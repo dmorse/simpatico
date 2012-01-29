@@ -1,0 +1,9 @@
+    RDF{
+      interval                           10000
+      outputFileName                       RDF
+      RadialDistribution{
+        max                   5.000000000000e+00
+        nBin                                 500
+      }
+      selector                           Inter        -1        -1
+    }

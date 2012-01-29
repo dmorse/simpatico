@@ -1,0 +1,7 @@
+    McEnergyOutput{
+      interval                            1000
+      outputFileName                    energy
+    }
+
+File format:
+[pair]       [bond]       [potential]  

@@ -1,0 +1,186 @@
+#ifndef  PAIR_ITERATOR_H
+#define  PAIR_ITERATOR_H
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "PairList.h"
+#include <util/global.h>
+
+namespace DdMd
+{
+
+   using namespace Util;
+
+   class Atom;
+   
+   /**
+   * Iterator for pairs in a PairList. 
+   *
+   * A loop over atom pairs, such as that required to calculated forces or
+   * energies, can take the following form:
+   * \code
+   * 
+   *    PairList     pairList;
+   *    PairIterator iter;
+   *
+   *    // [build the PairList]
+   *
+   *    // Loop over pairs
+   *    Atom* atom1Ptr;
+   *    Atom* atom2Ptr;
+   *    for (pairList.begin(iter); !iterator.atEnd(); ++iter) {
+   *       iterator.getPair(atom1Ptr, atom2Ptr);
+   *
+   *       // [Do something with atom1Ptr and atom2Ptr]
+   *
+   *       ++iter;
+   *    }
+   *
+   * \endcode
+   *
+   * \ingroup Neighbor_Module
+   */
+   class PairIterator
+   {
+   
+   public:
+
+      /**
+      * Default constructor.
+      *
+      * Creates an uninitialized iterator, which is not associated with a 
+      * parent PairList.
+      */
+      PairIterator();
+   
+      /**
+      * Initializing constructor.
+      *
+      * Creates an initialized iterator, for which the current pair is the
+      * first pair in a parent PairList.
+      *
+      * \param pairList parent PairList object.
+      */
+      PairIterator(const PairList &pairList);
+  
+      // Use default C++ destructor.
+ 
+      /** 
+      * Increment to next pair.
+      */
+      PairIterator& operator++ ();
+ 
+      /** 
+      * Return true if at end of PairList.
+      *
+      * When atEnd() is true, the current pair is already one past past
+      * the end of the pairlist, and is thus invalid.
+      */
+      bool atEnd() const;
+   
+      /**
+      * Get pointers for current pair of Atoms. 
+      *
+      * \param atom1Ptr pointer to current atom 1.
+      * \param atom2Ptr pointer to current atom 2.
+      */
+      void getPair(Atom* &atom1Ptr, Atom* &atom2Ptr) const;
+
+   private:
+ 
+      /// Array of const pointers to primary atom in each pair.
+      Atom* const* atom1Ptrs_;  
+
+      /// Array of const pointers to secondary atom in each pair.
+      Atom* const* atom2Ptrs_;  
+
+      /// Pointer to const index in atom2Ptrs_ of first neighbor of an Atom.
+      const int*   first_; 
+
+      /// Number of primary atoms in atom1Ptrs_.
+      int    nAtom1_;      
+  
+      /// Number of secondary atoms in atom2Ptrs_.
+      int    nAtom2_;      
+  
+      /// Current index of first atom in atom1Ptrs_.
+      int    atom1Id_;
+
+      /// Current index of second atom in atom2Ptrs_.
+      int    atom2Id_;
+
+   // friends:
+
+      friend class PairList;
+
+   }; 
+
+   /*
+   * Default constructor.
+   */
+   inline PairIterator::PairIterator()
+    : atom1Ptrs_(0),
+      atom2Ptrs_(0),
+      first_(0),
+      nAtom1_(0),
+      nAtom2_(0),
+      atom1Id_(0),
+      atom2Id_(0)
+   {}
+
+   /*
+   * Constructor, initialized iterator.
+   */
+   inline PairIterator::PairIterator(const PairList &pairList)
+    : atom1Ptrs_(0),
+      atom2Ptrs_(0),
+      first_(0),
+      nAtom1_(0),
+      nAtom2_(0),
+      atom1Id_(0),
+      atom2Id_(0)
+   {  pairList.begin(*this); }
+
+   /*
+   * Get pointers to current pair of Atoms. 
+   */
+   inline void PairIterator::getPair(Atom* &atom1Ptr, Atom* &atom2Ptr) const
+   {
+      assert(atom1Id_ >=0);
+      assert(atom1Id_ < nAtom1_);
+      assert(atom2Id_ >=0);
+      assert(atom2Id_ < nAtom2_);
+      atom1Ptr = atom1Ptrs_[atom1Id_];
+      atom2Ptr = atom2Ptrs_[atom2Id_];
+   }
+ 
+   /*
+   * Increment current pair.
+   */
+   inline PairIterator& PairIterator::operator++ ()
+   {
+      assert(atom1Id_ >=0);
+      assert(atom1Id_ < nAtom1_);
+      assert(atom2Id_ >=0);
+      assert(atom2Id_ < nAtom2_);
+      ++atom2Id_;
+      if (atom2Id_ == first_[atom1Id_+1]) {
+         ++atom1Id_;
+      }
+      return *this;
+   }
+
+   /*
+   * Return true if past last pair in list.
+   */
+   inline bool PairIterator::atEnd() const
+   { return (atom2Id_ == nAtom2_); }
+   
+ 
+} 
+#endif

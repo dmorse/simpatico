@@ -1,0 +1,90 @@
+#!/usr/bin/env python
+# -------------------------------------------------------------
+# Python script to create a set of directories in the pattern
+# used for parallel simulations. For a job with processors with
+# ranks 0, 1, 2, ..., n-1 it creates directories:
+#
+#     0/
+#     0/in
+#     0/out
+#     0/out/dump
+#     1/
+#     1/in
+#     1/out
+#     1/out/dump
+#
+# etc., in which the files associated with processor with number
+# m are in the directory rooted at m/.
+# -------------------------------------------------------------
+import os, os.path, shutil
+from optparse import OptionParser
+
+def sim_mkdirs(args, options):
+   if os.path.exists(options.root):
+      print 'Error: Root path ' + options.root + ' already exists'
+   else:
+      sep = os.sep
+      if options.n:
+         os.makedirs(options.root)
+         for i in range(int(options.n)):
+            prefix = options.root + sep + str(i) + sep
+            os.makedirs(prefix + options.input)
+            os.makedirs(prefix + options.output)
+            if not options.suppressDump:
+               os.makedirs(prefix + options.output + sep + options.dump)
+       
+         if options.config:
+            suffix = sep + "config"
+            for i in range(int(options.n)):
+               dir = sep + str(i) + sep
+               src = options.config + dir + options.output + suffix
+               if not os.path.exists(src):
+                  print 'Error: No path ' + options.config
+               else:
+                  dest = options.root + dir + options.input  + suffix
+                  shutil.copy(src, dest)
+            
+      else:
+         os.makedirs(options.root)
+         prefix = options.root + sep 
+         os.makedirs(prefix + options.input)
+         os.makedirs(prefix + options.output)
+         if not options.suppressDump:
+            os.makedirs(prefix + options.output + sep + options.dump)
+         if options.config:
+            suffix = sep + "config"
+            src  = options.config + sep + options.output + suffix
+            if not os.path.exists(src):
+               print 'Error: No path ' + options.config
+            else:
+               dest = options.root + sep + options.input  + suffix
+               shutil.copy(src, dest)
+
+
+if __name__ == "__main__":
+   usage = "usage: rm [-r] firstarg secondarg ..."
+   parser = OptionParser(usage)
+   parser.add_option("-r", "--root",
+          action="store", dest="root",
+          help="root directory name")
+   parser.add_option("-i", "--input",
+          action="store", dest="input", default="in",
+          help="input prefix")
+   parser.add_option("-o", "--output",
+          action="store", dest="output", default="out",
+           help="output prefix")
+   parser.add_option("-d", "--dump",
+          action="store", dest="dump", default="dump",
+          help="name a dump directory")
+   parser.add_option("-s", "--supressDump",
+          action="store_true", dest="suppressDump", default=False,
+          help="suppress creation of a dump directory")
+   parser.add_option("-c", "--config",
+          action="store", dest="config", default=False,
+          help="root directory name for input config file to copy")
+   parser.add_option("-n", "--n",
+          action="store", dest="n", default=0,
+          help="activate parallel mode, set number of directories")
+   (options, args) = parser.parse_args()
+   (options, args) = parser.parse_args()
+   sim_mkdirs(args, options)

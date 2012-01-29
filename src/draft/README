@@ -1,0 +1,4 @@
+This directory contains "drafts" of ideas for classes that are not
+used by other parts of the code, and that may be abandoned. The 
+classes defined here should not be compiled by the make all command
+from the src directory.

@@ -1,0 +1,159 @@
+namespace McMd
+{
+
+/*! \page parallel_page Parallel Operation
+
+Simpatico can be compiled for operation on multiple processors, 
+using MPI (Message Passing Interface) for interprocess communication.
+The multi-processor version of Simpatico does not allow a simulation
+of a single system to be divided among multiple processors, but simply 
+allows a different system to be simulated on each processor.  This is 
+useful primarily for replica exchange and free energy perturbation 
+simulations, and as a way to submit multiple independent simulations 
+as an MPI job. 
+
+\section Compiling Compiling with MPI
+To compile a parallel MPI version of the code, one must either choose 
+one of the compiler blocks that enables MPI in the compiler.mk file,
+all of which have names that end in _MPI, or write such a block for 
+a new compiler and/or MPI library. Each of the blocks for an MPI compiler 
+defines a makefile variable UTIL_MPI=1. Defining this makefile variable 
+causes the compiler to be passed a string "-DUTIL_MPI" that defines a 
+preprocessor macro of the same name, UTIL_MPI, when compiling all of 
+the source files in the util/ and mcMd/ directories.  Defining the 
+makefile variable UTIL_MPI also cause a string "_m" to be included in 
+a suffix that is added to the names of the util mcMd libraries and the 
+executables mcSim and mdSim.
+
+To compile a version of Simpatico that can carry out replica exchange
+and free energy perturbation calculations, one must also uncomment 
+the line "MCMD_PERTURB=1" in the file mcMd/defines.mk, which is 
+commented out by default.  Defining the makefile variable MCMD_PERTURB 
+causes a C++ preprocessor macro of the same name to be defined (via a 
+string passed to the compiler), and causes a suffix "_f" (for "free 
+energy perturbation") to be added to the name of the mcMd library and 
+to the mcSim and mdSim executables. 
+
+When Simpatico is compiled with mpi and free energy perturbation enabled, 
+but no other preprocessor macros defined, the default names of the 
+resulting MC and MD executables are mcSim_m_f and mdSim_m_f 
+
+\section File Directory Structure Conventions
+Conventions for paths to input and ouput file names are different 
+in the multiprocessor version of the code (compiled with UTIL_MPI
+defined) from those used in the default single processor version.  
+
+Each processor in MPI job involving np processors is assigned a 
+integer "rank" in the range n = 0, ..., np-1.  In the multiprocessor 
+version of Simpatico, the input config file and all output files 
+associated with a processor with rank "n" are put in a subdirectory 
+named "n/", e.g., in a directory named "3/" for the processor with 
+rank 3 in the MPI communicator.  To do this, the FileMaster class
+for processor 3 prepends the string "3/" to the paths for all of 
+the input and and output configuration and data files used by 
+that processor, with an analogous convention for other processors.
+
+The treatment of parameter and command files in an MPI job depends 
+upon whether or not the executable is invoked with the "-p" command 
+line, which enables free energy perturbation.  This command line 
+option is only valid if the executable was compiled with MCMD_PERTURB 
+defined. 
+
+\section Independent Independent Simulations
+
+Invoking a parallel version of mcSim or mdSim without the "-p" option 
+runs a series of completely independent simulations on different 
+processor, in which each simulation is controlled by a different 
+parameter and command file.  In this mode, it is not possible to
+read the parameter file from standard input, as done in the 
+single-processor version, because that would not allow different 
+processors to read different parameter files. 
+By convention, the parameter file for processor n is instead read 
+from the file "n/param". The command file is read from a file name 
+obtained by adding "n/" as a prefix to the commandFileName given 
+in this parameter file.  The paths to input and ouput files are also
+obtained by adding a string "n/" before the inputPrefix or outputPrefix.  
+Thus if the inputPrefix is set to "in/" and the outputPrefix is 
+set to "out/" in the file "n/param", the command 
+"WRITE_CONFIG config" for processor 3 will read the file 
+"3/in/config", and all of the output files for processor 3 will 
+be written to the directory "3/out". 
+
+For example, to run independent MC simulations on 3 processors, 
+using an executable mcSim_m, one might thus enter
+\code
+    mpirun -np 3 mSim_m 
+\endcode
+from the root directory of a directory tree (i.e., the directory
+above the numbered subdirectories) with a structure
+\code
+    0/
+      param
+      commands
+      in/
+        config
+      out/
+    1/
+      param
+      commands
+      in/
+        config
+      out/
+    2/ 
+      param
+      commands
+      in/
+        config
+      out/
+\endcode
+We have assumed here that the commandFileName pararameter is set to the
+string "commands" in each of the param files.
+
+\section Pertubation Perturbation Simulations
+Invoking the MC or MD executable with the "-p" option instead enables 
+the definition of a free energy perturbation or replica exchange 
+simulation  In this mode, "replicas" on several processors are controlled 
+by a single parameter file and a single command file, but different parameter 
+values are assigned to different processors.  This mode of operation is 
+required for replica exchange and free energy perturbation simulations. 
+
+For example, to run a MC program in this mode on 3 processors, using 
+an executable whose name includes the suffixes _m and _f to denote 
+that it was compiled with MPI and MCMD_PERTURB defined, one might thus 
+enter 
+\code
+    mpirun -np 2 mSim_m_p -p < param
+\endcode
+from the root directory of a directory tree with a structure
+\code
+    param
+    commands
+    0/
+      in/
+        config
+      out/
+    1/
+      in/
+        config
+      out/
+    2/ 
+      in/
+        config
+      out/
+\endcode
+assuming that commandFileName=="commands" in the param file.
+Note that the parameter file is read from standard input in this 
+case, like the single processor version, but unlike the parallel
+mode for independent simulations. 
+
+The use of free energy perturbation and replica exchange is discussed 
+in more detail on the following page. 
+
+<ul>
+ <li> \ref restart_page   (Prev)  </li>
+ <li> \ref guide_page     (Up)    </li>
+ <li> \ref perturb_page   (Next)  </li>
+</ul>
+
+*/
+}

@@ -1,0 +1,180 @@
+namespace McMd
+{
+
+/*! \page preprocessor_page Preprocessor macros
+
+Several optional features of Simpatico can be conditionally compiled 
+by defining preprocessor macros when compiling the code. 
+
+\section Macros Available Macros
+
+C++ preprocessor macros used in Simpatico fall into two groups. Those 
+whose names begin with UTIL_ are used to conditionally compile blocks
+of code in both the Util and McMd namespaces.  Those whose names begin 
+with MCMD_ effect only the code in the McMd namespace. Each of these
+preprocessor macros may be defined by uncommenting line that defines 
+a makefile flag variable of the same name in the one of the makefile
+fragments src/compiler.mk, src/util/defines.mk or src/compiler.mk, as 
+noted below. Each such makefile variable, if defiend, also causes a 
+suffix string to be added to the names of all libraries and executable 
+files that contain code that is affected by the preprocessor.
+
+UTIL_ Macros:
+
+  - UTIL_MPI: Define UTIL_MPI to enable Simpatico to run on multiple
+    processors, with a different systems on different processors. 
+    To enable this feature, choose a compiler block in src/compiler.mk
+    that defines the makefile variable UTIL_MPI .
+    Suffix string: _m.
+
+  - UTIL_DEBUG: Defining this macro causes compilation of many additional 
+    internal logic checks, including the addition of bounds checking on 
+    all of the container class templates. To enable this, uncomment the 
+    line that defines the makefile variable UTIL_DEBUG of the same name 
+    in src/util/defines.mk.
+    Suffix string: _g.
+
+MCMD_ Macros, which are all defined in mcMd/defines.mk:
+
+  - MCMD_PERTURB: Define this to enable algorithms such as thermodynamic 
+    perturbation theory and replica exchange in which the Boltzmann 
+    weight depends upon a parameter. The replica exchange algorithm 
+    can be used only if both UTIL_MPI and MCMD_PERTURB are defined. 
+    To enable this, uncomment the line that defines MCMD_PERTURB=1 
+    in src/mcMd/defines.mk.  Suffix string: _f.
+
+  - MCMD_NOPAIR: Define this to remove all nonbonded pair interactions.
+    This also removes all code associated with the calculation of pair
+    interactions and for creating and managing Cell and/or Pair Lists. 
+    To disable pair potentials, define MCMD_NOPAIR=1 in src/mcMd/defines.mk.
+    Suffix string: _np.
+
+  - MCMD_ANGLE: Define MCMD_ANGLE to enable three-particle angle potentials.
+    To enable angle potentials, define MCMD_ANGLE=1 in src/mcMd/defines.mk.
+    Suffix string: _a.
+
+  - MCMD_DIHEDRAL: Define MCMD_DIHEDRAL to enable four-particle dihedal 
+    potentials. To enable this, define MCMD_ANGLE=1 in src/mcMd/defines.mk.
+    Suffix string: _d.
+
+  - MCMD_LINK: Define MCMD_LINK to allow the inclusion of mutable two-body 
+    bond potentials that are not included as part of the definitions of 
+    molecular species, such as crosslinks between polymers. This enables
+    addition of a LinkMaster object to the System object.
+    To enable this, define MCMD_LINK=1 in src/mcMd/defines.mk.
+    Suffix string: _l.
+
+  - MCMD_EXTERNAL: 
+    Define this to allow the inclusion of an external one-particle 
+    potentials, such as a wall or confining potential, in which the
+    potential energ of each atom depends on its type and position.
+    To enable this, define MCMD_EXTERNAL=1 in src/mcMd/defines.mk.
+    Suffix string: _e.
+ 
+  - MCMD_TETHER: Define this to allow inclusion of potentials that
+    confine specific individual atoms, e.g., by introducing a 
+    potential energy that depends on the distance of each such 
+    atom from a specific "anchor" position. 
+    To enable, define MCMD_TETHER_FLAG=1 in src/mcMd/defines.mk.
+    Suffix string: _t.
+
+  - MCMD_SHIFT: Define this to enable the recording of shifts of
+    atomic coordinates used to map positions into the periodic unit
+    cell in MD (but not MC) simulations. This macro also enables 
+    inclusion of the integer shifts in the MdConfigIo configuration 
+    file format. This feature allows a user to reconstruct continuous
+    trajectories of "true" atomic positions from configuration file
+    dumps. This feature only works in MD simulations.
+    To enable this, define MCMD_SHIFT=1 in src/mcMd/defines.mk.
+    Suffix string: _s.
+
+\section flags_sec How preprocessor macros are defined
+
+As discussed above, each preprocessor macros (except UTIL_MPI) can
+be defined by uncommenting a line in util/defines.mk or mcMd/defines.mk 
+that defines a makefile variable with the same name. The UTIL_MPI 
+macro is defined by choosing a compiler flag for an MPI compiler 
+the src/compiler.mk file.  Here, we discuss how this makefile 
+system works.
+
+As an example, to define the preprocessor macro UTIL_DEBUG, and thus
+enable debugging, one should uncomment the line in util/defines.mk 
+that defines the makefile variable MCMD_DEBUG=1.  Defining this 
+makefile variable enables execution of a corresponding block in
+either util/defines.mk or mcMd/defines.mk that does two things:
+
+  - It adds a string that causes a corresponding preprocessor macro 
+    to be defined to a makefile variable UTIL_DEFS or MCMD_DEFS that
+    is passed as an option to the compiler.
+
+  - It adds a suffix to a string UTIL_SUFFIX or MCMD_SUFFIX that is 
+    added to the names of all relevant library and executable files. 
+    
+For example, defining DEBUG_FLAG near the top of util/defines.mk enables 
+execution of the following two lines further down in the same file:
+\code
+    UTIL_DEFS+='-DUTIL_DEBUG'
+    UTIL_SUFFIX:=_g
+\endcode
+The first line in this block appends '-DUTIL_DEBUG' to the makefile
+variable UTIL_DEFS, which causes the preprocessor macro 'UTIL_DEBUG' 
+to be defined throughout the source code. The second adds a suffix
+_g t the string that is added to the end of library and executable
+file names.
+
+The string UTIL_DEFS is passed to the compiler as an option by the
+pattern rule defined for creating object files in src/util/patterns.mk.
+This pattern rule is used to compile the all source *.cpp files in the 
+src/util directory.  A corresponding string MCMD_DEFS is used by the
+pattern rule defined in src/mcMd/patterns.mk, which is used to compile 
+all the source files in the src/mcMd directories and the main 
+programs in src/main. The MCMD_DEFS string contains the UTIL_DEFS 
+string as its first segment, so suffix strings that are added to 
+UTIL_DEFS also appear in MCMD_DEFS. Each of these strings uses the 
+standard '-D' compiler option to instruct the compiler to define 
+C/C++ preprocessor macros.  
+
+The second line of the above block causes a suffix "_g" to be added
+to the makefile variable UTIL_SUFFIX. The value of this variable is 
+appended to the names of library and executable files in order to 
+mark what preprocessor macros were defined during compilation.
+Other suffixes, each preceded by an underscore, are added to indicate 
+other preprocessor macros: "_m" for MPI (UTIL_MPI), "_a" for angle 
+potentials (MCMD_ANGLE), etc. The value of UTIL_SUFFIX is added to 
+the name of the util library. A corresponding variable MCMD_SUFFIX,
+whose value begins with UTIL_SUFFIX, is added to the names of the mcMd
+library and the McSim and MdSim executable files.  Setting MPI_FLAG or 
+DEBUG_FLAG causes suffixes _m or _g to be added to UTIL_SUFFIX, and 
+thus causes these suffixes to be added to the names of both libraries 
+and both executables. Each MCMD_* variable that is set in 
+src/mcMd/defines.mk causes a corresponding suffix to be added to the 
+name of the mcMd library and both executables, but not to the name 
+of the util library.
+
+As an example, consider a user who defines DEBUG_FLAG=1 in 
+util/define.mk and LINK_FLAG=1 in mcMd/defines.mk, using a compiler 
+in compiler.mk that does not use MPI, and leaves all other flags 
+undefined. Assume that the user uses the default directory paths 
+for the library and executable directories. In this case the makefile
+system would set UTIL_SUFFX=_g and MCMD_SUFFIX=_g_l, and would build 
+library files named lib/util_g_l.a and lib/mcMd_g_l.a, and executable 
+files named bin/mcSim_g_l and bin/mdSim_g_l.  The suffixes _g and _l 
+indicate that debugging and mutable bonds (crosslinks), respectively, 
+have been enabled by defining the preprocessor macros UTIL_DEBUG and 
+MCMD_LINK. The _l suffix is not added to the name of the util library 
+because the macro MCMD_LINK is not used in the Util namespace. 
+
+The addition of suffixes to the names of the libraries and executables
+can be helpful for keeping track of these files that were compiled 
+with different preprocessor macros defined, but is not mandatory. 
+Users can suppress or modify these suffixes commenting out or modifying 
+the lines that append suffixes to UTIL_SUFFIX or MCMD_SUFFIX in the 
+two defines.mk files. 
+
+<ul>
+ <li> \ref custom_page      (Up)   </li>
+ <li> \ref boundary_page  (Next) </li>
+</ul>
+ 
+*/
+}

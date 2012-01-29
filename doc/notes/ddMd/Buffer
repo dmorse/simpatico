@@ -1,0 +1,47 @@
+Plans for changing Buffer and dependent classes (May 2, 2011).
+
+class Buffer:
+
+1) Add private pointers to contain more complete description of buffer.
+
+   change private members:
+
+       void* sendBuffer_ to sendBufferBegin_
+       void* recvBuffer_ to sendBufferBegin_
+
+   add private members:
+
+       void* sendBufferEnd_
+       void* recvBufferEnd_
+
+2) Change pack() template so as to check for the end of the buffer.
+
+3) Change send() and sendRecv() so as to calculate buffer size from 
+   sendPtr_.
+
+4) Add private pointers that refer to the current block, if any.
+
+       void* sendBlockBegin_
+       void* recvBlockBegin_
+
+5) Change names of type enumeration and type variables
+
+       Rename: AtomTypeName  -> BlockTypeName
+       Rename: atomSendType_ -> blockSendType_
+       Rename: atomRecvType_ -> blockRecvType_
+
+6) Rename initSendBuffer(AtomTypeName) -> beginSendBlock(BlockTypeName)
+
+   Change function calls in Distributor, Exchanger, and Collector.
+
+7) Add method endSendBlock(). This should:
+
+      set blockSendSize_ and blockSendType_ values in buffer.
+      set sendBlockBegin_ = 0
+      set BlockTypeName = NONE
+
+      Remove these operations from send()
+      Add function calls in Distributor, before send calls.
+
+      Remove these operations from sendRecv()
+      Add function calls in Exchanger, before sendRecv() calls.

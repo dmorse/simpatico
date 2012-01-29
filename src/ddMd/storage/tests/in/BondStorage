@@ -1,0 +1,4 @@
+BondStorage{
+   capacity        10
+   totalCapacity  100
+}

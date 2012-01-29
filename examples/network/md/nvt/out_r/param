@@ -1,0 +1,86 @@
+MdSimulation{
+  FileMaster{
+    commandFileName                 commands
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              1
+  nBondType                              1
+  nLinkType                              1
+  atomTypes                              A  1.000000000000e+00
+  maskedPairPolicy                MaskNone
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                     100
+      nAtom                                  8
+      atomType                               0
+      bondType                               0
+    }
+
+  }
+  Random{
+    seed                          1379066121
+  }
+  MdSystem{
+    pairStyle                        DpdPair
+    bondStyle                 HarmonicL0Bond
+    linkStyle                 HarmonicL0Bond
+    LinkMaster{
+      linkCapacity                        1000
+      atomCapacity                         800
+    }
+    MdPairPotential{
+      epsilon               1.000000000000e+01
+      sigma                 1.000000000000e+00
+      maxBoundary                        cubic     9.0000000e+00
+      PairList{
+        atomCapacity                         800
+        pairCapacity                        5000
+        skin                  3.000000000000e-01
+      }
+    }
+    BondPotential{
+      kappa                 1.500000000000e+00
+    }
+    LinkPotential{
+      kappa                 1.500000000000e+00
+    }
+    EnergyEnsemble{
+      type                          isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                               rigid
+    }
+    NvtNhIntegrator{
+      dt                    4.000000000000e-03
+      tauT                  2.000000000000e+00
+    }
+  }
+  DiagnosticManager{
+    baseInterval                         100
+
+    LogProgress{
+      interval                            2000
+    }
+
+    MdEnergyOutput{
+      interval                            1000
+      outputFileName                    energy
+    }
+
+    MdPotentialEnergyAverage{
+      interval                             100
+      outputFileName        potentialEnergyAve
+      nSamplePerBlock                       10
+    }
+
+    MdKineticEnergyAverage{
+      interval                             100
+      outputFileName          kineticEnergyAve
+      nSamplePerBlock                       10
+    }
+
+  }
+}

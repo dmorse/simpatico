@@ -1,0 +1,10 @@
+moleculeCapacity             5
+nAtom                        3
+nBond                        2
+nAngle                       1
+atomTypeIds                  0
+                             1
+                             0
+speciesBonds                 0  1  0
+                             1  2  0
+speciesAngles                0  1  2  0

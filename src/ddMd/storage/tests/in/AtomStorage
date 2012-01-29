@@ -1,0 +1,5 @@
+AtomStorage{
+   atomCapacity        10
+   ghostCapacity       10
+   totalAtomCapacity  100
+}

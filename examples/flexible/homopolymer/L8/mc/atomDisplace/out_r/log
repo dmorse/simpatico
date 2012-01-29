@@ -1,0 +1,37 @@
+WRITE_PARAM  param
+READ_CONFIG         config
+SIMULATE  2000000000
+
+iStep = 0
+iStep = 100000000
+iStep = 200000000
+iStep = 300000000
+iStep = 400000000
+iStep = 500000000
+iStep = 600000000
+iStep = 700000000
+iStep = 800000000
+iStep = 900000000
+iStep = 1000000000
+iStep = 1100000000
+iStep = 1200000000
+iStep = 1300000000
+iStep = 1400000000
+iStep = 1500000000
+iStep = 1600000000
+iStep = 1700000000
+iStep = 1800000000
+iStep = 1900000000
+iStep = 2000000000
+
+nStep         2000000000
+run time      12541.6  sec
+time / nStep  6.27079e-06  sec
+
+Move Statistics:
+
+Move Name                          Attempted    Accepted     AcceptRate
+AtomDisplaceMove                  2000000000   908655040       0.454328
+
+WRITE_CONFIG         config
+FINISH

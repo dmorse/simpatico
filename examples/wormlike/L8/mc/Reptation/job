@@ -1,0 +1,9 @@
+#!/bin/bash -l
+
+#PBS -l walltime=24:00:00,pmem=500mb,nodes=1:ppn=1
+#PBS -o zout
+#PBS -j oe
+#PBS -N L8AngleReptation 
+
+cd $PBS_O_WORKDIR
+$HOME/molmcd/trunk/bin/mcSim_a < param

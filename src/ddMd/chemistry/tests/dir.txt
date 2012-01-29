@@ -1,0 +1,3 @@
+subDirectories =
+pathFromSrc = ddMd/chemistry/tests
+pathToSrc = ../../..

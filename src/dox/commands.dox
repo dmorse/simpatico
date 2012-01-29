@@ -1,0 +1,159 @@
+namespace McMd
+{
+
+/*! \page commands_page Command File
+
+After the main Simulation object is initialized by the readParam() 
+method, the progress of a simulation is controlled by a command file
+that is read by the readCommand() method. The name of the command file
+is specified by the commandFileName parameter in the FileMaster block
+of the parameter file. If the value of commandFileName is given by
+the special string "paramfile", however, readCommand() will assume 
+that command file has been appended to the end of the param file, 
+after the closing bracket of the main McSimulation or MdSimulation 
+block, and will attempt to continue reading from the parameter file. 
+
+The command file contains a sequence of one-line commands that are
+read and executed in sequence. Each command begins with an all upper
+case label. Some commands take one or more required parameters after
+the upper case label. The script stops execution when it encounters 
+the command string 'FINISH' on a line by itself. 
+
+Here is a example of a command file for an MD simulation that reads
+in a file in the MC format, generates random velocities, and then 
+outputs the final configuration in the MD format:
+\code
+SET_CONFIG_IO  McConfigIo
+READ_CONFIG        config
+THERMALIZE         1.0000
+SIMULATE           100000
+SET_CONFIG_IO  MdConfigIo
+WRITE_CONFIG       config
+FINISH
+\endcode
+The command "SET_CONFIG_IO McConfigIo" creates a new instance of McConfigIo
+that will be used in subsequent calls to READ_CONFIG and WRITE_CONFIG. The 
+command "READ_CONFIG config" reads an MC configuration file from a file 
+named "config", prefixed by the input prefix given in the param file. 
+The "THERMALIZE 1.0" command generates random velocities chosen from the 
+Maxwell-Boltzmann distribution with a thermal energy kT = 1.0, which is 
+necessary here because the MC file format does not contain any velocities.
+The command "SIMULATE 100000" runs a simulation of 100000 MD steps. 
+The command "SET_CONFIG_IO MdConfigIo" creates a new instance of MdConfigIo
+which will be used to write the output file using the default MD format.
+"WRITE_CONFIG config" writes the final configuration (including velocities)
+to a file whose is given by "config" prefixed by the output path prefix. 
+The input and output prefix strings are set in the parameter file. 
+
+The ANALYZE_DUMPS or ANALYZE_TRAJECTORY commands can be used to read and
+analyze (i.e., post-process) a sequence of configuration files that were 
+dumped by a previous simulation or a whole trajectory that was dumped by 
+a different simulation program (such as Hoomd).
+For ANALYZE_DUMPS, the name each of these files must be a concatenation of the input prefix, 
+followed by the filename argument of the ANALYZE command, followed by an 
+integer suffix. For ANALYZE_TRAJECTORY, the file name is simply the single 
+trajectory file.
+
+The system can also be initialized with a random configuration of molecules.
+Currently this is only possible for Linear species. The command
+GENERATE_MOLECULES is used to generate such a initial configuration of
+molecules using hard-core excluded volume and ensures that no two atoms 
+are closer together than the sum of their exclusion radii.
+
+The following commands that are recognized by in command files for either 
+an McSimulation or an MdSimulation:
+<table>
+  <tr> 
+    <td> <b>command     </b> </td>
+    <td> <b>parameter(s)</b> </td>
+    <td> <b>description </b> </td>
+  </tr>
+  <tr> 
+    <td> READ_CONFIG </td>
+    <td> filename [string] </td>
+    <td> Read configuration from file filename, with input prefix  </td>
+  </tr>
+  <tr> 
+    <td> SIMULATE </td>
+    <td> endStep [integer] </td>
+    <td> Run a new simulation of endStep MD or MC steps. 
+         Initialize state of simulation, and set iStep = 0, before
+         entering the main loop. </td>
+  </tr>
+  <tr> 
+    <td> CONTINUE </td>
+    <td> endStep [integer] </td>
+    <td> Continue a simulation simulation until step counter iStep 
+         reaches endStep, with no re-initialization. </td>
+  </tr>
+  <tr> 
+    <td> ANALYZE_DUMPS </td>
+    <td> min [integer], max [integer], filename [string] </td>
+    <td> Postprocess a series of configuration dump files with integer suffix 
+         labels min <= i <= max and a specified base filename </td>
+  </tr>
+  <tr> 
+    <td> WRITE_CONFIG </td>
+    <td> filename [string] </td>
+    <td> Write configuration from file filename, with output prefix  </td>
+  </tr>
+  <tr> 
+    <td> WRITE_PARAM </td>
+    <td> filename [string] </td>
+    <td> Write parameter file block to file filename, with output prefix </td>
+  </tr>
+  <tr> 
+    <td> SET_CONFIG_IO </td>
+    <td> className [string] </td>
+    <td> Choose a file format form reading and writing config files, by
+         creating a new instance of a specified subclass className of
+         ConfigIo to be used for these purposes. The resulting object
+         will be used until the next SET_CONFIG_IO command. </td>
+  </tr>
+   <tr>
+    <td> GENERATE_MOLECULES </td>
+    <td> boxL [float], nMolecule0 [int], nMolecule1 [int], ...,
+         exclusionRadius0 [float], exclusionRadius1[float], ... </td>
+    <td> Generate a random set of molecules using hard-core excluded
+         volume in a cubix box of size boxL.
+         The number of molecules is nMolecule0 for species 0,
+         nMolecule1 for species 1, etc.. Use exclusion radii exclusionRadius0
+         for particle type 0, exclusionRadius1 for particle type 1, etc.
+         </td>
+   </tr>
+</table>
+The className argument of the SET_CONFIG_IO command can be "McConfigIo" or "MdConfigIo". This command 
+effects subsequent calls to READ_CONFIG and WRITE_CONFIG. If READ_CONFIG and/or WRITE_CONFIG is 
+encountered before any SET_CONFIG_IO command, the default MC or MD file format will be used.
+
+In addition, MdSimulation recognizes the commands
+<table>
+  <tr> 
+    <td> THERMALIZE </td>
+    <td> temperature [float] </td>
+    <td> 
+       Generate random velocities for specified temperature (in energy units). 
+    </td>
+  </tr>
+  <tr>
+    <td> ANALYZE_TRAJECTORY </td>
+    <td> min[integer], max[integer], classname [string], filename [string] </td>
+    <td> Postprocess a trajectory dump using classname (a TrajectoryIo) by
+         reading from the input trajectory file filename. Reads frame numbers
+         min <= i <= max.  Negative values for min, max are also allowed and
+         are counted from the end of the trajectory file. 
+    </td>
+  </tr>
+</table>
+The THERMALIZE command can be used to generate random velocities after an MD simulation reads
+an MC config file.
+
+<ul>
+ <li> \ref param_page        (Prev) </li>
+ <li> \ref guide_page        (Up)   </li>
+ <li> \ref cfgfile_page      (Next) </li>
+</ul>
+
+*/
+
+}

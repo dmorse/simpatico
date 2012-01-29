@@ -1,0 +1,9 @@
+#!/bin/bash -l
+
+#PBS -q long
+#PBS -l walltime=24:00:00,mem=20000mb,nodes=8:ppn=3
+#PBS -o zout
+cd $PBS_O_WORKDIR
+module load intel 
+$HOME/mcmd_may29/trunk/bin/mdSim_lj_serial_external -e < param 
+

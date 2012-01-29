@@ -1,0 +1,27 @@
+Domain Decomposition MD (DdMd)
+------------------------------
+
+- Add Collector to ConfigIo, to allow writing. 
+
+- Write and test GroupDistributor<N> template.
+
+- Add BondDistributor to ConfigIo.
+
+- Add BondStorage to System.
+
+- Add bond forces to System.
+
+- Modify Exchanger::exchangeAtoms to exchange bonds.
+
+- Modify Exchanger::exchangeGhosts accordingly.
+
+- Modify Exchanger to work ifndef UTIL_MPI, continue with other classes.
+
+- Improve unit testing of CellList (add atoms and ghosts, small boxes),
+  Integrator (check that number of interacting pairs doesn't change),
+  System (test with very small system, 1x1x1 grid).
+
+- Make Integrator and Interaction abstract base classes.
+
+- Move integrate(int nStep) method to Integrator class.
+

@@ -1,0 +1,3 @@
+subDirectories =
+pathFromSrc = ddMd/configIo/tests
+pathToSrc = ../../..

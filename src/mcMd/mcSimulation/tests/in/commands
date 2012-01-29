@@ -1,0 +1,6 @@
+WRITE_PARAM       param
+READ_CONFIG      config
+FINISH
+
+SIMULATE            100
+WRITE_CONFIG     config

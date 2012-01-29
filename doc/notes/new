@@ -1,0 +1,66 @@
+
+This file records instance of the "new" memory allocation operator in the code.
+I am considering defining a replacement function that calls new but also 
+records how much memory was used. 
+
+util
+-----
+
+containers/ArraySet.h:       ptrs_       = new Data*[capacity_];
+containers/ArraySet.h:       tags_       = new int[capacity_];
+
+containers/ArrayStack.h:     ptrs_       = new Data*[capacity];
+
+containers/DArray.h:         data_       = new Data[other.capacity_];
+containers/DArray.h:         data_       = new Data[capacity];
+
+containers/DMatrix.h:        data_       = new Data[capacity1*capacity2];
+
+containers/DPArray.h:        ptrs_       = new Data*[other.capacity_];
+containers/DPArray.h:        ptrs_       = new Data*[capacity];
+
+containers/DRaggedMatrix.h:  capacity2_  = new int[capacity1_];
+containers/DRaggedMatrix.h:  rows_       = new Data*[capacity1_];
+containers/DRaggedMatrix.h:  data_       = new Data[capacity];
+
+containers/ListArray.h:      nodes_      = new Node<Data>[capacity_];
+containers/ListArray.h:      lists_      = new List<Data>[nList_];
+
+containers/RingBuffer.h:     data_       = new Data[capacity_];
+containers/RingBuffer.h:     data_       = new Data[other.capacity_];
+containers/RingBuffer.h:     data_       = new Data[capacity];
+
+mpi/MpiSendRecv.cpp:      char* cstr = new char[count];
+mpi/MpiSendRecv.cpp:      char* cstr = new char[count];
+mpi/MpiSendRecv.cpp:      char* cstr = new char[count];
+
+param/ParamComposite.cpp:      list   = new ParamComponent*[listCapacity_];
+param/ParamComposite.cpp:      isLeaf = new bool[listCapacity_];
+param/ParamComposite.cpp:      list   = new ParamComponent*[listCapacity_];
+param/ParamComposite.cpp:      isLeaf = new bool[listCapacity_];
+param/ParamComposite.cpp:      list   = new ParamComponent*[listCapacity_];
+param/ParamComposite.cpp:      isLeaf = new bool[listCapacity_];
+
+mcMd
+-----
+
+chemistry/Atom.cpp:      atoms_        = new Atom[capacity];
+chemistry/Atom.cpp:      masks_        = new Mask[capacity];
+chemistry/Atom.cpp:      moleculePtrs_ = new Molecule*[capacity];
+chemistry/Atom.cpp:      forces_ = new Vector[capacity_];
+chemistry/Atom.cpp:      velocities_ = new Vector[capacity_];
+chemistry/Atom.cpp:      shifts_ = new IntVector[capacity_];
+
+perturb/ReplicaMove.cpp:      ptPositionPtr_ = new Vector[nAtom];
+perturb/ReplicaMove.cpp:      myPositionPtr_ = new Vector[nAtom];
+
+mcMoves/linear/CfbDoubleRebridgeMove.cpp:  bonds = new int[nRegrow_ + 1];
+mcMoves/linear/CfbDoubleRebridgeMove.cpp:  molBuf  = new int[maxPair];  
+mcMoves/linear/CfbDoubleRebridgeMove.cpp:  atomBuf = new int[maxPair];  
+mcMoves/linear/CfbRebridgeMove.cpp:        bonds = new int[nRegrow_ + 1];
+
+mcMoves/ring/CfbRingRebridgeMove.cpp:      bonds = new int[nRegrow_ + 1];
+
+mcMoves/ring/RingOctaRebridgeMove.cpp:     idList = new int[nNeighbor];
+mcMoves/ring/RingOctaRebridgeMove.cpp:     molIdList = new int[nNeighbor];
+mcMoves/ring/RingTetraRebridgeMove.cpp:    idList = new int[nAtom_ - 3];

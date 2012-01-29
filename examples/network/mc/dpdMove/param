@@ -1,0 +1,101 @@
+McSimulation{
+  FileMaster{
+    commandFileName                 commands
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              1
+  nBondType                              1
+  nLinkType                              1
+  atomTypes                              A       1.0
+  maskedPairPolicy                      MaskNone
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                     100
+      nAtom                                  8
+      atomType                               0
+      bondType                               0
+    }
+
+  }
+  Random{
+    seed                          -15526457
+  }
+  McSystem{
+    pairStyle                          DpdPair
+    bondStyle                   HarmonicL0Bond
+    linkStyle                   HarmonicL0Bond
+    McPairPotential{
+      epsilon              10.000000000000e+00  
+      sigma                 1.000000000000e+00  
+      maxBoundary             cubic   9.0
+    }
+    BondPotential{
+      kappa                                1.5
+    }
+    LinkMaster{
+      linkCapacity                  1000
+      atomCapacity                   800
+    }
+    LinkPotential{
+      kappa                                1.5
+    }
+    EnergyEnsemble{
+      type             isothermal
+      temperature      1.0
+    }
+    BoundaryEnsemble{
+      type                               rigid
+    }
+  }
+  McMoveManager{
+
+    DpdMove{
+      probability         1.000000000000e+00
+      nStep                               10
+      MdSystem{
+        MdPairPotential{
+          maxBoundary         cubic         10.5
+          PairList{
+            atomCapacity                     800
+            pairCapacity                   10000
+            skin                 3.000000000e-01
+          }
+        }
+        NvtDpdVvIntegrator{
+          dt               1.000000000e-01
+          cutoff           1.000000000e+00
+          gamma            0.500000000e+00
+        }
+      }
+    }
+
+  }
+  DiagnosticManager{
+    baseInterval                           1
+
+    LogProgress{
+      interval                            10
+    }
+
+    McEnergyOutput{
+      interval                            10
+      outputFileName                  energy
+    }
+
+    McEnergyAverage{
+      interval                             1
+      outputFileName      potentialEnergyAve
+      nSamplePerBlock                     10
+    }
+
+  }
+}
+
+    DumpConfig{
+      interval                             10
+      outputFileName             dump/config.
+    }
+
+

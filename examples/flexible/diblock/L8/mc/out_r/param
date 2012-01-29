@@ -1,0 +1,195 @@
+McSimulation{
+  FileMaster{
+    commandFileName                 commands
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              2
+  nBondType                              1
+  atomTypes                              A  1.000000000000e+00
+                                         B  1.000000000000e+00
+  maskedPairPolicy              MaskBonded
+  SpeciesManager{
+
+    Diblock{
+      moleculeCapacity                     100
+      blockLength                            4                   4
+      type                                   0                   1
+    }
+
+  }
+  Random{
+    seed                           564326796
+  }
+  McSystem{
+    EnergyEnsemble{
+      type                          isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                               rigid
+    }
+    pairStyle                         LJPair
+    bondStyle                   HarmonicBond
+    McPairPotential{
+      epsilon               1.000000000000e+00  2.200000000000e+00
+                            2.200000000000e+00  1.000000000000e+00
+      sigma                 1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      cutoff                1.122460000000e+00  1.122460000000e+00
+                            1.122460000000e+00  1.122460000000e+00
+      maxBoundary                 orthorhombic     1.10000000e+01  1.10000000e+01  1.10000000e+01
+    }
+    BondPotential{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+  }
+  McMoveManager{
+
+    HybridMdMove{
+      nStep                                 40
+      MdSystem{
+        MdPairPotential{
+          maxBoundary                        cubic     1.1000000e+01
+          PairList{
+            atomCapacity                       20000
+            pairCapacity                      100000
+            skin                  3.000000000000e-01
+          }
+        }
+        NVEIntegrator{
+          dt                    5.000000000000e-03
+        }
+      }
+    }
+    probability           1.000000000000e-02
+
+    EndSwapMove{
+      speciesId                              0
+    }
+    probability           9.900000000000e-01
+
+  }
+  DiagnosticManager{
+    baseInterval                         100
+
+    LogProgress{
+      interval                            2000
+    }
+
+    McEnergyOutput{
+      interval                             200
+      outputFileName                    energy
+    }
+
+    McEnergyAverage{
+      interval                             200
+      outputFileName                 energyAve
+      nSamplePerBlock                        1
+    }
+
+    McPairEnergyAverage{
+      interval                             200
+      outputFileName                pairEnergy
+      nSamplePerBlock                        1
+      selector                             All         0         1
+    }
+
+    RadiusGyration{
+      interval                             200
+      outputFileName            RadiusGyration
+      nSamplePerBlock                        1
+      speciesId                              0
+    }
+
+    StructureFactorPGrid{
+      interval                            1000
+      outputFileName      StructureFactorPGrid
+      nAtomTypeIdPair                        2
+      atomTypeIdPairs                         0    0
+                                              0    1
+      hMax                                   4
+      lattice                            cubic
+    }
+
+    StructureFactorP{
+      interval                             100
+      outputFileName          StructureFactorP
+      nAtomTypeIdPair                        3
+      atomTypeIdPairs                         0    0
+                                              0    1
+                                              1    1
+      nWave                                 30
+      waveIntVectors                    1              0              0
+                                        2              0              0
+                                        3              0              0
+                                        4              0              0
+                                        5              0              0
+                                        6              0              0
+                                        7              0              0
+                                        8              0              0
+                                        9              0              0
+                                       10              0              0
+                                       11              0              0
+                                       12              0              0
+                                       13              0              0
+                                       14              0              0
+                                       15              0              0
+                                       16              0              0
+                                       17              0              0
+                                       18              0              0
+                                       19              0              0
+                                       20              0              0
+                                       21              0              0
+                                       22              0              0
+                                       23              0              0
+                                       24              0              0
+                                       25              0              0
+                                       26              0              0
+                                       27              0              0
+                                       28              0              0
+                                       29              0              0
+                                       30              0              0
+    }
+
+    StructureFactorGrid{
+      interval                            1000
+      outputFileName       StructureFactorGrid
+      nMode                                  2
+      modes                 1.000000000000e+00 -1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      hMax                                   5
+      lattice                            cubic
+    }
+
+    StructureFactor{
+      interval                             100
+      outputFileName           StructureFactor
+      nMode                                  2
+      modes                 1.000000000000e+00 -1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      nWave                                  5
+      waveIntVectors                    1              0              0
+                                        2              0              0
+                                        3              0              0
+                                        4              0              0
+                                        5              0              0
+    }
+
+    VanHove{
+      interval                             100
+      outputFileName                   VanHove
+      atomTypeCoeffs        1.000000000000e+00
+                           -1.000000000000e+00
+      nBuffer                               20
+      nWave                                  5
+      waveIntVectors                    1              0              0
+                                        2              0              0
+                                        3              0              0
+                                        4              0              0
+                                        5              0              0
+    }
+
+  }
+}

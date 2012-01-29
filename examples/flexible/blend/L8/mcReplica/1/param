@@ -1,0 +1,200 @@
+McSimulation{
+  FileMaster{
+    commandFileName                paramfile
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              2
+  nBondType                              1
+  atomTypes                    A       1.0
+                               B       1.0
+  maskedPairPolicy                MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                      50
+      nAtom                                  8
+      type                                   0
+    }
+
+    Homopolymer{
+      moleculeCapacity                       50
+      nAtom                                   8
+      type                                   1
+    }
+  }
+  Random{
+    seed                           13451892
+  }
+  McSystem{
+    EnergyEnsemble{
+      type                  isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                  rigid
+    }
+    maxBoundary             cubic  10.5 
+    LJPair{
+      epsilon               1.000000000000e+00  1.150000000000e+00
+                            1.150000000000e+00  1.000000000000e+00
+      sigma                 1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      cutoff                1.122460000000e+00  1.122460000000e+00
+                            1.122460000000e+00  1.122460000000e+00
+    }
+    HarmonicBond{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+  }
+  hasReplicaMove                             1
+  ReplicaMove{
+    interval                              1000
+  } 
+  McMoveManager{
+
+    HybridMdMove{
+      nStep                                 20
+      MdSystem{
+        PairList{
+          atomCapacity                        1000
+          pairCapacity                       10000
+          skin                  3.000000000000e-01
+        }
+        NveVvIntegrator{
+          dt                    5.000000000000e-03
+        }
+      }
+    }
+    probability           0.002000000000e+00
+
+    AtomDisplaceMove{
+      speciesId                              0
+      delta                               0.04
+    }
+    probability           0.908000000000e+00
+
+    CfbEndMove{
+      speciesId                              0
+      nRegrow                                4
+      nTrial                                20
+    }
+    probability           0.030000000000e+00
+
+    CfbReptationMove{
+      speciesId                              0
+      nTrial                                20
+    }
+    probability           0.040000000000e+00
+
+    CfbRebridgeMove{
+      speciesId                              0
+      nRegrow                                1
+      nTrial                                10
+      length21                             1.0
+      length10                             1.0
+      kappa10                            400.0
+    }
+    probability             0.010000000000e+00
+
+    CfbDoubleRebridgeMove{
+      speciesId                              0
+      nRegrow                                1
+      bridgeLength                         2.0
+      nTrial                                10
+      length21                             1.0
+      length10                             1.0
+      kappa10                            800.0
+    }
+    probability             0.010000000000e+00
+
+  }
+  DiagnosticManager{
+    baseInterval                        1000
+
+    LogProgress{
+      interval                         10000
+    }
+
+    DumpConfig{
+      interval                         1000
+      outputFileName            dump/config.
+    }
+
+    McEnergyOutput{
+      interval                          1000
+      outputFileName                  energy
+    }
+
+    McEnergyAverage{
+      interval                          1000
+      outputFileName               energyAve
+      nSamplePerBlock                     10
+    }
+
+    McPairEnergyAverage{
+      interval                          1000
+      outputFileName              pairEnergy
+      nSamplePerBlock                     10
+      selector                           inter  -1  -1
+    }
+   
+    RadiusGyration{
+      interval                          1000
+      outputFileName          RadiusGyration
+      nSamplePerBlock                     10
+      speciesId                            0
+    }
+
+    RDF{
+      interval                         1000
+      outputFileName                     RDF
+      RadialDistribution{
+         max                             5.0
+         nBin                            500
+      }
+      selector                         inter   -1    -1
+    }
+
+    BondLengthDist{
+      interval                          1000
+      outputFileName          BondLengthDist
+      speciesId                            0
+      Distribution{
+         min                             0.0
+         max                             2.0
+         nBin                            400
+      }
+    }
+
+    AtomMSD{
+      interval                          1000
+      outputFileName                 AtomMSD
+      speciesId                            0
+      atomId                               5
+      capacity                           400
+    }
+
+    IntraPairAutoCorr{
+      interval                         1000
+      outputFileName      IntraPairAutoCorr
+      speciesId                           0
+      atom1Id                             0
+      atom2Id                             7 
+      capacity                         1000
+    }
+
+  }
+}
+WRITE_PARAM      param
+READ_CONFIG      config
+SIMULATE        1000000
+WRITE_CONFIG     config
+FINISH
+
+
+    HarmonicTether{
+      nTetherType                            1
+      kappa                 1.000000000000e+00
+    }

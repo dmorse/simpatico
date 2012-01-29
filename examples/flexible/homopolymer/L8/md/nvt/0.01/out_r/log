@@ -1,0 +1,172 @@
+READ_CONFIG    config         
+THERMALIZE     1.000000e+00   
+SIMULATE       150000000      
+
+iStep = 0
+iStep = 1000000
+iStep = 2000000
+iStep = 3000000
+iStep = 4000000
+iStep = 5000000
+iStep = 6000000
+iStep = 7000000
+iStep = 8000000
+iStep = 9000000
+iStep = 10000000
+iStep = 11000000
+iStep = 12000000
+iStep = 13000000
+iStep = 14000000
+iStep = 15000000
+iStep = 16000000
+iStep = 17000000
+iStep = 18000000
+iStep = 19000000
+iStep = 20000000
+iStep = 21000000
+iStep = 22000000
+iStep = 23000000
+iStep = 24000000
+iStep = 25000000
+iStep = 26000000
+iStep = 27000000
+iStep = 28000000
+iStep = 29000000
+iStep = 30000000
+iStep = 31000000
+iStep = 32000000
+iStep = 33000000
+iStep = 34000000
+iStep = 35000000
+iStep = 36000000
+iStep = 37000000
+iStep = 38000000
+iStep = 39000000
+iStep = 40000000
+iStep = 41000000
+iStep = 42000000
+iStep = 43000000
+iStep = 44000000
+iStep = 45000000
+iStep = 46000000
+iStep = 47000000
+iStep = 48000000
+iStep = 49000000
+iStep = 50000000
+iStep = 51000000
+iStep = 52000000
+iStep = 53000000
+iStep = 54000000
+iStep = 55000000
+iStep = 56000000
+iStep = 57000000
+iStep = 58000000
+iStep = 59000000
+iStep = 60000000
+iStep = 61000000
+iStep = 62000000
+iStep = 63000000
+iStep = 64000000
+iStep = 65000000
+iStep = 66000000
+iStep = 67000000
+iStep = 68000000
+iStep = 69000000
+iStep = 70000000
+iStep = 71000000
+iStep = 72000000
+iStep = 73000000
+iStep = 74000000
+iStep = 75000000
+iStep = 76000000
+iStep = 77000000
+iStep = 78000000
+iStep = 79000000
+iStep = 80000000
+iStep = 81000000
+iStep = 82000000
+iStep = 83000000
+iStep = 84000000
+iStep = 85000000
+iStep = 86000000
+iStep = 87000000
+iStep = 88000000
+iStep = 89000000
+iStep = 90000000
+iStep = 91000000
+iStep = 92000000
+iStep = 93000000
+iStep = 94000000
+iStep = 95000000
+iStep = 96000000
+iStep = 97000000
+iStep = 98000000
+iStep = 99000000
+iStep = 100000000
+iStep = 101000000
+iStep = 102000000
+iStep = 103000000
+iStep = 104000000
+iStep = 105000000
+iStep = 106000000
+iStep = 107000000
+iStep = 108000000
+iStep = 109000000
+iStep = 110000000
+iStep = 111000000
+iStep = 112000000
+iStep = 113000000
+iStep = 114000000
+iStep = 115000000
+iStep = 116000000
+iStep = 117000000
+iStep = 118000000
+iStep = 119000000
+iStep = 120000000
+iStep = 121000000
+iStep = 122000000
+iStep = 123000000
+iStep = 124000000
+iStep = 125000000
+iStep = 126000000
+iStep = 127000000
+iStep = 128000000
+iStep = 129000000
+iStep = 130000000
+iStep = 131000000
+iStep = 132000000
+iStep = 133000000
+iStep = 134000000
+iStep = 135000000
+iStep = 136000000
+iStep = 137000000
+iStep = 138000000
+iStep = 139000000
+iStep = 140000000
+iStep = 141000000
+iStep = 142000000
+iStep = 143000000
+iStep = 144000000
+iStep = 145000000
+iStep = 146000000
+iStep = 147000000
+iStep = 148000000
+iStep = 149000000
+iStep = 150000000
+
+Time Statistics
+nStep                150000000
+run time             5.655008e+04 sec
+time / nStep         3.770005e-04 sec
+time / (nStep*nAtom) 4.712507e-07 sec
+
+
+PairList Statistics
+maxNPair           2299
+maxNAtom           800
+buildCounter       40480655
+steps / build      3.705474e+00
+
+WRITE_CONFIG   config         
+WRITE_PARAM    param          
+FINISH         

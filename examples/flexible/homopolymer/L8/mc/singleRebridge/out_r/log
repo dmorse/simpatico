@@ -1,0 +1,67 @@
+WRITE_PARAM  param
+READ_CONFIG  config
+SIMULATE  490000000
+
+iStep = 0
+iStep = 10000000
+iStep = 20000000
+iStep = 30000000
+iStep = 40000000
+iStep = 50000000
+iStep = 60000000
+iStep = 70000000
+iStep = 80000000
+iStep = 90000000
+iStep = 100000000
+iStep = 110000000
+iStep = 120000000
+iStep = 130000000
+iStep = 140000000
+iStep = 150000000
+iStep = 160000000
+iStep = 170000000
+iStep = 180000000
+iStep = 190000000
+iStep = 200000000
+iStep = 210000000
+iStep = 220000000
+iStep = 230000000
+iStep = 240000000
+iStep = 250000000
+iStep = 260000000
+iStep = 270000000
+iStep = 280000000
+iStep = 290000000
+iStep = 300000000
+iStep = 310000000
+iStep = 320000000
+iStep = 330000000
+iStep = 340000000
+iStep = 350000000
+iStep = 360000000
+iStep = 370000000
+iStep = 380000000
+iStep = 390000000
+iStep = 400000000
+iStep = 410000000
+iStep = 420000000
+iStep = 430000000
+iStep = 440000000
+iStep = 450000000
+iStep = 460000000
+iStep = 470000000
+iStep = 480000000
+iStep = 490000000
+
+nStep         490000000
+run time      85359.7  sec
+time / nStep  0.000174203  sec
+
+Move Statistics:
+
+Move Name                          Attempted    Accepted     AcceptRate
+CfbEndMove                          61252763    20382669       0.332763
+CfbRebridgeMove                    428747237   185850138       0.433473
+
+WRITE_CONFIG  config
+FINISH

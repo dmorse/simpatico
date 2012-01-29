@@ -1,0 +1,4 @@
+LinkMaster{
+    linkCapacity    100
+    atomCapacity    100
+}

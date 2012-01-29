@@ -1,0 +1,24 @@
+    RadiusGyration{
+      interval                            1000
+      outputFileName            RadiusGyration
+      nSamplePerBlock                       10
+      speciesId                              0
+    }
+
+Average     3.3419194e+00
+Variance    7.9866040e-03
+Std Dev     8.9367802e-02
+
+Hierarchichal Error Analysis:
+              0              1  8.9363334e-04          10001
+              1              2  1.0247401e-03           5000
+              2              4  1.1635275e-03           2500
+              3              8  1.2864229e-03           1250
+              4             16  1.3829662e-03            625
+              5             32  1.4269857e-03            312
+              6             64  1.4542961e-03            156
+              7            128  1.4552044e-03             78
+              8            256  1.4503356e-03             39
+              9            512  1.3110485e-03             19
+             10           1024  1.7199669e-03              9
+             11           2048  1.1679304e-03              4

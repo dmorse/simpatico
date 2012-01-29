@@ -1,0 +1,90 @@
+
+
+class ClusterAnalysis : public SystemDiagnostic<System>
+{
+
+public:
+
+   /**
+   * Constructor.
+   */
+   ClusterAnalysis(SystemDiagnostic& system, int speciesId);
+
+   /**
+   * Main analysis
+   *
+   * Because this allocates a DRaggedMatrix), it may only be called
+   * once. We could change this if necessary.
+   */
+   void analyze();
+
+   /**
+   * Recursive tree search.
+   *
+   * If this molecule has not been assigned to a cluster, assign it,
+   * and recursively assign all new molecules to which it is connected.
+   *
+   * If this molecule has been labelled previously, return false.
+   *
+   * \return true if this is a new molecule, otherwise.
+   */
+   bool search(int moleculeId, int clusterId);
+  
+private:
+
+   DArray<int>        nLinks_;
+   DArray<int>        clusterIds_;
+   DRaggedMatrix<int> connections_;
+
+   int speciesId_;
+   int nMolecule_;
+
+}
+
+ClusterAnalysis::ClusterAnalysis(System& system, int speciesId)
+ : SystemDiagnostic<System>(system),
+   speciesId_(speciesId),
+   nMolecule_(-1)
+{}
+
+void ClusterAnalysis::analyze()
+{
+
+   // Make sure that this is only called once. 
+   // If nMoleculec != -1, throw Exception.
+
+   // Assign value to nMolecule_
+
+   // Allocate arrays with dimension nMolecule_
+   nLinks_.allocate(nMolecule_);
+   clusterIds_.allocate(nMolecule_);
+
+   // Initialize all elements of clusterIds to -1.
+
+   // Loop over links to evaluate nLinks_.
+
+   // Allocate ragged connections array
+   connections_.allocate(nLinks_);
+
+   // Main loop over molecules
+   int clusterId = 0;
+   for (int moleculeId = 0; moleculeId < nMolecule_; ++moleculeId) {
+      if (search(moleculeId, clusterId)) {
+         ++clusterId;
+      }
+   }
+
+}
+
+bool ClusterAnalysis::search(int moleculeId, int clusterId)
+{
+   if (clusterIds_[moleculeId] < 0) {
+      clusterIds_[moleculeId] = clusterId;
+      for (int j = 0; j < nLinks_[moleculeId]; ++j) {
+         search(connections_(moleculeId, j), clusterId);
+      }
+      return true;
+   } else {
+      return false;
+   }
+}

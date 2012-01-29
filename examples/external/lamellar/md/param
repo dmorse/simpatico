@@ -1,0 +1,139 @@
+MdSimulation{
+  FileMaster{
+    commandFileName                 commands
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              2
+  nBondType                              1
+  hasExternal                            1
+  atomTypes                    A       1.0
+                               B       1.0
+  maskedPairPolicy                MaskBonded
+  SpeciesManager{
+
+    Diblock{
+      moleculeCapacity                     100
+      blockLengths                          4
+                                            4
+      atomTypes                             0
+                                            1
+      bondType                              0
+    }
+
+  }
+  Random{
+    seed                          -13741892
+  }
+  MdSystem{
+    pairStyle                        LJPair
+    bondStyle                  HarmonicBond 
+    externalStyle        TanhCosineExternal
+    MdPairPotential{
+      epsilon               1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      sigma                 1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      cutoff                1.122460000000e+00  1.122460000000e+00
+                            1.122460000000e+00  1.122460000000e+00
+      maxBoundary            orthorhombic  10.8000 10.8000 10.8000
+      PairList{
+        atomCapacity                       800
+        pairCapacity                      20000
+        skin                  3.000000000000e-01
+      }
+    }
+    BondPotential{
+      kappa                 4.000000000000e+02
+      length                1.000000000000e+00
+    }
+    ExternalPotential{
+      perpDirection             2
+      prefactor                 1.000
+                               -1.000
+      orderParameter            0.5
+      interfaceWidth            0.2
+      periodicity               2
+    }
+    EnergyEnsemble{
+      type                           adiabatic
+    }
+    BoundaryEnsemble{
+      type                               rigid
+    }
+    NveVvIntegrator{
+       dt                   1.000000000000e-03
+    }
+    
+  }
+  DiagnosticManager{
+    baseInterval                         1000
+
+    LogProgress{
+      interval                          5000
+    }
+
+    MdEnergyOutput{
+      interval                           1000
+      outputFileName                  energy
+    }
+
+    RadiusGyration{
+      interval                           1000
+      outputFileName          RadiusGyration
+      nSamplePerBlock                     10
+      speciesId                            0
+    }
+
+    CompositionProfile{
+       interval                          1000
+       outputFileName           CompositionProfile
+       nDirections                        3
+       Directions                    0  0  1
+                                     1  0  0
+                                     0  1  0
+    }
+
+    StructureFactorGrid{
+      interval                           1000
+      outputFileName         StructureFactorGrid
+      nMode                      2
+      modes                            1   1
+                                       1   -1
+      hMax                               3
+      lattice                          cubic
+    }
+
+
+    VanHove{
+      interval                         1000
+      outputFileName                   VanHove
+      atomTypeCoeffs        1.000000000000e+00   -1.000000000000e+00
+      nBuffer                             100
+      nWave                                3
+      waveIntVectors                    1              0              0
+                                        0              0              1
+                                        0              1              0
+    }
+  }
+}
+
+
+
+    RDF{
+      interval                          1000
+      outputFileName                     RDF
+      RadialDistribution{
+         max                             5.0
+         nBin                            500
+      }
+      selector                         inter   -1    -1
+    }
+
+    MdPairEnergyAverage{
+      interval                             200
+      outputFileName                pairEnergy
+      nSamplePerBlock                        1
+      selector                             All         0         1
+    }
+

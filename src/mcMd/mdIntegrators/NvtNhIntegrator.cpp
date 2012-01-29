@@ -1,0 +1,210 @@
+#ifndef  NVT_NH_INTEGRATOR_CPP
+#define  NVT_NH_INTEGRATOR_CPP
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "NvtNhIntegrator.h"
+#include <mcMd/mdSimulation/MdSystem.h>
+#include <mcMd/simulation/Simulation.h>
+#include <mcMd/potentials/pair/MdPairPotential.h>
+#include <mcMd/ensembles/EnergyEnsemble.h>
+#include <mcMd/boundary/Boundary.h>
+#include <mcMd/chemistry/Molecule.h>
+#include <mcMd/chemistry/Atom.h>
+#include <util/space/Vector.h>
+#include <util/archives/Serializable_includes.h>
+
+namespace McMd
+{
+
+   using namespace Util;
+
+   /* 
+   * Constructor.
+   */
+   NvtNhIntegrator::NvtNhIntegrator(MdSystem& system)
+    : MdIntegrator(system),
+      T_target_(1.0),
+      T_kinetic_(1.0),
+      xi_(0.0),
+      xiDot_(0.0),
+      tauT_(1.0),
+      nuT_(1.0),
+      energyEnsemblePtr_(0)
+   {
+      // Note: Within the constructor, the method parameter "system" hides 
+      // the system() method name.
+
+      // Precondition
+      if (!system.energyEnsemble().isIsothermal() ) {
+         UTIL_THROW("System energy ensemble is not isothermal");
+      }
+
+      energyEnsemblePtr_ = &(system.energyEnsemble());
+      T_target_          = energyEnsemblePtr_->temperature();
+      T_kinetic_         = T_target_;
+
+   }
+
+   /* 
+   * Destructor.   
+   */
+   NvtNhIntegrator::~NvtNhIntegrator() 
+   {}
+
+   /* 
+   * Read parameter and configuration files, initialize system.
+   */
+   void NvtNhIntegrator::readParam(std::istream &in) 
+   {
+      read<double>(in, "dt",   dt_);
+      read<double>(in, "tauT", tauT_);
+      nuT_ = 1.0/tauT_;
+      T_target_  = energyEnsemblePtr_->temperature();
+      T_kinetic_ = T_target_;
+      xiDot_ = 0.0;
+      xi_    = 0.0;
+
+      int nAtomType = simulation().nAtomType();
+      if (!prefactors_.isAllocated()) {
+         prefactors_.allocate(nAtomType);
+      }
+
+   }
+
+   void NvtNhIntegrator::setup() 
+   {
+      double mass, dtHalf;
+      int nAtomType = simulation().nAtomType();
+      int nAtom  = system().nAtom();
+
+      T_kinetic_ = system().kineticEnergy()*2.0/double(3*nAtom);
+      T_target_ = energyEnsemblePtr_->temperature();
+      xiDot_ = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
+      xi_ = 0.0;
+
+      dtHalf = 0.5*dt_;
+      for (int i = 0; i < nAtomType; ++i) {
+         mass = simulation().atomType(i).mass();
+         prefactors_[i] = dtHalf/mass;
+      }
+   }
+
+   /*
+   * Nose-Hoover integrator step.
+   *
+   * This implements a reversible Velocity-Verlet MD NVT integrator step.
+   *
+   * Reference: Winkler, Kraus, and Reineker, J. Chem. Phys. 102, 9018 (1995).
+   */
+   void NvtNhIntegrator::step() 
+   {
+      Vector  dv;
+      Vector  dr;
+      System::MoleculeIterator molIter;
+      double  dtHalf = 0.5*dt_;
+      double  prefactor;
+      double  factor;
+      Molecule::AtomIterator atomIter;
+      int  iSpecies, nSpecies;
+      int  nAtom;
+
+      T_target_ = energyEnsemblePtr_->temperature();
+      nSpecies  = simulation().nSpecies();
+      nAtom     = system().nAtom();
+
+      factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
+
+      // 1st half velocity Verlet, loop over atoms 
+      for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
+         system().begin(iSpecies, molIter); 
+         for ( ; !molIter.atEnd(); ++molIter) {
+
+            molIter->begin(atomIter); 
+            for ( ; !atomIter.atEnd(); ++atomIter) {
+
+               atomIter->velocity() *= factor;
+
+               prefactor = prefactors_[atomIter->typeId()];
+               dv.multiply(atomIter->force(), prefactor);
+               //dv.multiply(atomIter->force(), dtHalf);
+
+               atomIter->velocity() += dv;
+               dr.multiply(atomIter->velocity(), dt_);
+
+               atomIter->position() += dr;
+
+            }
+
+         }
+      }
+
+      // First half of update of xi_
+      xi_ += xiDot_*dtHalf;
+
+      #ifndef MCMD_NOPAIR
+      // Rebuild the pair list if necessary
+      if (!system().pairPotential().isPairListCurrent()) {
+         system().pairPotential().buildPairList();
+      }
+      #endif
+
+      system().calculateForces();
+
+      // 2nd half velocity Verlet, loop over atoms
+      for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
+         system().begin(iSpecies, molIter); 
+         for ( ; !molIter.atEnd(); ++molIter) {
+            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+               prefactor = prefactors_[atomIter->typeId()];
+               dv.multiply(atomIter->force(), prefactor);
+               atomIter->velocity() += dv;
+               atomIter->velocity() *=factor;
+            }
+         }
+      }
+
+      // Update xiDot and complete update of xi_
+      T_kinetic_ = system().kineticEnergy()*2.0/double(3*nAtom);
+      xiDot_     = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
+      xi_       += xiDot_*dtHalf;
+
+   }
+
+   /*
+   * Save the internal state to an archive.
+   */
+   void NvtNhIntegrator::save(Serializable::OArchiveType& ar)
+   {  
+      ar & dt_;
+      ar & T_target_;
+      ar & T_kinetic_;
+      ar & xi_;
+      ar & xiDot_;
+      ar & tauT_;
+      ar & nuT_;
+      ar & prefactors_;
+   }
+
+   /**
+   * Load the internal state to an archive.
+   */
+   void NvtNhIntegrator::load(Serializable::IArchiveType& ar)
+   {  
+      ar & dt_;
+      ar & T_target_;
+      ar & T_kinetic_;
+      ar & xi_;
+      ar & xiDot_;
+      ar & tauT_;
+      ar & nuT_;
+      ar & prefactors_;
+   }
+
+}
+#endif

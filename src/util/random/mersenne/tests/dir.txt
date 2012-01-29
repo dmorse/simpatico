@@ -1,0 +1,3 @@
+subDirectories =
+pathFromSrc = util/random/mersenne/tests
+pathToSrc = ../../../..

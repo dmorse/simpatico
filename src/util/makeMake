@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+from MakeMaker import *
+
+x = MakeMaker('.','util','..')
+
+globalInclude  = 'include $(SRC_DIR_REL)/compiler.mk\n'
+globalInclude += 'include $(SRC_DIR_REL)/util/defines.mk\n'
+globalInclude += 'include $(SRC_DIR_REL)/util/patterns.mk\n'
+globalInclude += 'include $(SRC_DIR_REL)/util/sources.mk\n'
+x.setGlobalInclude(globalInclude)
+
+x.addLibrary('$(util_LIB)', '$(util_OBJS)')
+x.setLinkObjs('$(util_LIB)')
+x.make()

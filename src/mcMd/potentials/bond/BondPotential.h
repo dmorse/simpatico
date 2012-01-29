@@ -1,0 +1,143 @@
+#ifndef BOND_POTENTIAL_H
+#define BOND_POTENTIAL_H
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include <util/param/ParamComposite.h>   // base class
+
+#include <string>
+
+namespace Util
+{
+   class Vector;
+   class Tensor;
+   class Random;
+}
+
+namespace McMd
+{
+
+   using namespace Util;
+
+   class Atom;
+
+   /**
+   * Abstract Bond Potential class.
+   *
+   * \ingroup Bond_Module
+   */
+   class BondPotential : public ParamComposite
+   {
+
+   public:
+
+      /**
+      * Constructor .
+      */
+      BondPotential();
+
+      /**
+      * Destructor (does nothing)
+      */
+      virtual ~BondPotential();
+
+      /// \name Bond Evaluator Interface
+      //@{
+
+      /**
+      * Returns potential energy for one bond.
+      *
+      * \param rSq  square of distance between bonded particles.
+      * \param type type of bond.
+      */
+      virtual double energy(double rSq, int type) const = 0;
+   
+      /**
+      * Returns force/distance for one bond, for use in MD.
+      *
+      * A positive return value represents a repulsive radial force.
+      *
+      * \param rSq  square of distance between bonded particles.
+      * \param type type of bond.
+      * \return     scalar repulsive force divided by distance.
+      */
+      virtual double forceOverR(double rSq, int type) const = 0;
+
+      /**
+      * Return bond length chosen from equilibrium distribution.
+      *
+      * This function returns a bond length chosen from the Boltzmann
+      * distribution of lengths for bonds of random orientation. The
+      * distribution P(l) of values of the length l is proportional 
+      * to l*l*exp[-beta*phi(l) ], where phi(l) is the bond energy. 
+      *
+      * \param random pointer to random number generator object.
+      * \param beta   inverse temperature
+      * \param type   bond type
+      * \return bond length chosen from equilibrium distribution.
+      */
+      virtual 
+      double randomBondLength(Util::Random* random, double beta, int type) 
+             const = 0;
+
+      /**
+      * Return name of pair evaluator class (e.g., "HarmonicBond").
+      */
+      virtual std::string evaluatorClassName() const = 0;
+
+      //@}
+      /// \name System energy, force, and stress.
+      //@{
+
+      /**
+      * Calculate the covalent bond energy for one Atom.
+      *
+      * \param  atom Atom object of interest
+      * \return bond potential energy of atom
+      */
+      virtual double atomEnergy(const Atom& atom) const
+      {  UTIL_THROW("Unimplemented method"); }
+
+      /**
+      * Add bond forces to all atomic forces.
+      */
+      virtual void addForces()
+      {  UTIL_THROW("Unimplemented method"); }
+
+      /**
+      * Calculate the total nonBonded pair energy for the associated System.
+      */
+      virtual double energy() const = 0;
+
+      /**
+      * Compute total nonbonded pressure
+      *
+      * \param stress (output) pressure.
+      */
+      virtual void computeStress(double& stress) const = 0;
+
+      /**
+      * Compute x, y, z nonbonded pressures.
+      *
+      * \param stress (output) pressures.
+      */
+      virtual void computeStress(Util::Vector& stress) const = 0;
+
+      /**
+      * Compute stress tensor.
+      *
+      * \param stress (output) pressures.
+      */
+      virtual void computeStress(Util::Tensor& stress) const = 0;
+    
+      //@}
+
+   };
+
+} 
+#endif

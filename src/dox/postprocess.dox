@@ -1,0 +1,75 @@
+namespace McMd
+{
+
+/*! \page postprocess_page Post-Processing Data
+
+The same programs that are used to run MC and MD simulations can also 
+be used to postprocess sequences of configurations that are written to 
+file.  A sequence of configurations from an MC simulation can be written 
+to file as a set of numbered configuration files, each of which contains 
+a single snapshot of the system. A sequence of configurations from an 
+MD simulations can be written to file either as a series of separate 
+configuration files (as for MC simulations) or as a single MD trajectory 
+file that contains many configurations. A postprocessing run is 
+initialized by a parameter file similar to that used for a simulation
+run, and uses a command file that contains an command that instructs
+the program to read and analyze a sequence of simulations, as 
+discussed below.
+
+In order to dump configurations to file during a simulation, 
+for subsequent postprocessing, one must include a DumpConfig 
+or DumpTrajectory diagnostic within the DiagnosticManager block 
+of the parameter file used to initialize the simulation.  The 
+DumpConfig diagnostic writes separate configuration files at 
+regular intervals, with each configuration in a separate file.
+DumpTrajectory instead writes multiple configurations to a single 
+MD trajectory file. In either type of file, each configuration 
+contains the unit cell dimensions and list of atomic coordinates.
+The name of each configuration file written by DumpConfig is 
+constructed by adding an integer counter to a base file name 
+that is specified in the DumpConfig parameter file block. If 
+the base name were "dump/config", for example, the files would 
+be placed in the "dump" subdirectory of the output directory 
+(defined by the output prefix string), and would be named 
+dump/config.0, dump/config.1, etc.
+
+To postprocess a sequence of configuration dump files, one must 
+run the main program using a parameter file very similar to that 
+used to initialize the original simulation, and a command script 
+that contains an "ANALYZE_DUMPS" command, rather than a "SIMULATE" 
+command.  The ANALYZE_DUMPTS command causes the program to read 
+in a sequence of configuration files and treat the configurations 
+exactly as if they were generated during a simulation. The names 
+of the input configuration files are constructed by concatenating 
+the input prefix, a base name that is specified in the ANALYZE
+command and an integer in a range that is specified in the
+ANALYZE command.  If the input prefix is set to in/, the command
+\code
+   ANALYZE_DUMPS  0   19   config
+\endcode
+causes the main Simulation object to read in and apply all of 
+the specified diagnostics to configurations files with names 
+in/config.0 in/config.1 ... in/config.19. To use the mdSim 
+program to postprocess an MD trajectory file, simply use an 
+ANALYZE_TRAJECTORY command in place of ANALYZE_DUMPS.
+
+The set of diagnostics that will be applied to a sequence of 
+configurations during postprocessing is specified in the 
+"DiagnosticManager" block of the parameter file, exactly as
+for diagnostics that are applied on-the-fly during a simulation. 
+The same set of diagnostic subclasses are available for use in
+either mode. The main difference is that, during postprocessing, 
+the "interval" of each diagnostic is interpreted as a number of
+configurations read from file between subsequent calls of the
+sample method, rather than MD or MC steps. For postprocessing,
+the interval for most diagnostics should thus be set to 1.
+
+<ul>
+ <li> \ref diagnostics_page  (Prev) </li>
+ <li> \ref guide_page     (Up)   </li>
+ <li> \ref examples_page  (Next) </li>
+</ul>
+
+*/
+
+}

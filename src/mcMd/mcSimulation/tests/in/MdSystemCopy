@@ -1,0 +1,13 @@
+MdSystem{
+  MdPairPotential{
+     maxBoundary  orthorhombic   2.0    3.0     4.0
+     PairList{
+       atomCapacity                30
+       pairCapacity              1000
+       skin                       0.2
+     }
+  }
+  NveVvIntegrator{
+    dt                         0.00100
+  }
+}

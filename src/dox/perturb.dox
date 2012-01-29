@@ -1,0 +1,63 @@
+namespace McMd
+{
+
+/*! \page perturb_page Free Energy Perturbation
+
+When a parallel simulation is compiled with MPI and free energy
+perturbation enabled, by defining MPI_FLAG and PERTURB_FLAG, and
+invoked with the "-p" option, the master processor of the MPI 
+communicator reads a parameter file from standard input, and then 
+broadcasts the contents of that single parameter file to all other 
+processors. In this mode, the parameter file must contain a 
+polymorphic block associated with a subclass of the "Perturbation" 
+abstract base class. This block in the param file is at the end of 
+the block associated with the McSystem.  
+
+A "Perturbation" defines how a sequence of slightly different sets 
+of different physical parameters should be assigned to different 
+processors within a parallel job, for use in thermodynamic perturbation 
+theory.  Each subclass of "Perturbation" must specify how the 
+information that it reads from the param file is used to define
+such a sequence of parameter values. Different parameters are 
+set for the System on different processors by first setting the 
+parameters on every system to a baseline set of values, which 
+are determined by the value given for quantities such as the 
+potential energy parameters and temperature in the rest of the
+System block, and then allowing the Perturbation object to reset 
+specific parameters to different values on different processors. 
+The Perturbation may reset values of any parameters that effects
+the statistical weight for a microstate, including parameters
+in the potential energy or macroscopic parameters such as 
+temperature or pressure.
+
+As a simple example of this, McEnergyPerturbation" class is a 
+subclass of Perturbation that sets every processor in an MC
+simulation to a different temperature, or inverse temperature 
+beta, while using equal values for all potential energy 
+parameters.  The required values of inverse temperature for 
+different processors are input as an array in the parameter 
+file block that is read by McEnergyPerturbation::readParam(), 
+listed in order of the MPI ranks of corresponding processors.  
+The contents of this entire array is broadcast to all 
+processors, and each processor then resets its temperature to 
+a value obtained from the appropriate elements of the array 
+(i.e., processor 4 resets its temperature to the value 
+corresponding to element 4 in this array). 
+
+More generally, each concrete subclass of Perturbation must 
+define how the Boltzmann weight (Hamiltonian / kT) for a 
+sequence of systems depend on some parameter such as 
+inverse temperature or a potential energy parameter. The 
+readParam() method for any Perturbation reads a list of 
+values of that perturbation parameter, which it uses to 
+reset different values for an associated physical parameter 
+values on different processors. 
+
+<ul>
+ <li> \ref parallel_page   (Prev)  </li>
+ <li> \ref guide_page      (Up)    </li>
+ <li> \ref overview_page   (Next)  </li>
+</ul>
+
+*/
+}

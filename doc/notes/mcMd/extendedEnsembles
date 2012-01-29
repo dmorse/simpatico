@@ -1,0 +1,124 @@
+
+Several types of simulation algorithm and diagnostics 
+involve the definition of a Boltzmann weight W(x) that depends 
+upon a continuous parameter x, and an ensemble of allowed values 
+for this parameter. In each of these applications, each System 
+has a unique value for this parameter, which can be identified by
+a stateId.
+
+1) Parallel Replica Exchange - Each processor has one System 
+with a stateId that is permanently determined by its MPI rank. 
+
+2) Serial Extended Ensemble - Each processor has a System with a 
+stateId that can change over a range of values that are owned by 
+that processor. 
+
+3) Parallel Extended Ensemble + Replica Exchange - Each processor
+has one System with a stateId that can change over a subrange of 
+the entire ensemble.
+
+4) Perturbation theory by Bennet's acceptance ratio method: This
+requires only that, when a System has a particular StateId, it has 
+access to the values of the parameters "above" and "below" it
+
+Both Serial and Parallel Extended Ensemble require that the
+separate diagnostics be maintained or each stateId. 
+
+Proposed Classes:
+
+//------------------------------------------------------------------
+   class Perturbation
+   {
+
+   public:
+  
+      /// Set parameter value, and modify system accordingly 
+      void   setParameter(double value) = 0; 
+
+      /// Return derivative dW/du of Boltzmann weight w/ respect to parameter.
+      double derivative() = 0;
+
+      /// Return difference W(other) - W(current) 
+      double difference(double other) = 0;
+
+   private:
+
+      double parameter_;
+
+   }
+
+//------------------------------------------------------------------
+
+   class PerturbationEnsemble : public ParamComposite
+   {
+
+   public:
+
+      virtual void readParam();
+
+      void setPerturbation(Perturbation&); 
+
+      virtual void allocate(int capacity);
+
+      virtual void setState(int stateId)
+      {   
+         stateId_ = stateId;
+         peturbation().setParameter(parameters_[stateId]);
+      }
+
+      // Current state Id.
+      int stateId()
+      {  return stateId_; }
+
+      // Value of parameter number id
+      double parameter(int id);
+     
+      // Current parameter value
+      double parameter()
+      {  return parameter(stateId_); }
+     
+   private:
+
+      /// Array of values for parameters
+      DArray<double> parameters_;
+
+      /// Current integer state id for this System.
+      int            stateId_; 
+
+      /// Pointer to a Perturbation
+      Perturbation*  perturbationPtr_;
+
+   }
+
+//------------------------------------------------------------------
+
+   /**
+   *
+   */
+   class ExtendedEnsemble : public PerturbationEnsemble 
+   {
+
+   public:
+
+      virtual void readParam(std::istream&);
+
+      virtual void allocate(int capacity);
+
+      void setIdRange(int minId, int maxId);
+
+      void   setLogWeight(double logWeight, int id);
+
+      double logWeight(int id);
+
+      int    minId();
+      int    maxId();
+
+   private:
+
+      /// Array of logarithms of statistical weights 
+      DArray<double> logWeights_;
+
+      int minId_;
+      int maxId_;
+
+   }

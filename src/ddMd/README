@@ -1,0 +1,14 @@
+WARNING: EXPERIMENTAL CODE
+--------------------------
+
+This directory contains unfinished code for a domain-decomposition
+(DD) parallel molecular dynamics (MD) program. The code is based on 
+a parallelization strategy similiar to that used in LAMMPS and other 
+DD parallel MD codes, but is thus far only capable of simulating a 
+system of point particles with non-bonded pair interactions, with 
+no covalent interactions. The code uses same the utility classes 
+in the Util namespace (or util/ directory) as those used by the 
+McMD code, but is otherwise separate.
+
+Users of the serial MC/MD code in the McMd directory can (for now)
+safely ignore this. 

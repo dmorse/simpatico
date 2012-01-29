@@ -1,0 +1,37 @@
+/*! \page design_page Class Library
+
+The classes used in the current version of Simpatico are divided into two 
+namespaces, and two corresponding subdirectories: The Util namespace (or
+the src/util subdirectory) contains general utilities for C++ programming 
+and scientific computation. The McMd namespace (and the src/mcmd directory)
+contains the remaining classes for Monte Carlo and molecular dynamics
+simulations on a single processor. 
+
+Subdirectory src/ddMd also contains an incomplete set of classes for a 
+parallel domain-decomposition molecular dynamics code. This code is still
+under development, and is not documented in these web pages. 
+
+The most important classes in the Util and McMd namespaces are introduced 
+here in a roughly bottom-up fashion, starting with the most elementary 
+constituents of a simulation, and building up to more complicated aggregates. 
+Complete information about any class that is mentioned can be obtained by 
+clicking on highlighted links to the class documentation. An alternate,
+and more complete, view of all of the classes in these two namespaces 
+may be obtained clicking on the "Modules" link above and browsing this 
+list. 
+
+Contents:
+<ul>
+ <li> \subpage Util_NS_page </li>
+ <li> \subpage McMd_NS_page </li>
+</ul>
+
+Navigation:
+<ul>
+ <li> \ref directory_page (Previous)  </li>
+ <li> \ref overview_page  (Up)        </li>
+ <li> \ref custom_page   (Next)      </li>
+</ul>
+
+*/
+ 

@@ -1,0 +1,3 @@
+This directory contains three classes that are used to implement a cell list. 
+Only the CellList class is intended to be used by outside classes: Cell and 
+CellTag are used only by CellList. 

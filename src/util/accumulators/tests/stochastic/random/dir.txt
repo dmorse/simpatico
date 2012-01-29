@@ -1,0 +1,3 @@
+subDirectories =
+pathFromSrc = util/accumulators/tests/stochastic/random
+pathToSrc = ../../../../..

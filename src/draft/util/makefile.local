@@ -1,0 +1,30 @@
+# ==============================================================================
+# draft directory
+
+# File macros
+INFILE=$(DRAFT)/InFile
+OUTFILE=$(DRAFT)/OutFile
+LABELBUFFER=$(DRAFT)/LabelBuffer
+
+#Aggregate macros
+DRAFT_HDR=
+DRAFT_CPP=$(INFILE).cpp $(OUTFILE).cpp
+DRAFT_THD=
+DRAFT_TPP=
+DRAFT_SRC=$(DRAFT_HDR) $(DRAFT_CPP) ${DRAFT_CPP:.cpp=.h} \
+          $(DRAFT_THD) $(DRAFT_TPP) ${DRAFT_TPP:.cpp=.h}
+DRAFT_OBJ=${DRAFT_CPP:.cpp=.o}
+
+# Targets
+
+$(INFILE).o: $(INFILE).cpp $(INFILE).h
+	$(CC) -o $(INFILE).o -c $(INFILE).cpp
+
+$(OUTFILE).o: $(OUTFILE).cpp $(OUTFILE).h
+	$(CC) -o $(OUTFILE).o -c $(OUTFILE).cpp
+
+$(LABELBUFFER).o: $(LABELBUFFER).cpp $(LABELBUFFER).h
+	$(CC) -o $(LABELBUFFER).o -c $(LABELBUFFER).cpp
+
+
+# ==============================================================================

@@ -1,0 +1,112 @@
+namespace McMd
+{
+
+/*! \page cfgfile_page Configuration File
+
+The instantaneous state of a system is recorded in a configuration
+file.  The configuration file always contains the dimensions of the 
+periodic boundary, and the positions of all atoms. Configuration 
+file formats that are designed for use with MD simulations also 
+contain atomic velocities. Simpatico is able to read and write 
+configuration files in several formats.
+
+The default formats for MC and MD simulations are very simple text
+files.  Below is an example of the default format for a very small
+MC simulation.  This example is for a simulation of a mixture of 
+two species, labelled 0 and 1, in which molecules of species 0 have 
+two atoms and molecules of species 1 have 3 atoms. The number of 
+species and the number of atoms per molecule is specified in the 
+parameter file, which must be read before any configuration file. 
+The number of molecules of each species in the configuration file 
+must be less than or equal to the capacity specified for that 
+species in the parameter file. The configuration shown here is 
+for a system with an orthorhombic periodic boundary with dimensions 
+[Lx], [Ly], and [Lz] that contains three molecules of species 0 
+and one molecule of species 1.  Here, we use [Lx], [Ly] and [Lz] 
+to represent values of the boundary dimensions, and [x] [y] and 
+[z] to represent values of Cartesian coordinates for individual 
+atoms:
+\code
+BOUNDARY
+
+orthorhombic    [Lx]       [Ly]        [Lz]
+
+MOLECULES
+
+species   0
+nMolecule 3
+
+molecule 0 
+          [x]         [y]         [z]
+          [x]         [y]         [z]
+
+molecule 1
+          [x]         [y]         [z]
+          [x]         [y]         [z]
+
+molecule 2
+          [x]         [y]         [z]
+          [x]         [y]         [z]
+
+species   1
+nMolecule 1
+
+molecule 0 
+          [x]         [y]         [z]
+          [x]         [y]         [z]
+          [x]         [y]         [z]
+
+\endcode
+The default file format for an MD simulation is similar, except that 
+it includes Cartesian velocity components for each atom as well as 
+coordinates.  In the default MD format, the line associated with each 
+atom thus contains the three coordinates x, y, z, followed by the three 
+velocity components vx, vy, vz. 
+
+The configuration file does not normally contain information about 
+the chemical structure of each species. This is instead specified 
+for each species within the parameter file. The exception to this 
+is the special case of a "mutable" species, which is a species in 
+which each molecule can be in any of an enumerable number of internal 
+states (e.g., for semi-grand canonical ensemble simulations), for 
+which the configuration file contains one additional index per 
+molecule that can be used to specify the internal state of the 
+molecule. 
+
+A configuration file is written and read by a ConfigIo object that 
+is associated with a System object. By default, an McSystem uses a 
+McConfigIo object, which implements the MC file format depicted
+above. By default, an MdSystem uses a MdConfigIo, which implements 
+a similar file format in which the velocities are added to each line, 
+as discussed above. These default formats are used by READ_CONFIG
+and WRITE_CONFIG commands if they appear in the command file
+before any SET_CONFIG_IO commands.
+
+The SET_CONFIG_IO command in the command file can be used to change 
+the configuration file format used to read or write configuration 
+files.  This command takes the name of a subclass of ConfigIo as an 
+argument, and causes subsequent READ_CONFIG and WRITE_CONFIG commands 
+to use a new instance of the specified subclass to read and/or write 
+configuration files.  For example, in the command file for an 
+MdSimulation, adding a command "SET_CONFIG_IO McConfigIo" just 
+before a READ_CONFIG command will cause the MC file format to be 
+used to parse the input configuration file, rather than the default 
+MD file format.  Because the MC file format does not contain any 
+information about velocities, this pair of commands would normally 
+be followed in the file for an MdSimulation by a THERMALIZE command, 
+to generate random velocities chosen from a Maxwell-Boltzmann 
+distribution. A SET_CONFIG_IO command can be inserted just before 
+a subsequent WRITE_CONFIG command to control the file format used 
+to output a final configuration file. A command file that contains 
+only SET_CONFIG_IO commands can be used to convert between file 
+formats.
+
+<ul>
+ <li> \ref commands_page  (Previous) </li>
+ <li> \ref guide_page    (Up)       </li>
+ <li> \ref diagnostics_page    (Next)     </li>
+</ul>
+
+*/
+
+}

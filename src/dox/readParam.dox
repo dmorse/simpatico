@@ -1,0 +1,117 @@
+namespace McMd
+{
+
+/*! \page read_param_page readParam() Methods
+
+The format of the parameter file (discussed in \ref param_page) 
+consists of a set of nested blocks, in which each block contains 
+the data required to initialize an instance of a particular 
+class. Each class that reads data from the parameter file is
+derived from the Util::ParamComposite base class, and must provide
+an implementation of the virtual Util::ParamComposite::readParam() 
+method, which has a signature
+\code
+   void readParam(std::istream& in);
+\endcode
+The format of the associated parameter file block is defined by 
+the implementation of the readParam method.  The source code for 
+the readParam() method of the associated class is thus the most 
+reliable documentation of the file format for a parameter file 
+block. It is thus useful for users (as well as developers) to be
+able to read the implementation of a readParam() method, so that 
+they can check the source code to resolve any questions about the 
+file format. 
+
+The implementation of a readParam() method typically uses a several 
+protected methods that are inherited from the parent Util::ParamComposite 
+class. These are:
+<ul>
+<li> read < T >(std::istream& in, const char* label, T& data) 
+is a method template that reads an single parameter of type T. </li>
+<li> readParamComposite(std::istream& in, ParamComposite& child) 
+invokes the readParam() method of a child ParamComposite object. </li>
+<li> readBegin(std::istream& in, const char* label) 
+reads the opening line of a parameter block. </li>
+<li> readEnd(std::istream& in) reads 
+the closing bracket of a parameter block. </li>
+</ul>
+In these methods, the parameter "in" represents an input stream.
+The parameter "label" is a string literal that represents the
+expect value of the label string for a parameter or a parameter 
+block.  Other read* methods to read parameters that represent 
+arrays and matrices are discussed in the class documentation 
+for Util::ParamComposite.
+
+As an example, consider a class A that has an int member variable 
+var1_, a double member var2_, and a member thingy_ that is an instance 
+of another class B:
+\code
+
+   using namepace Util;
+
+   class A : public ParamComposite 
+   {
+   
+   public:
+   
+      // other methods
+   
+      void readParam(std::istream& in);
+   
+      // other methods
+   
+   private:
+   
+      int    var1_;
+      double var2_;
+      B      thingy_;
+   }
+\endcode
+We assume here that B is a also subclass of ParamComposite, which
+is associated with a nested subblock in the parameter file format 
+for class A. 
+
+The parameter block format for class A might look like this:
+\code
+A{
+  var1      1
+  var2    1.5
+  B{
+    ...
+  }
+}
+\endcode
+where B{ ... } represents the (unspecified) file format for class B. 
+
+The minimum implementation of A::readParam() required to parse this 
+file format is show below:
+\code
+
+   void A::readParam(std::istream& in)
+   {
+      readBegin(in,"A");
+      read<int>(in, "var1", var1_);
+      read<double>(in, "var2", var2_);
+      readParamComposite(in, thingy_);
+      readEnd(in);
+   }
+
+\endcode
+For a real class, the implementation of readParam() might also 
+contain code to validate input, allocate any required memory, and 
+do whatever else is required to initialize an instance of A. 
+
+The expected label strings "A", "var1", and "var2" are all passed 
+as string literals to the relevant read* methods. Each of these 
+methods throws an Exception, and thereby abort program execution, 
+if the expected label is not found. 
+
+<ul>
+ <li> \ref examples_page     (Prev) </li>
+ <li> \ref guide_page        (Up)   </li>
+ <li> \ref restart_page      (Next) </li>
+</ul>
+
+*/
+
+}

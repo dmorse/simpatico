@@ -1,0 +1,166 @@
+#ifndef MCMD_NOPAIR
+#ifndef PAIR_FACTORY_CPP
+#define PAIR_FACTORY_CPP
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include <mcMd/potentials/pair/PairFactory.h>
+
+#include <mcMd/simulation/System.h>
+
+// PairPotential interfaces and implementation classes
+#include <mcMd/potentials/pair/MdPairPotential.h>
+#include <mcMd/potentials/pair/MdPairPotentialImpl.h>
+#include <mcMd/potentials/pair/McPairPotential.h>
+#include <mcMd/potentials/pair/McPairPotentialImpl.h>
+
+// Pair Potential evaluator classes
+#include <mcMd/potentials/pair/LJPair.h>
+#include <mcMd/potentials/pair/DpdPair.h>
+#include <mcMd/potentials/pair/CompensatedPair.h>
+
+#include <mcMd/potentials/bond/FeneBond.h>
+
+namespace McMd
+{
+
+   /**
+   * Default constructor.
+   */
+   PairFactory::PairFactory()
+   {}
+
+   /*
+   * Add a subfactory to the list of children, and set communicator (if any).
+   */
+   void PairFactory::addSubfactory(PairFactory& subfactory)
+   {  subfactories_.push_back(&subfactory); }
+
+   /*
+   * Return a pointer to a new McPairInteration, if possible.
+   */
+   McPairPotential* 
+   PairFactory::mcFactory(const std::string& name, System& system) const
+   {
+      McPairPotential* ptr = 0;
+
+      // Try subfactories first
+      ptr = tryMcSubfactories(name, system);
+      if (ptr) return ptr;
+
+      if (name == "LJPair") {
+         ptr = new McPairPotentialImpl<LJPair>(system);
+      } else
+      if (name == "DpdPair") {
+         ptr = new McPairPotentialImpl<DpdPair>(system);
+      } else
+      if (name == "CompensatedPair<DpdPair,FeneBond>") {
+         ptr = new McPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(system);
+      }
+      return ptr;
+   }
+
+   /*
+   * Return a pointer to a new MdPairPotential, if possible.
+   */
+   MdPairPotential* 
+   PairFactory::mdFactory(const std::string& name, System& system) const
+   {
+      MdPairPotential* ptr = 0;
+
+      // Try subfactories first
+      ptr = tryMdSubfactories(name, system);
+      if (ptr) return ptr;
+
+      if (name == "LJPair") {
+         ptr = new MdPairPotentialImpl<LJPair>(system);
+      } else
+      if (name == "DpdPair") {
+         ptr = new MdPairPotentialImpl<DpdPair>(system);
+      } else
+      if (name == "CompensatedPair<DpdPair,FeneBond>") {
+         ptr = new MdPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(system);
+      }
+      return ptr;
+   }
+
+   /*
+   * Convert an McPairPotential to a MdPairPotential, if possible.
+   */
+   MdPairPotential* 
+   PairFactory::mdFactory(McPairPotential& potential) const
+   {
+      std::string name = potential.evaluatorClassName();
+      MdPairPotential* ptr = 0;
+
+      // Try subfactories first
+      ptr = tryMdSubfactories(potential);
+      if (ptr) return ptr;
+
+      if (name == "LJPair") {
+         McPairPotentialImpl<LJPair>* mcPtr 
+             = dynamic_cast< McPairPotentialImpl<LJPair>* >(&potential);
+         ptr = new MdPairPotentialImpl<LJPair>(*mcPtr);
+      } else
+      if (name == "DpdPair") {
+         McPairPotentialImpl<DpdPair>* mcPtr 
+             = dynamic_cast< McPairPotentialImpl<DpdPair>* >(&potential);
+         ptr = new MdPairPotentialImpl<DpdPair>(*mcPtr);
+      } else 
+      if (name == "CompensatedPair<DpdPair,FeneBond>") {
+         McPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >* mcPtr 
+             = dynamic_cast< McPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >* >(&potential);
+         ptr = new MdPairPotentialImpl< CompensatedPair<DpdPair, FeneBond> >(*mcPtr);
+      }
+      return ptr;
+   }
+
+   /*
+   * Try all subfactories in sequence searching for a match.
+   */
+   McPairPotential* 
+   PairFactory::tryMcSubfactories(const std::string& className, System& system) const
+   {
+      McPairPotential* typePtr = 0;
+      int n = subfactories_.size();
+      for (int i = 0; i < n && typePtr == 0; ++i) {
+         typePtr = subfactories_[i]->mcFactory(className, system);
+      }
+      return typePtr;
+   }
+
+   /*
+   * Try all subfactories in sequence searching for a match.
+   */
+   MdPairPotential* 
+   PairFactory::tryMdSubfactories(const std::string& className, System& system) const
+   {
+      MdPairPotential* typePtr = 0;
+      int n = subfactories_.size();
+      for (int i = 0; i < n && typePtr == 0; ++i) {
+         typePtr = subfactories_[i]->mdFactory(className, system);
+      }
+      return typePtr;
+   }
+
+   /*
+   * Try all subfactories in sequence searching for a match.
+   */
+   MdPairPotential* PairFactory::tryMdSubfactories(McPairPotential& potential) const
+   {
+      MdPairPotential* typePtr = 0;
+      int n = subfactories_.size();
+      for (int i = 0; i < n && typePtr == 0; ++i) {
+         typePtr = subfactories_[i]->mdFactory(potential);
+      }
+      return typePtr;
+   }
+
+}
+#endif
+#endif

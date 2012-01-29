@@ -1,0 +1,39 @@
+System{
+  Domain{
+    gridDimensions    2    1   3
+  }
+  AtomStorage{
+    atomCapacity       200
+    ghostCapacity      700
+    totalAtomCapacity  200
+  }
+  nAtomType           1
+  LJPair{
+    epsilon         1.0
+    sigma           1.0
+    cutoff          1.122462048
+  }
+  Interaction{
+    skin            0.3000
+    pairCapacity    1000
+    maxBoundary     orthorhombic   6.1   3.1   9.1
+  }
+  Integrator{
+    dt           0.002
+  }
+  Random{
+    seed        8012457890
+  }
+  Buffer{
+    atomCapacity    200
+    ghostCapacity   200
+  }
+  ConfigIo{
+    cacheCapacity    100
+  }
+}
+
+  GrootSoftPair{
+    epsilon         1.0
+    sigma           1.0
+  }

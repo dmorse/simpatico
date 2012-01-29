@@ -1,0 +1,6 @@
+This directory contains classes that are used to represent chemical objects,
+i.e., atoms and molecules.  It also contains typdefs for Atom and Bond
+iterator classes.
+
+These classes depend on the classes in the util, containers, param, and math 
+directories.

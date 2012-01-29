@@ -1,0 +1,131 @@
+class MpiPlan 
+{
+
+   MpiPlan();
+
+   // Initialize
+   setHasMasterSystem(bool hasSerialMaster);
+
+   // Initialize
+   void init(int nSystem, int nBox);
+
+   /// Number of separate systems in world communicator.
+   int  nSystem();
+
+   /// Number of MdBoxes in this ystem.
+   int  nBox();
+
+   /// Integer index of this System, 0 <= systemId < nSystem.
+   int  systemId();
+
+   /// Does this simulation use serial Simulation for each system?
+   bool hasSimulation();
+
+   /// Is this processor a serial Simulation?
+   bool isSimulation();
+
+   /// Is this processor a parallel MD Box?
+   bool isMdBox();
+
+   /// Does this the master processor for this system?
+   bool isMaster();
+
+protected:
+
+   // Array containing world processor ids of masters
+   DArray<int> systemMasters_;
+
+   // Array containing number of Boxes in each system.
+   DArray<int> systemBoxesCounts_;
+
+   MPI::Comunicator* worldCommPtr_;
+
+   /// Number of processors in the world communicator.
+   int  worldRank_;
+
+   /// Number of distinct physical systems in world.
+   int  nSystem_;
+
+   /// Integer index of this System.
+   int  systemId_;
+
+   /// Number of MdBox processors in this System.
+   int  nBox_;
+
+   /// Is there a serial Simulation each system?
+   bool hasSimulation_;
+
+   /// Does this node own a serial Simulation object?
+   bool isSimulation_;
+
+   /// Is this processor a domain decomposition MdBox?
+   bool isMdBox_;
+
+   bool isInitialized_;
+
+}
+
+
+class MpiSimulationPlan : private MpiPlan
+{
+
+   /// Default constructor.
+   MpiSimulationPlan(MpiPlan& context);
+
+   /// Conversion constructor.
+   MpiSimulationPlan(MpiPlan& context);
+
+   /// Return intersystem communicator.
+   MPI::IntraComunicator& masterCommunicator();
+
+   /// Return intra-System communicator
+   MPI::IntraComunicator& systemCommunicator();
+
+private:
+
+   /// Communicator containing the master node of each System.
+   MPI::IntraComunicator* masterCommPtr_;
+
+   /// Communicator containing all processors associated with this System.
+   MPI::IntraComunicator* systemCommPtr_;
+
+}
+
+class BoxMpiPlan : private MpiPlan
+{
+
+   // Default constructor.
+   BoxMpiPlan();
+
+   // Conversion constructor.
+   explicit MpiMasterPlan(MpiPlan& context);
+
+   // Initialize
+   void init(int nSystem, int nBox, bool hasMaster=false);
+
+   /// Return intra-System communicator
+   MPI::IntraComunicator& systemCommunicator();
+
+   /// Return intra-System communicator among boxes.
+   MPI::IntraComunicator& boxCommunicator();
+
+   int  boxId();
+
+   bool isRoot();
+
+private:
+
+   // Communicator containing master node of each System
+   MPI::IntraComunicator* interSystemCommPtr_;
+
+   // Communicator containing master node of each System
+   MPI::IntraComunicator* systemCommPtr_;
+
+   // Communicator containing master node of each System
+   MPI::IntraComunicator* boxCommPtr_;
+
+   int  boxId_;
+
+   bool isRoot_;
+
+}

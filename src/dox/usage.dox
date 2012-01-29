@@ -1,0 +1,212 @@
+namespace McMd
+{
+
+/*! \page usage_page Usage
+
+Compiling Simpatico produces separate executables for MD and MC simulations.
+These are named mdSim and mcSim by default, and are placed in the bin/
+subdirectory of the Simpatico root directory. Before executing either of 
+these, a new user should either add the Simpatico bin/ directory to the
+unix PATH environment variable, or move both executables to a directory 
+that is in the existing PATH. 
+
+\section usage_running Running a Simulation 
+
+The default single-processor versions of both mdSim and mcSim read a parameter 
+file from standard input. To run an MD simulation using a parameter file named 
+"param" in the current working directory, one would thus enter 
+\code
+   mdSim < param
+\endcode
+To run an MC simulation, one would enter "mcSim < param" instead.  If 
+everything works correctly, the contents of a log file will be sent to 
+standard output (i.e., the screen) during execution, or can be redirected 
+to another file using, e.g., mdSim < param > log.
+
+The programs mdSim and mcSim can each be invoked with three command line options:
+<ul>
+  <li> -e: Activates echoing of ach line of the parameter file as it is read.</li>
+  <li> -e filename: Restarts a previous simulation. The required parameter "filename"
+          is the base name of the required input files, which have suffixes *.prm,
+          *.rst, and *.cmd. </li>
+  <li> -p: Enables the use of free energy perturbation theory.
+  </li>
+</ul>
+The -e option can be useful for locating errors in the parameter file block.  
+The -p option is generally only useful when used with a version of the code 
+that is compiled for use on multiple processors, and is discussed in more 
+detail \ref perturb_page "here".
+
+A simple MC or MD simulation generally requires three input files: 
+<ul>
+   <li> a parameter file </li>
+   <li> a command file </li>
+   <li> a configuration file </li>
+</ul>
+The parameter file is read from standard input, and contains the path 
+to the command file.  The command file must contain the name of an input 
+configuration file, as an argument of a command that causes the program 
+to read that file.  The contents and formats of these different types of 
+file are discussed briefly below and in more detail in several separate 
+pages (see \ref param_page , \ref commands_page and \ref cfgfile_page).
+
+\section section_program Main Program
+
+The main programs for MD and MC simulation have a very simple structure. 
+Shown below is an example of a minimal functional MC simulation program. 
+This is a slightly simplified version of the main program src/main/mcSim.cpp 
+that is compiled to create the mcSim executable:
+
+\code
+namespace McMd
+{
+
+   int main 
+   {
+      McSimulation simulation;
+  
+      \\ Read the parameter file from standard input
+      simulation.readParam();
+  
+      \\ Read the command file.
+      simulation.readCommands();
+  
+   }
+
+}
+\endcode
+This minimal version of the program contains only three executable lines:
+
+The first line of the program creates an object named simulation that is 
+an instance of the class McSimulation. An McSimulation object is the main
+object for an MC simulation. 
+
+The second line invokes the readParam() method of the McSimulation.
+Invoking readParam() with no argument (as here) reads the parameter file 
+from standard input. Despite its name, the readParam() method does not 
+merely read parameters: By convention, the readParam() method of any
+object in a Simpatico simulation is responsible for reading any data
+required to initialize the object, allocating any required memory, 
+initializing the internal state of the object so as to leave that
+object (and any member subojects) ready for use.  The readParam() method
+of an object may call readParam() methods of member subobjects. The
+readParam() method of the main McSimulation object for an MC simulation 
+thus leaves the entire simulation in a valid initial state, ready to 
+execute commands given in the command file. 
+
+The third line invokes the readCommands() method. This method reads a 
+command script file containing a list of commands that are interpreted 
+and executed sequentially.  The name of the command file must be 
+specified in the param file. The command file usually contains (at a
+minimum) commands to read a specific input configuration file, run a 
+simulation, and write the final configuration to file. 
+
+The analogous code for a minimal molecular dynamics (MD) program is 
+almost identical. The only difference is that the first line would 
+create an instance of the class MdSimulation, which represents a 
+complete MD simulation, rather than an instance of McSimulaton.
+
+The actual main programs src/main/mcSim.cpp and src/main/mdSim.cpp 
+are  more complicated than the above example primarily because they 
+also contain code to process command line options. 
+
+\section io_Parameter Parameter File
+
+The parameter file contains all the data required to initialize 
+a simulation, i.e., to allocate all required memory and initialize 
+all variables to valid values. This data includes: (1) a list of all 
+the molecular species that may be present, and the amount of memory 
+(i.e., the number of molecules) to allocate for each species, 
+(2) physical parameters such as the temperature and potential 
+energy parameters, (3) instructions for the simulation algorithm, 
+such as the set of Monte Carlo moves that may be be used for a MC 
+simulation or the choice of integration algorithm and time step 
+for an MD simulation, and (4) instructions for any desired data 
+analysis and/or data output operations. The format of the parameter
+file is described \ref param_page "here".
+
+\section io_Command Command File
+
+The command file contains a sequence of commands that are read and 
+executed in sequence. Each line of the command file starts with a
+capitalized command name, followed by zero or more arguments. The 
+minimal command file for a simple MC simulation looks like this:
+\code
+READ_CONFIG       config
+SIMULATE          100000
+WRITE_CONFIG      config
+FINISH   
+\endcode
+This file instructs the program to read a configuration file named 
+"config", run a simulation of 100000 attempted MC moves, write a final 
+output configuration file to a file named "config", and then stop. The 
+command file is read by an infinite loop that terminates when a line 
+containing only the word FINISH is encountered. A full list of valid 
+commands and their arguments is given \ref commands_page "here".
+
+The full file names for the input and output system config files 
+are constructed by appending the file names specified as arguments to 
+the READ_CONFIG and WRITE_CONFIG commands to input and output prefix 
+strings (named inputPrefix and outputPrefix) that are specified in 
+the FileMaster block of the parameter file.  The outputPrefix string 
+is also prepended to a variety of other output files. The values of 
+these prefix strings are often set to directory names followed by a 
+directory separator symbol "/", in order to place all input files 
+and output files in different directories. 
+
+\section io_Config Configuration File
+
+A configuration file specifies all characteristics of the system
+configuration that might change during the course of a simulation.
+The configuration for either an MD or MC simulation contains the 
+dimensions of the periodic system boundary, the number of molecules 
+of each molecular species, and the positions of all atoms. The 
+default file format for an MD simulation also contains the atomic 
+velocities. The default configuration file formats do not contain
+any information about molecular structure (which atom is connected
+to which), which is specified for each molecular species within
+the param file. A Simpatico configuation file is thus similar to 
+one frame of a molecular dynamics trajectory file.  The boundary 
+dimensions and number of molecules of each species are specified 
+in the configuration file, rather than the param file, because 
+these quantities can vary in some statistical ensembles (e.g., in
+constant pressure or grand canonical ensembles). The number of 
+molecules of each species must always be less than or equal to 
+the capacity given in the parameter file, which is used to 
+allocate memory for each species. The default configuration file 
+format is described in more detail \ref cfgfile_page "here".
+
+\section io_Output Output Files
+
+A typical simulation writes a log file to report the progress of 
+the simulation. In the default, single-processor version of mdSim
+and mcSim write the log file to standard output.  The command
+file normally contains a WRITE_CONFIG command to write the final 
+configuration to a file. 
+
+The parameter file may specify that complete system configurations 
+be written to either a series of configuration files or to a single 
+trajectory file at regular intervals during the simulation, for 
+postprocessing. 
+
+A variety of other output files may also be written by classes 
+that implement on-the-fly statistical analyses or data output 
+operations. These data analysis and data output classes are all 
+subclasses of the Diagnostic base class. The parameter file may 
+specify a set of Diagnostic objects that should used during a 
+simulation, each of which samples or outputs data at a specified
+interval, and each of which writes its output one or more 
+separate files. The path to each such output files is constructed
+by prepending a common outputPrefix string to a base name that 
+is specified in the parameter file. 
+
+<ul>
+ <li> \ref compile_page  (Previous) </li>
+ <li> \ref guide_page    (Up)       </li>
+ <li> \ref param_page    (Next)     </li>
+
+</ul>
+
+*/
+
+}

@@ -1,0 +1,3 @@
+subDirectories =
+pathFromSrc = util/param/tests/mpi
+pathToSrc = ../../../..

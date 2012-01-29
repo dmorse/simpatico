@@ -1,0 +1,79 @@
+
+
+namespace McMd 
+{
+
+   class lmpDriver
+   {
+
+   public:
+
+      lmpDriver(MPI::IntraComm& bridgeComm);
+
+      readParam(std::istream& in);
+
+      readCommands(std::istream& in);
+      
+
+   private:
+
+      McSimulation* mcSimPtr_;
+
+      #ifdef UTIL_MPI
+
+      Lammps*         lammpPtr_;
+
+      MPI::IntraComm* lammpsCommunicatorPtr_;
+
+      #endif
+
+
+   }
+
+   #ifdef UTIL_MPI
+   lmpDriver::lmpDriver(MPI::IntraComm& bridgeComm)
+   {
+      if (master) {
+
+         mcSimPtr_ = new McSimulation();
+
+      } else {
+
+         // make a lmpCommunicator;
+         // make a Lammps object, with new communicator.
+
+      }
+
+   }
+   #endif
+
+   lmpDriver::readParam(std::istream& in) 
+   {
+      if (master) {
+         mcSimPtr_->readParam(in);
+         // Write input script for lammps
+         // bcast message
+      } else {
+         // Read input script 
+      }
+   }
+
+   lmpDriver::readCommands() 
+   {
+      if (isMaster()) {
+
+         Either:
+
+         i)  Create a subclass LmpSimulation that reads a parameter 
+         file and responds appropriately.
+
+         ii) Read file an control everything from here.
+
+         Advantage of (ii) is that everything we need to do appears
+         to be public, or can be made public. No modification of 
+         McSimulation.
+
+      }
+   }
+}
+#endif

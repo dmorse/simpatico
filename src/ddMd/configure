@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cp defines.mk_r  defines.mk
+cp boundary/Boundary.h_r  boundary/Boundary.h
+cp potentials/PairPotential.h_r  potentials/PairPotential.h
+cp potentials/BondPotential.h_r  potentials/BondPotential.h
+

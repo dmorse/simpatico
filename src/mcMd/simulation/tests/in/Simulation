@@ -1,0 +1,33 @@
+FileMaster{
+  commandFileName   in/commands
+  inputPrefix       in/
+  outputPrefix      out/
+}
+nAtomType                    2
+nBondType                    1
+atomTypes                    A  1.0
+                             B  1.0
+maskedPairPolicy      MaskBonded
+SpeciesManager{
+   
+  Homopolymer{
+    moleculeCapacity             5
+    nAtom                        2
+    atomType                     0
+    bondType                     0
+  }
+   
+  Diblock{
+    moleculeCapacity             4
+    blockLengths                 3       2
+    atomTypes                    1       0
+    bondType                     0
+  }
+   
+}
+Random{
+  seed                  98732163
+}
+
+nStep                     1000
+

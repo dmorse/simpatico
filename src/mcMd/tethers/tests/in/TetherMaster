@@ -1,0 +1,4 @@
+TetherMaster{
+    tetherCapacity    100
+    atomCapacity      100
+}

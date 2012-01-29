@@ -1,0 +1,604 @@
+#ifndef DENSITY_CORR_H
+#define DENSITY_CORR_H
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "../GLOBAL.h"
+#include "../base/Diagnostic.h"
+#include "../analysis/BlockAverageVec.h"
+#include "../base/System.h"
+
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
+#include <complex>
+
+/**
+* DensityCorr calculates a series of monomer density corrrelation functions 
+* in q-space. Each of them is uniquely specified by the type of two monomers
+* involved and by type of correlations to be counted. The structure of the 
+* class is very similar to GenericRDF.
+*
+* The density correlation function computed in this code is defined by:
+*    S_ij (q) = \sum_{ij pair, i/=j} < cos(r_ij * q) > / Nparticle
+*
+* Monomer types are defined by two integer arrays: monoType1 and monoType2.
+* {0, 1, ...} are valid values.
+*
+* If "monoType1 = -1", all particle pairs will be sampled, regardless of the
+* value of monoType2
+*
+* Correlation types are defined by integer array corrType:
+*     -1 : total
+*      1 : intra-molecular
+*
+* The dimensions of these arrays are nCorr.
+*
+* \ingroup Diagnostic_Module
+*/
+template <class ChainType> class DensityCorr : public Diagnostic
+{
+
+public:
+   
+   /// Constructor
+   DensityCorr(System *system, ChainType *species_in);
+   
+   /// Destructor
+   ~DensityCorr();
+
+   /// Read parameters needed to specify the type of correlation functions
+   void read(FILE *file);
+
+   /// Output statistical result.
+   void output();
+
+   /// Backup statisitcal accumulators.
+   void backup(FILE *file);
+
+   /// Retrieve statisitcal accumulators.
+   void restore(FILE *file);
+
+   /// Send the sampled correlation function to the BlockAverageVec objects
+   void sample(long iStep);
+
+private:
+
+   // Number of different correlation functions requested
+   int nCorr;
+
+   // Pointer to an array of first/second monomer type
+   int *monoType1;
+   int *monoType2;
+
+   // Pointer to an array of type of correlation function 
+   int *corrType;
+
+   // Pointer to an array of BlockAverage objects
+   BlockAverageVec **corr;
+
+   // Max number of waves with the same magnitue
+   static const int MaxMultiplicity = 1000; 
+
+   // Logic index determining whether or not to read wave
+   int waveMode;
+   int *waveIndex;
+
+   // Basis vector for wave vectors 
+   double basis[3];
+
+   // Arrays for waves and their multiplicity
+   int    nWave;      // number of waves
+   double *q;         // magnitude of the waves
+   int    *mWave;     // multiplicity for each group of waves
+   double **wave;     // components of each wave; nWave * MaxMultiplicity*3
+   
+   // Name of data file.
+   char fileName[80];
+   
+   // Pointer to data file.
+   FILE *outFile;
+ 
+   // pointer to species of class ChainsTypes
+   ChainType *species;
+
+   // Pointer to parent system
+   System *sys;   
+
+   /// Read representative wave vectors
+   void readWave(FILE *file);
+
+   /// Generate waves commensurate with the simulation box.
+   void makeWave(int nMax);
+
+   /// Calculate the Fourier component of overall monomer density
+   dcmplx totalCorr(int monomerType, double* qVec);
+
+   /// Calculate the Fourier component of molecule monomer density
+   dcmplx intraCorr(int iMol, int monomerType, double* qVec);
+
+};
+
+
+/*-----------------------------------------------------------------------------
+* Constructor.
+*/
+template <class ChainType> DensityCorr<ChainType> ::
+   DensityCorr(System *system, ChainType *species_in) : Diagnostic()
+{  
+   sys = system;
+   species = species_in;
+   strcpy(fileName,"");
+   outFile   = 0;         // invalid initial value
+   waveMode  = 0;
+   nWave     = 0;
+   mWave     = 0;         // invalid initial value
+   wave      = 0;         // invalid initial value
+   q         = 0;         // invalid initial value
+} 
+   
+
+/*-----------------------------------------------------------------------------
+* Destructor: release the memory allocated.
+*/
+template <class ChainType> 
+DensityCorr<ChainType>::~DensityCorr()
+{
+   // Analysis & diagnostic arrays
+   if (corr)      delete [] corr;
+   if (monoType1) delete [] monoType1;
+   if (monoType2) delete [] monoType2;
+   if (corrType)  delete [] corrType;
+
+   // Wave vector arrays
+   if (q)     delete [] q;
+   if (mWave) delete [] mWave;
+   if (wave)  delete [] wave;
+
+   // Output file
+   if (outFile) fclose(outFile);
+}
+
+
+/*-----------------------------------------------------------------------------
+* Read parameters necessary to specify the particular series of correlation 
+* functions from file.
+*/
+template <class ChainType> 
+void DensityCorr<ChainType>::read(FILE *file)
+{
+   int samplePerBlock, i;
+   double L[3];
+
+   // fileName and #MC steps per sampling
+   readString(file, "fileName", fileName);
+   readInterval(file);
+
+   // Get the box size and calculate wave vector basis
+   sys->box->getL(L);
+   basis[0] = 2.0 * acos(-1.0) / L[0];
+   basis[1] = basis[0] * L[0] / L[1];
+   basis[2] = basis[1] * L[1] / L[2];
+
+   // input and make wave
+   readWave(file);
+   
+   // Read diagnostic specific parameter 
+   readInt(file, "nCorr",  &nCorr);
+   if (nCorr < 1) {
+      PMC_THROW("Invalid number of correlation functions (<1).");
+   }
+   
+   // Allocate memory
+   monoType1 = new int[nCorr];
+   monoType2 = new int[nCorr];
+   corrType  = new int[nCorr];
+   
+   // Read monomer types and correlation types
+   readIntArr(file, "monoType1", monoType1, nCorr);
+   readIntArr(file, "monoType2", monoType2, nCorr);
+   readIntArr(file, "corrType", corrType, nCorr);
+
+   for (i = 0; i < nCorr; i++) {
+      if (monoType1[i] < -1) {
+         PMC_THROW("monoType1 < -1 not allowed.");
+      }
+
+      if (monoType2[i] < -1) {
+         PMC_THROW("monoType2 < -1 not allowed.");
+      }
+    
+      if (corrType[i] != -1 && corrType[i] != 1) {
+         PMC_THROW("Invalid corrType: total(-1), intra(1).");
+      }
+   }
+
+   // Allocate memory for BlockAverageVec objects
+   corr = new BlockAverageVec*[nCorr];
+   for (i = 0; i < nCorr; i++) corr[i] = new BlockAverageVec(nWave);
+ 
+   // read BlockAverageVec parameters using the first object
+   readIo(file, corr[0]);
+
+   // Set parameters for the remaining objects and initialize them
+   samplePerBlock = corr[0]->samplePerBlock;
+   for (i = 1; i < nCorr; i++) corr[i]->samplePerBlock = samplePerBlock;
+ 
+   // Build the filename and open output file
+   sys->makeOutputFilename(fileName, fileName);
+   outFile = fopen(fileName, "w");
+   
+   if (outFile == NULL) {
+      printf("%s\n", fileName);
+      PMC_THROW("Error opening diagnostic file.");
+   }
+} 
+
+
+/*-----------------------------------------------------------------------------
+* Send correlation function to BlockAverageVec analysis.
+*
+* The only molecule level information is whether or not the two monomers are on
+* the same chain. The current version works for Homopolymer, HomopolymerSG, and
+* Diblock.
+*/
+template <class ChainType>
+void DensityCorr<ChainType>::sample(long iStep)
+{
+   dcmplx  sIJ[nCorr][nWave];
+   dcmplx  sI, sJ, sTmp;
+   double  dataTmp[nCorr][nWave];
+   int     i, j, iCorr, iMol, iWave;
+
+   if (isAtInterval(iStep)) {
+
+      // Loop over correlation objects
+      for (iCorr = 0; iCorr < nCorr; iCorr++) {
+
+         if (corrType[iCorr] == -1) {
+
+            // loop over waves on distinct shells
+            for (i = 0; i < nWave; i++) {
+
+               // Initialize accumulator
+               sTmp = dcmplx(0.0, 0.0);
+
+               // loop over waves on the same shell
+               for (j = 0; j < mWave[i]; j++) {
+                  sI = totalCorr(monoType1[iCorr], &wave[i][j*3]);
+                  sJ = totalCorr(monoType2[iCorr], &wave[i][j*3]);
+
+                  sTmp += sI * conj(sJ);
+               }
+
+               // average over waves on the same shell
+               sIJ[iCorr][i] = sTmp / dcmplx(double(mWave[i]), 0.0);
+
+            }
+
+         } else if (corrType[iCorr] == 1) {
+
+            // loop over waves on distinct shells
+            for (i = 0; i < nWave; i++) {
+
+               // Initialize accumulator
+               sTmp = dcmplx(0.0, 0.0);
+
+               // loop over waves on the same shell
+               for (j = 0; j < mWave[i]; j++) {
+
+                  // loop over molecules
+                  for (iMol = 0; iMol < species->nMolecule; iMol++) {
+                     sI = intraCorr(iMol, monoType1[iCorr], &wave[i][j*3]);
+                     sJ = intraCorr(iMol, monoType2[iCorr], &wave[i][j*3]);
+
+                     sTmp += sI * conj(sJ);
+                  }
+
+               }
+
+               // average over waves on the same shell
+               sIJ[iCorr][i] = sTmp / dcmplx(double(mWave[i]), 0.0);
+
+            }
+
+         } else {
+
+            printf("corrType = %i \n", corrType[iCorr]);
+            PMC_THROW("Invalid correlation type.\n");
+
+         }
+
+      } // loop over correlations
+
+      // send the normalized correlation function to BlockAverageVec objects
+      for (iCorr = 0; iCorr < nCorr; iCorr++) {
+
+         for (iWave = 0; iWave < nWave; iWave++) {
+            dataTmp[iCorr][iWave]  = real(sIJ[iCorr][iWave]);
+            dataTmp[iCorr][iWave] /= double(sys->nParticle);
+         }
+
+         corr[iCorr]->sample(dataTmp[iCorr]);
+      }
+
+   } // if isAtInterval
+}
+
+
+/*-----------------------------------------------------------------------------
+* Get the sum of Fourier components of the particle density.
+*    monoType -- particle type
+*    qVec[3]  -- wave vector
+* Return
+*    totalFourier = \sum_{j=monoType} { - i * kVec * R_j }
+*/
+template <class ChainType>
+dcmplx DensityCorr<ChainType> :: totalCorr(int monoType, double* qVec)
+{
+   dcmplx totalFourier, phase;
+   VecDef r[3];
+   int    iParticle, iType;
+
+   // Initialize Fourier component
+   totalFourier = dcmplx(0.0, 0.0);
+
+   // Loop over particles
+   for (iParticle = 0; iParticle < sys->nParticle; iParticle++) {
+
+      // Particle position & type
+      sys->getPosition(iParticle, r);
+      sys->getType(iParticle, iType);
+
+      // Fourier component
+      if (iType == monoType || monoType == -1) {
+         phase = dcmplx(0.0, qVec[0]*r[0] + qVec[1]*r[1] + qVec[2]*r[2]);
+         totalFourier += exp(-phase);
+      }  
+
+   }
+ 
+   // Return Fourier component
+   return totalFourier;
+}
+
+
+/*-----------------------------------------------------------------------------
+* Get the sum of Fourier components of the particle density.
+*    iMol     -- molecule index
+*    monoType -- particle type
+*    qVec[3]  -- wave vector
+* Return
+*    intraFourier = \sum_{j of iMol=monoType} { - i * kvec * R_j }
+*/
+template <class ChainType>
+dcmplx DensityCorr<ChainType> :: intraCorr(int iMol, int monoType, double* qVec)
+{
+   int     head, nPartMol;
+   int     i, iParticle, iType;
+   VecDef  r[3];
+   dcmplx  intraFourier, phase;
+
+   // retrieve molecule information
+   head     = species->molecule[iMol].head;
+   nPartMol = species->molecule[iMol].nPartMol;
+
+   // Initialize Fourier component
+   intraFourier = dcmplx(0.0, 0.0);
+
+   // Loop over particles
+   for (i = 0; i < nPartMol; i++) {
+
+      // Particle type and position
+      iParticle = i + head;
+      sys->getType(iParticle, iType);
+      sys->getPosition(iParticle, r);
+
+      // Fourier component
+      if (iType == monoType) {
+         phase = dcmplx(0.0, qVec[0]*r[0] + qVec[1]*r[1] + qVec[2]*r[2]);
+         intraFourier += exp(-phase);
+      }  
+
+   }
+ 
+   // Return Fourier component
+   return intraFourier;
+}
+
+
+/*-----------------------------------------------------------------------------
+* Read parameters specifying waves commensurate with the box dimension
+*
+*    waveMode == 0: read in waves and generate all waves with equivalent
+*                   magnitudes. This mode is mostly useful for isotropic
+*                   structure.
+*    waveMode == 1: read in waves and use these waves only, giving the
+*                   user the freedom to choose the direction.
+*
+* The axes are assumed to be orthogonal, but the box needs not to be cubic.
+*/
+template <class ChainType>
+void DensityCorr<ChainType>::readWave(FILE *file)
+{
+   int    iWave, nMax, maxWaveInStar;
+   double minBasis, qMax;
+
+   // Read number of waves (or wave groups)
+   readInt(file, "nWave", &nWave);
+   if (nWave < 1) {
+      PMC_THROW("nWave < 1.");
+   }
+
+   // Allocate and read wave indices
+   waveIndex = new int[nWave*3];
+   for (iWave = 1; iWave < nWave; iWave++)
+      waveIndex[iWave] = waveIndex[iWave-1] + 3;
+   readIntMat(file, "waveIndex", waveIndex, nWave, 3);
+
+   // Wave magnitudes; orthogonality between basis vectors assumed.
+   q    = new double[nWave];
+   qMax = 0.0;
+   for (iWave = 0; iWave < nWave; iWave++) {
+      q[iWave]  = pow(double(waveIndex[iWave*3])  *basis[0], 2.0) 
+                + pow(double(waveIndex[iWave*3+1])*basis[1], 2.0) 
+                + pow(double(waveIndex[iWave*3+2])*basis[2], 2.0);
+      q[iWave]  = sqrt(q[iWave]);
+      qMax = q[iWave] > qMax ? q[iWave] : qMax;
+   }
+
+   // routing parameter: used to determine how to generate waves
+   readInt(file, "waveMode", &waveMode);
+   if (waveMode < 0 || waveMode > 1)
+      PMC_THROW("Invalid waveMode ([0,1])");
+
+   maxWaveInStar = waveMode == 0 ? MaxMultiplicity : 1;
+
+   // Wave vectors
+   wave    = new double*[nWave];
+   wave[0] = new double[nWave*maxWaveInStar*3];
+   for (iWave = 1; iWave < nWave; iWave++) {
+      wave[iWave] = wave[iWave-1] + maxWaveInStar*3; 
+   }
+
+   // Multiplicity of waves of the same magnitude
+   mWave = new int[nWave];
+
+   if (waveMode ==  0) {
+
+      // Find minimum basis length
+      minBasis = basis[0] < basis[1] ? basis[0] : basis[1];
+      minBasis = minBasis < basis[2] ? minBasis : basis[2];
+
+      // Set the maximum wave index
+      nMax = int(qMax / minBasis);
+
+      // Generate waves
+      makeWave(nMax);
+
+   } else {
+
+      // wave multiplicity
+      for (iWave = 0; iWave < nWave; iWave++) mWave[iWave] = 1;
+
+      // wave vector
+      for (iWave = 0; iWave < nWave; iWave++) {
+         wave[iWave][0] = double(waveIndex[iWave*3])  *basis[0];
+         wave[iWave][1] = double(waveIndex[iWave*3+1])*basis[1];
+         wave[iWave][2] = double(waveIndex[iWave*3+2])*basis[2];
+      }
+
+   }
+
+}
+
+
+/*-----------------------------------------------------------------------------
+* Generate waves commensurate with the simulation box, namely
+*     q = 2 * \pi * (1/Lx, 1/Ly, z/Lz) * (ix, iy, iz)
+* The discretization of the magnitude of q-vector is chosen along [111]
+* direction to get maximum multiplicities (an arbitrary choice).
+*
+* The axes are assumed to be orthogonal, but the box needs not to be cubic.
+*/
+template <class ChainType>
+void DensityCorr<ChainType>::makeWave(int nMax)
+{
+   int    ix, iy, iz, iWave;
+   int    nx, ny, nz;
+   double qtmp;
+   double EPS=1.0E-10;
+
+   // Set maximum wave indices
+   nx = nMax;
+   ny = nx;
+   nz = ny;
+
+   // Initialize mWave
+   for (iWave = 0; iWave < nWave; iWave++) mWave[iWave] = 0;
+
+   // Loop over ix, iy and iz
+   for (ix = 0; ix <= nx; ix++) {
+      for (iy = -ny; iy <= ny; iy++) {
+         for (iz = -nz; iz <= nz; iz++) {
+
+            qtmp = double(ix*ix) * basis[0]*basis[0]
+                 + double(iy*iy) * basis[1]*basis[1]
+                 + double(iz*iz) * basis[2]*basis[2];
+            qtmp = sqrt(qtmp);
+
+            for (iWave = 0; iWave < nWave; iWave++) {
+               if (fabs(qtmp - q[iWave]) < EPS) {
+                  mWave[iWave]++;
+                  if (mWave[iWave] > MaxMultiplicity) {
+                     printf("iWave = %i, q[iWave] = %f\n", iWave, q[iWave]);
+                     printf("ix = %i, iy = %i, iz = %i\n", ix, iy, iz);
+                     PMC_THROW("Multiplicity exceeds the maximum.");
+                  }
+                  wave[iWave][mWave[iWave]*3-3] = double(ix) * basis[0];
+                  wave[iWave][mWave[iWave]*3-2] = double(iy) * basis[1];
+                  wave[iWave][mWave[iWave]*3-1] = double(iz) * basis[2];
+               }
+            } // iWave
+
+         }  // iz
+      }  // iy
+   } // ix
+}
+
+
+/*------------------------------------------------------------------------------
+*  Output correlation functions
+*/
+template <class ChainType> 
+void DensityCorr<ChainType>::output()
+{   
+   int    i, j;
+ 
+   for (i = 0; i < nCorr; i++) {
+      fprintf(outFile,"Type1:%d  Type2:%d  Type:%d \n",
+                 monoType1[i], monoType2[i], corrType[i]);
+
+      fprintf(outFile, "   q                ");
+      fprintf(outFile,    "Average          ");
+      fprintf(outFile,    "Error            ");
+      fprintf(outFile,    "Variance         ");
+      fprintf(outFile,    "Std_Dev\n");
+      for (j = 0; j < nWave; j++) {
+         fprintf(outFile, "%15.10f  %15.10f  %15.10f  %15.10f  %15.10f\n",
+                q[j], corr[i]->average(j), corr[i]->errorOfAverage(j), 
+                      corr[i]->variance(j), corr[i]->stdDeviation(j));
+      }
+
+      fprintf(outFile,"\n");
+   }
+}
+
+
+/*-----------------------------------------------------------------------------
+* Backup statisitcal accumulators.
+*/
+template <class ChainType>
+void DensityCorr<ChainType>::backup(FILE *file)
+{
+   for (int i = 0; i < nCorr; i++)
+      corr[i]->backup(file);
+}
+
+
+/*-----------------------------------------------------------------------------
+* Retrieve statisitcal accumulators.
+*/
+template <class ChainType>
+void DensityCorr<ChainType>::restore(FILE *file)
+{
+   for (int i = 0; i < nCorr; i++)
+      corr[i]->restore(file);
+}
+
+#endif

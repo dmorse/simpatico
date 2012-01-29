@@ -1,0 +1,142 @@
+Bugs
+----
+
+- Finish debugging restart system for serial jobs.
+
+New features:
+-------------
+
+- Check restart system for parallel jobs.
+
+- Write and test HarmonicAngle class.
+
+- Write and test MultiHarmonicDihedral class.
+
+- Write and test NptNhIntegrator subclass.
+
+
+Testing
+-------
+
+- Finish adding unit tests in util and mcMd directories to composite tests.
+
+- Add capacity for regression tests, using comparison to old files.
+
+- More thorough tests with non-unit masses.
+
+- More thorough tests of pressure and stress methods.
+
+- More thorough tests of dihedral potentials.
+
+- Test consistency of LammpsConfigIo (Can it read output created by write?).
+
+Documentation:
+--------------
+
+- Improve documentation regarding diagnostics.
+
+- Write doxygen documentation for unit test framework.
+
+- Convert style guide documentation to doxygen format, and add 
+  to Developers Guide.
+
+
+SubSystem base classes:
+-----------------------
+
+- Write McSubSystem and MdSubSystem (classes, not templates).
+
+- Derive each diagnostic from Diagnostic and a private (Mc|Mc|)SubSystem class.
+
+- Remove replace system().typePotential() by typePotential() in diagnostics 
+  that are derived from a SubSystem class.
+
+- Derive SystemMcMove from a protected McSubSystem.
+
+- Remove replace system().typePotential() by typePotential() in mcMoves.
+
+- Derive MdIntegrator from a protected MdSubSystem.
+
+- Remove replace system().typePotential() by typePotential() in mdIntegrators
+
+
+Convenience / Clarity
+---------------------
+
+- Add code to Simulation to distinguish different input modes for MPI.
+  Define enum Simulation::MpiMode {INDEPENDENT, PERTURBATION}, defined 
+  only when UTIL_MPI is defined. The default mode would be INDEPDENDENT.
+
+  Public methods:
+
+           void setPerturbationMpiMode(MPI::Intracomm& paramCommunicator);
+           void setPerturbationMpiMode();
+           MpiMode mpiMode() const;
+
+  The setPerturbationMode() method would call setParamCommunicator internally.
+
+  Add if (simulation.mpiMode() == PERTURBATION) { .... } around perturbation 
+  code.
+
+- Allow diagnostics to be enabled, disabled, and cleared (reset accumulators) 
+  from the command script. Add commands:
+
+  ENABLE_DIAGNOSTICS 
+  DISABLE_DIAGNOSTICS 
+  CLEAR_DIAGNOSTICS 
+  ENABLE_DIAGNOSTIC  i
+  DISABLE_DIAGNOSTIC i
+
+  to enable or disable a specific diagnostic, and to enable, disable, or
+  clear all of the diagnostics. 
+
+- Add SET_... commands to command script parser.  Start with :
+  SET_OUTPUT_PREFIX 
+  SET_INPUT_PREFIX
+
+- Add MODIFY_... commands to command script parser.  Start with :
+  MODIFY_PAIR  (format defined by class)
+  MODIFY_BOND  (format defined by class), etc.
+
+Python File Tools:
+------------------
+
+- Tools for manipulating files and directories. We need scripts to:
+
+  * Create standard directory structures for serial or parallel jobs.
+  * Copy config and param files into a newly created directory structure.
+  * Copy and move files to continue a run.
+
+
+Interface changes:
+------------------
+
+- Modify preprocessor macros so that the default version includes 
+  angles and dihedrals, which can be excluded by defining 
+  MCMD_NOANGLE and MCMD_NODIHEDRAL.
+
+- Method names:
+
+  * If possible, remove moleculeId() and molecule(speciesId, moleculeId)
+    methods of System.
+
+  * Change begin(iterator&) to start(iterator&). Reserve begin and end
+    for the usual standard library meanings. 
+
+  * Change iterator.atEnd() to iterator.isEnd()
+
+  * Change !iterator.atEnd() to iterator.notEnd()
+
+  * Redesign interface for Random:
+
+    getFloat()   -> uniform()
+    getFloat()   -> uniform(double min, double max)
+    getInteger() -> uniformInt(int min, int max) 
+
+- Source file names and locations:
+
+  * Separate directories for observer, string, error, timer, misc
+
+  * Move boundary, potentials from McMd namespace and mcMd directory 
+    to a new namespace MSim and new directory src/mSim.
+

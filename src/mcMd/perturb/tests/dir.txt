@@ -1,0 +1,3 @@
+subDirectories =
+pathFromSrc = mcMd/perturb/tests
+pathToSrc = ../../..

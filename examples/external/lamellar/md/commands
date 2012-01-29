@@ -1,0 +1,9 @@
+SET_CONFIG_IO       McConfigIo
+WRITE_PARAM         param
+READ_CONFIG         config
+THERMALIZE          1.0
+SIMULATE            50000
+SET_CONFIG_IO       McConfigIo
+WRITE_CONFIG        config
+FINISH
+

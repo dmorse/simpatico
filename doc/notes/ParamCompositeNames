@@ -1,0 +1,21 @@
+
+Proposed ParamComposite Changes:
+--------------------------------
+
+- Change C-array to std::vector in the implementation of ParamComposite.
+
+- Add a private className_ variable to ParamComposite that is set by a 
+  protected method inside the constructor of each subclass, and read by 
+  a public accessor.
+  
+- Add a virtual method readParameters(std::istream&) to ParamComposite,
+  which reads parameters with no readBegin() and readEnd() statements.
+  Make default implementation of readParam() call this, using a stored
+  class name to set the class name. Start transforming readParam methods
+  of existing classes to the new system, by adding a class name to each, 
+  and renaming readParam -> readParameters. The old readParam methods 
+  will continue to work fine until transformation is complete.
+
+- Develop a way to allow optional parameters in a parameter file.  Use 
+  the same mechanism for polymorphic classes. (See notes about this).
+

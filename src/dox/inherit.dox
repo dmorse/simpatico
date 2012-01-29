@@ -1,0 +1,51 @@
+namespace McMd
+{
+
+/*! \page inherit_page Polymorphic Base Classes
+
+Simpatico defines several base classes that can be extended by users to 
+implement new algorithms, molecular species or file formats. Among these 
+are:
+<ul>
+ <li> Species, which represents a molecular species. </li>
+ <li> Diagnostic, which represents a data analysis or output operation. </li>
+ <li> McMove, which represents a MC Markov move. </li>
+ <li> MdIntegrator, which represents an MD integration algorithm. 
+ <li> ConfigIo, which represents a configuration file format.</li>
+ <li> TrajectoryIo, which represents an MD trajectory file format.</li>
+ <li> Perturbation, which defines a free energy perturbation.</li>
+</ul>
+In order to implement, for instance, a new data analysis operation, the
+user must write a subclass of the Diagnostic base class, which must 
+implement the interface defined by the base class.  The required interface 
+for each of these base class is described in the documentation for each 
+of these base classes, and is not described in detail. 
+
+There are also base classes for each of the different types of potential 
+energy (pair, bond, angle, dihedral, etc). Users may also extend these
+classes in order to define new functional forms for the various types
+of potential energy. The procedure for doing so is, however, somewhat
+different than that required for the base classes listed above, because
+it involves the use of a template to define new subclasses. The 
+peculiarities of the potential energy classes described here.
+
+Simpatico is designed to allow users to use a parameter file to choose 
+from among available subclasses of each of these base classes at run 
+time, and thus choose the particular molecular species, file formats, 
+and algorithms required in a particular simulation. The algorithm used
+to interpret the relevant parts of the parameter file involves the
+definition of a "Factory" class for each polymorphic base class. 
+The implementation of the Factory class defines a set of available 
+subclasses of that base class. In order to allow instances of a 
+user-defined subclass of any of these base classes to be controlled
+in the same way, the writer of a new subclass must also add the new
+subclass to the appropriate Factory class. 
+
+Navigation: 
+<ul>
+ <li> \ref extend_page     (Up)       </li>
+ <li> \ref factory_page    (Next)     </li>
+</ul>
+
+*/
+}

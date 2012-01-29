@@ -1,0 +1,568 @@
+#ifndef VAN_HOVE_H
+#define VAN_HOVE_H
+
+#ifdef PMC_PARALLEL
+#include "mpi.h"
+#endif
+
+#include <cstdlib>
+#include <cstdio>
+#include <cstring>
+
+#include "../GLOBAL.h"
+#include "../base/System.h"
+#include "../base/Diagnostic.h"              // base class
+#include "../analysis/DcmplxCorrelation.h"
+
+// Diagnostic observer base class
+#include <util/util/DiagnosticObserver.h>
+
+// Use observer pattern if replicaX move is invoked
+#include "../mcmove/RepXMove.h"
+
+/**
+* Leon Van Hove introduced the time dependent correlation function in:
+* Phys. Rev., 95(1):249-262, 1954 with the title "Correlations in Space
+* and Time and Born Approximation Scattering in Systems of Interacting
+* Particles.
+*
+* VanHove calculates the time dependent correlation function of various
+* density pairs, known as the VanHove function. Each of them is uniquely
+* specified by the type of two monomers involved. Only total monomer densities
+* are considered, i.e., no separate calculation of intra- or inter-molecular
+* density correlation is enabled.
+*
+* The density correlation function computed in this code is defined as:
+*    S_ij (q,t) = < c_i(q,t) c_j*(q,0) > / Nparticle
+*
+* Monomer types are defined by two integer arrays: monoType1 and monoType2.
+* {0, 1, ...} are valid values.
+*/
+template <class ChainType> class VanHove : public Diagnostic,
+                                           public DiagnosticObserver
+{
+
+public:
+   
+   /**
+   * Default constructor. 
+   *
+   * \param system      pointer to parent system object.
+   * \param species_in  pointer to chain species.
+   */
+   VanHove(System *system, ChainType *species_in);
+
+
+   /**
+   * Constructor registering the active object as an observer.
+   *
+   * \param system      pointer to parent system object.
+   * \param species_in  pointer to chain species.
+   * \param repXMoveIn  pointer to the replicaX move object.
+   */
+   VanHove(System *system, ChainType *species_in, RepXMove* repXMoveIn);
+
+
+   /**
+   * Default destructor.
+   */
+   ~VanHove();
+
+
+   /**
+   * Read parameters needed to specify the type of correlation functions.
+   *
+   * \param file  pointer to the parameter file.
+   */
+   void read(FILE *file);
+
+
+   /**
+   * Sample the current configuration.
+   *
+   * \param iStep  MC move step index.
+   */
+   void sample(long iStep);
+
+
+   /**
+   * Output statistics.
+   */
+   void output();
+
+
+   /**
+   * Backup statisitcal accumulators.
+   *
+   * \param file  pointer to the backup file.
+   */
+   void backup(FILE *file);
+
+
+   /**
+   * Retrieve statisitcal accumulators.
+   *
+   * \param file  pointer to the restoring file.
+   */
+   void restore(FILE *file);
+
+
+   /**
+   * Override the update method of DiagnosticObserver class.
+   *
+   * \param partnerId  neighboring replica ID to which the statistics is
+   *                   exchanged.
+   */
+   virtual void update(int partnerId);
+
+
+private:
+
+   // Pointers enabling the current class to access system data.
+   System *sys;                ///< Pointer to parent system.
+   ChainType *species;         ///< Pointer to species container.
+
+   // Variables defining and storing of correlations
+   int nCorr;                  ///< Number of correlation functions requested.
+   int *monoType1;             ///< Index array to monomer type 1.
+   int *monoType2;             ///< Index array to monomer type 2.
+   DcmplxCorrelation ***corr;  ///< Pointers to the BlockAverage objects.
+
+   // Variables storing wave vectors
+   int    nWave;               ///< Number of waves.
+   int    *waveIndex;          ///< Indices of waves.
+   double *wave;               ///< Magnitudes of waves.
+   
+   // Output.
+   FILE *outFile;              ///< Pointer to the data file.
+   char fileName[80];          ///< Data file name.
+ 
+   /// \name Variables enabling exchange of statistics with other replicas.
+   //@{
+   double *corrDataIn;         ///< Buffering array for exchanging statistics.
+   double *corrDataOut;        ///< Buffering array for exchanging statistics.
+   RepXMove *repXMove;         ///< Pointer to replicaX move subject.
+   //@}
+
+
+   /**
+   * Generate waves commensurate with the simulation box.
+   *
+   * \param file  pointer to the parameter file.
+   */
+   void readWave(FILE* file);
+
+
+   /**
+   * Calculate the Fourier component of overall monomer density.
+   *
+   * \param monomerType  type of monomer density.
+   * \param qVec         wave vector of the Fourier mode.
+   */
+   dcmplx totalCorr(int monomerType, double* qVec);
+
+};
+
+
+/*-----------------------------------------------------------------------------
+* Default constructor.
+*/
+template <class ChainType> VanHove<ChainType> ::
+   VanHove(System *system, ChainType *species_in) : Diagnostic()
+{  
+   sys = system;
+   species = species_in;
+
+   strcpy(fileName,"");
+
+   repXMove    = 0;      // Invalid value
+   outFile     = 0;      // Invalid value
+   monoType1   = 0;      // Invalid value
+   monoType2   = 0;      // Invalid value
+   corr        = 0;      // Invalid value
+   corrDataIn  = 0;      // Invalid value
+   corrDataOut = 0;      // Invalid value
+   waveIndex   = 0;      // Invalid value
+   wave        = 0;      // Invalid value
+} 
+ 
+
+/*-----------------------------------------------------------------------------
+* Constructor also building connection with ReplicaX moves.
+*/
+template <class ChainType> VanHove<ChainType> ::
+   VanHove(System *system, ChainType *species_in, RepXMove *repXMoveIn)
+   : Diagnostic()
+{  
+   sys = system;
+   species = species_in;
+
+   strcpy(fileName,"");
+
+   repXMove = repXMoveIn;
+   repXMove ->registerObserver(this);
+
+   outFile     = 0;      // Invalid value
+   monoType1   = 0;      // Invalid value
+   monoType2   = 0;      // Invalid value
+   corr        = 0;      // Invalid value
+   corrDataIn  = 0;      // Invalid value
+   corrDataOut = 0;      // Invalid value
+   waveIndex   = 0;      // Invalid value
+   wave        = 0;      // Invalid value
+
+} 
+   
+
+/*-----------------------------------------------------------------------------
+* Destructor: release the memory allocated.
+*/
+template <class ChainType> 
+VanHove<ChainType>::~VanHove()
+{
+   // Analysis & diagnostic arrays
+   if (corr)      delete [] corr;
+   if (monoType1) delete [] monoType1;
+   if (monoType2) delete [] monoType2;
+
+   // Wave vector arrays
+   if (wave)  delete [] wave;
+
+   // Output file
+   if (outFile) fclose(outFile);
+}
+
+
+/*-----------------------------------------------------------------------------
+* Read parameters necessary to specify the particular series of correlation 
+* functions from file.
+*/
+template <class ChainType> 
+void VanHove<ChainType>::read(FILE *file)
+{
+   int bufferSize, i, j;
+
+   // fileName and #MC steps per sampling
+   readString(file, "fileName", fileName);
+   readInterval(file);
+
+   // Generate waves
+   readWave(file);
+   
+   // Read diagnostic specific parameter 
+   readInt(file, "nCorr",  &nCorr);
+   if (nCorr < 1) {
+      PMC_THROW("Invalid number of correlation functions (<1).");
+   }
+   
+   // Allocate memory
+   monoType1 = new int[nCorr];
+   monoType2 = new int[nCorr];
+   
+   // Read monomer types and correlation types
+   readIntArr(file, "monoType1", monoType1, nCorr);
+   readIntArr(file, "monoType2", monoType2, nCorr);
+
+   for (i = 0; i < nCorr; i++) {
+      if (monoType1[i] < 0) {
+         PMC_THROW("monoType1 < 0 not allowed.");
+      }
+
+      if (monoType2[i] < 0) {
+         PMC_THROW("monoType2 < 0 not allowed.");
+      }
+   }
+
+   // Allocate memory for correlation functions
+   corr = new DcmplxCorrelation**[nCorr];
+   for (i = 0; i < nCorr; i++) {
+      corr[i] = new DcmplxCorrelation*[nWave];
+      for (j = 0; j < nWave; j++) {
+         corr[i][j] = new DcmplxCorrelation;
+      }
+   }
+ 
+   // Read correlation size using the first instance
+   readIo(file, corr[0][0]);
+
+   // Set parameters for the remaining objects and initialize them
+   bufferSize = corr[0][0]->getSize();
+
+   for (j = 1; j < nWave; j++) {
+      corr[0][j]->setSize(bufferSize);
+      corr[0][j]->initialize();
+   }
+
+   for (i = 1; i < nCorr; i++) {
+      for (j = 0; j < nWave; j++) {
+         corr[i][j]->setSize(bufferSize);
+         corr[i][j]->initialize();
+      }
+   }
+ 
+   // Build the filename and open output file
+   sys->makeOutputFilename(fileName, fileName);
+   outFile = fopen(fileName, "w");
+   
+   if (outFile == NULL) {
+      printf("%s\n", fileName);
+      PMC_THROW("Error opening diagnostic file.");
+   }
+
+   // Allocate buffer array
+   corrDataIn  = new double[nCorr*nWave*(2*DcmplxCorrelation::packDataDim*2+4)];
+   corrDataOut = new double[nCorr*nWave*(2*DcmplxCorrelation::packDataDim*2+4)];
+} 
+
+
+/*-----------------------------------------------------------------------------
+* Send correlation function to BlockAverageVec analysis.
+*
+* The only molecule level information is whether or not the two monomers are on
+* the same chain. The current version works for Homopolymer, HomopolymerSG, and
+* Diblock.
+*/
+template <class ChainType>
+void VanHove<ChainType>::sample(long iStep)
+{
+   dcmplx sI, sJ, normalization;
+   int    iCorr, iWave;
+
+   normalization = dcmplx(sqrt(double(sys->nParticle)), 0.0);
+
+   if (isAtInterval(iStep)) {
+
+      // Loop over correlation objects
+      for (iCorr = 0; iCorr < nCorr; iCorr++) {
+         // loop over waves on distinct shells
+         for (iWave = 0; iWave < nWave; iWave++) {
+
+            sI = totalCorr(monoType1[iCorr], &wave[iWave*3]) / normalization;
+            sJ = totalCorr(monoType2[iCorr], &wave[iWave*3]) / normalization;
+
+            corr[iCorr][iWave]->sample(sI, sJ);
+
+         } // loop over waves
+      } // loop over correlations
+   } // if isAtInterval
+}
+
+
+/*-----------------------------------------------------------------------------
+* Get the sum of Fourier components of the particle density.
+*    monoType -- particle type
+*    qVec[3]  -- wave vector
+* Return
+*    totalFourier = \sum_{j=monoType} exp { - i * kVec * R_j }
+*/
+template <class ChainType>
+dcmplx VanHove<ChainType> :: totalCorr(int monoType, double* qVec)
+{
+   dcmplx totalFourier, phase;
+   VecDef r[3];
+   int    iParticle, iType;
+
+   // Initialize Fourier component
+   totalFourier = dcmplx(0.0, 0.0);
+
+   // Loop over particles
+   for (iParticle = 0; iParticle < sys->nParticle; iParticle++) {
+
+      // Particle position & type
+      sys->getPosition(iParticle, r);
+      sys->getType(iParticle, iType);
+
+      // Fourier component
+      if (iType == monoType) {
+         phase = dcmplx(0.0, qVec[0]*r[0] + qVec[1]*r[1] + qVec[2]*r[2]);
+         totalFourier += exp(-phase);
+      }  
+
+   }
+ 
+   // Return Fourier component
+   return totalFourier;
+}
+
+
+/*-----------------------------------------------------------------------------
+* Generate waves commensurate with the simulation box, namely
+*     q = 2 * \pi * (1/Lx, 1/Ly, z/Lz) * (ix, iy, iz)
+*
+* The axes are assumed to be orthogonal, but the box needs not to be cubic.
+*/
+template <class ChainType>
+void VanHove<ChainType>::readWave(FILE* file)
+{
+   int    iWave;
+   double L[3], basis[3];
+
+   // Read number of waves
+   readInt(file, "nWave", &nWave);
+   if (nWave < 1) {
+      PMC_THROW("nWave < 1.");
+   }
+
+   // Allocate wave and indice array
+   wave      = new double[nWave*3];
+   waveIndex = new int[nWave*3];
+   for (iWave = 1; iWave < nWave; iWave++)
+      waveIndex[iWave] = waveIndex[iWave-1] + 3;
+
+   // Get the box size; calculate basis vector in reciprocal space
+   sys->box->getL(L);
+   basis[0] = 2.0 * acos(-1.0) / L[0];
+   basis[1] = 2.0 * acos(-1.0) / L[1];
+   basis[2] = 2.0 * acos(-1.0) / L[2];
+
+   // Calculate wave components
+   readIntMat(file, "waveIndex", waveIndex, nWave, 3);
+
+   for (iWave = 0; iWave < nWave; iWave++) {
+      wave[iWave*3]   = double(waveIndex[iWave*3])   * basis[0];
+      wave[iWave*3+1] = double(waveIndex[iWave*3+1]) * basis[1];
+      wave[iWave*3+2] = double(waveIndex[iWave*3+2]) * basis[2];
+   }
+}
+
+
+/*------------------------------------------------------------------------------
+*  Output correlation functions
+*/
+template <class ChainType> 
+void VanHove<ChainType>::output()
+{   
+   int    i, j;
+ 
+   for (i = 0; i < nCorr; i++) {
+      fprintf(outFile,"Type1:%d  Type2:%d \n", monoType1[i], monoType2[i]);
+
+      for (j = 0; j < nWave; j++) {
+         fprintf(outFile,"wave index: %d  %d  %d\n",
+                         waveIndex[3*j], waveIndex[3*j+1], waveIndex[3*j+2]);
+         corr[i][j]->output(outFile);
+      }
+   }
+}
+
+
+/*-----------------------------------------------------------------------------
+* Backup statisitcal accumulators.
+*/
+template <class ChainType>
+void VanHove<ChainType>::backup(FILE *file)
+{
+   for (int i = 0; i < nCorr; i++)
+      for (int j = 0; j < nWave; j++)
+         corr[i][j]->backup(file);
+}
+
+
+/*-----------------------------------------------------------------------------
+* Retrieve statisitcal accumulators.
+*/
+template <class ChainType>
+void VanHove<ChainType>::restore(FILE *file)
+{
+   for (int i = 0; i < nCorr; i++)
+      for (int j = 0; j < nWave; j++)
+         corr[i][j]->restore(file);
+}
+
+
+/*-----------------------------------------------------------------------------
+* Exchange statistical accumulators with the active neighboring processor.
+*/
+template <class ChainType>
+void VanHove<ChainType>::update(int partnerId)
+{
+   #ifdef PMC_PARALLEL
+   MPI::Request request[2];
+   MPI::Status  status;
+   int          myId, myPort, ptPort, msgTag[2];
+   int          iCorr, iWave;
+   int          corrDataSize, counter, counterStep;
+   int          i, j, stepBuffer, stepCorr;
+
+   // Acquiring this processor's rank and ports
+   myId = sys->comm->Get_rank();
+   myPort    = myId%2;
+   ptPort    = partnerId%2;
+
+   // Message tag
+   msgTag[0] = 121;
+   msgTag[1] = 212;
+
+   // Pack complex correlation data
+   stepBuffer  = DcmplxCorrelation::packDataDim;
+   stepCorr    = stepBuffer + 4;
+   counterStep = stepBuffer + stepCorr;
+
+   // Collect pieces of data
+   counter = 0;
+   for (iCorr = 0; iCorr < nCorr; iCorr++) {
+      for (iWave = 0; iWave < nWave; iWave++) {
+
+         // pack the complex data into double arrays
+         corr[iCorr][iWave]->packDcmplxData();
+
+         // record buffer array
+         for (i = counter; i < counter + stepBuffer; i++) {
+            j = i - counter;
+            corrDataOut[i] = corr[iCorr][iWave]->bufferDataArray[j];
+         }
+
+         counter += stepBuffer;
+
+         // record corr array
+         for (i = counter; i < counter + stepCorr; i++) {
+            j = i - counter;
+            corrDataOut[i] = corr[iCorr][iWave]->corrDataArray[j];
+         }
+         counter += stepCorr;
+      }
+   }   
+
+   // size of corrData (data buffer)
+   corrDataSize = nCorr * nWave * (2*DcmplxCorrelation::packDataDim + 4);
+
+   // Accomodate neighboring accumulator
+   request[0] = sys->comm->Irecv(corrDataIn, corrDataSize, MPI::DOUBLE,
+                                 partnerId, msgTag[ptPort]);
+
+   // Send out current accumulator
+   request[1] = sys->comm->Isend(corrDataOut, corrDataSize, MPI::DOUBLE,
+                                 partnerId, msgTag[myPort]);
+
+   // Wait until exchanging finished
+   request[0].Wait();
+   request[1].Wait();
+
+   // Distribute data
+   counter = 0;
+   for (iCorr = 0; iCorr < nCorr; iCorr++) {
+      for (iWave = 0; iWave < nWave; iWave++) {
+
+         // Record buffer array
+         for (i = counter; i < counter + stepBuffer; i++) {
+            j = i - counter;
+            corr[iCorr][iWave]->bufferDataArray[j] = corrDataIn[i];
+         }
+         counter += stepBuffer;
+
+         // Record corr array
+         for (i = counter; i < counter + stepCorr; i++) {
+            j = i - counter;
+            corr[iCorr][iWave]->corrDataArray[j] = corrDataIn[i];
+         }
+         counter += stepCorr;
+
+         // Unpack the double arrays to recover the complex data
+         corr[iCorr][iWave]->unpackDcmplxData();
+      }
+   }
+    
+   #endif // PMC_PARALLEL
+}
+
+#endif // VAN_HOVE_H

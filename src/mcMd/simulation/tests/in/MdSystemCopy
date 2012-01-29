@@ -1,0 +1,10 @@
+MdSystem{
+  PairList{
+    atomCapacity                30
+    pairCapacity              1000
+    skin                       0.2
+  }
+  NVEIntegrator{
+    dt                         0.00100
+  }
+}

@@ -1,0 +1,65 @@
+MdSimulation{
+  FileMaster{
+    inputPrefix                simulation/in/md.
+    outputPrefix               simulation/in/md.
+  }
+  nAtomType                    2
+  nBondType                    2
+  atomTypes                    A         1.0000
+                               B         1.0000
+  maskedPairPolicy      MaskBonded
+  SpeciesManager{
+    capacity                     2
+    
+    Homopolymer{
+      moleculeCapacity             5
+      nAtom                        2
+      type                         0
+    }
+   
+    Diblock{
+      moleculeCapacity             4
+      blockLength                  3       2
+      type                         1       0
+    }
+  
+  }
+  Random{
+    seed                -874615293
+  }
+  MdSystem{
+    EnergyEnsemble{
+      type           adiabatic
+    }
+    BoundaryEnsemble{
+      type               rigid
+    }
+    maxBoundary    orthorhombic  11.00        11.00       11.00
+    LJPair{
+      epsilon             1.00         2.00  
+                          2.00         1.00
+      sigma               1.00         1.00
+                          1.00         1.00
+      cutoff              1.12246      1.12246
+                          1.12246      1.12246
+    }
+    
+    HarmonicBond{
+      kappa               100.00       100.000
+      length                1.00         1.100
+    }
+    PairList{
+      atomCapacity                30
+      pairCapacity              1000
+      skin                       0.2
+    }
+    NVEIntegrator{
+       dt                         0.00100
+    }
+  }
+  DiagnosticManager{
+    baseInterval               10
+    capacity                    0
+
+  }
+}

@@ -1,0 +1,14 @@
+#-----------------------------------------------------------------------
+# This makefile fragment defines makefile variables that control the 
+# directory in which the main executables are installed, and the names 
+# of the executable files. It is included by src/main/makefile
+#-----------------------------------------------------------------------
+
+# Directory for executable files
+BIN_DIR=$(ROOT_DIR)/bin
+
+# Paths to executable files for MC and MD simulations.
+MCSIM_EXE=$(BIN_DIR)/mcSim$(MCMD_SUFFIX)
+MDSIM_EXE=$(BIN_DIR)/mdSim$(MCMD_SUFFIX)
+
+#-----------------------------------------------------------------------

@@ -1,0 +1,117 @@
+McSimulation{
+  FileMaster{
+    commandFileName                 commands
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              1
+  nBondType                              1
+  atomTypes                    A       1.0
+  maskedPairPolicy                MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                     100
+      nAtom                                  2
+      atomType                               0
+      bondType                               0
+    }
+
+  }
+  Random{
+    seed                           13451892
+  }
+  McSystem{
+    pairStyle                        LJPair
+    bondStyle                  HarmonicBond
+    McPairPotential{
+      epsilon               1.000000000000e+00  
+      sigma                 1.000000000000e+00  
+      cutoff                1.122460000000e+00  
+      maxBoundary             cubic  10.5 
+    }
+    BondPotential{
+      kappa                 1.000000000000e+02
+      length                1.000000000000e+00
+    }
+    EnergyEnsemble{
+      type                  isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                  rigid
+    }
+  }
+  McMoveManager{
+
+    AtomDisplaceMove{
+      probability           0.998000000000e+00
+      speciesId                              0
+      delta                               0.10
+    }
+
+    HybridMdMove{
+      probability           0.002000000000e+00
+      nStep                                 20
+      MdSystem{
+        MdPairPotential{
+          maxBoundary             cubic  10.5 
+          PairList{
+            atomCapacity                        1000
+            pairCapacity                       10000
+            skin                  5.000000000000e-01
+          }
+        }
+        NveVvIntegrator{
+          dt                    1.000000000000e-02
+        }
+      }
+    }
+
+  }
+  DiagnosticManager{
+    baseInterval                        1000
+
+    LogProgress{
+      interval                        500000
+    }
+
+    McEnergyAverage{
+      interval                         10000
+      outputFileName                  energy
+      nSamplePerBlock                     10
+    }
+
+    McPressureAverage{
+      interval                          1000
+      outputFileName                pressure
+      nSamplePerBlock                     10
+    }
+
+    AtomMSD{
+      interval                          1000
+      outputFileName                 AtomMSD
+      speciesId                            0
+      atomId                               0
+      capacity                           100
+    }
+
+    RDF{
+      interval                        100000
+      outputFileName                     RDF
+      RadialDistribution{
+         max                             5.0
+         nBin                            500
+      }
+      selector                         inter   -1    -1
+    }
+
+  }
+}
+
+
+    DumpConfig{
+      interval                         10000
+      outputFileName            dump/config.
+    }
+

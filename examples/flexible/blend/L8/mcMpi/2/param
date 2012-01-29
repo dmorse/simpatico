@@ -1,0 +1,205 @@
+McSimulation{
+  FileMaster{
+    commandFileName                paramfile
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              2
+  nBondType                              1
+  atomTypes                    A       1.0
+                               B       1.0
+  maskedPairPolicy                MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                      50
+      nAtom                                  8
+      atomType                               0
+      bondType                               0
+    }
+
+    Homopolymer{
+      moleculeCapacity                      50
+      nAtom                                  8
+      atomType                               1
+      bondType                               0
+    }
+
+  }
+  Random{
+    seed                           13451892
+  }
+  McSystem{
+    pairStyle                        LJPair
+    bondStyle                 HarmonicBond
+    McPairPotential{
+      epsilon               1.000000000000e+00  1.300000000000e+00
+                            1.300000000000e+00  1.000000000000e+00
+      sigma                 1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      cutoff                1.122460000000e+00  1.122460000000e+00
+                            1.122460000000e+00  1.122460000000e+00
+      maxBoundary             cubic  10.5 
+    }
+    BondPotential{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+    EnergyEnsemble{
+      type                  isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                  rigid
+    }
+  }
+  McMoveManager{
+
+    HybridMdMove{
+      probability           0.002000000000e+00
+      nStep                                 20
+      MdSystem{
+        MdPairPotential{
+          maxBoundary cubic 10.5
+          PairList{
+            atomCapacity                        1000
+            pairCapacity                       10000
+            skin                  3.000000000000e-01
+          }
+        }
+        NveVvIntegrator{
+          dt                    5.000000000000e-03
+        }
+      }
+    }
+
+    AtomDisplaceMove{
+      probability           0.908000000000e+00
+      speciesId                              0
+      delta                               0.04
+    }
+
+    CfbEndMove{
+      probability           0.030000000000e+00
+      speciesId                              0
+      nRegrow                                4
+      nTrial                                20
+    }
+
+    CfbReptationMove{
+      probability           0.040000000000e+00
+      speciesId                              0
+      nTrial                                20
+      hasAutoCorr 0
+    }
+
+    CfbRebridgeMove{
+      probability             0.010000000000e+00
+      speciesId                              0
+      nRegrow                                1
+      nTrial                                10
+      length21                             1.0
+      length10                             1.0
+      kappa10                            400.0
+    }
+
+    CfbDoubleRebridgeMove{
+      probability             0.010000000000e+00
+      speciesId                              0
+      nRegrow                                1
+      bridgeLength                         2.0
+      nTrial                                10
+      length21                             1.0
+      length10                             1.0
+      kappa10                            800.0
+    }
+
+  }
+  DiagnosticManager{
+    baseInterval                        1000
+
+    LogProgress{
+      interval                         10000
+    }
+
+    DumpConfig{
+      interval                         1000
+      outputFileName            dump/config.
+    }
+
+    McEnergyOutput{
+      interval                          1000
+      outputFileName                  energy
+    }
+
+    McEnergyAverage{
+      interval                          1000
+      outputFileName               energyAve
+      nSamplePerBlock                     10
+    }
+
+    McPairEnergyAverage{
+      interval                          1000
+      outputFileName              pairEnergy
+      nSamplePerBlock                     10
+      selector                           inter  -1  -1
+    }
+   
+    RadiusGyration{
+      interval                          1000
+      outputFileName          RadiusGyration
+      nSamplePerBlock                     10
+      speciesId                            0
+    }
+
+    RDF{
+      interval                         1000
+      outputFileName                     RDF
+      RadialDistribution{
+         max                             5.0
+         nBin                            500
+      }
+      selector                         inter   -1    -1
+    }
+
+    BondLengthDist{
+      interval                          1000
+      outputFileName          BondLengthDist
+      speciesId                            0
+      Distribution{
+         min                             0.0
+         max                             2.0
+         nBin                            400
+      }
+    }
+
+    AtomMSD{
+      interval                          1000
+      outputFileName                 AtomMSD
+      speciesId                            0
+      atomId                               5
+      capacity                           400
+    }
+
+    IntraPairAutoCorr{
+      interval                         1000
+      outputFileName      IntraPairAutoCorr
+      speciesId                           0
+      atom1Id                             0
+      atom2Id                             7 
+      capacity                         1000
+    }
+
+  }
+}
+WRITE_PARAM      param
+READ_CONFIG      config
+SIMULATE        1000000
+WRITE_CONFIG     config
+FINISH
+
+
+    HarmonicTether{
+      nTetherType                            1
+      kappa                 1.000000000000e+00
+    }

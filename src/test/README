@@ -1,0 +1,12 @@
+This directory contains the source code for a simple unit test library.
+The library contains only header files, in which all member functions
+are inlined. 
+
+The design of the library is documented in the class documentation for
+the classes UnitTest, TestRunner, and UnitTestRunner.  Three programs 
+that illustrate usage are given in the examples/ subdirectory.
+
+Unit tests for particular classes must be derived from UnitTest. Files
+that contain definitions of such unit tests must include the files
+"UnitTest.h" and "UnitTestRunner.h". 
+

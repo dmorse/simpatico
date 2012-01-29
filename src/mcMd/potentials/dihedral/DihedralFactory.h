@@ -1,0 +1,53 @@
+#ifdef  MCMD_DIHEDRAL
+#ifndef DIHEDRAL_FACTORY_H
+#define DIHEDRAL_FACTORY_H
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include <util/param/Factory.h>
+#include <iostream>
+
+namespace McMd
+{
+
+   using namespace Util;
+
+   class System;
+   class DihedralPotential;
+
+   /**
+   * Factory for subclasses of DihedralPotential.
+   * 
+   * \ingroup Dihedral_Module
+   */
+   class DihedralFactory : public Factory<DihedralPotential>
+   {
+   
+   public:
+   
+      /**
+      * Default constructor.
+      */
+      DihedralFactory(System& system);
+
+      /**
+      * Return a pointer to a new DihedralPotential, if possible.
+      */
+      DihedralPotential* factory(const std::string& subclass) const;
+
+   private:
+
+      // Pointer to parent System. 
+      System* systemPtr_;
+
+   };
+  
+}
+
+#endif // ifndef DIHEDRAL_FACTORY_H
+#endif // ifdef MCMD_DIHEDRAL

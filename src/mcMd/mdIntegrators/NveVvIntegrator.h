@@ -1,0 +1,75 @@
+#ifndef NVE_VV_INTEGRATOR_H
+#define NVE_VV_INTEGRATOR_H
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include <mcMd/mdIntegrators/MdIntegrator.h>
+
+#include <iostream>
+
+namespace McMd
+{
+
+   using namespace Util;
+
+   /**
+   * An NVE Verlet molecular dynamics integrator.
+   *
+   * \ingroup MdIntegrator_Module
+   */
+   class NveVvIntegrator : public MdIntegrator
+   {
+   
+   public:
+
+      /// Constructor. 
+      NveVvIntegrator(MdSystem& system);
+ 
+      /// Destructor.   
+      virtual ~NveVvIntegrator();
+
+      /**
+      * Read parameters from file and initialize this MdSystem.
+      *
+      * \param in input file stream.
+      */
+      virtual void readParam(std::istream &in);
+
+      /**
+      * Setup private variables before main loop.
+      */
+      virtual void setup();
+
+      /**
+      * Take a complete NVE MD integration step.
+      */
+      virtual void step();
+
+      /**
+      * Save the internal state to an archive.
+      *
+      * \param ar archive object.
+      */
+      virtual void save(Serializable::OArchiveType& ar);
+
+      /**
+      * Load the internal state to an archive.
+      *
+      * \param ar archive object.
+      */
+      virtual void load(Serializable::IArchiveType& ar);
+
+   private:
+
+      /// Factors of 0.5*dt/mass for different atom types.
+      DArray<double> prefactors_;
+
+   }; 
+
+} 
+#endif

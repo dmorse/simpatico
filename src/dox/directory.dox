@@ -1,0 +1,56 @@
+namespace McMd
+{
+
+/*! \page directory_page Directory Structure
+
+The code for Simpatico is maintained in a subversion version 
+control repository. The root directory of the repository has 
+subdirectories named trunk/, tags/, and branches/ that can hold 
+different versions of the entire project. The root directory
+of the version of the code that is distributed as a tar file 
+for download is a snapshot of a recent version of the trunk/
+directory of the repository version.  Hereafter, we discuss 
+only the structure of the trunk/ directory of the repository, 
+or of the root directory of the version that is distributed 
+for download. 
+
+The trunk directory has the following subdirectories:
+\code
+  src/
+  doc/ 
+  lib/
+  bin/
+  examples/ 
+  tools/
+  user/
+\endcode
+The content of each of these directories is discussed below.
+
+- src/ contains all C++ header (.h) and source (.cpp) files.
+
+- doc/ contains documentation files, including the web 
+    documentation that you are reading.
+
+- lib/ is the default location for installing static 
+     (*.a) libraries. It is initially empty.
+
+- bin/ is the default location for installing
+     executable programs. It is initially empty.
+
+- examples/ contains input files for a variety of example 
+  simulations.  
+
+- tools/ contains C++ and python programs that are useful 
+    for manipulating data or generating initial configurations.
+
+- user/ provides a skeleton of the code required to 
+    integrate new user-defined classes.
+
+<ul>
+ <li> \ref overview_page (Up)    </li>
+ <li> \ref design_page   (Next)  </li>
+</ul>
+
+
+*/
+}

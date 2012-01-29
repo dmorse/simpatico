@@ -1,0 +1,47 @@
+The directory tree rooted at src/mcMd contains all of the classes in the 
+McMd namespace. 
+
+Subdirectories:
+----------------------
+
+boundary       periodic boundary conditions and minimum image convention
+potentials     classes that define potential energy functions
+  pair         nonbonded pair potential classes
+  bond         covalent bond potential classes (also for "links")
+  angle        covalent three-body angle potential classes
+  dihedral     covalent four-body angle dihedral torsion classes
+  link         mutable covalent bond potentials (e.g., crosslinks)
+  external     external one-body potentials.
+  tether       potentials to "tether" (restrain) specific atoms.
+ensembles      classes that define statistical ensembles
+chemistry      classes for atoms, molecules, and covalent groups (bonds, etc.)
+species        molecular species (i.e., molecular structures)
+neighbor       classes that implement a cell list and a Verlet pair list
+links          classes to manage crosslinks (mutable covalent bonds).
+tethers        classes to manage tethers that constrain specific atoms
+simulation     main classes for constructing simulations
+mcSimulation   Monte Carlo (MC) Simulation and System subclasses
+mcMoves        classes for specific MC moves (derived from McMove)
+mdSimulation   molecular dynamics (MD) Simulation and System subclasses
+mdIntegrators  classes for specific MD integrators (derived from MdIntegrator)
+diagnostics    classes for data analysis (derived from Diagnostic)
+configIos      classes for configuration file IO in non-default formats
+trajectoryIos  classes for MD trajectory (multi-configuration) file IO.
+perturb        class for free energy perturbation theory
+util           miscellaneous utilities
+
+dox            source files for dOxygen html documentation.
+
+Makefile targets 
+----------------
+
+The mcMd directory contains a makefile that can be used to compile all of the 
+classes in the directory tree rooted at mcMd. This includes all of the classes 
+in the McMd namespace.  The most important targets are available:
+
+make all      make all *.o files in src/mcMd and its subdirectories, 
+              and a static library mcMd$(MCMD_SUFFIX).a in lib/
+
+make clean    remove all *.o files in src/mcMd and its subdirectories,
+              and the static library file.
+

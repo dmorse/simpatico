@@ -1,0 +1,3 @@
+This directory contains source files for subclasses of the Species
+abstract base class. Each subcless corresponds to a different type
+of molecule.

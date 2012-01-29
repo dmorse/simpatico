@@ -1,0 +1,7 @@
+                        potentialEnergyAve
+  
+mdNvt (dt=0.004)          1689.55 +- 0.07
+mdNvt (dt=0.004)          1689.8  +- 0.2
+
+mc (atomDisplace)         1688.2  +- 0.3
+mc (hybridMd dt = 0.005)  1687.4  +- 0.4

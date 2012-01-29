@@ -1,0 +1,5 @@
+boundary    cubic  10.0000
+Random{
+  seed   10314761
+}
+nMolecule       850

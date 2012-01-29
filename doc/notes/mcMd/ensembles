@@ -1,0 +1,30 @@
+Ideas:
+
+1) Generalized ensembles for energy, boundary, and species number.
+For each of these variables, we define a base class (EnergyEnsemble,
+SpeciesEnsemble, etc.) and at least three implementations: constant,
+Boltzmann, and nonBoltzmann. Each System will have a pointer to an
+EnergyEnsemble and to a BoundaryEnsemble. Each Species will have a
+pointer to a SpeciesEnsemble. We wil have to use dynamic_cast to use 
+the full interface of specific ensembles.
+
+2) Pseudo-Species can also have a PseudoSpeciesEnsemble to control
+transitions between internal states. This is sufficient to allow us 
+to treat extended ensembles in which individual molecules can be in 
+any of several internal states. 
+
+3) Derive the nonBoltzmann ensembles for energy, boundary, and
+number from a NonBoltzmannEnsemble base class. This must have a 
+histogram of weights, and a histogram of visits. It should also 
+provide methods to update the weights, using either fixed or 
+adaptive (i.e., WangLandau) weighting schemes.
+
+4) Perhaps define NonBoltzmann<Type> as a base class for NB ensembles 
+for a variable of type Type. This method must have a pure virtual 
+index(Type) method that gives the integer index associated with a 
+value.
+
+5) How about diagnostics? Perhaps a base class template 
+NonBoltzmannDiagnostic<Type> that constructs a 1D array of diagnostic 
+objects and that is associated with a NonBoltzmann<Type>. 
+

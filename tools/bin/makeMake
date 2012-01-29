@@ -1,0 +1,8 @@
+#!/usr/bin/env python
+
+from makeMake import *
+x = MakeMaker()
+globalInclude  = 'include $(SRC_DIR)/util/makefile.inc\n'
+#globalInclude  = 'include $(SRC_DIR)/mcMd/makefile.inc\n'
+x.setGlobalInclude(globalInclude)
+x.make()

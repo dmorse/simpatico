@@ -1,0 +1,8 @@
+#!/bin/bash -l
+#PBS -q devel
+#PBS -l walltime=0:59:00,mem=5000mb,nodes=1:ppn=3
+#PBS -o zout
+cd $PBS_O_WORKDIR
+module load intel 
+module load ompi/intel
+mpirun -np 3 $HOME/molmcd/branches/evaluators/bin/mcSim_m_f -e -p < param

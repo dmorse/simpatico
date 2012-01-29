@@ -1,0 +1,112 @@
+/*! \page about_page About Simpatico
+ 
+Simpatico is C++ class library that can be used for both Monte Carlo (MC) 
+or Molecular Dynamics (MD) simulations of polymeric and molecular liquids.
+It is particularly suitable for hybrid Monte Carlo simulations, in which 
+short NVE MD simulations are used as proposed MC moves. It also provides 
+algorithms for thermodynamic perturbation theory and parallel tempering 
+(or replica exchange simulations, using an arbitrary choice of tempering 
+variable.  Simpatico is designed to be both efficient enough to be 
+attractive as a serious research tool, and flexible enough to allow easy 
+extension. 
+
+Simpatico uses a molecular model with nonbonded pair interactions, covalent
+two-body bond interactions, and three- four-body angle and dihedral potentials.
+Several different types of pair and bond interactions are provided, and others
+are easily added.  It also has allows for introduction of external potentials,
+and for the introduction of a type of mutable bond (a "link") that can be added 
+or removed during a simulation, to represent permanent or transient crosslinks. 
+It does not yet provide electrostatic interactions. 
+
+For MD simulations, Simpatico currently provides the following integration 
+algorithms:
+<ul>
+  <li> NVE velocity verlet </li>
+  <li> NVT Nose-Hoover </li>
+  <li> NVT dissipative particle dynamics </li>
+  <li> NPH Anderson barostat </li>
+</ul>
+For Monte Carlo simulations, it currently provides the following MC moves,
+among others:
+<ul>
+   <li> Single atom displacement </li>
+   <li> Rigid molecule displacement </li>
+   <li> Hybrid MD move (short NVE or NPH simulations as proposed MC moves) </li>
+   <li> Reptation move for linear chains </li>
+   <li> Configuration bias regrowth of all or part of a linear chain. </li>
+   <li> Double rebridging for linear chains. </li>
+   <li> Double rebridging moves for ring polymers. </li>
+   <li> End-swap move for linear heteropolymers (e.g., diblock copolymers) </li>
+   <li> Semi-grand canonical move (for, e.g., homopolymer blends) </li>
+</ul>
+Simpatico now also provides support for the use of the 
+<a href=http://codeblue.umich.edu/hoomd-blue/>Hoomd-blue</a> 
+code for MD on the GPU as a fast engine for hybrid MC simulations. In this mode, 
+Hoomd-blue is used to implement a hybrid MC move in which short NVE MD simulations 
+are carried out on a GPU, while 
+the main loop is implemented on the CPU, as are any other MC moves.
+Integration with Hoomd-blue provides a dramatic increase in the speed of 
+hybrid MC simulations.
+
+Simpatico provides a large set of classes for statistical analysis.  
+These include classes to evaluate:
+<ul>
+  <li> Full and partial radial distribution functions. </li>
+  <li> Structure factors S(k). </li>
+  <li> Intramolecular correlation functions. </li>
+  <li> Radii of gyration </li>
+  <li> Mean-squared distances between specific atom pairs in a molecule.</li>
+  <li> Thermodynamic properties (energies and stress components.) </li>
+  <li> Mean-squared displacements for atoms or molecular centers-of-mass. </li>
+  <li> Auto-correlation functions for vector separations of atom pairs. </li>
+  <li> Intermediate scattering (van Hove) function S(k, t) . </li>
+</ul>
+All diagnostic classes can be used either on-the-fly, during a simulation,
+or for post-processing of a trajectory file or a sequence of configuration 
+dump files. Postprocessing is done using the same programs as those used 
+for simulation, by a command that replaces the main simulation loop by a 
+loop over a sequence of system configurations that are read from file.
+
+Simpatico is designed primarily for use on a single CPU (or CPU/GPU pair), 
+or for parallel algorithms such as replica exchange in which each CPU 
+simulates a separate physical system.  This restriction is necessary to allow 
+a flexible implementation of molecular MC as well as MD algorithms, and of a 
+flexible scheme for data analysis. In this regard, it is different from a 
+growing number of open source packages [LAMMPS, NAMD, DPPOLY, EsPResso, etc.] 
+that provide efficient parallel engines for MD simulations, but that do not
+provide a convenient basis for molecular Monte Carlo simulations or (in 
+some cases) for data analysis. Among other open source molecular simulation 
+packages, it is probably most similar in design to 
+<a href=http://www.etomica.org>Etomica</a>, which was written in Java by 
+David Kofke's group at the University of Buffalo. 
+
+Simpatico currently provides a very convenient tool for running and 
+analyzing MC, MD and hybrid MC simulations of coarse-grained models 
+of polymer liquids.  It is not yet appropriate for use with atomistic 
+models, because of the absence of an electrostatic potential, and the 
+absence of MC algorithms designed specifically for use with stiff angle 
+and dihedral potentials. 
+
+Simpatico is still under rapid development, and is distributed with 
+no warranty of any kind. It is distributed under the terms of the GNU 
+public license (see the LICENSE file). 
+
+Contributors:
+<ul>
+  <li> David Morse (primary author) </li>
+  <li> Jens Glaser (HOOMD integration) </li>
+  <li> Jian Qin (MC algorithms, angle and dihedral potentials) </li>
+  <li> Pavani Medapuram (replica exchange and perturbation theory) </li>
+</ul>
+Simpatico was written by starting from a code named PMC that was used 
+in 2007-2009 by Jun Chung and Jian Qin, but not distributed outside 
+of our research group. Many of the MC algorithms in Simpatico were 
+written by these two users and then ported to Simpatico. 
+
+Navigation:
+<ul>
+ <li> \ref index       (Up)        </li>
+ <li> \ref guide_page (Next)      </li>
+</ul>
+
+*/

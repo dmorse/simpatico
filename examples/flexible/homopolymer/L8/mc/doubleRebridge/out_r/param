@@ -1,0 +1,147 @@
+McSimulation{
+  FileMaster{
+    commandFileName                 commands
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              1
+  nBondType                              1
+  atomTypes                              A  1.000000000000e+00
+  maskedPairPolicy              MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                     100
+      nAtom                                  8
+      type                                   0
+    }
+
+  }
+  Random{
+    seed                          1756780490
+  }
+  McSystem{
+    EnergyEnsemble{
+      type                          isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                               rigid
+    }
+    pairStyle                         LJPair
+    bondStyle                   HarmonicBond
+    McPairPotential{
+      epsilon               1.000000000000e+00
+      sigma                 1.000000000000e+00
+      cutoff                1.122460000000e+00
+      maxBoundary                        cubic     1.0500000e+01
+    }
+    BondPotential{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+  }
+  McMoveManager{
+
+    HybridMdMove{
+      nStep                                 20
+      MdSystem{
+        MdPairPotential{
+          maxBoundary                        cubic     1.0500000e+01
+          PairList{
+            atomCapacity                        1000
+            pairCapacity                       10000
+            skin                  3.000000000000e-01
+          }
+        }
+        NveVvIntegrator{
+          dt                    5.000000000000e-03
+        }
+      }
+    }
+    probability           5.000000000000e-02
+
+    CfbDoubleRebridgeMove{
+      speciesId                              0
+      nRegrow                                1
+      bridgeLength          2.000000000000e+00
+      nTrial                                10
+      length21              1.000000000000e+00
+      length10              1.000000000000e+00
+      kappa10               8.000000000000e+02
+    }
+    probability           9.500000000000e-01
+
+  }
+  DiagnosticManager{
+    baseInterval                        1000
+
+    LogProgress{
+      interval                           50000
+    }
+
+    McEnergyOutput{
+      interval                           10000
+      outputFileName                    energy
+    }
+
+    McEnergyAverage{
+      interval                            5000
+      outputFileName                 energyAve
+      nSamplePerBlock                       10
+    }
+
+    McPairEnergyAverage{
+      interval                            5000
+      outputFileName                pairEnergy
+      nSamplePerBlock                       10
+      selector                             All        -1        -1
+    }
+
+    RadiusGyration{
+      interval                            5000
+      outputFileName            RadiusGyration
+      nSamplePerBlock                       10
+      speciesId                              0
+    }
+
+    RDF{
+      interval                           40000
+      outputFileName                       RDF
+      RadialDistribution{
+        max                   5.000000000000e+00
+        nBin                                 500
+      }
+      selector                           Inter        -1        -1
+    }
+
+    BondLengthDist{
+      interval                           10000
+      outputFileName            BondLengthDist
+      speciesId                              0
+      Distribution{
+        min                   0.000000000000e+00
+        max                   2.000000000000e+00
+        nBin                                 400
+      }
+    }
+
+    AtomMSD{
+      interval                            5000
+      outputFileName                   AtomMSD
+      speciesId                              0
+      atomId                                 5
+      capacity                             400
+    }
+
+    IntraPairAutoCorr{
+      interval                            5000
+      outputFileName         IntraPairAutoCorr
+      speciesId                              0
+      atom1Id                                0
+      atom2Id                                7
+      capacity                            1000
+    }
+
+  }
+}

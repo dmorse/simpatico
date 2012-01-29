@@ -1,0 +1,3 @@
+SET_CONFIG_IO      MdConfigIo
+READ_CONFIG            config
+FINISH

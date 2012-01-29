@@ -1,0 +1,3 @@
+subDirectories = tests
+pathFromSrc = mcMd/simulation
+pathToSrc = ../..

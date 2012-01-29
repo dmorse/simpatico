@@ -1,0 +1,6 @@
+Simpatico is not yet a mature simulation package, but aspires to 
+become one. The core of Simpatico was developed by rewriting a 
+package named PMC that is used in our group for NVT simulations 
+of coarse-grained bead-spring models of flexible polymer liquids. 
+Thus far, both packages provide only those features that we
+have needed for these simulations. 

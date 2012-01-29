@@ -1,0 +1,387 @@
+namespace McMd
+{
+
+/*! \page param_page Parameter File
+
+Initialization of a Simpatico MC or MD simulation is directed by a parameter 
+file.  The parameter file is read by the readParam() method of an McSimulation 
+or McSimulation object.  This file uses a hierarchical format that reflects 
+the organization of objects used to construct a simulation. For this purpose, 
+All of the objects that must read parameters during initialization are 
+organized into a hierarchy, or tree, in which each object can have one more 
+"children". The main McSimulation or MdSimulation object is the root of the
+tree.  Each child of an object is generally either a member of the parent 
+object or a dynamically allocated object that the parent "owns" is responsible
+for managing.  Each object can have children that represent either 
+composite-subobjects, which are nodes of the tree, or individual parameters, 
+which are leaves. 
+
+The file format for parameter file contains a set of nested parameter blocks 
+that begin and end with matched curly brackets, as in a C program. Each such 
+block is associated with an object, and contains all of the data required to 
+initialize that object. Each block may also contain any number of nested 
+subblocks associated with its child objects, as well as lines containing 
+individual parameter values. For example, because an McSimulation object 
+has an McSystem data member, the outer parameter file block for the main 
+McSimulation object contains a nested subblock associated with its McSystem. 
+The McSystem subblock in turn contains subblocks associated with the children 
+of an McSystem, among which are the instances of classes used to define 
+boundary conditions and various interaction potentials. 
+
+As an example, here is the complete parameter file for a simple constant 
+energy (NVE) MD simulation, for a version of the code that was compiled
+with support for only nonbonded pair and covalent bond interactions.
+\code
+MdSimulation{
+  FileMaster{
+    commandFileName               commands
+    inputPrefix                        in/
+    outputPrefix                      out/
+  }
+  nAtomType                              2
+  nBondType                              1
+  atomTypes                              A   1.000
+                                         B   1.000
+  maskedPairPolicy              MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                     100
+      nAtom                                  8
+      atomType                               0
+      bondType                               0
+    }
+
+  }
+  Random{
+    seed                          -10742892
+  }
+  MdSystem{
+    pairStyle                        LJPair
+    bondStyle                  HarmonicBond 
+    MdPairPotential{
+      epsilon               1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      sigma                 1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      cutoff                1.122460000000e+00  1.122460000000e+00
+                            1.122460000000e+00  1.122460000000e+00
+      maxBoundary           cubic       12.000   
+      PairList{
+        atomCapacity                        1000
+        pairCapacity                       10000
+        skin                  2.500000000000e-01
+      }
+    }
+    MdBondPotential{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+    EnergyEnsemble{
+      type                        adiabatic
+    }
+    BoundaryEnsemble{
+      type                            rigid
+    }
+    NveVvIntegrator{
+       dt                   5.000000000000e-03
+    }
+  }
+  DiagnosticManager{
+    baseInterval                          10
+
+    DumpConfig{
+      interval                           100
+      outputFileName                   dump/
+    }
+
+    MdEnergyOutput{
+      interval                           100
+      outputFileName                  energy
+    }
+
+  }
+
+}
+\endcode
+
+In this format, the block associated with an instance of a class starts with a 
+line containing the name of the class and an opening brace ("{"), and ends with 
+a line containing only a matched closing brace (i.e., "}"). For example, the 
+block associated with the "MdSystem" begins with a line containing "MdSystem{", 
+and ends with a line containing only a matching closing brace "}".  By convention, 
+nested blocks are indented, but indentation and other white space is ignored when 
+this file is parsed.  The main block, which contains all the others, is 
+associated with the main MdSimulation or McSimulation object, and so starts with 
+"MdSimulation{" in this example.
+
+\section parameter_section Parameter Values
+ 
+Each block in a parameter file may contain lines that contain values for 
+individual parameters and nested subblocks.  
+
+The value of each parameter that is represented by a primitive C++ variable 
+(e.g., an int, double, or bool) or by a std::string is given on a single 
+line. Each such line contains a label string followed by the value of the 
+parameter. Each parameter is associated with a member variable of the 
+enclosing class. By convention, the label for each parameter is the name 
+of the associated class member, except for the absence in the label of a 
+trailing underscore that is used in the source code to mark names of 
+private class member variables).  For example, the number of atom types 
+in an MdSimulation is given by private member variable named nAtomType_, 
+which is indicated in the parameter file by a label "nAtomType". Parameter 
+label strings may contain only letters, numbers, and underscores. Label
+strings may not contain white space.  
+
+An similar format is used for variables that are defined as instances 
+of non-primitive data types (classes or enumerations) for which iostream 
+inserter (<<) and extractor (>>) operators have been defined.  Like 
+primitive variables, each such variable is output on a single line 
+containing a label followed by a string representation of its value. 
+The string format for each such non-primitive type is defined by the 
+implementation of the overloaded << and >> operators for that data
+type.  For example, in the above file, the "type" member of an 
+EnergyEnsemble object is an instance of the enumeration 
+EnergyEnsemble::Type, which can take on values ADIABATIC or ISOTHERMAL. 
+The value of this variable is read by an overloaded extractor (>>) 
+operator for this enum that recognizes either "adiabatic" or 
+"ADIABATIC" as a valid string representation of one of the allowed 
+values.
+
+A single parameter, with a single label, can also represent the 
+contents of a one one-dimensional array. Such array parameters are 
+input and output in a multi-line format. The first line contains 
+the label (the name of the array) and the value of the first element, 
+while subsequent lines contain values of subsequent elements.  Thus, 
+for example, the atomTypes member of an MdSimulation is an array
+(a DArray < AtomType > container) that contains nAtomType instances 
+of class AtomType. This array is input using a format in which the 
+first line contains the label "atomTypes" (the name of the array), 
+and in which this and each subsequent line contains a string 
+representation of one AtomType object. The string representation 
+of an AtomType, which is defined by the extractor (>>) operator for 
+an AtomType, contains a name string ("A" or "B" in this example) 
+followed by a floating point mass. (The mass is 1.0 for both of the 
+types in this example). The number of elements in such an array 
+(nAtomType in this example) must be known from a parameter that 
+is read before the array.
+
+Parameters can also represent two-dimensional arrays or Matrix
+objects. These use a multi-line format in which the name label 
+appears at the beginning of the first line, followed by the 
+elements of the first row, with subsequent rows on subsequent 
+lines. In the above example, this format is used for the epsilon, 
+sigma, and cutoff members of an LJPair pair potential object.
+
+The meaning of most parameter labels should be self-explanatory. 
+Because each parameter in this file format is labelled by the
+name of a corresponding class member variable, the meaning of 
+any parameter can be looked up by looking up that variable in
+html documentation and/or header file of the class named in 
+the first line of the innermost enclosing block.  
+
+\section algorithm_section How a parameter file is parsed
+
+Each block in a parameter file is associated with an instance
+of a class that is named in the opening line of the block. 
+Each such block is parsed by a method of the associated class 
+named readParam().  Every class that reads data from the parameter 
+file derived from abstract base class Util::ParamComposite that
+declares a pure virtual method Util::ParamComposite::readParam(). 
+The opening line for an object of class Foo, which contains 
+the string "Foo{", marks the spot at which the code enters the 
+function Foo:readParam().  The line containing the corresponding 
+closing bracket "}" marks the point at which Foo::readParam() 
+returns.  
+
+The implementation of the readParam() method of a class 
+defines the format of the associated parameter file block.  
+The readParam() method of each class must read whatever data is 
+required to initialize an instance of that class. It must also 
+invoke the readParam() method of each of its "child" objects, 
+each of which is associated with a subblock in the parameter 
+file. 
+
+The algorithm described above is an example of the so-called "Composite" 
+programming pattern (http://en.wikipedia.org/wiki/Composite_pattern). 
+The most important virtues of this algorithm as a way of reading the 
+parameter file are that: (i) it preserves modularity and encapsulation 
+of private data, and (ii) it allows the file format to change almost
+automatically as the software is modified.  Because readParam() is 
+a class method, it can read values for private member variables, 
+without exposing these variables outside the class. Each class is 
+responsible for reading whatever data it needs from file in order to 
+initialize its internal state, and for defining a file format for 
+this data.  
+
+The most reliable documentation of the file format for each 
+parameter file block is the source code of the readParam() method 
+of the class named in the opening line of the block. An explanation 
+of the programming conventions and methods used in all such readParam() 
+methods is given \ref read_param_page "here". 
+
+\section polymorphic_section Polymorphic Blocks
+
+Some blocks within a parameter file are "polymorphic": A polymorphic 
+block is one that is allowed to contain the file format appropriate 
+for any of several possible subclasses of a polymorphic base class. 
+When a polymorphic block is encountered, the parent object must 
+recognize what type of object is desired from the class name in
+the opening line of the block, and create and initialize an instance 
+of the desired class.
+
+For example, an MdSystem has an associated MdIntegrator object. The
+user may specify that this object should an instance of either NveVvIntegrator, 
+a class that implements an energy conserving velocity-Verlet integrator,
+or an instance of NvtNhIntegrator, an isothermal Nose-Hoover integrator, 
+among other choices. All of the available choices are subclasses of the 
+abstract base class MdIntegrator. The parameter file block associated 
+with the MdIntegrator object may contain the file format for any of the
+available subclasses of MdIntegrator.  If an NveVvIntegrator block is 
+encountered, as in the above example file, the parent MdSystem will create 
+and initialize an NveVvIntegrator object, which will then be used in 
+subsequent simulation.  To indicate that an NvtNhIntegrator was desired 
+instead, this block in the parameter file could be changed to contain 
+the file format for an NvtNhIntegrator, which begins with the line 
+"NvtNhIntegrator{" that identifies the name of the desired class. 
+Different subclasses of MdIntegrator may require different parameters,
+and so may define different file formats for the associated parameter
+file block.  For example, the format for a NvtNhIntegrator contains 
+a parameter that controls the strength of the coupling of the system 
+to a heat reservoir, in addition to the step size parameter dt that is
+needed for either type of integrator. 
+
+When the first line of a polymorphic block is encountered, the readParam() 
+of the parent object must compare the subclass name that appears in the 
+opening line to a list of known subclasses of the corresponding base 
+class. In this example, it must recognize "NveVvIntegrator" as a valid 
+name of a subclass of "MdIntegrator". If it recognizes the subclass name, 
+it creates a new instance of the desired subclass and then invokes the 
+readParam method of this new instance to read the rest of the block.  
+The algorithm used to process polymorphic blocks is discussed in more
+detail \ref factory_page "here".
+
+This use of polymorphic blocks provides a mechanism for users to control 
+the creation of the set of objects needed in a specific simulation at run 
+time, without recompiling the program. This mechanism is used to specify
+molecular species (subclasses of the Species base class), molecular dynamics 
+integrators (subclasses of MdIntegrator), Monte Carlo moves (subclasses of
+McMove), and data analysis and output operations (subclasses of 
+Diagnostic).
+
+\section manager_section Manager Classes
+
+The above example file contains blocks labelled "SpeciesManager" and 
+"DiagnosticManager". The corresponding classes SpeciesManager and 
+DiagnosticManager are examples of Manager classes.  
+
+A Manager class has a container that holds an array of pointers to 
+dynamically allocated objects that are all instances of a specific 
+base class. Thus, for example, a SpeciesManager hold an array  of 
+pointers to Species objects (i.e., instances of the Species base 
+class or its subclasses) that represent different molecular species 
+within a mixture. A DiagnosticManager contains an array of pointers
+Diagnostic objects that will be used for data analysis and/or data 
+output during a simulation. 
+
+The parameter file block associated with a Manager class contains 
+a sequence of polymorphic subblocks, separated by spaces.Each of 
+these blocks  may contain the file format for any known subclass 
+of the associated base class. The readParam method of a Manager 
+class is responsible for reading a sequence of such polymorphic
+subblocks, instantiating one object of the indicated subclass for 
+each subblock, and appending a base class pointer to each new 
+object to its array of such pointers. 
+
+\section potential_section Potential Energy Styles
+
+In both MD and MC simulations, a System has several associated
+types of potential energy. By default, these include only a 
+non-bonded pair potential and a bond potential. Other types of 
+potential energy that are disabled by default, such as 3-body 
+bond angle and 4-body dihedral potentials, may be enabled by 
+setting associated flags in the file mcMd/defines.mk before 
+compiling. 
+
+For each type of potential energy, the parameter file format 
+allows a user to choose from several forms for the potential
+energy function by specifying a "style" string parameter. For 
+example, the type of nonbonded pair potential function is
+specified by the value of "pairStyle". This can take on values 
+"LJPair", corresponding to a Lennard-Jones potential, or "DpdPair", 
+corresponding to the soft potential typically used in dissipative 
+particle dynamics (DPD) simulations. Each of the allowed values 
+of this "style" string corresponds to the name of a class in 
+the src/mcMd/potential/pair directory that implements the 
+core calculation of energy and/or force for a single pair of 
+nonbonded atoms.  We will refer to the classes named by the 
+pairStyle variable as pair "evaluator" classes. Similarly, 
+"bondStyle" can take on values "HarmonicBond" or "FeneBond", 
+which are the names of bond evaluator classes in 
+src/mcMd/potential/bond directory.  A parameter file for a 
+code compiled with angle and dihedral potentials enabled 
+would also contain "angleStyle" and "dihedralStyle" strings 
+that specify choices of angle and dihedral evaluator classes. 
+
+These "style" variables are followed by a set of blocks that
+contain the parameters for different types of potential 
+energy (pair, bond, etc.). In the above example, these blocks
+are labelled "MdPairPotential" and "McPairPotential". Each 
+of these blocks contains the set of parameters required by
+the evaluator class (or functional form) specified by the 
+corresponding "style" variable. These blocks are polymorphic 
+only in the sense that that names of the required parameters 
+depends on the choice of "style". In the above example, for 
+which bondStyle == "HarmonicBond", the "MdBondPotential" 
+block thus contains a spring constant "kappa" and a preferred 
+bond length "length". If bondStyle were set to "FeneBond", 
+this block would also contain a maximum bond length. The 
+block of parameters required by a particular style is read 
+by invoking the readParam method of an instance of the
+associated evaluator class (e.g., "HarmonicBond"). 
+
+The MdPairPotential parameter block contains not only the
+parameters required by the associated evaluator (epsilon, sigma, 
+and cutoff for the LJPair Lennard-Jones style), but also a 
+parameter labelled maxBoundary and a PairList subblock. These 
+additional parameters are required to create a Verlet pairlist,
+which is needed to efficiently compute pair interactions in an 
+MD simulation. The classes MdPairPotential and MdBondPotential
+are abstract base classes that declare methods to calculate 
+energies and forces for an entire System, as well as for 
+individual pairs of atoms.  The corresponding classes 
+McPairPotential and MdPairPotential for MC simulation also 
+declare methods to calculate total pair or bond potential 
+energies for a specified atom. The efficient treatment of 
+pair interactions requires a pair list for MD simulations 
+or cell list for MC simulations. The required data structures 
+are private members of the subclasses of MdPairPotential and 
+McPairPotential that implement these calculations. The 
+parameters required to initialize these data structures are
+thus included within the MdPairPotential and McPairPotential 
+parameter blocks, in addition to the potential energy 
+parameters.
+
+Note that the syntax used to specify a choice of evaluator 
+class is different from that used to specify choices of
+MdIntegrator, McMove or Diagnostic objects, all of which 
+relied on the use of polymorhpic parameter blocks in which 
+a subclass name is specified by the first name in the block.
+The choice of evaluator class (of functional form) for each
+potential energy is instead specified by the value of a 
+"style" string variable.  This difference in syntax reflects 
+a difference in design: The potential energy objects, such 
+as the MdPairPotential, are actually implemented using 
+templates, in which the value of the style variable is the
+name of an "evaluator" class that is a template argument
+(see \ref McMd_NS_page).
+
+<ul>
+ <li> \ref usage_page   (Prev) </li>
+ <li> \ref guide_page     (Up)   </li>
+ <li> \ref commands_page  (Next) </li>
+</ul>
+
+*/
+
+}

@@ -1,0 +1,3 @@
+subDirectories = tests
+pathFromSrc = ddMd/storage
+pathToSrc = ../..

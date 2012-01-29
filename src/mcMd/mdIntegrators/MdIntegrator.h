@@ -1,0 +1,123 @@
+#ifndef MD_INTEGRATOR_H
+#define MD_INTEGRATOR_H
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include <util/param/ParamComposite.h>    // base class
+#include <util/archives/Serializable.h>   // base class
+#include <mcMd/boundary/Boundary.h>       // typedef
+
+#include <iostream>
+
+namespace McMd
+{
+
+   using namespace Util;
+
+   class Simulation;
+   class MdSystem;
+   
+   /**
+   * Abstract base for molecular dynamics integrators.
+   *
+   * \ingroup MdIntegrator_Module
+   */
+   class MdIntegrator : public ParamComposite, public Serializable
+   {
+   
+   public:
+
+      /// Constructor. 
+      MdIntegrator(MdSystem& system);
+ 
+      /// Destructor.   
+      virtual ~MdIntegrator();
+
+      /**
+      * Initialize internal state, if any.
+      *
+      * This method should be called just before entering
+      * the main MD loop. Empty default implementation.
+      */
+      virtual void setup()
+      {}
+
+      /**
+      * Take a complete MD integration step.
+      */
+      virtual void step() = 0;
+
+      /**
+      * Save the internal state to an archive.
+      *
+      * \param ar archive object.
+      */
+      virtual void save(Serializable::OArchiveType& ar);
+
+      /**
+      * Load the internal state to an archive.
+      *
+      * \param ar archive object.
+      */
+      virtual void load(Serializable::IArchiveType& ar);
+
+      /**
+      * Get Boundary of parent System.
+      */
+      Boundary&   boundary();
+
+      /**
+      * Get parent MdSystem by reference.
+      */
+      MdSystem&   system();
+
+      /**
+      * Get parent Simulation.
+      */
+      Simulation& simulation();
+
+   protected:
+
+      /// Integrator time step 
+      double dt_;
+
+   private:
+
+      /// Pointer to a Boundary.
+      Boundary*    boundaryPtr_;
+   
+      /// Pointer to parent MdSystem
+      MdSystem*    systemPtr_;
+
+      /// Pointer to parent Simulation.
+      Simulation*  simulationPtr_;
+
+   }; 
+
+   // Inline methods
+
+   /**
+   * Get Boundary of parent System.
+   */
+   inline Boundary&   MdIntegrator::boundary()
+   {  return *boundaryPtr_; }
+
+   /**
+   * Get parent MdSystem.
+   */
+   inline MdSystem&   MdIntegrator::system()
+   {  return *systemPtr_; }
+
+   /**
+   * Get parent Simulation.
+   */
+   inline Simulation& MdIntegrator::simulation()
+   {  return *simulationPtr_; }
+
+} 
+#endif

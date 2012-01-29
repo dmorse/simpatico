@@ -1,0 +1,24 @@
+    McPairEnergyAverage{
+      interval                            1000
+      outputFileName                pairEnergy
+      nSamplePerBlock                       10
+      selector                             All        -1        -1
+    }
+
+Average     2.3106904e+02
+Variance    2.3028897e+02
+Std Dev     1.5175275e+01
+
+Hierarchichal Error Analysis:
+              0              1  1.3852490e-01          12001
+              1              2  1.3724351e-01           6000
+              2              4  1.3857083e-01           3000
+              3              8  1.3768915e-01           1500
+              4             16  1.3292701e-01            750
+              5             32  1.3517862e-01            375
+              6             64  1.3211177e-01            187
+              7            128  1.2854744e-01             93
+              8            256  1.3182698e-01             46
+              9            512  1.1516807e-01             23
+             10           1024  9.9904957e-02             11
+             11           2048  1.2784289e-01              5

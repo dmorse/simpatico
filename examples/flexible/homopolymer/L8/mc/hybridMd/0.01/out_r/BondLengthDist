@@ -1,0 +1,10 @@
+    BondLengthDist{
+      interval                             100
+      outputFileName            BondLengthDist
+      speciesId                              0
+      Distribution{
+        min                   0.000000000000e+00
+        max                   2.000000000000e+00
+        nBin                                 400
+      }
+    }

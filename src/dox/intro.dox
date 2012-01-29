@@ -1,0 +1,89 @@
+/*! \page intro_page Introduction
+
+Simpatico is a package of software for Monte Carlo (MC) and molecular 
+dynamics (MD) simulations of molecular and polymer liquids. It is still 
+relatively young, and lacks some of the features found in some more
+mature molecular dynamics packages (such as Lammps, NAMD, Gromacs,
+and Espresso) and a smaller number of MC packages (e.g., Towhee). 
+The package is characterized by the following basic goals and design
+decisions:
+
+- Object oriented C++: The code is written in idiomatic, object 
+  oriented C++, with well encapsulated data structures. It is
+  written in standard ANSI 1998 C++, and compiles on any modern 
+  C++ compiler.
+
+- Well documented: The package is documented with extensive 
+  source code comments, and by additional web pages (such as this 
+  one) that explain usage and design. Source code documentation 
+  blocks are provided for every class and function, which are 
+  compiled into an html programmers manual using the doxygen 
+  documentation utility. 
+
+- Extensible: The package is designed to allow users to add new
+  algorithms for almost every aspect of a simulation, using C++
+  inheritance, without modifying the original source code. Most 
+  elements of a simulation, including Monte Carlo moves, molecular 
+  dynamics integrators, potential energies, configuration file 
+  formats, molecular species, and data analysis algorithms are 
+  represented by exensible abstract base classes.
+
+- Efficient: Simpatico does not sacrifice efficiency for flexibility, 
+  and is designed to be competitive as a tool for computationally 
+  demanding research projects. 
+
+- Monte Carlo and Molecular Dynamics: Simpatico provides efficient
+  implementations of both molecular Monte Carlo and molecular dynamics 
+  simulation algorithms, based on a shared code base.
+
+- Hybrid simulations: Because it was designed for both MC and MD 
+  simulation, Simpatico is particularly suitable for hybrid simulation 
+  tecnniques such as hybrid Monte Carlo, in which short MD simulations 
+  are used as proposed Monte Carlo moves. 
+
+- Perturbation Theory and Replica Exchange: Simpatico provides an
+  extensible interface for free energy perturbation, and a parallel 
+  replica exchange algorithm, in which different processors simulate 
+  "replicas" with a sequence of slightly different parameters.
+    
+- Flexible data analysis: All data analysis classes can be used
+  either "on-the-fly", to sample the state of a system at periodic
+  intervals during an MC or MD simulation, or for post-processing, 
+  by reading in a sequence of system configurations that were 
+  written to file during a previous simulation. The same programs 
+  are used for simulation and post-processing. The package contains
+  many classes to measure standard observables. 
+
+- File driven: Simulations are controlled by a pair of simple text 
+  files. A simulations is initialized by reading a parameter file 
+  that specifies choice of potential energies, simulation algorithms, 
+  and data analysis algorithms available for use in a particular 
+  simulation. After initialization, the progress of a simulation 
+  is controlled by a simple command script. The parameter file 
+  uses a hierarchical format that is compatible with strict data 
+  encapsulation (each class reads an associated block within the 
+  parameter file, and initializes its own internal state), and 
+  that is, as much as possible, self-documenting. 
+
+- Pure C++: The package was not designed to rely on the use of a 
+  separate scripting language such as python to control program 
+  flow, an approach taken in several other C and C++ simulation 
+  projects (Hoomd-Blue, Espresso, and Espresso++). The current
+  design requires that a simulation be initialized by reading a 
+  parameter file, but does not preclude the later addition of a 
+  python interface as an alternative to the use of command script 
+  for program control (which we are considering).
+
+- Extensible to open ensembles: Data structures in Simpatico were 
+  designed to allow eventual extension to grand-canonical and Gibbs 
+  ensembles, which require random insertion and deletion of 
+  molecules during a simulation. The required simulation algorithms 
+  have not, however, been implemented.
+
+Navigation:
+<ul>
+ <li> \ref index       (Up)        </li>
+ <li> \ref guide_page (Next)      </li>
+</ul>
+
+*/

@@ -1,0 +1,9 @@
+    VanHove{
+      interval                             200
+      outputFileName                   VanHove
+      atomTypeCoeffs        1.000000000000e+00
+                           -1.000000000000e+00
+      nBuffer                              100
+      nWave                                  1
+      waveIntVectors                    3              0              0
+    }

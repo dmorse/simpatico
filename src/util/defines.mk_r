@@ -1,0 +1,84 @@
+#-----------------------------------------------------------------------
+# This makefile fragment defines:
+#
+#   - A variable $(UTIL_DEFS) that is passed to the processor to define 
+#     preprocessor flags that effect the code in the util/ directory. 
+#
+#   - A variable $(UTIL_SUFFIX) which is added as a suffix to the name
+#     of the util library.
+#
+#   - The name $(UTIL_LIB) of the util library. 
+#
+# This file must be included by every makefile in the util directory. 
+# It must be included after $(SRC_DIR)/makefile.mk and before
+# $(SRC_DIR)/mcmd/patterns.mk.
+#-----------------------------------------------------------------------
+# Flag to define preprocessor macros.
+
+# To define UTIL_DEBUG, and enable debugging, uncomment the following:
+#UTIL_DEBUG=1
+
+# Note: The flag UTIL_MPI that enables MPI parallel operation must be 
+# defined (or not) in the file src/compiler.mk. The compiler.mk file 
+# must thus be included before this file.
+
+# Most users will not need to modify the rest of this file. 
+#-----------------------------------------------------------------------
+# Comments:
+#
+# The variable UTIL_DEFS is used to pass preprocessor definitions to
+# the compiler, using the "-D" compiler option. If not empty, it must 
+# consist of a list of zero or more preprocessor macro names, each 
+# preceded by the compiler flag "-D".  For example, setting UTIL_DEFS 
+# to "-DUTIL_MPI -DUTIL_DEBUG" will cause compilation of a parallel
+# version of the code with debugging enabled.
+#
+# The variable UTIL_SUFFIX is appended to the base name of the library 
+# util.a in the $(LIB_DIR). Setting UTIL_SUFFIX to "_g", to denote a 
+# debugging version, in the absence of other macros, will create a 
+# library named util_a.a.
+#
+# The variable UTIL_DEFS is a recursive (normal) makefile variable, and
+# may be extended using the += operator, e.g., UTIL_DEFS+=-DUTIL_ANGLE.
+# UTIL_SUFFIX is instead a non-recursive makefile variable, which may 
+# be extended using the := operator, as UTIL_SUFFIX:=$(UTIL_SUFFIX)_g. 
+# They are defined differently because the += operator for recursive
+# variables adds a white space before an added string, which is 
+# appropriate for UTIL_DEFS, but not for UTIL_SUFFIX. 
+#
+# Each if-block below contains two lines: The first appends a preprocessor
+# macro definition to UTIL_DEFS. The second add a suffix to UTIL_SUFFIX. 
+# The addition of suffixes to the library and executable names is optional, 
+# and may be suppressed by commenting out or modifying this second line.
+#
+
+# Initialize to empty strings
+UTIL_DEFS=
+UTIL_SUFFIX:=
+
+# Enable message passing interface
+ifdef UTIL_MPI
+UTIL_DEFS+= -DUTIL_MPI
+UTIL_SUFFIX:=$(UTIL_SUFFIX)_m
+endif
+
+# Enable debugging assertions
+ifdef UTIL_DEBUG
+UTIL_DEFS+= -DUTIL_DEBUG
+UTIL_SUFFIX:=$(UTIL_SUFFIX)_g
+endif
+
+# Enable HOOMD interoperability
+ifdef HOOMD_FLAG
+UTIL_DEFS+= -DUTIL_HOOMD
+endif
+
+#-----------------------------------------------------------------------
+# Library file name 
+
+# Library of objects from the Util namespace, or src/util directory
+util_LIBNAME=util$(UTIL_SUFFIX)
+util_LIBDIR=$(ROOT_DIR)/lib
+util_LIB=$(util_LIBDIR)/lib$(util_LIBNAME).a
+
+#-----------------------------------------------------------------------

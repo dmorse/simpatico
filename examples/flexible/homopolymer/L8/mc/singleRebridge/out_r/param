@@ -1,0 +1,135 @@
+McSimulation{
+  FileMaster{
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              1
+  nBondType                              1
+  atomTypes                              A  1.000000000000e+00
+  maskedPairPolicy              MaskBonded
+  SpeciesManager{
+    capacity                               1
+
+    Homopolymer{
+      moleculeCapacity                     100
+      nAtom                                  8
+      type                                   0
+    }
+
+  }
+  Random{
+    seed                          1601665508
+  }
+  McSystem{
+    EnergyEnsemble{
+      type                          isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                               rigid
+    }
+    maxBoundary                 orthorhombic       1.0500000000e+01    1.0500000000e+01    1.0500000000e+01
+    LJPair{
+      epsilon               1.000000000000e+00
+      sigma                 1.000000000000e+00
+      cutoff                1.122460000000e+00
+    }
+    HarmonicBond{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+  }
+  McMoveManager{
+    capacity                               2
+
+    CfbEndMove{
+      speciesId                              0
+      nRegrow                                1
+      nTrial                                20
+    }
+    probability           1.250000000000e-01
+
+    CfbRebridgeMove{
+      speciesId                              0
+      nRegrow                                1
+      nTrial                                10
+      length21              1.000000000000e+00
+      length10              1.000000000000e+00
+      kappa10               4.000000000000e+02
+    }
+    probability           8.750000000000e-01
+
+  }
+  DiagnosticManager{
+    baseInterval                        1000
+    capacity                               9
+
+    LogProgress{
+      interval                        10000000
+    }
+
+    McEnergyOutput{
+      interval                            1000
+      outputFileName                    energy
+    }
+
+    McEnergyAverage{
+      interval                            1000
+      outputFileName                 energyAve
+      nSamplePerBlock                       10
+    }
+
+    McPairEnergyAverage{
+      interval                            1000
+      outputFileName                pairEnergy
+      nSamplePerBlock                       10
+      selector                             All        -1        -1
+    }
+
+    RadiusGyration{
+      interval                            1000
+      outputFileName            RadiusGyration
+      nSamplePerBlock                       10
+      speciesId                              0
+    }
+
+    RDF{
+      interval                            1000
+      outputFileName                       RDF
+      RadialDistribution{
+        max                   5.000000000000e+00
+        nBin                                 500
+      }
+      selector                           Inter        -1        -1
+    }
+
+    BondLengthDist{
+      interval                            1000
+      outputFileName            BondLengthDist
+      speciesId                              0
+      Distribution{
+        min                   0.000000000000e+00
+        max                   2.000000000000e+00
+        nBin                                 400
+      }
+    }
+
+    AtomMSD{
+      interval                            1000
+      outputFileName                   AtomMSD
+      speciesId                              0
+      atomId                                 5
+      capacity                             400
+    }
+
+    IntraPairAutoCorr{
+      interval                            1000
+      outputFileName         IntraPairAutoCorr
+      speciesId                              0
+      atom1Id                                0
+      atom2Id                                7
+      capacity                            1000
+    }
+
+  }
+}

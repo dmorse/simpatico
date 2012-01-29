@@ -1,0 +1,18 @@
+Domain{
+  gridDimensions    2    1     3
+}
+AtomStorage{
+  atomCapacity         40
+  ghostCapacity        40
+  totalAtomCapacity   150
+}
+Buffer{
+  atomCapacity    20
+  ghostCapacity   20
+}
+AtomDistributor{
+  cacheCapacity   35 
+}
+Random{
+   seed -8762018674
+}

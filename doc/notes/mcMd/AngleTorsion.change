@@ -1,0 +1,346 @@
+/*------------------------------------------------------------------
+*   Notes on changes needed to add Angle and AnglePotential        *
+*   Logic: mimicking implementation of bonds, and bond potential   *
+*   turned on/off by: MCMD_ANGLE_POTENTIAL                         *
+*            Jian Qin (created 4/28/2011)                          *
+------------------------------------------------------------------*/
+
+                            Angle
+
+1) write angle potential (CosineAngle)
+
+   Assuming the potential is solely determined by cos[angle], the class
+provides interfaces to evaluate energy and forces along two bonds spanning the
+angle.
+
+2) modify Species
+
+   Purpose:
+      Introduce Angle object and define arrays mapping Angles to Atoms. Define
+which atom groups form which angle, and make the mutual map, for creating
+molecules, and for later reference. Atoms, bonds, and angles are referred by
+local indices.
+
+   New typedefs:
+      typedef SpeciesGroup<3>                        SpeciesAngle
+      typedef SArray<const Angle*, MaxAnglePerAtom>  AtomAngleArray
+      protected typedef SArray<int, MaxAnglePerAtom> AtomAngleIdArray
+
+   New methods:
+      int nAngle()
+      SpeciesAngle& speciesAngle(int iAngle)
+      void getAtomAngles(const Atom& atom, AtomAngleArray& angles)
+      void makeAngle(int angleId, int atomId1, int atomId2, int atomId3, int angleType);
+
+   Modified methods:
+      constructor: initialize nAngle_
+      void readSpeciesParam(std::istream &in): read Angles
+      void allocate(): allocate Angle related arrays
+      bool isValid(): check the mutual mapping between atom and angle is correct
+
+   New variables:
+      protected int nAngle_
+      protected DArray<SpeciesAngle> speciesAngles_
+      private DArray<AtomAngleIdArray> atomAngleIdArrays_
+
+3) modify Linear, Homopolymer, Diblock, HomopolymerSG
+
+   Purpose:
+      Specialized implementation of constructing Angles for named chain
+molecule.
+
+   New methods:
+      int Linear::calculateAngleTypeId(int index) const = 0
+      int Homopolymer::calculateAngleTypeId(int index) const
+      int HomopolymerSG::calculateAngleTypeId(int index) const
+      int Diblock::calculateAngleTypeId(int index) const
+
+   Modified method:
+      void Linear::buildLinear()
+
+4) modify Ring, HomoRing
+
+   Purpose:
+      Specialized implementation of constructing Angles for named ring
+molecule.
+
+   New methods:
+      int Ring::calculateAngleTypeId(int index) const = 0
+      int HomoRing::calculateAngleTypeId(int index) const
+
+   Modified method:
+      void Ring::buildRing()
+
+5) modify Molecule
+
+   Purpose:
+      Create arrays and maps needed to describe Angles by one molecule. 
+
+   New typedefs:
+      typedef ArrayIterator<Angle>       AngleIterator;
+      typedef ConstArrayIterator<Angle>  ConstAngleIterator
+
+   Modified method:
+      constructor: to initialize new variables
+
+   New methods:
+      void setFirstAngle(Angle &angle)
+      void setNAngle(int nAngle)
+      int nAngle()
+      Angle angle(int localId)
+      void begin(AngleIterator &iterator)
+      void begin(ConstAngleIterator &iterator)
+
+   New variables:
+      private Angle* firstAnglePtr_
+      private int nAngle_
+
+6) modify Simulation
+
+   Purpose:
+      Define a global Angle arrays holding all possible Angles accessible to a
+simulation, and map subsets of it to different species. Create angles for all
+molecules created duing the initialization stage.
+
+   New variables:
+      private DArray<Angle> angles_
+      private DArray<int> firstAngleIds_
+      private int nAngleType_
+      private int angleCapacity_ 
+
+   New methods:
+      int nAngleType()
+      int angleCapacity()
+      void initializeSpeciesAngles(int speciesId)
+
+   Modify methods:
+      constuctor: to initialize nAngleType_ and angleCapacity_
+      readParam:  to read nAngleType_ and angleCapacity_
+      initialize()
+      isValid()
+
+   Question:
+      "Allocating some space avoids bugs elsewhere" for bond allocation?
+
+7) modify System
+
+   Purpose:
+      Create and read parameter for anglePotential.
+
+   New variable:
+      AnglePotential* anglePotentialPtr_
+
+   New method:
+      AnglePotential& anglePotential()
+
+   Modify method:
+      constructor and copy constructor: initialize anglePotentialPtr_
+      destructor: release memory
+      readParam: read angle potential if requested
+
+8) modify McSystem
+
+   Add methods for evaluating the angle energy associated with an atom, the
+total angle anergy of the system, and the angle potential contribution to the
+total stress.
+
+   New methods:
+      double atomAngleEnergy(Atom &atom)
+      double angleEnergy()
+      template <typename T> void computeAngleStress(T& stress)
+      template <typename T> void computeAngleStressImpl(T& stress)
+
+   Modified methods:
+      atomPotentialEnergy:     add atomAngleEnergy contribution
+      potentialEnergy:         add angleEnergy contribution
+      computeVirialStressImpl: add angleStress contribution
+
+9) modify MdSystem
+
+   Add methods for evaluating the angle energy associated with an atom, the
+total angle anergy of the system, forces caused by angle potential, and the
+angle potential contribution to the total stress.
+
+   New methods:
+      void addAngleForces()
+      double angleEnergy()
+      template <typename T> void computeAngleStress(T& stress)
+      template <typename T> void computeAngleStressImpl(T& stress)
+
+   Modified methods:
+      potentialEnergy:         add angleEnergy contribution
+      calculateForces:         add angleEnergy contribution
+      computeVirialStressImpl: add angleStress contribution
+
+10) modify MC moves
+
+
+# --------------------------------------------------------------------
+
+                            Torsion
+
+1) modify Species
+
+   Purpose:
+      Introduce Torsion object and define arrays mapping Torsions to Atoms.
+Define which atom groups form which Torsion, and make the mutual map, for
+creating molecules, and for later reference. Atoms, bonds, angles, and torsions
+are referred by local indices.
+
+   New typedefs:
+      typedef SpeciesGroup<3>                        SpeciesTorsion
+      typedef SArray<const Angle*, MaxAnglePerAtom>  AtomTorsionArray
+      protected typedef SArray<int, MaxAnglePerAtom> AtomTorsionIdArray
+
+   New methods:
+      int nTorsion()
+      SpeciesTorsion& speciesTorsion(int iTorsion)
+      void getAtomTorsions(const Atom& atom, AtomTorsionArray& torsions)
+      void makeTorsion(int torsionId, int atomId1, int atomId2, int atomId3, int atomId4, int torsionType);
+
+   Modified methods:
+      constructor: initialize nTorsion_
+      void readSpeciesParam(std::istream &in): read Torsions
+      void allocate(): allocate Torsion related arrays
+      bool isValid(): check the mutual mapping between atom and torsion is correct
+
+   New variables:
+      protected int nTorsion_
+      protected DArray<SpeciesTorsion> speciesTorsions_
+      private DArray<AtomTorsionIdArray> atomTorsionIdArrays_
+
+2) modify Linear, Homopolymer, Diblock, HomopolymerSG
+
+   Purpose:
+      Specialized implementation of constructing Torsions for named chain
+molecule.
+
+   New methods:
+      int Linear::calculateTorsionTypeId(int index) const = 0
+      int Homopolymer::calculateTorsionTypeId(int index) const
+      int HomopolymerSG::calculateTorsionTypeId(int index) const
+      int Diblock::calculateTorsionTypeId(int index) const
+
+   Modified method:
+      void Linear::buildLinear()
+
+3) modify Ring, HomoRing
+
+   Purpose:
+      Specialized implementation of constructing Torsions for named ring
+molecule.
+
+   New methods:
+      int Ring::calculateTorsionTypeId(int index) const = 0
+      int HomoRing::calculateTorsionTypeId(int index) const
+
+   Modified method:
+      void Ring::buildRing()
+
+4) modify Molecule
+
+   Purpose:
+      Create arrays and maps needed to describe Torsions by one molecule. 
+
+   New typedefs:
+      typedef ArrayIterator<Torsion>       TorsionIterator;
+      typedef ConstArrayIterator<Torsion>  ConstTorsionIterator
+
+   Modified method:
+      constructor: to initialize new variables
+
+   New methods:
+      void setFirstTorsion(Torsion &torsion)
+      void setNTorsion(int nTorsion)
+      int nTorsion()
+      Torsion torsion(int localId)
+      void begin(TorsionIterator &iterator)
+      void begin(ConstTorsionIterator &iterator)
+
+   New variables:
+      private Torsion* firstTorsionPtr_
+      private int nTorsion_
+
+5) modify Simulation
+
+   Purpose:
+      Define a global Angle arrays holding all possible Angles accessible to a
+simulation, and map subsets of it to different species. Create angles for all
+molecules created duing the initialization stage.
+
+   New variables:
+      private DArray<Angle> torsions_
+      private DArray<int> firstTorsionIds_
+      private int nTorsionType_
+      private int torsionCapacity_ 
+
+   New methods:
+      int nTorsionType()
+      int torsionCapacity()
+      void initializeSpeciesTorsions(int speciesId)
+
+   Modify methods:
+      constuctor: to initialize nTorsionType_ and torsionCapacity_
+      readParam:  to read nTorsionType_ and torsionCapacity_
+      initialize()
+      isValid()
+
+   Question:
+      "Allocating some space avoids bugs elsewhere" for bond allocation?
+
+6) modify System
+
+   Purpose:
+      Create and read parameter for anglePotential.
+
+   New variable:
+      AnglePotential* anglePotentialPtr_
+
+   New method:
+      AnglePotential& anglePotential()
+
+   Modify method:
+      constructor and copy constructor: initialize anglePotentialPtr_
+      destructor: release memory
+      readParam: read angle potential if requested
+
+7) modify McSystem
+
+   Add methods for evaluating the torsion energy associated with an atom, the
+total torsion anergy of the system, and the torsion contribution to the total
+stress.
+
+   New methods:
+      double atomTorsionEnergy(Atom &atom)
+      double torsionEnergy()
+      template <typename T> void computeTorsionStress(T& stress)
+      template <typename T> void computeTorsionStressImpl(T& stress)
+
+   Modified methods:
+      atomPotentialEnergy:     add atomTorsionEnergy contribution
+      potentialEnergy:         add torsionEnergy contribution
+      computeVirialStressImpl: add torsionStress contribution
+
+8) modify MdSystem
+
+   Add methods for evaluating the torsion energy associated with an atom, the
+total torsion anergy of the system, forces caused by torsion potential, and the
+torsion contribution to the total stress.
+
+   New methods:
+      void addTorsionForces()
+      double torsionEnergy()
+      template <typename T> void computeTorsionStress(T& stress)
+      template <typename T> void computeTorsionStressImpl(T& stress)
+
+   Modified methods:
+      potentialEnergy:         add torsionEnergy contribution
+      calculateForces:         add torsionEnergy contribution
+      computeVirialStressImpl: add torsionStress contribution
+
+9) write torsion potential (CosineTorsion)
+
+   Assuming the potential is solely determined by cos[dihedral angle], the
+class provides interfaces to evaluate energy and forces along three bonds
+spanning the dihedral angle.
+

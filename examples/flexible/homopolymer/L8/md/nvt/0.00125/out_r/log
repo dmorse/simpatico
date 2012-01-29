@@ -1,0 +1,44 @@
+READ_CONFIG    config         
+THERMALIZE     1.000000e+00   
+SIMULATE       400000000      
+
+iStep = 0
+iStep = 100000
+iStep = 200000
+iStep = 300000
+iStep = 400000
+iStep = 500000
+iStep = 600000
+iStep = 700000
+iStep = 800000
+iStep = 900000
+iStep = 1000000
+iStep = 1100000
+iStep = 1200000
+iStep = 1300000
+iStep = 1400000
+ 
+  ....
+
+iStep = 399600000
+iStep = 399700000
+iStep = 399800000
+iStep = 399900000
+iStep = 400000000
+
+Time Statistics
+nStep                400000000
+run time             6.815587e+04 sec
+time / nStep         1.703897e-04 sec
+time / (nStep*nAtom) 2.129871e-07 sec
+
+
+PairList Statistics
+maxNPair           2299
+maxNAtom           800
+buildCounter       15390205
+steps / build      2.599056e+01
+
+WRITE_CONFIG   config         
+WRITE_PARAM    param          
+FINISH         

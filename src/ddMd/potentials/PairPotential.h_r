@@ -1,0 +1,32 @@
+#ifndef PAIR_POTENTIAL_H
+#define PAIR_POTENTIAL_H
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include <ddMd/potentials/pair/LJPair.h>
+
+namespace DdMd
+{
+
+   /**
+   * PairPotential is a typdef for the nonbonded pair potential class.
+   *
+   * This typedef is provided to make it easy to change the pair potential
+   * used when a program is compiled. Other classes in namespace McMd
+   * that require the pair potential class must refer to it only via this
+   * typedef, and must include the definition file PairPotential.h.
+   * To change the actual pair potential, modify the PairPotential.h file
+   * by changing this typedef, and including the header file for the actual
+   * pair potential class.
+   *
+   * \ingroup Potential_Module
+   */
+   typedef LJPair PairPotential;
+
+}
+#endif

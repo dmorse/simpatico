@@ -1,0 +1,65 @@
+Current Implementation (Notes)
+-------------------------------
+New classes:
+
+   HoomdPairPotential {
+
+     virtual boost::shared_ptr forceCompute(....);  // perhaps remove ?
+     virtual std::string evaluatorName() const = 0;  --> hoomdName ???
+
+   }
+
+
+   template < class hoomd_evaluator, .... , char* name>
+   HoomdPair : public ParamComposite, public HoomdPair
+   {
+
+      // Pair evaluator interface:
+
+      energy(i, j);
+
+      forceOverR(rsq, i, j);
+
+      readParam(std::istream in);
+
+      double maxPairCutoff() const;
+
+      std::string className() const;
+
+      // 
+
+      boost::shared_ptr forceCompute(.....);
+
+      std::string evaluatorName() const;
+
+   }
+
+Proposal
+--------
+
+   class HoomdPairFactory : public Factory<McMd::Pair> 
+   {
+
+   public:
+  
+      // Simpatico 
+      mdPairPotential* mdFactory(std::string);
+      mcPairPotential* mcFactory(std::string);
+      mdPairPotential* mcFactory(McPairPotential&);
+
+      // Called by HoomdMove
+      boost::shared_ptr<ForceCompute> hoomdFactory(HoomdPairPotential);
+
+   private:
+
+      template <hoomd_evaluator, gpu_cgpf> 
+      boost::shared_ptr<ForceCompute> hoomdFactoryImpl(HoomdPairPotential);
+
+   }
+
+   template < class hoomd_evaluator, function , char* name>
+   HoomdPair : public ParamComposite, public HoomdPairPotential {
+
+       parameter accessor;
+       cutoff accessor;
+   }

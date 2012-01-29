@@ -1,0 +1,3 @@
+subDirectories =
+pathFromSrc = util/format/tests
+pathToSrc = ../../..

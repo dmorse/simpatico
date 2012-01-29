@@ -1,0 +1,90 @@
+-----------------------------------------------------------------------
+Priorities:
+
+1) Script to rerun. Must:
+
+   - Copy output config to in/config.
+   - Change outputPrefix to new name.
+
+2) Automatically resubmit a parallel job to queue. (status unknown)
+
+-----------------------------------------------------------------------
+Scripts for manipulating files and directories:
+
+1) Create a standard directory structure, with in/ out/ out/dump.
+   Create a number set of standard series of directories, 0/ 1/ ... n/
+   (Done).
+
+2) Clone a file from one directory in a series to all others in a series.  
+   (copy param, commands, in/config, ...)
+
+-----------------------------------------------------------------------
+Tools for manipulating param and command files.
+
+1) Python class ParamComposite to read, modify and write a param file.
+   (Done)
+
+2) Python class CommandScript to read, modify and write a command file.
+   (Done)
+
+3) Simulation object for a single simulation.
+
+4) MpiSimulation object for a series of independent simulations,
+   or for a perturbation simulation.
+
+-----------------------------------------------------------------------
+Scripts for manipulating data output files:
+
+1) Class DataFile to read *.dat files. Should distinguish integers and 
+   floats.  How to associate meaning with columns? Format file?
+
+2) Class AverageFile to read outputs from files that output averages.
+
+3) Class DataFilePlot to make plots from *.dat files. Subclass of DataFile.
+
+-----------------------------------------------------------------------
+New output file types for diagnostics:
+
+   Parameter file:         <basename>.prm
+   Average output file:    <basename>.ave
+   Data *.dat file format: <basename>.dfm
+   Data file:              <basename>.dat
+
+-----------------------------------------------------------------------
+Executable commands (python scripts):
+
+--------
+Command:    mcmd_setup_rerun
+Parameters: [outprefix] [inconfig [outconfig]]]
+Purpose:    setup a job to be rerun
+   - Copy in/config to out/config.in
+   - Copy out/config to in/config
+   - Copy contents of out to new directory
+   - mkdir out
+
+--------
+Command:    mcmd_mkdirs_mpi n [dumpdir]
+Parameter:  n number of directories 0, ..., n-1
+Parameter:  dumpdir - name of dump directory if not "dump"
+Purpose:    create directories for an mpi job
+
+--------
+Command:    mcmd_clone_mpi root n file
+Parameter:  root index of directory with file
+Parameter:  n number of directories/processors
+Parameter:  path to file from within root directory
+Purpose:    clone a file to all others in mpi job.
+
+--------
+Command:   mcmd_edit_command
+Parameter: file command = value |
+           file command[i] = value |
+Purpose:   Edit one parameter in a command file
+
+--------
+Command:   mcmd_edit_param
+Parameter: file attribute = value |
+           file attribute[i] = value |
+           file attribute[i][j] = value
+Purpose:   Edit one parameter in a parameter file
+

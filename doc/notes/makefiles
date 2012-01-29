@@ -1,0 +1,33 @@
+
+src/
+  makefile     -> Includes compiler.mk mcmd/defs.mk, mcMd/rules.mk, util/srcs.mk, mcMd/srcs.mk
+  compiler.mk  -> Defines $(CXX), $(LIB_DIR) and $(BIN_DIR)
+
+  make/README  -> explain what the other files are.
+  make/gcc.mk
+  make/gccMpi.mk
+  make/intel.mk
+  make/intelMpi.mk
+  make/pscale.mk
+  make/pscaleMpi.mk
+
+util/
+  defs.mk   -> Initializes and appends to UTIL_DEFINE and UTIL_SUFFIX.
+               Define library name, using only util suffixes.
+  rules.mk  -> Adds util/defs.mk as dependencies for all targets.
+            -> Other makefiles include src/compiler.mk, src/util/defs.mk and src/util/rules.mk
+  srcs.mk   -> List of source files.
+  makefile  -> Includes defs, rules, srcs
+mcMd/
+  defs.mk   -> Includes util/defs.mk
+               Initializes MCMD_DEFINE = UTIL_DEFINE and MCMD_SUFFIX = UTIL_SUFFIX
+               Define library name, using util and mcMd suffixes.
+  rules.mk  -> Includes src/make/compiler.mk and src/mcmd/defs.mk
+            -> Adds util/defs.mk and mcMd/defs.mk as dependencies.
+            -> Other makefiles include src/compiler.mk, src/mcMd/defs.mk and src/mcMd/rules.mk
+  srcs.mk   -> List of source files.
+  makefile  -> Includes defs, rules, srcs
+
+main/
+  makefile  -> Includes compiler.mk mcmd/defs.mk, mcMd/rules.mk, util/srcs.mk, mcMd/srcs.mk
+            -> Define executable names, including util and mcmd suffixes.

@@ -1,0 +1,4 @@
+Buffer{
+  atomCapacity    4
+  ghostCapacity   4
+}

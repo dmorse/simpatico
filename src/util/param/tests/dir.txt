@@ -1,0 +1,3 @@
+subDirectories = serial mpi
+pathFromSrc = util/param/tests
+pathToSrc = ../../..

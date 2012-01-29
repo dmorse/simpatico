@@ -1,0 +1,9 @@
+AtomStorage{
+   atomCapacity       200
+   ghostCapacity      200
+   totalAtomCapacity  400
+}
+GrootSoftPair{
+   epsilon               1.000000000000e+00 
+   sigma                 1.000000000000e+00 
+}

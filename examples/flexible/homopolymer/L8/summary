@@ -1,0 +1,15 @@
+Flexible MC, 100 flexible polymers of 8 monomers each.
+
+                    Potential               Rg^2
+HMC 0.0025          581.63 +- 0.18       1.795 +- 0.002
+HMC 0.0050          581.65 +- 0.15       1.798 +- 0.001 
+HMC 0.0100          581.43 +- 0.24       1.795 +- 0.001
+
+MC AtomDisplace     581.64 +- 0.13       1.794 +- 0.004
+MC CfbReptation     582.19 +- 0.22       1.795 +- 0.001
+MC DoubleRebridge   581.56 +- 0.27       1.798 +- 0.001
+
+MD NVT 0.0025       584.07 +- 0.05       1.7962 +- 0.0004
+MD NVT 0.00125      582.88 +- 0.06       1.7963 +- 0.0004
+
+DDPD NVT 0.005      586.00 +- 1.00

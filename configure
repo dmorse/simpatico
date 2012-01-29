@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#------------------------------------------------------------------------
+# Configuration script:
+#
+# This script should be run once before the first time the program is
+# compiled. It must be run from the root directory, which contains 
+# this script.
+# 
+# This script:
+#
+# 1) Copies default or repository versions of configuration files, 
+# marked with a suffix _r, to modifiable user versions. 
+#
+# 2) While copying src/compiler.mk_r to src/compiler.mk, uses sed
+# to set the makefile variable $(ROOT_DIR) to the current working 
+# directory, as given by the shell variable $PWD.
+#------------------------------------------------------------------------
+
+cp  src/util/defines.mk_r  src/util/defines.mk
+cp  src/mcMd/defines.mk_r  src/mcMd/defines.mk
+cp  src/main/defines.mk_r  src/main/defines.mk
+cp  src/mcMd/boundary/Boundary.h_r src/mcMd/boundary/Boundary.h
+sed "s|=PWD|=$PWD|" src/compiler.mk_r > src/compiler.mk
+

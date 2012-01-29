@@ -1,0 +1,48 @@
+McSimulation{
+  nAtomType                              2
+  SpeciesManager{
+    capacity                               1
+
+    Homopolymer{
+      moleculeCapacity                     100
+      nAtomPerMolecule                       8
+      type                                   0
+    }
+
+  }
+  Random{
+    seed                          -10742892
+  }
+  nStep                               10000
+  McSystem{
+    inputPrefix                          in/
+    outputPrefix                         out/
+    LJPair{
+      epsilon               1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      sigma                 1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      cutoff                1.122460000000e+00  1.122460000000e+00
+                            1.122460000000e+00  1.122460000000e+00
+    }
+    HarmonicBond{
+      nBondType                              1
+      kappa                 2.000000000000e+00
+      length                1.000000000000e+00
+    }
+    IsothermalEnsemble{
+      temperature             1.0000000000 
+    }
+  }
+  McMoveManager{
+    capacity                                 0
+
+  }
+  DiagnosticManager{
+    baseStepPerSample                     10
+    capacity                               0
+
+  }
+
+}
+
