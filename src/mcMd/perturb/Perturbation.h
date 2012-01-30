@@ -135,15 +135,15 @@ namespace McMd
 
    protected:
 
-      /// Number of perturbation parameters associated with a System.
-      int nParameters_;
-
       /*
       mode 0: parameters of all replica systems are specified.
       mode 1: parameters of only the first and last replica systems are specified.
       */
       int mode_;
 
+      /// Number of perturbation parameters associated with a System.
+      int nParameters_;
+      
       /**
       * Sets the perturbation parameter in the associated system.
       *

@@ -103,7 +103,7 @@ namespace McMd
       nParameters = 2 for McPairExternalPerturbation.
       */
       int nParameters_;
-     
+
    };
 
    /// Implementation
@@ -171,13 +171,7 @@ namespace McMd
       if (i >= nParameters_) {
          UTIL_THROW("perturbation parameter index is out of bounds");
       }
-      double param;
-      if (i == 0) {
-        param = evaluator().epsilon(0, 1); 
-      } else if (i == 1) {
-        param = system().externalPotential().externalParameter(); 
-      } 
-      return param;
+      return ((i == 0) ? (evaluator().epsilon(0, 1)) : (system().externalPotential().externalParameter()));
    }
 
    /*

@@ -63,8 +63,13 @@ namespace McMd
       virtual void output();
    
    protected:
-      /// Value of the shift constant for the associated System.
+      
+      /// Shift factor (the logarithm of the difference between free 
+      /// energies of replicas n and n+1) associated with replica n.
       double shift_;
+      
+      /// Shift factor (the logarithm of the difference between free 
+      /// energies of replicas n-1 and n) associated with replica n.
       double lowerShift_;
 
       #if UTIL_MPI
@@ -75,51 +80,69 @@ namespace McMd
       #endif
      
    private:
-      /// Tempering variable.
-      DArray<double> myParam_;
-      DArray<double> lowerParam_;
-      DArray<double> upperParam_;
-      double myDerivative_;
-
-      /// System reference.
-      System* systemPtr_;
-
+      
       /// Get the communicator in the simulation.
       MPI::Intracomm* communicatorPtr_;
-      double myArg_;
-      double lowerArg_;
-      double myFermi_;
-      double upperFermi_;
-      double lowerFermi_;
-
+      
+      /// Current processor's rank.
+      int   myId_;
+      
       /// Number of processors.
       int   nProcs_;
 
-      /// Current processor's rank.
-      int   myId_;
-
-      /// Active neighboring (partner) replica's rank.
+      /// Active neighboring (lower partner) replica's rank.
       int   lowerId_;
+      
+      /// Active neighboring (upper partner) replica's rank.
       int   upperId_;
 
-      /// Number of simulation steps between subsequent actions.
-      long interval_;
-
-      /// Tags for exchanging parameters.
-      static const int TagDerivative[2];
-      static const int TagFermi[2];
-
-      /// Output file stream
-      std::ofstream outputFile_;
-
+      /// Number of perturbation parameters.
+      int nParameters_;
+     
       /// Average object - statistical accumulator
       Average  myAccumulator_;
+      
+      /// Average object - statistical accumulator
       Average  upperAccumulator_;
 
       /// Number of samples per block average output.
       int nSamplePerBlock_;
+ 
+      /// Tempering parameter.
+      DArray<double> myParam_;
+      
+      /// Lower partner's tempering parameter.
+      DArray<double> lowerParam_;
+      
+      /// Upper partner's tempering parameter.
+      DArray<double> upperParam_;
+      
+      /// Derivative of hamiltonian with respect to a perturbation parameter variable.
+      double myDerivative_;
+      
+      /// Argument representing the difference between free energy estimated from
+      /// derivative calculations and the input shift factor (for replicas n and n+1).
+      double myArg_;
+      
+      /// Argument representing the difference between free energy estimated from
+      /// derivative calculations and the input shift factor (for replicas n and n-1).
+      double lowerArg_;
 
-      int nParameters_;
+      /// Fermi function of the argument myArg_.
+      double myFermi_;
+
+      /// Fermi function of the argument lowerArg_.
+      double lowerFermi_;
+
+      /// Fermi function received from upper replica.
+      double upperFermi_;
+      
+      /// Output file stream
+      std::ofstream outputFile_;
+
+      /// Tags for exchanging parameters.
+      static const int TagDerivative[2];
+      static const int TagFermi[2];
   
       virtual void analyze();
    };

@@ -130,51 +130,51 @@ namespace McMd
 
    private:
 
-      /// Tempering variable.
-      DArray<double> myParam_;
-      
-      DArray<double> ptParam_;
-
-      /// System reference.
-      System* systemPtr_;
-
       /// Get the communicator in the simulation.
       MPI::Intracomm* communicatorPtr_;
+      
+      /// Current processor's rank.
+      int   myId_;
 
       /// Number of processors.
       int   nProcs_;
 
-      /// Current processor's rank.
-      int   myId_;
-
-      /// Active neighboring (partner) replica's rank.
-      int   ptId_;
-
-      /// Number of perturbation parameters.
-      int   nParameters_;
+      /// Output file stream storing the acceptance statistics.
+      std::ofstream outputFile_;
       
-      /// Count the number of times the replica move is called to determine
-      /// when this processor should attempt a replica exchange
-      int   stepCount_;
-
       /// Count of attempted moves.
       long  repxAttempt_[2];
 
       /// Count of accepted moves.
       long  repxAccept_[2];
+      
+      /// Number of simulation steps between subsequent actions.
+      long interval_;
+      
+      /// Number of perturbation parameters.
+      int   nParameters_;
+      
+      /// Tempering variable.
+      DArray<double> myParam_;
+      
+      /// Partner's tempering variable.
+      DArray<double> ptParam_;
+      
+      /// System reference.
+      System* systemPtr_;
+      
+      /// Active neighboring (partner) replica's rank.
+      int   ptId_;
+
+      /// Count the number of times the replica move is called to determine
+      /// when this processor should attempt a replica exchange
+      int   stepCount_;
 
       /// Pointer to allocated buffer to store atom positions.
       Vector   *ptPositionPtr_;
 
       /// Local copy of the system atom pointer.
       Vector   *myPositionPtr_;
-
-      /// Output file stream storing the acceptance statistics.
-      std::ofstream outputFile_;
-
-
-      /// Number of simulation steps between subsequent actions.
-      long interval_;
 
       /// Tags for exchanging parameters.
       static const int TagParam[2];

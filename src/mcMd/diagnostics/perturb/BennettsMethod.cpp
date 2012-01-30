@@ -156,15 +156,15 @@ namespace McMd
             
             myPort = myId_%2;
             upperPort = upperId_%2;
-
-            for (int i = 0; i < nParameters_; ++i) {
+ 
+           for (int i = 0; i < nParameters_; ++i) {
                myParam_[i] = system().perturbation().parameter(i);
                upperParam_[i] = system().perturbation().parameter(i, upperId_);
             }
 
             myArg_ = system().perturbation().difference(upperParam_);
             myArg_ -= shift_;
-            
+ 
             myFermi_ = 1/(1 + exp(myArg_));
             
             requestFermi[0] = communicatorPtr_->Irecv(&upperFermi_, 1, MPI::DOUBLE, upperId_,
