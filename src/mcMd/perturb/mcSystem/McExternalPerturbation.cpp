@@ -27,7 +27,7 @@ namespace McMd
    */
    McExternalPerturbation::McExternalPerturbation(McSystem& system)
     : LinearPerturbation<McSystem>(system)
-   {  }
+   { }
 
    /*
    * Destructor.
@@ -57,10 +57,10 @@ namespace McMd
    */
    double McExternalPerturbation::parameter(int i) const
    { 
-      if (i > nParameters_) {
+      if (i >= nParameters_) {
          UTIL_THROW("perturbation parameter index is out of bounds");
       }
-     return system().externalPotential().externalParameter();
+      return system().externalPotential().externalParameter();
    }
 
    /* 
@@ -69,7 +69,7 @@ namespace McMd
    double McExternalPerturbation::derivative(int i) const
    {  
       // Preconditions
-      if (i > nParameters_) {
+      if (i >= nParameters_) {
          UTIL_THROW("perturbation parameter index is out of bounds");
       }
 

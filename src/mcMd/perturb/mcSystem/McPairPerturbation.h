@@ -159,7 +159,7 @@ namespace McMd
    template < class Evaluator >
    double McPairPerturbation<Evaluator>::parameter(int i) const
    {  
-      if (i > nParameters_) {
+      if (i >= nParameters_) {
          UTIL_THROW("perturbation parameter index is out of bounds");
       }
       return evaluator().epsilon(0, 1);
@@ -172,7 +172,7 @@ namespace McMd
    double McPairPerturbation<Evaluator>::derivative(int i) const
    {  
       // Preconditions
-      if (i > nParameters_) {
+      if (i >= nParameters_) {
          UTIL_THROW("perturbation parameter index is out of bounds");
       }
       if (fabs(parameter_[i] - parameter(i)) > 1.0E-8) {
