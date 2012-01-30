@@ -21,6 +21,21 @@
 #include <modules/hoomd/potentials/pair/HoomdDpdPair.h>
 #endif
 
+#ifdef MCMD_EXTERNAL
+#include <mcMd/perturb/mcSystem/McExternalPerturbation.h>
+#include <mcMd/mcSimulation/McSystem.h>
+#include <mcMd/potentials/external/ExternalPotential.h>
+
+#include <modules/hoomd/potentials/external/HoomdLamellarExternal.h>
+#endif
+
+#ifndef MCMD_NOPAIR
+#ifdef MCMD_EXTERNAL
+#include <mcMd/perturb/mcSystem/McPairExternalPerturbation.h>
+#endif
+#endif
+
+
 namespace McMd
 {
 
@@ -47,6 +62,24 @@ namespace McMd
             ptr = new McPairPerturbation<HoomdDpdPair> (*systemPtr_);
          } 
       } 
+      #endif
+      #ifdef MCMD_EXTERNAL
+      if (className == "McExternalPerturbation") {
+         ptr = new McExternalPerturbation(*systemPtr_);
+      }
+      #endif 
+      #ifdef MCMD_EXTERNAL
+      #ifndef MCMD_NOPAIR
+      if (className == "McPairExternalPerturbation") {
+         const std::string& evaluatorClassName = systemPtr_->pairPotential().
+            evaluatorClassName();
+         if (evaluatorClassName == "HoomdLJPair") {
+            ptr = new McPairExternalPerturbation<HoomdLJPair> (*systemPtr_);
+         } else if (evaluatorClassName == "HoomdDpdPair") {
+            ptr = new McPairExternalPerturbation<HoomdDpdPair> (*systemPtr_);
+         } 
+      } 
+      #endif
       #endif
       return ptr;
    }
