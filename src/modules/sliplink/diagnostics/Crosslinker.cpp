@@ -58,7 +58,7 @@ namespace McMd
          System::MoleculeIterator molIter;
          Atom*                     atomPtr;
          for (int iSpec=0; iSpec < system().simulation().nSpecies(); ++iSpec) {
-            for (system().begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
+            for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
                for (int ia=0; ia < molIter->nAtom(); ++ia) {
                   atomPtr = &molIter->atom(ia);
                   system().boundary().shift(atomPtr->position());
@@ -99,7 +99,7 @@ namespace McMd
                       // Calculate distance between atoms i and j
                       dRSq = system().boundary().distanceSq(iPos, jPos);
                       if (dRSq < cutoffSq) {
-                         if(system().simulation().random().getFloat(0.0, 1.0) < probability_){ 
+                         if(system().simulation().random().uniform(0.0, 1.0) < probability_){ 
                           //create a link between i and j atoms
                            system().linkMaster().addLink(*iAtomPtr, *jAtomPtr, 0);
                          }

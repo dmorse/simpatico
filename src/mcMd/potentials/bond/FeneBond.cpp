@@ -154,7 +154,7 @@ namespace McMd
          eHarm = 0.5*kappa_[type]*rSq;
          eFene = energy(rSq, type);
          ratio = exp(-beta*(eFene - eHarm));
-         if (random->getFloat(0.0,1.0) < ratio) {
+         if (random->uniform(0.0,1.0) < ratio) {
             return sqrt(rSq);
          };
       }

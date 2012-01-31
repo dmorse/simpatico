@@ -145,7 +145,7 @@ public:
       for(int i = 0; i < 3; i++) {
         storage.begin(atomIter);
     	 for ( ; !atomIter.atEnd(); ++atomIter) {
-    	    atomIter->position()[i] += random.getFloat(range1, range2);
+    	    atomIter->position()[i] += random.uniform(range1, range2);
      	 }
       }
 

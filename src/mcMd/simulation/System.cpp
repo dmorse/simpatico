@@ -758,7 +758,7 @@ namespace McMd
       if (nMol <= 0) {
          UTIL_THROW("Number of molecules in species <= 0");
       }
-      moleculeId = simulation().random().getInteger(0, nMol);
+      moleculeId = simulation().random().uniformInt(0, nMol);
       return molecule(speciesId, moleculeId); 
    }
 

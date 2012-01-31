@@ -82,7 +82,7 @@ namespace McMd
 
       // Generate trial displacement Vector dr
       for (j = 0; j < Dimension; ++j) {
-         dr[j] = random().getFloat(-delta_, delta_);
+         dr[j] = random().uniform(-delta_, delta_);
       }
 
       // Move every atom by dr and calculate new trial energy.

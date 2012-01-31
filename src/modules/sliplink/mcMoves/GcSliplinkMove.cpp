@@ -77,16 +77,16 @@ namespace McMd
          nLink = system().linkMaster().nLink();
 
          incrementNAttempt();
-         if (random().getFloat(0.0, 1.0) > fCreate_) { // Shuffle/destroy
+         if (random().uniform(0.0, 1.0) > fCreate_) { // Shuffle/destroy
 
             if (nLink > 0) {
    
                // Choose a link at random
-               linkId = random().getInteger(0, nLink);
+               linkId = random().uniformInt(0, nLink);
                linkPtr = &(system().linkMaster().link(linkId));
    
                // Choose an end to be moved: atom0.
-               if (random().getFloat(0.0, 1.0) < 0.5) {
+               if (random().uniform(0.0, 1.0) < 0.5) {
                   endId = 0;
                   atom0Ptr = &(linkPtr->atom0());
                   atom1Ptr = &(linkPtr->atom1());
@@ -114,7 +114,7 @@ namespace McMd
                                       .energy(rsq, linkPtr->typeId());
    
                   // Shuffle atom0 index
-                  if (random().getFloat(0.0, 1.0) > 0.5) {
+                  if (random().uniform(0.0, 1.0) > 0.5) {
                      ++iAtom0;
                   } else {
                      --iAtom0;
@@ -151,7 +151,7 @@ namespace McMd
                } else { // If  atom0 is a chain end
    
                   // Attempt shuffle away from end with 50% probability
-                  if (random().getFloat(0.0, 1.0) > 0.5) {
+                  if (random().uniform(0.0, 1.0) > 0.5) {
    
                      #ifdef MCMD_LINK_SHUFFLE 
                      // Calculate energy of old configuration.
@@ -261,7 +261,7 @@ namespace McMd
             mol0Ptr  = &(system().randomMolecule(speciesId_));
   
             // Choose either molecule end at random
-            if (random().getFloat(0.0, 1.0) > 0.5) {
+            if (random().uniform(0.0, 1.0) > 0.5) {
                iAtom0 = 0;
             } else {
                iAtom0 = mol0Ptr->nAtom() - 1;
@@ -307,7 +307,7 @@ namespace McMd
    
                // Choose a partner with probability cdf[j]/cdf[n0-1]
                j = 0;
-               rnd = random().getFloat(0.0, 1.0);
+               rnd = random().uniform(0.0, 1.0);
                norm = 1.0/cdf[n0-1];
                while (rnd > cdf[j]*norm ){
                   j = j + 1;
@@ -320,7 +320,7 @@ namespace McMd
                pdi = 4.0 * (nLink + 1.0) / fNotCreate_;
                ratio = pci / pdi;
                if (random().metropolis(ratio)) {
-                  if (random().getFloat(0.0, 1.0) > 0.5){
+                  if (random().uniform(0.0, 1.0) > 0.5){
                      system().linkMaster().addLink(*atom0Ptr, *atom1Ptr, 0);
                   } else {
                      system().linkMaster().addLink(*atom1Ptr, *atom0Ptr, 0);

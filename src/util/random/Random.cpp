@@ -88,8 +88,8 @@ namespace Util
          double rsq=2.0;
 
          while( rsq >= 1.0) {
-            v1 = 2.0*getFloat(-1.0, 1.0);
-            v2 = 2.0*getFloat(-1.0, 1.0);
+            v1 = 2.0*uniform(-1.0, 1.0);
+            v2 = 2.0*uniform(-1.0, 1.0);
             rsq = v1*v1 + v2*v2;
          }
          double fac = sqrt(-2.0*log(rsq)/rsq);
@@ -113,8 +113,8 @@ namespace Util
 
       ransq=2.0;
       while (ransq >= 1.0) {
-         ran1  = 1.0-2.0*getFloat(0.0, 1.0);
-         ran2  = 1.0-2.0*getFloat(0.0, 1.0);
+         ran1  = 1.0-2.0*uniform(0.0, 1.0);
+         ran2  = 1.0-2.0*uniform(0.0, 1.0);
          ransq = ran1*ran1 + ran2*ran2;
       }
       ranh= 2.0*sqrt(1.0-ransq);

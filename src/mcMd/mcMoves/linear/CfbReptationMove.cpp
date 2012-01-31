@@ -136,7 +136,7 @@ namespace McMd
       length = molPtr->nAtom();
 
       // Choose which chain end to regrow
-      if (random().getFloat(0.0, 1.0) > 0.5) {
+      if (random().uniform(0.0, 1.0) > 0.5) {
          sign = +1;
          headId = length - 1;
          tailId = 0;

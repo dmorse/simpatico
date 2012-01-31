@@ -59,7 +59,7 @@ namespace McMd
 
       // Choose a molecule and atom at random
       molPtr  = &(system().randomMolecule(speciesId_));
-      iAtom   = random().getInteger(0, molPtr->nAtom());
+      iAtom   = random().uniformInt(0, molPtr->nAtom());
       atomPtr = &molPtr->atom(iAtom);
 
       // Calculate current pair energy and store old position
@@ -67,7 +67,7 @@ namespace McMd
       oldEnergy = system().atomPotentialEnergy(*atomPtr);
 
       for (int j = 0; j < Dimension; ++j) {
-         atomPtr->position()[j] += random().getFloat(-delta_, delta_);
+         atomPtr->position()[j] += random().uniform(-delta_, delta_);
       }
       boundary().shift(atomPtr->position());
       newEnergy = system().atomPotentialEnergy(*atomPtr);

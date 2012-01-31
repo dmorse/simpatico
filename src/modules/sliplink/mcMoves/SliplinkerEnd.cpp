@@ -64,7 +64,7 @@ namespace McMd
      for (i=0; i < ntrials; ++i){
 
 	//Choose to create or destroy a link with prob 0.5
-	if (random().getFloat(0.0, 1.0) > 0.5){
+	if (random().uniform(0.0, 1.0) > 0.5){
 
 	    // Try to create a link.
 	    incrementNAttempt();
@@ -74,7 +74,7 @@ namespace McMd
 
 	    // Choose a molecule end at random
 	    iAtom0 = 0;
-	    if (random().getFloat(0.0, 1.0) > 0.5) iAtom0 = molIPtr->nAtom() - 1;
+	    if (random().uniform(0.0, 1.0) > 0.5) iAtom0 = molIPtr->nAtom() - 1;
 	    atom0Ptr = &molIPtr->atom(iAtom0);
 
 	    // Get array of neighbors
@@ -113,7 +113,7 @@ namespace McMd
 
 	      // Choose a partner with probability cdf[j]/cdf[n0-1]
 	      j = 0;
-	      rnd = random().getFloat(0.0, 1.0);
+	      rnd = random().uniform(0.0, 1.0);
 	      norm = 1.0/cdf[n0-1];
 	      while (rnd > cdf[j]*norm ){
 		j = j + 1;
@@ -123,8 +123,8 @@ namespace McMd
 	      // Create a slip-link between the selected atoms with probability = prob
 	      prob = 2.0*(system().linkMaster().nLink() + 1.0);
 	      prob = 2.0 * system().nMolecule(speciesId_) * boltzmann(-mu_) * cdf[n0-1]/ prob ;
-	      if (system().simulation().random().getFloat(0.0, 1.0) < prob) {
-	        if (random().getFloat(0.0, 1.0) > 0.5){
+	      if (system().simulation().random().uniform(0.0, 1.0) < prob) {
+	        if (random().uniform(0.0, 1.0) > 0.5){
 		  system().linkMaster().addLink(*atom0Ptr, *atom1Ptr, 0);
                 } else {
 		  system().linkMaster().addLink(*atom1Ptr, *atom0Ptr, 0);
@@ -142,11 +142,11 @@ namespace McMd
 	    if (system().linkMaster().nLink() > 0){
 
 	      // Choose a link at random
-	      idLink = random().getInteger(0, system().linkMaster().nLink());
+	      idLink = random().uniformInt(0, system().linkMaster().nLink());
 	      linkPtr = &(system().linkMaster().link(idLink));
 
               // Choose atom0 and atom1 from link ends at random
-	      if (random().getFloat(0.0, 1.0) > 0.5){
+	      if (random().uniform(0.0, 1.0) > 0.5){
                  atom0Ptr = &(linkPtr->atom0());
                  atom1Ptr = &(linkPtr->atom1());
               } else {
@@ -201,7 +201,7 @@ namespace McMd
 		  // Destroy the slip-link between the selected atoms with probability = prob	
 		  prob = 2.0 * system().nMolecule(speciesId_) * boltzmann(-mu_) * cdf[n0-1];
 		  prob = 2.0*system().linkMaster().nLink() / prob; 	
-		  if (system().simulation().random().getFloat(0.0, 1.0) < prob) {
+		  if (system().simulation().random().uniform(0.0, 1.0) < prob) {
 		    system().linkMaster().removeLink(idLink);
 		    incrementNAccept();
 		  }

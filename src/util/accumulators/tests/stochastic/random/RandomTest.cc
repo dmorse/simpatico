@@ -44,7 +44,7 @@ public:
 
       // Verbose output
       if (verbose_ > 0) {
-         printf("idum: %ld\n", random().getSeed() );
+         printf("idum: %ld\n", random().seed() );
       }
 
       tearDown();
@@ -67,7 +67,7 @@ public:
       const int nSample  = 100000;
       double x;
       for (int i=0; i < nSample; i++) {
-         x = random().getFloat(0.0,1.0);
+         x = random().uniform(0.0,1.0);
          average.sample(x);
          distribution.sample(x);
       }

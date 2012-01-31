@@ -93,7 +93,7 @@ namespace McMd
       incrementNAttempt();
 
       // Choose a random direction
-      if (random().getFloat(0.0, 1.0) > 0.5)
+      if (random().uniform(0.0, 1.0) > 0.5)
          sign = +1;
       else
          sign = -1;
@@ -343,7 +343,7 @@ namespace McMd
       
       if (found) {
          // iMol is not changed after the random selection
-         choice  = random().getInteger(0, nPairs);  
+         choice  = random().uniformInt(0, nPairs);  
          jMol    = molBuf[choice];
          beginId = atomBuf[choice] + sign; // return the the active atom ID
          prob    = 1.0 / double(nPairs);

@@ -121,7 +121,7 @@ namespace DdMd
       for (;;) { 
          x = x0 + sd*random->gaussian();
          if (x < 0) continue;
-         if ( x*x/xm2 >= random->getFloat(0.0,1.0) ) {
+         if ( x*x/xm2 >= random->uniform(0.0,1.0) ) {
             return x;
          };
       }

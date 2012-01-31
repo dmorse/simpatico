@@ -142,7 +142,7 @@ inline void SystemTest::testExchangeAtoms()
    for (int i = 0; i < Dimension; ++i) {
      storage.begin(atomIter);
      for ( ; !atomIter.atEnd(); ++atomIter) {
-        atomIter->position()[i] += random.getFloat(range1, range2);
+        atomIter->position()[i] += random.uniform(range1, range2);
      }
    }
 
@@ -202,7 +202,7 @@ inline void SystemTest::testExchangeGhosts()
    for (int i = 0; i < Dimension; ++i) {
      storage.begin(atomIter);
      for ( ; !atomIter.atEnd(); ++atomIter) {
-        atomIter->position()[i] += random.getFloat(range1, range2);
+        atomIter->position()[i] += random.uniform(range1, range2);
      }
    }
 
@@ -284,7 +284,7 @@ inline void SystemTest::testUpdateGhosts()
    for (int i = 0; i < Dimension; ++i) {
      storage.begin(atomIter);
      for ( ; !atomIter.atEnd(); ++atomIter) {
-        atomIter->position()[i] += random.getFloat(range1, range2);
+        atomIter->position()[i] += random.uniform(range1, range2);
      }
    }
 
@@ -349,7 +349,7 @@ inline void SystemTest::testUpdateGhosts()
    storage.begin(atomIter);
    for ( ; !atomIter.atEnd(); ++atomIter) {
       for (int i = 0; i < Dimension; ++i) {
-         atomIter->position()[i] += random.getFloat(range1, range2);
+         atomIter->position()[i] += random.uniform(range1, range2);
       }
    }
 

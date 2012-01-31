@@ -131,7 +131,7 @@ namespace McMd
      
       LinkMaster::ConstLinkIterator it;
       system().linkMaster().begin(it);
-      for (; !it.atEnd(); ++it) {
+      for (; it.notEnd(); ++it) {
          // link type ids are mapped according to
          // HOOMD bond id =  nBondType + link type id
          ::Bond bond(nBondType+it->typeId(),
@@ -403,8 +403,8 @@ namespace McMd
       System::MoleculeIterator molIter;
       Molecule::BondIterator bondIter;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (system().begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(bondIter); !bondIter.atEnd(); ++bondIter) {
+         for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(bondIter); bondIter.notEnd(); ++bondIter) {
                ::Bond bond(bondIter->typeId(),
                            bondIter->atom(0).id(),
                            bondIter->atom(1).id());
@@ -495,8 +495,8 @@ namespace McMd
 
       for (int iSpec =0; iSpec < nSpec; ++iSpec) {
          system().begin(iSpec, molIter);
-         for ( ; !molIter.atEnd(); ++ molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for ( ; molIter.notEnd(); ++ molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                unsigned int idx = (unsigned int) atomIter->id();
                Vector& pos = atomIter->position();
                h_pos.data[idx].x = pos[0] - lengths_[0]/2.;
@@ -555,8 +555,8 @@ namespace McMd
          ArrayHandle<unsigned int> h_rtag(particleDataSPtr_->getRTags(), access_location::host, access_mode::read);
          for (int iSpec = 0; iSpec < nSpec; ++iSpec) {
             system().begin(iSpec, molIter);
-            for ( ; !molIter.atEnd(); ++molIter) {
-               for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+            for ( ; molIter.notEnd(); ++molIter) {
+               for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                   unsigned int idx = h_rtag.data[atomIter->id()]; 
                   atomIter->position() = Vector(h_pos.data[idx].x+lengths_[0]/2.,
                                                 h_pos.data[idx].y+lengths_[1]/2.,

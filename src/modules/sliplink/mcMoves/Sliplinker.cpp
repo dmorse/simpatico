@@ -66,13 +66,13 @@ namespace McMd
      for (i=0; i < ntrials; ++i){   
        
        //Choose to create or destroy a link with prob 0.5
-       if (random().getFloat(0.0, 1.0) > 0.5){         
+       if (random().uniform(0.0, 1.0) > 0.5){         
 	  // Try to create a link. 
 	  incrementNAttempt();		
 	  // Choose a molecule and atom at random
 	  molIPtr  = &(system().randomMolecule(speciesId_));
 	  iMolecule0 = system().moleculeId(*molIPtr);
-	  iAtom   = random().getInteger(0, molIPtr->nAtom());
+	  iAtom   = random().uniformInt(0, molIPtr->nAtom());
 	  atomPtr = &molIPtr->atom(iAtom);
 	  id0 = atomPtr->id();
 	  
@@ -111,7 +111,7 @@ namespace McMd
 	  if (n0 > 0) {
 	    // Choose a partner with probability cdf[j]/cdf[n0-1]
 	    j = 0;
-	    rnd = random().getFloat(0.0, 1.0);
+	    rnd = random().uniform(0.0, 1.0);
 	    norm = 1.0/cdf[n0-1];
 	    while (rnd > cdf[j]*norm ){
 	      j = j + 1;
@@ -121,7 +121,7 @@ namespace McMd
 	    prob = 2.0 * (system().linkMaster().nLink() + 1.0);
 	    prob = system().simulation().atomCapacity() * boltzmann(-mu_) * cdf[n0-1]/ prob ;
 	    //prob = 2.0 * system().nMolecule(speciesId_) * boltzmann(-mu_) * cdf[n0-1]/ prob ;	      
-	    if (system().simulation().random().getFloat(0.0, 1.0) < prob) {        
+	    if (system().simulation().random().uniform(0.0, 1.0) < prob) {        
 	      system().linkMaster().addLink(*atomPtr, *atom1Ptr, 0); 
 	      incrementNAccept();	    
 	    }      
@@ -132,7 +132,7 @@ namespace McMd
 	  incrementNAttempt();
 	  // Choose a link at random
 	  if (system().linkMaster().nLink() > 0){
-	    idLink = random().getInteger(0, system().linkMaster().nLink());
+	    idLink = random().uniformInt(0, system().linkMaster().nLink());
 	    // Indentify the atoms for this link.
 	    linkPtr = &(system().linkMaster().link(idLink));
 	    atom0Ptr = &(linkPtr->atom0());
@@ -181,7 +181,7 @@ namespace McMd
 	      //prob = 2.0 * system().nMolecule(speciesId_) * boltzmann(-mu_) * cdf[n0-1];	
 	      prob = system().simulation().atomCapacity() * boltzmann(-mu_) * cdf[n0-1];	    
 	      prob = 2.0 * system().linkMaster().nLink() / prob; 	            
-	      if (system().simulation().random().getFloat(0.0, 1.0) < prob) {        
+	      if (system().simulation().random().uniform(0.0, 1.0) < prob) {        
 		system().linkMaster().removeLink(idLink); 
 		incrementNAccept();  
 	      }  

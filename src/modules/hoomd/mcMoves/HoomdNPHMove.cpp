@@ -146,8 +146,8 @@ namespace McMd
 
       for (int iSpec =0; iSpec < nSpec; ++iSpec) {
          system().begin(iSpec, molIter);
-         for ( ; !molIter.atEnd(); ++ molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for ( ; molIter.notEnd(); ++ molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                unsigned int idx = (unsigned int) atomIter->id();
                Vector& pos = atomIter->position();
                h_pos.data[idx].x = pos[0] - lengths_[0]/2.;
@@ -265,8 +265,8 @@ namespace McMd
          
          for (int iSpec = 0; iSpec < nSpec; ++iSpec) {
             system().begin(iSpec, molIter);
-            for ( ; !molIter.atEnd(); ++molIter) {
-               for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+            for ( ; molIter.notEnd(); ++molIter) {
+               for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                   unsigned int idx = h_rtag.data[atomIter->id()]; 
                   atomIter->position() = Vector(h_pos.data[idx].x+lengths_[0]/2.,
                                                 h_pos.data[idx].y+lengths_[1]/2.,

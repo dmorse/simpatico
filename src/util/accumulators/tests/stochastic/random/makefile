@@ -4,7 +4,6 @@ include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
 include $(SRC_DIR_REL)/util/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
-include $(SRC_DIR_REL)/test/sources.mk
 include sources.mk
 
 all: $(util_accumulators_tests_stochastic_random_OBJS) RandomTest

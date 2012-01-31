@@ -88,7 +88,7 @@ namespace McMd
       molPtr = &(system().randomMolecule(speciesId_));
 
       // Randomly choose the a atom in the tetra-group.
-      ia = random().getInteger(0, nAtom_);
+      ia = random().uniformInt(0, nAtom_);
 
       // Search the rebriding sites.
       found = scanBridge(molPtr, ia, ic);
@@ -235,7 +235,7 @@ namespace McMd
 
       if (nGroup > 0) {
          found = true;
-         ic = idList[random().getInteger(0,nGroup)];
+         ic = idList[random().uniformInt(0,nGroup)];
       } else {
          found = false;
          ic = -1;         // Invalid value.

@@ -98,8 +98,8 @@ namespace McMd
 
       // Loop over all atoms
       for (iSpec = 0; iSpec < nSpec_; ++iSpec) { 
-        for (system().begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {               
-          for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {    
+        for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {               
+          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {    
 	    zcoord = (atomIter->position())[2]; 
 	    i = int(zcoord/slabWidth_);	    
 	    if(zcoord == Lz) i = nSlabs_-1;

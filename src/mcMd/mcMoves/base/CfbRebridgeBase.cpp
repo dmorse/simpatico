@@ -197,7 +197,7 @@ namespace McMd
             orientationBias(u_21, u_20, prefAng, kappaAng, bias);
    
    	    // Rejection method
-   	    if (bias > random().getFloat(0.0, 1.0)) {
+   	    if (bias > random().uniform(0.0, 1.0)) {
                ready = true;
             }
          }
@@ -286,7 +286,7 @@ namespace McMd
             orientationBias(u_21, u_20, prefAng, kappaAng, bias[iTrial]);
    
    	    // Rejection method
-   	    if (bias[iTrial] > random().getFloat(0.0, 1.0)) {
+   	    if (bias[iTrial] > random().uniform(0.0, 1.0)) {
                ready = true;
             }
          }

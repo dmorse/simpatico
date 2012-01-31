@@ -214,7 +214,7 @@ namespace McMd
       if (n <= 0) {
          UTIL_THROW("Number of links in species <= 0");
       }
-      int id = random.getInteger(0, n);
+      int id = random.uniformInt(0, n);
       return linkSet_[id]; 
    }
 

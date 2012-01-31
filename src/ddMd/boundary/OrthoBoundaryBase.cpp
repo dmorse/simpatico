@@ -43,7 +43,7 @@ namespace DdMd
    void OrthoBoundaryBase::randomPosition(Random &random, Vector &r) const 
    {
      for (int i=0; i < Dimension; ++i) {
-        r[i] = random.getFloat(minima_[i], maxima_[i]);
+        r[i] = random.uniform(minima_[i], maxima_[i]);
      }
    }
 

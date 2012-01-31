@@ -80,7 +80,7 @@ namespace Util
       *
       * \return random double precision number
       */
-      double getFloat();
+      double uniform();
    
       /**
       * Return a random floating point number x, uniformly distributed in the
@@ -88,7 +88,7 @@ namespace Util
       *
       * \return random double precision number
       */
-      double getFloat(double range1, double range2);
+      double uniform(double range1, double range2);
    
       /**
       * Return random long int x uniformly distributed in range1 <= x < range2.
@@ -97,7 +97,7 @@ namespace Util
       *
       * \return random integer
       */
-      long getInteger(long range1, long range2);
+      long uniformInt(long range1, long range2);
     
       /**
       * Generate a random point in a box.
@@ -186,7 +186,7 @@ namespace Util
    /*
    * Get a uniform double precision number.
    */
-   inline double Random::getFloat()
+   inline double Random::uniform()
    {
       // Divide 32 bit integer engine output by 2^32
       return static_cast<double>(engine_()) * (1.0/ 4294967296.0); 
@@ -195,7 +195,7 @@ namespace Util
    /*
    * Get a uniform double precision number.
    */
-   inline double Random::getFloat(double range1, double range2)
+   inline double Random::uniform(double range1, double range2)
    {
       // Divide 32 bit integer engine output by 2^32
       double frac = static_cast<double>(engine_()) * (1.0/ 4294967296.0); 
@@ -207,8 +207,8 @@ namespace Util
    *
    * Parameters range1 and range2 must be within the range of long integers.
    */
-   inline long Random::getInteger(long range1, long range2) {
-      double x = getFloat(range1, range2);
+   inline long Random::uniformInt(long range1, long range2) {
+      double x = uniform(range1, range2);
       return long(x);
    }
    
@@ -221,7 +221,7 @@ namespace Util
    * \param size          number of options
    */
    inline long Random::drawFrom(double probability[], long size) {
-      double roulette = getFloat();
+      double roulette = uniform();
       long   n=0;
       double cumProb = probability[0];
       while ( cumProb < roulette && n < size ) {
@@ -235,9 +235,9 @@ namespace Util
    * Get random point within a rectangular prism.
    */
    inline void Random::getPoint(double minR[], double maxR[], double r[]) {
-      r[0] = getFloat(minR[0], maxR[0]);
-      r[1] = getFloat(minR[1], maxR[1]);
-      r[2] = getFloat(minR[2], maxR[2]);
+      r[0] = uniform(minR[0], maxR[0]);
+      r[1] = uniform(minR[1], maxR[1]);
+      r[2] = uniform(minR[2], maxR[2]);
    }
    
    /* 
@@ -248,7 +248,7 @@ namespace Util
       if ( ratio > 1.0 ) {
          return true;
       } else {
-         double ran = getFloat();
+         double ran = uniform();
          if ( ran < ratio ) {
             return true;
          } else {

@@ -70,7 +70,7 @@ namespace McMd
          endId = 0;	 
          atom0Ptr = &(linkPtr->atom0());
          atom1Ptr = &(linkPtr->atom1());
-         if (random().getFloat(0.0, 1.0) > 0.5) {
+         if (random().uniform(0.0, 1.0) > 0.5) {
 	    endId=1;	   
             atom0Ptr = &(linkPtr->atom1());
             atom1Ptr = &(linkPtr->atom0());
@@ -92,7 +92,7 @@ namespace McMd
             // Move the atom
             iAtom = iAtom0;
             iAtom0 = iAtom - 1;
-            if(random().getFloat(0.0, 1.0) > 0.5) iAtom0 = iAtom + 1;
+            if(random().uniform(0.0, 1.0) > 0.5) iAtom0 = iAtom + 1;
             // If the atoms belong to the same chain
             if(iMolecule0==iMolecule1){
                 if(std::fabs(iAtom0-iAtom1)<2) iAtom0 = iAtom;
@@ -116,7 +116,7 @@ namespace McMd
             rsq = boundary().distanceSq(atom0Ptr->position(), atom1Ptr->position());
  
             // try to move in the chain
-             if (random().getFloat(0.0, 1.0) > 0.5) {
+             if (random().uniform(0.0, 1.0) > 0.5) {
  
                // Calculate energy of old configuration.
                oldEnergy = system().linkPotential().energy(rsq, linkPtr->typeId());
@@ -189,7 +189,7 @@ namespace McMd
                   if (n0 > 0) {
                      // Choose a partner with probability cdf[j]/cdf[n0-1]
                      j = 0;
-                     rnd = random().getFloat(0.0, 1.0);
+                     rnd = random().uniform(0.0, 1.0);
                      norm = 1.0/cdf[n0-1];
                      while (rnd > cdf[j]*norm ){
                        j = j + 1;

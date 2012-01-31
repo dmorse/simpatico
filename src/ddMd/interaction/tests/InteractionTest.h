@@ -100,7 +100,7 @@ public:
       for (i = 0; i < nAtom; ++i) {
          ghost = false;
          for (j = 0; j < Dimension; ++j) {
-            pos[j] = random.getFloat(lowerGhost[j], upperGhost[j]);
+            pos[j] = random.uniform(lowerGhost[j], upperGhost[j]);
             if (pos[j] < lower[j]) 
                ghost = true;
             if (pos[j] > upper[j]) 

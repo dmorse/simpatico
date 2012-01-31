@@ -71,7 +71,7 @@ public:
       }
 
       for (i=0; i < max; i++) {
-         x = random->getFloat(0.0,1.0);
+         x = random->uniform(0.0,1.0);
          j = int(x*nbin);
          histogram[j]++;
       }
@@ -104,7 +104,7 @@ public:
       random->readParam(in);
 
       for (i=0; i < nSample; i++) {
-         x = random->getInteger(0, nbin);
+         x = random->uniformInt(0, nbin);
          histogram[x]++;
          //printf("   %ld\n", x);
       }
@@ -172,7 +172,7 @@ public:
 
       int x;
       for (int i=0; i < 20; i++) {
-         x = random->getInteger(0, 255);
+         x = random->uniformInt(0, 255);
       }
       std::ofstream out;
       openOutputFile("binary", out);
@@ -183,9 +183,9 @@ public:
       out.close();
 
       printEndl();
-      std::cout << random->getInteger(0,255) << std::endl;
-      std::cout << random->getInteger(0,255) << std::endl;
-      std::cout << random->getInteger(0,255) << std::endl;
+      std::cout << random->uniformInt(0,255) << std::endl;
+      std::cout << random->uniformInt(0,255) << std::endl;
+      std::cout << random->uniformInt(0,255) << std::endl;
    }
 
    void testBinaryUnSerialize() {
@@ -193,7 +193,7 @@ public:
 
       int x;
       for (int i=0; i < 20; i++) {
-         x = random->getInteger(0, 255);
+         x = random->uniformInt(0, 255);
       }
       std::ifstream in;
       openInputFile("in/binary", in);
@@ -203,9 +203,9 @@ public:
       iar >> *random;
 
       printEndl();
-      std::cout << random->getInteger(0,255) << std::endl;
-      std::cout << random->getInteger(0,255) << std::endl;
-      std::cout << random->getInteger(0,255) << std::endl;
+      std::cout << random->uniformInt(0,255) << std::endl;
+      std::cout << random->uniformInt(0,255) << std::endl;
+      std::cout << random->uniformInt(0,255) << std::endl;
    }
 
 };

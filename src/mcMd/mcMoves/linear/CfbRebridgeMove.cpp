@@ -97,10 +97,10 @@ namespace McMd
       bonds = new int[nRegrow_ + 1];
 
       // Choose the beginId of the growing interior bridge
-      beginId = random().getInteger(1, length - nRegrow_);
+      beginId = random().uniformInt(1, length - nRegrow_);
 
       // Choose direction: sign = +1 if beginId < endId
-      if (random().getFloat(0.0, 1.0) > 0.5) {
+      if (random().uniform(0.0, 1.0) > 0.5) {
          sign = +1;
          endId = beginId + (nRegrow_ - 1);
       } else {
