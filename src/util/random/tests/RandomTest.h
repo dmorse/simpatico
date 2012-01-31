@@ -173,6 +173,7 @@ public:
       int x;
       for (int i=0; i < 20; i++) {
          x = random->uniformInt(0, 255);
+         // std::cout << x << std::endl;
       }
       std::ofstream out;
       openOutputFile("binary", out);
@@ -191,10 +192,11 @@ public:
    void testBinaryUnSerialize() {
       printMethod(TEST_FUNC);
 
-      int x;
-      for (int i=0; i < 20; i++) {
-         x = random->uniformInt(0, 255);
-      }
+      //int x;
+      //for (int i=0; i < 20; i++) {
+      //   x = random->uniformInt(0, 255);
+      //}
+
       std::ifstream in;
       openInputFile("in/binary", in);
       BinaryFileIArchive iar;

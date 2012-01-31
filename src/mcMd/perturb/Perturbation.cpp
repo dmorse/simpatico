@@ -35,6 +35,7 @@ namespace McMd
    void Perturbation::readParameters(std::istream& in)
    {  
       #ifdef UTIL_MPI
+      int i, j;
       if (hasParamCommunicator()) {
          int size = paramCommunicator().Get_size();
          int rank = paramCommunicator().Get_rank();
