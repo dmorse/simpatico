@@ -9,17 +9,8 @@ Directory structure:
 --------------------
 
 Simpatico may be obtained either by download from the project website or 
-(for developers) by checking out a working copy from a subversion (svn)
-version control repository. The repository uses the directory structure 
-recommended in the subversion documentation, with top level directories 
-named trunk/ branches/, and tags/ . The trunk/ directory contains the 
-main line of development. The version of the code that is distributed 
-for download only contains a snapshot of the trunk/ directory. 
-
-Hereafter, all references to directories will refer to subdirectories 
-of the root directory of the downloadable distribution, or the trunk/
-directory in the repository. This is sometimes referred as the root 
-directory in the documentation.
+(for developers) by cloning a copy of the git version control repository.
+In either case, the root directory for the package is named simpatico/. 
 
 Documentation:
 --------------
@@ -28,7 +19,7 @@ Documentation for Simpatico is prepared using the Doxygen utility
 (www.doxygen.org).  Doxygen is used to create html web pages that 
 are deposited in the directory doc/html/ (i.e., trunk/doc/html in
 the repository).  These web pages are created from *.dox files in 
-the directory src/dox/, which contain the text for a set of 
+the directory simpatico/src/dox/, which contain the text for a set of 
 introductory web pages, and from comments extracted from the C++
 source code. The resulting html pages are not retained in the 
 subversion repository, but are included in the downloadable 
@@ -37,9 +28,10 @@ Simpatico web page.
 
 If you are using a downloaded version, it should include this
 html documentation. You can read it by pointing a browser at 
-any *.html file in the doc/html directory, and then using the 
-links at the top of any page to navigate to the main manual 
-page.  The source file for the main page is called index.html.
+any *.html file in the simpatico/doc/html directory, and then 
+using the links at the top of any page to navigate to the main 
+manual page.  The source file for the main page is called 
+index.html.
 
 If you are using at a version that was checked out from the
 repository, the html documentation will initially be absent. 
@@ -49,11 +41,11 @@ begin by reading the text of the introductory web pages in
 the *.dox files src/dox directory, which are used to generate
 corresponding html pages.
 
-The file src/dox/compile.dox contains instructions for how to 
-use dOxygen to regenerate the html documentation, if necessary. 
+The file simpatico/src/dox/compile.dox contains instructions for 
+how to use dOxygen to regenerate the html documentation, if necessary. 
 This requires that dOxygen be installed. The basic instruction 
-(after installing dOxygen) is to cd to the src/ directory and 
-type "make doc".  
+(after installing dOxygen) is to cd to the simpatico/src/ directory 
+and type "make doc".  
 
 Compilation:
 ------------
@@ -62,43 +54,44 @@ Complete information about compilation is given in src/dox/compile.dox,
 or in the corresponding html web page in the doc/html directory. Here 
 is the short version:
 
-1) Change directory (cd) to the root (or trunk/) directory. 
+1) Change directory (cd) to the root simpatico/ directory. 
    This is the directory that contains this README file. 
 
 2) Enter "./configure".
 
-3) Change directory (cd) to the src/ subdirectory. 
+3) Enter "cd src" to change directory (cd) to the simpatico/src/ directory. 
 
 3) Check the makefile variables in the file src/compiler.mk, and make
    any required changes.  The value of the variable ROOT_DIR should 
-   be the absolute path to the root directory. If necessary, change 
-   the choice of compiler (the default choice is gcc) and/or compiler
-   options in this file. 
+   be the absolute path to the root simpatico/ directory. If necessary, 
+   change the choice of compiler (the default choice is gcc) and/or 
+   compiler options in this file. 
 
-4) Enter "make all" from the src/ directory.
+4) Enter "make all" from within the simpatico/src/ directory.
 
 The above procedure should compile all the classes in the src/util and 
-src/mcMd directories, place libraries in the lib/ directory, and compile 
-the main programs in src/main. By default, the resulting executables are 
-put in the bin/ directory, and are named mcSim and mdSim. 
+src/mcMd subdirectories, place libraries in the simpatico/lib/ directory, 
+and compile the main programs in simpatico/src/main. By default, the 
+resulting executables are put in the simpatico/bin/ directory, and are 
+named mcSim and mdSim. 
 
 The "./configure" script only needs to be invoked once, before the first 
 time you compile the program. 
 
 The above procedure does not enable automatic dependency generation,
 which is disabled by default.  The html documentation and the file 
-src/dox/compile.dox contain information about how to enable this 
-feature. Automatic dependency generation is important for developers 
+simpatico/src/dox/compile.dox contain information about how to enable 
+this feature. Automatic dependency generation is important for developers 
 but less important for users who do not plan to modify the code. 
 Until dependency generation is enabled, however, the only safe way 
 to recompile the program after changing anything is to do a clean 
-rebuild by typing "make clean" followed by "make all" from the src/ 
-directory.
+rebuild by typing "make clean" followed by "make all" from the 
+simpatico/src/ directory.
 
 Makefile special targets:
 -------------------------
 
-These may all be issued from within the src/ directory:
+These may all be issued from within the simpatico/src/ directory:
 
 make all       compile all class files, create libraries and executables
 make clean     remove all *.o, library and executables created by "all".

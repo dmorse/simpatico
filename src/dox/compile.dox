@@ -20,12 +20,10 @@ src/util and src/mcMd.
 The following procedure is normally sufficient to compile all of the 
 classes and the mcSim and mdSim main programs, using the ubiquitous
 gcc compiler on a linux or Mac machine.  Here, all references to the 
-root directory refer to the parent of the src/, doc/, bin/ and lib/ 
-directories. This root directory is the trunk/ directory in the svn 
-repository or the main directory in the version that is downloadable 
-from the project web page. Instructions:
+root directory refer to the simpatico/ that is the parent of the 
+src/, doc/, bin/ and lib/ directories. Instructions:
 
-  - Change working directory (cd) to the root directory.
+  - Change working directory (cd) to the root simpatico/ directory.
 
   - Enter "./configure".
 
