@@ -19,8 +19,8 @@ namespace McMd
    */
    Perturbation::Perturbation()
     : ParamComposite(),
-      mode_(0),
-      nParameters_(0)
+      nParameters_(0),
+      mode_(0)
    {}
 
    /*
@@ -34,7 +34,6 @@ namespace McMd
    */
    void Perturbation::readParameters(std::istream& in)
    {  
-      int i, j;
       #ifdef UTIL_MPI
       if (hasParamCommunicator()) {
          int size = paramCommunicator().Get_size();

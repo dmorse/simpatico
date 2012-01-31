@@ -153,10 +153,10 @@ namespace McMd
       createdTrajectoryIoFactory_(false),
       createdFileMaster_(false)
       #ifdef MCMD_PERTURB
-      , createdPerturbation_(false),
-      createdPerturbationFactory_(false),
+      , createdPerturbation_(false)
+      , createdPerturbationFactory_(false)
       #ifdef UTIL_MPI
-      createdReplicaMove_(false)
+      , createdReplicaMove_(false)
       #endif
       #endif
    {
@@ -257,10 +257,10 @@ namespace McMd
       createdTrajectoryIoFactory_(false),
       createdFileMaster_(false)
       #ifdef MCMD_PERTURB
-      ,createdPerturbation_(false),
-      createdPerturbationFactory_(false),
+      , createdPerturbation_(false)
+      , createdPerturbationFactory_(false)
       #ifdef UTIL_MPI
-      createdReplicaMove_(false)
+      , createdReplicaMove_(false)
       #endif
       #endif
    {}

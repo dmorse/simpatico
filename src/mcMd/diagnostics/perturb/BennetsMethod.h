@@ -1,6 +1,7 @@
 #ifndef BENNETS_METHOD_H
 #define BENNETS_METHOD_H
 
+#ifdef UTIL_PERTURB
 #ifdef UTIL_MPI
 
 /*
@@ -127,4 +128,5 @@ namespace McMd
 
 }
 #endif   // ifdef  UTIL_MPI
+#endif   // ifdef  UTIL_PERTURB
 #endif   // ifndef BENNETS_METHOD_H
