@@ -135,37 +135,37 @@ namespace McMd
 
    protected:
 
-      /*
+      /**
       * Number of perturbation parameters associated with a System.
       */
       int nParameters_;
 
-      /*
+      /**
       * mode 0: parameters of all replica systems are specified.
       * mode 1: parameters of only the first and last replica systems are specified.
       */
       int mode_;
 
-      /*
+      /**
       * Value of the perturbation parameter for the associated System. 
       * parameter is a DMatrix of dimensions 1xnParameters.
       */
       DArray<double> parameter_;
       
-      /*
+      /**
       * Value of the perturbation parameter for the first replica System.
       * initialParameter is a DMatrix of dimensions 1xnParameters.
       */
       DArray<double> initialParameter_;
       
-      /*
+      /**
       * Value of the perturbation parameter for the last replica System.
       * finalParameter is a DMatrix of dimensions 1xnParameters.
       */
       DArray<double> finalParameter_;
 
       #if UTIL_MPI
-      /*
+      /**
       * Value of the perturbation parameter for all the replica Systems.
       * parameters is a DMatrix of dimensions nProcsxnParameters.
       */
