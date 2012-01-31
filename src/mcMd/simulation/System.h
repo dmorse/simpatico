@@ -868,10 +868,8 @@ namespace McMd
       /// Has this System instantiated a PerturbationFactory?
       bool    createdPerturbationFactory_;
       
-      #ifdef UTIL_MPI
       /// Has this System instantiated a ReplicaMove?
       bool    createdReplicaMove_;
-      #endif 
       #endif
 
 

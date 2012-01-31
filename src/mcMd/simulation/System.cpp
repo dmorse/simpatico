@@ -155,9 +155,7 @@ namespace McMd
       #ifdef MCMD_PERTURB
       , createdPerturbation_(false),
       createdPerturbationFactory_(false),
-      #ifdef UTIL_MPI
       createdReplicaMove_(false)
-      #endif
       #endif
    {
       moleculeSetsPtr_ = new DArray<MoleculeSet>;
@@ -259,9 +257,7 @@ namespace McMd
       #ifdef MCMD_PERTURB
       ,createdPerturbation_(false),
       createdPerturbationFactory_(false),
-      #ifdef UTIL_MPI
       createdReplicaMove_(false)
-      #endif
       #endif
    {}
 
