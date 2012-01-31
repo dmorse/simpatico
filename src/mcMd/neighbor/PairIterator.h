@@ -78,7 +78,15 @@ namespace McMd
       /** 
       * Return true if at end of PairList.
       *
-      * When notEnd() is true, the current pair is already one past past
+      * When atEnd() is true, the current pair is already one past past
+      * the end of the pairlist, and is thus invalid.
+      */
+      bool atEnd() const;
+   
+      /** 
+      * Return true if not at end of PairList.
+      *
+      * When notEnd() is false, the current pair is already one past past
       * the end of the pairlist, and is thus invalid.
       */
       bool notEnd() const;
@@ -177,10 +185,16 @@ namespace McMd
    }
 
    /*
-   * Return true if past last pair in list.
+   * Return true if at end of the pair list.
+   */
+   inline bool PairIterator::atEnd() const
+   { return (atom2Id_ == nAtom2_); }
+   
+   /*
+   * Return true if not at end of pair list.
    */
    inline bool PairIterator::notEnd() const
-   { return (atom2Id_ == nAtom2_); }
+   { return (atom2Id_ != nAtom2_); }
    
  
 } 
