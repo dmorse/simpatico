@@ -1,8 +1,3 @@
-Bugs
-----
-
-- Finish debugging restart system for serial jobs.
-
 New features:
 -------------
 
@@ -18,35 +13,22 @@ New features:
 Testing
 -------
 
-- Finish adding unit tests in util and mcMd directories to composite tests.
-
 - Add capacity for regression tests, using comparison to old files.
 
-- More thorough tests with non-unit masses.
-
-- More thorough tests of pressure and stress methods.
-
 - More thorough tests of dihedral potentials.
-
-- Test consistency of LammpsConfigIo (Can it read output created by write?).
 
 Documentation:
 --------------
 
-- Improve documentation regarding diagnostics.
-
-- Write doxygen documentation for unit test framework.
+- Write introductory documentation.
 
 - Convert style guide documentation to doxygen format, and add 
   to Developers Guide.
 
-
 SubSystem base classes:
 -----------------------
 
-- Write McSubSystem and MdSubSystem (classes, not templates).
-
-- Derive each diagnostic from Diagnostic and a private (Mc|Mc|)SubSystem class.
+- Derive diagnostics from a public Diagnostic and a private (Mc|Mc|)SubSystem.
 
 - Remove replace system().typePotential() by typePotential() in diagnostics 
   that are derived from a SubSystem class.
@@ -115,23 +97,12 @@ Interface changes:
   angles and dihedrals, which can be excluded by defining 
   MCMD_NOANGLE and MCMD_NODIHEDRAL.
 
-- Method names:
+- Method names changes (possible):
 
   * If possible, remove moleculeId() and molecule(speciesId, moleculeId)
     methods of System.
 
-  * Change begin(iterator&) to start(iterator&). Reserve begin and end
-    for the usual standard library meanings. 
-
   * Change iterator.atEnd() to iterator.isEnd()
-
-  * Change !iterator.atEnd() to iterator.notEnd()
-
-  * Redesign interface for Random:
-
-    getFloat()   -> uniform()
-    getFloat()   -> uniform(double min, double max)
-    getInteger() -> uniformInt(int min, int max) 
 
 - Source file names and locations:
 
