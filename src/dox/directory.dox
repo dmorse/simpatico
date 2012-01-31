@@ -3,18 +3,7 @@ namespace McMd
 
 /*! \page directory_page Directory Structure
 
-The code for Simpatico is maintained in a subversion version 
-control repository. The root directory of the repository has 
-subdirectories named trunk/, tags/, and branches/ that can hold 
-different versions of the entire project. The root directory
-of the version of the code that is distributed as a tar file 
-for download is a snapshot of a recent version of the trunk/
-directory of the repository version.  Hereafter, we discuss 
-only the structure of the trunk/ directory of the repository, 
-or of the root directory of the version that is distributed 
-for download. 
-
-The trunk directory has the following subdirectories:
+The root simpatico/ directory has the following subdirectories:
 \code
   src/
   doc/ 

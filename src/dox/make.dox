@@ -22,10 +22,10 @@ Invoking "make all" from the src/ directory will:
  - Create a pair of executable programs for Monte Carlo (MC) and 
    Molecular Dynamics (MD) simulation. 
 
-By default, the class library files are placed in the lib/ directory,
-and the executable files are placed in the bin/ directory under the
-main directory (e.g., trunk/ for the main line of development). The 
-default names of the MC and MD exectuables are mcSim and mdSim.  
+By default, the class library files are placed in the simpatico/lib/ 
+directory, and the executable files are placed in the simpatico/bin/ 
+directory.  The default names of the MC and MD exectuables are mcSim 
+and mdSim.  
 
 Invoking "make clean" from the src/ directory removes all of the *.o, 
 *.a and executable files created by "make all".
@@ -268,7 +268,7 @@ for all source files, and because make is not smart enough
 to recognize the equivalence of absolute and relative paths, 
 the only way to explicitly compile a single source file is 
 to use the absolute path as a makefile target, as in
-"make /home/george/simpatico/trunk/src/mcMd/simulation/Simulation.cpp".
+"make /home/george/simpatico/src/mcMd/simulation/Simulation.cpp".
 It is generally more convenient to just use "make all", and 
 comment broken or unfinished source files out of the *_SRCS 
 list until you are ready to fix them.
