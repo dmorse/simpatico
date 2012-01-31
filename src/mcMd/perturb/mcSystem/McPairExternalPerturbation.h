@@ -261,8 +261,8 @@ namespace McMd
          externalEnergy = 0.0;
 
          for (int iSpec=0; iSpec < system().simulation().nSpecies(); ++iSpec){
-             for (system().begin(iSpec, molIter); !molIter.atEnd(); ++molIter){
-                  for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+             for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter){
+                  for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                       externalEnergy += system().externalPotential().energy(atomIter->position(), atomIter->typeId());
                   }
              }

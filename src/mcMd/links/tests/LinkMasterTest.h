@@ -273,7 +273,7 @@ public:
       LinkMaster::LinkIterator iterator;
       linkMaster_.begin(iterator);
       int i = 0;
-      for ( ; !iterator.atEnd(); ++iterator) {
+      for ( ; iterator.notEnd(); ++iterator) {
           i++;
       }
       TEST_ASSERT(i == 3);

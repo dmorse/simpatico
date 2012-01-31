@@ -100,7 +100,7 @@ namespace McMd
 
          // Loop over molecules in species
          system().begin(speciesId_, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter) {
+         for ( ; molIter.notEnd(); ++molIter) {
 
             // Set all Fourier modes to zero
             for (i = 0; i < nWave_; ++i) {
@@ -111,7 +111,7 @@ namespace McMd
  
             // Loop over all atoms in one molecule
             molIter->begin(atomIter); 
-            for ( ; !atomIter.atEnd(); ++atomIter) {
+            for ( ; atomIter.notEnd(); ++atomIter) {
                position = atomIter->position();
                typeId   = atomIter->typeId();
  

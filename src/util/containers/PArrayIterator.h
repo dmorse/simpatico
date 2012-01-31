@@ -77,12 +77,20 @@ namespace Util
       }
 
       /**
-      * Is the iterator dead?
+      * Is the current pointer at the end of the PArray?
       *
       * \return true if at end, false otherwise.
       */
       bool atEnd() const
       {  return (current_ == end_); }
+
+      /**
+      * Is this not at the end of the PArray?
+      *
+      * \return true if not at end, false otherwise.
+      */
+      bool notEnd() const
+      {  return (current_ != end_); }
 
       /**
       * Return a pointer to the current data.

@@ -117,7 +117,7 @@ public:
       TEST_ASSERT(pairList.first_[pairList.nAtom1_] == pairList.nAtom2_);
 
       // Check that all pairs have distance less than cutoff^2
-      for (PairIterator iter(pairList); !iter.atEnd(); ++iter) {
+      for (PairIterator iter(pairList); iter.notEnd(); ++iter) {
          iter.getPair(atom1Ptr, atom2Ptr);
          rSq = boundary.distanceSq(atom1Ptr->position(), atom2Ptr->position());
          TEST_ASSERT(rSq < cutoff*cutoff);
@@ -140,7 +140,7 @@ public:
 
       // Verbose output - list atom Ids for all pairs
       if (verbose() > 1) {
-         for (PairIterator iter(pairList); !iter.atEnd(); ++iter) {
+         for (PairIterator iter(pairList); iter.notEnd(); ++iter) {
             iter.getPair(atom1Ptr, atom2Ptr);
             printf(" %5i %5i \n", atom1Ptr->id(), atom2Ptr->id());
          }

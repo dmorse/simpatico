@@ -265,11 +265,11 @@ namespace McMd
       for (int iMol =0; iMol < nMolecule; ++iMol) {
          Molecule::AtomIterator atomIter;
          system.molecule(id(),iMol).begin(atomIter);
-         for (; !atomIter.atEnd(); ++atomIter) {
+         for (; atomIter.notEnd(); ++atomIter) {
             for (int jMol =0; jMol < nMolecule; ++jMol) {
                Molecule::AtomIterator atomIter2;
                system.molecule(id(),jMol).begin(atomIter2);
-               for (; !atomIter2.atEnd(); ++atomIter2 ) {
+               for (; atomIter2.notEnd(); ++atomIter2 ) {
                   if (atomIter2->id() != atomIter->id()) {
                      double r = sqrt(boundary.distanceSq(
                         atomIter->position(),atomIter2->position()));

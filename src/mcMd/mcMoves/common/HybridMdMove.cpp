@@ -75,8 +75,8 @@ namespace McMd
       // Store old atom positions in oldPositions_ array.
       for (iSpec = 0; iSpec < nSpec; ++iSpec) {
          mdSystemPtr_->begin(iSpec, molIter);
-         for ( ; !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for ( ; molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                oldPositions_[atomIter->id()] = atomIter->position();
             }
          }
@@ -122,9 +122,9 @@ namespace McMd
          // Restore old atom positions
          for (iSpec = 0; iSpec < nSpec; ++iSpec) {
             mdSystemPtr_->begin(iSpec, molIter);
-            for ( ; !molIter.atEnd(); ++molIter) {
+            for ( ; molIter.notEnd(); ++molIter) {
                molIter->begin(atomIter);
-               for ( ; !atomIter.atEnd(); ++atomIter) {
+               for ( ; atomIter.notEnd(); ++atomIter) {
                   atomIter->position() = oldPositions_[atomIter->id()];
                }
             }

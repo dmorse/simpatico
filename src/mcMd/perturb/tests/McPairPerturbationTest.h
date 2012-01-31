@@ -77,8 +77,8 @@ void McPairPerturbationTest::testPairEnergy()
 
    energy = 0.0;
    for (int is=0; is < object().nSpecies(); ++is) {
-      for (system_.begin(is, molIter); !molIter.atEnd(); ++molIter) {
-         for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+      for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
+         for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             de = system_.atomPairEnergy(*atomIter);
             //std::cout.width(5);
             //std::cout << atomIter->id() << "     " << de << std::endl;
@@ -114,8 +114,8 @@ void McPairPerturbationTest::testSetParameter()
 
    energy = 0.0;
    for (int is=0; is < object().nSpecies(); ++is) {
-      for (system_.begin(is, molIter); !molIter.atEnd(); ++molIter) {
-         for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+      for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
+         for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             de = system_.atomPairEnergy(*atomIter);
             //std::cout.width(5);
             //std::cout << atomIter->id() << "     " << de << std::endl;

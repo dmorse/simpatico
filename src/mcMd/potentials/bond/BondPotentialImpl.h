@@ -283,8 +283,8 @@ namespace McMd
 
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (simulation().species(iSpec).nBond() > 0) {
-            for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-               for (molIter->begin(bondIter); !bondIter.atEnd(); ++bondIter) {
+            for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+               for (molIter->begin(bondIter); bondIter.notEnd(); ++bondIter) {
                   rsq = boundary().
                         distanceSq( bondIter->atom(0).position(), 
                                     bondIter->atom(1).position());
@@ -313,8 +313,8 @@ namespace McMd
       // Loop over all bonds in system
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (simulation().species(iSpec).nBond() > 0) {
-            for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-               for (molIter->begin(bondIter); !bondIter.atEnd(); ++bondIter) {
+            for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+               for (molIter->begin(bondIter); bondIter.notEnd(); ++bondIter) {
                   atom0Ptr = &(bondIter->atom(0));
                   atom1Ptr = &(bondIter->atom(1));
                   rsq = boundary().distanceSq(atom0Ptr->position(), 
@@ -348,9 +348,9 @@ namespace McMd
       Molecule::ConstBondIterator bondIter;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (simulation().species(iSpec).nBond() > 0) {
-            for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
+            for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
                molIter->begin(bondIter); 
-               for ( ; !bondIter.atEnd(); ++bondIter) {
+               for ( ; bondIter.notEnd(); ++bondIter) {
                   atom0Ptr = &(bondIter->atom(0));
                   atom1Ptr = &(bondIter->atom(1));
                   rsq = boundary().distanceSq(atom0Ptr->position(), 

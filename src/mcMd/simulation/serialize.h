@@ -45,9 +45,9 @@ namespace McMd
             ar & nMoleculeOut;
             speciesPtr = &simulation().species(iSpecies);
             begin(iSpecies, molIter); 
-            for ( ; !molIter.atEnd(); ++molIter) {
+            for ( ; molIter.notEnd(); ++molIter) {
                molIter->begin(atomIter); 
-               for ( ; !atomIter.atEnd(); ++atomIter) {
+               for ( ; atomIter.notEnd(); ++atomIter) {
                   #ifdef MCMD_SHIFT
                   boundary().shift(atomIter->position(), atomIter->shift());
                   ar & atomIter->shift();
@@ -82,7 +82,7 @@ namespace McMd
                   UTIL_THROW("Molecule index error");
                }
                molPtr->begin(atomIter); 
-               for ( ; !atomIter.atEnd(); ++atomIter) {
+               for ( ; atomIter.notEnd(); ++atomIter) {
                   ar & atomIter->position();
                   ar & atomIter->velocity();
                   #ifdef MCMD_SHIFT

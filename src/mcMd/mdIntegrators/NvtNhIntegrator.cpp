@@ -123,10 +123,10 @@ namespace McMd
       // 1st half velocity Verlet, loop over atoms 
       for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
          system().begin(iSpecies, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter) {
+         for ( ; molIter.notEnd(); ++molIter) {
 
             molIter->begin(atomIter); 
-            for ( ; !atomIter.atEnd(); ++atomIter) {
+            for ( ; atomIter.notEnd(); ++atomIter) {
 
                atomIter->velocity() *= factor;
 
@@ -159,8 +159,8 @@ namespace McMd
       // 2nd half velocity Verlet, loop over atoms
       for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
          system().begin(iSpecies, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for ( ; molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                prefactor = prefactors_[atomIter->typeId()];
                dv.multiply(atomIter->force(), prefactor);
                atomIter->velocity() += dv;

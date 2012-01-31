@@ -110,7 +110,7 @@ namespace McMd
             Atom *atom0Ptr;
             Atom *atom1Ptr;
 
-            for (pairListPtr_->begin(iter); !iter.atEnd(); ++iter) {
+            for (pairListPtr_->begin(iter); iter.notEnd(); ++iter) {
                iter.getPair(atom0Ptr, atom1Ptr);
                if (selector_.match(*atom0Ptr, *atom1Ptr)) {
                   Pair< Atom * > atomPair;
@@ -180,7 +180,7 @@ namespace McMd
                   ConstArrayIterator< Pair< Atom *> > it;
 
                   neighborsPtr=&moleculeNeighbors_[iSpecies1][iMolecule1];
-                  for (neighborsPtr->begin(it); ! it.atEnd(); ++it) {
+                  for (neighborsPtr->begin(it); it.notEnd(); ++it) {
                      Atom *atom0Ptr, *atom1Ptr;
                      atom0Ptr = (*it)[0];
                      atom1Ptr = (*it)[1];

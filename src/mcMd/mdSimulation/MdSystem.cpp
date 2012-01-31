@@ -355,9 +355,9 @@ namespace McMd
       MoleculeIterator molIter;
       Molecule::AtomIterator atomIter;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
             molIter->begin(atomIter); 
-            for ( ; !atomIter.atEnd(); ++atomIter) {
+            for ( ; atomIter.notEnd(); ++atomIter) {
                #ifdef MCMD_SHIFT
                boundary().shift(atomIter->position(), atomIter->shift());
                #else
@@ -376,8 +376,8 @@ namespace McMd
       MoleculeIterator       molIter;
       Molecule::AtomIterator atomIter;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                atomIter->force().zero();
             }
          }
@@ -392,8 +392,8 @@ namespace McMd
       MoleculeIterator       molIter;
       Molecule::AtomIterator atomIter;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                atomIter->velocity().zero();
             }
          }
@@ -416,8 +416,8 @@ namespace McMd
    
       Molecule::AtomIterator atomIter;
       for (iSpec = 0; iSpec < nSpec; ++iSpec) {
-         for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                mass   = sim.atomType(atomIter->typeId()).mass();
                scale  = sqrt(temperature/mass);
                for (j = 0; j < Dimension; ++j) {
@@ -442,8 +442,8 @@ namespace McMd
       int    iSpec;
    
       for (iSpec = 0; iSpec < nSpec; ++iSpec) {
-         for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                average += atomIter->velocity();
                ++nAtom;
             }
@@ -451,8 +451,8 @@ namespace McMd
       }
       average /= double(nAtom);
       for (iSpec = 0; iSpec < nSpec; ++iSpec) {
-         for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                atomIter->velocity() -= average;
             }
          }
@@ -553,8 +553,8 @@ namespace McMd
 
       KE = 0.0;
       for (iSpec=0; iSpec < sim.nSpecies(); ++iSpec) {
-         for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                typeId = atomIter->typeId();
                mass = sim.atomType(typeId).mass();
                KE += atomIter->velocity().square()*mass;
@@ -582,8 +582,8 @@ namespace McMd
 
       setToZero(stress);
       for (int iSpec=0; iSpec < sim.nSpecies(); ++iSpec) {
-         for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                vPtr   = &atomIter->velocity();
                mass   = sim.atomType(atomIter->typeId()).mass();
                p.multiply(*vPtr, mass);

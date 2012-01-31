@@ -115,8 +115,8 @@ void McSimulationTest::testPairEnergy()
 
    energy = 0.0;
    for (int is=0; is < object().nSpecies(); ++is) {
-      for (system_.begin(is, molIter); !molIter.atEnd(); ++molIter) {
-         for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+      for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
+         for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             de = system_.pairPotential().atomEnergy(*atomIter);
             std::cout.width(5);
             std::cout << atomIter->id() << "     " << de << std::endl;
@@ -145,8 +145,8 @@ void McSimulationTest::testBondEnergy()
 
    energy = 0.0;
    for (int is=0; is < object().nSpecies(); ++is) {
-      for (system_.begin(is, molIter); !molIter.atEnd(); ++molIter) {
-         for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+      for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
+         for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             de = system_.bondPotential().atomEnergy(*atomIter);
             std::cout.width(5);
             std::cout << atomIter->id() << "     " << de << std::endl;
@@ -175,8 +175,8 @@ void McSimulationTest::testAngleEnergy()
 
    energy = 0.0;
    for (int is=0; is < object().nSpecies(); ++is) {
-      for (system_.begin(is, molIter); !molIter.atEnd(); ++molIter) {
-         for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+      for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
+         for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             de = system_.atomAngleEnergy(*atomIter);
             std::cout.width(5);
             std::cout << atomIter->id() << "     " << de << std::endl;

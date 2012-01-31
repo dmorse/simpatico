@@ -114,9 +114,9 @@ namespace McMd
          nSpecies = system().simulation().nSpecies();
          for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
             system().begin(iSpecies, molIter); 
-            for ( ; !molIter.atEnd(); ++molIter) {
+            for ( ; molIter.notEnd(); ++molIter) {
                molIter->begin(atomIter); 
-               for ( ; !atomIter.atEnd(); ++atomIter) {
+               for ( ; atomIter.notEnd(); ++atomIter) {
                   position = atomIter->position();
                   coeff    = atomTypeCoeffs_[atomIter->typeId()];
  

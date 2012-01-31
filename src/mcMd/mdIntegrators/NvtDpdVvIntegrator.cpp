@@ -137,7 +137,7 @@ namespace McMd
       }
 
       // Iterator over atom pairs
-      for (pairListPtr_->begin(iter); !iter.atEnd(); ++iter) {
+      for (pairListPtr_->begin(iter); iter.notEnd(); ++iter) {
          iter.getPair(atom0Ptr, atom1Ptr);
          rsq = boundaryPtr_->distanceSq(atom0Ptr->position(), 
                                         atom1Ptr->position(), e);
@@ -192,9 +192,9 @@ namespace McMd
       // 1st half velocity Verlet, loop over atoms 
       Molecule::AtomIterator atomIter;
       for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
-         for (system().begin(iSpecies, molIter); !molIter.atEnd(); ++molIter)
+         for (system().begin(iSpecies, molIter); molIter.notEnd(); ++molIter)
          {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                atomId = atomIter->id();
 
                // f = (conservative atomic) + random + dissipative force 
@@ -229,8 +229,8 @@ namespace McMd
       // 2nd half velocity Verlet, loop over atoms
       for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
          system().begin(iSpecies, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for ( ; molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                atomId = atomIter->id();
 
                // f = conservative + random + dissipative force 

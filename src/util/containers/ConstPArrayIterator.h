@@ -85,6 +85,14 @@ namespace Util
       { return (current_ == end_); }
 
       /**
+      * Is this not the end of the array?
+      *
+      * \return true if not at end, false otherwise.
+      */
+      bool notEnd() const
+      { return (current_ != end_); }
+
+      /**
       * Return a pointer to const current data.
       *
       * \return true if at end, false otherwise.

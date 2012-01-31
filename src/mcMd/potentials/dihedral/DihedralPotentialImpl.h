@@ -298,9 +298,9 @@ namespace McMd
 
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (simulation().species(iSpec).nDihedral() > 0) {
-            for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
+            for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
                molIter->begin(dihedralIter); 
-               for ( ; !dihedralIter.atEnd(); ++dihedralIter){
+               for ( ; dihedralIter.notEnd(); ++dihedralIter){
                   boundary().distanceSq(dihedralIter->atom(1).position(),
                                         dihedralIter->atom(0).position(), dr1);
                   boundary().distanceSq(dihedralIter->atom(2).position(),
@@ -331,9 +331,9 @@ namespace McMd
       Molecule::DihedralIterator dihedralIter;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (simulation().species(iSpec).nDihedral() > 0) {
-            for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
+            for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
                molIter->begin(dihedralIter); 
-               for ( ; !dihedralIter.atEnd(); ++dihedralIter) {
+               for ( ; dihedralIter.notEnd(); ++dihedralIter) {
 
                   atom0Ptr = &(dihedralIter->atom(0));
                   atom1Ptr = &(dihedralIter->atom(1));
@@ -377,9 +377,9 @@ namespace McMd
       Molecule::ConstDihedralIterator dihedralIter;
       for (int iSpec = 0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (simulation().species(iSpec).nDihedral() > 0) {
-            for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
+            for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
                molIter->begin(dihedralIter);
-               for ( ; !dihedralIter.atEnd(); ++dihedralIter){
+               for ( ; dihedralIter.notEnd(); ++dihedralIter){
 
                   boundary().distanceSq(dihedralIter->atom(1).position(),
                                         dihedralIter->atom(0).position(), dr1);

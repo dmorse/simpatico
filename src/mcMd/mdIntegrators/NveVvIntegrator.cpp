@@ -92,8 +92,8 @@ namespace McMd
       Molecule::AtomIterator atomIter;
       for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
          system().begin(iSpecies, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for ( ; molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
 
                prefactor = prefactors_[atomIter->typeId()];
 
@@ -111,7 +111,7 @@ namespace McMd
       int   ia;
       for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
          system().begin(iSpecies, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter) {
+         for ( ; molIter.notEnd(); ++molIter) {
             for (ia=0; ia < molIter->nAtom(); ++ia) {
                atomPtr = &molIter->atom(ia);
                prefactor = prefactors_[atomPtr->typeId()];
@@ -133,8 +133,8 @@ namespace McMd
       #if USE_ITERATOR
       for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
          system().begin(iSpecies, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for ( ; molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                prefactor = prefactors_[atomIter->typeId()];
                dv.multiply(atomIter->force(), prefactor);
                atomIter->velocity() += dv;
@@ -144,7 +144,7 @@ namespace McMd
       #else
       for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
          system().begin(iSpecies, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter)
+         for ( ; molIter.notEnd(); ++molIter)
          {
             for (ia=0; ia < molIter->nAtom(); ++ia) {
                atomPtr = &molIter->atom(ia);

@@ -82,7 +82,7 @@ namespace McMd
             system().addMolecule(*molPtr);
    
             // Read positions.
-            for (molPtr->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+            for (molPtr->begin(atomIter); atomIter.notEnd(); ++atomIter) {
 
                in >> atomId >> atomTypeId;
                if (atomId != atomIter->id()) 
@@ -126,9 +126,9 @@ namespace McMd
       int i = 0;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          system().begin(iSpec, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter) {
+         for ( ; molIter.notEnd(); ++molIter) {
             molIter->begin(atomIter); 
-            for ( ; !atomIter.atEnd(); ++atomIter) {
+            for ( ; atomIter.notEnd(); ++atomIter) {
                out << Int(i, 8);
                out << Int(atomIter->typeId(), 5);
                out << atomIter->position();
@@ -148,9 +148,9 @@ namespace McMd
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (system().simulation().species(iSpec).nBond() > 0) {
             system().begin(iSpec, molIter); 
-            for ( ; !molIter.atEnd(); ++molIter) {
+            for ( ; molIter.notEnd(); ++molIter) {
                molIter->begin(bondIter); 
-               for ( ; !bondIter.atEnd(); ++bondIter) {
+               for ( ; bondIter.notEnd(); ++bondIter) {
                   out << Int(i, 8) << Int(bondIter->typeId(), 5);
                   out << Int(bondIter->atom(0).id() + 1, 8);
                   out << Int(bondIter->atom(1).id() + 1, 8);

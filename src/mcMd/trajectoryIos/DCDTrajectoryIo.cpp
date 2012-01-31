@@ -182,7 +182,7 @@ namespace McMd
          speciesPtr = &simulation().species(iSpecies);
          for (iMol = 0; iMol < speciesPtr->capacity(); ++iMol) {
             molPtr = &system().molecule(iSpecies, iMol);
-            for (molPtr->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+            for (molPtr->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                atomIter->position()[0] = (double) xBuffer_[bufferIdx];
                atomIter->position()[1] = (double) yBuffer_[bufferIdx];
                atomIter->position()[2] = (double) zBuffer_[bufferIdx];

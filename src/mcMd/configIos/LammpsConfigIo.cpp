@@ -143,7 +143,7 @@ namespace McMd
             }
    
             // Read positions, shift into primary cell
-            for (molPtr->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+            for (molPtr->begin(atomIter); atomIter.notEnd(); ++atomIter) {
 
                in >> atomId >> molId >> atomTypeId;
                if (atomId != atomIter->id() + 1) 
@@ -232,8 +232,8 @@ namespace McMd
       int i;
       int shift = 0;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (system().begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                out << Int( atomIter->id() + 1, 8 ) << Int( molIter->id() + 1, 8 );
                out << Int( atomIter->typeId() + 1, 5 );
                out << atomIter->position();
@@ -252,8 +252,8 @@ namespace McMd
       Molecule::BondIterator bondIter;
       int                    iBond = 1;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (system().begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(bondIter); !bondIter.atEnd(); ++bondIter) {
+         for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(bondIter); bondIter.notEnd(); ++bondIter) {
                out << Int(iBond, 8 ) << Int(bondIter->typeId() + 1, 5);
                out << Int(bondIter->atom(0).id() + 1, 8);
                out << Int(bondIter->atom(1).id() + 1, 8);

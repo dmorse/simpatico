@@ -64,8 +64,8 @@ namespace McMd
          Molecule::BondIterator   bondIter;
          double    lsq, l;
 
-         for (system().begin(speciesId_, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(bondIter); !bondIter.atEnd(); ++bondIter) {
+         for (system().begin(speciesId_, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(bondIter); bondIter.notEnd(); ++bondIter) {
                lsq = system().boundary().distanceSq( bondIter->atom(0).position(), 
                                                      bondIter->atom(1).position());
                l = sqrt(lsq);

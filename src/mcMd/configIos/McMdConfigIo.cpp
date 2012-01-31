@@ -87,7 +87,7 @@ namespace McMd
             }
 
             // Read positions, shift into primary cell
-            for (molPtr->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+            for (molPtr->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                readAtom(in, *atomIter);
             }
 
@@ -203,13 +203,13 @@ namespace McMd
          speciesPtr = &simulation().species(iSpecies);
          iMolecule = 0;
          system().begin(iSpecies, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter) {
+         for ( ; molIter.notEnd(); ++molIter) {
             out << endl;
             out << "molecule   " << iMolecule << endl;
             if (speciesPtr->isMutable()) {
                speciesPtr->mutator().writeMoleculeState(out, *molIter);
             }
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                //out << atomIter->position() << endl;
                writeAtom(out, *atomIter);
             }

@@ -127,11 +127,11 @@ namespace McMd
          Molecule::ConstBondIterator   bondIter;
          i = 0;
          system().begin(speciesId_, molIter); 
-         for ( ; !molIter.atEnd(); ++ molIter) {
+         for ( ; molIter.notEnd(); ++ molIter) {
             data_[i].zero();
 
             molIter->begin(bondIter);
-            for ( ; !bondIter.atEnd(); ++bondIter) {
+            for ( ; bondIter.notEnd(); ++bondIter) {
                rsq = system().boundary().distanceSq(
                                       bondIter->atom(0).position(), 
                                       bondIter->atom(1).position(), dr);

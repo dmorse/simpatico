@@ -244,8 +244,8 @@ namespace McMd
       Molecule::ConstAtomIterator atomIter;
       double energy = 0.0;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                energy += evaluator().energy(atomIter->position(),
                                                     atomIter->typeId());
             }
@@ -264,8 +264,8 @@ namespace McMd
       System::MoleculeIterator molIter;
       Molecule::AtomIterator   atomIter;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                evaluator().getForce(atomIter->position(), 
                                             atomIter->typeId(), force);
                atomIter->force() += force;

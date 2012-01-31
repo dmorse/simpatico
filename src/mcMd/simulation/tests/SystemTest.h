@@ -163,7 +163,7 @@ void SystemTest::testInitMoleculeIterator()
    // Count molecules of each Species
    for (int i=0; i < object().nSpecies() ; ++i ) {
       iMolecule = 0; 
-      for (system_.begin(i, molIter); !molIter.atEnd(); ++molIter) {
+      for (system_.begin(i, molIter); molIter.notEnd(); ++molIter) {
          ++iMolecule;
       }
       TEST_ASSERT(iMolecule == system_.nMolecule(i));
@@ -174,9 +174,9 @@ void SystemTest::testInitMoleculeIterator()
       std::cout << std::endl;
       for (int i=0; i < object().nSpecies() ; ++i ) {
          std::cout << "species Id    = " << i << std::endl;
-         for (system_.begin(i, molIter); !molIter.atEnd(); ++molIter) {
+         for (system_.begin(i, molIter); molIter.notEnd(); ++molIter) {
             std::cout << "Molecule Id    = " << molIter->id() << std::endl;
-            for (molIter->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                std::cout << "   " << atomIter->id();
                std::cout << "   " << atomIter->typeId() << std::endl;
             }

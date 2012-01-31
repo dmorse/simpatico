@@ -53,9 +53,9 @@ namespace McMd
       System::MoleculeIterator molIter;
       Molecule::AtomIterator   atomIter;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
+         for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
             molIter->begin(atomIter); 
-            for ( ; !atomIter.atEnd(); ++atomIter) {
+            for ( ; atomIter.notEnd(); ++atomIter) {
                #ifdef MCMD_SHIFT
                boundary().shift(atomIter->position(), atomIter->shift());
                #else

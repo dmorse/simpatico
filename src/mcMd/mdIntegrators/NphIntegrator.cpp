@@ -196,7 +196,7 @@ namespace McMd
 
       for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
          system().begin(iSpecies, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter) {
+         for ( ; molIter.notEnd(); ++molIter) {
             for (ia=0; ia < molIter->nAtom(); ++ia) {
                atomPtr = &molIter->atom(ia);
                prefactor = prefactors_[atomPtr->typeId()];
@@ -240,7 +240,7 @@ namespace McMd
       // v(t+dt) = v'' + 1/2 * a(t+dt)*dt
       for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
          system().begin(iSpecies, molIter); 
-         for ( ; !molIter.atEnd(); ++molIter)
+         for ( ; molIter.notEnd(); ++molIter)
          {
             for (ia=0; ia < molIter->nAtom(); ++ia) {
                atomPtr = &molIter->atom(ia);

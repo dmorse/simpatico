@@ -83,7 +83,7 @@ namespace McMd
          for (int iMol=0; iMol < nMolecule; ++iMol) {
             molPtr = &(speciesPtr->reservoir().pop());
             system().addMolecule(*molPtr);
-            for (molPtr->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+            for (molPtr->begin(atomIter); atomIter.notEnd(); ++atomIter) {
                in >> atomIter->position() >> atomType;
                boundary().shift(atomIter->position());
             }
@@ -109,13 +109,13 @@ namespace McMd
 
       // Write atomic positions
       System::MoleculeIterator molIter;
-      Molecule::AtomIterator   atomPtr;
+      Molecule::AtomIterator   atomIter;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
-         for (system().begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-            for (molIter->begin(atomPtr); !atomPtr.atEnd(); ++atomPtr) {
-               out << atomPtr->position();
+         for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+               out << atomIter->position();
                out.width(10);
-               out << atomPtr->typeId() << endl;
+               out << atomIter->typeId() << endl;
             }
          }
       }

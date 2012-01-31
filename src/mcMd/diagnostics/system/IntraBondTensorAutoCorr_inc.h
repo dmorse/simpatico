@@ -128,12 +128,12 @@ namespace McMd
          // Loop over molecules
          i = 0;
          system().begin(speciesId_, molIter); 
-         for ( ; !molIter.atEnd(); ++ molIter) {
+         for ( ; molIter.notEnd(); ++ molIter) {
             data_[i].zero();
 
             // Loop over bonds
             molIter->begin(bondIter);
-            for ( ; !bondIter.atEnd(); ++bondIter) {
+            for ( ; bondIter.notEnd(); ++bondIter) {
                boundary.distanceSq(bondIter->atom(0).position(), 
                                    bondIter->atom(1).position(), dr);
                u.versor(dr);

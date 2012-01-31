@@ -80,9 +80,9 @@ namespace McMd
          // Loop over atom 1
          for (iSpecies1 = 0; iSpecies1 < nSpecies; ++iSpecies1) {
             system().begin(iSpecies1, molIter1); 
-            for ( ; !molIter1.atEnd(); ++molIter1) {
+            for ( ; molIter1.notEnd(); ++molIter1) {
                molIter1->begin(atomIter1); 
-               for ( ; !atomIter1.atEnd(); ++atomIter1) {
+               for ( ; atomIter1.notEnd(); ++atomIter1) {
                   r1 = atomIter1->position();
  
                   ++typeNumbers_[atomIter1->typeId()];
@@ -90,13 +90,13 @@ namespace McMd
                   // Loop over atom 2 
                   for (iSpecies2 = 0; iSpecies2 < nSpecies; ++iSpecies2) {
                      system().begin(iSpecies2, molIter2); 
-                     for ( ; !molIter2.atEnd(); ++molIter2) {
+                     for ( ; molIter2.notEnd(); ++molIter2) {
 
                         //Check if molecules are the same  
                         //if ( &(*molIter2) != &(*molIter1)) {
 
                            molIter2->begin(atomIter2);
-                           for ( ; !atomIter2.atEnd(); ++atomIter2) {
+                           for ( ; atomIter2.notEnd(); ++atomIter2) {
 
                               if (selector_.match(*atomIter1, *atomIter2)) {
                                  r2 = atomIter2->position();

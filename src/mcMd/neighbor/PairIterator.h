@@ -33,7 +33,7 @@ namespace McMd
    *    // Loop over pairs
    *    Atom* atom1Ptr;
    *    Atom* atom2Ptr;
-   *    for (pairList.begin(iter); !iterator.atEnd(); ++iter) {
+   *    for (pairList.begin(iter); iterator.notEnd(); ++iter) {
    *       iterator.getPair(atom1Ptr, atom2Ptr);
    *
    *       // [Do something with atom1Ptr and atom2Ptr]
@@ -78,10 +78,10 @@ namespace McMd
       /** 
       * Return true if at end of PairList.
       *
-      * When atEnd() is true, the current pair is already one past past
+      * When notEnd() is true, the current pair is already one past past
       * the end of the pairlist, and is thus invalid.
       */
-      bool atEnd() const;
+      bool notEnd() const;
    
       /**
       * Get pointers for current pair of Atoms. 
@@ -179,7 +179,7 @@ namespace McMd
    /*
    * Return true if past last pair in list.
    */
-   inline bool PairIterator::atEnd() const
+   inline bool PairIterator::notEnd() const
    { return (atom2Id_ == nAtom2_); }
    
  

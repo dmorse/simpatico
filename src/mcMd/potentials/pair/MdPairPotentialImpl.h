@@ -275,7 +275,7 @@ namespace McMd
       Atom *atom1Ptr;
       double rsq;
       double energy=0;
-      for (pairList_.begin(iter); !iter.atEnd(); ++iter) {
+      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
          iter.getPair(atom0Ptr, atom1Ptr);
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position());
@@ -303,7 +303,7 @@ namespace McMd
       double       rsq;
       Atom        *atom0Ptr;
       Atom        *atom1Ptr;
-      for (pairList_.begin(iter); !iter.atEnd(); ++iter) {
+      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
          iter.getPair(atom0Ptr, atom1Ptr);
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position(), force);
@@ -332,7 +332,7 @@ namespace McMd
       setToZero(stress);
 
       // Loop over nonbonded neighbor pairs
-      for (pairList_.begin(iter); !iter.atEnd(); ++iter) {
+      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
          iter.getPair(atom0Ptr, atom1Ptr);
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position(), dr);

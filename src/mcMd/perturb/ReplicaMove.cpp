@@ -136,7 +136,7 @@ namespace McMd
       double myWeight, ptWeight, exponential;
       int    isLeft, iAccept, myPort, ptPort;
       System::MoleculeIterator molIter;
-      Molecule::AtomIterator   atomPtr;
+      Molecule::AtomIterator   atomIter;
       int iA;
       
       // Default value for no replica exchange
@@ -224,9 +224,9 @@ namespace McMd
             // Pack atomic positions and types.
             iA = 0;
             for (int iSpec=0; iSpec < system().simulation().nSpecies(); ++iSpec){
-               for (system().begin(iSpec, molIter); !molIter.atEnd(); ++molIter){
-                  for (molIter->begin(atomPtr); !atomPtr.atEnd(); ++atomPtr) {
-                     myPositionPtr_[iA] = atomPtr->position();
+               for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter){
+                  for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+                     myPositionPtr_[iA] = atomIter->position();
                      iA++;
                   }
                }
@@ -246,9 +246,9 @@ namespace McMd
             // Adopt the new atomic positions.
             iA = 0;
             for (int iSpec=0; iSpec < system().simulation().nSpecies(); ++iSpec){
-               for (system().begin(iSpec, molIter); !molIter.atEnd(); ++molIter){
-                  for (molIter->begin(atomPtr); !atomPtr.atEnd(); ++atomPtr) {
-                     atomPtr->position() = ptPositionPtr_[iA];
+               for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter){
+                  for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter){
+                     atomIter->position() = ptPositionPtr_[iA];
                      ++iA;
                   }
                }

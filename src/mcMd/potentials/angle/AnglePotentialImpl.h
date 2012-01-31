@@ -283,8 +283,8 @@ namespace McMd
 
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (simulation().species(iSpec).nAngle() > 0) {
-            for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-               for (molIter->begin(angleIter); !angleIter.atEnd(); ++angleIter){
+            for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+               for (molIter->begin(angleIter); angleIter.notEnd(); ++angleIter){
                   rsq1 = boundary().distanceSq(angleIter->atom(1).position(),
                                         angleIter->atom(0).position(), dr1);
                   rsq2 = boundary().distanceSq(angleIter->atom(2).position(),
@@ -313,8 +313,8 @@ namespace McMd
 
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (simulation().species(iSpec).nAngle() > 0) {
-            for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-               for (molIter->begin(angleIter); !angleIter.atEnd(); ++angleIter){
+            for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+               for (molIter->begin(angleIter); angleIter.notEnd(); ++angleIter){
                   atom0Ptr = &(angleIter->atom(0));
                   atom1Ptr = &(angleIter->atom(1));
                   atom2Ptr = &(angleIter->atom(2));
@@ -351,8 +351,8 @@ namespace McMd
       Molecule::ConstAngleIterator  angleIter;
       for (int iSpec = 0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (simulation().species(iSpec).nAngle() > 0) {
-            for (begin(iSpec, molIter); !molIter.atEnd(); ++molIter) {
-               for (molIter->begin(angleIter); !angleIter.atEnd(); ++angleIter){
+            for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
+               for (molIter->begin(angleIter); angleIter.notEnd(); ++angleIter){
                   atom0Ptr = &(angleIter->atom(0));
                   atom1Ptr = &(angleIter->atom(1));
                   atom2Ptr = &(angleIter->atom(2));
