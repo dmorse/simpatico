@@ -367,6 +367,8 @@ namespace DdMd
       if (nGhost() + ghostReservoir_.size() != ghostCapacity_) 
          UTIL_THROW("nGhost + reservoir size != ghost capacity"); 
 
+      // Check consistency of indexing in atomPtrs_.
+      // For atomPtr_[i] != 0, does atomPtr_[i]->id() = i ?
       Atom* ptr;
       int   i, j;
       j = 0;
@@ -379,10 +381,11 @@ namespace DdMd
             }
          }
       }
+      // Feb. 2012: I don't remember why this test is commented out.
       // if (nGhost() + nAtom() != j) 
       //   UTIL_THROW("nGhost + nAtom != j"); 
 
-      // Count local atoms
+      // Count local atoms on this processor.
       ConstAtomIterator localIter;
       j = 0;
       for (begin(localIter); !localIter.atEnd(); ++localIter) {

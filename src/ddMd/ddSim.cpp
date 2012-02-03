@@ -26,9 +26,7 @@ int main()
    System system;
    system.readParam(std::cin); 
 
-   Domain& domain  = system.domain();
-   AtomStorage& storage = system.atomStorage();
-   int myRank = domain.gridRank();
+   int myRank = system.domain().gridRank();
 
    std::string filename("config");
    system.readConfig(filename);
@@ -40,7 +38,7 @@ int main()
    system.setBoltzmannVelocities(temperature);
 
    // Calculate energies before integration
-   double kinetic   = system.kineticEnergy();
+   double kinetic = system.kineticEnergy();
    double potential = system.pairPotentialEnergy();
    if (myRank == 0) {
       std::cout << Dbl(kinetic) << Dbl(potential) 

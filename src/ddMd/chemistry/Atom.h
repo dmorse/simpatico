@@ -49,11 +49,25 @@ namespace DdMd
       void setTypeId(int Id);
 
       /**
+      * Set rank of the processor that owns this Atom.
+      *  
+      * \param ownerRank rank of parent processor.
+      */
+      void setOwnerRank(int ownerRank);
+
+      /**
       * Set the atomic type index.
       *  
       * \param isGhost true if this is a ghost, or false if local.
       */
       void setIsGhost(bool isGhost);
+
+      /**
+      * Set or unset send marker.
+      *  
+      * \param sendMark true to mark for sending, false otherwise.
+      */
+      void setSendMark(bool sendMark);
 
       //@}
       /// \name Accessors (non-const references)
@@ -84,8 +98,14 @@ namespace DdMd
       /// Get atom type index.
       int   typeId() const;
 
+      /// Get rank of processor that owns this atom.
+      int   ownerRank() const;
+
       /// Is this atom a ghost?
-      bool   isGhost() const;
+      bool  isGhost() const;
+
+      /// Is this atom marked for sending?
+      bool  sendMark() const;
 
       /// Get the position Vector (const reference).
       const Vector& position() const;
@@ -129,11 +149,17 @@ namespace DdMd
       // Is this Atom a ghost (0=false, 1=true)
       int  isGhost_;
 
+      // Is this Atom a ghost (0=false, 1=true)
+      int  ownerRank_;
+
       // Integer index of molecule
       // int  moleculeId_;                      
 
       /// Atomic velocity.
       Vector velocity_;                       
+
+      // Is this Atom a ghost (0=false, 1=true)
+      int  sendMark_;
 
       // Mask      mask_;   
       // IntVector shift_;  
@@ -149,21 +175,31 @@ namespace DdMd
      id_(-1),
      force_(0.0),
      isGhost_(0),
+     ownerRank_(-1),
      // moleculeId(-1),
-     velocity_(0.0)
+     velocity_(0.0),
+     sendMark_(0)
    {}
 
    // Set unique global index for Atom.
-   inline void Atom:: setId(int id) 
+   inline void Atom::setId(int id) 
    {  id_ = id; }
 
    // Set type Id for Atom.
-   inline void Atom:: setTypeId(int typeId) 
+   inline void Atom::setTypeId(int typeId) 
    {  typeId_ = typeId; }
 
+   // Set rank of owner processor.
+   inline void Atom::setOwnerRank(int ownerRank) 
+   {  ownerRank_ = ownerRank; }
+
    // Set type Id for Atom.
-   inline void Atom:: setIsGhost(bool isGhost) 
+   inline void Atom::setIsGhost(bool isGhost) 
    {  isGhost_ = isGhost ? 1 : 0; }
+
+   // Set type Id for Atom.
+   inline void Atom::setSendMark(bool sendMark) 
+   {  sendMark_ = sendMark ? 1 : 0; }
 
    // Get global id for Atom.
    inline int  Atom::id() const
@@ -173,9 +209,17 @@ namespace DdMd
    inline int Atom::typeId() const
    {  return typeId_; }
 
+   // Get type Id.
+   inline int Atom::ownerRank() const
+   {  return ownerRank_; }
+
    // Is this a ghost atom?
    inline bool Atom::isGhost() const
    {  return bool(isGhost_); }
+
+   // Is this atom marked for sending?
+   inline bool Atom::sendMark() const
+   {  return bool(sendMark_); }
 
    // Get reference to position.
    inline Vector& Atom::position()

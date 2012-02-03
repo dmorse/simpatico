@@ -286,6 +286,7 @@ namespace DdMd
 
          Atom* ptr  = storage.newAtomPtr();
          *ptr = *newPtr_;
+         ptr->setOwnerRank(rank);
          storage.addNewAtom();
 
          reservoir_.push(*newPtr_); 
@@ -379,8 +380,11 @@ namespace DdMd
    */ 
    void AtomDistributor::receive(AtomStorage& storage)
    {
-
       #ifdef UTIL_MPI
+      Atom* ptr;                 // Ptr to atom for storage
+      const int source = 0;      // Rank of source processor
+      int   rank;                // Rank of this processor
+      bool  isComplete = false;  // Have all atoms been received?
 
       // Preconditions
       if (domainPtr_ == 0) {
@@ -389,13 +393,11 @@ namespace DdMd
       if (!domainPtr_->isInitialized() != 0) {
          UTIL_THROW("Domain is not initialized");
       }
-      if (domainPtr_->gridRank() == 0) {
+      rank = domainPtr_->gridRank();
+      if (rank == 0) {
          UTIL_THROW("AtomDistributor::receive() called on master processor");
       }
 
-      Atom* ptr;
-      const int source = 0;
-      bool  isComplete = false;
       while (!isComplete) {
 
          // Receive a buffer
@@ -407,12 +409,14 @@ namespace DdMd
             ptr = storage.newAtomPtr();
             bufferPtr_->unpackAtom(*ptr);
             storage.addNewAtom();
+            if (domainPtr_->ownerRank(ptr->position()) != rank) {
+               UTIL_THROW("Error: Atom on wrong processor");
+            }
+            ptr->setOwnerRank(rank);
          }
 
       }
-
       #endif
-
    }
 
 }
