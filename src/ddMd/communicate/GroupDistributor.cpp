@@ -25,16 +25,12 @@ namespace DdMd
    */
    template <int N>
    GroupDistributor<N>::GroupDistributor() 
-    : sendArrays_(),
-      sendSizes_(),
-      domainPtr_(0),
-      bufferPtr_(0),
+    : cache_()
       newPtr_(0),
+      atomStoragePtr_(0),
+      groupStoragePtr_(0),
       cacheCapacity_(0),
-      sendCapacity_(0),
-      rankMaxSendSize_(0),
-      nCachedTotal_(0),
-      nSentTotal_(0)
+      cacheSize_(0)
    {}
 
    /*
@@ -48,10 +44,11 @@ namespace DdMd
    * Retain pointers to associated objects.
    */
    template <int N>
-   void GroupDistributor<N>::associate(Domain& domain, Buffer& buffer)
+   void GroupDistributor<N>::associate(GroupStorage<N>& groupStorage, 
+                                       AtomStorage& atomStorage)
    {
-      domainPtr_    = &domain;
-      bufferPtr_    = &buffer;
+      groupStoragePtr_ = &groupStorage;
+      atomStoragePtr_  = &atomStorage;
    }
 
    /*
@@ -86,65 +83,12 @@ namespace DdMd
    void GroupDistributor<N>::allocate()
    {
       // Preconditions
-      if (bufferPtr_ == 0) {
+      if (atomStoragePtr_ == 0) {
          UTIL_THROW("GroupDistributor not initialized");
       }
-      if (!bufferPtr_->isInitialized()) {
-         UTIL_THROW("Buffer not initialized");
-      }
-      if (!domainPtr_->isInitialized()) {
-         UTIL_THROW("Domain is not initialized");
-      }
-
-      int gridSize  = domainPtr_->grid().size();
-      int rank      = domainPtr_->gridRank();
-      sendCapacity_ = bufferPtr_->atomCapacity();
-
-      // If master processor
-      if (rank == 0) {
-         int i, j;
-
-         // Default cacheCapacity_ = (# processors)*(max atoms per send)
-         if (cacheCapacity_ <= 0) {
-            cacheCapacity_ = gridSize * sendCapacity_;
-         }
-
-         // Allocate memory for array of atoms on the master processor. 
-         cache_.allocate(cacheCapacity_);
-         reservoir_.allocate(cacheCapacity_);
-
-         // Push all atoms onto the reservoir stack, in reverse order.
-         for (i = cacheCapacity_ - 1; i >= 0; --i) {
-            reservoir_.push(cache_[i]);
-         }
-
-         // Allocate memory for sendArrays_ matrix, and nullify all elements.
-         sendArrays_.allocate(gridSize, sendCapacity_);
-         sendSizes_.allocate(gridSize);
-         for (i = 0; i < gridSize; ++i) {
-            sendSizes_[i] = 0; 
-            for (j = 0; j < sendCapacity_; ++j) {
-               sendArrays_(i, j) = 0;      
-            }
-         }
-
-      }
+      cache_.allocate(cacheCapacity_);
 
    }
-
-   #ifdef UTIL_MPI
-
-   /*
-   * Initialize the send buffer.
-   */ 
-   template <int N>
-   void GroupDistributor<N>::initSendBuffer() 
-   {  
-      bufferPtr_->clearSendBuffer(); 
-      bufferPtr_->beginSendBlock(Buffer::ATOM); 
-   }
-
-   #endif
 
    /*
    * Returns address for a new local Group.
@@ -153,109 +97,42 @@ namespace DdMd
    Group<N>* GroupDistributor<N>::newPtr()
    {
       // Preconditions
-      if (domainPtr_ == 0) {
-         UTIL_THROW("GroupDistributor is not initialized");
-      }
-      if (bufferPtr_ == 0) {
+      if (atomStoragePtr_ == 0) {
          UTIL_THROW("GroupDistributor is not initialized");
       }
       if (cacheCapacity_ <= 0) {
          UTIL_THROW("GroupDistributor is not allocated");
       }
-      if (!domainPtr_->isInitialized() != 0) {
-         UTIL_THROW("Domain is not initialized");
-      }
-      if (domainPtr_->gridRank() != 0) {
-         UTIL_THROW("This is not the master processor");
-      }
       if (newPtr_ != 0) {
          UTIL_THROW("A newPtr_ is still active");
       }
 
-      #ifdef UTIL_MPI
-      // If reservoir is empty, send buffer to processor with maximum sendSize_
-      if (reservoir_.size() == 0) {
+      if (cacheSize_ == cacheCapacity_) {
+        
+          #if UTIL_MPI
+          // Broadcast cache
+          #endif
+          cacheSize_ = 0;
 
-         int rank  = rankMaxSendSize_;
-         int size  = sendSizes_[rank];
-         int nSend = std::min(size, sendCapacity_);
-         int begin = size - nSend;
-
-         // Pack groups into buffer, and return pointers for reuse.
-         for (int i = begin; i < size; ++i) {
-            bufferPtr_->packGroup(*sendArrays_(rank, i));
-
-            // Return pointer to the reservoir and remove it from sendArrays_.
-            reservoir_.push(*sendArrays_(rank, i));
-            sendArrays_(rank, i) = 0;
-         }
-         bool isComplete = false;
-         bufferPtr_->endSendBlock(isComplete);
-         nSentTotal_ += sendSizes_[rank];
-         sendSizes_[rank] = begin;
-
-         // Send the buffer
-         bufferPtr_->send(domainPtr_->communicator(), rank);
-
-         // Reinitialize the buffer for reuse.
-         bufferPtr_->clearSendBuffer();
-         bufferPtr_->beginSendBlock(Buffer::ATOM);
       }
-      #endif
-
-      // Return pointer to new atom.
-      newPtr_ = &reservoir_.pop();
-      return newPtr_;
-
+      return &cache_[i];
    }
 
    /*
    * Add an atom to the list to be sent.
    */ 
    template <int N>
-   void 
-   GroupDistributor<N>::add(GroupStorage<N>& storage, DArray<int> atomOwners)
+   void GroupDistributor<N>::add();
    {
       // Preconditions
-      if (domainPtr_ == 0) {
+      if (atomStoragePtr_ == 0) {
          UTIL_THROW("GroupDistributor is not initialized");
-      }
-      if (!domainPtr_->isInitialized() != 0) {
-         UTIL_THROW("Domain is not initialized");
       }
       if (cacheCapacity_ <= 0) {
          UTIL_THROW("GroupDistributor is not allocated");
       }
-      if (domainPtr_->gridRank() != 0) {
-         UTIL_THROW("This is not the master processor");
-      }
-      if (newPtr_ == 0) {
-         UTIL_THROW("No active newPtr_");
-      }
 
-      int  ranks[N];
-      int  nRanks = 0;
-      int  i, j, k;
-      bool ownedByMaster = false;
-      bool newOwner;
-      for (i = 0; i < N; ++i) {
-         k = newPtr_->atomId(i);
-         if (k = 0) {
-            ownedByMaster = true;
-         } else {
-            newOwner = true;
-            for (j = 0; j < nRanks; ++j) {
-               if (k = ranks[j]) {
-                  newOwner = false;
-               }
-            }
-            if (newOwner) {
-               ranks[nRanks] = k;
-               ++nRanks;
-            }
-         }
-      }
-
+      // Decide if this group is owned by the amster
       // If not owned by the master, queue this atom for sending.
       if (ownedByMaster) {
 
@@ -263,65 +140,14 @@ namespace DdMd
          *ptr = *newPtr_;
          storage.addNewGroup();
 
-         reservoir_.push(*newPtr_); 
-
       #ifndef UTIL_MPI
       } else {
          UTIL_THROW("Group not owned by master but UTIL_MPI not defined");
       #endif
       }
     
-      #ifdef UTIL_MPI
-      for (i = 0; i < nRanks; ++i) {
-
-         rank = ranks[i];
-
-         // Add newPtr_ to array of pointers for processor rank.
-         assert(sendSizes_[rank] < sendCapacity_);
-         sendArrays_(rank, sendSizes_[rank]) = newPtr_;
-         ++sendSizes_[rank];
-         ++nCachedTotal_;
-
-         // Check if sendSize for this rank is the largest.
-         if (rank != rankMaxSendSize_) {
-            if (sendSizes_[rank] > sendSizes_[rankMaxSendSize_]) {
-               rankMaxSendSize_ = rank;
-            }
-         }
- 
-         // If buffer for the relevant processor is full, send it now.
-         if (sendSizes_[rank] == sendCapacity_) {
-
-            // Pack atoms into buffer, and return pointers for reuse.
-            for (int i = 0; i < sendCapacity_; ++i) {
-               bufferPtr_->packGroup(*sendArrays_(rank, i));
-
-               // Push pointer onto reservoir and remove it from sendArrays_.
-               reservoir_.push(*sendArrays_(rank, i));
-               sendArrays_(rank, i) = 0;
-            }
-            bool isComplete = false;
-            bufferPtr_->endSendBlock(isComplete);
-            nSentTotal_ += sendCapacity_;
-            sendSizes_[rank] = 0;
-
-            // Send the buffer
-            bufferPtr_->send(domainPtr_->communicator(), rank);
-
-            // Reinitialize the send buffer for reuse.
-            bufferPtr_->clearSendBuffer();
-            bufferPtr_->beginSendBlock(Buffer::ATOM);
-         }
-
-      } 
-
       // Nullify newPtr_ to release for reuse.
       newPtr_ = 0;
-
-
-      // Return rank of processor that owns this atom.
-      return rank;
-      #endif
 
    }
 
@@ -335,62 +161,28 @@ namespace DdMd
    {
 
       #ifdef UTIL_MPI
-
       // Preconditions
-      if (domainPtr_ == 0) {
+      if (atomStoragePtr_ == 0) {
          UTIL_THROW("GroupDistributor is not initialized");
       }
-      if (!domainPtr_->isInitialized() != 0) {
-         UTIL_THROW("Domain is not initialized");
-      }
-      if (domainPtr_->gridRank() != 0) {
-         UTIL_THROW("This is not the master processor");
+      if (cacheCapacity_ <= 0) {
+         UTIL_THROW("GroupDistributor is not allocated");
       }
       if (newPtr_ != 0) {
          UTIL_THROW("A newPtr_ is still active");
       }
 
-      int gridSize = domainPtr_->grid().size();
-      int i, j;
-      bool isComplete = true;
-      for (i = 1; i < gridSize; ++i) {
-
-         // Pack all remaining atoms for this processor
-         for (j = 0; j < sendSizes_[i]; ++j) {
-            bufferPtr_->packGroup(*sendArrays_(i, j));
-
-            // Return pointer to atom to the reservoir.
-            reservoir_.push(*sendArrays_(i, j));
-
-         }
-         bufferPtr_->endSendBlock(isComplete);
-         nSentTotal_ += sendSizes_[i];
-
-         // Send buffer, with isComplete flag as true.
-         bufferPtr_->send(domainPtr_->communicator(), i);
-
-         // Clear buffer and initialize for resending.
-         bufferPtr_->clearSendBuffer();
-         bufferPtr_->beginSendBlock(Buffer::ATOM);
-
-         // Reset atomPtrs array to empty state.
-         for (int j = 0; j < sendCapacity_; ++j) {
-            sendArrays_(i, j) = 0;
-         }
-         sendSizes_[i] = 0;
+      if (cacheSize_ > 0) {
+         // Broadcast cache;
       }
 
       // Postconditions
-      if (reservoir_.size() != reservoir_.capacity()) {
-         UTIL_THROW("atomReservoir not empty after final send");
-      }
       if (nCachedTotal_ != nSentTotal_) {
          UTIL_THROW("Number of cached atoms != number sent");
       }
 
       nCachedTotal_ = 0;
       nSentTotal_   = 0;
-
       #endif
 
    }
@@ -401,21 +193,12 @@ namespace DdMd
    * Called by all processors except the master.
    */ 
    template <int N>
-   void GroupDistributor<N>::receive(GroupStorage<N>& storage)
+   void GroupDistributor<N>::receive()
    {
 
       #ifdef UTIL_MPI
 
       // Preconditions
-      if (domainPtr_ == 0) {
-         UTIL_THROW("GroupDistributor is not initialized");
-      }
-      if (!domainPtr_->isInitialized() != 0) {
-         UTIL_THROW("Domain is not initialized");
-      }
-      if (domainPtr_->gridRank() == 0) {
-         UTIL_THROW("GroupDistributor<N>::receive() called on master processor");
-      }
 
       Group<N>* ptr;
       const int source = 0;
@@ -430,11 +213,11 @@ namespace DdMd
          while (bufferPtr_->recvSize() > 0) {
             ptr = storage.newPtr();
             bufferPtr_->unpackGroup(*ptr);
+            // Do I own any of the atoms in this group ? 
             storage.add();
          }
 
       }
-
       #endif
 
    }

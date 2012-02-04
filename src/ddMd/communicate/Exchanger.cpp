@@ -96,6 +96,30 @@ namespace DdMd
       int           shift;
       bool          choose;
 
+      #if 0
+      /*
+      // Identify processors that own local atoms
+      for (storagePtr_->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+         dest = domainPtr_->ownerRank(atomIter->position());
+         atomIter->setOwnerRank(dest); 
+      }
+
+      // Identify processors that own ghost atoms
+      for (storagePtr_->begin(ghostIter); !ghostIter.atEnd(); ++ghostIter) {
+         dest = domainPtr_->ownerRank(ghostIter->position());
+         ghostIter->setOwnerRank(dest); 
+      }
+
+      loop over bonds{
+         for each atom in bond {
+            update ownerRank_ values in each Bond
+         }
+      }
+      */
+      #endif
+
+      storagePtr_->clearGhosts();
+
       // Cartesian directions
       for (i = 0; i < Dimension; ++i) {
 
@@ -155,6 +179,31 @@ namespace DdMd
 
             } // end atom loop
 
+            #if 0
+            /*
+            // Process groups for sending
+            if (domainPtr_->grid().dimension(i) > 1) {
+               For each group {
+                  empty = true;
+                  groupIter->setSendMark(true);
+                  for each atom in group {
+                     if (atom is local) {
+                        empty = false;
+                     }
+                     if (atom->sendMark) {
+                        groupIter->setSendMark(true);
+                     }
+                  }
+                  pack group for sending
+                  }
+                  if (empty) {
+                     removeGroup from Storage
+                  }
+               }
+            }
+            */
+            #endif
+
             // Send and receive only if dimension(i) > 1
             if(domainPtr_->grid().dimension(i) > 1) {
 
@@ -187,7 +236,39 @@ namespace DdMd
             }
          }
       }
+
+      #if 0
+      /*
+      // Add all local atoms to all groups
+      // Identify incomplete groups
+      groupStoragePtr_->begin(groupIter); 
+      for ( ; groupIter->notEnd(); ++groupIter) {
+         nLocal = 0;
+         for each atom {
+            if (atom is local) {
+               if pointer in group is null {
+                  find atom in storage
+                  assert (atom is found and local)
+                  ste atom ptr in Group
+                  ++nLocal;
+               }
+            }
+         }
+         if (nLocal < N) {
+           add to incomplete group list
+         }
+      }
+ 
+      // At this point:
+      // All atoms on correct processor
+      // No ghost atoms exist
+      // All pointer to local atoms in Groups are set.
+      // All pointers to ghost atoms in Groups are null.
+      */
+      #endif
+
    }
+
 
    /*
    * Exchange ghost atoms.

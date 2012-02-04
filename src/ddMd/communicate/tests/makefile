@@ -6,7 +6,6 @@ include $(SRC_DIR_REL)/ddMd/defines.mk
 include $(SRC_DIR_REL)/ddMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
-include $(SRC_DIR_REL)/test/sources.mk
 include sources.mk
 
 all: $(ddMd_communicate_tests_OBJS) BufferTest DomainTest ExchangerTest Test CollectorTest AtomDistributorTest

@@ -14,5 +14,5 @@ AtomDistributor{
   cacheCapacity   35 
 }
 Random{
-   seed -8762018674
+   seed 8762018674
 }

@@ -265,6 +265,11 @@ namespace DdMd
          atomPtr->setId(-1);
          ghostReservoir_.push(*atomPtr);
       }
+
+      if (ghostSet_.size() != 0) {
+         UTIL_THROW("Nonzero ghostSet size at end of clearGhosts");
+      }
+
    }
 
    // Snapshot functions

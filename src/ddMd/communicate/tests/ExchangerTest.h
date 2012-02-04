@@ -387,7 +387,7 @@ public:
       for (int i=0; i < 3; ++i) {
 
          // Clear ghosts prior to exchanging atoms.
-         storage.clearGhosts();
+         // storage.clearGhosts();
 
          // Move positions and exchange ownership
          exchangeAtoms();

@@ -11,14 +11,11 @@
 #include <util/param/ParamComposite.h>       // base class
 #include <ddMd/chemistry/Group.h>            // member
 #include <util/containers/DArray.h>          // member
-#include <util/containers/DMatrix.h>         // member
-#include <util/containers/ArrayStack.h>      // member
 
 namespace DdMd
 {
 
-   class Domain;
-   class Buffer;
+   class AtomStorage;
    template <int N> class GroupStorage;
 
    using namespace Util;
@@ -36,7 +33,7 @@ namespace DdMd
    * \code
    * 
    *    GroupDistributor  distributor;
-   *    GroupStorage<N>   storage;
+   *    GroupStorage<N>   groupStorage;
    *    DArray<int>       atomOwners;
    *    Group<N>*         ptr;
    *    std::ifstream file
@@ -55,7 +52,7 @@ namespace DdMd
    *           // ...
    *
    *           // Cache active Group<N> for sending.
-   *           distributor.add(storage, atomOwners);
+   *           distributor.add(groupStorage, atomOwners);
    *       }
    *
    *       // Send all remaining.
@@ -63,12 +60,11 @@ namespace DdMd
    *
    *    } else { // If not master processor
    *
-   *       distributor.receive(storage);
+   *       distributor.receive(groupStorage);
    *
    *    }
-   *
    * \endcode
-   * The add(storage, atomOwners) method can send items if required by
+   * The add(groupStorage) method can send items if required by
    * memory limits, and the send() method then sends all remaining
    * groups.
    *
@@ -90,14 +86,12 @@ namespace DdMd
       ~GroupDistributor();
 
       /**
-      * Set pointers to boundary, domain, and buffer.
+      * Set pointers to AtomStorage.
       *
-      * This method must be called on all nodes, before any other.
-      * 
-      * \param domain        Domain object (processor grid)
-      * \param buffer        Buffer used for communication
+      * \param atomStorage   Associated AtomStorage.
       */
-      void associate(Domain& domain, Buffer& buffer);
+      void associate(GroupStorage<N>& groupStorage, 
+                     AtomStorage& atomStorage);
 
       /**
       * Set cacheCapacity, allocate memory and initialize object.
@@ -123,18 +117,6 @@ namespace DdMd
       */
       virtual void readParam(std::istream& in);
 
-      #ifdef UTIL_MPI
-
-      /**
-      * Initialize buffer before the loop over groups.
-      *
-      * This method should be called only by the master processor,
-      * just before entering the loop to read groups from file. 
-      */
-      void initSendBuffer();
-
-      #endif
-
       /**
       * Returns pointer an address available for a new Group<N>.
       *
@@ -148,24 +130,15 @@ namespace DdMd
       Group<N>* newPtr(); 
      
       /**
-      * Process the active group for sending.
-      *
-      * This method should be called only by the master processor, after
-      * a matching call to newPtr(). It identifies and returns the
-      * rank of the processor that owns the active group (i.e., the atom 
-      * returned by the recent call to newPtr), based on its position. 
-      * If this group is owned by the master (rank == 0), it adds it to
-      * the GroupStorage<N> on the master node. If it is not owned by the
-      * master, it caches the atom for sending to its owner. 
+      * Add a group to the cache for sending, send if necessary.
       *
       * If the addition of this atom to the cache would make the cache
-      * full, this method first sends a buffer to the processor with
-      * the largest sendList.
+      * full, this method broadcasts the cache to all processors.
       *
       * \param  storage GroupStorage<N> object on master processor.
       * \return rank of processor that owns the active atom.
       */
-      void add(GroupStorage<N>& storage, DArray<int> atomOwners);
+      void add()
 
       /**
       * Send all atoms that have not be sent previously.
@@ -180,7 +153,7 @@ namespace DdMd
       *
       * This should be called by all processes except the master.
       */ 
-      void receive(GroupStorage<N>& storage);
+      void receive();
 
    protected:
 
@@ -201,42 +174,14 @@ namespace DdMd
       /// Allocated only on the master processor.
       DArray< Group<N> > cache_;
 
-      /// Stack of pointers to unused elements of cache_ array.
-      /// Allocated only on the master processor.
-      ArrayStack< Group<N> > reservoir_;
-      
-      /// Matrix of ptrs to elements of cache_ array. Each row contains
-      /// pointers to Group objects to be sent to one processor.
-      /// Allocated only on the master processor.
-      DMatrix< Group<N>* >  sendArrays_;
-
-      /// Array of sendArrays_ row sizes.
-      /// Allocated only on the master processor.
-      DArray<int> sendSizes_;
-
-      /// Pointer to associated Domain object.
-      Domain*     domainPtr_;
-
-      /// Pointer to associated Buffer object.
-      Buffer*     bufferPtr_;
-
       /// Pointer to space for a new local Group<N>. Null when inactive.
       Group<N>*   newPtr_;
       
-      /// Maximum allowed number of items per transmission to one processor.
-      int         sendCapacity_;
+      /// Pointer to associated Buffer object.
+      AtomStorage* atomStoragePtr_;
 
-      /// Rank of processor with the maximum current buffer size.
-      /// Used only on the master processor.
-      int         rankMaxSendSize_;
-
-      /// Total number of items cached for sending in add()
-      /// Used only on the master processor.
-      int          nCachedTotal_;
-
-      /// Total number of items actually sent.
-      /// Used only on the master processor.
-      int          nSentTotal_;
+      /// Pointer to associated Buffer object.
+      GroupStorage<N>* groupStoragePtr_;
 
    };
 
