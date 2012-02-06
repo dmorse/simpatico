@@ -10,6 +10,7 @@
 
 #include <util/param/ParamComposite.h>   // base class
 #include <ddMd/chemistry/Atom.h>         // member template parameter
+#include <ddMd/chemistry/Group.h>        // Used in template methods
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
@@ -24,7 +25,6 @@ namespace DdMd
    class ConstAtomIterator;
    class GhostIterator;
    class ConstGhostIterator;
-   template <int N> class Group;
 
    /**
    * A container for all the atoms and ghost atoms on this processor.
@@ -271,13 +271,28 @@ namespace DdMd
       Atom* find(int atomId) const;  
 
       /**
-      * Set pointers to atoms in a Group<N> object.
+      * Determine if a group has any atoms in this AtomStorage.
+      *
+      * Preconditions: 
+      * 1) All atom ids in the Group<N> must be set to valid 
+      * values, in the range 0 <= atomId(i) < totalAtomCapacity.
+      * 2) All ghost atoms may exist in this AtomStorage. The 
+      * method throws an exception if it finds ghost atom.
+      *
+      * \param group Group<N> object with known atom ids. 
+      */ 
+      template <int N> 
+      bool groupHasAtoms(Group<N>& group) const;
+
+      /**
+      * Set handles to atoms in a Group<N> object.
       *
       * On entry group is a Group<N> object for which the atom
       * ids have been set for all N atoms in the group, but the
-      * pointers have not yet been set. On exit, the pointers
-      * to these atoms are also set. The pointer for any atom
-      * that is not found on this processor is set null. 
+      * pointers have not yet been set. On exit, both pointers
+      * and values of atom ownerId are set are set for all atoms
+      * that are found in this AtomStorage. Any atoms that are
+      * not found in this storage are assigned null values.
       *
       * Precondition: All atom ids in the Group must be set to
       * values in the range 0 <= atomId(i) < totalAtomCapacity.
@@ -285,7 +300,7 @@ namespace DdMd
       * \param group Group<N> object with known atom ids. 
       */ 
       template <int N> 
-      void findGroupAtoms(Group<N>& group) const;
+      int findGroupAtoms(Group<N>& group) const;
 
       /**
       * Return current number of atoms (excluding ghosts)
@@ -397,6 +412,50 @@ namespace DdMd
 
    inline int AtomStorage::totalAtomCapacity() const
    { return totalAtomCapacity_; }
+
+   // Template method definition
+
+   /*
+   * Determine if a Group<N> has one or more atoms from this AtomStorage.
+   */
+   template <int N>
+   bool AtomStorage::groupHasAtoms(Group<N>& group) const
+   {
+      Atom* ptr;
+      int nAtom = 0;
+      for (int i = 0; i < N; ++i) {
+         ptr = atomPtrs_[group.atomId(i)];
+         if (ptr) {
+            if (ptr->isGhost()) {
+               UTIL_THROW("Found ghost atom");
+            }
+            return true;
+         }
+      }
+      return false;
+   }
+
+   /*
+   * Set pointers to atoms in a Group<N> object.
+   */
+   template <int N>
+   int AtomStorage::findGroupAtoms(Group<N>& group) const
+   {
+      Atom* ptr;
+      int nAtom = 0;
+      for (int i = 0; i < N; ++i) {
+         ptr = atomPtrs_[group.atomId(i)];
+         if (ptr) {
+            group.setAtomPtr(i, ptr);
+            //group.setAtomOwnerRankd(i, ptr->ownerRank());
+            ++nAtom;
+         } else {
+            group.setAtomPtr(i, 0);
+            //group.setAtomOwnerRankd(i, -1);
+         }
+      }
+      return nAtom;
+   }
 
 }
 #endif

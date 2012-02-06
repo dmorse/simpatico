@@ -177,12 +177,18 @@ namespace DdMd
       void packGroup(const Group<N>& group);
 
       /**
-      * Receive of a Atom.
+      * Receive the next group in the recv buffer.
       *
       * \param group Group<N> object into which data is received.
       */
       template <int N>
       void unpackGroup(Group<N>& group);
+
+      /**
+      * Discard the next group in the recv buffer.
+      */
+      template <int N>
+      void discardGroup();
 
       #if 0
       /**
@@ -385,7 +391,7 @@ namespace DdMd
    }
 
    /*
-   * Unpack a Group.
+   * Unpack the next Group in the recieve buffer.
    */
    template <int N>
    void Buffer::unpackGroup(Group<N>& group)
@@ -405,6 +411,31 @@ namespace DdMd
       for (j = 0; j < N; ++j) {
          unpack(i);
          group.setAtomId(j, i);
+      }
+
+      // Decrement number of groups in recv buffer by 1
+      recvSize_--;
+
+   }
+
+   /*
+   * Discard the next Group in the receive buffer.
+   */
+   template <int N>
+   void Buffer::discardGroup()
+   {
+      // Preconditions
+      if (recvType_ != GROUP) {
+         UTIL_THROW("SendType is not GROUP");
+      }
+      if (recvGroupSize_ != N) {
+         UTIL_THROW("Wrong recvGroupSize");
+      }
+      int i, j;
+      unpack(i);
+      unpack(i);
+      for (j = 0; j < N; ++j) {
+         unpack(i);
       }
 
       // Decrement number of groups in recv buffer by 1

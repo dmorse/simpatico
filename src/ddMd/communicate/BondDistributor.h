@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "GroupDistributor.h"       // base class template
+#include "GroupDistributor.cpp"       // base class template
 
 namespace DdMd
 {
@@ -27,6 +27,11 @@ namespace DdMd
       * \param in input stream from which parameter is read.
       */
       virtual void readParam(std::istream& in);
+
+      using GroupDistributor<2>::initSendBuffer;
+      using GroupDistributor<2>::add;
+      using GroupDistributor<2>::send;
+      using GroupDistributor<2>::receive;
 
    };
 

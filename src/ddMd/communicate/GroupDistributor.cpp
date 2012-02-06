@@ -10,6 +10,7 @@
 
 #include "GroupDistributor.h"
 //#include "Buffer.h"
+#include "Domain.h"
 #include <ddMd/storage/GroupStorage.h>
 #include <ddMd/storage/AtomStorage.h>
 
@@ -25,14 +26,15 @@ namespace DdMd
    */
    template <int N>
    GroupDistributor<N>::GroupDistributor() 
-    : cache_()
+    : cache_(),
       newPtr_(0),
       atomStoragePtr_(0),
       groupStoragePtr_(0),
+      domainPtr_(0),
       bufferPtr_(0),
       cacheCapacity_(0),
-      cacheSize_(0)
-      sentSize_(0)
+      cacheSize_(0),
+      nSentTotal_(0)
    {}
 
    /*
@@ -48,10 +50,11 @@ namespace DdMd
    template <int N>
    void GroupDistributor<N>::associate(GroupStorage<N>& groupStorage, 
                                        AtomStorage& atomStorage,
-                                       Buffer& buffer)
+                                       Domain& domain, Buffer& buffer)
    {
       groupStoragePtr_ = &groupStorage;
       atomStoragePtr_ = &atomStorage;
+      domainPtr_ = &domain;
       bufferPtr_ = &buffer;
    }
 
@@ -91,7 +94,6 @@ namespace DdMd
          UTIL_THROW("GroupDistributor not initialized");
       }
       cache_.allocate(cacheCapacity_);
-
    }
 
    /*
@@ -101,7 +103,7 @@ namespace DdMd
    void GroupDistributor<N>::initSendBuffer()
    {
       bufferPtr_->clearSendBuffer();
-      bufferPtr_->beginSendBlock(Buffer::Group, N);
+      bufferPtr_->beginSendBlock(Buffer::GROUP, N);
    }
 
    /*
@@ -121,7 +123,7 @@ namespace DdMd
          UTIL_THROW("A newPtr_ is still active");
       }
 
-      #if UTIL_MPI
+      // #ifdef UTIL_MPI
       if (cacheSize_ == cacheCapacity_) {
           bool isComplete = false;
           int  source = 0;
@@ -132,8 +134,9 @@ namespace DdMd
           bufferPtr_->clearSendBuffer();
           bufferPtr_->beginSendBlock(Buffer::GROUP, N);
       }
-      #endif
-      return &cache_[cacheSize];
+      // #endif
+      newPtr_ = &cache_[cacheSize_];
+      return newPtr_;
    }
 
    /*
@@ -150,19 +153,18 @@ namespace DdMd
          UTIL_THROW("GroupDistributor is not allocated");
       }
 
-      // Decide if this group is owned by the master
-      // If not owned by the master, queue this atom for sending.
-      bool myGroup = true;
-      if (myGroup) {
+      // If this group has atoms on the master, add to groupStorage.
+      if (atomStoragePtr_->groupHasAtoms(*newPtr_)) {
 
          Group<N>* ptr  = groupStoragePtr_->newPtr();
          *ptr = *newPtr_;
-         groupStoragePtr_->addNewGroup();
+         groupStoragePtr_->add();
 
       }
     
       // Nullify newPtr_ to release for reuse.
       newPtr_ = 0;
+      ++cacheSize_;
 
    }
 
@@ -175,7 +177,7 @@ namespace DdMd
    void GroupDistributor<N>::send()
    {
 
-      #ifdef UTIL_MPI
+      // #ifdef UTIL_MPI
       // Preconditions
       if (atomStoragePtr_ == 0) {
          UTIL_THROW("GroupDistributor is not initialized");
@@ -198,14 +200,8 @@ namespace DdMd
           bufferPtr_->beginSendBlock(Buffer::GROUP, N);
       }
 
-      // Postconditions
-      if (nCachedTotal_ != nSentTotal_) {
-         UTIL_THROW("Number of cached atoms != number sent");
-      }
-
-      nCachedTotal_ = 0;
       nSentTotal_   = 0;
-      #endif
+      // #endif
 
    }
 
@@ -218,8 +214,8 @@ namespace DdMd
    void GroupDistributor<N>::receive()
    {
 
-      #ifdef UTIL_MPI
-      // Preconditions
+      // #ifdef UTIL_MPI
+      // Preconditions ??
 
       Group<N>* ptr;
       const int source = 0;
@@ -230,19 +226,20 @@ namespace DdMd
          // Receive broadcast
          bufferPtr_->bcast(domainPtr_->communicator(), source);
 
-         // Unpack the buffer
+         // Unpack the buffer, 
          isComplete = bufferPtr_->beginRecvBlock();
          while (bufferPtr_->recvSize() > 0) {
-            // Do I own any of the atoms in this group ? 
-            if (myGroup) {
-               ptr = storage.newPtr();
+            if (atomStoragePtr_->groupHasAtoms(*newPtr_)) {
+               ptr = groupStoragePtr_->newPtr();
                bufferPtr_->unpackGroup(*ptr);
-               groupStorage.add();
+               groupStoragePtr_->add();
+            } else {
+               bufferPtr_->discardGroup<N>();
             }
          }
 
       }
-      #endif
+      // #endif
 
    }
 

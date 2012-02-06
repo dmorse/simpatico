@@ -322,19 +322,6 @@ namespace DdMd
    {  return atomPtrs_[atomId]; }
 
    /*
-   * Set pointers to atoms in a Group<N> object.
-   */ 
-   template <int N>
-   void AtomStorage::findGroupAtoms(Group<N>& group) const
-   {
-      Atom* ptr;
-      for (int i = 0; i < N; ++i) {
-         ptr = atomPtrs_[group.atomId(i)];
-         group.setAtomPtr(i, ptr);
-      }
-   }
-
-   /*
    * Set iterator to beginning of the set of local atoms.
    */
    void AtomStorage::begin(AtomIterator& iterator)

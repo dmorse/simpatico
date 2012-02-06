@@ -18,6 +18,7 @@ namespace DdMd
 
    class AtomStorage;
    template <int N> class GroupStorage;
+   class Domain;
    class Buffer;
 
    using namespace Util;
@@ -92,9 +93,8 @@ namespace DdMd
       *
       * \param atomStorage   Associated AtomStorage.
       */
-      void associate(GroupStorage<N>& groupStorage, 
-                     AtomStorage& atomStorage,
-                     Buffer& buffer);
+      void associate(GroupStorage<N>& groupStorage, AtomStorage& atomStorage, 
+                     Domain& domain, Buffer& buffer);
 
       /**
       * Initialize Buffer for sending.
@@ -190,6 +190,9 @@ namespace DdMd
 
       /// Pointer to associated GroupStorage<N> object.
       GroupStorage<N>* groupStoragePtr_;
+
+      /// Pointer to associated Buffer object.
+      Domain* domainPtr_;
 
       /// Pointer to associated Buffer object.
       Buffer* bufferPtr_;
