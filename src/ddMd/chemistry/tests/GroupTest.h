@@ -44,11 +44,15 @@ void GroupTest::testSetGet()
    group.setTypeId(4);
    group.setAtomId(0, 34);
    group.setAtomId(1, 35);
+   group.setAtomOwnerRank(0, 2);
+   group.setAtomOwnerRank(1, 5);
 
    TEST_ASSERT(group.id() == 3);
    TEST_ASSERT(group.typeId() == 4);
    TEST_ASSERT(group.atomId(0) == 34);
    TEST_ASSERT(group.atomId(1) == 35);
+   TEST_ASSERT(group.atomOwnerRank(0) == 2);
+   TEST_ASSERT(group.atomOwnerRank(0) == 5);
 
 } 
 

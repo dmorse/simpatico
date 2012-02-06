@@ -9,9 +9,9 @@
 */
 
 #include "GroupDistributor.h"
-#include "Domain.h"
-#include "Buffer.h"
+//#include "Buffer.h"
 #include <ddMd/storage/GroupStorage.h>
+#include <ddMd/storage/AtomStorage.h>
 
 #include <algorithm>
 
@@ -29,8 +29,10 @@ namespace DdMd
       newPtr_(0),
       atomStoragePtr_(0),
       groupStoragePtr_(0),
+      bufferPtr_(0),
       cacheCapacity_(0),
       cacheSize_(0)
+      sentSize_(0)
    {}
 
    /*
@@ -45,10 +47,12 @@ namespace DdMd
    */
    template <int N>
    void GroupDistributor<N>::associate(GroupStorage<N>& groupStorage, 
-                                       AtomStorage& atomStorage)
+                                       AtomStorage& atomStorage,
+                                       Buffer& buffer)
    {
       groupStoragePtr_ = &groupStorage;
-      atomStoragePtr_  = &atomStorage;
+      atomStoragePtr_ = &atomStorage;
+      bufferPtr_ = &buffer;
    }
 
    /*
@@ -91,6 +95,16 @@ namespace DdMd
    }
 
    /*
+   *
+   */
+   template <int N>
+   void GroupDistributor<N>::initSendBuffer()
+   {
+      bufferPtr_->clearSendBuffer();
+      bufferPtr_->beginSendBlock(Buffer::Group, N);
+   }
+
+   /*
    * Returns address for a new local Group.
    */ 
    template <int N>
@@ -107,22 +121,26 @@ namespace DdMd
          UTIL_THROW("A newPtr_ is still active");
       }
 
+      #if UTIL_MPI
       if (cacheSize_ == cacheCapacity_) {
-        
-          #if UTIL_MPI
-          // Broadcast cache
-          #endif
+          bool isComplete = false;
+          int  source = 0;
+          bufferPtr_->endSendBlock(isComplete);
+          bufferPtr_->bcast(domainPtr_->communicator(), source);
+          nSentTotal_ += cacheSize_;
           cacheSize_ = 0;
-
+          bufferPtr_->clearSendBuffer();
+          bufferPtr_->beginSendBlock(Buffer::GROUP, N);
       }
-      return &cache_[i];
+      #endif
+      return &cache_[cacheSize];
    }
 
    /*
    * Add an atom to the list to be sent.
    */ 
    template <int N>
-   void GroupDistributor<N>::add();
+   void GroupDistributor<N>::add()
    {
       // Preconditions
       if (atomStoragePtr_ == 0) {
@@ -132,18 +150,15 @@ namespace DdMd
          UTIL_THROW("GroupDistributor is not allocated");
       }
 
-      // Decide if this group is owned by the amster
+      // Decide if this group is owned by the master
       // If not owned by the master, queue this atom for sending.
-      if (ownedByMaster) {
+      bool myGroup = true;
+      if (myGroup) {
 
-         Group<N>* ptr  = storage.newPtr();
+         Group<N>* ptr  = groupStoragePtr_->newPtr();
          *ptr = *newPtr_;
-         storage.addNewGroup();
+         groupStoragePtr_->addNewGroup();
 
-      #ifndef UTIL_MPI
-      } else {
-         UTIL_THROW("Group not owned by master but UTIL_MPI not defined");
-      #endif
       }
     
       // Nullify newPtr_ to release for reuse.
@@ -173,7 +188,14 @@ namespace DdMd
       }
 
       if (cacheSize_ > 0) {
-         // Broadcast cache;
+          bool isComplete = false;
+          int  source = 0;
+          bufferPtr_->endSendBlock(isComplete);
+          bufferPtr_->bcast(domainPtr_->communicator(), source);
+          nSentTotal_ += cacheSize_;
+          cacheSize_ = 0;
+          bufferPtr_->clearSendBuffer();
+          bufferPtr_->beginSendBlock(Buffer::GROUP, N);
       }
 
       // Postconditions
@@ -197,24 +219,26 @@ namespace DdMd
    {
 
       #ifdef UTIL_MPI
-
       // Preconditions
 
       Group<N>* ptr;
       const int source = 0;
       bool  isComplete = false;
+      bool  myGroup = true;
       while (!isComplete) {
 
-         // Receive a buffer
-         bufferPtr_->recv(domainPtr_->communicator(), source);
+         // Receive broadcast
+         bufferPtr_->bcast(domainPtr_->communicator(), source);
 
          // Unpack the buffer
          isComplete = bufferPtr_->beginRecvBlock();
          while (bufferPtr_->recvSize() > 0) {
-            ptr = storage.newPtr();
-            bufferPtr_->unpackGroup(*ptr);
             // Do I own any of the atoms in this group ? 
-            storage.add();
+            if (myGroup) {
+               ptr = storage.newPtr();
+               bufferPtr_->unpackGroup(*ptr);
+               groupStorage.add();
+            }
          }
 
       }

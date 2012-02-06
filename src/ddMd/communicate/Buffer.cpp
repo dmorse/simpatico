@@ -118,7 +118,6 @@ namespace DdMd
    {  return isInitialized_; }
 
    #ifdef UTIL_MPI
-
    /*
    * Allocate send and recv buffers (private method).
    *
@@ -186,7 +185,7 @@ namespace DdMd
    /*
    * Clear the send buffer prior to packing, and set the sendType.
    */
-   void Buffer::beginSendBlock(BlockDataType sendType)
+   void Buffer::beginSendBlock(BlockDataType sendType, int sendGroupSize)
    {
       if (sendSize_ != 0) {
          UTIL_THROW("Error: previous send block not finalized");
@@ -197,6 +196,7 @@ namespace DdMd
 
       // Data type to be sent.
       sendType_ = sendType;
+      sendGroupSize_ = sendGroupSize; // 0 by default, for atom or ghost.
 
       // Mark beginning of block.
       sendBlockBegin_ = sendPtr_;
@@ -220,12 +220,15 @@ namespace DdMd
       ++sendBuffPtr;
       *sendBuffPtr = (int) sendType_;
       ++sendBuffPtr;
+      *sendBuffPtr = sendGroupSize_;
+      ++sendBuffPtr;
       *sendBuffPtr = (int) isComplete;
 
       // Clear variables associated with the sent block.
       sendBlockBegin_ = 0;
       sendSize_ = 0;
       sendType_ = NONE;
+      sendGroupSize_ = 0;
 
    }
 
@@ -243,7 +246,8 @@ namespace DdMd
       int* recvBuffPtr = (int *)recvPtr_;
       recvSize_  = *recvBuffPtr;
       recvType_  = *(recvBuffPtr + 1);
-      bool isComplete = (bool) *(recvBuffPtr + 2);
+      recvGroupSize_ = *(recvBuffPtr + 2);
+      bool isComplete = (bool) *(recvBuffPtr + 3);
       recvBuffPtr += 4;
 
       // Set recvPtr to beginning of first item to be unpacked
@@ -346,67 +350,6 @@ namespace DdMd
       
       //Decrement number of atoms in recv buffer to be unpacked by 1
       recvSize_--;
-   }
-
-   /*
-   * Pack a Group.
-   */
-   template <int N>
-   void Buffer::packGroup(const Group<N>& group)
-   {
-      pack<int>(group.typeId());
-      pack<int>(group.id());
-      for (int j = 0; j < N; ++j) {
-         pack<int>(group.atomId(j));
-      }
-
-      //Increment number of groups in send buffer by 1
-      ++sendSize_;
-
-   }
-
-   /*
-   * Unpack a Group.
-   */
-   template <int N>
-   void Buffer::unpackGroup(Group<N>& group)
-   {
-      int i, j;
-      unpack(i);
-      group.setTypeId(i);
-      unpack(i);
-      group.setId(i);
-      for (j = 0; j < N; ++j) {
-         unpack(i);
-         group.setAtomId(j, i);
-      }
-
-      // Decrement number of groups in recv buffer by 1
-      recvSize_--;
-
-   }
-
-   /*
-   * Pack data required for a ghost Atom for sending.
-   */
-   void Buffer::packBond(Bond& bond)
-   {
-      // Preconditions
-      if (sendType_ != BOND) {
-         UTIL_THROW("Send type is not BOND");
-      }
-      packGroup<2>(bond);
-   }
-
-   /**
-   * Unpack data required for a ghost Atom.
-   */
-   void Buffer::unpackBond(Bond& bond)
-   {
-      if (recvType_ != (int)BOND) {
-         UTIL_THROW("Receive type is not BOND");
-      }
-      unpackGroup<2>(bond);
    }
 
    /*
@@ -537,6 +480,7 @@ namespace DdMd
       }
 
    }
+   #endif
 
    /*
    * Number of items currently in data send block. 
@@ -556,35 +500,5 @@ namespace DdMd
    bool Buffer::isAllocated() const
    {  return (bufferCapacity_ > 0); }
 
-   /*
-   * Pack an object of type T into send buffer.
-   */
-   template <typename T>
-   void Buffer::pack(const T& data)
-   {
-      if (sendPtr_ + sizeof(data) > sendBufferEnd_) {
-         UTIL_THROW("Attempted write past end of send buffer");
-      }
-      T* ptr = (T *)sendPtr_;
-      *ptr = data;
-      ++ptr;
-      sendPtr_ = (char *)ptr;
-   }
-
-   /*
-   * Unpack an object of type T from recvBuffer.
-   */
-   template <typename T>
-   void Buffer::unpack(T& data)
-   {
-      if (recvPtr_ + sizeof(data) > recvBufferEnd_) {
-         UTIL_THROW("Attempted read past end of recv buffer");
-      }
-      T* ptr = (T *)recvPtr_;
-      data = *ptr;
-      ++ptr;
-      recvPtr_ = (char *)ptr;
-   }
-   #endif
 }
 #endif

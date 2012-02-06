@@ -10,6 +10,7 @@
 
 #include <util/param/ParamComposite.h>       // base class
 #include <ddMd/chemistry/Group.h>            // member
+#include <ddMd/communicate/Buffer.h>         // member data type
 #include <util/containers/DArray.h>          // member
 
 namespace DdMd
@@ -17,6 +18,7 @@ namespace DdMd
 
    class AtomStorage;
    template <int N> class GroupStorage;
+   class Buffer;
 
    using namespace Util;
 
@@ -91,7 +93,13 @@ namespace DdMd
       * \param atomStorage   Associated AtomStorage.
       */
       void associate(GroupStorage<N>& groupStorage, 
-                     AtomStorage& atomStorage);
+                     AtomStorage& atomStorage,
+                     Buffer& buffer);
+
+      /**
+      * Initialize Buffer for sending.
+      */
+      void initSendBuffer();
 
       /**
       * Set cacheCapacity, allocate memory and initialize object.
@@ -138,7 +146,7 @@ namespace DdMd
       * \param  storage GroupStorage<N> object on master processor.
       * \return rank of processor that owns the active atom.
       */
-      void add()
+      void add();
 
       /**
       * Send all atoms that have not be sent previously.
@@ -158,7 +166,7 @@ namespace DdMd
    protected:
 
       /// Maximum number of items that can be cached on master.
-      int         cacheCapacity_;
+      int  cacheCapacity_;
 
       /**
       * Allocate memory and initialize object.
@@ -180,8 +188,20 @@ namespace DdMd
       /// Pointer to associated Buffer object.
       AtomStorage* atomStoragePtr_;
 
-      /// Pointer to associated Buffer object.
+      /// Pointer to associated GroupStorage<N> object.
       GroupStorage<N>* groupStoragePtr_;
+
+      /// Pointer to associated Buffer object.
+      Buffer* bufferPtr_;
+
+      /// Type of object to send.
+      Buffer::BlockDataType sendType_;
+
+      /// Current size of cache_ (defined only on master)
+      int cacheSize_;
+
+      /// Total number of atoms sent(defined only on master)
+      int nSentTotal_;
 
    };
 

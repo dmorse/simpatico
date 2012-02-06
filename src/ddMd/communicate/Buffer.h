@@ -27,7 +27,7 @@ namespace DdMd
 
    public:
 
-      enum BlockDataType {NONE, ATOM, GHOST, BOND};
+      enum BlockDataType {NONE, ATOM, GHOST, GROUP};
 
       /**
       * Constructor.
@@ -57,11 +57,8 @@ namespace DdMd
       void allocate(int atomCapacity, int ghostCapacity);
 
       #ifdef UTIL_MPI
-
       /**
-      * Clear the send buffer prior to packing and set atomtype.
-      *
-      * Set the send pointer to the beginning of the send buffer.
+      * Clear the send buffer and sendType.
       */
       void clearSendBuffer();
 
@@ -69,9 +66,10 @@ namespace DdMd
       * Clear the send buffer prior to packing and set atomtype.
       *
       * Sets sendSize() to zero, the send pointer to the beginning of
-      * the send buffer, and atomType to the type of atom to be packed.
+      * the send buffer, and sendType to the type of data to be sent.
+      * If sendType = Group, also set sendGroupSize.
       */
-      void beginSendBlock(BlockDataType sendType);
+      void beginSendBlock(BlockDataType sendType, int sendGroupSize = 0);
 
       /**
       * Finalize a block in the send buffer.
@@ -171,6 +169,23 @@ namespace DdMd
       void unpackGhost(Atom& atom);
 
       /**
+      * Pack a Group for sending.
+      *
+      * \param group Group<N> object to be sent.
+      */
+      template <int N>
+      void packGroup(const Group<N>& group);
+
+      /**
+      * Receive of a Atom.
+      *
+      * \param group Group<N> object into which data is received.
+      */
+      template <int N>
+      void unpackGroup(Group<N>& group);
+
+      #if 0
+      /**
       * Pack a Bond into send buffer.
       *
       * Copies required data from atom into send buffer, and
@@ -191,6 +206,7 @@ namespace DdMd
       * \param atom ghost Atom object.
       */
       void unpackBond(Bond& bond);
+      #endif
 
       /**
       * Number of items written to current send block.
@@ -227,7 +243,6 @@ namespace DdMd
    private:
 
       #ifdef UTIL_MPI
-
       /// Pointer to send buffer.
       char* sendBufferBegin_;
 
@@ -261,12 +276,17 @@ namespace DdMd
       /// Number of unread atoms or ghosts currently in receive buffer.
       int recvSize_;
 
-      /// Type of atom being sent = NONE, ATOM, or GHOST
+      /// Number of atoms in group (or 0 if not a Group).
+      int sendGroupSize_;
+
+      /// Type of atom being sent = NONE, ATOM, GHOST, BOND, ANGLE. DIHEDRAL
       BlockDataType sendType_;
 
       /// Type of atom being received (BlockDataType cast to int)
       int recvType_;
 
+      /// Number of atoms in group (or 0 if not a Group).
+      int recvGroupSize_;
       #endif
 
       /// Maximum number of local atoms in buffer.
@@ -301,30 +321,97 @@ namespace DdMd
       template <typename T>
       void unpack(T& data);
 
-      /**
-      * Pack a Group for sending.
-      *
-      * \param group Group<N> object to be sent.
-      */
-      template <int N>
-      void packGroup(const Group<N>& group);
-
-      /**
-      * Receive of a Atom.
-      *
-      * \param group Group<N> object into which data is received.
-      */
-      template <int N>
-      void unpackGroup(Group<N>& group);
-
       /*
       * Allocate send and recv buffers, using preset capacities.
       */
       void allocate();
-
       #endif
 
    };
+
+   #if UTIL_MPI
+   /*
+   * Pack an object of type T into send buffer.
+   */
+   template <typename T>
+   void Buffer::pack(const T& data)
+   {
+      if (sendPtr_ + sizeof(data) > sendBufferEnd_) {
+         UTIL_THROW("Attempted write past end of send buffer");
+      }
+      T* ptr = (T *)sendPtr_;
+      *ptr = data;
+      ++ptr;
+      sendPtr_ = (char *)ptr;
+   }
+
+   /*
+   * Unpack an object of type T from recvBuffer.
+   */
+   template <typename T>
+   void Buffer::unpack(T& data)
+   {
+      if (recvPtr_ + sizeof(data) > recvBufferEnd_) {
+         UTIL_THROW("Attempted read past end of recv buffer");
+      }
+      T* ptr = (T *)recvPtr_;
+      data = *ptr;
+      ++ptr;
+      recvPtr_ = (char *)ptr;
+   }
+
+   /*
+   * Pack a Group.
+   */
+   template <int N>
+   void Buffer::packGroup(const Group<N>& group)
+   {
+      // Preconditions
+      if (sendType_ != GROUP) {
+         UTIL_THROW("SendType is not GROUP");
+      }
+      if (sendGroupSize_ != N) {
+         UTIL_THROW("Wrong sendGroupSize");
+      }
+      pack<int>(group.typeId());
+      pack<int>(group.id());
+      for (int j = 0; j < N; ++j) {
+         pack<int>(group.atomId(j));
+      }
+
+      //Increment number of groups in send buffer by 1
+      ++sendSize_;
+
+   }
+
+   /*
+   * Unpack a Group.
+   */
+   template <int N>
+   void Buffer::unpackGroup(Group<N>& group)
+   {
+      // Preconditions
+      if (recvType_ != GROUP) {
+         UTIL_THROW("SendType is not GROUP");
+      }
+      if (recvGroupSize_ != N) {
+         UTIL_THROW("Wrong recvGroupSize");
+      }
+      int i, j;
+      unpack(i);
+      group.setTypeId(i);
+      unpack(i);
+      group.setId(i);
+      for (j = 0; j < N; ++j) {
+         unpack(i);
+         group.setAtomId(j, i);
+      }
+
+      // Decrement number of groups in recv buffer by 1
+      recvSize_--;
+
+   }
+   #endif
 
 }
 #endif

@@ -701,7 +701,7 @@ public:
 
    }
 
-   //Test Method for MPI Sendrecv method for local atoms
+   // Test Method for MPI Sendrecv method for bonds
    void testBondSendRecv()
    {
       printMethod(TEST_FUNC);
@@ -728,11 +728,11 @@ public:
 
       //Initialize the sendbuffer, set atomtype to ATOM
       object().clearSendBuffer();
-      object().beginSendBlock(Buffer::BOND);
+      object().beginSendBlock(Buffer::GROUP, 2);
 
       // Pack 2 bonds into the send buffer
-      object().packBond(bonds[0]);
-      object().packBond(bonds[1]);
+      object().packGroup(bonds[0]);
+      object().packGroup(bonds[1]);
       object().endSendBlock();
 
       // Send the sendbuffer to processor to the right. 
@@ -744,8 +744,8 @@ public:
       // Unpack bonds
       object().beginRecvBlock();
       TEST_ASSERT(object().recvSize() == 2);
-      object().unpackBond(bonds[2]);
-      object().unpackBond(bonds[3]);
+      object().unpackGroup(bonds[2]);
+      object().unpackGroup(bonds[3]);
       TEST_ASSERT(object().recvSize() == 0);
 
       TEST_ASSERT(bonds[2].id() == 0);
@@ -802,6 +802,68 @@ public:
 
    }
 
+   // Test Method for MPI Sendrecv method for bonds
+   void testBondBcast()
+   {
+      printMethod(TEST_FUNC);
+
+      DArray<Bond> bonds;
+      int          myrank, commsize, source;
+
+      bonds.allocate(4);
+      myrank   = MPI::COMM_WORLD.Get_rank();
+      commsize = MPI::COMM_WORLD.Get_size();
+      source   = 0;
+
+      if (myrank == source) {
+
+         // Fill one bond object. 
+         bonds[0].setId(0);
+         bonds[0].setTypeId(0);
+         bonds[0].setAtomId(0, myrank + 34);
+         bonds[0].setAtomId(1, myrank + 35);
+   
+         // Fill another bondobject
+         bonds[1].setId(1);
+         bonds[1].setTypeId(0);
+         bonds[1].setAtomId(0, myrank + 38);
+         bonds[1].setAtomId(1, myrank + 39);
+   
+         //Initialize the sendbuffer, set atomtype to ATOM
+         object().clearSendBuffer();
+         object().beginSendBlock(Buffer::GROUP, 2);
+   
+         // Pack 2 bonds into the send buffer
+         object().packGroup(bonds[0]);
+         object().packGroup(bonds[1]);
+         object().endSendBlock();
+
+      }
+
+      object().bcast(MPI::COMM_WORLD, source);
+
+      if (myrank != source) {
+
+         // Unpack bonds
+         object().beginRecvBlock();
+         TEST_ASSERT(object().recvSize() == 2);
+         object().unpackGroup(bonds[2]);
+         object().unpackGroup(bonds[3]);
+         TEST_ASSERT(object().recvSize() == 0);
+   
+         TEST_ASSERT(bonds[2].id() == 0);
+         TEST_ASSERT(bonds[2].typeId() == 0);
+         TEST_ASSERT(bonds[2].atomId(0) == 34 + source);
+         TEST_ASSERT(bonds[2].atomId(1) == 35 + source);
+   
+         TEST_ASSERT(bonds[3].id() == 1);
+         TEST_ASSERT(bonds[3].typeId() == 0);
+         TEST_ASSERT(bonds[3].atomId(0) == 38 + source);
+         TEST_ASSERT(bonds[3].atomId(1) == 39 + source);
+
+      }
+
+   }
    #endif
 
 };
@@ -817,6 +879,7 @@ TEST_ADD(BufferTest, testAtomSend_Recv)
 TEST_ADD(BufferTest, testGhostSend_Recv)
 TEST_ADD(BufferTest, testAtomGhostSend_Recv)
 TEST_ADD(BufferTest, testBondSendRecv)
+TEST_ADD(BufferTest, testBondBcast)
 #endif
 TEST_END(BufferTest)
 

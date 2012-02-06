@@ -311,11 +311,11 @@ namespace DdMd
          UTIL_THROW("Group with specified id is already present");
 
       // Add Group<N> object to container
-      Group<N>* ptr = newPtr_;
-      groupSet_.append(*ptr);
-      groupPtrs_[groupId] = ptr;
+      groupSet_.append(*newPtr_);
+      groupPtrs_[groupId] = newPtr_;
 
       // Release newPtr_ for reuse.
+      Group<N>* ptr = newPtr_;
       newPtr_ = 0;
 
       return ptr;

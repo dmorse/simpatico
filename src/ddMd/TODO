@@ -1,8 +1,6 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Add Collector to ConfigIo, to allow writing. 
-
 - Write and test GroupDistributor<N> template.
 
 - Add BondDistributor to ConfigIo.
@@ -14,6 +12,8 @@ Domain Decomposition MD (DdMd)
 - Modify Exchanger::exchangeAtoms to exchange bonds.
 
 - Modify Exchanger::exchangeGhosts accordingly.
+
+- Add Collector to ConfigIo, to allow writing. 
 
 - Modify Exchanger to work ifndef UTIL_MPI, continue with other classes.
 
