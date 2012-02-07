@@ -1,8 +1,6 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Write and test GroupDistributor<N> template.
-
 - Add BondDistributor to ConfigIo.
 
 - Add BondStorage to System.
