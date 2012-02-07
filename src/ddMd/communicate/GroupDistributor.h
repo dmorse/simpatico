@@ -203,8 +203,11 @@ namespace DdMd
       /// Current size of cache_ (defined only on master)
       int cacheSize_;
 
-      /// Total number of atoms sent(defined only on master)
+      /// Total number of groups sent(defined only on master)
       int nSentTotal_;
+
+      /// Total number of atoms in groups recieved (defined on all)
+      int nAtomRecv_;
 
    };
 

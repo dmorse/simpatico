@@ -151,6 +151,8 @@ public:
          TEST_ASSERT(domain.isInDomain(iter->position()));
       }
 
+
+      #if 0
       #ifdef UTIL_MPI
       MpiLogger logger;
       logger.begin();
@@ -158,22 +160,24 @@ public:
                 << ", recvCount = " << recvCount << std::endl;
       logger.end();
       #endif 
+      #endif 
 
       // Check that all atoms are accounted for after distribution.
       #ifdef UTIL_MPI
       int nRecvAll;
       communicator().Reduce(&recvCount, &nRecvAll, 1, MPI::INT, MPI::SUM, 0);
       if (myRank == 0) {
-         std::cout << "Total atom count = " << nRecvAll << std::endl;
+         //std::cout << "Total atom count = " << nRecvAll << std::endl;
          TEST_ASSERT(nRecvAll == atomCount);
       }
       #else
-      std::cout << "Total atom count = " << recvCount << std::endl;
+      //std::cout << "Total atom count = " << recvCount << std::endl;
       TEST_ASSERT(recvCount == atomCount);
       #endif
 
       // Read bonds
       if (myRank == 0) {
+
          int i;
          Group<2>* ptr;
          //Group<2>  bond;
@@ -197,11 +201,13 @@ public:
             //Assign a random position within the boundary for the atom.
             configFile >> *ptr;
 
-            std::cout << "id "     << ptr->id()
+            #if 0
+            std::cout << "   id "     << ptr->id()
                       << ",  typeId " << ptr->typeId() 
                       << ",  atom0 " << ptr->atomId(0) 
                       << ",  atom1 " << ptr->atomId(1) 
                       << std::endl;
+            #endif
        
             bondDistributor.add();
 
@@ -209,11 +215,11 @@ public:
          file().close();
 
          // Send any bonds not sent previously.
-         //bondDistributor.send();
+         bondDistributor.send();
 
       } else { // If I am not the master processor
 
-         //bondDistributor.receive();
+         bondDistributor.receive();
 
       }
 

@@ -271,18 +271,18 @@ namespace DdMd
       Atom* find(int atomId) const;  
 
       /**
-      * Determine if a group has any atoms in this AtomStorage.
+      * Count the number of atoms in Group and in this AtomStorage.
       *
       * Preconditions: 
-      * 1) All atom ids in the Group<N> must be set to valid 
-      * values, in the range 0 <= atomId(i) < totalAtomCapacity.
+      * 1) All atom ids in the Group<N> must be set to valid values,
+      *    in the range 0 <= atomId(i) < totalAtomCapacity.
       * 2) All ghost atoms may exist in this AtomStorage. The 
-      * method throws an exception if it finds ghost atom.
+      *    method throws an exception if it finds ghost atom.
       *
       * \param group Group<N> object with known atom ids. 
       */ 
       template <int N> 
-      bool groupHasAtoms(Group<N>& group) const;
+      int countGroupAtoms(Group<N>& group) const;
 
       /**
       * Set handles to atoms in a Group<N> object.
@@ -416,10 +416,10 @@ namespace DdMd
    // Template method definition
 
    /*
-   * Determine if a Group<N> has one or more atoms from this AtomStorage.
+   * Count the number of atoms in this Group and this AtomStorage.
    */
    template <int N>
-   bool AtomStorage::groupHasAtoms(Group<N>& group) const
+   int AtomStorage::countGroupAtoms(Group<N>& group) const
    {
       Atom* ptr;
       int nAtom = 0;
@@ -429,10 +429,10 @@ namespace DdMd
             if (ptr->isGhost()) {
                UTIL_THROW("Found ghost atom");
             }
-            return true;
+            ++nAtom;
          }
       }
-      return false;
+      return nAtom;
    }
 
    /*

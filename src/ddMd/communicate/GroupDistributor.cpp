@@ -94,6 +94,8 @@ namespace DdMd
          UTIL_THROW("GroupDistributor not initialized");
       }
       cache_.allocate(cacheCapacity_);
+      nAtomRecv_ = 0;
+      newPtr_ = 0;
    }
 
    /*
@@ -104,6 +106,8 @@ namespace DdMd
    {
       bufferPtr_->clearSendBuffer();
       bufferPtr_->beginSendBlock(Buffer::GROUP, N);
+      //nAtomRecv_ = 0;
+      //newPtr_ = 0;
    }
 
    /*
@@ -119,11 +123,14 @@ namespace DdMd
       if (cacheCapacity_ <= 0) {
          UTIL_THROW("GroupDistributor is not allocated");
       }
+      if (domainPtr_->gridRank() != 0) {
+         UTIL_THROW("GroupDistributor::add called on slave node");
+      }
       if (newPtr_ != 0) {
          UTIL_THROW("A newPtr_ is still active");
       }
 
-      // #ifdef UTIL_MPI
+      #ifdef UTIL_MPI
       if (cacheSize_ == cacheCapacity_) {
           bool isComplete = false;
           int  source = 0;
@@ -134,7 +141,7 @@ namespace DdMd
           bufferPtr_->clearSendBuffer();
           bufferPtr_->beginSendBlock(Buffer::GROUP, N);
       }
-      // #endif
+      #endif
       newPtr_ = &cache_[cacheSize_];
       return newPtr_;
    }
@@ -152,15 +159,22 @@ namespace DdMd
       if (cacheCapacity_ <= 0) {
          UTIL_THROW("GroupDistributor is not allocated");
       }
+      if (domainPtr_->gridRank() != 0) {
+         UTIL_THROW("GroupDistributor::add called on slave node");
+      }
+      if (newPtr_ == 0) {
+         UTIL_THROW("newPtr is null");
+      }
 
       // If this group has atoms on the master, add to groupStorage.
-      if (atomStoragePtr_->groupHasAtoms(*newPtr_)) {
-
+      int nAtom = atomStoragePtr_->countGroupAtoms(*newPtr_);
+      if (nAtom) {
          Group<N>* ptr  = groupStoragePtr_->newPtr();
          *ptr = *newPtr_;
          groupStoragePtr_->add();
-
+         nAtomRecv_ += nAtom;
       }
+      bufferPtr_->packGroup(*newPtr_);
     
       // Nullify newPtr_ to release for reuse.
       newPtr_ = 0;
@@ -177,32 +191,47 @@ namespace DdMd
    void GroupDistributor<N>::send()
    {
 
-      // #ifdef UTIL_MPI
+      #ifdef UTIL_MPI
       // Preconditions
       if (atomStoragePtr_ == 0) {
+         UTIL_THROW("GroupDistributor is not initialized");
+      }
+      if (domainPtr_ == 0) {
+         UTIL_THROW("GroupDistributor is not initialized");
+      }
+      if (bufferPtr_ == 0) {
          UTIL_THROW("GroupDistributor is not initialized");
       }
       if (cacheCapacity_ <= 0) {
          UTIL_THROW("GroupDistributor is not allocated");
       }
+      if (domainPtr_->gridRank() != 0) {
+         UTIL_THROW("GroupDistributor::send called on slave node");
+      }
       if (newPtr_ != 0) {
          UTIL_THROW("A newPtr_ is still active");
       }
 
-      if (cacheSize_ > 0) {
-          bool isComplete = false;
-          int  source = 0;
-          bufferPtr_->endSendBlock(isComplete);
-          bufferPtr_->bcast(domainPtr_->communicator(), source);
-          nSentTotal_ += cacheSize_;
-          cacheSize_ = 0;
-          bufferPtr_->clearSendBuffer();
-          bufferPtr_->beginSendBlock(Buffer::GROUP, N);
+      bool isComplete = true;
+      int  source = 0;
+      bufferPtr_->endSendBlock(isComplete);
+      bufferPtr_->bcast(domainPtr_->communicator(), source);
+      nSentTotal_ += cacheSize_;
+      cacheSize_ = 0;
+      bufferPtr_->clearSendBuffer();
+
+      int nAtomRecvAll;
+      domainPtr_->communicator()
+                  .Reduce(&nAtomRecv_, &nAtomRecvAll, 1, MPI::INT, MPI::SUM, 0);
+      if (domainPtr_->gridRank() == 0) {
+         if (nAtomRecvAll != nSentTotal_*N) {
+             UTIL_THROW("Discrepancy in number of local atoms in groups");
+         }
+         std::cout << "Total # groups   = " << nSentTotal_  << std::endl;
+         std::cout << "Total atom count = " << nAtomRecvAll << std::endl;
       }
-
       nSentTotal_   = 0;
-      // #endif
-
+      #endif
    }
 
    /*
@@ -213,33 +242,40 @@ namespace DdMd
    template <int N>
    void GroupDistributor<N>::receive()
    {
+      #ifdef UTIL_MPI
+      // Preconditions 
+      if (domainPtr_->gridRank() == 0) {
+         UTIL_THROW("GroupDistributor::receive called on master node");
+      }
 
-      // #ifdef UTIL_MPI
-      // Preconditions ??
-
+      Group<N>  group;
       Group<N>* ptr;
+      int  nAtom;
+      bool isComplete = false;
+      int  nAtomRecv_ = 0;
       const int source = 0;
-      bool  isComplete = false;
-      bool  myGroup = true;
       while (!isComplete) {
 
          // Receive broadcast
          bufferPtr_->bcast(domainPtr_->communicator(), source);
-
+      
          // Unpack the buffer, 
          isComplete = bufferPtr_->beginRecvBlock();
          while (bufferPtr_->recvSize() > 0) {
-            if (atomStoragePtr_->groupHasAtoms(*newPtr_)) {
+            bufferPtr_->unpackGroup(group);
+            nAtom = atomStoragePtr_->countGroupAtoms(group);
+            if (nAtom) {
                ptr = groupStoragePtr_->newPtr();
-               bufferPtr_->unpackGroup(*ptr);
+               *ptr = group;
                groupStoragePtr_->add();
-            } else {
-               bufferPtr_->discardGroup<N>();
+               nAtomRecv_ += nAtom;
             }
          }
 
       }
-      // #endif
+      int nAtomRecvAll;
+      domainPtr_->communicator().Reduce(&nAtomRecv_, &nAtomRecvAll, 1, MPI::INT, MPI::SUM, 0);
+      #endif
 
    }
 
