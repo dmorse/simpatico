@@ -168,7 +168,6 @@ namespace DdMd
       recvBufferEnd_ = recvBufferBegin_ + bufferCapacity_;
 
       recvPtr_ = recvBufferBegin_;
-
    }
 
    /*
@@ -394,17 +393,6 @@ namespace DdMd
       // Wait for completion of send
       request[1].Wait();
 
-      #if 0
-      MpiLogger logger;
-      logger.begin();
-      std::cout << " My rank                 " << myRank << std::endl;
-      std::cout << " Receiving from          " << source << std::endl;
-      std::cout << " Send number of bytes  = " << sendBytes << std::endl;
-      std::cout << " Sent number of atoms  = " << sendSize_ << std::endl;
-      std::cout << " Received number atoms = " << recvSize_ << std::endl;
-      logger.end();
-      #endif
-
    }
 
    /*
@@ -450,9 +438,9 @@ namespace DdMd
          UTIL_THROW("Source and desination identical");
       }
 
-      recvType_ = NONE;
       request = comm.Irecv(recvBufferBegin_, bufferCapacity_, MPI::CHAR, source, 5);
       request.Wait();
+      recvType_ = NONE;
       recvPtr_ = recvBufferBegin_;
 
    }
@@ -462,21 +450,24 @@ namespace DdMd
    */
    void Buffer::bcast(MPI::Intracomm& comm, int source)
    {
-      MPI::Request request;
-      int  comm_size = comm.Get_size();
-      int  myRank = comm.Get_rank();
+      int comm_size = comm.Get_size();
+      int myRank = comm.Get_rank();
+      if (source > comm_size - 1 || source < 0) {
+         UTIL_THROW("Source rank out of bounds");
+      }
 
+      int sendBytes;
       if (myRank == source) {
-         int sendBytes = sendPtr_ - sendBufferBegin_;
-         comm.Bcast(sendBufferBegin_, sendBytes, 
-                    MPI::CHAR, source);
+         sendBytes = sendPtr_ - sendBufferBegin_;
+         comm.Bcast(&sendBytes, 1, MPI::INT, source);
+         comm.Bcast(sendBufferBegin_, sendBytes, MPI::CHAR, source);
          sendPtr_ = sendBufferBegin_;
          sendType_ = NONE;
       } else {
-         comm.Bcast(recvBufferBegin_, bufferCapacity_, 
-                    MPI::CHAR, source);
-         recvType_ = NONE;
+         comm.Bcast(&sendBytes, 1, MPI::INT, source);
+         comm.Bcast(recvBufferBegin_, sendBytes, MPI::CHAR, source);
          recvPtr_ = recvBufferBegin_;
+         recvType_ = NONE;
       }
 
    }

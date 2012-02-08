@@ -12,6 +12,7 @@
 #include <ddMd/boundary/Boundary.h>              // member 
 #include <ddMd/potentials/PairPotential.h>       // member 
 #include <ddMd/storage/AtomStorage.h>            // member 
+#include <ddMd/storage/BondStorage.h>            // member 
 #include <ddMd/communicate/Domain.h>             // member 
 #include <ddMd/communicate/Buffer.h>             // member 
 #include <ddMd/communicate/Exchanger.h>          // member 
@@ -128,6 +129,11 @@ namespace DdMd
       AtomStorage& atomStorage();
    
       /**
+      * Get the BondStorage by reference.
+      */
+      BondStorage& bondStorage();
+   
+      /**
       * Get the Boundary by reference.
       */
       Boundary& boundary();
@@ -181,7 +187,10 @@ namespace DdMd
    private:
 
       /// Container for all atoms and ghosts.
-      AtomStorage       atomStorage_;
+      AtomStorage   atomStorage_;
+
+      /// Container for all atoms and ghosts.
+      BondStorage   bondStorage_;
 
       /// Periodic system boundary.
       Boundary      boundary_;
@@ -235,6 +244,9 @@ namespace DdMd
 
    inline AtomStorage& System::atomStorage()
    { return atomStorage_; }
+
+   inline BondStorage& System::bondStorage()
+   { return bondStorage_; }
 
    inline Exchanger& System::exchanger()
    { return exchanger_; }

@@ -11,10 +11,12 @@
 #include "ConfigIo.h"
 
 #include <ddMd/system/System.h>                 
-#include <ddMd/storage/AtomStorage.h>               
 #include <ddMd/communicate/Domain.h>   
+#include <ddMd/storage/AtomStorage.h>               
+#include <ddMd/storage/BondStorage.h>               
 #include <ddMd/communicate/Buffer.h> 
 #include <ddMd/chemistry/Atom.h>
+#include <ddMd/chemistry/Bond.h>
 #include <util/space/Vector.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/format/Int.h>
@@ -30,11 +32,16 @@ namespace DdMd
    */
    ConfigIo::ConfigIo(System& system, Buffer& buffer)
    {
-      systemPtr_   = &system;
-      storagePtr_  = &system.atomStorage();
-      domainPtr_   = &system.domain();
+      systemPtr_ = &system;
+      domainPtr_ = &system.domain();
       boundaryPtr_ = &system.boundary();
-      distributor_.associate(*boundaryPtr_, *domainPtr_, buffer);
+      atomStoragePtr_ = &system.atomStorage();
+      bondStoragePtr_ = &system.bondStorage();
+      atomDistributor_.associate(*boundaryPtr_, *domainPtr_, buffer);
+      bondDistributor_.associate(*bondStoragePtr_, *atomStoragePtr_, 
+                                 *domainPtr_, buffer);
+      atomCacheCapacity_ = 0;
+      bondCacheCapacity_ = 0;
    }
 
    /*
@@ -43,9 +50,11 @@ namespace DdMd
    void ConfigIo::readParam(std::istream& in)
    {
       readBegin(in, "ConfigIo");
-      read<int>(in, "cacheCapacity", cacheCapacity_);
+      read<int>(in, "atomCacheCapacity", atomCacheCapacity_);
+      read<int>(in, "bondCacheCapacity", bondCacheCapacity_);
       readEnd(in);
-      distributor_.setParam(cacheCapacity_);
+      atomDistributor_.setParam(atomCacheCapacity_);
+      bondDistributor_.setParam(bondCacheCapacity_);
    }
 
    /*
@@ -54,15 +63,13 @@ namespace DdMd
    void ConfigIo::readConfig(std::string filename)
    {
 
-      Atom* ptr;
-
+      std::ifstream file;
       int myRank = domain().gridRank();
       int nAtom  = 0;  // Total number of atoms in file
+      int nBond  = 0;  // Total number of bonds in file
 
-      // If I am the master processor.
+      // Read and distribute atoms
       if (myRank == 0) {
-
-         std::ifstream file;
 
          file.open(filename.c_str());
 
@@ -85,42 +92,42 @@ namespace DdMd
 
          #if UTIL_MPI
          //Initialize the send buffer.
-         distributor().initSendBuffer();
+         atomDistributor().initSendBuffer();
          #endif
 
-         // Fill the atom objects
+         // Read atoms
+         Atom* atomPtr;
          int id;
          int typeId = 0;
          for(int i = 0; i < nAtom; ++i) {
 
-            ptr = distributor().newAtomPtr();
+            atomPtr = atomDistributor().newAtomPtr();
 
             file >> id >> typeId;
-            ptr->setId(id);
-            ptr->setTypeId(typeId);
-            file >> ptr->position();
-            file >> ptr->velocity();
+            atomPtr->setId(id);
+            atomPtr->setTypeId(typeId);
+            file >> atomPtr->position();
+            file >> atomPtr->velocity();
 
             #if 0
             std::cout << Int(id,6);
             std::cout << Int(typeId,4);
             for (int j = 0; j < Dimension; ++j) {
-                std::cout << Dbl(ptr->position()[j], 15, 7);
+                std::cout << Dbl(atomPtr->position()[j], 15, 7);
             }
             for (int j = 0; j < Dimension; ++j) {
-                std::cout << Dbl(ptr->velocity()[j], 15, 7);
+                std::cout << Dbl(atomPtr->velocity()[j], 15, 7);
             }
             std::cout << std::endl;
             #endif
 
             // Add atom to cache for sending.
-            distributor().addAtom(atomStorage());
+            atomDistributor().addAtom(atomStorage());
 
          }
-         file.close();
 
          // Send any atoms not sent previously.
-         distributor().send();
+         atomDistributor().send();
 
       } else { // If I am not the master processor
 
@@ -130,23 +137,67 @@ namespace DdMd
          #endif
 
          // Receive all atoms into AtomStorage
-         distributor().receive(atomStorage());
+         atomDistributor().receive(atomStorage());
 
       }
 
       // Check that all atoms are accounted for after distribution.
-      int nAtomLocal = atomStorage().nAtom();
-      int nAtomAll;
-      #ifdef UTIL_MPI
-      domain().communicator().Reduce(&nAtomLocal, &nAtomAll, 1, 
-                                     MPI::INT, MPI::SUM, 0);
-      #else
-      nAtomAll = nAtomLocal;
-      #endif
-      if (myRank == 0) {
-         if (nAtomAll != nAtom) {
-            UTIL_THROW("nAtomAll != nAtom after distribution");
+      {
+         int nAtomLocal = atomStorage().nAtom();
+         int nAtomAll;
+         #ifdef UTIL_MPI
+         domain().communicator().Reduce(&nAtomLocal, &nAtomAll, 1, 
+                                        MPI::INT, MPI::SUM, 0);
+         #else
+         nAtomAll = nAtomLocal;
+         #endif
+         if (myRank == 0) {
+            if (nAtomAll != nAtom) {
+               UTIL_THROW("nAtomAll != nAtom after distribution");
+            }
          }
+      }
+
+      // Read and distribute bonds
+      if (myRank == 0) {
+
+         // Read and distribute bonds
+         file >> Label("BONDS");
+
+         // Read number of bonds
+         file >> Label("nBond") >> nBond;
+
+         std::cout << std::endl;
+         std::cout << "Num Bonds to be distributed = " 
+                   << nBond << std::endl;
+
+         #if UTIL_MPI
+         //Initialize the send buffer.
+         bondDistributor().initSendBuffer();
+         #endif
+
+         // Fill the bond objects
+         Bond* bondPtr;
+         for (int i = 0; i < nBond; ++i) {
+
+            bondPtr = bondDistributor().newPtr();
+            file >> *bondPtr;
+            bondDistributor().add();
+
+         }
+
+         // Send any bonds not sent previously.
+         bondDistributor().send();
+
+      } else { // If I am not the master processor
+
+         // Receive all bonds into BondStorage
+         bondDistributor().receive();
+
+      }
+
+      if (myRank == 0) {
+         file.close();
       }
 
    }

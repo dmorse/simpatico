@@ -290,7 +290,6 @@ namespace DdMd
          storage.addNewAtom();
 
          reservoir_.push(*newPtr_); 
-
       }
 
       // Nullify newPtr_ to release for reuse.
@@ -349,7 +348,9 @@ namespace DdMd
 
          // Clear buffer and initialize for resending.
          bufferPtr_->clearSendBuffer();
-         bufferPtr_->beginSendBlock(Buffer::ATOM);
+         if (i < gridSize - 1) {
+            bufferPtr_->beginSendBlock(Buffer::ATOM);
+         }
 
          // Reset atomPtrs array to empty state.
          for (int j = 0; j < sendCapacity_; ++j) {
@@ -368,7 +369,6 @@ namespace DdMd
 
       nCachedTotal_ = 0;
       nSentTotal_   = 0;
-
       #endif
 
    }

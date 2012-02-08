@@ -72,6 +72,7 @@ namespace DdMd
       readBegin(in, "System");
       readParamComposite(in, domain_);
       readParamComposite(in, atomStorage_);
+      readParamComposite(in, bondStorage_);
       read<int>(in, "nAtomType", nAtomType_);
       pairPotential_.setNAtomType(nAtomType_);
       readParamComposite(in, pairPotential_);

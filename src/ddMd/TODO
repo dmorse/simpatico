@@ -1,15 +1,11 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Add BondDistributor to ConfigIo.
-
-- Add BondStorage to System.
-
-- Add bond forces to System.
-
 - Modify Exchanger::exchangeAtoms to exchange bonds.
 
 - Modify Exchanger::exchangeGhosts accordingly.
+
+- Add bond forces to System.
 
 - Add Collector to ConfigIo, to allow writing. 
 

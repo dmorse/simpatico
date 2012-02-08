@@ -9,20 +9,17 @@
 */
 
 #include <util/param/ParamComposite.h>           // base class
-#include <ddMd/communicate/AtomDistributor.h>        // member 
-
-//#include <ddMd/system/System.h>                  // member
-//#include <ddMd/storage/AtomStorage.h>                // member 
-//#include <ddMd/communicate/Domain.h>             // member 
-//#include <ddMd/communicate/Buffer.h>             // member 
+#include <ddMd/communicate/AtomDistributor.h>    // member 
+#include <ddMd/communicate/BondDistributor.h>    // member 
 #include <ddMd/boundary/Boundary.h>              // typedef
 
 namespace DdMd
 {
 
    class System;
-   class AtomStorage;
    class Domain;
+   class AtomStorage;
+   class BondStorage;
    class Buffer;
 
    using namespace Util;
@@ -70,17 +67,17 @@ namespace DdMd
       /**
       * Get the AtomDistributor by reference.
       */
-      AtomDistributor& distributor();
+      AtomDistributor& atomDistributor();
+
+      /**
+      * Get the AtomDistributor by reference.
+      */
+      BondDistributor& bondDistributor();
 
       /**
       * Get AtomStorage by reference.
       */
       System& system();
-   
-      /**
-      * Get AtomStorage by reference.
-      */
-      AtomStorage& atomStorage();
    
       /**
       * Get the Domain by reference.
@@ -92,38 +89,60 @@ namespace DdMd
       */
       Boundary& boundary();
    
+      /**
+      * Get AtomStorage by reference.
+      */
+      AtomStorage& atomStorage();
+   
+      /**
+      * Get AtomStorage by reference.
+      */
+      BondStorage& bondStorage();
+   
    private:
 
-      AtomDistributor  distributor_;
+      AtomDistributor  atomDistributor_;
+
+      BondDistributor  bondDistributor_;
 
       System*      systemPtr_;
-
-      AtomStorage*     storagePtr_;
 
       Domain*      domainPtr_;
 
       Boundary*    boundaryPtr_;
 
-      int          cacheCapacity_;
+      AtomStorage* atomStoragePtr_;
+
+      BondStorage* bondStoragePtr_;
+
+      int          atomCacheCapacity_;
+
+      int          bondCacheCapacity_;
 
    };
 
    // Inline method definitions
 
-   inline AtomDistributor& ConfigIo::distributor()
-   { return distributor_; }
+   inline AtomDistributor& ConfigIo::atomDistributor()
+   { return atomDistributor_; }
+
+   inline BondDistributor& ConfigIo::bondDistributor()
+   { return bondDistributor_; }
 
    inline System& ConfigIo::system()
    { return *systemPtr_; }
-
-   inline AtomStorage& ConfigIo::atomStorage()
-   { return *storagePtr_; }
 
    inline Domain& ConfigIo::domain()
    { return *domainPtr_; }
 
    inline Boundary& ConfigIo::boundary()
    { return *boundaryPtr_; }
+
+   inline AtomStorage& ConfigIo::atomStorage()
+   { return *atomStoragePtr_; }
+
+   inline BondStorage& ConfigIo::bondStorage()
+   { return *bondStoragePtr_; }
 
 }
 #endif
