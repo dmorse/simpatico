@@ -5,11 +5,13 @@
 
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/communicate/AtomDistributor.h>
+#include <ddMd/communicate/BondDistributor.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
+#include <ddMd/storage/BondStorage.h>
 #include <ddMd/chemistry/Atom.h>
 #include <util/space/Grid.h>
 #include <util/space/IntVector.h>
@@ -30,13 +32,15 @@ using namespace DdMd;
 class ExchangerTest: public ParamFileTest<Exchanger>
 {
 
-      Boundary    boundary;
-      Domain      domain;
-      AtomStorage     storage;
-      Buffer      buffer;
-      AtomDistributor distributor;
-      Random      random;
-      int         atomCount;
+      Boundary boundary;
+      Domain domain;
+      Buffer buffer;
+      AtomStorage atomStorage;
+      BondStorage bondStorage;
+      AtomDistributor atomDistributor;
+      BondDistributor bondDistributor;
+      Random random;
+      int atomCount;
 
 public:
 
@@ -45,15 +49,19 @@ public:
 
       // Set connections between objects
       domain.setBoundary(boundary);
-      distributor.associate(boundary, domain, buffer);
-      object().associate(boundary, domain, storage, buffer);
+      atomDistributor.associate(boundary, domain, buffer);
+      bondDistributor.associate(bondStorage, atomStorage, domain, buffer);
+      object().associate(boundary, domain, 
+                         atomStorage, bondStorage, buffer);
 
       // Set communicators
       domain.setGridCommunicator(communicator());
       domain.setParamCommunicator(communicator());
       buffer.setParamCommunicator(communicator());
-      storage.setParamCommunicator(communicator());
-      distributor.setParamCommunicator(communicator());
+      atomStorage.setParamCommunicator(communicator());
+      bondStorage.setParamCommunicator(communicator());
+      atomDistributor.setParamCommunicator(communicator());
+      bondDistributor.setParamCommunicator(communicator());
       random.setParamCommunicator(communicator());
 
       // Open parameter file
@@ -63,13 +71,15 @@ public:
       domain.readParam(file());
 
       // Initialize AtomStorage
-      storage.readParam(file());
+      atomStorage.readParam(file());
+      bondStorage.readParam(file());
 
       // Initialize Buffer
       buffer.readParam(file());
 
       // Initialize AtomDistributor 
-      distributor.readParam(file());
+      atomDistributor.readParam(file());
+      bondDistributor.readParam(file());
 
       // Initialize Random seed
       random.readParam(file());
@@ -79,8 +89,141 @@ public:
       // Finish reading parameter file
       closeFile();
 
-      // Begin distributing atoms 
+      std::ifstream configFile;
+      int myRank = domain.gridRank();
 
+      if (myRank == 0) {
+         configFile.open("in/config");
+      }
+
+      // Read and broadcast boundary
+      if (myRank == 0) {
+
+         // Read and broadcast system Boundary 
+         configFile >> Label("BOUNDARY");
+         configFile >> boundary;
+      } 
+      #if UTIL_MPI
+      // Receive broadcast of boundary
+      bcast(domain.communicator(), boundary, 0);
+      #endif
+
+      // Read and distribute atoms 
+      if (myRank == 0) {
+
+         // Read and distribute atoms
+         configFile >> Label("ATOMS");
+
+         // Read number of atoms
+         int nAtom; 
+         configFile >> Label("nAtom") >> nAtom;
+
+         std::cout << std::endl;
+         std::cout << "Num Atoms to be distributed = " 
+                   << nAtom << std::endl;
+
+         #if UTIL_MPI
+         //Initialize the send buffer.
+         atomDistributor.initSendBuffer();
+         #endif
+
+         // Read atoms
+         Atom* atomPtr;
+         int id, typeId;
+         for(int i = 0; i < nAtom; ++i) {
+
+            // Get pointer to new atom in distributor memory.
+            atomPtr = atomDistributor.newAtomPtr();
+
+            configFile >> id >> typeId;
+            atomPtr->setId(id);
+            atomPtr->setTypeId(typeId);
+            configFile >> atomPtr->position();
+
+            // Use position vector for velocity for now
+            atomPtr->velocity() = atomPtr->position();
+
+            // Add atom to list for sending.
+            atomDistributor.addAtom(atomStorage);
+
+         }
+
+         // Send any atoms not sent previously.
+         atomDistributor.send();
+
+      } else { // If I am not the master processor
+
+         #if UTIL_MPI
+         // Receive all atoms into AtomStorage
+         atomDistributor.receive(atomStorage);
+         #endif
+
+      }
+
+      // Check that all atoms are accounted for after distribution.
+      {
+         int nAtomLocal = atomStorage.nAtom();
+         int nAtomAll;
+         #ifdef UTIL_MPI
+         domain.communicator().Reduce(&nAtomLocal, &nAtomAll, 1, 
+                                        MPI::INT, MPI::SUM, 0);
+         #else
+         nAtomAll = nAtomLocal;
+         #endif
+         if (myRank == 0) {
+            if (nAtomAll != nAtom) {
+               UTIL_THROW("nAtomAll != nAtom after distribution");
+            }
+            std::cout << "nAtomAll after distribution " << nAtomAll 
+                      << std::endl;
+         }
+      }
+
+      // Read and distribute bonds
+      if (myRank == 0) {
+
+         // Read and distribute bonds
+         configFile >> Label("BONDS");
+
+         // Read number of bonds
+         int nBond;  
+         configFile >> Label("nBond") >> nBond;
+
+         std::cout << std::endl;
+         std::cout << "Num Bonds to be distributed = " 
+                   << nBond << std::endl;
+
+         #if UTIL_MPI
+         //Initialize the send buffer.
+         bondDistributor.initSendBuffer();
+         #endif
+
+         // Fill the bond objects
+         Bond* bondPtr;
+         for (int i = 0; i < nBond; ++i) {
+
+            bondPtr = bondDistributor.newPtr();
+            configFile >> *bondPtr;
+            bondDistributor.add();
+
+         }
+
+         // Send any bonds not sent previously.
+         bondDistributor.send();
+      
+      } else { // If I am not the master processor
+
+         // Receive all bonds into BondStorage
+         bondDistributor.receive();
+
+      }
+
+      if (myRank == 0) {
+         configFile.close();
+      }
+
+      #if 0
+      // Begin distributing atoms 
       Vector boundarylength(6.0, 3.0, 9.0);
       boundary.setLengths(boundarylength);
 
@@ -104,12 +247,12 @@ public:
                    << std::endl;
 
          // Initialize the send buffer.
-         distributor.initSendBuffer();
+         atomDistributor.initSendBuffer();
 
          // Fill the atom objects
          for(i = 0; i < atomCount; ++i) {
 
-            ptr = distributor.newAtomPtr();
+            ptr = atomDistributor.newAtomPtr();
 
             ptr->setId(i);
             ptr->setTypeId(0);
@@ -118,39 +261,39 @@ public:
             // Use position vector for velocity for now
             ptr->velocity() = ptr->position();
 
-            distributor.addAtom(storage);
+            atomDistributor.addAtom(atomStorage);
 
          }
          file().close();
 
          // Send any atoms not sent previously.
-         distributor.send();
+         atomDistributor.send();
 
       } else { // If I am not the master processor
 
-         distributor.receive(storage);
+         atomDistributor.receive(atomStorage);
 
       }
+      #endif
 
    }
 
    void exchangeAtoms()
    {
       // Range of random increments for the atom positions.
-      double range1 = double(-0.3);
-      double range2 = double(0.3);
+      double range1 = -0.3;
+      double range2 = 0.3;
 
       // Add random increments to atom positions
       AtomIterator  atomIter;
       for(int i = 0; i < 3; i++) {
-        storage.begin(atomIter);
-    	 for ( ; !atomIter.atEnd(); ++atomIter) {
-    	    atomIter->position()[i] += random.uniform(range1, range2);
-     	 }
+         atomStorage.begin(atomIter);
+         for ( ; !atomIter.atEnd(); ++atomIter) {
+            atomIter->position()[i] += random.uniform(range1, range2);
+         }
       }
 
       // Exchange atoms among processors.
-      // Vector length = boundary.lengths();
       object().exchangeAtoms();
 
    }
@@ -163,9 +306,8 @@ public:
       int  nAtomAll  = 0; // Number received on all processors.
       int  myRank = domain.gridRank();
 
-
       // Check that all atoms are accounted for after distribution.
-      nAtom = storage.nAtom();
+      nAtom = atomStorage.nAtom();
       communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
       if (myRank == 0) {
          std::cout << std::endl;
@@ -176,7 +318,7 @@ public:
 
       // Check that all atoms are within the processor domain.
       AtomIterator  atomIter;
-      storage.begin(atomIter);
+      atomStorage.begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
@@ -186,14 +328,14 @@ public:
       #if 0
       logger.begin();
       std::cout << "Processor: " << myRank << ", Post-distribute nAtom = "
-                << storage.nAtom() << std::endl;
+                << atomStorage.nAtom() << std::endl;
       logger.end();
       #endif
 
       exchangeAtoms();
 
       // Check that all atoms are accounted for after exchange.
-      nAtom = storage.nAtom();
+      nAtom = atomStorage.nAtom();
       communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
       if (myRank == 0) {
          std::cout << "Total atom count (post atom exchange) = " << nAtomAll << std::endl;
@@ -201,18 +343,18 @@ public:
       }
 
       // Check that all atoms are within the processor domain.
-      storage.begin(atomIter);
+      atomStorage.begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
-      TEST_ASSERT(storage.isValid());
+      TEST_ASSERT(atomStorage.isValid());
 
       #if 0
       //Print the number of atoms with each processor after the exchange.
       logger.begin();
       std::cout << "Processor " << myRank << " : Post-exchange Atoms count = "
-                << storage.nAtom() << std::endl;
+                << atomStorage.nAtom() << std::endl;
       logger.end();
       #endif
 
@@ -232,7 +374,7 @@ public:
       exchangeAtoms();
 
       // Record number of atoms before exchange
-      nAtom = storage.nAtom();
+      nAtom = atomStorage.nAtom();
 
       // Setup ghost exchange
       double pairCutoff = double(0.3);
@@ -243,10 +385,10 @@ public:
       object().exchangeGhosts();
 
       // Check that the number of atoms on each processor is unchanged.
-      TEST_ASSERT(nAtom == storage.nAtom());
+      TEST_ASSERT(nAtom == atomStorage.nAtom());
 
       // Check that all atoms are accounted for after atom and ghost exchanges.
-      nAtom = storage.nAtom();
+      nAtom = atomStorage.nAtom();
       communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
       if (myRank == 0) {
          // std::cout << "Total atom count (post ghost exchange) = " 
@@ -255,18 +397,18 @@ public:
       }
 
       // Check that all local atoms are within the processor domain.
-      storage.begin(atomIter);
+      atomStorage.begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
       // Check that all ghosts are outside the processor domain.
-      storage.begin(ghostIter);
+      atomStorage.begin(ghostIter);
       for ( ; !ghostIter.atEnd(); ++ghostIter) {
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
       }
 
-      TEST_ASSERT(storage.isValid());
+      TEST_ASSERT(atomStorage.isValid());
 
       #if 0
       MpiLogger logger;
@@ -275,14 +417,14 @@ public:
       logger.begin();
       std::cout << "Processor " << myRank 
                 << " : Post-ghost exchange Atom  count = "
-                << storage.nAtom() << std::endl;
+                << atomStorage.nAtom() << std::endl;
       logger.end();
 
       // Print number of ghosts on each processor after the exchange.
       logger.begin();
       std::cout << "Processor " << myRank 
                 << " : Post-ghost exchange Ghost count = "
-                << storage.nGhost() << std::endl;
+                << atomStorage.nGhost() << std::endl;
       logger.end();
       #endif
 
@@ -304,7 +446,7 @@ public:
       exchangeAtoms();
 
       // Record number of atoms before ghost exchange
-      nAtom = storage.nAtom();
+      nAtom = atomStorage.nAtom();
 
       // Set slab width used for ghost exchange.
       double pairCutoff = double(0.3);
@@ -315,19 +457,19 @@ public:
       object().exchangeGhosts();
 
       // Record number of ghosts after ghost exchange, before update.
-      nGhost = storage.nGhost();
+      nGhost = atomStorage.nGhost();
 
       // Update ghost positions
       object().updateGhosts();
 
       // Check that the number of atoms on each processor is unchanged.
-      TEST_ASSERT(nAtom == storage.nAtom());
+      TEST_ASSERT(nAtom == atomStorage.nAtom());
 
       // Check that the number of ghosts on each processor is unchanged.
-      TEST_ASSERT(nGhost == storage.nGhost());
+      TEST_ASSERT(nGhost == atomStorage.nGhost());
 
       // Check that all atoms are accounted for after atom and ghost exchanges.
-      nAtom = storage.nAtom();
+      nAtom = atomStorage.nAtom();
       communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
       if (myRank == 0) {
          // std::cout << "Total atom count (post ghost exchange) = " 
@@ -336,18 +478,18 @@ public:
       }
 
       // Check that all atoms are within the processor domain.
-      storage.begin(atomIter);
+      atomStorage.begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
       // Check that all ghosts are outside the processor domain.
-      storage.begin(ghostIter);
+      atomStorage.begin(ghostIter);
       for ( ; !ghostIter.atEnd(); ++ghostIter) {
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
       }
 
-      TEST_ASSERT(storage.isValid());
+      TEST_ASSERT(atomStorage.isValid());
 
       #if 0
       MpiLogger logger;
@@ -355,13 +497,13 @@ public:
       //Print number of atoms on each processor after the ghost exchange.
       logger.begin();
       std::cout << "Processor " << myRank << " : Post-ghost exchange Atom  count = "
-                << storage.nAtom() << std::endl;
+                << atomStorage.nAtom() << std::endl;
       logger.end();
 
       // Print number of ghosts on each processor after the exchange.
       logger.begin();
       std::cout << "Processor " << myRank << " : Post-ghost exchange Ghost count = "
-                << storage.nGhost() << std::endl;
+                << atomStorage.nGhost() << std::endl;
       logger.end();
       #endif
 
@@ -387,40 +529,40 @@ public:
       for (int i=0; i < 3; ++i) {
 
          // Clear ghosts prior to exchanging atoms.
-         // storage.clearGhosts();
+         // atomStorage.clearGhosts();
 
          // Move positions and exchange ownership
          exchangeAtoms();
 
-         TEST_ASSERT(storage.isValid());
+         TEST_ASSERT(atomStorage.isValid());
 
          // Record number of atoms before ghost exchange
-         nAtom = storage.nAtom();
+         nAtom = atomStorage.nAtom();
    
          // Exchange ghosts among processors.
          // Vector length = boundary.lengths();
          object().exchangeGhosts();
    
-         TEST_ASSERT(storage.isValid());
+         TEST_ASSERT(atomStorage.isValid());
 
          // Record number of ghosts after ghost exchange, before update.
-         nGhost = storage.nGhost();
+         nGhost = atomStorage.nGhost();
    
          for (int j=0; j < 3; ++j) {
 
             // Update ghost positions
             object().updateGhosts();
 
-            TEST_ASSERT(storage.isValid());
+            TEST_ASSERT(atomStorage.isValid());
       
             // Assert number of atoms on each processor is unchanged.
-            TEST_ASSERT(nAtom == storage.nAtom());
+            TEST_ASSERT(nAtom == atomStorage.nAtom());
       
             // Assert number of ghosts on each processor is unchanged.
-            TEST_ASSERT(nGhost == storage.nGhost());
+            TEST_ASSERT(nGhost == atomStorage.nGhost());
       
             // Assert atoms accounted for after atom & ghost exchanges.
-            nAtom = storage.nAtom();
+            nAtom = atomStorage.nAtom();
             communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
             if (myRank == 0) {
                // std::cout << "Total atom count (post ghost exchange) = " 
@@ -429,13 +571,13 @@ public:
             }
       
             // Assert all atoms are within the processor domain.
-            storage.begin(atomIter);
+            atomStorage.begin(atomIter);
             for ( ; !atomIter.atEnd(); ++atomIter) {
                TEST_ASSERT(domain.isInDomain(atomIter->position()));
             }
       
             // Assert all ghosts are outside the processor domain.
-            storage.begin(ghostIter);
+            atomStorage.begin(ghostIter);
             for ( ; !ghostIter.atEnd(); ++ghostIter) {
                TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
             }
@@ -447,14 +589,14 @@ public:
             logger.begin();
             std::cout << "Processor " << myRank 
                       << " : Post-ghost exchange Atom  count = "
-                      << storage.nAtom() << std::endl;
+                      << atomStorage.nAtom() << std::endl;
             logger.end();
       
             // Print number ghosts on each node after the exchange.
             logger.begin();
             std::cout << "Processor " << myRank 
                       << " : Post-ghost exchange Ghost count = "
-                      << storage.nGhost() << std::endl;
+                      << atomStorage.nGhost() << std::endl;
             logger.end();
             #endif
 

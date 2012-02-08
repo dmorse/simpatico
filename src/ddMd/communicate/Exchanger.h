@@ -18,6 +18,7 @@ namespace DdMd
 
    class Domain;
    class AtomStorage;
+   class BondStorage;
    class Buffer;
 
    using namespace Util;
@@ -44,7 +45,9 @@ namespace DdMd
       * Set pointers to associated objects.
       */
       void associate(const Boundary& boundary, const Domain& domain, 
-                     AtomStorage& storage, Buffer& buffer);
+                     AtomStorage& atomStorage, 
+                     BondStorage& bondStorage, 
+                     Buffer& buffer);
 
       /**
       * Allocate all required memory.
@@ -122,7 +125,10 @@ namespace DdMd
       const Domain*  domainPtr_;
 
       // Pointer to associated AtomStorage object.
-      AtomStorage* storagePtr_;
+      AtomStorage* atomStoragePtr_;
+
+      // Pointer to associated AtomStorage object.
+      BondStorage* bondStoragePtr_;
 
       // Pointer to associated buffer object.
       Buffer*  bufferPtr_;

@@ -65,20 +65,24 @@ namespace DdMd
 
       std::ifstream file;
       int myRank = domain().gridRank();
-      int nAtom  = 0;  // Total number of atoms in file
-      int nBond  = 0;  // Total number of bonds in file
+      int nAtom;  // Total number of atoms in file
+      int nBond;  // Total number of bonds in file
 
-      // Read and distribute atoms
       if (myRank == 0) {
-
          file.open(filename.c_str());
+      }
 
-         // Read and broadcast system Boundary 
+      // Read and broadcast boundary
+      if (myRank == 0) {
          file >> Label("BOUNDARY");
          file >> boundary();
-         #if UTIL_MPI
-         bcast(domainPtr_->communicator(), boundary(), 0);
-         #endif
+      }
+      #if UTIL_MPI
+      bcast(domainPtr_->communicator(), boundary(), 0);
+      #endif
+
+      // Read and distribute atoms 
+      if (myRank == 0) {
 
          // Read and distribute atoms
          file >> Label("ATOMS");
@@ -101,6 +105,7 @@ namespace DdMd
          int typeId = 0;
          for(int i = 0; i < nAtom; ++i) {
 
+            // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
 
             file >> id >> typeId;
@@ -109,19 +114,7 @@ namespace DdMd
             file >> atomPtr->position();
             file >> atomPtr->velocity();
 
-            #if 0
-            std::cout << Int(id,6);
-            std::cout << Int(typeId,4);
-            for (int j = 0; j < Dimension; ++j) {
-                std::cout << Dbl(atomPtr->position()[j], 15, 7);
-            }
-            for (int j = 0; j < Dimension; ++j) {
-                std::cout << Dbl(atomPtr->velocity()[j], 15, 7);
-            }
-            std::cout << std::endl;
-            #endif
-
-            // Add atom to cache for sending.
+            // Add atom to list for sending.
             atomDistributor().addAtom(atomStorage());
 
          }
@@ -132,12 +125,9 @@ namespace DdMd
       } else { // If I am not the master processor
 
          #if UTIL_MPI
-         // Receive broadcast of boundary
-         bcast(domainPtr_->communicator(), boundary(), 0);
-         #endif
-
          // Receive all atoms into AtomStorage
          atomDistributor().receive(atomStorage());
+         #endif
 
       }
 
