@@ -89,8 +89,8 @@ namespace McMd
       /// Output file stream
       std::ofstream outputFile_;
 
-      /// Average object - statistical accumulator
-      Average  accumulator_;
+      /// Array of Average objects - statistical accumulators
+      DArray<Average>  accumulators_;
 
       /// Number of samples per block average output.
       int nSamplePerBlock_;
@@ -108,8 +108,9 @@ namespace McMd
       if (!isInitialized_) {
          UTIL_THROW("Error: Object not initialized.");
       }
-      ar & accumulator_;
-
+      for (int i = 0; i < Dimension+1; ++i) {
+         ar & accumulators_[i];
+      }
    }
 
 }
