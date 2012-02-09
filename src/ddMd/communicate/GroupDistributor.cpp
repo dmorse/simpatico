@@ -244,8 +244,8 @@ namespace DdMd
          if (nAtomRecvAll != nSentTotal_*N) {
              UTIL_THROW("Discrepancy in number of local atoms in groups");
          }
-         //std::cout << "Total # groups   = " << nSentTotal_  << std::endl;
-         //std::cout << "Total atom count = " << nAtomRecvAll << std::endl;
+         std::cout << "Total # groups   = " << nSentTotal_  << std::endl;
+         std::cout << "Total atom count = " << nAtomRecvAll << std::endl;
       }
 
       nSentTotal_   = 0;

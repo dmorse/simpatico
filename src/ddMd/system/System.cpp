@@ -54,7 +54,8 @@ namespace DdMd
 
       // Set connections between objects
       domain_.setBoundary(boundary_);
-      exchanger_.associate(boundary_, domain_, atomStorage_, buffer_);
+      exchanger_.associate(boundary_, domain_, 
+                          atomStorage_, bondStorage_, buffer_);
 
    }
 
