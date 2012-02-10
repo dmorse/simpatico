@@ -69,7 +69,30 @@ namespace McMd
       * Get the barostat energy.
       */
       virtual double barostatEnergy();
-
+      
+      /**
+      * Get the barostat mass.
+      */
+      virtual double barostatMass() const;
+      
+      /**
+      * Get the integrator mode.
+      */
+      virtual LatticeSystem mode() const;
+      
+      /**
+      * Get the barostat momentum.
+      */
+      //virtual Vector& eta();
+      
+      /**
+      * Set the barostat momentum component of an index to a value eta
+      *
+      * \param index index of momentum component.
+      * \param eta value to which momentum component must be set.
+      */
+      virtual void setEta(unsigned int index, double eta);
+      
       /**
       * Save the internal state to an archive.
       *

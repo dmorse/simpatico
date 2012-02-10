@@ -46,11 +46,12 @@ namespace DdMd
    /*
    * Retain pointers to associated objects.
    */
-   void AtomDistributor::associate(Boundary& boundary, Domain& domain, Buffer& buffer)
+   void AtomDistributor::associate(Domain& domain, Boundary& boundary, 
+                                   Buffer& buffer)
    {
-      boundaryPtr_  = &boundary;
-      domainPtr_    = &domain;
-      bufferPtr_    = &buffer;
+      domainPtr_ = &domain;
+      boundaryPtr_ = &boundary;
+      bufferPtr_ = &buffer;
    }
 
    /*

@@ -48,14 +48,17 @@ namespace DdMd
       setParamCommunicator(communicator);
       #endif
 
-      interactionPtr_ = new Interaction(*this);
-      integratorPtr_  = new Integrator(*this);
-      configIoPtr_    = new ConfigIo(*this, buffer_);
-
       // Set connections between objects
       domain_.setBoundary(boundary_);
-      exchanger_.associate(boundary_, domain_, atomStorage_, buffer_);
+      exchanger_.associate(domain_, boundary_,
+                           atomStorage_, bondStorage_, buffer_);
 
+      configIoPtr_    = new ConfigIo();
+      configIoPtr_->associate(domain_, boundary_,
+                              atomStorage_, bondStorage_, buffer_);
+
+      interactionPtr_ = new Interaction(*this);
+      integratorPtr_  = new Integrator(*this);
    }
 
    /**

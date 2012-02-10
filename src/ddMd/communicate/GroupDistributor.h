@@ -90,11 +90,11 @@ namespace DdMd
 
       /**
       * Set pointers to AtomStorage.
-      *
-      * \param atomStorage   Associated AtomStorage.
       */
-      void associate(GroupStorage<N>& groupStorage, AtomStorage& atomStorage, 
-                     Domain& domain, Buffer& buffer);
+      void associate(Domain& domain, 
+                     AtomStorage& atomStorage, 
+                     GroupStorage<N>& groupStorage, 
+                     Buffer& buffer);
 
       /**
       * Initialize Buffer for sending.
@@ -186,13 +186,13 @@ namespace DdMd
       Group<N>*   newPtr_;
       
       /// Pointer to associated Buffer object.
+      Domain* domainPtr_;
+
+      /// Pointer to associated Buffer object.
       AtomStorage* atomStoragePtr_;
 
       /// Pointer to associated GroupStorage<N> object.
       GroupStorage<N>* groupStoragePtr_;
-
-      /// Pointer to associated Buffer object.
-      Domain* domainPtr_;
 
       /// Pointer to associated Buffer object.
       Buffer* bufferPtr_;

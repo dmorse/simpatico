@@ -15,7 +15,8 @@ mcMd_diagnostics_system_SRCS=$(SRC_DIR)/mcMd/diagnostics/system/AtomMSD.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/StructureFactorP.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/StructureFactorPGrid.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/SystemDiagnosticFactory.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/system/VanHove.cpp 
+    $(SRC_DIR)/mcMd/diagnostics/system/VanHove.cpp \
+    $(SRC_DIR)/mcMd/diagnostics/system/VolumeAverage.cpp 
 
 ifdef MCMD_PERTURB
 ifdef UTIL_MPI

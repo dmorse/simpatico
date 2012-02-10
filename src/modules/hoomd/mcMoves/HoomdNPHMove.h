@@ -64,6 +64,11 @@ namespace McMd
 
       /// integration method
       boost::shared_ptr<TwoStepNPHGPU> twoStepNPHGPUSPtr_;
+
+   private:
+      
+      /// Geometry of simulation cell
+      std::string modeIn_;
    };
 
 }

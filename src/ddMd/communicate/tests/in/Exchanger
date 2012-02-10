@@ -6,12 +6,19 @@ AtomStorage{
   ghostCapacity        40
   totalAtomCapacity   150
 }
+BondStorage{
+  capacity             40
+  totalCapacity       150
+}
 Buffer{
-  atomCapacity    20
-  ghostCapacity   20
+  atomCapacity    100
+  ghostCapacity   100
 }
 AtomDistributor{
-  cacheCapacity   35 
+  cacheCapacity   35
+}
+BondDistributor{
+  cacheCapacity   35
 }
 Random{
    seed 8762018674

@@ -28,9 +28,9 @@ namespace DdMd
    GroupDistributor<N>::GroupDistributor() 
     : cache_(),
       newPtr_(0),
+      domainPtr_(0),
       atomStoragePtr_(0),
       groupStoragePtr_(0),
-      domainPtr_(0),
       bufferPtr_(0),
       cacheCapacity_(0),
       cacheSize_(0),
@@ -48,13 +48,14 @@ namespace DdMd
    * Retain pointers to associated objects.
    */
    template <int N>
-   void GroupDistributor<N>::associate(GroupStorage<N>& groupStorage, 
+   void GroupDistributor<N>::associate(Domain& domain, 
                                        AtomStorage& atomStorage,
-                                       Domain& domain, Buffer& buffer)
+                                       GroupStorage<N>& groupStorage, 
+                                       Buffer& buffer)
    {
-      groupStoragePtr_ = &groupStorage;
-      atomStoragePtr_ = &atomStorage;
       domainPtr_ = &domain;
+      atomStoragePtr_ = &atomStorage;
+      groupStoragePtr_ = &groupStorage;
       bufferPtr_ = &buffer;
    }
 
@@ -244,8 +245,8 @@ namespace DdMd
          if (nAtomRecvAll != nSentTotal_*N) {
              UTIL_THROW("Discrepancy in number of local atoms in groups");
          }
-         //std::cout << "Total # groups   = " << nSentTotal_  << std::endl;
-         //std::cout << "Total atom count = " << nAtomRecvAll << std::endl;
+         std::cout << "Total # groups   = " << nSentTotal_  << std::endl;
+         std::cout << "Total atom count = " << nAtomRecvAll << std::endl;
       }
 
       nSentTotal_   = 0;

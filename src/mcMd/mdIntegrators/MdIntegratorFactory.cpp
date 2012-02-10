@@ -42,6 +42,7 @@ namespace McMd
       // Try to match classname
       if (className == "NveVvIntegrator") {
          ptr = new NveVvIntegrator(*systemPtr_);
+
       } else
       if (className == "NvtNhIntegrator") {
          ptr = new NvtNhIntegrator(*systemPtr_);

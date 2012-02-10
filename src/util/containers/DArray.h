@@ -69,12 +69,18 @@ namespace Util
       /**
       * Allocate the underlying C array.
       *
-      * Throw an Exception if the DArray has already been
-      * allocated - A DArray can only be allocated once.
+      * Throw an Exception if the DArray is already allocated.
       *
       * \param capacity number of elements to allocate.
       */
       void allocate(int capacity); 
+
+      /**
+      * Dellocate the underlying C array.
+      *
+      * Throw an Exception if the DArray is not allocated.
+      */
+      void deallocate(); 
 
       /**
       * Return true if the DArray has been allocated, false otherwise.
@@ -212,8 +218,7 @@ namespace Util
    /*
    * Allocate the underlying C array.
    *
-   * Throw an Exception if the DArray has already been
-   * allocated - A DArray can only be allocated once.
+   * Throw an Exception if the DArray has already allocated.
    *
    * \param capacity number of elements to allocate.
    */
@@ -228,6 +233,22 @@ namespace Util
       }
       data_     = new Data[capacity];
       capacity_ = capacity;
+   }
+
+   /*
+   * Deallocate the underlying C array.
+   *
+   * Throw an Exception if this DArray is not allocated.
+   */
+   template <class Data>
+   void DArray<Data>::deallocate() 
+   {
+      if (!data_) {
+         UTIL_THROW("Array is not allocated");
+      }
+      delete [] data_;
+      data_ = 0;
+      capacity_ = 0;
    }
 
    /*

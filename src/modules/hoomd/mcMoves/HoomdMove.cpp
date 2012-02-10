@@ -90,7 +90,14 @@ namespace McMd
       read<int>(in, "nStep", nStep_);
       read<double>(in, "dt", dt_);
       read<double>(in, "skin", skin_);
-      read<int>(in, "GPUId", GPUId_);
+      char* env;
+      if ((env = getenv("OMPI_COMM_WORLD_LOCAL_RANK")) != NULL) {
+         GPUId_ = atoi(env);
+      } else {
+         GPUId_ = -1;
+      }
+
+      // read<int>(in, "GPUId", GPUId_);
       // create HOOMD execution configuration
       executionConfigurationSPtr_ = 
         boost::shared_ptr<ExecutionConfiguration>(new ExecutionConfiguration(ExecutionConfiguration::GPU,GPUId_));
