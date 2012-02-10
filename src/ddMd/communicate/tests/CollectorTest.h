@@ -44,7 +44,7 @@ public:
 
       // Set connections between objects
       domain.setBoundary(boundary);
-      distributor.associate(boundary, domain, buffer);
+      distributor.associate(domain, boundary, buffer);
 
       #ifdef UTIL_MPI
       // Set communicators

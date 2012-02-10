@@ -49,10 +49,9 @@ public:
 
       // Set connections between objects
       domain.setBoundary(boundary);
-      atomDistributor.associate(boundary, domain, buffer);
-      bondDistributor.associate(bondStorage, atomStorage, domain, buffer);
-      object().associate(boundary, domain, 
-                         atomStorage, bondStorage, buffer);
+      atomDistributor.associate(domain, boundary, buffer);
+      bondDistributor.associate(domain, atomStorage, bondStorage, buffer);
+      object().associate(domain, boundary, atomStorage, bondStorage, buffer);
 
       // Set communicators
       domain.setGridCommunicator(communicator());

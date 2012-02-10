@@ -42,7 +42,7 @@ public:
 
       // Set connections between objects
       domain.setBoundary(boundary);
-      object().associate(boundary, domain, buffer);
+      object().associate(domain, boundary, buffer);
 
       #ifdef UTIL_MPI
       // Set communicators

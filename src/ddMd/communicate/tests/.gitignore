@@ -1,7 +1,8 @@
+DomainTest
+BufferTest
 AtomDistributorTest
 BondDistributorTest
-BufferTest
-CollectorTest
-DomainTest
+PlanTest
 ExchangerTest
+CollectorTest
 Test

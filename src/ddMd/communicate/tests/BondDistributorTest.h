@@ -47,8 +47,8 @@ public:
 
       // Set connections between atomDistributors
       domain.setBoundary(boundary);
-      atomDistributor.associate(boundary, domain, buffer);
-      bondDistributor.associate(bondStorage, atomStorage, domain, buffer);
+      atomDistributor.associate(domain, boundary, buffer);
+      bondDistributor.associate(domain, atomStorage, bondStorage, buffer);
 
       #ifdef UTIL_MPI
       // Set communicators
