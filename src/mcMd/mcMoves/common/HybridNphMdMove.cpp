@@ -33,7 +33,9 @@ namespace McMd
       SystemMove(system),
       mdSystemPtr_(0),
       nStep_(0),
-      nphIntegratorPtr_(0)
+      nphIntegratorPtr_(0),
+      barostatMass_(0.0),
+      mode_()
    {
       mdSystemPtr_ = new MdSystem(system);
       oldPositions_.allocate(simulation().atomCapacity());
@@ -58,6 +60,10 @@ namespace McMd
       read<int>(in, "nStep", nStep_);
       readParamComposite(in, *mdSystemPtr_);
       nphIntegratorPtr_ = dynamic_cast<NphIntegrator*>(&mdSystemPtr_->mdIntegrator());
+      barostatMass_ = nphIntegratorPtr_->barostatMass();
+      //std::cout << " mass is " << barostatMass_ << std::endl;
+      mode_ = nphIntegratorPtr_->mode();
+      //std::cout << " lattice is " << mode_ << std::endl;
    }
 
    /*
@@ -65,6 +71,7 @@ namespace McMd
    */
    bool HybridNphMdMove::move()
    {
+      //std::cout << "In move" << std::endl;
       System::MoleculeIterator molIter;
       Molecule::AtomIterator   atomIter;
       double oldEnergy, newEnergy;
@@ -73,6 +80,9 @@ namespace McMd
 
       bool   accept;
 
+      if (nphIntegratorPtr_ == NULL) {
+         UTIL_THROW("null integrator pointer");
+      }
       // Increment counter for attempted moves
       incrementNAttempt();
 
@@ -97,25 +107,28 @@ namespace McMd
       // generate integrator variables from a Gaussian distribution
       Random& random = simulation().random();
       double temp = system().energyEnsemble().temperature();
-      double barostatMass = nphIntegratorPtr_->barostatMass();
+      //std::cout << " temperature is " << temp << std::endl;
       double volume = system().boundary().volume();
+      //std::cout << " volume is " << volume << std::endl;
       
-      if (nphIntegratorPtr_->mode() == Cubic) {
+      if (mode_ == Cubic) {
          // one degree of freedom
 	 // barostat_energy = 1/2 (1/W) eta_x^2
-         double sigma = sqrt(temp/barostatMass);
+         double sigma = sqrt(temp/barostatMass_);
+         //std::cout << " sigma is " << sigma << std::endl;
          nphIntegratorPtr_->setEta(0, sigma*random.gaussian());
-      } else if (nphIntegratorPtr_->mode() == Tetragonal) {
+         //std::cout << " FInished setting eta " << sigma*random.gaussian() << std::endl;
+      } else if (mode_ == Tetragonal) {
          // two degrees of freedom
          // barostat_energy = 1/2 (1/W) eta_x^2 + 1/2 (1/(2W)) eta_y^2
-         double sigma1 = sqrt(temp/barostatMass);
+         double sigma1 = sqrt(temp/barostatMass_);
          nphIntegratorPtr_->setEta(0, sigma1*random.gaussian());
-         double sigma2 = sqrt(temp/barostatMass/2.0);
+         double sigma2 = sqrt(temp/barostatMass_/2.0);
          nphIntegratorPtr_->setEta(1, sigma2*random.gaussian());
-      } else if (nphIntegratorPtr_->mode() == Orthorhombic) { 
+      } else if (mode_ == Orthorhombic) { 
          // three degrees of freedom 
          // barostat_energy = 1/2 (1/W) (eta_x^2 + eta_y^2 + eta_z^2)
-         double sigma = sqrt(temp/barostatMass);
+         double sigma = sqrt(temp/barostatMass_);
          nphIntegratorPtr_->setEta(0, sigma*random.gaussian());
          nphIntegratorPtr_->setEta(1, sigma*random.gaussian());
          nphIntegratorPtr_->setEta(2, sigma*random.gaussian());
@@ -123,8 +136,12 @@ namespace McMd
 
       // Store old energy
       oldEnergy  = mdSystemPtr_->potentialEnergy();
+         //std::cout << " potential energy " << oldEnergy << std::endl;
       oldEnergy += mdSystemPtr_->kineticEnergy();
+         //std::cout << " potential+kinetic energy " << oldEnergy << std::endl;
       oldEnergy += system().boundaryEnsemble().pressure()*volume;
+         //std::cout << " H " << oldEnergy << std::endl;
+         //std::cout << " pressure is " << system().boundaryEnsemble().pressure() << std::endl;
 
       // Run a short MD simulation
       for (int iStep = 0; iStep < nStep_; ++iStep) {
@@ -132,6 +149,7 @@ namespace McMd
       }
 
       volume = system().boundary().volume();
+      //std::cout << " new volume is " << volume << std::endl;
       // Calculate new energy
       newEnergy  = mdSystemPtr_->potentialEnergy();
       newEnergy += mdSystemPtr_->kineticEnergy();

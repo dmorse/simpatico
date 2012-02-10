@@ -64,8 +64,15 @@ namespace McMd
 
       /// Number of Md steps per Hybrid MD move
       int            nStep_;
-
+      
+      /// Pointer to NphIntegrator
       NphIntegrator* nphIntegratorPtr_;
+
+      /// Mass of integrator barostat 
+      double barostatMass_;
+
+      /// Integration mode
+      LatticeSystem mode_;
    };
 
 }      
