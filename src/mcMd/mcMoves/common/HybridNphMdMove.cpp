@@ -13,6 +13,8 @@
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/simulation/Simulation.h>
+#include <mcMd/boundary/OrthorhombicBoundary.h>
+#include <mcMd/ensembles/BoundaryEnsemble.h>
 #include <mcMd/chemistry/Atom.h>
 #ifndef MCMD_NOPAIR
 #include <mcMd/potentials/pair/MdPairPotential.h>
@@ -96,9 +98,11 @@ namespace McMd
       Random& random = simulation().random();
       double temp = system().energyEnsemble().temperature();
       double barostatMass = nphIntegratorPtr_->barostatMass();
+      double volume = system().boundary().volume();
+      
       if (nphIntegratorPtr_->mode() == Cubic) {
          // one degree of freedom
-         // barostat_energy = 1/2 (1/W) eta_x^2
+	 // barostat_energy = 1/2 (1/W) eta_x^2
          double sigma = sqrt(temp/barostatMass);
          nphIntegratorPtr_->setEta(0, sigma*random.gaussian());
       } else if (nphIntegratorPtr_->mode() == Tetragonal) {
@@ -120,15 +124,18 @@ namespace McMd
       // Store old energy
       oldEnergy  = mdSystemPtr_->potentialEnergy();
       oldEnergy += mdSystemPtr_->kineticEnergy();
+      oldEnergy += system().boundaryEnsemble().pressure()*volume;
 
       // Run a short MD simulation
       for (int iStep = 0; iStep < nStep_; ++iStep) {
          nphIntegratorPtr_->step();
       }
 
+      volume = system().boundary().volume();
       // Calculate new energy
       newEnergy  = mdSystemPtr_->potentialEnergy();
       newEnergy += mdSystemPtr_->kineticEnergy();
+      newEnergy += system().boundaryEnsemble().pressure()*volume;
 
       // Decide whether to accept or reject
       accept = random.metropolis( boltzmann(newEnergy-oldEnergy) );
