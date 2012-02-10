@@ -13,6 +13,7 @@
 #include "common/AtomDisplaceMove.h"
 #include "common/RigidDisplaceMove.h"
 #include "common/HybridMdMove.h"
+#include "common/HybridNphMdMove.h"
 #include "common/MdMove.h"
 #include "common/DpdMove.h"
 
@@ -47,6 +48,9 @@ namespace McMd
 
       if (className == "HybridMdMove") {
          ptr = new HybridMdMove(*systemPtr_);
+      } else 
+      if (className == "HybridNphMdMove") {
+         ptr = new HybridNphMdMove(*systemPtr_);
       } else 
       if (className == "MdMove") {
          ptr = new MdMove(*systemPtr_);
