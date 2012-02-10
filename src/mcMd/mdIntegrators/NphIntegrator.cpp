@@ -15,6 +15,7 @@
 #include <mcMd/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
+#include <mcMd/ensembles/EnergyEnsemble.h>
 #include <mcMd/ensembles/BoundaryEnsemble.h>
 #include <util/space/Vector.h>
 #include <util/archives/Serializable_includes.h>
@@ -305,6 +306,32 @@ namespace McMd
       return barostat_energy;
    }
 
+   /* 
+   * Get barostat mass.
+   */
+   double NphIntegrator::barostatMass() const
+   {  return W_; }
+ 
+   /* 
+   * Get mode of integrator.
+   */
+   LatticeSystem NphIntegrator::mode() const
+   {  return mode_; }
+
+   /* 
+   * Get momentum of barostat.
+   */
+   //Vector& NphIntegrator::eta()
+   //{  return eta_; }
+
+   /* 
+   * Set momentum component of barostat.
+   */
+   void NphIntegrator::setEta(unsigned int index, double eta)
+   {  
+      eta_[index] = eta; 
+   }
+   
    /*
    * Save the internal state to an archive.
    */

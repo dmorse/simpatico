@@ -46,20 +46,26 @@ namespace McMd
       read<int>(in, "nStep", nStep_);
       read<double>(in, "dt", dt_);
 
-      std::string modeIn;
-      read<std::string>(in, "mode", modeIn);
-      if (modeIn == "cubic")
+      read<std::string>(in, "mode", modeIn_);
+      if (modeIn_ == "cubic")
          integrationMode_ = TwoStepNPHGPU::cubic;
-      else if (modeIn == "orthorhombic")
+      else if (modeIn_ == "orthorhombic")
          integrationMode_ = TwoStepNPHGPU::orthorhombic;
-      else if (modeIn == "tetragonal")
+      else if (modeIn_ == "tetragonal")
          integrationMode_ = TwoStepNPHGPU::tetragonal;
       else
          UTIL_THROW("Unsupported integration mode.");
 
       read<double>(in,"W", W_);
       read<double>(in, "skin", skin_);
-      read<int>(in, "GPUId", GPUId_);
+      char* env;
+      if ((env = getenv("OMPI_COMM_WORLD_LOCAL_RANK")) != NULL) {
+         GPUId_ = atoi(env);
+      } else {
+         GPUId_ = -1;
+      }
+
+      //read<int>(in, "GPUId", GPUId_);
       // create HOOMD execution configuration
       executionConfigurationSPtr_ = 
         boost::shared_ptr<ExecutionConfiguration>(new ExecutionConfiguration(ExecutionConfiguration::GPU,GPUId_));
