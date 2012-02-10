@@ -95,7 +95,7 @@ namespace DdMd
       * \param domain        Domain object (processor grid)
       * \param buffer        Buffer used for communication
       */
-      void associate(Boundary& boundary, Domain& domain, Buffer& buffer);
+      void associate(Domain& domain, Boundary& boundary, Buffer& buffer);
 
       /**
       * Set cacheCapacity, allocate memory and initialize object.

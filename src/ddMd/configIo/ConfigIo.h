@@ -13,6 +13,9 @@
 #include <ddMd/communicate/BondDistributor.h>    // member 
 #include <ddMd/boundary/Boundary.h>              // typedef
 
+#include <util/containers/DArray.h>              // member
+
+
 namespace DdMd
 {
 
@@ -35,7 +38,15 @@ namespace DdMd
       /**
       * Constructor.
       */
-      ConfigIo(System& system, Buffer& buffer);
+      ConfigIo();
+
+      /**
+      * Associate with related objects.
+      */
+      void associate(Domain& domain, Boundary& boundary,
+                     AtomStorage& atomStorage,
+                     BondStorage& bondStorage,
+                     Buffer& buffer);
 
       /**
       * Read cache size and allocate memory.
@@ -75,11 +86,6 @@ namespace DdMd
       BondDistributor& bondDistributor();
 
       /**
-      * Get AtomStorage by reference.
-      */
-      System& system();
-   
-      /**
       * Get the Domain by reference.
       */
       Domain& domain();
@@ -105,7 +111,7 @@ namespace DdMd
 
       BondDistributor  bondDistributor_;
 
-      System*      systemPtr_;
+      DArray<int>      ownerRanks_;
 
       Domain*      domainPtr_;
 
@@ -128,9 +134,6 @@ namespace DdMd
 
    inline BondDistributor& ConfigIo::bondDistributor()
    { return bondDistributor_; }
-
-   inline System& ConfigIo::system()
-   { return *systemPtr_; }
 
    inline Domain& ConfigIo::domain()
    { return *domainPtr_; }

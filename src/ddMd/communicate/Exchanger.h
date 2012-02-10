@@ -44,7 +44,8 @@ namespace DdMd
       /**
       * Set pointers to associated objects.
       */
-      void associate(const Boundary& boundary, const Domain& domain, 
+      void associate(const Domain& domain, 
+                     const Boundary& boundary, 
                      AtomStorage& atomStorage, 
                      BondStorage& bondStorage, 
                      Buffer& buffer);

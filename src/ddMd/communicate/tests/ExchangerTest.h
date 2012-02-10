@@ -109,13 +109,13 @@ public:
       #endif
 
       // Read and distribute atoms 
+      int nAtom; 
       if (myRank == 0) {
 
          // Read and distribute atoms
          configFile >> Label("ATOMS");
 
          // Read number of atoms
-         int nAtom; 
          configFile >> Label("nAtom") >> nAtom;
 
          std::cout << std::endl;

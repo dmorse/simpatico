@@ -30,18 +30,30 @@ namespace DdMd
    /*
    * Constructor.
    */
-   ConfigIo::ConfigIo(System& system, Buffer& buffer)
+   ConfigIo::ConfigIo()
+    : domainPtr_(0),
+      boundaryPtr_(0),
+      atomStoragePtr_(0),
+      bondStoragePtr_(0),
+      atomCacheCapacity_(0),
+      bondCacheCapacity_(0)
+   {}
+
+   /*
+   * Read cache size and allocate memory.
+   */
+   void ConfigIo::associate(Domain& domain, Boundary& boundary,
+                            AtomStorage& atomStorage,
+                            BondStorage& bondStorage,
+                            Buffer& buffer)
    {
-      systemPtr_ = &system;
-      domainPtr_ = &system.domain();
-      boundaryPtr_ = &system.boundary();
-      atomStoragePtr_ = &system.atomStorage();
-      bondStoragePtr_ = &system.bondStorage();
-      atomDistributor_.associate(*boundaryPtr_, *domainPtr_, buffer);
-      bondDistributor_.associate(*bondStoragePtr_, *atomStoragePtr_, 
-                                 *domainPtr_, buffer);
-      atomCacheCapacity_ = 0;
-      bondCacheCapacity_ = 0;
+      domainPtr_ = &domain;
+      boundaryPtr_ = &boundary;
+      atomStoragePtr_ = &atomStorage;
+      bondStoragePtr_ = &bondStorage;
+      atomDistributor_.associate(domain, boundary, buffer);
+      bondDistributor_.associate(domain, atomStorage,
+                                 bondStorage, buffer);
    }
 
    /*
@@ -65,8 +77,6 @@ namespace DdMd
 
       std::ifstream file;
       int myRank = domain().gridRank();
-      int nAtom;  // Total number of atoms in file
-      int nBond;  // Total number of bonds in file
 
       if (myRank == 0) {
          file.open(filename.c_str());
@@ -82,6 +92,7 @@ namespace DdMd
       #endif
 
       // Read and distribute atoms 
+      int nAtom;  // Total number of atoms in file
       if (myRank == 0) {
 
          // Read and distribute atoms
@@ -94,6 +105,9 @@ namespace DdMd
          std::cout << "Num Atoms to be distributed = " 
                    << nAtom << std::endl;
 
+         int totalAtomCapacity = atomStoragePtr_->totalAtomCapacity();
+         ownerRanks_.allocate(totalAtomCapacity);
+
          #if UTIL_MPI
          //Initialize the send buffer.
          atomDistributor().initSendBuffer();
@@ -102,20 +116,26 @@ namespace DdMd
          // Read atoms
          Atom* atomPtr;
          int id;
-         int typeId = 0;
+         int typeId;
+         int rank;
          for(int i = 0; i < nAtom; ++i) {
 
             // Get pointer to new atom in distributor memory.
             atomPtr = atomDistributor().newAtomPtr();
 
             file >> id >> typeId;
+            if (id < 0 || id >= totalAtomCapacity) {
+               UTIL_THROW("Invalid atom id");
+            }
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
             file >> atomPtr->position();
             file >> atomPtr->velocity();
 
             // Add atom to list for sending.
-            atomDistributor().addAtom(atomStorage());
+            rank = atomDistributor().addAtom(atomStorage());
+
+            ownerRanks_[id] = rank;
 
          }
 
@@ -149,6 +169,7 @@ namespace DdMd
       }
 
       // Read and distribute bonds
+      int nBond;  // Total number of bonds in file
       if (myRank == 0) {
 
          // Read and distribute bonds
@@ -168,12 +189,17 @@ namespace DdMd
 
          // Fill the bond objects
          Bond* bondPtr;
-         for (int i = 0; i < nBond; ++i) {
+         int   i, j, k;
+         for (i = 0; i < nBond; ++i) {
 
             bondPtr = bondDistributor().newPtr();
             file >> *bondPtr;
+            for (j = 0; j < 2; ++j) {
+               k = bondPtr->atomId(j);
+               bondPtr->setAtomOwnerRank(j, ownerRanks_[k]);
+            }
+            
             bondDistributor().add();
-
          }
 
          // Send any bonds not sent previously.
@@ -188,6 +214,7 @@ namespace DdMd
 
       if (myRank == 0) {
          file.close();
+         ownerRanks_.deallocate();
       }
 
    }
@@ -211,7 +238,7 @@ namespace DdMd
          file << boundary() << endl;
    
          file << endl << "ATOMS" << endl;
-         file << "nAtom" << system().nAtomTotal() << endl;
+         //file << "nAtom" << system().nAtomTotal() << endl;
 
       }
 

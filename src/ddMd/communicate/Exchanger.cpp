@@ -43,16 +43,17 @@ namespace DdMd
    /*
    * Set pointers to associated objects.
    */
-   void Exchanger::associate(const Boundary& boundary, const Domain& domain, 
+   void Exchanger::associate(const Domain& domain, 
+                             const Boundary& boundary, 
                              AtomStorage& atomStorage, 
                              BondStorage& bondStorage, 
                              Buffer& buffer)
    {
-      boundaryPtr_  = &boundary;
       domainPtr_  = &domain;
+      boundaryPtr_  = &boundary;
       atomStoragePtr_  = &atomStorage;
       bondStoragePtr_  = &bondStorage;
-      bufferPtr_    = &buffer;
+      bufferPtr_  = &buffer;
    }
 
    /*
