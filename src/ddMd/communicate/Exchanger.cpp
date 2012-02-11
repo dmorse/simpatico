@@ -95,38 +95,81 @@ namespace DdMd
    void Exchanger::exchangeAtoms()
    {
       Vector lengths = boundaryPtr_->lengths();
-      double bound;
+      double bound, inner, coordinate;
       AtomIterator atomIter;
       GhostIterator ghostIter;
       GroupIterator<2> bondIter;
       Atom* ptr;
-      int i, j, k, source, dest, nSend;
+      int i, j, jc, k, source, dest, nSend;
       int myRank = domainPtr_->gridRank();
       int shift;
       bool choose;
 
+      // Calculate atom communication plans for all local atoms
+      atomStoragePtr_->begin(atomIter);
+      for ( ; !atomIter.atEnd(); ++atomIter) {
+
+         atomIter->plan().clearFlags();
+
+         // Cartesian directions
+         for (i = 0; i < Dimension; ++i) {
+  
+            coordinate = atomIter->position()[i];
+ 
+            // Transmission direction
+            for (j = 0; j < 2; ++j) {
+   
+               // j = 0 sends to lower coordinate i
+               // j = 1 sends to higher coordinate i
+   
+               // Boundary (j=0 -> minimum, j=1 -> maximum)
+               bound = domainPtr_->domainBound(i, j);
+
+               // Decide upon plan  direction i, j
+               if (j == 0) { // Communicate with lower index
+                  jc = 1; // direction for reverse communication
+                  choose = (coordinate < bound);
+                  if (!choose) { // retain atom
+                     inner = bound + pairCutoff_;
+                     if (coordinate < inner) {
+                        atomIter->plan().setGhost(i, j);
+                     }
+                  } else { // Send to lower index
+                     atomIter->plan().setExchange(i, j);
+                     inner = bound - pairCutoff_;
+                     if (coordinate > inner) {
+                        atomIter->plan().setGhost(i, jc);
+                     }
+                  }
+               } else { // j == 1, communicate with upper index
+                  jc = 0; // direction for reverse communication
+                  choose = (coordinate > bound);
+                  if (!choose) { // retain atom
+                     inner = bound - pairCutoff_;
+                     if (coordinate > inner) {
+                        atomIter->plan().setGhost(i, j);
+                     }
+                  } else { // send to upper index
+                     atomIter->plan().setExchange(i, j);
+                     inner = bound + pairCutoff_;
+                     if (coordinate < inner) {
+                        atomIter->plan().setGhost(i, jc);
+                     }
+                  }
+               }
+   
+            } // end loop j
+         } // loop i
+   
+      } // end atom loop, end compute plan
 
       #if 0
-      /*
-      // Identify processors that own local atoms
-      for (atomStoragePtr_->begin(atomIter); !atomIter.atEnd(); ++atomIter) {
-         dest = domainPtr_->ownerRank(atomIter->position());
-         atomIter->setOwnerRank(dest); 
-      }
-
-      // Identify processors that own ghost atoms
-      for (atomStoragePtr_->begin(ghostIter); !ghostIter.atEnd(); ++ghostIter) {
-         dest = domainPtr_->ownerRank(ghostIter->position());
-         ghostIter->setOwnerRank(dest); 
-      }
-
       for (bondStoragePtr_->begin(bondIter); !bondIter.atEnd(); ++bondIter) {
          for (i = 0; i < 2; ++i) {
             ptr = atomStoragePtr_->find(bondIter->atomId(i));
             bondIter->setOwnerRank(i, ptr->ownerRank());
          }
       }
-      */
       #endif
 
       atomStoragePtr_->clearGhosts();
@@ -169,6 +212,7 @@ namespace DdMd
                } else {
                   choose = (atomIter->position()[i] > bound);
                }
+               assert(choose == atomIter->plan().testExchange(i, j));
 
                if (choose) {
 
@@ -190,32 +234,9 @@ namespace DdMd
                }
 
             } // end atom loop
-            //std::cout << "Atoms packed for " << i << "  " << j << " on proc " << myRank << std::endl; 
-
-            #if 0
-            /*
-            // Process groups for sending
-            if (domainPtr_->grid().dimension(i) > 1) {
-               For each group {
-                  empty = true;
-                  groupIter->setSendMark(true);
-                  for each atom in group {
-                     if (atom is local) {
-                        empty = false;
-                     }
-                     if (atom->sendMark) {
-                        groupIter->setSendMark(true);
-                     }
-                  }
-                  pack group for sending
-                  }
-                  if (empty) {
-                     removeGroup from Storage
-                  }
-               }
-            }
-            */
-            #endif
+            //std::cout << "Atoms packed for " 
+            //          << i << "  " << j 
+            //          << " on proc " << myRank << std::endl; 
 
             // Send and receive only if dimension(i) > 1
             if (domainPtr_->grid().dimension(i) > 1) {
@@ -282,7 +303,6 @@ namespace DdMd
       #endif
 
    }
-
 
    /*
    * Exchange ghost atoms.
@@ -353,6 +373,8 @@ namespace DdMd
                   assert(coord < bound);
                   choose = (coord > inner);
                }
+
+               //assert(choose == localIter->plan().testGhost(i, j));
 
                if (choose) {
 

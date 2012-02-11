@@ -106,7 +106,6 @@ namespace DdMd
                    << nAtom << std::endl;
 
          int totalAtomCapacity = atomStoragePtr_->totalAtomCapacity();
-         ownerRanks_.allocate(totalAtomCapacity);
 
          #if UTIL_MPI
          //Initialize the send buffer.
@@ -134,8 +133,6 @@ namespace DdMd
 
             // Add atom to list for sending.
             rank = atomDistributor().addAtom(atomStorage());
-
-            ownerRanks_[id] = rank;
 
          }
 
@@ -196,9 +193,7 @@ namespace DdMd
             file >> *bondPtr;
             for (j = 0; j < 2; ++j) {
                k = bondPtr->atomId(j);
-               bondPtr->setAtomOwnerRank(j, ownerRanks_[k]);
             }
-            
             bondDistributor().add();
          }
 
@@ -214,7 +209,6 @@ namespace DdMd
 
       if (myRank == 0) {
          file.close();
-         ownerRanks_.deallocate();
       }
 
    }

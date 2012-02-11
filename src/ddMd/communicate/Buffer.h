@@ -305,10 +305,10 @@ namespace DdMd
       bool isInitialized_;
 
       /// Number of bytes required per local atom.
-      static const int localAtomSize_ = 56;
+      static const int localAtomSize_ = 60;
 
       /// Number of bytes required per ghost atom.
-      static const int ghostAtomSize_ = 32;
+      static const int ghostAtomSize_ = 36;
 
       #ifdef UTIL_MPI
       /**
@@ -384,9 +384,6 @@ namespace DdMd
       for (int j = 0; j < N; ++j) {
          pack<int>(group.atomId(j));
       }
-      for (int j = 0; j < N; ++j) {
-         pack<int>(group.atomOwnerRank(j));
-      }
 
       //Increment number of groups in send buffer by 1
       ++sendSize_;
@@ -414,10 +411,6 @@ namespace DdMd
       for (j = 0; j < N; ++j) {
          unpack(i);
          group.setAtomId(j, i);
-      }
-      for (j = 0; j < N; ++j) {
-         unpack(i);
-         group.setAtomOwnerRank(j, i);
       }
 
       // Decrement number of groups in recv buffer by 1

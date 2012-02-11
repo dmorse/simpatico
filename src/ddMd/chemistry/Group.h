@@ -83,14 +83,6 @@ namespace DdMd
       {  atomIds_[i] = atomId; }
     
       /**
-      * Set the id for a specific atom.
-      *
-      * \param i index within group (0,..., N-1)
-      */
-      void setAtomOwnerRank(int i, int ownerRank) 
-      {  atomOwnerRanks_[i] = ownerRank; }
-    
-      /**
       * Set the pointer to a specific atom.
       *
       * \param i       index of atom within group.
@@ -128,14 +120,6 @@ namespace DdMd
       {  return atomIds_[i]; }
     
       /**
-      * Get rank of processor of specific atom.
-      *
-      * \param i index within group (0,..., N-1)
-      */
-      int atomOwnerRank(int i) const
-      {  return atomOwnerRanks_[i]; }
-    
-      /**
       * Get a pointer to a specific Atom.
       *
       * \param i index within group (0,...,N-1)
@@ -156,9 +140,6 @@ namespace DdMd
    
       /// Array of integer ids of atoms in this group.
       int    atomIds_[N];
-   
-      /// Array of integer ids of atoms in this group.
-      int    atomOwnerRanks_[N];
    
       /// Integer index for the type of group.
       int    typeId_;
