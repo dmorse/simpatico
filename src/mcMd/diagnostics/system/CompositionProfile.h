@@ -81,9 +81,12 @@ namespace McMd
       /// Distribution statistical accumulators.
       DArray<Distribution> accumulators_;
       
+      /// Array of Miller index IntVectors for wavevectors.
+      DArray<IntVector>  intVectors_;
+
       /// Array of direction vectors.
-      DArray<Vector>        Directions_;
-      
+      DArray<Vector>        waveVectors_;
+
       /// Number of direction vectors.
       int                      nDirections_;
 
@@ -95,6 +98,12 @@ namespace McMd
 
       /// Has readParam been called?
       bool    isInitialized_;
+
+      /**
+      * Update wavevectors.
+      */
+      void makeWaveVectors();
+
 
    };
 
