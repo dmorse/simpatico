@@ -46,12 +46,14 @@ namespace McMd
 
       // Read number of direction vectors and direction vectors 
       read<int>(in, "nDirections", nDirections_);
-      Directions_.allocate(nDirections_);
-      readDArray<Vector>(in, "Directions", Directions_, nDirections_);
+      intVectors_.allocate(nDirections_);
+      waveVectors_.allocate(nDirections_);
+      readDArray<IntVector>(in, "intVectors", intVectors_, nDirections_);
 
       accumulators_.allocate(nDirections_*nAtomType_);
 
       isInitialized_ = true;
+   
    }
 
    /*
@@ -59,32 +61,27 @@ namespace McMd
    */
    void CompositionProfile::initialize() 
    {  
-      int i, j, bin;
+      int bin;
       double min, max;
-      Vector blengths;
-
-      // Lengths of simulation box
-      blengths = system().boundary().lengths();
       
-      for (i=0; i < nDirections_; ++i) {
-         for (j=0; j < nAtomType_; ++j) {
- 
-            // Component of boundary lengths along direction vector
-            max = blengths.dot(Directions_[i]);
-            max /= Directions_[i].abs();
-            
-            min = 0;
-            
+      for (int i=0; i < nDirections_; ++i) {
+         for (int j=0; j < nAtomType_; ++j) {
+
+            min = 0.0;
+            max = 1.0;
+
             // number of bins in histogram = int(((max-min)/0.05));
             bin = 500;
-            
+
             accumulators_[i+j*nDirections_].setParam(min, max, bin);
          }
       }
-  
+
+      makeWaveVectors();
+
       // Clear accumulators
-      for (i = 0; i < nDirections_; ++i) {
-         for (j = 0; j < nAtomType_; ++j){
+      for (int i = 0; i < nDirections_; ++i) {
+         for (int j = 0; j < nAtomType_; ++j){
             accumulators_[i+j*nDirections_].clear();
          }
       } 
@@ -93,13 +90,20 @@ namespace McMd
  
    void CompositionProfile::sample(long iStep) 
    {
+      int bin;
+      double min, max;
+      Vector blengths;
+
+      // Lengths of simulation box
+      blengths = system().boundary().lengths();
+
       if (isAtInterval(iStep))  {
 
          Vector  position;
          double  product;
          System::ConstMoleculeIterator  molIter;
          Molecule::ConstAtomIterator  atomIter;
-         int  nSpecies, iSpecies, typeId, i;
+         int  nSpecies, iSpecies, typeId;
 
          // Loop over all atoms
          nSpecies = system().simulation().nSpecies();
@@ -112,11 +116,13 @@ namespace McMd
                for ( ; atomIter.notEnd(); ++atomIter) {
                   position = atomIter->position();
                   typeId   = atomIter->typeId();
- 
+                  for (int i = 0; i < Dimension; ++i) {
+                     position[i] /= blengths[i];
+                  }
 		  // Loop over direction vectors
-                  for (i = 0; i < nDirections_; ++i) {
-                     product = position.dot(Directions_[i]);
-                     product /= Directions_[i].abs();
+                  for (int i = 0; i < nDirections_; ++i) {
+                     product = position.dot(waveVectors_[i]);
+                     product /= waveVectors_[i].abs();
                      accumulators_[i+typeId*nDirections_].sample(product);
                   }
 		 
@@ -129,6 +135,27 @@ namespace McMd
 
       }
 
+   }
+
+   /**
+   * Calculate floating point wavevectors.
+   */
+   void CompositionProfile::makeWaveVectors()
+   {
+      Vector    dWave;
+      Boundary* boundaryPtr = &system().boundary();
+      int       i, j;
+
+      // Calculate wavevectors
+      for (i = 0; i < nDirections_; ++i) {
+         waveVectors_[i] = Vector::Zero;
+         for (j = 0; j < Dimension; ++j) {
+            dWave  = boundaryPtr->reciprocalBasisVector(j);
+            dWave *= intVectors_[i][j];
+            waveVectors_[i] += dWave;
+            //std::cout << waveVectors_[i] << std::endl;
+         }
+      }
    }
 
    void CompositionProfile::output() 
@@ -145,7 +172,7 @@ namespace McMd
       fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       for (i = 0; i < nDirections_; ++i) {
          for (j = 0; j < Dimension; ++j) {
-            outputFile_ << Dbl(Directions_[i][j], 5);
+            outputFile_ << Dbl(waveVectors_[i][j], 5);
          }
          outputFile_ << std::endl;
       
