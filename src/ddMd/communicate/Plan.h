@@ -12,36 +12,42 @@ namespace DdMd
 {
 
    /**
-   * Plan for sending local or ghost atoms.
+   * Plan for communication pattern for exchanging atoms
+   * and communicating ghots.
    */
    class Plan
    {
 
    public:
 
-      Plan(){}
+      Plan() :
+       flags_(0)
+      {}
 
       void setExchange(int i, int j)
-      { bits_ |= EMask[i][j]; }
+      { flags_ |= EMask[i][j]; }
  
       void clearExchange(int i, int j)
-      { bits_ &= (~EMask[i][j]); }
+      { flags_ &= (~EMask[i][j]); }
  
-      bool testExchange(int i, int j)
-      { return bool(bits_ & ~EMask[i][j]); }
+      bool testExchange(int i, int j) const
+      { return bool(flags_ & EMask[i][j]); }
  
       void setGhost(int i, int j)
-      { bits_ |= GMask[i][j]; }
+      { flags_ |= GMask[i][j]; }
  
       void clearGhost(int i, int j)
-      { bits_ &= (~GMask[i][j]); }
+      { flags_ &= (~GMask[i][j]); }
  
-      bool testGhost(int i, int j)
-      { return bool(bits_ & ~GMask[i][j]); }
+      bool testGhost(int i, int j) const
+      { return bool(flags_ & GMask[i][j]); }
+ 
+      unsigned int flags() const
+      { return flags_; }
  
    private:
 
-      unsigned int bits_;
+      unsigned int flags_;
  
       static unsigned int GMask[3][2];
       static unsigned int EMask[3][2];
