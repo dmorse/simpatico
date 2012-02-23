@@ -59,11 +59,11 @@ namespace McMd
       readProbability(in);
       read<int>(in, "nStep", nStep_);
       readParamComposite(in, *mdSystemPtr_);
+      
       nphIntegratorPtr_ = dynamic_cast<NphIntegrator*>(&mdSystemPtr_->mdIntegrator());
+      
       barostatMass_ = nphIntegratorPtr_->barostatMass();
-      //std::cout << " mass is " << barostatMass_ << std::endl;
       mode_ = nphIntegratorPtr_->mode();
-      //std::cout << " lattice is " << mode_ << std::endl;
    }
 
    /*
@@ -71,7 +71,6 @@ namespace McMd
    */
    bool HybridNphMdMove::move()
    {
-      //std::cout << "In move" << std::endl;
       System::MoleculeIterator molIter;
       Molecule::AtomIterator   atomIter;
       double oldEnergy, newEnergy;
@@ -85,6 +84,9 @@ namespace McMd
       }
       // Increment counter for attempted moves
       incrementNAttempt();
+      
+      // Store old boundary lengths.
+      Vector oldLengths = system().boundary().lengths();
 
       // Store old atom positions in oldPositions_ array.
       for (iSpec = 0; iSpec < nSpec; ++iSpec) {
@@ -106,18 +108,16 @@ namespace McMd
       
       // generate integrator variables from a Gaussian distribution
       Random& random = simulation().random();
+      
       double temp = system().energyEnsemble().temperature();
-      //std::cout << " temperature is " << temp << std::endl;
+       
       double volume = system().boundary().volume();
-      //std::cout << " volume is " << volume << std::endl;
       
       if (mode_ == Cubic) {
          // one degree of freedom
 	 // barostat_energy = 1/2 (1/W) eta_x^2
          double sigma = sqrt(temp/barostatMass_);
-         //std::cout << " sigma is " << sigma << std::endl;
          nphIntegratorPtr_->setEta(0, sigma*random.gaussian());
-         //std::cout << " FInished setting eta " << sigma*random.gaussian() << std::endl;
       } else if (mode_ == Tetragonal) {
          // two degrees of freedom
          // barostat_energy = 1/2 (1/W) eta_x^2 + 1/2 (1/(2W)) eta_y^2
@@ -136,31 +136,29 @@ namespace McMd
 
       // Store old energy
       oldEnergy  = mdSystemPtr_->potentialEnergy();
-         //std::cout << " potential energy " << oldEnergy << std::endl;
       oldEnergy += mdSystemPtr_->kineticEnergy();
-         //std::cout << " potential+kinetic energy " << oldEnergy << std::endl;
       oldEnergy += system().boundaryEnsemble().pressure()*volume;
-         //std::cout << " H " << oldEnergy << std::endl;
-         //std::cout << " pressure is " << system().boundaryEnsemble().pressure() << std::endl;
+      oldEnergy += nphIntegratorPtr_->barostatEnergy();
 
       // Run a short MD simulation
       for (int iStep = 0; iStep < nStep_; ++iStep) {
          nphIntegratorPtr_->step();
       }
-
+      
       volume = system().boundary().volume();
-      //std::cout << " new volume is " << volume << std::endl;
+
       // Calculate new energy
       newEnergy  = mdSystemPtr_->potentialEnergy();
       newEnergy += mdSystemPtr_->kineticEnergy();
       newEnergy += system().boundaryEnsemble().pressure()*volume;
+      newEnergy += nphIntegratorPtr_->barostatEnergy();
 
       // Decide whether to accept or reject
       accept = random.metropolis( boltzmann(newEnergy-oldEnergy) );
 
       // Accept move
       if (accept) {
-
+         
          #ifndef MCMD_NOPAIR
          // Rebuild the McSystem cellList using the new positions.
          system().pairPotential().buildCellList();
@@ -170,6 +168,9 @@ namespace McMd
          incrementNAccept();
 
       } else {
+         
+         // Restore old boundary lengths
+         system().boundary().setLengths(oldLengths);
 
          // Restore old atom positions
          for (iSpec = 0; iSpec < nSpec; ++iSpec) {

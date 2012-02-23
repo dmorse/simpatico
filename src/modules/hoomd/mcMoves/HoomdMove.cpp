@@ -40,8 +40,7 @@
 #include <hoomd/HOOMDMath.h>
 #include <hoomd/ParticleData.h>
 #include <hoomd/ForceCompute.h>
-#include <hoomd/HarmonicBondForceComputeGPU.h>
-#include <hoomd/FENEBondForceComputeGPU.h>
+#include <hoomd/AllBondPotentials.h>
 #include <hoomd/ParticleGroup.h>
 #include <hoomd/IntegratorTwoStep.h>
 #include <hoomd/TwoStepNVEGPU.h>
@@ -171,13 +170,14 @@ namespace McMd
          BondPotentialImpl<HarmonicBond> *harmonicBondPtr =
             dynamic_cast< BondPotentialImpl<HarmonicBond> *>
             (&system().bondPotential());
-         boost::shared_ptr<HarmonicBondForceComputeGPU>
-            force(new HarmonicBondForceComputeGPU(systemDefinitionSPtr_,""));
+         boost::shared_ptr<PotentialBondHarmonic>
+            force(new PotentialBondHarmonicGPU(systemDefinitionSPtr_,""));
          for (int iType=0; iType<simulation().nBondType(); iType++)
          {
-            force->setParams(iType,
+            Scalar2 param = make_scalar2(
                              harmonicBondPtr->evaluator().stiffness(iType),
                              harmonicBondPtr->evaluator().length(iType));
+            force->setParams(iType, param);
          }
          bondName_ = std::string("harmonic");
          return force;
@@ -187,13 +187,14 @@ namespace McMd
           BondPotentialImpl<HarmonicL0Bond> *harmonicL0BondPtr =
              dynamic_cast< BondPotentialImpl<HarmonicL0Bond> *>
              (&system().bondPotential());
-          boost::shared_ptr<HarmonicBondForceComputeGPU>
-             force(new HarmonicBondForceComputeGPU(systemDefinitionSPtr_,""));
+          boost::shared_ptr<PotentialBondHarmonic>
+             force(new PotentialBondHarmonicGPU(systemDefinitionSPtr_,""));
           for (int iType=0; iType<simulation().nBondType(); iType++)
           {
-             force->setParams(iType,
-                              harmonicL0BondPtr->evaluator().stiffness(iType),
-                              0);
+             Scalar2 param = make_scalar2(
+                             harmonicL0BondPtr->evaluator().stiffness(iType),
+                             0);
+             force->setParams(iType, param);
           }
           bondName_ = std::string("harmonic");
           return force;
@@ -308,7 +309,6 @@ namespace McMd
 
       // access Bond data
       bondDataSPtr_ = systemDefinitionSPtr_->getBondData();
-
       // add bonds
       addBonds();
 

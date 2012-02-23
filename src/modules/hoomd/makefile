@@ -46,6 +46,6 @@ clean-deps:
 # Executables 
 
 $(MCSIM_EXE): mcSim.o $(modules_hoomd_OBJS) $(mcMd_LIB) $(util_LIB) $(LIBS)
-	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) mcSim.o \
+	$(CXX) -L/opt/torque/2.5.11/lib $(LDFLAGS)-o $(MCSIM_EXE) mcSim.o \
 		 $(modules_hoomd_OBJS) $(mcMd_LIB) $(util_LIB) $(LIBS)
 
