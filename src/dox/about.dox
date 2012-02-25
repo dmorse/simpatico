@@ -67,7 +67,7 @@ dump files. Postprocessing is done using the same programs as those used
 for simulation, by a command that replaces the main simulation loop by a 
 loop over a sequence of system configurations that are read from file.
 
-Simpatico is designed primarily for use on a single CPU (or CPU/GPU pair), 
+Simpatico is designed primarily for use on a single CPU (or a CPU/GPU pair), 
 or for parallel algorithms such as replica exchange in which each CPU 
 simulates a separate physical system.  This restriction is necessary to allow 
 a flexible implementation of molecular MC as well as MD algorithms, and of a 
@@ -81,27 +81,27 @@ packages, it is probably most similar in design to
 David Kofke's group at the University of Buffalo. 
 
 Simpatico currently provides a very convenient tool for running and 
-analyzing MC, MD and hybrid MC simulations of coarse-grained models 
-of polymer liquids.  It is not yet appropriate for use with atomistic 
-models, because of the absence of an electrostatic potential, and the 
-absence of MC algorithms designed specifically for use with stiff angle 
-and dihedral potentials. 
+analyzing MC, MD and hybrid MC simulations of coarse-grained models of 
+polymer liquids.  It is not yet appropriate for use with atomistic models, 
+because of the absence of an electrostatic potential, and the absence of 
+MC conformation sampling algorithms designed specifically for use with 
+stiff angle potentials. 
 
-Simpatico is still under rapid development, and is distributed with 
-no warranty of any kind. It is distributed under the terms of the GNU 
-public license (see the LICENSE file). 
+Simpatico is still undergoing rapid development, and is distributed with no 
+warranty of any kind. It is distributed under the terms of the GNU public 
+license (see the LICENSE file). 
 
 Contributors:
 <ul>
   <li> David Morse (primary author) </li>
-  <li> Jens Glaser (HOOMD integration) </li>
   <li> Jian Qin (MC algorithms, angle and dihedral potentials) </li>
+  <li> Jens Glaser (HOOMD integration) </li>
   <li> Pavani Medapuram (replica exchange and perturbation theory) </li>
 </ul>
-Simpatico was written by starting from a code named PMC that was used 
-in 2007-2009 by Jun Chung and Jian Qin, but not distributed outside 
-of our research group. Many of the MC algorithms in Simpatico were 
-written by these two users and then ported to Simpatico. 
+Simpatico was written by starting from a code named PMC that was used in 
+2007-2009 by Jun Chung and Jian Qin, but not distributed outside of our 
+research group. Many of the MC algorithms in Simpatico were written by 
+these two users and then ported to Simpatico. 
 
 Navigation:
 <ul>
