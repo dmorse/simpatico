@@ -53,7 +53,7 @@ namespace DdMd
       exchanger_.associate(domain_, boundary_,
                            atomStorage_, bondStorage_, buffer_);
 
-      configIoPtr_    = new ConfigIo();
+      configIoPtr_  = new ConfigIo();
       configIoPtr_->associate(domain_, boundary_,
                               atomStorage_, bondStorage_, buffer_);
 

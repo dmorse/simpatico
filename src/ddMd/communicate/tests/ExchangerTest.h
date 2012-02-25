@@ -89,9 +89,9 @@ public:
       nAtom = atomStorage.nAtom();
       communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
       if (domain.gridRank() == 0) {
-         std::cout << std::endl;
-         std::cout << "Total atom count (post-distribute) = " 
-                   << nAtomAll << std::endl;
+         //std::cout << std::endl;
+         // std::cout << "Total atom count (post-distribute) = " 
+         //          << nAtomAll << std::endl;
          atomCount = nAtomAll;
       }
 
@@ -103,8 +103,8 @@ public:
    void exchangeAtoms()
    {
       // Range of random increments for the atom positions.
-      double range1 = -0.3;
-      double range2 = 0.3;
+      double range1 = -1.0;
+      double range2 =  1.0;
 
       // Add random increments to atom positions
       AtomIterator  atomIter;
@@ -150,7 +150,7 @@ public:
       nAtom = atomStorage.nAtom();
       communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
       if (myRank == 0) {
-         std::cout << "Total atom count (post atom exchange) = " << nAtomAll << std::endl;
+         //std::cout << "Total atom count (post atom exchange) = " << nAtomAll << std::endl;
          TEST_ASSERT(nAtomAll == atomCount);
       }
 
@@ -188,12 +188,7 @@ public:
       // Record number of atoms before exchange
       nAtom = atomStorage.nAtom();
 
-      // Setup ghost exchange
-      double pairCutoff = double(0.3);
-      object().setPairCutoff(pairCutoff);
-
       // Exchange ghosts among processors.
-      // Vector length = boundary.lengths();
       object().exchangeGhosts();
 
       // Check that the number of atoms on each processor is unchanged.
@@ -259,10 +254,6 @@ public:
 
       // Record number of atoms before ghost exchange
       nAtom = atomStorage.nAtom();
-
-      // Set slab width used for ghost exchange.
-      double pairCutoff = double(0.3);
-      object().setPairCutoff(pairCutoff);
 
       // Exchange ghosts among processors.
       // Vector length = boundary.lengths();
@@ -334,10 +325,6 @@ public:
       AtomIterator   atomIter;
       GhostIterator  ghostIter;
       DArray<Vector> ghostPositions;
-
-      // Set slab width used for ghost exchange.
-      double pairCutoff = double(0.5);
-      object().setPairCutoff(pairCutoff);
 
       for (int i=0; i < 3; ++i) {
 

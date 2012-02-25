@@ -411,7 +411,9 @@ namespace DdMd
       for (j = 0; j < N; ++j) {
          unpack(i);
          group.setAtomId(j, i);
+         group.clearAtomPtr(j);
       }
+      group.setPostMark(false);
 
       // Decrement number of groups in recv buffer by 1
       recvSize_--;

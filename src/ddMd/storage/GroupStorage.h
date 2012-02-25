@@ -33,10 +33,14 @@ namespace DdMd
 
    public:
 
-      // Default constructor.
+      /**
+      * Default constructor.
+      */
       GroupStorage();
 
-      // Destructor.
+      /**
+      * Destructor.
+      */
       ~GroupStorage();
 
       /**
@@ -59,19 +63,31 @@ namespace DdMd
       // Mutators
 
       /**
-      * Returns pointer an address available for a new Group.
+      * Returns pointer to an address available for a new Group.
       *
-      * This method returns the address of a Group<N> object that 
-      * can be used for a new local Group<N>. It does not add the 
-      * Group to the set of local Group<N> objects, and so must 
-      * be followed by a call to add() to do this. 
+      * This method returns the address of an empty Group<N> object that
+      * can be used for a new local Group<N>. The pointer that it returns
+      * is popped off the reservoir of unused objects. This method does 
+      * not modify the object id or add the Group to the set of local 
+      * Group<N> objects, and so must be followed by either a call to 
+      * add(), which adds the object to the set, or returnPtr(), which
+      * pushes the new pointer back onto the reservoir.
       *
       * \return address available for a new group.
       */
       Group<N>* newPtr();
 
       /**
-      * Register the most recent new Group.
+      * Reverses the action of newPtr.
+      *
+      * This method pushes the pointer returned by a previous call to
+      * newPtr back onto the reservoir, without adding it to the local
+      * group set.
+      */
+      void returnPtr();
+
+      /**
+      * Adds the most recent new Group to the set of local groups.
       *
       * This method adds the Group that is pointed at by the pointer
       * returned by the most recent call to newPtr(). This method
@@ -86,7 +102,7 @@ namespace DdMd
       * storage.add();
       *
       * \endcode
-      * The Group id must be called before calling add(), but other
+      * The Group id must be set before calling add(), but other
       * properties may be set either before or after calling add().
       *
       * Preconditions:
@@ -103,9 +119,9 @@ namespace DdMd
       *
       * Adds a new Group<N> to the set owned by this method, with a
       * specified global id, and returns a pointer to the new Group.
-      * This method combines a call to newPtr() and add(), and sets
-      * the id of the new Group. Other member variables must be set
-      * after calling this method, using the returned pointer.
+      * This method calls newPtr(), and sets the id of the new group,
+      * and calls add().  Other member variables must be set after
+      * calling this method, using the returned pointer.
       * 
       * \param id  global id for the new Group.
       * \return pointer to the new Group.
@@ -120,6 +136,29 @@ namespace DdMd
       * \param groupPtr pointer to the group to be removed
       */
       void remove(Group<N>* groupPtr); 
+
+      /**
+      * Add to set of incomplete groups.
+      *
+      * \throw Exception if groupPtr is not address of a local Group.
+      *
+      * \param groupPtr pointer to the group to be added to set.
+      */
+      void addIncomplete(Group<N>* groupPtr); 
+
+      /**
+      * Remove from set of incomplete groups.
+      *
+      * \throw Exception if groupPtr is not address of a Group.
+      *
+      * \param groupPtr pointer to the group to be removed
+      */
+      void removeIncomplete(Group<N>* groupPtr); 
+
+      /**
+      * Clear the set of incomplete groups.
+      */
+      void clearIncompleteSet(); 
 
       // Accessors
 
@@ -143,6 +182,20 @@ namespace DdMd
       * \param iterator iterator for all groups.
       */
       void begin(ConstGroupIterator<N>& iterator) const;
+ 
+      /**
+      * Set iterator to beginning of the set of incomplete groups.
+      *
+      * \param iterator iterator for all incomplete groups.
+      */
+      void begin(IncompleteGroupIterator<N>& iterator);
+ 
+      /**
+      * Set const iterator to beginning of the set of incomplete groups.
+      *
+      * \param iterator iterator for all incomplete groups.
+      */
+      void begin(ConstIncompleteGroupIterator<N>& iterator) const;
  
       /**
       * Return current number of groups (excluding ghosts)
@@ -173,6 +226,9 @@ namespace DdMd
 
       // Set of pointers to local groups.
       ArraySet< Group<N> >   groupSet_;
+
+      // Set of pointers to incomplete local groups.
+      ArraySet< Group<N> >   incompleteGroupSet_;
 
       // Stack of pointers to unused local Group objects.
       ArrayStack< Group<N> > reservoir_;
@@ -261,17 +317,19 @@ namespace DdMd
    template <int N>
    void GroupStorage<N>::allocate()
    {
-      int i;
-
       groups_.allocate(capacity_);
       reservoir_.allocate(capacity_);
       groupSet_.allocate(groups_);
-      for (i = capacity_ - 1; i >=0; --i) {
+      incompleteGroupSet_.allocate(groups_);
+      groupPtrs_.allocate(totalCapacity_);
+
+      // Push all groups onto reservoir stack, in reverse order.
+      for (int i = capacity_ - 1; i >=0; --i) {
           reservoir_.push(groups_[i]);
       }
 
-      groupPtrs_.allocate(totalCapacity_);
-      for (i = 0; i < totalCapacity_; ++i) {
+      // Nullify all pointers in groupPtrs_ array.
+      for (int i = 0; i < totalCapacity_; ++i) {
          groupPtrs_[i] = 0;
       }
 
@@ -285,11 +343,26 @@ namespace DdMd
    template <int N>
    Group<N>* GroupStorage<N>::newPtr()
    {
-      // Preconditions
+      // Precondition
       if (newPtr_ != 0) 
          UTIL_THROW("Unregistered newPtr_ still active");
       newPtr_ = &reservoir_.pop();
+      newPtr_->clear();
       return newPtr_;
+   }
+
+   /*
+   * Pushes unused pointer back onto reservoir.
+   */ 
+   template <int N>
+   void GroupStorage<N>::returnPtr()
+   {
+      // Preconditions
+      if (newPtr_ == 0) 
+         UTIL_THROW("No active newPtr_");
+      newPtr_->setId(-1);
+      reservoir_.push(*newPtr_);
+      newPtr_ = 0;
    }
 
    /*
@@ -339,11 +412,48 @@ namespace DdMd
    template <int N>
    void GroupStorage<N>::remove(Group<N>* groupPtr)
    {
+      int groupId = groupPtr->id();
+      if (groupPtrs_[groupId] == 0) {
+         UTIL_THROW("Ptr does not point to local group");
+      }
       reservoir_.push(*groupPtr);
       groupSet_.remove(*groupPtr);
-      groupPtrs_[groupPtr->id()] = 0;
+      groupPtrs_[groupId] = 0;
       groupPtr->setId(-1);
    }
+
+   /*
+   * Add to set of incomplete groups.
+   */
+   template <int N>
+   void GroupStorage<N>::addIncomplete(Group<N>* groupPtr)
+   {
+      int id = groupPtr->id();
+      if (groupPtrs_[id] == 0) {
+         UTIL_THROW("Ptr does not point to local group");
+      }
+      incompleteGroupSet_.append(*groupPtr);
+   }
+
+   /*
+   * Remove from set of incomplete groups.
+   */
+   template <int N>
+   void GroupStorage<N>::removeIncomplete(Group<N>* groupPtr)
+   {
+      int id = groupPtr->id();
+      if (groupPtrs_[id] == 0) {
+         UTIL_THROW("Ptr does not point to local group");
+      }
+      incompleteGroupSet_.remove(*groupPtr);
+   }
+
+   /*
+   * Clear incomplete group set (remove all).
+   */
+   template <int N>
+   void GroupStorage<N>::clearIncompleteSet()
+   {  incompleteGroupSet_.clear(); }
 
    // Accessors
 
@@ -367,6 +477,20 @@ namespace DdMd
    template <int N>
    void GroupStorage<N>::begin(ConstGroupIterator<N>& iterator) const
    {  groupSet_.begin(iterator); }
+ 
+   /*
+   * Set iterator to beginning of the set of incomplete local groups.
+   */
+   template <int N>
+   void GroupStorage<N>::begin(IncompleteGroupIterator<N>& iterator)
+   {  incompleteGroupSet_.begin(iterator); }
+ 
+   /*
+   * Set const iterator to beginning of the set of incomplete local groups.
+   */
+   template <int N>
+   void GroupStorage<N>::begin(ConstIncompleteGroupIterator<N>& iterator) const
+   {  incompleteGroupSet_.begin(iterator); }
  
    /*
    * Check validity of this AtomStorage.

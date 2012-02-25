@@ -2,9 +2,10 @@
 
 int main()
 {
-   #ifdef UTIL_MPI
+  #ifdef UTIL_MPI
    MPI::Init();
    IntVector::commitMpiType();
+   Vector::commitMpiType();
    #endif
 
    TEST_RUNNER(BondDistributorTest) runner;
@@ -15,4 +16,3 @@ int main()
    #endif
 
 }
-

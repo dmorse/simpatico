@@ -272,7 +272,7 @@ namespace DdMd
       pack<int>(atom.id());
       pack<Vector>(atom.position());
       pack<Vector>(atom.velocity());
-      pack<unsigned int>(atom.plan().flags());
+      // pack<unsigned int>(atom.plan().flags());
 
       //Increment number of atoms in send buffer by 1
       ++sendSize_;
@@ -300,8 +300,8 @@ namespace DdMd
       atom.setId(i);
       unpack<Vector>(atom.position());
       unpack<Vector>(atom.velocity());
-      unpack(ui);
-      atom.plan().setFlags(ui);
+      // unpack(ui);
+      // atom.plan().setFlags(ui);
 
       // Decrement number of atoms in recv buffer by 1
       recvSize_--;
@@ -325,7 +325,7 @@ namespace DdMd
       pack<int>(atom.typeId());
       pack<int>(atom.id());
       pack<Vector>(atom.position());
-      pack<unsigned int>(atom.plan().flags());
+      //pack<unsigned int>(atom.plan().flags());
 
       //Increment number of atoms in send buffer by 1
       sendSize_++;
@@ -352,8 +352,8 @@ namespace DdMd
       unpack(i);
       atom.setId(i);
       unpack<Vector>(atom.position());
-      unpack(ui);
-      atom.plan().setFlags(ui);
+      //unpack(ui);
+      //atom.plan().setFlags(ui);
       
       //Decrement number of atoms in recv buffer to be unpacked by 1
       recvSize_--;

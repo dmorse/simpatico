@@ -101,9 +101,9 @@ namespace DdMd
          // Read number of atoms
          file >> Label("nAtom") >> nAtom;
 
-         std::cout << std::endl;
-         std::cout << "Num Atoms to be distributed = " 
-                   << nAtom << std::endl;
+         //std::cout << std::endl;
+         //std::cout << "Num Atoms to be distributed = " 
+         //          << nAtom << std::endl;
 
          int totalAtomCapacity = atomStoragePtr_->totalAtomCapacity();
 
@@ -175,9 +175,9 @@ namespace DdMd
          // Read number of bonds
          file >> Label("nBond") >> nBond;
 
-         std::cout << std::endl;
-         std::cout << "Num Bonds to be distributed = " 
-                   << nBond << std::endl;
+         //std::cout << std::endl;
+         //std::cout << "Num Bonds to be distributed = " 
+         //          << nBond << std::endl;
 
          #if UTIL_MPI
          //Initialize the send buffer.

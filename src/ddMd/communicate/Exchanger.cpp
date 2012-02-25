@@ -99,12 +99,14 @@ namespace DdMd
       AtomIterator atomIter;
       GhostIterator ghostIter;
       GroupIterator<2> bondIter;
-      Atom* ptr;
+      Atom* atomPtr;
       int i, j, jc, k, source, dest, nSend;
       int myRank = domainPtr_->gridRank();
       int shift;
+      int nLocal;
       bool choose;
 
+      #if 0
       // Calculate atom communication plans for all local atoms
       atomStoragePtr_->begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
@@ -160,20 +162,31 @@ namespace DdMd
    
             } // end loop j
          } // loop i
-   
-      } // end atom loop, end compute plan
 
-      #if 0
-      for (bondStoragePtr_->begin(bondIter); !bondIter.atEnd(); ++bondIter) {
-         for (i = 0; i < 2; ++i) {
-            ptr = atomStoragePtr_->find(bondIter->atomId(i));
-            bondIter->setOwnerRank(i, ptr->ownerRank());
-         }
-      }
+      } // end atom loop, end compute plan
       #endif
 
+      // Clear pointers to ghosts and check local pointers in all bonds.
+      int atomId;
+      bondStoragePtr_->begin(bondIter);
+      for ( ; !bondIter.atEnd(); ++bondIter) {
+         for (k = 0; k < 2; ++k) {
+            atomPtr = bondIter->atomPtr(k);
+            if (atomPtr != 0) {
+               if (atomPtr->isGhost()) {
+                  bondIter->clearAtomPtr(k);
+               } else {
+                  atomId = atomPtr->id();
+                  if (atomPtr != atomStoragePtr_->find(atomId)) {
+                     UTIL_THROW("Error in atom pointer in bond");
+                  }
+               }
+            }
+         }
+         bondIter->setPostMark(false);
+      }
+
       atomStoragePtr_->clearGhosts();
-      // std::cout << "Ghosts cleared on " << myRank << std::endl; 
 
       // Cartesian directions
       for (i = 0; i < Dimension; ++i) {
@@ -207,12 +220,14 @@ namespace DdMd
             atomStoragePtr_->begin(atomIter);
             for ( ; !atomIter.atEnd(); ++atomIter) {
 
+               atomIter->setPostMark(false);
+
                if (j == 0) {
                   choose = (atomIter->position()[i] < bound);
                } else {
                   choose = (atomIter->position()[i] > bound);
                }
-               assert(choose == atomIter->plan().testExchange(i, j));
+               //assert(choose == atomIter->plan().testExchange(i, j));
 
                if (choose) {
 
@@ -220,6 +235,7 @@ namespace DdMd
 
                      sendArray_(i, j).append(*atomIter);
                      bufferPtr_->packAtom(*atomIter);
+                     atomIter->setPostMark(true);
 
                   } else {
 
@@ -234,18 +250,38 @@ namespace DdMd
                }
 
             } // end atom loop
-            //std::cout << "Atoms packed for " 
-            //          << i << "  " << j 
-            //          << " on proc " << myRank << std::endl; 
 
             // Send and receive only if dimension(i) > 1
             if (domainPtr_->grid().dimension(i) > 1) {
 
+               // End atom send block
                bufferPtr_->endSendBlock();
 
+               // Pack all bonds that contain one or more postmarked atoms.
+               bufferPtr_->beginSendBlock(Buffer::GROUP, 2);
+               bondStoragePtr_->begin(bondIter);
+               for ( ; !bondIter.atEnd(); ++bondIter) {
+                  bondIter->setPostMark(false);
+                  for (k = 0; k < 2; ++k) {
+                     atomPtr = bondIter->atomPtr(k);
+                     if (atomPtr != 0) {
+                        if (atomPtr->postMark()) {
+                           bondIter->setPostMark(true);
+                           break;
+                        }
+                     }
+                  }
+                  if (bondIter->postMark()) {
+                     bufferPtr_->packGroup<2>(*bondIter);
+                     bondIter->setPostMark(true);
+                  }
+               }
+               bufferPtr_->endSendBlock();
+
+               // Removal cannot be done within the above loops over atoms and 
+               // groups because removal invalidates the iterator.
+
                // Remove chosen atoms from atomStorage
-               // This cannot be done within the above loop over atoms because
-               // removal invalidates the AtomIterator.
                nSend = sendArray_(i, j).size();
                for (k = 0; k < nSend; ++k) {
                   atomStoragePtr_->removeAtom(&sendArray_(i, j)[k]);
@@ -253,47 +289,54 @@ namespace DdMd
 
                // Send to processor dest and receive from processor source
                bufferPtr_->sendRecv(domainPtr_->communicator(), source, dest);
-               //std::cout << "Finished sendRecv for " << i << "  " << j << " on proc " << myRank << std::endl; 
 
-               // Unpack atoms from receive buffer into atomStorage
+               // Unpack atoms into atomStorage
                bufferPtr_->beginRecvBlock();
                while (bufferPtr_->recvSize() > 0) {
-                  ptr = atomStoragePtr_->newAtomPtr();
-                  bufferPtr_->unpackAtom(*ptr);
+                  atomPtr = atomStoragePtr_->newAtomPtr();
+                  bufferPtr_->unpackAtom(*atomPtr);
                   if (shift) {
-                     ptr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += shift * lengths[i];
                   }
-                  assert(ptr->position()[i] > domainPtr_->domainBound(i, 0));
-                  assert(ptr->position()[i] < domainPtr_->domainBound(i, 1));
+                  assert(atomPtr->position()[i] > domainPtr_->domainBound(i, 0));
+                  assert(atomPtr->position()[i] < domainPtr_->domainBound(i, 1));
                   atomStoragePtr_->addNewAtom();
                }
+               assert(bufferPtr_->recvSize() == 0);
+
+               // Unpack bonds into bondStorage.
+               Group<2>* bondPtr;
+               bufferPtr_->beginRecvBlock();
+               while (bufferPtr_->recvSize() > 0) {
+                  bondPtr = bondStoragePtr_->newPtr();
+                  bufferPtr_->unpackGroup<2>(*bondPtr);
+                  if (bondStoragePtr_->find(bondPtr->id())) {
+                     bondStoragePtr_->returnPtr();
+                  } else {
+                     bondStoragePtr_->add();
+                  }
+               }
+               assert(bufferPtr_->recvSize() == 0);
 
             }
          }
       }
 
-      #if 0
-      /*
-      // Add all local atoms to all groups
-      // Identify incomplete groups
-      groupStoragePtr_->begin(groupIter); 
-      for ( ; groupIter->notEnd(); ++groupIter) {
-         nLocal = 0;
-         for each atom {
-            if (atom is local) {
-               if pointer in group is null {
-                  find atom in atomStorage
-                  assert (atom is found and local)
-                  ste atom ptr in Group
-                  ++nLocal;
-               }
+      // Find all atoms for all bonds
+      bondStoragePtr_->begin(bondIter); 
+      for ( ; bondIter.notEnd(); ++bondIter) {
+         for (k = 0; k < 2; ++k) {
+            atomId = bondIter->atomId(k);
+            atomPtr = atomStoragePtr_->find(atomId);
+            if (atomPtr) {
+               bondIter->setAtomPtr(k, atomPtr);
+            } else {
+               bondIter->clearAtomPtr(k);
             }
-         }
-         if (nLocal < N) {
-           add to incomplete group list
          }
       }
  
+      #if 0
       // At this point:
       // All atoms on correct processor
       // No ghost atoms exist
@@ -322,10 +365,10 @@ namespace DdMd
       double        bound, inner, coord;
       AtomIterator  localIter;
       GhostIterator ghostIter;
-      Atom*         ptr;
-      int           i, j, source, dest;
-      bool          choose;
-      int           shift;
+      Atom* atomPtr;
+      int i, j, source, dest, shift;
+      int myRank = domainPtr_->gridRank();
+      bool choose;
 
       // Check that all ghosts are cleared upon entry.
       if (atomStoragePtr_->nGhost() > 0) {
@@ -374,7 +417,30 @@ namespace DdMd
                   choose = (coord > inner);
                }
 
-               //assert(choose == localIter->plan().testGhost(i, j));
+               #if 0
+               assert(choose == localIter->plan().testGhost(i, j));
+               if (choose != localIter->plan().testGhost(i, j)) {
+                  std::cout << "Proc " << myRank << "  "
+                            << "atom " << localIter->id() << "  "
+                            << "Dir  " << i << "  " << j << "  "
+                            << localIter->position() << "  ";
+                  for (int a= 0; a < Dimension; ++a) {
+                     for (int b = 0; b < 2;  ++b) {
+                        std::cout << localIter->plan().testExchange(a, b);
+                     }
+                  }
+                  std::cout << "  ";
+                  for (int a= 0; a < Dimension; ++a) {
+                     for (int b = 0; b < 2;  ++b) {
+                        std::cout << localIter->plan().testGhost(a, b);
+                     }
+                  }
+                  std::cout << "  " << choose << "  " << localIter->plan().testGhost(i, j);
+                  std::cout << std::endl;
+                  
+                  UTIL_THROW("Assert failed in exchange ghosts");
+               }
+               #endif
 
                if (choose) {
 
@@ -388,22 +454,22 @@ namespace DdMd
                   } else {  // if grid dimension == 1
 
                      // Make a ghost copy of the local atom on this processor
-                     ptr = atomStoragePtr_->newGhostPtr();
-                     recvArray_(i, j).append(*ptr);
-                     ptr->position() = localIter->position();
-                     ptr->setTypeId(localIter->typeId());
-                     ptr->setId(localIter->id());
+                     atomPtr = atomStoragePtr_->newGhostPtr();
+                     recvArray_(i, j).append(*atomPtr);
+                     atomPtr->position() = localIter->position();
+                     atomPtr->setTypeId(localIter->typeId());
+                     atomPtr->setId(localIter->id());
                      if (shift) {
-                        ptr->position()[i] += shift * lengths[i];
+                        atomPtr->position()[i] += shift * lengths[i];
                      }
                      atomStoragePtr_->addNewGhost();
 
                      #ifdef UTIL_DEBUG
                      // Validate shifted positions
                      if (j == 0) {
-                        assert(ptr->position()[i] > domainPtr_->domainBound(i, 1));
+                        assert(atomPtr->position()[i] > domainPtr_->domainBound(i, 1));
                      } else {
-                        assert(ptr->position()[i] < domainPtr_->domainBound(i, 0));
+                        assert(atomPtr->position()[i] < domainPtr_->domainBound(i, 0));
                      }
                      #endif
 
@@ -437,22 +503,22 @@ namespace DdMd
                   } else {  // if grid dimension == 1
 
                      // Make another ghost copy on the same processor
-                     ptr = atomStoragePtr_->newGhostPtr();
-                     recvArray_(i, j).append(*ptr);
-                     ptr->position() = ghostIter->position();
-                     ptr->setTypeId(ghostIter->typeId());
-                     ptr->setId(ghostIter->id());
+                     atomPtr = atomStoragePtr_->newGhostPtr();
+                     recvArray_(i, j).append(*atomPtr);
+                     atomPtr->position() = ghostIter->position();
+                     atomPtr->setTypeId(ghostIter->typeId());
+                     atomPtr->setId(ghostIter->id());
                      if (shift) {
-                        ptr->position()[i] += shift * lengths[i];
+                        atomPtr->position()[i] += shift * lengths[i];
                      }
                      atomStoragePtr_->addNewGhost();
 
                      #ifdef UTIL_DEBUG
                      // Validate shifted position
                      if (j == 0) {
-                        assert(ptr->position()[i] > domainPtr_->domainBound(i, 1));
+                        assert(atomPtr->position()[i] > domainPtr_->domainBound(i, 1));
                      } else {
-                        assert(ptr->position()[i] < domainPtr_->domainBound(i, 0));
+                        assert(atomPtr->position()[i] < domainPtr_->domainBound(i, 0));
                      }
                      #endif
 
@@ -475,20 +541,20 @@ namespace DdMd
                bufferPtr_->beginRecvBlock();
                while (bufferPtr_->recvSize() > 0) {
 
-                  ptr = atomStoragePtr_->newGhostPtr();
-                  bufferPtr_->unpackGhost(*ptr);
+                  atomPtr = atomStoragePtr_->newGhostPtr();
+                  bufferPtr_->unpackGhost(*atomPtr);
                   if (shift) {
-                     ptr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += shift * lengths[i];
                   }
-                  recvArray_(i, j).append(*ptr);
+                  recvArray_(i, j).append(*atomPtr);
                   atomStoragePtr_->addNewGhost();
 
                   #ifdef UTIL_DEBUG
                   // Validate ghost coordinates on receiving processor.
                   if (j == 0) {
-                     assert(ptr->position()[i] > domainPtr_->domainBound(i, 1));
+                     assert(atomPtr->position()[i] > domainPtr_->domainBound(i, 1));
                   } else {
-                     assert(ptr->position()[i] < domainPtr_->domainBound(i, 0));
+                     assert(atomPtr->position()[i] < domainPtr_->domainBound(i, 0));
                   }
                   #endif
 
@@ -510,7 +576,7 @@ namespace DdMd
    void Exchanger::updateGhosts()
    {
       Vector lengths = boundaryPtr_->lengths();
-      Atom*  ptr;
+      Atom*  atomPtr;
       int    i, j, k, source, dest, size, shift;
 
       for (i = 0; i < Dimension; ++i) {
@@ -539,10 +605,10 @@ namespace DdMd
                bufferPtr_->beginRecvBlock();
                size = recvArray_(i, j).size();
                for (k = 0; k < size; ++k) {
-                  ptr = &recvArray_(i, j)[k];
-                  bufferPtr_->unpackGhost(*ptr);
+                  atomPtr = &recvArray_(i, j)[k];
+                  bufferPtr_->unpackGhost(*atomPtr);
                   if (shift) {
-                     ptr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += shift * lengths[i];
                   }
                }
 
@@ -554,10 +620,10 @@ namespace DdMd
                size = sendArray_(i, j).size();
                assert(size == recvArray_(i, j).size());
                for (k = 0; k < size; ++k) {
-                  ptr = &recvArray_(i, j)[k];
-                  ptr->position() = sendArray_(i, j)[k].position();
+                  atomPtr = &recvArray_(i, j)[k];
+                  atomPtr->position() = sendArray_(i, j)[k].position();
                   if (shift) {
-                     ptr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += shift * lengths[i];
                   }
                }
 
