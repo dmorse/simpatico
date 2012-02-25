@@ -23,5 +23,12 @@ namespace DdMd
    class GroupIterator : public PArrayIterator< Group<N> >
    {};
 
+   /**
+   * Iterator for all incomplete Group<N> objects owned by this processor.
+   */
+   template <int N>
+   class IncompleteGroupIterator : public PArrayIterator< Group<N> >
+   {};
+
 }
 #endif

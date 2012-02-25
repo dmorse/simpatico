@@ -450,7 +450,7 @@ namespace DdMd
             //group.setAtomOwnerRankd(i, ptr->ownerRank());
             ++nAtom;
          } else {
-            group.setAtomPtr(i, 0);
+            group.clearAtomPtr(i);
             //group.setAtomOwnerRankd(i, -1);
          }
       }

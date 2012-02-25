@@ -17,10 +17,17 @@ namespace DdMd
    template <int N> class Group; 
 
    /**
-   * Iterator for all atoms owned by a System.
+   * Iterator for all Group<N> objects owned by a System.
    */
    template <int N>
    class ConstGroupIterator : public ConstPArrayIterator< Group<N> >
+   {};
+
+   /**
+   * Iterator for all Group<N> objects owned by a System.
+   */
+   template <int N>
+   class ConstIncompleteGroupIterator : public ConstPArrayIterator< Group<N> >
    {};
 
 }

@@ -287,7 +287,6 @@ namespace DdMd
 
          Atom* ptr  = storage.newAtomPtr();
          *ptr = *newPtr_;
-         ptr->setOwnerRank(rank);
          storage.addNewAtom();
 
          reservoir_.push(*newPtr_); 
@@ -413,7 +412,6 @@ namespace DdMd
             if (domainPtr_->ownerRank(ptr->position()) != rank) {
                UTIL_THROW("Error: Atom on wrong processor");
             }
-            ptr->setOwnerRank(rank);
          }
 
       }

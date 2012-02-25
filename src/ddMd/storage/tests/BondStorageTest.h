@@ -86,8 +86,6 @@ void BondStorageTest::testAddRemove()
    Bond* ptr35 = object().add(35);
    Bond* ptr18 = object().add(18);
 
-   #if 0
-   #endif
    TEST_ASSERT(object().find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
    TEST_ASSERT(object().find(35) == ptr35);
@@ -96,6 +94,19 @@ void BondStorageTest::testAddRemove()
    TEST_ASSERT(ptr18->id() == 18);
    TEST_ASSERT(object().size() == 3);
    TEST_ASSERT(object().isValid());
+
+   Bond* newPtr = object().newPtr();
+   object().returnPtr();
+
+   TEST_ASSERT(object().find(53) == ptr53);
+   TEST_ASSERT(ptr53->id() == 53);
+   TEST_ASSERT(object().find(35) == ptr35);
+   TEST_ASSERT(ptr35->id() == 35);
+   TEST_ASSERT(object().find(18) == ptr18);
+   TEST_ASSERT(ptr18->id() == 18);
+   TEST_ASSERT(object().size() == 3);
+   TEST_ASSERT(object().isValid());
+
 
    object().remove(ptr53);
    TEST_ASSERT(object().find(53) == 0);

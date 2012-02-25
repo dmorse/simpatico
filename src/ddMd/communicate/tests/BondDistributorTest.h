@@ -9,6 +9,7 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/storage/BondStorage.h>
+#include <util/param/Label.h>
 #include <util/space/Grid.h>
 #include <util/mpi/MpiLogger.h>
 
@@ -71,22 +72,9 @@ public:
       #endif
 
       domain.readParam(file());
-
-      // Allocate memory for received atoms on the local processor
-      // Maximum total number of atoms received on one processor
-      // int atomCapacity = 100; 
-      // atomStorage.setParam(atomCapacity, atomCapacity, 200);
       atomStorage.readParam(file());
       bondStorage.readParam(file());
-
-      // Initialize buffer
-      //int sendsize = 10;      
-      //buffer.allocate(sendsize , sendsize);
       buffer.readParam(file());
-
-      // Initialize AtomDistributor atomDistributor
-      // int cacheCapacity = 35; 
-      // atomDistributor.setParam(cacheCapacity);
       atomDistributor.readParam(file());
       bondDistributor.readParam(file());
 
@@ -102,32 +90,35 @@ public:
 
       // If I am the master processor.
       if (myRank == 0) {
-         int i;
-         Vector  pos;
-         Atom*   ptr;
-
          configFile.open("in/config");
+         configFile >> Label("BOUNDARY");
+         configFile >> boundary;
+      }
+      bcast(domain.communicator(), boundary, 0);
+
+      if (myRank == 0) {
+
          // Read Max number of atoms to be distributed by the master processor
-         configFile >> atomCount;
+         configFile >> Label("ATOMS");
+         configFile >> Label("nAtom") >> atomCount;
 
          std::cout << std::endl;
          std::cout << "Num Atoms to be distributed = " << atomCount << std::endl;
 
-         #if UTIL_MPI
          // Initialize the sendbuffer.
          atomDistributor.initSendBuffer();
-         #endif
 
          // Fill the atom atomDistributors
-         for(i = 0; i < atomCount; ++i) {
+         Atom*   ptr;
+         int     id, typeId;
+         for(int i = 0; i < atomCount; ++i) {
             ptr = atomDistributor.newAtomPtr();
-            ptr->setId(i);
-            ptr->setTypeId(0);
 
-            //Assign a random position within the boundary for the atom.
+            configFile >> id >> typeId;
+            ptr->setId(id);
+            ptr->setTypeId(typeId);
             configFile >> ptr->position();
-
-            //Use position vector for velocity for now
+            configFile >> ptr->velocity();
             ptr->velocity() = ptr->position();
 
             atomDistributor.addAtom(atomStorage);
@@ -151,7 +142,6 @@ public:
          TEST_ASSERT(domain.isInDomain(iter->position()));
       }
 
-
       #if 0
       #ifdef UTIL_MPI
       MpiLogger logger;
@@ -161,6 +151,7 @@ public:
       logger.end();
       #endif 
       #endif 
+
 
       // Check that all atoms are accounted for after distribution.
       #ifdef UTIL_MPI
@@ -178,13 +169,9 @@ public:
       // Read bonds
       if (myRank == 0) {
 
-         int i;
-         Group<2>* ptr;
-         //Group<2>  bond;
-         //ptr = &bond;
-
          // Read Max number of atoms to be distributed by the master processor
-         configFile >> bondCount;
+         configFile >> Label("BONDS");
+         configFile >> Label("nBond") >> bondCount;
 
          std::cout << std::endl;
          std::cout << "Num Bonds to be distributed = " << bondCount << std::endl;
@@ -195,24 +182,13 @@ public:
          #endif
 
          // Fill the atom atomDistributors
+         int i;
+         Group<2>* ptr;
          for(i = 0; i < bondCount; ++i) {
             ptr = bondDistributor.newPtr();
-
-            //Assign a random position within the boundary for the atom.
             configFile >> *ptr;
-
-            #if 0
-            std::cout << "   id "     << ptr->id()
-                      << ",  typeId " << ptr->typeId() 
-                      << ",  atom0 " << ptr->atomId(0) 
-                      << ",  atom1 " << ptr->atomId(1) 
-                      << std::endl;
-            #endif
-       
             bondDistributor.add();
-
          }
-         file().close();
 
          // Send any bonds not sent previously.
          bondDistributor.send();
@@ -222,6 +198,8 @@ public:
          bondDistributor.receive();
 
       }
+      #if 0
+      #endif
 
    }
 };

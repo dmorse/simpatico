@@ -7,6 +7,10 @@ System{
     ghostCapacity     20000
     totalAtomCapacity 20000
   }
+  BondStorage{
+    capacity        8000
+    totalCapacity  20000
+  }
   nAtomType           1
   LJPair{
     epsilon         1.0
@@ -29,7 +33,8 @@ System{
     ghostCapacity     4000
   }
   ConfigIo{
-    cacheCapacity    2000
+    atomCacheCapacity 2000
+    bondCacheCapacity 2000
   }
 }
 

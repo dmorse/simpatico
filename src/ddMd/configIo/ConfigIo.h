@@ -111,8 +111,6 @@ namespace DdMd
 
       BondDistributor  bondDistributor_;
 
-      DArray<int>      ownerRanks_;
-
       Domain*      domainPtr_;
 
       Boundary*    boundaryPtr_;

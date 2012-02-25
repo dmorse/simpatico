@@ -57,9 +57,9 @@ public:
 
       // Open parameter file
       #ifdef UTIL_MPI
-         openFile("in/AtomDistributor.213");
+      openFile("in/AtomDistributor.213");
       #else
-         openFile("in/AtomDistributor.111");
+      openFile("in/AtomDistributor.111");
       #endif
 
       domain.readParam(file());
@@ -141,11 +141,11 @@ public:
       }
 
       #ifdef UTIL_MPI
-         MpiLogger logger;
-         logger.begin();
-         std::cout << "Processor: " << myRank
-                   << ", recvCount = " << recvCount << std::endl;
-         logger.end();
+      MpiLogger logger;
+      logger.begin();
+      std::cout << "Processor: " << myRank
+                << ", recvCount = " << recvCount << std::endl;
+      logger.end();
       #endif 
 
       // Check that all atoms are accounted for after distribution.

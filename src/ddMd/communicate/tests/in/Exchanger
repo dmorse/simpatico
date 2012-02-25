@@ -14,11 +14,9 @@ Buffer{
   atomCapacity    100
   ghostCapacity   100
 }
-AtomDistributor{
-  cacheCapacity   35
-}
-BondDistributor{
-  cacheCapacity   35
+ConfigIo{
+  atomCacheCapacity   35
+  bondCacheCapacity   35
 }
 Random{
    seed 8762018674

@@ -101,12 +101,11 @@ namespace DdMd
          // Read number of atoms
          file >> Label("nAtom") >> nAtom;
 
-         std::cout << std::endl;
-         std::cout << "Num Atoms to be distributed = " 
-                   << nAtom << std::endl;
+         //std::cout << std::endl;
+         //std::cout << "Num Atoms to be distributed = " 
+         //          << nAtom << std::endl;
 
          int totalAtomCapacity = atomStoragePtr_->totalAtomCapacity();
-         ownerRanks_.allocate(totalAtomCapacity);
 
          #if UTIL_MPI
          //Initialize the send buffer.
@@ -134,8 +133,6 @@ namespace DdMd
 
             // Add atom to list for sending.
             rank = atomDistributor().addAtom(atomStorage());
-
-            ownerRanks_[id] = rank;
 
          }
 
@@ -178,9 +175,9 @@ namespace DdMd
          // Read number of bonds
          file >> Label("nBond") >> nBond;
 
-         std::cout << std::endl;
-         std::cout << "Num Bonds to be distributed = " 
-                   << nBond << std::endl;
+         //std::cout << std::endl;
+         //std::cout << "Num Bonds to be distributed = " 
+         //          << nBond << std::endl;
 
          #if UTIL_MPI
          //Initialize the send buffer.
@@ -196,9 +193,7 @@ namespace DdMd
             file >> *bondPtr;
             for (j = 0; j < 2; ++j) {
                k = bondPtr->atomId(j);
-               bondPtr->setAtomOwnerRank(j, ownerRanks_[k]);
             }
-            
             bondDistributor().add();
          }
 
@@ -214,7 +209,6 @@ namespace DdMd
 
       if (myRank == 0) {
          file.close();
-         ownerRanks_.deallocate();
       }
 
    }

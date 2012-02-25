@@ -71,17 +71,24 @@ void AtomArrayTest::testSubscript()
    f[1] =  0.2;
    f[2] = -8.5;
 
+   TEST_ASSERT(!a[1].isGhost());
+   TEST_ASSERT(!a[1].postMark());
+
    a[1].setId(1);
    a[1].setTypeId(5);
    a[1].position() = r;
    a[1].velocity() = v;
    a[1].force()    = f;
+   a[1].setIsGhost(true);
+   a[1].setPostMark(true);
 
    TEST_ASSERT(a[1].id() == 1 );
    TEST_ASSERT(a[1].typeId() == 5 );
    TEST_ASSERT(a[1].position() == r );
    TEST_ASSERT(a[1].velocity() == v );
    TEST_ASSERT(a[1].force()    == f );
+   TEST_ASSERT(a[1].isGhost());
+   TEST_ASSERT(a[1].postMark());
 
    a[2].setId(1);
    a[2].setTypeId(5);
