@@ -116,6 +116,8 @@ namespace McMd
 
    void BennettsMethod::sample(long iStep) 
    {
+      if (!isAtInterval(iStep)) return;
+
       int myPort, upperPort;
       MPI::Request requestFermi[2];
       MPI::Status  status;
