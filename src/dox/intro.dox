@@ -2,35 +2,10 @@
 
 Simpatico is a package of software for Monte Carlo (MC) and molecular 
 dynamics (MD) simulations of molecular and polymer liquids. It is still 
-relatively young, and lacks some of the features found in some more
-mature molecular dynamics packages (such as Lammps, NAMD, Gromacs,
-and Espresso) and a smaller number of MC packages (e.g., Towhee). 
-The package is characterized by the following basic goals and design
-decisions:
-
-- Object oriented C++: The code is written in idiomatic, object 
-  oriented C++, with well encapsulated data structures. It is
-  written in standard ANSI 1998 C++, and compiles on any modern 
-  C++ compiler.
-
-- Well documented: The package is documented with extensive 
-  source code comments, and by additional web pages (such as this 
-  one) that explain usage and design. Source code documentation 
-  blocks are provided for every class and function, which are 
-  compiled into an html programmers manual using the doxygen 
-  documentation utility. 
-
-- Extensible: The package is designed to allow users to add new
-  algorithms for almost every aspect of a simulation, using C++
-  inheritance, without modifying the original source code. Most 
-  elements of a simulation, including Monte Carlo moves, molecular 
-  dynamics integrators, potential energies, configuration file 
-  formats, molecular species, and data analysis algorithms are 
-  represented by exensible abstract base classes.
-
-- Efficient: Simpatico does not sacrifice efficiency for flexibility, 
-  and is designed to be competitive as a tool for computationally 
-  demanding research projects. 
+relativley young, and lacks some of the features found in some more
+mature molecular dynamics packages (such as Lammps, NAMD, Gromacs, and 
+Espresso) and in a smaller number of MC packages (e.g., Towhee).  The 
+package is characterized by the following goals and design decisions:
 
 - Monte Carlo and Molecular Dynamics: Simpatico provides efficient
   implementations of both molecular Monte Carlo and molecular dynamics 
@@ -40,6 +15,10 @@ decisions:
   simulation, Simpatico is particularly suitable for hybrid simulation 
   tecnniques such as hybrid Monte Carlo, in which short MD simulations 
   are used as proposed Monte Carlo moves. 
+
+- Efficient: The design does not sacrifice efficiency for flexibility, 
+  and is designed to be competitive as a tool for computationally 
+  demanding research projects. 
 
 - Perturbation Theory and Replica Exchange: Simpatico provides an
   extensible interface for free energy perturbation, and a parallel 
@@ -54,30 +33,58 @@ decisions:
   are used for simulation and post-processing. The package contains
   many classes to measure standard observables. 
 
-- File driven: Simulations are controlled by a pair of simple text 
-  files. A simulations is initialized by reading a parameter file 
-  that specifies choice of potential energies, simulation algorithms, 
-  and data analysis algorithms available for use in a particular 
-  simulation. After initialization, the progress of a simulation 
-  is controlled by a simple command script. The parameter file 
-  uses a hierarchical format that is compatible with strict data 
-  encapsulation (each class reads an associated block within the 
-  parameter file, and initializes its own internal state), and 
-  that is, as much as possible, self-documenting. 
+- File driven initialization: Each Simpatico simulation begins with 
+  an initialization stage that is controlled by a parameter file. 
+  The parameter file specifies choice of potential energy functions, 
+  simulation algorithms, data analysis algorithms, and some memory 
+  block sizes available for use in a particular simulation.  Each 
+  object required to construct a simulation reads an associated block 
+  within the parameter file, from which it reads values of parameters
+  needed to initializes its own internal state. The file format, is 
+  as much as possible, self-documenting: Each parameter is preceded 
+  by a label that corresponds to the name of a member variable of 
+  the associated object, and the meaning of each class variable is 
+  documented in the class documentation.
 
-- Pure C++: The package was not designed to rely on the use of a 
-  separate scripting language such as python to control program 
-  flow, an approach taken in several other C and C++ simulation 
-  projects (Hoomd-Blue, Espresso, and Espresso++). The current
-  design requires that a simulation be initialized by reading a 
-  parameter file, but does not preclude the later addition of a 
-  python interface as an alternative to the use of command script 
-  for program control (which we are considering).
+- File driven program flow: After initialization, the progress of a 
+  simulation is controlled by a separate command script file, with 
+  one command per line.
+
+- Pure C++: Simpatico does not rely on the use of a separate scripting 
+  language such as python or Tcl to control either initialization or 
+  program flow, an approach taken in several other C and C++ simulation 
+  projects (Hoomd-Blue, Espresso, and Espresso++). The design requires
+  the use of a parameter file for initialization, but does not preclude 
+  the later introduction of a python interface as an alternative to the 
+  use of command script for program control (which we are considering).
+
+- Object oriented: The code is written in idiomatic, object oriented 
+  C++, with well encapsulated data structures. It is written in standard 
+  ANSI 1998 C++, and compiles on any modern C++ compiler.
+
+- Extensible: The design allows users to add new algorithms for almost 
+  every aspect of a simulation, using C++ inheritance, without modifying 
+  the original source code. Most elements of a simulation, including 
+  Monte Carlo moves, molecular dynamics integrators, potential energies, 
+  configuration file formats, molecular species, and data analysis 
+  algorithms are represented by exensible abstract base classes.
+
+- Documented: The package is documented with extensive source code 
+  comments, class documentation, and additional web pages (such as this 
+  one) that explain overall usage and design. Source code documentation 
+  for every class and function are compiled into an html programmers 
+  manual using the doxygen documentation utility. 
+
+- Tests and debuggable: Unit tests are provided to test most classes
+  in isolation, in addition to examples that test the program as a 
+  whole. Most classes also contain internal sanity checks, some of 
+  which (the most expensive) can included or excluded by a preprocessor 
+  macro. Meaningful error messages are provided for all detected errors.
 
 - Extensible to open ensembles: Data structures in Simpatico were 
   designed to allow eventual extension to grand-canonical and Gibbs 
   ensembles, which require random insertion and deletion of 
-  molecules during a simulation. The required simulation algorithms 
+  molecules during a simulation. The required MC move algorithms 
   have not, however, been implemented.
 
 Navigation:

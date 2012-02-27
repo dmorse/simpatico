@@ -38,11 +38,9 @@ public:
       Buffer   buffer;
       AtomStorage  atomStorage;
       BondStorage  bondStorage;
-      AtomDistributor  atomDistributor;
-      BondDistributor  bondDistributor;
       std::ifstream configFile;
 
-      // Set connections between atomDistributors
+      // Set connections between objects
       domain.setBoundary(boundary);
       object().associate(domain, boundary, atomStorage, bondStorage, buffer);
 

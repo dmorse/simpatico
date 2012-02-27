@@ -40,20 +40,38 @@ void GroupTest::testSetGet()
 {
    printMethod(TEST_FUNC);
    Group<2> group;
+   AtomArray atoms;
+   atoms.allocate(5);
+
+   TEST_ASSERT(group.nPtr() == 0);
+
    group.setId(3);
    group.setTypeId(4);
    group.setAtomId(0, 34);
    group.setAtomId(1, 35);
-   group.setAtomOwnerRank(0, 2);
-   group.setAtomOwnerRank(1, 5);
+   group.setAtomPtr(1, &atoms[3]);
 
    TEST_ASSERT(group.id() == 3);
    TEST_ASSERT(group.typeId() == 4);
    TEST_ASSERT(group.atomId(0) == 34);
    TEST_ASSERT(group.atomId(1) == 35);
-   TEST_ASSERT(group.atomOwnerRank(0) == 2);
-   TEST_ASSERT(group.atomOwnerRank(0) == 5);
+   TEST_ASSERT(group.atomPtr(0) == 0);
+   TEST_ASSERT(group.atomPtr(1) == &atoms[3]);
+   TEST_ASSERT(group.nPtr() == 1);
 
+   group.clearAtomPtr(1);
+   TEST_ASSERT(group.nPtr() == 0);
+   TEST_ASSERT(group.atomPtr(0) == 0);
+   TEST_ASSERT(group.atomPtr(1) == 0);
+
+   group.setAtomPtr(0, &atoms[3]);
+   group.setAtomPtr(1, &atoms[4]);
+   TEST_ASSERT(group.nPtr() == 2);
+
+   group.clearAtomPtr(0);
+   TEST_ASSERT(group.atomPtr(0) == 0);
+   TEST_ASSERT(group.atomPtr(1) == &atoms[4]);
+   TEST_ASSERT(group.nPtr() == 1);
 } 
 
 void GroupTest::testFileIo()

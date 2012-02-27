@@ -15,7 +15,7 @@ Buffer{
   ghostCapacity   10
 }
 AtomDistributor{
-  cacheCapacity   35 
+  cacheCapacity   35
 }
 BondDistributor{
   cacheCapacity   35 

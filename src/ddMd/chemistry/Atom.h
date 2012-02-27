@@ -8,6 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <ddMd/communicate/Plan.h>
 //#include "Mask.h"
 #include <util/space/Vector.h>
 
@@ -49,13 +50,6 @@ namespace DdMd
       void setTypeId(int Id);
 
       /**
-      * Set rank of the processor that owns this Atom.
-      *  
-      * \param ownerRank rank of parent processor.
-      */
-      void setOwnerRank(int ownerRank);
-
-      /**
       * Set the atomic type index.
       *  
       * \param isGhost true if this is a ghost, or false if local.
@@ -63,11 +57,11 @@ namespace DdMd
       void setIsGhost(bool isGhost);
 
       /**
-      * Set or unset send marker.
+      * Set the postMark.
       *  
-      * \param sendMark true to mark for sending, false otherwise.
+      * \param postMark true if this is marked for sending, false otherwise.
       */
-      void setSendMark(bool sendMark);
+      void setPostMark(bool postMark);
 
       //@}
       /// \name Accessors (non-const references)
@@ -88,24 +82,25 @@ namespace DdMd
       */
       Vector& force();
 
+      #if 0
+      /**
+      * Get communication plan by reference.
+      */
+      Plan& plan();
+      #endif
+
       //@}
       /// \name Accessors 
       //@{
 
       /// Get unique global index.
-      int   id() const;
+      int  id() const;
 
       /// Get atom type index.
-      int   typeId() const;
-
-      /// Get rank of processor that owns this atom.
-      int   ownerRank() const;
+      int  typeId() const;
 
       /// Is this atom a ghost?
-      bool  isGhost() const;
-
-      /// Is this atom marked for sending?
-      bool  sendMark() const;
+      bool isGhost() const;
 
       /// Get the position Vector (const reference).
       const Vector& position() const;
@@ -115,6 +110,14 @@ namespace DdMd
 
       /// Get the force Vector (const reference).
       const Vector& force() const;
+
+      #if 0
+      /// Communication plan (const reference).
+      const Plan& plan() const;
+      #endif
+
+      /// Return postMark (true if marked for sending).
+      bool postMark() const;
 
       //@}
 
@@ -138,28 +141,27 @@ namespace DdMd
       Vector position_;                       
 
       /// Integer index of atom type.
-      int  typeId_;                         
+      int typeId_;                         
 
       /// Integer index for Atom within Simulation.
-      int  id_;                      
+      int id_;                      
 
       /// Force on atom.
       Vector force_;                       
 
-      // Is this Atom a ghost (0=false, 1=true)
-      int  isGhost_;
+      // Is this Atom a ghost? (0=false, 1=true)
+      int isGhost_;
 
-      // Is this Atom a ghost (0=false, 1=true)
-      int  ownerRank_;
+      // Is this Atom marked for sending? (0=false, 1=true)
+      int postMark_;
 
-      // Integer index of molecule
-      // int  moleculeId_;                      
+      #if 0
+      // Is this Atom a ghost (0=false, 1=true)
+      Plan plan_;
+      #endif
 
       /// Atomic velocity.
       Vector velocity_;                       
-
-      // Is this Atom a ghost (0=false, 1=true)
-      int  sendMark_;
 
       // Mask      mask_;   
       // IntVector shift_;  
@@ -175,10 +177,9 @@ namespace DdMd
      id_(-1),
      force_(0.0),
      isGhost_(0),
-     ownerRank_(-1),
-     // moleculeId(-1),
-     velocity_(0.0),
-     sendMark_(0)
+     postMark_(0),
+     //plan_(),
+     velocity_(0.0)
    {}
 
    // Set unique global index for Atom.
@@ -189,17 +190,13 @@ namespace DdMd
    inline void Atom::setTypeId(int typeId) 
    {  typeId_ = typeId; }
 
-   // Set rank of owner processor.
-   inline void Atom::setOwnerRank(int ownerRank) 
-   {  ownerRank_ = ownerRank; }
-
    // Set type Id for Atom.
    inline void Atom::setIsGhost(bool isGhost) 
    {  isGhost_ = isGhost ? 1 : 0; }
 
    // Set type Id for Atom.
-   inline void Atom::setSendMark(bool sendMark) 
-   {  sendMark_ = sendMark ? 1 : 0; }
+   inline void Atom::setPostMark(bool postMark) 
+   {  postMark_ = postMark ? 1 : 0; }
 
    // Get global id for Atom.
    inline int  Atom::id() const
@@ -209,17 +206,19 @@ namespace DdMd
    inline int Atom::typeId() const
    {  return typeId_; }
 
-   // Get type Id.
-   inline int Atom::ownerRank() const
-   {  return ownerRank_; }
-
    // Is this a ghost atom?
    inline bool Atom::isGhost() const
    {  return bool(isGhost_); }
 
-   // Is this atom marked for sending?
-   inline bool Atom::sendMark() const
-   {  return bool(sendMark_); }
+   // Is this atom marked for sendng?
+   inline bool Atom::postMark() const
+   {  return bool(postMark_); }
+
+   #if 0
+   // Get reference to communication plan.
+   inline Plan& Atom::plan()
+   {  return plan_; }
+   #endif
 
    // Get reference to position.
    inline Vector& Atom::position()
@@ -244,6 +243,12 @@ namespace DdMd
    // Get const reference to force.
    inline const Vector& Atom::force() const
    {  return force_; }
+
+   #if 0
+   // Get const reference to communication plan.
+   inline const Plan& Atom::plan() const
+   {  return plan_; }
+   #endif
 
    #if 0
    // Get the associated mask.

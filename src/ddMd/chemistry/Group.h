@@ -50,7 +50,9 @@ namespace DdMd
       */
       Group()
        : id_(-1),
-         typeId_(-1)
+         typeId_(-1),
+         nPtr_(0),
+         postMark_(0)
       {
          for (int i=0; i < N; ++i) {
             atomIds_[i]  = -1;
@@ -58,6 +60,21 @@ namespace DdMd
          }
       }
             
+      /**
+      * Set group to empty initial state.
+      */
+      void clear()
+      {  
+         id_ = -1; 
+         typeId_ = -1;
+         nPtr_ = 0;
+         postMark_ = 0;
+         for (int i=0; i < N; ++i) {
+            atomIds_[i]  = -1;
+            atomPtrs_[i] = 0;
+         }
+      }
+   
       /**
       * Set the global id for this group.
       *
@@ -83,28 +100,43 @@ namespace DdMd
       {  atomIds_[i] = atomId; }
     
       /**
-      * Set the id for a specific atom.
-      *
-      * \param i index within group (0,..., N-1)
-      */
-      void setAtomOwnerRank(int i, int ownerRank) 
-      {  atomOwnerRanks_[i] = ownerRank; }
-    
-      /**
       * Set the pointer to a specific atom.
       *
-      * \param i       index of atom within group.
+      * \param i index of atom within group.
       * \param atomPtr atom pointer to be added.
       */
       void setAtomPtr(int i, Atom* atomPtr)
-      { atomPtrs_[i] = atomPtr; }
+      {
+         if (atomPtr == 0) {
+            UTIL_THROW("Attempt to set null pointer");
+         }  
+         if (atomPtrs_[i] == 0) {
+            ++nPtr_;
+         }
+         atomPtrs_[i] = atomPtr; 
+      }
     
       /**
-      * Is this group marked for sending?
+      * Clear the pointer to a specific atom.
+      *
+      * \param i index of atom within group.
       */
-      void setPostMark(bool isPostMarked = true) 
-      {  return isPostMarked_ = isPostMarked; }
+      void clearAtomPtr(int i)
+      {
+         if (atomPtrs_[i] != 0) {
+            --nPtr_;
+            atomPtrs_[i] = 0; 
+         }
+      }
     
+      /**
+      * Set the postMark.
+      *  
+      * \param postMark true if this is marked for sending, false otherwise.
+      */
+      void setPostMark(bool postMark)
+      {  postMark_ = postMark ? 1 : 0; }
+
       // Accessors
  
       /**
@@ -128,14 +160,6 @@ namespace DdMd
       {  return atomIds_[i]; }
     
       /**
-      * Get rank of processor of specific atom.
-      *
-      * \param i index within group (0,..., N-1)
-      */
-      int atomOwnerRank(int i) const
-      {  return atomOwnerRanks_[i]; }
-    
-      /**
       * Get a pointer to a specific Atom.
       *
       * \param i index within group (0,...,N-1)
@@ -144,31 +168,37 @@ namespace DdMd
       {  return atomPtrs_[i]; }
     
       /**
-      * Is this group marked for sending?
+      * Return the number of non-null atom pointers in this group.
       */
-      bool isPostMarked() const
-      {  return isPostMarked_; }
+      int nPtr() const 
+      {  return nPtr_; }
     
+      /**
+      * Return postMark (true if marked for sending).
+      */
+      bool postMark() const
+      {  return bool(postMark_); }
+
    private:
       
       /// Array of pointers to Atoms in this group.
       Atom*  atomPtrs_[N];
    
       /// Array of integer ids of atoms in this group.
-      int    atomIds_[N];
-   
-      /// Array of integer ids of atoms in this group.
-      int    atomOwnerRanks_[N];
+      int  atomIds_[N];
    
       /// Integer index for the type of group.
-      int    typeId_;
+      int  typeId_;
    
       /// Global id for this group.
-      int    id_;
+      int  id_;
 
-      /// Postmark for sending.
-      bool   isPostMarked_;
-   
+      /// Number of non-null atom pointers in this Group.
+      int  nPtr_;
+
+      /// Is this Atom marked for sending? (0=false, 1=true)
+      int  postMark_;
+
    //friends:
 
       friend std::istream& operator >> <> (std::istream& in, Group<N> &group);

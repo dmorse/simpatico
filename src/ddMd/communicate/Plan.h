@@ -25,25 +25,31 @@ namespace DdMd
       {}
 
       void setExchange(int i, int j)
-      { flags_ |= EMask[i][j]; }
+      {  flags_ |= EMask[i][j]; }
  
       void clearExchange(int i, int j)
-      { flags_ &= (~EMask[i][j]); }
- 
-      bool testExchange(int i, int j) const
-      { return bool(flags_ & EMask[i][j]); }
+      {  flags_ &= (~EMask[i][j]); }
  
       void setGhost(int i, int j)
-      { flags_ |= GMask[i][j]; }
+      {  flags_ |= GMask[i][j]; }
  
       void clearGhost(int i, int j)
-      { flags_ &= (~GMask[i][j]); }
+      {  flags_ &= (~GMask[i][j]); }
+
+      void setFlags(unsigned int flags)
+      {  flags_ = flags; }
+ 
+      void clearFlags()
+      {  flags_ = 0; }
+ 
+      bool testExchange(int i, int j) const
+      {  return bool(flags_ & EMask[i][j]); }
  
       bool testGhost(int i, int j) const
-      { return bool(flags_ & GMask[i][j]); }
+      {  return bool(flags_ & GMask[i][j]); }
  
       unsigned int flags() const
-      { return flags_; }
+      {  return flags_; }
  
    private:
 

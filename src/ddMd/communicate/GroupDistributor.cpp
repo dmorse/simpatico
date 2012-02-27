@@ -176,6 +176,9 @@ namespace DdMd
       if (cache_.capacity() <= 0) {
          UTIL_THROW("GroupDistributor cache is not allocated");
       }
+      if (atomStoragePtr_->nGhost() != 0) {
+         UTIL_THROW("AtomStorage has ghosts");
+      }
       if (newPtr_ == 0) {
          UTIL_THROW("newPtr is null on entry to add()");
       }
@@ -183,7 +186,7 @@ namespace DdMd
       // If group has at least one atoms on master, add to groupStorage.
       int nAtom = atomStoragePtr_->countGroupAtoms(*newPtr_);
       if (nAtom) {
-         Group<N>* ptr  = groupStoragePtr_->newPtr();
+         Group<N>* ptr = groupStoragePtr_->newPtr();
          *ptr = *newPtr_;
          groupStoragePtr_->add();
          nAtomRecv_ += nAtom;
@@ -245,8 +248,6 @@ namespace DdMd
          if (nAtomRecvAll != nSentTotal_*N) {
              UTIL_THROW("Discrepancy in number of local atoms in groups");
          }
-         std::cout << "Total # groups   = " << nSentTotal_  << std::endl;
-         std::cout << "Total atom count = " << nAtomRecvAll << std::endl;
       }
 
       nSentTotal_   = 0;
@@ -279,8 +280,10 @@ namespace DdMd
       if (domainPtr_->gridRank() == 0) {
          UTIL_THROW("GroupDistributor::receive called on master node");
       }
+      if (atomStoragePtr_->nGhost() != 0) {
+         UTIL_THROW("AtomStorage has ghosts");
+      }
 
-      Group<N>  group;
       Group<N>* ptr;
       int  nAtom;
       bool isComplete = false;
@@ -291,21 +294,23 @@ namespace DdMd
          // Receive broadcast
          bufferPtr_->bcast(domainPtr_->communicator(), source);
       
-         // Unpack the buffer, 
+         // Unpack the buffer, set pointers to atoms
          isComplete = bufferPtr_->beginRecvBlock();
          while (bufferPtr_->recvSize() > 0) {
-            bufferPtr_->unpackGroup(group);
-            nAtom = atomStoragePtr_->countGroupAtoms(group);
+            ptr = groupStoragePtr_->newPtr();
+            bufferPtr_->unpackGroup(*ptr);
+            nAtom = atomStoragePtr_->findGroupAtoms(*ptr);
             if (nAtom) {
-               ptr = groupStoragePtr_->newPtr();
-               *ptr = group;
                groupStoragePtr_->add();
                nAtomRecv_ += nAtom;
+            } else {
+               groupStoragePtr_->returnPtr();
             }
          }
 
       }
 
+      // Calculate total number of atoms on all processors.
       int nAtomRecvAll;
       domainPtr_->communicator()
                   .Reduce(&nAtomRecv_, &nAtomRecvAll, 1, MPI::INT, MPI::SUM, 0);

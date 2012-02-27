@@ -822,16 +822,12 @@ public:
          bonds[0].setTypeId(0);
          bonds[0].setAtomId(0, myrank + 34);
          bonds[0].setAtomId(1, myrank + 35);
-         bonds[0].setAtomOwnerRank(0, 3);
-         bonds[0].setAtomOwnerRank(1, 3);
    
          // Fill another bondobject
          bonds[1].setId(1);
          bonds[1].setTypeId(0);
          bonds[1].setAtomId(0, myrank + 38);
          bonds[1].setAtomId(1, myrank + 39);
-         bonds[1].setAtomOwnerRank(0, 1);
-         bonds[1].setAtomOwnerRank(1, 2);
    
          //Initialize the sendbuffer, set atomtype to ATOM
          object().clearSendBuffer();
