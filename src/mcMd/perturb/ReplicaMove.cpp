@@ -17,11 +17,7 @@
 #include <mcMd/perturb/LinearPerturbation.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
-#include <mcMd/mdSimulation/MdSystem.h>
-#include <mcMd/mdIntegrators/MdIntegrator.h>
-#include <mcMd/mdIntegrators/NphIntegrator.h>
 #include <mcMd/boundary/OrthorhombicBoundary.h>
-#include <mcMd/ensembles/BoundaryEnsemble.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/util/Observer.h>
 
@@ -180,20 +176,7 @@ namespace McMd
             request[1].Wait();
          }   
          myWeight = system().perturbation().difference(ptParam_);
-
-         MdSystem* mdSystemPtr;
-         mdSystemPtr = dynamic_cast<MdSystem*>(systemPtr_);
-         NphIntegrator* nphIntegratorPtr;
-       
-         if (mdSystemPtr) {
-            nphIntegratorPtr = dynamic_cast<NphIntegrator*>(&mdSystemPtr->mdIntegrator());
-            if (nphIntegratorPtr) {
-               double volume = system().boundary().volume();
-               myWeight += system().boundaryEnsemble().pressure()*volume;
-               myWeight += nphIntegratorPtr->barostatEnergy();
-            }
-         }
-   
+         
          // Collect tempering weights and make decision
          if (isLeft == 1) {
 
@@ -232,33 +215,29 @@ namespace McMd
             request[3].Wait();
 
          }
-
          // Exchange particle configurations if the move is accepted
          if (iAccept == 1) {
          
             // Update accumulator
             repxAccept_[isLeft] += 1;
 
-            if (mdSystemPtr) {
-               if (nphIntegratorPtr) {
-                  const Vector *myBoundaryPtr;
-                  const Vector *ptBoundaryPtr;
-                  myBoundaryPtr = &(system().boundary().lengths());
+            Vector myBoundary;
+            myBoundary = system().boundary().lengths();
                   
-                  // Accomodate new boundary dimensions.
-                  request[4] = communicatorPtr_->Irecv((void*)ptBoundaryPtr, 1,
-                                                  MpiTraits<Vector>::type, ptId_, TagConfig[ptPort]);
+            Vector ptBoundary;
+                  
+            // Accomodate new boundary dimensions.
+            request[4] = communicatorPtr_->Irecv(&ptBoundary, 1,
+                                                 MpiTraits<Vector>::type, ptId_, TagConfig[ptPort]);
 
-                  // Send old boundary dimensions.
-                  request[5] = communicatorPtr_->Isend(myBoundaryPtr, 1,
-                                                   MpiTraits<Vector>::type, ptId_, TagConfig[myPort]);
+            // Send old boundary dimensions.
+            request[5] = communicatorPtr_->Isend(&myBoundary, 1,
+                                                  MpiTraits<Vector>::type, ptId_, TagConfig[myPort]);
 
-                  request[4].Wait();
-                  request[5].Wait();
+            request[4].Wait();
+            request[5].Wait();
                    
-                  system().boundary().setLengths(*ptBoundaryPtr);
-               }
-            }
+            system().boundary().setLengths(ptBoundary);
 
             // Pack atomic positions and types.
             iA = 0;
