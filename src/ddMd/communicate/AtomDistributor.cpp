@@ -28,6 +28,7 @@ namespace DdMd
       sendSizes_(),
       boundaryPtr_(0),
       domainPtr_(0),
+      storagePtr_(0),
       bufferPtr_(0),
       newPtr_(0),
       cacheCapacity_(0),
@@ -47,10 +48,11 @@ namespace DdMd
    * Retain pointers to associated objects.
    */
    void AtomDistributor::associate(Domain& domain, Boundary& boundary, 
-                                   Buffer& buffer)
+                                   AtomStorage& storage, Buffer& buffer)
    {
       domainPtr_ = &domain;
       boundaryPtr_ = &boundary;
+      storagePtr_ = &storage;
       bufferPtr_ = &buffer;
    }
 
@@ -207,7 +209,7 @@ namespace DdMd
    /*
    * Add an atom to the list to be sent.
    */ 
-   int AtomDistributor::addAtom(AtomStorage& storage) 
+   int AtomDistributor::addAtom() 
    {
       // Preconditions
       if (domainPtr_ == 0) {
@@ -285,9 +287,9 @@ namespace DdMd
 
       } else { // rank == 0
 
-         Atom* ptr  = storage.newAtomPtr();
+         Atom* ptr = storagePtr_->newAtomPtr();
          *ptr = *newPtr_;
-         storage.addNewAtom();
+         storagePtr_->addNewAtom();
 
          reservoir_.push(*newPtr_); 
       }
@@ -352,12 +354,15 @@ namespace DdMd
             bufferPtr_->beginSendBlock(Buffer::ATOM);
          }
 
-         // Reset atomPtrs array to empty state.
+         // Reset send arrays to empty state.
          for (int j = 0; j < sendCapacity_; ++j) {
             sendArrays_(i, j) = 0;
          }
          sendSizes_[i] = 0;
       }
+
+      // Compute total number of atoms on all processors.
+      storagePtr_->computeNAtomTotal(domainPtr_->communicator());
 
       // Postconditions
       if (reservoir_.size() != reservoir_.capacity()) {
@@ -365,6 +370,9 @@ namespace DdMd
       }
       if (nCachedTotal_ != nSentTotal_) {
          UTIL_THROW("Number of cached atoms != number sent");
+      }
+      if (storagePtr_->nAtomTotal() != nSentTotal_ + storagePtr_->nAtom()) {
+         UTIL_THROW("Number of atoms received != number sent + nAtom on master");
       }
 
       nCachedTotal_ = 0;
@@ -378,12 +386,12 @@ namespace DdMd
    *
    * Called by all processors except the master.
    */ 
-   void AtomDistributor::receive(AtomStorage& storage)
+   void AtomDistributor::receive()
    {
       #ifdef UTIL_MPI
       Atom* ptr;                 // Ptr to atom for storage
-      const int source = 0;      // Rank of source processor
       int   rank;                // Rank of this processor
+      const int source = 0;      // Rank of source processor
       bool  isComplete = false;  // Have all atoms been received?
 
       // Preconditions
@@ -406,15 +414,18 @@ namespace DdMd
          // Unpack the buffer
          isComplete = bufferPtr_->beginRecvBlock();
          while (bufferPtr_->recvSize() > 0) {
-            ptr = storage.newAtomPtr();
+            ptr = storagePtr_->newAtomPtr();
             bufferPtr_->unpackAtom(*ptr);
-            storage.addNewAtom();
+            storagePtr_->addNewAtom();
             if (domainPtr_->ownerRank(ptr->position()) != rank) {
                UTIL_THROW("Error: Atom on wrong processor");
             }
          }
 
       }
+
+      // Compute total number of atoms on all processors.
+      storagePtr_->computeNAtomTotal(domainPtr_->communicator());
       #endif
    }
 

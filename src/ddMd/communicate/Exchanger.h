@@ -9,9 +9,10 @@
 */
 
 #include <ddMd/chemistry/Atom.h>
+#include <ddMd/chemistry/Group.h>
 #include <ddMd/boundary/Boundary.h>
 #include <util/containers/FMatrix.h>
-#include <util/containers/DPArray.h>
+#include <util/containers/APArray.h>
 
 namespace DdMd
 {
@@ -95,50 +96,57 @@ namespace DdMd
 
    private:
 
-      /*
+      /**
       * Arrays of pointers to ghosts to be sent in each direction.
       *
-      * The FMatrix(i, j) is a DPArray that stores pointers to the ghost 
-      * atoms whose positions are sent during the send along cartesian 
+      * Element sendArray_(i, j) is a APArray that stores pointers to the
+      * ghost atoms whose positions are sent during the send along cartesian 
       * axis i (i=0/x, 1/y or 2/z) in direction j (j=0/lower or 1/higher).
       * These 6 arrays are filled by the exchangeGhosts() method and used 
       * by subsequent calls of the updateGhosts() method, until the next
       * call of exchangeGhosts().
       */
-      FMatrix< DPArray<Atom>, Dimension, 2>  sendArray_;
+      FMatrix< APArray<Atom>, Dimension, 2>  sendArray_;
 
-      /*
+      /**
       * Arrays of pointers to ghosts received in each direction.
       *
-      * The FMatrix(i, j) is a DPArray that stores pointers to the ghost 
-      * atoms that are received during the send along cartesian axis
-      * i (i=0/x, 1/y or 2/z) in direction j (j=0/lower or 1/higher).
+      * Element recvArray_(i, j) is a APArray that stores pointers to the 
+      * ghost atoms that are received during the send along cartesian axis
+      * i (for i=0/x, 1/y or 2/z) in direction j (for j=0/lower or 1/higher).
       * These 6 arrays are filled by the exchangeGhosts() method and used 
       * by subsequent calls of the updateGhosts() method, until the next
       * call of exchangeGhosts().
       */
-      FMatrix< DPArray<Atom>, Dimension, 2>  recvArray_;
+      FMatrix< APArray<Atom>, Dimension, 2>  recvArray_;
 
-      // Pointer to associated const Boundary object.
+      /**
+      * Array of pointers to empty bonds on this processor.
+      * 
+      * Used to mark bonds for later removal.
+      */
+      APArray< Group<2> > emptyBonds_;
+
+      /// Array of pointers to incomplete bonds on this processor.
+      APArray< Group<2> > incompleteBonds_;
+
+      /// Pointer to associated const Boundary object.
       const Boundary*  boundaryPtr_;
 
-      // Pointer to associated const Domain object.
+      /// Pointer to associated const Domain object.
       const Domain*  domainPtr_;
 
-      // Pointer to associated AtomStorage object.
+      /// Pointer to associated AtomStorage object.
       AtomStorage* atomStoragePtr_;
 
-      // Pointer to associated AtomStorage object.
+      /// Pointer to associated AtomStorage object.
       BondStorage* bondStoragePtr_;
 
-      // Pointer to associated buffer object.
+      /// Pointer to associated buffer object.
       Buffer*  bufferPtr_;
 
-      // Cutoff for pair list (potential cutoff + skin).
+      /// Cutoff for pair list (potential cutoff + skin).
       double pairCutoff_;
-
-      // Maximum number of ghosts per transmission.
-      int ghostCapacity_;
 
    };
 

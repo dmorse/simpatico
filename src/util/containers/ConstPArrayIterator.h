@@ -72,12 +72,12 @@ namespace Util
       void setNull()
       {
          current_ = 0; 
-         end_     = 0; 
-         data_    = 0; 
+         end_ = 0; 
+         data_ = 0; 
       }
 
       /**
-      * Is the iterator dead?
+      * Is the current pointer at the end of the array.
       *
       * \return true if at end, false otherwise.
       */
@@ -85,7 +85,7 @@ namespace Util
       { return (current_ == end_); }
 
       /**
-      * Is this not the end of the array?
+      * Is the current pointer not at the end of the array?
       *
       * \return true if not at end, false otherwise.
       */
@@ -104,7 +104,7 @@ namespace Util
       //@{
       
       /**
-      * Get a const refererence to the current Data.
+      * Return a const refererence to the current Data.
       *
       * \return const reference to the Data object
       */
@@ -142,10 +142,10 @@ namespace Util
       // Pointer to the current Data* pointer.
       Data** current_;
 
-      // Pointer to one element one past last Data* pointer in the set.
+      // Pointer to one element one past last Data* pointer in the array.
       Data** end_;
 
-      // current Data* pointer - references current Data.
+      // Pointer to current Data object.
       Data*  data_;
 
    };

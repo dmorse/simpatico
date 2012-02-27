@@ -53,7 +53,6 @@ namespace DdMd
       Interaction* interactionPtr  = &systemPtr_->interaction();
 
       atomStoragePtr->clearSnapshot();
-      //atomStoragePtr->clearGhosts();
       exchangerPtr->exchangeAtoms();
       exchangerPtr->exchangeGhosts();
       atomStoragePtr->makeSnapshot();
@@ -96,7 +95,6 @@ namespace DdMd
       if (needExchange) {
 
          atomStoragePtr->clearSnapshot();
-         //atomStoragePtr->clearGhosts();
          exchangerPtr->exchangeAtoms();
          exchangerPtr->exchangeGhosts();
          atomStoragePtr->makeSnapshot();
@@ -114,10 +112,8 @@ namespace DdMd
       // 2nd half of velocity Verlet
       atomStoragePtr->begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
-
          dv.multiply(atomIter->force(), dtHalf);
          atomIter->velocity() += dv;
-
       }
 
    }

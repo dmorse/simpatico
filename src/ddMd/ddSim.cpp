@@ -56,7 +56,7 @@ int main()
          std::cout << Dbl(kinetic) << Dbl(potential) 
                    << Dbl(kinetic + potential) << std::endl;
       }
-      system.isValid();
+      //system.isValid();
    }
 
    MPI::Finalize();

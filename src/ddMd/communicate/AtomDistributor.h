@@ -93,9 +93,11 @@ namespace DdMd
       * 
       * \param boundary      Boundary object (periodic boundary conditions)
       * \param domain        Domain object (processor grid)
+      * \param storage       AtomStorage object (processor grid)
       * \param buffer        Buffer used for communication
       */
-      void associate(Domain& domain, Boundary& boundary, Buffer& buffer);
+      void associate(Domain& domain, Boundary& boundary, 
+                     AtomStorage& storage, Buffer& buffer);
 
       /**
       * Set cacheCapacity, allocate memory and initialize object.
@@ -148,22 +150,23 @@ namespace DdMd
       /**
       * Process the active atom for sending.
       *
-      * This method should be called only by the master processor, after
+      * This method may be called only by the master processor, after
       * a matching call to newAtomPtr(). It identifies and returns the
       * rank of the processor that owns the active atom (i.e., the atom 
       * returned by the recent call to newAtomPtr), based on its position. 
-      * If this atom is owned by the master (rank == 0), it adds it to
-      * the AtomStorage on the master node. If it is not owned by the
-      * master, it caches the atom for sending to its owner. 
+      * If this atom is owned by the master (rank == 0), it adds it to the
+      * AtomStorage on the master node. Otherwise, it adds the atom to the
+      * cache of stored atoms, and adds a pointer to this atom to the 
+      * sendList for the relevant processor.
       *
-      * If the addition of this atom to the cache would make the cache
-      * full, this method first sends a buffer to the processor with
-      * the largest sendList.
+      * Whenever addition of an atom to the cache would exceed the cache
+      * capacity, or exceed the capacity of the sendlist for the owner
+      * processor, this method sends a buffer to the processor with the
+      * the largest sendList, before caching and marking the current atom.
       *
-      * \param  storage AtomStorage object on master processor.
       * \return rank of processor that owns the active atom.
       */
-      int addAtom(AtomStorage& storage);
+      int addAtom();
 
       /**
       * Send all atoms that have not be sent previously.
@@ -178,7 +181,7 @@ namespace DdMd
       *
       * This should be called by all processes except the master.
       */ 
-      void receive(AtomStorage& storage);
+      void receive();
 
    private:
 
@@ -204,6 +207,9 @@ namespace DdMd
 
       /// Pointer to associated Domain object.
       Domain*     domainPtr_;
+
+      /// Pointer to associated Domain object.
+      AtomStorage* storagePtr_;
 
       /// Pointer to associated Buffer object.
       Buffer*     bufferPtr_;

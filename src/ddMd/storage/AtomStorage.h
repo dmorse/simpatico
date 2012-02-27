@@ -132,7 +132,7 @@ namespace DdMd
       *
       * \param atomPtr pointer to the atom to be removed
       */
-      void  removeAtom(Atom* atomPtr); 
+      void removeAtom(Atom* atomPtr); 
 
       // Ghost Atom Mutators
 
@@ -341,6 +341,30 @@ namespace DdMd
       */
       bool isValid() const;
 
+      #ifdef UTIL_MPI
+      /**
+      * Compute, store and return total number of atoms on all processors.
+      *
+      * This is an MPI reduce operation. The correct result is stored and
+      * returned only on the rank 0 processor. On other processors, the
+      * method returns a null value of -1.
+      *
+      * \param  communicator MPI communicator for this system.
+      * \return on master node, return total number of atoms.
+      */
+      int computeNAtomTotal(MPI::Intracomm& communicator);
+   
+      /**
+      * On master processor (rank=0), stored value of total number of atoms.
+      *
+      * This method should only be called on the master node (rank = 0).
+      * The return value is computed by a previous call of computeNAtomTotal.
+      * The method throws an Exception if computeNAtomTotal has not been
+      * called, or if the method is called on a slave processor.
+      */
+      int nAtomTotal() const;
+      #endif
+
    private:
 
       // Array that holds all available local Atom objects.
@@ -383,6 +407,9 @@ namespace DdMd
       // Maximum number of atoms on all processors, maximum id + 1
       int totalAtomCapacity_;
 
+      // Total number of local atoms on all processors.
+      int nAtomTotal_;
+
       // Is addition or removal of atoms forbidden?
       bool locked_;
 
@@ -412,6 +439,17 @@ namespace DdMd
 
    inline int AtomStorage::totalAtomCapacity() const
    { return totalAtomCapacity_; }
+
+   #ifdef UTIL_MPI
+   /*
+   * On master processor (rank=0), stored value of total number of atoms.
+   */
+   inline int AtomStorage::nAtomTotal() const
+   {
+      if (nAtomTotal_ < 0) UTIL_THROW("Value not set: nAtomTotal < 0");
+      return nAtomTotal_;
+   }
+   #endif
 
    // Template method definition
 
@@ -447,11 +485,9 @@ namespace DdMd
          ptr = atomPtrs_[group.atomId(i)];
          if (ptr) {
             group.setAtomPtr(i, ptr);
-            //group.setAtomOwnerRankd(i, ptr->ownerRank());
             ++nAtom;
          } else {
             group.clearAtomPtr(i);
-            //group.setAtomOwnerRankd(i, -1);
          }
       }
       return nAtom;

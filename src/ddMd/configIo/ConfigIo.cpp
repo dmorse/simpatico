@@ -51,7 +51,7 @@ namespace DdMd
       boundaryPtr_ = &boundary;
       atomStoragePtr_ = &atomStorage;
       bondStoragePtr_ = &bondStorage;
-      atomDistributor_.associate(domain, boundary, buffer);
+      atomDistributor_.associate(domain, boundary, atomStorage, buffer);
       bondDistributor_.associate(domain, atomStorage,
                                  bondStorage, buffer);
    }
@@ -132,7 +132,7 @@ namespace DdMd
             file >> atomPtr->velocity();
 
             // Add atom to list for sending.
-            rank = atomDistributor().addAtom(atomStorage());
+            rank = atomDistributor().addAtom();
 
          }
 
@@ -143,7 +143,7 @@ namespace DdMd
 
          #if UTIL_MPI
          // Receive all atoms into AtomStorage
-         atomDistributor().receive(atomStorage());
+         atomDistributor().receive();
          #endif
 
       }

@@ -8,20 +8,22 @@ int main()
    #ifdef UTIL_MPI 
    MPI::Init();
    IntVector::commitMpiType();
-   #endif 
+   Vector::commitMpiType();
 
    TEST_RUNNER(DomainTest) runner1;
    runner1.run();
 
-   #ifdef UTIL_MPI
    TEST_RUNNER(BufferTest) runner2;
    runner2.run();
 
    TEST_RUNNER(AtomDistributorTest) runner3;
    runner3.run();
 
-   TEST_RUNNER(ExchangerTest) runner4;
+   TEST_RUNNER(AtomDistributorTest) runner4;
    runner4.run();
+
+   TEST_RUNNER(ExchangerTest) runner5;
+   runner5.run();
 
    MPI::Finalize();
    #endif

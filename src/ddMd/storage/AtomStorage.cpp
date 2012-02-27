@@ -406,5 +406,20 @@ namespace DdMd
       return true;
    }
 
+   #ifdef UTIL_MPI
+   /**
+   * Compute, store and return total number of atoms on all processors.
+   */
+   int AtomStorage::computeNAtomTotal(MPI::Intracomm& communicator)
+   {
+      int nAtomLocal = nAtom();
+      communicator.Reduce(&nAtomLocal, &nAtomTotal_, 1, 
+                          MPI::INT, MPI::SUM, 0);
+      if (communicator.Get_rank() !=0) {
+         nAtomTotal_ = -1;
+      }
+      return nAtomTotal_;
+   }
+   #endif
 }
 #endif

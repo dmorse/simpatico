@@ -24,6 +24,8 @@ namespace DdMd
 
    using namespace Util;
 
+   class AtomStorage;
+
    /**
    * A container for all the Group<N> objects on this processor.
    */
@@ -59,6 +61,14 @@ namespace DdMd
       * \param totalcapacity max number of groups on all processors.
       */
       void setParam(int capacity, int totalCapacity);
+
+      /**
+      * Set value for total number of distinct groups on all processors.
+      *
+      * This value is used by the isValid() method, and should be set only 
+      * on the master processor.
+      */
+      void setNTotal(int nTotal);
 
       // Mutators
 
@@ -198,12 +208,12 @@ namespace DdMd
       void begin(ConstIncompleteGroupIterator<N>& iterator) const;
  
       /**
-      * Return current number of groups (excluding ghosts)
+      * Return current number of groups on this processor.
       */
       int size() const;
 
       /**
-      * Return capacity for groups (excluding ghosts).
+      * Return capacity for groups on this processor.
       */
       int capacity() const;
 
@@ -215,9 +225,32 @@ namespace DdMd
       int totalCapacity() const;
 
       /**
+      * Return total number of distinct groups on all processors.
+      */
+      int nTotal() const;
+
+      /**
       * Return true if the container is valid, or throw an Exception.
       */
       bool isValid();
+
+      /**
+      * Return true if the container is valid, or throw an Exception.
+      *
+      * Calls overloaded isValid() method, then checks consistency of atom 
+      * pointers with those in an asociated AtomStorage. If hasGhosts is
+      * false, the method requires that no group contain a pointer to a ghost 
+      * atom. If hasGhosts is true, requires that every Group be complete.
+      *
+      * \param atomStorage associated AtomStorage object.
+      * \param hasGhosts   true if the atomStorage has ghosts, false otherwise.
+      */
+      #ifdef UTIL_MPI
+      bool isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator, 
+                   bool hasGhosts);
+      #else
+      bool isValid(AtomStorage& atomStorage, bool hasGhosts);
+      #endif
 
    private:
 
@@ -246,6 +279,9 @@ namespace DdMd
       // Maximum number of groups on all processors, maximum id + 1
       int totalCapacity_;
 
+      // Total number of distinct groups on all processors.
+      int nTotal_;
+
       /*
       * Allocate and initialize all private containers.
       */
@@ -257,15 +293,19 @@ namespace DdMd
 
    template <int N>
    inline int GroupStorage<N>::size() const
-   { return groupSet_.size(); }
+   {  return groupSet_.size(); }
 
    template <int N>
    inline int GroupStorage<N>::capacity() const
-   { return capacity_; }
+   {  return capacity_; }
 
    template <int N>
    inline int GroupStorage<N>::totalCapacity() const
-   { return totalCapacity_; }
+   {  return totalCapacity_; }
+
+   template <int N>
+   inline int GroupStorage<N>::nTotal() const
+   {  return nTotal_; }
 
    // Non-inline method templates.
 
@@ -279,7 +319,8 @@ namespace DdMd
       reservoir_(),
       newPtr_(0),
       capacity_(0),
-      totalCapacity_(0)
+      totalCapacity_(0),
+      nTotal_(-1)
    {}
  
    /*
@@ -310,6 +351,13 @@ namespace DdMd
       totalCapacity_ = totalCapacity;
       allocate();
    }
+
+   /*
+   * Set total number of distinct groups on all processors.
+   */
+   template <int N>
+   void GroupStorage<N>::setNTotal(int nTotal)
+   {  nTotal_ = nTotal; }
 
    /*
    * Allocate and initialize all containers (private).
@@ -373,15 +421,17 @@ namespace DdMd
    {
 
       // Preconditions
-      if (newPtr_ == 0) 
+      if (newPtr_ == 0) {
          UTIL_THROW("No active newPtr_");
+      }
       int groupId = newPtr_->id();
       if (groupId < 0 || groupId >= totalCapacity_) {
          std::cout << "groupId = " << groupId << std::endl;
-         UTIL_THROW("groupId is out of range");
+         UTIL_THROW("Invalid group id");
       }
-      if (groupPtrs_[groupId] != 0)
+      if (groupPtrs_[groupId] != 0) {
          UTIL_THROW("Group with specified id is already present");
+      }
 
       // Add Group<N> object to container
       groupSet_.append(*newPtr_);
@@ -413,8 +463,11 @@ namespace DdMd
    void GroupStorage<N>::remove(Group<N>* groupPtr)
    {
       int groupId = groupPtr->id();
-      if (groupPtrs_[groupId] == 0) {
-         UTIL_THROW("Ptr does not point to local group");
+      if (groupId < 0 || groupId >= totalCapacity_) {
+         std::cout << "Group id = " << groupId << std::endl;
+         UTIL_THROW("Invalid group id, out of range");
+      } else if (groupPtrs_[groupId] == 0) {
+         UTIL_THROW("Group does not exist on this processor");
       }
       reservoir_.push(*groupPtr);
       groupSet_.remove(*groupPtr);
@@ -493,7 +546,7 @@ namespace DdMd
    {  incompleteGroupSet_.begin(iterator); }
  
    /*
-   * Check validity of this AtomStorage.
+   * Check validity of this GroupStorage.
    *
    * Returns true if all is ok, or throws an Exception.
    */
@@ -534,5 +587,90 @@ namespace DdMd
       return true;
    }
 
+   /*
+   * Check validity of all groups on this processor.
+   */
+   template <int N>
+   #ifdef UTIL_MPI
+   bool GroupStorage<N>::isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator,
+                                 bool hasGhosts)
+   #else
+   bool GroupStorage<N>::isValid(AtomStorage& atomStorage, bool hasGhosts)
+   #endif
+   {
+      int i;
+      int atomId;
+      int nAtom;  // Number of local atoms in particular group.
+      int nAtomGroup = 0; // Number of local atoms in all groups on processor
+      Atom* atomPtr;
+      ConstGroupIterator<N> groupIter;
+
+      // Call simpler function that only checks storage data structures.
+      isValid();
+
+      // Loop over groups.
+      begin(groupIter);
+      for ( ; groupIter.notEnd(); ++groupIter) {
+         nAtom = 0;
+         for (i = 0; i < N; ++i) {
+            atomId  = groupIter->atomId(i);
+            if (atomId < 0 || atomId >= atomStorage.totalAtomCapacity()) {
+               UTIL_THROW("Invalid atom id in Group");
+            }
+            atomPtr = groupIter->atomPtr(i);
+            if (atomPtr) {
+               if (atomPtr != atomStorage.find(atomId)) {
+                  UTIL_THROW("Inconsistent non-null atom pointer in Group");
+               }
+               if (atomPtr->isGhost()) {
+                  if (hasGhosts) {
+                     ++nAtom;
+                  } else {
+                     UTIL_THROW("Ghost atom in Group");
+                  }
+               } else {
+                  ++nAtom;
+               }
+            } else {
+               atomPtr = atomStorage.find(atomId);
+               if (atomPtr != 0) {
+                  if (atomPtr->isGhost()) {
+                     if (hasGhosts) {
+                          UTIL_THROW("Missing ghost atom");
+                     }
+                  } else {
+                     UTIL_THROW("Missing local atom");
+                  }
+               }
+            }
+         }
+         if (nAtom == 0) {
+            UTIL_THROW("Empty group");
+         }
+         if (hasGhosts && nAtom < N) {
+            UTIL_THROW("Incomplete group");
+         }
+         nAtomGroup += nAtom;
+      }
+
+      #ifdef UTIL_MPI
+      // Count & return number of local atoms in groups on all processors.
+      int nAtomGroupTotal;
+      const int source = 0;
+      communicator.Reduce(&nAtomGroup, &nAtomGroupTotal, 1, 
+                          MPI::INT, MPI::SUM, source);
+      if (communicator.Get_rank() == source) {
+         if (nTotal_ < 0) {
+            UTIL_THROW("nTotal not set before isValid");
+         }
+         if (nAtomGroupTotal != nTotal_*N) {
+            std::cout << "nAtomGroupTotal = " << nAtomGroupTotal << std::endl;
+            std::cout << "nTotal*N        = " << nTotal_*N  << std::endl;
+            UTIL_THROW("Discrepancy in number of local atoms in Group objects");
+         }
+      }
+      #endif
+
+   }
 }
 #endif

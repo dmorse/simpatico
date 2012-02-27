@@ -184,12 +184,6 @@ namespace DdMd
       template <int N>
       void unpackGroup(Group<N>& group);
 
-      /**
-      * Discard the next group in the recv buffer.
-      */
-      template <int N>
-      void discardGroup();
-
       #if 0
       /**
       * Pack a Bond into send buffer.
@@ -379,15 +373,14 @@ namespace DdMd
       if (sendGroupSize_ != N) {
          UTIL_THROW("Wrong sendGroupSize");
       }
-      pack<int>(group.typeId());
       pack<int>(group.id());
+      pack<int>(group.typeId());
       for (int j = 0; j < N; ++j) {
          pack<int>(group.atomId(j));
       }
 
       //Increment number of groups in send buffer by 1
       ++sendSize_;
-
    }
 
    /*
@@ -403,46 +396,19 @@ namespace DdMd
       if (recvGroupSize_ != N) {
          UTIL_THROW("Wrong recvGroupSize");
       }
-      int i, j;
-      unpack(i);
-      group.setTypeId(i);
+      int i;
       unpack(i);
       group.setId(i);
-      for (j = 0; j < N; ++j) {
+      unpack(i);
+      group.setTypeId(i);
+      for (int j = 0; j < N; ++j) {
          unpack(i);
          group.setAtomId(j, i);
          group.clearAtomPtr(j);
       }
-      group.setPostMark(false);
 
       // Decrement number of groups in recv buffer by 1
       recvSize_--;
-
-   }
-
-   /*
-   * Discard the next Group in the receive buffer.
-   */
-   template <int N>
-   void Buffer::discardGroup()
-   {
-      // Preconditions
-      if (recvType_ != GROUP) {
-         UTIL_THROW("SendType is not GROUP");
-      }
-      if (recvGroupSize_ != N) {
-         UTIL_THROW("Wrong recvGroupSize");
-      }
-      int i, j;
-      unpack(i);
-      unpack(i);
-      for (j = 0; j < N; ++j) {
-         unpack(i);
-      }
-
-      // Decrement number of groups in recv buffer by 1
-      recvSize_--;
-
    }
    #endif
 

@@ -44,7 +44,7 @@ public:
 
       // Set connections between objects
       domain.setBoundary(boundary);
-      distributor.associate(domain, boundary, buffer);
+      distributor.associate(domain, boundary, storage, buffer);
 
       #ifdef UTIL_MPI
       // Set communicators
@@ -115,7 +115,7 @@ public:
             //Use position vector for velocity for now
             ptr->velocity() = ptr->position();
 
-            distributor.addAtom(storage);
+            distributor.addAtom();
 
          }
          file().close();
@@ -125,7 +125,7 @@ public:
 
       } else { // If I am not the master processor
 
-         distributor.receive(storage);
+         distributor.receive();
 
       }
 

@@ -30,8 +30,7 @@ namespace DdMd
    * Constructor.
    */
    Exchanger::Exchanger()
-    : pairCutoff_(-1.0),
-      ghostCapacity_(0)
+    : pairCutoff_(-1.0)
    {}
 
    /*
@@ -66,16 +65,18 @@ namespace DdMd
          UTIL_THROW("Buffer must be allocated before Exchanger");
       }
 
-      // Allocate all send and recv arrays
-      ghostCapacity_ = std::max(bufferPtr_->atomCapacity(), bufferPtr_->ghostCapacity());
+      int sendRecvCapacity = bufferPtr_->ghostCapacity()/2;
+
+      // Reserve space for all ghost send and recv arrays
       int i, j;
       for (i = 0; i < Dimension; ++i) {
          for (j = 0; j < 2; ++j) {
-            sendArray_(i, j).allocate(ghostCapacity_);
-            recvArray_(i, j).allocate(ghostCapacity_);
+            sendArray_(i, j).reserve(sendRecvCapacity);
+            recvArray_(i, j).reserve(sendRecvCapacity);
          }
       }
-
+      emptyBonds_.reserve(sendRecvCapacity);
+      incompleteBonds_.reserve(sendRecvCapacity);
    }
 
    /*
@@ -100,10 +101,10 @@ namespace DdMd
       GhostIterator ghostIter;
       GroupIterator<2> bondIter;
       Atom* atomPtr;
-      int i, j, jc, k, source, dest, nSend;
+      int i, j, jc, k, m, source, dest, nSend;
+      int atomId, nAtom;
       int myRank = domainPtr_->gridRank();
       int shift;
-      int nLocal;
       bool choose;
 
       #if 0
@@ -166,27 +167,52 @@ namespace DdMd
       } // end atom loop, end compute plan
       #endif
 
-      // Clear pointers to ghosts and check local pointers in all bonds.
-      int atomId;
+      // In all bonds, clear pointers to ghosts and check local pointers.
       bondStoragePtr_->begin(bondIter);
-      for ( ; !bondIter.atEnd(); ++bondIter) {
+      for ( ; bondIter.notEnd(); ++bondIter) {
+         nAtom = 0;
          for (k = 0; k < 2; ++k) {
             atomPtr = bondIter->atomPtr(k);
+            atomId = bondIter->atomId(k);
             if (atomPtr != 0) {
+               #ifdef UTIL_DEBUG
+               if (atomPtr != atomStoragePtr_->find(atomId)) {
+                  UTIL_THROW("Error in atom pointer in bond");
+               }
+               #endif
                if (atomPtr->isGhost()) {
                   bondIter->clearAtomPtr(k);
                } else {
                   atomId = atomPtr->id();
-                  if (atomPtr != atomStoragePtr_->find(atomId)) {
-                     UTIL_THROW("Error in atom pointer in bond");
+                  ++nAtom;
+               }
+            }
+            #ifdef UTIL_DEBUG 
+            else { // if atomPtr == 0
+               atomPtr = atomStoragePtr_->find(atomId);
+               if (atomPtr) {
+                  if (!atomPtr->isGhost()) {
+                     UTIL_THROW("Missing pointer to local atom in bond");
                   }
                }
             }
+            #endif
          }
-         bondIter->setPostMark(false);
+         if (nAtom == 0) {
+            UTIL_THROW("Empty bond");
+         }
       }
 
+      // Clear ghost atoms from AtomStorage
       atomStoragePtr_->clearGhosts();
+
+      #if 0
+      int nAtomTotal; // Total number of atoms on all processors
+      if (myRank == 0) {
+         nAtomTotal = atomStoragePtr_->nAtomTotal();
+      }
+      bondStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(), false);
+      #endif
 
       // Cartesian directions
       for (i = 0; i < Dimension; ++i) {
@@ -243,8 +269,10 @@ namespace DdMd
                      if (shift) {
                         atomIter->position()[i] += shift * lengths[i];
                      }
-                     assert(atomIter->position()[i] > domainPtr_->domainBound(i, 0));
-                     assert(atomIter->position()[i] < domainPtr_->domainBound(i, 1));
+                     assert(atomIter->position()[i] 
+                            > domainPtr_->domainBound(i, 0));
+                     assert(atomIter->position()[i] 
+                            < domainPtr_->domainBound(i, 1));
 
                   }
                }
@@ -257,34 +285,60 @@ namespace DdMd
                // End atom send block
                bufferPtr_->endSendBlock();
 
-               // Pack all bonds that contain one or more postmarked atoms.
+               // Loop over bonds
+               // Pack bonds with postmarked atoms.
                bufferPtr_->beginSendBlock(Buffer::GROUP, 2);
+               emptyBonds_.clear();
                bondStoragePtr_->begin(bondIter);
                for ( ; !bondIter.atEnd(); ++bondIter) {
-                  bondIter->setPostMark(false);
+                  atomStoragePtr_->findGroupAtoms(*bondIter);
+                  choose = false;
+                  nAtom = 0;
                   for (k = 0; k < 2; ++k) {
                      atomPtr = bondIter->atomPtr(k);
-                     if (atomPtr != 0) {
+                     if (atomPtr) {
                         if (atomPtr->postMark()) {
-                           bondIter->setPostMark(true);
-                           break;
+                           choose = true;
+                           bondIter->clearAtomPtr(k);
+                        } else {
+                           ++nAtom;
                         }
                      }
                   }
-                  if (bondIter->postMark()) {
+                  if (nAtom == 0) {
+                     emptyBonds_.append(*bondIter);
+                  }
+                  if (choose) {
                      bufferPtr_->packGroup<2>(*bondIter);
-                     bondIter->setPostMark(true);
                   }
                }
                bufferPtr_->endSendBlock();
 
-               // Removal cannot be done within the above loops over atoms and 
-               // groups because removal invalidates the iterator.
+               /*
+               * Note: Removal cannot be done within the above loops over 
+               * atoms and groups because element removal invalidates any
+               * PArray iterator.
+               */
 
                // Remove chosen atoms from atomStorage
                nSend = sendArray_(i, j).size();
                for (k = 0; k < nSend; ++k) {
+                  sendArray_(i, j)[k].setPostMark(false);
                   atomStoragePtr_->removeAtom(&sendArray_(i, j)[k]);
+               }
+
+               // Remove empty bonds from bondStorage.
+               int nEmpty = emptyBonds_.size();
+               for (k = 0; k < nEmpty; ++k) {
+                  #if 0
+                  for (m = 0; m < 2; ++m) {
+                     atomId  = emptyBonds_[k].atomId(m);
+                     atomPtr = emptyBonds_[k].atomPtr(m);
+                     assert(atomPtr == 0);
+                     assert(atomStoragePtr_->find(atomId) == 0);
+                  }
+                  #endif
+                  bondStoragePtr_->remove(&(emptyBonds_[k]));
                }
 
                // Send to processor dest and receive from processor source
@@ -305,45 +359,58 @@ namespace DdMd
                assert(bufferPtr_->recvSize() == 0);
 
                // Unpack bonds into bondStorage.
-               Group<2>* bondPtr;
+               int bondId;
+               Group<2>* newBondPtr;
+               Group<2>* oldBondPtr;
                bufferPtr_->beginRecvBlock();
                while (bufferPtr_->recvSize() > 0) {
-                  bondPtr = bondStoragePtr_->newPtr();
-                  bufferPtr_->unpackGroup<2>(*bondPtr);
-                  if (bondStoragePtr_->find(bondPtr->id())) {
+                  newBondPtr = bondStoragePtr_->newPtr();
+                  bufferPtr_->unpackGroup<2>(*newBondPtr);
+                  bondId = newBondPtr->id();
+                  oldBondPtr = bondStoragePtr_->find(bondId);
+                  if (oldBondPtr) {
                      bondStoragePtr_->returnPtr();
+                     atomStoragePtr_->findGroupAtoms(*oldBondPtr);
                   } else {
                      bondStoragePtr_->add();
+                     atomStoragePtr_->findGroupAtoms(*newBondPtr);
                   }
                }
                assert(bufferPtr_->recvSize() == 0);
 
-            }
-         }
-      }
+            } // end if gridDimension > 1
 
-      // Find all atoms for all bonds
+         } // end for j (direction 0, 1)
+      } // end for i (Cartesian index)
+
+      #if 0
+      atomStoragePtr_->computeNAtomTotal(domainPtr_->communicator());
+      if (myRank == 0) {
+         assert(nAtomTotal = atomStoragePtr_->nAtomTotal());
+      }
+      #endif
+
+      #if 0
+      // Find atoms for all bonds.
       bondStoragePtr_->begin(bondIter); 
       for ( ; bondIter.notEnd(); ++bondIter) {
-         for (k = 0; k < 2; ++k) {
-            atomId = bondIter->atomId(k);
-            atomPtr = atomStoragePtr_->find(atomId);
-            if (atomPtr) {
-               bondIter->setAtomPtr(k, atomPtr);
-            } else {
-               bondIter->clearAtomPtr(k);
-            }
-         }
+         nAtom = atomStoragePtr_->findGroupAtoms(*bondIter);
+         assert(nAtom > 0);
       }
- 
-      #if 0
-      // At this point:
-      // All atoms on correct processor
-      // No ghost atoms exist
-      // All pointer to local atoms in Groups are set.
-      // All pointers to ghost atoms in Groups are null.
-      */
       #endif
+
+      #if 1
+      bondStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(),
+                               false);
+      #endif
+
+      /*
+      * At this point:
+      * No ghost atoms exist.
+      * All atoms are on correct processor.
+      * All pointer to local atoms in Groups are set.
+      * All pointers to ghost atoms in Groups are null.
+      */
 
    }
 

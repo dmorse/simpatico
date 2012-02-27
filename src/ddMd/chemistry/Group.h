@@ -128,7 +128,7 @@ namespace DdMd
             atomPtrs_[i] = 0; 
          }
       }
-    
+   
       /**
       * Set the postMark.
       *  

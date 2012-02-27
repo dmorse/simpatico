@@ -85,7 +85,7 @@ namespace Util
       {  return (current_ == end_); }
 
       /**
-      * Is this not at the end of the PArray?
+      * Is the current pointer not at the end of the PArray?
       *
       * \return true if not at end, false otherwise.
       */
@@ -104,12 +104,15 @@ namespace Util
       //@{
       
       /**
-      * Get a reference to the current Data.
+      * Return a reference to the current Data.
       *
       * \return reference to associated Data object
       */
       Data& operator* () const
-      {  return *data_; }
+      {
+         assert(data_); 
+         return *data_; 
+      }
 
       /**
       * Provide a pointer to the current Data object.
@@ -117,7 +120,10 @@ namespace Util
       * \return pointer to the Data object
       */
       Data* operator -> () const
-      {  return data_; }
+      {
+         assert(data_); 
+         return data_; 
+      }
 
       /**
       * Increment the current pointer.
@@ -126,6 +132,7 @@ namespace Util
       */
       PArrayIterator<Data>& operator++ ()
       {
+         assert(current_);
          ++current_;
          if (current_ != end_) {
            data_ = *current_;
@@ -145,8 +152,8 @@ namespace Util
       // Pointer to one element one past last Data* pointer in the set.
       Data** end_;
 
-      // current Data* pointer - references current Data.
-      Data*  data_;
+      // Pointer to current Data object.
+      Data* data_;
 
    };
 

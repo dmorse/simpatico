@@ -35,6 +35,8 @@ namespace Util
 
    public:
 
+      // Protected default constructor
+
       /**
       * Destructor.
       */
@@ -78,21 +80,17 @@ namespace Util
 
    protected:
 
-      /**
-      * Default constructor.
-      *
-      * Protected to prevent direct instantiation.
-      */
+      /// Constructor (protected to prevent instantiation).
       PArray();
 
       /// PArray of of pointers to Data objects.
       Data** ptrs_;
 
       /// Allocated size of ptrs_ array.
-      int    capacity_;
+      int capacity_;
 
       /// Logical size (number of elements with initialized data).
-      int    size_;
+      int size_;
 
    private:
 
@@ -130,14 +128,14 @@ namespace Util
    */
    template <typename Data>
    inline int PArray<Data>::capacity() const
-   { return capacity_; }
+   {  return capacity_; }
 
    /*
    * Return logical size.
    */
    template <typename Data>
    inline int PArray<Data>::size() const
-   { return size_; }
+   {  return size_; }
 
    /**
    * Set an PArrayIterator to the beginning of this PArray.
@@ -147,8 +145,7 @@ namespace Util
    template <typename Data>
    inline void PArray<Data>::begin(PArrayIterator<Data> &iterator) const
    {
-      assert(ptrs_ != 0);
-      if (size_ > 0) {
+      if (ptrs_ && size_ > 0) {
          iterator.setCurrent(ptrs_);
          iterator.setEnd(ptrs_ + size_);
       } else {
@@ -164,8 +161,7 @@ namespace Util
    template <typename Data>
    inline void PArray<Data>::begin(ConstPArrayIterator<Data> &iterator) const
    {
-      assert(ptrs_ != 0);
-      if (size_ > 0) {
+      if (ptrs_ && size_ > 0) {
          iterator.setCurrent(ptrs_);
          iterator.setEnd(ptrs_ + size_);
       } else {
@@ -182,10 +178,10 @@ namespace Util
    template <typename Data>
    inline Data& PArray<Data>::operator[] (int i) const
    {
-      assert(ptrs_ != 0);
+      assert(ptrs_);
       assert(i >= 0);
       assert(i < size_);
-      return *ptrs_[i];
+      return *(ptrs_[i]);
    }
 
 } 

@@ -72,8 +72,7 @@ namespace Util
       /**
       * Return the error message.
       */
-      const std::string& message();
-   
+      std::string& message();
    
    protected:
   

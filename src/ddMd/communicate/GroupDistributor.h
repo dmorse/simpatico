@@ -209,6 +209,11 @@ namespace DdMd
       /// Total number of atoms in groups recieved (defined on all)
       int nAtomRecv_;
 
+      /**
+      * Validate groups after receipt.
+      */
+      void validate();
+
    };
 
 }

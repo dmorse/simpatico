@@ -429,9 +429,9 @@ inline void SystemTest::testIntegrate1()
                 << Dbl(kinetic + potential) << std::endl;
    }
 
-   for (int i = 0; i < 5; ++i ) {
+   for (int i = 0; i < 3; ++i ) {
 
-      object().integrate(1000);
+      object().integrate(500);
 
       // Calculate energies after integration
       kinetic   = object().kineticEnergy();

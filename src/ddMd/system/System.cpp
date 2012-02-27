@@ -302,7 +302,17 @@ namespace DdMd
    bool System::isValid()
    {
       atomStorage_.isValid();
+
+      // Determine if there are any ghosts on any processor
+      int nGhost = nGhostTotal();
+      #if UTIL_MPI
+      bcast(domain_.communicator(), nGhost, 0);
+      #endif
+      bool hasGhosts = bool(nGhost);
+
+      bondStorage_.isValid(atomStorage_, domain_.communicator(), hasGhosts);
       return true; 
+
    }
 
 }

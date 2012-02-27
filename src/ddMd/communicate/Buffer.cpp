@@ -260,7 +260,6 @@ namespace DdMd
    */
    void Buffer::packAtom(Atom& atom)
    {
-      // Preconditions
       if (sendType_ != ATOM) {
          UTIL_THROW("Send type is not ATOM");
       }
@@ -268,15 +267,14 @@ namespace DdMd
          UTIL_THROW("Attempt to overpack send buffer");
       }
 
-      pack<int>(atom.typeId());
       pack<int>(atom.id());
+      pack<int>(atom.typeId());
       pack<Vector>(atom.position());
       pack<Vector>(atom.velocity());
       // pack<unsigned int>(atom.plan().flags());
 
       //Increment number of atoms in send buffer by 1
       ++sendSize_;
-
    }
 
    /*
@@ -284,7 +282,6 @@ namespace DdMd
    */
    void Buffer::unpackAtom(Atom& atom)
    {
-      // Preconditions
       if (recvType_ != (int)ATOM) {
          UTIL_THROW("Receive type is not ATOM");
       }
@@ -293,13 +290,17 @@ namespace DdMd
       }
 
       int i;
-      unsigned int ui;
-      unpack(i);
-      atom.setTypeId(i);
+
       unpack(i);
       atom.setId(i);
+
+      unpack(i);
+      atom.setTypeId(i);
+
       unpack<Vector>(atom.position());
       unpack<Vector>(atom.velocity());
+
+      // unsigned int ui;
       // unpack(ui);
       // atom.plan().setFlags(ui);
 
@@ -322,8 +323,8 @@ namespace DdMd
       }
 
       Vector pos;
-      pack<int>(atom.typeId());
       pack<int>(atom.id());
+      pack<int>(atom.typeId());
       pack<Vector>(atom.position());
       //pack<unsigned int>(atom.plan().flags());
 
@@ -337,7 +338,6 @@ namespace DdMd
    */
    void Buffer::unpackGhost(Atom& atom)
    {
-      // Preconditions
       if (recvType_ != (int)GHOST) {
          UTIL_THROW("Receive type is not GHOST");
       }
@@ -346,12 +346,15 @@ namespace DdMd
       }
 
       int i;
-      unsigned int ui;
-      unpack(i);
-      atom.setTypeId(i);
       unpack(i);
       atom.setId(i);
+
+      unpack(i);
+      atom.setTypeId(i);
+
       unpack<Vector>(atom.position());
+
+      //unsigned int ui;
       //unpack(ui);
       //atom.plan().setFlags(ui);
       
@@ -390,15 +393,15 @@ namespace DdMd
       request[0] = comm.Irecv(recvBufferBegin_, bufferCapacity_ , 
                               MPI::CHAR, source, 5);
 
-      // Start nonblock send.
+      // Start nonblocking send.
       sendBytes = sendPtr_ - sendBufferBegin_;
       request[1] = comm.Isend(sendBufferBegin_, sendBytes , MPI::CHAR, dest, 5);
 
-      // Wait for completion of receive buffer.
+      // Wait for completion of receive.
       request[0].Wait();
       recvPtr_ = recvBufferBegin_;
 
-      // Wait for completion of send
+      // Wait for completion of send.
       request[1].Wait();
 
    }
@@ -425,7 +428,6 @@ namespace DdMd
       sendBytes = sendPtr_ - sendBufferBegin_;
       request = comm.Isend(sendBufferBegin_, sendBytes, MPI::CHAR, dest, 5);
       request.Wait();
-
    }
 
    /*

@@ -12,6 +12,8 @@
 //#include "Buffer.h"
 #include "Domain.h"
 #include <ddMd/storage/GroupStorage.h>
+#include <ddMd/storage/GroupIterator.h>
+#include <ddMd/storage/ConstGroupIterator.h>
 #include <ddMd/storage/AtomStorage.h>
 
 #include <algorithm>
@@ -184,8 +186,8 @@ namespace DdMd
       }
 
       // If group has at least one atoms on master, add to groupStorage.
-      int nAtom = atomStoragePtr_->countGroupAtoms(*newPtr_);
-      if (nAtom) {
+      int nAtom = atomStoragePtr_->findGroupAtoms(*newPtr_);
+      if (nAtom > 0) {
          Group<N>* ptr = groupStoragePtr_->newPtr();
          *ptr = *newPtr_;
          groupStoragePtr_->add();
@@ -208,7 +210,6 @@ namespace DdMd
    void GroupDistributor<N>::send()
    {
 
-      #ifdef UTIL_MPI
       // Preconditions
       if (atomStoragePtr_ == 0) {
          UTIL_THROW("GroupDistributor is not initialized");
@@ -232,27 +233,27 @@ namespace DdMd
          UTIL_THROW("A newPtr_ is still active");
       }
 
+      #ifdef UTIL_MPI
       bool isComplete = true;
-      int  source = 0;
+      int source = 0;
       bufferPtr_->endSendBlock(isComplete);
       bufferPtr_->bcast(domainPtr_->communicator(), source);
       nSentTotal_ += cacheSize_;
       bufferPtr_->clearSendBuffer();
+
+      validate();
+      groupStoragePtr_->setNTotal(nSentTotal_);
+      groupStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(), 
+                                false);
+      #else
+      groupStoragePtr_->setNTotal(nSentTotal_);
+      groupStoragePtr_->isValid(*atomStoragePtr_, false);
+      #endif
+
       cacheSize_ = 0;
       newPtr_ = 0;
-
-      int nAtomRecvAll;
-      domainPtr_->communicator()
-                  .Reduce(&nAtomRecv_, &nAtomRecvAll, 1, MPI::INT, MPI::SUM, 0);
-      if (domainPtr_->gridRank() == 0) {
-         if (nAtomRecvAll != nSentTotal_*N) {
-             UTIL_THROW("Discrepancy in number of local atoms in groups");
-         }
-      }
-
-      nSentTotal_   = 0;
+      nSentTotal_ = 0;
       nAtomRecv_ = 0;
-      #endif
    }
 
    /*
@@ -287,8 +288,9 @@ namespace DdMd
       Group<N>* ptr;
       int  nAtom;
       bool isComplete = false;
-      int  nAtomRecv_ = 0;
       const int source = 0;
+
+      nAtomRecv_ = 0;
       while (!isComplete) {
 
          // Receive broadcast
@@ -300,25 +302,48 @@ namespace DdMd
             ptr = groupStoragePtr_->newPtr();
             bufferPtr_->unpackGroup(*ptr);
             nAtom = atomStoragePtr_->findGroupAtoms(*ptr);
-            if (nAtom) {
+            if (nAtom > 0) {
                groupStoragePtr_->add();
                nAtomRecv_ += nAtom;
-            } else {
+            } else if (nAtom == 0) {
                groupStoragePtr_->returnPtr();
+            } else {
+               UTIL_THROW("Invalid return value from findGroupAtoms");
             }
          }
 
       }
 
-      // Calculate total number of atoms on all processors.
-      int nAtomRecvAll;
-      domainPtr_->communicator()
-                  .Reduce(&nAtomRecv_, &nAtomRecvAll, 1, MPI::INT, MPI::SUM, 0);
+      validate();
+
+      // Validate Group Storage
+      groupStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(),
+                                false);
 
       nAtomRecv_ = 0;
       #endif
-
    }
+
+   #ifdef UTIL_MPI
+   /**
+   * Check number of atoms sent and recieved.
+   */
+   template <int N>
+   void GroupDistributor<N>::validate() 
+   {
+      int nAtomRecvTot;
+      const int source = 0;
+      domainPtr_->communicator()
+             .Reduce(&nAtomRecv_, &nAtomRecvTot, 1, MPI::INT, MPI::SUM, source);
+      if (domainPtr_->gridRank() == 0) {
+         if (nAtomRecvTot != nSentTotal_*N) {
+             std::cout << "nSentTotal_*N = " << nSentTotal_*N << std::endl;
+             std::cout << "nAtomRecvTot  = " << nAtomRecvTot  << std::endl;
+             UTIL_THROW("Discrepancy in number of local atoms in groups");
+         }
+      }
+   }
+   #endif
 
 }
 #endif

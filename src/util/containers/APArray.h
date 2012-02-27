@@ -120,18 +120,24 @@ namespace Util
    APArray<Data>::APArray(const APArray<Data>& other) 
     : PArray<Data>()
    {
-      if (other.isAllocated()) {
+      if (other.ptrs_ == 0) {
+
+         ptrs_ = 0;
+         capacity_ = 0;
+         size_ = 0;
+
+      } else { 
 
          // Allocate array of Data* pointers
-         ptrs_     = new Data*[other.capacity_];
+         ptrs_  = new Data*[other.capacity_];
          capacity_ = other.capacity_;
+         size_ = other.size_;
 
          // Copy pointers
          int i;
-         for (i = 0; i < other.size_; ++i) {
+         for (i = 0; i < size_; ++i) {
             ptrs_[i] = other.ptrs_[i];
          }
-         size_ = other.size_;
 
          // Nullify unused elements of ptrs_ array
          if (capacity_ > size_) {
@@ -149,16 +155,13 @@ namespace Util
    template <typename Data>
    APArray<Data>& APArray<Data>::operator=(const APArray<Data>& other) 
    {
-
       // Check for self assignment
       if (this == &other) return *this;
 
-      // Copy pointers
       clear();
       for (int i = 0; i < other.size_; ++i) {
          append(other[i]);
       }
-
       return *this;
    }
 

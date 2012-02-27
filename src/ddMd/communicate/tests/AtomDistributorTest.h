@@ -42,7 +42,7 @@ public:
 
       // Set connections between objects
       domain.setBoundary(boundary);
-      object().associate(domain, boundary, buffer);
+      object().associate(domain, boundary, storage, buffer);
 
       #ifdef UTIL_MPI
       // Set communicators
@@ -119,7 +119,7 @@ public:
             //Use position vector for velocity for now
             ptr->velocity() = ptr->position();
 
-            object().addAtom(storage);
+            object().addAtom();
 
          }
          file().close();
@@ -129,7 +129,7 @@ public:
 
       } else { // If I am not the master processor
 
-         object().receive(storage);
+         object().receive();
 
       }
 
@@ -143,8 +143,8 @@ public:
       #ifdef UTIL_MPI
       MpiLogger logger;
       logger.begin();
-      std::cout << "Processor: " << myRank
-                << ", recvCount = " << recvCount << std::endl;
+      //std::cout << "Processor: " << myRank
+      //          << ", recvCount = " << recvCount << std::endl;
       logger.end();
       #endif 
 
@@ -153,7 +153,7 @@ public:
       int nRecvAll;
       communicator().Reduce(&recvCount, &nRecvAll, 1, MPI::INT, MPI::SUM, 0);
       if (myRank == 0) {
-         std::cout << "Total atom count = " << nRecvAll << std::endl;
+         //std::cout << "Total atom count = " << nRecvAll << std::endl;
          TEST_ASSERT(nRecvAll == atomCount);
       }
       #else

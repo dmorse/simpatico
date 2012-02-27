@@ -29,6 +29,7 @@ public:
    void tearDown();
   
    void testAppend();
+   void testAppendEmpty();
    void testModify();
    void testIterator();
 
@@ -69,6 +70,37 @@ void APArrayTest::testAppend()
    TEST_ASSERT(parray[4] == array[6]);
    TEST_ASSERT(parray[5] == array[9]);
 
+   parray.clear();
+   TEST_ASSERT(parray.size() == 0);
+   TEST_ASSERT(parray.capacity() == 8);
+
+} 
+
+void APArrayTest::testAppendEmpty()
+{
+   printMethod(TEST_FUNC);
+
+   TEST_ASSERT(parray.size() == 0);
+   TEST_ASSERT(parray.capacity() == 0);
+
+   parray.append(array[8]); // 0
+   TEST_ASSERT(parray.capacity() == 64);
+   parray.append(array[4]); // 1
+   TEST_ASSERT(parray.capacity() == 64);
+   parray.append(array[3]); // 2
+   parray.append(array[5]); // 3
+   parray.append(array[6]); // 4
+   parray.append(array[9]); // 5
+   TEST_ASSERT(parray.capacity() == 64);
+
+   TEST_ASSERT(parray.size() == 6);
+   TEST_ASSERT(parray[0] == array[8]);
+   TEST_ASSERT(parray[1] == array[4]);
+   TEST_ASSERT(parray[2] == array[3]);
+   TEST_ASSERT(parray[3] == array[5]);
+   TEST_ASSERT(parray[4] == array[6]);
+   TEST_ASSERT(parray[5] == array[9]);
+
 } 
 
 void APArrayTest::testModify()
@@ -89,15 +121,24 @@ void APArrayTest::testModify()
    } catch (Exception e) {
       TEST_ASSERT(0);
    }
+
    TEST_ASSERT(parray[1] == 13);
    TEST_ASSERT(array[4]  == 13);
+   TEST_ASSERT(&parray[1]  == &array[4]);
    TEST_ASSERT(parray[2] == array[3]);
+   TEST_ASSERT(&parray[2] == &array[3]);
+   TEST_ASSERT(parray[3] == array[5]);
+   TEST_ASSERT(&parray[3] == &array[5]);
 
 } 
 
 void APArrayTest::testIterator()
 {
    printMethod(TEST_FUNC);
+
+   parray.begin(iterator);
+   TEST_ASSERT(iterator.atEnd());
+   TEST_ASSERT(!iterator.notEnd());
 
    parray.reserve(2);
    parray.append(array[8]);
@@ -111,11 +152,15 @@ void APArrayTest::testIterator()
    TEST_ASSERT(!iterator.atEnd());
    TEST_ASSERT(iterator.notEnd());
    TEST_ASSERT(*iterator == array[8]);
+   TEST_ASSERT(iterator.get() == &array[8]);
+   TEST_ASSERT(&(*iterator) == &array[8]);
    ++iterator;
 
    TEST_ASSERT(!iterator.atEnd());
    TEST_ASSERT(iterator.notEnd());
    TEST_ASSERT(*iterator == array[4]);
+   TEST_ASSERT(iterator.get() == &array[4]);
+   TEST_ASSERT(&(*iterator) == &array[4]);
    ++iterator;
 
    TEST_ASSERT(!iterator.atEnd());
@@ -135,6 +180,7 @@ void APArrayTest::testIterator()
 
 TEST_BEGIN(APArrayTest)
 TEST_ADD(APArrayTest, testAppend)
+TEST_ADD(APArrayTest, testAppendEmpty)
 TEST_ADD(APArrayTest, testModify)
 TEST_ADD(APArrayTest, testIterator)
 TEST_END(APArrayTest)

@@ -48,7 +48,7 @@ public:
 
       // Set connections between atomDistributors
       domain.setBoundary(boundary);
-      atomDistributor.associate(domain, boundary, buffer);
+      atomDistributor.associate(domain, boundary, atomStorage, buffer);
       bondDistributor.associate(domain, atomStorage, bondStorage, buffer);
 
       #ifdef UTIL_MPI
@@ -121,7 +121,7 @@ public:
             configFile >> ptr->velocity();
             ptr->velocity() = ptr->position();
 
-            atomDistributor.addAtom(atomStorage);
+            atomDistributor.addAtom();
 
          }
          file().close();
@@ -131,7 +131,7 @@ public:
 
       } else { // If I am not the master processor
 
-         atomDistributor.receive(atomStorage);
+         atomDistributor.receive();
 
       }
 
@@ -181,7 +181,7 @@ public:
          bondDistributor.initSendBuffer();
          #endif
 
-         // Fill the atom atomDistributors
+         // Read bonds and add to bondDistributor
          int i;
          Group<2>* ptr;
          for(i = 0; i < bondCount; ++i) {

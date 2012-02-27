@@ -42,8 +42,6 @@ public:
 
    void setUp()
    {
-      printMethod(TEST_FUNC);
-
       std::ifstream configFile;
 
       // Set connections between atomDistributors
@@ -98,7 +96,10 @@ public:
    }
 
    virtual void testDistribute()
-   {}
+   { 
+      printMethod(TEST_FUNC); 
+   }
+
 
    void exchangeAtoms()
    {
@@ -144,6 +145,9 @@ public:
       logger.end();
       #endif
 
+      TEST_ASSERT(atomStorage.isValid());
+      TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), false));
+
       exchangeAtoms();
 
       // Check that all atoms are accounted for after exchange.
@@ -161,6 +165,7 @@ public:
       }
 
       TEST_ASSERT(atomStorage.isValid());
+      TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), false));
 
       #if 0
       //Print the number of atoms with each processor after the exchange.

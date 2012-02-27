@@ -78,9 +78,9 @@ namespace Util
    {  out << message_; }
 
    /*
-   * Get message by const reference
+   * Get message by reference
    */
-   const std::string& Exception::message()
+   std::string& Exception::message()
    {  return message_; }
 
 
