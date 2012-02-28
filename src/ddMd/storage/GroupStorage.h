@@ -601,6 +601,7 @@ namespace DdMd
       int i;
       int atomId;
       int nAtom;  // Number of local atoms in particular group.
+      int nGhost; // Number of local atoms in particular group.
       int nAtomGroup = 0; // Number of local atoms in all groups on processor
       Atom* atomPtr;
       ConstGroupIterator<N> groupIter;
@@ -612,6 +613,7 @@ namespace DdMd
       begin(groupIter);
       for ( ; groupIter.notEnd(); ++groupIter) {
          nAtom = 0;
+         nGhost = 0;
          for (i = 0; i < N; ++i) {
             atomId  = groupIter->atomId(i);
             if (atomId < 0 || atomId >= atomStorage.totalAtomCapacity()) {
@@ -623,11 +625,7 @@ namespace DdMd
                   UTIL_THROW("Inconsistent non-null atom pointer in Group");
                }
                if (atomPtr->isGhost()) {
-                  if (hasGhosts) {
-                     ++nAtom;
-                  } else {
-                     UTIL_THROW("Ghost atom in Group");
-                  }
+                  ++nGhost;
                } else {
                   ++nAtom;
                }
@@ -647,7 +645,7 @@ namespace DdMd
          if (nAtom == 0) {
             UTIL_THROW("Empty group");
          }
-         if (hasGhosts && nAtom < N) {
+         if (hasGhosts && (nAtom + nGhost) < N) {
             UTIL_THROW("Incomplete group");
          }
          nAtomGroup += nAtom;
@@ -671,6 +669,7 @@ namespace DdMd
       }
       #endif
 
+      return true;
    }
 }
 #endif

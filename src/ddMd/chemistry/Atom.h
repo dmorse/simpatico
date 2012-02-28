@@ -29,28 +29,37 @@ namespace DdMd
 
    public:
 
-      // Default constructor.
+      /**
+      * Constructor.
+      */
       Atom();
-      
+     
+      // Use default destructor.
+ 
       /// \name Mutators
       //@{
 
       /**
-      * Set unique id.
+      * Reset integer members to initial null values.
+      */
+      void clear();
+
+      /**
+      * Set unique id for this Atom.
       *  
       * \param Id unique atom id.
       */
       void setId(int Id);
 
       /**
-      * Set the atomic type index.
+      * Set the atom type index.
       *  
       * \param Id integer index that identifies atom type
       */
       void setTypeId(int Id);
 
       /**
-      * Set the atomic type index.
+      * Mark as ghost or local atom.
       *  
       * \param isGhost true if this is a ghost, or false if local.
       */
@@ -82,12 +91,10 @@ namespace DdMd
       */
       Vector& force();
 
-      #if 0
       /**
       * Get communication plan by reference.
       */
       Plan& plan();
-      #endif
 
       //@}
       /// \name Accessors 
@@ -111,10 +118,8 @@ namespace DdMd
       /// Get the force Vector (const reference).
       const Vector& force() const;
 
-      #if 0
-      /// Communication plan (const reference).
+      /// Get communication plan (const reference).
       const Plan& plan() const;
-      #endif
 
       /// Return postMark (true if marked for sending).
       bool postMark() const;
@@ -155,10 +160,8 @@ namespace DdMd
       // Is this Atom marked for sending? (0=false, 1=true)
       int postMark_;
 
-      #if 0
-      // Is this Atom a ghost (0=false, 1=true)
+      // Communication plan.
       Plan plan_;
-      #endif
 
       /// Atomic velocity.
       Vector velocity_;                       
@@ -178,9 +181,21 @@ namespace DdMd
      force_(0.0),
      isGhost_(0),
      postMark_(0),
-     //plan_(),
+     plan_(),
      velocity_(0.0)
    {}
+
+   /**
+   * Reset integer members to null values.
+   */
+   inline void Atom::clear()
+   {
+      typeId_ = -1;
+      id_ = -1;
+      isGhost_ = 0;
+      postMark_ = 0;
+      plan_.setFlags(0);
+   }
 
    // Set unique global index for Atom.
    inline void Atom::setId(int id) 
@@ -214,11 +229,9 @@ namespace DdMd
    inline bool Atom::postMark() const
    {  return bool(postMark_); }
 
-   #if 0
    // Get reference to communication plan.
    inline Plan& Atom::plan()
    {  return plan_; }
-   #endif
 
    // Get reference to position.
    inline Vector& Atom::position()
@@ -244,11 +257,9 @@ namespace DdMd
    inline const Vector& Atom::force() const
    {  return force_; }
 
-   #if 0
    // Get const reference to communication plan.
    inline const Plan& Atom::plan() const
    {  return plan_; }
-   #endif
 
    #if 0
    // Get the associated mask.

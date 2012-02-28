@@ -104,8 +104,8 @@ public:
    void exchangeAtoms()
    {
       // Range of random increments for the atom positions.
-      double range1 = -1.0;
-      double range2 =  1.0;
+      double range1 = -0.4;
+      double range2 =  0.4;
 
       // Add random increments to atom positions
       AtomIterator  atomIter;
@@ -221,6 +221,7 @@ public:
       }
 
       TEST_ASSERT(atomStorage.isValid());
+      TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), false));
 
       #if 0
       MpiLogger logger;
@@ -298,6 +299,7 @@ public:
       }
 
       TEST_ASSERT(atomStorage.isValid());
+      TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), false));
 
       #if 0
       MpiLogger logger;

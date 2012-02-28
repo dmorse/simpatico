@@ -102,8 +102,9 @@ public:
          configFile >> Label("ATOMS");
          configFile >> Label("nAtom") >> atomCount;
 
-         std::cout << std::endl;
-         std::cout << "Num Atoms to be distributed = " << atomCount << std::endl;
+         //std::cout << std::endl;
+         //std::cout << "Num Atoms to be distributed = " 
+         //          << atomCount << std::endl;
 
          // Initialize the sendbuffer.
          atomDistributor.initSendBuffer();
@@ -173,8 +174,9 @@ public:
          configFile >> Label("BONDS");
          configFile >> Label("nBond") >> bondCount;
 
-         std::cout << std::endl;
-         std::cout << "Num Bonds to be distributed = " << bondCount << std::endl;
+         //std::cout << std::endl;
+         //std::cout << "Num Bonds to be distributed = " 
+         //          << bondCount << std::endl;
 
          #if UTIL_MPI
          // Initialize the sendbuffer.

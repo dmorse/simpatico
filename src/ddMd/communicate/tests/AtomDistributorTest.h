@@ -99,8 +99,9 @@ public:
          // Read Max number of atoms to be distributed by the master processor
          atomposfile >> atomCount;
 
-         std::cout << std::endl;
-         std::cout << "Num Atoms to be distributed = " << atomCount << std::endl;
+         //std::cout << std::endl;
+         //std::cout << "Num Atoms to be distributed = " 
+         //          << atomCount << std::endl;
 
          #if UTIL_MPI
          // Initialize the sendbuffer.
@@ -157,7 +158,7 @@ public:
          TEST_ASSERT(nRecvAll == atomCount);
       }
       #else
-      std::cout << "Total atom count = " << recvCount << std::endl;
+      //std::cout << "Total atom count = " << recvCount << std::endl;
       TEST_ASSERT(recvCount == atomCount);
       #endif
 

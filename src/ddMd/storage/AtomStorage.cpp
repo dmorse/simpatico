@@ -123,6 +123,7 @@ namespace DdMd
          UTIL_THROW("Ghosts are not cleared");
 
       newAtomPtr_ = &atomReservoir_.pop();
+      newAtomPtr_->clear();
       return newAtomPtr_;
    }
 
@@ -194,6 +195,7 @@ namespace DdMd
       if (locked_ ) 
          UTIL_THROW("AtomStorage is locked");
       newGhostPtr_ = &ghostReservoir_.pop();
+      newGhostPtr_->clear();
       return newGhostPtr_;
    }
 
@@ -240,7 +242,7 @@ namespace DdMd
       ghostReservoir_.push(*atomPtr);
       ghostSet_.remove(*atomPtr);
       int atomId = atomPtr->id();
-      if (atomPtrs_[atomId] == atomPtr) { 
+      if (atomPtrs_[atomId] == atomPtr) {
          atomPtrs_[atomId] = 0;
       }
       atomPtr->setId(-1);
@@ -256,20 +258,21 @@ namespace DdMd
          UTIL_THROW("AtomStorage is locked");
 
       Atom* atomPtr;
+      int   atomId;
       while (ghostSet_.size() > 0) {
          atomPtr = &ghostSet_.pop();
-         int atomId = atomPtr->id();
+         atomId = atomPtr->id();
          if (atomPtrs_[atomId] == atomPtr) { 
             atomPtrs_[atomId] = 0;
          }
          atomPtr->setId(-1);
+         atomPtr->clear();
          ghostReservoir_.push(*atomPtr);
       }
 
       if (ghostSet_.size() != 0) {
          UTIL_THROW("Nonzero ghostSet size at end of clearGhosts");
       }
-
    }
 
    // Snapshot functions

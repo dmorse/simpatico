@@ -70,6 +70,7 @@ public:
       vel[1] = 5.0;
       vel[2] = 7.0;
       atoms[0].velocity() = vel;
+      atoms[0].plan().setFlags(7);
 
       // Atom 1
       atoms[1].setId(1);
@@ -82,6 +83,7 @@ public:
       vel[1] = 3.5;
       vel[2] = 67.7;
       atoms[1].velocity() = vel;
+      atoms[1].plan().setFlags(7);
 
       TEST_ASSERT(object().isAllocated());
       object().clearSendBuffer();
@@ -107,6 +109,7 @@ public:
       pos[1] = 4.2;
       pos[2] = 5.3;
       atoms[0].position() = pos;
+      atoms[0].plan().setFlags(7);
 
       atoms[1].setId(3);
       atoms[1].setTypeId(1);
@@ -114,6 +117,7 @@ public:
       pos[1] = 4.4;
       pos[2] = 5.5;
       atoms[1].position() = pos;
+      atoms[1].plan().setFlags(7);
 
       TEST_ASSERT(object().isAllocated());
       object().clearSendBuffer();
@@ -152,6 +156,7 @@ public:
       vel[1] = myrank  + 5.0;
       vel[2] = myrank  + 6.0;
       atoms[0].velocity() = vel;
+      atoms[0].plan().setFlags(7);
 
       // Fill another local atom object
       atoms[1].setId(1);
@@ -164,6 +169,7 @@ public:
       vel[1] = myrank  + 50.3;
       vel[2] = myrank  + 60.3;
       atoms[1].velocity() = vel;
+      atoms[1].plan().setFlags(7);
 
       //Initialize the sendbuffer, set atomtype to ATOM
       object().clearSendBuffer();
@@ -195,6 +201,7 @@ public:
       TEST_ASSERT(feq(atoms[2].velocity()[0], 4.0 + double(source)));
       TEST_ASSERT(feq(atoms[2].velocity()[1], 5.0 + double(source)));
       TEST_ASSERT(feq(atoms[2].velocity()[2], 6.0 + double(source)));
+      TEST_ASSERT(atoms[2].plan().flags() == 7);
 
       TEST_ASSERT(atoms[3].id() == 1);
       TEST_ASSERT(atoms[3].typeId() == 0);
@@ -204,6 +211,7 @@ public:
       TEST_ASSERT(feq(atoms[3].velocity()[0], 40.3 + double(source)));
       TEST_ASSERT(feq(atoms[3].velocity()[1], 50.3 + double(source)));
       TEST_ASSERT(feq(atoms[3].velocity()[2], 60.3 + double(source)));
+      TEST_ASSERT(atoms[3].plan().flags() == 7);
 
       #if 0
       MpiLogger logger;
@@ -273,6 +281,7 @@ public:
       pos[1] = myrank  + 20.0;
       pos[2] = myrank  + 30.0;
       atoms[0].position() = pos;
+      atoms[0].plan().setFlags(3);
 
       //Fill another local atom object
       atoms[1].setId(1);
@@ -281,6 +290,7 @@ public:
       pos[1] = myrank  + 200.0;
       pos[2] = myrank  + 300.0;
       atoms[1].position() = pos;
+      atoms[1].plan().setFlags(2);
 
       //Initialize the sendbuffer, set atomtype to GHOST
       object().clearSendBuffer();
@@ -309,12 +319,14 @@ public:
       TEST_ASSERT(feq(atoms[2].position()[0], 10.0 + double(source)));
       TEST_ASSERT(feq(atoms[2].position()[1], 20.0 + double(source)));
       TEST_ASSERT(feq(atoms[2].position()[2], 30.0 + double(source)));
+      TEST_ASSERT(atoms[2].plan().flags() == 3);
 
       TEST_ASSERT(atoms[3].id() == 1);
       TEST_ASSERT(atoms[3].typeId() == 0);
       TEST_ASSERT(feq(atoms[3].position()[0], 100.0 + double(source)));
       TEST_ASSERT(feq(atoms[3].position()[1], 200.0 + double(source)));
       TEST_ASSERT(feq(atoms[3].position()[2], 300.0 + double(source)));
+      TEST_ASSERT(atoms[3].plan().flags() == 2);
 
    }
 

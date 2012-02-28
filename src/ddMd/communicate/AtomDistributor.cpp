@@ -369,10 +369,10 @@ namespace DdMd
          UTIL_THROW("atomReservoir not empty after final send");
       }
       if (nCachedTotal_ != nSentTotal_) {
-         UTIL_THROW("Number of cached atoms != number sent");
+         UTIL_THROW("Number cached atoms != number sent");
       }
       if (storagePtr_->nAtomTotal() != nSentTotal_ + storagePtr_->nAtom()) {
-         UTIL_THROW("Number of atoms received != number sent + nAtom on master");
+         UTIL_THROW("Number atoms received != number sent + nAtom on master");
       }
 
       nCachedTotal_ = 0;

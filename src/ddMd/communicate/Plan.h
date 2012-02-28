@@ -42,10 +42,10 @@ namespace DdMd
       void clearFlags()
       {  flags_ = 0; }
  
-      bool testExchange(int i, int j) const
+      bool exchange(int i, int j) const
       {  return bool(flags_ & EMask[i][j]); }
  
-      bool testGhost(int i, int j) const
+      bool ghost(int i, int j) const
       {  return bool(flags_ & GMask[i][j]); }
  
       unsigned int flags() const
@@ -59,7 +59,6 @@ namespace DdMd
       static unsigned int EMask[3][2];
 
    };
-
 
 }
 #endif

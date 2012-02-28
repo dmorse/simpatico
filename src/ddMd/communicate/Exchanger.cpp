@@ -52,7 +52,7 @@ namespace DdMd
       boundaryPtr_ = &boundary;
       atomStoragePtr_ = &atomStorage;
       bondStoragePtr_ = &bondStorage;
-      bufferPtr_  = &buffer;
+      bufferPtr_ = &buffer;
    }
 
    /*
@@ -86,7 +86,6 @@ namespace DdMd
    {  pairCutoff_ = pairCutoff; }
 
    #ifdef UTIL_MPI
-
    /**
    * Exchange ownership of local atoms.
    *
@@ -107,7 +106,7 @@ namespace DdMd
       int shift;
       bool choose;
 
-      #if 0
+      #if 1
       // Calculate atom communication plans for all local atoms
       atomStoragePtr_->begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
@@ -130,33 +129,19 @@ namespace DdMd
 
                // Decide upon plan  direction i, j
                if (j == 0) { // Communicate with lower index
-                  jc = 1; // direction for reverse communication
-                  choose = (coordinate < bound);
-                  if (!choose) { // retain atom
-                     inner = bound + pairCutoff_;
-                     if (coordinate < inner) {
-                        atomIter->plan().setGhost(i, j);
-                     }
-                  } else { // Send to lower index
-                     atomIter->plan().setExchange(i, j);
-                     inner = bound - pairCutoff_;
-                     if (coordinate > inner) {
-                        atomIter->plan().setGhost(i, jc);
+                  inner = bound + pairCutoff_;
+                  if (coordinate < inner) {
+                     atomIter->plan().setGhost(i, j);
+                     if (coordinate < bound) {
+                        atomIter->plan().setExchange(i, j);
                      }
                   }
                } else { // j == 1, communicate with upper index
-                  jc = 0; // direction for reverse communication
-                  choose = (coordinate > bound);
-                  if (!choose) { // retain atom
-                     inner = bound - pairCutoff_;
-                     if (coordinate > inner) {
-                        atomIter->plan().setGhost(i, j);
-                     }
-                  } else { // send to upper index
-                     atomIter->plan().setExchange(i, j);
-                     inner = bound + pairCutoff_;
-                     if (coordinate < inner) {
-                        atomIter->plan().setGhost(i, jc);
+                  inner = bound - pairCutoff_;
+                  if (coordinate > inner) {
+                     atomIter->plan().setGhost(i, j);
+                     if (coordinate > bound) {
+                        atomIter->plan().setExchange(i, j);
                      }
                   }
                }
@@ -224,14 +209,25 @@ namespace DdMd
             // j = 0 sends to lower  coordinate i
             // j = 1 sends to higher coordinate i
 
+            // Index for conjugate (reverse) direction
+            if (j == 0) jc = 1;
+            if (j == 1) jc = 0;
+
             //Processor to receive from
             source = domainPtr_->sourceRank(i, j);
 
             //Processor to send to
             dest = domainPtr_->destRank(i, j);
 
-            // Boundary (j=0 -> minimum, j=1 -> maximum)
+            // Boundary for sending processor (j=0 -> minimum, j=1 -> maximum)
             bound = domainPtr_->domainBound(i, j);
+
+            // Inner slab boundary for receiving processor. 
+            if (j == 0) {
+               inner = domainPtr_->domainBound(i, 1) - pairCutoff_;
+            } else {
+               inner = domainPtr_->domainBound(i, 0) + pairCutoff_;
+            }
 
             // Shift due to periodic boundary conditions
             shift = domainPtr_->shift(i, j);
@@ -247,14 +243,14 @@ namespace DdMd
             atomStoragePtr_->begin(atomIter);
             for ( ; !atomIter.atEnd(); ++atomIter) {
 
-               atomIter->setPostMark(false);
+               //atomIter->plan().clearExchange(i, j);
 
                if (j == 0) {
                   choose = (atomIter->position()[i] < bound);
                } else {
                   choose = (atomIter->position()[i] > bound);
                }
-               //assert(choose == atomIter->plan().testExchange(i, j));
+               assert(choose == atomIter->plan().exchange(i, j));
 
                if (choose) {
 
@@ -262,13 +258,22 @@ namespace DdMd
 
                      sendArray_(i, j).append(*atomIter);
                      bufferPtr_->packAtom(*atomIter);
-                     atomIter->setPostMark(true);
+                     atomIter->plan().setExchange(i, j);
 
                   } else {
 
                      // Shift position if required by periodic b.c.
                      if (shift) {
                         atomIter->position()[i] += shift * lengths[i];
+                     }
+                     if (atomIter->plan().ghost(i, j)) {
+                        atomIter->plan().clearGhost(i, j);
+                     }
+                     if (j == 0 && atomIter->position()[i] > inner) { 
+                           atomIter->plan().setGhost(i, 1);
+                     } else 
+                     if (j == 1 && atomIter->position()[i] < inner) { 
+                           atomIter->plan().setGhost(i, 0);
                      }
                      assert(atomIter->position()[i] 
                             > domainPtr_->domainBound(i, 0));
@@ -298,7 +303,7 @@ namespace DdMd
                   for (k = 0; k < 2; ++k) {
                      atomPtr = bondIter->atomPtr(k);
                      if (atomPtr) {
-                        if (atomPtr->postMark()) {
+                        if (atomPtr->plan().exchange(i, j)) {
                            choose = true;
                            bondIter->clearAtomPtr(k);
                         } else {
@@ -352,6 +357,7 @@ namespace DdMd
                while (bufferPtr_->recvSize() > 0) {
                   atomPtr = atomStoragePtr_->newAtomPtr();
                   bufferPtr_->unpackAtom(*atomPtr);
+
                   if (shift) {
                      atomPtr->position()[i] += shift * lengths[i];
                   }
@@ -359,6 +365,18 @@ namespace DdMd
                          > domainPtr_->domainBound(i, 0));
                   assert(atomPtr->position()[i] 
                          < domainPtr_->domainBound(i, 1));
+
+                  // Adjust ghost plan
+                  if (atomPtr->plan().ghost(i, j)) {
+                     atomPtr->plan().clearGhost(i, j);
+                  }
+                  if (j == 0 && atomPtr->position()[i] > inner) { 
+                        atomPtr->plan().setGhost(i, 1);
+                  } else 
+                  if (j == 1 && atomPtr->position()[i] < inner) { 
+                        atomPtr->plan().setGhost(i, 0);
+                  }
+
                   atomStoragePtr_->addNewAtom();
                }
                assert(bufferPtr_->recvSize() == 0);
@@ -404,7 +422,7 @@ namespace DdMd
       }
       #endif
 
-      #if 1
+      #if 0
       bondStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(),
                                false);
       #endif
@@ -489,26 +507,27 @@ namespace DdMd
                   choose = (coord > inner);
                }
 
+               //assert(choose == localIter->plan().ghost(i, j));
+
                #if 0
-               assert(choose == localIter->plan().testGhost(i, j));
-               if (choose != localIter->plan().testGhost(i, j)) {
+               if (choose != localIter->plan().ghost(i, j)) {
                   std::cout << "Proc " << myRank << "  "
                             << "atom " << localIter->id() << "  "
                             << "Dir  " << i << "  " << j << "  "
                             << localIter->position() << "  ";
                   for (int a= 0; a < Dimension; ++a) {
                      for (int b = 0; b < 2;  ++b) {
-                        std::cout << localIter->plan().testExchange(a, b);
+                        std::cout << localIter->plan().exchange(a, b);
                      }
                   }
                   std::cout << "  ";
                   for (int a= 0; a < Dimension; ++a) {
                      for (int b = 0; b < 2;  ++b) {
-                        std::cout << localIter->plan().testGhost(a, b);
+                        std::cout << localIter->plan().ghost(a, b);
                      }
                   }
                   std::cout << "  " << choose << "  " 
-                            << localIter->plan().testGhost(i, j);
+                            << localIter->plan().ghost(i, j);
                   std::cout << std::endl;
                   
                   UTIL_THROW("Assert failed in exchange ghosts");
