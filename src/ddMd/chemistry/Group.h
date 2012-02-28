@@ -51,8 +51,7 @@ namespace DdMd
       Group()
        : id_(-1),
          typeId_(-1),
-         nPtr_(0),
-         postMark_(0)
+         nPtr_(0)
       {
          for (int i=0; i < N; ++i) {
             atomIds_[i]  = -1;
@@ -64,11 +63,10 @@ namespace DdMd
       * Set group to empty initial state.
       */
       void clear()
-      {  
+      {
          id_ = -1; 
          typeId_ = -1;
          nPtr_ = 0;
-         postMark_ = 0;
          for (int i=0; i < N; ++i) {
             atomIds_[i]  = -1;
             atomPtrs_[i] = 0;
@@ -128,15 +126,7 @@ namespace DdMd
             atomPtrs_[i] = 0; 
          }
       }
-   
-      /**
-      * Set the postMark.
-      *  
-      * \param postMark true if this is marked for sending, false otherwise.
-      */
-      void setPostMark(bool postMark)
-      {  postMark_ = postMark ? 1 : 0; }
-
+  
       // Accessors
  
       /**
@@ -172,13 +162,7 @@ namespace DdMd
       */
       int nPtr() const 
       {  return nPtr_; }
-    
-      /**
-      * Return postMark (true if marked for sending).
-      */
-      bool postMark() const
-      {  return bool(postMark_); }
-
+   
    private:
       
       /// Array of pointers to Atoms in this group.
@@ -195,9 +179,6 @@ namespace DdMd
 
       /// Number of non-null atom pointers in this Group.
       int  nPtr_;
-
-      /// Is this Atom marked for sending? (0=false, 1=true)
-      int  postMark_;
 
    //friends:
 

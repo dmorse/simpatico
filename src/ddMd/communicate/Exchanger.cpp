@@ -48,10 +48,10 @@ namespace DdMd
                              BondStorage& bondStorage, 
                              Buffer& buffer)
    {
-      domainPtr_  = &domain;
-      boundaryPtr_  = &boundary;
-      atomStoragePtr_  = &atomStorage;
-      bondStoragePtr_  = &bondStorage;
+      domainPtr_ = &domain;
+      boundaryPtr_ = &boundary;
+      atomStoragePtr_ = &atomStorage;
+      bondStoragePtr_ = &bondStorage;
       bufferPtr_  = &buffer;
    }
 
@@ -211,7 +211,8 @@ namespace DdMd
       if (myRank == 0) {
          nAtomTotal = atomStoragePtr_->nAtomTotal();
       }
-      bondStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(), false);
+      bondStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(), 
+                               false);
       #endif
 
       // Cartesian directions
@@ -323,7 +324,6 @@ namespace DdMd
                // Remove chosen atoms from atomStorage
                nSend = sendArray_(i, j).size();
                for (k = 0; k < nSend; ++k) {
-                  sendArray_(i, j)[k].setPostMark(false);
                   atomStoragePtr_->removeAtom(&sendArray_(i, j)[k]);
                }
 
@@ -331,12 +331,15 @@ namespace DdMd
                int nEmpty = emptyBonds_.size();
                for (k = 0; k < nEmpty; ++k) {
                   #if 0
+                  #ifdef UTIL_DEBUG
+                  // Confirm that bond is empty
                   for (m = 0; m < 2; ++m) {
                      atomId  = emptyBonds_[k].atomId(m);
                      atomPtr = emptyBonds_[k].atomPtr(m);
                      assert(atomPtr == 0);
                      assert(atomStoragePtr_->find(atomId) == 0);
                   }
+                  #endif
                   #endif
                   bondStoragePtr_->remove(&(emptyBonds_[k]));
                }
@@ -352,8 +355,10 @@ namespace DdMd
                   if (shift) {
                      atomPtr->position()[i] += shift * lengths[i];
                   }
-                  assert(atomPtr->position()[i] > domainPtr_->domainBound(i, 0));
-                  assert(atomPtr->position()[i] < domainPtr_->domainBound(i, 1));
+                  assert(atomPtr->position()[i] 
+                         > domainPtr_->domainBound(i, 0));
+                  assert(atomPtr->position()[i] 
+                         < domainPtr_->domainBound(i, 1));
                   atomStoragePtr_->addNewAtom();
                }
                assert(bufferPtr_->recvSize() == 0);
@@ -502,7 +507,8 @@ namespace DdMd
                         std::cout << localIter->plan().testGhost(a, b);
                      }
                   }
-                  std::cout << "  " << choose << "  " << localIter->plan().testGhost(i, j);
+                  std::cout << "  " << choose << "  " 
+                            << localIter->plan().testGhost(i, j);
                   std::cout << std::endl;
                   
                   UTIL_THROW("Assert failed in exchange ghosts");
@@ -534,9 +540,11 @@ namespace DdMd
                      #ifdef UTIL_DEBUG
                      // Validate shifted positions
                      if (j == 0) {
-                        assert(atomPtr->position()[i] > domainPtr_->domainBound(i, 1));
+                        assert(atomPtr->position()[i] 
+                               > domainPtr_->domainBound(i, 1));
                      } else {
-                        assert(atomPtr->position()[i] < domainPtr_->domainBound(i, 0));
+                        assert(atomPtr->position()[i] 
+                               < domainPtr_->domainBound(i, 0));
                      }
                      #endif
 
@@ -583,9 +591,11 @@ namespace DdMd
                      #ifdef UTIL_DEBUG
                      // Validate shifted position
                      if (j == 0) {
-                        assert(atomPtr->position()[i] > domainPtr_->domainBound(i, 1));
+                        assert(atomPtr->position()[i] 
+                               > domainPtr_->domainBound(i, 1));
                      } else {
-                        assert(atomPtr->position()[i] < domainPtr_->domainBound(i, 0));
+                        assert(atomPtr->position()[i] 
+                               < domainPtr_->domainBound(i, 0));
                      }
                      #endif
 
@@ -619,9 +629,11 @@ namespace DdMd
                   #ifdef UTIL_DEBUG
                   // Validate ghost coordinates on receiving processor.
                   if (j == 0) {
-                     assert(atomPtr->position()[i] > domainPtr_->domainBound(i, 1));
+                     assert(atomPtr->position()[i] 
+                            > domainPtr_->domainBound(i, 1));
                   } else {
-                     assert(atomPtr->position()[i] < domainPtr_->domainBound(i, 0));
+                     assert(atomPtr->position()[i] 
+                            < domainPtr_->domainBound(i, 0));
                   }
                   #endif
 
