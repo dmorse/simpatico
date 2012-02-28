@@ -1,13 +1,14 @@
 Subdirectories:
 ---------------
 
-main           main programs mcSim.cpp and mdSim.cpp for MC and MD simulation
-util           general utility classes for scientific computation
-mcMd           classes for Monte Carlo (MC) / molecular dynamics (MD) simulation
-modules        add-on components for particular applications
-draft          unfinished or proposed classes
-test           unit test framework classes
-dox            source files for the html manual pages
+main       main programs mcSim.cpp and mdSim.cpp for MC and MD simulation
+util       general utility classes for scientific computation
+mcMd       classes for Monte Carlo (MC) / molecular dynamics (MD) simulation
+modules    add-on components for particular applications
+test       simple unit test framework
+dox        source files for the html manual pages
+ddMd       classes for domain-decomposition parallel MD (experimental)
+draft      unfinished or proposed classes
 
 Files:
 ------

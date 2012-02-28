@@ -1,9 +1,19 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Modify Exchanger::exchangeAtoms to exchange bonds.
+- Add plan Atom class.
 
-- Modify Exchanger::exchangeGhosts accordingly.
+- Modify Buffer to pack and unpack plan an Atoms.
+
+- Modify Exchanger::exchangeAtoms to use plan rather than postmark.
+  Remove postmark member.
+
+- Modify Exchanger::exchangeAtoms to set atom plans.
+
+- Modify Exchanger::exchangeAtoms to reset ghost plan bits upon
+  receipt of exchanged atoms to reflect new ownership.
+
+- Modify Exchanger::exchangeGhosts so as to use plans.
 
 - Add bond forces to System.
 
@@ -16,6 +26,4 @@ Domain Decomposition MD (DdMd)
   System (test with very small system, 1x1x1 grid).
 
 - Make Integrator and Interaction abstract base classes.
-
-- Move integrate(int nStep) method to Integrator class.
 
