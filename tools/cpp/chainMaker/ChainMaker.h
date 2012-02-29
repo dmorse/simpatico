@@ -3,7 +3,7 @@
 
 #include   <util/param/ParamComposite.h>
 #include   <mcMd/boundary/Boundary.h>
-#include   <mcMd/potentials/BondPotential.h>
+#include   <mcMd/potentials/bond/HarmonicBond.h>
 #include   <util/random/Random.h>
 
 #include <iostream>
@@ -24,7 +24,7 @@ private:
 
    Boundary       boundary_;
    Random         random_;
-   BondPotential  bondPotential_;
+   HarmonicBond   bondPotential_;
    int            nAtomPerMolecule_;
    int            nMolecule_;
 
