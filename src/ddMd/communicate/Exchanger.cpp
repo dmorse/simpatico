@@ -87,6 +87,15 @@ namespace DdMd
 
    #ifdef UTIL_MPI
    /**
+   * Exchange local atoms and ghosts.
+   */
+   void Exchanger::exchange()
+   {
+      exchangeAtoms();
+      exchangeGhosts();
+   }
+
+   /**
    * Exchange ownership of local atoms.
    *
    * This method should be called before rebuilding the neighbor list on
@@ -669,7 +678,7 @@ namespace DdMd
    *
    * Call on time steps for which no reneighboring is required. 
    */
-   void Exchanger::updateGhosts()
+   void Exchanger::update()
    {
       Vector lengths = boundaryPtr_->lengths();
       Atom*  atomPtr;

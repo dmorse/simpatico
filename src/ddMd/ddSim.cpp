@@ -30,8 +30,7 @@ int main()
 
    std::string filename("config");
    system.readConfig(filename);
-   system.exchanger().exchangeAtoms();
-   system.exchanger().exchangeGhosts();
+   system.exchanger().exchange();
 
    system.interaction().findNeighbors();
 

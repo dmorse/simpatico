@@ -66,23 +66,24 @@ namespace DdMd
       void setPairCutoff(double pairCutoff);
 
       /**
-      * Exchange ownership of local atoms just before reneighboring.
+      * Exchange local atoms and ghosts.
       * 
       * This method should be called just before rebuilding the neighbor
-      * list on each processor, to exchange ownership of local atoms.
+      * list on each processor, to exchange ownership of local atoms and
+      * to exchange ghost atoms. The lists of which atoms were sent and
+      * received as ghosts by this method are used in subsequent calls
+      * to update. 
       */
-      void exchangeAtoms();
+      void exchange();
 
       /**
-      * Exchange ghosts.
-      * 
-      * This method should be called after Exchanger::exchange() 
-      * during time steps in which processors exchange atom ownership. 
-      * It sends the ghost atom coordinates and atom types, and stores 
-      * a record of which atoms were sent in each direction for use in 
-      * subsequent calls to communicate().
+      * Exchange ownership of local atoms.
+      *
+      * This method exchanges ownershp of local atoms, and calculates
+      * communication plan for ghost atoms, but but does not actually
+      * exchange ghost atoms.  
       */
-      void exchangeGhosts();
+      void exchangeAtoms();
 
       /**
       * Update ghost atom coordinates.
@@ -92,7 +93,7 @@ namespace DdMd
       * for the same ghosts as those sent by the most recent call to
       * the exchangeGhosts() methods.
       */
-      void updateGhosts();
+      void update();
 
    private:
 
@@ -103,7 +104,7 @@ namespace DdMd
       * ghost atoms whose positions are sent during the send along cartesian 
       * axis i (i=0/x, 1/y or 2/z) in direction j (j=0/lower or 1/higher).
       * These 6 arrays are filled by the exchangeGhosts() method and used 
-      * by subsequent calls of the updateGhosts() method, until the next
+      * by subsequent calls of the update() method, until the next
       * call of exchangeGhosts().
       */
       FMatrix< APArray<Atom>, Dimension, 2>  sendArray_;
@@ -115,7 +116,7 @@ namespace DdMd
       * ghost atoms that are received during the send along cartesian axis
       * i (for i=0/x, 1/y or 2/z) in direction j (for j=0/lower or 1/higher).
       * These 6 arrays are filled by the exchangeGhosts() method and used 
-      * by subsequent calls of the updateGhosts() method, until the next
+      * by subsequent calls of the update() method, until the next
       * call of exchangeGhosts().
       */
       FMatrix< APArray<Atom>, Dimension, 2>  recvArray_;
@@ -147,6 +148,16 @@ namespace DdMd
 
       /// Cutoff for pair list (potential cutoff + skin).
       double pairCutoff_;
+
+      /**
+      * Exchange ghosts.
+      *
+      * This method exchanges ghosts, and stores lists of which atoms 
+      * are sent and received in each direction for use in subsequent
+      * calls to update(). It must be called immediately after
+      * exchangeAtoms().
+      */
+      void exchangeGhosts();
 
    };
 

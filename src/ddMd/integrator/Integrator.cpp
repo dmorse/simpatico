@@ -53,8 +53,7 @@ namespace DdMd
       Interaction* interactionPtr  = &systemPtr_->interaction();
 
       atomStoragePtr->clearSnapshot();
-      exchangerPtr->exchangeAtoms();
-      exchangerPtr->exchangeGhosts();
+      exchangerPtr->exchange();
       atomStoragePtr->makeSnapshot();
       interactionPtr->findNeighbors();
       interactionPtr->calculateForces();
@@ -95,14 +94,13 @@ namespace DdMd
       if (needExchange) {
 
          atomStoragePtr->clearSnapshot();
-         exchangerPtr->exchangeAtoms();
-         exchangerPtr->exchangeGhosts();
+         exchangerPtr->exchange();
          atomStoragePtr->makeSnapshot();
          interactionPtr->findNeighbors();
 
       } else {
 
-         exchangerPtr->updateGhosts();
+         exchangerPtr->update();
 
       }
 

@@ -34,9 +34,9 @@ public:
 
    void testExchangeAtoms();
 
-   void testExchangeGhosts();
+   void testExchange();
 
-   void testUpdateGhosts();
+   void testUpdate();
 
    void testCalculateForces();
 
@@ -166,20 +166,9 @@ inline void SystemTest::testExchangeAtoms()
    }
    TEST_ASSERT(j == storage.nAtom());
 
-   #if 0
-   //Print the number of atoms with each processor after the exchange.
-   logger.begin();
-
-   std::cout << "Processor " << myRank 
-             << " : Post-exchange Atoms count = "
-             << storage.nAtom() << std::endl;
-
-   logger.end();
-   #endif
-
 }
 
-inline void SystemTest::testExchangeGhosts()
+inline void SystemTest::testExchange()
 {
    printMethod(TEST_FUNC); 
 
@@ -207,7 +196,7 @@ inline void SystemTest::testExchangeGhosts()
    }
 
    // Exchange atoms among processors
-   object().exchanger().exchangeAtoms();
+   object().exchanger().exchange();
 
    // Check that all atoms are accounted for after exchange.
    int myRank   = domain.gridRank();
@@ -226,12 +215,6 @@ inline void SystemTest::testExchangeGhosts()
    TEST_ASSERT(j == storage.nAtom());
    int nAtom = storage.nAtom();
 
-   // Exchange ghosts among processors.
-   object().exchanger().exchangeGhosts();
-
-   // Check that the number of atoms on each processor is unchanged.
-   TEST_ASSERT(nAtom == storage.nAtom());
-
    // Check that all ghosts are outside the processor domain.
    GhostIterator ghostIter;
    storage.begin(ghostIter);
@@ -244,26 +227,9 @@ inline void SystemTest::testExchangeGhosts()
       std::cout << "Total ghost count = " << nGhostAll << std::endl;
    }
 
-   #if 0
-   //Print number of atoms on each processor after the ghost exchange.
-   MpiLogger logger;
-   logger.begin();
-   std::cout << "Processor " << myRank 
-             << " : Post-ghost exchange Atoms count = "
-             << storage.nAtom() << std::endl;
-   logger.end();
-
-   // Print number of ghosts on each processor after the exchange.
-   logger.begin();
-   std::cout << "Processor " << myRank 
-             << " : Post-ghost exchange Ghost count = "
-             << storage.nGhost() << std::endl;
-   logger.end();
-   #endif
-
 }
 
-inline void SystemTest::testUpdateGhosts()
+inline void SystemTest::testUpdate()
 {
    printMethod(TEST_FUNC); 
 
@@ -289,7 +255,7 @@ inline void SystemTest::testUpdateGhosts()
    }
 
    // Exchange atoms among processors
-   object().exchanger().exchangeAtoms();
+   object().exchanger().exchange();
 
    // Check that all atoms are accounted for after exchange.
    int myRank   = domain.gridRank();
@@ -307,12 +273,6 @@ inline void SystemTest::testUpdateGhosts()
    }
    TEST_ASSERT(j == storage.nAtom());
    int nAtom = storage.nAtom();
-
-   // Exchange ghosts among processors.
-   object().exchanger().exchangeGhosts();
-
-   // Check that the number of atoms on each processor is unchanged.
-   TEST_ASSERT(nAtom == storage.nAtom());
 
    // Check that all ghosts are outside the processor domain.
    GhostIterator ghostIter;
@@ -353,7 +313,7 @@ inline void SystemTest::testUpdateGhosts()
       }
    }
 
-   object().exchanger().updateGhosts();
+   object().exchanger().update();
 
 }
 
@@ -371,8 +331,8 @@ inline void SystemTest::testCalculateForces()
    std::string filename("in/config1");
    object().readConfig(filename);
 
-   // Exchange ghosts among processors.
-   object().exchanger().exchangeGhosts();
+   // Exchange ghosts among processsors
+   object().exchanger().exchange();
    object().interaction().findNeighbors();
 
    object().interaction().calculateForces();
@@ -413,7 +373,7 @@ inline void SystemTest::testIntegrate1()
 
    std::string filename("in/config2");
    object().readConfig(filename);
-   object().exchanger().exchangeGhosts();
+   object().exchanger().exchange();
 
    //object().interaction().setMethodId(0);
    object().interaction().findNeighbors();
@@ -451,8 +411,8 @@ TEST_BEGIN(SystemTest)
 TEST_ADD(SystemTest, testReadParam)
 TEST_ADD(SystemTest, testReadConfig)
 TEST_ADD(SystemTest, testExchangeAtoms)
-TEST_ADD(SystemTest, testExchangeGhosts)
-TEST_ADD(SystemTest, testUpdateGhosts)
+TEST_ADD(SystemTest, testExchange)
+TEST_ADD(SystemTest, testUpdate)
 TEST_ADD(SystemTest, testCalculateForces)
 TEST_ADD(SystemTest, testIntegrate1)
 TEST_END(SystemTest)

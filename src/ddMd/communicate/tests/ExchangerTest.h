@@ -112,13 +112,6 @@ public:
       }
    }
 
-   void exchangeAtoms()
-   {
-      double range = 0.4;
-      displaceAtoms(range);
-      object().exchangeAtoms();
-   }
-
    void testAtomExchange()
    {
       printMethod(TEST_FUNC);
@@ -193,16 +186,9 @@ public:
 
       double range = 0.4;
       displaceAtoms(range);
-      object().exchangeAtoms();
 
-      // Record number of local atoms before exchange
-      nAtom = atomStorage.nAtom();
 
-      // Exchange ghosts among processors.
-      object().exchangeGhosts();
-
-      // Check that the number of local atoms on each processor is unchanged.
-      TEST_ASSERT(nAtom == atomStorage.nAtom());
+      object().exchange();
 
       // Check that all atoms are accounted for after ghost exchange.
       nAtom = atomStorage.nAtom();
@@ -265,25 +251,17 @@ public:
 
       double range = 0.4;
       displaceAtoms(range);
-      object().exchangeAtoms();
+      object().exchange();
 
-      // Record number of atoms before ghost exchange
+      // Record number of atoms and ghosts after exchange
       nAtom = atomStorage.nAtom();
-
-      // Exchange ghosts among processors.
-      // Vector length = boundary.lengths();
-      object().exchangeGhosts();
-
-      // Record number of ghosts after ghost exchange, before update.
       nGhost = atomStorage.nGhost();
 
       // Update ghost positions
-      object().updateGhosts();
+      object().update();
 
-      // Check that the number of atoms on each processor is unchanged.
+      // Check number of atoms and ghosts on each processor is unchanged.
       TEST_ASSERT(nAtom == atomStorage.nAtom());
-
-      // Check that the number of ghosts on each processor is unchanged.
       TEST_ASSERT(nGhost == atomStorage.nGhost());
 
       // Check that all atoms are accounted for after atom and ghost exchanges.
@@ -328,12 +306,11 @@ public:
       double range = 0.4;
       displaceAtoms(range);
 
-      object().exchangeAtoms();
+      object().exchange();
       nAtom = atomStorage.nAtom();
-      object().exchangeGhosts();
       nGhost = atomStorage.nGhost();
-      object().updateGhosts();
 
+      object().update();
       TEST_ASSERT(nAtom == atomStorage.nAtom());
       TEST_ASSERT(nGhost == atomStorage.nGhost());
 
@@ -359,19 +336,19 @@ public:
                   false));
 
       range = 0.1;
-      for (int i=0; i < 10000; ++i) {
+      for (int i=0; i < 1000; ++i) {
          displaceAtoms(range);
+
          for (int j=0; j < 3; ++j) {
-            object().updateGhosts();
+            object().update();
             TEST_ASSERT(nGhost == atomStorage.nGhost());
             TEST_ASSERT(nAtom == atomStorage.nAtom());
             displaceAtoms(range);
          }
-         object().exchangeAtoms();
-         nAtom = atomStorage.nAtom();
-         object().exchangeGhosts();
+
+         object().exchange();
+         nAtom  = atomStorage.nAtom();
          nGhost = atomStorage.nGhost();
-         TEST_ASSERT(nAtom == atomStorage.nAtom());
 
          // Check that all atoms are within the processor domain.
          atomStorage.begin(atomIter);
