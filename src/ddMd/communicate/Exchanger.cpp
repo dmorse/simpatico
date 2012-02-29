@@ -129,19 +129,21 @@ namespace DdMd
 
                // Decide upon plan  direction i, j
                if (j == 0) { // Communicate with lower index
-                  inner = bound + pairCutoff_;
-                  if (coordinate < inner) {
-                     atomIter->plan().setGhost(i, j);
-                     if (coordinate < bound) {
-                        atomIter->plan().setExchange(i, j);
+                  if (coordinate < bound) {
+                     atomIter->plan().setExchange(i, j);
+                  } else {
+                     inner = bound + pairCutoff_;
+                     if (coordinate < inner) {
+                        atomIter->plan().setGhost(i, j);
                      }
                   }
                } else { // j == 1, communicate with upper index
-                  inner = bound - pairCutoff_;
-                  if (coordinate > inner) {
-                     atomIter->plan().setGhost(i, j);
-                     if (coordinate > bound) {
-                        atomIter->plan().setExchange(i, j);
+                  if (coordinate > bound) {
+                     atomIter->plan().setExchange(i, j);
+                  } else {
+                     inner = bound - pairCutoff_;
+                     if (coordinate > inner) {
+                        atomIter->plan().setGhost(i, j);
                      }
                   }
                }
@@ -266,9 +268,7 @@ namespace DdMd
                      if (shift) {
                         atomIter->position()[i] += shift * lengths[i];
                      }
-                     if (atomIter->plan().ghost(i, j)) {
-                        atomIter->plan().clearGhost(i, j);
-                     }
+                     assert(!atomIter->plan().ghost(i, j));
                      if (j == 0 && atomIter->position()[i] > inner) { 
                            atomIter->plan().setGhost(i, 1);
                      } else 
@@ -367,9 +367,7 @@ namespace DdMd
                          < domainPtr_->domainBound(i, 1));
 
                   // Adjust ghost plan
-                  if (atomPtr->plan().ghost(i, j)) {
-                     atomPtr->plan().clearGhost(i, j);
-                  }
+                  assert(!atomPtr->plan().ghost(i, j));
                   if (j == 0 && atomPtr->position()[i] > inner) { 
                         atomPtr->plan().setGhost(i, 1);
                   } else 
@@ -461,8 +459,8 @@ namespace DdMd
       bool choose;
 
       // Check that all ghosts are cleared upon entry.
-      if (atomStoragePtr_->nGhost() > 0) {
-         UTIL_THROW("atomStoragePtr_->nGhost() > 0");
+      if (atomStoragePtr_->nGhost() != 0) {
+         UTIL_THROW("atomStoragePtr_->nGhost() != 0");
       }
 
       // Cartesian directions
@@ -507,7 +505,7 @@ namespace DdMd
                   choose = (coord > inner);
                }
 
-               //assert(choose == localIter->plan().ghost(i, j));
+               assert(choose == localIter->plan().ghost(i, j));
 
                #if 0
                if (choose != localIter->plan().ghost(i, j)) {
