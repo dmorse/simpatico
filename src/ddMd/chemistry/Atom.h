@@ -65,13 +65,6 @@ namespace DdMd
       */
       void setIsGhost(bool isGhost);
 
-      /**
-      * Set the postMark.
-      *  
-      * \param postMark true if this is marked for sending, false otherwise.
-      */
-      void setPostMark(bool postMark);
-
       //@}
       /// \name Accessors (non-const references)
       //@{
@@ -121,9 +114,6 @@ namespace DdMd
       /// Get communication plan (const reference).
       const Plan& plan() const;
 
-      /// Return postMark (true if marked for sending).
-      bool postMark() const;
-
       //@}
 
       #if 0
@@ -157,9 +147,6 @@ namespace DdMd
       // Is this Atom a ghost? (0=false, 1=true)
       int isGhost_;
 
-      // Is this Atom marked for sending? (0=false, 1=true)
-      int postMark_;
-
       // Communication plan.
       Plan plan_;
 
@@ -180,7 +167,6 @@ namespace DdMd
      id_(-1),
      force_(0.0),
      isGhost_(0),
-     postMark_(0),
      plan_(),
      velocity_(0.0)
    {}
@@ -193,7 +179,6 @@ namespace DdMd
       typeId_ = -1;
       id_ = -1;
       isGhost_ = 0;
-      postMark_ = 0;
       plan_.setFlags(0);
    }
 
@@ -209,10 +194,6 @@ namespace DdMd
    inline void Atom::setIsGhost(bool isGhost) 
    {  isGhost_ = isGhost ? 1 : 0; }
 
-   // Set type Id for Atom.
-   inline void Atom::setPostMark(bool postMark) 
-   {  postMark_ = postMark ? 1 : 0; }
-
    // Get global id for Atom.
    inline int  Atom::id() const
    {  return id_; }
@@ -224,10 +205,6 @@ namespace DdMd
    // Is this a ghost atom?
    inline bool Atom::isGhost() const
    {  return bool(isGhost_); }
-
-   // Is this atom marked for sendng?
-   inline bool Atom::postMark() const
-   {  return bool(postMark_); }
 
    // Get reference to communication plan.
    inline Plan& Atom::plan()

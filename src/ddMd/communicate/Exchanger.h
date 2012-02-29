@@ -128,8 +128,14 @@ namespace DdMd
       */
       APArray< Group<2> > emptyBonds_;
 
-      /// Array of pointers to incomplete bonds on this processor.
-      APArray< Group<2> > incompleteBonds_;
+      /// Processor boundaries (minima j=0, maxima j=1)
+      FMatrix< double, Dimension, 2>  bound_;
+
+      /// Inner boundaries of nonbonded slabs
+      FMatrix< double, Dimension, 2>  inner_;
+
+      /// Outer boundaries of nonbonded slabs
+      FMatrix< double, Dimension, 2>  outer_;
 
       /// Pointer to associated const Boundary object.
       const Boundary*  boundaryPtr_;

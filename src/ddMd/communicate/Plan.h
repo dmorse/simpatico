@@ -8,6 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <iostream>
+
 namespace DdMd
 {
 
@@ -50,6 +52,10 @@ namespace DdMd
  
       unsigned int flags() const
       {  return flags_; }
+
+      // friends:
+      friend std::istream& operator >> (std::istream& in, Plan &plan);
+      friend std::ostream& operator << (std::ostream& out, const Plan &plan);
  
    private:
 
@@ -59,6 +65,26 @@ namespace DdMd
       static unsigned int EMask[3][2];
 
    };
+
+   /**
+   * istream extractor (>>) for a Plan.
+   *
+   * \param in    input stream
+   * \param plan  Plan to be read from stream
+   * \return modified input stream
+   */
+   std::istream& operator>>(std::istream& in, Plan &plan);
+
+   /**
+   * ostream inserter (<<) for a Plan.
+   *
+   * Format, one one line with no line break:
+   *
+   * \param  out  output stream
+   * \param  plan Plan to be written to stream
+   * \return modified output stream
+   */
+   std::ostream& operator<<(std::ostream& out, const Plan &plan);
 
 }
 #endif
