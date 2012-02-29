@@ -9,17 +9,15 @@ include $(SRC_DIR_REL)/mcMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/mcMd/sources.mk
 
-CHAINMAKER=ChainMaker
-
-all: $(CHAINMAKER).o $(CHAINMAKER)
+all: ChainMaker.o ChainMaker
 
 clean:	
 	-rm ChainMaker.o
 	-rm ChainMaker.d
 	-rm ChainMaker
 
--include $(CHAINMAKER).d
+-include ChainMaker.d
 
-$(CHAINMAKER): $(CHAINMAKER).cpp $(mcMd_OBJS) $(util_OBJS)
-	$(CXX) $(LDFLAGS) $(DEFINES) $(INCLUDES) -o $(CHAINMAKER) $(CHAINMAKER).o \
+ChainMaker: ChainMaker.cpp $(mcMd_OBJS) $(util_OBJS)
+	$(CXX) $(LDFLAGS) $(DEFINES) $(INCLUDES) -o ChainMaker ChainMaker.o \
                $(mcMd_OBJS) $(util_OBJS)
