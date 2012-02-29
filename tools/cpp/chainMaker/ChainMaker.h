@@ -18,7 +18,9 @@ public:
 
    void readParam(std::istream& in);
 
-   void writeChains(std::ostream& out);
+   void writeChainsMcMd(std::ostream& out);
+
+   void writeChainsDdMd(std::ostream& out);
 
 private:
 
