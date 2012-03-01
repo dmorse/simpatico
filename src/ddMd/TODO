@@ -1,8 +1,6 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Modify CellList to ignore ghosts that are outside outer boundary.
-
 - Move potentials/PairPotential.h to potentials/PairInteraction.
 
 - Move Interaction to potentials/PairPotential.

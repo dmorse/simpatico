@@ -126,6 +126,10 @@ namespace DdMd
       * This method does not place the atom in a cell, but retains a record
       * of the cell index that is used to place atoms in the build() method.
       *
+      * This method quietly does nothing if the atom is outside the expanded 
+      * domain for nonbonded ghosts, which extends one cutoff length beyond
+      * the domain boundaries the domain boundaries in each direction.
+      *
       * \param atom  Atom object to be added.
       */
       void placeAtom(Atom &atom);
@@ -159,6 +163,9 @@ namespace DdMd
 
       /**
       * Return the index of the cell that contains a position Vector. 
+      *
+      * Returns a null value of -1 if the position is outside the 
+      * expanded domain for nonbonded ghost atoms. 
       *
       * \param position position Vector, inside the boundary.
       */
@@ -252,6 +259,12 @@ namespace DdMd
       /// Length of each cell in grid
       Vector  cellLengths_; 
 
+      /// Lower bound for nonbonded ghosts.
+      Vector  lowerOuter_; 
+
+      /// Upper coordinate bound for nonbonded ghosts.
+      Vector  upperOuter_; 
+
       /// Pointer to first local cell (to initialize iterator).
       Cell* begin_;
 
@@ -285,12 +298,18 @@ namespace DdMd
    // Public inline method definitions:
 
    /*
-   * Add an Atom to the appropriate cell, based on its position.
+   * Identify the cell for an Atom, based on its position.
    */
    inline int CellList::cellIndexFromPosition(const Vector& position) const
    {
       IntVector r;
       for (int i = 0; i < Dimension; ++i) {
+         if (position[i] < lowerOuter_[i]) {
+            return -1;
+         }
+         if (position[i] > upperOuter_[i]) {
+            return -1;
+         }
          if (position[i] < lower_[i]) {
             r[i] = 0;
          } else {
@@ -302,7 +321,7 @@ namespace DdMd
    }
 
    /*
-   * Identify the cell for an Atom, based on its position.
+   * Add an Atom to the appropriate cell, based on its position.
    */
    inline void CellList::placeAtom(Atom &atom)
    {
@@ -310,13 +329,12 @@ namespace DdMd
       assert(nAtom_ < tags_.capacity());
 
       int rank = cellIndexFromPosition(atom.position());
-      tags_[nAtom_].cellRank = rank;
-      cells_[rank].incrementCapacity();
-
-      // Store handle (pointer) for this atom
-      tags_[nAtom_].handle = &atom;
-
-      ++nAtom_;
+      if (rank >= 0) {
+         tags_[nAtom_].cellRank = rank;
+         tags_[nAtom_].handle = &atom;
+         cells_[rank].incrementCapacity();
+         ++nAtom_;
+      }
    }
 
    inline const Grid& CellList::grid() const
