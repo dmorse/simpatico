@@ -95,11 +95,6 @@ public:
 
    }
 
-   virtual void testDistribute()
-   { 
-      printMethod(TEST_FUNC); 
-   }
-
    void displaceAtoms(double max)
    {
       double min = -max;
@@ -110,6 +105,11 @@ public:
             atomIter->position()[i] += random.uniform(min, max);
          }
       }
+   }
+
+   virtual void testDistribute()
+   { 
+      printMethod(TEST_FUNC); 
    }
 
    void testAtomExchange()
@@ -186,8 +186,7 @@ public:
 
       double range = 0.4;
       displaceAtoms(range);
-
-
+      
       object().exchange();
 
       // Check that all atoms are accounted for after ghost exchange.
@@ -336,7 +335,7 @@ public:
                   false));
 
       range = 0.1;
-      for (int i=0; i < 1000; ++i) {
+      for (int i=0; i < 3; ++i) {
          displaceAtoms(range);
 
          for (int j=0; j < 3; ++j) {

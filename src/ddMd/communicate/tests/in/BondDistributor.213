@@ -3,7 +3,7 @@ Domain{
 }
 AtomStorage{
    atomCapacity        50
-   ghostCapacity       50
+   ghostCapacity      150
    totalAtomCapacity  120
 }
 BondStorage{
@@ -11,8 +11,8 @@ BondStorage{
    totalCapacity      100
 }
 Buffer{
-  atomCapacity     8
-  ghostCapacity   10
+  atomCapacity    20
+  ghostCapacity   30
 }
 AtomDistributor{
   cacheCapacity   35

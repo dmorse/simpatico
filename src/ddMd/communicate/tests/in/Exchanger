@@ -3,7 +3,7 @@ Domain{
 }
 AtomStorage{
   atomCapacity         40
-  ghostCapacity        40
+  ghostCapacity       200
   totalAtomCapacity   150
 }
 BondStorage{
