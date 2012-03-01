@@ -105,14 +105,14 @@ namespace DdMd
    void Exchanger::exchangeAtoms()
    {
       Vector lengths = boundaryPtr_->lengths();
-      double bound, inner, outer;
+      double bound, inner, outer, middle;
       double coordinate;
       AtomIterator atomIter;
       GhostIterator ghostIter;
       GroupIterator<2> bondIter;
       Atom* atomPtr;
       int i, j, jc, k, m, source, dest, nSend;
-      int atomId, nAtom, nGhost, nNull;
+      int atomId, nAtom;
       int myRank = domainPtr_->gridRank();
       int shift;
       bool choose;
@@ -134,7 +134,7 @@ namespace DdMd
          }
       }
 
-      // Set communication plans for all local atoms
+      // Compute communication plans for all local atoms
       atomStoragePtr_->begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
 
@@ -185,82 +185,23 @@ namespace DdMd
       } // end atom loop, end compute plan
 
       // Loop over bonds.
-      // Set communication for bonded ghosts, clear pointers to ghosts.
       bondStoragePtr_->begin(bondIter);
       for ( ; bondIter.notEnd(); ++bondIter) {
 
-         // Count local atoms, known ghosts and null ghosts.
-         nAtom  = 0;
-         nGhost = 0;
-         nNull  = 0;
-         for (k = 0; k < 2; ++k) {
-            atomPtr = bondIter->atomPtr(k);
-            atomId  = bondIter->atomId(k);
-            if (atomPtr != 0) {
-               #ifdef UTIL_DEBUG
-               #ifdef EXCHANGER_DEBUG
-               if (atomPtr != atomStoragePtr_->find(atomId)) {
-                  UTIL_THROW("Error in atom pointer in bond");
-               }
-               #endif
-               #endif
-               if (atomPtr->isGhost()) {
-                  ++nGhost;
-               } else {
-                  ++nAtom;
-               }
-            } else { // if atomPtr == 0
-               ++nNull;
-               #ifdef UTIL_DEBUG 
-               #ifdef EXCHANGER_DEBUG
-               atomPtr = atomStoragePtr_->find(atomId);
-               if (atomPtr) {
-                  if (!atomPtr->isGhost()) {
-                     UTIL_THROW("Missing pointer to local atom in bond");
-                  }
-               }
-               #endif
-               #endif
-            }
-         }
-         assert(nAtom + nGhost + nNull == 2);
-         assert(nAtom + nGhost == bondIter->nPtr());
-         if (nAtom == 0) {
-            UTIL_THROW("Empty bond");
-         }
-
-         #if 1
-         // Compute ghost communication plan for incomplete bonds
+         #if 0
+         // Compute ghost communication plan for group
          if (nAtom < 2) {
             for (i = 0; i < Dimension; ++i) {
                if (domainPtr_->grid().dimension(i) > 1) {
                   for (j = 0; j < 2; ++j) {
-                     if (domainPtr_->grid().dimension(i) == 2) {
-                        if (j == 0) { 
-                           choose = true;
-                        } else {
-                           choose = false;
-                        }
-                     } else {
-                        choose = true;
-                     }
-                     if (choose) {
-                        for (k = 0; k < 2; ++k) {
-                           atomPtr = bondIter->atomPtr(k);
-                           if (atomPtr) {
-                              if (!atomPtr->isGhost()) {
-                                 atomPtr->plan().setGhost(i, j);
-                              }
-                           }
-                        }
-                     }
+                     // Set communication plan for group.
                   }
                }
             }
          }
          #endif
 
-         // Clear ghost pointers
+         // Clear pointers to ghosts in group
          for (k = 0; k < 2; ++k) {
             atomPtr = bondIter->atomPtr(k);
             if (atomPtr) {
@@ -272,7 +213,7 @@ namespace DdMd
 
       }
 
-      // Clear ghost atoms from AtomStorage
+      // Clear all ghost atoms from AtomStorage
       atomStoragePtr_->clearGhosts();
 
       #ifdef UTIL_DEBUG
@@ -282,8 +223,8 @@ namespace DdMd
       if (myRank == 0) {
          nAtomTotal = atomStoragePtr_->nAtomTotal();
       }
-      bondStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(), 
-                               false);
+      bondStoragePtr_->isValid(*atomStoragePtr_, 
+                               domainPtr_->communicator(), false);
       #endif
       #endif
 
@@ -303,8 +244,8 @@ namespace DdMd
             source = domainPtr_->sourceRank(i, j); // rank to receive from
             dest = domainPtr_->destRank(i, j);     // rank to send to
             bound = domainPtr_->domainBound(i, j); // bound for send
-            inner = inner_(i, jc);                 // inner upon receipt 
-            shift = domainPtr_->shift(i, j);       // shift for periodic b.c.
+            inner = inner_(i, jc);             // inner bound upon receipt 
+            shift = domainPtr_->shift(i, j);   // shift for periodic b.c.
 
             sendArray_(i, j).clear();
 
@@ -317,8 +258,8 @@ namespace DdMd
             atomStoragePtr_->begin(atomIter);
             for ( ; !atomIter.atEnd(); ++atomIter) {
 
-               #ifdef EXCHANGER_DEBUG
                #ifdef UTIL_DEBUG
+               #ifdef EXCHANGER_DEBUG
                if (j == 0) {
                   choose = (atomIter->position()[i] < bound);
                } else {
@@ -379,7 +320,7 @@ namespace DdMd
                bufferPtr_->endSendBlock();
 
                // Loop over bonds
-               // Pack bonds with postmarked atoms.
+               // Pack bonds that contain postmarked atoms.
                bufferPtr_->beginSendBlock(Buffer::GROUP, 2);
                emptyBonds_.clear();
                bondStoragePtr_->begin(bondIter);
@@ -453,18 +394,10 @@ namespace DdMd
                   assert(atomPtr->position()[i] 
                          < domainPtr_->domainBound(i, 1));
 
-                  // Only bonded ghosts should have ghost(i, j) flags set
-                  // for i and j for which exchange(i, j) is also set.
 
-                  // Flip ghost send direction for new bonded ghosts.
-                  if (atomPtr->plan().ghost(i, j)) {
-                     atomPtr->plan().clearGhost(i, j);
-                     atomPtr->plan().setGhost(i, jc);
-                  }
-
-                  #if 0
+                  #ifdef UTIL_DEBUG
                   // Check ghost plan
-                  //assert(!atomPtr->plan().ghost(i, j));
+                  assert(!atomPtr->plan().ghost(i, j));
                   if (j == 0) {
                      assert( atomPtr->plan().ghost(i, 1)
                              == (atomPtr->position()[i] > inner) );
@@ -524,13 +457,84 @@ namespace DdMd
       #endif
       #endif
 
+      // Set ghost communication flags for atoms in incomplete bonds
+      bondStoragePtr_->begin(bondIter);
+      for ( ; bondIter.notEnd(); ++bondIter) {
+
+         #ifdef UTIL_DEBUG
+         #ifdef EXCHANGER_DEBUG
+         nAtom  = 0;
+         for (k = 0; k < 2; ++k) {
+            atomPtr = bondIter->atomPtr(k);
+            atomId  = bondIter->atomId(k);
+            if (atomPtr != 0) {
+               if (atomPtr != atomStoragePtr_->find(atomId)) {
+                  UTIL_THROW("Error in atom pointer in bond");
+               }
+               if (atomPtr->isGhost()) {
+                  UTIL_THROW("Pointer to ghost atom in bond");
+               } else {
+                  ++nAtom;
+               }
+            } else { // if atomPtr == 0
+               atomPtr = atomStoragePtr_->find(atomId);
+               if (atomPtr) {
+                  if (!atomPtr->isGhost()) {
+                     UTIL_THROW("Missing pointer to local atom in bond");
+                  }
+               }
+            }
+         }
+         assert(nAtom == bondIter->nPtr());
+         if (nAtom == 0) {
+            UTIL_THROW("Empty bond");
+         }
+         #endif
+         #endif
+
+         // Set communication flags for atoms in incomplete groups
+         if (nAtom < 2) {
+            for (i = 0; i < Dimension; ++i) {
+               if (domainPtr_->grid().dimension(i) > 1) {
+                  if (domainPtr_->grid().dimension(i) == 2) {
+                     middle = 0.5*(bound_(i, 0) + bound_(i, 1));
+                  }
+                  for (j = 0; j < 2; ++j) {
+                     choose = true; 
+                     // Can replace above by more sophisticated plan.
+                     if (choose) {
+                        for (k = 0; k < 2; ++k) {
+                           atomPtr = bondIter->atomPtr(k);
+                           if (atomPtr) {
+                              if (!atomPtr->isGhost()) {
+                                 if (domainPtr_->grid().dimension(i) == 2) {
+                                    if (atomPtr->position()[i] < middle) {
+                                       atomPtr->plan().setGhost(i, 0);
+                                    } else {
+                                       atomPtr->plan().setGhost(i, 1);
+                                    }
+                                 } else {
+                                    atomPtr->plan().setGhost(i, j);
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+
+      }
+
    }
 
    /*
    * Exchange ghost atoms.
    *
    * Call immediately after exchangeAtoms and before rebuilding the 
-   * neighbor list on time steps that require reneighboring.
+   * neighbor list on time steps that require reneighboring. Uses
+   * ghost communication plans computed in exchangeAtoms.
    */
    void Exchanger::exchangeGhosts()
    {
@@ -547,7 +551,6 @@ namespace DdMd
       Atom* atomPtr;
       int i, j, jc, source, dest, shift;
       int myRank = domainPtr_->gridRank();
-      bool choose;
 
       // Check that all ghosts are cleared upon entry.
       if (atomStoragePtr_->nGhost() != 0) {
@@ -588,19 +591,22 @@ namespace DdMd
                coord = localIter->position()[i];
 
                #if 0 
-               if (j == 0) {
-                  assert(coord > bound);
-                  choose = (coord < inner);
-               } else {
-                  assert(coord < bound);
-                  choose = (coord > inner);
+               // This test is valid only for nonbonded ghosts.
+               {
+                  bool choose;
+                  if (j == 0) {
+                     assert(coord > bound);
+                     choose = (coord < inner);
+                  } else {
+                     assert(coord < bound);
+                     choose = (coord > inner);
+                  }
+                  assert(choose == localIter->plan().ghost(i, j));
                }
-               assert(choose == localIter->plan().ghost(i, j));
                #endif
 
-               choose = localIter->plan().ghost(i, j);
-
-               if (choose) {
+               // If this local atom is selected for sending as a ghost.
+               if ( localIter->plan().ghost(i, j) ) {
 
                   sendArray_(i, j).append(*localIter);
 
@@ -623,8 +629,8 @@ namespace DdMd
                      }
                      atomStoragePtr_->addNewGhost();
 
-                     // Prevent ghost copy from being re-copied
-                     // within loop over ghosts on same processor.
+                     // Prevent ghost copy from being re-copied within
+                     // following loop over ghosts on same processor.
                      atomPtr->plan().clearGhost(i, j);
 
                      #ifdef UTIL_DEBUG
@@ -649,18 +655,20 @@ namespace DdMd
                coord = ghostIter->position()[i];
 
                #if 0
-               // Decide whether to resend this ghost
-               if (j == 0) {
-                  choose = (coord > bound) && (coord < inner);
-               } else {
-                  choose = (coord < bound) && (coord > inner);
+               // This test is valid only for nonbonded ghosts.
+               {
+                  bool choose;
+                  if (j == 0) {
+                     choose = (coord > bound) && (coord < inner);
+                  } else {
+                     choose = (coord < bound) && (coord > inner);
+                  }
+                  assert(choose == ghostIter->plan().ghost(i, j));
                }
-               assert(choose == ghostIter->plan().ghost(i, j));
                #endif
 
-               choose = ghostIter->plan().ghost(i, j);
-
-               if (choose) {
+               // If this ghost is selected for re-sending
+               if ( ghostIter->plan().ghost(i, j) ) {
 
                   sendArray_(i, j).append(*ghostIter);
 
@@ -683,7 +691,7 @@ namespace DdMd
                      }
                      atomStoragePtr_->addNewGhost();
 
-                     #if EXCHANGE_DEBUG
+                     #ifdef EXCHANGE_DEBUG
                      #ifdef UTIL_DEBUG
                      // Validate shifted position
                      if (j == 0) {
@@ -694,7 +702,7 @@ namespace DdMd
                      #endif
                      #endif
 
-                  } 
+                  }
 
                }
 
@@ -721,8 +729,10 @@ namespace DdMd
                   recvArray_(i, j).append(*atomPtr);
                   atomStoragePtr_->addNewGhost();
 
-                  // Prohibit re-sending of ghost in reverse direction
-                  atomPtr->plan().clearGhost(i, jc);
+                  // Prohibit sending back ghost in reverse direction
+                  if (j == 0) {
+                     atomPtr->plan().clearGhost(i, 1);
+                  }
 
                   #ifdef UTIL_DEBUG
                   // Validate ghost coordinate on receiving processor.
@@ -755,14 +765,17 @@ namespace DdMd
 
       } // end for Cartesian index i
 
-      // Find atoms for all incomplete bonds
+      // Find ghost atoms for all incomplete bonds
       GroupIterator<2> bondIter;
       int nAtom;
       bondStoragePtr_->begin(bondIter);
       for ( ; !bondIter.atEnd(); ++bondIter) {
          nAtom = bondIter->nPtr();
          if (nAtom < 2) {
-            atomStoragePtr_->findGroupAtoms(*bondIter);
+            nAtom = atomStoragePtr_->findGroupAtoms(*bondIter);
+            if (nAtom < 2) {
+               UTIL_THROW("Incomplete group at end of exchangeGhosts");
+            }
          }
       }
 

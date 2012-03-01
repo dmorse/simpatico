@@ -1,8 +1,7 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Modify Exchanger::exchangeAtoms to set atom plans for covalent
-  ghosts. Check that this completes all bonds.
+- Modify CellList to ignore ghosts that are outside outer boundary.
 
 - Move potentials/PairPotential.h to potentials/PairInteraction.
 
@@ -12,7 +11,7 @@ Domain Decomposition MD (DdMd)
 
 - Incorporate bond forces into System.
 
-- Add Collector to ConfigIo, to allow writing. 
+- Add Collector to ConfigIo, to allow writing.
 
 - Add readCommands() method to System to read command file. 
 
