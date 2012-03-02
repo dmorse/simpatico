@@ -1,7 +1,7 @@
 #ifndef INTEGRATOR_H
 #define INTEGRATOR_H
 
-#include <ddMd/potentials/PairPotential.h>
+#include <util/param/ParamComposite.h>
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

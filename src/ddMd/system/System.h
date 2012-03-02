@@ -10,7 +10,7 @@
 
 #include <util/param/ParamComposite.h>           // base class
 #include <ddMd/boundary/Boundary.h>              // member 
-#include <ddMd/potentials/PairPotential.h>       // member 
+#include <ddMd/potentials/PairInteraction.h>     // member 
 #include <ddMd/storage/AtomStorage.h>            // member 
 #include <ddMd/storage/BondStorage.h>            // member 
 #include <ddMd/communicate/Domain.h>             // member 
@@ -21,7 +21,7 @@
 namespace DdMd
 {
 
-   class Interaction;
+   class PairPotential;
    class Integrator;
    class ConfigIo;
 
@@ -76,6 +76,16 @@ namespace DdMd
       * \param temperature absolute temperature kT, in energy units. 
       */
       void setBoltzmannVelocities(double temperature);
+
+      /**
+      * Set forces for all local atoms to zero.
+      */
+      void zeroForces();
+
+      /**
+      * Compute forces for all local atoms.
+      */
+      void computeForces();
 
       /**
       * Is exchange of atoms among processors needed?
@@ -139,14 +149,14 @@ namespace DdMd
       Boundary& boundary();
    
       /**
+      * Get the PairInteraction by reference.
+      */
+      PairInteraction& pairInteraction();
+   
+      /**
       * Get the PairPotential by reference.
       */
       PairPotential& pairPotential();
-   
-      /**
-      * Get the Interaction by reference.
-      */
-      Interaction& interaction();
    
       /**
       * Get the Integrator by reference.
@@ -196,7 +206,7 @@ namespace DdMd
       Boundary      boundary_;
 
       /// Periodic system boundary.
-      PairPotential pairPotential_;
+      PairInteraction pairInteraction_;
 
       /// Processor grid.
       Domain        domain_;
@@ -218,7 +228,7 @@ namespace DdMd
       #endif
 
       /// Pointer to force/energy evaluator.
-      Interaction*  interactionPtr_;
+      PairPotential* pairPotentialPtr_;
 
       /// Pointer to MD integrator.
       Integrator*   integratorPtr_;
@@ -251,13 +261,13 @@ namespace DdMd
    inline Exchanger& System::exchanger()
    { return exchanger_; }
 
-   inline PairPotential& System::pairPotential()
-   { return pairPotential_; }
+   inline PairInteraction& System::pairInteraction()
+   { return pairInteraction_; }
 
-   inline Interaction& System::interaction()
+   inline PairPotential& System::pairPotential()
    { 
-      assert(interactionPtr_); 
-      return *interactionPtr_; 
+      assert(pairPotentialPtr_); 
+      return *pairPotentialPtr_; 
    }
 
    inline Integrator& System::integrator()

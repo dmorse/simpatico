@@ -2,7 +2,7 @@
 #define INTERACTION_H
 
 #include <util/param/ParamComposite.h>
-#include <ddMd/potentials/PairPotential.h>
+#include <ddMd/potentials/PairInteraction.h>
 #include <ddMd/neighbor/CellList.h>
 #include <ddMd/neighbor/PairList.h>
 
@@ -24,14 +24,14 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * An Interaction calculates forces for a parent System.
+   * An PairPotential calculates forces for a parent System.
    *
-   * An Interaction has a private CellList and PairList which it
+   * An PairPotential has a private CellList and PairList which it
    * uses to calculate nonbonded pair forces. 
    * 
    * All operations in this class are local (no MPI).
    */
-   class Interaction : public ParamComposite
+   class PairPotential : public ParamComposite
    {
 
    public:
@@ -39,24 +39,24 @@ namespace DdMd
       /**
       * Constructor.
       */
-      Interaction(System& system);
+      PairPotential(System& system);
 
       /**
       * Default constructor.
       *
       * Used only for unit testing.
       */
-      Interaction();
+      PairPotential();
 
       /**
       * Destructor.
       */
-      ~Interaction();
+      ~PairPotential();
 
       /**
       * Read parameters and allocate memory.
       *
-      * Use iff this object was instantiated with Interaction(System&).
+      * Use iff this object was instantiated with PairPotential(System&).
       *
       * \param in input parameter stream.
       */
@@ -65,17 +65,17 @@ namespace DdMd
       /**
       * Create links to associated objects.
       *
-      * Use iff this was instantiated with default constructor Interaction().
+      * Use iff this was instantiated with default constructor PairPotential().
       *
       * \param storage   associated AtomStorage object.
-      * \param potential associated PairPotential object.
+      * \param potential associated PairInteraction object.
       */
-      void associate(AtomStorage& storage, const PairPotential& potential);
+      void associate(AtomStorage& storage, const PairInteraction& potential);
 
       /**
       * Set parameters and allocate memory.
       *
-      * Required if this was created with default constructor Interaction().
+      * Required if this was created with default constructor PairPotential().
       * The associate method must be called before setParam. This method sets 
       * the skin and cutoff length parameters, and allocates the internal
       * CellList and a PairList. The CellList allocates memory for the number
@@ -100,7 +100,7 @@ namespace DdMd
       /**
       * Build the cell and pair lists. 
       *
-      * Use with objects created with Interaction(System&). Makes a
+      * Use with objects created with PairPotential(System&). Makes a
       * CellList grid for the region defined by the associated Domain. 
       */
       void findNeighbors();
@@ -126,17 +126,17 @@ namespace DdMd
       /**
       * Add pair forces to atom forces.
       */
-      void addPairForces();
+      void addForces();
 
       /**
       * Add pair forces to atom forces, and compute energy.
       */
-      void addPairForces(double& energy);
+      void addForces(double& energy);
 
       /**
       * Calculate total pair potential on this processor
       */
-      double pairPotential();
+      double energy();
 
       /**
       * Get value of the pair list skin.
@@ -178,10 +178,10 @@ namespace DdMd
       // Pointer to associated AtomStorage object.
       AtomStorage* storagePtr_;
 
-      // Pointer to associated pair potential.
-      const PairPotential* potentialPtr_;
+      // Pointer to associated pair interaction.
+      const PairInteraction* interactionPtr_;
 
-      // Pointer to associated pair potential.
+      // Pointer to associated Domain object.
       const Domain* domainPtr_;
 
       // Pointer to associated Boundary object.
@@ -198,34 +198,34 @@ namespace DdMd
       *
       * Use the Verlet pair list. 
       */
-      double addPairForcesList(bool needForce, bool needEnergy);
+      double addForcesList(bool needForce, bool needEnergy);
 
       /**
-      * Calculate atomic pair forces and/or pair potential energy.a
+      * Calculate atomic pair forces and/or pair potential energy.
       *
       * Use cell list (but not pair list).
       */
-      double addPairForcesCell(bool needForce, bool needEnergy);
+      double addForcesCell(bool needForce, bool needEnergy);
 
       /**
       * Calculate atomic pair forces and/or pair potential energy.
       * 
       * Use an O(N^2) double loop over all atoms.
       */
-      double addPairForcesNSq(bool needForce, bool needEnergy);
+      double addForcesNSq(bool needForce, bool needEnergy);
 
    };
 
-   inline const CellList& Interaction::cellList() const
+   inline const CellList& PairPotential::cellList() const
    {  return cellList_; }
 
-   inline const PairList& Interaction::pairList() const
+   inline const PairList& PairPotential::pairList() const
    {  return pairList_; }
 
-   inline double Interaction::skin() const
+   inline double PairPotential::skin() const
    {  return skin_; }
 
-   inline double Interaction::cutoff() const
+   inline double PairPotential::cutoff() const
    {  return cutoff_; }
 
 }

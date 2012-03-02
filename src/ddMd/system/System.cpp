@@ -10,7 +10,7 @@
 
 #include "System.h"
 #include <ddMd/storage/AtomIterator.h>
-#include <ddMd/interaction/Interaction.h>
+#include <ddMd/potentials/PairPotential.h>
 #include <ddMd/integrator/Integrator.h>
 #include <ddMd/configIo/ConfigIo.h>
 #include <util/util/Log.h>
@@ -37,7 +37,7 @@ namespace DdMd
    #else
    System::System() :
    #endif
-      interactionPtr_(0),
+      pairPotentialPtr_(0),
       integratorPtr_(0),
       configIoPtr_(0),
       nAtomType_(0)
@@ -57,7 +57,7 @@ namespace DdMd
       configIoPtr_->associate(domain_, boundary_,
                               atomStorage_, bondStorage_, buffer_);
 
-      interactionPtr_ = new Interaction(*this);
+      pairPotentialPtr_ = new PairPotential(*this);
       integratorPtr_  = new Integrator(*this);
    }
 
@@ -68,7 +68,7 @@ namespace DdMd
    {
 
       // Preconditions
-      assert(interactionPtr_);
+      assert(pairPotentialPtr_);
       assert(integratorPtr_);
       assert(configIoPtr_);
 
@@ -77,16 +77,16 @@ namespace DdMd
       readParamComposite(in, atomStorage_);
       readParamComposite(in, bondStorage_);
       read<int>(in, "nAtomType", nAtomType_);
-      pairPotential_.setNAtomType(nAtomType_);
-      readParamComposite(in, pairPotential_);
-      readParamComposite(in, *interactionPtr_);
+      pairInteraction_.setNAtomType(nAtomType_);
+      readParamComposite(in, pairInteraction_);
+      readParamComposite(in, *pairPotentialPtr_);
       readParamComposite(in, *integratorPtr_);
       readParamComposite(in, random_);
       readParamComposite(in, buffer_);
       readParamComposite(in, *configIoPtr_);
 
       exchanger_.allocate();
-      exchanger_.setPairCutoff(interactionPtr_->cutoff());
+      exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
 
       readEnd(in);
    }
@@ -106,6 +106,27 @@ namespace DdMd
             atomIter->velocity()[i] = scale*random_.gaussian();
          }
       }
+   }
+
+   /*
+   * Set forces on all local atoms to zero.
+   */
+   void System::zeroForces()
+   {
+      AtomIterator atomIter;
+      atomStorage_.begin(atomIter); 
+      for( ; !atomIter.atEnd(); ++atomIter){
+         atomIter->force().zero();
+      }
+   }
+
+   /*
+   * Set forces on all local atoms to zero.
+   */
+   void System::computeForces()
+   {
+      zeroForces();
+      pairPotential().addForces();
    }
 
    /*
@@ -156,14 +177,17 @@ namespace DdMd
   
          #if 0 
          Log::file() << "PairList Statistics" << std::endl;
-         Log::file() << "maxNPair           " << interaction().pairList().maxNPair()
+         Log::file() << "maxNPair           " 
+                     << pairPotential().pairList().maxNPair()
                      << std::endl;
-         Log::file() << "maxNAtom           " << interaction().pairList().maxNAtom()
+         Log::file() << "maxNAtom           " 
+                     << pairPotential().pairList().maxNAtom()
                      << std::endl;
-         Log::file() << "buildCounter       " << interaction().pairList().buildCounter()
+         Log::file() << "buildCounter       " 
+                     << pairPotential().pairList().buildCounter()
                      << std::endl;
          Log::file() << "steps / build      "
-                     << double(nStep)/double(interaction().pairList().buildCounter())
+                     << double(nStep)/double(pairPotential().pairList().buildCounter())
                      << std::endl;
          Log::file() << std::endl;
          #endif
@@ -199,7 +223,7 @@ namespace DdMd
    }
 
    /*
-   * Calculate total pair potential energy
+   * Calculate total potential energy
    * 
    * Returns total on all processors on master, 0.0 on others.
    */
@@ -208,7 +232,7 @@ namespace DdMd
       double energy    = 0.0;
       double energyAll = 0.0;
 
-      energy = interactionPtr_->pairPotential();
+      energy = pairPotentialPtr_->energy();
 
       #ifdef UTIL_MPI
       // Sum values from all processors.
@@ -247,7 +271,7 @@ namespace DdMd
       // Decide if maximum exceeds threshhold (on master)
       int needed = 0;
       if (domain_.isMaster()) {
-         if (sqrt(maxSqDispAll) > 0.5*interactionPtr_->skin()) {
+         if (sqrt(maxSqDispAll) > 0.5*pairPotentialPtr_->skin()) {
             needed = 1; 
          }
       }

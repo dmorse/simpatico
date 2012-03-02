@@ -4,7 +4,7 @@
 #include <ddMd/system/System.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/storage/AtomStorage.h>
-#include <ddMd/interaction/Interaction.h>
+#include <ddMd/potentials/PairPotential.h>
 #include <util/random/Random.h>
 #include <util/format/Dbl.h>
 #include <util/util/initStatic.h>
@@ -32,7 +32,7 @@ int main()
    system.readConfig(filename);
    system.exchanger().exchange();
 
-   system.interaction().findNeighbors();
+   system.pairPotential().findNeighbors();
 
    double temperature = 1.0;
    system.setBoltzmannVelocities(temperature);

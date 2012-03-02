@@ -13,7 +13,7 @@
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/communicate/Exchanger.h>
-#include <ddMd/interaction/Interaction.h>
+#include <ddMd/potentials/PairPotential.h>
 #include <util/space/Vector.h>
 #include <util/global.h>
 
@@ -50,13 +50,13 @@ namespace DdMd
    {
       AtomStorage* atomStoragePtr  = &systemPtr_->atomStorage();
       Exchanger*   exchangerPtr    = &systemPtr_->exchanger();
-      Interaction* interactionPtr  = &systemPtr_->interaction();
+      PairPotential* pairPotentialPtr  = &systemPtr_->pairPotential();
 
       atomStoragePtr->clearSnapshot();
       exchangerPtr->exchange();
       atomStoragePtr->makeSnapshot();
-      interactionPtr->findNeighbors();
-      interactionPtr->calculateForces();
+      pairPotentialPtr->findNeighbors();
+      systemPtr_->computeForces();
    }
 
    void Integrator::step()
@@ -71,9 +71,9 @@ namespace DdMd
       double        dtHalf = 0.5*dt_;
       AtomIterator  atomIter;
 
-      AtomStorage* atomStoragePtr  = &systemPtr_->atomStorage();
-      Exchanger*   exchangerPtr    = &systemPtr_->exchanger();
-      Interaction* interactionPtr  = &systemPtr_->interaction();
+      AtomStorage* atomStoragePtr = &systemPtr_->atomStorage();
+      Exchanger* exchangerPtr = &systemPtr_->exchanger();
+      PairPotential* pairPotentialPtr = &systemPtr_->pairPotential();
 
       // 1st half of velocity Verlet.
       atomStoragePtr->begin(atomIter);
@@ -87,16 +87,14 @@ namespace DdMd
  
       }
 
-      bool needExchange = systemPtr_->needExchange();
-
-
       // Exchange atoms if necessary
-      if (needExchange) {
+      //bool needExchange = systemPtr_->needExchange();
+      if (systemPtr_->needExchange()) {
 
          atomStoragePtr->clearSnapshot();
          exchangerPtr->exchange();
          atomStoragePtr->makeSnapshot();
-         interactionPtr->findNeighbors();
+         pairPotentialPtr->findNeighbors();
 
       } else {
 
@@ -105,7 +103,7 @@ namespace DdMd
       }
 
       // Calculate new forces for all local atoms
-      interactionPtr->calculateForces();
+      systemPtr_->computeForces();
 
       // 2nd half of velocity Verlet
       atomStoragePtr->begin(atomIter);

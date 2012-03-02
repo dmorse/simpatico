@@ -17,7 +17,7 @@ System{
     sigma           1.0
     cutoff          1.122462048
   }
-  Interaction{
+  PairPotential{
     skin             0.3
     pairCapacity   60000
     maxBoundary     orthorhombic   30.0   30.0   30.0

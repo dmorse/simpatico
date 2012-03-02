@@ -1,2 +1,2 @@
-BondPotential.h
-PairPotential.h
+BondInteraction.h
+PairInteraction.h
