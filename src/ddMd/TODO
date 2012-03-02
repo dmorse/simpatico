@@ -1,17 +1,13 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Move potentials/PairPotential.h to potentials/PairInteraction.
+- Incorporate bond interaction and bond potential into System.
 
-- Move Interaction to potentials/PairPotential.
-
-- Write class potentials/BondPotential.
-
-- Incorporate bond forces into System.
-
-- Add Collector to ConfigIo, to allow writing.
+- Test BondPotential for conservation of energy.
 
 - Add readCommands() method to System to read command file. 
+
+- Add Collector to ConfigIo, to allow writing.
 
 - Make Integrator etc. abstract base classes.
 
