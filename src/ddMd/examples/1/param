@@ -12,10 +12,15 @@ System{
     totalCapacity 20000
   }
   nAtomType           1
+  nBondType           1
   LJPair{
     epsilon         1.0
     sigma           1.0
     cutoff          1.122462048
+  }
+  HarmonicBond{
+    kappa         400.0
+    length          1.0
   }
   PairPotential{
     skin             0.3
@@ -29,12 +34,12 @@ System{
     seed        8012457890
   }
   Buffer{
-    atomCapacity      1000
-    ghostCapacity     1000
+    atomCapacity     10000
+    ghostCapacity    10000
   }
   ConfigIo{
-    atomCacheCapacity   10000
-    bondCacheCapacity   10000
+    atomCacheCapacity   4000
+    bondCacheCapacity  20000
   }
 }
 

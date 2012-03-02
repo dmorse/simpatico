@@ -10,7 +10,8 @@
 
 #include <util/param/ParamComposite.h>           // base class
 #include <ddMd/boundary/Boundary.h>              // member 
-#include <ddMd/potentials/PairInteraction.h>     // member 
+#include <ddMd/potentials/PairInteraction.h>     // member, typedef
+#include <ddMd/potentials/BondInteraction.h>     // member, typedef
 #include <ddMd/storage/AtomStorage.h>            // member 
 #include <ddMd/storage/BondStorage.h>            // member 
 #include <ddMd/communicate/Domain.h>             // member 
@@ -22,6 +23,7 @@ namespace DdMd
 {
 
    class PairPotential;
+   class BondPotential;
    class Integrator;
    class ConfigIo;
 
@@ -112,6 +114,16 @@ namespace DdMd
       double kineticEnergy();
 
       /**
+      * Calculate total potential energy on all processors.
+      * 
+      * Reduce operation: Must be called on all nodes but returns correct
+      * total value only on grid communicator master.
+      *
+      * \return total pair potential for all nodes on master, 0.0 otherwise.
+      */
+      double potentialEnergy();
+
+      /**
       * Calculate total nonbonded pair potential energy.
       * 
       * Reduce operation: Must be called on all nodes but returns correct
@@ -120,6 +132,16 @@ namespace DdMd
       * \return total pair potential for all nodes on master, 0.0 otherwise.
       */
       double pairPotentialEnergy();
+
+      /**
+      * Calculate total bond potential energy.
+      * 
+      * Reduce operation: Must be called on all nodes but returns correct
+      * total value only on grid communicator master.
+      *
+      * \return total bond potential for all nodes on master, 0.0 otherwise.
+      */
+      double bondPotentialEnergy();
 
       /**
       * Integrate equations of motion. 
@@ -154,9 +176,19 @@ namespace DdMd
       PairInteraction& pairInteraction();
    
       /**
+      * Get the BondInteraction by reference.
+      */
+      BondInteraction& bondInteraction();
+   
+      /**
       * Get the PairPotential by reference.
       */
       PairPotential& pairPotential();
+   
+      /**
+      * Get the PairPotential by reference.
+      */
+      BondPotential& bondPotential();
    
       /**
       * Get the Integrator by reference.
@@ -205,8 +237,11 @@ namespace DdMd
       /// Periodic system boundary.
       Boundary      boundary_;
 
-      /// Periodic system boundary.
+      /// Nonbonded pair interaction potential.
       PairInteraction pairInteraction_;
+
+      /// Bonded pair interaction potential.
+      BondInteraction bondInteraction_;
 
       /// Processor grid.
       Domain        domain_;
@@ -230,6 +265,9 @@ namespace DdMd
       /// Pointer to force/energy evaluator.
       PairPotential* pairPotentialPtr_;
 
+      /// Pointer to force/energy evaluator.
+      BondPotential* bondPotentialPtr_;
+
       /// Pointer to MD integrator.
       Integrator*   integratorPtr_;
 
@@ -237,7 +275,10 @@ namespace DdMd
       ConfigIo*     configIoPtr_;
 
       /// Number of distinct atom types.
-      int           nAtomType_;
+      int nAtomType_;
+
+      /// Number of distinct bond types.
+      int nBondType_;
 
       /// Is this the master node for file Io?
       bool isMaster_;
@@ -264,10 +305,19 @@ namespace DdMd
    inline PairInteraction& System::pairInteraction()
    { return pairInteraction_; }
 
+   inline BondInteraction& System::bondInteraction()
+   { return bondInteraction_; }
+
    inline PairPotential& System::pairPotential()
    { 
       assert(pairPotentialPtr_); 
       return *pairPotentialPtr_; 
+   }
+
+   inline BondPotential& System::bondPotential()
+   { 
+      assert(bondPotentialPtr_); 
+      return *bondPotentialPtr_; 
    }
 
    inline Integrator& System::integrator()

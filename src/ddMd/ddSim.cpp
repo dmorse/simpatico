@@ -39,7 +39,7 @@ int main()
 
    // Calculate energies before integration
    double kinetic = system.kineticEnergy();
-   double potential = system.pairPotentialEnergy();
+   double potential = system.potentialEnergy();
    if (myRank == 0) {
       std::cout << Dbl(kinetic) << Dbl(potential) 
                 << Dbl(kinetic + potential) << std::endl;
@@ -51,7 +51,7 @@ int main()
 
       // Calculate energies after integration
       kinetic   = system.kineticEnergy();
-      potential = system.pairPotentialEnergy();
+      potential = system.potentialEnergy();
       if (myRank == 0) {
          std::cout << Dbl(kinetic) << Dbl(potential) 
                    << Dbl(kinetic + potential) << std::endl;

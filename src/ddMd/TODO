@@ -1,8 +1,6 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Incorporate bond interaction and bond potential into System.
-
 - Test BondPotential for conservation of energy.
 
 - Add readCommands() method to System to read command file. 

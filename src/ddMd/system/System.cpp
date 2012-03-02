@@ -11,6 +11,7 @@
 #include "System.h"
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/potentials/PairPotential.h>
+#include <ddMd/potentials/BondPotential.h>
 #include <ddMd/integrator/Integrator.h>
 #include <ddMd/configIo/ConfigIo.h>
 #include <util/util/Log.h>
@@ -27,7 +28,6 @@ namespace DdMd
 
    using namespace Util;
 
-
    /*
    * Default constructor.
    */
@@ -38,6 +38,7 @@ namespace DdMd
    System::System() :
    #endif
       pairPotentialPtr_(0),
+      bondPotentialPtr_(0),
       integratorPtr_(0),
       configIoPtr_(0),
       nAtomType_(0)
@@ -58,6 +59,7 @@ namespace DdMd
                               atomStorage_, bondStorage_, buffer_);
 
       pairPotentialPtr_ = new PairPotential(*this);
+      bondPotentialPtr_ = new BondPotential(*this);
       integratorPtr_  = new Integrator(*this);
    }
 
@@ -69,6 +71,7 @@ namespace DdMd
 
       // Preconditions
       assert(pairPotentialPtr_);
+      assert(bondPotentialPtr_);
       assert(integratorPtr_);
       assert(configIoPtr_);
 
@@ -78,7 +81,10 @@ namespace DdMd
       readParamComposite(in, bondStorage_);
       read<int>(in, "nAtomType", nAtomType_);
       pairInteraction_.setNAtomType(nAtomType_);
+      read<int>(in, "nBondType", nBondType_);
+      bondInteraction_.setNBondType(nBondType_);
       readParamComposite(in, pairInteraction_);
+      readParamComposite(in, bondInteraction_);
       readParamComposite(in, *pairPotentialPtr_);
       readParamComposite(in, *integratorPtr_);
       readParamComposite(in, random_);
@@ -127,6 +133,7 @@ namespace DdMd
    {
       zeroForces();
       pairPotential().addForces();
+      bondPotential().addForces();
    }
 
    /*
@@ -227,12 +234,44 @@ namespace DdMd
    * 
    * Returns total on all processors on master, 0.0 on others.
    */
+   double System::potentialEnergy() {
+      double energy = 0.0;
+      energy += pairPotentialEnergy();
+      energy += bondPotentialEnergy();
+      return energy;
+   }
+
+   /*
+   * Calculate total nonbonded pair potential energy
+   * 
+   * Returns total on all processors on master, 0.0 on others.
+   */
    double System::pairPotentialEnergy()
    {
       double energy    = 0.0;
       double energyAll = 0.0;
 
       energy = pairPotentialPtr_->energy();
+
+      #ifdef UTIL_MPI
+      // Sum values from all processors.
+      domain_.communicator().Reduce(&energy, &energyAll, 1, 
+                                    MPI::DOUBLE, MPI::SUM, 0);
+      #endif
+      return energyAll;
+   }
+
+   /*
+   * Calculate total potential energy
+   * 
+   * Returns total on all processors on master, 0.0 on others.
+   */
+   double System::bondPotentialEnergy()
+   {
+      double energy    = 0.0;
+      double energyAll = 0.0;
+
+      energy = bondPotentialPtr_->energy();
 
       #ifdef UTIL_MPI
       // Sum values from all processors.
@@ -282,7 +321,6 @@ namespace DdMd
       #endif
 
       return bool(needed);
-
    }
 
    /**

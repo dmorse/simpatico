@@ -29,16 +29,14 @@ namespace DdMd
       storagePtr_(0)
    {}
 
-   #if 0
    /*
    * Constructor.
    */
    BondPotential::BondPotential(System& system)
     : boundaryPtr_(&system.boundary()),
       interactionPtr_(&system.bondInteraction()),
-      storagePtr_(&system.storage())
+      storagePtr_(&system.bondStorage())
    {}
-   #endif
 
    /*
    * Destructor.

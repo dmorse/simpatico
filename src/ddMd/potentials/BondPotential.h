@@ -19,7 +19,7 @@ namespace DdMd
 
    using namespace Util;
 
-   //class System;
+   class System;
    template <int N> class GroupStorage;
 
    /**
@@ -32,12 +32,10 @@ namespace DdMd
 
    public:
 
-      #if 0
       /**
       * Constructor.
       */
       BondPotential(System& system);
-      #endif
 
       /**
       * Default constructor.
