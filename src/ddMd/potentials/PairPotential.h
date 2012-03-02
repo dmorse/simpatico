@@ -1,5 +1,5 @@
-#ifndef INTERACTION_H
-#define INTERACTION_H
+#ifndef PAIR_POTENTIAL_H
+#define PAIR_POTENTIAL_H
 
 #include <util/param/ParamComposite.h>
 #include <ddMd/potentials/PairInteraction.h>
