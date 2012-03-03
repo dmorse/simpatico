@@ -41,7 +41,8 @@ namespace DdMd
       bondPotentialPtr_(0),
       integratorPtr_(0),
       configIoPtr_(0),
-      nAtomType_(0)
+      nAtomType_(0),
+      nBondType_(0)
    {
       #ifdef UTIL_MPI
       communicatorPtr_ = &communicator;
@@ -54,13 +55,16 @@ namespace DdMd
       exchanger_.associate(domain_, boundary_,
                            atomStorage_, bondStorage_, buffer_);
 
-      configIoPtr_  = new ConfigIo();
-      configIoPtr_->associate(domain_, boundary_,
-                              atomStorage_, bondStorage_, buffer_);
+      // Note: The following objects will become polymorphic,
+      // and will be created in readParam by factories.
 
       pairPotentialPtr_ = new PairPotential(*this);
       bondPotentialPtr_ = new BondPotential(*this);
       integratorPtr_  = new Integrator(*this);
+      configIoPtr_  = new ConfigIo();
+      configIoPtr_->associate(domain_, boundary_,
+                              atomStorage_, bondStorage_, buffer_);
+
    }
 
    /**
@@ -80,10 +84,10 @@ namespace DdMd
       readParamComposite(in, atomStorage_);
       readParamComposite(in, bondStorage_);
       read<int>(in, "nAtomType", nAtomType_);
-      pairInteraction_.setNAtomType(nAtomType_);
       read<int>(in, "nBondType", nBondType_);
-      bondInteraction_.setNBondType(nBondType_);
+      pairInteraction_.setNAtomType(nAtomType_);
       readParamComposite(in, pairInteraction_);
+      bondInteraction_.setNBondType(nBondType_);
       readParamComposite(in, bondInteraction_);
       readParamComposite(in, *pairPotentialPtr_);
       readParamComposite(in, *integratorPtr_);
@@ -268,7 +272,7 @@ namespace DdMd
    */
    double System::bondPotentialEnergy()
    {
-      double energy    = 0.0;
+      double energy = 0.0;
       double energyAll = 0.0;
 
       energy = bondPotentialPtr_->energy();

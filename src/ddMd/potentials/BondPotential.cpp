@@ -86,28 +86,41 @@ namespace DdMd
 
       Vector f;
       double rsq;
+      double bondEnergy;
       double energy = 0.0;
       GroupIterator<2> iter;
       Atom* atom0Ptr;
       Atom* atom1Ptr;
       int type;
+      int isLocal0, isLocal1;
 
       storagePtr_->begin(iter);
       for ( ; !iter.atEnd(); ++iter) {
          type = iter->typeId();
          atom0Ptr = iter->atomPtr(0);
          atom1Ptr = iter->atomPtr(1);
+         isLocal0 = !(atom0Ptr->isGhost());
+         isLocal1 = !(atom1Ptr->isGhost());
          // Set f = r0 - r1, minimum image separation between atoms
          rsq = boundaryPtr_->distanceSq(atom0Ptr->position(), 
                                         atom1Ptr->position(), f);
          if (needEnergy) {
-            energy += interactionPtr_->energy(rsq, type);
+            bondEnergy = interactionPtr_->energy(rsq, type);
+            if (isLocal0 && isLocal1) {
+               energy += bondEnergy;
+            } else {
+               energy += 0.5*bondEnergy;
+            }
          }
          if (needForce) {
             // Set force = (r0-r1)*(forceOverR)
             f *= interactionPtr_->forceOverR(rsq, type);
-            atom0Ptr->force() += f;
-            atom1Ptr->force() -= f;
+            if (isLocal0) {
+               atom0Ptr->force() += f;
+            }
+            if (isLocal1) {
+               atom1Ptr->force() -= f;
+            }
          }
       }
       return energy;

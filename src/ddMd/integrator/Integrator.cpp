@@ -88,18 +88,13 @@ namespace DdMd
       }
 
       // Exchange atoms if necessary
-      //bool needExchange = systemPtr_->needExchange();
       if (systemPtr_->needExchange()) {
-
          atomStoragePtr->clearSnapshot();
          exchangerPtr->exchange();
          atomStoragePtr->makeSnapshot();
          pairPotentialPtr->findNeighbors();
-
       } else {
-
          exchangerPtr->update();
-
       }
 
       // Calculate new forces for all local atoms

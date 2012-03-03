@@ -6,7 +6,6 @@ include $(SRC_DIR)/ddMd/neighbor/sources.mk
 include $(SRC_DIR)/ddMd/system/sources.mk
 include $(SRC_DIR)/ddMd/configIo/sources.mk
 include $(SRC_DIR)/ddMd/potentials/sources.mk
-include $(SRC_DIR)/ddMd/interaction/sources.mk
 include $(SRC_DIR)/ddMd/integrator/sources.mk
 
 ddMd_SRCS=$(ddMd_boundary_SRCS) $(ddMd_chemistry_SRCS) $(ddMd_storage_SRCS) \

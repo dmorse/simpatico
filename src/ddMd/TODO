@@ -1,8 +1,6 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Test BondPotential for conservation of energy.
-
 - Add readCommands() method to System to read command file. 
 
 - Add Collector to ConfigIo, to allow writing.
@@ -10,6 +8,8 @@ Domain Decomposition MD (DdMd)
 - Make Integrator etc. abstract base classes.
 
 - Add factories and clean up param file format.
+
+- Write NVT and NPH integrators.
 
 - Modify Exchanger to work ifndef UTIL_MPI, continue with other classes.
 

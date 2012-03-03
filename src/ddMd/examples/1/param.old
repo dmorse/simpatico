@@ -13,12 +13,14 @@ System{
   }
   nAtomType           1
   nBondType           1
-  DpdSoftPair{
-    epsilon        20.0
+  LJPair{
+    epsilon         1.0
     sigma           1.0
+    cutoff          1.122462048
   }
-  HarmonicL0Bond{
-    kappa           6.0
+  HarmonicBond{
+    kappa         100.0
+    length          1.0
   }
   PairPotential{
     skin             0.3
@@ -26,7 +28,7 @@ System{
     maxBoundary     orthorhombic   30.0   30.0   30.0
   }
   Integrator{
-    dt           0.0010
+    dt           0.0005
   }
   Random{
     seed        8012457890

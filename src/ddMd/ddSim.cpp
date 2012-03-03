@@ -39,10 +39,11 @@ int main()
 
    // Calculate energies before integration
    double kinetic = system.kineticEnergy();
-   double potential = system.potentialEnergy();
+   double pair = system.pairPotentialEnergy();
+   double bond = system.bondPotentialEnergy();
    if (myRank == 0) {
-      std::cout << Dbl(kinetic) << Dbl(potential) 
-                << Dbl(kinetic + potential) << std::endl;
+      std::cout << Dbl(kinetic) << Dbl(pair) << Dbl(bond)
+                << Dbl(kinetic + pair + bond) << std::endl;
    }
 
    for (int i = 0; i < 5; ++i ) {
@@ -51,12 +52,13 @@ int main()
 
       // Calculate energies after integration
       kinetic   = system.kineticEnergy();
-      potential = system.potentialEnergy();
+      pair = system.pairPotentialEnergy();
+      bond = system.bondPotentialEnergy();
       if (myRank == 0) {
-         std::cout << Dbl(kinetic) << Dbl(potential) 
-                   << Dbl(kinetic + potential) << std::endl;
+         std::cout << Dbl(kinetic) << Dbl(pair) << Dbl(bond)
+                   << Dbl(kinetic + pair + bond) << std::endl;
       }
-      //system.isValid();
+      system.isValid();
    }
 
    MPI::Finalize();
