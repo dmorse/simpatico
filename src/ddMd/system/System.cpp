@@ -12,7 +12,7 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/potentials/PairPotential.h>
 #include <ddMd/potentials/BondPotential.h>
-#include <ddMd/integrator/Integrator.h>
+#include <ddMd/integrator/NveIntegrator.h>
 #include <ddMd/configIo/ConfigIo.h>
 #include <util/util/Log.h>
 #include <util/util/Timer.h>
@@ -60,7 +60,7 @@ namespace DdMd
 
       pairPotentialPtr_ = new PairPotential(*this);
       bondPotentialPtr_ = new BondPotential(*this);
-      integratorPtr_  = new Integrator(*this);
+      integratorPtr_  = new NveIntegrator(*this);
       configIoPtr_  = new ConfigIo();
       configIoPtr_->associate(domain_, boundary_,
                               atomStorage_, bondStorage_, buffer_);
@@ -81,10 +81,15 @@ namespace DdMd
 
       readBegin(in, "System");
       readParamComposite(in, domain_);
-      readParamComposite(in, atomStorage_);
-      readParamComposite(in, bondStorage_);
       read<int>(in, "nAtomType", nAtomType_);
       read<int>(in, "nBondType", nBondType_);
+      atomTypes_.allocate(nAtomType_);
+      for (int i = 0; i < nAtomType_; ++i) {
+         atomTypes_[i].setId(i);
+      }
+      readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
+      readParamComposite(in, atomStorage_);
+      readParamComposite(in, bondStorage_);
       pairInteraction_.setNAtomType(nAtomType_);
       readParamComposite(in, pairInteraction_);
       bondInteraction_.setNBondType(nBondType_);
@@ -154,7 +159,7 @@ namespace DdMd
          Log::file() << std::endl;
       }
 
-      integratorPtr_->initialize();
+      integratorPtr_->setup();
 
       // Main MD loop
       timer.start();
@@ -216,13 +221,18 @@ namespace DdMd
    {
       double energy    = 0.0;
       double energyAll = 0.0;
+      double mass;
+      int typeId;
 
       // Add kinetic energies of local atoms on this processor
       AtomIterator atomIter;
       atomStorage_.begin(atomIter); 
       for( ; !atomIter.atEnd(); ++atomIter){
-         energy += 0.5*(atomIter->velocity().square());
+         typeId = atomIter->typeId();
+         mass   = atomTypes_[typeId].mass();
+         energy += mass*(atomIter->velocity().square());
       }
+      energy = 0.5*energy;
 
       #ifdef UTIL_MPI
       // Sum values from all processors.

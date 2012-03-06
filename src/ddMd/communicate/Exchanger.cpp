@@ -1,7 +1,7 @@
 #ifndef EXCHANGER_CPP
 #define EXCHANGER_CPP
 
-#define EXCHANGER_DEBUG
+//#define EXCHANGER_DEBUG
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -493,6 +493,7 @@ namespace DdMd
          #endif
 
          // Set communication flags for atoms in incomplete groups
+         nAtom = bondIter->nPtr();
          if (nAtom < 2) {
             for (i = 0; i < Dimension; ++i) {
                if (domainPtr_->grid().dimension(i) > 1) {

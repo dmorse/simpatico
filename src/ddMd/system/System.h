@@ -14,10 +14,12 @@
 #include <ddMd/potentials/BondInteraction.h>     // member, typedef
 #include <ddMd/storage/AtomStorage.h>            // member 
 #include <ddMd/storage/BondStorage.h>            // member 
+#include <ddMd/chemistry/AtomType.h>             // member
 #include <ddMd/communicate/Domain.h>             // member 
 #include <ddMd/communicate/Buffer.h>             // member 
 #include <ddMd/communicate/Exchanger.h>          // member 
 #include <util/random/Random.h>                  // member 
+#include <util/containers/DArray.h>              // member 
 
 namespace DdMd
 {
@@ -222,6 +224,21 @@ namespace DdMd
       int nGhostTotal() const;
 
       /**
+      * Get maximum number of atom types.
+      */
+      int nAtomType();
+
+      /**
+      * Get maximum number of bond types.
+      */
+      int nBondType();
+
+      /**
+      * Get an AtomType descriptor by reference.
+      */
+      AtomType& atomType(int i);
+
+      /**
       * Return true if this System is valid, or throw an Exception.
       */
       bool isValid();
@@ -242,6 +259,9 @@ namespace DdMd
 
       /// Bonded pair interaction potential.
       BondInteraction bondInteraction_;
+
+      /// Array of AtomType objects for all atoms in a simulation.
+      DArray<AtomType> atomTypes_;
 
       /// Processor grid.
       Domain        domain_;
@@ -328,6 +348,24 @@ namespace DdMd
 
    inline Random& System::random()
    { return random_; }
+
+   /*
+   * Get maximum number of atom types.
+   */
+   inline int System::nAtomType()
+   {   return nAtomType_; }
+
+   /*
+   * Get maximum number of bond types.
+   */
+   inline int System::nBondType()
+   {  return nBondType_; }
+
+   /*
+   * Get an AtomType descriptor by reference.
+   */
+   inline AtomType& System::atomType(int i)
+   {  return atomTypes_[i]; }
 
 }
 #endif

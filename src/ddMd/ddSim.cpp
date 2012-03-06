@@ -58,7 +58,7 @@ int main()
          std::cout << Dbl(kinetic) << Dbl(pair) << Dbl(bond)
                    << Dbl(kinetic + pair + bond) << std::endl;
       }
-      system.isValid();
+      //system.isValid();
    }
 
    MPI::Finalize();
