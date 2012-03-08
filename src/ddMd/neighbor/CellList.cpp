@@ -78,6 +78,8 @@ namespace DdMd
             gridDimensions[i] = 1;
          }
          cellLengths_[i] = lengths[i]/double(gridDimensions[i]);
+         lowerOuter_[i] = lower_[i] - cellLengths_[i];
+         upperOuter_[i] = upper_[i] + cellLengths_[i];
 
          // Add two extra layers of cells for ghosts.
          gridDimensions[i] += 2;

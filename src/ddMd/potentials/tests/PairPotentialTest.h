@@ -1,11 +1,13 @@
-#ifndef INTERACTION_TEST_H
-#define INTERACTION_TEST_H
+#ifndef PAIR_POTENTIAL_TEST_H
+#define PAIR_POTENTIAL_TEST_H
 
-#include <ddMd/interaction/Interaction.h>
 #include <ddMd/potentials/PairPotential.h>
+#include <ddMd/potentials/PairInteraction.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
+#include <ddMd/communicate/Domain.h>
+#include <ddMd/boundary/Boundary.h>
 #include <ddMd/chemistry/Atom.h>
 #include <util/random/Random.h>
 
@@ -16,26 +18,27 @@
 using namespace Util;
 using namespace DdMd;
 
-class InteractionTest: public ParamFileTest<Interaction>
+class PairPotentialTest: public ParamFileTest<PairPotential>
 {
 
 private:
 
-      Interaction   interaction;
-      AtomStorage       storage;
-      PairPotential potential;
+      Boundary    boundary;
+      Domain      domain;
+      AtomStorage storage;
+      PairInteraction pairInteraction;
 
 public:
 
    virtual void setUp()
    {
-      potential.setNAtomType(1);
-      object().associate(storage, potential);
+      pairInteraction.setNAtomType(1);
+      object().associate(boundary, domain, storage, pairInteraction);
 
       // Read parameter file
-      openFile("in/Interaction");
+      openFile("in/PairPotential");
       storage.readParam(file());
-      potential.readParam(file());
+      pairInteraction.readParam(file());
       closeFile();
 
    }
@@ -195,7 +198,7 @@ public:
       }      
 
       object().setMethodId(2); // N^2 loop
-      object().addPairForces();
+      object().addForces();
 
       std::cout << std::endl;
       storage.begin(iter);
@@ -220,26 +223,26 @@ public:
 
       zeroForces();
       object().setMethodId(0);
-      object().addPairForces();
+      object().addForces();
       writeForces();
  
       zeroForces();
       object().setMethodId(1);
-      object().addPairForces();
+      object().addForces();
       writeForces();
 
       zeroForces();
       object().setMethodId(2);
-      object().addPairForces();
+      object().addForces();
       writeForces();
 
    }
 
 };
 
-TEST_BEGIN(InteractionTest)
-TEST_ADD(InteractionTest, testRead1)
-TEST_ADD(InteractionTest, testRandom1)
-TEST_END(InteractionTest)
+TEST_BEGIN(PairPotentialTest)
+TEST_ADD(PairPotentialTest, testRead1)
+TEST_ADD(PairPotentialTest, testRandom1)
+TEST_END(PairPotentialTest)
 
 #endif 

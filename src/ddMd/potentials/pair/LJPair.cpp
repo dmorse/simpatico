@@ -185,6 +185,12 @@ namespace DdMd
    double LJPair::maxPairCutoff() const
    { return maxPairCutoff_; }
 
+   /**
+   * Return name string "LJPair" for this evaluator class.
+   */
+   std::string LJPair::className() const
+   {  return std::string("LJPair"); }
+ 
    /* 
    * Get pair interaction strength.
    */

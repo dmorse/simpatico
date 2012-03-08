@@ -1,5 +1,5 @@
-#ifndef GROOT_SOFT_PAIR_H
-#define GROOT_SOFT_PAIR_H
+#ifndef DPD_SOFT_PAIR_H
+#define DPD_SOFT_PAIR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -19,14 +19,14 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * The soft potential introduced in DPD simulations of Groot et al. 
+   * The soft potential introduced in DPD simulations of Dpd et al. 
    *
    * Member functions evaluate energy and force for an individual pair 
    * of nonbonded interacting particles.
    * 
    * \ingroup Potential_Module
    */
-   class GrootSoftPair : public ParamComposite 
+   class DpdSoftPair : public ParamComposite 
    {
    
    public:
@@ -34,17 +34,17 @@ namespace DdMd
       /**
       * Constructor.
       */
-      GrootSoftPair();
+      DpdSoftPair();
 
       /**
       * Copy constructor.
       */
-      GrootSoftPair(const GrootSoftPair& other);
+      DpdSoftPair(const DpdSoftPair& other);
 
       /**
       * Assignment.
       */
-      GrootSoftPair& operator = (const GrootSoftPair& other);
+      DpdSoftPair& operator = (const DpdSoftPair& other);
 
       /// \name Mutators
       //@{ 
@@ -138,6 +138,11 @@ namespace DdMd
       */
       double maxPairCutoff() const;
  
+      /**
+      * Return name string "DpdSoftPair" for this evaluator class.
+      */
+      std::string className() const;
+ 
       //@}
 
    private:
@@ -172,7 +177,7 @@ namespace DdMd
    /* 
    * Calculate interaction energy for a pair, as function of squared distance.
    */
-   inline double GrootSoftPair::energy(double rsq, int i, int j) const 
+   inline double DpdSoftPair::energy(double rsq, int i, int j) const 
    {
       double dr;
       if (rsq < sigmaSq_[i][j]) {
@@ -186,7 +191,7 @@ namespace DdMd
    /* 
    * Calculate force/distance for a pair as function of squared distance.
    */
-   inline double GrootSoftPair::forceOverR(double rsq, int i, int j) const
+   inline double DpdSoftPair::forceOverR(double rsq, int i, int j) const
    {
       if (rsq < sigmaSq_[i][j]) {
          return cf_[i][j]*(sigma_[i][j]/sqrt(rsq) - 1.0);

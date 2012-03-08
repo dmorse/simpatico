@@ -18,6 +18,8 @@ public:
 
    void readParam(std::istream& in);
 
+   void writeChains(std::ostream& out);
+
    void writeChainsMcMd(std::ostream& out);
 
    void writeChainsDdMd(std::ostream& out);
@@ -29,6 +31,7 @@ private:
    HarmonicBond   bondPotential_;
    int            nAtomPerMolecule_;
    int            nMolecule_;
+   std::string    outputStyle_;
 
 };
 #endif

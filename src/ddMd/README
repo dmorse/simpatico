@@ -6,9 +6,9 @@ This directory contains unfinished code for a domain-decomposition
 a parallelization strategy similiar to that used in LAMMPS and other 
 DD parallel MD codes, but is thus far only capable of simulating a 
 system of point particles with non-bonded pair interactions, with 
-no covalent interactions. The code relies on utility class defined
-in the Util namespace (or util/ directory), but does not rely on 
-any code in McMD classes (or mcMd/ directory).
+no covalent interactions. The code relies on utility classes defined
+in the Util namespace (or util/ directory), but does not use any
+code from the McMD namespace (or mcMd/ directory).
 
 Users of the serial MC/MD code in the McMd directory can (for now)
 safely ignore this. 

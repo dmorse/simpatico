@@ -129,7 +129,7 @@ namespace McMd
          for ( ; molIter.notEnd(); ++molIter) {
             molIter->begin(atomIter); 
             for ( ; atomIter.notEnd(); ++atomIter) {
-               out << Int(i, 8);
+               out << Int(atomIter->id(), 10);
                out << Int(atomIter->typeId(), 5);
                out << atomIter->position();
                out << atomIter->velocity();
@@ -152,8 +152,8 @@ namespace McMd
                molIter->begin(bondIter); 
                for ( ; bondIter.notEnd(); ++bondIter) {
                   out << Int(i, 8) << Int(bondIter->typeId(), 5);
-                  out << Int(bondIter->atom(0).id() + 1, 8);
-                  out << Int(bondIter->atom(1).id() + 1, 8);
+                  out << Int(bondIter->atom(0).id(), 10);
+                  out << Int(bondIter->atom(1).id(), 10);
                   out << std::endl;
                   ++i;
                }

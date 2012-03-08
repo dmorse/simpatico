@@ -6,20 +6,20 @@ include $(SRC_DIR_REL)/ddMd/defines.mk
 include $(SRC_DIR_REL)/ddMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
-include $(SRC_DIR_REL)/test/sources.mk
 include sources.mk
 
-all: $(ddMd_interaction_tests_OBJS) Test
+all: $(ddMd_potentials_tests_OBJS) Test
 
 clean:
-	rm -f $(ddMd_interaction_tests_OBJS) Test $(ddMd_interaction_tests_OBJS:.o=.d)
+	rm -f Test $(ddMd_potentials_tests_OBJS)
+	rm -f $(ddMd_potentials_tests_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(ddMd_interaction_tests_OBJS:.o=.d)
+	rm -f $(ddMd_potentials_tests_OBJS:.o=.d)
 
 Test: Test.o $(ddMd_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
 	       $(ddMd_LIB) $(util_LIB)
 
--include $(ddMd_interaction_tests_OBJS:.o=.d)
+-include $(ddMd_potentials_tests_OBJS:.o=.d)
 

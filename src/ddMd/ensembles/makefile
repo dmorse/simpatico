@@ -7,13 +7,13 @@ include $(SRC_DIR_REL)/ddMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
 
-all: $(ddMd_interaction_OBJS)
+all: $(ddMd_ensembles_OBJS)
 
 clean:
-	rm -f $(ddMd_interaction_OBJS) $(ddMd_interaction_OBJS:.o=.d)
+	rm -f $(ddMd_ensembles_OBJS) $(ddMd_ensembles_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(ddMd_interaction_OBJS:.o=.d)
+	rm -f $(ddMd_ensembles_OBJS:.o=.d)
 
--include $(ddMd_interaction_OBJS:.o=.d)
+-include $(ddMd_ensembles_OBJS:.o=.d)
 

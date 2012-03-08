@@ -1,7 +1,7 @@
 #ifndef INTEGRATOR_H
 #define INTEGRATOR_H
 
-#include <ddMd/potentials/PairPotential.h>
+#include <util/param/ParamComposite.h>
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -13,17 +13,12 @@
 namespace DdMd
 {
 
-   class System;
    using namespace Util;
+
+   class System;
 
    /**
    * An Integrator numerically integrates the equations of motion. 
-   * 
-   * This class implements the velocity-Verlet algorithm. The 
-   * integrator uses the public interface of a parent System to
-   * evaluated forces and access atomic forces and velocities.
-   *
-   * All operations of this class are local (no MPI). 
    */
    class Integrator : public ParamComposite
    {
@@ -40,30 +35,41 @@ namespace DdMd
       */
       ~Integrator();
 
+      #if 0
       /**
       * Read required parameters.
       *
       * For velocity-verlet algorithm, reads the time step dt.
       */
-      void readParam(std::istream& in);
+      virtual void readParam(std::istream& in);
+      #endif
 
       /**
       * Initialize just before integration.
       */
-      void initialize();
+      virtual void setup() = 0;
 
       /**
       * Implement one step.
       */
-      void step();
+      virtual void step() = 0;
+
+   protected:
+
+      /**
+      * Get reference to parent System.
+      */ 
+      System& system();
 
    private:
 
       System* systemPtr_;
 
-      double  dt_;
-
    };
+
+   /// Get reference to parent System.
+   inline System& Integrator::system() 
+   {  return *systemPtr_; }
 
 }
 #endif

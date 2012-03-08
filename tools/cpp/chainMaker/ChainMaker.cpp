@@ -16,9 +16,20 @@ void ChainMaker::readParam(std::istream& in)
    readParamComposite(in, random_);
    read<int>(in, "nMolecule", nMolecule_);
    read<int>(in, "nAtomPerMolecule", nAtomPerMolecule_);
+   
+   in >> outputStyle_;
 }
 
 
+void ChainMaker::writeChains(std::ostream& out)
+{
+   if (outputStyle_ == "McMd") {
+      writeChainsMcMd(out);
+   } else 
+   if (outputStyle_ == "DdMd") {
+      writeChainsDdMd(out);
+   }
+}
 
 void ChainMaker::writeChainsMcMd(std::ostream& out)
 {
@@ -69,26 +80,31 @@ void ChainMaker::writeChainsDdMd(std::ostream& out)
    out << std::endl;
    out << "ATOMS" << std::endl;
    out << "nAtom  " << nMolecule_*nAtomPerMolecule_ << std::endl;
-   out << std::endl;
 
    i = 0;
+   velocity.zero();
    for (iMol = 0; iMol < nMolecule_; ++iMol) {
 
       boundary_.randomPosition(random_, r);
-      ++i;
 
-      out << Int(i,6) << Int(bondType, 5);
-      out << r << std::endl;
-
-      for (iAtom = 1; iAtom < nAtomPerMolecule_; ++iAtom) {
-         random_.unitVector(v);
-         v *= bondPotential_.randomBondLength(&random_, beta, bondType);
-         r += v;
-         boundary_.shift(r);
+      for (iAtom = 0; iAtom < nAtomPerMolecule_; ++iAtom) {
 
          out << Int(i,6) << Int(bondType, 5);
-         out << r << std::endl;
+         for (j = 0; j < Dimension; ++j) {
+            out << Dbl(r[j], 15, 6);
+         }
+         out << "  ";
+         for (j = 0; j < Dimension; ++j) {
+            out << Dbl(0.0, 12, 4);
+         }
+         out << std::endl;
 
+         if (iAtom < nAtomPerMolecule_ - 1) {
+            random_.unitVector(v);
+            v *= bondPotential_.randomBondLength(&random_, beta, bondType);
+            r += v;
+            boundary_.shift(r);
+         }
 
          ++i;
       }
@@ -97,7 +113,6 @@ void ChainMaker::writeChainsDdMd(std::ostream& out)
    out << std::endl;
    out << "BONDS" << std::endl;
    out << "nBond  " << nMolecule_*(nAtomPerMolecule_ -1 ) << std::endl;
-   out << std::endl;
    i = 0;
    j = 0;
    for (iMol = 0; iMol < nMolecule_; ++iMol) {
@@ -112,17 +127,11 @@ void ChainMaker::writeChainsDdMd(std::ostream& out)
     }
 }
 
-int main() {
+int main() 
+{
    ChainMaker obj;
    obj.readParam(std::cin);
-   int format;
-   std::cin >> format;
-   if (format == 0) {
-      obj.writeChainsMcMd(std::cout);
-   } else 
-   if (format == 1) {
-      obj.writeChainsDdMd(std::cout);
-   }
+   obj.writeChains(std::cout);
 }
 
 #endif

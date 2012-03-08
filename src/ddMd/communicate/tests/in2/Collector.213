@@ -1,0 +1,15 @@
+Domain{
+  gridDimensions    2    1     3
+}
+AtomStorage{
+   atomCapacity        50
+   ghostCapacity       50
+   totalAtomCapacity  120
+}
+Buffer{
+  atomCapacity    10
+  ghostCapacity   10
+}
+AtomDistributor{
+  cacheCapacity   35 
+}

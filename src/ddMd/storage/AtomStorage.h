@@ -276,8 +276,8 @@ namespace DdMd
       * Preconditions: 
       * 1) All atom ids in the Group<N> must be set to valid values,
       *    in the range 0 <= atomId(i) < totalAtomCapacity.
-      * 2) All ghost atoms may exist in this AtomStorage. The 
-      *    method throws an exception if it finds ghost atom.
+      * 2) No ghost atoms may exist in this AtomStorage. The 
+      *    method throws an exception if it finds a ghost atom.
       *
       * \param group Group<N> object with known atom ids. 
       */ 
@@ -289,15 +289,16 @@ namespace DdMd
       *
       * On entry group is a Group<N> object for which the atom
       * ids have been set for all N atoms in the group, but the
-      * pointers have not yet been set. On exit, both pointers
+      * pointers may not yet have been set. On exit, both pointers
       * and values of atom ownerId are set are set for all atoms
-      * that are found in this AtomStorage. Any atoms that are
-      * not found in this storage are assigned null values.
+      * that are found in this AtomStorage. Pointers for any atoms 
+      * that are not found on this storage are set to null values.
       *
       * Precondition: All atom ids in the Group must be set to
       * values in the range 0 <= atomId(i) < totalAtomCapacity.
       *
       * \param group Group<N> object with known atom ids. 
+      * \return number of atoms found on this processor.
       */ 
       template <int N> 
       int findGroupAtoms(Group<N>& group) const;

@@ -95,11 +95,6 @@ public:
 
    }
 
-   virtual void testDistribute()
-   { 
-      printMethod(TEST_FUNC); 
-   }
-
    void displaceAtoms(double max)
    {
       double min = -max;
@@ -110,6 +105,11 @@ public:
             atomIter->position()[i] += random.uniform(min, max);
          }
       }
+   }
+
+   virtual void testDistribute()
+   { 
+      printMethod(TEST_FUNC); 
    }
 
    void testAtomExchange()
@@ -186,8 +186,7 @@ public:
 
       double range = 0.4;
       displaceAtoms(range);
-
-
+      
       object().exchange();
 
       // Check that all atoms are accounted for after ghost exchange.
@@ -213,7 +212,7 @@ public:
 
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
-                  false));
+                  true));
 
       #if 0
       MpiLogger logger;
@@ -287,7 +286,7 @@ public:
 
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
-                  false));
+                  true));
 
    }
 
@@ -310,22 +309,13 @@ public:
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
 
-      object().update();
-      TEST_ASSERT(nAtom == atomStorage.nAtom());
-      TEST_ASSERT(nGhost == atomStorage.nGhost());
-
-      communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
-      if (myRank == 0) {
-         TEST_ASSERT(nAtomAll == atomCount);
-      }
-
-      // Check that all atoms are within the processor domain.
+      // Assert that all atoms are within the processor domain.
       atomStorage.begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
-      // Check that all ghosts are outside the processor domain.
+      // Assert that all ghosts are outside the processor domain.
       atomStorage.begin(ghostIter);
       for ( ; !ghostIter.atEnd(); ++ghostIter) {
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
@@ -333,10 +323,11 @@ public:
 
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
-                  false));
+                  true));
 
       range = 0.1;
-      for (int i=0; i < 1000; ++i) {
+      for (int i=0; i < 3; ++i) {
+
          displaceAtoms(range);
 
          for (int j=0; j < 3; ++j) {
@@ -364,7 +355,7 @@ public:
 
          TEST_ASSERT(atomStorage.isValid());
          TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
-                                         false)); 
+                                         true)); 
       }
 
    }

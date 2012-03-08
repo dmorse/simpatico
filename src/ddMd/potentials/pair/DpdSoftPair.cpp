@@ -1,5 +1,5 @@
-#ifndef GROOT_SOFT_PAIR_CPP
-#define GROOT_SOFT_PAIR_CPP
+#ifndef DPD_SOFT_PAIR_CPP
+#define DPD_SOFT_PAIR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,7 +9,7 @@
 */
 
 #include <iostream>
-#include "GrootSoftPair.h"
+#include "DpdSoftPair.h"
 
 namespace DdMd
 {
@@ -19,7 +19,7 @@ namespace DdMd
    /* 
    * Constructor.
    */
-   GrootSoftPair::GrootSoftPair() 
+   DpdSoftPair::DpdSoftPair() 
     : maxPairCutoff_(0.0),
       nAtomType_(0),
       isInitialized_(false)
@@ -28,7 +28,7 @@ namespace DdMd
    /* 
    * Copy constructor.
    */
-   GrootSoftPair::GrootSoftPair(const GrootSoftPair& other)
+   DpdSoftPair::DpdSoftPair(const DpdSoftPair& other)
     : maxPairCutoff_(other.maxPairCutoff_),
       nAtomType_(other.nAtomType_),
       isInitialized_(other.isInitialized_)
@@ -48,7 +48,7 @@ namespace DdMd
    /* 
    * Assignment operator.
    */
-   GrootSoftPair& GrootSoftPair::operator = (const GrootSoftPair& other)
+   DpdSoftPair& DpdSoftPair::operator = (const DpdSoftPair& other)
    {
       maxPairCutoff_ = other.maxPairCutoff_;
       nAtomType_     = other.nAtomType_;
@@ -69,7 +69,7 @@ namespace DdMd
    /* 
    * Read potential parameters from file.
    */
-   void GrootSoftPair::readParam(std::istream &in) 
+   void DpdSoftPair::readParam(std::istream &in) 
    {
       // Preconditions
       if (nAtomType_ == 0) {
@@ -77,7 +77,7 @@ namespace DdMd
       }
    
       // Read parameters
-      readBegin(in, "GrootSoftPair");
+      readBegin(in, "DpdSoftPair");
       readCArray2D<double> (
                   in, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
       readCArray2D<double>(
@@ -104,13 +104,13 @@ namespace DdMd
    /* 
    * Set nAtomType
    */
-   void GrootSoftPair::setNAtomType(int nAtomType) 
+   void DpdSoftPair::setNAtomType(int nAtomType) 
    {  
       if (nAtomType <= 0) {
          UTIL_THROW("nAtomType <= 0");
       }
       if (nAtomType > MaxAtomType) {
-         UTIL_THROW("nAtomType > GrootSoftPair::MaxAtomType");
+         UTIL_THROW("nAtomType > DpdSoftPair::MaxAtomType");
       }
       nAtomType_ = nAtomType;
    }
@@ -118,12 +118,12 @@ namespace DdMd
    /*
    * Reset epsilon_[i][j] after initialization
    */
-   void GrootSoftPair::setEpsilon(int i, int j, double epsilon)
+   void DpdSoftPair::setEpsilon(int i, int j, double epsilon)
    {
 
       // Preconditions
       if (!isInitialized_) {
-         UTIL_THROW("Cannot modify epsilon before GrootSoftPair is initialized");
+         UTIL_THROW("Cannot modify epsilon before DpdSoftPair is initialized");
       }
       if (i < 0 || i >= nAtomType_) {
          UTIL_THROW("Invalid atom type index i");
@@ -141,12 +141,12 @@ namespace DdMd
    /*
    * Reset sigma_[i][j] after initialization
    */
-   void GrootSoftPair::setSigma(int i, int j, double sigma)
+   void DpdSoftPair::setSigma(int i, int j, double sigma)
    {
 
       // Preconditions
       if (!isInitialized_) {
-         UTIL_THROW("Cannot modify sigma before GrootSoftPair is initialized");
+         UTIL_THROW("Cannot modify sigma before DpdSoftPair is initialized");
       }
       if (i < 0 || i >= nAtomType_) {
          UTIL_THROW("Invalid atom type index i");
@@ -165,7 +165,7 @@ namespace DdMd
    /* 
    * Get pair interaction strength.
    */
-   double GrootSoftPair::epsilon(int i, int j) const
+   double DpdSoftPair::epsilon(int i, int j) const
    { 
       assert(i >= 0 && i < nAtomType_); 
       assert(j >= 0 && j < nAtomType_); 
@@ -175,7 +175,7 @@ namespace DdMd
    /* 
    * Get pair interaction strength.
    */
-   double GrootSoftPair::sigma(int i, int j) const
+   double DpdSoftPair::sigma(int i, int j) const
    {
       assert(i >= 0 && i < nAtomType_); 
       assert(j >= 0 && j < nAtomType_); 
@@ -185,9 +185,14 @@ namespace DdMd
    /* 
    * Get maximum of pair cutoff distance, for all atom type pairs.
    */
-   double GrootSoftPair::maxPairCutoff() const
+   double DpdSoftPair::maxPairCutoff() const
    { return maxPairCutoff_; }
 
+   /**
+   * Return name string "DpdSoftPair" for this evaluator class.
+   */
+   std::string DpdSoftPair::className() const
+   {  return std::string("DpdSoftPair"); }
 
 } 
 #endif
