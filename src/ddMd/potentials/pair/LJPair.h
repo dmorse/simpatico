@@ -117,6 +117,11 @@ namespace DdMd
       double maxPairCutoff() const;
  
       /**
+      * Return name string "LJPair" for this evaluator class.
+      */
+      std::string className() const;
+ 
+      /**
       * Get LJ interaction energy for a specific pair of Atom types.
       *
       * \param i   type of Atom 1

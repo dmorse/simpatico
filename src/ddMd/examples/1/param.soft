@@ -14,14 +14,14 @@ System{
     capacity       8000
     totalCapacity 20000
   }
-  DpdSoftPair{
-    epsilon        20.0
-    sigma           1.0
-  }
   HarmonicL0Bond{
     kappa           6.0
   }
   PairPotential{
+    DpdSoftPair{
+      epsilon        20.0
+      sigma           1.0
+    }
     skin             0.3
     pairCapacity   60000
     maxBoundary     orthorhombic   30.0   30.0   30.0

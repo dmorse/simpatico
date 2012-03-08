@@ -5,6 +5,7 @@
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/potentials/PairPotential.h>
+#include <ddMd/potentials/BondPotential.h>
 #include <util/random/Random.h>
 #include <util/format/Dbl.h>
 #include <util/util/initStatic.h>
@@ -51,7 +52,7 @@ int main()
       system.integrate(1000);
 
       // Calculate energies after integration
-      kinetic   = system.kineticEnergy();
+      kinetic = system.kineticEnergy();
       pair = system.pairPotentialEnergy();
       bond = system.bondPotentialEnergy();
       if (myRank == 0) {

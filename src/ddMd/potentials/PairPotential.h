@@ -42,35 +42,18 @@ namespace DdMd
       PairPotential(System& system);
 
       /**
-      * Default constructor.
+      * Constructor (for unit testing).
       *
-      * Used only for unit testing.
+      * \param boundary    associated Boundary object.
+      * \param domain      associated Domain object.
+      * \param storage     associated AtomStorage object.
       */
-      PairPotential();
+      PairPotential(Boundary& boundary, Domain& domain, AtomStorage& storage);
 
       /**
       * Destructor.
       */
-      ~PairPotential();
-
-      /**
-      * Read parameters and allocate memory.
-      *
-      * Use iff this object was instantiated with PairPotential(System&).
-      *
-      * \param in input parameter stream.
-      */
-      virtual void readParam(std::istream& in);
-
-      /**
-      * Create links to associated objects.
-      *
-      * Use iff this was instantiated with default constructor PairPotential().
-      *
-      * \param storage   associated AtomStorage object.
-      * \param potential associated PairInteraction object.
-      */
-      void associate(AtomStorage& storage, const PairInteraction& potential);
+      virtual ~PairPotential();
 
       /**
       * Set parameters and allocate memory.
@@ -87,16 +70,98 @@ namespace DdMd
       * \param cutoff       pair list skin length.
       * \param pairCapacity maximum number of pairs per processor.
       */
-      void setParam(const Vector& lower, const Vector& upper, 
+      void setParam(const Vector& lower, const Vector& upper,
                     double skin, int pairCapacity);
 
+      /// \name Interaction interface
+      //@{
+
+
+
+
       /**
-      * Set integer id to specify algorithm.
-      *
-      * \param methodId algorithm id: 0=pair list, 1=cell list, 2=N^2 loop.
+      * Set the maximum number of atom types.
       */
-      void setMethodId(int methodId);
+      virtual void setNAtomType(int nAtomType) = 0;
   
+      /**
+      * Return pair energy for a single pair.
+      * 
+      * \param rsq       square distance between atoms in pair
+      * \param iAtomType atom type index of 1st atom
+      * \param jAtomType atom type index of 2nd atom
+      * \return energy of pair
+      */
+      virtual 
+      double energy(double rsq, int iAtomType, int jAtomType) const = 0;
+
+      /**
+      * Return force / separation for a single pair.
+      *
+      * \param rsq       square distance between atoms in pair
+      * \param iAtomType atom type index of 1st atom
+      * \param jAtomType atom type index of 2nd atom
+      * \return repulsive force (< 0 if attractive) over distance
+      */
+      virtual 
+      double forceOverR(double rsq, int iAtomType, int jAtomType) const = 0;
+
+      /**
+      * Return maximum cutoff.
+      */
+      virtual double maxPairCutoff() const = 0;
+
+      /**
+      * Return pair interaction class name (e.g., "LJPair").
+      */
+      virtual std::string interactionClassName() const = 0;
+
+      //@}
+      /// \name Total Energy, Force and Stress 
+      //@{
+
+      /**
+      * Add pair forces to atom forces.
+      */
+      virtual void addForces() = 0;
+
+      /**
+      * Add pair forces to atom forces, and compute energy.
+      */
+      virtual void addForces(double& energy) = 0;
+
+      /**
+      * Calculate total pair potential on this processor
+      */
+      virtual double energy() = 0;
+
+      #if 0
+      /**
+      * Compute total bond pressure.
+      *
+      * \param stress (output) pressure.
+      */
+      virtual void computeStress(double& stress) const = 0;
+
+      /**
+      * Compute x, y, z bond pressure components.
+      *
+      * \param stress (output) pressures.
+      */
+      virtual void computeStress(Util::Vector& stress) const = 0;
+
+      /**
+      * Compute bond stress tensor.
+      *
+      * \param stress (output) pressures.
+      */
+      virtual void computeStress(Util::Tensor& stress) const = 0;
+      #endif
+
+      //@}
+      /// \name Pair and Cell Lists.
+      //@{
+
       /**
       * Build the cell and pair lists. 
       *
@@ -114,29 +179,16 @@ namespace DdMd
       void findNeighbors(const Vector& lower, const Vector& upper);
 
       /**
-      * Set forces for all local atoms to zero.
+      * Get the CellList by const reference.
       */
-      void zeroForces();
+      const CellList& cellList() const;
 
       /**
-      * Calculate forces for all local atoms.
+      * Get the PairList by const reference.
       */
-      void calculateForces();
+      const PairList& pairList() const;
 
-      /**
-      * Add pair forces to atom forces.
-      */
-      void addForces();
-
-      /**
-      * Add pair forces to atom forces, and compute energy.
-      */
-      void addForces(double& energy);
-
-      /**
-      * Calculate total pair potential on this processor
-      */
-      double energy();
+      //@}
 
       /**
       * Get value of the pair list skin.
@@ -148,17 +200,7 @@ namespace DdMd
       */
       double cutoff() const;
 
-      /**
-      * Get the CellList by const reference.
-      */
-      const CellList& cellList() const;
-
-      /**
-      * Get the PairList by const reference.
-      */
-      const PairList& pairList() const;
-
-   private:
+   protected:
 
       // CellList to construct PairList or calculate nonbonded pair forces.
       CellList cellList_;
@@ -170,49 +212,48 @@ namespace DdMd
       Boundary maxBoundary_;
 
       // Difference between pairlist cutoff and pair potential cutoff. 
-      double   skin_;
+      double skin_;
 
       // Minimum cell size = pair potential cutoff + skin.
-      double   cutoff_;
-
-      // Pointer to associated AtomStorage object.
-      AtomStorage* storagePtr_;
-
-      // Pointer to associated pair interaction.
-      const PairInteraction* interactionPtr_;
-
-      // Pointer to associated Domain object.
-      const Domain* domainPtr_;
-
-      // Pointer to associated Boundary object.
-      Boundary* boundaryPtr_;
+      double cutoff_;
 
       // Maximum number of nonbonded pairs in pair list. 
       int pairCapacity_;
 
-      // Index for method used to calculate forces / energies.
-      int methodId_;
-
       /**
-      * Calculate atomic pair forces and/or pair potential energy.
+      * Read parameters and allocate memory for PairList.
       *
-      * Use the Verlet pair list. 
-      */
-      double addForcesList(bool needForce, bool needEnergy);
-
-      /**
-      * Calculate atomic pair forces and/or pair potential energy.
+      * Use iff this object was instantiated with PairPotential(System&).
       *
-      * Use cell list (but not pair list).
+      * \param in input parameter stream.
       */
-      double addForcesCell(bool needForce, bool needEnergy);
+      void readPairListParam(std::istream& in);
 
       /**
-      * Calculate atomic pair forces and/or pair potential energy.
-      * 
-      * Use an O(N^2) double loop over all atoms.
+      * Get the PairList by const reference.
       */
-      double addForcesNSq(bool needForce, bool needEnergy);
+      Boundary& boundary();
+
+      /**
+      * Get the PairList by const reference.
+      */
+      Domain& domain();
+
+      /**
+      * Get the AtomStorage by reference.
+      */
+      AtomStorage& storage();
+
+   private:
+
+      // Pointer to associated Boundary object.
+      Boundary* boundaryPtr_;
+
+      // Pointer to associated Domain object.
+      Domain* domainPtr_;
+
+      // Pointer to associated AtomStorage object.
+      AtomStorage* storagePtr_;
 
    };
 
@@ -227,6 +268,15 @@ namespace DdMd
 
    inline double PairPotential::cutoff() const
    {  return cutoff_; }
+
+   inline Boundary& PairPotential::boundary() 
+   {  return *boundaryPtr_; }
+
+   inline Domain& PairPotential::domain()
+   {  return *domainPtr_; }
+
+   inline AtomStorage& PairPotential::storage()
+   {  return *storagePtr_; }
 
 }
 #endif

@@ -1,9 +1,8 @@
 #ifndef BOND_POTENTIAL_H
 #define BOND_POTENTIAL_H
 
-//#include <util/param/ParamComposite.h>      // base class
+#include <util/param/ParamComposite.h>        // base class
 #include <ddMd/boundary/Boundary.h>           // typedef
-#include <ddMd/potentials/BondInteraction.h>  // typedef
 
 #include <iostream>
 
@@ -27,7 +26,7 @@ namespace DdMd
    *
    * All operations in this class are local (no MPI).
    */
-   class BondPotential 
+   class BondPotential  : public ParamComposite
    {
 
    public:
@@ -38,69 +37,101 @@ namespace DdMd
       BondPotential(System& system);
 
       /**
-      * Default constructor.
+      * Constructor (for unit testing).
       *
-      * Used only for unit testing.
+      * \param boundary associated Boundary object.
+      * \param storage  associated bond storage.
       */
-      BondPotential();
+      BondPotential(Boundary& boundary, GroupStorage<2>& storage);
 
       /**
       * Destructor.
       */
       ~BondPotential();
 
+      /// \name Interaction interface
+      //@{
+
+      /**
+      * Set the maximum number of atom types.
+      */
+      virtual void setNBondType(int nBondType) = 0;
+  
+      /**
+      * Return pair energy for a single pair.
+      */
+      virtual double energy(double rsq, int bondTypeId) const = 0;
+
+      /**
+      * Return force / separation for a single pair.
+      */
+      virtual double forceOverR(double rsq, int bondTypeId) const = 0;
+
+      /**
+      * Return force / separation for a single pair.
+      */
+      virtual double 
+      randomBondLength(Random* random, double beta, int bondTypeId) const = 0;
+
       #if 0
       /**
-      * Read parameters and allocate memory.
-      *
-      * Use iff this object was instantiated with BondPotential(System&).
-      *
-      * \param in input parameter stream.
+      * Return pair interaction class name (e.g., "HarmonicBond").
       */
-      virtual void readParam(std::istream& in);
+      virtual std::string interactionClassName() const = 0;
       #endif
 
-      /**
-      * Create links to associated objects.
-      *
-      * Use iff this was instantiated with default constructor BondPotential().
-      *
-      * \param potential associated BondPotential object.
-      */
-      void associate(Boundary& boundary, 
-                     const BondInteraction& interaction,
-                     GroupStorage<2>& storage);
+      //@}
+
+      /// \name Total Energy, Force and Stress 
+      //@{
 
       /**
-      * Add pair forces to atom forces.
+      * Add the bond forces for all atoms.
       */
-      void addForces();
+      virtual void addForces() = 0;
 
       /**
       * Add pair forces to atom forces, and compute energy.
       */
-      void addForces(double& energy);
+      virtual void addForces(double& energy) = 0;
 
       /**
       * Calculate total pair potential on this processor
       */
-      double energy();
+      virtual double energy() = 0;
 
-   private:
+      #if 0
+      /**
+      * Compute total bond pressure.
+      *
+      * \param stress (output) pressure.
+      */
+      virtual void computeStress(double& stress) const;
+
+      /**
+      * Compute x, y, z bond pressure components.
+      *
+      * \param stress (output) pressures.
+      */
+      virtual void computeStress(Util::Vector& stress) const;
+
+      /**
+      * Compute bond stress tensor.
+      *
+      * \param stress (output) pressures.
+      */
+      virtual void computeStress(Util::Tensor& stress) const;
+
+      //@}
+      #endif
+
+   protected:
 
       // Pointer to associated Boundary object.
       Boundary* boundaryPtr_;
 
-      // Pointer to associated pair interaction.
-      const BondInteraction* interactionPtr_;
-
       // Pointer to associated GroupStorage<2> object.
       GroupStorage<2>* storagePtr_;
-
-      /**
-      * Calculate bond forces and/or pair potential energy.
-      */
-      double addForces(bool needForce, bool needEnergy);
 
    };
 

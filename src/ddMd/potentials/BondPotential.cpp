@@ -10,11 +10,6 @@
 
 #include "BondPotential.h"
 #include <ddMd/system/System.h>
-#include <ddMd/storage/GroupStorage.h>
-#include <ddMd/storage/GroupIterator.h>
-#include <ddMd/boundary/Boundary.h>
-#include <util/space/Vector.h>
-#include <util/global.h>
 
 namespace DdMd
 {
@@ -23,19 +18,18 @@ namespace DdMd
    /*
    * Constructor.
    */
-   BondPotential::BondPotential()
-    : boundaryPtr_(0),
-      interactionPtr_(0),
-      storagePtr_(0)
+   BondPotential::BondPotential(System& system)
+    : boundaryPtr_(&system.boundary()),
+      storagePtr_(&system.bondStorage())
    {}
 
    /*
-   * Constructor.
+   * Constructor (for unit testing).
    */
-   BondPotential::BondPotential(System& system)
-    : boundaryPtr_(&system.boundary()),
-      interactionPtr_(&system.bondInteraction()),
-      storagePtr_(&system.bondStorage())
+   BondPotential::BondPotential(Boundary& boundary,
+                                GroupStorage<2>& storage)
+    : boundaryPtr_(&boundary),
+      storagePtr_(&storage)
    {}
 
    /*
@@ -43,88 +37,6 @@ namespace DdMd
    */
    BondPotential::~BondPotential()
    {}
-
-   /*
-   * Retain pointers to associated objects.
-   */
-   void BondPotential::associate(Boundary& boundary,
-                                 const BondInteraction& interaction,
-                                 GroupStorage<2>& storage)
-   {
-      boundaryPtr_ = &boundary;
-      interactionPtr_ = &interaction;
-      storagePtr_ = &storage;
-   }
-
-   /*
-   * Increment atomic forces, without calculating energy.
-   */
-   void BondPotential::addForces()
-   {  addForces(true, false);  }
-
-   /*
-   * Increment atomic forces and compute pair energy for this processor.
-   */
-   void BondPotential::addForces(double& energy)
-   {  energy = addForces(true, true);  }
-
-   /*
-   * Calculate and return total bond energy for this processor.
-   */
-   double BondPotential::energy()
-   {  return addForces(false, true);  }
-
-   /*
-   * Increment atomic forces and/or pair energy (private).
-   */
-   double BondPotential::addForces(bool needForce, bool needEnergy)
-   {
-      // Preconditions
-      //if (!storagePtr_->isInitialized()) {
-      //   UTIL_THROW("AtomStorage must be initialized");
-      //}
-
-      Vector f;
-      double rsq;
-      double bondEnergy;
-      double energy = 0.0;
-      GroupIterator<2> iter;
-      Atom* atom0Ptr;
-      Atom* atom1Ptr;
-      int type;
-      int isLocal0, isLocal1;
-
-      storagePtr_->begin(iter);
-      for ( ; !iter.atEnd(); ++iter) {
-         type = iter->typeId();
-         atom0Ptr = iter->atomPtr(0);
-         atom1Ptr = iter->atomPtr(1);
-         isLocal0 = !(atom0Ptr->isGhost());
-         isLocal1 = !(atom1Ptr->isGhost());
-         // Set f = r0 - r1, minimum image separation between atoms
-         rsq = boundaryPtr_->distanceSq(atom0Ptr->position(), 
-                                        atom1Ptr->position(), f);
-         if (needEnergy) {
-            bondEnergy = interactionPtr_->energy(rsq, type);
-            if (isLocal0 && isLocal1) {
-               energy += bondEnergy;
-            } else {
-               energy += 0.5*bondEnergy;
-            }
-         }
-         if (needForce) {
-            // Set force = (r0-r1)*(forceOverR)
-            f *= interactionPtr_->forceOverR(rsq, type);
-            if (isLocal0) {
-               atom0Ptr->force() += f;
-            }
-            if (isLocal1) {
-               atom1Ptr->force() -= f;
-            }
-         }
-      }
-      return energy;
-   }
 
 }
 #endif

@@ -11,6 +11,10 @@
 #include "System.h"
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/potentials/PairPotential.h>
+#include <ddMd/potentials/PairPotentialImpl.h>
+#include <ddMd/potentials/PairInteraction.h>
+#include <ddMd/potentials/BondPotential.h>
+#include <ddMd/potentials/BondPotentialImpl.h>
 #include <ddMd/potentials/BondPotential.h>
 #include <ddMd/integrator/NveIntegrator.h>
 #include <ddMd/configIo/ConfigIo.h>
@@ -58,8 +62,8 @@ namespace DdMd
       // Note: The following objects will become polymorphic,
       // and will be created in readParam by factories.
 
-      pairPotentialPtr_ = new PairPotential(*this);
-      bondPotentialPtr_ = new BondPotential(*this);
+      pairPotentialPtr_ = new PairPotentialImpl<PairInteraction>(*this);
+      bondPotentialPtr_ = new BondPotentialImpl<BondInteraction>(*this);
       integratorPtr_  = new NveIntegrator(*this);
       configIoPtr_  = new ConfigIo();
       configIoPtr_->associate(domain_, boundary_,
@@ -90,11 +94,13 @@ namespace DdMd
       readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
       readParamComposite(in, atomStorage_);
       readParamComposite(in, bondStorage_);
-      pairInteraction_.setNAtomType(nAtomType_);
-      readParamComposite(in, pairInteraction_);
-      bondInteraction_.setNBondType(nBondType_);
-      readParamComposite(in, bondInteraction_);
+      pairPotentialPtr_->setNAtomType(nAtomType_);
+      bondPotentialPtr_->setNBondType(nBondType_);
+      //readParamComposite(in, pairInteraction_);
+      //bondInteraction_.setNBondType(nBondType_);
+      //readParamComposite(in, bondInteraction_);
       readParamComposite(in, *pairPotentialPtr_);
+      readParamComposite(in, *bondPotentialPtr_);
       readParamComposite(in, *integratorPtr_);
       readParamComposite(in, random_);
       readParamComposite(in, buffer_);
@@ -248,7 +254,8 @@ namespace DdMd
    * 
    * Returns total on all processors on master, 0.0 on others.
    */
-   double System::potentialEnergy() {
+   double System::potentialEnergy() 
+   {
       double energy = 0.0;
       energy += pairPotentialEnergy();
       energy += bondPotentialEnergy();
@@ -265,7 +272,7 @@ namespace DdMd
       double energy    = 0.0;
       double energyAll = 0.0;
 
-      energy = pairPotentialPtr_->energy();
+      energy = pairPotential().energy();
 
       #ifdef UTIL_MPI
       // Sum values from all processors.
@@ -276,7 +283,7 @@ namespace DdMd
    }
 
    /*
-   * Calculate total potential energy
+   * Calculate total bond potential energy
    * 
    * Returns total on all processors on master, 0.0 on others.
    */
@@ -285,7 +292,7 @@ namespace DdMd
       double energy = 0.0;
       double energyAll = 0.0;
 
-      energy = bondPotentialPtr_->energy();
+      energy = bondPotential().energy();
 
       #ifdef UTIL_MPI
       // Sum values from all processors.

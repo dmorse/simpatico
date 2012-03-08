@@ -25,30 +25,27 @@ namespace DdMd
    /*
    * Constructor.
    */
-   PairPotential::PairPotential()
-    : skin_(0.0),
-      cutoff_(0.0),
-      storagePtr_(0),
-      interactionPtr_(0),
-      domainPtr_(0),
-      boundaryPtr_(0),
-      pairCapacity_(0),
-      methodId_(0)
-   {}
-
-   /*
-   * Constructor.
-   */
    PairPotential::PairPotential(System& system)
     : skin_(0.0),
       cutoff_(0.0),
-      storagePtr_(&system.atomStorage()),
-      interactionPtr_(&system.pairInteraction()),
-      domainPtr_(&system.domain()),
       boundaryPtr_(&system.boundary()),
-      pairCapacity_(0),
-      methodId_(0)
+      domainPtr_(&system.domain()),
+      storagePtr_(&system.atomStorage()),
+      pairCapacity_(0)
    {}
+
+   /*
+   * Constructor (for unit testing).
+   */
+   PairPotential::PairPotential(Boundary& boundary, Domain& domain,
+                                AtomStorage& storage)
+    : skin_(0.0),
+      boundaryPtr_(&boundary),
+      domainPtr_(&domain),
+      storagePtr_(&storage),
+      pairCapacity_(0)
+   
+   {} 
 
    /*
    * Destructor.
@@ -56,60 +53,45 @@ namespace DdMd
    PairPotential::~PairPotential()
    {}
 
-   /*
-   * Retain pointers to associated objects.
-   */
-   void PairPotential::associate(AtomStorage& storage, 
-                                 const PairInteraction& potential)
-   { 
-      storagePtr_   = &storage;
-      interactionPtr_ = &potential;
-   }
-
-   void PairPotential::readParam(std::istream& in)
+   void PairPotential::readPairListParam(std::istream& in)
    {
-      readBegin(in,"PairPotential");
       read<double>(in, "skin", skin_);
       read<int>(in, "pairCapacity", pairCapacity_);
       read<Boundary>(in, "maxBoundary", maxBoundary_);
 
-      cutoff_ = interactionPtr_->maxPairCutoff() + skin_;
-      int atomCapacity = storagePtr_->atomCapacity();
-                       + storagePtr_->ghostCapacity();
+      cutoff_ = maxPairCutoff() + skin_;
+      int atomCapacity = storage().atomCapacity();
+                       + storage().ghostCapacity();
 
-      // Set upper and lower bound of this domain.
-      boundaryPtr_->setLengths(maxBoundary_.lengths());
+      // Set upper and lower bound of the processor domain.
+      boundary().setLengths(maxBoundary_.lengths());
       Vector lower;
       Vector upper;
       for (int i = 0; i < Dimension; ++i) {
-         lower[i] = domainPtr_->domainBound(i, 0);
-         upper[i] = domainPtr_->domainBound(i, 1);
+         lower[i] = domain().domainBound(i, 0);
+         upper[i] = domain().domainBound(i, 1);
       }
+
       cellList_.allocate(atomCapacity, lower, upper, cutoff_);
       pairList_.allocate(atomCapacity, pairCapacity_, cutoff_);
-
-      readEnd(in);
    }
 
    /*
    * Allocate memory for the cell list.
    */
    void PairPotential::setParam(const Vector& lower, const Vector& upper, 
-                              double skin, int pairCapacity)
+                                double skin, int pairCapacity)
    {
       skin_ = skin;
       pairCapacity_ = pairCapacity;
 
-      cutoff_ = interactionPtr_->maxPairCutoff() + skin;
-      int atomCapacity = storagePtr_->atomCapacity();
-                       + storagePtr_->ghostCapacity();
+      cutoff_ = maxPairCutoff() + skin;
+      int atomCapacity = storage().atomCapacity();
+                       + storage().ghostCapacity();
 
       cellList_.allocate(atomCapacity, lower, upper, cutoff_);
       pairList_.allocate(atomCapacity, pairCapacity_, cutoff_);
    }
-
-   void PairPotential::setMethodId(int methodId)
-   {  methodId_ = methodId; }
 
    /*
    * Build the cell list (i.e., fill with atoms).
@@ -121,14 +103,14 @@ namespace DdMd
      
       // Add all atoms to the cell list. 
       AtomIterator atomIter;
-      storagePtr_->begin(atomIter);
+      storage().begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
          cellList_.placeAtom(*atomIter);
       }
 
       // Add all ghosts to the cell list. 
       GhostIterator ghostIter;
-      storagePtr_->begin(ghostIter);
+      storage().begin(ghostIter);
       for ( ; !ghostIter.atEnd(); ++ghostIter) {
          cellList_.placeAtom(*ghostIter);
       }
@@ -148,19 +130,20 @@ namespace DdMd
       Vector lower;
       Vector upper;
       for (int i = 0; i < Dimension; ++i) {
-         lower[i] = domainPtr_->domainBound(i, 0);
-         upper[i] = domainPtr_->domainBound(i, 1);
+         lower[i] = domain().domainBound(i, 0);
+         upper[i] = domain().domainBound(i, 1);
       }
       findNeighbors(lower, upper);
    }
 
+   #if 0
    /*
    * Set forces on all local atoms to zero.
    */
    void PairPotential::zeroForces()
    {
       AtomIterator atomIter;
-      storagePtr_->begin(atomIter); 
+      storage().begin(atomIter); 
       for( ; !atomIter.atEnd(); ++atomIter){
          atomIter->force().zero();
       }
@@ -174,249 +157,7 @@ namespace DdMd
       zeroForces();
       addForces();
    }
-
-   /*
-   * Increment atomic forces, without calculating energy.
-   */
-   void PairPotential::addForces()
-   {  
-       if (methodId_ == 0) {
-          addForcesList(true, false); 
-       } else
-       if (methodId_ == 1) {
-          addForcesCell(true, false); 
-       } else {
-          addForcesNSq(true, false); 
-       }
-   }
-
-   /*
-   * Increment atomic forces and compute pair energy.
-   */
-   void PairPotential::addForces(double& energy)
-   {  
-       if (methodId_ == 0) {
-          energy = addForcesList(true, true); 
-       } else
-       if (methodId_ == 1) {
-          energy = addForcesCell(true, true); 
-       } else {
-          energy = addForcesNSq(true, true); 
-       }
-   }
-
-   /*
-   * Calculate and return total pair energy.
-   */
-   double PairPotential::energy()
-   {  
-       if (methodId_ == 0) {
-          return addForcesList(false, true); 
-       } else 
-       if (methodId_ == 1) {
-          return addForcesCell(false, true); 
-       } else {
-          return addForcesNSq(false, true); 
-       }
-   }
-
-   /*
-   * Increment atomic forces and/or pair energy (private).
-   */
-   double PairPotential::addForcesList(bool needForce, bool needEnergy)
-   {
-      Vector f;
-      double rsq, energy;
-      PairIterator iter;
-      Atom*  atom0Ptr;
-      Atom*  atom1Ptr;
-      int    type0, type1;
-
-      for (pairList_.begin(iter); !iter.atEnd(); ++iter) {
-         iter.getPair(atom0Ptr, atom1Ptr);
-         type0 = atom0Ptr->typeId();
-         type1 = atom1Ptr->typeId();
-         f.subtract(atom0Ptr->position(), atom1Ptr->position());
-         rsq = f.square();
-         if (!atom1Ptr->isGhost()) {
-            if (needEnergy) {
-               energy += interactionPtr_->energy(rsq, type0, type1);
-            }
-            if (needForce) {
-               f *= interactionPtr_->forceOverR(rsq, type0, type1);
-               atom0Ptr->force() += f;
-               atom1Ptr->force() -= f;
-            }
-         } else {
-            if (needEnergy) {
-               energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
-            }
-            if (needForce) {
-               f *= interactionPtr_->forceOverR(rsq, type0, type1);
-               atom0Ptr->force() += f;
-            }
-         }
-      }
-      return energy;
-   }
-
-   /*
-   * Increment atomic forces and/or pair energy (private).
-   */
-   double PairPotential::addForcesCell(bool needForce, bool needEnergy)
-   {
-
-      // Find all neighbors (cell list)
-      Cell::NeighborArray neighbors;
-      Vector f;
-      double rsq;
-      double energy = 0.0;
-      Atom*  atomPtr0;
-      Atom*  atomPtr1;
-      const Cell*  cellPtr;
-      int    type0, type1, na, nn, i, j;
-
-      // Iterate over local cells.
-      cellPtr = cellList_.begin();
-      while (cellPtr) {
-         cellPtr->getNeighbors(neighbors);
-         na = cellPtr->nAtom();
-         nn = neighbors.size();
-         for (i = 0; i < na; ++i) {
-            atomPtr0 = neighbors[i];
-            type0 = atomPtr0->typeId();
-
-            // Loop over atoms in this cell
-            for (j = 0; j < na; ++j) {
-               atomPtr1 = neighbors[j];
-               type1 = atomPtr1->typeId();
-               if (atomPtr1 > atomPtr0) {
-                  f.subtract(atomPtr0->position(), atomPtr1->position());
-                  rsq = f.square();
-                  if (needEnergy) {
-                     energy += interactionPtr_->energy(rsq, type0, type1);
-                  }
-                  if (needForce) {
-                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                     atomPtr0->force() += f;
-                     atomPtr1->force() -= f;
-                  }
-               }
-            }
-
-            // Loop over atoms in neighboring cells.
-            for (j = na; j < nn; ++j) {
-               atomPtr1 = neighbors[j];
-               type1 = atomPtr1->typeId();
-               f.subtract(atomPtr0->position(), atomPtr1->position());
-               rsq = f.square();
-               if (!atomPtr1->isGhost()) {
-                  if (needEnergy) {
-                     energy += interactionPtr_->energy(rsq, type0, type1);
-                  }
-                  if (needForce) {
-                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                     atomPtr0->force() += f;
-                     atomPtr1->force() -= f;
-                  }
-               } else {
-                  if (needEnergy) {
-                     energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
-                  }
-                  if (needForce) {
-                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                     atomPtr0->force() += f;
-                  }
-               }
-            }
-
-         }
-
-         cellPtr = cellPtr->nextCellPtr();
-
-      } // while (cellPtr) 
-
-      return energy;
-   }
-
-   /*
-   * Increment atomic forces and/or pair energy (private).
-   */
-   double PairPotential::addForcesNSq(bool needForce, bool needEnergy)
-   {
-      // Preconditions
-      //if (!storagePtr_->isInitialized()) {
-      //   UTIL_THROW("AtomStorage must be initialized");
-      //}
-
-      Vector f;
-      double rsq;
-      double energy = 0.0;
-      AtomIterator  atomIter0, atomIter1;
-      GhostIterator ghostIter;
-      int           type0, type1;
-
-      // Iterate over atom 0
-      storagePtr_->begin(atomIter0);
-      for ( ; !atomIter0.atEnd(); ++atomIter0) {
-         type0 = atomIter0->typeId();
-
-         // Iterate over atom 1
-         storagePtr_->begin(atomIter1);
-         for ( ; !atomIter1.atEnd(); ++atomIter1) {
-            type1 = atomIter1->typeId();
-
-            if (atomIter0->id() < atomIter1->id()) {
-
-               // Set f = r0 - r1, separation between atoms
-               f.subtract(atomIter0->position(), atomIter1->position());
-               rsq = f.square();
- 
-               if (needEnergy) {
-                  energy += interactionPtr_->energy(rsq, type0, type1);
-               }
-
-               if (needForce) {
- 
-                  // Set vector force = (r0-r1)*(forceOverR)
-                  f *= interactionPtr_->forceOverR(rsq, type0, type1);
-           
-                  // Add equal and opposite forces.
-                  atomIter0->force() += f;
-                  atomIter1->force() -= f;
-
-               }
-
-            }
-            
-         }
-
-         // Iterate over ghosts
-         storagePtr_->begin(ghostIter);
-         for ( ; !ghostIter.atEnd(); ++ghostIter) {
-            type1 = ghostIter->typeId();
-
-            // Set f = r0 - r1, separation between atoms
-            f.subtract(atomIter0->position(), ghostIter->position());
-            rsq = f.square();
-
-            // Set force = (r0-r1)*(forceOverR)
-            f *= interactionPtr_->forceOverR(rsq, type0, type1);
-     
-            // Add half energy of local-ghost interaction. 
-            if (needEnergy) {
-               energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
-            }
- 
-            // Add force to local atom
-            atomIter0->force() += f;
-            
-         }
-
-      }
-
-      return energy;
-   }
+   #endif
 
 }
 #endif
