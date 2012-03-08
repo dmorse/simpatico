@@ -18,6 +18,35 @@
 #include <ddMd/potentials/bond/BondInteraction.h>
 #include <ddMd/integrator/NveIntegrator.h>
 #include <ddMd/configIo/ConfigIo.h>
+
+#if 0
+#include <ddMd/ensembles/EnergyEnsemble.h>
+#include <ddMd/ensembles/BoundaryEnsemble.h>
+#include <ddMd/configIos/ConfigIoFactory.h>
+#endif
+
+#if 0
+#ifndef DDMD_NOPAIR
+#include <ddMd/potentials/pair/PairFactory.h>
+#endif
+#include <ddMd/potentials/bond/BondFactory.h>
+#ifdef DDMD_ANGLE
+#include <ddMd/potentials/angle/AngleFactory.h>
+#endif
+#ifdef DDMD_DIHEDRAL
+#include <ddMd/potentials/dihedral/DihedralFactory.h>
+#endif
+#ifdef DDMD_EXTERNAL
+#include <ddMd/potentials/external/ExternalFactory.h>
+#endif
+#endif // if 0
+
+#if 0
+#include <ddMd/util/FileMaster.h>
+#endif
+
+// namespace Util
+#include <util/param/Factory.h>
 #include <util/util/Log.h>
 #include <util/util/Timer.h>
 
@@ -26,6 +55,7 @@
 //#include <util/format/Str.h>
 //#include <util/util/ioUtil.h>
 
+#include <fstream>
 
 namespace DdMd
 {
@@ -47,6 +77,37 @@ namespace DdMd
       configIoPtr_(0),
       nAtomType_(0),
       nBondType_(0)
+      #if 0
+      energyEnsemblePtr_(0),
+      boundaryEnsemblePtr_(0),
+      #ifndef DDMD_NOPAIR
+      pairFactoryPtr_(0),
+      #endif
+      bondFactoryPtr_(0),
+      #ifdef DDMD_ANGLE
+      angleFactoryPtr_(0),
+      #endif
+      #ifdef DDMD_DIHEDRAL
+      dihedralFactoryPtr_(0),
+      #endif
+      #ifdef DDMD_EXTERNAL
+      externalFactoryPtr_(0),
+      #endif
+      //configIoFactoryPtr_(0),
+      #ifndef DDMD_NOPAIR
+      pairStyle_(),
+      #endif
+      bondStyle_(),
+      #ifdef DDMD_ANGLE
+      angleStyle_(),
+      #endif
+      #ifdef DDMD_DIHEDRAL
+      dihedralStyle_(),
+      #endif
+      #ifdef DDMD_EXTERNAL
+      externalStyle_(),
+      #endif
+      #endif // if 0
    {
       #ifdef UTIL_MPI
       communicatorPtr_ = &communicator;
@@ -64,10 +125,72 @@ namespace DdMd
 
       pairPotentialPtr_ = new PairPotentialImpl<PairInteraction>(*this);
       bondPotentialPtr_ = new BondPotentialImpl<BondInteraction>(*this);
+      //energyEnsemblePtr_   = new EnergyEnsemble;
+      //boundaryEnsemblePtr_ = new BoundaryEnsemble;
       integratorPtr_  = new NveIntegrator(*this);
       configIoPtr_  = new ConfigIo();
       configIoPtr_->associate(domain_, boundary_,
                               atomStorage_, bondStorage_, buffer_);
+
+   }
+
+   /*
+   * Destructor.
+   */
+   System::~System()
+   {
+
+      #if 0
+      #ifndef DDMD_NOPAIR
+      if (pairFactoryPtr_) {
+         delete pairFactoryPtr_;
+      }
+      #endif
+      if (bondFactoryPtr_) {
+         delete bondFactoryPtr_;
+      }
+      #ifdef DDMD_ANGLE
+      if (angleFactoryPtr_) {
+         delete angleFactoryPtr_;
+      }
+      #endif
+      #ifdef DDMD_DIHEDRAL
+      if (dihedralFactoryPtr_) {
+         delete dihedralFactoryPtr_;
+      }
+      #endif
+      #ifdef DDMD_EXTERNAL
+      if (externalFactoryPtr_) {
+         delete externalFactoryPtr_;
+      }
+      #endif
+      #endif
+
+      #if 0
+      if (energyEnsemblePtr_) {
+         delete energyEnsemblePtr_;
+      }
+      if (boundaryEnsemblePtr_) {
+         delete boundaryEnsemblePtr_;
+      }
+      #endif
+
+      #if 0
+      if (configIoPtr_) {
+         delete configIoPtr_;
+      }
+      #endif
+
+      #if 0
+      if (configIoFactoryPtr_ && createdConfigIoFactory_) {
+         delete configIoFactoryPtr_;
+      }
+      #endif
+      #if 0
+      if (fileMasterPtr_ && createdFileMaster_) {
+         delete fileMasterPtr_;
+      }
+      #endif
 
    }
 
@@ -111,6 +234,75 @@ namespace DdMd
 
       readEnd(in);
    }
+
+   #if 0
+   /**
+   * If no FileMaster exists, create and initialize one. 
+   */
+   void System::readFileMaster(std::istream &in)
+   {
+      // Create FileMaster if necessary
+      if (!fileMasterPtr_) {
+         fileMasterPtr_ = new FileMaster();
+         createdFileMaster_ = true;
+         readParamComposite(in, *fileMasterPtr_);
+      }
+   }
+   #endif
+
+   #if 0
+   void System::readPotentialStyles(std::istream &in)
+   {
+      #ifndef DDMD_NOPAIR
+      read<std::string>(in, "pairStyle", pairStyle_);
+      #endif
+
+      if (simulation().nBondType() > 0) {
+         read<std::string>(in, "bondStyle", bondStyle_);
+      }
+
+      #ifdef DDMD_ANGLE
+      if (simulation().nAngleType() > 0) {
+         read<std::string>(in, "angleStyle", angleStyle_);
+      }
+      #endif
+
+      #ifdef DDMD_DIHEDRAL
+      if (simulation().nDihedralType() > 0) {
+         read<std::string>(in, "dihedralStyle", dihedralStyle_);
+      }
+      #endif
+
+      #ifdef DDMD_LINK
+      if (simulation().nLinkType() > 0) {
+         read<std::string>(in, "linkStyle", linkStyle_);
+      }
+      #endif
+
+      #ifdef DDMD_EXTERNAL
+      if (simulation().hasExternal()) {
+         read<std::string>(in, "externalStyle", externalStyle_);
+      }
+      #endif
+
+      #ifdef DDMD_TETHER
+      if (simulation().hasTether()) {
+         read<std::string>(in, "tetherStyle", tetherStyle_);
+      }
+      #endif
+   }
+   #endif // if 0
+
+   #if 0
+   /*
+   * Create EnergyEnsemble and BoundaryEnsemble
+   */
+   void System::readEnsembles(std::istream &in)
+   {
+      readParamComposite(in, *energyEnsemblePtr_);
+      readParamComposite(in, *boundaryEnsemblePtr_);
+   }
+   #endif // if 0
 
    /*
    * Set forces on all local atoms to zero.
@@ -378,6 +570,175 @@ namespace DdMd
       #endif
       return nGhostAll;
    }
+
+   #if 0
+
+   #ifndef DDMD_NOPAIR
+   /*
+   * Return the PairFactory by reference.
+   */
+   PairFactory& System::pairFactory()
+   {
+      if (!pairFactoryPtr_) {
+         pairFactoryPtr_ = new PairFactory;
+         createdPairFactory_ = true;
+      }
+      assert(pairFactoryPtr_);
+      return *pairFactoryPtr_;
+   }
+
+   /*
+   * Get the pair style string.
+   */
+   std::string System::pairStyle() const
+   {  return pairStyle_;  }
+   #endif
+
+   #if 0
+   /*
+   * Return the BondFactory by reference.
+   */
+   Factory<BondPotential>& System::bondFactory()
+   {
+      if (!bondFactoryPtr_) {
+         bondFactoryPtr_ = new BondFactory(*this);
+         createdBondFactory_ = true;
+      }
+      assert(bondFactoryPtr_);
+      return *bondFactoryPtr_;
+   }
+
+   /*
+   * Get the bond style string.
+   */
+   std::string System::bondStyle() const
+   {  return bondStyle_;  }
+   #endif
+
+   #ifdef DDMD_ANGLE
+   /*
+   * Return the AngleFactory by reference.
+   */
+   Factory<AnglePotential>& System::angleFactory()
+   {
+      if (angleFactoryPtr_ == 0) {
+         angleFactoryPtr_ = new AngleFactory(*this);
+         createdAngleFactory_ = true;
+      }
+      assert(angleFactoryPtr_);
+      return *angleFactoryPtr_;
+   }
+
+   /*
+   * Get the angle style string.
+   */
+   std::string System::angleStyle() const
+   {  return angleStyle_;  }
+   #endif
+
+   #ifdef DDMD_DIHEDRAL
+   /*
+   * Return the DihedralFactory by reference.
+   */
+   Factory<DihedralPotential>& System::dihedralFactory()
+   {
+      if (dihedralFactoryPtr_ == 0) {
+         dihedralFactoryPtr_ = new DihedralFactory(*this);
+         createdDihedralFactory_ = true;
+      }
+      assert(dihedralFactoryPtr_);
+      return *dihedralFactoryPtr_;
+   }
+
+   /*
+   * Get the dihedral style string.
+   */
+   std::string System::dihedralStyle() const
+   {  return dihedralStyle_;  }
+   #endif
+
+   #ifdef DDMD_EXTERNAL
+   /*
+   * Return the ExternalFactory by reference.
+   */
+   Factory<ExternalPotential>& System::externalFactory()
+   {
+      if (externalFactoryPtr_ == 0) {
+         externalFactoryPtr_ = new ExternalFactory(*this);
+         createdExternalFactory_ = true;
+      }
+      assert(externalFactoryPtr_);
+      return *externalFactoryPtr_;
+   }
+
+   /*
+   * Get the external style string.
+   */
+   std::string System::externalStyle() const
+   {  return externalStyle_;  }
+   #endif
+
+   #endif // if 0
+
+   #if 0
+   /*
+   * Set pointer to a FileMaster.
+   */
+   void System::setFileMaster(FileMaster &fileMaster)
+   {
+      assert(!fileMasterPtr_);
+      fileMasterPtr_ = &fileMaster;
+   }
+   #endif
+
+   #if 0
+   // ConfigIoIo Management
+
+   /*
+   * Get the ConfigIo factory by reference.
+   */
+   Factory<ConfigIo>& System::configIoFactory()
+   {
+      if (!configIoFactoryPtr_) {
+         configIoFactoryPtr_ = newDefaultConfigIoFactory();
+         createdConfigIoFactory_ = true;
+      }
+      return *configIoFactoryPtr_;
+   }
+
+   /*
+   * Return a pointer to a new ConfigIoFactory.
+   */
+   Factory<ConfigIo>* System::newDefaultConfigIoFactory()
+   {  return new ConfigIoFactory(*this); }
+
+   /*
+   * Set the ConfigIo, identified by subclass name.
+   */
+   void System::setConfigIo(std::string& classname)
+   {
+      if (!configIoFactoryPtr_) {
+         configIoFactoryPtr_ = newDefaultConfigIoFactory();
+         createdConfigIoFactory_ = true;
+      }
+      ConfigIo* ptr = configIoFactoryPtr_->factory(classname);
+      if (!ptr) {
+         UTIL_THROW("Unrecognized ConfigIo subclass name");
+      } 
+      if (configIoPtr_) {
+         delete configIoPtr_;
+      }
+      configIoPtr_ = ptr;
+   }
+   #endif
+
+   #if 0
+   /*
+   * Return a pointer to a new default ConfigIo.
+   */
+   ConfigIo* System::newDefaultConfigIo()
+   {  return new McConfigIo(*this); }
+   #endif
 
    /**
    * Return true if this System is valid, or throw an Exception.

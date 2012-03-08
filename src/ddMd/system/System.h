@@ -19,13 +19,22 @@
 #include <util/random/Random.h>                  // member 
 #include <util/containers/DArray.h>              // member 
 
+namespace Util
+{
+   template <typename T> class Factory;
+}
+
+
 namespace DdMd
 {
 
    class PairPotential;
    class BondPotential;
+   //class EnergyEnsemble;
+   //class BoundaryEnsemble;
    class Integrator;
    class ConfigIo;
+   //class FileMaster;
 
    using namespace Util;
 
@@ -58,19 +67,17 @@ namespace DdMd
 
       #endif
 
-      // Mutators
+      /**
+      * Destructor.
+      */
+      ~System();
 
       /**
       * Read parameters, allocate memory and initialize.
       */
       virtual void readParam(std::istream& in);
 
-      /**
-      * Read configuration file on master and distribute atoms.
-      *
-      * \param filename name of configuration file.
-      */
-      void readConfig(std::string filename);
+      // Mutators
 
       /**
       * Set random velocities chosen from Boltzmann distribution.
@@ -148,7 +155,113 @@ namespace DdMd
       */
       void integrate(int nStep);
 
-      // Accessors (members by non-const reference)
+      /// \name Config File IO
+      //@{
+
+      /**
+      * Read configuration file on master and distribute atoms.
+      *
+      * \param filename name of configuration file.
+      */
+      void readConfig(std::string filename);
+
+      #if 0
+      /**
+      * Create a new configuration file reader/writer.
+      *
+      * This method allows one to choose from among several subclasses
+      * of ConfigIo, identified by subclass name. The implementation
+      * uses a Factory<ConfigIo> object to instantiate a new object.
+      * If setConfigIoFactory() has not been called, an instance of
+      * the default class ConfigIoFactory is created and used.
+      *
+      * \param classname name of desired ConfigIo subclass.
+      */
+      void setConfigIo(std::string& classname);
+
+      /**
+      * Get the configuration file reader/writer factory by reference.
+      */
+      Factory<ConfigIo>& configIoFactory();
+      #endif
+
+      //@}
+
+      #if 0
+      /// \name Potential Energy Factories and Styles
+      //@{
+
+      #ifndef DDMD_NOPAIR
+      /**
+      * Add a custom PairPotential Factory.
+      *
+      * This method adds a user-defined PairFactory object as a
+      * subfactory of the default factory for configuration file
+      * reader/writers.
+      *
+      * \param pairFactory custom PairFactory object.
+      */
+      void addPairSubfactory(PairFactory& pairFactory);
+
+      /**
+      * Get the PairFactory by reference.
+      */
+      PairFactory& pairFactory();
+
+      /**
+      * Return nonbonded pair style string.
+      */
+      std::string pairStyle() const;
+      #endif
+
+      /**
+      * Add a custom Factory<BondPotential> factory object.
+      *
+      * This method adds a user-defined Factory<BondPotential>
+      * object as a subfactory of the default factory for
+      * configuration file reader/writers.
+      *
+      * \param bondFactory custom Factory<BondPotential> object.
+      */
+      void addBondSubfactory(Factory<BondPotential>& bondFactory);
+
+      /**
+      * Get the associated Factory<BondPotential> by reference.
+      */
+      Factory<BondPotential>& bondFactory();
+
+      /**
+      * Return covalent bond style string.
+      */
+      std::string bondStyle() const;
+
+      #ifdef DDMD_ANGLE
+      /**
+      * Get the associated AngleFactory by reference.
+      */
+      Factory<AnglePotential>& angleFactory();
+
+      /**
+      * Return angle potential style string.
+      */
+      std::string angleStyle() const;
+      #endif
+
+      #ifdef DDMD_DIHEDRAL
+      /**
+      * Get the associated Dihedral Factory by reference.
+      */
+      Factory<DihedralPotential>& dihedralFactory();
+
+      /**
+      * Return dihedral potential style string.
+      */
+      std::string dihedralStyle() const;
+      #endif
+      #endif // if 0
+
+      /// \name Accessors (Miscellaneous)
+      //@{
 
       /**
       * Get the Domain by reference.
@@ -185,6 +298,19 @@ namespace DdMd
       */
       Integrator& integrator();
    
+      #if 0
+      /// Get the EnergyEnsemble by reference.
+      EnergyEnsemble& energyEnsemble();
+
+      /// Get the BoundaryEnsemble by reference.
+      BoundaryEnsemble& boundaryEnsemble();
+      #endif
+
+      #if 0
+      /// Get the associated FileMaster by reference.
+      FileMaster& fileMaster() const;
+      #endif
+
       /**
       * Get the Random number generator by reference.
       */
@@ -226,10 +352,57 @@ namespace DdMd
       */
       AtomType& atomType(int i);
 
+      //@}
+
       /**
       * Return true if this System is valid, or throw an Exception.
       */
       bool isValid();
+
+   protected:
+
+      #if 0
+      /**
+      * Return a pointer to a new default ConfigIo.
+      */
+      virtual ConfigIo* newDefaultConfigIo();
+
+      /**
+      * Return a pointer to a new default ConfigIoFactory.
+      */
+      virtual Factory<ConfigIo>* newDefaultConfigIoFactory();
+      #endif
+
+      #if 0
+      /**
+      * If no FileMaster exists, create and initialize one.
+      *
+      * Invoked in implementation of readParam().
+      *
+      * \param in input parameter stream
+      */
+      void readFileMaster(std::istream& in);
+      #endif
+
+      #if 0
+      /**
+      * Read potential styles, initialize LinkMaster or TetherMaster if needed.
+      *
+      * Invoked in implementation of readParam().
+      *
+      * \param in input parameter stream
+      */
+      void readPotentialStyles(std::istream& in);
+
+      /**
+      * Read energy and boundary ensembles.
+      *
+      * Invoked in implementation of readParam().
+      *
+      * \param in input parameter stream
+      */
+      void readEnsembles(std::istream& in);
+      #endif
 
    private:
 
@@ -275,6 +448,64 @@ namespace DdMd
 
       /// Pointer to configuration file reader/writer.
       ConfigIo*     configIoPtr_;
+
+      #if 0
+      /// Pointer to an EnergyEnsemble.
+      EnergyEnsemble*   energyEnsemblePtr_;
+
+      /// Pointer to an BoundaryEnsemble.
+      BoundaryEnsemble* boundaryEnsemblePtr_;
+      #endif
+
+      #if 0
+      /// Pointer to a FileMaster.
+      FileMaster*       fileMasterPtr_;
+      #endif
+
+      #if 0
+      #ifndef DDMD_NOPAIR
+      /// Pointer to a PairPotential factory.
+      PairFactory*  pairFactoryPtr_;
+      #endif
+
+      /// Pointer to a Factory<BondPotential>.
+      Factory<BondPotential>*  bondFactoryPtr_;
+
+      #ifdef DDMD_ANGLE
+      /// Pointer to the AnglePotential Factory.
+      Factory<AnglePotential>*  angleFactoryPtr_;
+      #endif
+
+      #ifdef DDMD_DIHEDRAL
+      /// Pointer to DihedralPotential Factory
+      Factory<DihedralPotential>*  dihedralFactoryPtr_;
+      #endif
+      #endif
+
+      #if 0
+      /// Pointer to a configuration reader/writer factory.
+      Factory<ConfigIo>* configIoFactoryPtr_;
+      #endif
+
+      #if 0
+      #ifndef DDMD_NOPAIR
+      /// Name of pair potential style.
+      std::string pairStyle_;
+      #endif
+
+      /// Name of bond potential style.
+      std::string bondStyle_;
+
+      #ifdef DDMD_ANGLE
+      /// Name of angle potential style.
+      std::string angleStyle_;
+      #endif
+
+      #ifdef DDMD_DIHEDRAL
+      /// Name of dihedral potential style.
+      std::string dihedralStyle_;
+      #endif
+      #endif
 
       /// Number of distinct atom types.
       int nAtomType_;
@@ -324,6 +555,37 @@ namespace DdMd
 
    inline Random& System::random()
    { return random_; }
+
+   #if 0
+   /*
+   * Get the EnergyEnsemble by reference.
+   */
+   inline EnergyEnsemble& System::energyEnsemble() const
+   {
+      assert(energyEnsemblePtr_);
+      return *energyEnsemblePtr_;
+   }
+
+   /*
+   * Get the BoundaryEnsemble by reference.
+   */
+   inline BoundaryEnsemble& System::boundaryEnsemble() const
+   {
+      assert(boundaryEnsemblePtr_);
+      return *boundaryEnsemblePtr_;
+   }
+   #endif
+
+   #if 0
+   /*
+   * Get the FileMaster by reference.
+   */
+   inline FileMaster& System::fileMaster() const
+   {
+      assert(fileMasterPtr_);
+      return *fileMasterPtr_;
+   }
+   #endif
 
    /*
    * Get maximum number of atom types.
