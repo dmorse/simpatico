@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <ddMd/potentials/PairPotential.h>
+#include <ddMd/potentials/pair/PairPotential.h>
 #include <util/global.h>
 
 namespace Util {
@@ -208,7 +208,6 @@ namespace DdMd
 
 }
 
-#include "PairPotential.h"
 #include <ddMd/system/System.h>
 //#include <ddMd/system/stress.h>
 #include <ddMd/storage/AtomStorage.h>

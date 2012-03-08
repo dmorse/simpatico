@@ -4,8 +4,8 @@
 #include <ddMd/system/System.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/storage/AtomStorage.h>
-#include <ddMd/potentials/PairPotential.h>
-#include <ddMd/potentials/BondPotential.h>
+#include <ddMd/potentials/pair/PairPotential.h>
+#include <ddMd/potentials/bond/BondPotential.h>
 #include <util/random/Random.h>
 #include <util/format/Dbl.h>
 #include <util/util/initStatic.h>

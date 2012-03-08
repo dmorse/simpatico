@@ -2,7 +2,6 @@
 #define PAIR_POTENTIAL_H
 
 #include <util/param/ParamComposite.h>
-#include <ddMd/potentials/PairInteraction.h>
 #include <ddMd/neighbor/CellList.h>
 #include <ddMd/neighbor/PairList.h>
 

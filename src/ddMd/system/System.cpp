@@ -10,12 +10,12 @@
 
 #include "System.h"
 #include <ddMd/storage/AtomIterator.h>
-#include <ddMd/potentials/PairPotential.h>
-#include <ddMd/potentials/PairPotentialImpl.h>
-#include <ddMd/potentials/PairInteraction.h>
-#include <ddMd/potentials/BondPotential.h>
-#include <ddMd/potentials/BondPotentialImpl.h>
-#include <ddMd/potentials/BondPotential.h>
+#include <ddMd/potentials/pair/PairPotential.h>
+#include <ddMd/potentials/pair/PairPotentialImpl.h>
+#include <ddMd/potentials/pair/PairInteraction.h>
+#include <ddMd/potentials/bond/BondPotential.h>
+#include <ddMd/potentials/bond/BondPotentialImpl.h>
+#include <ddMd/potentials/bond/BondInteraction.h>
 #include <ddMd/integrator/NveIntegrator.h>
 #include <ddMd/configIo/ConfigIo.h>
 #include <util/util/Log.h>

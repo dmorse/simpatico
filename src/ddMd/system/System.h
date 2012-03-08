@@ -10,8 +10,6 @@
 
 #include <util/param/ParamComposite.h>           // base class
 #include <ddMd/boundary/Boundary.h>              // member 
-#include <ddMd/potentials/PairInteraction.h>     // member, typedef
-#include <ddMd/potentials/BondInteraction.h>     // member, typedef
 #include <ddMd/storage/AtomStorage.h>            // member 
 #include <ddMd/storage/BondStorage.h>            // member 
 #include <ddMd/chemistry/AtomType.h>             // member
@@ -173,16 +171,6 @@ namespace DdMd
       Boundary& boundary();
    
       /**
-      * Get the PairInteraction by reference.
-      */
-      PairInteraction& pairInteraction();
-   
-      /**
-      * Get the BondInteraction by reference.
-      */
-      BondInteraction& bondInteraction();
-   
-      /**
       * Get the PairPotential by reference.
       */
       PairPotential& pairPotential();
@@ -254,12 +242,6 @@ namespace DdMd
       /// Periodic system boundary.
       Boundary      boundary_;
 
-      /// Nonbonded pair interaction potential.
-      PairInteraction pairInteraction_;
-
-      /// Bonded pair interaction potential.
-      BondInteraction bondInteraction_;
-
       /// Array of AtomType objects for all atoms in a simulation.
       DArray<AtomType> atomTypes_;
 
@@ -321,12 +303,6 @@ namespace DdMd
 
    inline Exchanger& System::exchanger()
    { return exchanger_; }
-
-   inline PairInteraction& System::pairInteraction()
-   { return pairInteraction_; }
-
-   inline BondInteraction& System::bondInteraction()
-   { return bondInteraction_; }
 
    inline PairPotential& System::pairPotential()
    { 

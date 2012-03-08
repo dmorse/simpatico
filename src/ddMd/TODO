@@ -3,14 +3,14 @@ Domain Decomposition MD (DdMd)
 
 - Add readCommands() method to System to read a command file. 
 
-- Add Collector to ConfigIo, to allow writing.
+- Write collector classes or methods, to allow writing configurations.
 
 - Add Mask to Atom to allow masking of bonded interactions.
   Also add MaskBondPolicy to System, and code to update masks.
 
-- Make PairPotential and BondPotential abstract base classes.
+- Add potential styles and factories and clean up param file format.
 
-- Add factories and clean up param file format.
+- Add energy and boundary ensembles
 
 - Port NVT and NPH integrators.
 
