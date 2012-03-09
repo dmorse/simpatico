@@ -30,8 +30,8 @@ namespace DdMd
 
    class PairPotential;
    class BondPotential;
-   //class EnergyEnsemble;
-   //class BoundaryEnsemble;
+   class EnergyEnsemble;
+   class BoundaryEnsemble;
    class Integrator;
    class ConfigIo;
    //class FileMaster;
@@ -187,43 +187,20 @@ namespace DdMd
 
       //@}
 
-      #if 0
       /// \name Potential Energy Factories and Styles
       //@{
 
       #ifndef DDMD_NOPAIR
       /**
-      * Add a custom PairPotential Factory.
-      *
-      * This method adds a user-defined PairFactory object as a
-      * subfactory of the default factory for configuration file
-      * reader/writers.
-      *
-      * \param pairFactory custom PairFactory object.
+      * Get the Factory<PairPotential> by reference.
       */
-      void addPairSubfactory(PairFactory& pairFactory);
-
-      /**
-      * Get the PairFactory by reference.
-      */
-      PairFactory& pairFactory();
+      Factory<PairPotential>& pairFactory();
 
       /**
       * Return nonbonded pair style string.
       */
       std::string pairStyle() const;
       #endif
-
-      /**
-      * Add a custom Factory<BondPotential> factory object.
-      *
-      * This method adds a user-defined Factory<BondPotential>
-      * object as a subfactory of the default factory for
-      * configuration file reader/writers.
-      *
-      * \param bondFactory custom Factory<BondPotential> object.
-      */
-      void addBondSubfactory(Factory<BondPotential>& bondFactory);
 
       /**
       * Get the associated Factory<BondPotential> by reference.
@@ -258,7 +235,6 @@ namespace DdMd
       */
       std::string dihedralStyle() const;
       #endif
-      #endif // if 0
 
       /// \name Accessors (Miscellaneous)
       //@{
@@ -298,13 +274,11 @@ namespace DdMd
       */
       Integrator& integrator();
    
-      #if 0
       /// Get the EnergyEnsemble by reference.
       EnergyEnsemble& energyEnsemble();
 
       /// Get the BoundaryEnsemble by reference.
       BoundaryEnsemble& boundaryEnsemble();
-      #endif
 
       #if 0
       /// Get the associated FileMaster by reference.
@@ -384,7 +358,6 @@ namespace DdMd
       void readFileMaster(std::istream& in);
       #endif
 
-      #if 0
       /**
       * Read potential styles, initialize LinkMaster or TetherMaster if needed.
       *
@@ -402,7 +375,6 @@ namespace DdMd
       * \param in input parameter stream
       */
       void readEnsembles(std::istream& in);
-      #endif
 
    private:
 
@@ -449,23 +421,20 @@ namespace DdMd
       /// Pointer to configuration file reader/writer.
       ConfigIo*     configIoPtr_;
 
-      #if 0
       /// Pointer to an EnergyEnsemble.
       EnergyEnsemble*   energyEnsemblePtr_;
 
       /// Pointer to an BoundaryEnsemble.
       BoundaryEnsemble* boundaryEnsemblePtr_;
-      #endif
 
       #if 0
       /// Pointer to a FileMaster.
       FileMaster*       fileMasterPtr_;
       #endif
 
-      #if 0
       #ifndef DDMD_NOPAIR
       /// Pointer to a PairPotential factory.
-      PairFactory*  pairFactoryPtr_;
+      Factory<PairPotential>*  pairFactoryPtr_;
       #endif
 
       /// Pointer to a Factory<BondPotential>.
@@ -480,14 +449,12 @@ namespace DdMd
       /// Pointer to DihedralPotential Factory
       Factory<DihedralPotential>*  dihedralFactoryPtr_;
       #endif
-      #endif
 
       #if 0
       /// Pointer to a configuration reader/writer factory.
       Factory<ConfigIo>* configIoFactoryPtr_;
       #endif
 
-      #if 0
       #ifndef DDMD_NOPAIR
       /// Name of pair potential style.
       std::string pairStyle_;
@@ -504,7 +471,6 @@ namespace DdMd
       #ifdef DDMD_DIHEDRAL
       /// Name of dihedral potential style.
       std::string dihedralStyle_;
-      #endif
       #endif
 
       /// Number of distinct atom types.
@@ -556,11 +522,10 @@ namespace DdMd
    inline Random& System::random()
    { return random_; }
 
-   #if 0
    /*
    * Get the EnergyEnsemble by reference.
    */
-   inline EnergyEnsemble& System::energyEnsemble() const
+   inline EnergyEnsemble& System::energyEnsemble()
    {
       assert(energyEnsemblePtr_);
       return *energyEnsemblePtr_;
@@ -569,12 +534,11 @@ namespace DdMd
    /*
    * Get the BoundaryEnsemble by reference.
    */
-   inline BoundaryEnsemble& System::boundaryEnsemble() const
+   inline BoundaryEnsemble& System::boundaryEnsemble()
    {
       assert(boundaryEnsemblePtr_);
       return *boundaryEnsemblePtr_;
    }
-   #endif
 
    #if 0
    /*

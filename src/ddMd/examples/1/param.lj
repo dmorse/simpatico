@@ -14,21 +14,25 @@ System{
     capacity       8000
     totalCapacity 20000
   }
+  pairStyle    LJPair
+  bondStyle    HarmonicBond
   PairPotential{
-    LJPair{
-       epsilon         1.0
-       sigma           1.0
-       cutoff          1.122462048
-    }
+    epsilon         1.0
+    sigma           1.0
+    cutoff          1.122462048
     skin             0.3
     pairCapacity   60000
     maxBoundary     orthorhombic   30.0   30.0   30.0
   }
   BondPotential{
-    HarmonicBond{
-      kappa         100.0
-      length          1.0
-    }
+    kappa         100.0
+    length          1.0
+  }
+  EnergyEnsemble{
+    type   adiabatic
+  }
+  BoundaryEnsemble{
+    type   rigid
   }
   NveIntegrator{
     dt           0.0005

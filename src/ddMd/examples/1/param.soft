@@ -14,17 +14,23 @@ System{
     capacity       8000
     totalCapacity 20000
   }
-  HarmonicL0Bond{
-    kappa           6.0
-  }
+  pairStyle    DpdSoftPair
+  bondStyle    HarmonicL0Bond
   PairPotential{
-    DpdSoftPair{
-      epsilon        20.0
-      sigma           1.0
-    }
+    epsilon         1.0
+    sigma           1.0
     skin             0.3
     pairCapacity   60000
     maxBoundary     orthorhombic   30.0   30.0   30.0
+  }
+  BondPotential{
+    kappa           6.0
+  }
+  EnergyEnsemble{
+    type   adiabatic
+  }
+  BoundaryEnsemble{
+    type   rigid
   }
   NveIntegrator{
     dt           0.0005
@@ -41,4 +47,9 @@ System{
     bondCacheCapacity  20000
   }
 }
+
+  GrootSoftPair{
+    epsilon         1.0
+    sigma           1.0
+  }
 

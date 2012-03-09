@@ -73,9 +73,9 @@ namespace DdMd
       }
 
       // Read parameters
-      readBegin(in, "HarmonicL0Bond");
+      //readBegin(in, "HarmonicL0Bond");
       readCArray<double>(in, "kappa",  kappa_,  nBondType_);
-      readEnd(in);
+      //readEnd(in);
    }
    
    /* 

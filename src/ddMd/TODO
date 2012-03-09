@@ -1,18 +1,17 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Add readCommands() method to System to read a command file. 
-
 - Write collector classes or methods, to allow writing configurations.
 
+- Add readCommands() method to System to read a command file. 
+
 - Add Mask to Atom to allow masking of bonded interactions.
-  Also add MaskBondPolicy to System, and code to update masks.
 
-- Add potential styles and factories and clean up param file format.
-
-- Add energy and boundary ensembles
+- Add MaskBondPolicy to System, and add code to update masks.
 
 - Port NVT and NPH integrators.
+
+- Add Integrator and configIo factories.
 
 - Modify Exchanger to work ifndef UTIL_MPI, continue with other classes.
 
