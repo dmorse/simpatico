@@ -138,6 +138,11 @@ namespace DdMd
       */
       double maxPairCutoff() const;
  
+      /**
+      * Return name string "DpdSoftPair" for this evaluator class.
+      */
+      std::string className() const;
+ 
       //@}
 
    private:

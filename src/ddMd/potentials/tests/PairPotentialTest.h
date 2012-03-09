@@ -6,6 +6,8 @@
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
+#include <ddMd/communicate/Domain.h>
+#include <ddMd/boundary/Boundary.h>
 #include <ddMd/chemistry/Atom.h>
 #include <util/random/Random.h>
 
@@ -21,6 +23,8 @@ class PairPotentialTest: public ParamFileTest<PairPotential>
 
 private:
 
+      Boundary    boundary;
+      Domain      domain;
       AtomStorage storage;
       PairInteraction pairInteraction;
 
@@ -29,7 +33,7 @@ public:
    virtual void setUp()
    {
       pairInteraction.setNAtomType(1);
-      object().associate(storage, pairInteraction);
+      object().associate(boundary, domain, storage, pairInteraction);
 
       // Read parameter file
       openFile("in/PairPotential");
