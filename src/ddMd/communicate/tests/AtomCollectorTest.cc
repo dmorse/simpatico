@@ -1,4 +1,4 @@
-#include "CollectorTest.h"
+#include "AtomCollectorTest.h"
 
 int main()
 {
@@ -7,7 +7,7 @@ int main()
    IntVector::commitMpiType();
    #endif
 
-   TEST_RUNNER(CollectorTest) runner;
+   TEST_RUNNER(AtomCollectorTest) runner;
    runner.run();
 
    #ifdef UTIL_MPI

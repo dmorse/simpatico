@@ -77,7 +77,24 @@ namespace DdMd
       */
       virtual void readParam(std::istream& in);
 
+      /*
+      * Read and implement commands in an input script.
+      */
+      void readCommands(std::istream &in);
+   
+      #if 0
+      /*
+      * Read and implement commands from the default command file.
+      */
+      void readCommands();
+      #endif
+
       // Mutators
+
+      /**
+      * Integrate equations of motion. 
+      */
+      void integrate(int nStep);
 
       /**
       * Set random velocities chosen from Boltzmann distribution.
@@ -149,11 +166,6 @@ namespace DdMd
       * \return total bond potential for all nodes on master, 0.0 otherwise.
       */
       double bondPotentialEnergy();
-
-      /**
-      * Integrate equations of motion. 
-      */
-      void integrate(int nStep);
 
       /// \name Config File IO
       //@{
@@ -294,23 +306,7 @@ namespace DdMd
       * Get the Exchanger by reference.
       */
       Exchanger& exchanger();
-   
-      /**
-      * Return total number of atoms on all processors.
-      *
-      * Reduce operation: Must be called on all nodes but returns
-      * correct total value only on grid communicator master.
-      */
-      int nAtomTotal() const;
-
-      /**
-      * Return total number of ghosts on all processors.
-      *
-      * Reduce operation: Must be called on all nodes but returns
-      * correct total value only on grid communicator master.
-      */
-      int nGhostTotal() const;
-
+  
       /**
       * Get maximum number of atom types.
       */

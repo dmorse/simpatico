@@ -330,6 +330,28 @@ namespace DdMd
       */
       int totalAtomCapacity() const;
 
+      #ifdef UTIL_MPI
+      /**
+      * Compute and store the total number of atoms on all processors.
+      *
+      * This is an MPI reduce operation. The correct result is stored and
+      * returned only on the rank 0 processor. On other processors, the
+      * method stores a null value of -1.
+      *
+      * \param  communicator MPI communicator for this system.
+      * \return on master node, return total number of atoms.
+      */
+      void computeNAtomTotal(MPI::Intracomm& communicator);
+      #endif
+   
+      /**
+      * On master processor (rank=0), stored value of total number of atoms.
+      *
+      * This method should only be called on the master node (rank = 0).
+      * The return value is computed by a previous call of computeNAtomTotal.
+      */
+      int nAtomTotal() const;
+
       /**
       * Has this object been initialized?
       *
@@ -341,30 +363,6 @@ namespace DdMd
       * Return true if the container is valid, or throw an Exception.
       */
       bool isValid() const;
-
-      #ifdef UTIL_MPI
-      /**
-      * Compute, store and return total number of atoms on all processors.
-      *
-      * This is an MPI reduce operation. The correct result is stored and
-      * returned only on the rank 0 processor. On other processors, the
-      * method returns a null value of -1.
-      *
-      * \param  communicator MPI communicator for this system.
-      * \return on master node, return total number of atoms.
-      */
-      int computeNAtomTotal(MPI::Intracomm& communicator);
-   
-      /**
-      * On master processor (rank=0), stored value of total number of atoms.
-      *
-      * This method should only be called on the master node (rank = 0).
-      * The return value is computed by a previous call of computeNAtomTotal.
-      * The method throws an Exception if computeNAtomTotal has not been
-      * called, or if the method is called on a slave processor.
-      */
-      int nAtomTotal() const;
-      #endif
 
    private:
 
@@ -441,16 +439,18 @@ namespace DdMd
    inline int AtomStorage::totalAtomCapacity() const
    { return totalAtomCapacity_; }
 
-   #ifdef UTIL_MPI
    /*
    * On master processor (rank=0), stored value of total number of atoms.
    */
    inline int AtomStorage::nAtomTotal() const
    {
+      #ifdef UTIL_MPI
       if (nAtomTotal_ < 0) UTIL_THROW("Value not set: nAtomTotal < 0");
       return nAtomTotal_;
+      #else
+      return atomSet_.size();
+      #endif
    }
-   #endif
 
    // Template method definition
 

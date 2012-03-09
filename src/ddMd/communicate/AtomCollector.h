@@ -1,5 +1,5 @@
-#ifndef COLLECTOR_H
-#define COLLECTOR_H
+#ifndef ATOM_COLLECTOR_H
+#define ATOM_COLLECTOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -24,37 +24,36 @@ namespace DdMd
    /**
    * Class for collecting Atoms from processors to master processor.
    *
-   * A Collector is used to collect atoms from processors back to the
-   * master in order to output a configuration file. 
+   * An AtomCollector collects atoms from all processors to the master
+   * in order to output a configuration file. 
    *
    * Usage:
    * \code
    * 
    *    AtomStorage storage;
-   *    Domain      domain;
-   *    Buffer      buffer;
-   *    Collector   collector;
+   *    Domain domain;
+   *    Buffer buffer;
+   *    AtomCollector collector;
    *
-   *    // If master processor
-   *    if (domain.gridRank() == 0) {  
+   *    // Initialization
+   *    collector.associate(domain, storage, buffer);
+   *    collector.allocate(100);
    *
-   *       collector.initialize(storage, domain, buffer);
+   *    // Communication
+   *    if (domain.gridRank() == 0) {  // if master processor
+   *       collector.setup();
    *       Atom* atomPtr = collector.nextPtr();
    *       while (atomPtr) {
    *          // Write *atomPtr to file; 
    *          atomPtr = collector.nextPtr();
    *       }
-   *
-   *    } else { 
-   *       // If not master processor
-   *
-   *       collector.send(storage, domain, buffer);
-   *
+   *    } else { // if not master
+   *       collector.send();
    *    }
    *
    * \endcode
    */
-   class Collector : public ParamComposite
+   class AtomCollector : public ParamComposite
    {
 
    public:
@@ -62,24 +61,38 @@ namespace DdMd
       /**
       * Constructor.
       */
-      Collector();
+      AtomCollector();
 
       /**
       * Destructor.
       */
-      ~Collector();
+      ~AtomCollector();
 
       /**
-      * Initialize master processor for receiving.
+      * Initialize pointers to associated objects.
       *
-      * Call only on the master processor.
+      * Call on all processors, only once.
       */
-      void initialize(AtomStorage& storage, Domain& domain, Buffer& buffer);
+      void associate(Domain& domain, AtomStorage& storage, Buffer& buffer);
+
+      /**
+      * Allocate cache on master processor.
+      *
+      * Call only on the master processor, only once.
+      */
+      void allocate(int cacheSize);
+
+      /**
+      * Setup master processor for receiving.
+      *
+      * Call only on the master processor, just before each receive loop.
+      */
+      void setup();
 
       /**
       * Return a pointer to the next available atom, or null. 
       *
-      * Call only on the master processor.
+      * Call only on the master processor, within loop over atoms.
       *
       * \return address of next atom, or null if no more are available.
       */
@@ -90,33 +103,39 @@ namespace DdMd
       *
       * Call on all processors except the master.
       */
-      void send(AtomStorage& storage, Domain& domain, Buffer& buffer);
+      void send();
 
    private:
 
       /// Temporary array of atoms, allocated only on master.
-      AtomArray   recvArray_;
+      AtomArray recvArray_;
 
       /// Iterator for atoms in a AtomStorage (master and slaves).
       AtomIterator iterator_;
 
       /// Pointer to associated Domain object (on master).
-      Domain*     domainPtr_;
+      Domain* domainPtr_;
+
+      /// Pointer to associated Domain object (on master).
+      AtomStorage* storagePtr_;
 
       /// Pointer to associated Buffer object (on master).
-      Buffer*     bufferPtr_;
+      Buffer* bufferPtr_;
 
       /// Rank of processor from which atoms are being received (on master).
-      int         source_;
+      int source_;
+
+      /// Number of items in receive buffer (on master).
+      int recvBufferSize_;
 
       /// Number of items in recvArray_ (on master).
-      int         recvArraySize_;
+      int recvArraySize_;
 
       /// Index of current item in recvArray_ (on master).
-      int         recvArrayId_;
+      int recvArrayId_;
 
-      /// Have all atoms been processed from current source? (master and slaves).
-      bool        isComplete_;
+      /// Have all atoms been processed from current source? (all).
+      bool isComplete_;
 
    };
 

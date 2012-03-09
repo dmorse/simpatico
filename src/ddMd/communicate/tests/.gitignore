@@ -4,5 +4,5 @@ AtomDistributorTest
 BondDistributorTest
 PlanTest
 ExchangerTest
-CollectorTest
+AtomCollectorTest
 Test

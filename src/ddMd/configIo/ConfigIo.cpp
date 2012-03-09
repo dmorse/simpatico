@@ -54,6 +54,7 @@ namespace DdMd
       atomDistributor_.associate(domain, boundary, atomStorage, buffer);
       bondDistributor_.associate(domain, atomStorage,
                                  bondStorage, buffer);
+      atomCollector_.associate(domain, atomStorage, buffer);
    }
 
    /*
@@ -67,6 +68,7 @@ namespace DdMd
       readEnd(in);
       atomDistributor_.setParam(atomCacheCapacity_);
       bondDistributor_.setParam(bondCacheCapacity_);
+      atomCollector_.allocate(atomCacheCapacity_);
    }
 
    /*
@@ -83,7 +85,7 @@ namespace DdMd
       }
 
       // Read and broadcast boundary
-      if (myRank == 0) {
+      if (domain().isMaster()) {  
          file >> Label("BOUNDARY");
          file >> boundary();
       }
@@ -91,19 +93,15 @@ namespace DdMd
       bcast(domainPtr_->communicator(), boundary(), 0);
       #endif
 
-      // Read and distribute atoms 
+      // Atoms 
       int nAtom;  // Total number of atoms in file
-      if (myRank == 0) {
+      if (domain().isMaster()) {  
 
          // Read and distribute atoms
          file >> Label("ATOMS");
 
          // Read number of atoms
          file >> Label("nAtom") >> nAtom;
-
-         //std::cout << std::endl;
-         //std::cout << "Num Atoms to be distributed = " 
-         //          << nAtom << std::endl;
 
          int totalAtomCapacity = atomStoragePtr_->totalAtomCapacity();
 
@@ -140,12 +138,7 @@ namespace DdMd
          atomDistributor().send();
 
       } else { // If I am not the master processor
-
-         #if UTIL_MPI
-         // Receive all atoms into AtomStorage
          atomDistributor().receive();
-         #endif
-
       }
 
       // Check that all atoms are accounted for after distribution.
@@ -165,28 +158,17 @@ namespace DdMd
          }
       }
 
-      // Read and distribute bonds
+      // Bonds
       int nBond;  // Total number of bonds in file
-      if (myRank == 0) {
+      if (domain().isMaster()) {  
 
-         // Read and distribute bonds
          file >> Label("BONDS");
-
-         // Read number of bonds
          file >> Label("nBond") >> nBond;
-
-         //std::cout << std::endl;
-         //std::cout << "Num Bonds to be distributed = " 
-         //          << nBond << std::endl;
-
-         #if UTIL_MPI
-         //Initialize the send buffer.
-         bondDistributor().initSendBuffer();
-         #endif
 
          // Fill the bond objects
          Bond* bondPtr;
          int   i, j, k;
+         bondDistributor().initSendBuffer();
          for (i = 0; i < nBond; ++i) {
 
             bondPtr = bondDistributor().newPtr();
@@ -207,10 +189,9 @@ namespace DdMd
 
       }
 
-      if (myRank == 0) {
+      if (domain().isMaster()) {  
          file.close();
       }
-
    }
 
    /* 
@@ -218,24 +199,40 @@ namespace DdMd
    */
    void ConfigIo::writeConfig(std::string filename)
    {
-      using std::endl;
-
-      int myRank = domain().gridRank();
-
-      // If I am the master processor.
-      if (myRank == 0) {
-
-         std::ofstream file;
-
-         // Write Boundary dimensions
-         file << "BOUNDARY" << endl << endl;
-         file << boundary() << endl;
-   
-         file << endl << "ATOMS" << endl;
-         //file << "nAtom" << system().nAtomTotal() << endl;
-
+      // Open file
+      std::ofstream file;
+      if (domain().isMaster()) {
+         file.open(filename.c_str());
       }
 
+      // Write Boundary dimensions
+      if (domain().isMaster()) {
+         file << "BOUNDARY" << std::endl << std::endl;
+         file << boundary() << std::endl;
+         file << std::endl;
+      }
+
+      // Atoms
+      if (domain().isMaster()) {  
+         file << "ATOMS" << std::endl;
+         file << "nAtom" << 0 << std::endl;
+         atomCollector_.setup();
+         Atom* atomPtr = atomCollector_.nextPtr();
+         while (atomPtr) {
+            std::cout << Int(atomPtr->id(), 10)
+                      << "  " << atomPtr->position() << std::endl;
+            atomPtr = atomCollector_.nextPtr();
+         }
+      } else { 
+         atomCollector_.send();
+      }
+
+      // Bonds
+
+      // Close file
+      if (domain().isMaster()) {  
+         file.close();
+      }
    }
  
 }

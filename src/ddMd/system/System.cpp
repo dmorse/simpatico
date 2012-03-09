@@ -12,10 +12,9 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <ddMd/potentials/pair/PairPotentialImpl.h>
-#include <ddMd/potentials/pair/PairInteraction.h>
 #include <ddMd/potentials/bond/BondPotential.h>
 #include <ddMd/potentials/bond/BondPotentialImpl.h>
-#include <ddMd/potentials/bond/BondInteraction.h>
+#include <ddMd/integrator/Integrator.h>
 #include <ddMd/integrator/NveIntegrator.h>
 #include <ddMd/configIo/ConfigIo.h>
 
@@ -45,14 +44,17 @@
 #endif
 
 // namespace Util
+#include <util/space/Vector.h>
+#include <util/space/IntVector.h>
 #include <util/param/Factory.h>
 #include <util/util/Log.h>
 #include <util/util/Timer.h>
 
-//#include <util/format/Int.h>
-//#include <util/format/Dbl.h>
-//#include <util/format/Str.h>
-//#include <util/util/ioUtil.h>
+#include <util/format/Int.h>
+#include <util/format/Dbl.h>
+#include <util/format/Str.h>
+#include <util/util/ioUtil.h>
+#include <util/util/initStatic.h>
 
 #include <fstream>
 
@@ -115,12 +117,30 @@ namespace DdMd
       #endif
       nAtomType_(0),
       nBondType_(0),
+      //maskedPairPolicy_(MaskBonded),
       isMaster_(false)
    {
+      Util::initStatic();
+
       #ifdef UTIL_MPI
+      if (!MPI::Is_initialized()) {
+         MPI::Init();
+         Util::Vector::commitMpiType();
+         Util::IntVector::commitMpiType();
+         //Util::Pair<int>::commitMpiType();
+      }
+
       communicatorPtr_ = &communicator;
       domain_.setGridCommunicator(communicator);
       setParamCommunicator(communicator);
+
+      // Set directory Id in FileMaster to MPI processor rank.
+      // fileMaster_.setDirectoryId(communicatorPtr_->Get_rank());
+
+      // Set log file for processor n to a new file named "n/log"
+      // Relies on initialization of FileMaster outputPrefix to "" (empty).
+      // fileMaster_.openOutputFile("log", logFile_);
+      // Log::setFile(logFile_);
       #endif
 
       // Set connections between member objects
@@ -128,19 +148,8 @@ namespace DdMd
       exchanger_.associate(domain_, boundary_,
                            atomStorage_, bondStorage_, buffer_);
 
-      // Note: The following objects will become polymorphic,
-      // and will be created in readParam by factories.
-
-      //pairPotentialPtr_ = new PairPotentialImpl<PairInteraction>(*this);
-      //bondPotentialPtr_ = new BondPotentialImpl<BondInteraction>(*this);
       energyEnsemblePtr_  = new EnergyEnsemble;
       boundaryEnsemblePtr_ = new BoundaryEnsemble;
-      integratorPtr_ = new NveIntegrator(*this);
-      configIoPtr_ = new ConfigIo();
-
-      configIoPtr_->associate(domain_, boundary_,
-                              atomStorage_, bondStorage_, buffer_);
-
    }
 
    /*
@@ -199,6 +208,11 @@ namespace DdMd
          delete configIoFactoryPtr_;
       }
       #endif
+
+      #ifdef UTIL_MPI
+      //if (logFile_.is_open()) logFile_.close();
+      MPI::Finalize();
+      #endif
    }
 
    /**
@@ -210,8 +224,8 @@ namespace DdMd
       // Preconditions
       assert(pairPotentialPtr_ == 0);
       assert(bondPotentialPtr_ == 0);
-      assert(integratorPtr_);
-      assert(configIoPtr_);
+      assert(integratorPtr_ == 0);
+      assert(configIoPtr_ == 0);
 
       readBegin(in, "System");
       readParamComposite(in, domain_);
@@ -237,9 +251,13 @@ namespace DdMd
       readParamComposite(in, *bondPotentialPtr_);
 
       readEnsembles(in);
+      integratorPtr_ = new NveIntegrator(*this); // Todo: Add factory
       readParamComposite(in, *integratorPtr_);
       readParamComposite(in, random_);
       readParamComposite(in, buffer_);
+      configIoPtr_ = new ConfigIo();             // Todo: Add factory
+      configIoPtr_->associate(domain_, boundary_,
+                              atomStorage_, bondStorage_, buffer_);
       readParamComposite(in, *configIoPtr_);
 
       exchanger_.allocate();
@@ -301,7 +319,110 @@ namespace DdMd
    }
 
    /*
-   * Set forces on all local atoms to zero.
+   * Read and implement commands in an input script.
+   */
+   void System::readCommands(std::istream &in)
+   {
+      std::string   command;
+      std::string   filename;
+      std::ifstream inputFile;
+      std::ofstream outputFile;
+
+      #ifndef UTIL_MPI
+      std::istream&     inBuffer = in;
+      #else
+      std::stringstream inBuffer;
+      std::string       line;
+      #endif
+
+      bool readNext = true;
+      while (readNext) {
+
+         #ifdef UTIL_MPI
+         if (!hasParamCommunicator() || isParamIoProcessor()) {
+            getNextLine(in, line);
+            Log::file() << line << std::endl;
+         } 
+         if (hasParamCommunicator()) {
+            bcast<std::string>(domain_.communicator(), line, 0);
+         }
+         inBuffer.clear();
+         for (unsigned i=0; i < line.size(); ++i) {
+            inBuffer.put(line[i]);
+         }
+         #endif
+
+         inBuffer >> command;
+         //Log::file().setf(std::ios_base::left);
+         //Log::file().width(15);
+         //Log::file() << command;
+
+         if (command == "READ_CONFIG") {
+            inBuffer >> filename;
+            //Log::file() << Str(filename, 15) << std::endl;
+            //fileMaster().openInputFile(filename, inputFile);
+            //readConfig(inputFile);
+            configIoPtr_->readConfig(filename.c_str());
+            //inputFile.close();
+         } else
+         if (command == "THERMALIZE") {
+            double temperature;
+            inBuffer >> temperature;
+            //Log::file() << Dbl(temperature, 15, 6) << std::endl;
+            setBoltzmannVelocities(temperature);
+            //removeDriftVelocity();
+         } else
+         if (command == "SIMULATE") {
+            int endStep;
+            inBuffer >> endStep;
+            //Log::file() << Int(endStep, 15) << std::endl;
+            integrate(endStep);
+         } else
+         if (command == "WRITE_CONFIG") {
+            inBuffer >> filename;
+            //Log::file() << Str(filename, 15) << std::endl;
+            //fileMaster().openOutputFile(filename, outputFile);
+            //writeConfig(outputFile);
+            configIoPtr_->writeConfig(filename);
+            //outputFile.close();
+         } else
+         if (command == "WRITE_PARAM") {
+            inBuffer >> filename;
+            //Log::file() << Str(filename, 15) << std::endl;
+            //fileMaster().openOutputFile(filename, outputFile);
+            outputFile.open(filename.c_str());
+            writeParam(outputFile);
+            outputFile.close();
+         } else
+         #if 0
+         if (command == "SET_CONFIG_IO") {
+            std::string classname;
+            inBuffer >> classname;
+            Log::file() << Str(classname, 15) << std::endl;
+            setConfigIo(classname);
+         } else
+         #endif
+         if (command == "FINISH") {
+            //Log::file() << std::endl;
+            readNext = false;
+         } else {
+            Log::file() << "Error: Unknown command  " << std::endl;
+            readNext = false;
+         }
+
+      }
+   }
+
+   #if 0
+   /*
+   * Read and implement commands from the default command file.
+   */
+   void System::readCommands()
+   {  readCommands(fileMaster().commandFile()); }
+   #endif
+
+   /*
+   * Choose velocities from a Boltzmann distribution.
    */
    void System::setBoltzmannVelocities(double temperature)
    {
@@ -363,10 +484,11 @@ namespace DdMd
       timer.stop();
 
       // Calculate nAtomTot (correct value only on master).
-      int nAtomTot = nAtomTotal();
+      atomStorage_.computeNAtomTotal(domain_.communicator());
 
       if (isMaster) {
 
+         int nAtomTot = atomStorage_.nAtomTotal();
          int nProc = 1;
          #ifdef UTIL_MPI
          nProc = domain_.communicator().Get_size();
@@ -530,41 +652,6 @@ namespace DdMd
       #endif
 
       return bool(needed);
-   }
-
-   /**
-   * Return total number of atoms on all processors.
-   */
-   int System::nAtomTotal() const
-   {
-      int nAtom = atomStorage_.nAtom();
-      int nAtomAll;
-      #ifdef UTIL_MPI
-      domain_.communicator().Reduce(&nAtom, &nAtomAll, 1, 
-                                    MPI::INT, MPI::SUM, 0);
-      #else
-      nAtomAll = nAtom;
-      #endif
-      return nAtomAll;
-   }
-
-   /**
-   * Return total number of ghosts on all processors.
-   * 
-   * Reduce operation: Must be called on all processors but returns
-   * correct value only on processor 0 of grid communicator.
-   */
-   int System::nGhostTotal() const
-   {
-      int nGhost = atomStorage_.nGhost();
-      int nGhostAll = 0;
-      #ifdef UTIL_MPI
-      domain_.communicator().Reduce(&nGhost, &nGhostAll, 1, 
-                                    MPI::INT, MPI::SUM, 0);
-      #else
-      nGhostAll = nGhost;
-      #endif
-      return nGhostAll;
    }
 
    #ifndef DDMD_NOPAIR
@@ -731,11 +818,18 @@ namespace DdMd
       atomStorage_.isValid();
 
       // Determine if there are any ghosts on any processor
-      int nGhost = nGhostTotal();
-      #if UTIL_MPI
-      bcast(domain_.communicator(), nGhost, 0);
+      int nGhost = atomStorage_.nGhost();
+      int nGhostAll = 0;
+      #ifdef UTIL_MPI
+      domain_.communicator().Reduce(&nGhost, &nGhostAll, 1, 
+                                    MPI::INT, MPI::SUM, 0);
+      #else
+      nGhostAll = nGhost;
       #endif
-      bool hasGhosts = bool(nGhost);
+      #if UTIL_MPI
+      bcast(domain_.communicator(), nGhostAll, 0);
+      #endif
+      bool hasGhosts = bool(nGhostAll);
 
       bondStorage_.isValid(atomStorage_, domain_.communicator(), hasGhosts);
       return true; 

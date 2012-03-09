@@ -1,17 +1,20 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Write collector classes or methods, to allow writing configurations.
+- Write GroupCollector template.
 
-- Add readCommands() method to System to read a command file. 
+- Add MaskBondPolicy to System.
 
-- Add Mask to Atom to allow masking of bonded interactions.
+- Add Mask to Atom to allow masking of bonded interactions,
+  and add code to set masks to ConfigIo.
 
-- Add MaskBondPolicy to System, and add code to update masks.
+- Move collective energy calculation to potential classes.
 
 - Port NVT and NPH integrators.
 
-- Add Integrator and configIo factories.
+- Add IntegratorFactory to System.
+
+- Add ConfigIo factory.
 
 - Modify Exchanger to work ifndef UTIL_MPI, continue with other classes.
 
