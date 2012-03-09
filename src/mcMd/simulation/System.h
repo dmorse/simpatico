@@ -382,16 +382,6 @@ namespace McMd
       //@{
     
       #ifndef MCMD_NOPAIR 
-      /**
-      * Add a custom PairPotential Factory.
-      *
-      * This method adds a user-defined PairFactory object as a
-      * subfactory of the default factory for configuration file 
-      * reader/writers.
-      *
-      * \param pairFactory custom PairFactory object.
-      */
-      void addPairSubfactory(PairFactory& pairFactory);
 
       /**
       * Get the PairFactory by reference.
@@ -404,17 +394,6 @@ namespace McMd
       std::string pairStyle() const;
   
       #endif
-
-      /**
-      * Add a custom Factory<BondPotential> factory object.
-      *
-      * This method adds a user-defined Factory<BondPotential> 
-      * object as a subfactory of the default factory for 
-      * configuration file reader/writers.
-      *
-      * \param bondFactory custom Factory<BondPotential> object.
-      */
-      void addBondSubfactory(Factory<BondPotential>& bondFactory);
 
       /**
       * Get the associated Factory<BondPotential> by reference.
@@ -502,7 +481,7 @@ namespace McMd
       /// \name Free Energy Perturbation Theory
       //@{
       /**
-      * return the perturbation factory by reference.
+      * Get the perturbation factory by reference.
       */
       Factory<Perturbation>& perturbationFactory();
 
@@ -817,43 +796,6 @@ namespace McMd
 
       /// Was this System instantiated with the copy constructor?
       bool    isCopy_;
-
-      /// Did this System instantiate the PairFactory object?
-      bool    createdPairFactory_;
-
-      /// Did this System instantiate the BondPotential factory?
-      bool    createdBondFactory_;
-
-      #ifdef MCMD_ANGLE
-      /// Did this System instantiate the AnglePotential factory?
-      bool    createdAngleFactory_;
-      #endif
-
-      #ifdef MCMD_DIHEDRAL
-      /// Did this System instantiate the DihedralPotential factory?
-      bool    createdDihedralFactory_;
-      #endif
-
-      #ifdef MCMD_LINK
-      /// Did this System instantiate the Link factory?
-      bool    createdLinkFactory_;
-      #endif
-
-      #ifdef MCMD_EXTERNAL
-      /// Did this System instantiate the ExternalPotential factory?
-      bool    createdExternalFactory_;
-      #endif
-
-      #ifdef MCMD_TETHER
-      /// Did this System instantiate the TetherFactory object?
-      bool    createdTetherFactory_;
-      #endif
-
-      /// Did this System instantiate the Factory<ConfigIo> object?
-      bool    createdConfigIoFactory_;
-
-      /// Did this System instantiate the Factory<TrajectoryIo> object?
-      bool    createdTrajectoryIoFactory_;
 
       /// Did this System instantiate a FileMaster object?
       bool    createdFileMaster_;
