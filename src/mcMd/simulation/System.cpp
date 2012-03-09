@@ -130,27 +130,6 @@ namespace McMd
       #endif
       id_(0),
       isCopy_(false),
-      #ifndef MCMD_NOPAIR
-      createdPairFactory_(false),
-      #endif
-      createdBondFactory_(false),
-      #ifdef MCMD_ANGLE
-      createdAngleFactory_(false),
-      #endif
-      #ifdef MCMD_DIHEDRAL
-      createdDihedralFactory_(false),
-      #endif
-      #ifdef MCMD_LINK
-      createdLinkFactory_(false),
-      #endif
-      #ifdef MCMD_EXTERNAL
-      createdExternalFactory_(false),
-      #endif
-      #ifdef MCMD_TETHER
-      createdTetherFactory_(false),
-      #endif
-      createdConfigIoFactory_(false),
-      createdTrajectoryIoFactory_(false),
       createdFileMaster_(false)
       #ifdef MCMD_PERTURB
       , createdPerturbation_(false)
@@ -232,27 +211,6 @@ namespace McMd
       #endif
       id_(other.id_),
       isCopy_(true),
-      #ifndef MCMD_NOPAIR
-      createdPairFactory_(false),
-      #endif
-      createdBondFactory_(false),
-      #ifdef MCMD_ANGLE
-      createdAngleFactory_(false),
-      #endif
-      #ifdef MCMD_DIHEDRAL
-      createdDihedralFactory_(false),
-      #endif
-      #ifdef MCMD_LINK
-      createdLinkFactory_(false),
-      #endif
-      #ifdef MCMD_EXTERNAL
-      createdExternalFactory_(false),
-      #endif
-      #ifdef MCMD_TETHER
-      createdTetherFactory_(false),
-      #endif
-      createdConfigIoFactory_(false),
-      createdTrajectoryIoFactory_(false),
       createdFileMaster_(false)
       #ifdef MCMD_PERTURB
       , createdPerturbation_(false)
@@ -274,30 +232,30 @@ namespace McMd
             delete boundaryPtr_;
          }
          #ifndef MCMD_NOPAIR
-         if (pairFactoryPtr_ && createdPairFactory_) {
+         if (pairFactoryPtr_) {
             delete pairFactoryPtr_;
          }
          #endif
-         if (bondFactoryPtr_ && createdBondFactory_) {
+         if (bondFactoryPtr_) {
             delete bondFactoryPtr_;
          }
          #ifdef MCMD_ANGLE
-         if (angleFactoryPtr_ && createdAngleFactory_) {
+         if (angleFactoryPtr_) {
             delete angleFactoryPtr_;
          }
          #endif
          #ifdef MCMD_DIHEDRAL
-         if (dihedralFactoryPtr_ && createdDihedralFactory_) {
+         if (dihedralFactoryPtr_) {
             delete dihedralFactoryPtr_;
          }
          #endif
          #ifdef MCMD_LINK
-         if (linkFactoryPtr_ && createdLinkFactory_) {
+         if (linkFactoryPtr_) {
             delete linkFactoryPtr_;
          }
          #endif
          #ifdef MCMD_EXTERNAL
-         if (externalFactoryPtr_ && createdExternalFactory_) {
+         if (externalFactoryPtr_) {
             delete externalFactoryPtr_;
          }
          #endif
@@ -310,7 +268,7 @@ namespace McMd
          if (tetherMasterPtr_) {
             delete tetherMasterPtr_;
          }
-         if (tetherFactoryPtr_ && createdTetherFactory_) {
+         if (tetherFactoryPtr_) {
             delete tetherFactoryPtr_;
          }
          #endif
@@ -327,7 +285,6 @@ namespace McMd
             delete replicaMovePtr_;
          }
          #endif
-
          #endif
       
          if (energyEnsemblePtr_) {
@@ -339,10 +296,10 @@ namespace McMd
          if (configIoPtr_) {
             delete configIoPtr_;
          }
-         if (configIoFactoryPtr_ && createdConfigIoFactory_) {
+         if (configIoFactoryPtr_) {
             delete configIoFactoryPtr_;
          }
-         if (trajectoryIoFactoryPtr_ && createdTrajectoryIoFactory_) {
+         if (trajectoryIoFactoryPtr_) {
             delete trajectoryIoFactoryPtr_;
          }
          if (fileMasterPtr_ && createdFileMaster_) {
@@ -543,7 +500,6 @@ namespace McMd
    {
       if (!configIoFactoryPtr_) {
          configIoFactoryPtr_ = newDefaultConfigIoFactory();
-         createdConfigIoFactory_ = true;
       }
       return *configIoFactoryPtr_;
    }
@@ -561,7 +517,6 @@ namespace McMd
    {
       if (!configIoFactoryPtr_) {
          configIoFactoryPtr_ = newDefaultConfigIoFactory();
-         createdConfigIoFactory_ = true;
       }
       ConfigIo* ptr = configIoFactoryPtr_->factory(classname);
       if (!ptr) {
@@ -582,7 +537,6 @@ namespace McMd
    {
       if (!trajectoryIoFactoryPtr_) {
          trajectoryIoFactoryPtr_ = newDefaultTrajectoryIoFactory();
-         createdTrajectoryIoFactory_ = true;
       }
       return *trajectoryIoFactoryPtr_;
    }
@@ -778,7 +732,6 @@ namespace McMd
    {
       if (!pairFactoryPtr_) {
          pairFactoryPtr_ = new PairFactory;
-         createdPairFactory_ = true;
       }
       assert(pairFactoryPtr_);
       return *pairFactoryPtr_;
@@ -798,7 +751,6 @@ namespace McMd
    {
       if (!bondFactoryPtr_) {
          bondFactoryPtr_ = new BondFactory(*this);
-         createdBondFactory_ = true;
       }
       assert(bondFactoryPtr_);
       return *bondFactoryPtr_;
@@ -818,7 +770,6 @@ namespace McMd
    {
       if (angleFactoryPtr_ == 0) {
          angleFactoryPtr_ = new AngleFactory(*this);
-         createdAngleFactory_ = true;
       }
       assert(angleFactoryPtr_);
       return *angleFactoryPtr_;
@@ -839,7 +790,6 @@ namespace McMd
    {
       if (dihedralFactoryPtr_ == 0) {
          dihedralFactoryPtr_ = new DihedralFactory(*this);
-         createdDihedralFactory_ = true;
       }
       assert(dihedralFactoryPtr_);
       return *dihedralFactoryPtr_;
@@ -861,7 +811,6 @@ namespace McMd
    {
       if (linkFactoryPtr_ == 0) {
          linkFactoryPtr_ = new LinkFactory(*this);
-         createdLinkFactory_ = true;
       }
       assert(linkFactoryPtr_);
       return *linkFactoryPtr_;
@@ -882,7 +831,6 @@ namespace McMd
    {
       if (externalFactoryPtr_ == 0) {
          externalFactoryPtr_ = new ExternalFactory(*this);
-         createdExternalFactory_ = true;
       }
       assert(externalFactoryPtr_);
       return *externalFactoryPtr_;
@@ -903,7 +851,6 @@ namespace McMd
    {
       if (tetherFactoryPtr_ == 0) {
          tetherFactoryPtr_ = new TetherFactory;
-         createdTetherFactory_ = true;
       }
       assert(tetherFactoryPtr_);
       return *tetherFactoryPtr_;
