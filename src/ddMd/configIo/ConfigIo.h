@@ -25,6 +25,7 @@ namespace DdMd
    class AtomStorage;
    class BondStorage;
    class Buffer;
+   enum  MaskPolicy;
 
    using namespace Util;
 
@@ -62,7 +63,7 @@ namespace DdMd
       *
       * \param filename name of configuration file.
       */
-      virtual void readConfig(std::string filename);
+      virtual void readConfig(std::string filename, MaskPolicy maskPolicy);
 
       /**
       * Write configuration file.
@@ -75,6 +76,11 @@ namespace DdMd
       virtual void writeConfig(std::string filename);
 
    protected:
+
+      /**
+      * Set masks on all atoms.
+      */
+      void setAtomMasks();
 
       /**
       * Get the AtomDistributor by reference.

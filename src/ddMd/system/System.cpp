@@ -117,7 +117,7 @@ namespace DdMd
       #endif
       nAtomType_(0),
       nBondType_(0),
-      //maskedPairPolicy_(MaskBonded),
+      maskedPairPolicy_(MaskBonded),
       isMaster_(false)
    {
       Util::initStatic();
@@ -254,13 +254,13 @@ namespace DdMd
       bondPotentialPtr_->setNBondType(nBondType_);
       readParamComposite(in, *bondPotentialPtr_);
 
-      readParamComposite(in, random_);
-
       readEnsembles(in);
 
       // Integrator
       integratorPtr_ = new NveIntegrator(*this); // Todo: Add factory
       readParamComposite(in, *integratorPtr_);
+
+      readParamComposite(in, random_);
 
       configIoPtr_ = new ConfigIo();             // Todo: Add factory
       configIoPtr_->associate(domain_, boundary_,
@@ -374,7 +374,7 @@ namespace DdMd
             //Log::file() << Str(filename, 15) << std::endl;
             //fileMaster().openInputFile(filename, inputFile);
             //readConfig(inputFile);
-            configIoPtr_->readConfig(filename.c_str());
+            configIoPtr_->readConfig(filename.c_str(), maskedPairPolicy_);
             exchanger_.exchange();
             //inputFile.close();
          } else
@@ -633,7 +633,7 @@ namespace DdMd
    void System::readConfig(std::string filename)
    {
       assert(configIoPtr_);
-      configIoPtr_->readConfig(filename);
+      configIoPtr_->readConfig(filename, maskedPairPolicy_);
    }
 
    /**

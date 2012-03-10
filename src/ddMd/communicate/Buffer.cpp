@@ -273,6 +273,14 @@ namespace DdMd
       pack<Vector>(atom.velocity());
       pack<unsigned int>(atom.plan().flags());
 
+      // Pack Mask
+      Mask& mask = atom.mask();
+      int size = mask.size();
+      pack<int>(size);
+      for (int j = 0; j < size; ++j) {
+         pack<int>(mask[j]);
+      }
+
       //Increment number of atoms in send buffer by 1
       ++sendSize_;
    }
@@ -300,9 +308,21 @@ namespace DdMd
       unpack<Vector>(atom.position());
       unpack<Vector>(atom.velocity());
 
+      // Unpack communication plan
       unsigned int ui;
       unpack(ui);
       atom.plan().setFlags(ui);
+
+      // Unpack atom Mask
+      Mask& mask = atom.mask();
+      mask.clear();
+      int size;
+      unpack(size);
+      for (int j = 0; j < size; ++j) {
+         unpack(i);
+         mask.append(i);
+      }
+      assert(mask.size() == size);
 
       // Decrement number of atoms in recv buffer by 1
       recvSize_--;

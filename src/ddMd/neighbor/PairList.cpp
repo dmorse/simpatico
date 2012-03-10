@@ -99,6 +99,7 @@ namespace DdMd
       Vector dr;
       int    na;      // number of atoms in this cell
       int    nn;      // number of neighbors for a cell
+      int    atom2Id; // atom Id for second atom
       int    i, j;
       bool   foundNeighbor;
   
@@ -122,60 +123,70 @@ namespace DdMd
 
             for (j = 0; j < na; ++j) {
                atom2Ptr = neighbors[j];
+
+               // Neighbors in the same cell as atom1
                if (atom2Ptr > atom1Ptr) {
+                  atom2Id  = atom2Ptr->id();
+                  if (!atom1Ptr->mask().isMasked(atom2Id)) {
+                     dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
+                     dRSq = dr.square();
+                     if (dRSq < cutoffSq) {
+      
+                        if (nAtom2_ >= pairCapacity_) {
+                           UTIL_THROW("Overflow: # pairs > pairCapacity_");
+                        }
+      
+                        // If first neighbor of atom1, record atom1 in atom1Ptrs_
+                        if (!foundNeighbor) {
+   
+                           if (nAtom1_ >= atomCapacity_) {
+                              UTIL_THROW("Overflow: # pairs > pairCapacity_");
+                           }
+                           assert(nAtom1_ >= 0);
+   
+                           atom1Ptrs_[nAtom1_] = atom1Ptr;
+                           foundNeighbor = true;
+                        }
+      
+                        // Append pointer to 2nd atom to atom2Ptrs_[]
+                        atom2Ptrs_[nAtom2_] = atom2Ptr;
+                        ++nAtom2_;
+      
+                     }
+                  }
+               }
+            }
+
+            // Neighbors in the same cell as atom1
+            for (j = na; j < nn; ++j) {
+               atom2Ptr = neighbors[j];
+               atom2Id  = atom2Ptr->id();
+               if (!atom1Ptr->mask().isMasked(atom2Id)) {
                   dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
                   dRSq = dr.square();
                   if (dRSq < cutoffSq) {
    
+                     // Check for overflow of atom2Ptrs_
                      if (nAtom2_ >= pairCapacity_) {
                         UTIL_THROW("Overflow: # pairs > pairCapacity_");
                      }
    
-                     // If first neighbor of atom1, record atom1 in atom1Ptrs_
+                     // If first_ neighbor, record iAtomId in atom1Ptrs_
                      if (!foundNeighbor) {
-
+   
                         if (nAtom1_ >= atomCapacity_) {
                            UTIL_THROW("Overflow: # pairs > pairCapacity_");
                         }
                         assert(nAtom1_ >= 0);
-
+   
                         atom1Ptrs_[nAtom1_] = atom1Ptr;
                         foundNeighbor = true;
                      }
    
-                     // Append pointer to 2nd atom to atom2Ptrs_[]
+                     // Append Id of 2nd atom in pair to atom2Ptrs_[]
                      atom2Ptrs_[nAtom2_] = atom2Ptr;
                      ++nAtom2_;
-   
-                  }
-               }
-            }
-            for (j = na; j < nn; ++j) {
-               atom2Ptr = neighbors[j];
-               dr.subtract(atom2Ptr->position(), atom1Ptr->position()); 
-               dRSq = dr.square();
-               if (dRSq < cutoffSq) {
-
-                  // Check for overflow of atom2Ptrs_
-                  if (nAtom2_ >= pairCapacity_) {
-                     UTIL_THROW("Overflow: # pairs > pairCapacity_");
-                  }
-
-                  // If first_ neighbor, record iAtomId in atom1Ptrs_
-                  if (!foundNeighbor) {
-
-                     if (nAtom1_ >= atomCapacity_) {
-                        UTIL_THROW("Overflow: # pairs > pairCapacity_");
-                     }
-                     assert(nAtom1_ >= 0);
-
-                     atom1Ptrs_[nAtom1_] = atom1Ptr;
-                     foundNeighbor = true;
-                  }
-
-                  // Append Id of 2nd atom in pair to atom2Ptrs_[]
-                  atom2Ptrs_[nAtom2_] = atom2Ptr;
-                  ++nAtom2_;
+                 }
               }
    
             }

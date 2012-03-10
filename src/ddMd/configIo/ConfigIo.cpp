@@ -17,6 +17,7 @@
 #include <ddMd/communicate/Buffer.h> 
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Bond.h>
+#include <ddMd/chemistry/MaskPolicy.h>
 #include <util/space/Vector.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/format/Int.h>
@@ -74,7 +75,7 @@ namespace DdMd
    /*
    * Read parameters, allocate memory and initialize.
    */
-   void ConfigIo::readConfig(std::string filename)
+   void ConfigIo::readConfig(std::string filename, MaskPolicy maskPolicy)
    {
 
       std::ifstream file;
@@ -189,9 +190,16 @@ namespace DdMd
 
       }
 
+      // Set atom "masks" to suppress pair interactions
+      // between covalently bonded atoms.
+      if (maskPolicy == MaskBonded) {
+         setAtomMasks();
+      }
+
       if (domain().isMaster()) {  
          file.close();
       }
+
    }
 
    /* 
@@ -220,8 +228,15 @@ namespace DdMd
          atomCollector_.setup();
          Atom* atomPtr = atomCollector_.nextPtr();
          while (atomPtr) {
-            file << Int(atomPtr->id(), 10)
-                 << "  " << atomPtr->position() << std::endl;
+            file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6)
+                 << atomPtr->position() << std::endl
+                 << "                " << atomPtr->velocity();
+            #if 0
+            for (int j=0; j < atomPtr->mask().size(); ++j) {
+               file << Int(atomPtr->mask()[j], 8);
+            }
+            #endif
+            file << std::endl;
             atomPtr = atomCollector_.nextPtr();
          }
       } else { 
@@ -236,5 +251,33 @@ namespace DdMd
       }
    }
  
+   void ConfigIo::setAtomMasks() 
+   {
+
+      AtomIterator     atomIter;
+      atomStorage().begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         atomIter->mask().clear();
+      }
+  
+      int   atomId0, atomId1; 
+      Atom* atomPtr0;
+      Atom* atomPtr1;
+      GroupIterator<2> bondIter;
+      bondStorage().begin(bondIter);
+      for ( ; bondIter.notEnd(); ++bondIter) {
+         atomId0  = bondIter->atomId(0);
+         atomId1  = bondIter->atomId(1);
+         atomPtr0 = atomStorage().find(atomId0);
+         atomPtr1 = atomStorage().find(atomId1);
+         if (atomPtr0) {
+            atomPtr0->mask().append(atomId1);
+         }
+         if (atomPtr1) {
+            atomPtr1->mask().append(atomId0);
+         }
+      }
+   }
+
 }
 #endif

@@ -39,11 +39,11 @@ System{
   BoundaryEnsemble{
     type             rigid
   }
-  Random{
-    seed        8012457890
-  }
   NveIntegrator{
     dt               0.005
+  }
+  Random{
+    seed        8012457890
   }
   ConfigIo{
     atomCacheCapacity    4000
@@ -51,8 +51,3 @@ System{
   }
 }
 
-
-  GrootSoftPair{
-    epsilon         1.0
-    sigma           1.0
-  }

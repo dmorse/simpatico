@@ -8,6 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include <util/global.h>
+
 namespace DdMd
 {
 
@@ -16,7 +18,7 @@ namespace DdMd
    /**
    * Set of Atoms for which pair interactions with a target Atom are "masked".
    *
-   * A Mask stores identifiers for a set of Atoms for which the non-bonded
+   * A Mask stores int identifiers for a set of Atoms for which the non-bonded
    * pair interactions with a single target atom are suppressed, or "masked".
    * Each Mask object is associated with one target Atom. 
    *
@@ -45,7 +47,7 @@ namespace DdMd
       *  
       * \param atom Atom to be added to the masked set.
       */
-      void append(const Atom& atom);
+      void append(int id);
 
       /**
       * True if the atom is in the masked set for the target Atom.
@@ -54,6 +56,13 @@ namespace DdMd
       * \return true if atom is masked, false otherwise.
       */
       bool isMasked(int id) const;
+
+      /**
+      * Return value of atom index number i.
+      *
+      * \param i array index for desired atom index.
+      */
+      int operator [] (int i) const;
 
       /**
       * Return the number of masked atoms.
@@ -84,9 +93,21 @@ namespace DdMd
       return false;
    }
 
-   // Return the number of masked atoms.
+   /*
+   * Return the number of masked atoms.
+   */
    inline int Mask::size() const
    { return size_; }
+
+   /*
+   * Return value of index
+   */
+   inline int Mask::operator[] (int i) const
+   {
+      assert(i >= 0);
+      assert(i <  size_);
+      return atomIds_[i]; 
+   }
 
 } 
 #endif
