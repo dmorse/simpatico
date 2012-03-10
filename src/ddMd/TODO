@@ -1,9 +1,6 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Add Mask to Atom to allow masking of bonded interactions,
-  and add code to set masks on input and to exchange masks.
-
 - Write GroupCollector template.
 
 - Move collective energy calculation to potential classes.
