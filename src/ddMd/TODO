@@ -1,20 +1,18 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Write GroupCollector template.
-
-- Add MaskBondPolicy to System.
-
 - Add Mask to Atom to allow masking of bonded interactions,
-  and add code to set masks to ConfigIo.
+  and add code to set masks on input and to exchange masks.
+
+- Write GroupCollector template.
 
 - Move collective energy calculation to potential classes.
 
-- Port NVT and NPH integrators.
-
 - Add IntegratorFactory to System.
 
-- Add ConfigIo factory.
+- Port NVT and NPH integrators.
+
+- Add ConfigIo factory and SET_CONFIG_IO command.
 
 - Modify Exchanger to work ifndef UTIL_MPI, continue with other classes.
 

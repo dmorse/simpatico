@@ -9,13 +9,14 @@
 */
 
 #include <util/param/ParamComposite.h>           // base class
-#include <ddMd/boundary/Boundary.h>              // member 
-#include <ddMd/storage/AtomStorage.h>            // member 
-#include <ddMd/storage/BondStorage.h>            // member 
-#include <ddMd/chemistry/AtomType.h>             // member
 #include <ddMd/communicate/Domain.h>             // member 
 #include <ddMd/communicate/Buffer.h>             // member 
 #include <ddMd/communicate/Exchanger.h>          // member 
+#include <ddMd/storage/AtomStorage.h>            // member 
+#include <ddMd/storage/BondStorage.h>            // member 
+#include <ddMd/chemistry/AtomType.h>             // member
+#include <ddMd/chemistry/MaskPolicy.h>           // member
+#include <ddMd/boundary/Boundary.h>              // member 
 #include <util/random/Random.h>                  // member 
 #include <util/containers/DArray.h>              // member 
 
@@ -322,6 +323,11 @@ namespace DdMd
       */
       AtomType& atomType(int i);
 
+      /**
+      * Return the value of the mask policy (MaskNone or MaskBonded).
+      */
+      MaskPolicy maskedPairPolicy() const;
+
       //@}
 
       /**
@@ -345,9 +351,7 @@ namespace DdMd
 
       #if 0
       /**
-      * If no FileMaster exists, create and initialize one.
-      *
-      * Invoked in implementation of readParam().
+      * Read the FileMaster.
       *
       * \param in input parameter stream
       */
@@ -355,9 +359,7 @@ namespace DdMd
       #endif
 
       /**
-      * Read potential styles, initialize LinkMaster or TetherMaster if needed.
-      *
-      * Invoked in implementation of readParam().
+      * Read potential styles and maskedPairPolicy.
       *
       * \param in input parameter stream
       */
@@ -365,8 +367,6 @@ namespace DdMd
 
       /**
       * Read energy and boundary ensembles.
-      *
-      * Invoked in implementation of readParam().
       *
       * \param in input parameter stream
       */
@@ -475,6 +475,16 @@ namespace DdMd
       /// Number of distinct bond types.
       int nBondType_;
 
+      /**
+      * Policy for suppressing pair interactions for some atom pairs.
+      *
+      * Allowed values of enum MaskPolicy:
+      *
+      *  - MaskNone:   no masked pairs
+      *  - MaskBonded:  mask pair interaction between bonded atoms
+      */
+      MaskPolicy  maskedPairPolicy_;
+
       /// Is this the master node for file Io?
       bool isMaster_;
 
@@ -564,6 +574,10 @@ namespace DdMd
    */
    inline AtomType& System::atomType(int i)
    {  return atomTypes_[i]; }
+
+   inline MaskPolicy System::maskedPairPolicy() const
+   {  return maskedPairPolicy_; }
+
 
 }
 #endif

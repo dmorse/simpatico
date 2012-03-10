@@ -229,6 +229,10 @@ namespace DdMd
 
       readBegin(in, "System");
       readParamComposite(in, domain_);
+      readParamComposite(in, atomStorage_);
+      readParamComposite(in, bondStorage_);
+      readParamComposite(in, buffer_);
+
       read<int>(in, "nAtomType", nAtomType_);
       read<int>(in, "nBondType", nBondType_);
       atomTypes_.allocate(nAtomType_);
@@ -236,25 +240,28 @@ namespace DdMd
          atomTypes_[i].setId(i);
       }
       readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
-      readParamComposite(in, atomStorage_);
-      readParamComposite(in, bondStorage_);
       readPotentialStyles(in);
 
       #ifndef DDMD_NOPAIR
+      // Pair Potential
       pairPotentialPtr_ = pairFactory().factory(pairStyle());
       pairPotentialPtr_->setNAtomType(nAtomType_);
       readParamComposite(in, *pairPotentialPtr_);
       #endif
 
+      // Bond Potential
       bondPotentialPtr_ = bondFactory().factory(bondStyle());
       bondPotentialPtr_->setNBondType(nBondType_);
       readParamComposite(in, *bondPotentialPtr_);
 
+      readParamComposite(in, random_);
+
       readEnsembles(in);
+
+      // Integrator
       integratorPtr_ = new NveIntegrator(*this); // Todo: Add factory
       readParamComposite(in, *integratorPtr_);
-      readParamComposite(in, random_);
-      readParamComposite(in, buffer_);
+
       configIoPtr_ = new ConfigIo();             // Todo: Add factory
       configIoPtr_->associate(domain_, boundary_,
                               atomStorage_, bondStorage_, buffer_);
@@ -281,6 +288,9 @@ namespace DdMd
    }
    #endif
 
+   /**
+   * Read potential style strings and maskedPairPolicy.
+   */
    void System::readPotentialStyles(std::istream &in)
    {
       #ifndef DDMD_NOPAIR
@@ -307,6 +317,8 @@ namespace DdMd
          read<std::string>(in, "externalStyle", externalStyle_);
       }
       #endif
+
+      read<MaskPolicy>(in, "maskedPairPolicy", maskedPairPolicy_);
    }
 
    /*
@@ -363,6 +375,7 @@ namespace DdMd
             //fileMaster().openInputFile(filename, inputFile);
             //readConfig(inputFile);
             configIoPtr_->readConfig(filename.c_str());
+            exchanger_.exchange();
             //inputFile.close();
          } else
          if (command == "THERMALIZE") {

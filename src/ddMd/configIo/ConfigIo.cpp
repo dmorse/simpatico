@@ -213,14 +213,15 @@ namespace DdMd
       }
 
       // Atoms
+      atomStorage().computeNAtomTotal(domain().communicator());
       if (domain().isMaster()) {  
          file << "ATOMS" << std::endl;
-         file << "nAtom" << 0 << std::endl;
+         file << "nAtom" << Int(atomStorage().nAtomTotal(), 10) << std::endl;
          atomCollector_.setup();
          Atom* atomPtr = atomCollector_.nextPtr();
          while (atomPtr) {
-            std::cout << Int(atomPtr->id(), 10)
-                      << "  " << atomPtr->position() << std::endl;
+            file << Int(atomPtr->id(), 10)
+                 << "  " << atomPtr->position() << std::endl;
             atomPtr = atomCollector_.nextPtr();
          }
       } else { 
