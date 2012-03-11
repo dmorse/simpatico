@@ -185,23 +185,64 @@ namespace DdMd
       } // end atom loop, end compute plan
 
       // Loop over bonds.
+      int nIn;
+      int nOut;
       bondStoragePtr_->begin(bondIter);
       for ( ; bondIter.notEnd(); ++bondIter) {
 
-         #if 0
          // Compute ghost communication plan for group
-         if (nAtom < 2) {
-            for (i = 0; i < Dimension; ++i) {
-               if (domainPtr_->grid().dimension(i) > 1) {
-                  for (j = 0; j < 2; ++j) {
-                     // Set communication plan for group.
+         bondIter->plan().clearFlags();
+         for (i = 0; i < Dimension; ++i) {
+            if (domainPtr_->grid().dimension(i) > 1) {
+               for (j = 0; j < 2; ++j) {
+                  choose = false;
+                  nIn = 0;
+                  nOut = 0;
+                  for (k = 0; k < 2; ++k) {
+                     atomPtr = bondIter->atomPtr(k);
+                     if (atomPtr) {
+                        coordinate = atomPtr->position()[i];
+                        if (atomPtr->isGhost()) {
+                           if (j == 0) {
+                              if (coordinate < inner_(i, j)) {
+                                 ++nOut;
+                              }
+                              if (coordinate > outer_(i, j)) {
+                                 ++nIn;
+                              }
+                           } else {
+                              if (coordinate > inner_(i, j)) {
+                                 ++nOut;
+                              }
+                              if (coordinate < outer_(i, j)) {
+                                 ++nIn;
+                              }
+                           }
+                        } else { 
+                           if (atomPtr->plan().exchange(i, j)) {
+                              ++nOut;
+                           } else {
+                              ++nIn;
+                           }
+                        }
+                     } else {
+                        choose = true;
+                        break;
+                     }
+                  } // end for k
+                  if (nOut > 0 && nIn > 0) {
+                     choose = true;
                   }
-               }
+                  if (choose) {
+                     bondIter->plan().setGhost(i, j);
+                  } else {
+                     bondIter->plan().clearGhost(i, j);
+                  }
+               } // end for j
             }
-         }
-         #endif
+         } // end for i
 
-         // Clear pointers to ghosts in group
+         // Clear pointers to all ghost atoms in group
          for (k = 0; k < 2; ++k) {
             atomPtr = bondIter->atomPtr(k);
             if (atomPtr) {
@@ -291,12 +332,6 @@ namespace DdMd
                      // For gridDimension==1, only nonbonded ghosts exist.
                      // The following assertion applies to these.
                      assert(!atomIter->plan().ghost(i, j));
-
-                     // Flip ghost send direction for covalent ghosts
-                     //if (atomIter->plan().ghost(i, j)) {
-                     //   atomIter->plan().clearGhost(i, j);
-                     //   atomIter->plan().setGhost(i, jc);
-                     //}
 
                      #if UTIL_DEBUG
                      // Check ghost communication plan
@@ -497,26 +532,15 @@ namespace DdMd
          if (nAtom < 2) {
             for (i = 0; i < Dimension; ++i) {
                if (domainPtr_->grid().dimension(i) > 1) {
-                  if (domainPtr_->grid().dimension(i) == 2) {
-                     middle = 0.5*(bound_(i, 0) + bound_(i, 1));
-                  }
                   for (j = 0; j < 2; ++j) {
-                     choose = true; 
-                     // Can replace above by more sophisticated plan.
+                     // choose = true;
+                     choose = bondIter->plan().ghost(i, j);
                      if (choose) {
                         for (k = 0; k < 2; ++k) {
                            atomPtr = bondIter->atomPtr(k);
                            if (atomPtr) {
                               if (!atomPtr->isGhost()) {
-                                 if (domainPtr_->grid().dimension(i) == 2) {
-                                    if (atomPtr->position()[i] < middle) {
-                                       atomPtr->plan().setGhost(i, 0);
-                                    } else {
-                                       atomPtr->plan().setGhost(i, 1);
-                                    }
-                                 } else {
-                                    atomPtr->plan().setGhost(i, j);
-                                 }
+                                 atomPtr->plan().setGhost(i, j);
                               }
                            }
                         }
@@ -811,10 +835,10 @@ namespace DdMd
 
                // Pack ghost positions for sending
                bufferPtr_->clearSendBuffer();
-               bufferPtr_->beginSendBlock(Buffer::GHOST);
+               bufferPtr_->beginSendBlock(Buffer::UPDATE);
                size = sendArray_(i, j).size();
                for (k = 0; k < size; ++k) {
-                  bufferPtr_->packGhost(sendArray_(i, j)[k]);
+                  bufferPtr_->packUpdate(sendArray_(i, j)[k]);
                }
                bufferPtr_->endSendBlock();
   
@@ -828,7 +852,7 @@ namespace DdMd
                size = recvArray_(i, j).size();
                for (k = 0; k < size; ++k) {
                   atomPtr = &recvArray_(i, j)[k];
-                  bufferPtr_->unpackGhost(*atomPtr);
+                  bufferPtr_->unpackUpdate(*atomPtr);
                   if (shift) {
                      atomPtr->position()[i] += shift * lengths[i];
                   }

@@ -12,8 +12,8 @@ System{
     totalCapacity    20000
   }
   Buffer{
-    atomCapacity      5000
-    ghostCapacity     5000
+    atomCapacity     10000
+    ghostCapacity    10000
   }
   nAtomType          1
   nBondType          1

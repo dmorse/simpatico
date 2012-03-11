@@ -381,6 +381,41 @@ namespace DdMd
    }
 
    /*
+   * Pack data required to update a ghost atom.
+   */
+   void Buffer::packUpdate(Atom& atom)
+   {
+      // Preconditions
+      if (sendType_ != UPDATE) {
+         UTIL_THROW("Send type is not UPDATE");
+      }
+      if (sendSize_ >= ghostCapacity_) {
+         UTIL_THROW("Attempt to overpack buffer: sendSize> >= ghostCapacity_");
+      }
+      pack<Vector>(atom.position());
+
+      //Increment number of atoms in send buffer by 1
+      sendSize_++;
+   }
+
+   /**
+   * Unpack data required for a ghost Atom.
+   */
+   void Buffer::unpackUpdate(Atom& atom)
+   {
+      if (recvType_ != (int)UPDATE) {
+         UTIL_THROW("Receive type is not UPDATE");
+      }
+      if (recvSize_ <= 0) {
+         UTIL_THROW("Attempt to unpack empty receive buffer");
+      }
+      unpack<Vector>(atom.position());
+      
+      //Decrement number of atoms in recv buffer to be unpacked by 1
+      recvSize_--;
+   }
+
+   /*
    * Send and receive buffer.
    */
    void Buffer::sendRecv(MPI::Intracomm& comm, int source, int dest)

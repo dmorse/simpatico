@@ -27,7 +27,7 @@ namespace DdMd
 
    public:
 
-      enum BlockDataType {NONE, ATOM, GHOST, GROUP};
+      enum BlockDataType {NONE, ATOM, GHOST, UPDATE, GROUP};
 
       /**
       * Constructor.
@@ -169,6 +169,20 @@ namespace DdMd
       void unpackGhost(Atom& atom);
 
       /**
+      * Pack update of ghost position Atom into send buffer.
+      *
+      * \param atom ghost Atom to be sent.
+      */
+      void packUpdate(Atom& atom);
+
+      /**
+      * Unpack updated position of ghost Atom from recv buffer.
+      *
+      * \param atom ghost Atom object.
+      */
+      void unpackUpdate(Atom& atom);
+
+      /**
       * Pack a Group for sending.
       *
       * \param group Group<N> object to be sent.
@@ -177,36 +191,12 @@ namespace DdMd
       void packGroup(const Group<N>& group);
 
       /**
-      * Receive the next group in the recv buffer.
+      * Receive the next Group in the recv buffer.
       *
       * \param group Group<N> object into which data is received.
       */
       template <int N>
       void unpackGroup(Group<N>& group);
-
-      #if 0
-      /**
-      * Pack a Bond into send buffer.
-      *
-      * Copies required data from atom into send buffer, and
-      * increments sendSize() and send buffer pointer.
-      *
-      * Throws an Exception if sendType != BOND.
-      *
-      * \param bond Bond to be sent.
-      */
-      void packBond(Bond& bond);
-
-      /**
-      * Unpack a Bond from recv buffer.
-      *
-      * Copies required data from recv buffer into bond, and
-      * decrements recvSize() and recv buffer pointer.
-      *
-      * \param atom ghost Atom object.
-      */
-      void unpackBond(Bond& bond);
-      #endif
 
       /**
       * Number of items written to current send block.
@@ -378,6 +368,7 @@ namespace DdMd
       for (int j = 0; j < N; ++j) {
          pack<int>(group.atomId(j));
       }
+      pack<unsigned int>(group.plan().flags());
 
       //Increment number of groups in send buffer by 1
       ++sendSize_;
@@ -406,6 +397,11 @@ namespace DdMd
          group.setAtomId(j, i);
          group.clearAtomPtr(j);
       }
+
+      // Unpack communication plan
+      unsigned int ui;
+      unpack(ui);
+      group.plan().setFlags(ui);
 
       // Decrement number of groups in recv buffer by 1
       recvSize_--;
