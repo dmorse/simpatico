@@ -41,9 +41,9 @@ namespace DdMd
    */
    void NveIntegrator::readParam(std::istream& in)
    {
-      readBegin(in, "NveIntegrator");
+      //readBegin(in, "NveIntegrator");
       read<double>(in, "dt", dt_);
-      readEnd(in);
+      //readEnd(in);
 
       int nAtomType = system().nAtomType();
       if (!prefactors_.isAllocated()) {

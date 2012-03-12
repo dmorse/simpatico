@@ -1,11 +1,12 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Write GroupCollector template.
+- Write GroupCollector template, add to ConfigIo.
+
+- Add Diagnostic classes, and simple diagnostics.
 
 - Move collective energy calculation to potential classes.
-
-- Add IntegratorFactory to System.
+  Divde into "compute" and accessor functions.
 
 - Port NVT and NPH integrators.
 

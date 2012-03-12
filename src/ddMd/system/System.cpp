@@ -15,6 +15,7 @@
 #include <ddMd/potentials/bond/BondPotential.h>
 #include <ddMd/potentials/bond/BondPotentialImpl.h>
 #include <ddMd/integrator/Integrator.h>
+#include <ddMd/integrator/IntegratorFactory.h>
 #include <ddMd/integrator/NveIntegrator.h>
 #include <ddMd/configIo/ConfigIo.h>
 
@@ -39,7 +40,9 @@
 #ifdef DDMD_EXTERNAL
 #include <ddMd/potentials/external/ExternalFactory.h>
 #endif
-
+#if 0
+#include <ddMd/integrator/IntegratorFactory.h>
+#endif
 #if 0
 #include <ddMd/configIos/ConfigIoFactory.h>
 #endif
@@ -101,6 +104,7 @@ namespace DdMd
       #ifdef DDMD_DIHEDRAL
       dihedralFactoryPtr_(0),
       #endif
+      integratorFactoryPtr_(0),
       #if 0
       configIoFactoryPtr_(0),
       #endif
@@ -201,6 +205,9 @@ namespace DdMd
          delete externalFactoryPtr_;
       }
       #endif
+      if (integratorFactoryPtr_) {
+         delete integratorFactoryPtr_;
+      }
       #if 0
       if (configIoFactoryPtr_) {
          delete configIoFactoryPtr_;
@@ -256,8 +263,16 @@ namespace DdMd
       readEnsembles(in);
 
       // Integrator
-      integratorPtr_ = new NveIntegrator(*this); // Todo: Add factory
-      readParamComposite(in, *integratorPtr_);
+      //integratorPtr_ = new NveIntegrator(*this); // Todo: Add factory
+      std::string className;
+      bool        isEnd;
+      integratorPtr_ = 
+         integratorFactory().readObject(in, *this, className, isEnd);
+      if (!integratorPtr_) {
+         std::string msg("Unknown Integrator subclass name: ");
+         msg += className;
+         UTIL_THROW("msg.c_str()");
+      }
 
       readParamComposite(in, random_);
 
@@ -367,6 +382,8 @@ namespace DdMd
 
          if (command == "READ_CONFIG") {
             inBuffer >> filename;
+            readConfig(filename);
+            #if 0
             if (domain_.isMaster()) {
                fileMaster().openInputFile(filename, inputFile);
             }
@@ -375,6 +392,7 @@ namespace DdMd
             if (domain_.isMaster()) {
                inputFile.close();
             }
+            #endif
          } else
          if (command == "THERMALIZE") {
             double temperature;
@@ -390,6 +408,8 @@ namespace DdMd
          } else
          if (command == "WRITE_CONFIG") {
             inBuffer >> filename;
+            writeConfig(filename);
+            #if 0
             if (domain_.isMaster()) {
                fileMaster().openOutputFile(filename, outputFile);
             }
@@ -397,6 +417,7 @@ namespace DdMd
             if (domain_.isMaster()) {
                outputFile.close();
             }
+            #endif
          } else
          if (command == "WRITE_PARAM") {
             inBuffer >> filename;
@@ -414,7 +435,6 @@ namespace DdMd
          } else
          #endif
          if (command == "FINISH") {
-            //Log::file() << std::endl;
             readNext = false;
          } else {
             Log::file() << "Error: Unknown command  " << std::endl;
@@ -621,18 +641,42 @@ namespace DdMd
       return energyAll;
    }
 
-   #if 0
    /*
    * Read configuration file on master and distribute atoms.
    *
    * \param filename name of configuration file.
    */
-   void System::readConfig(std::istream file)
+   void System::readConfig(const std::string& filename)
    {
       assert(configIoPtr_);
-      configIoPtr_->readConfig(file, maskedPairPolicy_);
+      std::ifstream inputFile;
+      if (domain_.isMaster()) {
+         fileMaster().openInputFile(filename, inputFile);
+      }
+      configIoPtr_->readConfig(inputFile, maskedPairPolicy_);
+      exchanger_.exchange();
+      if (domain_.isMaster()) {
+         inputFile.close();
+      }
    }
-   #endif
+
+   /*
+   * Write configuration file on master.
+   *
+   * \param filename name of configuration file.
+   */
+   void System::writeConfig(const std::string& filename)
+   {
+      assert(configIoPtr_);
+      std::ofstream outputFile;
+      if (domain_.isMaster()) {
+         fileMaster().openOutputFile(filename, outputFile);
+      }
+      configIoPtr_->writeConfig(outputFile);
+      if (domain_.isMaster()) {
+         outputFile.close();
+      }
+   }
 
    /**
    * Determine whether an atom exchange and reneighboring is needed.
@@ -762,6 +806,18 @@ namespace DdMd
    std::string System::externalStyle() const
    {  return externalStyle_;  }
    #endif
+
+   /*
+   * Return the IntegratorFactory by reference.
+   */
+   Factory<Integrator>& System::integratorFactory()
+   {
+      if (integratorFactoryPtr_ == 0) {
+         integratorFactoryPtr_ = new IntegratorFactory(*this);
+      }
+      assert(integratorFactoryPtr_);
+      return *integratorFactoryPtr_;
+   }
 
    #if 0
    // ConfigIoIo Management

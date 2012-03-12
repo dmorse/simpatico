@@ -169,29 +169,21 @@ namespace DdMd
       /// \name Config File IO
       //@{
 
-      #if 0
       /**
       * Read configuration file on master and distribute atoms.
       *
       * \param filename name of configuration file.
       */
-      void readConfig(std::string filename);
-      #endif
+      void readConfig(const std::string& filename);
+
+      /**
+      * Write configuration file.
+      *
+      * \param filename name of configuration file.
+      */
+      void writeConfig(const std::string& filename);
 
       #if 0
-      /**
-      * Create a new configuration file reader/writer.
-      *
-      * This method allows one to choose from among several subclasses
-      * of ConfigIo, identified by subclass name. The implementation
-      * uses a Factory<ConfigIo> object to instantiate a new object.
-      * If setConfigIoFactory() has not been called, an instance of
-      * the default class ConfigIoFactory is created and used.
-      *
-      * \param classname name of desired ConfigIo subclass.
-      */
-      void setConfigIo(std::string& classname);
-
       /**
       * Get the configuration file reader/writer factory by reference.
       */
@@ -249,6 +241,7 @@ namespace DdMd
       std::string dihedralStyle() const;
       #endif
 
+      //@}
       /// \name Accessors (Miscellaneous)
       //@{
 
@@ -295,6 +288,11 @@ namespace DdMd
 
       /// Get the associated FileMaster by reference.
       FileMaster& fileMaster() const;
+
+      /**
+      * Get the Md  integrator factory by reference.
+      */
+      Factory<Integrator>& integratorFactory();
 
       /**
       * Get the Random number generator by reference.
@@ -439,6 +437,9 @@ namespace DdMd
       /// Pointer to DihedralPotential Factory
       Factory<DihedralPotential>*  dihedralFactoryPtr_;
       #endif
+
+      /// Pointer to MD integrator factory.
+      Factory<Integrator>* integratorFactoryPtr_;
 
       #if 0
       /// Pointer to a configuration reader/writer factory.
