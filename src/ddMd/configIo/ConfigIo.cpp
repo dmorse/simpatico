@@ -75,15 +75,14 @@ namespace DdMd
    /*
    * Read parameters, allocate memory and initialize.
    */
-   void ConfigIo::readConfig(std::string filename, MaskPolicy maskPolicy)
+   void ConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
    {
 
-      std::ifstream file;
       int myRank = domain().gridRank();
 
-      if (myRank == 0) {
-         file.open(filename.c_str());
-      }
+      //if (myRank == 0) {
+      //   file.open(filename.c_str());
+      //}
 
       // Read and broadcast boundary
       if (domain().isMaster()) {  
@@ -196,22 +195,22 @@ namespace DdMd
          setAtomMasks();
       }
 
-      if (domain().isMaster()) {  
-         file.close();
-      }
+      //if (domain().isMaster()) {  
+      //   file.close();
+      //}
 
    }
 
    /* 
    * Write the configuration file.
    */
-   void ConfigIo::writeConfig(std::string filename)
+   void ConfigIo::writeConfig(std::ostream& file)
    {
       // Open file
-      std::ofstream file;
-      if (domain().isMaster()) {
-         file.open(filename.c_str());
-      }
+      //std::ofstream file;
+      //if (domain().isMaster()) {
+      //   file.open(filename.c_str());
+      //}
 
       // Write Boundary dimensions
       if (domain().isMaster()) {
@@ -246,9 +245,9 @@ namespace DdMd
       // Bonds
 
       // Close file
-      if (domain().isMaster()) {  
-         file.close();
-      }
+      //if (domain().isMaster()) {  
+      //   file.close();
+      //}
    }
  
    void ConfigIo::setAtomMasks() 

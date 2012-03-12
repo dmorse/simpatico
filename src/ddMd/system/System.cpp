@@ -20,6 +20,7 @@
 
 #include <ddMd/ensembles/EnergyEnsemble.h>
 #include <ddMd/ensembles/BoundaryEnsemble.h>
+#include <ddMd/util/FileMaster.h>
 
 #if 0
 #include <ddMd/util/FileMaster.h>
@@ -89,9 +90,7 @@ namespace DdMd
       configIoPtr_(0),
       energyEnsemblePtr_(0),
       boundaryEnsemblePtr_(0),
-      #if 0
       fileMasterPtr_(0),
-      #endif
       #ifndef DDMD_NOPAIR
       pairFactoryPtr_(0),
       #endif
@@ -117,8 +116,7 @@ namespace DdMd
       #endif
       nAtomType_(0),
       nBondType_(0),
-      maskedPairPolicy_(MaskBonded),
-      isMaster_(false)
+      maskedPairPolicy_(MaskBonded)
    {
       Util::initStatic();
 
@@ -134,8 +132,10 @@ namespace DdMd
       domain_.setGridCommunicator(communicator);
       setParamCommunicator(communicator);
 
+      #if 0
       // Set directory Id in FileMaster to MPI processor rank.
       // fileMaster_.setDirectoryId(communicatorPtr_->Get_rank());
+      #endif
 
       // Set log file for processor n to a new file named "n/log"
       // Relies on initialization of FileMaster outputPrefix to "" (empty).
@@ -175,11 +175,9 @@ namespace DdMd
       if (configIoPtr_) {
          delete configIoPtr_;
       }
-      #if 0
       if (fileMasterPtr_) {
          delete fileMasterPtr_;
       }
-      #endif
       #ifndef DDMD_NOPAIR
       if (pairFactoryPtr_) {
          delete pairFactoryPtr_;
@@ -232,6 +230,7 @@ namespace DdMd
       readParamComposite(in, atomStorage_);
       readParamComposite(in, bondStorage_);
       readParamComposite(in, buffer_);
+      readFileMaster(in);
 
       read<int>(in, "nAtomType", nAtomType_);
       read<int>(in, "nBondType", nBondType_);
@@ -273,7 +272,6 @@ namespace DdMd
       readEnd(in);
    }
 
-   #if 0
    /**
    * If no FileMaster exists, create and initialize one. 
    */
@@ -282,11 +280,9 @@ namespace DdMd
       // Create FileMaster if necessary
       if (!fileMasterPtr_) {
          fileMasterPtr_ = new FileMaster();
-         createdFileMaster_ = true;
          readParamComposite(in, *fileMasterPtr_);
       }
    }
-   #endif
 
    /**
    * Read potential style strings and maskedPairPolicy.
@@ -371,12 +367,14 @@ namespace DdMd
 
          if (command == "READ_CONFIG") {
             inBuffer >> filename;
-            //Log::file() << Str(filename, 15) << std::endl;
-            //fileMaster().openInputFile(filename, inputFile);
-            //readConfig(inputFile);
-            configIoPtr_->readConfig(filename.c_str(), maskedPairPolicy_);
+            if (domain_.isMaster()) {
+               fileMaster().openInputFile(filename, inputFile);
+            }
+            configIoPtr_->readConfig(inputFile, maskedPairPolicy_);
             exchanger_.exchange();
-            //inputFile.close();
+            if (domain_.isMaster()) {
+               inputFile.close();
+            }
          } else
          if (command == "THERMALIZE") {
             double temperature;
@@ -388,22 +386,22 @@ namespace DdMd
          if (command == "SIMULATE") {
             int endStep;
             inBuffer >> endStep;
-            //Log::file() << Int(endStep, 15) << std::endl;
             integrate(endStep);
          } else
          if (command == "WRITE_CONFIG") {
             inBuffer >> filename;
-            //Log::file() << Str(filename, 15) << std::endl;
-            //fileMaster().openOutputFile(filename, outputFile);
-            //writeConfig(outputFile);
-            configIoPtr_->writeConfig(filename);
-            //outputFile.close();
+            if (domain_.isMaster()) {
+               fileMaster().openOutputFile(filename, outputFile);
+            }
+            configIoPtr_->writeConfig(outputFile);
+            if (domain_.isMaster()) {
+               outputFile.close();
+            }
          } else
          if (command == "WRITE_PARAM") {
             inBuffer >> filename;
-            //Log::file() << Str(filename, 15) << std::endl;
-            //fileMaster().openOutputFile(filename, outputFile);
-            outputFile.open(filename.c_str());
+            fileMaster().openOutputFile(filename, outputFile);
+            //outputFile.open(filename.c_str());
             writeParam(outputFile);
             outputFile.close();
          } else
@@ -426,13 +424,11 @@ namespace DdMd
       }
    }
 
-   #if 0
    /*
    * Read and implement commands from the default command file.
    */
    void System::readCommands()
    {  readCommands(fileMaster().commandFile()); }
-   #endif
 
    /*
    * Choose velocities from a Boltzmann distribution.
@@ -625,16 +621,18 @@ namespace DdMd
       return energyAll;
    }
 
+   #if 0
    /*
    * Read configuration file on master and distribute atoms.
    *
    * \param filename name of configuration file.
    */
-   void System::readConfig(std::string filename)
+   void System::readConfig(std::istream file)
    {
       assert(configIoPtr_);
-      configIoPtr_->readConfig(filename, maskedPairPolicy_);
+      configIoPtr_->readConfig(file, maskedPairPolicy_);
    }
+   #endif
 
    /**
    * Determine whether an atom exchange and reneighboring is needed.
@@ -763,17 +761,6 @@ namespace DdMd
    */
    std::string System::externalStyle() const
    {  return externalStyle_;  }
-   #endif
-
-   #if 0
-   /*
-   * Set pointer to a FileMaster.
-   */
-   void System::setFileMaster(FileMaster &fileMaster)
-   {
-      assert(!fileMasterPtr_);
-      fileMasterPtr_ = &fileMaster;
-   }
    #endif
 
    #if 0

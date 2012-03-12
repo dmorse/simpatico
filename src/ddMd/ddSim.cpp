@@ -19,20 +19,17 @@ using namespace DdMd;
 int main()
 {
 
+   System system;
+   system.readParam(std::cin); 
+
+   system.readCommands();
+
    #if 0
    MPI::Init();
    Util::initStatic();
    Util::IntVector::commitMpiType();
    Util::Vector::commitMpiType();
-   #endif
 
-   System system;
-   system.readParam(std::cin); 
-
-   std::ifstream commandFile("commands");
-   system.readCommands(commandFile);
-
-   #if 0
    int myRank = system.domain().gridRank();
 
    std::string filename("config");

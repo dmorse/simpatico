@@ -35,7 +35,7 @@ namespace DdMd
    class BoundaryEnsemble;
    class Integrator;
    class ConfigIo;
-   //class FileMaster;
+   class FileMaster;
 
    using namespace Util;
 
@@ -79,16 +79,14 @@ namespace DdMd
       virtual void readParam(std::istream& in);
 
       /*
-      * Read and implement commands in an input script.
+      * Read and execute commands from a command file.
       */
       void readCommands(std::istream &in);
    
-      #if 0
-      /*
-      * Read and implement commands from the default command file.
+      /**
+      * Read and execute commands from the default command file.
       */
       void readCommands();
-      #endif
 
       // Mutators
 
@@ -171,12 +169,14 @@ namespace DdMd
       /// \name Config File IO
       //@{
 
+      #if 0
       /**
       * Read configuration file on master and distribute atoms.
       *
       * \param filename name of configuration file.
       */
       void readConfig(std::string filename);
+      #endif
 
       #if 0
       /**
@@ -293,10 +293,8 @@ namespace DdMd
       /// Get the BoundaryEnsemble by reference.
       BoundaryEnsemble& boundaryEnsemble();
 
-      #if 0
       /// Get the associated FileMaster by reference.
       FileMaster& fileMaster() const;
-      #endif
 
       /**
       * Get the Random number generator by reference.
@@ -349,14 +347,12 @@ namespace DdMd
       virtual Factory<ConfigIo>* newDefaultConfigIoFactory();
       #endif
 
-      #if 0
       /**
       * Read the FileMaster.
       *
       * \param in input parameter stream
       */
       void readFileMaster(std::istream& in);
-      #endif
 
       /**
       * Read potential styles and maskedPairPolicy.
@@ -423,10 +419,8 @@ namespace DdMd
       /// Pointer to an BoundaryEnsemble.
       BoundaryEnsemble* boundaryEnsemblePtr_;
 
-      #if 0
       /// Pointer to a FileMaster.
       FileMaster*       fileMasterPtr_;
-      #endif
 
       #ifndef DDMD_NOPAIR
       /// Pointer to a PairPotential factory.
@@ -546,7 +540,6 @@ namespace DdMd
       return *boundaryEnsemblePtr_;
    }
 
-   #if 0
    /*
    * Get the FileMaster by reference.
    */
@@ -555,7 +548,6 @@ namespace DdMd
       assert(fileMasterPtr_);
       return *fileMasterPtr_;
    }
-   #endif
 
    /*
    * Get maximum number of atom types.

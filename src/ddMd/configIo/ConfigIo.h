@@ -63,7 +63,7 @@ namespace DdMd
       *
       * \param filename name of configuration file.
       */
-      virtual void readConfig(std::string filename, MaskPolicy maskPolicy);
+      virtual void readConfig(std::istream& file, MaskPolicy maskPolicy);
 
       /**
       * Write configuration file.
@@ -73,7 +73,7 @@ namespace DdMd
       *
       * \param filename name of output configuration file.
       */
-      virtual void writeConfig(std::string filename);
+      virtual void writeConfig(std::ostream& file);
 
    protected:
 

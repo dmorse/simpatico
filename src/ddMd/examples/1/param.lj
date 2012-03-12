@@ -15,6 +15,11 @@ System{
     atomCapacity     10000
     ghostCapacity    10000
   }
+  FileMaster{
+    commandFileName commands
+    inputPrefix     in/
+    outputPrefix    out/
+  }
   nAtomType          1
   nBondType          1
   atomTypes          A    1.0
