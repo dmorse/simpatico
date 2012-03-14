@@ -1,4 +1,4 @@
-#ifdef  MCMD_DIHEDRAL
+#ifdef  INTER_DIHEDRAL
 #ifndef DIHEDRAL_FACTORY_H
 #define DIHEDRAL_FACTORY_H
 
@@ -50,4 +50,4 @@ namespace McMd
 }
 
 #endif // ifndef DIHEDRAL_FACTORY_H
-#endif // ifdef MCMD_DIHEDRAL
+#endif // ifdef INTER_DIHEDRAL

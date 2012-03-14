@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/configIos/ConfigIo.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <util/global.h>
 
 #include <iostream>

@@ -20,9 +20,9 @@
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
 
 // Pair Potential evaluator classes
-#include <mcMd/potentials/pair/LJPair.h>
-#include <mcMd/potentials/pair/DpdPair.h>
-#include <mcMd/potentials/pair/CompensatedPair.h>
+#include <inter/pair/LJPair.h>
+#include <inter/pair/DpdPair.h>
+#include <inter/pair/CompensatedPair.h>
 
 #include <modules/hoomd/potentials/pair/HoomdLJPair.h>
 #include <modules/hoomd/potentials/pair/HoomdLJShiftedForcePair.h>

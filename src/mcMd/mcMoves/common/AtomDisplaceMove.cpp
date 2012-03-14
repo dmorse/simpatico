@@ -10,10 +10,10 @@
 
 #include "AtomDisplaceMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/space/Vector.h>
@@ -77,7 +77,7 @@ namespace McMd
 
       if (accept) {
   
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          system().pairPotential().updateAtomCell(*atomPtr);
          #endif
          incrementNAccept();

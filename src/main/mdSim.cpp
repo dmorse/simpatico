@@ -4,8 +4,8 @@
 #include <unistd.h>
 #include <memory>
 
-using namespace McMd;
 using namespace Util;
+using namespace McMd;
 
 /**
 * Main program for Monte Carlo Simulation.

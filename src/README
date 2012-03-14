@@ -2,20 +2,21 @@ Subdirectories:
 ---------------
 
 main       main programs mcSim.cpp and mdSim.cpp for MC and MD simulation
-util       general utility classes for scientific computation
 mcMd       classes for Monte Carlo (MC) / molecular dynamics (MD) simulation
+ddMd       classes for domain-decomposition parallel MD (experimental)
+inter      classes that define interaction potential energy functions
+util       utility classes for scientific computation
 modules    add-on components for particular applications
 test       simple unit test framework
 dox        source files for the html manual pages
-ddMd       classes for domain-decomposition parallel MD (experimental)
 draft      unfinished or proposed classes
 
 Files:
 ------
 
-makefile        main makefile
-compiler.mk_r   compiler settings (compiler and options) (default version)
-LICENSE         GPL license
+makefile      main makefile
+compiler.mk_r compiler settings (compiler and options) (default version)
+LICENSE       GPL license
 
 For compilation instructions, see the file src/dox/compile.dox, or the README 
 file in the root directory (the parent of this directory).

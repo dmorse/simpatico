@@ -1,4 +1,4 @@
-#ifdef  MCMD_TETHER
+#ifdef  INTER_TETHER
 #ifndef MD_TETHER_POTENTIAL_H
 #define MD_TETHER_POTENTIAL_H
 

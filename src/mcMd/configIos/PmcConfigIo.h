@@ -9,9 +9,12 @@
 */
 
 #include <mcMd/configIos/ConfigIo.h>  // base class
-#include <mcMd/boundary/Boundary.h>    // typedef
+#include <util/boundary/Boundary.h>   // typedef
 
-namespace Util {class Vector; }
+namespace Util {
+   class Vector; 
+   class OrthorhombicBoundary;
+}
 
 namespace McMd
 {
@@ -20,7 +23,6 @@ namespace McMd
 
    class Simulation;
    class System;
-   class OrthorhombicBoundary;
    
    /**
    * ConfigIo for PMC configuration files.
@@ -60,7 +62,8 @@ namespace McMd
    }; 
 
    template <>
-   void PmcConfigIo::setLengths<OrthorhombicBoundary>(OrthorhombicBoundary& boundary, const Vector& lengths);
+   void PmcConfigIo::setLengths<Util::OrthorhombicBoundary>(Util::OrthorhombicBoundary& boundary, 
+                                                            const Vector& lengths);
  
 } 
 #endif

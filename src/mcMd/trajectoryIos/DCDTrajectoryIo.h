@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/trajectoryIos/TrajectoryIo.h> // base class
-#include <mcMd/boundary/Boundary.h>      // base class
+#include <util/boundary/Boundary.h>      // base class
 #include <util/containers/DArray.h>
 
 namespace McMd

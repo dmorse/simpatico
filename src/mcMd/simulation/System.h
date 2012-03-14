@@ -13,7 +13,7 @@
 #include <util/param/ParamComposite.h>        // base class
 #include <util/archives/Serializable.h>       // base class
 
-#include <mcMd/boundary/Boundary.h>           // member (typedef)
+#include <util/boundary/Boundary.h>           // member (typedef)
 #include <mcMd/chemistry/Molecule.h>          // member template parameter
 
 #include <util/containers/DArray.h>           // member template
@@ -58,20 +58,20 @@ namespace McMd
    class BoundaryEnsemble;
    class PairFactory;
    class BondPotential;
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    class AnglePotential;
    #endif
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    class DihedralPotential;
    #endif
    #ifdef MCMD_LINK
    class LinkPotential;
    class LinkMaster;
    #endif
-   #ifdef MCMD_EXTERNAL
+   #ifdef INTER_EXTERNAL
    class ExternalPotential;
    #endif
-   #ifdef MCMD_TETHER
+   #ifdef INTER_TETHER
    class TetherFactory;
    class TetherMaster;
    #endif
@@ -381,7 +381,7 @@ namespace McMd
       /// \name Potential Energy Factories and Styles
       //@{
     
-      #ifndef MCMD_NOPAIR 
+      #ifndef INTER_NOPAIR 
 
       /**
       * Get the PairFactory by reference.
@@ -405,7 +405,7 @@ namespace McMd
       */
       std::string bondStyle() const;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Get the associated AngleFactory by reference.
       */
@@ -417,7 +417,7 @@ namespace McMd
       std::string angleStyle() const;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Get the associated Dihedral Factory by reference.
       */
@@ -446,7 +446,7 @@ namespace McMd
       LinkMaster& linkMaster() const;
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       /**
       * Get the associated ExternalPotential factory by reference.
       */
@@ -458,7 +458,7 @@ namespace McMd
       std::string externalStyle() const;
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       /**
       * Get the associated TetherFactory by reference.
       */
@@ -653,7 +653,7 @@ namespace McMd
       void readLinkMaster(std::istream& in);
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       /**
       * Read the TetherMaster.
       *
@@ -682,7 +682,7 @@ namespace McMd
       LinkMaster*       linkMasterPtr_;
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       /// TetherMaster object to manage Tethers
       TetherMaster*     tetherMasterPtr_;
       #endif
@@ -696,7 +696,7 @@ namespace McMd
       /// Pointer to an BoundaryEnsemble.
       BoundaryEnsemble* boundaryEnsemblePtr_;
   
-      #ifndef MCMD_NOPAIR 
+      #ifndef INTER_NOPAIR 
       /// Pointer to a PairPotential factory.
       PairFactory*  pairFactoryPtr_;
       #endif
@@ -704,12 +704,12 @@ namespace McMd
       /// Pointer to a Factory<BondPotential>.
       Factory<BondPotential>*  bondFactoryPtr_;
   
-      #ifdef MCMD_ANGLE 
+      #ifdef INTER_ANGLE 
       /// Pointer to the AnglePotential Factory.
       Factory<AnglePotential>*  angleFactoryPtr_;
       #endif
    
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /// Pointer to DihedralPotential Factory
       Factory<DihedralPotential>*  dihedralFactoryPtr_;
       #endif
@@ -719,12 +719,12 @@ namespace McMd
       Factory<BondPotential>*  linkFactoryPtr_;
       #endif
    
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       /// Pointer to ExternalPotential factory
       Factory<ExternalPotential>*  externalFactoryPtr_;
       #endif
   
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       /// Pointer to TetherFactory
       TetherFactory*  tetherFactoryPtr_;
       #endif
@@ -758,7 +758,7 @@ namespace McMd
       #endif
       #endif 
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       /// Name of pair potential style.
       std::string pairStyle_;
       #endif
@@ -766,12 +766,12 @@ namespace McMd
       /// Name of bond potential style.
       std::string bondStyle_;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /// Name of angle potential style.
       std::string angleStyle_;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /// Name of dihedral potential style.
       std::string dihedralStyle_;
       #endif
@@ -781,12 +781,12 @@ namespace McMd
       std::string linkStyle_;
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       /// Name of external potential style.
       std::string externalStyle_;
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       /// Name of tether potential style.
       std::string tetherStyle_;
       #endif
@@ -868,7 +868,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef MCMD_TETHER
+   #ifdef INTER_TETHER
    /* 
    * Get the TetherMaster by reference.
    */

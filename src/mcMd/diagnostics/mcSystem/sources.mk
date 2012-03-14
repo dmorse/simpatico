@@ -10,7 +10,7 @@ mcMd_diagnostics_mcSystem_SRCS=\
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McIntraBondTensorAutoCorr.cpp \
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McWriteRestart.cpp 
 
-ifdef MCMD_EXTERNAL
+ifdef INTER_EXTERNAL
 mcMd_diagnostics_mcSystem_SRCS+=\
     $(SRC_DIR)/mcMd/diagnostics/mcSystem/McExternalEnergyAverage.cpp 
 endif

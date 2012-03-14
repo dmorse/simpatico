@@ -1,4 +1,4 @@
-#ifdef  MCMD_ANGLE
+#ifdef  INTER_ANGLE
 #ifndef ANGLE_POTENTIAL_H
 #define ANGLE_POTENTIAL_H
 

@@ -12,7 +12,7 @@
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mcSimulation/mc_potentials.h>
 
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/species/Species.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Bond.h>
@@ -66,13 +66,13 @@ namespace McMd
       length   = sqrt(lengthSq);
 
       // Calculate current nonbonded pair energy of end atom
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       energy = system().pairPotential().atomEnergy(*endPtr);
       #else
       energy = 0.0;
       #endif
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       Species::AtomAngleArray angles;
       const Angle *anglePtr;
       const Atom  *pvtPtr2(NULL);
@@ -108,7 +108,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       if (system().hasExternalPotential()) {
          energy += system().externalPotential().atomEnergy(*endPtr);
       }
@@ -129,13 +129,13 @@ namespace McMd
          endPtr->position().add(pvtPos, bondVec);  
          boundary().shift(endPtr->position());
 
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          trialEnergy = system().pairPotential().atomEnergy(*endPtr);
          #else
          trialEnergy = 0.0;
          #endif
 
-         #ifdef MCMD_ANGLE
+         #ifdef INTER_ANGLE
          if (system().hasAnglePotential()) {
 
             // Get the angle type and atom pointer at the angle.
@@ -164,7 +164,7 @@ namespace McMd
          }
          #endif
 
-         #ifdef MCMD_EXTERNAL
+         #ifdef INTER_EXTERNAL
          if (system().hasExternalPotential()) {
             trialEnergy += system().externalPotential()
                                    .atomEnergy(*endPtr);
@@ -191,7 +191,7 @@ namespace McMd
       double beta, length;
       int    iTrial;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       Species::AtomAngleArray angles;
       const Angle *anglePtr;
       const Atom  *pvtPtr2(NULL);
@@ -214,13 +214,13 @@ namespace McMd
          trialPos[iTrial].add(pvtPos, bondVec); 
          boundary().shift(trialPos[iTrial]);
          endPtr->position() = trialPos[iTrial];
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          trialEnergy[iTrial] = system().pairPotential().atomEnergy(*endPtr);
          #else
          trialEnergy[iTrial] = 0.0;
          #endif
 
-         #ifdef MCMD_ANGLE
+         #ifdef INTER_ANGLE
          if (system().hasAnglePotential()) {
 
             endPtr->molecule().species().getAtomAngles(*endPtr, angles);
@@ -248,7 +248,7 @@ namespace McMd
          }
          #endif
 
-         #ifdef MCMD_EXTERNAL
+         #ifdef INTER_EXTERNAL
          trialEnergy[iTrial] += system().externalPotential().atomEnergy(*endPtr);
          #endif
 

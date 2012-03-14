@@ -14,7 +14,7 @@
 #include <mcMd/species/Species.h>                 // forward declaration in ComMSD.h
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/global.h>

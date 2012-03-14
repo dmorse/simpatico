@@ -22,10 +22,10 @@ namespace McMd
     : Linear(),
       atomType_(NullIndex),
       bondType_(NullIndex)
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       , angleType_(NullIndex)
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       , dihedralType_(NullIndex)
       #endif
    {} 
@@ -39,7 +39,7 @@ namespace McMd
       read<int>(in,"atomType", atomType_);
       nBond_  = nAtom_ - 1;
       read<int>(in,"bondType", bondType_);
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       read<int>(in,"hasAngles", hasAngles_);
       if (hasAngles_) {
          nAngle_ = nBond_ - 1;
@@ -50,7 +50,7 @@ namespace McMd
          nAngle_ = 0;
       }
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       read<int>(in,"hasDihedrals", hasDihedrals_);
       if (hasDihedrals_) {
          if (nAtom_ > 3) {
@@ -83,7 +83,7 @@ namespace McMd
    int Homopolymer::calculateBondTypeId(int index) const
    { return bondType_; }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /* 
    * Return angleType_ for every angle.
    */
@@ -91,7 +91,7 @@ namespace McMd
    { return angleType_; }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /* 
    * Return dihedralType_ for every dihedral.
    */

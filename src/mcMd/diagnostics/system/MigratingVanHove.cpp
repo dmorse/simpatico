@@ -18,7 +18,7 @@
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
 #include <mcMd/simulation/McMd_mpi.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/perturb/ReplicaMove.h>

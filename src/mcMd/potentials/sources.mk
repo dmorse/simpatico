@@ -5,12 +5,12 @@ mcMd_potentials_SRCS=\
     $(mcMd_potentials_pair_SRCS) \
     $(mcMd_potentials_bond_SRCS) 
 
-ifdef MCMD_ANGLE
+ifdef INTER_ANGLE
 include $(SRC_DIR)/mcMd/potentials/angle/sources.mk
 mcMd_potentials_SRCS+=$(mcMd_potentials_angle_SRCS) 
 endif
 
-ifdef MCMD_DIHEDRAL
+ifdef INTER_DIHEDRAL
 include $(SRC_DIR)/mcMd/potentials/dihedral/sources.mk
 mcMd_potentials_SRCS+=$(mcMd_potentials_dihedral_SRCS) 
 endif
@@ -20,12 +20,12 @@ include $(SRC_DIR)/mcMd/potentials/link/sources.mk
 mcMd_potentials_SRCS+=$(mcMd_potentials_link_SRCS) 
 endif
 
-ifdef MCMD_EXTERNAL
+ifdef INTER_EXTERNAL
 include $(SRC_DIR)/mcMd/potentials/external/sources.mk
 mcMd_potentials_SRCS+=$(mcMd_potentials_external_SRCS) 
 endif
 
-ifdef MCMD_TETHER
+ifdef INTER_TETHER
 include $(SRC_DIR)/mcMd/potentials/tether/sources.mk
 mcMd_potentials_SRCS+=$(mcMd_potentials_tether_SRCS) 
 endif

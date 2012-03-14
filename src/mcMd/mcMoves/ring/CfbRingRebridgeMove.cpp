@@ -11,11 +11,11 @@
 #include "CfbRingRebridgeMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/Ring.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
@@ -165,7 +165,7 @@ namespace McMd
             thisPtr = tempPtr + modId(beginId + i*sign, nAtom) - beginId;
             //system().moveAtom(*thisPtr, oldPos_[i]);
             thisPtr->position() =  oldPos_[i];
-            #ifndef MCMD_NOPAIR
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*thisPtr);
             #endif
          }
@@ -207,7 +207,7 @@ namespace McMd
          // Orientation biased trimer rebridge move
          deleteMiddleAtom(thisPtr, prevPtr, nextPtr,
                 prevBType, nextBType, rosen_r, energy_r);
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          system().pairPotential().deleteAtom(*thisPtr);
          #endif
          rosenbluth *= rosen_r;
@@ -221,7 +221,7 @@ namespace McMd
 
          prevBType = bonds[i+2];
          deleteEndAtom(thisPtr, prevPtr, prevBType, rosen_r, energy_r);
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          system().pairPotential().deleteAtom(*thisPtr);
          #endif
 
@@ -257,7 +257,7 @@ namespace McMd
 
          prevBType = bonds[nRegrow_ - i];
          addEndAtom(thisPtr, prevPtr, prevBType, rosen_f, energy_f);
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          system().pairPotential().addAtom(*thisPtr);
          #endif
 
@@ -277,7 +277,7 @@ namespace McMd
          // Invoke the orientation biased trimer re-bridging move
          addMiddleAtom(thisPtr, prevPtr, nextPtr,
                 prevBType, nextBType, rosen_f, energy_f);
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          system().pairPotential().addAtom(*thisPtr);
          #endif
 

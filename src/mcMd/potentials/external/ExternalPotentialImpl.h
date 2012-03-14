@@ -1,4 +1,4 @@
-#ifdef  MCMD_EXTERNAL
+#ifdef  INTER_EXTERNAL
 #ifndef EXTERNAL_POTENTIAL_IMPL_H
 #define EXTERNAL_POTENTIAL_IMPL_H
 
@@ -144,7 +144,7 @@ namespace McMd
 #include <mcMd/simulation/System.h> 
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/species/Species.h>
-#include <mcMd/boundary/Boundary.h> 
+#include <util/boundary/Boundary.h> 
 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>

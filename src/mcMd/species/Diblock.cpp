@@ -21,10 +21,10 @@ namespace McMd
    */
    Diblock::Diblock()
     : Linear()
-    #ifdef MCMD_ANGLE
+    #ifdef INTER_ANGLE
     , angleType_(NullIndex)
     #endif
-    #ifdef MCMD_DIHEDRAL
+    #ifdef INTER_DIHEDRAL
     , dihedralType_(NullIndex)
     #endif
    { 
@@ -51,7 +51,7 @@ namespace McMd
       nBond_ = nAtom_ - 1;
       read<int>(in, "bondType", bondType_);
 
-      #if MCMD_ANGLE
+      #if INTER_ANGLE
       read<int>(in, "hasAngle", hasAngles_);
       if (nAtom_ <= 3) {
          UTIL_THROW("Error: Cannot have dihedrals with nAtom <= 4");
@@ -64,7 +64,7 @@ namespace McMd
       }
       #endif
 
-      #if MCMD_DIHEDRALS
+      #if INTER_DIHEDRALS
       read<int>(in, "hasDihedrals", hasDihedrals_);
       if (nAtom_ <= 4) {
          UTIL_THROW("Error: Cannot have dihedrals with nAtom <= 4");
@@ -98,7 +98,7 @@ namespace McMd
    int Diblock::calculateBondTypeId(int molBondId) const
    { return bondType_; }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /* 
    * Return angleType_ for every angle.
    */
@@ -106,7 +106,7 @@ namespace McMd
    { return angleType_; }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /* 
    * Return dihedralType_ for every dihedral.
    */

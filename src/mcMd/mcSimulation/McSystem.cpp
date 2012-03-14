@@ -15,25 +15,25 @@
 #include <mcMd/ensembles/BoundaryEnsemble.h>
 #include <mcMd/ensembles/EnergyEnsemble.h>
 
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/pair/PairFactory.h>
 #endif
 #include <mcMd/potentials/bond/BondPotential.h>
-#ifdef MCMD_ANGLE
+#ifdef INTER_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
-#ifdef MCMD_DIHEDRAL
+#ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #endif
 #ifdef MCMD_LINK
 #include <mcMd/links/LinkMaster.h>
 #endif
-#ifdef MCMD_EXTERNAL
+#ifdef INTER_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
 #include <mcMd/potentials/external/ExternalPotential.h>
 #endif
-#ifdef MCMD_TETHER
+#ifdef INTER_TETHER
 #include <mcMd/tethers/TetherMaster.h>
 #include <mcMd/potentials/tether/TetherPotential.h>
 #endif
@@ -64,23 +64,23 @@ namespace McMd
    McSystem::McSystem()
     :
       System(),
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       pairPotentialPtr_(0),
       #endif
       bondPotentialPtr_(0)
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       , anglePotentialPtr_(0)
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       , dihedralPotentialPtr_(0)
       #endif
       #ifdef MCMD_LINK
       , linkPotentialPtr_(0)
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       , externalPotentialPtr_(0)
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       , tetherPotentialPtr_(0)
       #endif
    {}
@@ -90,23 +90,23 @@ namespace McMd
    */
    McSystem::~McSystem()
    {
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       if (pairPotentialPtr_) delete pairPotentialPtr_;
       #endif
       if (bondPotentialPtr_) delete bondPotentialPtr_;
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       if (anglePotentialPtr_) delete anglePotentialPtr_;
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       if (dihedralPotentialPtr_) delete dihedralPotentialPtr_;
       #endif
       #ifdef MCMD_LINK
       if (linkPotentialPtr_) delete linkPotentialPtr_;
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       if (externalPotentialPtr_) delete externalPotentialPtr_;
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       if (tetherPotentialPtr_) delete tetherPotentialPtr_;
       #endif
    }
@@ -122,7 +122,7 @@ namespace McMd
       readFileMaster(in);
       readPotentialStyles(in);
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       pairPotentialPtr_ = pairFactory().mcFactory(pairStyle(), *this);
       if (pairPotentialPtr_ == 0) {
          UTIL_THROW("Failed attempt to create McPairPotential");
@@ -139,7 +139,7 @@ namespace McMd
          readParamComposite(in, *bondPotentialPtr_);
       }
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       assert(anglePotentialPtr_ == 0);
       if (simulation().nAngleType() > 0) {
          anglePotentialPtr_ = angleFactory().factory(angleStyle());
@@ -150,7 +150,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       assert(dihedralPotentialPtr_ == 0);
       if (simulation().nDihedralType() > 0) {
          dihedralPotentialPtr_ = dihedralFactory().factory(dihedralStyle());
@@ -173,7 +173,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       assert(externalPotentialPtr_ == 0);
       if (simulation().hasExternal()) {
          externalPotentialPtr_ =
@@ -185,7 +185,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       if (simulation().hasTether()) {
          readTetherMaster(in);
          tetherPotentialPtr_ = tetherFactory().factory(tetherStyle(), *this);
@@ -215,7 +215,7 @@ namespace McMd
    void McSystem::readConfig(std::istream &in)
    {
       System::readConfig(in);
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       pairPotential().buildCellList();
       #endif
    }
@@ -226,7 +226,7 @@ namespace McMd
    void McSystem::load(Serializable::IArchiveType& ar)
    {  
       System::load(ar); 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       pairPotential().buildCellList();
       #endif
    }
@@ -240,7 +240,7 @@ namespace McMd
    {
       double energy = 0;
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       energy += pairPotential().atomEnergy(atom);
       #endif
 
@@ -248,13 +248,13 @@ namespace McMd
          energy += bondPotential().atomEnergy(atom);
       }
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       if (hasAnglePotential()) {
          energy += anglePotential().atomEnergy(atom);
       }
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       if (hasDihedralPotential()) {
          energy += dihedralPotential().atomEnergy(atom);
       }
@@ -266,13 +266,13 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       if (hasExternalPotential()) {
          energy += externalPotential().atomEnergy(atom);
       }
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       if (tetherPotentialPtr_) {
          if (tetherMaster().isTethered(atom)) {
             energy += tetherPotential().atomEnergy(atom);
@@ -290,7 +290,7 @@ namespace McMd
    {
       double energy = 0.0;
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       energy += pairPotential().energy();
       #endif
 
@@ -298,13 +298,13 @@ namespace McMd
          energy += bondPotential().energy();
       }
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       if (hasAnglePotential()) {
          energy += anglePotential().energy();
       }
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       if (hasDihedralPotential()) {
          energy += dihedralPotential().energy();
       }
@@ -316,13 +316,13 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       if (hasExternalPotential()) {
          energy += externalPotential().energy();
       }
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       if (tetherPotentialPtr_) {
          energy += tetherPotential().energy();
       }
@@ -338,7 +338,7 @@ namespace McMd
    {
       setToZero(stress);
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       T pairStress;
       pairPotential().computeStress(pairStress);
       stress += pairStress;
@@ -350,7 +350,7 @@ namespace McMd
          stress += bondStress;
       }
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       if (hasAnglePotential()) {
          T angleStress;
          anglePotential().computeStress(angleStress);
@@ -358,7 +358,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       if (hasDihedralPotential()) {
          T dihedralStress;
          dihedralPotential().computeStress(dihedralStress);
@@ -449,7 +449,7 @@ namespace McMd
    bool McSystem::isValid() const
    {
       System::isValid();
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       pairPotentialPtr_->cellList().isValid();
       #endif
       return true;

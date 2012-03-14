@@ -15,7 +15,7 @@
 #include <mcMd/ensembles/EnergyEnsemble.h>
 #include <mcMd/neighbor/PairList.h>
 #include <mcMd/neighbor/PairIterator.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/archives/Serializable_includes.h>
@@ -213,7 +213,7 @@ namespace McMd
       }
 
       #if 0
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       if (!system().pairPotential().isPairListCurrent()) {
          system().pairPotential().buildPairList();
       }

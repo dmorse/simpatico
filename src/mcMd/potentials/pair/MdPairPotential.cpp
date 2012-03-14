@@ -1,4 +1,4 @@
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #ifndef MD_PAIR_INTERACTION
 #define MD_PAIR_INTERACTION
 
@@ -12,7 +12,7 @@
 #include "MdPairPotential.h"
 #include <mcMd/simulation/System.h> 
 #include <mcMd/simulation/Simulation.h> 
-#include <mcMd/boundary/Boundary.h> 
+#include <util/boundary/Boundary.h> 
 
 #include <util/global.h> 
 

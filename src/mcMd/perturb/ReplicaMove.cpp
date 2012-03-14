@@ -17,7 +17,7 @@
 #include <mcMd/perturb/LinearPerturbation.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/simulation/System.h>
-#include <mcMd/boundary/OrthorhombicBoundary.h>
+#include <util/boundary/OrthorhombicBoundary.h>
 #include <util/mpi/MpiSendRecv.h>
 #include <util/util/Observer.h>
 

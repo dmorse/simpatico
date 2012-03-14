@@ -43,27 +43,27 @@ namespace McMd
       #endif
       nAtomType_(-1),
       nBondType_(-1),
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       nAngleType_(-1),
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       nDihedralType_(-1),
       #endif
       #ifdef MCMD_LINK
       nLinkType_(-1),
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       hasExternal_(-1),
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       hasTether_(-1),
       #endif
       atomCapacity_(0),
       bondCapacity_(0),
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       angleCapacity_(0),
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       dihedralCapacity_(0),
       #endif
       maskedPairPolicy_(MaskBonded)
@@ -151,13 +151,13 @@ namespace McMd
       if (nBondType_ <= 0) {
          UTIL_THROW("nBondType must be > 0");
       }
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       read<int>(in, "nAngleType", nAngleType_);
       if (nAngleType_ < 0) {
          UTIL_THROW("nAngleType must be >= 0");
       }
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       read<int>(in, "nDihedralType", nDihedralType_);
       if (nDihedralType_ < 0) {
          UTIL_THROW("nDihedralType must be >= 0");
@@ -170,13 +170,13 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       read<int>(in, "hasExternal", hasExternal_);
       if (hasExternal_ < 0) {
          UTIL_THROW("hasExternal must be >= 0");
       }
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       read<int>(in, "hasTether", hasTether_);
       if (hasTether_ < 0) {
          UTIL_THROW("hasTether must be >= 0");
@@ -219,10 +219,10 @@ namespace McMd
 
       //Preconditions
       assert(nSpecies() > 0);
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       assert(nAngleType_ >= 0);
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       assert(nDihedralType_ >= 0);
       #endif
       #ifdef MCMD_LINK
@@ -232,10 +232,10 @@ namespace McMd
       Species *speciesPtr;
       int  nAtom, nBond, iSpecies;
       int capacity;
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       int  nAngle;
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       int  nDihedral;
       #endif
 
@@ -245,12 +245,12 @@ namespace McMd
       if (nBondType_ > 0) {
          firstBondIds_.allocate(nSpecies());
       }
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       if (nAngleType_ > 0) {
          firstAngleIds_.allocate(nSpecies());
       }
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       if (nDihedralType_ > 0) {
          firstDihedralIds_.allocate(nSpecies());
       }
@@ -260,10 +260,10 @@ namespace McMd
       moleculeCapacity_ = 0;
       atomCapacity_     = 0;
       bondCapacity_     = 0;
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       angleCapacity_    = 0;
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       dihedralCapacity_  = 0;
       #endif
       for (iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
@@ -278,12 +278,12 @@ namespace McMd
          if (nBondType_ > 0) {
             firstBondIds_[iSpecies] = bondCapacity_;
          }
-         #ifdef MCMD_ANGLE
+         #ifdef INTER_ANGLE
          if (nAngleType_ > 0) {
             firstAngleIds_[iSpecies] = angleCapacity_;
          }
          #endif
-         #ifdef MCMD_DIHEDRAL
+         #ifdef INTER_DIHEDRAL
          if (nDihedralType_ > 0) {
             firstDihedralIds_[iSpecies] = dihedralCapacity_;
          }
@@ -298,13 +298,13 @@ namespace McMd
             nBond    = speciesPtr->nBond();
             bondCapacity_ += capacity*nBond;
          }
-         #ifdef MCMD_ANGLE
+         #ifdef INTER_ANGLE
          if (nAngleType_ > 0) {
             nAngle = speciesPtr->nAngle();
             angleCapacity_ += capacity*nAngle;
          }
          #endif
-         #ifdef MCMD_DIHEDRAL
+         #ifdef INTER_DIHEDRAL
          if (nDihedralType_ > 0) {
             nDihedral = speciesPtr->nDihedral();
             dihedralCapacity_ += capacity*nDihedral;
@@ -336,7 +336,7 @@ namespace McMd
          }
       }
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       if (nAngleType_ > 0) {
          if (angleCapacity_ > 0) {
             angles_.allocate(angleCapacity_);
@@ -349,7 +349,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       if (nAngleType_ > 0) {
          if (dihedralCapacity_ > 0) {
             dihedrals_.allocate(dihedralCapacity_);
@@ -490,7 +490,7 @@ namespace McMd
 
    }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Initialize all Angle objects for Molecules of one Species.
    *
@@ -559,7 +559,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /*
    * Initialize all Dihedral objects for Molecules of one Species.
    *
@@ -680,13 +680,13 @@ namespace McMd
       if (nBondType_ > 0) {
          bondPtr = &(bonds_[0]);
       }
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       const Angle* anglePtr = 0;
       if (nAngleType_ > 0) {
          anglePtr = &(angles_[0]);
       }
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       const Dihedral* dihedralPtr = 0;
       if (nDihedralType_ > 0) {
           dihedralPtr  = &(dihedrals_[0]);
@@ -705,13 +705,13 @@ namespace McMd
          if (nBondType_ > 0) {
             nBond = speciesPtr->nBond();
          }
-         #ifdef MCMD_ANGLE
+         #ifdef INTER_ANGLE
          int nAngle = 0;
          if (nAngleType_ > 0) {
             nAngle = speciesPtr->nAngle();
          }
          #endif
-         #ifdef MCMD_DIHEDRAL
+         #ifdef INTER_DIHEDRAL
          int nDihedral = 0;
          if (nDihedralType_ > 0) {
             nDihedral = speciesPtr->nDihedral();
@@ -819,7 +819,7 @@ namespace McMd
                }
             }
 
-            #ifdef MCMD_ANGLE
+            #ifdef INTER_ANGLE
             if (nAngleType_ > 0) {
 
                if (&moleculePtr->angle(0) != anglePtr) {
@@ -877,7 +877,7 @@ namespace McMd
             }
             #endif
 
-            #ifdef MCMD_DIHEDRAL
+            #ifdef INTER_DIHEDRAL
             if (nDihedralType_ > 0) {
 
                const Atom* tAtomPtr;

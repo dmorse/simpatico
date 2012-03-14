@@ -10,7 +10,7 @@
 
 #include <util/param/ParamComposite.h>    // base class
 #include <util/archives/Serializable.h>   // base class
-#include <mcMd/boundary/Boundary.h>       // typedef
+#include <util/boundary/Boundary.h>       // typedef
 
 #include <iostream>
 

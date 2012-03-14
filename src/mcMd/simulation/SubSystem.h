@@ -11,7 +11,7 @@
 #include <util/global.h>
 
 #include <mcMd/simulation/System.h>               // parent (provides typedefs)
-#include <mcMd/boundary/Boundary.h>               // member
+#include <util/boundary/Boundary.h>               // member
 #include <mcMd/chemistry/Molecule.h>              // member template parameter
 
 #include <util/containers/DArray.h>               // member template
@@ -118,12 +118,12 @@ namespace McMd
       /// Does a bond potential exist?
       bool hasBonds() const;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /// Does an angle potential exist?
       bool hasAngles() const;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /// Does a dihedral potential exist?
       bool hasDihedrals() const;
       #endif
@@ -133,12 +133,12 @@ namespace McMd
       bool hasLinks() const;
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       /// Does an external potential exist?
       bool hasExternal() const;
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       /// Does a tether potential exist?
       bool hasTethers() const;
       #endif
@@ -167,12 +167,12 @@ namespace McMd
       // Does a bond potential exist?
       bool hasBonds_;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       // Does an angle potential exist?
       bool hasAngles_;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       // Does a dihedral potential exist?
       bool hasDihedrals_;
       #endif
@@ -182,12 +182,12 @@ namespace McMd
       bool hasLinks_;
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       // Does an external potential exist?
       bool hasExternal_;
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       // Does a tether potential exist?
       bool hasTethers_;
       #endif
@@ -258,7 +258,7 @@ namespace McMd
    inline bool SubSystem::hasBonds() const
    {  return hasBonds_; }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Does an angle potential exist?
    */
@@ -266,7 +266,7 @@ namespace McMd
    {  return hasAngles_; }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /// Does a dihedral potential exist?
    inline bool SubSystem::hasDihedrals() const
    {  return hasDihedrals_; }
@@ -278,13 +278,13 @@ namespace McMd
    { return hasLinks_; }
    #endif
 
-   #ifdef MCMD_EXTERNAL
+   #ifdef INTER_EXTERNAL
    /// Does an external potential exist?
    inline bool SubSystem::hasExternal() const
    { return hasExternal_; }
    #endif
 
-   #ifdef MCMD_TETHER
+   #ifdef INTER_TETHER
    /// Does a tether potential exist?
    inline bool SubSystem::hasTethers() const
    { return hasTethers_; }

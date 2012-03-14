@@ -18,7 +18,7 @@
 #include <mcMd/potentials/external/ExternalPotentialImpl.h>
 
 // External Potential evaluator classes
-#include <mcMd/potentials/external/TanhCosineExternal.h>
+#include <inter/external/TanhCosineExternal.h>
 
 #include <modules/hoomd/potentials/external/HoomdLamellarExternal.h>
 

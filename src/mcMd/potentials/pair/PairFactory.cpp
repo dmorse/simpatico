@@ -1,4 +1,4 @@
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #ifndef PAIR_FACTORY_CPP
 #define PAIR_FACTORY_CPP
 
@@ -20,14 +20,17 @@
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
 
 // Pair Potential evaluator classes
-#include <mcMd/potentials/pair/LJPair.h>
-#include <mcMd/potentials/pair/DpdPair.h>
-#include <mcMd/potentials/pair/CompensatedPair.h>
+#include <inter/pair/LJPair.h>
+#include <inter/pair/DpdPair.h>
+#include <inter/pair/CompensatedPair.h>
 
-#include <mcMd/potentials/bond/FeneBond.h>
+#include <inter/bond/FeneBond.h>
 
 namespace McMd
 {
+
+   using namespace Util;
+   using namespace Inter;
 
    /**
    * Default constructor.

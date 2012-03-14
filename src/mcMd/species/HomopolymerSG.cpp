@@ -49,10 +49,10 @@ namespace McMd
    {
       read<int>(in,"nAtom", nAtom_);
       nBond_ = nAtom_ - 1;
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       nAngle_ = nAtom_ - 2;
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       if (nAtom_ > 3)
          nDihedral_ = nAtom_ - 3;
       else
@@ -87,7 +87,7 @@ namespace McMd
    int HomopolymerSG::calculateBondTypeId(int index) const
    { return 0; }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /* 
    * Return 0 for every angle.
    *
@@ -97,7 +97,7 @@ namespace McMd
    { return 0; }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /* 
    * Return 0 for every dihedral.
    *

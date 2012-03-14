@@ -1,4 +1,3 @@
-#ifdef  MCMD_ANGLE
 #ifndef ANGLE_FACTORY_CPP
 #define ANGLE_FACTORY_CPP
 
@@ -16,11 +15,13 @@
 #include <mcMd/potentials/angle/AnglePotentialImpl.h>
 
 // Angle Potential evaluator classes
-#include <mcMd/potentials/angle/CosineAngle.h>
-#include <mcMd/potentials/angle/CosineSqAngle.h>
+#include <inter/angle/CosineAngle.h>
+#include <inter/angle/CosineSqAngle.h>
 
 namespace McMd
 {
+
+   using namespace Inter;
 
    /**
    * Default constructor.
@@ -51,4 +52,3 @@ namespace McMd
 
 }
 #endif // ifndef ANGLE_FACTORY_CPP
-#endif // ifdef MCMD_ANGLE

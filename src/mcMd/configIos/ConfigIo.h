@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <util/global.h>
 
 #include <iostream>

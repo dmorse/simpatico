@@ -9,7 +9,7 @@
 */
 
 #include <mcMd/configIos/ConfigIo.h> // base class
-#include <mcMd/boundary/Boundary.h>   // base class
+#include <util/boundary/Boundary.h>   // base class
 
 namespace McMd
 {

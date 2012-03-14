@@ -13,7 +13,7 @@
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/ensembles/EnergyEnsemble.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/space/Vector.h>
@@ -147,7 +147,7 @@ namespace McMd
       // First half of update of xi_
       xi_ += xiDot_*dtHalf;
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       // Rebuild the pair list if necessary
       if (!system().pairPotential().isPairListCurrent()) {
          system().pairPotential().buildPairList();

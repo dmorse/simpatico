@@ -1,4 +1,4 @@
-#ifdef  MCMD_TETHER
+#ifdef  INTER_TETHER
 #ifndef MC_TETHER_POTENTIAL_IMPL_H
 #define MC_TETHER_POTENTIAL_IMPL_H
 
@@ -127,7 +127,7 @@ namespace McMd
 #include <mcMd/simulation/System.h> 
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/species/Species.h>
-#include <mcMd/boundary/Boundary.h> 
+#include <util/boundary/Boundary.h> 
 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>

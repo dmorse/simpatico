@@ -1,4 +1,4 @@
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #ifndef PAIR_FACTORY_H
 #define PAIR_FACTORY_H
 

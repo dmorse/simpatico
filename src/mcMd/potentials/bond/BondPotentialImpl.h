@@ -157,7 +157,7 @@ namespace McMd
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
 #include <mcMd/species/Species.h>
-#include <mcMd/boundary/Boundary.h> 
+#include <util/boundary/Boundary.h> 
 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>

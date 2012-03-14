@@ -19,6 +19,7 @@ INCLUDES= -I$(SRC_DIR)
 # Extra dependencies for all source files
 MCMD_ALLDEPS= -A$(SRC_DIR)/compiler.mk
 MCMD_ALLDEPS+= -A$(SRC_DIR)/util/defines.mk
+MCMD_ALLDEPS+= -A$(SRC_DIR)/inter/defines.mk
 MCMD_ALLDEPS+= -A$(SRC_DIR)/mcMd/defines.mk
 
 # Rule to compile all class source (*.cpp) files.

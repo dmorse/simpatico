@@ -1,4 +1,3 @@
-include $(SRC_DIR)/mcMd/boundary/sources.mk
 include $(SRC_DIR)/mcMd/ensembles/sources.mk
 include $(SRC_DIR)/mcMd/potentials/sources.mk
 include $(SRC_DIR)/mcMd/chemistry/sources.mk
@@ -14,7 +13,7 @@ include $(SRC_DIR)/mcMd/mcMoves/sources.mk
 include $(SRC_DIR)/mcMd/diagnostics/sources.mk
 include $(SRC_DIR)/mcMd/util/sources.mk
 
-mcMd_SRCS=$(mcMd_boundary_SRCS) $(mcMd_ensembles_SRCS) \
+mcMd_SRCS=$(mcMd_ensembles_SRCS) \
     $(mcMd_potentials_SRCS) $(mcMd_chemistry_SRCS) \
     $(mcMd_species_SRCS) $(mcMd_neighbor_SRCS) \
     $(mcMd_simulation_SRCS) $(mcMd_mcSimulation_SRCS) \
@@ -33,7 +32,7 @@ include $(SRC_DIR)/mcMd/links/sources.mk
 mcMd_SRCS+=$(mcMd_links_SRCS)
 endif
 
-ifdef MCMD_TETHER
+ifdef INTER_TETHER
 include $(SRC_DIR)/mcMd/tethers/sources.mk
 mcMd_SRCS+=$(mcMd_tethers_SRCS)
 endif

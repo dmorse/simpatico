@@ -12,7 +12,7 @@
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/ensembles/EnergyEnsemble.h>
@@ -269,7 +269,7 @@ namespace McMd
          eta_[0] += 1.0/2.0*dt_*(1.0/3.0*(currP_[0]+currP_[1]+currP_[2]) - extP);
       }
  
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       if (!system().pairPotential().isPairListCurrent()) {
          system().pairPotential().buildPairList();
       }

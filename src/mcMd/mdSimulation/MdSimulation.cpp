@@ -282,7 +282,7 @@ namespace McMd
             }
          }
 
-         #ifdef MCMD_NOPAIR
+         #ifdef INTER_NOPAIR
          else {
             // When the pair potential is disabled, require that
             // Diagnostic::baseInterval != 0 to guarantee periodic 
@@ -327,7 +327,7 @@ namespace McMd
       Log::file() << std::endl;
       Log::file() << std::endl;
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       Log::file() << "PairList Statistics" << std::endl;
       Log::file() << "maxNPair           " 
                   << system().pairPotential().pairList().maxNPair()
@@ -379,7 +379,7 @@ namespace McMd
          system().readConfig(configFile);
          configFile.close();
 
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          // Build the system CellList
          system().pairPotential().buildPairList();
          #endif
@@ -469,7 +469,7 @@ namespace McMd
          // Read frames, even if they are not sampled
          trajectoryIo->readFrame(*trajectoryFile);
 
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          // Build the system CellList
          system().pairPotential().buildPairList();
          #endif

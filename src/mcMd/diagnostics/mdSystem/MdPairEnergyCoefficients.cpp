@@ -1,4 +1,4 @@
-#ifndef  MCMD_NOPAIR
+#ifndef  INTER_NOPAIR
 #ifndef  MD_ENERGY_OUTPUT_CPP
 #define  MD_ENERGY_OUTPUT_CPP
 
@@ -97,7 +97,7 @@ namespace McMd
    {
       if (isAtInterval(iStep)) {
 
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
 //            if (!system().isPairListCurrent()) {
 //               system().buildPairList();
 //             }
@@ -267,7 +267,7 @@ namespace McMd
       outputFile_ << std::endl;
 
       outputFile_ << "File format:" << std::endl;
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       outputFile_ << "  ";
       outputFile_ << "[pairE]        ";
       outputFile_ << "[moPairESq]    ";

@@ -12,7 +12,7 @@
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mcSimulation/mc_potentials.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/species/Species.h>
 #include <mcMd/species/Linear.h>
 #include <mcMd/chemistry/Molecule.h>
@@ -80,10 +80,10 @@ namespace McMd
 
       // Calculate old molecule energy = pair + external 
       oldEnergy = 0.0;
-      #ifndef MCMD_NOPAIR 
+      #ifndef INTER_NOPAIR 
       oldEnergy += system().pairPotential().moleculeEnergy(*molPtr);
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       for (i = 0; i < nAtom; ++i) {
          atomPtr = &molPtr->atom(i);
          oldEnergy += system().externalPotential().atomEnergy(*atomPtr);
@@ -98,10 +98,10 @@ namespace McMd
 
       // Calculate new energy (with reversed sequence of atom types).
       newEnergy = 0.0;
-      #ifndef MCMD_NOPAIR 
+      #ifndef INTER_NOPAIR 
       newEnergy += system().pairPotential().moleculeEnergy(*molPtr);
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       for (i = 0; i < nAtom; ++i) {
          molPtr->atom(i).setTypeId(atomTypeIds_[nAtom - 1 - i]);   
          atomPtr = &molPtr->atom(i);
@@ -128,7 +128,7 @@ namespace McMd
          for (i = 0; i < nAtom; ++i) {
             atomPtr = &molPtr->atom(i);
             atomPtr->position() = positions_[nAtom - 1 - i];
-            #ifndef MCMD_NOPAIR
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*atomPtr);
             #endif
          }

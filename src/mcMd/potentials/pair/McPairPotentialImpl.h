@@ -1,4 +1,4 @@
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #ifndef MC_PAIR_INTERACTION_IMPL_H
 #define MC_PAIR_INTERACTION_IMPL_H
 
@@ -10,7 +10,7 @@
 */
 
 #include <mcMd/potentials/pair/McPairPotential.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <util/global.h>
 
 namespace Util
@@ -149,7 +149,7 @@ namespace McMd
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
 #include <mcMd/neighbor/PairIterator.h> 
-#include <mcMd/boundary/Boundary.h> 
+#include <util/boundary/Boundary.h> 
 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>

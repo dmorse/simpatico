@@ -12,7 +12,7 @@
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
@@ -62,7 +62,7 @@ namespace McMd
       incrementNAttempt();
 
       // Initialize MdSystem
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       mdSystemPtr_->pairPotential().buildPairList();
       #endif
       mdSystemPtr_->calculateForces();
@@ -73,7 +73,7 @@ namespace McMd
          mdSystemPtr_->mdIntegrator().step();
       }
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       // Rebuild the McSystem cellList using the new positions.
       system().pairPotential().buildCellList();
       #endif

@@ -15,7 +15,7 @@
 #include <mcMd/species/SpeciesMutator.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#ifdef MCMD_TETHER
+#ifdef INTER_TETHER
 #include <mcMd/tethers/TetherMaster.h>
 #endif
 #ifdef MCMD_LINK
@@ -94,7 +94,7 @@ namespace McMd
          }
       }
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       {  // Scope block for variables 
 
          // Read Tethers
@@ -217,7 +217,7 @@ namespace McMd
          }
       }
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       { // Scope for local variables
 
          // Write Tethers

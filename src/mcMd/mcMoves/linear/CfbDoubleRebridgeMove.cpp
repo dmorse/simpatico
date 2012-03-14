@@ -11,11 +11,11 @@
 #include "CfbDoubleRebridgeMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/Linear.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
@@ -154,12 +154,12 @@ namespace McMd
          swapPos = thisPtr->position();
          //system().moveAtom(*thisPtr, tempPtr->position());
          thisPtr->position() = tempPtr->position();
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          system().pairPotential().updateAtomCell(*thisPtr);
          #endif
          //system().moveAtom(*tempPtr, swapPos);
          tempPtr->position() = swapPos;
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          system().pairPotential().updateAtomCell(*tempPtr);
          #endif
 
@@ -203,12 +203,12 @@ namespace McMd
          for (i = 0; i < nRegrow_; ++i) {
             //system().moveAtom(*thisPtr, iOldPos_[i]);
             thisPtr->position() = iOldPos_[i];
-            #ifndef MCMD_NOPAIR
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*thisPtr);
             #endif
             //system().moveAtom(*tempPtr, jOldPos_[i]);
             tempPtr->position() = jOldPos_[i];
-            #ifndef MCMD_NOPAIR
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*tempPtr);
             #endif
 
@@ -223,12 +223,12 @@ namespace McMd
             swapPos = thisPtr->position();
             //system().moveAtom(*thisPtr, tempPtr->position());
             thisPtr->position() = tempPtr->position();
-            #ifndef MCMD_NOPAIR
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*thisPtr);
             #endif
             //system().moveAtom(*tempPtr, swapPos);
             tempPtr->position() = swapPos;
-            #ifndef MCMD_NOPAIR
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*tempPtr);
             #endif
 
