@@ -2,7 +2,7 @@
 #define BOND_POTENTIAL_H
 
 #include <util/param/ParamComposite.h>        // base class
-#include <ddMd/boundary/Boundary.h>           // typedef
+#include <util/boundary/Boundary.h>           // typedef
 
 #include <iostream>
 

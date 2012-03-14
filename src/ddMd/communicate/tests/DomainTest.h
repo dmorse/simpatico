@@ -3,7 +3,7 @@
 
 #include <util/global.h>
 #include <ddMd/communicate/Domain.h>
-#include <ddMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <util/space/Grid.h>
 #include <util/format/Int.h>
 #include <util/mpi/MpiLogger.h>

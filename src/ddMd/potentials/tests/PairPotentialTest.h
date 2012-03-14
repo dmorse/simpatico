@@ -7,7 +7,7 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/communicate/Domain.h>
-#include <ddMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <ddMd/chemistry/Atom.h>
 #include <util/random/Random.h>
 

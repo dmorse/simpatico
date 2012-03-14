@@ -2,9 +2,11 @@ SRC_DIR_REL =..
 
 include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
+include $(SRC_DIR_REL)/inter/defines.mk
 include $(SRC_DIR_REL)/ddMd/defines.mk
 include $(SRC_DIR_REL)/ddMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
+include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
 
 ddSim=$(SRC_DIR)/ddMd/ddSim
@@ -24,6 +26,6 @@ clean-deps:
 -include $(ddMd_OBJS:.o=.d)
 -include $(ddSim).d
 
-$(ddSim_EXE): $(ddSim).o $(util_LIB) $(ddMd_LIB)
-	$(CXX) $(LDFLAGS) -o $(ddSim_EXE) $(ddSim).o $(ddMd_LIB) $(util_LIB)
+$(ddSim_EXE): $(ddSim).o $(util_LIB) $(inter_LIB) $(ddMd_LIB)
+	$(CXX) $(LDFLAGS) -o $(ddSim_EXE) $(ddSim).o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
  

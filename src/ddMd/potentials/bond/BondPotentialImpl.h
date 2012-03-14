@@ -171,7 +171,7 @@ namespace DdMd
 //#include <mcMd/simulation/stress.h>
 #include <ddMd/storage/GroupStorage.h>
 #include <ddMd/storage/GroupIterator.h>
-#include <ddMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <util/space/Vector.h>
 #include <util/global.h>
 

@@ -16,16 +16,13 @@
 #include <ddMd/potentials/bond/BondPotentialImpl.h>
 
 // Bond interaction classes
-#include <ddMd/potentials/bond/HarmonicBond.h>
-#include <ddMd/potentials/bond/HarmonicL0Bond.h>
-//#include <ddMd/potentials/bond/FeneBond.h>
-//#include <ddMd/potentials/bond/CompositeBond.h>
-
-//#include <ddMd/potentials/pair/DpdPair.h>
-//#include <ddMd/potentials/pair/LJPair.h>
+#include <inter/bond/HarmonicBond.h>
+#include <inter/bond/HarmonicL0Bond.h>
 
 namespace DdMd
 {
+
+   using namespace Inter;
 
    /**
    * Default constructor.

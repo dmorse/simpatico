@@ -1,5 +1,4 @@
 #!/bin/bash
 
 cp defines.mk_r  defines.mk
-cp boundary/Boundary.h_r  boundary/Boundary.h
 

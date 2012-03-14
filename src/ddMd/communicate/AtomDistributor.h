@@ -14,7 +14,7 @@
 #include <util/containers/ArrayStack.h>      // member
 #include <util/containers/DMatrix.h>         // member
 #include <util/containers/DArray.h>          // member
-#include <ddMd/boundary/Boundary.h>          // typedef
+#include <util/boundary/Boundary.h>          // typedef
 
 namespace DdMd
 {

@@ -10,7 +10,7 @@
 
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Group.h>
-#include <ddMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <util/containers/FMatrix.h>
 #include <util/containers/APArray.h>
 

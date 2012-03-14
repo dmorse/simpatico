@@ -12,7 +12,7 @@
 #include <ddMd/communicate/AtomDistributor.h>    // member 
 #include <ddMd/communicate/BondDistributor.h>    // member 
 #include <ddMd/communicate/AtomCollector.h>      // member 
-#include <ddMd/boundary/Boundary.h>              // typedef
+#include <util/boundary/Boundary.h>              // typedef
 
 #include <util/containers/DArray.h>              // member
 

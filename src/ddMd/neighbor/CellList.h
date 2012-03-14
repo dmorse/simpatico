@@ -10,7 +10,7 @@
 
 #include "Cell.h"
 #include <ddMd/chemistry/Atom.h>
-#include <ddMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <util/space/Grid.h>
 #include <util/containers/DArray.h>
 #include <util/global.h>

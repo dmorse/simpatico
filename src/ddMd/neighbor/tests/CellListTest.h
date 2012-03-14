@@ -5,7 +5,7 @@
 #include <test/UnitTestRunner.h>
 
 #include <ddMd/neighbor/CellList.h>
-#include <ddMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/AtomArray.h>
 #include <util/containers/DPArray.h>

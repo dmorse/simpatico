@@ -9,7 +9,7 @@
 */
 
 #include <util/param/ParamComposite.h>  // base class
-#include <ddMd/boundary/Boundary.h>     // typedef used in interface
+#include <util/boundary/Boundary.h>     // typedef used in interface
 #include <util/containers/FMatrix.h>    // member template
 #include <util/containers/FArray.h>     // member template
 #include <util/space/IntVector.h>        // member

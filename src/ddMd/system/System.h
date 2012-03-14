@@ -16,7 +16,7 @@
 #include <ddMd/storage/BondStorage.h>            // member 
 #include <ddMd/chemistry/AtomType.h>             // member
 #include <ddMd/chemistry/MaskPolicy.h>           // member
-#include <ddMd/boundary/Boundary.h>              // member 
+#include <util/boundary/Boundary.h>              // member 
 #include <util/random/Random.h>                  // member 
 #include <util/containers/DArray.h>              // member 
 
