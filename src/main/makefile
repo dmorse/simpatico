@@ -35,10 +35,10 @@ clean-deps:
 -include $(main_OBJS:.o=.d)
 
 $(MCSIM_EXE): mcSim.o $(util_LIB) $(inter_LIB) $(mcMd_LIB)
-	$(CXX) -L/opt/torque/2.5.11/lib $(LDFLAGS) -o $(MCSIM_EXE) mcSim.o \
+	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) mcSim.o \
                $(mcMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
  
 $(MDSIM_EXE): mdSim.o $(util_LIB) $(mcMd_LIB)
-	$(CXX) -L/opt/torque/2.5.11/lib $(LDFLAGS) -o $(MDSIM_EXE) mdSim.o \
+	$(CXX) $(LDFLAGS) -o $(MDSIM_EXE) mdSim.o \
         $(mcMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
  
