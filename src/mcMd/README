@@ -4,12 +4,11 @@ McMd namespace.
 Subdirectories:
 ----------------------
 
-boundary       periodic boundary conditions and minimum image convention
-potentials     classes that define potential energy functions
-  pair         nonbonded pair potential classes
-  bond         covalent bond potential classes (also for "links")
-  angle        covalent three-body angle potential classes
-  dihedral     covalent four-body angle dihedral torsion classes
+potentials     classes that evaluate potential energies and forces
+  pair         nonbonded pair potentials
+  bond         covalent bond potentials 
+  angle        covalent three-body angle potentials
+  dihedral     covalent four-body dihedral potentials
   link         mutable covalent bond potentials (e.g., crosslinks)
   external     external one-body potentials.
   tether       potentials to "tether" (restrain) specific atoms.
