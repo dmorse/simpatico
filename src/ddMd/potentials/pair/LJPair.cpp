@@ -143,19 +143,19 @@ namespace DdMd
    */
    void LJPair::readParam(std::istream &in) 
    {
-      if (nAtomType_ == 0) {
+      if (nAtomType_ <= 0) {
          UTIL_THROW( "nAtomType must be set before readParam");
       }
    
       // Read parameters
-      readBegin(in,  "LJPair");
+      //readBegin(in,  "LJPair");
       readCArray2D<double> (
                   in, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
       readCArray2D<double>(
                   in, "sigma", sigma_[0], nAtomType_, nAtomType_);
       readCArray2D<double>(
                   in, "cutoff", cutoff_[0], nAtomType_, nAtomType_);
-      readEnd(in);
+      //readEnd(in);
    
       // Initialize dependent variables sigmaSq, cutoffSq, and ljShift,
       // and calculate maxPairCutoff_

@@ -42,15 +42,15 @@ namespace DdMd
    /*
    * Add an an atom to the mask.
    */
-   void Mask::append(const Atom& atom)
+   void Mask::append(int id)
    {
       if (size_ >= Capacity) {
          UTIL_THROW("Too many masked partners for one Atom");
       }
-      if (isMasked(atom.id())) {
+      if (isMasked(id)) {
          UTIL_THROW("Attempt to add an atom to a Mask twice");
       }
-      atomIds_[size_] = atom.id();
+      atomIds_[size_] = id;
       ++size_;
    }
 

@@ -9,13 +9,14 @@
 */
 
 #include <util/param/ParamComposite.h>           // base class
-#include <ddMd/boundary/Boundary.h>              // member 
-#include <ddMd/storage/AtomStorage.h>            // member 
-#include <ddMd/storage/BondStorage.h>            // member 
-#include <ddMd/chemistry/AtomType.h>             // member
 #include <ddMd/communicate/Domain.h>             // member 
 #include <ddMd/communicate/Buffer.h>             // member 
 #include <ddMd/communicate/Exchanger.h>          // member 
+#include <ddMd/storage/AtomStorage.h>            // member 
+#include <ddMd/storage/BondStorage.h>            // member 
+#include <ddMd/chemistry/AtomType.h>             // member
+#include <ddMd/chemistry/MaskPolicy.h>           // member
+#include <ddMd/boundary/Boundary.h>              // member 
 #include <util/random/Random.h>                  // member 
 #include <util/containers/DArray.h>              // member 
 
@@ -30,11 +31,11 @@ namespace DdMd
 
    class PairPotential;
    class BondPotential;
-   //class EnergyEnsemble;
-   //class BoundaryEnsemble;
+   class EnergyEnsemble;
+   class BoundaryEnsemble;
    class Integrator;
    class ConfigIo;
-   //class FileMaster;
+   class FileMaster;
 
    using namespace Util;
 
@@ -77,7 +78,22 @@ namespace DdMd
       */
       virtual void readParam(std::istream& in);
 
+      /*
+      * Read and execute commands from a command file.
+      */
+      void readCommands(std::istream &in);
+   
+      /**
+      * Read and execute commands from the default command file.
+      */
+      void readCommands();
+
       // Mutators
+
+      /**
+      * Integrate equations of motion. 
+      */
+      void integrate(int nStep);
 
       /**
       * Set random velocities chosen from Boltzmann distribution.
@@ -150,11 +166,6 @@ namespace DdMd
       */
       double bondPotentialEnergy();
 
-      /**
-      * Integrate equations of motion. 
-      */
-      void integrate(int nStep);
-
       /// \name Config File IO
       //@{
 
@@ -163,22 +174,16 @@ namespace DdMd
       *
       * \param filename name of configuration file.
       */
-      void readConfig(std::string filename);
+      void readConfig(const std::string& filename);
+
+      /**
+      * Write configuration file.
+      *
+      * \param filename name of configuration file.
+      */
+      void writeConfig(const std::string& filename);
 
       #if 0
-      /**
-      * Create a new configuration file reader/writer.
-      *
-      * This method allows one to choose from among several subclasses
-      * of ConfigIo, identified by subclass name. The implementation
-      * uses a Factory<ConfigIo> object to instantiate a new object.
-      * If setConfigIoFactory() has not been called, an instance of
-      * the default class ConfigIoFactory is created and used.
-      *
-      * \param classname name of desired ConfigIo subclass.
-      */
-      void setConfigIo(std::string& classname);
-
       /**
       * Get the configuration file reader/writer factory by reference.
       */
@@ -187,43 +192,20 @@ namespace DdMd
 
       //@}
 
-      #if 0
       /// \name Potential Energy Factories and Styles
       //@{
 
       #ifndef DDMD_NOPAIR
       /**
-      * Add a custom PairPotential Factory.
-      *
-      * This method adds a user-defined PairFactory object as a
-      * subfactory of the default factory for configuration file
-      * reader/writers.
-      *
-      * \param pairFactory custom PairFactory object.
+      * Get the Factory<PairPotential> by reference.
       */
-      void addPairSubfactory(PairFactory& pairFactory);
-
-      /**
-      * Get the PairFactory by reference.
-      */
-      PairFactory& pairFactory();
+      Factory<PairPotential>& pairFactory();
 
       /**
       * Return nonbonded pair style string.
       */
       std::string pairStyle() const;
       #endif
-
-      /**
-      * Add a custom Factory<BondPotential> factory object.
-      *
-      * This method adds a user-defined Factory<BondPotential>
-      * object as a subfactory of the default factory for
-      * configuration file reader/writers.
-      *
-      * \param bondFactory custom Factory<BondPotential> object.
-      */
-      void addBondSubfactory(Factory<BondPotential>& bondFactory);
 
       /**
       * Get the associated Factory<BondPotential> by reference.
@@ -258,8 +240,8 @@ namespace DdMd
       */
       std::string dihedralStyle() const;
       #endif
-      #endif // if 0
 
+      //@}
       /// \name Accessors (Miscellaneous)
       //@{
 
@@ -298,18 +280,19 @@ namespace DdMd
       */
       Integrator& integrator();
    
-      #if 0
       /// Get the EnergyEnsemble by reference.
       EnergyEnsemble& energyEnsemble();
 
       /// Get the BoundaryEnsemble by reference.
       BoundaryEnsemble& boundaryEnsemble();
-      #endif
 
-      #if 0
       /// Get the associated FileMaster by reference.
       FileMaster& fileMaster() const;
-      #endif
+
+      /**
+      * Get the Md  integrator factory by reference.
+      */
+      Factory<Integrator>& integratorFactory();
 
       /**
       * Get the Random number generator by reference.
@@ -320,23 +303,7 @@ namespace DdMd
       * Get the Exchanger by reference.
       */
       Exchanger& exchanger();
-   
-      /**
-      * Return total number of atoms on all processors.
-      *
-      * Reduce operation: Must be called on all nodes but returns
-      * correct total value only on grid communicator master.
-      */
-      int nAtomTotal() const;
-
-      /**
-      * Return total number of ghosts on all processors.
-      *
-      * Reduce operation: Must be called on all nodes but returns
-      * correct total value only on grid communicator master.
-      */
-      int nGhostTotal() const;
-
+  
       /**
       * Get maximum number of atom types.
       */
@@ -351,6 +318,11 @@ namespace DdMd
       * Get an AtomType descriptor by reference.
       */
       AtomType& atomType(int i);
+
+      /**
+      * Return the value of the mask policy (MaskNone or MaskBonded).
+      */
+      MaskPolicy maskedPairPolicy() const;
 
       //@}
 
@@ -373,22 +345,15 @@ namespace DdMd
       virtual Factory<ConfigIo>* newDefaultConfigIoFactory();
       #endif
 
-      #if 0
       /**
-      * If no FileMaster exists, create and initialize one.
-      *
-      * Invoked in implementation of readParam().
+      * Read the FileMaster.
       *
       * \param in input parameter stream
       */
       void readFileMaster(std::istream& in);
-      #endif
 
-      #if 0
       /**
-      * Read potential styles, initialize LinkMaster or TetherMaster if needed.
-      *
-      * Invoked in implementation of readParam().
+      * Read potential styles and maskedPairPolicy.
       *
       * \param in input parameter stream
       */
@@ -397,12 +362,9 @@ namespace DdMd
       /**
       * Read energy and boundary ensembles.
       *
-      * Invoked in implementation of readParam().
-      *
       * \param in input parameter stream
       */
       void readEnsembles(std::istream& in);
-      #endif
 
    private:
 
@@ -449,23 +411,18 @@ namespace DdMd
       /// Pointer to configuration file reader/writer.
       ConfigIo*     configIoPtr_;
 
-      #if 0
       /// Pointer to an EnergyEnsemble.
       EnergyEnsemble*   energyEnsemblePtr_;
 
       /// Pointer to an BoundaryEnsemble.
       BoundaryEnsemble* boundaryEnsemblePtr_;
-      #endif
 
-      #if 0
       /// Pointer to a FileMaster.
       FileMaster*       fileMasterPtr_;
-      #endif
 
-      #if 0
       #ifndef DDMD_NOPAIR
       /// Pointer to a PairPotential factory.
-      PairFactory*  pairFactoryPtr_;
+      Factory<PairPotential>*  pairFactoryPtr_;
       #endif
 
       /// Pointer to a Factory<BondPotential>.
@@ -480,14 +437,15 @@ namespace DdMd
       /// Pointer to DihedralPotential Factory
       Factory<DihedralPotential>*  dihedralFactoryPtr_;
       #endif
-      #endif
+
+      /// Pointer to MD integrator factory.
+      Factory<Integrator>* integratorFactoryPtr_;
 
       #if 0
       /// Pointer to a configuration reader/writer factory.
       Factory<ConfigIo>* configIoFactoryPtr_;
       #endif
 
-      #if 0
       #ifndef DDMD_NOPAIR
       /// Name of pair potential style.
       std::string pairStyle_;
@@ -505,13 +463,22 @@ namespace DdMd
       /// Name of dihedral potential style.
       std::string dihedralStyle_;
       #endif
-      #endif
 
       /// Number of distinct atom types.
       int nAtomType_;
 
       /// Number of distinct bond types.
       int nBondType_;
+
+      /**
+      * Policy for suppressing pair interactions for some atom pairs.
+      *
+      * Allowed values of enum MaskPolicy:
+      *
+      *  - MaskNone:   no masked pairs
+      *  - MaskBonded:  mask pair interaction between bonded atoms
+      */
+      MaskPolicy  maskedPairPolicy_;
 
       /// Is this the master node for file Io?
       bool isMaster_;
@@ -556,11 +523,10 @@ namespace DdMd
    inline Random& System::random()
    { return random_; }
 
-   #if 0
    /*
    * Get the EnergyEnsemble by reference.
    */
-   inline EnergyEnsemble& System::energyEnsemble() const
+   inline EnergyEnsemble& System::energyEnsemble()
    {
       assert(energyEnsemblePtr_);
       return *energyEnsemblePtr_;
@@ -569,14 +535,12 @@ namespace DdMd
    /*
    * Get the BoundaryEnsemble by reference.
    */
-   inline BoundaryEnsemble& System::boundaryEnsemble() const
+   inline BoundaryEnsemble& System::boundaryEnsemble()
    {
       assert(boundaryEnsemblePtr_);
       return *boundaryEnsemblePtr_;
    }
-   #endif
 
-   #if 0
    /*
    * Get the FileMaster by reference.
    */
@@ -585,7 +549,6 @@ namespace DdMd
       assert(fileMasterPtr_);
       return *fileMasterPtr_;
    }
-   #endif
 
    /*
    * Get maximum number of atom types.
@@ -604,6 +567,10 @@ namespace DdMd
    */
    inline AtomType& System::atomType(int i)
    {  return atomTypes_[i]; }
+
+   inline MaskPolicy System::maskedPairPolicy() const
+   {  return maskedPairPolicy_; }
+
 
 }
 #endif

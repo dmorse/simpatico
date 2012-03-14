@@ -1,4 +1,4 @@
-#ifdef  MCMD_EXTERNAL
+#ifdef  INTER_EXTERNAL
 #ifndef EXTERNAL_FACTORY_CPP
 #define EXTERNAL_FACTORY_CPP
 
@@ -17,13 +17,16 @@
 #include <mcMd/potentials/external/ExternalPotential.h>
 #include <mcMd/potentials/external/ExternalPotentialImpl.h>
 
-#include <mcMd/potentials/external/BoxExternal.h>
-#include <mcMd/potentials/external/OrthoBoxExternal.h>
-#include <mcMd/potentials/external/SlitExternal.h>
-#include <mcMd/potentials/external/TanhCosineExternal.h>
+// Interaction classes
+#include <inter/external/BoxExternal.h>
+#include <inter/external/OrthoBoxExternal.h>
+#include <inter/external/SlitExternal.h>
+#include <inter/external/TanhCosineExternal.h>
 
 namespace McMd
 {
+
+   using namespace Inter;
 
    /**
    * Default constructor.

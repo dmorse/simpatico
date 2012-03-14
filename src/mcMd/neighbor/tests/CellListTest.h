@@ -5,7 +5,7 @@
 #include <test/UnitTestRunner.h>
 
 #include <mcMd/neighbor/CellList.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/space/Vector.h>
 #include <util/random/Random.h>

@@ -14,10 +14,10 @@
 #include <mcMd/chemistry/Atom.h>       // member container template argument
 #include <mcMd/chemistry/Molecule.h>   // member container template argument
 #include <mcMd/chemistry/Bond.h>       // typedef
-#ifdef MCMD_ANGLE
+#ifdef INTER_ANGLE
 #include <mcMd/chemistry/Angle.h>      // typedef
 #endif
-#ifdef MCMD_DIHEDRAL
+#ifdef INTER_DIHEDRAL
 #include <mcMd/chemistry/Dihedral.h>   // typedef
 #endif
 #include <mcMd/chemistry/MaskPolicy.h> // member 
@@ -205,14 +205,14 @@ namespace McMd
       */
       int nBondType() const;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Get the number of angle types.
       */
       int nAngleType() const;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Get the number of dihedral types.
       */
@@ -226,14 +226,14 @@ namespace McMd
       int nLinkType() const;
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       /**
       * Does an external potential exist?
       */
       int hasExternal() const;
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       /**
       * Does a tether potential exist?
       */
@@ -267,14 +267,14 @@ namespace McMd
       */
       int bondCapacity() const;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Get the total number of Angles allocated.
       */
       int angleCapacity() const;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Get the total number of Dihedrals allocated.
       */
@@ -389,7 +389,7 @@ namespace McMd
       */
       DArray<Bond>     bonds_;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Array of all Angle objects.
       *
@@ -401,7 +401,7 @@ namespace McMd
       DArray<Angle>     angles_;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Array of all Dihedral objects.
       *
@@ -437,7 +437,7 @@ namespace McMd
       */
       DArray<int>      firstBondIds_;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Array containing indices to the first Angle of each species.
       *
@@ -447,7 +447,7 @@ namespace McMd
       DArray<int>      firstAngleIds_;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Array containing indices to the first Dihedral of each species.
       *
@@ -503,12 +503,12 @@ namespace McMd
       /// Number of bond types.
       int  nBondType_;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /// Number of angle types.
       int  nAngleType_;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /// Number of dihedral types.
       int  nDihedralType_;
       #endif
@@ -518,12 +518,12 @@ namespace McMd
       int  nLinkType_;
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       /// Does an external potential exist? (0 false or 1 true)
       int  hasExternal_;
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       /// Does a tether potential exist? (0 false or 1 true)
       int  hasTether_;
       #endif
@@ -554,7 +554,7 @@ namespace McMd
       */
       int  bondCapacity_;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Number of angles allocated.
       *
@@ -564,7 +564,7 @@ namespace McMd
       int  angleCapacity_;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Number of dihedrals allocated.
       *
@@ -605,7 +605,7 @@ namespace McMd
       */
       void initializeSpeciesBonds(int speciesId);
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Initialize all Angle objects in all Molecules of one Species.
       *
@@ -614,7 +614,7 @@ namespace McMd
       void initializeSpeciesAngles(int speciesId);
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Initialize all Dihedral objects in all Molecules of one Species.
       *
@@ -634,12 +634,12 @@ namespace McMd
    inline int Simulation::nBondType() const
    {  return nBondType_; }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    inline int Simulation::nAngleType() const
    {  return nAngleType_; }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    inline int Simulation::nDihedralType() const
    {  return nDihedralType_; }
    #endif
@@ -649,12 +649,12 @@ namespace McMd
    {  return nLinkType_; }
    #endif
 
-   #ifdef MCMD_EXTERNAL
+   #ifdef INTER_EXTERNAL
    inline int Simulation::hasExternal() const
    {  return hasExternal_; }
    #endif
 
-   #ifdef MCMD_TETHER
+   #ifdef INTER_TETHER
    inline int Simulation::hasTether() const
    {  return hasTether_; }
    #endif
@@ -671,12 +671,12 @@ namespace McMd
    inline int Simulation::bondCapacity() const
    {  return bondCapacity_; }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    inline int Simulation::angleCapacity() const
    {  return angleCapacity_; }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    inline int Simulation::dihedralCapacity() const
    {  return dihedralCapacity_; }
    #endif

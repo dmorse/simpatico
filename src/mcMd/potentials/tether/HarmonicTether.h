@@ -1,4 +1,4 @@
-#ifdef  MCMD_TETHER
+#ifdef  INTER_TETHER
 #ifndef HARMONIC_TETHER_H
 #define HARMONIC_TETHER_H
 

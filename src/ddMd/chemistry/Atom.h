@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+#include "Mask.h"
 #include <ddMd/communicate/Plan.h>
-//#include "Mask.h"
 #include <util/space/Vector.h>
 
 namespace DdMd
@@ -84,6 +84,9 @@ namespace DdMd
       */
       Vector& force();
 
+      /// Get the associated Mask by reference.
+      Mask& mask();
+
       /**
       * Get communication plan by reference.
       */
@@ -114,15 +117,13 @@ namespace DdMd
       /// Get communication plan (const reference).
       const Plan& plan() const;
 
-      //@}
-
-      #if 0
-      /// Get the associated Mask by reference.
-      Mask& mask();
-
       /// Get the associated Mask by const reference.
       const Mask& mask() const;
 
+      //@}
+
+
+      #if 0
       /// Get the shift IntVector by reference.
       IntVector& shift();
 
@@ -138,22 +139,24 @@ namespace DdMd
       /// Integer index of atom type.
       int typeId_;                         
 
-      /// Integer index for Atom within Simulation.
-      int id_;                      
+      // Is this Atom a ghost? (0=false, 1=true)
+      int isGhost_;
 
       /// Force on atom.
       Vector force_;                       
 
-      // Is this Atom a ghost? (0=false, 1=true)
-      int isGhost_;
+      /// Integer index for Atom within Simulation.
+      int id_;                      
 
-      // Communication plan.
-      Plan plan_;
+      // Mask (listed of bonded pairs)
+      Mask mask_;   
 
       /// Atomic velocity.
       Vector velocity_;                       
 
-      // Mask      mask_;   
+      // Communication plan.
+      Plan plan_;
+
       // IntVector shift_;  
 
    };
@@ -164,11 +167,12 @@ namespace DdMd
    inline Atom::Atom() :
      position_(0.0),
      typeId_(-1),
-     id_(-1),
-     force_(0.0),
      isGhost_(0),
-     plan_(),
-     velocity_(0.0)
+     force_(0.0),
+     id_(-1),
+     mask_(),
+     velocity_(0.0),
+     plan_()
    {}
 
    /**
@@ -179,6 +183,7 @@ namespace DdMd
       typeId_ = -1;
       id_ = -1;
       isGhost_ = 0;
+      mask_.clear();
       plan_.setFlags(0);
    }
 
@@ -238,15 +243,13 @@ namespace DdMd
    inline const Plan& Atom::plan() const
    {  return plan_; }
 
-   #if 0
    // Get the associated mask.
    inline Mask& Atom::mask() 
-   {  return masks_[id_]; }
+   {  return mask_; }
 
    // Get a const reference to the mask.
    inline const Mask& Atom::mask() const
-   {  return masks_[id_]; }
-   #endif
+   {  return mask_; }
 
 }
 #endif

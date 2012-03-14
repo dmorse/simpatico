@@ -70,7 +70,7 @@ namespace McMd
       if (className == "MdWriteRestart") {
          ptr = new MdWriteRestart(simulation());
       } 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       else
       if (className == "MdPairEnergyCoefficients") {
          ptr = new MdPairEnergyCoefficients(system());

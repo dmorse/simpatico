@@ -1,3 +1,0 @@
-subDirectories = tests
-pathFromSrc = mcMd/boundary
-pathToSrc = ../..

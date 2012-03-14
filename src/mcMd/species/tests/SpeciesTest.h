@@ -50,8 +50,8 @@ void SpeciesTest::testReadParam()
    using std::ifstream;
    using std::cout;
 
-   #ifdef MCMD_ANGLE
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_ANGLE
+   #ifdef INTER_DIHEDRAL
    ifstream in("in/SpeciesAngleDihedral");
    #else
    ifstream in("in/SpeciesAngle");

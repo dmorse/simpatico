@@ -13,18 +13,17 @@
 
 // Subclasses of Perturbation
 #include "McEnergyPerturbation.h"
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include "McPairPerturbation.h"
-#include <mcMd/potentials/pair/LJPair.h>
-#include <mcMd/potentials/pair/DpdPair.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
+#include <inter/pair/LJPair.h>
+#include <inter/pair/DpdPair.h>
 #endif
-#ifdef MCMD_EXTERNAL
+
+#ifdef INTER_EXTERNAL
 #include "McExternalPerturbation.h"
-#endif
-#ifndef MCMD_NOPAIR
-#ifdef MCMD_EXTERNAL
+#ifndef INTER_NOPAIR
 #include "McPairExternalPerturbation.h"
 #endif
 #endif
@@ -33,6 +32,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Inter;
 
    McPerturbationFactory::McPerturbationFactory(McSystem& system)
     : systemPtr_(&system)
@@ -52,12 +52,12 @@ namespace McMd
       if (className == "McEnergyPerturbation") {
          ptr = new McEnergyPerturbation(*systemPtr_);
       }
-      #ifdef MCMD_EXTERNAL 
+      #ifdef INTER_EXTERNAL 
       if (className == "McExternalPerturbation") {
          ptr = new McExternalPerturbation(*systemPtr_);
       } 
       #endif
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       else if (className == "McPairPerturbation") {
          const std::string& evaluatorClassName = systemPtr_->pairPotential().
             evaluatorClassName();
@@ -70,8 +70,8 @@ namespace McMd
          }
       } 
       #endif
-      #ifndef MCMD_NOPAIR
-      #ifdef MCMD_EXTERNAL
+      #ifndef INTER_NOPAIR
+      #ifdef INTER_EXTERNAL
       else if (className == "McPairExternalPerturbation") {
          const std::string& evaluatorClassName = systemPtr_->pairPotential().
             evaluatorClassName();
@@ -85,7 +85,7 @@ namespace McMd
       }
       #endif 
       #endif
-      /*#ifdef MCMD_EXTERNAL
+      /*#ifdef INTER_EXTERNAL
       else if (className == "McExternalPerturbation") {
          const std::string& evaluatorClassName = systemPtr_->externalPotential().
             evaluatorClassName();

@@ -48,7 +48,7 @@ public:
 
    virtual void readParam(McSimulation& sim)
    {  
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       openFile("in/McSimulationAngle"); 
       #else
       openFile("in/McSimulation"); 
@@ -61,7 +61,7 @@ public:
    void testReadParam();
    void testPairEnergy();
    void testBondEnergy();
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    void testAngleEnergy();
    #endif
    void testMdSystemCopy();
@@ -158,7 +158,7 @@ void McSimulationTest::testBondEnergy()
    std::cout << "TotalBondEnergy      = " << system_.bondPotential().energy() << std::endl;
 }
 
-#ifdef MCMD_ANGLE
+#ifdef INTER_ANGLE
 void McSimulationTest::testAngleEnergy()
 { 
    printMethod(TEST_FUNC);
@@ -340,7 +340,7 @@ TEST_BEGIN(McSimulationTest)
 TEST_ADD(McSimulationTest, testReadParam)
 TEST_ADD(McSimulationTest, testPairEnergy)
 TEST_ADD(McSimulationTest, testBondEnergy)
-#ifdef MCMD_ANGLE
+#ifdef INTER_ANGLE
 TEST_ADD(McSimulationTest, testAngleEnergy)
 #endif
 TEST_ADD(McSimulationTest, testMdSystemCopy)

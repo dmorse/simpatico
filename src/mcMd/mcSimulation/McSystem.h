@@ -19,20 +19,20 @@ namespace McMd
    using namespace Util;
 
    class Atom;
-   #ifndef MCMD_NOPAIR
+   #ifndef INTER_NOPAIR
    class McPairPotential;
    #endif
    class BondPotential;
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    class AnglePotential;
    #endif
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    class DihedralPotential;
    #endif
-   #ifdef MCMD_EXTERNAL
+   #ifdef INTER_EXTERNAL
    class ExternalPotential;
    #endif
-   #ifdef MCMD_TETHER
+   #ifdef INTER_TETHER
    class TetherPotential;
    #endif
 
@@ -134,7 +134,7 @@ namespace McMd
 
       // ----------------------------------------------------------------------
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       /**
       * Return the McPairPotential by reference.
       */
@@ -151,7 +151,7 @@ namespace McMd
       */
       BondPotential& bondPotential() const;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Does angle potential exist?.
       */
@@ -164,7 +164,7 @@ namespace McMd
       #endif
 
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Does a dihedral potential exist?.
       */
@@ -188,7 +188,7 @@ namespace McMd
       BondPotential& linkPotential() const;
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       /**
       * Does an external potential exist?.
       */
@@ -200,7 +200,7 @@ namespace McMd
       ExternalPotential& externalPotential() const;
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       /**
       * Return the TetherPotential by reference.
       */
@@ -223,7 +223,7 @@ namespace McMd
       virtual Factory<Perturbation>* newDefaultPerturbationFactory();
       #endif
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       /**
       * Set the PairPotential
       *
@@ -234,7 +234,7 @@ namespace McMd
 
    private:
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       /// Array to hold neighbors returned by a CellList.
       mutable CellList::NeighborArray neighbors_;
 
@@ -243,12 +243,12 @@ namespace McMd
 
       BondPotential* bondPotentialPtr_;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /// Pointer to an AnglePotential.
       AnglePotential* anglePotentialPtr_;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /// Pointer to an DihedralPotential.
       DihedralPotential* dihedralPotentialPtr_;
       #endif
@@ -258,12 +258,12 @@ namespace McMd
       BondPotential* linkPotentialPtr_;
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       /// Pointer to an ExternalPotential.
       ExternalPotential* externalPotentialPtr_;
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       /// Pointer to an TetherPotential.
       TetherPotential* tetherPotentialPtr_;
       #endif
@@ -290,7 +290,7 @@ namespace McMd
 
    // Inline methods
 
-   #ifndef MCMD_NOPAIR
+   #ifndef INTER_NOPAIR
    /*
    * Return the McPairPotential by reference.
    */
@@ -310,7 +310,7 @@ namespace McMd
    inline BondPotential& McSystem::bondPotential() const
    {  return *bondPotentialPtr_; }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Does an angle potential exist?
    */
@@ -324,7 +324,7 @@ namespace McMd
    {  return *anglePotentialPtr_; }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /*
    * Does a dihedral potential exist?
    */
@@ -352,7 +352,7 @@ namespace McMd
    {  return *linkPotentialPtr_; }
    #endif
 
-   #ifdef MCMD_EXTERNAL
+   #ifdef INTER_EXTERNAL
    /*
    * Does an external potential exist?
    */
@@ -366,7 +366,7 @@ namespace McMd
    {  return *externalPotentialPtr_; }
    #endif
 
-   #ifdef MCMD_TETHER
+   #ifdef INTER_TETHER
    /*
    * Return tether potential by reference.
    */
@@ -374,7 +374,7 @@ namespace McMd
    {  return *tetherPotentialPtr_; }
    #endif
 
-   #ifndef MCMD_NOPAIR
+   #ifndef INTER_NOPAIR
    /*
    * Set the pair potential
    */

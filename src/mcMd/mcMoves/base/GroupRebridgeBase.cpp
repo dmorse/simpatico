@@ -70,7 +70,7 @@ namespace McMd
       energy += system().bondPotential().energy(lac, bondType);
       energy += system().bondPotential().energy(lbd, bondType);
    
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       int    aId = aPtr->typeId();
       int    bId = bPtr->typeId();
       int    cId = cPtr->typeId();
@@ -85,7 +85,7 @@ namespace McMd
       energy += system().pairPotential().energy(lcd, cId, dId);
       #endif
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       if (system().hasAnglePotential()) {
 
          // Implementation assumed linear or ring molecular topology
@@ -219,7 +219,7 @@ namespace McMd
       energy += system().bondPotential().energy(lcm, bondType);
       energy += system().bondPotential().energy(lmd, bondType);
   
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       int    aId = aPtr->typeId();
       int    bId = bPtr->typeId();
       int    cId = cPtr->typeId();

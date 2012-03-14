@@ -1,4 +1,4 @@
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #ifndef MD_PAIR_POTENTIAL_H
 #define MD_PAIR_POTENTIAL_H
 

@@ -11,6 +11,7 @@
 #include <util/param/ParamComposite.h>           // base class
 #include <ddMd/communicate/AtomDistributor.h>    // member 
 #include <ddMd/communicate/BondDistributor.h>    // member 
+#include <ddMd/communicate/AtomCollector.h>      // member 
 #include <ddMd/boundary/Boundary.h>              // typedef
 
 #include <util/containers/DArray.h>              // member
@@ -24,6 +25,7 @@ namespace DdMd
    class AtomStorage;
    class BondStorage;
    class Buffer;
+   enum  MaskPolicy;
 
    using namespace Util;
 
@@ -61,7 +63,7 @@ namespace DdMd
       *
       * \param filename name of configuration file.
       */
-      virtual void readConfig(std::string filename);
+      virtual void readConfig(std::istream& file, MaskPolicy maskPolicy);
 
       /**
       * Write configuration file.
@@ -71,9 +73,14 @@ namespace DdMd
       *
       * \param filename name of output configuration file.
       */
-      virtual void writeConfig(std::string filename);
+      virtual void writeConfig(std::ostream& file);
 
    protected:
+
+      /**
+      * Set masks on all atoms.
+      */
+      void setAtomMasks();
 
       /**
       * Get the AtomDistributor by reference.
@@ -84,6 +91,11 @@ namespace DdMd
       * Get the AtomDistributor by reference.
       */
       BondDistributor& bondDistributor();
+
+      /**
+      * Get the AtomCollector by reference.
+      */
+      AtomCollector& atomCollector();
 
       /**
       * Get the Domain by reference.
@@ -111,6 +123,8 @@ namespace DdMd
 
       BondDistributor  bondDistributor_;
 
+      AtomCollector    atomCollector_;
+
       Domain*      domainPtr_;
 
       Boundary*    boundaryPtr_;
@@ -132,6 +146,9 @@ namespace DdMd
 
    inline BondDistributor& ConfigIo::bondDistributor()
    { return bondDistributor_; }
+
+   inline AtomCollector& ConfigIo::atomCollector()
+   { return atomCollector_; }
 
    inline Domain& ConfigIo::domain()
    { return *domainPtr_; }

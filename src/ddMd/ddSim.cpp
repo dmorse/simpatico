@@ -19,13 +19,16 @@ using namespace DdMd;
 int main()
 {
 
+   System system;
+   system.readParam(std::cin); 
+
+   system.readCommands();
+
+   #if 0
    MPI::Init();
    Util::initStatic();
    Util::IntVector::commitMpiType();
    Util::Vector::commitMpiType();
-
-   System system;
-   system.readParam(std::cin); 
 
    int myRank = system.domain().gridRank();
 
@@ -61,7 +64,8 @@ int main()
       }
       //system.isValid();
    }
+   #endif
 
-   MPI::Finalize();
+   //MPI::Finalize();
 }
 #endif

@@ -9,10 +9,13 @@ include $(SRC_DIR_REL)/ddMd/sources.mk
 include sources.mk
 
 all: $(ddMd_communicate_tests_OBJS) BufferTest DomainTest PlanTest \
-     AtomDistributorTest BondDistributorTest ExchangerTest CollectorTest Test
+     AtomDistributorTest BondDistributorTest ExchangerTest \
+     AtomCollectorTest Test
 
 clean:
-	rm -f $(ddMd_communicate_tests_OBJS) BufferTest DomainTest ExchangerTest Test CollectorTest AtomDistributorTest $(ddMd_communicate_tests_OBJS:.o=.d)
+	rm -f $(ddMd_communicate_tests_OBJS) BufferTest DomainTest \
+        PlanTest AtomDistributorTest BondDistributorTest ExchangerTest \
+        AtomCollectorTest Test $(ddMd_communicate_tests_OBJS:.o=.d)
 
 clean-deps:
 	rm -f $(ddMd_communicate_tests_OBJS:.o=.d)
@@ -41,8 +44,8 @@ ExchangerTest: ExchangerTest.o $(ddMd_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o ExchangerTest ExchangerTest.o \
 	       $(ddMd_LIB) $(util_LIB)
 
-CollectorTest: CollectorTest.o $(ddMd_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o CollectorTest CollectorTest.o \
+AtomCollectorTest: AtomCollectorTest.o $(ddMd_LIB) $(util_LIB)
+	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o AtomCollectorTest AtomCollectorTest.o \
 	       $(ddMd_LIB) $(util_LIB)
 
 Test: Test.o $(ddMd_LIB) $(util_LIB)

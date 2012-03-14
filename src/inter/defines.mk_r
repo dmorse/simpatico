@@ -1,0 +1,115 @@
+#-----------------------------------------------------------------------
+# This makefile file defines:
+#
+#   - A variable $(INTER_DEFS) that is passed to the processor to define 
+#     preprocessor flags that effect the code in the mcMd/ directory. 
+#
+#   - A variable $(INTER_SUFFIX) which is added as a suffix to the name
+#     of the mcMd library and (by default) the main executables. 
+#
+#   - The name $(INTER_LIB) of the McMd library. 
+#
+# This file is included by every makefile in the mcMd directory. 
+# It must be included after $(SRC_DIR)/makefile.mk and before
+# $(SRC_DIR)/mcmd/patterns.mk.
+#-----------------------------------------------------------------------
+# Makefile variables to define preprocessor macros
+
+# Define INTER_NOPAIR, disable non-bonded pair potentials 
+#INTER_NOPAIR=1
+
+# Define INTER_ANGLE, enable 3-body angle potentials
+#INTER_ANGLE=1
+
+# Define INTER_DIHEDRAL, enable 4-body dihedral torsion potentials
+#INTER_DIHEDRAL=1
+
+# Define INTER_EXTERNAL, enable external potentials
+#INTER_EXTERNAL=1
+
+# Define INTER_TETHER, enable tethers
+#INTER_TETHER=1
+
+#-----------------------------------------------------------------------
+# The following code defines the variables INTER_DEFS and INTER_SUFFIX.
+#
+# The variable INTER_DEFS is used to pass preprocessor definitions to
+# the compiler, using the "-D" compiler option. If not empty, it must 
+# consist of a list of zero or more preprocessor macro names, each 
+# preceded by the compiler flag "-D".  For example, setting INTER_DEFS 
+# to "-DINTER_ANGLE -DINTER_DIHEDRAL" will cause compilation of a version 
+# of the code with debugging and angles enabled.
+#
+# The variable INTER_SUFFIX is appended to the base names of the library 
+# mcMd.a in the $(LIB_DIR) directory and (by default) to the executables 
+# mcSim and mdSim in the $(BIN_DIR). Setting INTER_SUFFIX to "_a", to
+# denote a version with angular potentials enabled, will create a
+# library mcMd_a.a and executables named mcSim_a and mdSim_a. This
+# addition of suffixes to library and executable names is optional,
+# but can be useful for managing several versions of the libraries 
+# and executables that were compiled with different preprocessor 
+# macros defined. 
+#
+# The variables INTER_DEFS and INTER_SUFFIX are initialized with the
+# values of the strings UTIL_DEFS and UTIL_SUFFIX, and thus begin 
+# with any strings defined there to control MPI and/or debugging.
+
+INTER_DEFS=$(UTIL_DEFS)
+INTER_SUFFIX:=$(UTIL_SUFFIX)
+
+# The variable INTER_DEFS is a recursive (normal) makefile variable, and
+# may be extended using the += operator, e.g., INTER_DEFS+=-DINTER_ANGLE.
+# The INTER_SUFFIX is a non-recursive makefile variable, which may be 
+# extended using the := operator, as INTER_SUFFIX:=$(INTER_SUFFIX)_a. 
+# They are defined differently because the += operator adds a white 
+# space before an added string, which is appropriate for INTER_DEFS, 
+# but not for INTER_SUFFIX. 
+#
+# Each if block in what follows contains two lines: The first adds a 
+# string containing a preprocessor macro to INTER_DEFS. The second
+# adds an underscore and a string of one or two identifying letters 
+# to INTER_SUFFIX. The addition of suffixes to the library and 
+# executable names is optional, and may be suppressed by commenting
+# out the relevant lines.
+#
+# See the file src/mcMd/dox/preprocessor.dox for an explanation of all
+# of preprocessor macros listed below.
+
+# Disable non-bonded pair potentials 
+ifdef INTER_NOPAIR
+INTER_DEFS+= -DINTER_NOPAIR
+INTER_SUFFIX:=$(INTER_SUFFIX)_np
+endif
+
+# Enable angle potential
+ifdef INTER_ANGLE
+INTER_DEFS+= -DINTER_ANGLE
+INTER_SUFFIX:=$(INTER_SUFFIX)_a
+endif
+
+# Enable dihedral potential
+ifdef INTER_DIHEDRAL
+INTER_DEFS+= -DINTER_DIHEDRAL
+INTER_SUFFIX:=$(INTER_SUFFIX)_d
+endif
+
+# Enable external potential
+ifdef INTER_EXTERNAL
+INTER_DEFS+= -DINTER_EXTERNAL
+INTER_SUFFIX:=$(INTER_SUFFIX)_e
+endif
+
+# Enable one-atom Tether potentials 
+ifdef INTER_TETHER
+INTER_DEFS+= -DINTER_TETHER
+INTER_SUFFIX:=$(INTER_SUFFIX)_t
+endif
+
+#-----------------------------------------------------------------------
+# Library of objects from the McMd namespace, or src/inter directory
+
+inter_LIBNAME=inter$(INTER_SUFFIX)
+inter_LIBDIR=$(ROOT_DIR)/lib
+inter_LIB=$(inter_LIBDIR)/lib$(inter_LIBNAME).a
+
+#-----------------------------------------------------------------------

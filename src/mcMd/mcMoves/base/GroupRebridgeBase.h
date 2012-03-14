@@ -9,9 +9,9 @@
 */
 
 #include <mcMd/mcMoves/SystemMove.h>  // base class
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/mcSimulation/McSystem.h>
-#ifdef MCMD_ANGLE
+#ifdef INTER_ANGLE
 #include <mcMd/potentials/angle/AnglePotential.h>
 #endif
 #include <util/space/Vector.h>
@@ -57,7 +57,7 @@ namespace McMd
       void tetraEnergy(Atom* aPtr, Atom* bPtr, Atom* cPtr, Atom* dPtr,
                        int bondType, double &energy);
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Calculate the angle energy for a bead triple.
       *
@@ -88,7 +88,7 @@ namespace McMd
   
    };
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /*
    */
    inline

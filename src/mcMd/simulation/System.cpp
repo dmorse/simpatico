@@ -22,24 +22,24 @@
 #include <mcMd/trajectoryIos/TrajectoryIo.h>
 #include <mcMd/trajectoryIos/TrajectoryIoFactory.h>
 
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/PairFactory.h>
 #endif
 #include <mcMd/potentials/bond/BondFactory.h>
-#ifdef MCMD_ANGLE
+#ifdef INTER_ANGLE
 #include <mcMd/potentials/angle/AngleFactory.h>
 #endif
-#ifdef MCMD_DIHEDRAL
+#ifdef INTER_DIHEDRAL
 #include <mcMd/potentials/dihedral/DihedralFactory.h>
 #endif
 #ifdef MCMD_LINK
 #include <mcMd/potentials/link/LinkFactory.h>
 #include <mcMd/links/LinkMaster.h>
 #endif
-#ifdef MCMD_EXTERNAL
+#ifdef INTER_EXTERNAL
 #include <mcMd/potentials/external/ExternalFactory.h>
 #endif
-#ifdef MCMD_TETHER
+#ifdef INTER_TETHER
 #include <mcMd/potentials/tether/tetherFactory.h>
 #include <mcMd/tethers/TetherMaster.h>
 #endif
@@ -72,29 +72,29 @@ namespace McMd
       #ifdef MCMD_LINK
       linkMasterPtr_(0),
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       tetherMasterPtr_(0),
       #endif
       simulationPtr_(0),
       energyEnsemblePtr_(0),
       boundaryEnsemblePtr_(0),
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       pairFactoryPtr_(0),
       #endif
       bondFactoryPtr_(0),
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       angleFactoryPtr_(0),
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       dihedralFactoryPtr_(0),
       #endif
       #ifdef MCMD_LINK
       linkFactoryPtr_(0),
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       externalFactoryPtr_(0),
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       tetherFactoryPtr_(0),
       #endif
       configIoPtr_(0),
@@ -109,48 +109,27 @@ namespace McMd
       hasReplicaMove_(false),
       #endif
       #endif
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       pairStyle_(),
       #endif
       bondStyle_(),
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       angleStyle_(),
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       dihedralStyle_(),
       #endif
       #ifdef MCMD_LINK
       linkStyle_(),
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       externalStyle_(),
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       tetherStyle_(),
       #endif
       id_(0),
       isCopy_(false),
-      #ifndef MCMD_NOPAIR
-      createdPairFactory_(false),
-      #endif
-      createdBondFactory_(false),
-      #ifdef MCMD_ANGLE
-      createdAngleFactory_(false),
-      #endif
-      #ifdef MCMD_DIHEDRAL
-      createdDihedralFactory_(false),
-      #endif
-      #ifdef MCMD_LINK
-      createdLinkFactory_(false),
-      #endif
-      #ifdef MCMD_EXTERNAL
-      createdExternalFactory_(false),
-      #endif
-      #ifdef MCMD_TETHER
-      createdTetherFactory_(false),
-      #endif
-      createdConfigIoFactory_(false),
-      createdTrajectoryIoFactory_(false),
       createdFileMaster_(false)
       #ifdef MCMD_PERTURB
       , createdPerturbation_(false)
@@ -174,29 +153,29 @@ namespace McMd
       #ifdef MCMD_LINK
       linkMasterPtr_(other.linkMasterPtr_),
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       tetherMasterPtr_(other.tetherMasterPtr_),
       #endif
       simulationPtr_(other.simulationPtr_),
       energyEnsemblePtr_(other.energyEnsemblePtr_),
       boundaryEnsemblePtr_(other.boundaryEnsemblePtr_),
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       pairFactoryPtr_(other.pairFactoryPtr_),
       #endif
       bondFactoryPtr_(other.bondFactoryPtr_),
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       angleFactoryPtr_(other.angleFactoryPtr_),
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       dihedralFactoryPtr_(other.dihedralFactoryPtr_),
       #endif
       #ifdef MCMD_LINK
       linkFactoryPtr_(other.linkFactoryPtr_),
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       externalFactoryPtr_(other.externalFactoryPtr_),
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       tetherFactoryPtr_(other.tetherFactoryPtr_),
       #endif
       configIoPtr_(other.configIoPtr_),
@@ -211,48 +190,27 @@ namespace McMd
       hasReplicaMove_(other.hasReplicaMove_),
       #endif
       #endif
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       pairStyle_(other.pairStyle_),
       #endif
       bondStyle_(other.bondStyle_),
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       angleStyle_(other.angleStyle_),
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       dihedralStyle_(other.dihedralStyle_),
       #endif
       #ifdef MCMD_LINK
       linkStyle_(other.linkStyle_),
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       externalStyle_(other.externalStyle_),
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       tetherStyle_(other.tetherStyle_),
       #endif
       id_(other.id_),
       isCopy_(true),
-      #ifndef MCMD_NOPAIR
-      createdPairFactory_(false),
-      #endif
-      createdBondFactory_(false),
-      #ifdef MCMD_ANGLE
-      createdAngleFactory_(false),
-      #endif
-      #ifdef MCMD_DIHEDRAL
-      createdDihedralFactory_(false),
-      #endif
-      #ifdef MCMD_LINK
-      createdLinkFactory_(false),
-      #endif
-      #ifdef MCMD_EXTERNAL
-      createdExternalFactory_(false),
-      #endif
-      #ifdef MCMD_TETHER
-      createdTetherFactory_(false),
-      #endif
-      createdConfigIoFactory_(false),
-      createdTrajectoryIoFactory_(false),
       createdFileMaster_(false)
       #ifdef MCMD_PERTURB
       , createdPerturbation_(false)
@@ -273,31 +231,31 @@ namespace McMd
          if (boundaryPtr_) {
             delete boundaryPtr_;
          }
-         #ifndef MCMD_NOPAIR
-         if (pairFactoryPtr_ && createdPairFactory_) {
+         #ifndef INTER_NOPAIR
+         if (pairFactoryPtr_) {
             delete pairFactoryPtr_;
          }
          #endif
-         if (bondFactoryPtr_ && createdBondFactory_) {
+         if (bondFactoryPtr_) {
             delete bondFactoryPtr_;
          }
-         #ifdef MCMD_ANGLE
-         if (angleFactoryPtr_ && createdAngleFactory_) {
+         #ifdef INTER_ANGLE
+         if (angleFactoryPtr_) {
             delete angleFactoryPtr_;
          }
          #endif
-         #ifdef MCMD_DIHEDRAL
-         if (dihedralFactoryPtr_ && createdDihedralFactory_) {
+         #ifdef INTER_DIHEDRAL
+         if (dihedralFactoryPtr_) {
             delete dihedralFactoryPtr_;
          }
          #endif
          #ifdef MCMD_LINK
-         if (linkFactoryPtr_ && createdLinkFactory_) {
+         if (linkFactoryPtr_) {
             delete linkFactoryPtr_;
          }
          #endif
-         #ifdef MCMD_EXTERNAL
-         if (externalFactoryPtr_ && createdExternalFactory_) {
+         #ifdef INTER_EXTERNAL
+         if (externalFactoryPtr_) {
             delete externalFactoryPtr_;
          }
          #endif
@@ -306,11 +264,11 @@ namespace McMd
             delete linkMasterPtr_;
          }
          #endif
-         #ifdef MCMD_TETHER
+         #ifdef INTER_TETHER
          if (tetherMasterPtr_) {
             delete tetherMasterPtr_;
          }
-         if (tetherFactoryPtr_ && createdTetherFactory_) {
+         if (tetherFactoryPtr_) {
             delete tetherFactoryPtr_;
          }
          #endif
@@ -327,7 +285,6 @@ namespace McMd
             delete replicaMovePtr_;
          }
          #endif
-
          #endif
       
          if (energyEnsemblePtr_) {
@@ -339,10 +296,10 @@ namespace McMd
          if (configIoPtr_) {
             delete configIoPtr_;
          }
-         if (configIoFactoryPtr_ && createdConfigIoFactory_) {
+         if (configIoFactoryPtr_) {
             delete configIoFactoryPtr_;
          }
-         if (trajectoryIoFactoryPtr_ && createdTrajectoryIoFactory_) {
+         if (trajectoryIoFactoryPtr_) {
             delete trajectoryIoFactoryPtr_;
          }
          if (fileMasterPtr_ && createdFileMaster_) {
@@ -365,7 +322,7 @@ namespace McMd
          #ifdef MCMD_LINK
          readLinkMaster(in);
          #endif
-         #ifdef MCMD_TETHER
+         #ifdef INTER_TETHER
          readTetherMaster(in);
          #endif
          readEnsembles(in);
@@ -388,7 +345,7 @@ namespace McMd
 
    void System::readPotentialStyles(std::istream &in)
    {
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       read<std::string>(in, "pairStyle", pairStyle_);
       #endif
 
@@ -396,13 +353,13 @@ namespace McMd
          read<std::string>(in, "bondStyle", bondStyle_);
       }
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       if (simulation().nAngleType() > 0) {
          read<std::string>(in, "angleStyle", angleStyle_);
       }
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       if (simulation().nDihedralType() > 0) {
          read<std::string>(in, "dihedralStyle", dihedralStyle_);
       }
@@ -414,13 +371,13 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       if (simulation().hasExternal()) {
          read<std::string>(in, "externalStyle", externalStyle_);
       }
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       if (simulation().hasTether()) {
          read<std::string>(in, "tetherStyle", tetherStyle_);
       }
@@ -446,7 +403,7 @@ namespace McMd
    }
    #endif 
 
-   #ifdef MCMD_TETHER
+   #ifdef INTER_TETHER
    void System::readTetherMaster(std::istream &in)
    {
       if (simulation().hasTether()) {
@@ -543,7 +500,6 @@ namespace McMd
    {
       if (!configIoFactoryPtr_) {
          configIoFactoryPtr_ = newDefaultConfigIoFactory();
-         createdConfigIoFactory_ = true;
       }
       return *configIoFactoryPtr_;
    }
@@ -561,7 +517,6 @@ namespace McMd
    {
       if (!configIoFactoryPtr_) {
          configIoFactoryPtr_ = newDefaultConfigIoFactory();
-         createdConfigIoFactory_ = true;
       }
       ConfigIo* ptr = configIoFactoryPtr_->factory(classname);
       if (!ptr) {
@@ -582,7 +537,6 @@ namespace McMd
    {
       if (!trajectoryIoFactoryPtr_) {
          trajectoryIoFactoryPtr_ = newDefaultTrajectoryIoFactory();
-         createdTrajectoryIoFactory_ = true;
       }
       return *trajectoryIoFactoryPtr_;
    }
@@ -770,7 +724,7 @@ namespace McMd
       return sum;
    }
 
-   #ifndef MCMD_NOPAIR
+   #ifndef INTER_NOPAIR
    /*
    * Return the PairFactory by reference.
    */
@@ -778,7 +732,6 @@ namespace McMd
    {
       if (!pairFactoryPtr_) {
          pairFactoryPtr_ = new PairFactory;
-         createdPairFactory_ = true;
       }
       assert(pairFactoryPtr_);
       return *pairFactoryPtr_;
@@ -798,7 +751,6 @@ namespace McMd
    {
       if (!bondFactoryPtr_) {
          bondFactoryPtr_ = new BondFactory(*this);
-         createdBondFactory_ = true;
       }
       assert(bondFactoryPtr_);
       return *bondFactoryPtr_;
@@ -810,7 +762,7 @@ namespace McMd
    std::string System::bondStyle() const
    {  return bondStyle_;  }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Return the AngleFactory by reference.
    */
@@ -818,7 +770,6 @@ namespace McMd
    {
       if (angleFactoryPtr_ == 0) {
          angleFactoryPtr_ = new AngleFactory(*this);
-         createdAngleFactory_ = true;
       }
       assert(angleFactoryPtr_);
       return *angleFactoryPtr_;
@@ -831,7 +782,7 @@ namespace McMd
    {  return angleStyle_;  }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /*
    * Return the DihedralFactory by reference.
    */
@@ -839,7 +790,6 @@ namespace McMd
    {
       if (dihedralFactoryPtr_ == 0) {
          dihedralFactoryPtr_ = new DihedralFactory(*this);
-         createdDihedralFactory_ = true;
       }
       assert(dihedralFactoryPtr_);
       return *dihedralFactoryPtr_;
@@ -861,7 +811,6 @@ namespace McMd
    {
       if (linkFactoryPtr_ == 0) {
          linkFactoryPtr_ = new LinkFactory(*this);
-         createdLinkFactory_ = true;
       }
       assert(linkFactoryPtr_);
       return *linkFactoryPtr_;
@@ -874,7 +823,7 @@ namespace McMd
    {  return linkStyle_;  }
    #endif
 
-   #ifdef MCMD_EXTERNAL
+   #ifdef INTER_EXTERNAL
    /*
    * Return the ExternalFactory by reference.
    */
@@ -882,7 +831,6 @@ namespace McMd
    {
       if (externalFactoryPtr_ == 0) {
          externalFactoryPtr_ = new ExternalFactory(*this);
-         createdExternalFactory_ = true;
       }
       assert(externalFactoryPtr_);
       return *externalFactoryPtr_;
@@ -895,7 +843,7 @@ namespace McMd
    {  return externalStyle_;  }
    #endif
 
-   #ifdef MCMD_TETHER
+   #ifdef INTER_TETHER
    /*
    * Return the TetherFactory by reference.
    */
@@ -903,7 +851,6 @@ namespace McMd
    {
       if (tetherFactoryPtr_ == 0) {
          tetherFactoryPtr_ = new TetherFactory;
-         createdTetherFactory_ = true;
       }
       assert(tetherFactoryPtr_);
       return *tetherFactoryPtr_;
@@ -948,7 +895,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       if (simulation().hasTether() > 0) {
          if (!tetherMasterPtr_) {
             UTIL_THROW("Null tetherMasterPtr_");

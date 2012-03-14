@@ -11,11 +11,11 @@
 #include "RingOctaRebridgeMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/Ring.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
@@ -115,13 +115,13 @@ namespace McMd
 
       //system().moveAtom(*mPtr, nPtr->position());
       mPtr->position() = nPtr->position();
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       system().pairPotential().updateAtomCell(*mPtr);
       #endif
 
       //system().moveAtom(*nPtr, swapV);
       nPtr->position() = swapV;
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       system().pairPotential().updateAtomCell(*nPtr);
       #endif
 
@@ -140,13 +140,13 @@ namespace McMd
 
          //system().moveAtom(*mPtr, nPtr->position());
          mPtr->position() = nPtr->position();
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          system().pairPotential().updateAtomCell(*mPtr);
          #endif
 
          //system().moveAtom(*nPtr, swapV);
          nPtr->position() = swapV;
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          system().pairPotential().updateAtomCell(*nPtr);
          #endif
       }
@@ -203,7 +203,7 @@ namespace McMd
       }
 
       // Get the neighbor list.
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       system().pairPotential().cellList().getNeighbors(mPos, neighbors_);
       nNeighbor = neighbors_.size();
       idList = new int[nNeighbor];

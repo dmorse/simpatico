@@ -11,11 +11,11 @@
 #include "CfbHomoReptationMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/Homopolymer.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <mcMd/chemistry/Bond.h>
@@ -104,7 +104,7 @@ namespace McMd
       }
       deleteEndAtom(tailPtr, atomPtr, bondType, rosen_r, energy_r);
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       // Delete from McSystem cell list
       system().pairPotential().deleteAtom(*tailPtr);
       #endif
@@ -143,7 +143,7 @@ namespace McMd
    
          tailPtr->position() = atomPtr->position();
 
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          // Add back to system cell list
          system().pairPotential().addAtom(*tailPtr);
          #endif
@@ -152,7 +152,7 @@ namespace McMd
          for (i=1; i < length - 1; ++i) {
             //system().moveAtom(*atomPtr, (atomPtr+sign)->position());
             atomPtr->position() = (atomPtr+sign)->position();
-            #ifndef MCMD_NOPAIR
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*atomPtr);
             #endif
             atomPtr += sign;
@@ -161,7 +161,7 @@ namespace McMd
          // Move head atom to new chosen position
          //system().moveAtom(*atomPtr, newPos);
          atomPtr->position() = newPos;
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          system().pairPotential().updateAtomCell(*atomPtr);
          #endif
 
@@ -170,7 +170,7 @@ namespace McMd
          // Restore old position of tail
          tailPtr->position() = oldPos;
 
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          // Add tail back to System cell list.
          system().pairPotential().addAtom(*tailPtr);
          #endif

@@ -1,4 +1,3 @@
-#ifdef  MCMD_DIHEDRAL
 #ifndef DIHEDRAL_FACTORY_CPP
 #define DIHEDRAL_FACTORY_CPP
 
@@ -15,10 +14,12 @@
 #include <mcMd/potentials/dihedral/DihedralPotentialImpl.h>
 
 // Dihedral Potential evaluator classes
-#include <mcMd/potentials/dihedral/CosineDihedral.h>
+#include <inter/dihedral/CosineDihedral.h>
 
 namespace McMd
 {
+
+   using namespace Inter;
 
    /**
    * Default constructor.
@@ -45,4 +46,3 @@ namespace McMd
 
 }
 #endif // ifndef DIHEDRAL_FACTORY_CPP
-#endif // ifdef MCMD_DIHEDRAL

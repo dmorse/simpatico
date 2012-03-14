@@ -1,4 +1,4 @@
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #ifndef MD_PAIR_POTENTIAL_IMPL_H
 #define MD_PAIR_POTENTIAL_IMPL_H
 
@@ -156,7 +156,7 @@ namespace McMd
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
 #include <mcMd/neighbor/PairIterator.h> 
-#include <mcMd/boundary/Boundary.h> 
+#include <util/boundary/Boundary.h> 
 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>

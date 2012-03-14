@@ -16,13 +16,13 @@
 #include <mcMd/chemistry/Molecule.h>       // member template parameter
 #include <mcMd/chemistry/SpeciesGroup.h>   // member template parameter
 #include <mcMd/chemistry/Bond.h>           // typedef
-#ifdef MCMD_ANGLE
+#ifdef INTER_ANGLE
 #include <mcMd/chemistry/Angle.h>          // typedef
 #endif
-#ifdef MCMD_DIHEDRAL
+#ifdef INTER_DIHEDRAL
 #include <mcMd/chemistry/Dihedral.h>          // typedef
 #endif
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 
 namespace McMd
 {
@@ -109,7 +109,7 @@ namespace McMd
       /// Array of pointers to Bond objects that contain a specific Atom.
       typedef FSArray<const Bond*, MaxBondPerAtom> AtomBondArray;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /// A SpeciesAngle has the local atom ids and a type id for an angle.
       typedef SpeciesGroup<3>               SpeciesAngle;
 
@@ -117,7 +117,7 @@ namespace McMd
       typedef FSArray<const Angle*, MaxAnglePerAtom> AtomAngleArray;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /// A SpeciesDihedral has the local atom ids and a type id for an angle.
       typedef SpeciesGroup<4>               SpeciesDihedral;
 
@@ -171,14 +171,14 @@ namespace McMd
       */
       int nBond() const;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Get number of angles per molecule for this Species.
       */
       int nAngle() const;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Get number of dihedrals per molecule for this Species.
       */
@@ -207,7 +207,7 @@ namespace McMd
       */
       void getAtomBonds(const Atom& atom, AtomBondArray& bonds) const;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Get a specific SpeciesAngle object, by local angle index.
       *
@@ -224,7 +224,7 @@ namespace McMd
       void getAtomAngles(const Atom& atom, AtomAngleArray& angles) const;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Get a specific SpeciesDihedral object, by local angle index.
       *
@@ -305,12 +305,12 @@ namespace McMd
       /// An array of local integer bond ids for all bonds containing one atom.
       typedef FSArray<int, MaxBondPerAtom>    AtomBondIdArray;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /// An array of local integer angle ids for all angles containing one atom.
       typedef FSArray<int, MaxAnglePerAtom>   AtomAngleIdArray;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /// An array of local integer angle ids for all dihedrals containing one atom.
       typedef FSArray<int, MaxDihedralPerAtom> AtomDihedralIdArray;
       #endif
@@ -341,7 +341,7 @@ namespace McMd
       */ 
       DArray<SpeciesBond>   speciesBonds_;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Array of SpeciesAngles for all angles, indexed by local angle id.
       * 
@@ -351,7 +351,7 @@ namespace McMd
       DArray<SpeciesAngle>   speciesAngles_;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Array of SpeciesDihedrals for all dihedrals, indexed by local dihedral id.
       * 
@@ -371,14 +371,14 @@ namespace McMd
       */
       int    nBond_;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Number of angles per molecule.
       */
       int    nAngle_;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Number of dihedrals per molecule.
       */
@@ -438,7 +438,7 @@ namespace McMd
       */
       void makeBond(int bondId, int atomId1, int atomId2, int bondType);
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Add an angle to the chemical structure of a generic molecule.
       *
@@ -455,7 +455,7 @@ namespace McMd
                      int angleType);
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Add a dihedral to the chemical structure of a generic molecule.
       *
@@ -506,7 +506,7 @@ namespace McMd
       */ 
       DArray<AtomBondIdArray> atomBondIdArrays_;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Array of AtomAngleIdArray objects for all atoms.
       * 
@@ -517,7 +517,7 @@ namespace McMd
       DArray<AtomAngleIdArray> atomAngleIdArrays_;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Array of AtomDihedralIdArray objects for all atoms.
       * 
@@ -578,7 +578,7 @@ namespace McMd
    inline int Species::nBond() const
    { return nBond_; }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Get number of angles per Molecule
    */
@@ -586,7 +586,7 @@ namespace McMd
    { return nAngle_; }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /*
    * Get number of dihedrals per Molecule
    */
@@ -606,7 +606,7 @@ namespace McMd
    inline const Species::SpeciesBond& Species::speciesBond(int iBond) const
    { return speciesBonds_[iBond]; }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Get a specific SpeciesAngle object by local index.
    */
@@ -614,7 +614,7 @@ namespace McMd
    { return speciesAngles_[iAngle]; }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /*
    * Get a specific SpeciesDihedral object by local index.
    */

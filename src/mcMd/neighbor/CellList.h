@@ -10,7 +10,7 @@
 
 #include "Cell.h"
 #include "CellTag.h"
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/containers/DArray.h>
 #include <util/containers/FSArray.h>

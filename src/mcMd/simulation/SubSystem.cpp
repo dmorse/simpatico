@@ -29,19 +29,19 @@ namespace McMd
       moleculeSetsPtr_(parent.moleculeSetsPtr_),
       boundaryPtr_(parent.boundaryPtr_),
       hasBonds_(parent.simulation().nBondType() > 0)
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       , hasAngles_(parent.simulation().nAngleType() > 0)
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       , hasDihedrals_(parent.simulation().nDihedralType() > 0)
       #endif
       #ifdef MCMD_LINK
       , hasLinks_(parent.simulation().nLinkType() > 0)
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       , hasExternal_(parent.simulation().hasExternal())
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       , hasTethers_(parent.simulation().hasTether())
       #endif
    {}

@@ -1,14 +1,15 @@
 #ifndef EXCHANGER_TEST_H
 #define EXCHANGER_TEST_H
 
+#include <ddMd/configIo/ConfigIo.h>
 #include <ddMd/communicate/Domain.h>
+#include <ddMd/communicate/Buffer.h>
+#include <ddMd/communicate/Exchanger.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/storage/BondStorage.h>
-#include <ddMd/configIo/ConfigIo.h>
-#include <ddMd/communicate/Buffer.h>
-#include <ddMd/communicate/Exchanger.h>
+#include <ddMd/chemistry/MaskPolicy.h>
 #include <util/random/Random.h>
 #include <util/mpi/MpiLogger.h>
 
@@ -75,7 +76,8 @@ public:
       // Finish reading parameter file
       closeFile();
 
-      configIo.readConfig("in/config");
+      MaskPolicy policy = MaskBonded;
+      configIo.readConfig("in/config", policy);
 
       object().allocate();
       object().setPairCutoff(0.5);

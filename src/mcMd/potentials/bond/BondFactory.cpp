@@ -16,16 +16,18 @@
 #include <mcMd/potentials/bond/BondPotentialImpl.h>
 
 // Bond Potential evaluator classes
-#include <mcMd/potentials/bond/HarmonicBond.h>
-#include <mcMd/potentials/bond/HarmonicL0Bond.h>
-#include <mcMd/potentials/bond/FeneBond.h>
-#include <mcMd/potentials/bond/CompositeBond.h>
+#include <inter/bond/HarmonicBond.h>
+#include <inter/bond/HarmonicL0Bond.h>
+#include <inter/bond/FeneBond.h>
+#include <inter/bond/CompositeBond.h>
 
-#include <mcMd/potentials/pair/DpdPair.h>
-#include <mcMd/potentials/pair/LJPair.h>
+#include <inter/pair/DpdPair.h>
+#include <inter/pair/LJPair.h>
 
 namespace McMd
 {
+
+   using namespace Inter;
 
    /**
    * Default constructor.

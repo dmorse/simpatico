@@ -31,10 +31,10 @@ namespace McMd
       read<int>(in,"nAtom", nAtom_);
       read<int>(in,"type", type_);
       nBond_  = nAtom_;
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       nAngle_ = nAtom_;
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       nDihedral_ = nAtom_;
       #endif
       buildRing();
@@ -52,7 +52,7 @@ namespace McMd
    int HomoRing::calculateBondTypeId(int index) const
    { return 0; }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /* 
    * Return 0 for every angle.
    */
@@ -60,7 +60,7 @@ namespace McMd
    { return 0; }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /* 
    * Return 0 for every dihedral.
    */

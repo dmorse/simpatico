@@ -72,17 +72,17 @@ namespace DdMd
    void DpdSoftPair::readParam(std::istream &in) 
    {
       // Preconditions
-      if (nAtomType_ == 0) {
+      if (nAtomType_ <= 0) {
          UTIL_THROW( "nAtomType must be set before readParam");
       }
    
       // Read parameters
-      readBegin(in, "DpdSoftPair");
+      //readBegin(in, "DpdSoftPair");
       readCArray2D<double> (
                   in, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
       readCArray2D<double>(
                   in, "sigma", sigma_[0], nAtomType_, nAtomType_);
-      readEnd(in);
+      //readEnd(in);
    
       // Calculate sigmaSq_, ce_, cf_, and maxPairCutoff_
       int i, j;

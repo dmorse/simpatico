@@ -127,6 +127,12 @@ namespace DdMd
          }
       }
   
+      /**
+      * Get communication plan by reference.
+      */
+      Plan& plan()
+      {  return plan_; }
+
       // Accessors
  
       /**
@@ -163,6 +169,12 @@ namespace DdMd
       int nPtr() const 
       {  return nPtr_; }
    
+      /**
+      * Get communication plan (const reference).
+      */
+      const Plan& plan() const
+      {  return plan_; }
+
    private:
       
       /// Array of pointers to Atoms in this group.
@@ -179,6 +191,9 @@ namespace DdMd
 
       /// Number of non-null atom pointers in this Group.
       int  nPtr_;
+
+      // Communication plan.
+      Plan plan_;
 
    //friends:
 

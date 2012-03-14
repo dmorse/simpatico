@@ -53,12 +53,12 @@ namespace McMd
       #if 0
       bool hasBondPotential() const;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       // Does an angle potential exist?
       bool hasAnglePotential() const;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       // Does a dihedral potential exist?
       bool hasDihedralPotential() const;
       #endif
@@ -68,12 +68,12 @@ namespace McMd
       bool hasLinkPotential() const;
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       // Does an external potential exist?
       bool hasExternalPotential() const;
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       // Does a tether potential exist?
       bool hasTetherPotential() const;
       #endif
@@ -88,12 +88,12 @@ namespace McMd
       // Does a bond potential exist?
       bool hasBondPotential_;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       // Does an angle potential exist?
       bool hasAnglePotential_;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       // Does a dihedral potential exist?
       bool hasDihedralPotential_;
       #endif
@@ -103,12 +103,12 @@ namespace McMd
       bool hasLinkPotential_;
       #endif
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       // Does an external potential exist?
       bool hasExternalPotential_;
       #endif
 
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       // Does a tether potential exist?
       bool hasTetherPotential_;
       #endif
@@ -125,19 +125,19 @@ namespace McMd
       systemPtr_(&system)
       #if 0
       , hasBondPotential_(system.simulation().nBondType() > 0)
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       , hasAnglePotential_(system.simulation().nAngleType() > 0)
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       , hasDihedralPotential_(system.simulation().nDihedralType() > 0)
       #endif
       #ifdef MCMD_LINK
       , hasLinkPotential_(system.simulation().nLinkType() > 0)
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       , hasExternalPotential_(system.simulation().hasExternal())
       #endif
-      #ifdef MCMD_TETHER
+      #ifdef INTER_TETHER
       , hasTetherPotential_(system.simulation().hasTether())
       #endif
       #endif
@@ -169,7 +169,7 @@ namespace McMd
    inline bool SystemDiagnostic<SystemType>::hasBondPotential() const
    {  return hasBondPotential_; }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Does an angle potential exist?
    */
@@ -178,7 +178,7 @@ namespace McMd
    {  return hasAnglePotential_; }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /// Does a dihedral potential exist?
    template <class SystemType>
    inline bool SystemDiagnostic<SystemType>::hasDihedralPotential() const
@@ -192,14 +192,14 @@ namespace McMd
    { return hasLinkPotential_; }
    #endif
 
-   #ifdef MCMD_EXTERNAL
+   #ifdef INTER_EXTERNAL
    /// Does an external potential exist?
    template <class SystemType>
    inline bool SystemDiagnostic<SystemType>::hasExternalPotential() const
    { return hasExternalPotential_; }
    #endif
 
-   #ifdef MCMD_TETHER
+   #ifdef INTER_TETHER
    /// Does a tether potential exist?
    template <class SystemType>
    inline bool SystemDiagnostic<SystemType>::hasTetherPotential() const

@@ -32,11 +32,11 @@ namespace McMd
          UTIL_THROW("nAtom < 3");
       if (nBond() != nAtom()) 
          UTIL_THROW("nBond != nAtom");
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       if (nAngle() != nAtom()) 
          UTIL_THROW("nAngle != nAtom");
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       if (nDihedral() != nAtom()) 
          UTIL_THROW("nDihedral != nAtom");
       #endif
@@ -56,14 +56,14 @@ namespace McMd
          makeBond(i, i, (i+1)%nAtom(), calculateBondTypeId(i));
       }
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       // Build Angles.
       for (i = 0; i < nAngle(); ++i) {
          makeAngle(i, i, (i+1)%nAtom(), (i+2)%nAtom(), calculateAngleTypeId(i));
       }
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       // Build Dihedrals. 
       for (i = 0; i < nDihedral(); ++i) {
          makeDihedral(i, i, (i+1)%nAtom(), (i+2)%nAtom(), (i+3)%nAtom(),

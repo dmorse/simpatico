@@ -9,8 +9,10 @@ SRC_DIR_REL=../..
 # Include master makefiles
 include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
+include $(SRC_DIR_REL)/inter/defines.mk
 include $(SRC_DIR_REL)/mcMd/defines.mk
 include $(SRC_DIR_REL)/util/sources.mk
+include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/mcMd/sources.mk
 include $(SRC_DIR_REL)/modules/sliplink/sources.mk
 include $(SRC_DIR_REL)/mcMd/patterns.mk
@@ -47,12 +49,14 @@ clean-deps:
 #-------------------------------------------------------------------
 # Executables 
 
-$(MCSIM_EXE): mcSim.o $(modules_sliplink_OBJS) $(mcMd_LIB) $(util_LIB) $(LIBS)
+$(MCSIM_EXE): mcSim.o $(modules_sliplink_OBJS) \
+                 $(mcMd_LIB) $(inter_LIB)$(util_LIB) $(LIBS)
 	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) mcSim.o \
                  $(modules_sliplink_OBJS) \
-                 $(mcMd_LIB) $(util_LIB) $(LIBS)
+                 $(mcMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
 
-$(MDSIM_EXE): mdSim.o $(modules_sliplink_OBJS) $(mcMd_LIB) $(util_LIB) $(LIBS)
+$(MDSIM_EXE): mdSim.o $(modules_sliplink_OBJS) \
+                 $(mcMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
 	$(CXX) $(LDFLAGS) -o $(MDSIM_EXE) mdSim.o \
                  $(modules_sliplink_OBJS) \
-                 $(mcMd_LIB) $(util_LIB) $(LIBS)
+                 $(mcMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)

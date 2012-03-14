@@ -2,6 +2,4 @@
 
 cp defines.mk_r  defines.mk
 cp boundary/Boundary.h_r  boundary/Boundary.h
-cp potentials/PairInteraction.h_r  potentials/PairInteraction.h
-cp potentials/BondInteraction.h_r  potentials/BondInteraction.h
 

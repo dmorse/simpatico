@@ -18,8 +18,9 @@
 #------------------------------------------------------------------------
 
 cp  src/util/defines.mk_r  src/util/defines.mk
+cp  src/inter/defines.mk_r src/inter/defines.mk
 cp  src/mcMd/defines.mk_r  src/mcMd/defines.mk
 cp  src/main/defines.mk_r  src/main/defines.mk
-cp  src/mcMd/boundary/Boundary.h_r src/mcMd/boundary/Boundary.h
+cp  src/util/boundary/Boundary.h_r src/util/boundary/Boundary.h
 sed "s|=PWD|=$PWD|" src/compiler.mk_r > src/compiler.mk
 

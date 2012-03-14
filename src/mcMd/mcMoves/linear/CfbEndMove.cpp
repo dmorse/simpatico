@@ -11,11 +11,11 @@
 #include "CfbEndMove.h"
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/species/Linear.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Bond.h>
 #include <mcMd/chemistry/Atom.h>
@@ -113,7 +113,7 @@ namespace McMd
             bondType = molPtr->bond(i).typeId();
          }
          deleteEndAtom(endPtr, pvtPtr, bondType, rosenbluth, energy);
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          system().pairPotential().deleteAtom(*endPtr);
          #endif
          rosen_r  *= rosenbluth;
@@ -136,7 +136,7 @@ namespace McMd
          rosen_f  *= rosenbluth;
          energy_f += energy;
 
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          // Add end atom to McSystem cell list
          system().pairPotential().addAtom(*endPtr);
          #endif
@@ -160,7 +160,7 @@ namespace McMd
          for (i = 0; i < nRegrow_; ++i) {
             // system().moveAtom(*endPtr, oldPos_[i]);
             endPtr->position() = oldPos_[i];
-            #ifndef MCMD_NOPAIR
+            #ifndef INTER_NOPAIR
             system().pairPotential().updateAtomCell(*endPtr);
             #endif
             endPtr += sign;

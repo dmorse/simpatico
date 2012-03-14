@@ -11,7 +11,7 @@
 #include "VolumeAverage.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/species/Species.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
 #include <util/archives/Serializable_includes.h>

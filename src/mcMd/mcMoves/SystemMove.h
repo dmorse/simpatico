@@ -10,7 +10,7 @@
 
 #include <mcMd/mcMoves/McMove.h>      // base class
 #include <mcMd/ensembles/EnergyEnsemble.h> // inline function
-#include <mcMd/boundary/Boundary.h>        // typedef
+#include <util/boundary/Boundary.h>        // typedef
 
 namespace McMd
 {

@@ -1,4 +1,4 @@
-#ifdef  MCMD_ANGLE
+#ifdef  INTER_ANGLE
 #ifndef ANGLE_POTENTIAL_IMPL_H
 #define ANGLE_POTENTIAL_IMPL_H
 
@@ -160,7 +160,7 @@ namespace McMd
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
 #include <mcMd/species/Species.h>
-#include <mcMd/boundary/Boundary.h> 
+#include <util/boundary/Boundary.h> 
 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>

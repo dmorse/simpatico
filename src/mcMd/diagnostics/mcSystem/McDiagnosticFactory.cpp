@@ -53,7 +53,7 @@ namespace McMd
       if (className == "McEnergyOutput") {
          ptr = new McEnergyOutput(system());
       } else
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       if (className == "McPairEnergyAverage") {
          ptr = new McPairEnergyAverage(system());
       } else
@@ -61,7 +61,7 @@ namespace McMd
       if (className == "McBondEnergyAverage") {
          ptr = new McBondEnergyAverage(system());
       } else
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       if (className == "McExternalEnergyAverage") {
          ptr = new McExternalEnergyAverage(system());
       } else

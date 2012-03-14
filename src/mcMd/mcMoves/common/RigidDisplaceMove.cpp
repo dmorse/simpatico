@@ -13,7 +13,7 @@
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/mcSimulation/mc_potentials.h>
 #include <mcMd/species/Species.h>
-#include <mcMd/boundary/Boundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/space/Dimension.h>
@@ -69,13 +69,13 @@ namespace McMd
       for (iAtom = 0; iAtom < nAtom_; ++iAtom) {
          atomPtr = &molPtr->atom(iAtom);
          oldPositions_[iAtom] = atomPtr->position();
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          oldEnergy += system().pairPotential().atomEnergy(*atomPtr);
          #endif
-         #ifdef MCMD_EXTERNAL
+         #ifdef INTER_EXTERNAL
          oldEnergy += system().externalPotential().atomEnergy(*atomPtr);
          #endif
-         #ifdef MCMD_TETHER
+         #ifdef INTER_TETHER
          oldEnergy += system().atomTetherEnergy(*atomPtr);
          #endif
       }
@@ -91,13 +91,13 @@ namespace McMd
          atomPtr = &molPtr->atom(iAtom);
          atomPtr->position() += dr;
          boundary().shift(atomPtr->position());
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          newEnergy += system().pairPotential().atomEnergy(*atomPtr);
          #endif
-         #ifdef MCMD_EXTERNAL
+         #ifdef INTER_EXTERNAL
          newEnergy += system().externalPotential().atomEnergy(*atomPtr);
          #endif
-         #ifdef MCMD_TETHER
+         #ifdef INTER_TETHER
          newEnergy += system().atomTetherEnergy(*atomPtr);
          #endif
       }
@@ -107,7 +107,7 @@ namespace McMd
 
       if (accept) {
    
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          // Update cell
          for (iAtom = 0; iAtom < nAtom_; ++iAtom) {
             system().pairPotential().updateAtomCell(molPtr->atom(iAtom));

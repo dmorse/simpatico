@@ -14,7 +14,7 @@
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/chemistry/Atom.h>
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
@@ -83,7 +83,7 @@ namespace McMd
       }
 
       // Initialize MdSystem
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       mdSystemPtr_->pairPotential().buildPairList();
       #endif
       mdSystemPtr_->calculateForces();
@@ -109,7 +109,7 @@ namespace McMd
       // Accept move
       if (accept) {
 
-         #ifndef MCMD_NOPAIR
+         #ifndef INTER_NOPAIR
          // Rebuild the McSystem cellList using the new positions.
          system().pairPotential().buildCellList();
          #endif

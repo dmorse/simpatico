@@ -8,6 +8,7 @@ SRC_DIR_REL=..
 include $(SRC_DIR_REL)/compiler.mk
 
 include $(SRC_DIR_REL)/util/defines.mk
+include $(SRC_DIR_REL)/inter/defines.mk
 include $(SRC_DIR_REL)/mcMd/defines.mk
 include $(SRC_DIR_REL)/main/defines.mk
 
@@ -33,9 +34,11 @@ clean-deps:
 
 -include $(main_OBJS:.o=.d)
 
-$(MCSIM_EXE): mcSim.o $(util_LIB) $(mcMd_LIB)
-	$(CXX) -L/opt/torque/2.5.11/lib $(LDFLAGS) -o $(MCSIM_EXE) mcSim.o $(mcMd_LIB) $(util_LIB) $(LIBS)
+$(MCSIM_EXE): mcSim.o $(util_LIB) $(inter_LIB) $(mcMd_LIB)
+	$(CXX) -L/opt/torque/2.5.11/lib $(LDFLAGS) -o $(MCSIM_EXE) mcSim.o \
+               $(mcMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
  
 $(MDSIM_EXE): mdSim.o $(util_LIB) $(mcMd_LIB)
-	$(CXX) -L/opt/torque/2.5.11/lib $(LDFLAGS) -o $(MDSIM_EXE) mdSim.o $(mcMd_LIB) $(util_LIB) $(LIBS)
+	$(CXX) -L/opt/torque/2.5.11/lib $(LDFLAGS) -o $(MDSIM_EXE) mdSim.o \
+        $(mcMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
  

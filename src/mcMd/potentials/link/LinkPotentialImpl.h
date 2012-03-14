@@ -169,7 +169,7 @@ namespace McMd
 #include <mcMd/simulation/Simulation.h> 
 #include <mcMd/simulation/stress.h>
 #include <mcMd/species/Species.h>
-#include <mcMd/boundary/Boundary.h> 
+#include <util/boundary/Boundary.h> 
 #include <mcMd/links/Link.h>
 
 #include <util/space/Dimension.h>

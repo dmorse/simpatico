@@ -273,6 +273,14 @@ namespace DdMd
       pack<Vector>(atom.velocity());
       pack<unsigned int>(atom.plan().flags());
 
+      // Pack Mask
+      Mask& mask = atom.mask();
+      int size = mask.size();
+      pack<int>(size);
+      for (int j = 0; j < size; ++j) {
+         pack<int>(mask[j]);
+      }
+
       //Increment number of atoms in send buffer by 1
       ++sendSize_;
    }
@@ -300,9 +308,21 @@ namespace DdMd
       unpack<Vector>(atom.position());
       unpack<Vector>(atom.velocity());
 
+      // Unpack communication plan
       unsigned int ui;
       unpack(ui);
       atom.plan().setFlags(ui);
+
+      // Unpack atom Mask
+      Mask& mask = atom.mask();
+      mask.clear();
+      int size;
+      unpack(size);
+      for (int j = 0; j < size; ++j) {
+         unpack(i);
+         mask.append(i);
+      }
+      assert(mask.size() == size);
 
       // Decrement number of atoms in recv buffer by 1
       recvSize_--;
@@ -355,6 +375,41 @@ namespace DdMd
       unsigned int ui;
       unpack(ui);
       atom.plan().setFlags(ui);
+      
+      //Decrement number of atoms in recv buffer to be unpacked by 1
+      recvSize_--;
+   }
+
+   /*
+   * Pack data required to update a ghost atom.
+   */
+   void Buffer::packUpdate(Atom& atom)
+   {
+      // Preconditions
+      if (sendType_ != UPDATE) {
+         UTIL_THROW("Send type is not UPDATE");
+      }
+      if (sendSize_ >= ghostCapacity_) {
+         UTIL_THROW("Attempt to overpack buffer: sendSize> >= ghostCapacity_");
+      }
+      pack<Vector>(atom.position());
+
+      //Increment number of atoms in send buffer by 1
+      sendSize_++;
+   }
+
+   /**
+   * Unpack data required for a ghost Atom.
+   */
+   void Buffer::unpackUpdate(Atom& atom)
+   {
+      if (recvType_ != (int)UPDATE) {
+         UTIL_THROW("Receive type is not UPDATE");
+      }
+      if (recvSize_ <= 0) {
+         UTIL_THROW("Attempt to unpack empty receive buffer");
+      }
+      unpack<Vector>(atom.position());
       
       //Decrement number of atoms in recv buffer to be unpacked by 1
       recvSize_--;

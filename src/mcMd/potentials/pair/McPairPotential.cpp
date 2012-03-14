@@ -1,4 +1,4 @@
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #ifndef  MC_PAIR_POTENTIAL_CPP
 #define  MC_PAIR_POTENTIAL_CPP
 
@@ -12,7 +12,7 @@
 #include "McPairPotential.h"
 #include <mcMd/simulation/System.h> 
 #include <mcMd/simulation/Simulation.h> 
-#include <mcMd/boundary/Boundary.h> 
+#include <util/boundary/Boundary.h> 
 #include <mcMd/chemistry/Atom.h> 
 #include <mcMd/chemistry/Molecule.h> 
 

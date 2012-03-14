@@ -31,10 +31,10 @@ namespace McMd
    Species::Species()
     : nAtom_(0),
       nBond_(0),
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       nAngle_(0),
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       nDihedral_(0),
       #endif
       mutatorPtr_(0),
@@ -74,10 +74,10 @@ namespace McMd
    {
       read<int>(in, "nAtom", nAtom_);
       read<int>(in, "nBond", nBond_);
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       read<int>(in, "nAngle", nAngle_);
       #endif
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       read<int>(in, "nDihedral", nDihedral_);
       #endif
 
@@ -101,7 +101,7 @@ namespace McMd
 
       }
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       if (nAngle_ > 0) {
 
          readDArray<SpeciesAngle>(in, "speciesAngles", speciesAngles_,
@@ -120,7 +120,7 @@ namespace McMd
       }
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       // Make atomDihedralIdArrays
       if (nDihedral_ > 0) {
 
@@ -172,7 +172,7 @@ namespace McMd
 
    }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Get an array of pointers to Angles that contain an Atom.
    */
@@ -198,7 +198,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /*
    * Get an array of pointers to Dihedrals that contain an Atom.
    */
@@ -257,14 +257,14 @@ namespace McMd
       if (nBond_ > 0) {
          speciesBonds_.allocate(nBond_);
       } 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       atomAngleIdArrays_.allocate(nAtom_);
       if (nAngle_ > 0) {
          speciesAngles_.allocate(nAngle_);
       } 
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       atomDihedralIdArrays_.allocate(nAtom_);
       if (nDihedral_ > 0) {
          speciesDihedrals_.allocate(nDihedral_);
@@ -309,7 +309,7 @@ namespace McMd
 
    }
 
-   #ifdef MCMD_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Add an angle to the species chemical structure.
    */
@@ -339,7 +339,7 @@ namespace McMd
    }
    #endif
 
-   #ifdef MCMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /*
    * Add a dihedral to the species chemical structure.
    */
@@ -461,7 +461,7 @@ namespace McMd
          if (bondCounter != 2*nBond_) 
             UTIL_THROW("Inconsistency in total number of bonds");
 
-         #ifdef MCMD_ANGLE
+         #ifdef INTER_ANGLE
          // Loop over all angles (if any) in speciesAngles_ array
          int  angleId, id, id2, atomId2(-1);
          bool hasAngle;
@@ -523,7 +523,7 @@ namespace McMd
             UTIL_THROW("Inconsistency in total number of angles");
          #endif
 
-         #ifdef MCMD_DIHEDRAL
+         #ifdef INTER_DIHEDRAL
          // Loop over all dihedrals (if any) in speciesDihedrals_ array
          int  dihedralId, tId, tId2, tAtomId, tAtomId2;
          bool hasDihedral;

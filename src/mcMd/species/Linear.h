@@ -64,14 +64,14 @@ namespace McMd
 
    protected:
 
-      #ifdef MCMD_ANGLE 
+      #ifdef INTER_ANGLE 
       /**
       * Does this chain have angle potentials (0 = false, 1 = true).
       */
       int hasAngles_;
       #endif
    
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Does this chain have dihedral potentials (0 = false, 1 = true).
       */
@@ -101,7 +101,7 @@ namespace McMd
       */
       virtual int calculateBondTypeId(int index) const = 0;
 
-      #ifdef MCMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Return the angle type id for a specific angle.
       *
@@ -113,7 +113,7 @@ namespace McMd
       virtual int calculateAngleTypeId(int index) const = 0;
       #endif
 
-      #ifdef MCMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Return the dihedral type id for a specific dihedral.
       *

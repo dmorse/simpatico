@@ -13,6 +13,7 @@
 #include <mcMd/simulation/Simulation.h>
 
 #include <util/param/ParamComposite.h>
+#include <util/boundary/Boundary.h>
 #include <util/global.h>
 
 #include <math.h>
@@ -25,7 +26,6 @@
 #include <hoomd/PotentialExternalGPU.cuh>
 #include <hoomd/PotentialExternalGPU.h>
 #include <hoomd/HOOMDMath.h>
-
 
 namespace McMd
 {
