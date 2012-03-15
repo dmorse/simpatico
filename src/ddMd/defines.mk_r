@@ -15,25 +15,6 @@
 #-----------------------------------------------------------------------
 # Makefile variables to define preprocessor macros
 
-# Define DDMD_NOPAIR, disable non-bonded pair potentials 
-#DDMD_NOPAIR=1
-
-# Define DDMD_ANGLE, enable 3-body angle potentials
-#DDMD_ANGLE=1
-
-# Define DDMD_DIHEDRAL, enable 4-body dihedral torsion potentials
-#DDMD_DIHEDRAL=1
-
-# Define DDMD_LINK, enable Link (mutable bond) potentials 
-#DDMD_LINK=1
-
-# Define DDMD_EXTERNAL, enable external potentials
-#DDMD_EXTERNAL=1
-
-# Define DDMD_SHIFT, enable recording of shifts of atomic coordinates
-# into primary periodic unit cell in MD simulations. 
-#DDMD_SHIFT=1
-
 #-----------------------------------------------------------------------
 # The following code defines the variables DDMD_DEFS and DDMD_SUFFIX.
 #
@@ -41,7 +22,7 @@
 # the compiler, using the "-D" compiler option. If not empty, it must 
 # consist of a list of zero or more preprocessor macro names, each 
 # preceded by the compiler flag "-D".  For example, setting DDMD_DEFS 
-# to "-DDDMD_ANGLE -DDDMD_DIHEDRAL" will cause compilation of a version 
+# to "-DUTIL_DEBUG -DINTER_ANGLE" will cause compilation of a version
 # of the code with debugging and angles enabled.
 #
 # The variable DDMD_SUFFIX is appended to the base names of the library 
@@ -58,63 +39,16 @@
 # values of the strings UTIL_DEFS and UTIL_SUFFIX, and thus begin 
 # with any strings defined there to control MPI and/or debugging.
 
-DDMD_DEFS=$(UTIL_DEFS)
-DDMD_SUFFIX:=$(UTIL_SUFFIX)
+DDMD_DEFS=$(INTER_DEFS)
+DDMD_SUFFIX:=$(INTER_SUFFIX)
 
 # The variable DDMD_DEFS is a recursive (normal) makefile variable, and
-# may be extended using the += operator, e.g., DDMD_DEFS+=-DDDMD_ANGLE.
+# may be extended using the += operator, e.g., DDMD_DEFS+=-DINTER_ANGLE.
 # The DDMD_SUFFIX is a non-recursive makefile variable, which may be 
 # extended using the := operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_a. 
 # They are defined differently because the += operator adds a white 
 # space before an added string, which is appropriate for DDMD_DEFS, 
 # but not for DDMD_SUFFIX. 
-#
-# Each if block in what follows contains two lines: The first adds a 
-# string containing a preprocessor macro to DDMD_DEFS. The second
-# adds an underscore and a string of one or two identifying letters 
-# to DDMD_SUFFIX. The addition of suffixes to the library and 
-# executable names is optional, and may be suppressed by commenting
-# out the relevant lines.
-#
-# See the file src/ddMd/dox/preprocessor.dox for an explanation of all
-# of preprocessor macros listed below.
-
-# Disable non-bonded pair potentials 
-ifdef DDMD_NOPAIR
-DDMD_DEFS+= -DDDMD_NOPAIR
-DDMD_SUFFIX:=$(DDMD_SUFFIX)_np
-endif
-
-# Enable angle potential
-ifdef DDMD_ANGLE
-DDMD_DEFS+= -DDDMD_ANGLE
-DDMD_SUFFIX:=$(DDMD_SUFFIX)_a
-endif
-
-# Enable dihedral potential
-ifdef DDMD_DIHEDRAL
-DDMD_DEFS+= -DDDMD_DIHEDRAL
-DDMD_SUFFIX:=$(DDMD_SUFFIX)_d
-endif
-
-# Enable Link (mutable bond) potentials 
-ifdef DDMD_LINK
-DDMD_DEFS+= -DDDMD_LINK
-DDMD_SUFFIX:=$(DDMD_SUFFIX)_l
-endif
-
-# Enable external potential
-ifdef DDMD_EXTERNAL
-DDMD_DEFS+= -DDDMD_EXTERNAL
-DDMD_SUFFIX:=$(DDMD_SUFFIX)_e
-endif
-
-# Enable recording of shifts of atomic coordinates into
-# primary periodic unit cell in MD simulations. 
-ifdef DDMD_SHIFT
-DDMD_DEFS+= -DDDMD_SHIFT
-DDMD_SUFFIX:=$(DDMD_SUFFIX)_s
-endif
 
 #-----------------------------------------------------------------------
 # Library of objects from the DdMd namespace, or src/ddMd directory

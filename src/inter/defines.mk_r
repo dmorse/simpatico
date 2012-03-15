@@ -49,13 +49,9 @@
 # but can be useful for managing several versions of the libraries 
 # and executables that were compiled with different preprocessor 
 # macros defined. 
-#
-# The variables INTER_DEFS and INTER_SUFFIX are initialized with the
-# values of the strings UTIL_DEFS and UTIL_SUFFIX, and thus begin 
-# with any strings defined there to control MPI and/or debugging.
-
-INTER_DEFS=$(UTIL_DEFS)
-INTER_SUFFIX:=$(UTIL_SUFFIX)
+ 
+INTER_DEFS=
+INTER_SUFFIX:=
 
 # The variable INTER_DEFS is a recursive (normal) makefile variable, and
 # may be extended using the += operator, e.g., INTER_DEFS+=-DINTER_ANGLE.

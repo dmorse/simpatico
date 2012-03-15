@@ -32,8 +32,8 @@
 # the compiler, using the "-D" compiler option. If not empty, it must 
 # consist of a list of zero or more preprocessor macro names, each 
 # preceded by the compiler flag "-D".  For example, setting MCMD_DEFS 
-# to "-DINTER_ANGLE -DINTER_DIHEDRAL" will cause compilation of a version 
-# of the code with debugging and angles enabled.
+# to "-DUTIL_DEBUG -DINTER_DIHEDRAL" will cause compilation of a 
+# version of the code with debugging and angles enabled.
 #
 # The variable MCMD_SUFFIX is appended to the base names of the library 
 # mcMd.a in the $(LIB_DIR) directory and (by default) to the executables 
@@ -46,11 +46,17 @@
 # macros defined. 
 #
 # The variables MCMD_DEFS and MCMD_SUFFIX are initialized with the
-# values of the strings UTIL_DEFS and UTIL_SUFFIX, and thus begin 
-# with any strings defined there to control MPI and/or debugging.
+# values of the strings INTER_DEFS and INTER_SUFFIX. These strings,
+# which are defines in the files src/inter/defines.mk, are in 
+# turn initialized with the values of the strings UTIL_DEFS and 
+# UTIL_SUFFIX, which are defined in the file src/util/defines.mk. 
+# The MCMD_DEFS and MCMD_SUFFIX strings thus begin with any 
+# strings defines in src/util/defines.mk or src.inter/defines.mk,
+# and thus contain informationa about any preprocessor macros
+# defined in either of those two files. 
 
-MCMD_DEFS=$(UTIL_DEFS) $(INTER_DEFS)
-MCMD_SUFFIX:=$(UTIL_SUFFIX)$(INTER_SUFFIX)
+MCMD_DEFS=
+MCMD_SUFFIX:=
 
 # The variable MCMD_DEFS is a recursive (normal) makefile variable, and
 # may be extended using the += operator, e.g., MCMD_DEFS+=-DINTER_ANGLE.
@@ -62,7 +68,7 @@ MCMD_SUFFIX:=$(UTIL_SUFFIX)$(INTER_SUFFIX)
 #
 # Each if block in what follows contains two lines: The first adds a 
 # string containing a preprocessor macro to MCMD_DEFS. The second
-# adds an underscore and a string of one or two identifying letters 
+# adds an underscore and a suffix of one or two identifying letters 
 # to MCMD_SUFFIX. The addition of suffixes to the library and 
 # executable names is optional, and may be suppressed by commenting
 # out the relevant lines.
