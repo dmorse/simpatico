@@ -45,7 +45,7 @@ System{
     type             rigid
   }
   NveIntegrator{
-    dt               0.005
+    dt               0.002
   }
   Random{
     seed        8012457890

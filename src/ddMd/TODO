@@ -5,10 +5,9 @@ Domain Decomposition MD (DdMd)
 
 - Write GroupCollector template, add to ConfigIo.
 
-- Move collective energy calculation to potential classes.
-  Divde into "compute" and accessor functions.
+- Port NVT integrators and add IntegratorFactory.
 
-- Port NVT and NPH integrators.
+- Add stress mode and port NPH integrator.
 
 - Add ConfigIo factory and SET_CONFIG_IO command.
 
