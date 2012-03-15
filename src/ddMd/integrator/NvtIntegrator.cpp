@@ -1,5 +1,5 @@
-#ifndef NVE_INTEGRATOR_CPP
-#define NVE_INTEGRATOR_CPP
+#ifndef NVT_INTEGRATOR_CPP
+#define NVT_INTEGRATOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -24,25 +24,18 @@ namespace DdMd
 {
    using namespace Util;
 
-   /*
-   * Constructor.
-   */
-   NvtIntegrator::NvtIntegrator(System& system)
-    : Integrator(system)
-   {}
-
    /* 
    * Constructor.
    */
-   NvtIntegrator::NvtIntegrator(MdSystem& system)
-    : MdIntegrator(system),
+   NvtIntegrator::NvtIntegrator(System& system)
+    : Integrator(system),
+      prefactors_(),
       T_target_(1.0),
       T_kinetic_(1.0),
       xi_(0.0),
       xiDot_(0.0),
       tauT_(1.0),
-      nuT_(1.0),
-      energyEnsemblePtr_(0)
+      nuT_(1.0)
    {
       // Note: Within the constructor, the method parameter "system" hides 
       // the system() method name.
@@ -52,10 +45,8 @@ namespace DdMd
          UTIL_THROW("System energy ensemble is not isothermal");
       }
 
-      energyEnsemblePtr_ = &(system.energyEnsemble());
-      T_target_          = energyEnsemblePtr_->temperature();
-      T_kinetic_         = T_target_;
-
+      T_target_  = system.energyEnsemble().temperature();
+      T_kinetic_ = T_target_;
    }
 
    /*
@@ -64,35 +55,23 @@ namespace DdMd
    NvtIntegrator::~NvtIntegrator()
    {}
 
-   /*
-   * Read time step.
-   */
-   void NvtIntegrator::readParam(std::istream& in)
-   {
-      readBegin(in, "NvtIntegrator");
-      read<double>(in, "dt", dt_);
-      readEnd(in);
-
-      int nAtomType = system().nAtomType();
-      if (!prefactors_.isAllocated()) {
-         prefactors_.allocate(nAtomType);
-      }
-
-   }
    /* 
    * Read parameter and configuration files, initialize system.
    */
    void NvtIntegrator::readParam(std::istream &in) 
    {
+      readBegin(in, "NvtIntegrator");
       read<double>(in, "dt",   dt_);
       read<double>(in, "tauT", tauT_);
+      readEnd(in);
+
       nuT_ = 1.0/tauT_;
-      T_target_  = energyEnsemblePtr_->temperature();
+      T_target_  = system().energyEnsemble().temperature();
       T_kinetic_ = T_target_;
       xiDot_ = 0.0;
       xi_    = 0.0;
 
-      int nAtomType = simulation().nAtomType();
+      int nAtomType = system().nAtomType();
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
       }
@@ -102,14 +81,10 @@ namespace DdMd
    void NvtIntegrator::setup()
    {
       AtomStorage* atomStoragePtr = &system().atomStorage();
+      Domain*      domainPtr = &system().domain();
       Exchanger*   exchangerPtr = &system().exchanger();
       PairPotential* pairPotentialPtr = &system().pairPotential();
 
-      atomStoragePtr->clearSnapshot();
-      exchangerPtr->exchange();
-      atomStoragePtr->makeSnapshot();
-      pairPotentialPtr->findNeighbors();
-      system().computeForces();
 
       double dtHalf = 0.5*dt_;
       double mass;
@@ -118,24 +93,24 @@ namespace DdMd
          mass = system().atomType(i).mass();
          prefactors_[i] = dtHalf/mass;
       }
-   }
 
-   void NvtIntegrator::setup() 
-   {
-      double mass, dtHalf;
-      int nAtomType = simulation().nAtomType();
-      int nAtom  = system().nAtom();
+      atomStoragePtr->clearSnapshot();
+      exchangerPtr->exchange();
+      atomStoragePtr->makeSnapshot();
+      pairPotentialPtr->findNeighbors();
+      system().computeForces();
 
-      T_kinetic_ = system().kineticEnergy()*2.0/double(3*nAtom);
-      T_target_ = energyEnsemblePtr_->temperature();
+      system().computeKineticEnergy();
+      atomStoragePtr->computeNAtomTotal(domainPtr->communicator());
+      if (domainPtr->isMaster()) {
+         nAtom_  = atomStoragePtr->nAtomTotal();
+         T_kinetic_ = system().kineticEnergy()*2.0/double(3*nAtom_);
+      }
+      bcast(domainPtr->communicator(), nAtom_, 0);
+      bcast(domainPtr->communicator(), T_kinetic_, 0);
+      T_target_ = system().energyEnsemble().temperature();
       xiDot_ = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
       xi_ = 0.0;
-
-      dtHalf = 0.5*dt_;
-      for (int i = 0; i < nAtomType; ++i) {
-         mass = simulation().atomType(i).mass();
-         prefactors_[i] = dtHalf/mass;
-      }
    }
 
    /*
@@ -149,106 +124,39 @@ namespace DdMd
    {
       Vector  dv;
       Vector  dr;
-      System::MoleculeIterator molIter;
       double  dtHalf = 0.5*dt_;
       double  prefactor;
       double  factor;
-      Molecule::AtomIterator atomIter;
-      int  iSpecies, nSpecies;
-      int  nAtom;
+      AtomIterator atomIter;
 
-      T_target_ = energyEnsemblePtr_->temperature();
-      nSpecies  = simulation().nSpecies();
-      nAtom     = system().nAtom();
-
-      factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
-
-      // 1st half velocity Verlet, loop over atoms 
-      for (iSpecies = 0; iSpecies < nSpecies; ++iSpecies) {
-         system().begin(iSpecies, molIter); 
-         for ( ; molIter.notEnd(); ++molIter) {
-
-            molIter->begin(atomIter); 
-            for ( ; atomIter.notEnd(); ++atomIter) {
-
-               atomIter->velocity() *= factor;
-
-               prefactor = prefactors_[atomIter->typeId()];
-               dv.multiply(atomIter->force(), prefactor);
-               //dv.multiply(atomIter->force(), dtHalf);
-
-               atomIter->velocity() += dv;
-               dr.multiply(atomIter->velocity(), dt_);
-
-               atomIter->position() += dr;
-
-            }
-
-         }
-      }
-
-      // First half of update of xi_
-      xi_ += xiDot_*dtHalf;
-
-      #ifndef MCMD_NOPAIR
-      // Rebuild the pair list if necessary
-      if (!system().pairPotential().isPairListCurrent()) {
-         system().pairPotential().buildPairList();
-      }
-      #endif
-
-      system().calculateForces();
-
-      // 2nd half velocity Verlet, loop over atoms
-      for (iSpecies=0; iSpecies < nSpecies; ++iSpecies) {
-         system().begin(iSpecies, molIter); 
-         for ( ; molIter.notEnd(); ++molIter) {
-            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-               prefactor = prefactors_[atomIter->typeId()];
-               dv.multiply(atomIter->force(), prefactor);
-               atomIter->velocity() += dv;
-               atomIter->velocity() *=factor;
-            }
-         }
-      }
-
-      // Update xiDot and complete update of xi_
-      T_kinetic_ = system().kineticEnergy()*2.0/double(3*nAtom);
-      xiDot_     = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
-      xi_       += xiDot_*dtHalf;
-
-   }
-
-   void NvtIntegrator::step()
-   {
-      // Preconditions
-      //if (!storage.isInitialized()) {
-      //   UTIL_THROW("AtomStorage must be initialized");
-      //}
-
-      /// DdMd::Nve step
-
-      Vector        dv;
-      Vector        dr;
-      double        prefactor; // = 0.5*dt/mass
-      AtomIterator  atomIter;
-
+      Domain*  domainPtr = &system().domain();
       AtomStorage* atomStoragePtr = &system().atomStorage();
       Exchanger* exchangerPtr = &system().exchanger();
       PairPotential* pairPotentialPtr = &system().pairPotential();
 
+      factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
+      T_target_ = system().energyEnsemble().temperature();
+
       // 1st half of velocity Verlet.
       atomStoragePtr->begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
+
+         atomIter->velocity() *= factor;
+
          prefactor = prefactors_[atomIter->typeId()];
-
          dv.multiply(atomIter->force(), prefactor);
-         atomIter->velocity() += dv;
 
+         atomIter->velocity() += dv;
          dr.multiply(atomIter->velocity(), dt_);
          atomIter->position() += dr;
  
       }
+
+      // First half of update of xi_
+      if (domainPtr->isMaster()) {
+         xi_ += xiDot_*dtHalf;
+      }
+      bcast(domainPtr->communicator(), xi_, 0);
 
       // Exchange atoms if necessary
       if (system().needExchange()) {
@@ -269,8 +177,18 @@ namespace DdMd
          prefactor = prefactors_[atomIter->typeId()];
          dv.multiply(atomIter->force(), prefactor);
          atomIter->velocity() += dv;
+         atomIter->velocity() *=factor;
       }
 
+      // Update xiDot and complete update of xi_
+      system().computeKineticEnergy();
+      if (domainPtr->isMaster()) {
+         T_kinetic_ = system().kineticEnergy()*2.0/double(3*nAtom_);
+         xiDot_     = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
+         xi_       += xiDot_*dtHalf;
+      }
+      bcast(domainPtr->communicator(), xiDot_, 0);
+      bcast(domainPtr->communicator(), xi_, 0);
    }
 
 }

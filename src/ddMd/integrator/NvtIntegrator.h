@@ -1,5 +1,5 @@
-#ifndef NVE_INTEGRATOR_H
-#define NVE_INTEGRATOR_H
+#ifndef NVT_INTEGRATOR_H
+#define NVT_INTEGRATOR_H
 
 #include "Integrator.h"
 
@@ -21,7 +21,7 @@ namespace DdMd
    *
    * All operations of this class are local (no MPI). 
    */
-   class NveIntegrator : public Integrator
+   class NvtIntegrator : public Integrator
    {
 
    public:
@@ -29,12 +29,12 @@ namespace DdMd
       /**
       * Constructor.
       */
-      NveIntegrator(System& system);
+      NvtIntegrator(System& system);
 
       /**
       * Destructor.
       */
-      ~NveIntegrator();
+      ~NvtIntegrator();
 
       /**
       * Read required parameters.
@@ -55,11 +55,12 @@ namespace DdMd
 
    private:
 
-      double  dt_;
-   
       /// Factors of 0.5*dt/mass for different atom types.
       DArray<double> prefactors_;
 
+      /// Time step.
+      double  dt_;
+   
       /// Target temperature
       double T_target_;
 
@@ -78,9 +79,8 @@ namespace DdMd
       /// Relaxation rate for energy fluctuations.
       double nuT_;
 
-      /// Pointer to EnergyEnsemble object.
-      EnergyEnsemble* energyEnsemblePtr_;
-
+      /// Total number of atoms in system.
+      int nAtom_;
 
    };
 

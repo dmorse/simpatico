@@ -489,9 +489,6 @@ namespace DdMd
       */
       MaskPolicy  maskedPairPolicy_;
 
-      /// Is this the master node for file Io?
-      bool isMaster_;
-
    };
 
    // Inline method definitions
