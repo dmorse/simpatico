@@ -24,28 +24,38 @@ include $(SRC_DIR_REL)/main/sources.mk
 #-----------------------------------------------------------------------
 
 
-all: mcSim mdSim
+all: $(main_EXES)
 
 clean:
 	-rm -f $(main_OBJS) $(main_OBJS:.o=.d)
-	-rm -f $(MCSIM_EXE) $(MDSIM_EXE) $(DDSIM_EXE)
+	-rm -f $(main_EXES)
 
 clean-deps:
 	-rm -f $(main_OBJS:.o=.d)
 
 # Executables
 
--include $(main_OBJS:.o=.d)
-
-mcSim: $(MCSIM).o $(util_LIB) $(inter_LIB) $(mcMd_LIB)
+$(MCSIM_EXE): $(MCSIM).o $(util_LIB) $(inter_LIB) $(mcMd_LIB)
 	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) $(MCSIM).o \
                $(mcMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
  
-mdSim: $(MDSIM).o $(util_LIB) $(inter_LIB) $(mcMd_LIB)
+$(MDSIM_EXE): $(MDSIM).o $(util_LIB) $(inter_LIB) $(mcMd_LIB)
 	$(CXX) $(LDFLAGS) -o $(MDSIM_EXE) $(MDSIM).o \
         $(mcMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
  
-ddSim: $(DDSIM).o $(util_LIB) $(ddMd_LIB) $(inter_LIB)
+$(DDSIM_EXE): $(DDSIM).o $(util_LIB) $(ddMd_LIB) $(inter_LIB)
 	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o \
         $(ddMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
- 
+
+mcSim:
+	make $(MCSIM_EXE)
+
+mdSim:
+	make $(MDSIM_EXE)
+
+ddSim:
+	make $(DDSIM_EXE)
+
+# Object file targets and dependencies
+-include $(main_OBJS:.o=.d)
+

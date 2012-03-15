@@ -2,18 +2,18 @@
 # This makefile file defines:
 #
 #   - A variable $(DDMD_DEFS) that is passed to the processor to define 
-#     preprocessor flags that effect the code in the ddMd/ directory. 
+#     any preprocessor flags that effect the code in the ddMd/ directory. 
 #
 #   - A variable $(DDMD_SUFFIX) which is added as a suffix to the name
 #     of the ddMd library and (by default) the main executables. 
 #
-#   - The name $(DDMD_LIB) of the DdMd library. 
+#   - The name $(DDMD_LIB) of the DdMd static library. 
 #
 # This file is included by every makefile in the ddMd directory. 
 # It must be included after $(SRC_DIR)/compiler.mk and before
 # $(SRC_DIR)/mcmd/patterns.mk.
 #-----------------------------------------------------------------------
-# Makefile variables to define preprocessor macros
+# Makefile variables to define preprocessor macros (None yet defined).
 
 #-----------------------------------------------------------------------
 # The following code defines the variables DDMD_DEFS and DDMD_SUFFIX.
@@ -21,37 +21,23 @@
 # The variable DDMD_DEFS is used to pass preprocessor definitions to
 # the compiler, using the "-D" compiler option. If not empty, it must 
 # consist of a list of zero or more preprocessor macro names, each 
-# preceded by the compiler flag "-D".  For example, setting DDMD_DEFS 
-# to "-DUTIL_DEBUG -DINTER_ANGLE" will cause compilation of a version
-# of the code with debugging and angles enabled.
+# preceded by the compiler flag "-D".  
 #
 # The variable DDMD_SUFFIX is appended to the base names of the library 
 # ddMd.a in the $(LIB_DIR) directory and (by default) to the executables 
-# mcSim and mdSim in the $(BIN_DIR). Setting DDMD_SUFFIX to "_a", to
-# denote a version with angular potentials enabled, will create a
-# library ddMd_a.a and executables named mcSim_a and mdSim_a. This
-# addition of suffixes to library and executable names is optional,
-# but can be useful for managing several versions of the libraries 
-# and executables that were compiled with different preprocessor 
-# macros defined. 
+# mcSim and mdSim in the $(BIN_DIR). 
 #
-# The variables DDMD_DEFS and DDMD_SUFFIX are initialized with the
-# values of the strings UTIL_DEFS and UTIL_SUFFIX, and thus begin 
-# with any strings defined there to control MPI and/or debugging.
 
-DDMD_DEFS=$(INTER_DEFS)
-DDMD_SUFFIX:=$(INTER_SUFFIX)
+DDMD_DEFS=
+DDMD_SUFFIX:=
 
 # The variable DDMD_DEFS is a recursive (normal) makefile variable, and
-# may be extended using the += operator, e.g., DDMD_DEFS+=-DINTER_ANGLE.
+# may be extended using the += operator, e.g., DDMD_DEFS+=-DDMD_FEATURE.
 # The DDMD_SUFFIX is a non-recursive makefile variable, which may be 
-# extended using the := operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_a. 
-# They are defined differently because the += operator adds a white 
-# space before an added string, which is appropriate for DDMD_DEFS, 
-# but not for DDMD_SUFFIX. 
+# extended using the := operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_c. 
 
 #-----------------------------------------------------------------------
-# Library of objects from the DdMd namespace, or src/ddMd directory
+# Library of objects from the DdMd namespace, or the src/ddMd directory
 
 ddMd_LIBNAME=ddMd$(DDMD_SUFFIX)
 ddMd_LIBDIR=$(ROOT_DIR)/lib

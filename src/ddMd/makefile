@@ -9,10 +9,7 @@ include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
 
-ddSim=$(SRC_DIR)/ddMd/ddSim
-ddSim_EXE=$(ROOT_DIR)/bin/ddSim
-
-all: $(ddMd_OBJS) $(ddMd_LIB) $(ddSim).o $(ddSim_EXE)
+all: $(ddMd_OBJS) $(ddMd_LIB)
 
 clean:
 	-rm -f $(ddMd_OBJS) $(ddMd_OBJS:.o=.d) $(ddMd_LIB)
