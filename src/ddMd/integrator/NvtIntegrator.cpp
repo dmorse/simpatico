@@ -44,9 +44,6 @@ namespace DdMd
       if (!system.energyEnsemble().isIsothermal() ) {
          UTIL_THROW("System energy ensemble is not isothermal");
       }
-
-      T_target_  = system.energyEnsemble().temperature();
-      T_kinetic_ = T_target_;
    }
 
    /*
@@ -60,17 +57,12 @@ namespace DdMd
    */
    void NvtIntegrator::readParam(std::istream &in) 
    {
-      readBegin(in, "NvtIntegrator");
+      //readBegin(in, "NvtIntegrator");
       read<double>(in, "dt",   dt_);
       read<double>(in, "tauT", tauT_);
-      readEnd(in);
+      //readEnd(in);
 
       nuT_ = 1.0/tauT_;
-      T_target_  = system().energyEnsemble().temperature();
-      T_kinetic_ = T_target_;
-      xiDot_ = 0.0;
-      xi_    = 0.0;
-
       int nAtomType = system().nAtomType();
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
@@ -100,16 +92,16 @@ namespace DdMd
       pairPotentialPtr->findNeighbors();
       system().computeForces();
 
+      // Initialize nAtom_, xiDot_, xi_
       system().computeKineticEnergy();
       atomStoragePtr->computeNAtomTotal(domainPtr->communicator());
       if (domainPtr->isMaster()) {
+         T_target_ = system().energyEnsemble().temperature();
          nAtom_  = atomStoragePtr->nAtomTotal();
          T_kinetic_ = system().kineticEnergy()*2.0/double(3*nAtom_);
+         xiDot_ = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
       }
-      bcast(domainPtr->communicator(), nAtom_, 0);
-      bcast(domainPtr->communicator(), T_kinetic_, 0);
-      T_target_ = system().energyEnsemble().temperature();
-      xiDot_ = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
+      bcast(domainPtr->communicator(), xiDot_, 0);
       xi_ = 0.0;
    }
 
@@ -134,29 +126,19 @@ namespace DdMd
       Exchanger* exchangerPtr = &system().exchanger();
       PairPotential* pairPotentialPtr = &system().pairPotential();
 
-      factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
       T_target_ = system().energyEnsemble().temperature();
+      factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
 
       // 1st half of velocity Verlet.
       atomStoragePtr->begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
-
          atomIter->velocity() *= factor;
-
          prefactor = prefactors_[atomIter->typeId()];
          dv.multiply(atomIter->force(), prefactor);
-
          atomIter->velocity() += dv;
          dr.multiply(atomIter->velocity(), dt_);
          atomIter->position() += dr;
- 
       }
-
-      // First half of update of xi_
-      if (domainPtr->isMaster()) {
-         xi_ += xiDot_*dtHalf;
-      }
-      bcast(domainPtr->communicator(), xi_, 0);
 
       // Exchange atoms if necessary
       if (system().needExchange()) {
@@ -180,12 +162,13 @@ namespace DdMd
          atomIter->velocity() *=factor;
       }
 
-      // Update xiDot and complete update of xi_
+      // Update xiDot_ and xi_
       system().computeKineticEnergy();
       if (domainPtr->isMaster()) {
+         xi_ += xiDot_*dtHalf;
          T_kinetic_ = system().kineticEnergy()*2.0/double(3*nAtom_);
-         xiDot_     = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
-         xi_       += xiDot_*dtHalf;
+         xiDot_ = (T_kinetic_/T_target_  - 1.0)*nuT_*nuT_;
+         xi_ += xiDot_*dtHalf;
       }
       bcast(domainPtr->communicator(), xiDot_, 0);
       bcast(domainPtr->communicator(), xi_, 0);

@@ -260,7 +260,6 @@ namespace DdMd
       readEnsembles(in);
 
       // Integrator
-      //integratorPtr_ = new NveIntegrator(*this); // Todo: Add factory
       std::string className;
       bool        isEnd;
       integratorPtr_ = 
@@ -510,7 +509,8 @@ namespace DdMd
             computeKineticEnergy();
             computePotentialEnergies();
             if (domain_.gridRank() == 0) {
-               std::cout << Dbl(kineticEnergy(), 20)
+               std::cout << Int(i, 10)
+                         << Dbl(kineticEnergy(), 20)
                          << Dbl(potentialEnergy(), 20)
                          << Dbl(kineticEnergy() + potentialEnergy(), 20)
                          << std::endl;
