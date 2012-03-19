@@ -1,4 +1,4 @@
-READ_CONFIG   config
+READ_CONFIG   test
 THERMALIZE    1.0
 SIMULATE      50000
 WRITE_CONFIG  config

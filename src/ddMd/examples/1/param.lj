@@ -35,7 +35,7 @@ System{
     maxBoundary      orthorhombic   30.0   30.0   30.0
   }
   BondPotential{
-    kappa            100.0
+    kappa            400.0
     length           1.000
   }
   EnergyEnsemble{

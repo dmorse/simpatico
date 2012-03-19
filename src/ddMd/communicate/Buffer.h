@@ -269,13 +269,13 @@ namespace DdMd
       /// Number of atoms in group (or 0 if not a Group).
       int sendGroupSize_;
 
-      /// Type of atom being sent = NONE, ATOM, GHOST, BOND, ANGLE. DIHEDRAL
+      /// Type of atom being sent = NONE, ATOM, GHOST, GROUP
       BlockDataType sendType_;
 
       /// Type of atom being received (BlockDataType cast to int)
       int recvType_;
 
-      /// Number of atoms in group (or 0 if not a Group).
+      /// Number of atoms in a Group type (or 0 if not a Group).
       int recvGroupSize_;
       #endif
 
