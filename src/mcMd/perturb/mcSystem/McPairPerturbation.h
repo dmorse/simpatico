@@ -36,7 +36,7 @@ namespace McMd
    *
    * \ingroup Perturb_Module
    */
-   template < class Evaluator >
+   template < class Interaction >
    class McPairPerturbation : public LinearPerturbation<McSystem>
    {
 
@@ -81,17 +81,17 @@ namespace McMd
       virtual double derivative(int i) const;
 
       /**
-      * Return the pair potential evaluator.
+      * Return the pair potential interaction.
       */
-      Evaluator& evaluator() const;
+      Interaction& interaction() const;
   
    private:
 
       /// Neighbor array for internal use
       mutable CellList::NeighborArray neighbors_;
 
-      /// Pointer to evaluator
-      mutable Evaluator* evaluatorPtr_;
+      /// Pointer to interaction
+      mutable Interaction* interactionPtr_;
 
       /*
       Number of perturbation parameters associated with a System.
@@ -106,24 +106,24 @@ namespace McMd
    /*
    * Constructor.
    */
-   template < class Evaluator >
-   McPairPerturbation<Evaluator>::McPairPerturbation(McSystem& system)
+   template < class Interaction >
+   McPairPerturbation<Interaction>::McPairPerturbation(McSystem& system)
     : LinearPerturbation<McSystem>(system),
-      evaluatorPtr_(0)
+      interactionPtr_(0)
    {}
 
    /*
    * Destructor.
    */
-   template < class Evaluator >
-   McPairPerturbation<Evaluator>::~McPairPerturbation<Evaluator>()
+   template < class Interaction >
+   McPairPerturbation<Interaction>::~McPairPerturbation<Interaction>()
    {}
 
    /*
    * Read epsilon(0,1) from file
    */
-   template < class Evaluator >
-   void McPairPerturbation<Evaluator>::readParam(std::istream& in)
+   template < class Interaction >
+   void McPairPerturbation<Interaction>::readParam(std::istream& in)
    {  
       Perturbation::readParameters(in); 
       nParameters_ = Perturbation::getNParameters();
@@ -131,45 +131,45 @@ namespace McMd
 
    /*
    */
-   template < class Evaluator >
-   Evaluator& McPairPerturbation<Evaluator>::evaluator() const
+   template < class Interaction >
+   Interaction& McPairPerturbation<Interaction>::interaction() const
    {
-      if (evaluatorPtr_ == 0) {
+      if (interactionPtr_ == 0) {
          McPairPotential* pairPtr = &(system().pairPotential());
-         McPairPotentialImpl< Evaluator >* implPtr = 0;
-         implPtr = dynamic_cast< McPairPotentialImpl< Evaluator >* >(pairPtr);
+         McPairPotentialImpl< Interaction >* implPtr = 0;
+         implPtr = dynamic_cast< McPairPotentialImpl< Interaction >* >(pairPtr);
          if (implPtr == 0) {
             UTIL_THROW("Failed dynamic cast of McPairPotential");
          }
-         evaluatorPtr_ = &implPtr->evaluator();
+         interactionPtr_ = &implPtr->interaction();
       }
-      return *evaluatorPtr_;
+      return *interactionPtr_;
    }
 
    /*
    * Set the parameter epsilon(0,1) for this McSystem.
    */
-   template < class Evaluator >
-   void McPairPerturbation<Evaluator>::setParameter()
-   {  evaluator().setEpsilon(0, 1, parameter_[0]); }
+   template < class Interaction >
+   void McPairPerturbation<Interaction>::setParameter()
+   {  interaction().setEpsilon(0, 1, parameter_[0]); }
 
    /* 
    * Get the tempering variable from the parent System.
    */
-   template < class Evaluator >
-   double McPairPerturbation<Evaluator>::parameter(int i) const
+   template < class Interaction >
+   double McPairPerturbation<Interaction>::parameter(int i) const
    {  
       if (i > nParameters_) {
          UTIL_THROW("perturbation parameter index is out of bounds");
       }
-      return evaluator().epsilon(0, 1);
+      return interaction().epsilon(0, 1);
    }
 
    /*
    * Return pair energy for unlike pairs / (kT*epsilon(0,1))
    */
-   template < class Evaluator >
-   double McPairPerturbation<Evaluator>::derivative(int i) const
+   template < class Interaction >
+   double McPairPerturbation<Interaction>::derivative(int i) const
    {  
       // Preconditions
       if (i > nParameters_) {
@@ -217,7 +217,7 @@ namespace McMd
                      rsq = system().boundary().
                          distanceSq(jAtomPtr->position(), kAtomPtr->position());
 
-                     energy += evaluator().
+                     energy += interaction().
                             energy(rsq, jAtomPtr->typeId(), kAtomPtr->typeId());
 
                   }

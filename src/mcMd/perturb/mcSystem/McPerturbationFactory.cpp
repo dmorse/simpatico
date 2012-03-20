@@ -59,11 +59,11 @@ namespace McMd
       #endif
       #ifndef INTER_NOPAIR
       else if (className == "McPairPerturbation") {
-         const std::string& evaluatorClassName = systemPtr_->pairPotential().
-            evaluatorClassName();
-         if (evaluatorClassName == "LJPair") {
+         const std::string& interactionClassName = systemPtr_->pairPotential().
+            interactionClassName();
+         if (interactionClassName == "LJPair") {
             ptr = new McPairPerturbation<LJPair> (*systemPtr_);
-         } else if (evaluatorClassName == "DpdPair") {
+         } else if (interactionClassName == "DpdPair") {
             ptr = new McPairPerturbation<DpdPair> (*systemPtr_);
          } else {
             UTIL_THROW("Unsupported pair potential.");
@@ -73,11 +73,11 @@ namespace McMd
       #ifndef INTER_NOPAIR
       #ifdef INTER_EXTERNAL
       else if (className == "McPairExternalPerturbation") {
-         const std::string& evaluatorClassName = systemPtr_->pairPotential().
-            evaluatorClassName();
-         if (evaluatorClassName == "LJPair") {
+         const std::string& interactionClassName = systemPtr_->pairPotential().
+            interactionClassName();
+         if (interactionClassName == "LJPair") {
             ptr = new McPairExternalPerturbation<LJPair> (*systemPtr_);
-         } else if (evaluatorClassName == "DpdPair") {
+         } else if (interactionClassName == "DpdPair") {
             ptr = new McPairExternalPerturbation<DpdPair> (*systemPtr_);
          } else {
             UTIL_THROW("Unsupported pair potential.");
@@ -87,9 +87,9 @@ namespace McMd
       #endif
       /*#ifdef INTER_EXTERNAL
       else if (className == "McExternalPerturbation") {
-         const std::string& evaluatorClassName = systemPtr_->externalPotential().
-            evaluatorClassName();
-         if (evaluatorClassName == "TanhCosineExternal") {
+         const std::string& interactionClassName = systemPtr_->externalPotential().
+            interactionClassName();
+         if (interactionClassName == "TanhCosineExternal") {
             ptr = new McExternalPerturbation<TanhCosineExternal> (*systemPtr_);
          } else
             UTIL_THROW("Unsupported external potential.")

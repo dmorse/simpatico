@@ -45,7 +45,7 @@ namespace McMd
    *
    * \ingroup Perturb_Module
    */
-   template < class Evaluator >
+   template < class Interaction >
    class McPairExternalPerturbation : public LinearPerturbation<McSystem>
    {
 
@@ -88,15 +88,15 @@ namespace McMd
       */
       virtual double derivative(int i) const;
       
-      Evaluator& evaluator() const;
+      Interaction& interaction() const;
       
    private:
 
       /// Neighbor array for internal use
       mutable CellList::NeighborArray neighbors_;
 
-      /// Pointer to evaluator
-      mutable Evaluator* evaluatorPtr_;
+      /// Pointer to interaction
+      mutable Interaction* interactionPtr_;
 
       /*
       Number of perturbation parameters associated with a System.
@@ -111,24 +111,24 @@ namespace McMd
    /*
    * Constructor.
    */
-   template < class Evaluator >
-   McPairExternalPerturbation<Evaluator>::McPairExternalPerturbation(McSystem& system)
+   template < class Interaction >
+   McPairExternalPerturbation<Interaction>::McPairExternalPerturbation(McSystem& system)
     : LinearPerturbation<McSystem>(system),
-      evaluatorPtr_(0)
+      interactionPtr_(0)
    {}
 
    /*
    * Destructor.
    */
-   template < class Evaluator >
-   McPairExternalPerturbation<Evaluator>::~McPairExternalPerturbation<Evaluator>()
+   template < class Interaction >
+   McPairExternalPerturbation<Interaction>::~McPairExternalPerturbation<Interaction>()
    {}
 
    /*
    * Read epsilon(0,1) and external parameter from file
    */
-   template < class Evaluator >
-   void McPairExternalPerturbation<Evaluator>::readParam(std::istream& in)
+   template < class Interaction >
+   void McPairExternalPerturbation<Interaction>::readParam(std::istream& in)
    { 
       Perturbation::readParameters(in);
       nParameters_ = Perturbation::getNParameters();
@@ -136,28 +136,28 @@ namespace McMd
 
    /*
    */
-   template < class Evaluator >
-   Evaluator& McPairExternalPerturbation<Evaluator>::evaluator() const
+   template < class Interaction >
+   Interaction& McPairExternalPerturbation<Interaction>::interaction() const
    {
-      if (evaluatorPtr_ == 0) {
+      if (interactionPtr_ == 0) {
          McPairPotential* pairPtr = &(system().pairPotential());
-         McPairPotentialImpl< Evaluator >* implPtr = 0;
-         implPtr = dynamic_cast< McPairPotentialImpl< Evaluator >* >(pairPtr);
+         McPairPotentialImpl< Interaction >* implPtr = 0;
+         implPtr = dynamic_cast< McPairPotentialImpl< Interaction >* >(pairPtr);
          if (implPtr == 0) {
             UTIL_THROW("Failed dynamic cast of McPairPotential");
          }
-         evaluatorPtr_ = &implPtr->evaluator();
+         interactionPtr_ = &implPtr->interaction();
       }
-      return *evaluatorPtr_;
+      return *interactionPtr_;
    }
 
    /*
    * Set the parameter epsilon(0,1) and external parameter for this McSystem.
    */
-   template < class Evaluator >
-   void McPairExternalPerturbation<Evaluator>::setParameter()
+   template < class Interaction >
+   void McPairExternalPerturbation<Interaction>::setParameter()
    { 
-      evaluator().setEpsilon(0, 1, parameter_[0]);
+      interaction().setEpsilon(0, 1, parameter_[0]);
       system().externalPotential().setExternalParameter(parameter_[1]);
    }
 
@@ -165,15 +165,15 @@ namespace McMd
    * i = 0: Get the epsilon(0,1) from the parent System.
    * i = 1: Get the externalParameter from the parent System.
    */
-   template < class Evaluator >
-   double McPairExternalPerturbation<Evaluator>::parameter(int i) const
+   template < class Interaction >
+   double McPairExternalPerturbation<Interaction>::parameter(int i) const
    {  
       if (i >= nParameters_) {
          UTIL_THROW("perturbation parameter index is out of bounds");
       }
       double param;
       if (i == 0) {
-        param = evaluator().epsilon(0, 1); 
+        param = interaction().epsilon(0, 1); 
       } else if (i == 1) {
         param = system().externalPotential().externalParameter(); 
       } 
@@ -184,8 +184,8 @@ namespace McMd
    * i = 0: Returns pair energy for unlike pairs / (kT*epsilon(0,1))
    * i = 1: Returns external potential energy / ( kT *external parameter )
    */
-   template < class Evaluator >
-   double McPairExternalPerturbation<Evaluator>::derivative(int i) const
+   template < class Interaction >
+   double McPairExternalPerturbation<Interaction>::derivative(int i) const
    {  
       // Preconditions
       if (i >= nParameters_) {
@@ -229,7 +229,7 @@ namespace McMd
 
                         rsq = system().boundary().
                               distanceSq(jAtomPtr->position(), kAtomPtr->position());
-                        pairEnergy += evaluator().
+                        pairEnergy += interaction().
                               energy(rsq, jAtomPtr->typeId(), kAtomPtr->typeId());
 
                      }
