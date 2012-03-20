@@ -30,7 +30,7 @@ namespace McMd
    *
    * \ingroup Bond_Module
    */
-   template <class Evaluator>
+   template <class Interaction>
    class BondPotentialImpl : public BondPotential, public SubSystem
    {
 
@@ -44,7 +44,7 @@ namespace McMd
       /** 
       * Constructor.
       */
-      BondPotentialImpl(BondPotentialImpl<Evaluator>& other);
+      BondPotentialImpl(BondPotentialImpl<Interaction>& other);
 
       /** 
       * Destructor.
@@ -54,13 +54,13 @@ namespace McMd
       /**
       * Read potential energy.
       * 
-      * This method reads the bond potential Evaluator parameter
-      * block. Before calling Evaluator::readParam(), it passes
-      * simulation().nBondType() to Evaluator::setNAtomType().
+      * This method reads the bond potential Interaction parameter
+      * block. Before calling Interaction::readParam(), it passes
+      * simulation().nBondType() to Interaction::setNAtomType().
       */
       virtual void readParam(std::istream& in);
 
-      /// \name Evaluators Methods
+      /// \name Interactions Methods
       //@{
 
       /**
@@ -81,9 +81,9 @@ namespace McMd
              const;
 
       /**
-      * Return pair evaluator class name (e.g., "HarmonicBond").
+      * Return pair interaction class name (e.g., "HarmonicBond").
       */
-      virtual std::string evaluatorClassName() const;
+      virtual std::string interactionClassName() const;
 
       //@}
       /// \name Total Energy, Force and Stress 
@@ -131,18 +131,18 @@ namespace McMd
       //@}
 
       /**
-      * Return bond evaluator by reference.
+      * Return bond interaction by reference.
       */
-      Evaluator& evaluator();
+      Interaction& interaction();
 
       /**
-      * Return bond evaluator by const reference.
+      * Return bond interaction by const reference.
       */
-      const Evaluator& evaluator() const;
+      const Interaction& interaction() const;
 
    private:
   
-      Evaluator* evaluatorPtr_;
+      Interaction* interactionPtr_;
 
       bool isCopy_;
  
@@ -174,49 +174,49 @@ namespace McMd
    /* 
    * Default constructor.
    */
-   template <class Evaluator>
-   BondPotentialImpl<Evaluator>::BondPotentialImpl(System& system)
+   template <class Interaction>
+   BondPotentialImpl<Interaction>::BondPotentialImpl(System& system)
     : BondPotential(),
       SubSystem(system),
-      evaluatorPtr_(0),
+      interactionPtr_(0),
       isCopy_(false)
-   { evaluatorPtr_ = new Evaluator(); }
+   { interactionPtr_ = new Interaction(); }
  
    /* 
    * Constructor.
    */
-   template <class Evaluator>
-   BondPotentialImpl<Evaluator>::BondPotentialImpl(
-                         BondPotentialImpl<Evaluator>& other)
+   template <class Interaction>
+   BondPotentialImpl<Interaction>::BondPotentialImpl(
+                         BondPotentialImpl<Interaction>& other)
     : BondPotential(other.system()),
-      evaluatorPtr_(&other.evaluator()),
+      interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}
  
    /* 
    * Destructor. 
    */
-   template <class Evaluator>
-   BondPotentialImpl<Evaluator>::~BondPotentialImpl() 
+   template <class Interaction>
+   BondPotentialImpl<Interaction>::~BondPotentialImpl() 
    {
       if (!isCopy_) {
-         delete evaluatorPtr_;
-         evaluatorPtr_ = 0;
+         delete interactionPtr_;
+         interactionPtr_ = 0;
       }
    }
 
    /* 
    * Read parameters from file.
    */
-   template <class Evaluator>
-   void BondPotentialImpl<Evaluator>::readParam(std::istream &in) 
+   template <class Interaction>
+   void BondPotentialImpl<Interaction>::readParam(std::istream &in) 
    {
-      // Read only if not a copy.  Do not indent evaluator block.
+      // Read only if not a copy.  Do not indent interaction block.
       if (!isCopy_) {
          readBegin(in, "BondPotential");
-         evaluator().setNBondType(simulation().nBondType());
+         interaction().setNBondType(simulation().nBondType());
          bool nextIndent = false;
-         readParamComposite(in, evaluator(), nextIndent);
+         readParamComposite(in, interaction(), nextIndent);
          readEnd(in);
       }
    }
@@ -224,32 +224,32 @@ namespace McMd
    /*
    * Return bond energy for a single pair.
    */
-   template <class Evaluator>
-   double BondPotentialImpl<Evaluator>::energy(double rsq, int iBondType) 
+   template <class Interaction>
+   double BondPotentialImpl<Interaction>::energy(double rsq, int iBondType) 
       const
-   { return evaluator().energy(rsq, iBondType); }
+   { return interaction().energy(rsq, iBondType); }
 
    /*
    * Return force / separation for a single bonded pair.
    */
-   template <class Evaluator>
-   double BondPotentialImpl<Evaluator>::forceOverR(double rsq, int iBondType)
+   template <class Interaction>
+   double BondPotentialImpl<Interaction>::forceOverR(double rsq, int iBondType)
       const
-   { return evaluator().forceOverR(rsq, iBondType); }
+   { return interaction().forceOverR(rsq, iBondType); }
 
    /*
    * Return force / separation for a single bonded pair.
    */
-   template <class Evaluator> double 
-   BondPotentialImpl<Evaluator>::
+   template <class Interaction> double 
+   BondPotentialImpl<Interaction>::
       randomBondLength(Random* random, double beta, int bondTypeId) const
-   { return evaluator().randomBondLength(random, beta, bondTypeId); }
+   { return interaction().randomBondLength(random, beta, bondTypeId); }
 
    /*
    * Return bond energy for one Atom. 
    */
-   template <class Evaluator>
-   double BondPotentialImpl<Evaluator>::atomEnergy(const Atom &atom) const
+   template <class Interaction>
+   double BondPotentialImpl<Interaction>::atomEnergy(const Atom &atom) const
    {
 
       Species::AtomBondArray bonds;
@@ -264,7 +264,7 @@ namespace McMd
          bondPtr = bonds[iBond];
          rsq = boundary().distanceSq(bondPtr->atom(0).position(),
                                      bondPtr->atom(1).position());
-         energy += evaluator().energy(rsq, bondPtr->typeId());
+         energy += interaction().energy(rsq, bondPtr->typeId());
       }
 
       return energy;
@@ -273,8 +273,8 @@ namespace McMd
    /* 
    * Calculate covalent bond energy.
    */
-   template <class Evaluator>
-   double BondPotentialImpl<Evaluator>::energy() const
+   template <class Interaction>
+   double BondPotentialImpl<Interaction>::energy() const
    {
       double energy = 0.0;
       double rsq    = 0.0;
@@ -288,7 +288,7 @@ namespace McMd
                   rsq = boundary().
                         distanceSq( bondIter->atom(0).position(), 
                                     bondIter->atom(1).position());
-                  energy += evaluator().energy(rsq, bondIter->typeId());
+                  energy += interaction().energy(rsq, bondIter->typeId());
                }
             } 
          }
@@ -300,8 +300,8 @@ namespace McMd
    /* 
    * Add bonded pair forces to forces array.
    */
-   template <class Evaluator>
-   void BondPotentialImpl<Evaluator>::addForces() 
+   template <class Interaction>
+   void BondPotentialImpl<Interaction>::addForces() 
    {
       Vector force;
       double rsq;
@@ -319,7 +319,7 @@ namespace McMd
                   atom1Ptr = &(bondIter->atom(1));
                   rsq = boundary().distanceSq(atom0Ptr->position(), 
                                               atom1Ptr->position(), force);
-                  force *= evaluator().forceOverR(rsq, bondIter->typeId());
+                  force *= interaction().forceOverR(rsq, bondIter->typeId());
                   atom0Ptr->force() += force;
                   atom1Ptr->force() -= force;
                }
@@ -331,9 +331,9 @@ namespace McMd
    /* 
    * Compute total stress (generic).
    */
-   template <class Evaluator>
+   template <class Interaction>
    template <typename T>
-   void BondPotentialImpl<Evaluator>::computeStressImpl(T& stress) 
+   void BondPotentialImpl<Interaction>::computeStressImpl(T& stress) 
       const
    {
       Vector dr, force;
@@ -356,7 +356,7 @@ namespace McMd
                   rsq = boundary().distanceSq(atom0Ptr->position(), 
                                               atom1Ptr->position(), dr);
                   force = dr;
-                  force *= evaluator().forceOverR(rsq, 
+                  force *= interaction().forceOverR(rsq, 
                                                   bondIter->typeId());
                   incrementPairStress(force, dr, stress);
                }
@@ -368,34 +368,34 @@ namespace McMd
       normalizeStress(stress);
    }
 
-   template <class Evaluator>
-   void BondPotentialImpl<Evaluator>::computeStress(double& stress) const
+   template <class Interaction>
+   void BondPotentialImpl<Interaction>::computeStress(double& stress) const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   void BondPotentialImpl<Evaluator>::computeStress(Util::Vector& stress) 
+   template <class Interaction>
+   void BondPotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
         const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   void BondPotentialImpl<Evaluator>::computeStress(Util::Tensor& stress) 
+   template <class Interaction>
+   void BondPotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
         const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   inline Evaluator& BondPotentialImpl<Evaluator>::evaluator()
-   { return *evaluatorPtr_; }
+   template <class Interaction>
+   inline Interaction& BondPotentialImpl<Interaction>::interaction()
+   { return *interactionPtr_; }
 
-   template <class Evaluator>
-   inline const Evaluator& BondPotentialImpl<Evaluator>::evaluator() const
-   { return *evaluatorPtr_; }
+   template <class Interaction>
+   inline const Interaction& BondPotentialImpl<Interaction>::interaction() const
+   { return *interactionPtr_; }
 
    /*
-   * Return bond potential evaluator class name.
+   * Return bond potential interaction class name.
    */
-   template <class Evaluator>
-   std::string BondPotentialImpl<Evaluator>::evaluatorClassName() const
-   {  return evaluator().className(); }
+   template <class Interaction>
+   std::string BondPotentialImpl<Interaction>::interactionClassName() const
+   {  return interaction().className(); }
 
 }
 #endif

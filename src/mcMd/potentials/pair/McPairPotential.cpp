@@ -1,4 +1,3 @@
-#ifndef INTER_NOPAIR
 #ifndef  MC_PAIR_POTENTIAL_CPP
 #define  MC_PAIR_POTENTIAL_CPP
 
@@ -66,5 +65,4 @@ namespace McMd
    }
 
 }
-#endif
 #endif

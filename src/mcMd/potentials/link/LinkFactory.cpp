@@ -1,4 +1,3 @@
-#ifdef  MCMD_LINK
 #ifndef LINK_FACTORY_CPP
 #define LINK_FACTORY_CPP
 
@@ -14,13 +13,15 @@
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/potentials/link/LinkPotentialImpl.h>
 
-// Bond Potential evaluator classes
-#include <mcMd/potentials/bond/HarmonicBond.h>
-#include <mcMd/potentials/bond/HarmonicL0Bond.h>
-#include <mcMd/potentials/bond/FeneBond.h>
+// Bond interaction classes
+#include <inter/bond/HarmonicBond.h>
+#include <inter/bond/HarmonicL0Bond.h>
+#include <inter/bond/FeneBond.h>
 
 namespace McMd
 {
+
+   using namespace Inter;
 
    /*
    * Default constructor.
@@ -49,5 +50,4 @@ namespace McMd
    }
 
 }
-#endif
 #endif

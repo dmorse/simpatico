@@ -19,7 +19,7 @@
 #include <mcMd/potentials/pair/McPairPotential.h>
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
 
-// Pair Potential evaluator classes
+// Pair Potential interaction classes
 #include <inter/pair/LJPair.h>
 #include <inter/pair/DpdPair.h>
 #include <inter/pair/CompensatedPair.h>
@@ -98,7 +98,7 @@ namespace McMd
    MdPairPotential* 
    PairFactory::mdFactory(McPairPotential& potential) const
    {
-      std::string name = potential.evaluatorClassName();
+      std::string name = potential.interactionClassName();
       MdPairPotential* ptr = 0;
 
       // Try subfactories first

@@ -46,7 +46,7 @@ namespace McMd
       */
       virtual ~BondPotential();
 
-      /// \name Bond Evaluator Interface
+      /// \name Bond Interaction Interface
       //@{
 
       /**
@@ -86,9 +86,9 @@ namespace McMd
              const = 0;
 
       /**
-      * Return name of pair evaluator class (e.g., "HarmonicBond").
+      * Return name of pair interaction class (e.g., "HarmonicBond").
       */
-      virtual std::string evaluatorClassName() const = 0;
+      virtual std::string interactionClassName() const = 0;
 
       //@}
       /// \name System energy, force, and stress.

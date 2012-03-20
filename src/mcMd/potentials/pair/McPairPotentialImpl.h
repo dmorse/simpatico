@@ -31,7 +31,7 @@ namespace McMd
    *
    * \ingroup Pair_Module
    */
-   template <class Evaluator>
+   template <class Interaction>
    class McPairPotentialImpl : public McPairPotential
    {
 
@@ -48,16 +48,16 @@ namespace McMd
       virtual ~McPairPotentialImpl();
 
       /**
-      * Reads maxBoundary and pair potential Evaluator blocks.
+      * Reads maxBoundary and pair potential Interaction blocks.
       * 
-      * This method reads the maxBoundary and Evaluator parameter blocks,
+      * This method reads the maxBoundary and Interaction parameter blocks,
       * and then allocates memory for an internal CellList. It passes
-      * simulation().nAtomType() as an argument Evaluator::setNAtomType() 
-      * before calling Evaluator::readParam().
+      * simulation().nAtomType() as an argument Interaction::setNAtomType() 
+      * before calling Interaction::readParam().
       */
       virtual void readParam(std::istream& in);
 
-      /// \name Energy, Force, Stress Evaluators
+      /// \name Energy, Force, Stress Interactions
       //@{
 
       /**
@@ -76,9 +76,9 @@ namespace McMd
       virtual double maxPairCutoff() const;
 
       /**
-      * Return pair evaluator class name (e.g., "LJPair").
+      * Return pair interaction class name (e.g., "LJPair").
       */
-      virtual std::string evaluatorClassName() const;
+      virtual std::string interactionClassName() const;
 
       /**
       * Calculate the nonbonded pair energy for one Atom.
@@ -125,18 +125,18 @@ namespace McMd
       //@}
 
       /**
-      * Return reference to underlying pair evaluator.
+      * Return reference to underlying pair interaction.
       */
-      Evaluator& evaluator();
+      Interaction& interaction();
 
       /**
-      * Return reference to underlying pair evaluator.
+      * Return reference to underlying pair interaction.
       */
-      const Evaluator& evaluator() const;
+      const Interaction& interaction() const;
 
    private:
   
-      Evaluator evaluator_;
+      Interaction interaction_;
  
       template <typename T>
       void computeStressImpl(T& stress) const;
@@ -166,32 +166,32 @@ namespace McMd
    /* 
    * Default constructor.
    */
-   template <class Evaluator>
-   McPairPotentialImpl<Evaluator>::McPairPotentialImpl(System& system)
+   template <class Interaction>
+   McPairPotentialImpl<Interaction>::McPairPotentialImpl(System& system)
     : McPairPotential(system)
    {}
  
    /* 
    * Destructor. 
    */
-   template <class Evaluator>
-   McPairPotentialImpl<Evaluator>::~McPairPotentialImpl() 
+   template <class Interaction>
+   McPairPotentialImpl<Interaction>::~McPairPotentialImpl() 
    {}
 
    /* 
    * Read parameters from file.
    */
-   template <class Evaluator>
-   void McPairPotentialImpl<Evaluator>::readParam(std::istream &in) 
+   template <class Interaction>
+   void McPairPotentialImpl<Interaction>::readParam(std::istream &in) 
    {
       readBegin(in, "McPairPotential");
      
-      // Must setNAtomTypes in evaluator before calling readParam.
-      evaluator().setNAtomType(simulation().nAtomType());
+      // Must setNAtomTypes in interaction before calling readParam.
+      interaction().setNAtomType(simulation().nAtomType());
 
       // Read potential energy parameters with no indent or brackets.
       bool nextIndent = false;
-      readParamComposite(in, evaluator(), nextIndent);
+      readParamComposite(in, interaction(), nextIndent);
 
       // Read maxBoundary (needed to allocate memory for cell list).
       read<Boundary>(in, "maxBoundary", maxBoundary_);
@@ -206,29 +206,29 @@ namespace McMd
    /*
    * Return pair energy for a single pair.
    */
-   template <class Evaluator>
-   double McPairPotentialImpl<Evaluator>::energy(double rsq, int iAtomType, int jAtomType) const
-   { return evaluator().energy(rsq, iAtomType, jAtomType); }
+   template <class Interaction>
+   double McPairPotentialImpl<Interaction>::energy(double rsq, int iAtomType, int jAtomType) const
+   { return interaction().energy(rsq, iAtomType, jAtomType); }
 
    /*
    * Return force / separation for a single pair.
    */
-   template <class Evaluator>
-   double McPairPotentialImpl<Evaluator>::forceOverR(double rsq, int iAtomType, int jAtomType) const
-   { return evaluator().forceOverR(rsq, iAtomType, jAtomType); }
+   template <class Interaction>
+   double McPairPotentialImpl<Interaction>::forceOverR(double rsq, int iAtomType, int jAtomType) const
+   { return interaction().forceOverR(rsq, iAtomType, jAtomType); }
 
    /*
    * Return maximum cutoff.
    */
-   template <class Evaluator>
-   double McPairPotentialImpl<Evaluator>::maxPairCutoff() const
-   { return evaluator().maxPairCutoff(); }
+   template <class Interaction>
+   double McPairPotentialImpl<Interaction>::maxPairCutoff() const
+   { return interaction().maxPairCutoff(); }
 
    /* 
    * Return nonbonded pair energy for one Atom.
    */
-   template <class Evaluator>
-   double McPairPotentialImpl<Evaluator>::atomEnergy(const Atom &atom) const
+   template <class Interaction>
+   double McPairPotentialImpl<Interaction>::atomEnergy(const Atom &atom) const
    {
       Atom   *jAtomPtr;
       double  energy;
@@ -253,7 +253,7 @@ namespace McMd
             if (!atom.mask().isMasked(*jAtomPtr)) {
                rsq = boundary().
                      distanceSq(atom.position(), jAtomPtr->position());
-               energy += evaluator().
+               energy += interaction().
                          energy(rsq, atom.typeId(), jAtomPtr->typeId());
             }
          }
@@ -264,8 +264,8 @@ namespace McMd
    /* 
    * Return nonbonded pair potential energy for one Molecule.
    */
-   template <class Evaluator>
-   double McPairPotentialImpl<Evaluator>::moleculeEnergy(const Molecule &molecule) const
+   template <class Interaction>
+   double McPairPotentialImpl<Interaction>::moleculeEnergy(const Molecule &molecule) const
    {
       const Atom* iAtomPtr;
       const Atom* jAtomPtr;
@@ -297,7 +297,7 @@ namespace McMd
                        (iId < jId) ) {
                      rsq = boundary().distanceSq(iAtomPtr->position(), 
                                                  jAtomPtr->position());
-                     energy += evaluator().energy(rsq, iAtomPtr->typeId(), 
+                     energy += interaction().energy(rsq, iAtomPtr->typeId(), 
                                                            jAtomPtr->typeId());
                   }
                }
@@ -310,8 +310,8 @@ namespace McMd
    /*
    * Return total nonbonded pair potential energy for System.
    */
-   template <class Evaluator>
-   double McPairPotentialImpl<Evaluator>::energy()
+   template <class Interaction>
+   double McPairPotentialImpl<Interaction>::energy()
    {
       Atom  *iAtomPtr, *jAtomPtr;
       double energy;
@@ -345,7 +345,7 @@ namespace McMd
 
                      rsq = boundary().distanceSq(iAtomPtr->position(), 
                                                  jAtomPtr->position());
-                     energy += evaluator().energy(rsq, iAtomPtr->typeId(), 
+                     energy += interaction().energy(rsq, iAtomPtr->typeId(), 
                                                   jAtomPtr->typeId());
                   }
 
@@ -363,9 +363,9 @@ namespace McMd
    /*
    * Return nonbonded pair stress or pressure (implementation template).
    */
-   template <class Evaluator>
+   template <class Interaction>
    template <typename T>
-   void McPairPotentialImpl<Evaluator>::computeStressImpl(T& stress) const
+   void McPairPotentialImpl<Interaction>::computeStressImpl(T& stress) const
    {
       Vector force, dr;
       double rsq;
@@ -399,7 +399,7 @@ namespace McMd
                      rsq = boundary().distanceSq(atom0Ptr->position(),
                                                  atom1Ptr->position(), dr);
                      force = dr;
-                     force *= evaluator().forceOverR(rsq,
+                     force *= interaction().forceOverR(rsq,
                               atom0Ptr->typeId(), atom1Ptr->typeId());
 
                      incrementPairStress(force, dr, stress);
@@ -421,37 +421,37 @@ namespace McMd
    }
 
 
-   template <class Evaluator>
-   void McPairPotentialImpl<Evaluator>::computeStress(double& stress) const
+   template <class Interaction>
+   void McPairPotentialImpl<Interaction>::computeStress(double& stress) const
    {  computeStressImpl(stress); }
 
 
-   template <class Evaluator>
-   void McPairPotentialImpl<Evaluator>::computeStress(Util::Vector& stress) 
+   template <class Interaction>
+   void McPairPotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
         const
    {  computeStressImpl(stress); }
 
 
-   template <class Evaluator>
-   void McPairPotentialImpl<Evaluator>::computeStress(Util::Tensor& stress) 
+   template <class Interaction>
+   void McPairPotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
         const
    {  computeStressImpl(stress); }
 
 
-   template <class Evaluator>
-   inline Evaluator& McPairPotentialImpl<Evaluator>::evaluator()
-   { return evaluator_; }
+   template <class Interaction>
+   inline Interaction& McPairPotentialImpl<Interaction>::interaction()
+   { return interaction_; }
 
-   template <class Evaluator>
-   inline const Evaluator& McPairPotentialImpl<Evaluator>::evaluator() const
-   { return evaluator_; }
+   template <class Interaction>
+   inline const Interaction& McPairPotentialImpl<Interaction>::interaction() const
+   { return interaction_; }
 
    /*
-   * Return pair evaluator class name.
+   * Return pair interaction class name.
    */
-   template <class Evaluator>
-   std::string McPairPotentialImpl<Evaluator>::evaluatorClassName() const
-   {  return evaluator().className(); }
+   template <class Interaction>
+   std::string McPairPotentialImpl<Interaction>::interactionClassName() const
+   {  return interaction().className(); }
 
 }
 #endif

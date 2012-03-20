@@ -44,7 +44,7 @@ namespace McMd
       */
       virtual ~McPairPotential();
 
-      /// \name Energy, Force, Stress Evaluators (pure virtual)
+      /// \name Energy, Force, Stress evaluators (pure virtual)
       //@{
 
       /**

@@ -1,4 +1,3 @@
-#ifdef  MCMD_LINK
 #ifndef LINK_POTENTIAL_IMPL_H
 #define LINK_POTENTIAL_IMPL_H
 
@@ -31,12 +30,12 @@ namespace McMd
    * Template implementation of an BondPotential for links.
    *
    * A LinkPotential implements the BondPotential interface, and uses
-   * an instance of a bond evaluator class, but uses the LinkMaster of
+   * an instance of a bond interaction class, but uses the LinkMaster of
    * the parent System to identify linked atoms.
    *
    * \ingroup Link_Module
    */
-   template <class Evaluator>
+   template <class Interaction>
    class LinkPotentialImpl : public BondPotential, public SubSystem
    {
 
@@ -50,7 +49,7 @@ namespace McMd
       /** 
       * Copy constructor.
       */
-      LinkPotentialImpl(LinkPotentialImpl<Evaluator>& other);
+      LinkPotentialImpl(LinkPotentialImpl<Interaction>& other);
 
       /** 
       * Destructor.
@@ -60,13 +59,13 @@ namespace McMd
       /**
       * Read potential energy.
       * 
-      * This method reads the bond potential Evaluator parameter
-      * block. Before calling Evaluator::readParam(), it passes
-      * simulation().nBondType() to Evaluator::setNBondType().
+      * This method reads the bond potential Interaction parameter
+      * block. Before calling Interaction::readParam(), it passes
+      * simulation().nBondType() to Interaction::setNBondType().
       */
       virtual void readParam(std::istream& in);
 
-      /// \name Bond evaluator interface.
+      /// \name Bond interaction interface.
       //@{
 
       /**
@@ -87,9 +86,9 @@ namespace McMd
       const;
 
       /**
-      * Return pair evaluator class name (e.g., "HarmonicBond").
+      * Return pair interaction class name (e.g., "HarmonicBond").
       */
-      virtual std::string evaluatorClassName() const;
+      virtual std::string interactionClassName() const;
 
       //@}
       /// \name System energy, force and stress.
@@ -137,19 +136,19 @@ namespace McMd
       //@}
 
       /**
-      * Return bond evaluator by reference.
+      * Return bond interaction by reference.
       */
-      Evaluator& evaluator();
+      Interaction& interaction();
 
       /**
-      * Return bond evaluator by const reference.
+      * Return bond interaction by const reference.
       */
-      const Evaluator& evaluator() const;
+      const Interaction& interaction() const;
 
    private:
   
-      // Pointer to a link/bond evaluator.
-      Evaluator*  evaluatorPtr_;
+      // Pointer to a link/bond interaction.
+      Interaction*  interactionPtr_;
 
       // Pointer to LinkMaster of parent System.
       LinkMaster* linkMasterPtr_;
@@ -187,24 +186,24 @@ namespace McMd
    /* 
    * Default constructor.
    */
-   template <class Evaluator>
-   LinkPotentialImpl<Evaluator>::LinkPotentialImpl(System& system)
+   template <class Interaction>
+   LinkPotentialImpl<Interaction>::LinkPotentialImpl(System& system)
     : BondPotential(),
       SubSystem(system),
-      evaluatorPtr_(0),
+      interactionPtr_(0),
       linkMasterPtr_(&system.linkMaster()),
       isCopy_(false)
-   { evaluatorPtr_ = new Evaluator(); }
+   { interactionPtr_ = new Interaction(); }
  
    /* 
-   * Constructor, copy from LinkPotentialImpl<Evaluator>.
+   * Constructor, copy from LinkPotentialImpl<Interaction>.
    */
-   template <class Evaluator>
-   LinkPotentialImpl<Evaluator>::LinkPotentialImpl(
-                         LinkPotentialImpl<Evaluator>& other)
+   template <class Interaction>
+   LinkPotentialImpl<Interaction>::LinkPotentialImpl(
+                         LinkPotentialImpl<Interaction>& other)
     : BondPotential(),
       SubSystem(other.system()),
-      evaluatorPtr_(&other.evaluator()),
+      interactionPtr_(&other.interaction()),
       linkMasterPtr_(&other.system().linkMaster()),
       isCopy_(true)
    {}
@@ -212,22 +211,22 @@ namespace McMd
    /* 
    * Destructor. 
    */
-   template <class Evaluator>
-   LinkPotentialImpl<Evaluator>::~LinkPotentialImpl() 
+   template <class Interaction>
+   LinkPotentialImpl<Interaction>::~LinkPotentialImpl() 
    {}
 
    /* 
    * Read parameters from file.
    */
-   template <class Evaluator>
-   void LinkPotentialImpl<Evaluator>::readParam(std::istream &in) 
+   template <class Interaction>
+   void LinkPotentialImpl<Interaction>::readParam(std::istream &in) 
    {
-      // Read only if not a copy.  Do not indent evaluator block.
+      // Read only if not a copy.  Do not indent interaction block.
       if (!isCopy_) {
          readBegin(in, "LinkPotential");
-         evaluator().setNBondType(simulation().nLinkType());
+         interaction().setNBondType(simulation().nLinkType());
          bool nextIndent = false;
-         readParamComposite(in, evaluator(), nextIndent);
+         readParamComposite(in, interaction(), nextIndent);
          readEnd(in);
       }
    }
@@ -235,32 +234,32 @@ namespace McMd
    /*
    * Return bond energy for a single pair.
    */
-   template <class Evaluator>
-   double LinkPotentialImpl<Evaluator>::energy(double rsq, int iBondType) 
+   template <class Interaction>
+   double LinkPotentialImpl<Interaction>::energy(double rsq, int iBondType) 
       const
-   { return evaluator().energy(rsq, iBondType); }
+   { return interaction().energy(rsq, iBondType); }
 
    /*
    * Return force / separation for a single bonded pair.
    */
-   template <class Evaluator>
-   double LinkPotentialImpl<Evaluator>::forceOverR(double rsq, int iBondType)
+   template <class Interaction>
+   double LinkPotentialImpl<Interaction>::forceOverR(double rsq, int iBondType)
       const
-   { return evaluator().forceOverR(rsq, iBondType); }
+   { return interaction().forceOverR(rsq, iBondType); }
 
    /*
    * Return force / separation for a single bonded pair.
    */
-   template <class Evaluator> double 
-   LinkPotentialImpl<Evaluator>::
+   template <class Interaction> double 
+   LinkPotentialImpl<Interaction>::
       randomBondLength(Random* random, double beta, int bondTypeId) const
-   { return evaluator().randomBondLength(random, beta, bondTypeId); }
+   { return interaction().randomBondLength(random, beta, bondTypeId); }
 
    /*
    * Return link energy for one Atom. 
    */
-   template <class Evaluator>
-   double LinkPotentialImpl<Evaluator>::atomEnergy(const Atom &atom) 
+   template <class Interaction>
+   double LinkPotentialImpl<Interaction>::atomEnergy(const Atom &atom) 
    const
    {
       double rsq;
@@ -275,7 +274,7 @@ namespace McMd
          linkPtr = &((*linkSetPtr)[iLink]);
          rsq = boundary().distanceSq(linkPtr->atom0().position(),
                                      linkPtr->atom1().position());
-         energy += evaluator().energy(rsq, linkPtr->typeId());
+         energy += interaction().energy(rsq, linkPtr->typeId());
       }
 
       return energy;
@@ -284,8 +283,8 @@ namespace McMd
    /* 
    * Return total link energy.
    */
-   template <class Evaluator>
-   double LinkPotentialImpl<Evaluator>::energy() const
+   template <class Interaction>
+   double LinkPotentialImpl<Interaction>::energy() const
    {
       double rsq;
       double energy = 0.0;
@@ -296,7 +295,7 @@ namespace McMd
          linkPtr = &(linkMasterPtr_->link(iLink));
          rsq = boundary().distanceSq(linkPtr->atom0().position(), 
                                      linkPtr->atom1().position());
-         energy += evaluator().energy(rsq, linkPtr->typeId());
+         energy += interaction().energy(rsq, linkPtr->typeId());
       }
       return energy;
    }
@@ -304,8 +303,8 @@ namespace McMd
    /* 
    * Add link forces to all atomic forces.
    */
-   template <class Evaluator>
-   void LinkPotentialImpl<Evaluator>::addForces()
+   template <class Interaction>
+   void LinkPotentialImpl<Interaction>::addForces()
    {
       Vector  force;
       double  rsq;
@@ -320,7 +319,7 @@ namespace McMd
          atom1Ptr = &(linkPtr->atom1());
          rsq = boundary().
                distanceSq(atom0Ptr->position(), atom1Ptr->position(), force);
-         force *= evaluator().forceOverR(rsq, linkPtr->typeId());
+         force *= interaction().forceOverR(rsq, linkPtr->typeId());
          atom0Ptr->force() += force;
          atom1Ptr->force() -= force;
       }
@@ -329,9 +328,9 @@ namespace McMd
    /* 
    * Compute the link pressure or stress
    */
-   template <class Evaluator>
+   template <class Interaction>
    template <typename T>
-   void LinkPotentialImpl<Evaluator>::computeStressImpl(T& stress) const
+   void LinkPotentialImpl<Interaction>::computeStressImpl(T& stress) const
    {
       Vector  dr;
       Vector  force;
@@ -348,7 +347,7 @@ namespace McMd
          rsq = boundary().distanceSq(linkPtr->atom0().position(), 
                                      linkPtr->atom1().position(), dr);
          force  = dr;
-         force *= evaluator().forceOverR(rsq, linkPtr->typeId());
+         force *= interaction().forceOverR(rsq, linkPtr->typeId());
          incrementPairStress(force, dr, stress);
       }
 
@@ -357,35 +356,34 @@ namespace McMd
       normalizeStress(stress);
    }
 
-   template <class Evaluator>
-   void LinkPotentialImpl<Evaluator>::computeStress(double& stress) const
+   template <class Interaction>
+   void LinkPotentialImpl<Interaction>::computeStress(double& stress) const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   void LinkPotentialImpl<Evaluator>::computeStress(Util::Vector& stress) 
+   template <class Interaction>
+   void LinkPotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
         const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   void LinkPotentialImpl<Evaluator>::computeStress(Util::Tensor& stress) 
+   template <class Interaction>
+   void LinkPotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
         const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   inline Evaluator& LinkPotentialImpl<Evaluator>::evaluator()
-   { return *evaluatorPtr_; }
+   template <class Interaction>
+   inline Interaction& LinkPotentialImpl<Interaction>::interaction()
+   { return *interactionPtr_; }
 
-   template <class Evaluator>
-   inline const Evaluator& LinkPotentialImpl<Evaluator>::evaluator() const
-   { return *evaluatorPtr_; }
+   template <class Interaction>
+   inline const Interaction& LinkPotentialImpl<Interaction>::interaction() const
+   { return *interactionPtr_; }
 
    /*
-   * Return bond potential evaluator class name.
+   * Return bond interaction class name.
    */
-   template <class Evaluator>
-   std::string LinkPotentialImpl<Evaluator>::evaluatorClassName() const
-   {  return evaluator().className(); }
+   template <class Interaction>
+   std::string LinkPotentialImpl<Interaction>::interactionClassName() const
+   {  return interaction().className(); }
 
 }
-#endif
 #endif

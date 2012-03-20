@@ -1,4 +1,3 @@
-#ifdef  INTER_EXTERNAL
 #ifndef EXTERNAL_POTENTIAL_IMPL_H
 #define EXTERNAL_POTENTIAL_IMPL_H
 
@@ -31,7 +30,7 @@ namespace McMd
    *
    * \ingroup External_Module
    */
-   template <class Evaluator>
+   template <class Interaction>
    class ExternalPotentialImpl : public ExternalPotential, public SubSystem
    {
 
@@ -45,7 +44,7 @@ namespace McMd
       /** 
       * Constructor (copied from ExternalPotential)
       */
-      ExternalPotentialImpl(ExternalPotentialImpl<Evaluator>& other);
+      ExternalPotentialImpl(ExternalPotentialImpl<Interaction>& other);
 
       /** 
       * Destructor.
@@ -55,13 +54,13 @@ namespace McMd
       /**
       * Read param for external potential.
       * 
-      * This method reads the external potential Evaluator parameter
-      * block. Before calling Evaluator::readParam(), it passes
-      * simulation().nExternalType() to Evaluator::setNAtomType().
+      * This method reads the external potential Interaction parameter
+      * block. Before calling Interaction::readParam(), it passes
+      * simulation().nExternalType() to Interaction::setNAtomType().
       */
       virtual void readParam(std::istream& in);
 
-      /// \name Energy, Force, Stress Evaluators
+      /// \name Energy, Force, Stress Interactions
       //@{
 
       /**
@@ -96,10 +95,12 @@ namespace McMd
       */
       virtual void getForce(const Vector& position, int typeId, Vector& force) const;
 
+      #if 0
       /**
-      * Return external evaluator class name (e.g., "TanhCosineExternal").
+      * Return external interaction class name (e.g., "TanhCosineExternal").
       */
-      virtual std::string evaluatorClassName() const;
+      virtual std::string interactionClassName() const;
+      #endif
 
       /**
       * Add external force of an Atom to the total force acting on it.
@@ -119,18 +120,18 @@ namespace McMd
       //@}
 
       /**
-      * Return external evaluator by reference.
+      * Return external interaction by reference.
       */
-      Evaluator& evaluator();
+      Interaction& interaction();
 
       /**
-      * Return external evaluator by const reference.
+      * Return external interaction by const reference.
       */
-      const Evaluator& evaluator() const;
+      const Interaction& interaction() const;
 
    private:
   
-      Evaluator* evaluatorPtr_;
+      Interaction* interactionPtr_;
 
       bool isCopy_;
  
@@ -159,46 +160,46 @@ namespace McMd
    /* 
    * Default constructor.
    */
-   template <class Evaluator>
-   ExternalPotentialImpl<Evaluator>::ExternalPotentialImpl(System& system)
+   template <class Interaction>
+   ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(System& system)
     : ExternalPotential(),
       SubSystem(system),
-      evaluatorPtr_(0),
+      interactionPtr_(0),
       isCopy_(false)
-   {  evaluatorPtr_ = new Evaluator(); }
+   {  interactionPtr_ = new Interaction(); }
  
    /* 
-   * Constructor, copy from ExternalPotentialImpl<Evaluator>.
+   * Constructor, copy from ExternalPotentialImpl<Interaction>.
    */
-   template <class Evaluator>
-   ExternalPotentialImpl<Evaluator>::ExternalPotentialImpl(
-                         ExternalPotentialImpl<Evaluator>& other)
+   template <class Interaction>
+   ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(
+                         ExternalPotentialImpl<Interaction>& other)
     : ExternalPotential(),
       SubSystem(other.system()),
-      evaluatorPtr_(&other.evaluator()),
+      interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}
  
    /* 
    * Destructor. 
    */
-   template <class Evaluator>
-   ExternalPotentialImpl<Evaluator>::~ExternalPotentialImpl() 
+   template <class Interaction>
+   ExternalPotentialImpl<Interaction>::~ExternalPotentialImpl() 
    {}
 
    /* 
    * Read parameters from file.
    */
-   template <class Evaluator>
-   void ExternalPotentialImpl<Evaluator>::readParam(std::istream &in) 
+   template <class Interaction>
+   void ExternalPotentialImpl<Interaction>::readParam(std::istream &in) 
    {
-      // Read only if not a copy.  Do not indent evaluator block.
+      // Read only if not a copy.  Do not indent interaction block.
       if (!isCopy_) {
          readBegin(in, "ExternalPotential");
-         evaluator().setNAtomType(simulation().nAtomType());
-         evaluator().setBoundary(system().boundary());
+         interaction().setNAtomType(simulation().nAtomType());
+         interaction().setBoundary(system().boundary());
          bool nextIndent = false;
-         readParamComposite(in, evaluator(), nextIndent);
+         readParamComposite(in, interaction(), nextIndent);
          readEnd(in);
       }
    }
@@ -206,39 +207,39 @@ namespace McMd
    /* 
    * Set external parameter.
    */
-   template <class Evaluator>
-   void ExternalPotentialImpl<Evaluator>::setExternalParameter(double externalParameter) 
-   { evaluator().setExternalParameter(externalParameter); }
+   template <class Interaction>
+   void ExternalPotentialImpl<Interaction>::setExternalParameter(double externalParameter) 
+   { interaction().setExternalParameter(externalParameter); }
  
    /* 
    * Returns external parameter.
    */
-   template <class Evaluator>
-   double ExternalPotentialImpl<Evaluator>::externalParameter() const 
-   { return evaluator().externalParameter(); }
+   template <class Interaction>
+   double ExternalPotentialImpl<Interaction>::externalParameter() const 
+   { return interaction().externalParameter(); }
   
    /*
    * Return external energy of an atom.
    */
-   template <class Evaluator>
+   template <class Interaction>
    double 
-   ExternalPotentialImpl<Evaluator>::energy(const Vector& position, int typeId) 
+   ExternalPotentialImpl<Interaction>::energy(const Vector& position, int typeId) 
       const
-   { return evaluator().energy(position, typeId); }
+   { return interaction().energy(position, typeId); }
 
    /*
    * Return external force on an atom.
    */
-   template <class Evaluator>
-   void ExternalPotentialImpl<Evaluator>::getForce(const Vector& position, 
+   template <class Interaction>
+   void ExternalPotentialImpl<Interaction>::getForce(const Vector& position, 
                                                int typeId, Vector& force) const
-   { evaluator().getForce(position, typeId, force); }
+   { interaction().getForce(position, typeId, force); }
 
    /* 
    * Return total external potential energy.
    */
-   template <class Evaluator>
-   double ExternalPotentialImpl<Evaluator>::energy() const
+   template <class Interaction>
+   double ExternalPotentialImpl<Interaction>::energy() const
    {
       System::ConstMoleculeIterator molIter;
       Molecule::ConstAtomIterator atomIter;
@@ -246,7 +247,7 @@ namespace McMd
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-               energy += evaluator().energy(atomIter->position(),
+               energy += interaction().energy(atomIter->position(),
                                                     atomIter->typeId());
             }
          }
@@ -257,8 +258,8 @@ namespace McMd
    /* 
    * Add external forces to total.
    */
-   template <class Evaluator>
-   void ExternalPotentialImpl<Evaluator>::addForces()
+   template <class Interaction>
+   void ExternalPotentialImpl<Interaction>::addForces()
    {
       Vector  force; 
       System::MoleculeIterator molIter;
@@ -266,7 +267,7 @@ namespace McMd
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          for (begin(iSpec, molIter); molIter.notEnd(); ++molIter) {
             for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-               evaluator().getForce(atomIter->position(), 
+               interaction().getForce(atomIter->position(), 
                                             atomIter->typeId(), force);
                atomIter->force() += force;
             }
@@ -274,31 +275,32 @@ namespace McMd
       }
    }
 
-   template <class Evaluator>
-   double ExternalPotentialImpl<Evaluator>::atomEnergy(const Atom &atom) const
+   template <class Interaction>
+   double ExternalPotentialImpl<Interaction>::atomEnergy(const Atom &atom) const
    {
       double  energy;
 
       energy = 0.0;
-      energy += evaluator().energy(atom.position(), atom.typeId());
+      energy += interaction().energy(atom.position(), atom.typeId());
       return energy;
    }
 
-   template <class Evaluator>
-   inline Evaluator& ExternalPotentialImpl<Evaluator>::evaluator()
-   { return *evaluatorPtr_; }
+   template <class Interaction>
+   inline Interaction& ExternalPotentialImpl<Interaction>::interaction()
+   { return *interactionPtr_; }
 
-   template <class Evaluator>
-   inline const Evaluator& ExternalPotentialImpl<Evaluator>::evaluator() const
-   { return *evaluatorPtr_; }
+   template <class Interaction>
+   inline const Interaction& ExternalPotentialImpl<Interaction>::interaction() const
+   { return *interactionPtr_; }
 
+   #if 0
    /*
-   * Return external potential evaluator class name.
+   * Return external interaction class name.
    */
-   template <class Evaluator>
-   std::string ExternalPotentialImpl<Evaluator>::evaluatorClassName() const
-   {  return evaluator().className(); }
+   template <class Interaction>
+   std::string ExternalPotentialImpl<Interaction>::interactionClassName() const
+   {  return interaction().className(); }
+   #endif
 
 }
-#endif
 #endif

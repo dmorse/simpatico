@@ -13,7 +13,7 @@
 #include <mcMd/potentials/dihedral/DihedralPotential.h>
 #include <mcMd/potentials/dihedral/DihedralPotentialImpl.h>
 
-// Dihedral Potential evaluator classes
+// Dihedral interaction classes
 #include <inter/dihedral/CosineDihedral.h>
 
 namespace McMd

@@ -15,7 +15,7 @@
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/potentials/bond/BondPotentialImpl.h>
 
-// Bond Potential evaluator classes
+// Bond Potential interaction classes
 #include <inter/bond/HarmonicBond.h>
 #include <inter/bond/HarmonicL0Bond.h>
 #include <inter/bond/FeneBond.h>

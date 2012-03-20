@@ -14,7 +14,7 @@
 #include <mcMd/potentials/angle/AnglePotential.h>
 #include <mcMd/potentials/angle/AnglePotentialImpl.h>
 
-// Angle Potential evaluator classes
+// Angle Potential interaction classes
 #include <inter/angle/CosineAngle.h>
 #include <inter/angle/CosineSqAngle.h>
 

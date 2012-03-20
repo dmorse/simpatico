@@ -1,4 +1,3 @@
-#ifdef  INTER_ANGLE
 #ifndef ANGLE_POTENTIAL_IMPL_H
 #define ANGLE_POTENTIAL_IMPL_H
 
@@ -31,7 +30,7 @@ namespace McMd
    *
    * \ingroup Angle_Module
    */
-   template <class Evaluator>
+   template <class Interaction>
    class AnglePotentialImpl : public AnglePotential, public SubSystem
    {
 
@@ -45,7 +44,7 @@ namespace McMd
       /** 
       * Constructor (copied from McAnglePotential)
       */
-      AnglePotentialImpl(AnglePotentialImpl<Evaluator>& other);
+      AnglePotentialImpl(AnglePotentialImpl<Interaction>& other);
 
       /** 
       * Destructor.
@@ -55,15 +54,15 @@ namespace McMd
       /**
       * Read angle potential parameters.
       * 
-      * This method reads the angle potential Evaluator parameter 
+      * This method reads the angle potential Interaction parameter 
       * block.  Before calling Evalutor::readParam(), it passes 
-      * simulation().nBondType() to Evaluator::setNAtomType().
+      * simulation().nBondType() to Interaction::setNAtomType().
       *
       * \param in input parameter stream.
       */
       virtual void readParam(std::istream& in);
 
-      /// \name Energy, Force, Stress Evaluators
+      /// \name Energy, Force, Stress Interactions
       //@{
 
       /**
@@ -87,10 +86,13 @@ namespace McMd
       void force(const Vector& R1, const Vector& R2,
                        Vector& F1, Vector& F2, int type) const;
 
+     
+      #if 0
       /**
-      * Return pair evaluator class name (e.g., "CosineAngle").
+      * Return pair interaction class name (e.g., "CosineAngle").
       */
-      virtual std::string evaluatorClassName() const;
+      virtual std::string interactionClassName() const;
+      #endif
 
       /**
       * Calculate the angle energy for one Atom.
@@ -134,18 +136,18 @@ namespace McMd
       //@}
 
       /**
-      * Return angle evaluator by reference.
+      * Return angle interaction by reference.
       */
-      Evaluator& evaluator();
+      Interaction& interaction();
 
       /**
-      * Return angle evaluator by const reference.
+      * Return angle interaction by const reference.
       */
-      const Evaluator& evaluator() const;
+      const Interaction& interaction() const;
 
    private:
   
-      Evaluator* evaluatorPtr_;
+      Interaction* interactionPtr_;
 
       bool isCopy_;
  
@@ -177,49 +179,49 @@ namespace McMd
    /* 
    * Default constructor.
    */
-   template <class Evaluator>
-   AnglePotentialImpl<Evaluator>::AnglePotentialImpl(System& system)
+   template <class Interaction>
+   AnglePotentialImpl<Interaction>::AnglePotentialImpl(System& system)
     : AnglePotential(),
       SubSystem(system),
-      evaluatorPtr_(0),
+      interactionPtr_(0),
       isCopy_(false)
-   {  evaluatorPtr_ = new Evaluator(); }
+   {  interactionPtr_ = new Interaction(); }
  
    /* 
-   * Constructor, copy from AnglePotentialImpl<Evaluator>.
+   * Constructor, copy from AnglePotentialImpl<Interaction>.
    */
-   template <class Evaluator>
-   AnglePotentialImpl<Evaluator>::AnglePotentialImpl(
-                         AnglePotentialImpl<Evaluator>& other)
+   template <class Interaction>
+   AnglePotentialImpl<Interaction>::AnglePotentialImpl(
+                         AnglePotentialImpl<Interaction>& other)
     : AnglePotential(),
       SubSystem(other.system()),
-      evaluatorPtr_(&other.evaluator()),
+      interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}
  
    /* 
    * Destructor. 
    */
-   template <class Evaluator>
-   AnglePotentialImpl<Evaluator>::~AnglePotentialImpl() 
+   template <class Interaction>
+   AnglePotentialImpl<Interaction>::~AnglePotentialImpl() 
    {
-      if (evaluatorPtr_ && !isCopy_) {
-         delete evaluatorPtr_; 
-         evaluatorPtr_ = 0;
+      if (interactionPtr_ && !isCopy_) {
+         delete interactionPtr_; 
+         interactionPtr_ = 0;
       }
    }
 
    /* 
    * Read parameters from file.
    */
-   template <class Evaluator>
-   void AnglePotentialImpl<Evaluator>::readParam(std::istream &in) 
+   template <class Interaction>
+   void AnglePotentialImpl<Interaction>::readParam(std::istream &in) 
    {
       if (!isCopy_) {
          readBegin(in, "AnglePotential");
-         evaluator().setNAngleType(simulation().nAngleType());
+         interaction().setNAngleType(simulation().nAngleType());
          bool nextIndent = false;
-         readParamComposite(in, evaluator(), nextIndent);
+         readParamComposite(in, interaction(), nextIndent);
          readEnd(in);
       }
    }
@@ -227,24 +229,24 @@ namespace McMd
    /*
    * Return energy for a single angle.
    */
-   template <class Evaluator>
-   double AnglePotentialImpl<Evaluator>::energy(double cosTheta, int angleTypeId) 
+   template <class Interaction>
+   double AnglePotentialImpl<Interaction>::energy(double cosTheta, int angleTypeId) 
       const
-   {  return evaluator().energy(cosTheta, angleTypeId); }
+   {  return interaction().energy(cosTheta, angleTypeId); }
 
    /*
    * Return forces for a single angle.
    */
-   template <class Evaluator>
-   void AnglePotentialImpl<Evaluator>::force(const Vector& R1, const Vector& R2, 
+   template <class Interaction>
+   void AnglePotentialImpl<Interaction>::force(const Vector& R1, const Vector& R2, 
                                           Vector& F1, Vector& F2, int typeId) const
-   {  evaluator().force(R1, R2, F1, F2, typeId); }
+   {  interaction().force(R1, R2, F1, F2, typeId); }
 
    /*
    * Return angle energy for one Atom. 
    */
-   template <class Evaluator>
-   double AnglePotentialImpl<Evaluator>::atomEnergy(const Atom &atom) const
+   template <class Interaction>
+   double AnglePotentialImpl<Interaction>::atomEnergy(const Atom &atom) const
    {
       Species::AtomAngleArray angles;
       const  Angle* anglePtr;
@@ -262,7 +264,7 @@ namespace McMd
          rsq2 = boundary().distanceSq(anglePtr->atom(2).position(),
                                anglePtr->atom(1).position(), dr2);
          cosTheta = dr1.dot(dr2) / sqrt(rsq1 * rsq2);
-         energy += evaluator().energy(cosTheta, anglePtr->typeId());
+         energy += interaction().energy(cosTheta, anglePtr->typeId());
       }
 
       return energy;
@@ -271,8 +273,8 @@ namespace McMd
    /* 
    * Calculate angle energy.
    */
-   template <class Evaluator>
-   double AnglePotentialImpl<Evaluator>::energy() const
+   template <class Interaction>
+   double AnglePotentialImpl<Interaction>::energy() const
    {
       Vector dr1; // R[1] - R[0]
       Vector dr2; // R[2] - R[1]
@@ -290,7 +292,7 @@ namespace McMd
                   rsq2 = boundary().distanceSq(angleIter->atom(2).position(),
                                         angleIter->atom(1).position(), dr2);
                   cosTheta = dr1.dot(dr2) / sqrt(rsq1 * rsq2);
-                  energy += evaluator().energy(cosTheta, angleIter->typeId());
+                  energy += interaction().energy(cosTheta, angleIter->typeId());
                }
             }
          }
@@ -302,8 +304,8 @@ namespace McMd
    /* 
    * Add angle forces to forces array.
    */
-   template <class Evaluator>
-   void AnglePotentialImpl<Evaluator>::addForces() 
+   template <class Interaction>
+   void AnglePotentialImpl<Interaction>::addForces() 
    {
       Vector dr1, dr2, force1, force2;
       System::MoleculeIterator molIter;
@@ -322,7 +324,7 @@ namespace McMd
                                         atom0Ptr->position(), dr1);
                   boundary().distanceSq(atom2Ptr->position(),
                                         atom1Ptr->position(), dr2);
-                  evaluator().force(dr1, dr2, force1, force2,
+                  interaction().force(dr1, dr2, force1, force2,
                                     angleIter->typeId());
                   atom0Ptr->force() += force1;
                   atom1Ptr->force() -= force1;
@@ -337,9 +339,9 @@ namespace McMd
    /* 
    * Compute angle contribution to stress.
    */
-   template <class Evaluator>
+   template <class Interaction>
    template <typename T>
-   void AnglePotentialImpl<Evaluator>::computeStressImpl(T& stress) const
+   void AnglePotentialImpl<Interaction>::computeStressImpl(T& stress) const
    {
       Vector dr1, dr2, force1, force2;
       const Atom *atom0Ptr, *atom1Ptr, *atom2Ptr;
@@ -363,7 +365,7 @@ namespace McMd
                                         atom1Ptr->position(), dr2);
 
                   // force1 -- along dr1; force2 -- along dr2.
-                  evaluator().force(dr1, dr2,
+                  interaction().force(dr1, dr2,
                                     force1, force2, angleIter->typeId());
 
                   dr1 *= -1.0;
@@ -379,35 +381,36 @@ namespace McMd
       normalizeStress(stress);
    }
 
-   template <class Evaluator>
-   void AnglePotentialImpl<Evaluator>::computeStress(double& stress) const
+   template <class Interaction>
+   void AnglePotentialImpl<Interaction>::computeStress(double& stress) const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   void AnglePotentialImpl<Evaluator>::computeStress(Util::Vector& stress) 
+   template <class Interaction>
+   void AnglePotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
         const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   void AnglePotentialImpl<Evaluator>::computeStress(Util::Tensor& stress) 
+   template <class Interaction>
+   void AnglePotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
         const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   inline Evaluator& AnglePotentialImpl<Evaluator>::evaluator()
-   { return *evaluatorPtr_; }
+   template <class Interaction>
+   inline Interaction& AnglePotentialImpl<Interaction>::interaction()
+   { return *interactionPtr_; }
 
-   template <class Evaluator>
-   inline const Evaluator& AnglePotentialImpl<Evaluator>::evaluator() const
-   { return *evaluatorPtr_; }
+   template <class Interaction>
+   inline const Interaction& AnglePotentialImpl<Interaction>::interaction() const
+   { return *interactionPtr_; }
 
+   #if 0
    /*
-   * Return angle potential evaluator class name.
+   * Return angle potential interaction class name.
    */
-   template <class Evaluator>
-   std::string AnglePotentialImpl<Evaluator>::evaluatorClassName() const
-   {  return evaluator().className(); }
+   template <class Interaction>
+   std::string AnglePotentialImpl<Interaction>::interactionClassName() const
+   {  return interaction().className(); }
+   #endif
 
 }
-#endif
 #endif

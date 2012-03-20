@@ -64,6 +64,8 @@ namespace McMd
       */
       virtual double externalParameter() const = 0;
 
+      //@{ External Interaction Interface
+
       /**
       * Returns external potential energy of a single particle. 
       *
@@ -82,6 +84,8 @@ namespace McMd
       */
       virtual void getForce(const Vector& position, int type, Vector& force) const = 0;
 
+      //@}
+
       /**
       * Add external force of an Atom to the total force acting on it.
       */
@@ -97,10 +101,12 @@ namespace McMd
       */
       virtual double atomEnergy(const Atom& atom) const = 0;
 
+      #if 0
       /**
-      * Return name of external evaluator class (e.g., "TanhCosineExternal").
+      * Return name of external interaction class (e.g., "TanhCosineExternal").
       */
-      virtual std::string evaluatorClassName() const = 0;
+      virtual std::string interactionClassName() const = 0;
+      #endif
    
    };
 

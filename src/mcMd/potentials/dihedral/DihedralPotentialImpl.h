@@ -31,7 +31,7 @@ namespace McMd
    *
    * \ingroup Dihedral_Module
    */
-   template <class Evaluator>
+   template <class Interaction>
    class DihedralPotentialImpl : public DihedralPotential, public SubSystem
    {
 
@@ -45,7 +45,7 @@ namespace McMd
       /** 
       * Constructor (copied from DihedralPotential)
       */
-      DihedralPotentialImpl(DihedralPotentialImpl<Evaluator>& other);
+      DihedralPotentialImpl(DihedralPotentialImpl<Interaction>& other);
 
       /** 
       * Destructor.
@@ -55,15 +55,15 @@ namespace McMd
       /**
       * Read dihedral potential parameters.
       * 
-      * This method reads the dihedral potential Evaluator parameter 
+      * This method reads the dihedral potential Interaction parameter 
       * block.  Before calling Evalutor::readParam(), it passes 
-      * simulation().nBondType() to Evaluator::setNAtomType().
+      * simulation().nBondType() to Interaction::setNAtomType().
       *
       * \param in input parameter stream.
       */
       virtual void readParam(std::istream& in);
 
-      /// \name Evaluator Interface.
+      /// \name Interaction Interface.
       //@{
 
       /**
@@ -100,10 +100,12 @@ namespace McMd
       void force(const Vector& R1, const Vector& R2, const Vector& R3,
                  Vector& F1, Vector& F2, Vector& F3, int type) const;
 
+      #if 0
       /**
-      * Return pair evaluator class name (e.g., "CosineDihedral").
+      * Return pair interaction class name (e.g., "CosineDihedral").
       */
-      virtual std::string evaluatorClassName() const;
+      virtual std::string interactionClassName() const;
+      #endif
 
       //@}
       /// \name Global Energy, Force, Stress methods.
@@ -151,18 +153,18 @@ namespace McMd
       //@}
 
       /**
-      * Return dihedral potential evaluator by reference.
+      * Return dihedral potential interaction by reference.
       */
-      Evaluator& evaluator();
+      Interaction& interaction();
 
       /**
-      * Return dihedral potential evaluator by const reference.
+      * Return dihedral potential interaction by const reference.
       */
-      const Evaluator& evaluator() const;
+      const Interaction& interaction() const;
 
    private:
   
-      Evaluator* evaluatorPtr_;
+      Interaction* interactionPtr_;
 
       bool isCopy_;
  
@@ -194,44 +196,44 @@ namespace McMd
    /* 
    * Default constructor.
    */
-   template <class Evaluator>
-   DihedralPotentialImpl<Evaluator>::DihedralPotentialImpl(System& system)
+   template <class Interaction>
+   DihedralPotentialImpl<Interaction>::DihedralPotentialImpl(System& system)
     : DihedralPotential(),
       SubSystem(system),
-      evaluatorPtr_(0),
+      interactionPtr_(0),
       isCopy_(false)
-   {  evaluatorPtr_ = new Evaluator(); }
+   {  interactionPtr_ = new Interaction(); }
  
    /* 
-   * Constructor, copy from DihedralPotentialImpl<Evaluator>.
+   * Constructor, copy from DihedralPotentialImpl<Interaction>.
    */
-   template <class Evaluator>
-   DihedralPotentialImpl<Evaluator>::DihedralPotentialImpl(
-                         DihedralPotentialImpl<Evaluator>& other)
+   template <class Interaction>
+   DihedralPotentialImpl<Interaction>::DihedralPotentialImpl(
+                         DihedralPotentialImpl<Interaction>& other)
     : DihedralPotential(),
       SubSystem(other.system()),
-      evaluatorPtr_(&other.evaluator()),
+      interactionPtr_(&other.interaction()),
       isCopy_(true)
    {}
  
    /* 
    * Destructor. 
    */
-   template <class Evaluator>
-   DihedralPotentialImpl<Evaluator>::~DihedralPotentialImpl() 
+   template <class Interaction>
+   DihedralPotentialImpl<Interaction>::~DihedralPotentialImpl() 
    {}
 
    /* 
    * Read parameters from file.
    */
-   template <class Evaluator>
-   void DihedralPotentialImpl<Evaluator>::readParam(std::istream &in) 
+   template <class Interaction>
+   void DihedralPotentialImpl<Interaction>::readParam(std::istream &in) 
    {
       if (!isCopy_) {
          readBegin(in, "DihedralPotential");
-         evaluator().setNDihedralType(simulation().nDihedralType());
+         interaction().setNDihedralType(simulation().nDihedralType());
          bool nextIndent = false;
-         readParamComposite(in, evaluator(), nextIndent);
+         readParamComposite(in, interaction(), nextIndent);
          readEnd(in);
       }
    }
@@ -239,25 +241,25 @@ namespace McMd
    /*
    * Return energy for a single dihedral.
    */
-   template <class Evaluator>
-   inline double DihedralPotentialImpl<Evaluator>::
+   template <class Interaction>
+   inline double DihedralPotentialImpl<Interaction>::
       energy(const Vector& R1, const Vector& R2, const Vector& R3, int typeId) const
-   {  return evaluator().energy(R1, R2, R3, typeId); }
+   {  return interaction().energy(R1, R2, R3, typeId); }
 
    /*
    * Return forces for a single dihedral.
    */
-   template <class Evaluator>
-   inline void DihedralPotentialImpl<Evaluator>::
+   template <class Interaction>
+   inline void DihedralPotentialImpl<Interaction>::
       force(const Vector& R1, const Vector& R2, const Vector& R3,
             Vector& F1, Vector& F2, Vector& F3, int typeId) const
-   {  evaluator().force(R1, R2, R3, F1, F2, F3, typeId); }
+   {  interaction().force(R1, R2, R3, F1, F2, F3, typeId); }
 
    /*
    * Return dihedral energy for one Atom.
    */
-   template <class Evaluator>
-   double DihedralPotentialImpl<Evaluator>::atomEnergy(const Atom &atom) 
+   template <class Interaction>
+   double DihedralPotentialImpl<Interaction>::atomEnergy(const Atom &atom) 
    const
    {
       Species::AtomDihedralArray dihedrals;
@@ -277,7 +279,7 @@ namespace McMd
                                dihedralPtr->atom(1).position(), dr2);
          boundary().distanceSq(dihedralPtr->atom(3).position(),
                                dihedralPtr->atom(2).position(), dr3);
-         energy += evaluator().energy(dr1, dr2, dr3,
+         energy += interaction().energy(dr1, dr2, dr3,
                                              dihedralPtr->typeId());
       }
       return energy;
@@ -286,8 +288,8 @@ namespace McMd
    /*
    * Compute total dihedral energy for a System.
    */
-   template <class Evaluator>
-   double DihedralPotentialImpl<Evaluator>::energy() const
+   template <class Interaction>
+   double DihedralPotentialImpl<Interaction>::energy() const
    {
       Vector dr1; // R[1] - R[0]
       Vector dr2; // R[2] - R[1]
@@ -307,7 +309,7 @@ namespace McMd
                                         dihedralIter->atom(1).position(), dr2);
                   boundary().distanceSq(dihedralIter->atom(3).position(),
                                         dihedralIter->atom(2).position(), dr3);
-                  energy += evaluator().
+                  energy += interaction().
                             energy(dr1, dr2, dr3, dihedralIter->typeId());
                }
             }
@@ -320,8 +322,8 @@ namespace McMd
    /* 
    * Add dihedral forces to atomic forces.
    */
-   template <class Evaluator>
-   void DihedralPotentialImpl<Evaluator>::addForces() 
+   template <class Interaction>
+   void DihedralPotentialImpl<Interaction>::addForces() 
    {
       Vector dr1, dr2, dr3, force1, force2, force3;
       Atom *atom0Ptr, *atom1Ptr, *atom2Ptr, *atom3Ptr;
@@ -346,7 +348,7 @@ namespace McMd
                                         atom1Ptr->position(), dr2);
                   boundary().distanceSq(atom3Ptr->position(),
                                         atom2Ptr->position(), dr3);
-                  evaluator().force(dr1, dr2, dr3,
+                  interaction().force(dr1, dr2, dr3,
                      force1, force2, force3, dihedralIter->typeId());
 
                   atom0Ptr->force() += force1;
@@ -364,9 +366,9 @@ namespace McMd
    /* 
    * Add dihedral contribution to stress.
    */
-   template <class Evaluator>
+   template <class Interaction>
    template <typename T>
-   void DihedralPotentialImpl<Evaluator>::computeStressImpl(T& stress) const
+   void DihedralPotentialImpl<Interaction>::computeStressImpl(T& stress) const
    {
       Vector dr1, dr2, dr3, force1, force2, force3;
 
@@ -388,7 +390,7 @@ namespace McMd
                   boundary().distanceSq(dihedralIter->atom(3).position(),
                                         dihedralIter->atom(2).position(), dr3);
 
-                  evaluator().force(dr1, dr2, dr3, force1, force2, force3, 
+                  interaction().force(dr1, dr2, dr3, force1, force2, force3, 
                                     dihedralIter->typeId());
 
                   dr1 *= -1.0;
@@ -405,34 +407,36 @@ namespace McMd
       stress /= boundary().volume();
       normalizeStress(stress);
    }
-   template <class Evaluator>
-   void DihedralPotentialImpl<Evaluator>::computeStress(double& stress) const
+   template <class Interaction>
+   void DihedralPotentialImpl<Interaction>::computeStress(double& stress) const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   void DihedralPotentialImpl<Evaluator>::computeStress(Util::Vector& stress) 
+   template <class Interaction>
+   void DihedralPotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
         const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   void DihedralPotentialImpl<Evaluator>::computeStress(Util::Tensor& stress) 
+   template <class Interaction>
+   void DihedralPotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
         const
    {  computeStressImpl(stress); }
 
-   template <class Evaluator>
-   inline Evaluator& DihedralPotentialImpl<Evaluator>::evaluator()
-   { return *evaluatorPtr_; }
+   template <class Interaction>
+   inline Interaction& DihedralPotentialImpl<Interaction>::interaction()
+   { return *interactionPtr_; }
 
-   template <class Evaluator>
-   inline const Evaluator& DihedralPotentialImpl<Evaluator>::evaluator() const
-   { return *evaluatorPtr_; }
+   template <class Interaction>
+   inline const Interaction& DihedralPotentialImpl<Interaction>::interaction() const
+   { return *interactionPtr_; }
 
+   #if 0
    /*
-   * Return dihedral potential evaluator class name.
+   * Return dihedral potential interaction class name.
    */
-   template <class Evaluator>
-   std::string DihedralPotentialImpl<Evaluator>::evaluatorClassName() const
-   {  return evaluator().className(); }
+   template <class Interaction>
+   std::string DihedralPotentialImpl<Interaction>::interactionClassName() const
+   {  return interaction().className(); }
+   #endif
 
 }
 #endif

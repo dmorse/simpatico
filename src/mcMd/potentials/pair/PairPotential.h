@@ -22,7 +22,7 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Interface for a Pair Interaction.
+   * Interface for a Pair Potential.
    *
    * \ingroup Pair_Module
    */
@@ -36,6 +36,9 @@ namespace McMd
       */
       virtual ~PairPotential()
       {}
+
+      /// \name Pair Interaction Interface
+      //@{ 
 
       /**
       * Return pair energy for a single pair.
@@ -55,9 +58,13 @@ namespace McMd
       virtual double maxPairCutoff() const = 0;
 
       /**
-      * Return name of pair evaluator class (e.g., "LJPair").
+      * Return name of pair interaction class (e.g., "LJPair").
       */
-      virtual std::string evaluatorClassName() const = 0;
+      virtual std::string interactionClassName() const = 0;
+
+      //@}
+      /// \name Global Energy, Force, and Stress Evaluators
+      //@{ 
 
       /**
       * Calculate the total nonBonded pair energy for the associated System.
@@ -85,6 +92,7 @@ namespace McMd
       */
       virtual void computeStress(Util::Tensor& stress) const = 0;
 
+      //@}
    };
 
 } 

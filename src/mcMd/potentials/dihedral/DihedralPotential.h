@@ -1,4 +1,3 @@
-#ifdef  INTER_DIHEDRAL
 #ifndef DIHEDRAL_POTENTIAL_H
 #define DIHEDRAL_POTENTIAL_H
 
@@ -43,7 +42,7 @@ namespace McMd
       virtual ~DihedralPotential()
       {}
 
-      /// \name Dihedral evaluator interface
+      /// \name Dihedral interaction interface
       //@{ 
 
       /**
@@ -80,10 +79,12 @@ namespace McMd
       void force(const Vector& R1, const Vector& R2, const Vector& R3,
                  Vector& F1, Vector& F2, Vector& F3, int type) const = 0;
 
+      #if 0
       /**
-      * Return name of pair evaluator class (e.g., "HarmonicDihedral").
+      * Return name of pair interaction class (e.g., "HarmonicDihedral").
       */
-      virtual std::string evaluatorClassName() const = 0;
+      virtual std::string interactionClassName() const = 0;
+      #endif
 
       //@}
       /// \name System energy, force, and stress
@@ -133,5 +134,4 @@ namespace McMd
    };
 
 } 
-#endif
 #endif

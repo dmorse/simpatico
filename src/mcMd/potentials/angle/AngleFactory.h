@@ -1,4 +1,3 @@
-#ifdef  INTER_ANGLE
 #ifndef ANGLE_FACTORY_H
 #define ANGLE_FACTORY_H
 
@@ -51,4 +50,3 @@ namespace McMd
 }
 
 #endif // ifndef ANGLE_FACTORY_H
-#endif // ifdef INTER_ANGLE

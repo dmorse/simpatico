@@ -1,4 +1,3 @@
-#ifdef  INTER_ANGLE
 #ifndef ANGLE_POTENTIAL_H
 #define ANGLE_POTENTIAL_H
 
@@ -44,7 +43,7 @@ namespace McMd
       virtual ~AnglePotential()
       {}
 
-      /// \name Angle evaluator interface
+      /// \name Angle interaction interface
       //@{
 
       /**
@@ -67,11 +66,13 @@ namespace McMd
       */
       virtual void force(const Vector& R1, const Vector& R2,
                          Vector& F1, Vector& F2, int type) const = 0;
- 
+
+      #if 0 
       /**
-      * Return name of pair evaluator class (e.g., "HarmonicAngle").
+      * Return name of pair interaction class (e.g., "HarmonicAngle").
       */
-      virtual std::string evaluatorClassName() const = 0;
+      virtual std::string interactionClassName() const = 0;
+      #endif
 
       //@}
       /// \name System energy, force, and stress.
@@ -124,5 +125,4 @@ namespace McMd
 
 }
 
-#endif
 #endif
