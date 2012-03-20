@@ -10,7 +10,6 @@ all:
 ifdef UTIL_MPI
 	cd ddMd;  make all
 endif
-	cd main;  make all
 
 clean:
 	cd util;  make clean
@@ -19,7 +18,6 @@ clean:
 ifdef UTIL_MPI
 	cd ddMd;  make clean
 endif
-	cd main;  make clean
  
 doc:    
 	doxygen Doxyfile
@@ -40,6 +38,5 @@ veryclean:
 	-rm -f inter/defines.mk
 	-rm -f mcMd/defines.mk
 	-rm -f ddMd/defines.mk
-	-rm -f main/defines.mk
 
 # ==============================================================================

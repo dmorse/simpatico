@@ -4,6 +4,8 @@ McMd namespace.
 Subdirectories:
 ----------------------
 
+chemistry      classes for atoms, molecules, and covalent groups (bonds, etc.)
+species        molecular species (i.e., molecular structures)
 potentials     classes that evaluate potential energies and forces
   pair         nonbonded pair potentials
   bond         covalent bond potentials 
@@ -12,12 +14,10 @@ potentials     classes that evaluate potential energies and forces
   link         mutable covalent bond potentials (e.g., crosslinks)
   external     external one-body potentials.
   tether       potentials to "tether" (restrain) specific atoms.
-ensembles      classes that define statistical ensembles
-chemistry      classes for atoms, molecules, and covalent groups (bonds, etc.)
-species        molecular species (i.e., molecular structures)
 neighbor       classes that implement a cell list and a Verlet pair list
 links          classes to manage crosslinks (mutable covalent bonds).
 tethers        classes to manage tethers that constrain specific atoms
+ensembles      classes that define statistical ensembles
 simulation     main classes for constructing simulations
 mcSimulation   Monte Carlo (MC) Simulation and System subclasses
 mcMoves        classes for specific MC moves (derived from McMove)
@@ -39,8 +39,9 @@ classes in the directory tree rooted at mcMd. This includes all of the classes
 in the McMd namespace.  The most important targets are available:
 
 make all      make all *.o files in src/mcMd and its subdirectories, 
-              and a static library mcMd$(MCMD_SUFFIX).a in lib/
+              a static library mcMd<suffix>.a in lib/, and the two
+              executables mdSim<suffix> and mcSim<suffix> in bin/.
 
 make clean    remove all *.o files in src/mcMd and its subdirectories,
-              and the static library file.
+              the static library file, and the two executables.
 

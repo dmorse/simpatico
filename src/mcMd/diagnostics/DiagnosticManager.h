@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Diagnostic.h"                        // template parameter
-#include <util/param/Manager.h>                // base class template
+#include "Diagnostic.h"                  // template parameter
+#include <util/param/Manager.h>          // base class template
 #include <util/archives/Serializable.h>  // base class 
 
 namespace McMd

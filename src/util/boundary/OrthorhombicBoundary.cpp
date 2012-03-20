@@ -20,8 +20,6 @@
 namespace Util
 {
 
-   using namespace Util;
-
    /* 
    * Default constructor.
    */
@@ -162,13 +160,8 @@ namespace Util
       }
       return out;
    }
-
-}
  
-#ifdef UTIL_MPI
-namespace Util
-{
-
+   #ifdef UTIL_MPI
    template <>
    void send<Util::OrthorhombicBoundary>(MPI::Comm& comm, 
              Util::OrthorhombicBoundary& data, int dest, int tag)
@@ -204,8 +197,8 @@ namespace Util
    */
    MPI::Datatype MpiTraits<Util::OrthorhombicBoundary>::type = MPI::BYTE;
    bool MpiTraits<Util::OrthorhombicBoundary>::hasType = false;
+   #endif
 
 }
-#endif
 
 #endif

@@ -10,6 +10,7 @@
 
 #include "Diagnostic.h"
 #include <mcMd/util/FileMaster.h>
+#include <util/archives/Serializable_includes.h>
 #include <util/global.h>
 
 namespace McMd

@@ -9,6 +9,7 @@
 */
 
 #include "DiagnosticManager.h" 
+#include "Diagnostic.h" 
 #include <util/archives/Serializable_includes.h>
 
 namespace McMd

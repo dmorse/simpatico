@@ -9,6 +9,7 @@ all: $(util_OBJS) $(util_LIB)
 
 clean:
 	rm -f $(util_OBJS) $(util_OBJS:.o=.d) $(util_LIB)
+	rm -f $(util_LIB)
 	rm -f Test Test.o Test.d
 
 clean-deps:
