@@ -159,11 +159,12 @@ public:
          Atom* atomPtr = object().nextPtr();
          int i = 0;
          while (atomPtr) {
-            std::cout << atomPtr->id() 
-                      << "  " << atomPtr->position() << std::endl;
+            //std::cout << atomPtr->id() 
+            //          << "  " << atomPtr->position() << std::endl;
             atomPtr = object().nextPtr();
             ++i;
          }
+         TEST_ASSERT(i == atomCount);
       } else { 
          object().send();
       }
@@ -184,8 +185,8 @@ public:
          Atom* atomPtr = object().nextPtr();
          int i = 0;
          while (atomPtr) {
-            std::cout << atomPtr->id() 
-                      << "  " << atomPtr->position() << std::endl;
+            //std::cout << atomPtr->id() 
+            //          << "  " << atomPtr->position() << std::endl;
             atomPtr = object().nextPtr();
             ++i;
          }
