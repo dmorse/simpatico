@@ -7,7 +7,7 @@
 #   - A variable $(MCMD_SUFFIX) which is added as a suffix to the name
 #     of the mcMd library and (by default) to the main executables.
 #
-#   - The name $(MCMD_LIB) of the McMd library.
+#   - Variables that give names for McMd library and executable files.
 #
 # This file is included by every makefile in the mcMd directory.  It
 # should be included after the file src/compiler.mk, after the files
@@ -68,10 +68,12 @@ MCMD_SUFFIX:=$(MCMD_SUFFIX)_s
 endif
 
 #-----------------------------------------------------------------------
-# Library of objects from the McMd namespace, or src/mcMd directory
+# Names of the library and executable files.
 
-mcMd_LIBNAME=mcMd$(MCMD_SUFFIX)
+mcMd_LIBNAME=mcMd$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
 mcMd_LIBDIR=$(ROOT_DIR)/lib
 mcMd_LIB=$(mcMd_LIBDIR)/lib$(mcMd_LIBNAME).a
 
+MCSIM_EXE=$(BIN_DIR)/mcSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
+MDSIM_EXE=$(BIN_DIR)/mdSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
 #-----------------------------------------------------------------------

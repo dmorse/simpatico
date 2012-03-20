@@ -29,7 +29,7 @@
 
 ROOT_DIR=PWD
 SRC_DIR=$(ROOT_DIR)/src
-
+BIN_DIR=$(ROOT_DIR)/bin
 #-----------------------------------------------------------------------
 # Automatic dependency generation:
 #

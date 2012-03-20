@@ -7,17 +7,17 @@ all:
 	cd util;  make all
 	cd inter; make all
 	cd mcMd;  make all
-ifdef UTIL_MPI
-	cd ddMd;  make all
-endif
+#ifdef UTIL_MPI
+#	cd ddMd;  make all
+#endif
 
 clean:
 	cd util;  make clean
 	cd inter; make clean
 	cd mcMd;  make clean
-ifdef UTIL_MPI
-	cd ddMd;  make clean
-endif
+#ifdef UTIL_MPI
+#	cd ddMd;  make clean
+#endif
  
 doc:    
 	doxygen Doxyfile

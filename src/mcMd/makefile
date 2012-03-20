@@ -12,10 +12,7 @@ include $(SRC_DIR_REL)/mcMd/sources.mk
 #-----------------------------------------------------------------------
 MDSIM=$(SRC_DIR)/mcMd/mdSim
 MCSIM=$(SRC_DIR)/mcMd/mcSim
-BIN_DIR=$(ROOT_DIR)/bin
-MCSIM_EXE=$(BIN_DIR)/mcSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
-MDSIM_EXE=$(BIN_DIR)/mdSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
-#-----------------------------------------------------------------------
+
 all: $(mcMd_OBJS) $(mcMd_LIB) $(MDSIM).o $(MCSIM).o $(MCSIM_EXE) $(MDSIM_EXE)
 
 clean:

@@ -76,9 +76,7 @@ endif
 #-----------------------------------------------------------------------
 # Library file name 
 
-# Library of objects from the Util namespace, or src/util directory
 util_LIBNAME=util$(UTIL_SUFFIX)
 util_LIBDIR=$(ROOT_DIR)/lib
 util_LIB=$(util_LIBDIR)/lib$(util_LIBNAME).a
-
 #-----------------------------------------------------------------------

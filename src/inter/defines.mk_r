@@ -99,10 +99,9 @@ INTER_SUFFIX:=$(INTER_SUFFIX)_t
 endif
 
 #-----------------------------------------------------------------------
-# Library of objects from the McMd namespace, or src/inter directory
+# Name of static library for Inter namespace.
 
 inter_LIBNAME=inter$(UTIL_SUFFIX)$(INTER_SUFFIX)
 inter_LIBDIR=$(ROOT_DIR)/lib
 inter_LIB=$(inter_LIBDIR)/lib$(inter_LIBNAME).a
-
 #-----------------------------------------------------------------------

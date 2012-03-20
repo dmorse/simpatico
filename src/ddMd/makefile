@@ -11,9 +11,6 @@ include $(SRC_DIR_REL)/ddMd/sources.mk
 
 #-----------------------------------------------------------------------
 DDSIM=$(SRC_DIR)/ddMd/ddSim
-BIN_DIR=$(ROOT_DIR)/bin
-DDSIM_EXE=$(BIN_DIR)/ddSim$(INTER_SUFFIX)$(DDMD_SUFFIX)
-#-----------------------------------------------------------------------
 
 all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE)
 
