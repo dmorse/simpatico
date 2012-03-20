@@ -365,8 +365,14 @@ public:
          bondDistributor.receive();
 
       }
-      #if 0
-      #endif
+
+      bondStorage.computeNTotal(domain.communicator());
+      if (myRank == 0) {
+         int nTotal = bondStorage.nTotal();
+         //std::cout << "BondStorage.nTotal() =" 
+         //          << nTotal << std::endl;
+         TEST_ASSERT(bondCount == bondStorage.nTotal());
+      }
 
    }
 };

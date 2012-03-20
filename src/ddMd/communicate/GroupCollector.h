@@ -38,10 +38,10 @@ namespace DdMd
    *
    *    // Initialization
    *    collector.associate(domain, storage, buffer);
-   *    collector.allocate(100);
    *
    *    // Communication
    *    if (domain.gridRank() == 0) {  // if master processor
+   *       collector.allocate(100);
    *       collector.setup();
    *       Atom* atomPtr = collector.nextPtr();
    *       while (atomPtr) {

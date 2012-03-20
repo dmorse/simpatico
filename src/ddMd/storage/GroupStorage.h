@@ -170,6 +170,22 @@ namespace DdMd
       */
       void clearIncompleteSet(); 
 
+      /**
+      * Compute and store the number of distinct groups on all processors.
+      *
+      * This is an MPI reduce operation. The correct result is stored and
+      * returned only on the rank 0 processor. On other processors, the
+      * method stores a null value of -1.
+      *
+      * \param  communicator MPI communicator for this system.
+      * \return on master node, return total number of groups.
+      */
+      #ifdef UTIL_MPI
+      void computeNTotal(MPI::Intracomm& communicator);
+      #else
+      void computeNTotal();
+      #endif
+   
       // Accessors
 
       /**
@@ -585,6 +601,39 @@ namespace DdMd
          UTIL_THROW("Number from iterator != size()"); 
 
       return true;
+   }
+
+   /**
+   * Compute, store and return total number of atoms on all processors.
+   */
+   template <int N>
+   #ifdef UTIL_MPI
+   void GroupStorage<N>::computeNTotal(MPI::Intracomm& communicator)
+   #else
+   void GroupStorage<N>::computeNTotal()
+   #endif
+   {
+      GroupIterator<N> iterator;
+      Atom* atomPtr;
+      int nLocal = 0;
+      begin(iterator);
+      for ( ; iterator.notEnd(); ++iterator) {
+         atomPtr = iterator->atomPtr(0);
+         if (atomPtr) {
+            if (!atomPtr->isGhost()) {
+               ++nLocal;
+            }
+         }
+      }
+      #ifdef UTIL_MPI
+      communicator.Reduce(&nLocal, &nTotal_, 1, 
+                          MPI::INT, MPI::SUM, 0);
+      if (communicator.Get_rank() !=0) {
+         nTotal_ = -1;
+      }
+      #else
+      nTotal_ = nLocal;
+      #endif
    }
 
    /*

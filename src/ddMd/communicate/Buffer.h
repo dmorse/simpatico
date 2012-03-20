@@ -230,6 +230,11 @@ namespace DdMd
       */
       int ghostCapacity() const;
 
+      /**
+      * Maximum number of group<N> objects for which space is available.
+      */
+      int groupCapacity(int N) const;
+
    private:
 
       #ifdef UTIL_MPI
@@ -260,6 +265,9 @@ namespace DdMd
       /// Allocated size of send and recv buffers, in bytes.
       int bufferCapacity_;
 
+      /// Size of buffer, in bytes, without 4 int envelope.
+      int dataCapacity_;
+
       /// Number of atoms or ghosts currently in send buffer.
       int sendSize_;
 
@@ -288,11 +296,14 @@ namespace DdMd
       /// Has this buffer been initialized ?
       bool isInitialized_;
 
-      /// Number of bytes required per local atom.
-      static const int localAtomSize_ = 60;
+      /// Return packed size of Atom, in bytes.
+      static int atomSize();
 
-      /// Number of bytes required per ghost atom.
-      static const int ghostAtomSize_ = 36;
+      /// Return packed size of Group, in bytes.
+      static int ghostSize();
+
+      /// Return packed size of Group<N>, in bytes.
+      static int groupSize(int N);
 
       #ifdef UTIL_MPI
       /**

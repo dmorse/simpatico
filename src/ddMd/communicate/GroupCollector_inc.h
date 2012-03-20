@@ -100,6 +100,7 @@ namespace DdMd
    /*
    * Returns address for a new Group.
    */ 
+   template <int N>
    Group<N>* GroupCollector<N>::nextPtr()
    {
       // Preconditions
@@ -114,17 +115,25 @@ namespace DdMd
       }
 
       // If master processor
-      Group<N>* ptr;
+      Group<N>* groupPtr;
+      Atom*     atomPtr;
       if (source_ == 0) {
-         if (!iterator_.atEnd()) {
-            ptr = iterator_.get();
-            ++iterator_;
-            return ptr;
-         } else {
-            recvBufferSize_ = 0;
-            recvArraySize_ = 0;
-            recvArrayId_ = 0;
-            isComplete_ = true;
+         while (!isComplete_) {
+            if (!iterator_.atEnd()) {
+               groupPtr = iterator_.get();
+               ++iterator_;
+               atomPtr = groupPtr->atomPtr(0);
+               if (atomPtr) {
+                  if (!atomPtr->isGhost()) {
+                     return groupPtr;
+                  }
+               }
+            } else {
+               recvBufferSize_ = 0;
+               recvArraySize_ = 0;
+               recvArrayId_ = 0;
+               isComplete_ = true;
+            }
          }
       }
      
@@ -187,8 +196,8 @@ namespace DdMd
    *
    * Call on every processor except the master.
    */
-   void 
-   GroupCollector<N>::send()
+   template <int N>
+   void GroupCollector<N>::send()
    {
 
       // Preconditions
@@ -202,6 +211,11 @@ namespace DdMd
          UTIL_THROW("GroupCollector<N>::send() called from master node.");
       }
 
+      Atom* atomPtr = 0;
+      int message;
+      int tag;
+      int bufferCapacity = bufferPtr_->groupCapacity(N);
+
       // Initialize group iterator
       storagePtr_->begin(iterator_);
 
@@ -209,8 +223,7 @@ namespace DdMd
       while (!isComplete_) {
 
          // Receive notice from master to send groups (blocking receive)
-         int message;
-         int tag = domainPtr_->communicator().Get_rank();
+         tag = domainPtr_->communicator().Get_rank();
          domainPtr_->communicator().Recv(&message, 1, MPI::INT, 0, tag);
 
          // Pack buffer with groups
@@ -218,10 +231,14 @@ namespace DdMd
          isComplete_ = iterator_.atEnd();
          bufferPtr_->clearSendBuffer();
          bufferPtr_->beginSendBlock(Buffer::GROUP, N);
-         //while (recvArraySize_ < bufferPtr_->groupCapacity(N) && !isComplete_) {
-         while (!isComplete_) {
-            bufferPtr_->packGroup<N>(*iterator_);
-            ++recvArraySize_;
+         while (recvArraySize_ < bufferCapacity && !isComplete_) {
+            atomPtr = iterator_->atomPtr(0);
+            if (atomPtr) {
+               if (!atomPtr->isGhost()) {
+                  bufferPtr_->packGroup<N>(*iterator_);
+                  ++recvArraySize_;
+               }
+            }
             ++iterator_;
             isComplete_ = iterator_.atEnd();
          }

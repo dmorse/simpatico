@@ -3,8 +3,6 @@ Domain Decomposition MD (DdMd)
 
 - Add Diagnostic classes, and simple diagnostics.
 
-- Write GroupCollector template, add to ConfigIo.
-
 - Add stress mode to BoundaryEnsemble and to potential classes.
 
 - Port NPH integrator.

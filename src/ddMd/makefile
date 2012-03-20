@@ -10,6 +10,7 @@ include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
 
 all: $(ddMd_OBJS) $(ddMd_LIB)
+	cd ../main; make ddSim
 
 clean:
 	-rm -f $(ddMd_OBJS) $(ddMd_OBJS:.o=.d) $(ddMd_LIB)

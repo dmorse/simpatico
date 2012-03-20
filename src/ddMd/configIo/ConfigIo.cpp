@@ -14,6 +14,7 @@
 #include <ddMd/communicate/Domain.h>   
 #include <ddMd/storage/AtomStorage.h>               
 #include <ddMd/storage/BondStorage.h>               
+#include <ddMd/communicate/GroupCollector_inc.h> 
 #include <ddMd/communicate/Buffer.h> 
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Bond.h>
@@ -56,6 +57,7 @@ namespace DdMd
       bondDistributor_.associate(domain, atomStorage,
                                  bondStorage, buffer);
       atomCollector_.associate(domain, atomStorage, buffer);
+      bondCollector_.associate(domain, bondStorage, buffer);
    }
 
    /*
@@ -70,6 +72,7 @@ namespace DdMd
       atomDistributor_.setParam(atomCacheCapacity_);
       bondDistributor_.setParam(bondCacheCapacity_);
       atomCollector_.allocate(atomCacheCapacity_);
+      bondCollector_.allocate(bondCacheCapacity_);
    }
 
    /*
@@ -77,12 +80,6 @@ namespace DdMd
    */
    void ConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
    {
-
-      int myRank = domain().gridRank();
-
-      //if (myRank == 0) {
-      //   file.open(filename.c_str());
-      //}
 
       // Read and broadcast boundary
       if (domain().isMaster()) {  
@@ -151,7 +148,7 @@ namespace DdMd
          #else
          nAtomAll = nAtomLocal;
          #endif
-         if (myRank == 0) {
+         if (domain().isMaster()) {
             if (nAtomAll != nAtom) {
                UTIL_THROW("nAtomAll != nAtom after distribution");
             }
@@ -195,10 +192,6 @@ namespace DdMd
          setAtomMasks();
       }
 
-      //if (domain().isMaster()) {  
-      //   file.close();
-      //}
-
    }
 
    /* 
@@ -206,11 +199,6 @@ namespace DdMd
    */
    void ConfigIo::writeConfig(std::ostream& file)
    {
-      // Open file
-      //std::ofstream file;
-      //if (domain().isMaster()) {
-      //   file.open(filename.c_str());
-      //}
 
       // Write Boundary dimensions
       if (domain().isMaster()) {
@@ -243,11 +231,21 @@ namespace DdMd
       }
 
       // Bonds
+      bondStorage().computeNTotal(domain().communicator());
+      if (domain().isMaster()) {  
+         file << std::endl;
+         file << "BONDS" << std::endl;
+         file << "nBOND" << Int(bondStorage().nTotal(), 10) << std::endl;
+         bondCollector_.setup();
+         Group<2>* bondPtr = bondCollector_.nextPtr();
+         while (bondPtr) {
+            file << *bondPtr << std::endl;
+            bondPtr = bondCollector_.nextPtr();
+         }
+      } else { 
+         bondCollector_.send();
+      }
 
-      // Close file
-      //if (domain().isMaster()) {  
-      //   file.close();
-      //}
    }
  
    void ConfigIo::setAtomMasks() 
