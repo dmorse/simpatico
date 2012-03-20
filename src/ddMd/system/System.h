@@ -127,35 +127,40 @@ namespace DdMd
       bool needExchange();
 
       /**
-      * Calculate total kinetic energy.
+      * Compute total kinetic energy.
       * 
-      * Reduce operation: Must be called on all nodes but returns correct
-      * total value only on grid communicator master.
+      * Reduce operation: Must be called on all nodes.
+      */
+      void computeKineticEnergy();
+
+      /**
+      * Compute precomputed total kinetic energy.
+      * 
+      * Call only on master node. 
       *
-      * \return total kinetic energy for all nodes on master, 0.0 otherwise.
+      * \return total kinetic energy for all nodes on master.
       */
       double kineticEnergy();
 
       /**
       * Calculate total potential energy on all processors.
       * 
-      * Reduce operation: Must be called on all nodes but returns correct
-      * total value only on grid communicator master.
+      * Reduce operation: Must be called on all nodes .
       *
       * \return total pair potential for all nodes on master, 0.0 otherwise.
+      */
+      void computePotentialEnergies();
+
+      /**
+      * Return precomputed total potential energy.
+      *
+      * Call only on master processor.
+      * 
+      * \return total potential energy (call only on master node).
       */
       double potentialEnergy();
 
-      /**
-      * Calculate total nonbonded pair potential energy.
-      * 
-      * Reduce operation: Must be called on all nodes but returns correct
-      * total value only on grid communicator master.
-      *
-      * \return total pair potential for all nodes on master, 0.0 otherwise.
-      */
-      double pairPotentialEnergy();
-
+      #if 0
       /**
       * Calculate total bond potential energy.
       * 
@@ -165,6 +170,7 @@ namespace DdMd
       * \return total bond potential for all nodes on master, 0.0 otherwise.
       */
       double bondPotentialEnergy();
+      #endif
 
       /// \name Config File IO
       //@{
@@ -395,6 +401,9 @@ namespace DdMd
       /// Maximum boundary (used to allocate memory for the cell list).
       Boundary      maxBoundary_;
 
+      // Value of total kinetic energy, for all processors.
+      double  kineticEnergy_;
+
       #ifdef UTIL_MPI
       MPI::Intracomm* communicatorPtr_;
       #endif
@@ -479,9 +488,6 @@ namespace DdMd
       *  - MaskBonded:  mask pair interaction between bonded atoms
       */
       MaskPolicy  maskedPairPolicy_;
-
-      /// Is this the master node for file Io?
-      bool isMaster_;
 
    };
 

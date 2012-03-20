@@ -1,7 +1,10 @@
 #include "DomainTest.h"
 #include "BufferTest.h"
 #include "AtomDistributorTest.h"
+#include "BondDistributorTest.h"
 #include "ExchangerTest.h"
+#include "AtomCollectorTest.h"
+#include "BondCollectorTest.h"
 
 int main()
 {
@@ -19,11 +22,17 @@ int main()
    TEST_RUNNER(AtomDistributorTest) runner3;
    runner3.run();
 
-   TEST_RUNNER(AtomDistributorTest) runner4;
+   TEST_RUNNER(BondDistributorTest) runner4;
    runner4.run();
 
    TEST_RUNNER(ExchangerTest) runner5;
    runner5.run();
+
+   TEST_RUNNER(AtomCollectorTest) runner6;
+   runner6.run();
+
+   TEST_RUNNER(BondCollectorTest) runner7;
+   runner7.run();
 
    MPI::Finalize();
    #endif

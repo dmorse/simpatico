@@ -7,8 +7,16 @@
 # Directory for executable files
 BIN_DIR=$(ROOT_DIR)/bin
 
-# Paths to executable files for MC and MD simulations.
-MCSIM_EXE=$(BIN_DIR)/mcSim$(MCMD_SUFFIX)
-MDSIM_EXE=$(BIN_DIR)/mdSim$(MCMD_SUFFIX)
+# Paths to executable files for different types of simulation.
+MCSIM_EXE=$(BIN_DIR)/mcSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
+MDSIM_EXE=$(BIN_DIR)/mdSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
+DDSIM_EXE=$(BIN_DIR)/ddSim$(INTER_SUFFIX)$(DDMD_SUFFIX)
+
+main_EXES=$(MCSIM_EXE) $(MDSIM_EXE) 
+#ifdef UTIL_MPI
+#main_EXES+=$(DDSIM_EXE)
+#endif
+
+
 
 #-----------------------------------------------------------------------

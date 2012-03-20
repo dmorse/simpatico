@@ -32,6 +32,9 @@ namespace DdMd
 
    public:
 
+      /// Maximum number of masked atoms per target atom.
+      static const int Capacity  = 4;
+
       /**
       * Constructor.
       */
@@ -70,9 +73,6 @@ namespace DdMd
       int size() const;
 
    private:
-
-      /// Maximum number of masked atoms per target atom.
-      static const int Capacity  = 4;
 
       /// Integer ids to of masked Atoms.
       int atomIds_[Capacity];      

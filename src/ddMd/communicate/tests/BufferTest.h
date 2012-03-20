@@ -47,7 +47,7 @@ public:
    {
       printMethod(TEST_FUNC);
       TEST_ASSERT(object().atomCapacity() == 4);
-      TEST_ASSERT(object().ghostCapacity() == 4);
+      TEST_ASSERT(object().ghostCapacity() > 4);
    }
 
    #ifdef UTIL_MPI

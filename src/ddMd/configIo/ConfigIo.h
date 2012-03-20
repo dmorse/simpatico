@@ -12,6 +12,7 @@
 #include <ddMd/communicate/AtomDistributor.h>    // member 
 #include <ddMd/communicate/BondDistributor.h>    // member 
 #include <ddMd/communicate/AtomCollector.h>      // member 
+#include <ddMd/communicate/GroupCollector.h>     // member 
 #include <util/boundary/Boundary.h>              // typedef
 
 #include <util/containers/DArray.h>              // member
@@ -98,6 +99,11 @@ namespace DdMd
       AtomCollector& atomCollector();
 
       /**
+      * Get the bond collector by reference.
+      */
+      GroupCollector<2>& bondCollector();
+
+      /**
       * Get the Domain by reference.
       */
       Domain& domain();
@@ -121,21 +127,23 @@ namespace DdMd
 
       AtomDistributor  atomDistributor_;
 
-      BondDistributor  bondDistributor_;
+      BondDistributor bondDistributor_;
 
-      AtomCollector    atomCollector_;
+      AtomCollector  atomCollector_;
 
-      Domain*      domainPtr_;
+      GroupCollector<2>  bondCollector_;
 
-      Boundary*    boundaryPtr_;
+      Domain* domainPtr_;
+
+      Boundary* boundaryPtr_;
 
       AtomStorage* atomStoragePtr_;
 
       BondStorage* bondStoragePtr_;
 
-      int          atomCacheCapacity_;
+      int  atomCacheCapacity_;
 
-      int          bondCacheCapacity_;
+      int  bondCacheCapacity_;
 
    };
 
@@ -149,6 +157,9 @@ namespace DdMd
 
    inline AtomCollector& ConfigIo::atomCollector()
    { return atomCollector_; }
+
+   inline GroupCollector<2>& ConfigIo::bondCollector()
+   { return bondCollector_; }
 
    inline Domain& ConfigIo::domain()
    { return *domainPtr_; }

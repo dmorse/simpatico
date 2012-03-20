@@ -117,7 +117,20 @@ namespace DdMd
       virtual void addForces(double& energy);
 
       /**
-      * Return total bond potential energy of this System.
+      * Compute the total bond energy for all processors
+      * 
+      * Call on all processors (MPI reduce operation).
+      */
+      #ifdef UTIL_MPI
+      virtual void computeEnergy(MPI::Intracomm& communicator);
+      #else
+      virtual void computeEnergy();
+      #endif
+
+      /**
+      * Get the total bond energy, computed previously by computeEnergy().
+      *
+      * Call only on master. 
       */
       virtual double energy();
 
@@ -147,7 +160,15 @@ namespace DdMd
       #endif
 
    private:
-  
+
+      /**
+      * Total bond energy on all processors.
+      */
+      double energy_;
+ 
+      /**
+      * Pointer to Interaction (evaluates the bond potential function).
+      */ 
       Interaction* interactionPtr_;
 
       /*
@@ -299,11 +320,32 @@ namespace DdMd
    {  energy = addForces(true, true);  }
 
    /*
-   * Calculate and return total bond energy for this processor.
+   * Compute total bond energy on all processors.
+   */
+   template <class Interaction>
+   #ifdef UTIL_MPI
+   void 
+   BondPotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
+   #else
+   void BondPotentialImpl<Interaction>::computeEnergy()
+   #endif
+   { 
+      double localEnergy = 0; 
+      localEnergy = addForces(false, true); 
+      #ifdef UTIL_MPI
+      communicator.Reduce(&localEnergy, &energy_, 1, 
+                          MPI::DOUBLE, MPI::SUM, 0);
+      #else
+      energy_ = localEnergy;
+      #endif
+   }
+
+   /*
+   * Return total pair energy from all processors.
    */
    template <class Interaction>
    double BondPotentialImpl<Interaction>::energy()
-   {  return addForces(false, true);  }
+   {  return energy_; } 
 
    /*
    * Increment atomic forces and/or pair energy (private).

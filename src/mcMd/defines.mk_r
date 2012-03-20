@@ -1,74 +1,52 @@
 #-----------------------------------------------------------------------
 # This makefile file defines:
 #
-#   - A variable $(MCMD_DEFS) that is passed to the processor to define 
-#     preprocessor flags that effect the code in the mcMd/ directory. 
+#   - A variable $(MCMD_DEFS) that is passed to the processor to define
+#     preprocessor flags that effect only code in the mcMd/ directory.
 #
 #   - A variable $(MCMD_SUFFIX) which is added as a suffix to the name
-#     of the mcMd library and (by default) the main executables. 
+#     of the mcMd library and (by default) to the main executables.
 #
-#   - The name $(MCMD_LIB) of the McMd library. 
+#   - The name $(MCMD_LIB) of the McMd library.
 #
-# This file is included by every makefile in the mcMd directory. 
-# It must be included after $(SRC_DIR)/makefile.mk and before
-# $(SRC_DIR)/mcmd/patterns.mk.
+# This file is included by every makefile in the mcMd directory.  It
+# should be included after the file src/compiler.mk, after the files
+# src/util/defines.mk and src/inter/defines.mk, and before the file
+# src/mcmd/patterns.mk.
 #-----------------------------------------------------------------------
 # Makefile variables to define preprocessor macros
 
 # Define MCMD_PERTURB, enable free energy perturbation
 #MCMD_PERTURB=1
 
-# Define MCMD_LINK, enable Link (mutable bond) potentials 
+# Define MCMD_LINK, enable Link (mutable bond) potentials
 #MCMD_LINK=1
 
 # Define MCMD_SHIFT, enable recording of shifts of atomic coordinates
-# into primary periodic unit cell in MD simulations. 
+# into primary periodic unit cell in MD simulations.
 #MCMD_SHIFT=1
 
 #-----------------------------------------------------------------------
 # The following code defines the variables MCMD_DEFS and MCMD_SUFFIX.
 #
 # The variable MCMD_DEFS is used to pass preprocessor definitions to
-# the compiler, using the "-D" compiler option. If not empty, it must 
-# consist of a list of zero or more preprocessor macro names, each 
-# preceded by the compiler flag "-D".  For example, setting MCMD_DEFS 
-# to "-DINTER_ANGLE -DINTER_DIHEDRAL" will cause compilation of a version 
-# of the code with debugging and angles enabled.
+# the compiler, using the "-D" compiler option. If not empty, it must
+# consist of a list of zero or more preprocessor macro names, each
+# preceded by the compiler flag "-D".
 #
-# The variable MCMD_SUFFIX is appended to the base names of the library 
-# mcMd.a in the $(LIB_DIR) directory and (by default) to the executables 
-# mcSim and mdSim in the $(BIN_DIR). Setting MCMD_SUFFIX to "_a", to
-# denote a version with angular potentials enabled, will create a
-# library mcMd_a.a and executables named mcSim_a and mdSim_a. This
-# addition of suffixes to library and executable names is optional,
-# but can be useful for managing several versions of the libraries 
-# and executables that were compiled with different preprocessor 
-# macros defined. 
+# The variable MCMD_SUFFIX is appended to the base names of the library
+# mcMd.a in the $(LIB_DIR) directory and (by default) to the executables
+# mcSim and mdSim in the $(BIN_DIR).
 #
-# The variables MCMD_DEFS and MCMD_SUFFIX are initialized with the
-# values of the strings UTIL_DEFS and UTIL_SUFFIX, and thus begin 
-# with any strings defined there to control MPI and/or debugging.
 
-MCMD_DEFS=$(UTIL_DEFS) $(INTER_DEFS)
-MCMD_SUFFIX:=$(UTIL_SUFFIX)$(INTER_SUFFIX)
+MCMD_DEFS=
+MCMD_SUFFIX:=
 
 # The variable MCMD_DEFS is a recursive (normal) makefile variable, and
-# may be extended using the += operator, e.g., MCMD_DEFS+=-DINTER_ANGLE.
-# The MCMD_SUFFIX is a non-recursive makefile variable, which may be 
-# extended using the := operator, as MCMD_SUFFIX:=$(MCMD_SUFFIX)_a. 
-# They are defined differently because the += operator adds a white 
-# space before an added string, which is appropriate for MCMD_DEFS, 
-# but not for MCMD_SUFFIX. 
+# is extended using the += operator, e.g., MCMD_DEFS+=-DMCMD_PERTURB.
+# The MCMD_SUFFIX is a non-recursive makefile variable, which may be
+# extended using the := operator, as MCMD_SUFFIX:=$(MCMD_SUFFIX)_f.
 #
-# Each if block in what follows contains two lines: The first adds a 
-# string containing a preprocessor macro to MCMD_DEFS. The second
-# adds an underscore and a string of one or two identifying letters 
-# to MCMD_SUFFIX. The addition of suffixes to the library and 
-# executable names is optional, and may be suppressed by commenting
-# out the relevant lines.
-#
-# See the file src/mcMd/dox/preprocessor.dox for an explanation of all
-# of preprocessor macros listed below.
 
 # Enable free energy perturbation (_f for "free energy")
 ifdef MCMD_PERTURB
@@ -76,14 +54,14 @@ MCMD_DEFS+= -DMCMD_PERTURB
 MCMD_SUFFIX:=$(MCMD_SUFFIX)_f
 endif
 
-# Enable Link (mutable bond) potentials 
+# Enable Link (mutable bond) potentials
 ifdef MCMD_LINK
 MCMD_DEFS+= -DMCMD_LINK
 MCMD_SUFFIX:=$(MCMD_SUFFIX)_l
 endif
 
 # Enable recording of shifts of atomic coordinates into
-# primary periodic unit cell in MD simulations. 
+# primary periodic unit cell in MD simulations.
 ifdef MCMD_SHIFT
 MCMD_DEFS+= -DMCMD_SHIFT
 MCMD_SUFFIX:=$(MCMD_SUFFIX)_s

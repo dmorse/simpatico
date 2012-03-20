@@ -1,8 +1,8 @@
 include $(SRC_DIR)/mcMd/ensembles/sources.mk
-include $(SRC_DIR)/mcMd/potentials/sources.mk
 include $(SRC_DIR)/mcMd/chemistry/sources.mk
 include $(SRC_DIR)/mcMd/species/sources.mk
 include $(SRC_DIR)/mcMd/neighbor/sources.mk
+include $(SRC_DIR)/mcMd/potentials/sources.mk
 include $(SRC_DIR)/mcMd/simulation/sources.mk
 include $(SRC_DIR)/mcMd/mcSimulation/sources.mk
 include $(SRC_DIR)/mcMd/mdSimulation/sources.mk

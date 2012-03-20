@@ -33,6 +33,7 @@ namespace DdMd
       sendPtr_(0),
       recvPtr_(0),
       bufferCapacity_(-1),
+      dataCapacity_(-1),
       sendSize_(0),
       recvSize_(0),
       #endif
@@ -141,17 +142,18 @@ namespace DdMd
 
       // Capacity in bytes send and receive buffers. This is maximum of
       // the buffer space required by the local atoms and ghost atoms.
-      bufferCapacity_  = ((atomCapacity_ * localAtomSize_) >
-                          (ghostCapacity_ * ghostAtomSize_)) 
-                         ? (atomCapacity_ * localAtomSize_)   
-                         : (ghostCapacity_ * ghostAtomSize_);
-
-      if (bufferCapacity_ <= 0) {
-         UTIL_THROW("Zero or negative buffer capacity");
+      int atomDataSize  = atomCapacity_*atomSize();
+      int ghostDataSize = ghostCapacity_*ghostSize();
+      if (atomDataSize > ghostDataSize) {
+          dataCapacity_ = atomDataSize;
+          ghostCapacity_ = dataCapacity_/ghostSize();
+      } else {
+          dataCapacity_ = ghostDataSize;
+          atomCapacity_ = dataCapacity_/atomSize();
       }
 
       // Leave space for a 4 byte header
-      bufferCapacity_ += 4 * sizeof(int);
+      bufferCapacity_ += dataCapacity_ + 4 * sizeof(int);
 
       // Allocate memory for the send buffer 
       sendBufferBegin_ = new char[bufferCapacity_];
@@ -330,6 +332,20 @@ namespace DdMd
    }
 
    /*
+   * Return size of packed Atom, in bytes.
+   */
+   int Buffer::atomSize()
+   {  
+      int size = 0;
+      size += 2*sizeof(int); 
+      size += 2*sizeof(Vector); 
+      size += sizeof(unsigned int);
+      size += sizeof(int);
+      size += Mask::Capacity*sizeof(int); 
+      return size;
+   }
+
+   /*
    * Pack data required for a ghost Atom for sending.
    */
    void Buffer::packGhost(Atom& atom)
@@ -380,6 +396,36 @@ namespace DdMd
       recvSize_--;
    }
 
+   /*
+   * Return size of one packed Ghost atom, in bytes (static method).
+   */
+   int Buffer::ghostSize()
+   {  
+      int size = 0;
+      size += 2*sizeof(int); 
+      size += sizeof(Vector); 
+      size += sizeof(unsigned int);
+      return size;
+   }
+
+   /*
+   * Packed size of one Group<N> object.
+   */
+   int Buffer::groupSize(int N)
+   {  return (2 + N)*sizeof(int) + sizeof(unsigned int); }
+
+   /*
+   * Maximum number of Group<N> objects that can fit buffer.
+   */
+   int Buffer::groupCapacity(int N) const
+   {
+      if (dataCapacity_ <= 0) {
+         UTIL_THROW("Buffer not allocated");
+      }
+      return (dataCapacity_/groupSize(N)); 
+   }
+
+   /*
    /*
    * Pack data required to update a ghost atom.
    */

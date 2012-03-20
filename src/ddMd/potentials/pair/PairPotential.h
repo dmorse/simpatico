@@ -1,9 +1,11 @@
 #ifndef PAIR_POTENTIAL_H
 #define PAIR_POTENTIAL_H
 
-#include <util/param/ParamComposite.h>
-#include <ddMd/neighbor/CellList.h>
-#include <ddMd/neighbor/PairList.h>
+#include <util/param/ParamComposite.h>  // base class
+#include <ddMd/neighbor/CellList.h>     // member
+#include <ddMd/neighbor/PairList.h>     // member
+#include <util/boundary/Boundary.h>     // member (typedef)
+#include <util/global.h>
 
 #include <iostream>
 
@@ -128,6 +130,15 @@ namespace DdMd
       * Add pair forces to atom forces, and compute energy.
       */
       virtual void addForces(double& energy) = 0;
+
+      /**
+      * Calculate total pair potential on this processor
+      */
+      #ifdef UTIL_MPI
+      virtual void computeEnergy(MPI::Intracomm& communicator) = 0;
+      #else
+      virtual void computeEnergy();
+      #endif
 
       /**
       * Calculate total pair potential on this processor

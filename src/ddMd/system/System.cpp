@@ -23,10 +23,6 @@
 #include <ddMd/ensembles/BoundaryEnsemble.h>
 #include <ddMd/util/FileMaster.h>
 
-#if 0
-#include <ddMd/util/FileMaster.h>
-#endif
-
 #ifndef DDMD_NOPAIR
 #include <ddMd/potentials/pair/PairFactory.h>
 #endif
@@ -84,6 +80,7 @@ namespace DdMd
       exchanger_(),
       random_(),
       maxBoundary_(),
+      kineticEnergy_(0.0),
       #ifdef UTIL_MPI
       communicatorPtr_(&communicator),
       #endif
@@ -263,7 +260,6 @@ namespace DdMd
       readEnsembles(in);
 
       // Integrator
-      //integratorPtr_ = new NveIntegrator(*this); // Todo: Add factory
       std::string className;
       bool        isEnd;
       integratorPtr_ = 
@@ -509,6 +505,17 @@ namespace DdMd
       timer.start();
       for (int i = 0; i < nStep; ++i) {
          integratorPtr_->step();
+         if ( i%1000 == 0) {
+            computeKineticEnergy();
+            computePotentialEnergies();
+            if (domain_.gridRank() == 0) {
+               std::cout << Int(i, 10)
+                         << Dbl(kineticEnergy(), 20)
+                         << Dbl(potentialEnergy(), 20)
+                         << Dbl(kineticEnergy() + potentialEnergy(), 20)
+                         << std::endl;
+            }
+         }
       }
       timer.stop();
 
@@ -559,20 +566,19 @@ namespace DdMd
 
    /*
    * Calculate total kinetic energy
-   * 
-   * Returns total on all processors on master, 0.0 on others.
+   *
+   * Call on all processors. 
    */
-   double System::kineticEnergy()
+   void System::computeKineticEnergy()
    {
-      double energy    = 0.0;
-      double energyAll = 0.0;
+      double energy = 0.0;
       double mass;
       int typeId;
 
       // Add kinetic energies of local atoms on this processor
       AtomIterator atomIter;
       atomStorage_.begin(atomIter); 
-      for( ; !atomIter.atEnd(); ++atomIter){
+      for( ; atomIter.notEnd(); ++atomIter){
          typeId = atomIter->typeId();
          mass   = atomTypes_[typeId].mass();
          energy += mass*(atomIter->velocity().square());
@@ -581,64 +587,40 @@ namespace DdMd
 
       #ifdef UTIL_MPI
       // Sum values from all processors.
-      domain_.communicator().Reduce(&energy, &energyAll, 1, 
+      domain_.communicator().Reduce(&energy, &kineticEnergy_, 1, 
                                     MPI::DOUBLE, MPI::SUM, 0);
+      #else
+      kineticEnergy_ = energy;
       #endif
 
-      return energyAll;
    }
 
    /*
-   * Calculate total potential energy
+   * Return total kinetic energy (on master processor).
    * 
-   * Returns total on all processors on master, 0.0 on others.
+   * Called only on master processor.
+   */
+   double System::kineticEnergy()
+   {  return kineticEnergy_; }
+
+   /*
+   * Compute all potential energy contributions.
+   */
+   void System::computePotentialEnergies() 
+   {
+      pairPotential().computeEnergy(domain_.communicator());
+      bondPotential().computeEnergy(domain_.communicator());
+   }
+
+   /*
+   * Compute all potential energy contributions.
    */
    double System::potentialEnergy() 
    {
       double energy = 0.0;
-      energy += pairPotentialEnergy();
-      energy += bondPotentialEnergy();
+      energy += pairPotential().energy();
+      energy += bondPotential().energy();
       return energy;
-   }
-
-   /*
-   * Calculate total nonbonded pair potential energy
-   * 
-   * Returns total on all processors on master, 0.0 on others.
-   */
-   double System::pairPotentialEnergy()
-   {
-      double energy    = 0.0;
-      double energyAll = 0.0;
-
-      energy = pairPotential().energy();
-
-      #ifdef UTIL_MPI
-      // Sum values from all processors.
-      domain_.communicator().Reduce(&energy, &energyAll, 1, 
-                                    MPI::DOUBLE, MPI::SUM, 0);
-      #endif
-      return energyAll;
-   }
-
-   /*
-   * Calculate total bond potential energy
-   * 
-   * Returns total on all processors on master, 0.0 on others.
-   */
-   double System::bondPotentialEnergy()
-   {
-      double energy = 0.0;
-      double energyAll = 0.0;
-
-      energy = bondPotential().energy();
-
-      #ifdef UTIL_MPI
-      // Sum values from all processors.
-      domain_.communicator().Reduce(&energy, &energyAll, 1, 
-                                    MPI::DOUBLE, MPI::SUM, 0);
-      #endif
-      return energyAll;
    }
 
    /*

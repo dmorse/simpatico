@@ -137,9 +137,20 @@ namespace DdMd
       virtual void addForces(double& energy);
 
       /**
-      * Calculate the total nonBonded pair energy for this System.
+      * Compute the total nonBonded pair energy for all processors
       * 
-      * Rebuilds the PairList if necessary before calculating energy.
+      * Call on all processors.
+      */
+      #ifdef UTIL_MPI
+      virtual void computeEnergy(MPI::Intracomm& communicator);
+      #else
+      virtual void computeEnergy();
+      #endif
+
+      /**
+      * Get the total energy calculated previously by computeEnergy().
+      *
+      * Call only on master. 
       */
       virtual double energy();
 
@@ -169,6 +180,11 @@ namespace DdMd
       //@}
 
    private:
+
+      /**
+      * Total pair energy on all processors (valid only on master).
+      */
+      double energy_;
  
       /**
       * Pointer to pair interaction object.
@@ -338,20 +354,40 @@ namespace DdMd
    }
 
    /*
-   * Calculate and return total pair energy.
+   * Compute total pair energy on all processors.
+   */
+   template <class Interaction>
+   #ifdef UTIL_MPI
+   void 
+   PairPotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
+   #else
+   void PairPotentialImpl<Interaction>::computeEnergy()
+   #endif
+   { 
+      double localEnergy = 0; 
+      if (methodId_ == 0) {
+         localEnergy = addForcesList(false, true); 
+      } else 
+      if (methodId_ == 1) {
+         localEnergy = addForcesCell(false, true); 
+      } else {
+         localEnergy = addForcesNSq(false, true); 
+      }
+
+      #ifdef UTIL_MPI
+      communicator.Reduce(&localEnergy, &energy_, 1, 
+                          MPI::DOUBLE, MPI::SUM, 0);
+      #else
+      energy_ = localEnergy;
+      #endif
+   }
+
+   /*
+   * Return total pair energy from all processors.
    */
    template <class Interaction>
    double PairPotentialImpl<Interaction>::energy()
-   {  
-       if (methodId_ == 0) {
-          return addForcesList(false, true); 
-       } else 
-       if (methodId_ == 1) {
-          return addForcesCell(false, true); 
-       } else {
-          return addForcesNSq(false, true); 
-       }
-   }
+   {  return energy_; } 
 
    /*
    * Increment atomic forces and/or pair energy (private).

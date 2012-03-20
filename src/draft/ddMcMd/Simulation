@@ -1,0 +1,91 @@
+namespace DdMcMd
+{
+
+   /**
+   * Composite in which an McMd::McSimulation MC simulation
+   * controls a parallel DdMd::System MD simulation.
+   *
+   * Usage:
+   *
+   * Simulation sim(MPI::WORLD_COMM);
+   * sim.readParam(std::cin);
+   * if (sim.isMaster()) {
+   *    sim.readCommands();
+   * } else {
+   *    sim.receiveCommands();
+   * }
+   */
+   class Simulation
+   {
+
+      /**
+      * Constructor.
+      */
+      Simulation(MPI::Communicator& ddCommunicator);
+
+      /**
+      * Initialize parent McMd::McSimulation and DdMd::System
+      *
+      * On master:
+      *    Call McMd::McSimulation::readParam().
+      *    Generate param file for DdMd::System.
+      *    Send signal to read file.
+      *    Call DdMd::System::readParam().
+      * On all processors:
+      *    Receive signal to read file.
+      *    Call DdMd::System::readParam().
+      */
+      virtual void readParam();
+
+      /**
+      * Read and broadcast commands.
+      *
+      * Call only on master processor. Implements main
+      * command loop for master processor.
+      */
+      readCommands();
+
+      /**
+      * Receive commands from master processor.
+      *
+      * Call only on slave processor. Allows master to control
+      * action of slaves. Implements main loop for slaves.
+      */
+      receiveCommands()
+
+      /**
+      * Distribute atoms and groups from master to slaves.
+      */
+      distribute();
+
+      /**
+      * Collect atoms from master to slaves.
+      */
+      collect();
+
+      /**
+      * Return McMd::McSimulation (valid only on master)
+      */
+      McMd::McSimulation& mcSimulation();
+
+      /**
+      * Return DdMd::System (valid on any processor)
+      */
+      DdMd::System& ddMdSystem();
+
+   private:
+
+      /// Parent McSimulation (exists only on master).
+      McMd::McSimulation* mcMdSimulationPtr_;
+
+      /// Slave parallel MD System (exists on all modes).
+      DdMd::System*       ddMdSystemPtr_;
+
+      DdMd::AtomDistributor     atomDistributor_;
+      DdMd::GroupDistributor<2> bondDistributor_;
+
+      DdMd::AtomCollector       atomCollector_;
+
+   };
+
+}

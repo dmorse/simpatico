@@ -108,6 +108,3 @@ Interface changes:
 
   * Separate directories for observer, string, error, timer, misc
 
-  * Move boundary, potentials from McMd namespace and mcMd directory 
-    to a new namespace MSim and new directory src/mSim.
-

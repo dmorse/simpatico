@@ -23,16 +23,16 @@ INTER_ALLDEPS+= -A$(SRC_DIR)/inter/defines.mk
 
 # Rule to compile all class source (*.cpp) files.
 %.o:%.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(INTER_DEFS) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(INTER_DEFS) $(INTER_ALLDEPS) $<
+	$(MAKEDEP) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(INTER_ALLDEPS) $<
 endif
 
 # Rule to compile *.cc main programs for unit tests. 
 %.o:%.cc
-	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(INTER_DEFS) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(INTER_DEFS) $(INTER_ALLDEPS) $<
+	$(MAKEDEP) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(INTER_ALLDEPS) $<
 endif
 
 # Note: The main program files for unit tests must use a file suffix *.cc,

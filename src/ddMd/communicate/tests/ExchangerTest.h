@@ -43,7 +43,6 @@ public:
 
    void setUp()
    {
-      std::ifstream configFile;
 
       // Set connections between atomDistributors
       domain.setBoundary(boundary);
@@ -77,7 +76,8 @@ public:
       closeFile();
 
       MaskPolicy policy = MaskBonded;
-      configIo.readConfig("in/config", policy);
+      std::ifstream configFile("in/config");
+      configIo.readConfig(configFile, policy);
 
       object().allocate();
       object().setPairCutoff(0.5);

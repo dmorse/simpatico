@@ -6,7 +6,7 @@
 # contains the source code for the DdMd namespace. It is included by
 # all makefile files in this directory tree. 
 #
-# These patterns use the string $(DDMD_DEFS) of preprocessor macro
+# These patterns use the string $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) of preprocessor macro
 # definitions that is constructed in src/mcMc/defines.mk and various
 # other variables defined in src/compiler.mk. It should thus be 
 # included in other makefiles after these files. 
@@ -19,20 +19,25 @@ INCLUDES= -I$(SRC_DIR)
 # Extra dependencies for all source files
 DDMD_ALLDEPS= -A$(SRC_DIR)/compiler.mk
 DDMD_ALLDEPS+= -A$(SRC_DIR)/util/defines.mk
+DDMD_ALLDEPS+= -A$(SRC_DIR)/inter/defines.mk
 DDMD_ALLDEPS+= -A$(SRC_DIR)/ddMd/defines.mk
 
 # Rule to compile all class source (*.cpp) files.
 %.o:%.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) $(DDMD_DEFS) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) \
+               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(DDMD_DEFS) $(DDMD_ALLDEPS) $<
+	$(MAKEDEP) $(INCLUDES) \
+               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) $(DDMD_ALLDEPS) $<
 endif
 
 # Rule to compile *.cc main programs for unit tests. 
 %.o:%.cc
-	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) $(DDMD_DEFS) -c -o $@ $<
+	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) \
+               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) -c -o $@ $<
 ifdef MAKEDEP
-	$(MAKEDEP) $(INCLUDES) $(DDMD_DEFS) $(DDMD_ALLDEPS) $<
+	$(MAKEDEP) $(INCLUDES) \
+               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) $(DDMD_ALLDEPS) $<
 endif
 
 # Note: The main program files for unit tests must use a file suffix *.cc,

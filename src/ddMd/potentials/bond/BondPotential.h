@@ -96,7 +96,20 @@ namespace DdMd
       virtual void addForces(double& energy) = 0;
 
       /**
-      * Calculate total pair potential on this processor
+      * Calculate total bond potential.
+      *
+      * Must be call on all processors (MPI reduce operation).
+      */
+      #ifdef UTIL_MPI
+      virtual void computeEnergy(MPI::Intracomm& communicator) = 0;
+      #else
+      virtual void computeEnergy() = 0;
+      #endif
+
+      /**
+      * Get total bond potential, computed previously by computeEnergy().
+      *
+      * Call only on master processor, result otherwise invalid.
       */
       virtual double energy() = 0;
 
