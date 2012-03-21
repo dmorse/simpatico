@@ -33,15 +33,13 @@ clean-test:
 #-----------------------------------------------------------------------
 # Include dependency files
 
+-include $(util_OBJS:.o=.d)
+-include $(inter_OBJS:.o=.d)
+-include $(mcMd_OBJS:.o=.d)
 -include $(MDSIM).d 
 -include $(MCSIM).d 
--include $(mcMd_OBJS:.o=.d)
--include $(inter_OBJS:.o=.d)
--include $(util_OBJS:.o=.d)
 #-----------------------------------------------------------------------
 # Executables
-
-main_EXES=$(MCSIM_EXE) $(MDSIM_EXE) 
 
 $(MCSIM_EXE): $(MCSIM).o $(util_LIB) $(inter_LIB) $(mcMd_LIB)
 	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) $(MCSIM).o \

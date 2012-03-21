@@ -18,10 +18,11 @@ clean-deps:
 clean-test:
 	rm -f Test Test.o Test.d
 
+-include $(util_OBJS:.o=.d)
+
 Test: $(util_LIB) $(SRC_DIR)/util/Test.o
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test $(SRC_DIR)/util/Test.o \
 	       $(util_LIB)
 
--include $(util_OBJS:.o=.d)
 -include Test.d
 

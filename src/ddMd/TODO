@@ -6,6 +6,9 @@ Domain Decomposition MD (DdMd)
 
 - Port NPH integrator.
 
+- Absorb code for bonds into template methods, to simplify addition
+  of angles and dihedrals.
+
 - Add ConfigIo factory and SET_CONFIG_IO command.
 
 - Modify Exchanger to work ifndef UTIL_MPI, continue with other classes.

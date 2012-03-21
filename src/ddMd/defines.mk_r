@@ -20,22 +20,19 @@
 # The following code defines the variables DDMD_DEFS and DDMD_SUFFIX.
 #
 # The variable DDMD_DEFS is used to pass preprocessor definitions to
-# the compiler, using the "-D" compiler option. If not empty, it must 
-# consist of a list of zero or more preprocessor macro names, each 
-# preceded by the compiler flag "-D".  
+# the compiler, using the "-D" compiler option.
 #
-# The variable DDMD_SUFFIX is appended to the base names of the library 
-# ddMd.a in the $(LIB_DIR) directory and (by default) to the executables 
-# mcSim and mdSim in the $(BIN_DIR). 
+# The variable DDMD_SUFFIX is appended to the names of the ddMd library
+# and (by default) of the ddSim executable.
 #
 
 DDMD_DEFS=
 DDMD_SUFFIX:=
 
-# The variable DDMD_DEFS is a recursive (normal) makefile variable, and
-# may be extended using the += operator, e.g., DDMD_DEFS+=-DDMD_FEATURE.
-# The DDMD_SUFFIX is a non-recursive makefile variable, which may be 
-# extended using the := operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_c. 
+# Note that DDMD_DEFS is a recursive (normal) makefile variable, and so
+# may be extended using the += operator, but that DDMD_SUFFIX is a 
+# non-recursive makefile variable, which may be extended using the := 
+# operator, as DDMD_SUFFIX:=$(DDMD_SUFFIX)_c. 
 
 #-----------------------------------------------------------------------
 # Names of library and executable files.

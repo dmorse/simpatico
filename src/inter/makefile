@@ -16,6 +16,7 @@ clean:
 clean-deps:
 	rm -f $(inter_OBJS:.o=.d)
 
+-include $(util_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
 
 #Test: $(inter_LIB) $(SRC_DIR)/inter/Test.o

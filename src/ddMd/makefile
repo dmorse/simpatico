@@ -9,8 +9,8 @@ include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
 
-#-----------------------------------------------------------------------
 DDSIM=$(SRC_DIR)/ddMd/ddSim
+#-----------------------------------------------------------------------
 
 all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE)
 
@@ -23,14 +23,14 @@ clean-deps:
 	-rm -f $(ddMd_OBJS:.o=.d)
 	-rm -f $(DDSIM).d
 
--include $(DDSIM).d
--include $(ddMd_OBJS:.o=.d)
--include $(inter_OBJS:.o=.d)
 -include $(util_OBJS:.o=.d)
+-include $(inter_OBJS:.o=.d)
+-include $(ddMd_OBJS:.o=.d)
+-include $(DDSIM).d
 
-$(DDSIM_EXE): $(DDSIM).o $(util_LIB) $(ddMd_LIB) $(inter_LIB)
+$(DDSIM_EXE): $(DDSIM).o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o \
-        $(ddMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
+               $(ddMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
 
 ddSim:
 	make $(DDSIM_EXE)
