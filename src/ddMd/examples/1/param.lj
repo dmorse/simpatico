@@ -50,6 +50,19 @@ System{
   Random{
     seed        8012457890
   }
+  DiagnosticManager{
+     baseInterval  1000
+
+     WriteConfig{
+        interval          2000
+        outputFileName  config
+     }
+
+     OutputEnergy{
+        interval          1000
+        outputFileName  energy
+     }
+  }
   ConfigIo{
     atomCacheCapacity    4000
     bondCacheCapacity   20000

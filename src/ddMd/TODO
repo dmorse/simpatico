@@ -1,9 +1,8 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Add Diagnostic classes, and simple diagnostics.
-
-- Add stress mode to BoundaryEnsemble and to potential classes.
+- Add needStress to System, and as argument to addForces() method 
+  of potentials. 
 
 - Port NPH integrator.
 

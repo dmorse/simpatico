@@ -60,7 +60,7 @@ namespace DdMd
       /**
       * Default constructor.
       */
-      Diagnostic();
+      Diagnostic(System& system);
 
       /**
       * Destructor.

@@ -16,6 +16,7 @@
 #include <ddMd/storage/BondStorage.h>            // member 
 #include <ddMd/chemistry/AtomType.h>             // member
 #include <ddMd/chemistry/MaskPolicy.h>           // member
+#include <ddMd/diagnostics/DiagnosticManager.h>  // member
 #include <util/boundary/Boundary.h>              // member 
 #include <util/random/Random.h>                  // member 
 #include <util/containers/DArray.h>              // member 
@@ -29,13 +30,14 @@ namespace Util
 namespace DdMd
 {
 
-   class PairPotential;
-   class BondPotential;
    class EnergyEnsemble;
    class BoundaryEnsemble;
+   class PairPotential;
+   class BondPotential;
    class Integrator;
    class ConfigIo;
    class FileMaster;
+   class DiagnosticManager;
 
    using namespace Util;
 
@@ -93,7 +95,7 @@ namespace DdMd
       /**
       * Integrate equations of motion. 
       */
-      void integrate(int nStep);
+      void simulate(int nStep);
 
       /**
       * Set random velocities chosen from Boltzmann distribution.
@@ -293,7 +295,7 @@ namespace DdMd
       BoundaryEnsemble& boundaryEnsemble();
 
       /// Get the associated FileMaster by reference.
-      FileMaster& fileMaster() const;
+      FileMaster& fileMaster();
 
       /**
       * Get the Md  integrator factory by reference.
@@ -372,6 +374,11 @@ namespace DdMd
       */
       void readEnsembles(std::istream& in);
 
+      /**
+      * Return associated DiagnosticManager by reference.
+      */
+      DiagnosticManager& diagnosticManager();
+
    private:
 
       /// Container for all atoms and ghosts.
@@ -427,7 +434,10 @@ namespace DdMd
       BoundaryEnsemble* boundaryEnsemblePtr_;
 
       /// Pointer to a FileMaster.
-      FileMaster*       fileMasterPtr_;
+      FileMaster*         fileMasterPtr_;
+
+      /// DiagnosticManager
+      DiagnosticManager*  diagnosticManagerPtr_;
 
       #ifndef DDMD_NOPAIR
       /// Pointer to a PairPotential factory.
@@ -550,10 +560,19 @@ namespace DdMd
    /*
    * Get the FileMaster by reference.
    */
-   inline FileMaster& System::fileMaster() const
+   inline FileMaster& System::fileMaster()
    {
       assert(fileMasterPtr_);
       return *fileMasterPtr_;
+   }
+
+   /*
+   * Get the FileMaster by reference.
+   */
+   inline DiagnosticManager& System::diagnosticManager()
+   {
+      assert(diagnosticManagerPtr_);
+      return *diagnosticManagerPtr_;
    }
 
    /*

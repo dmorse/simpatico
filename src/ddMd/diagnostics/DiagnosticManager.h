@@ -16,6 +16,8 @@ namespace DdMd
 
    using namespace Util;
 
+   class System;
+
    /**
    * Manager for a list of Diagnostic objects.
    *
@@ -30,7 +32,7 @@ namespace DdMd
       /**
       * Constructor.
       */
-      DiagnosticManager();
+      DiagnosticManager(System& system);
 
       /**
       * Destructor.
@@ -62,6 +64,16 @@ namespace DdMd
       * Call output method of each diagnostic.
       */
       void output();
+
+      /**
+      * Return pointer to a new default factory.
+      */
+      virtual Factory<Diagnostic>* newDefaultFactory() const;
+
+   private:
+
+      /// Pointer to parent System.
+      System* systemPtr_;
  
    };
 

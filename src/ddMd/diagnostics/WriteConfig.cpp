@@ -1,0 +1,69 @@
+#ifndef WRITE_CONFIG_CPP
+#define WRITE_CONFIG_CPP
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include "WriteConfig.h"
+//#include <ddMd/util/FileMaster.h>
+#include <util/util/ioUtil.h>
+
+#include <sstream>
+
+namespace DdMd
+{
+
+   using namespace Util;
+
+   /*
+   * Constructor.
+   */
+   WriteConfig::WriteConfig(System& system) 
+    : Diagnostic(system),
+      nSample_(0),
+      isInitialized_(false)
+   {}
+
+   /*
+   * Read interval and outputFileName. 
+   */
+   void WriteConfig::readParam(std::istream& in) 
+   {
+      readInterval(in);
+      readOutputFileName(in);
+      isInitialized_ = true;
+   }
+
+   /*
+   * Read interval and outputFileName. 
+   */
+   void WriteConfig::setup() 
+   {  nSample_ = 0; }
+
+   /*
+   * Dump configuration to file
+   */
+   void WriteConfig::sample(long iStep) 
+   {
+      if (isAtInterval(iStep))  {
+
+         // Construct new fileName: outputFileName + toString(nSample)
+         std::string filename;
+         filename  = outputFileName();
+         filename += toString(nSample_);
+
+         // Open output file, write data, and close file
+         //system().fileMaster().openOutputFile(filename, outputFile_);
+         system().writeConfig(filename);
+         //outputFile_.close();
+         ++nSample_;
+
+      }
+   }
+
+}
+#endif 

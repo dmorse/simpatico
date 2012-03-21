@@ -18,10 +18,10 @@
 #include <ddMd/integrator/IntegratorFactory.h>
 #include <ddMd/integrator/NveIntegrator.h>
 #include <ddMd/configIo/ConfigIo.h>
-
 #include <ddMd/ensembles/EnergyEnsemble.h>
 #include <ddMd/ensembles/BoundaryEnsemble.h>
 #include <ddMd/util/FileMaster.h>
+#include <ddMd/diagnostics/DiagnosticManager.h>
 
 #ifndef DDMD_NOPAIR
 #include <ddMd/potentials/pair/PairFactory.h>
@@ -151,6 +151,8 @@ namespace DdMd
 
       energyEnsemblePtr_  = new EnergyEnsemble;
       boundaryEnsemblePtr_ = new BoundaryEnsemble;
+     
+      diagnosticManagerPtr_ = new DiagnosticManager(*this);
    }
 
    /*
@@ -210,6 +212,9 @@ namespace DdMd
          delete configIoFactoryPtr_;
       }
       #endif
+      if (diagnosticManagerPtr_) {
+         delete diagnosticManagerPtr_;
+      }
 
       #ifdef UTIL_MPI
       //if (logFile_.is_open()) logFile_.close();
@@ -271,6 +276,8 @@ namespace DdMd
       }
 
       readParamComposite(in, random_);
+
+      readParamComposite(in, *diagnosticManagerPtr_);
 
       configIoPtr_ = new ConfigIo();             // Todo: Add factory
       configIoPtr_->associate(domain_, boundary_,
@@ -400,7 +407,7 @@ namespace DdMd
          if (command == "SIMULATE") {
             int endStep;
             inBuffer >> endStep;
-            integrate(endStep);
+            simulate(endStep);
          } else
          if (command == "WRITE_CONFIG") {
             inBuffer >> filename;
@@ -488,7 +495,7 @@ namespace DdMd
    /*
    * Integrate.
    */
-   void System::integrate(int nStep)
+   void System::simulate(int nStep)
    {
       // Preconditions
       assert(integratorPtr_);
@@ -500,22 +507,19 @@ namespace DdMd
       }
 
       integratorPtr_->setup();
+      diagnosticManager().setup();
 
       // Main MD loop
       timer.start();
-      for (int i = 0; i < nStep; ++i) {
-         integratorPtr_->step();
-         if ( i%1000 == 0) {
-            computeKineticEnergy();
-            computePotentialEnergies();
-            if (domain_.gridRank() == 0) {
-               std::cout << Int(i, 10)
-                         << Dbl(kineticEnergy(), 20)
-                         << Dbl(potentialEnergy(), 20)
-                         << Dbl(kineticEnergy() + potentialEnergy(), 20)
-                         << std::endl;
+      for (int iStep_ = 0; iStep_ < nStep; ++iStep_) {
+
+         if (Diagnostic::baseInterval > 0) {
+            if (iStep_ % Diagnostic::baseInterval == 0) {
+               diagnosticManager().sample(iStep_);
             }
          }
+
+         integratorPtr_->step();
       }
       timer.stop();
 

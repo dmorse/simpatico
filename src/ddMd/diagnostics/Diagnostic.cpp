@@ -26,10 +26,10 @@ namespace DdMd
    /* 
    * Default constructor.
    */
-   Diagnostic::Diagnostic()
+   Diagnostic::Diagnostic(System& system)
     : ParamComposite(),
       outputFileName_(),
-      systemPtr_(0),
+      systemPtr_(&system),
       interval_(1)
    {}
    

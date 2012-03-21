@@ -9,6 +9,7 @@
 */
 
 #include "DiagnosticManager.h" 
+#include "DiagnosticFactory.h" 
 
 namespace DdMd
 {
@@ -18,8 +19,9 @@ namespace DdMd
    /*
    * Constructor.
    */
-   DiagnosticManager::DiagnosticManager()
-   : Manager<Diagnostic>()
+   DiagnosticManager::DiagnosticManager(System& system)
+   : Manager<Diagnostic>(),
+     systemPtr_(&system)
    {}
 
    /*
@@ -74,5 +76,13 @@ namespace DdMd
       }
    }
 
+   /*
+   * Return pointer to default factory.
+   */
+   Factory<Diagnostic>* DiagnosticManager::newDefaultFactory() const
+   {
+      return new DiagnosticFactory(*systemPtr_);
+   }
+ 
 }
 #endif
