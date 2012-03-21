@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <msDd/Simulation.h>              // header
+#include <msDd/simulation/Simulation.h>    // header
 #include <mcMd/simulation/Simulation.h>                    
 #include <ddMd/system/System.h>       
 
