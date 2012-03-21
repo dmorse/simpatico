@@ -18,6 +18,13 @@ clean:
 	-rm -f $(ddMd_OBJS) $(ddMd_OBJS:.o=.d) $(ddMd_LIB)
 	-rm -f $(DDSIM).o $(DDSIM).d
 	-rm -f $(DDSIM_EXE)
+	cd chemistry/tests; make clean
+	cd storage/tests; make clean
+	cd communicate/tests; make clean
+	cd neighbor/tests; make clean
+	cd potentials/tests; make clean
+	cd configIo/tests; make clean
+	cd system/tests; make clean
 
 clean-deps:
 	-rm -f $(ddMd_OBJS:.o=.d)
