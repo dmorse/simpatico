@@ -18,7 +18,8 @@ namespace MsDd
    /*
    * Constructor.
    */
-   Simulation::Simulation(MPI::Communicator& ddCommunicator)
+   Simulation::Simulation(MPI::Intracomm& ddCommunicator)
+    : ddCommunicatorPtr_(&ddCommunicator)
    {}
 
    /*
@@ -33,7 +34,7 @@ namespace MsDd
    *    Receive signal to read file.
    *    Call DdMd::System::readParam().
    */
-   virtual void Simulation::readParam()
+   void Simulation::readParam()
    {}
 
    /*
@@ -51,7 +52,7 @@ namespace MsDd
    * Call only on slave processor. Allows master to control
    * action of slaves. Implements main loop for slaves.
    */
-   void Simulation::receiveCommands();
+   void Simulation::receiveCommands()
    {}
 
    /*
@@ -65,6 +66,7 @@ namespace MsDd
    */
    void Simulation::collect()
    {}
+
 
 }
 #endif

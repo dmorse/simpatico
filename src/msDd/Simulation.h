@@ -50,7 +50,7 @@ namespace MsDd
       /**
       * Constructor.
       */
-      Simulation(MPI::Communicator& ddCommunicator);
+      Simulation(MPI::Intracomm& ddCommunicator);
 
       /**
       * Initialize parent McMd::McSimulation and DdMd::System
@@ -80,7 +80,7 @@ namespace MsDd
       * Call only on slave processor. Allows master to control
       * action of slaves. Implements main loop for slaves.
       */
-      void receiveCommands()
+      void receiveCommands();
 
       /**
       * Distribute atoms and groups from master to slaves.
@@ -110,10 +110,10 @@ namespace MsDd
    private:
 
       /// Parent McSimulation (exists only on master).
-      McMd::McSimulation* mcMdSimulationPtr_;
+      McMd::McSimulation* mcSimulationPtr_;
 
       /// Slave parallel MD System (exists on all modes).
-      DdMd::System*       ddMdSystemPtr_;
+      DdMd::System*       ddSystemPtr_;
 
       DdMd::AtomDistributor     atomDistributor_;
       DdMd::GroupDistributor<2> bondDistributor_;
@@ -122,7 +122,7 @@ namespace MsDd
       DdMd::GroupCollector<2>   bondCollector_;
 
       /// Intracommunicator for DdMd simulation.
-      MPI::Intracomm ddCommunicatorPtr_;
+      MPI::Intracomm* ddCommunicatorPtr_;
 
       /// Is this the master (rank = 0) node of the ddCommunicator?
       bool isDdMaster_;
