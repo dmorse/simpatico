@@ -1,9 +1,38 @@
-namespace DdMcMd
+#ifndef MSDD_SIMULATION_H
+#define MSDD_SIMULATION_H
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include <util/param/ParamComposite.h>           // base class
+#include <ddMd/communicate/AtomDistributor.h>    // member
+#include <ddMd/communicate/GroupDistributor.h>   // member
+#include <ddMd/communicate/AtomCollector.h>      // member
+#include <ddMd/communicate/GroupCollector.h>     // member
+
+
+namespace McMd {
+   class McSimulation;
+}
+
+namespace DdMd {
+   class System;
+}
+
+namespace MsDd
 {
 
    /**
-   * Composite in which an McMd::McSimulation MC simulation
-   * controls a parallel DdMd::System MD simulation.
+   * Main object in master-slave simulation.
+   *
+   * A MsDd::Simulation object is the main object in a simulation
+   * in which a McMd::McSimulation MC simulation, which exists 
+   * only on the master node, controls a parallel DdMd::System
+   * molecular dynamics simulation.
    *
    * Usage:
    *
@@ -43,7 +72,7 @@ namespace DdMcMd
       * Call only on master processor. Implements main
       * command loop for master processor.
       */
-      readCommands();
+      void readCommands();
 
       /**
       * Receive commands from master processor.
@@ -51,17 +80,17 @@ namespace DdMcMd
       * Call only on slave processor. Allows master to control
       * action of slaves. Implements main loop for slaves.
       */
-      receiveCommands()
+      void receiveCommands()
 
       /**
       * Distribute atoms and groups from master to slaves.
       */
-      distribute();
+      void distribute();
 
       /**
       * Collect atoms from master to slaves.
       */
-      collect();
+      void collect();
 
       /**
       * Return McMd::McSimulation (valid only on master)
@@ -72,6 +101,11 @@ namespace DdMcMd
       * Return DdMd::System (valid on any processor)
       */
       DdMd::System& ddMdSystem();
+
+      /**
+      * Is this the master node in the intracommunicator?
+      */
+      bool isDdMaster() const;
 
    private:
 
@@ -85,7 +119,36 @@ namespace DdMcMd
       DdMd::GroupDistributor<2> bondDistributor_;
 
       DdMd::AtomCollector       atomCollector_;
+      DdMd::GroupCollector<2>   bondCollector_;
+
+      /// Intracommunicator for DdMd simulation.
+      MPI::Intracomm ddCommunicatorPtr_;
+
+      /// Is this the master (rank = 0) node of the ddCommunicator?
+      bool isDdMaster_;
 
    };
 
+   /*
+   * Return McMd::McSimulation (valid only on master)
+   */
+   inline
+   McMd::McSimulation& Simulation::mcSimulation()
+   {   return *mcSimulationPtr_; }
+
+   /**
+   * Return DdMd::System (valid on any processor)
+   */
+   inline 
+   DdMd::System& Simulation::ddMdSystem()
+   {  return *ddSystemPtr_; }
+
+   /**
+   * Is this the master node in the intracommunicator?
+   */
+   inline 
+   bool Simulation::isDdMaster() const
+   {  return isDdMaster_; }
+
 }
+#endif
