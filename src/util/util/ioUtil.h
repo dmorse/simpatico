@@ -16,6 +16,21 @@ namespace Util
 {
 
    /**
+   * Return string representation of an integer.
+   *
+   * \param n integer to be converted.
+   */
+   std::string toString(int n);
+
+   /**
+   * Strip trailing whitespace from a string.
+   *
+   * \param  string string (stripped upon return).
+   * \return length of stripped string.
+   */
+   int rStrip(std::string& string);
+
+   /**
    * Read string, and compare to expected value. 
    *
    * \throw Exception if input value differs from expected value.
@@ -24,13 +39,6 @@ namespace Util
    * \param expected expected value of string read from stream
    */
    void checkString(std::istream& in, std::string& expected);
-
-   /**
-   * Return string representation of an integer.
-   *
-   * \param n integer to be converted.
-   */
-   std::string toString(int n);
 
    /**
    * Get the next non-empty line of input, skipping any empty lines.

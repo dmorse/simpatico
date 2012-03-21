@@ -16,6 +16,23 @@ namespace Util
 {
 
    /*
+   * Strip trailing whitespace from a string.
+   */
+   int rStrip(std::string& str)
+   {
+      size_t found;
+      std::string whitespaces(" \t\n\r");
+      found = str.find_last_not_of(whitespaces);
+      if (found != std::string::npos) {
+        str.erase(found + 1);
+        return int(found + 1);
+      } else {
+        str.clear();
+        return 0;
+      }
+   }
+
+   /*
    * Read string, and compare to expected value. 
    *
    * Throw Exception if input value differs from expected value.
