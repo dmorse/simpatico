@@ -1,10 +1,11 @@
 Subdirectories:
 ---------------
 
-mcMd       classes/programs for Monte Carlo (MC) / molecular dynamics (MD) 
-ddMd       classes/programs for domain-decomposition parallel MD
-inter      classes that define potential interaction functions
 util       general utility classes for scientific computation
+inter      classes that define potential interaction functions
+mcMd       code for Monte Carlo (MC) / molecular dynamics (MD) 
+ddMd       code for domain-decomposition parallel MD
+MsDd       code for master-slave domain decomposition
 modules    add-on components for particular applications
 test       simple unit test framework
 dox        source files for the html manual pages
