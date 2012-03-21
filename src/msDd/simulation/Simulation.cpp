@@ -8,9 +8,10 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <msDd/simulation/Simulation.h>    // header
-#include <mcMd/simulation/Simulation.h>                    
+#include <msDd/simulation/Simulation.h>       // class header
+#include <mcMd/mcSimulation/McSimulation.h>                    
 #include <ddMd/system/System.h>       
+//#include <ddMd/communicator/GroupCollector_inc.h>
 
 namespace MsDd
 {
@@ -19,8 +20,17 @@ namespace MsDd
    * Constructor.
    */
    Simulation::Simulation(MPI::Intracomm& ddCommunicator)
-    : ddCommunicatorPtr_(&ddCommunicator)
-   {}
+    : ddCommunicatorPtr_(&ddCommunicator),
+      mcSimulationPtr_(0),
+      ddSystemPtr_(0),
+      isDdMaster_(false)
+   {
+      int myRank = ddCommunicator.Get_rank();
+      if (myRank == 0) {
+         isDdMaster_ = true;
+         mcSimulationPtr_ = new McMd::McSimulation();
+      }
+   }
 
    /*
    * Initialize parent McMd::McSimulation and DdMd::System
@@ -34,8 +44,9 @@ namespace MsDd
    *    Receive signal to read file.
    *    Call DdMd::System::readParam().
    */
-   void Simulation::readParam()
-   {}
+   void Simulation::readParam(std::istream& in)
+   {
+   }
 
    /*
    * Read and broadcast commands.

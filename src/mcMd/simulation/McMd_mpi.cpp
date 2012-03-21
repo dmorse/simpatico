@@ -49,13 +49,27 @@ namespace McMd
 
    void commitMpiTypes()
    {
-      Util::Vector::commitMpiType();
-      Util::IntVector::commitMpiType();
-      Util::Pair<int>::commitMpiType();
-      SpeciesGroup<2>::commitMpiType();
-      SpeciesGroup<3>::commitMpiType();
-      SpeciesGroup<4>::commitMpiType();
-      PairSelector::commitMpiType();
+      if (!Util::MpiTraits<Util::Vector>::hasType) {
+         Util::Vector::commitMpiType();
+      }
+      if (!Util::MpiTraits<Util::IntVector>::hasType) {
+         Util::IntVector::commitMpiType();
+      }
+      if (!Util::MpiTraits< Util::Pair<int> >::hasType) {
+         Util::Pair<int>::commitMpiType();
+      }
+      if (!Util::MpiTraits< SpeciesGroup<2> >::hasType) {
+         SpeciesGroup<2>::commitMpiType();
+      }
+      if (!Util::MpiTraits< SpeciesGroup<3> >::hasType) {
+         SpeciesGroup<3>::commitMpiType();
+      }
+      if (!Util::MpiTraits< SpeciesGroup<4> >::hasType) {
+         SpeciesGroup<4>::commitMpiType();
+      }
+      if (!Util::MpiTraits< PairSelector >::hasType) {
+         PairSelector::commitMpiType();
+      }
    }
 
 }

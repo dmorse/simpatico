@@ -1,0 +1,45 @@
+#-----------------------------------------------------------------------
+# This makefile file defines:
+#
+#   - A variable $(MSDD_DEFS) that is passed to the processor to define 
+#     any preprocessor flags that effect the code in the msDd/ directory. 
+#
+#   - A variable $(MSDD_SUFFIX) which is added as a suffix to the name
+#     of the msDd library and (by default) the main executables. 
+#
+#   - Name $(MSDD_LIB) and $(DDSIM_EXE) of the MsDd library and 
+#     executable files.
+#
+# This file is included by every makefile in the msDd directory. 
+# It must be included after $(SRC_DIR)/compiler.mk and before
+# $(SRC_DIR)/mcmd/patterns.mk.
+#-----------------------------------------------------------------------
+# Makefile variables to define preprocessor macros (None yet defined).
+
+#-----------------------------------------------------------------------
+# The following code defines the variables MSDD_DEFS and MSDD_SUFFIX.
+#
+# The variable MSDD_DEFS is used to pass preprocessor definitions to
+# the compiler, using the "-D" compiler option.
+#
+# The variable MSDD_SUFFIX is appended to the names of the msDd library
+# and (by default) of the ddSim executable.
+#
+
+MSDD_DEFS=
+MSDD_SUFFIX:=
+
+# Note that MSDD_DEFS is a recursive (normal) makefile variable, and so
+# may be extended using the += operator, but that MSDD_SUFFIX is a 
+# non-recursive makefile variable, which may be extended using the := 
+# operator, as MSDD_SUFFIX:=$(MSDD_SUFFIX)_c. 
+
+#-----------------------------------------------------------------------
+# Names of library and executable files.
+
+msDd_LIBNAME=msDd$(MSDD_SUFFIX)
+msDd_LIBDIR=$(ROOT_DIR)/lib
+msDd_LIB=$(msDd_LIBDIR)/lib$(msDd_LIBNAME).a
+
+DDSIM_EXE=$(BIN_DIR)/msDdSim$(INTER_SUFFIX)$(MCMD_SUFFIX)
+#-----------------------------------------------------------------------

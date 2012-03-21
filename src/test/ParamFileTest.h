@@ -33,12 +33,6 @@ public:
    { 
       if (isIoProcessor()) {
          openInputFile(std::string(fileName), file_);
-         //file_.open(fileName); 
-         if (file_.fail()) {
-            std::cout << std::endl;
-            std::cout << "Failure to open file " << fileName << std::endl;
-            TEST_THROW("Failure to open file");
-         }
       }
    }
 

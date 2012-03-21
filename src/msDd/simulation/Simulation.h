@@ -9,10 +9,11 @@
 */
 
 #include <util/param/ParamComposite.h>           // base class
-#include <ddMd/communicate/AtomDistributor.h>    // member
-#include <ddMd/communicate/GroupDistributor.h>   // member
-#include <ddMd/communicate/AtomCollector.h>      // member
-#include <ddMd/communicate/GroupCollector.h>     // member
+
+//#include <ddMd/communicate/AtomDistributor.h>    // member
+//#include <ddMd/communicate/GroupDistributor.h>   // member
+//#include <ddMd/communicate/AtomCollector.h>      // member
+//#include <ddMd/communicate/GroupCollector.h>     // member
 
 
 namespace McMd {
@@ -25,6 +26,8 @@ namespace DdMd {
 
 namespace MsDd
 {
+
+   using namespace Util;
 
    /**
    * Main object in master-slave simulation.
@@ -44,13 +47,15 @@ namespace MsDd
    *    sim.receiveCommands();
    * }
    */
-   class Simulation
+   class Simulation : public ParamComposite
    {
+
+   public:
 
       /**
       * Constructor.
       */
-      Simulation(MPI::Intracomm& ddCommunicator);
+      Simulation(MPI::Intracomm& ddCommunicator = MPI::COMM_WORLD);
 
       /**
       * Initialize parent McMd::McSimulation and DdMd::System
@@ -64,7 +69,7 @@ namespace MsDd
       *    Receive signal to read file.
       *    Call DdMd::System::readParam().
       */
-      virtual void readParam();
+      virtual void readParam(std::istream& in);
 
       /**
       * Read and broadcast commands.
@@ -115,11 +120,11 @@ namespace MsDd
       /// Slave parallel MD System (exists on all modes).
       DdMd::System*       ddSystemPtr_;
 
-      DdMd::AtomDistributor     atomDistributor_;
-      DdMd::GroupDistributor<2> bondDistributor_;
+      //DdMd::AtomDistributor     atomDistributor_;
+      //DdMd::GroupDistributor<2> bondDistributor_;
 
-      DdMd::AtomCollector       atomCollector_;
-      DdMd::GroupCollector<2>   bondCollector_;
+      //DdMd::AtomCollector       atomCollector_;
+      //DdMd::GroupCollector<2>   bondCollector_;
 
       /// Intracommunicator for DdMd simulation.
       MPI::Intracomm* ddCommunicatorPtr_;

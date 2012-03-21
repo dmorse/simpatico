@@ -161,9 +161,16 @@ protected:
    */
    void openInputFile(const std::string& name, std::ifstream& in) const
    {   
-      std::string filename = filePrefix_;
-      filename += name;
-      in.open(filename.c_str());
+      //if (isIoProcessor()) {
+         std::string filename = filePrefix_;
+         filename += name;
+         in.open(filename.c_str());
+         if (in.fail()) {
+            std::cout << std::endl;
+            std::cout << "Failure to open file " << filename << std::endl;
+            TEST_THROW("Failure to open file");
+         }
+      //}
    }
 
    /**

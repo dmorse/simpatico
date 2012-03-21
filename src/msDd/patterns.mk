@@ -6,12 +6,11 @@
 # contains the source code for the DdMd namespace. It is included by
 # all makefile files in this directory tree. 
 #
-# These patterns use the string $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) of preprocessor macro
-# definitions that is constructed in src/mcMc/defines.mk and various
-# other variables defined in src/compiler.mk. It should thus be 
-# included in other makefiles after these files. 
+# These patterns pass the compiler strings $(UTIL_DEFS) $(INTER_DEFS)
+# and $(DDMD_DEFS) that are defined in the defines.mk files in the 
+# util/, inter/, and mcMd/ directories, and in the src/compiler.mk
+# file, and should thus be included after these four files. 
 #-----------------------------------------------------------------------
-# Compilation pattern rules
 
 # Path(s) to search for header files. 
 INCLUDES= -I$(SRC_DIR)
@@ -42,4 +41,3 @@ endif
 
 # Note: The main program files for unit tests must use a file suffix *.cc,
 # while all other source files must use *.cpp. 
-

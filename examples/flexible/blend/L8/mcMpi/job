@@ -4,4 +4,4 @@
 cd $PBS_O_WORKDIR
 module load intel 
 module load ompi/intel
-mpirun -np 3 $HOME/molmcd/branches/evaluators/bin/mcSim_m_f -e 
+mpirun -np 3 $HOME/simpatico/bin/mcSim_m -e 

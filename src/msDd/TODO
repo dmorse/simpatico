@@ -1,0 +1,14 @@
+
+1) Add appropriate constructors to McDd::Simulation constructor.
+
+2) Read an input file that contains an McSimulation block plus
+   additional blocks for data required only by DdSystem, and
+   write a parameter file for a DdMd::System.
+
+3) Use the above to initialize a McSimulation on the master and
+   a DdMd::System on all nodes. 
+
+4) Write distributor() method.
+
+5) Begin writing readCommands and receiveCommands methods.
+   Start with MD_SIMULATE command. 
