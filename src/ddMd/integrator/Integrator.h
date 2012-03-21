@@ -1,5 +1,5 @@
-#ifndef INTEGRATOR_H
-#define INTEGRATOR_H
+#ifndef DDMD_INTEGRATOR_H
+#define DDMD_INTEGRATOR_H
 
 #include <util/param/ParamComposite.h>
 

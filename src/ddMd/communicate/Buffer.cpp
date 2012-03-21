@@ -1,5 +1,5 @@
-#ifndef BUFFER_CPP
-#define BUFFER_CPP
+#ifndef DDMD_BUFFER_CPP
+#define DDMD_BUFFER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

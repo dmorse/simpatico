@@ -1,5 +1,5 @@
-#ifndef INTEGRATOR_FACTORY_CPP
-#define INTEGRATOR_FACTORY_CPP
+#ifndef DDMD_INTEGRATOR_FACTORY_CPP
+#define DDMD_INTEGRATOR_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

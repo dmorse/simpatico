@@ -1,5 +1,5 @@
-#ifndef  MC_ENERGY_OUTPUT_H
-#define  MC_ENERGY_OUTPUT_H
+#ifndef MCMD_MC_ENERGY_OUTPUT_H
+#define MCMD_MC_ENERGY_OUTPUT_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef LINEAR_ROUSE_AUTO_CORR_H
-#define LINEAR_ROUSE_AUTO_CORR_H
+#ifndef MCMD_LINEAR_ROUSE_AUTO_CORR_H
+#define MCMD_LINEAR_ROUSE_AUTO_CORR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef CONFIG_IO_CPP
-#define CONFIG_IO_CPP
+#ifndef DDMD_CONFIG_IO_CPP
+#define DDMD_CONFIG_IO_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

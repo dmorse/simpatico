@@ -1,5 +1,5 @@
 #ifndef HYBRID_NPH_MD_MOVE_CPP
-#define HYBRID_NPH_MD_MOVE_CPP
+#define MCMD_HYBRID_NPH_MD_MOVE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef ATOM_COLLECTOR_CPP
-#define ATOM_COLLECTOR_CPP
+#ifndef DDMD_ATOM_COLLECTOR_CPP
+#define DDMD_ATOM_COLLECTOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef BOND_POTENTIAL_CPP
-#define BOND_POTENTIAL_CPP
+#ifndef DDMD_BOND_POTENTIAL_CPP
+#define DDMD_BOND_POTENTIAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

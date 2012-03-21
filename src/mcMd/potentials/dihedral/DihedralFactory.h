@@ -1,5 +1,5 @@
-#ifndef DIHEDRAL_FACTORY_H
-#define DIHEDRAL_FACTORY_H
+#ifndef MCMD_DIHEDRAL_FACTORY_H
+#define MCMD_DIHEDRAL_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

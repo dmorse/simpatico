@@ -1,5 +1,5 @@
-#ifndef BOND_COLLECTOR_TEST_H
-#define BOND_COLLECTOR_TEST_H
+#ifndef DDMD_BOND_COLLECTOR_TEST_H
+#define DDMD_BOND_COLLECTOR_TEST_H
 
 #include <ddMd/communicate/GroupCollector_inc.h>
 #include <ddMd/communicate/AtomDistributor.h>
@@ -14,7 +14,7 @@
 #include <util/space/Grid.h>
 #include <util/mpi/MpiLogger.h>
 
-#ifdef  UTIL_MPI
+#ifdef UTIL_MPI
 #ifndef TEST_MPI
 #define TEST_MPI
 #endif

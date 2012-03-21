@@ -1,5 +1,5 @@
-#ifndef MC_PRESSURE_AVERAGE_H
-#define MC_PRESSURE_AVERAGE_H
+#ifndef MCMD_MC_PRESSURE_AVERAGE_H
+#define MCMD_MC_PRESSURE_AVERAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

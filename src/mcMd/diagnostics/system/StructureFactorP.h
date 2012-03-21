@@ -1,5 +1,5 @@
-#ifndef STRUCTURE_FACTOR_P_H
-#define STRUCTURE_FACTOR_P_H
+#ifndef MCMD_STRUCTURE_FACTOR_P_H
+#define MCMD_STRUCTURE_FACTOR_P_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

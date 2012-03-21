@@ -1,5 +1,5 @@
-#ifndef  PAIR_LIST_H
-#define  PAIR_LIST_H
+#ifndef MCMD_PAIR_LIST_H
+#define MCMD_PAIR_LIST_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef DIBLOCK_H
-#define DIBLOCK_H
+#ifndef MCMD_DIBLOCK_H
+#define MCMD_DIBLOCK_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

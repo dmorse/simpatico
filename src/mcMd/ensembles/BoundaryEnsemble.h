@@ -1,5 +1,5 @@
-#ifndef BOUNDARY_ENSEMBLE_H
-#define BOUNDARY_ENSEMBLE_H
+#ifndef MCMD_BOUNDARY_ENSEMBLE_H
+#define MCMD_BOUNDARY_ENSEMBLE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

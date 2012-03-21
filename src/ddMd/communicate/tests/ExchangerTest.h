@@ -1,5 +1,5 @@
-#ifndef EXCHANGER_TEST_H
-#define EXCHANGER_TEST_H
+#ifndef DDMD_EXCHANGER_TEST_H
+#define DDMD_EXCHANGER_TEST_H
 
 #include <ddMd/configIo/ConfigIo.h>
 #include <ddMd/communicate/Domain.h>
@@ -13,7 +13,7 @@
 #include <util/random/Random.h>
 #include <util/mpi/MpiLogger.h>
 
-#ifdef  UTIL_MPI
+#ifdef UTIL_MPI
 #ifndef TEST_MPI
 #define TEST_MPI
 #endif

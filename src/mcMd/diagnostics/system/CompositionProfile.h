@@ -1,5 +1,5 @@
-#ifndef COMPOSITION_PROFILE_H
-#define COMPOSITION_PROFILE_H
+#ifndef MCMD_COMPOSITION_PROFILE_H
+#define MCMD_COMPOSITION_PROFILE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef MC_SIMULATION_TEST_H
-#define MC_SIMULATION_TEST_H
+#ifndef MCMD_MC_SIMULATION_TEST_H
+#define MCMD_MC_SIMULATION_TEST_H
 
 #include <mcMd/mcSimulation/McSimulation.h>
 #include <mcMd/mcSimulation/McSystem.h>

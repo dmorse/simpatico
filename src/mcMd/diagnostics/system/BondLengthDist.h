@@ -1,5 +1,5 @@
-#ifndef BOND_LENGTH_DIST_H
-#define BOND_LENGTH_DIST_H
+#ifndef MCMD_BOND_LENGTH_DIST_H
+#define MCMD_BOND_LENGTH_DIST_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

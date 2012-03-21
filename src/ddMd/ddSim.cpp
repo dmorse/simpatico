@@ -1,5 +1,5 @@
-#ifndef DDSIM_CPP
-#define DDSIM_CPP
+#ifndef DDMD_DDSIM_CPP
+#define DDMD_DDSIM_CPP
 
 #include <ddMd/system/System.h>
 

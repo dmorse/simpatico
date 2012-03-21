@@ -1,5 +1,5 @@
-#ifndef DISTRIBUTOR_TEST_H
-#define DISTRIBUTOR_TEST_H
+#ifndef DDMD_DISTRIBUTOR_TEST_H
+#define DDMD_DISTRIBUTOR_TEST_H
 
 #include <ddMd/communicate/AtomDistributor.h>
 #include <ddMd/communicate/Domain.h>
@@ -10,7 +10,7 @@
 #include <util/space/Grid.h>
 #include <util/mpi/MpiLogger.h>
 
-#ifdef  UTIL_MPI
+#ifdef UTIL_MPI
    #ifndef TEST_MPI
       #define TEST_MPI
    #endif

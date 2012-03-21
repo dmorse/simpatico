@@ -1,5 +1,5 @@
 #ifndef MD_WRITE_RESTART_CPP
-#define MD_WRITE_RESTART_CPP
+#define MCMD_MD_WRITE_RESTART_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

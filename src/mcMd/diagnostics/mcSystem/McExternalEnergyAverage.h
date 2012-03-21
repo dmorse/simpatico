@@ -1,6 +1,6 @@
 #ifdef INTER_EXTERNAL
-#ifndef MC_EXTERNAL_ENERGY_AVERAGE_H
-#define MC_EXTERNAL_ENERGY_AVERAGE_H
+#ifndef MCMD_MC_EXTERNAL_ENERGY_AVERAGE_H
+#define MCMD_MC_EXTERNAL_ENERGY_AVERAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

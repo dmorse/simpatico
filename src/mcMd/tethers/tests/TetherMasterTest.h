@@ -1,5 +1,5 @@
-#ifndef TETHER_MASTER_TEST_H
-#define TETHER_MASTER_TEST_H
+#ifndef MCMD_TETHER_MASTER_TEST_H
+#define MCMD_TETHER_MASTER_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>

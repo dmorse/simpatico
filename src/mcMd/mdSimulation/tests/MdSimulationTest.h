@@ -1,5 +1,5 @@
-#ifndef MD_SIMULATION_TEST_H
-#define MD_SIMULATION_TEST_H
+#ifndef MCMD_MD_SIMULATION_TEST_H
+#define MCMD_MD_SIMULATION_TEST_H
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>

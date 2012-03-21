@@ -1,5 +1,5 @@
-#ifndef MC_PAIR_PERTURBATION_TEST_H
-#define MC_PAIR_PERTURBATION_TEST_H
+#ifndef MCMD_MC_PAIR_PERTURBATION_TEST_H
+#define MCMD_MC_PAIR_PERTURBATION_TEST_H
 
 #include <mcMd/perturb/mcSystem/McPairPerturbation.h>
 #include <mcMd/mcSimulation/McSimulation.h>

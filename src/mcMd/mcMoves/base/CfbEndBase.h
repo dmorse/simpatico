@@ -1,5 +1,5 @@
-#ifndef CFB_END_BASE_H
-#define CFB_END_BASE_H
+#ifndef MCMD_CFB_END_BASE_H
+#define MCMD_CFB_END_BASE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

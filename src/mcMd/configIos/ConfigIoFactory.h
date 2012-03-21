@@ -1,5 +1,5 @@
-#ifndef CONFIG_IO_FACTORY_H
-#define CONFIG_IO_FACTORY_H
+#ifndef MCMD_CONFIG_IO_FACTORY_H
+#define MCMD_CONFIG_IO_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

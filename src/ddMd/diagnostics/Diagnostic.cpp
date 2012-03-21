@@ -1,5 +1,5 @@
-#ifndef DIAGNOSTIC_CPP
-#define DIAGNOSTIC_CPP
+#ifndef DDMD_DIAGNOSTIC_CPP
+#define DDMD_DIAGNOSTIC_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

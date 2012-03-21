@@ -1,5 +1,5 @@
-#ifndef PAIR_POTENTIAL_H
-#define PAIR_POTENTIAL_H
+#ifndef DDMD_PAIR_POTENTIAL_H
+#define DDMD_PAIR_POTENTIAL_H
 
 #include <util/param/ParamComposite.h>  // base class
 #include <ddMd/neighbor/CellList.h>     // member

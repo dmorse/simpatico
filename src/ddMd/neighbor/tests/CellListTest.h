@@ -1,5 +1,5 @@
-#ifndef CELL_LIST_TEST_H
-#define CELL_LIST_TEST_H
+#ifndef DDMD_CELL_LIST_TEST_H
+#define DDMD_CELL_LIST_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>

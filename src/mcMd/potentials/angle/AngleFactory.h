@@ -1,5 +1,5 @@
-#ifndef ANGLE_FACTORY_H
-#define ANGLE_FACTORY_H
+#ifndef MCMD_ANGLE_FACTORY_H
+#define MCMD_ANGLE_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

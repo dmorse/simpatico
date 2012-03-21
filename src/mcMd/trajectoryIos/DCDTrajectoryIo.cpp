@@ -1,5 +1,5 @@
 #ifndef DCD_TRAJECTORY_IO_CPP
-#define DCD_TRAJECTORY_IO_CPP
+#define MCMD_DCD_TRAJECTORY_IO_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

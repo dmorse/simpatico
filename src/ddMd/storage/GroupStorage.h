@@ -1,5 +1,5 @@
-#ifndef GROUP_STORAGE_H
-#define GROUP_STORAGE_H
+#ifndef DDMD_GROUP_STORAGE_H
+#define DDMD_GROUP_STORAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

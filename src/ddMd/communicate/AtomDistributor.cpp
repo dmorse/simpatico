@@ -1,5 +1,5 @@
-#ifndef ATOM_DISTRIBUTOR_CPP
-#define ATOM_DISTRIBUTOR_CPP
+#ifndef DDMD_ATOM_DISTRIBUTOR_CPP
+#define DDMD_ATOM_DISTRIBUTOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

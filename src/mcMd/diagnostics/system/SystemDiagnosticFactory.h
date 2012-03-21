@@ -1,5 +1,5 @@
-#ifndef SYSTEM_DIAGNOSTIC_FACTORY_H
-#define SYSTEM_DIAGNOSTIC_FACTORY_H
+#ifndef MCMD_SYSTEM_DIAGNOSTIC_FACTORY_H
+#define MCMD_SYSTEM_DIAGNOSTIC_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

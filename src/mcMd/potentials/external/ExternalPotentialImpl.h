@@ -1,5 +1,5 @@
-#ifndef EXTERNAL_POTENTIAL_IMPL_H
-#define EXTERNAL_POTENTIAL_IMPL_H
+#ifndef MCMD_EXTERNAL_POTENTIAL_IMPL_H
+#define MCMD_EXTERNAL_POTENTIAL_IMPL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

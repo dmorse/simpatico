@@ -1,5 +1,5 @@
-#ifndef LJ_PAIR_TEST_H
-#define LJ_PAIR_TEST_H
+#ifndef MCMD_LJ_PAIR_TEST_H
+#define MCMD_LJ_PAIR_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>

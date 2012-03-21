@@ -1,5 +1,5 @@
 #ifndef SPECIES_QUERIES_CPP
-#define SPECIES_QUERIES_CPP
+#define MCMD_SPECIES_QUERIES_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

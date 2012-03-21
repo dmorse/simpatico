@@ -1,5 +1,5 @@
 #ifndef PAIR_SELECTOR_CPP
-#define PAIR_SELECTOR_CPP
+#define MCMD_PAIR_SELECTOR_CPP
 
 #include "PairSelector.h"
 #include <mcMd/chemistry/Atom.h>

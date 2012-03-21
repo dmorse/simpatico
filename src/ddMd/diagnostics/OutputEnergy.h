@@ -1,5 +1,5 @@
-#ifndef OUTPUT_ENERGY_H
-#define OUTPUT_ENERGY_H
+#ifndef DDMD_OUTPUT_ENERGY_H
+#define DDMD_OUTPUT_ENERGY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef WRITE_CONFIG_H
-#define WRITE_CONFIG_H
+#ifndef DDMD_WRITE_CONFIG_H
+#define DDMD_WRITE_CONFIG_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,6 +1,6 @@
 #ifndef INTER_NOPAIR
 #ifndef PAIR_FACTORY_CPP
-#define PAIR_FACTORY_CPP
+#define MCMD_PAIR_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

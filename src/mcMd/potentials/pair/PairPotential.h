@@ -1,5 +1,5 @@
-#ifndef PAIR_POTENTIAL_H
-#define PAIR_POTENTIAL_H
+#ifndef MCMD_PAIR_POTENTIAL_H
+#define MCMD_PAIR_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

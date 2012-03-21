@@ -1,6 +1,6 @@
 #ifdef  MCMD_PERTURB
-#ifndef MC_ENERGY_PERTURBATION_H
-#define MC_ENERGY_PERTURBATION_H
+#ifndef MCMD_MC_ENERGY_PERTURBATION_H
+#define MCMD_MC_ENERGY_PERTURBATION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

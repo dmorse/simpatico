@@ -1,5 +1,5 @@
-#ifndef NVT_DPD_VV_INTEGRATOR_H
-#define NVT_DPD_VV_INTEGRATOR_H
+#ifndef MCMD_NVT_DPD_VV_INTEGRATOR_H
+#define MCMD_NVT_DPD_VV_INTEGRATOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

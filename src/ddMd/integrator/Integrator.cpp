@@ -1,5 +1,5 @@
-#ifndef INTEGRATOR_CPP
-#define INTEGRATOR_CPP
+#ifndef DDMD_INTEGRATOR_CPP
+#define DDMD_INTEGRATOR_CPP
 
 #include "Integrator.h"
 

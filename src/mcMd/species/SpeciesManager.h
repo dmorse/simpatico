@@ -1,5 +1,5 @@
-#ifndef SPECIES_MANAGER_H
-#define SPECIES_MANAGER_H
+#ifndef MCMD_SPECIES_MANAGER_H
+#define MCMD_SPECIES_MANAGER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
 #ifndef  TYPE_DISTRIBUTION_CPP
-#define  TYPE_DISTRIBUTION_CPP
+#define MCMD_TYPE_DISTRIBUTION_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

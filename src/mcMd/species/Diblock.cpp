@@ -1,5 +1,5 @@
 #ifndef DIBLOCK_CPP
-#define DIBLOCK_CPP
+#define MCMD_DIBLOCK_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef HARMONIC_BOND_TEST_H
-#define HARMONIC_BOND_TEST_H
+#ifndef MCMD_HARMONIC_BOND_TEST_H
+#define MCMD_HARMONIC_BOND_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>

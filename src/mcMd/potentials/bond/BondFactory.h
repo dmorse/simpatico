@@ -1,5 +1,5 @@
-#ifndef BOND_FACTORY_H
-#define BOND_FACTORY_H
+#ifndef MCMD_BOND_FACTORY_H
+#define MCMD_BOND_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

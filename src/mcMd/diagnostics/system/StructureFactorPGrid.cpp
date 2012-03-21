@@ -1,5 +1,5 @@
 #ifndef STRUCTURE_FACTOR_P_GRID_CPP
-#define STRUCTURE_FACTOR_P_GRID_CPP
+#define MCMD_STRUCTURE_FACTOR_P_GRID_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

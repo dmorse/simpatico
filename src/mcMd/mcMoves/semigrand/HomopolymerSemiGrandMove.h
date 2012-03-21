@@ -1,5 +1,5 @@
-#ifndef HOMOPOLYMER_SEMI_GRAND_MOVE_H
-#define HOMOPOLYMER_SEMI_GRAND_MOVE_H
+#ifndef MCMD_HOMOPOLYMER_SEMI_GRAND_MOVE_H
+#define MCMD_HOMOPOLYMER_SEMI_GRAND_MOVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

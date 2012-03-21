@@ -1,5 +1,5 @@
-#ifndef LOG_PROGRESS_H
-#define LOG_PROGRESS_H
+#ifndef MCMD_LOG_PROGRESS_H
+#define MCMD_LOG_PROGRESS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

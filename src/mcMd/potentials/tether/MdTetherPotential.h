@@ -1,6 +1,6 @@
 #ifdef  INTER_TETHER
-#ifndef MD_TETHER_POTENTIAL_H
-#define MD_TETHER_POTENTIAL_H
+#ifndef MCMD_MD_TETHER_POTENTIAL_H
+#define MCMD_MD_TETHER_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

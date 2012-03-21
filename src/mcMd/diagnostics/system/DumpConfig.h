@@ -1,5 +1,5 @@
-#ifndef DUMP_CONFIG_H
-#define DUMP_CONFIG_H
+#ifndef MCMD_DUMP_CONFIG_H
+#define MCMD_DUMP_CONFIG_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

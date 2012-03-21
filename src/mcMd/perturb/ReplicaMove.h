@@ -1,7 +1,7 @@
 #ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
-#ifndef REPLICA_MOVE_H 
-#define REPLICA_MOVE_H 
+#ifndef MCMD_REPLICA_MOVE_H 
+#define MCMD_REPLICA_MOVE_H 
 
 
 /*

@@ -1,5 +1,5 @@
-#ifndef GROUP_TEST_H
-#define GROUP_TEST_H
+#ifndef DDMD_GROUP_TEST_H
+#define DDMD_GROUP_TEST_H
 
 #include <ddMd/chemistry/Group.h>
 #include <ddMd/chemistry/AtomArray.h>

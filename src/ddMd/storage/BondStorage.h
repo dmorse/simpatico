@@ -1,5 +1,5 @@
-#ifndef BOND_STORAGE_H
-#define BOND_STORAGE_H
+#ifndef DDMD_BOND_STORAGE_H
+#define DDMD_BOND_STORAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

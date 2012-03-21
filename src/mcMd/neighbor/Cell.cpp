@@ -1,5 +1,5 @@
 #ifndef  CELL_CPP
-#define  CELL_CPP
+#define MCMD_CELL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef FILE_MASTER_H
-#define FILE_MASTER_H
+#ifndef DDMD_FILE_MASTER_H
+#define DDMD_FILE_MASTER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

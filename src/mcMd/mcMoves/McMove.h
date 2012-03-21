@@ -1,5 +1,5 @@
-#ifndef MC_MOVE_H
-#define MC_MOVE_H
+#ifndef MCMD_MC_MOVE_H
+#define MCMD_MC_MOVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef NEIGHBOR_TEST_COMPOSITE_H
-#define NEIGHBOR_TEST_COMPOSITE_H
+#ifndef MCMD_NEIGHBOR_TEST_COMPOSITE_H
+#define MCMD_NEIGHBOR_TEST_COMPOSITE_H
 
 #include <test/CompositeTestRunner.h>
 

@@ -1,5 +1,5 @@
-#ifndef ATOM_TYPE_H
-#define ATOM_TYPE_H
+#ifndef DDMD_ATOM_TYPE_H
+#define DDMD_ATOM_TYPE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

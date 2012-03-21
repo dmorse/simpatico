@@ -1,5 +1,5 @@
-#ifndef BOND_DISTRIBUTOR_H
-#define BOND_DISTRIBUTOR_H
+#ifndef DDMD_BOND_DISTRIBUTOR_H
+#define DDMD_BOND_DISTRIBUTOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef DOMAIN_TEST_H
-#define DOMAIN_TEST_H
+#ifndef DDMD_DOMAIN_TEST_H
+#define DDMD_DOMAIN_TEST_H
 
 #include <ddMd/communicate/Plan.h>
 

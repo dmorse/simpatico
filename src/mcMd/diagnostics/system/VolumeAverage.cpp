@@ -1,5 +1,5 @@
 #ifndef VOLUME_AVERAGE_CPP
-#define VOLUME_AVERAGE_CPP
+#define MCMD_VOLUME_AVERAGE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

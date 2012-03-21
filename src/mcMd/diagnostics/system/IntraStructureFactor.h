@@ -1,5 +1,5 @@
-#ifndef INTRA_STRUCTURE_FACTOR_H
-#define INTRA_STRUCTURE_FACTOR_H
+#ifndef MCMD_INTRA_STRUCTURE_FACTOR_H
+#define MCMD_INTRA_STRUCTURE_FACTOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

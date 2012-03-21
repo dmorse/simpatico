@@ -1,5 +1,5 @@
-#ifndef ATOM_STORAGE_CPP
-#define ATOM_STORAGE_CPP
+#ifndef DDMD_ATOM_STORAGE_CPP
+#define DDMD_ATOM_STORAGE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

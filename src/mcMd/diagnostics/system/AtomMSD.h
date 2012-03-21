@@ -1,5 +1,5 @@
-#ifndef ATOM_MSD_H
-#define ATOM_MSD_H
+#ifndef MCMD_ATOM_MSD_H
+#define MCMD_ATOM_MSD_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

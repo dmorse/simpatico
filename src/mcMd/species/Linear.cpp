@@ -1,5 +1,5 @@
 #ifndef LINEAR_CPP
-#define LINEAR_CPP
+#define MCMD_LINEAR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
 #ifndef SPECIES_FACTORY_CPP
-#define SPECIES_FACTORY_CPP
+#define MCMD_SPECIES_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

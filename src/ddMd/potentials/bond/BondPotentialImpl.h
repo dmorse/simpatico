@@ -1,5 +1,5 @@
-#ifndef BOND_POTENTIAL_IMPL_H
-#define BOND_POTENTIAL_IMPL_H
+#ifndef DDMD_BOND_POTENTIAL_IMPL_H
+#define DDMD_BOND_POTENTIAL_IMPL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

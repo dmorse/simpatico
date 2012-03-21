@@ -1,5 +1,5 @@
-#ifndef GROUP_REBRIDGE_BASE_H
-#define GROUP_REBRIDGE_BASE_H
+#ifndef MCMD_GROUP_REBRIDGE_BASE_H
+#define MCMD_GROUP_REBRIDGE_BASE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

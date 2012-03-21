@@ -1,5 +1,5 @@
 #ifndef  SEMI_GRAND_DISTRIBUTION_CPP
-#define  SEMI_GRAND_DISTRIBUTION_CPP
+#define MCMD_SEMI_GRAND_DISTRIBUTION_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

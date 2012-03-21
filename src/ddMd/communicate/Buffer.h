@@ -1,5 +1,5 @@
-#ifndef BUFFER_H
-#define BUFFER_H
+#ifndef DDMD_BUFFER_H
+#define DDMD_BUFFER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,6 +1,6 @@
 #ifdef  INTER_EXTERNAL
 #ifndef EXTERNAL_FACTORY_CPP
-#define EXTERNAL_FACTORY_CPP
+#define MCMD_EXTERNAL_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

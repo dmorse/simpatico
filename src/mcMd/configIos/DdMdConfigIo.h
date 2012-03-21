@@ -1,5 +1,5 @@
-#ifndef DDMD_CONFIG_IO_H
-#define DDMD_CONFIG_IO_H
+#ifndef MCMD_DDMD_CONFIG_IO_H
+#define MCMD_DDMD_CONFIG_IO_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

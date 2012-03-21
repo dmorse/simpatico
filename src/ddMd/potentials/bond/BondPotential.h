@@ -1,5 +1,5 @@
-#ifndef BOND_POTENTIAL_H
-#define BOND_POTENTIAL_H
+#ifndef DDMD_BOND_POTENTIAL_H
+#define DDMD_BOND_POTENTIAL_H
 
 #include <util/param/ParamComposite.h>        // base class
 #include <util/boundary/Boundary.h>           // typedef

@@ -1,5 +1,5 @@
-#ifndef CELL_TAG_H
-#define CELL_TAG_H
+#ifndef MCMD_CELL_TAG_H
+#define MCMD_CELL_TAG_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

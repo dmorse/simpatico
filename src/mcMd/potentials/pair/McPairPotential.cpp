@@ -1,5 +1,5 @@
 #ifndef  MC_PAIR_POTENTIAL_CPP
-#define  MC_PAIR_POTENTIAL_CPP
+#define MCMD_MC_PAIR_POTENTIAL_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

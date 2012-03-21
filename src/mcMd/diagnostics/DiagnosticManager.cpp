@@ -1,5 +1,5 @@
 #ifndef DIAGNOSTIC_MANAGER_CPP
-#define DIAGNOSTIC_MANAGER_CPP
+#define MCMD_DIAGNOSTIC_MANAGER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

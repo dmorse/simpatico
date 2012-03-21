@@ -1,5 +1,5 @@
 #ifndef ATOM_MSD_CPP
-#define ATOM_MSD_CPP
+#define MCMD_ATOM_MSD_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
 #ifndef MASK_CPP
-#define MASK_CPP
+#define MCMD_MASK_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

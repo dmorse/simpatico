@@ -1,5 +1,5 @@
-#ifndef CONFIG_IO_TEST_H
-#define CONFIG_IO_TEST_H
+#ifndef DDMD_CONFIG_IO_TEST_H
+#define DDMD_CONFIG_IO_TEST_H
 
 #include <ddMd/configIo/ConfigIo.h>
 #include <ddMd/communicate/Domain.h>
@@ -9,7 +9,7 @@
 #include <ddMd/storage/BondStorage.h>
 #include <util/mpi/MpiLogger.h>
 
-#ifdef  UTIL_MPI
+#ifdef UTIL_MPI
 #ifndef TEST_MPI
 #define TEST_MPI
 #endif

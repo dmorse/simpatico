@@ -1,5 +1,5 @@
-#ifndef TRAJECTORY_IO_H
-#define TRAJECTORY_IO_H
+#ifndef MCMD_TRAJECTORY_IO_H
+#define MCMD_TRAJECTORY_IO_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

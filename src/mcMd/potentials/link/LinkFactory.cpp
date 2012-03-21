@@ -1,5 +1,5 @@
 #ifndef LINK_FACTORY_CPP
-#define LINK_FACTORY_CPP
+#define MCMD_LINK_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

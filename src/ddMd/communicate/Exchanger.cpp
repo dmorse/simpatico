@@ -1,5 +1,5 @@
-#ifndef EXCHANGER_CPP
-#define EXCHANGER_CPP
+#ifndef DDMD_EXCHANGER_CPP
+#define DDMD_EXCHANGER_CPP
 
 //#define EXCHANGER_DEBUG
 

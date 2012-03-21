@@ -1,5 +1,5 @@
-#ifndef INTRA_BOND_TENSOR_AUTO_CORR_INC_H
-#define INTRA_BOND_TENSOR_AUTO_CORR_INC_H
+#ifndef MCMD_INTRA_BOND_TENSOR_AUTO_CORR_INC_H
+#define MCMD_INTRA_BOND_TENSOR_AUTO_CORR_INC_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

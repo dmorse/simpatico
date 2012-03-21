@@ -1,5 +1,5 @@
-#ifndef MASK_H
-#define MASK_H
+#ifndef DDMD_MASK_H
+#define DDMD_MASK_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

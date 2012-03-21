@@ -1,5 +1,5 @@
-#ifndef HOMORING_H
-#define HOMORING_H
+#ifndef MCMD_HOMORING_H
+#define MCMD_HOMORING_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
 #ifndef RING_OCTA_REBRIDGE_MOVE_CPP
-#define RING_OCTA_REBRIDGE_MOVE_CPP
+#define MCMD_RING_OCTA_REBRIDGE_MOVE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

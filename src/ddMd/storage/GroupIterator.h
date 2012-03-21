@@ -1,5 +1,5 @@
-#ifndef GROUP_ITERATOR_H
-#define GROUP_ITERATOR_H
+#ifndef DDMD_GROUP_ITERATOR_H
+#define DDMD_GROUP_ITERATOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef BOND_FACTORY_CPP
-#define BOND_FACTORY_CPP
+#ifndef DDMD_BOND_FACTORY_CPP
+#define DDMD_BOND_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

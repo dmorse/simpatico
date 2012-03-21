@@ -1,5 +1,5 @@
-#ifndef INTRA_PAIR_AUTO_CORR_H
-#define INTRA_PAIR_AUTO_CORR_H
+#ifndef MCMD_INTRA_PAIR_AUTO_CORR_H
+#define MCMD_INTRA_PAIR_AUTO_CORR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

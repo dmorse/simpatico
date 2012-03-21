@@ -1,5 +1,5 @@
-#ifndef COSINE_DIHEDRAL_TEST_H
-#define COSINE_DIHEDRAL_TEST_H
+#ifndef MCMD_COSINE_DIHEDRAL_TEST_H
+#define MCMD_COSINE_DIHEDRAL_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>

@@ -1,5 +1,5 @@
-#ifndef COMPOSITE_BOND_H
-#define COMPOSITE_BOND_H
+#ifndef MCMD_COMPOSITE_BOND_H
+#define MCMD_COMPOSITE_BOND_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -224,7 +224,7 @@ namespace McMd
    */  
    template <class BareBond, class BarePair>
    double CompositeBond<BareBond, BarePair>::randomBondLength(Random* randomPtr, double beta, int typeId) const
-   {  UTIL_THROW("Unimplemented function"); }
+   {  UTIL_THROW("Unimplemented function");  }
 
 }
 #endif

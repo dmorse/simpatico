@@ -1,5 +1,5 @@
-#ifndef MD_INTEGRATOR_H
-#define MD_INTEGRATOR_H
+#ifndef MCMD_MD_INTEGRATOR_H
+#define MCMD_MD_INTEGRATOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

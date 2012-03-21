@@ -1,5 +1,5 @@
-#ifndef SYSTEM_TEST_H
-#define SYSTEM_TEST_H
+#ifndef DDMD_SYSTEM_TEST_H
+#define DDMD_SYSTEM_TEST_H
 
 #include <ddMd/system/System.h>
 #include <ddMd/storage/AtomIterator.h>

@@ -1,5 +1,5 @@
-#ifndef MD_KINETIC_ENERGY_AVERAGE_H
-#define MD_KINETIC_ENERGY_AVERAGE_H
+#ifndef MCMD_MD_KINETIC_ENERGY_AVERAGE_H
+#define MCMD_MD_KINETIC_ENERGY_AVERAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

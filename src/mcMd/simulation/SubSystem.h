@@ -1,5 +1,5 @@
-#ifndef SUB_SYSTEM_H
-#define SUB_SYSTEM_H
+#ifndef MCMD_SUB_SYSTEM_H
+#define MCMD_SUB_SYSTEM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

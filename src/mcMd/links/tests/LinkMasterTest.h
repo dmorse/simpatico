@@ -1,5 +1,5 @@
-#ifndef LINK_MASTER_TEST_H
-#define LINK_MASTER_TEST_H
+#ifndef MCMD_LINK_MASTER_TEST_H
+#define MCMD_LINK_MASTER_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>

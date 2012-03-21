@@ -1,5 +1,5 @@
-#ifndef SYSTEM_TEST_H
-#define SYSTEM_TEST_H
+#ifndef MCMD_SYSTEM_TEST_H
+#define MCMD_SYSTEM_TEST_H
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>

@@ -1,5 +1,5 @@
-#ifndef ANGLE_POTENTIAL_IMPL_H
-#define ANGLE_POTENTIAL_IMPL_H
+#ifndef MCMD_ANGLE_POTENTIAL_IMPL_H
+#define MCMD_ANGLE_POTENTIAL_IMPL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

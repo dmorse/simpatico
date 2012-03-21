@@ -1,5 +1,5 @@
-#ifndef EXCHANGER_H
-#define EXCHANGER_H
+#ifndef DDMD_EXCHANGER_H
+#define DDMD_EXCHANGER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

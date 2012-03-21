@@ -1,7 +1,7 @@
 #ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
 #ifndef BENNETTS_METHOD_CPP
-#define BENNETTS_METHOD_CPP
+#define MCMD_BENNETTS_METHOD_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

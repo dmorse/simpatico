@@ -1,5 +1,5 @@
-#ifndef TETHER_H
-#define TETHER_H
+#ifndef MCMD_TETHER_H
+#define MCMD_TETHER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

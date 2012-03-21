@@ -1,5 +1,5 @@
-#ifndef MC_BOND_ENERGY_AVERAGE_H
-#define MC_BOND_ENERGY_AVERAGE_H
+#ifndef MCMD_MC_BOND_ENERGY_AVERAGE_H
+#define MCMD_MC_BOND_ENERGY_AVERAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

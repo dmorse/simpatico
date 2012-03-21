@@ -1,5 +1,5 @@
-#ifndef ATOM_TYPE_TEST_H
-#define ATOM_TYPE_TEST_H
+#ifndef MCMD_ATOM_TYPE_TEST_H
+#define MCMD_ATOM_TYPE_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>

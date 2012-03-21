@@ -1,5 +1,5 @@
 #ifndef MD_SIMULATION_CPP
-#define MD_SIMULATION_CPP
+#define MCMD_MD_SIMULATION_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

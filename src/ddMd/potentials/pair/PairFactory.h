@@ -1,5 +1,5 @@
-#ifndef PAIR_FACTORY_H
-#define PAIR_FACTORY_H
+#ifndef DDMD_PAIR_FACTORY_H
+#define DDMD_PAIR_FACTORY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

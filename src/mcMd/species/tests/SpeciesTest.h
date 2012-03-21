@@ -1,5 +1,5 @@
-#ifndef SPECIES_TEST_H
-#define SPECIES_TEST_H
+#ifndef MCMD_SPECIES_TEST_H
+#define MCMD_SPECIES_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>

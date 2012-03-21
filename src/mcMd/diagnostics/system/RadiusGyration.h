@@ -1,5 +1,5 @@
-#ifndef RADIUS_GYRATION_H
-#define RADIUS_GYRATION_H
+#ifndef MCMD_RADIUS_GYRATION_H
+#define MCMD_RADIUS_GYRATION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

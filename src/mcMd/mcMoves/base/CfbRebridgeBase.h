@@ -1,5 +1,5 @@
-#ifndef CFB_REBRIDGE_BASE_H
-#define CFB_REBRIDGE_BASE_H
+#ifndef MCMD_CFB_REBRIDGE_BASE_H
+#define MCMD_CFB_REBRIDGE_BASE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

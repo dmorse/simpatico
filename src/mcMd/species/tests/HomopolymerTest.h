@@ -1,5 +1,5 @@
-#ifndef HOMOPOLYMER_TEST_H
-#define HOMOPOLYMER_TEST_H
+#ifndef MCMD_HOMOPOLYMER_TEST_H
+#define MCMD_HOMOPOLYMER_TEST_H
 
 #include <test/UnitTest.h>
 

@@ -1,5 +1,5 @@
-#ifndef MD_SYSTEM_H
-#define MD_SYSTEM_H
+#ifndef MCMD_MD_SYSTEM_H
+#define MCMD_MD_SYSTEM_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

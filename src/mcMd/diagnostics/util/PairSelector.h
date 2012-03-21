@@ -1,5 +1,5 @@
-#ifndef PAIR_SELECTOR_H
-#define PAIR_SELECTOR_H
+#ifndef MCMD_PAIR_SELECTOR_H
+#define MCMD_PAIR_SELECTOR_H
 
 #include <util/global.h>
 #include <iostream>

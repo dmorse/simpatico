@@ -1,5 +1,5 @@
-#ifndef PAIR_POTENTIAL_TEST_H
-#define PAIR_POTENTIAL_TEST_H
+#ifndef DDMD_PAIR_POTENTIAL_TEST_H
+#define DDMD_PAIR_POTENTIAL_TEST_H
 
 #include <ddMd/potentials/PairPotential.h>
 #include <ddMd/potentials/PairInteraction.h>

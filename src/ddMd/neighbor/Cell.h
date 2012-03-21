@@ -1,5 +1,5 @@
-#ifndef  CELL_H
-#define  CELL_H
+#ifndef DDMD_CELL_H
+#define DDMD_CELL_H
 
 // THIS CLASS IS UNFINISHED, UNTESTED, AND UNUSED
 

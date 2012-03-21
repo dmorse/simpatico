@@ -1,5 +1,5 @@
-#ifndef MD_INTRA_BOND_STRESS_AUTO_CORR_H
-#define MD_INTRA_BOND_STRESS_AUTO_CORR_H
+#ifndef MCMD_MD_INTRA_BOND_STRESS_AUTO_CORR_H
+#define MCMD_MD_INTRA_BOND_STRESS_AUTO_CORR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

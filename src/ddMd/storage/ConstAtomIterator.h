@@ -1,5 +1,5 @@
-#ifndef CONST_ATOM_ITERATOR_H
-#define CONST_ATOM_ITERATOR_H
+#ifndef DDMD_CONST_ATOM_ITERATOR_H
+#define DDMD_CONST_ATOM_ITERATOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

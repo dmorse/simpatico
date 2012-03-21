@@ -1,5 +1,5 @@
-#ifndef NVE_INTEGRATOR_H
-#define NVE_INTEGRATOR_H
+#ifndef DDMD_NVE_INTEGRATOR_H
+#define DDMD_NVE_INTEGRATOR_H
 
 #include "Integrator.h"
 

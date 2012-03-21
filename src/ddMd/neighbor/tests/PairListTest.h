@@ -1,5 +1,5 @@
-#ifndef PAIR_LIST_TEST_H
-#define PAIR_LIST_TEST_H
+#ifndef DDMD_PAIR_LIST_TEST_H
+#define DDMD_PAIR_LIST_TEST_H
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>

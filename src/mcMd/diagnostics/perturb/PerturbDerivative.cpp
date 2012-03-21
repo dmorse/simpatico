@@ -1,6 +1,6 @@
 #ifdef MCMD_PERTURB
 #ifndef PERTURB_DERIVATIVE_CPP
-#define PERTURB_DERIVATIVE_CPP
+#define MCMD_PERTURB_DERIVATIVE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

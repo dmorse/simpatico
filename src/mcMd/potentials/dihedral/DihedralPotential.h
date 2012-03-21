@@ -1,5 +1,5 @@
-#ifndef DIHEDRAL_POTENTIAL_H
-#define DIHEDRAL_POTENTIAL_H
+#ifndef MCMD_DIHEDRAL_POTENTIAL_H
+#define MCMD_DIHEDRAL_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

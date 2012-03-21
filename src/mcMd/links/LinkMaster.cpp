@@ -1,6 +1,6 @@
 #ifdef  MCMD_LINK
 #ifndef LINK_MASTER_CPP
-#define LINK_MASTER_CPP
+#define MCMD_LINK_MASTER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

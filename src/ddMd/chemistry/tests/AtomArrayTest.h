@@ -1,5 +1,5 @@
-#ifndef ATOM_ARRAY_TEST_H
-#define ATOM_ARRAY_TEST_H
+#ifndef DDMD_ATOM_ARRAY_TEST_H
+#define DDMD_ATOM_ARRAY_TEST_H
 
 #include <ddMd/chemistry/AtomArray.h>
 #include <ddMd/chemistry/Atom.h>

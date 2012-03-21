@@ -1,6 +1,6 @@
 #ifndef  INTER_NOPAIR
 #ifndef  MD_ENERGY_OUTPUT_CPP
-#define  MD_ENERGY_OUTPUT_CPP
+#define MCMD_MD_ENERGY_OUTPUT_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

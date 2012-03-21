@@ -1,5 +1,5 @@
-#ifndef MOLECULE_H
-#define MOLECULE_H
+#ifndef MCMD_MOLECULE_H
+#define MCMD_MOLECULE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

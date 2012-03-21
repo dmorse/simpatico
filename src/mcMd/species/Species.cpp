@@ -1,5 +1,5 @@
 #ifndef SPECIES_CPP
-#define SPECIES_CPP
+#define MCMD_SPECIES_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef RDF_H
-#define RDF_H
+#ifndef MCMD_RDF_H
+#define MCMD_RDF_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

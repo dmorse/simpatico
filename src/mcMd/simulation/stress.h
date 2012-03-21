@@ -1,5 +1,5 @@
-#ifndef STRESS_H
-#define STRESS_H
+#ifndef MCMD_STRESS_H
+#define MCMD_STRESS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

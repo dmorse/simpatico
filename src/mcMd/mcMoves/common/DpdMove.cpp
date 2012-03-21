@@ -1,5 +1,5 @@
 #ifndef DPD_MOVE_CPP
-#define DPD_MOVE_CPP
+#define MCMD_DPD_MOVE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

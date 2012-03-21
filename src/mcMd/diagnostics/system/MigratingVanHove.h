@@ -1,7 +1,7 @@
 #ifdef UTIL_MPI
 #ifdef MCMD_PERTURB
-#ifndef MIGRATING_VAN_HOVE_H
-#define MIGRATING_VAN_HOVE_H
+#ifndef MCMD_MIGRATING_VAN_HOVE_H
+#define MCMD_MIGRATING_VAN_HOVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

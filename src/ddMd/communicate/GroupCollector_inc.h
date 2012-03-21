@@ -1,5 +1,5 @@
-#ifndef GROUP_COLLECTOR_INC_H
-#define GROUP_COLLECTOR_INC_H
+#ifndef DDMD_GROUP_COLLECTOR_INC_H
+#define DDMD_GROUP_COLLECTOR_INC_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

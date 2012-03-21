@@ -1,5 +1,5 @@
-#ifndef DIAGNOSTIC_H
-#define DIAGNOSTIC_H
+#ifndef DDMD_DIAGNOSTIC_H
+#define DDMD_DIAGNOSTIC_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

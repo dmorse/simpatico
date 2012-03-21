@@ -1,6 +1,6 @@
 #ifdef  INTER_DIHEDRAL
-#ifndef DIHEDRAL_POTENTIAL_IMPL_H
-#define DIHEDRAL_POTENTIAL_IMPL_H
+#ifndef MCMD_DIHEDRAL_POTENTIAL_IMPL_H
+#define MCMD_DIHEDRAL_POTENTIAL_IMPL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

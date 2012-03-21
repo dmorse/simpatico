@@ -1,5 +1,5 @@
-#ifndef NVE_INTEGRATOR_CPP
-#define NVE_INTEGRATOR_CPP
+#ifndef DDMD_NVE_INTEGRATOR_CPP
+#define DDMD_NVE_INTEGRATOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,6 +1,6 @@
 #ifndef  INTER_NOPAIR
-#ifndef  MD_PAIR_ENERGY_COEFFICIENTS_H
-#define  MD_PAIR_ENERGY_COEFFICIENTS_H
+#ifndef MCMD_MD_PAIR_ENERGY_COEFFICIENTS_H
+#define MCMD_MD_PAIR_ENERGY_COEFFICIENTS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

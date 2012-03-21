@@ -1,5 +1,5 @@
-#ifndef ATOM_ARRAY_H
-#define ATOM_ARRAY_H
+#ifndef DDMD_ATOM_ARRAY_H
+#define DDMD_ATOM_ARRAY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

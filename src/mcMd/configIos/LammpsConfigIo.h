@@ -1,5 +1,5 @@
-#ifndef LAMMPS_CONFIG_IO_H
-#define LAMMPS_CONFIG_IO_H
+#ifndef MCMD_LAMMPS_CONFIG_IO_H
+#define MCMD_LAMMPS_CONFIG_IO_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

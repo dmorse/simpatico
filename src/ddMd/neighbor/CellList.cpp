@@ -1,5 +1,5 @@
-#ifndef CELL_LIST_CPP
-#define CELL_LIST_CPP
+#ifndef DDMD_CELL_LIST_CPP
+#define DDMD_CELL_LIST_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

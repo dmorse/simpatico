@@ -1,5 +1,5 @@
-#ifndef BOND_POTENTIAL_H
-#define BOND_POTENTIAL_H
+#ifndef MCMD_BOND_POTENTIAL_H
+#define MCMD_BOND_POTENTIAL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -100,14 +100,13 @@ namespace McMd
       * \param  atom Atom object of interest
       * \return bond potential energy of atom
       */
-      virtual double atomEnergy(const Atom& atom) const
-      {  UTIL_THROW("Unimplemented method"); }
+      virtual double atomEnergy(const Atom& atom) const = 0;
 
       /**
       * Add bond forces to all atomic forces.
       */
-      virtual void addForces()
-      {  UTIL_THROW("Unimplemented method"); }
+      virtual void addForces() = 0;
+      //{  UTIL_THROW("Unimplemented method"); }
 
       /**
       * Calculate the total nonBonded pair energy for the associated System.

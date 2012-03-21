@@ -1,5 +1,5 @@
-#ifndef VOLUME_AVERAGE_H
-#define VOLUME_AVERAGE_H
+#ifndef MCMD_VOLUME_AVERAGE_H
+#define MCMD_VOLUME_AVERAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

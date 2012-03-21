@@ -1,5 +1,5 @@
-#ifndef SPECIES_GROUP_H
-#define SPECIES_GROUP_H
+#ifndef MCMD_SPECIES_GROUP_H
+#define MCMD_SPECIES_GROUP_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

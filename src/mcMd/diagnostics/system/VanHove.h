@@ -1,5 +1,5 @@
-#ifndef VAN_HOVE_H
-#define VAN_HOVE_H
+#ifndef MCMD_VAN_HOVE_H
+#define MCMD_VAN_HOVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

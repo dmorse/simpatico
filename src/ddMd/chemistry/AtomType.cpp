@@ -1,5 +1,5 @@
-#ifndef ATOM_TYPE_CPP
-#define ATOM_TYPE_CPP
+#ifndef DDMD_ATOM_TYPE_CPP
+#define DDMD_ATOM_TYPE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

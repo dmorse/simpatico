@@ -1,5 +1,5 @@
 #ifndef CFB_RING_REBRIDGE_MOVE_CPP
-#define CFB_RING_REBRIDGE_MOVE_CPP
+#define MCMD_CFB_RING_REBRIDGE_MOVE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

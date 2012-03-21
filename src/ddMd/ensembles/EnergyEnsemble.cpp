@@ -1,5 +1,5 @@
-#ifndef ENERGY_ENSEMBLE_CPP
-#define ENERGY_ENSEMBLE_CPP
+#ifndef DDMD_ENERGY_ENSEMBLE_CPP
+#define DDMD_ENERGY_ENSEMBLE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
-#ifndef PLAN_H
-#define PLAN_H
+#ifndef DDMD_PLAN_H
+#define DDMD_PLAN_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

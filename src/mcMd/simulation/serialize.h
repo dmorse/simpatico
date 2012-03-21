@@ -1,5 +1,5 @@
-#ifndef SYSTEM_SERIALIZE_H
-#define SYSTEM_SERIALIZE_H
+#ifndef MCMD_SYSTEM_SERIALIZE_H
+#define MCMD_SYSTEM_SERIALIZE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

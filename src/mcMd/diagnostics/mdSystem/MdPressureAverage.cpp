@@ -1,5 +1,5 @@
 #ifndef MD_PRESSURE_AVERAGE_CPP
-#define MD_PRESSURE_AVERAGE_CPP
+#define MCMD_MD_PRESSURE_AVERAGE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

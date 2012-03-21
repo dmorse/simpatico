@@ -1,5 +1,5 @@
-#ifndef GROUP_DISTRIBUTOR_H
-#define GROUP_DISTRIBUTOR_H
+#ifndef DDMD_GROUP_DISTRIBUTOR_H
+#define DDMD_GROUP_DISTRIBUTOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
 #ifndef ATOM_DISPLACE_MOVE_CPP
-#define ATOM_DISPLACE_MOVE_CPP
+#define MCMD_ATOM_DISPLACE_MOVE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

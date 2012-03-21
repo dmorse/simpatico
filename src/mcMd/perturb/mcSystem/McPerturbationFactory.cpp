@@ -1,6 +1,6 @@
 #ifdef  MCMD_PERTURB
 #ifndef MC_PERTURBATION_FACTORY_CPP
-#define MC_PERTURBATION_FACTORY_CPP
+#define MCMD_MC_PERTURBATION_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

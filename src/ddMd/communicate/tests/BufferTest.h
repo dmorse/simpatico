@@ -1,5 +1,5 @@
-#ifndef BUFFER_TEST_H
-#define BUFFER_TEST_H
+#ifndef DDMD_BUFFER_TEST_H
+#define DDMD_BUFFER_TEST_H
 
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/chemistry/Atom.h>

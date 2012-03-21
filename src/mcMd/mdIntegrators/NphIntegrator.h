@@ -1,5 +1,5 @@
-#ifndef NPH_INTEGRATOR_H
-#define NPH_INTEGRATOR_H
+#ifndef MCMD_NPH_INTEGRATOR_H
+#define MCMD_NPH_INTEGRATOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

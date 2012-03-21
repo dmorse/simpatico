@@ -1,5 +1,5 @@
-#ifndef DOMAIN_H
-#define DOMAIN_H
+#ifndef DDMD_DOMAIN_H
+#define DDMD_DOMAIN_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

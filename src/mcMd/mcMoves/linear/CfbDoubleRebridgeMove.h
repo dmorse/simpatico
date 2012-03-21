@@ -1,5 +1,5 @@
-#ifndef CFB_DOUBLE_REBRIDGE_MOVE_H
-#define CFB_DOUBLE_REBRIDGE_MOVE_H
+#ifndef MCMD_CFB_DOUBLE_REBRIDGE_MOVE_H
+#define MCMD_CFB_DOUBLE_REBRIDGE_MOVE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

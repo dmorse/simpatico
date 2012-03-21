@@ -1,5 +1,5 @@
-#ifndef CONST_GHOST_ITERATOR_H
-#define CONST_GHOST_ITERATOR_H
+#ifndef DDMD_CONST_GHOST_ITERATOR_H
+#define DDMD_CONST_GHOST_ITERATOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

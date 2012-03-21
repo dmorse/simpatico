@@ -1,5 +1,5 @@
-#ifndef MC_POTENTIALS_H
-#define MC_POTENTIALS_H
+#ifndef MCMD_MC_POTENTIALS_H
+#define MCMD_MC_POTENTIALS_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

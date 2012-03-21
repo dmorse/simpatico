@@ -1,5 +1,5 @@
 #ifndef MD_INTEGRATOR_FACTORY_CPP
-#define MD_INTEGRATOR_FACTORY_CPP
+#define MCMD_MD_INTEGRATOR_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

@@ -1,5 +1,5 @@
 #ifndef END_SWAP_MOVE_CPP
-#define END_SWAP_MOVE_CPP
+#define MCMD_END_SWAP_MOVE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
