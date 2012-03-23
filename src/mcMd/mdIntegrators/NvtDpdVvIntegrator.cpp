@@ -12,7 +12,7 @@
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
-#include <mcMd/ensembles/EnergyEnsemble.h>
+#include <util/ensembles/EnergyEnsemble.h>
 #include <mcMd/neighbor/PairList.h>
 #include <mcMd/neighbor/PairIterator.h>
 #include <util/boundary/Boundary.h>

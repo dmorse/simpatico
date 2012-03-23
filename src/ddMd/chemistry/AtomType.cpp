@@ -51,6 +51,17 @@ namespace DdMd
       return out;
    }
 
+   #ifdef UTIL_MPI
+   /*
+   * Call to guarantee initialization of static data.
+   */
+   void AtomType::initStatic()
+   {
+      Util::MpiTraits<DdMd::AtomType>::type = MPI::BYTE;
+      Util::MpiTraits<DdMd::AtomType>::hasType = false;
+   }
+   #endif
+
 } 
 
 #ifdef UTIL_MPI

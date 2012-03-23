@@ -1,5 +1,5 @@
-#ifndef DDMD_BOUNDARY_ENSEMBLE_CPP
-#define DDMD_BOUNDARY_ENSEMBLE_CPP
+#ifndef UTIL_BOUNDARY_ENSEMBLE_CPP
+#define UTIL_BOUNDARY_ENSEMBLE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,35 +9,14 @@
 */
 
 #include "BoundaryEnsemble.h"
-#include <mcMd/ensembles/BoundaryEnsemble.h>
-
 #ifdef UTIL_MPI
 #include <util/mpi/MpiStructBuilder.h>
+#endif
 
-namespace Util{
-
-   /**
-   * Initialize BoundaryEnsemble MPI Datatype.
-   */
-   MPI::Datatype MpiTraits<DdMd::BoundaryEnsemble>::type = MPI::BYTE;
-   bool MpiTraits<DdMd::BoundaryEnsemble>::hasType = false;
-
-   /**
-   * Initialize BoundaryEnsemble::Type MPI Datatype.
-   */
-   MPI::Datatype MpiTraits<DdMd::BoundaryEnsemble::Type>::type = MPI::INT;
-   bool MpiTraits<DdMd::BoundaryEnsemble::Type>::hasType = true;
-
-}
-
-#endif // ifdef UTIL_MPI
-
-namespace DdMd
+namespace Util
 {
 
-   using namespace Util;
-
-   /**
+   /*
    * Constructor.
    */
    BoundaryEnsemble::BoundaryEnsemble(Type type)
@@ -45,23 +24,7 @@ namespace DdMd
       type_(type)
    {}
 
-   /**
-   * Copy constructor.
-   */
-   BoundaryEnsemble::BoundaryEnsemble(const McMd::BoundaryEnsemble& other)
-    : pressure_(1.0),
-      type_(UNKNOWN)
-   {
-      if (other.isIsobaric()) {
-         type_ = ISOBARIC;
-         pressure_ = other.pressure();
-      } else
-      if (other.isRigid()) {
-         type_ = RIGID;
-      } 
-   }
-
-   /**
+   /*
    * Set the pressure.
    */
    void  BoundaryEnsemble::setPressure(double pressure)
@@ -72,7 +35,7 @@ namespace DdMd
       pressure_ = pressure;
    }
 
-   /**
+   /*
    * Read the type and (if necessary) pressure from file.
    */
    void BoundaryEnsemble::readParam(std::istream& in)
@@ -121,6 +84,17 @@ namespace DdMd
    }
 
    #ifdef UTIL_MPI
+   /**
+   * Initialize BoundaryEnsemble MPI Datatype.
+   */
+   MPI::Datatype MpiTraits<BoundaryEnsemble>::type = MPI::BYTE;
+   bool MpiTraits<BoundaryEnsemble>::hasType = false;
+
+   /**
+   * Initialize BoundaryEnsemble::Type MPI Datatype.
+   */
+   MPI::Datatype MpiTraits<BoundaryEnsemble::Type>::type = MPI::INT;
+   bool MpiTraits<BoundaryEnsemble::Type>::hasType = true;
 
    /**
    * Commit MPI Datatype.
@@ -133,11 +107,10 @@ namespace DdMd
       builder.setBase(&object);
       builder.addMember(&object.pressure_, MPI::DOUBLE);
       builder.addMember(&object.type_, MPI::INT);
-      builder.commit(Util::MpiTraits<BoundaryEnsemble>::type);
-      Util::MpiTraits<DdMd::BoundaryEnsemble>::hasType = true;
+      builder.commit(MpiTraits<BoundaryEnsemble>::type);
+      MpiTraits<BoundaryEnsemble>::hasType = true;
    }
-
    #endif
 
-} //namespace DdMd
+}
 #endif

@@ -15,8 +15,8 @@
 #include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/ensembles/EnergyEnsemble.h>
-#include <mcMd/ensembles/BoundaryEnsemble.h>
+#include <util/ensembles/EnergyEnsemble.h>
+#include <util/ensembles/BoundaryEnsemble.h>
 #include <util/space/Vector.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/crystal/LatticeSystem.h>

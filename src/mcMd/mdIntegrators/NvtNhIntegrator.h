@@ -12,13 +12,12 @@
 
 #include <iostream>
 
-namespace McMd
+namespace Util{ class EnergyEnsemble; } 
+
+namespace McMd 
 {
 
    using namespace Util;
-
-   class EnergyEnsemble;
-
 
    /**
    * A Nose-Hoover NVT molecular dynamics integrator.

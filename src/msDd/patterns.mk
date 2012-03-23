@@ -19,24 +19,27 @@ INCLUDES= -I$(SRC_DIR)
 MSDD_ALLDEPS= -A$(SRC_DIR)/compiler.mk
 MSDD_ALLDEPS+= -A$(SRC_DIR)/util/defines.mk
 MSDD_ALLDEPS+= -A$(SRC_DIR)/inter/defines.mk
+MSDD_ALLDEPS+= -A$(SRC_DIR)/mcMd/defines.mk
 MSDD_ALLDEPS+= -A$(SRC_DIR)/ddMd/defines.mk
 
 # Rule to compile all class source (*.cpp) files.
 %.o:%.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) \
-               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) -c -o $@ $<
+            $(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) \
-               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) $(MSDD_ALLDEPS) $<
+            $(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) \
+            $(MSDD_ALLDEPS) $<
 endif
 
 # Rule to compile *.cc main programs for unit tests. 
 %.o:%.cc
 	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) \
-               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) -c -o $@ $<
+            $(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) -c -o $@ $<
 ifdef MAKEDEP
 	$(MAKEDEP) $(INCLUDES) \
-               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) $(MSDD_ALLDEPS) $<
+            $(UTIL_DEFS) $(INTER_DEFS) $(MCMD_DEFS) $(DDMD_DEFS) \
+            $(MSDD_ALLDEPS) $<
 endif
 
 # Note: The main program files for unit tests must use a file suffix *.cc,

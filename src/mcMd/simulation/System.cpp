@@ -14,8 +14,8 @@
 #include "serialize.h"
 
 #include <mcMd/species/Species.h>
-#include <mcMd/ensembles/EnergyEnsemble.h>
-#include <mcMd/ensembles/BoundaryEnsemble.h>
+#include <util/ensembles/EnergyEnsemble.h>
+#include <util/ensembles/BoundaryEnsemble.h>
 #include <mcMd/configIos/ConfigIo.h>
 #include <mcMd/configIos/McConfigIo.h>
 #include <mcMd/configIos/ConfigIoFactory.h>

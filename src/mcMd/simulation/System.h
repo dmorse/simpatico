@@ -29,6 +29,8 @@ class SystemTest;
 namespace Util 
 { 
    template <typename T> class Factory;
+   class EnergyEnsemble;
+   class BoundaryEnsemble;
 }
 
 namespace McMd
@@ -54,8 +56,6 @@ namespace McMd
    class FileMaster;
    class ConfigIo;
    class TrajectoryIo;
-   class EnergyEnsemble;
-   class BoundaryEnsemble;
    class PairFactory;
    class BondPotential;
    #ifdef INTER_ANGLE

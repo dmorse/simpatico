@@ -68,8 +68,8 @@ namespace MsDd
       if (isDdMaster_) {
          readParamComposite(in, *mcSimulationPtr_);
       }
-      //readParamComposite(in, *ddSystemPtr_);
-      //readEnd(in);
+      readParamComposite(in, *ddSystemPtr_);
+      readEnd(in);
    }
 
    /*

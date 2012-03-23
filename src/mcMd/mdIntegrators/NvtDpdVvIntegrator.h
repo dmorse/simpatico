@@ -14,7 +14,11 @@
 
 #include <iostream>
 
-namespace Util{ class Random; }
+namespace Util
+{ 
+   class Random; 
+   class EnergyEnsemble;
+}
 
 namespace McMd
 {
@@ -22,7 +26,6 @@ namespace McMd
    using namespace Util;
 
    class PairList;
-   class EnergyEnsemble;
 
    /**
    * A velocity-Verlet DPD integerator.

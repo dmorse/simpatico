@@ -1,5 +1,5 @@
-#ifndef SPECIES_GROUP_TPP
-#define SPECIES_GROUP_TPP
+#ifndef MCMD_SPECIES_GROUP_TPP
+#define MCMD_SPECIES_GROUP_TPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids

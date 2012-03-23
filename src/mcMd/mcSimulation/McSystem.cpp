@@ -12,8 +12,8 @@
 #include "McSimulation.h"
 #include <mcMd/simulation/stress.h>
 #include <mcMd/species/Species.h>
-#include <mcMd/ensembles/BoundaryEnsemble.h>
-#include <mcMd/ensembles/EnergyEnsemble.h>
+#include <util/ensembles/BoundaryEnsemble.h>
+#include <util/ensembles/EnergyEnsemble.h>
 
 #ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>

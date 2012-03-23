@@ -17,7 +17,7 @@
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/ensembles/EnergyEnsemble.h>
+#include <util/ensembles/EnergyEnsemble.h>
 
 namespace McMd
 {

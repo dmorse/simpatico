@@ -12,7 +12,8 @@ include sources.mk
 all: $(mcMd_neighbor_tests_OBJS) Test
 
 clean:
-	rm -f $(mcMd_neighbor_tests_OBJS) Test $(mcMd_neighbor_tests_OBJS:.o=.d)
+	rm -f $(mcMd_neighbor_tests_OBJS) $(mcMd_neighbor_tests_OBJS:.o=.d)
+	rm -f Test
 
 clean-deps:
 	rm -f $(mcMd_neighbor_tests_OBJS:.o=.d)

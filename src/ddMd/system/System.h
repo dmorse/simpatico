@@ -21,15 +21,18 @@
 #include <util/random/Random.h>                  // member 
 #include <util/containers/DArray.h>              // member 
 
-namespace Util{ template <typename T> class Factory; }
-namespace McMd { class McSimulation; }
-
+namespace Util { 
+   template <typename T> class Factory; 
+   class EnergyEnsemble;
+   class BoundaryEnsemble;
+}
+namespace McMd { 
+   class McSimulation; 
+}
 
 namespace DdMd
 {
 
-   class EnergyEnsemble;
-   class BoundaryEnsemble;
    class PairPotential;
    class BondPotential;
    class Integrator;
@@ -417,10 +420,7 @@ namespace DdMd
       double  kineticEnergy_;
 
       #ifdef UTIL_MPI
-      MPI::Intracomm* communicatorPtr_;
-
-      /// Pointer to parent McSimulation (if any).
-      McMd::McSimulation* mcSimulationPtr_;
+      //MPI::Intracomm* communicatorPtr_;
       #endif
 
       /// Pointer to force/energy evaluator.
@@ -506,9 +506,6 @@ namespace DdMd
       *  - MaskBonded:  mask pair interaction between bonded atoms
       */
       MaskPolicy  maskedPairPolicy_;
-
-      /// Is this part of a master-slave simulation?
-      bool isMasterSlaveSimulation_;
 
    };
 

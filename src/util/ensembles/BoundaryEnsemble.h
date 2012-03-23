@@ -1,5 +1,5 @@
-#ifndef DDMD_BOUNDARY_ENSEMBLE_H
-#define DDMD_BOUNDARY_ENSEMBLE_H
+#ifndef UTIL_BOUNDARY_ENSEMBLE_H
+#define UTIL_BOUNDARY_ENSEMBLE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,15 +8,14 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/global.h>
 #include <util/param/ParamComposite.h>
+#ifdef UTIL_MPI
+#include <util/mpi/MpiTraits.h>
+#endif
+#include <util/global.h>
 
-namespace McMd{ class BoundaryEnsemble; }
-
-namespace DdMd
+namespace Util
 {
-
-   using namespace Util;
 
    /**
    * Statistical ensemble for changes in the periodic unit cell size.
@@ -42,11 +41,6 @@ namespace DdMd
       * Constructor.
       */
       BoundaryEnsemble(Type type = UNKNOWN);
-
-      /**
-      * Copy constructor.
-      */
-      BoundaryEnsemble(const McMd::BoundaryEnsemble& other);
 
       /**
       * Set the pressure.
@@ -133,19 +127,13 @@ namespace DdMd
    // Return true if this is an isobaric Ensemble.
    inline bool BoundaryEnsemble::isIsobaric() const
    { return (type_ == ISOBARIC); }
-      
-}
  
-#ifdef UTIL_MPI
-#include <util/mpi/MpiTraits.h>
-
-namespace Util{
-
+   #ifdef UTIL_MPI
    /**
    * Explicit specialization MpiTraits<BoundaryEnsemble>.
    */
    template <>
-   class MpiTraits<DdMd::BoundaryEnsemble>
+   class MpiTraits<BoundaryEnsemble>
    {  
    public:  
       static MPI::Datatype type;      ///< MPI Datatype 
@@ -156,14 +144,13 @@ namespace Util{
    * Explicit specialization MpiTraits<BoundaryEnsemble::Type>.
    */
    template <>
-   class MpiTraits<DdMd::BoundaryEnsemble::Type>
+   class MpiTraits<BoundaryEnsemble::Type>
    {  
    public:  
       static MPI::Datatype type;      ///< MPI Datatype
       static bool hasType;            ///< Is the MPI type initialized?
    };
+   #endif
 
 }
-#endif
-
 #endif

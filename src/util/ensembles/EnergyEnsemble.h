@@ -1,5 +1,5 @@
-#ifndef DDMD_ENERGY_ENSEMBLE_H
-#define DDMD_ENERGY_ENSEMBLE_H
+#ifndef UTIL_ENERGY_ENSEMBLE_H
+#define UTIL_ENERGY_ENSEMBLE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -10,13 +10,12 @@
 
 #include <util/global.h>
 #include <util/param/ParamComposite.h>
+#ifdef UTIL_MPI
+#include <util/mpi/MpiTraits.h>
+#endif
 
-namespace McMd { class EnergyEnsemble; }
-
-namespace DdMd
+namespace Util
 {
-
-   using namespace Util;
 
    /**
    * A statistical ensemble for energy.
@@ -39,11 +38,6 @@ namespace DdMd
       * Constructor.
       */
       EnergyEnsemble(Type type = UNKNOWN);
-
-      /**
-      * Copy constructor.
-      */
-      EnergyEnsemble(const McMd::EnergyEnsemble& other);
 
       /**
       * Set the temperature.
@@ -84,12 +78,10 @@ namespace DdMd
       //@}
       
       #ifdef UTIL_MPI
-
-         /**
-         * Commit associated MPI DataType.
-         */
-         static void commitMpiType();
-
+      /**
+      * Commit associated MPI DataType.
+      */
+      static void commitMpiType();
       #endif
 
    private:
@@ -145,18 +137,13 @@ namespace DdMd
    inline bool EnergyEnsemble::isIsothermal() const
    { return (type_ == ISOTHERMAL); }
 
-}
 
-#ifdef UTIL_MPI
-#include <util/mpi/MpiTraits.h>
-
-namespace Util{
-
+   #ifdef UTIL_MPI
    /**
    * Explicit specialization MpiTraits<EnergyEnsemble>.
    */
    template <>
-   class MpiTraits<DdMd::EnergyEnsemble>
+   class MpiTraits<EnergyEnsemble>
    {  
    public:  
       static MPI::Datatype type;       ///< MPI Datatype
@@ -167,14 +154,13 @@ namespace Util{
    * Explicit specialization MpiTraits<EnergyEnsemble::Type>.
    */
    template <>
-   class MpiTraits<DdMd::EnergyEnsemble::Type>
+   class MpiTraits<EnergyEnsemble::Type>
    {  
    public:  
       static MPI::Datatype type;       ///< MPI Datatype
       static bool hasType;             ///< Is the MPI type initialized?
    };
+   #endif
 
 }
-#endif
-
 #endif

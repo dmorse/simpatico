@@ -1,4 +1,3 @@
-include $(SRC_DIR)/mcMd/ensembles/sources.mk
 include $(SRC_DIR)/mcMd/chemistry/sources.mk
 include $(SRC_DIR)/mcMd/species/sources.mk
 include $(SRC_DIR)/mcMd/neighbor/sources.mk
@@ -13,7 +12,7 @@ include $(SRC_DIR)/mcMd/mcMoves/sources.mk
 include $(SRC_DIR)/mcMd/diagnostics/sources.mk
 include $(SRC_DIR)/mcMd/util/sources.mk
 
-mcMd_SRCS=$(mcMd_ensembles_SRCS) \
+mcMd_SRCS=\
     $(mcMd_potentials_SRCS) $(mcMd_chemistry_SRCS) \
     $(mcMd_species_SRCS) $(mcMd_neighbor_SRCS) \
     $(mcMd_simulation_SRCS) $(mcMd_mcSimulation_SRCS) \

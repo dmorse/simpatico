@@ -13,8 +13,8 @@
 #include "MdSimulation.h"
 #include <mcMd/configIos/MdConfigIo.h>
 #include <mcMd/mcSimulation/McSystem.h>
-#include <mcMd/ensembles/BoundaryEnsemble.h>
-#include <mcMd/ensembles/EnergyEnsemble.h>
+#include <util/ensembles/BoundaryEnsemble.h>
+#include <util/ensembles/EnergyEnsemble.h>
 #include <mcMd/neighbor/PairIterator.h> 
 #include <mcMd/mdIntegrators/MdIntegratorFactory.h> 
 

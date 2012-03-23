@@ -194,7 +194,7 @@ McSimulation{
 }
 WRITE_PARAM      param
 READ_CONFIG      config
-SIMULATE        1000000
+SIMULATE         500000
 WRITE_CONFIG     config
 FINISH
 

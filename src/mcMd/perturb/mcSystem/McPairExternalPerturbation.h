@@ -19,7 +19,7 @@
 #include <mcMd/potentials/pair/McPairPotentialImpl.h>
 #include <mcMd/potentials/external/ExternalPotentialImpl.h>
 #include <mcMd/chemistry/Atom.h>
-#include <mcMd/ensembles/EnergyEnsemble.h>
+#include <util/ensembles/EnergyEnsemble.h>
 #include <util/global.h>              
 #include <util/containers/DMatrix.h>              // member template
 #include <util/containers/DArray.h>               // member template

@@ -53,11 +53,6 @@ System{
   DiagnosticManager{
      baseInterval  1000
 
-     WriteConfig{
-        interval          2000
-        outputFileName  config
-     }
-
      OutputEnergy{
         interval          1000
         outputFileName  energy
@@ -68,4 +63,9 @@ System{
     bondCacheCapacity   20000
   }
 }
+
+     WriteConfig{
+        interval          2000
+        outputFileName  config
+     }
 

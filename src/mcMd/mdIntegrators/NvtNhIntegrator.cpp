@@ -12,7 +12,7 @@
 #include <mcMd/mdSimulation/MdSystem.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
-#include <mcMd/ensembles/EnergyEnsemble.h>
+#include <util/ensembles/EnergyEnsemble.h>
 #include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Molecule.h>
 #include <mcMd/chemistry/Atom.h>

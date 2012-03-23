@@ -61,8 +61,6 @@ Master{
   
     }
   }
-}
-
   System{
     Domain{
       gridDimensions    2    1     3
@@ -80,7 +78,11 @@ Master{
       atomCapacity     10000
       ghostCapacity    10000
     }
+    NveIntegrator{
+      dt               0.002
+    }
   }
+}
 
 
   FileMaster{
@@ -111,9 +113,6 @@ Master{
   }
   BoundaryEnsemble{
     type             rigid
-  }
-  NveIntegrator{
-    dt               0.002
   }
   Random{
     seed        8012457890

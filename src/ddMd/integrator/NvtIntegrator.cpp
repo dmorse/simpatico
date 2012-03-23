@@ -9,7 +9,7 @@
 */
 
 #include "NvtIntegrator.h"
-#include <ddMd/ensembles/EnergyEnsemble.h>
+#include <util/ensembles/EnergyEnsemble.h>
 #include <ddMd/system/System.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>

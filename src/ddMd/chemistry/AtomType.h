@@ -72,6 +72,13 @@ namespace DdMd
 
       //@}
 
+      #ifdef UTIL_MPI
+      /**
+      * Call this to guarantee initialization of static data.
+      */
+      static void initStatic();
+      #endif
+
    private:
 
       /// Name of type.

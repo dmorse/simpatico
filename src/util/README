@@ -13,6 +13,7 @@ math           mathematical constants and operations.
 space          classes to describe Cartesian vectors, tensors, and grids. 
 boundary       classes to define periodic boundary conditions.
 crystal        classes related to crystallographic symmetry
+ensembles      classes that define statistical mechanical ensembles
 archives       serialization classes (compatible with Boost serialization)
 random         random number generators and processes.
 accumulators   statistical accumulator classes.

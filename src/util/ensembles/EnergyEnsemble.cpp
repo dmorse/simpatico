@@ -1,5 +1,5 @@
-#ifndef DDMD_ENERGY_ENSEMBLE_CPP
-#define DDMD_ENERGY_ENSEMBLE_CPP
+#ifndef UTIL_ENERGY_ENSEMBLE_CPP
+#define UTIL_ENERGY_ENSEMBLE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -9,33 +9,13 @@
 */
 
 #include "EnergyEnsemble.h"
-#include <mcMd/ensembles/EnergyEnsemble.h>
-#include <iostream>
-
 #ifdef UTIL_MPI
 #include <util/mpi/MpiStructBuilder.h>
-
-namespace Util{
-
-   /**
-   * Initialize EnergyEnsemble MPI Datatype.
-   */
-   MPI::Datatype MpiTraits<DdMd::EnergyEnsemble>::type = MPI::BYTE;
-   bool MpiTraits<DdMd::EnergyEnsemble>::hasType = false;
-
-   /**
-   * Initialize EnergyEnsemble::Type MPI Datatype.
-   */
-   MPI::Datatype MpiTraits<DdMd::EnergyEnsemble::Type>::type = MPI::INT;
-   bool MpiTraits<DdMd::EnergyEnsemble::Type>::hasType = true;
-
-}
 #endif
 
-namespace DdMd
-{
+#include <iostream>
 
-   using namespace Util;
+namespace Util{
 
    /**
    * Constructor.
@@ -45,23 +25,6 @@ namespace DdMd
       beta_(1.0),
       type_(type)
    {}
-
-   /**
-   * Copy constructor.
-   */
-   EnergyEnsemble::EnergyEnsemble(const McMd::EnergyEnsemble& other)
-    : temperature_(1.0),
-      beta_(1.0),
-      type_(UNKNOWN)
-   {
-      if (other.isIsothermal()) {
-         type_ = ISOTHERMAL;
-         setTemperature(other.temperature());
-      } else
-      if (other.isAdiabatic()) {
-         type_ = ADIABATIC;
-      } 
-   }
 
    /**
    * Set the temperature.
@@ -122,6 +85,17 @@ namespace DdMd
    }
 
    #ifdef UTIL_MPI
+   /**
+   * Initialize EnergyEnsemble MPI Datatype.
+   */
+   MPI::Datatype MpiTraits<EnergyEnsemble>::type = MPI::BYTE;
+   bool MpiTraits<EnergyEnsemble>::hasType = false;
+
+   /**
+   * Initialize EnergyEnsemble::Type MPI Datatype.
+   */
+   MPI::Datatype MpiTraits<EnergyEnsemble::Type>::type = MPI::INT;
+   bool MpiTraits<EnergyEnsemble::Type>::hasType = true;
 
    /**
    * Commit MPI Datatype.
@@ -135,10 +109,9 @@ namespace DdMd
       builder.addMember(&object.temperature_, MPI::DOUBLE);
       builder.addMember(&object.beta_, MPI::DOUBLE);
       builder.addMember(&object.type_, MPI::INT);
-      builder.commit(Util::MpiTraits<EnergyEnsemble>::type);
-      Util::MpiTraits<DdMd::EnergyEnsemble>::hasType = true;
+      builder.commit(MpiTraits<EnergyEnsemble>::type);
+      MpiTraits<EnergyEnsemble>::hasType = true;
    }
-
    #endif
 
 }
