@@ -219,7 +219,6 @@ namespace DdMd
    */
    void System::readParam(std::istream& in)
    {
-
       // Preconditions
       assert(pairPotentialPtr_ == 0);
       assert(bondPotentialPtr_ == 0);
@@ -275,7 +274,8 @@ namespace DdMd
       configIoPtr_ = new ConfigIo();             // Todo: Add factory
       configIoPtr_->associate(domain_, boundary_,
                               atomStorage_, bondStorage_, buffer_);
-      readParamComposite(in, *configIoPtr_);
+      //readParamComposite(in, *configIoPtr_);
+      configIoPtr_->initialize();
 
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();

@@ -138,7 +138,6 @@ namespace DdMd
 
       #ifdef UTIL_MPI
       if (cacheSize_ == cacheCapacity_) {
-          std::cout << "Sending full cache in GroupDistributor" << std::endl;
           bool isComplete = false;
           int  source = 0;
           bufferPtr_->endSendBlock(isComplete);

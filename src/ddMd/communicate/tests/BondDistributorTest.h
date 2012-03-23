@@ -2,7 +2,7 @@
 #define DDMD_BOND_DISTRIBUTOR_TEST_H
 
 #include <ddMd/communicate/AtomDistributor.h>
-#include <ddMd/communicate/BondDistributor.h>
+#include <ddMd/communicate/GroupDistributor.cpp>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/storage/AtomStorage.h>
@@ -26,7 +26,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class BondDistributorTest: public ParamFileTest<BondDistributor>
+class BondDistributorTest: public ParamFileTest< GroupDistributor<2> >
 {
 public:
 
@@ -43,7 +43,7 @@ public:
       AtomStorage  atomStorage;
       BondStorage  bondStorage;
       AtomDistributor  atomDistributor;
-      BondDistributor  bondDistributor;
+      GroupDistributor<2>  bondDistributor;
       std::ifstream configFile;
 
       // Set connections between atomDistributors
@@ -212,7 +212,7 @@ public:
       AtomStorage atomStorage;
       BondStorage bondStorage;
       AtomDistributor atomDistributor;
-      BondDistributor bondDistributor;
+      GroupDistributor<2> bondDistributor;
       std::ifstream configFile;
 
       // Set connections between atomDistributors

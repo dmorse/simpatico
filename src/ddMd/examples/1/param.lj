@@ -58,10 +58,6 @@ System{
         outputFileName  energy
      }
   }
-  ConfigIo{
-    atomCacheCapacity    4000
-    bondCacheCapacity   20000
-  }
 }
 
      WriteConfig{

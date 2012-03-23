@@ -1,9 +1,9 @@
 #ifndef DDMD_BOND_COLLECTOR_TEST_H
 #define DDMD_BOND_COLLECTOR_TEST_H
 
-#include <ddMd/communicate/GroupCollector_inc.h>
 #include <ddMd/communicate/AtomDistributor.h>
-#include <ddMd/communicate/BondDistributor.h>
+#include <ddMd/communicate/GroupDistributor.cpp>
+#include <ddMd/communicate/GroupCollector_inc.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/storage/AtomStorage.h>
@@ -36,7 +36,7 @@ class BondCollectorTest: public ParamFileTest< GroupCollector<2> >
     AtomStorage atomStorage;
     BondStorage bondStorage;
     AtomDistributor atomDistributor;
-    BondDistributor bondDistributor;
+    GroupDistributor<2> bondDistributor;
     GroupCollector<2> bondCollector;
     int atomCount; // Number of atoms to be distributed by master
     int bondCount; // Number to bonds be distributed by master

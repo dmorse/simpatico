@@ -15,6 +15,7 @@
 #include <ddMd/storage/AtomStorage.h>               
 #include <ddMd/storage/BondStorage.h>               
 #include <ddMd/communicate/GroupCollector_inc.h> 
+#include <ddMd/communicate/GroupDistributor.cpp> 
 #include <ddMd/communicate/Buffer.h> 
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Bond.h>
@@ -76,7 +77,20 @@ namespace DdMd
    }
 
    /*
-   * Read parameters, allocate memory and initialize.
+   * Set parameters and allocate memory.
+   */
+   void ConfigIo::initialize(int atomCacheCapacity, int bondCacheCapacity)
+   {
+      atomCacheCapacity_ = atomCacheCapacity;
+      bondCacheCapacity_ = bondCacheCapacity;
+      atomDistributor_.setParam(atomCacheCapacity_);
+      bondDistributor_.setParam(bondCacheCapacity_);
+      atomCollector_.allocate(atomCacheCapacity_);
+      bondCollector_.allocate(bondCacheCapacity_);
+   }
+
+   /*
+   * Read a configuration file.
    */
    void ConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
    {

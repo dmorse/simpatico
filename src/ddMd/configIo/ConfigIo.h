@@ -10,7 +10,7 @@
 
 #include <util/param/ParamComposite.h>           // base class
 #include <ddMd/communicate/AtomDistributor.h>    // member 
-#include <ddMd/communicate/BondDistributor.h>    // member 
+#include <ddMd/communicate/GroupDistributor.h>    // member 
 #include <ddMd/communicate/AtomCollector.h>      // member 
 #include <ddMd/communicate/GroupCollector.h>     // member 
 #include <util/boundary/Boundary.h>              // typedef
@@ -57,6 +57,15 @@ namespace DdMd
       virtual void readParam(std::istream& in);
 
       /**
+      * Read cache size and allocate memory.
+      *
+      * \param atomCacheCapacity size of internal atom cache. 
+      * \param bondCacheCapacity size of internal bond cache. 
+      */
+      virtual void initialize(int atomCacheCapacity = 100,
+                              int bondCacheCapacity = 100);
+
+      /**
       * Read configuration file.
       *
       * This routine opens and reads a file on the master,
@@ -91,7 +100,7 @@ namespace DdMd
       /**
       * Get the AtomDistributor by reference.
       */
-      BondDistributor& bondDistributor();
+      GroupDistributor<2>& bondDistributor();
 
       /**
       * Get the AtomCollector by reference.
@@ -127,7 +136,7 @@ namespace DdMd
 
       AtomDistributor  atomDistributor_;
 
-      BondDistributor bondDistributor_;
+      GroupDistributor<2> bondDistributor_;
 
       AtomCollector  atomCollector_;
 
@@ -152,7 +161,7 @@ namespace DdMd
    inline AtomDistributor& ConfigIo::atomDistributor()
    { return atomDistributor_; }
 
-   inline BondDistributor& ConfigIo::bondDistributor()
+   inline GroupDistributor<2>& ConfigIo::bondDistributor()
    { return bondDistributor_; }
 
    inline AtomCollector& ConfigIo::atomCollector()

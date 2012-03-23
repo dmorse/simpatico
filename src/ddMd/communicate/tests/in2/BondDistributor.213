@@ -17,6 +17,6 @@ Buffer{
 AtomDistributor{
   cacheCapacity   10000
 }
-BondDistributor{
+GroupDistributor{
   cacheCapacity   10000
 }
