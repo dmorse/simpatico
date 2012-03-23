@@ -1,4 +1,4 @@
-#ifndef HOMORING_CPP
+#ifndef MCMD_HOMORING_CPP
 #define MCMD_HOMORING_CPP
 
 /*

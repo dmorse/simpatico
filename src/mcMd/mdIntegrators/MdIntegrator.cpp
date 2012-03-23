@@ -1,4 +1,4 @@
-#ifndef  MD_INTEGRATOR_CPP
+#ifndef MCMD_MD_INTEGRATOR_CPP
 #define MCMD_MD_INTEGRATOR_CPP
 
 /*

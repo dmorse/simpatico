@@ -1,4 +1,4 @@
-#ifndef LINK_FACTORY_CPP
+#ifndef MCMD_LINK_FACTORY_CPP
 #define MCMD_LINK_FACTORY_CPP
 
 /*

@@ -1,4 +1,4 @@
-#ifndef POINT_CPP
+#ifndef MCMD_POINT_CPP
 #define MCMD_POINT_CPP
 
 /*

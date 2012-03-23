@@ -1,4 +1,4 @@
-#ifndef DIAGNOSTIC_CPP
+#ifndef MCMD_DIAGNOSTIC_CPP
 #define MCMD_DIAGNOSTIC_CPP
 
 /*

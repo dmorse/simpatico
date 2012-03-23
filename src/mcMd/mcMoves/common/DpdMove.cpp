@@ -1,4 +1,4 @@
-#ifndef DPD_MOVE_CPP
+#ifndef MCMD_DPD_MOVE_CPP
 #define MCMD_DPD_MOVE_CPP
 
 /*

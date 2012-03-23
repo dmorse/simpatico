@@ -1,4 +1,4 @@
-#ifndef MD_MOVE_CPP
+#ifndef MCMD_MD_MOVE_CPP
 #define MCMD_MD_MOVE_CPP
 
 /*

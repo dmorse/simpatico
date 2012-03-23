@@ -1,4 +1,4 @@
-#ifndef PAIR_SELECTOR_CPP
+#ifndef MCMD_PAIR_SELECTOR_CPP
 #define MCMD_PAIR_SELECTOR_CPP
 
 #include "PairSelector.h"

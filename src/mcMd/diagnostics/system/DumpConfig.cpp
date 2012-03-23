@@ -1,4 +1,4 @@
-#ifndef DUMP_CONFIG_CPP
+#ifndef MCMD_DUMP_CONFIG_CPP
 #define MCMD_DUMP_CONFIG_CPP
 
 /*

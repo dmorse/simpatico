@@ -1,4 +1,4 @@
-#ifndef RING_CPP
+#ifndef MCMD_RING_CPP
 #define MCMD_RING_CPP
 
 /*

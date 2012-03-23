@@ -1,4 +1,4 @@
-#ifndef PMC_CONFIG_IO_CPP
+#ifndef MCMD_PMC_CONFIG_IO_CPP
 #define MCMD_PMC_CONFIG_IO_CPP
 
 /*

@@ -1,4 +1,4 @@
-#ifndef MASK_CPP
+#ifndef MCMD_MASK_CPP
 #define MCMD_MASK_CPP
 
 /*

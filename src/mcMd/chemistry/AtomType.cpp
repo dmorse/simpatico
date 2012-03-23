@@ -1,4 +1,4 @@
-#ifndef ATOM_TYPE_CPP
+#ifndef MCMD_ATOM_TYPE_CPP
 #define MCMD_ATOM_TYPE_CPP
 
 /*

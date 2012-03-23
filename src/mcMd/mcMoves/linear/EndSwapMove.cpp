@@ -1,4 +1,4 @@
-#ifndef END_SWAP_MOVE_CPP
+#ifndef MCMD_END_SWAP_MOVE_CPP
 #define MCMD_END_SWAP_MOVE_CPP
 
 /*

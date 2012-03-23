@@ -1,4 +1,4 @@
-#ifndef DDMD_CONFIG_IO_CPP
+#ifndef MCMD_DDMD_CONFIG_IO_CPP
 #define MCMD_DDMD_CONFIG_IO_CPP
 
 /*

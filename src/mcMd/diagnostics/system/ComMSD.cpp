@@ -1,4 +1,4 @@
-#ifndef COM_MSD_CPP
+#ifndef MCMD_COM_MSD_CPP
 #define MCMD_COM_MSD_CPP
 
 /*

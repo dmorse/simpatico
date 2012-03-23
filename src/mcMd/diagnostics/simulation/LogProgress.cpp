@@ -1,4 +1,4 @@
-#ifndef LOG_PROGRESS_CPP
+#ifndef MCMD_LOG_PROGRESS_CPP
 #define MCMD_LOG_PROGRESS_CPP
 
 /*
