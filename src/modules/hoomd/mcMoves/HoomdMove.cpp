@@ -19,9 +19,9 @@
 #include <mcMd/potentials/bond/BondFactory.h>
 #include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/potentials/bond/BondPotentialImpl.h>
-#include <mcMd/potentials/bond/HarmonicBond.h>
-#include <mcMd/potentials/bond/HarmonicL0Bond.h>
-#include <mcMd/potentials/bond/FeneBond.h>
+#include <inter/bond/HarmonicBond.h>
+#include <inter/bond/HarmonicL0Bond.h>
+#include <inter/bond/FeneBond.h>
 
 #include <modules/hoomd/potentials/pair/HoomdPairFactory.h>
 #include <modules/hoomd/potentials/pair/HoomdPairPotential.h>
@@ -52,6 +52,7 @@ namespace McMd
 {
 
    using namespace Util;
+   using namespace Inter;
 
    /*
    * Constructor
@@ -165,7 +166,7 @@ namespace McMd
    // FIXME: uses default GPU block_sizes (not optimized values)
    boost::shared_ptr<ForceCompute> HoomdMove::mapBondPotential()
    {
-      if (system().bondPotential().evaluatorClassName() == "HarmonicBond")
+      if (system().bondPotential().interactionClassName() == "HarmonicBond")
       {
          BondPotentialImpl<HarmonicBond> *harmonicBondPtr =
             dynamic_cast< BondPotentialImpl<HarmonicBond> *>
@@ -175,14 +176,14 @@ namespace McMd
          for (int iType=0; iType<simulation().nBondType(); iType++)
          {
             Scalar2 param = make_scalar2(
-                             harmonicBondPtr->evaluator().stiffness(iType),
-                             harmonicBondPtr->evaluator().length(iType));
+                             harmonicBondPtr->interaction().stiffness(iType),
+                             harmonicBondPtr->interaction().length(iType));
             force->setParams(iType, param);
          }
          bondName_ = std::string("harmonic");
          return force;
       } else
-      if (system().bondPotential().evaluatorClassName() == "HarmonicL0Bond")
+      if (system().bondPotential().interactionClassName() == "HarmonicL0Bond")
       {
           BondPotentialImpl<HarmonicL0Bond> *harmonicL0BondPtr =
              dynamic_cast< BondPotentialImpl<HarmonicL0Bond> *>
@@ -192,7 +193,7 @@ namespace McMd
           for (int iType=0; iType<simulation().nBondType(); iType++)
           {
              Scalar2 param = make_scalar2(
-                             harmonicL0BondPtr->evaluator().stiffness(iType),
+                             harmonicL0BondPtr->interaction().stiffness(iType),
                              0);
              force->setParams(iType, param);
           }
@@ -336,8 +337,8 @@ namespace McMd
       // Create link potential
       hoomdBondPtr_ =
          system().linkFactory().linkBondFactory(
-         system().bondPotential().evaluatorClassName(),
-         system().linkPotential().evaluatorClassName());
+         system().bondPotential().interactionClassName(),
+         system().linkPotential().interactionClassName());
       if (!hoomdBondPtr_)
          UTIL_THROW("No (known) combination of HOOMD link and bond potentials defined.");
       bondForceSPtr_ = hoomdBondPtr_->forceCompute(systemDefinitionSPtr_,

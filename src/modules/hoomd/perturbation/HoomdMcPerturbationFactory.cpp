@@ -53,11 +53,11 @@ namespace McMd
 
       #ifndef MCMD_NOPAIR
       if (className == "McPairPerturbation") {
-         const std::string& evaluatorClassName = systemPtr_->pairPotential().
-            evaluatorClassName();
-         if (evaluatorClassName == "HoomdLJPair") {
+         const std::string& interactionClassName = systemPtr_->pairPotential().
+            interactionClassName();
+         if (interactionClassName == "HoomdLJPair") {
             ptr = new McPairPerturbation<HoomdLJPair> (*systemPtr_);
-         } else if (evaluatorClassName == "HoomdDpdPair") {
+         } else if (interactionClassName == "HoomdDpdPair") {
             ptr = new McPairPerturbation<HoomdDpdPair> (*systemPtr_);
          } 
       } 
@@ -70,11 +70,11 @@ namespace McMd
       #ifdef MCMD_EXTERNAL
       #ifndef MCMD_NOPAIR
       if (className == "McPairExternalPerturbation") {
-         const std::string& evaluatorClassName = systemPtr_->pairPotential().
-            evaluatorClassName();
-         if (evaluatorClassName == "HoomdLJPair") {
+         const std::string& interactionClassName = systemPtr_->pairPotential().
+            interactionClassName();
+         if (interactionClassName == "HoomdLJPair") {
             ptr = new McPairExternalPerturbation<HoomdLJPair> (*systemPtr_);
-         } else if (evaluatorClassName == "HoomdDpdPair") {
+         } else if (interactionClassName == "HoomdDpdPair") {
             ptr = new McPairExternalPerturbation<HoomdDpdPair> (*systemPtr_);
          }
       }
