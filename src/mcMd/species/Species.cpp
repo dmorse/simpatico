@@ -1,4 +1,4 @@
-#ifndef SPECIES_CPP
+#ifndef MCMD_SPECIES_CPP
 #define MCMD_SPECIES_CPP
 
 /*

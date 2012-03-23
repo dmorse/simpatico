@@ -1,4 +1,4 @@
-#ifndef BOND_FACTORY_CPP
+#ifndef MCMD_BOND_FACTORY_CPP
 #define MCMD_BOND_FACTORY_CPP
 
 /*

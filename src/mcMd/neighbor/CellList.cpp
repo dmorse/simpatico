@@ -1,4 +1,4 @@
-#ifndef CELL_LIST_CPP
+#ifndef MCMD_CELL_LIST_CPP
 #define MCMD_CELL_LIST_CPP
 
 /*

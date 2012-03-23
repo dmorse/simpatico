@@ -1,5 +1,5 @@
 #ifndef INTER_NOPAIR
-#ifndef PAIR_FACTORY_CPP
+#ifndef MCMD_PAIR_FACTORY_CPP
 #define MCMD_PAIR_FACTORY_CPP
 
 /*

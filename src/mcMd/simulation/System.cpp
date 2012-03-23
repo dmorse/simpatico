@@ -1,4 +1,4 @@
-#ifndef SYSTEM_CPP
+#ifndef MCMD_SYSTEM_CPP
 #define MCMD_SYSTEM_CPP
 
 /*

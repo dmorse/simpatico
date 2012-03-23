@@ -1,4 +1,4 @@
-#ifndef SIMULATION_CPP
+#ifndef MCMD_SIMULATION_CPP
 #define MCMD_SIMULATION_CPP
 
 /*

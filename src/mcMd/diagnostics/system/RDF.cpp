@@ -1,4 +1,4 @@
-#ifndef RDF_CPP
+#ifndef MCMD_RDF_CPP
 #define MCMD_RDF_CPP
 
 /*
