@@ -1,4 +1,4 @@
-#ifndef ATOM_MSD_CPP
+#ifndef MCMD_ATOM_MSD_CPP
 #define MCMD_ATOM_MSD_CPP
 
 /*

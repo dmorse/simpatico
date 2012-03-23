@@ -5,8 +5,12 @@
 
 int main()
 {
-   DdMd::System system;
+   #ifdef UTIL_MPI
+   MPI::Init();
+   DdMd::System system(MPI::COMM_WORLD);
+   #endif
    system.readParam(std::cin); 
    system.readCommands();
+   MPI::Finalize();
 }
 #endif

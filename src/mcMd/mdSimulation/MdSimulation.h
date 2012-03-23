@@ -28,6 +28,13 @@ namespace McMd
 
    public:
 
+      #ifdef UTIL_MPI
+      /**
+      * Constructor.
+      */
+      MdSimulation(MPI::Intracomm& communicator);
+      #endif
+
       /**
       * Constructor.
       */

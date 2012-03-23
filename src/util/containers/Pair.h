@@ -68,13 +68,15 @@ namespace Util
    template <typename Data>
    void Pair<Data>::commitMpiType() 
    {
-      MpiStructBuilder builder;
-      Pair<Data>       object;
-      builder.setBase(&object);
-      builder.addMember(&object[0], MpiTraits<Data>::type);
-      builder.addMember(&object[1], MpiTraits<Data>::type);
-      builder.commit(MpiTraits< Pair<Data> >::type);
-      MpiTraits< Pair<Data> >::hasType = true;
+      if (!MpiTraits< Pair<Data> >::hasType) {
+         MpiStructBuilder builder;
+         Pair<Data>       object;
+         builder.setBase(&object);
+         builder.addMember(&object[0], MpiTraits<Data>::type);
+         builder.addMember(&object[1], MpiTraits<Data>::type);
+         builder.commit(MpiTraits< Pair<Data> >::type);
+         MpiTraits< Pair<Data> >::hasType = true;
+      }
    }
 
    #endif 

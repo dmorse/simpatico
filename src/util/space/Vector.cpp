@@ -99,15 +99,17 @@ namespace Util
    */
    void Vector::commitMpiType() 
    {
-      MpiStructBuilder builder;
-      Vector           vector;
-
-      builder.setBase(&vector);
-      builder.addMember(&vector[0], MPI::DOUBLE);
-      builder.addMember(&vector[1], MPI::DOUBLE);
-      builder.addMember(&vector[2], MPI::DOUBLE);
-      builder.commit(MpiTraits<Vector>::type);
-      MpiTraits<Vector>::hasType = true;
+      if (!MpiTraits<Vector>::hasType) {
+         MpiStructBuilder builder;
+         Vector           vector;
+   
+         builder.setBase(&vector);
+         builder.addMember(&vector[0], MPI::DOUBLE);
+         builder.addMember(&vector[1], MPI::DOUBLE);
+         builder.addMember(&vector[2], MPI::DOUBLE);
+         builder.commit(MpiTraits<Vector>::type);
+         MpiTraits<Vector>::hasType = true;
+      }
    }
    #endif
 

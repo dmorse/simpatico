@@ -1,4 +1,4 @@
-#ifndef MD_SIMULATION_CPP
+#ifndef MCMD_MD_SIMULATION_CPP
 #define MCMD_MD_SIMULATION_CPP
 
 /*
@@ -32,6 +32,25 @@ namespace McMd
 {
 
    using namespace Util;
+
+   #ifdef UTIL_MPI
+   /* 
+   * Constructor.
+   */
+   MdSimulation::MdSimulation(MPI::Intracomm& communicator)
+    : Simulation(communicator),
+      system_(),
+      mdDiagnosticManagerPtr_(0),
+      isRestarting_(false)
+   {
+      system_.setId(0);
+      system_.setSimulation(*this);
+      system_.setFileMaster(fileMaster());
+      mdDiagnosticManagerPtr_ = new MdDiagnosticManager(*this);
+      assert(mdDiagnosticManagerPtr_);
+      setDiagnosticManager(mdDiagnosticManagerPtr_);
+   }
+   #endif
 
    /* 
    * Constructor.

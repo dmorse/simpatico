@@ -112,20 +112,21 @@ namespace Util
    */
    void Tensor::commitMpiType() 
    {
-      MpiStructBuilder builder;
-      Tensor           tensor;
-      int              i, j;
-
-      builder.setBase(&tensor);
-      for (i = 0; i < Dimension; ++i) {
-         for (j = 0; j < Dimension; ++j) {
-            builder.addMember(&tensor(i, j), MPI::DOUBLE);
+      if (!MpiTraits<Tensor>::hasType) {
+         MpiStructBuilder builder;
+         Tensor           tensor;
+         int              i, j;
+   
+         builder.setBase(&tensor);
+         for (i = 0; i < Dimension; ++i) {
+            for (j = 0; j < Dimension; ++j) {
+               builder.addMember(&tensor(i, j), MPI::DOUBLE);
+            }
          }
+         builder.commit(MpiTraits<Tensor>::type);
+         MpiTraits<Tensor>::hasType = true;
       }
-      builder.commit(MpiTraits<Tensor>::type);
-      MpiTraits<Tensor>::hasType = true;
    }
-
    #endif
 
 } 

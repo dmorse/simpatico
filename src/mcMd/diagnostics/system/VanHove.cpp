@@ -1,4 +1,4 @@
-#ifndef VAN_HOVE_CPP
+#ifndef MCMD_VAN_HOVE_CPP
 #define MCMD_VAN_HOVE_CPP
 
 /*

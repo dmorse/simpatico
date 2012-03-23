@@ -1,4 +1,4 @@
-#ifndef MC_SIMULATION_CPP
+#ifndef MCMD_MC_SIMULATION_CPP
 #define MCMD_MC_SIMULATION_CPP
 
 /*
@@ -44,6 +44,33 @@ namespace McMd
 {
 
    using namespace Util;
+
+   #ifdef UTIL_MPI
+   /*
+   * Constructor.
+   */
+   McSimulation::McSimulation(MPI::Intracomm& communicator)
+    : Simulation(communicator),
+      system_(),
+      mcMoveManagerPtr_(0),
+      mcDiagnosticManagerPtr_(0),
+      paramFilePtr_(0),
+      isInitialized_(false),
+      isRestarting_(false)
+   {
+      // Set connections between this McSimulation and child McSystem
+      system().setId(0);
+      system().setSimulation(*this);
+      system().setFileMaster(fileMaster());
+
+      // Create McMove and Diagnostic managers
+      mcMoveManagerPtr_ = new McMoveManager(*this);
+      mcDiagnosticManagerPtr_ = new McDiagnosticManager(*this);
+
+      // Pass Manager<Diagnostic>* to Simulation base class.
+      setDiagnosticManager(mcDiagnosticManagerPtr_);
+   }
+   #endif
 
    /*
    * Constructor.
@@ -141,7 +168,6 @@ namespace McMd
          // ifndef UTIL_MPI, inBuffer is simply a reference to istream in.
 
          #ifdef UTIL_MPI
-
          // Read a command line, and broadcast if necessary.
          if (!hasParamCommunicator() || isParamIoProcessor()) {
             getNextLine(in, line);
@@ -155,9 +181,7 @@ namespace McMd
          for (unsigned i=0; i < line.size(); ++i) {
             inBuffer.put(line[i]);
          }
-
          #endif
-
 
          inBuffer >> command;
          Log::file() << command;

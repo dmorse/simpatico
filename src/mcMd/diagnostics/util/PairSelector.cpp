@@ -1,4 +1,4 @@
-#ifndef PAIR_SELECTOR_CPP
+#ifndef MCMD_PAIR_SELECTOR_CPP
 #define MCMD_PAIR_SELECTOR_CPP
 
 #include "PairSelector.h"
@@ -164,14 +164,16 @@ namespace McMd
    */
    void PairSelector::commitMpiType() 
    {
-      MpiStructBuilder builder;
-      PairSelector     object;
-      builder.setBase(&object);
-      builder.addMember(&object.pairType_, MpiTraits<PairSelector::PairType>::type);
-      builder.addMember(&object.atom1TypeId_, MPI::INT);
-      builder.addMember(&object.atom2TypeId_, MPI::INT);
-      builder.commit(Util::MpiTraits<PairSelector>::type);
-      Util::MpiTraits<PairSelector>::hasType = true;
+      if (!Util::MpiTraits<PairSelector>::hasType) {
+         MpiStructBuilder builder;
+         PairSelector     object;
+         builder.setBase(&object);
+         builder.addMember(&object.pairType_, MpiTraits<PairSelector::PairType>::type);
+         builder.addMember(&object.atom1TypeId_, MPI::INT);
+         builder.addMember(&object.atom2TypeId_, MPI::INT);
+         builder.commit(Util::MpiTraits<PairSelector>::type);
+         Util::MpiTraits<PairSelector>::hasType = true;
+      }
    }
 
 }

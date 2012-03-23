@@ -21,10 +21,8 @@
 #include <util/random/Random.h>                  // member 
 #include <util/containers/DArray.h>              // member 
 
-namespace Util
-{
-   template <typename T> class Factory;
-}
+namespace Util{ template <typename T> class Factory; }
+namespace McMd { class McSimulation; }
 
 
 namespace DdMd
@@ -61,6 +59,13 @@ namespace DdMd
       */
       System(MPI::Intracomm& communicator = MPI::COMM_WORLD);
 
+      /**
+      * Constructor.
+      *
+      * \param communicator MPI communicator for MD processors.
+      */
+      System(McMd::McSimulation& mcSimulation,
+             MPI::Intracomm& communicator = MPI::COMM_WORLD);
       #else
 
       /**
@@ -413,6 +418,9 @@ namespace DdMd
 
       #ifdef UTIL_MPI
       MPI::Intracomm* communicatorPtr_;
+
+      /// Pointer to parent McSimulation (if any).
+      McMd::McSimulation* mcSimulationPtr_;
       #endif
 
       /// Pointer to force/energy evaluator.
@@ -498,6 +506,9 @@ namespace DdMd
       *  - MaskBonded:  mask pair interaction between bonded atoms
       */
       MaskPolicy  maskedPairPolicy_;
+
+      /// Is this part of a master-slave simulation?
+      bool isMasterSlaveSimulation_;
 
    };
 

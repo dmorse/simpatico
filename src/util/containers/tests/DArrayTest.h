@@ -53,7 +53,7 @@ void DArrayTest::testAllocate()
    printMethod(TEST_FUNC);
    v.allocate(capacity);
    TEST_ASSERT(v.capacity() == capacity );
-   TEST_ASSERT(v.isAllocated() );
+   TEST_ASSERT(v.isAllocated());
 } 
 
 void DArrayTest::testSubscript()

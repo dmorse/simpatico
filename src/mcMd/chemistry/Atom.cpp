@@ -1,4 +1,4 @@
-#ifndef ATOM_CPP
+#ifndef MCMD_ATOM_CPP
 #define MCMD_ATOM_CPP
 
 /*
@@ -29,19 +29,41 @@ namespace McMd
 
    // Static functions
    
+   void Atom::initStatic()
+   {
+      atoms_        = 0;
+      masks_        = 0;
+      moleculePtrs_ = 0;
+      velocities_   = 0;
+      forces_       = 0;
+      #ifdef MCMD_SHIFT
+      shifts_       = 0;
+      #endif
+      capacity_     = 0;
+   }
+
    /* 
    * Allocate a static array of Atom objects.
    */
    void Atom::allocate(int capacity, RArray<Atom>& atoms)
    {  
       if (capacity == 0) return;
-      //if (capacity_ == 0) { throw }
+
+      assert(atoms_ == 0);
+      assert(masks_ == 0);
+      assert(moleculePtrs_ == 0);
+      assert(velocities_ == 0);
+      assert(forces_ == 0);
+      #ifdef MCMD_SHIFT
+      assert(shifts_ == 0);
+      #endif
+
       atoms_        = new Atom[capacity];
       masks_        = new Mask[capacity];
       moleculePtrs_ = new Molecule*[capacity];
       capacity_ = capacity; 
       for (int i = 0; i < capacity_; ++i) {
-         atoms_[i].id_    = i;
+         atoms_[i].id_ = i;
          moleculePtrs_[i] = 0;
       }
       atoms.associate(atoms_, capacity_);

@@ -27,10 +27,7 @@ public:
    {}
 
    void setUp()
-   {  
-      communicatorPtr_ = &(MPI::COMM_WORLD); 
-      setMpiRank();
-   }
+   {}
 
    void tearDown()
    {}

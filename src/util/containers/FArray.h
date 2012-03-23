@@ -290,14 +290,17 @@ namespace Util
    template <typename Data, int Capacity>
    void FArray<Data, Capacity>::commitMpiType() 
    {
-      MpiStructBuilder       builder;
-      FArray<Data, Capacity> object;
-
-      builder.setBase(&object);
-      for (int i = 0; i < Capacity; ++i) {
-         builder.addMember(&(object.data_[i]), MpiTraits<Data>::type);
+      if (!MpiTraits< FArray<Data, Capacity > >::hasType) {
+         MpiStructBuilder       builder;
+         FArray<Data, Capacity> object;
+   
+         builder.setBase(&object);
+         for (int i = 0; i < Capacity; ++i) {
+            builder.addMember(&(object.data_[i]), MpiTraits<Data>::type);
+         }
+         builder.commit(MpiTraits< FArray<Data, Capacity> >::type);
+         MpiTraits< FArray<Data, Capacity> >::hasType = true;
       }
-      builder.commit(MpiTraits< FArray<Data, Capacity> >::type);
    }
    #endif 
 } 

@@ -1,4 +1,4 @@
-#ifndef MASK_POLICY_CPP
+#ifndef MCMD_MASK_POLICY_CPP
 #define MCMD_MASK_POLICY_CPP
 
 /*

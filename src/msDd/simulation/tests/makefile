@@ -19,7 +19,9 @@ include sources.mk
 all: $(msDd_simulation_tests_OBJS) Test
 
 clean:
-	rm -f $(msDd_simulation_tests_OBJS) Test $(msDd_simulation_tests_OBJS:.o=.d)
+	rm -f $(msDd_simulation_tests_OBJS)
+	rm -f $(msDd_simulation_tests_OBJS:.o=.d)
+	rm -f Test
 
 clean-deps:
 	rm -f $(msDd_simulation_tests_OBJS:.o=.d)

@@ -43,6 +43,9 @@
 #include <ddMd/configIos/ConfigIoFactory.h>
 #endif
 
+// namespace McMd
+#include <mcMd/mcSimulation/McSimulation.h>
+
 // namespace Util
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
@@ -83,6 +86,7 @@ namespace DdMd
       kineticEnergy_(0.0),
       #ifdef UTIL_MPI
       communicatorPtr_(&communicator),
+      mcSimulationPtr_(0),
       #endif
       pairPotentialPtr_(0),
       bondPotentialPtr_(0),
@@ -117,31 +121,20 @@ namespace DdMd
       #endif
       nAtomType_(0),
       nBondType_(0),
-      maskedPairPolicy_(MaskBonded)
+      maskedPairPolicy_(MaskBonded),
+      isMasterSlaveSimulation_(false)
    {
       Util::initStatic();
 
       #ifdef UTIL_MPI
       if (!MPI::Is_initialized()) {
-         MPI::Init();
-         Util::Vector::commitMpiType();
-         Util::IntVector::commitMpiType();
-         //Util::Pair<int>::commitMpiType();
+         UTIL_THROW("MPI is not initialized");
       }
+      Util::Vector::commitMpiType();
+      Util::IntVector::commitMpiType();
 
-      communicatorPtr_ = &communicator;
       domain_.setGridCommunicator(communicator);
       setParamCommunicator(communicator);
-
-      #if 0
-      // Set directory Id in FileMaster to MPI processor rank.
-      // fileMaster_.setDirectoryId(communicatorPtr_->Get_rank());
-      #endif
-
-      // Set log file for processor n to a new file named "n/log"
-      // Relies on initialization of FileMaster outputPrefix to "" (empty).
-      // fileMaster_.openOutputFile("log", logFile_);
-      // Log::setFile(logFile_);
       #endif
 
       // Set connections between member objects
@@ -154,6 +147,85 @@ namespace DdMd
      
       diagnosticManagerPtr_ = new DiagnosticManager(*this);
    }
+
+   #ifdef UTIL_MPI
+   /*
+   * Slave constructor (for master-slave simulation).
+   */
+   System::System(McMd::McSimulation& mcSimulation, 
+                  MPI::Intracomm& communicator)
+    : atomStorage_(),
+      bondStorage_(),
+      boundary_(),
+      atomTypes_(),
+      domain_(),
+      buffer_(),
+      exchanger_(),
+      random_(),
+      maxBoundary_(),
+      kineticEnergy_(0.0),
+      communicatorPtr_(&communicator),
+      mcSimulationPtr_(&mcSimulation),
+      pairPotentialPtr_(0),
+      bondPotentialPtr_(0),
+      integratorPtr_(0),
+      configIoPtr_(0),
+      energyEnsemblePtr_(0),
+      boundaryEnsemblePtr_(0),
+      fileMasterPtr_(0),
+      #ifndef DDMD_NOPAIR
+      pairFactoryPtr_(0),
+      #endif
+      bondFactoryPtr_(0),
+      #ifdef DDMD_ANGLE
+      angleFactoryPtr_(0),
+      #endif
+      #ifdef DDMD_DIHEDRAL
+      dihedralFactoryPtr_(0),
+      #endif
+      integratorFactoryPtr_(0),
+      #if 0
+      configIoFactoryPtr_(0),
+      #endif
+      #ifndef DDMD_NOPAIR
+      pairStyle_(),
+      #endif
+      bondStyle_(),
+      #ifdef DDMD_ANGLE
+      angleStyle_(),
+      #endif
+      #ifdef DDMD_DIHEDRAL
+      dihedralStyle_(),
+      #endif
+      nAtomType_(0),
+      nBondType_(0),
+      maskedPairPolicy_(MaskBonded),
+      isMasterSlaveSimulation_(true)
+   {
+      Util::initStatic();
+
+      if (!MPI::Is_initialized()) {
+         UTIL_THROW("MPI is not initialized");
+      }
+
+      // Note commitMpiType methods check for previous commision
+      Util::Vector::commitMpiType();
+      Util::IntVector::commitMpiType();
+
+      domain_.setGridCommunicator(communicator);
+      setParamCommunicator(communicator);
+
+      // Set connections between member objects
+      domain_.setBoundary(boundary_);
+      exchanger_.associate(domain_, boundary_,
+                           atomStorage_, bondStorage_, buffer_);
+      diagnosticManagerPtr_ = new DiagnosticManager(*this);
+
+      energyEnsemblePtr_ = new EnergyEnsemble();
+      boundaryEnsemblePtr_ = new BoundaryEnsemble();
+      fileMasterPtr_ = new FileMaster();
+   }
+   #endif
 
    /*
    * Destructor.
@@ -218,7 +290,6 @@ namespace DdMd
 
       #ifdef UTIL_MPI
       //if (logFile_.is_open()) logFile_.close();
-      MPI::Finalize();
       #endif
    }
 
@@ -241,52 +312,69 @@ namespace DdMd
       readParamComposite(in, buffer_);
       readFileMaster(in);
 
-      read<int>(in, "nAtomType", nAtomType_);
-      read<int>(in, "nBondType", nBondType_);
-      atomTypes_.allocate(nAtomType_);
-      for (int i = 0; i < nAtomType_; ++i) {
-         atomTypes_[i].setId(i);
+      if (!isMasterSlaveSimulation_) {
+
+         read<int>(in, "nAtomType", nAtomType_);
+         read<int>(in, "nBondType", nBondType_);
+         atomTypes_.allocate(nAtomType_);
+         for (int i = 0; i < nAtomType_; ++i) {
+            atomTypes_[i].setId(i);
+         }
+         readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
+
+         readPotentialStyles(in);
+
+         #ifndef DDMD_NOPAIR
+         // Pair Potential
+         pairPotentialPtr_ = pairFactory().factory(pairStyle());
+         pairPotentialPtr_->setNAtomType(nAtomType_);
+         readParamComposite(in, *pairPotentialPtr_);
+         #endif
+   
+         // Bond Potential
+         bondPotentialPtr_ = bondFactory().factory(bondStyle());
+         bondPotentialPtr_->setNBondType(nBondType_);
+         readParamComposite(in, *bondPotentialPtr_);
+   
+         readEnsembles(in);
+
+         // Integrator
+         std::string className;
+         bool        isEnd;
+         integratorPtr_ = 
+            integratorFactory().readObject(in, *this, className, isEnd);
+         if (!integratorPtr_) {
+            std::string msg("Unknown Integrator subclass name: ");
+            msg += className;
+            UTIL_THROW("msg.c_str()");
+         }
+   
+         readParamComposite(in, random_);
+         readParamComposite(in, *diagnosticManagerPtr_);
+   
+         configIoPtr_ = new ConfigIo();             // Todo: Add factory
+         configIoPtr_->associate(domain_, boundary_,
+                                 atomStorage_, bondStorage_, buffer_);
+         readParamComposite(in, *configIoPtr_);
+   
+         exchanger_.allocate();
+
+         exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
+
+      } else {
+
+         #if 0
+         if (domain_.isMaster()) {
+            //*energyEnsemblePtr_ =
+            //    mcSimulationPtr_->system().energyEnsemble();
+            //*boundaryEnsemblePtr_ = 
+            //    mcSimulationPtr_->system().boundaryEnsemble();
+            //*fileMasterPtr_ =
+            //    mcSimulationPtr_->fileMaster();
+         }
+         // Broadcast to other nodes
+         #endif
       }
-      readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
-      readPotentialStyles(in);
-
-      #ifndef DDMD_NOPAIR
-      // Pair Potential
-      pairPotentialPtr_ = pairFactory().factory(pairStyle());
-      pairPotentialPtr_->setNAtomType(nAtomType_);
-      readParamComposite(in, *pairPotentialPtr_);
-      #endif
-
-      // Bond Potential
-      bondPotentialPtr_ = bondFactory().factory(bondStyle());
-      bondPotentialPtr_->setNBondType(nBondType_);
-      readParamComposite(in, *bondPotentialPtr_);
-
-      readEnsembles(in);
-
-      // Integrator
-      std::string className;
-      bool        isEnd;
-      integratorPtr_ = 
-         integratorFactory().readObject(in, *this, className, isEnd);
-      if (!integratorPtr_) {
-         std::string msg("Unknown Integrator subclass name: ");
-         msg += className;
-         UTIL_THROW("msg.c_str()");
-      }
-
-      readParamComposite(in, random_);
-
-      readParamComposite(in, *diagnosticManagerPtr_);
-
-      configIoPtr_ = new ConfigIo();             // Todo: Add factory
-      configIoPtr_->associate(domain_, boundary_,
-                              atomStorage_, bondStorage_, buffer_);
-      readParamComposite(in, *configIoPtr_);
-
-      exchanger_.allocate();
-      exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
-
       readEnd(in);
    }
 

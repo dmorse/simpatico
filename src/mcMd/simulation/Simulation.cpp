@@ -1,4 +1,4 @@
-#ifndef SIMULATION_CPP
+#ifndef MCMD_SIMULATION_CPP
 #define MCMD_SIMULATION_CPP
 
 /*
@@ -30,6 +30,63 @@ namespace McMd
 {
 
    using namespace Util;
+
+   /*
+   * Constructor.
+   */
+   #ifdef UTIL_MPI
+   Simulation::Simulation(MPI::Intracomm& communicator)
+    : nSystem_(1),
+      speciesManagerPtr_(0),
+      diagnosticManagerPtr_(0),
+      communicatorPtr_(&communicator),
+      nAtomType_(-1),
+      nBondType_(-1),
+      #ifdef INTER_ANGLE
+      nAngleType_(-1),
+      #endif
+      #ifdef INTER_DIHEDRAL
+      nDihedralType_(-1),
+      #endif
+      #ifdef MCMD_LINK
+      nLinkType_(-1),
+      #endif
+      #ifdef INTER_EXTERNAL
+      hasExternal_(-1),
+      #endif
+      #ifdef INTER_TETHER
+      hasTether_(-1),
+      #endif
+      atomCapacity_(0),
+      bondCapacity_(0),
+      #ifdef INTER_ANGLE
+      angleCapacity_(0),
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralCapacity_(0),
+      #endif
+      maskedPairPolicy_(MaskBonded)
+   {
+      Util::initStatic();
+      Atom::initStatic();
+      Diagnostic::initStatic();
+
+      if (!MPI::Is_initialized()) {
+         UTIL_THROW("MPI not initialized on entry");
+      }
+      commitMpiTypes();
+
+      // Set directory Id in FileMaster to MPI processor rank.
+      fileMaster_.setDirectoryId(communicatorPtr_->Get_rank());
+
+      // Set log file for processor n to a new file named "n/log"
+      // Relies on initialization of FileMaster outputPrefix to "" (empty).
+      fileMaster_.openOutputFile("log", logFile_);
+      Log::setFile(logFile_);
+
+      speciesManagerPtr_ = new SpeciesManager;
+   }
+   #endif
 
    /*
    * Constructor.
@@ -68,32 +125,10 @@ namespace McMd
       #endif
       maskedPairPolicy_(MaskBonded)
    {
-
       Util::initStatic();
+      Atom::initStatic();
       Diagnostic::initStatic();
-
-      #ifdef UTIL_MPI
-
-      if (!MPI::Is_initialized()) {
-         MPI::Init();
-         commitMpiTypes();
-      }
-
-      // Initialize MPI, set communicator to COMM_WORLD
-      communicatorPtr_ = &(MPI::COMM_WORLD);
-
-      // Set directory Id in FileMaster to MPI processor rank.
-      fileMaster_.setDirectoryId(communicatorPtr_->Get_rank());
-
-      // Set log file for processor n to a new file named "n/log"
-      // Relies on initialization of FileMaster outputPrefix to "" (empty).
-      fileMaster_.openOutputFile("log", logFile_);
-      Log::setFile(logFile_);
-
-      #endif
-
       speciesManagerPtr_ = new SpeciesManager;
-
    }
 
    /*
@@ -109,26 +144,30 @@ namespace McMd
 
       #ifdef UTIL_MPI
       if (logFile_.is_open()) logFile_.close();
-      MPI::Finalize();
       #endif
-
    }
 
    #ifdef UTIL_MPI
    /*
-   * Set an MPI job to read a single parameter file from std::cin.
+   * Set an MPI job to read a single parameter file, from std::cin.
    */
    void Simulation::setParamCommunicator(MPI::Intracomm& communicator)
    {
+      if (communicatorPtr_ == 0) {
+         UTIL_THROW("No communicator was passed to constructor");
+      } else 
+      if (communicatorPtr_ != &communicator) {
+         UTIL_THROW("ParamCcommunicator must be the one passed to constructor");
+      }
       fileMaster_.setParamFileStdIn();
       ParamComponent::setParamCommunicator(communicator);
    }
 
    /*
-   * Set an MPI job to read a single parameter file from std::cin.
+   * Set an MPI job to read a single parameter file, from std::cin.
    */
    void Simulation::setParamCommunicator()
-   {  Simulation::setParamCommunicator(communicator()); }
+   {  Simulation::setParamCommunicator(*communicatorPtr_); }
    #endif
 
    /*

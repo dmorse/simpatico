@@ -58,6 +58,11 @@ namespace MsDd
       Simulation(MPI::Intracomm& ddCommunicator = MPI::COMM_WORLD);
 
       /**
+      * Destructor.
+      */
+      ~Simulation();
+
+      /**
       * Initialize parent McMd::McSimulation and DdMd::System
       *
       * On master:

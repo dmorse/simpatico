@@ -95,6 +95,13 @@ namespace McMd
 
    public:
 
+      #ifdef UTIL_MPI
+      /**
+      * Constructor.
+      */
+      Simulation(MPI::Intracomm& communicator);
+      #endif
+
       /**
       * Constructor.
       */
@@ -112,12 +119,12 @@ namespace McMd
       */
       virtual void readParam(std::istream &in);
 
-      /// \name Initialization (befor or in readParam)
+      /// \name Initialization 
       //@{
 
       #ifdef UTIL_MPI
       /**
-      * Set MPI job to read a single parameter file from std::cin.
+      * Set MPI job to read a single parameter file.
       *
       * A communicator must be set before calling readParam() to use
       * allow a single parameter file to be used in a multi-processor
@@ -131,7 +138,7 @@ namespace McMd
       virtual void setParamCommunicator(MPI::Intracomm& communicator);
 
       /**
-      * Set MPI job to read a single parameter file from std::cin.
+      * Set MPI job to read a single parameter file.
       *
       * Equivalent to Simulation::setParamCommunicator(communicator()),
       * thus using the default Simulation::communicator() to read and
@@ -143,7 +150,7 @@ namespace McMd
       /**
       * Allocate and initialize a molecule set for one Species.
       * 
-      * This method is called during initialization within the readParam
+      * This method is called during initialization by the readParam
       * method of an associated System.
       *
       * \param set       molecule set for one Species in a System.

@@ -35,10 +35,12 @@ inline void SimulationTest::testReadParam()
    printMethod(TEST_FUNC); 
 
    std::ifstream paramFile;
-   openInputFile("in/Simulation", paramFile); 
-   simulation.readParam(paramFile); 
-   if (verbose() > 0) {
+   if (mpiRank() == 0) {
+      openInputFile("in/param", paramFile); 
+      simulation.readParam(paramFile); 
+      //if (verbose() > 0) {
       simulation.writeParam(std::cout);
+      //}
    }
    // TEST_ASSERT(simulation.buffer().isAllocated())
    //TEST_ASSERT(simulation.domain().isInitialized());

@@ -1,4 +1,4 @@
-#ifndef CFB_END_BASE_CPP
+#ifndef MCMD_CFB_END_BASE_CPP
 #define MCMD_CFB_END_BASE_CPP
 
 /*

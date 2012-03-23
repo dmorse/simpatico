@@ -11,6 +11,8 @@
 #include <util/global.h>
 #include <util/param/ParamComposite.h>
 
+namespace McMd { class EnergyEnsemble; }
+
 namespace DdMd
 {
 
@@ -37,6 +39,11 @@ namespace DdMd
       * Constructor.
       */
       EnergyEnsemble(Type type = UNKNOWN);
+
+      /**
+      * Copy constructor.
+      */
+      EnergyEnsemble(const McMd::EnergyEnsemble& other);
 
       /**
       * Set the temperature.

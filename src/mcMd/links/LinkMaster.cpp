@@ -1,5 +1,5 @@
 #ifdef  MCMD_LINK
-#ifndef LINK_MASTER_CPP
+#ifndef MCMD_LINK_MASTER_CPP
 #define MCMD_LINK_MASTER_CPP
 
 /*

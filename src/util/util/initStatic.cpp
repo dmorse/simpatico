@@ -11,6 +11,7 @@
 #include "initStatic.h"
 #include <util/util/Log.h>
 #include <util/format/Format.h>
+#include <util/memory/Memory.h>
 #include <util/param/ParamComponent.h>
 #include <util/math/Constants.h>
 #include <util/space/Vector.h>
@@ -29,16 +30,15 @@ namespace Util
       // Precondition: This function can only be called once.
       static int nCall = 0;
       if (nCall == 0) {
-
          // Call initStatic() methods of all relevant classes.
          Log::initStatic();
          Format::initStatic();
+         Memory::initStatic();
          ParamComponent::initStatic();
          Constants::initStatic();
          Vector::initStatic();
          IntVector::initStatic();
          Tensor::initStatic();
-
       }
       ++nCall;
    }

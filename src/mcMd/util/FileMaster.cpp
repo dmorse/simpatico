@@ -1,4 +1,4 @@
-#ifndef FILE_MASTER_CPP
+#ifndef MCMD_FILE_MASTER_CPP
 #define MCMD_FILE_MASTER_CPP
 
 /*

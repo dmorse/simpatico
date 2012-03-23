@@ -25,13 +25,30 @@ namespace MsDd
       ddSystemPtr_(0),
       isDdMaster_(false)
    {
+      if (!MPI::Is_initialized()) {
+         UTIL_THROW("MPI is not initialized");
+      }
       int myRank = ddCommunicator.Get_rank();
       if (myRank == 0) {
          isDdMaster_ = true;
          mcSimulationPtr_ = new McMd::McSimulation();
       }
+      ddSystemPtr_ = new DdMd::System(*mcSimulationPtr_, ddCommunicator);
    }
 
+   Simulation::~Simulation()
+   {
+      int myRank = ddCommunicatorPtr_->Get_rank();
+      if (isDdMaster_) {
+         if (mcSimulationPtr_) {
+            delete mcSimulationPtr_;
+         }
+      }
+      if (ddSystemPtr_) {
+         delete ddSystemPtr_;
+      }
+   }
+   
    /*
    * Initialize parent McMd::McSimulation and DdMd::System
    *
@@ -46,6 +63,13 @@ namespace MsDd
    */
    void Simulation::readParam(std::istream& in)
    {
+      Util::ParamComponent::setEcho(true);
+      readBegin(in, "Master");
+      if (isDdMaster_) {
+         readParamComposite(in, *mcSimulationPtr_);
+      }
+      //readParamComposite(in, *ddSystemPtr_);
+      //readEnd(in);
    }
 
    /*

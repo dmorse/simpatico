@@ -1,4 +1,4 @@
-#ifndef DIBLOCK_CPP
+#ifndef MCMD_DIBLOCK_CPP
 #define MCMD_DIBLOCK_CPP
 
 /*

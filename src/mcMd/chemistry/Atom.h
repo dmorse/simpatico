@@ -13,8 +13,11 @@
 #ifdef MCMD_SHIFT
 #include <util/space/IntVector.h>
 #endif
-#include <util/containers/RArray.h>
 #include <util/global.h>
+
+namespace Util {
+   template <class Data> class RArray;
+}
 
 namespace McMd
 {
@@ -22,7 +25,6 @@ namespace McMd
    using namespace Util;
 
    class Molecule;
-   //template <class Data> class Util::RArray;
 
    /**
    * A point particle within a Molecule.
@@ -156,6 +158,11 @@ namespace McMd
 
       ///\name Allocation and de-allocation
       //@{
+
+      /**
+      * Method to guarantee initialization of static data.
+      */
+      static void initStatic();
      
       /** 
       * Allocate a static array of Atom objects.
@@ -177,8 +184,7 @@ namespace McMd
       /**
       * Delete all static arrays.
       *
-      * Deletes all memory allocated previously by allocate, allocateForces, 
-      * and allocateVelocities.
+      * Deletes all memory allocated previously by allocate.
       */
       static void deallocate();
 

@@ -9,6 +9,7 @@
 */
 
 #include "BoundaryEnsemble.h"
+#include <mcMd/ensembles/BoundaryEnsemble.h>
 
 #ifdef UTIL_MPI
 #include <util/mpi/MpiStructBuilder.h>
@@ -43,6 +44,22 @@ namespace DdMd
     : pressure_(1.0),
       type_(type)
    {}
+
+   /**
+   * Copy constructor.
+   */
+   BoundaryEnsemble::BoundaryEnsemble(const McMd::BoundaryEnsemble& other)
+    : pressure_(1.0),
+      type_(UNKNOWN)
+   {
+      if (other.isIsobaric()) {
+         type_ = ISOBARIC;
+         pressure_ = other.pressure();
+      } else
+      if (other.isRigid()) {
+         type_ = RIGID;
+      } 
+   }
 
    /**
    * Set the pressure.

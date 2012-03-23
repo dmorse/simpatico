@@ -9,10 +9,10 @@
 */
 
 #include "EnergyEnsemble.h"
+#include <mcMd/ensembles/EnergyEnsemble.h>
 #include <iostream>
 
 #ifdef UTIL_MPI
-
 #include <util/mpi/MpiStructBuilder.h>
 
 namespace Util{
@@ -30,7 +30,6 @@ namespace Util{
    bool MpiTraits<DdMd::EnergyEnsemble::Type>::hasType = true;
 
 }
-
 #endif
 
 namespace DdMd
@@ -46,6 +45,23 @@ namespace DdMd
       beta_(1.0),
       type_(type)
    {}
+
+   /**
+   * Copy constructor.
+   */
+   EnergyEnsemble::EnergyEnsemble(const McMd::EnergyEnsemble& other)
+    : temperature_(1.0),
+      beta_(1.0),
+      type_(UNKNOWN)
+   {
+      if (other.isIsothermal()) {
+         type_ = ISOTHERMAL;
+         setTemperature(other.temperature());
+      } else
+      if (other.isAdiabatic()) {
+         type_ = ADIABATIC;
+      } 
+   }
 
    /**
    * Set the temperature.

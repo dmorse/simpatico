@@ -1,11 +1,17 @@
-#include "SimulationTest.h"
+
 //#include <util/space/Vector.h>
 //#include <util/space/IntVector.h>
+
+#include <util/util/initStatic.h>
+#include <util/global.h>
+#define TEST_MPI
+#include "SimulationTest.h"
 
 int main()
 {
    #ifdef UTIL_MPI 
    MPI::Init();
+   Util::initStatic();
    //Util::IntVector::commitMpiType();
    //Util::Vector::commitMpiType();
    #endif 
@@ -14,7 +20,9 @@ int main()
    runner.run();
 
    #ifdef UTIL_MPI
-   MPI::Finalize();
+   if (MPI::Is_initialized()) {
+      MPI::Finalize();
+   }
    #endif
 
 } 

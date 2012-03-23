@@ -11,6 +11,8 @@
 #include <util/global.h>
 #include <util/param/ParamComposite.h>
 
+namespace McMd{ class BoundaryEnsemble; }
+
 namespace DdMd
 {
 
@@ -40,6 +42,11 @@ namespace DdMd
       * Constructor.
       */
       BoundaryEnsemble(Type type = UNKNOWN);
+
+      /**
+      * Copy constructor.
+      */
+      BoundaryEnsemble(const McMd::BoundaryEnsemble& other);
 
       /**
       * Set the pressure.

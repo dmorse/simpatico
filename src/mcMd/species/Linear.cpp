@@ -1,4 +1,4 @@
-#ifndef LINEAR_CPP
+#ifndef MCMD_LINEAR_CPP
 #define MCMD_LINEAR_CPP
 
 /*

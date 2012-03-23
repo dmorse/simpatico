@@ -1,4 +1,4 @@
-#ifndef  PAIR_LIST_CPP
+#ifndef MCMD_PAIR_LIST_CPP
 #define MCMD_PAIR_LIST_CPP
 
 /*

@@ -13,6 +13,8 @@
 #include <fstream>
 #include <string>
 
+namespace DdMd{ class FileMaster; }
+
 namespace McMd
 {
 
@@ -293,6 +295,9 @@ namespace McMd
       * Has setParamFileStdIn been called?
       */
       bool isSetParamFileStdIn_;
+
+
+      friend class DdMd::FileMaster;
 
    };
 

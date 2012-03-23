@@ -54,25 +54,25 @@ namespace McMd
    }
 
    #ifdef UTIL_MPI
-
    /**
    * Commit MPI Datatype.
    */
    template <int NAtom>
    void SpeciesGroup<NAtom>::commitMpiType() 
    {
-      MpiStructBuilder    builder;
-      SpeciesGroup<NAtom> object;
-
-      builder.setBase(&object);
-      for (int i = 0; i < NAtom; ++i) {
-         builder.addMember(&(object.atomIds_[i]), MPI::INT);
+      if (!Util::MpiTraits< SpeciesGroup<NAtom> >::hasType) {
+         MpiStructBuilder    builder;
+         SpeciesGroup<NAtom> object;
+   
+         builder.setBase(&object);
+         for (int i = 0; i < NAtom; ++i) {
+            builder.addMember(&(object.atomIds_[i]), MPI::INT);
+         }
+         builder.addMember(&object.typeId_, MPI::INT);
+         builder.commit(Util::MpiTraits< SpeciesGroup<NAtom> >::type);
+         Util::MpiTraits< SpeciesGroup<NAtom> >::hasType = true;
       }
-      builder.addMember(&object.typeId_, MPI::INT);
-      builder.commit(Util::MpiTraits< SpeciesGroup<NAtom> >::type);
-      Util::MpiTraits< SpeciesGroup<NAtom> >::hasType = true;
    }
-
    #endif
 
 }

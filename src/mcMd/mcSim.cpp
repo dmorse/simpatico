@@ -72,7 +72,12 @@ int main(int argc, char **argv)
       }
    }
 
-   McSimulation simulation;
+   #ifdef UTIL_MPI
+   MPI::Init();
+   McSimulation simulation(MPI::COMM_WORLD);
+   #else
+   McSimulation simulation();
+   #endif
 
    // Set flag to echo parameters as they are read.
    if (eflag) {
@@ -110,6 +115,10 @@ int main(int argc, char **argv)
       simulation.readCommands();
 
    }
+
+   #ifdef UTIL_MPI
+   MPI::Finalize();
+   #endif
 
    // Normal completion
    return 0;

@@ -117,16 +117,22 @@ public:
    }
 
    /**
-   * Return rank of this processor in MPI::COMM_WORLD
+   * Return rank of this processor in communicator.
    */
    int mpiRank()
    {  return mpiRank_; } 
 
+   /**
+   * Does this test have a communicator?
+   */
    bool hasCommunicator()
-   { return bool(communicatorPtr_ != 0); }
+   {  return bool(communicatorPtr_ != 0); }
 
+   /**
+   * Return the communicator by reference.
+   */
    MPI::Intracomm& communicator()
-   { return *communicatorPtr_; }
+   {  return *communicatorPtr_; }
    #endif
 
 protected:

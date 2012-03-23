@@ -94,14 +94,16 @@ namespace Util
    */
    void IntVector::commitMpiType() 
    {
-      MpiStructBuilder builder;
-      IntVector        vector;
-      builder.setBase(&vector);
-      builder.addMember(&vector[0], MPI::INT);
-      builder.addMember(&vector[1], MPI::INT);
-      builder.addMember(&vector[2], MPI::INT);
-      builder.commit(MpiTraits<IntVector>::type);
-      MpiTraits<IntVector>::hasType = true;
+      if (!MpiTraits<IntVector>::hasType) {
+         MpiStructBuilder builder;
+         IntVector        vector;
+         builder.setBase(&vector);
+         builder.addMember(&vector[0], MPI::INT);
+         builder.addMember(&vector[1], MPI::INT);
+         builder.addMember(&vector[2], MPI::INT);
+         builder.commit(MpiTraits<IntVector>::type);
+         MpiTraits<IntVector>::hasType = true;
+      }
    }
    #endif
 
