@@ -28,7 +28,7 @@
 #include <modules/hoomd/potentials/pair/HoomdLJShiftedForcePair.h>
 #include <modules/hoomd/potentials/pair/HoomdDpdPair.h>
 
-#include <mcMd/potentials/bond/FeneBond.h>
+#include <inter/bond/FeneBond.h>
 
 #include <hoomd/HOOMDMath.h>
 #include <hoomd/EvaluatorPairLJ.h>
@@ -90,7 +90,7 @@ namespace McMd
    MdPairPotential* 
    HoomdPairFactory::mdFactory(McPairPotential& potential) const
    {
-      std::string name = potential.evaluatorClassName();
+      std::string name = potential.interactionClassName();
       MdPairPotential* ptr = 0;
       if (name == classNameHoomdLJ) {
          McPairPotentialImpl< HoomdLJPair > *mcPtr
@@ -116,24 +116,24 @@ namespace McMd
    HoomdPairPotential *HoomdPairFactory::hoomdPairPotentialPtr(McPairPotential&
       potential)
    {
-      std::string name = potential.evaluatorClassName();
+      std::string name = potential.interactionClassName();
       HoomdPairPotential* ptr = 0;
 
       if (name == classNameHoomdLJ) {
          ptr = dynamic_cast< HoomdPairPotential *>(
             dynamic_cast< HoomdLJPair * >(
             &(dynamic_cast< McPairPotentialImpl< HoomdLJPair > * >
-            (&potential))->evaluator()));
+            (&potential))->interaction()));
       } else if (name == classNameHoomdLJShiftedForce) {
          ptr = dynamic_cast< HoomdPairPotential *>(
             dynamic_cast< HoomdLJShiftedForcePair * >(
             &(dynamic_cast< McPairPotentialImpl< HoomdLJShiftedForcePair > * >
-            (&potential))->evaluator()));
+            (&potential))->interaction()));
       } else if (name == classNameHoomdDpd) {
          ptr = dynamic_cast<HoomdPairPotential *>(
             dynamic_cast< HoomdDpdPair* >(
             &(dynamic_cast< McPairPotentialImpl< HoomdDpdPair > * >
-            (&potential))->evaluator()));
+            (&potential))->interaction()));
       }
       return ptr;
    }
@@ -151,7 +151,7 @@ namespace McMd
       // first get a pointer to a HoomdPairPotential
       HoomdPairPotential* ptr = hoomdPairPotentialPtr(potential);
 
-      std::string className = potential.evaluatorClassName();
+      std::string className = potential.interactionClassName();
       boost::shared_ptr<ForceCompute> pairSPtr;
 
       if (className == classNameHoomdLJ) {
