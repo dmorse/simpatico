@@ -10,10 +10,10 @@
 
 #include "HoomdNPHMove.h"
 
-#include <mcMd/ensembles/BoundaryEnsemble.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
+#include <util/ensembles/BoundaryEnsemble.h>
 
 namespace McMd
 {

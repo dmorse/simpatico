@@ -85,9 +85,6 @@ namespace DdMd
       random_(),
       maxBoundary_(),
       kineticEnergy_(0.0),
-      #ifdef UTIL_MPI
-      //communicatorPtr_(&communicator),
-      #endif
       pairPotentialPtr_(0),
       bondPotentialPtr_(0),
       integratorPtr_(0),

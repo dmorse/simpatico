@@ -6,6 +6,7 @@ Subdirectories:
 
 util           Exception, Log, FileMaster and other general utility classes
 format         classes for formatted output of primitive types in ostreams
+memory         class for managing dynamically allocated memory.
 containers     container template classes and associated iterators
 mpi            utility classes for MPI programming
 param          classes for parameter file input and output

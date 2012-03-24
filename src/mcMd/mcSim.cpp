@@ -76,7 +76,7 @@ int main(int argc, char **argv)
    MPI::Init();
    McSimulation simulation(MPI::COMM_WORLD);
    #else
-   McSimulation simulation();
+   McSimulation simulation;
    #endif
 
    // Set flag to echo parameters as they are read.

@@ -5,17 +5,17 @@
 
 # if HOOMD_FLAG is defined, the path to the HOOMD installation needs to be 
 # set here
-HOOMD_INSTALL_PATH=${HOME}/hoomd-install
+HOOMD_INSTALL_PATH=${HOME}/local
 
 # the path to python needs to be set here
-PYTHON_INCLUDE_PATH=/sw/keeneland/python/2.6.4/centos5.4_gnu4.1.2/include/python2.6
+PYTHON_INCLUDE_PATH=${HOME}/local/include/python2.7
 
 # If HOOMD_FLAG is defined, the path to cuda needs to be set here
-CUDA_INSTALL_PATH=/sw/keeneland/cuda/4.1/linux_binary/
+CUDA_INSTALL_PATH=/usr/local/cuda
 
 # the path to the boost libraries needs to be set here (if not in the
 # standard paths)
-BOOST_INCLUDE_PATH=/sw/keeneland/boost/1.44.0/centos5.5_gnu4.4.0/include
+BOOST_INCLUDE_PATH=${HOME}/local/include
 
 #-----------------------------------------------------------------------
 # everything below this needs not to be changed

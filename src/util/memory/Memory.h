@@ -9,6 +9,8 @@
 */
 
 #include <stddef.h>
+#include <iostream>
+#include <new>
 
 namespace Util
 {

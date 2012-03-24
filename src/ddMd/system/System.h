@@ -419,10 +419,6 @@ namespace DdMd
       // Value of total kinetic energy, for all processors.
       double  kineticEnergy_;
 
-      #ifdef UTIL_MPI
-      //MPI::Intracomm* communicatorPtr_;
-      #endif
-
       /// Pointer to force/energy evaluator.
       PairPotential* pairPotentialPtr_;
 

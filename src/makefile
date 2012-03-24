@@ -1,30 +1,40 @@
 # ==============================================================================
-.PHONY: all clean configure doc clean cleandoc veryclean
+.PHONY: mcMd ddMd mcMd-clean ddMd-clean clean doc cleandoc veryclean
 
 include compiler.mk
 
-all: 
+mcMd: 
 	cd util;  make all
 	cd inter; make all
 	cd mcMd;  make all
-#ifdef UTIL_MPI
-#	cd ddMd;  make all
-#endif
 
-clean:
+ddMd:
+	cd util;  make all
+	cd inter; make all
+	cd ddMd;  make all
+
+clean-mcMd:
 	cd util;  make clean
 	cd inter; make clean
 	cd mcMd;  make clean
-#ifdef UTIL_MPI
-#	cd ddMd;  make clean
-#endif
- 
+
+clean-ddMd:
+	cd util;  make clean
+	cd inter; make clean
+	cd mcMd;  make clean
+
 doc:    
 	doxygen Doxyfile
 
 cleandoc:
 	-rm -fr ../doc/html/*
 
+clean:
+	cd util;  make clean
+	cd inter; make clean
+	cd mcMd;  make clean
+	cd ddMd;  make clean
+ 
 veryclean:
 	make clean
 	make cleandoc
