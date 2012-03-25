@@ -18,8 +18,6 @@
 #include <ddMd/integrator/IntegratorFactory.h>
 #include <ddMd/integrator/NveIntegrator.h>
 #include <ddMd/configIo/ConfigIo.h>
-#include <ddMd/ensembles/EnergyEnsemble.h>
-#include <ddMd/ensembles/BoundaryEnsemble.h>
 #include <ddMd/util/FileMaster.h>
 #include <ddMd/diagnostics/DiagnosticManager.h>
 
@@ -43,11 +41,17 @@
 #include <ddMd/configIos/ConfigIoFactory.h>
 #endif
 
+// namespace McMd
+#include <mcMd/mcSimulation/McSimulation.h>
+
 // namespace Util
+#include <util/ensembles/EnergyEnsemble.h>
+#include <util/ensembles/BoundaryEnsemble.h>
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
 #include <util/param/Factory.h>
 #include <util/util/Log.h>
+#include <util/mpi/MpiSendRecv.h>
 #include <util/util/Timer.h>
 
 #include <util/format/Int.h>
@@ -64,7 +68,7 @@ namespace DdMd
    using namespace Util;
 
    /*
-   * Default constructor.
+   * Constructor.
    */
    #ifdef UTIL_MPI
    Simulation::Simulation(MPI::Intracomm& communicator)
@@ -81,9 +85,6 @@ namespace DdMd
       random_(),
       maxBoundary_(),
       kineticEnergy_(0.0),
-      #ifdef UTIL_MPI
-      communicatorPtr_(&communicator),
-      #endif
       pairPotentialPtr_(0),
       bondPotentialPtr_(0),
       integratorPtr_(0),
@@ -123,25 +124,14 @@ namespace DdMd
 
       #ifdef UTIL_MPI
       if (!MPI::Is_initialized()) {
-         MPI::Init();
-         Util::Vector::commitMpiType();
-         Util::IntVector::commitMpiType();
-         //Util::Pair<int>::commitMpiType();
+         UTIL_THROW("MPI is not initialized");
       }
+      Util::Vector::commitMpiType();
+      Util::IntVector::commitMpiType();
+      AtomType::initStatic();
 
-      communicatorPtr_ = &communicator;
-      domain_.setGridCommunicator(communicator);
       setParamCommunicator(communicator);
-
-      #if 0
-      // Set directory Id in FileMaster to MPI processor rank.
-      // fileMaster_.setDirectoryId(communicatorPtr_->Get_rank());
-      #endif
-
-      // Set log file for processor n to a new file named "n/log"
-      // Relies on initialization of FileMaster outputPrefix to "" (empty).
-      // fileMaster_.openOutputFile("log", logFile_);
-      // Log::setFile(logFile_);
+      domain_.setGridCommunicator(communicator);
       #endif
 
       // Set connections between member objects
@@ -218,7 +208,6 @@ namespace DdMd
 
       #ifdef UTIL_MPI
       //if (logFile_.is_open()) logFile_.close();
-      MPI::Finalize();
       #endif
    }
 
@@ -227,7 +216,6 @@ namespace DdMd
    */
    void Simulation::readParam(std::istream& in)
    {
-
       // Preconditions
       assert(pairPotentialPtr_ == 0);
       assert(bondPotentialPtr_ == 0);
@@ -239,8 +227,9 @@ namespace DdMd
       readParamComposite(in, atomStorage_);
       readParamComposite(in, bondStorage_);
       readParamComposite(in, buffer_);
-      readFileMaster(in);
 
+      // Read types
+      readFileMaster(in);
       read<int>(in, "nAtomType", nAtomType_);
       read<int>(in, "nBondType", nBondType_);
       atomTypes_.allocate(nAtomType_);
@@ -248,6 +237,7 @@ namespace DdMd
          atomTypes_[i].setId(i);
       }
       readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
+
       readPotentialStyles(in);
 
       #ifndef DDMD_NOPAIR
@@ -276,16 +266,16 @@ namespace DdMd
       }
 
       readParamComposite(in, random_);
-
       readParamComposite(in, *diagnosticManagerPtr_);
 
       configIoPtr_ = new ConfigIo();             // Todo: Add factory
       configIoPtr_->associate(domain_, boundary_,
                               atomStorage_, bondStorage_, buffer_);
-      readParamComposite(in, *configIoPtr_);
+      //readParamComposite(in, *configIoPtr_);
+      configIoPtr_->initialize();
 
-      exchanger_.allocate();
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
+      exchanger_.allocate();
 
       readEnd(in);
    }
@@ -327,7 +317,7 @@ namespace DdMd
       }
       #endif
       #ifdef DDMD_EXTERNAL
-      if (simulation().hasExternal()) {
+      if (hasExternal()) {
          read<std::string>(in, "externalStyle", externalStyle_);
       }
       #endif
@@ -523,7 +513,6 @@ namespace DdMd
       }
       timer.stop();
 
-      // Calculate nAtomTot (correct value only on master).
       atomStorage_.computeNAtomTotal(domain_.communicator());
 
       if (isMaster) {

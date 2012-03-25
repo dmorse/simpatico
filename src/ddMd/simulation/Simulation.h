@@ -1,5 +1,5 @@
-#ifndef DDMD_DD_SIMULATION_H
-#define DDMD_DD_SIMULATION_H
+#ifndef DDMD_SIMULATION_H
+#define DDMD_SIMULATION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -21,17 +21,18 @@
 #include <util/random/Random.h>                  // member 
 #include <util/containers/DArray.h>              // member 
 
-namespace Util
-{
-   template <typename T> class Factory;
+namespace Util { 
+   template <typename T> class Factory; 
+   class EnergyEnsemble;
+   class BoundaryEnsemble;
 }
-
+namespace McMd { 
+   class McSimulation; 
+}
 
 namespace DdMd
 {
 
-   class EnergyEnsemble;
-   class BoundaryEnsemble;
    class PairPotential;
    class BondPotential;
    class Integrator;
@@ -61,6 +62,13 @@ namespace DdMd
       */
       Simulation(MPI::Intracomm& communicator = MPI::COMM_WORLD);
 
+      /**
+      * Constructor.
+      *
+      * \param communicator MPI communicator for MD processors.
+      */
+      Simulation(McMd::McSimulation& mcSimulation,
+             MPI::Intracomm& communicator = MPI::COMM_WORLD);
       #else
 
       /**
@@ -410,10 +418,6 @@ namespace DdMd
 
       // Value of total kinetic energy, for all processors.
       double  kineticEnergy_;
-
-      #ifdef UTIL_MPI
-      MPI::Intracomm* communicatorPtr_;
-      #endif
 
       /// Pointer to force/energy evaluator.
       PairPotential* pairPotentialPtr_;
