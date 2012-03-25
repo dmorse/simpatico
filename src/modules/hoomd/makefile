@@ -11,6 +11,7 @@ SRC_DIR_REL=../..
 include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
 include $(SRC_DIR_REL)/mcMd/defines.mk
+include $(SRC_DIR_REL)/inter/defines.mk
 include $(SRC_DIR_REL)/mcMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/mcMd/sources.mk
@@ -21,7 +22,7 @@ include $(SRC_DIR_REL)/modules/hoomd/defines.mk
 # Executable file name macros
 
 BIN_DIR=$(ROOT_DIR)/bin
-BIN_SUFFIX:=$(MCMD_SUFFIX)_h
+BIN_SUFFIX:=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)_h
 
 MCSIM_EXE=$(BIN_DIR)/mcSim$(BIN_SUFFIX)
 
@@ -45,7 +46,7 @@ clean-deps:
 #-------------------------------------------------------------------
 # Executables 
 
-$(MCSIM_EXE): mcSim.o $(modules_hoomd_OBJS) $(mcMd_LIB) $(util_LIB) $(LIBS)
+$(MCSIM_EXE): mcSim.o $(modules_hoomd_OBJS) $(util_LIB) $(inter_LIB) $(mcMd_LIB) $(LIBS)
 	$(CXX) -L/opt/torque/2.5.11/lib $(LDFLAGS)-o $(MCSIM_EXE) mcSim.o \
-		 $(modules_hoomd_OBJS) $(mcMd_LIB) $(util_LIB) $(LIBS)
+		 $(modules_hoomd_OBJS) $(mcMd_LIB) $(util_LIB) $(inter_LIB) $(LIBS)
 
