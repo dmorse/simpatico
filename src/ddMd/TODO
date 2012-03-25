@@ -1,17 +1,18 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
-- Add needStress to System, and as argument to addForces() method 
+- Add needStress to Simulation, and as argument to addForces() method 
   of potentials. 
 
 - Port NPH integrator.
 
-- Absorb code for bonds into template methods, to simplify addition
-  of angles and dihedrals.
+- Absorb code for bonds in ConfigIo and Exchanger into template methods, 
+  to simplify addition of angles and dihedrals.
 
 - Add ConfigIo factory and SET_CONFIG_IO command.
 
-- Modify Exchanger to work ifndef UTIL_MPI, continue with other classes.
+- Modify Distributor, Exchanger and Exchanger classes to work ifndef 
+  UTIL_MPI, continue with other classes.
 
 - Improve unit testing of CellList (add atoms and ghosts, small boxes),
   Integrator (check that number of interacting pairs doesn't change),

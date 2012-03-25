@@ -18,11 +18,11 @@ namespace DdMd
 
    using namespace Util;
 
-   class System;
+   class Simulation;
    template <int N> class GroupStorage;
 
    /**
-   * An BondPotential calculates bond forces and energies for a parent System.
+   * An BondPotential calculates bond forces and energies for a parent Simulation.
    *
    * All operations in this class are local (no MPI).
    */
@@ -34,7 +34,7 @@ namespace DdMd
       /**
       * Constructor.
       */
-      BondPotential(System& system);
+      BondPotential(Simulation& simulation);
 
       /**
       * Constructor (for unit testing).

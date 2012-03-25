@@ -16,7 +16,7 @@ namespace DdMd
 
    using namespace Util;
 
-   class System;
+   class Simulation;
 
    /**
    * Manager for a list of Diagnostic objects.
@@ -32,7 +32,7 @@ namespace DdMd
       /**
       * Constructor.
       */
-      DiagnosticManager(System& system);
+      DiagnosticManager(Simulation& simulation);
 
       /**
       * Destructor.
@@ -72,8 +72,8 @@ namespace DdMd
 
    private:
 
-      /// Pointer to parent System.
-      System* systemPtr_;
+      /// Pointer to parent Simulation.
+      Simulation* simulationPtr_;
  
    };
 

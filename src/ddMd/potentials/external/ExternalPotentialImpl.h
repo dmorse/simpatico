@@ -21,7 +21,7 @@ namespace DdMd
 
    using namespace Util;
 
-   class System;
+   class Simulation;
 
    /**
    * Implementation template for a ExternalPotential.
@@ -37,7 +37,7 @@ namespace DdMd
       /** 
       * Constructor.
       */
-      ExternalPotentialImpl(System& system);
+      ExternalPotentialImpl(Simulation& simulation);
 
       /** 
       * Destructor.
@@ -102,7 +102,7 @@ namespace DdMd
       //@{
 
       /**
-      * Calculate external forces for all atoms in this System.
+      * Calculate external forces for all atoms in this Simulation.
       */
       virtual void addForces();
 
@@ -182,8 +182,8 @@ namespace DdMd
 
 }
 
-#include <ddMd/system/System.h>
-//#include <ddMd/system/stress.h>
+#include <ddMd/simulation/Simulation.h>
+//#include <ddMd/simulation/stress.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/communicate/Domain.h>
@@ -205,8 +205,8 @@ namespace DdMd
    * Default constructor.
    */
    template <class Interaction>
-   ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(System& system)
-    : ExternalPotential(system),
+   ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(Simulation& simulation)
+    : ExternalPotential(simulation),
       interactionPtr_(0)
    {  interactionPtr_ = new Interaction; }
  
@@ -229,8 +229,8 @@ namespace DdMd
    void ExternalPotentialImpl<Interaction>::readParam(std::istream &in) 
    {
       readBegin(in, "ExternalPotential");
-      interaction().setNAtomType(system().nAtomType());
-      interaction().setBoundary(system().boundary());
+      interaction().setNAtomType(simulation().nAtomType());
+      interaction().setBoundary(simulation().boundary());
       bool nextIndent = false; // Do not indent interaction block. 
       readParamComposite(in, interaction(), nextIndent);
       readEnd(in);

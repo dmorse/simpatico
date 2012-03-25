@@ -13,7 +13,7 @@
 namespace DdMd
 {
 
-   class System;
+   class Simulation;
    using namespace Util;
 
    /**
@@ -29,7 +29,7 @@ namespace DdMd
       /**
       * Constructor.
       */
-      NveIntegrator(System& system);
+      NveIntegrator(Simulation& simulation);
 
       /**
       * Destructor.

@@ -17,7 +17,7 @@
 namespace DdMd
 {
 
-   class System;
+   class Simulation;
 
    /**
    * Factory for PairPotential objects.
@@ -32,7 +32,7 @@ namespace DdMd
       /**
       * Default constructor.
       */
-      PairFactory(System& system);
+      PairFactory(Simulation& simulation);
 
       /**
       * Return a pointer to a new McPairInteration, if possible.
@@ -41,8 +41,8 @@ namespace DdMd
 
    private:
 
-      // Pointer to the parent System.
-      System* systemPtr_;
+      // Pointer to the parent Simulation.
+      Simulation* simulationPtr_;
 
    };
   

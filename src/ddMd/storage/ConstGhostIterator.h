@@ -17,7 +17,7 @@ namespace DdMd
    class Atom;
 
    /**
-   * Iterator for all ghost atoms in a System.
+   * Iterator for all ghost atoms owned by an AtomStorage.
    */
    class ConstGhostIterator : public ConstPArrayIterator<Atom>
    {};

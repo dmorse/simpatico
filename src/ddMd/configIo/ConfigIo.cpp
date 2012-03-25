@@ -10,7 +10,7 @@
 
 #include "ConfigIo.h"
 
-#include <ddMd/system/System.h>                 
+#include <ddMd/simulation/Simulation.h>                 
 #include <ddMd/communicate/Domain.h>   
 #include <ddMd/storage/AtomStorage.h>               
 #include <ddMd/storage/BondStorage.h>               

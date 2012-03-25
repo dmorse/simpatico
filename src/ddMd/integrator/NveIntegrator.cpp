@@ -9,7 +9,7 @@
 */
 
 #include "NveIntegrator.h"
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/communicate/Exchanger.h>
@@ -26,8 +26,8 @@ namespace DdMd
    /*
    * Constructor.
    */
-   NveIntegrator::NveIntegrator(System& system)
-    : Integrator(system)
+   NveIntegrator::NveIntegrator(Simulation& simulation)
+    : Integrator(simulation)
    {}
 
    /*
@@ -45,7 +45,7 @@ namespace DdMd
       read<double>(in, "dt", dt_);
       //readEnd(in);
 
-      int nAtomType = system().nAtomType();
+      int nAtomType = simulation().nAtomType();
       if (!prefactors_.isAllocated()) {
          prefactors_.allocate(nAtomType);
       }
@@ -54,21 +54,21 @@ namespace DdMd
 
    void NveIntegrator::setup()
    {
-      AtomStorage* atomStoragePtr = &system().atomStorage();
-      Exchanger*   exchangerPtr = &system().exchanger();
-      PairPotential* pairPotentialPtr = &system().pairPotential();
+      AtomStorage* atomStoragePtr = &simulation().atomStorage();
+      Exchanger*   exchangerPtr = &simulation().exchanger();
+      PairPotential* pairPotentialPtr = &simulation().pairPotential();
 
       atomStoragePtr->clearSnapshot();
       exchangerPtr->exchange();
       atomStoragePtr->makeSnapshot();
       pairPotentialPtr->findNeighbors();
-      system().computeForces();
+      simulation().computeForces();
 
       double dtHalf = 0.5*dt_;
       double mass;
       int nAtomType = prefactors_.capacity();
       for (int i = 0; i < nAtomType; ++i) {
-         mass = system().atomType(i).mass();
+         mass = simulation().atomType(i).mass();
          prefactors_[i] = dtHalf/mass;
       }
    }
@@ -85,9 +85,9 @@ namespace DdMd
       double        prefactor; // = 0.5*dt/mass
       AtomIterator  atomIter;
 
-      AtomStorage* atomStoragePtr = &system().atomStorage();
-      Exchanger* exchangerPtr = &system().exchanger();
-      PairPotential* pairPotentialPtr = &system().pairPotential();
+      AtomStorage* atomStoragePtr = &simulation().atomStorage();
+      Exchanger* exchangerPtr = &simulation().exchanger();
+      PairPotential* pairPotentialPtr = &simulation().pairPotential();
 
       // 1st half of velocity Verlet.
       atomStoragePtr->begin(atomIter);
@@ -103,7 +103,7 @@ namespace DdMd
       }
 
       // Exchange atoms if necessary
-      if (system().needExchange()) {
+      if (simulation().needExchange()) {
          atomStoragePtr->clearSnapshot();
          exchangerPtr->exchange();
          atomStoragePtr->makeSnapshot();
@@ -113,7 +113,7 @@ namespace DdMd
       }
 
       // Calculate new forces for all local atoms
-      system().computeForces();
+      simulation().computeForces();
 
       // 2nd half of velocity Verlet
       atomStoragePtr->begin(atomIter);

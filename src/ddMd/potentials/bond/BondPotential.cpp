@@ -9,7 +9,7 @@
 */
 
 #include "BondPotential.h"
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 
 namespace DdMd
 {
@@ -18,9 +18,9 @@ namespace DdMd
    /*
    * Constructor.
    */
-   BondPotential::BondPotential(System& system)
-    : boundaryPtr_(&system.boundary()),
-      storagePtr_(&system.bondStorage())
+   BondPotential::BondPotential(Simulation& simulation)
+    : boundaryPtr_(&simulation.boundary()),
+      storagePtr_(&simulation.bondStorage())
    {}
 
    /*

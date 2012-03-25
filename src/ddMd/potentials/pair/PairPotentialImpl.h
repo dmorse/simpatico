@@ -21,7 +21,7 @@ namespace DdMd
 
    using namespace Util;
 
-   class System;
+   class Simulation;
 
    /**
    * Implementation template for a PairPotential.
@@ -37,7 +37,7 @@ namespace DdMd
       /** 
       * Constructor.
       */
-      PairPotentialImpl(System& system);
+      PairPotentialImpl(Simulation& simulation);
 
       /** 
       * Destructor.
@@ -57,7 +57,7 @@ namespace DdMd
       * This method reads the maxBoundary, PairList and pair potential 
       * Interaction parameter blocks, in  that order, and initializes an
       * internal PairList. Before calling the Interaction::readParam method,
-      * it passes system().nAtomType() to Interaction::setNAtomType().
+      * it passes simulation().nAtomType() to Interaction::setNAtomType().
       *
       * \param in input parameter stream.
       */
@@ -120,10 +120,10 @@ namespace DdMd
       //@{
 
       /**
-      * Calculate non-bonded pair forces for all atoms in this System.
+      * Calculate non-bonded pair forces for all atoms in this Simulation.
       *
       * Adds non-bonded pair forces to the current values of the
-      * forces for all atoms in this system. Before calculating 
+      * forces for all atoms in this simulation. Before calculating 
       * forces, the method checks if the pair list is current, and
       * rebuilds it if necessary.
       */
@@ -224,8 +224,8 @@ namespace DdMd
 
 }
 
-#include <ddMd/system/System.h>
-//#include <ddMd/system/stress.h>
+#include <ddMd/simulation/Simulation.h>
+//#include <ddMd/simulation/stress.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
@@ -249,8 +249,8 @@ namespace DdMd
    * Default constructor.
    */
    template <class Interaction>
-   PairPotentialImpl<Interaction>::PairPotentialImpl(System& system)
-    : PairPotential(system),
+   PairPotentialImpl<Interaction>::PairPotentialImpl(Simulation& simulation)
+    : PairPotential(simulation),
       interactionPtr_(0),
       methodId_(0)
    {  interactionPtr_ = new Interaction; }

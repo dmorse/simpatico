@@ -19,13 +19,13 @@
 namespace DdMd
 {
 
-   class System;
+   class Simulation;
    class AtomStorage;
    class Domain;
    using namespace Util;
 
    /**
-   * An PairPotential calculates forces for a parent System.
+   * An PairPotential calculates forces for a parent Simulation.
    *
    * An PairPotential has a private CellList and PairList which it
    * uses to calculate nonbonded pair forces. 
@@ -40,7 +40,7 @@ namespace DdMd
       /**
       * Constructor.
       */
-      PairPotential(System& system);
+      PairPotential(Simulation& simulation);
 
       /**
       * Constructor (for unit testing).
@@ -175,7 +175,7 @@ namespace DdMd
       /**
       * Build the cell and pair lists. 
       *
-      * Use with objects created with PairPotential(System&). Makes a
+      * Use with objects created with PairPotential(Simulation&). Makes a
       * CellList grid for the region defined by the associated Domain. 
       */
       void findNeighbors();
@@ -233,7 +233,7 @@ namespace DdMd
       /**
       * Read parameters and allocate memory for PairList.
       *
-      * Use iff this object was instantiated with PairPotential(System&).
+      * Use iff this object was instantiated with PairPotential(Simulation&).
       *
       * \param in input parameter stream.
       */

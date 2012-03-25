@@ -24,8 +24,8 @@ namespace DdMd
    /*
    * Constructor.
    */
-   OutputEnergy::OutputEnergy(System& system) 
-    : Diagnostic(system),
+   OutputEnergy::OutputEnergy(Simulation& simulation) 
+    : Diagnostic(simulation),
       nSample_(0),
       isInitialized_(false)
    {}
@@ -48,7 +48,7 @@ namespace DdMd
        nSample_ = 0; 
       //std::string filename;
       //filename  = outputFileName();
-      //system().fileMaster().openOutputFile(filename, outputFile_);
+      //simulation().fileMaster().openOutputFile(filename, outputFile_);
    }
 
    /*
@@ -57,7 +57,7 @@ namespace DdMd
    void OutputEnergy::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
-         System& sys = system();
+         Simulation& sys = simulation();
          sys.computeKineticEnergy();
          sys.computePotentialEnergies();
          if (sys.domain().isMaster()) {

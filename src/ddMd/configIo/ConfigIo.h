@@ -21,7 +21,7 @@
 namespace DdMd
 {
 
-   class System;
+   class Simulation;
    class Domain;
    class AtomStorage;
    class BondStorage;

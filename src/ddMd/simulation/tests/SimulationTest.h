@@ -1,7 +1,7 @@
 #ifndef DDMD_SYSTEM_TEST_H
 #define DDMD_SYSTEM_TEST_H
 
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/interaction/Interaction.h>
@@ -19,7 +19,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class SystemTest : public ParamFileTest<System>
+class SimulationTest : public ParamFileTest<Simulation>
 {
 
 public:
@@ -44,7 +44,7 @@ public:
 
 };
 
-inline void SystemTest::testReadParam()
+inline void SimulationTest::testReadParam()
 {  
    printMethod(TEST_FUNC); 
 
@@ -58,7 +58,7 @@ inline void SystemTest::testReadParam()
    TEST_ASSERT(object().domain().hasBoundary());
 }
 
-inline void SystemTest::testReadConfig()
+inline void SimulationTest::testReadConfig()
 {
    printMethod(TEST_FUNC); 
 
@@ -119,7 +119,7 @@ inline void SystemTest::testReadConfig()
 
 }
 
-inline void SystemTest::testExchangeAtoms()
+inline void SimulationTest::testExchangeAtoms()
 {
    printMethod(TEST_FUNC); 
 
@@ -168,7 +168,7 @@ inline void SystemTest::testExchangeAtoms()
 
 }
 
-inline void SystemTest::testExchange()
+inline void SimulationTest::testExchange()
 {
    printMethod(TEST_FUNC); 
 
@@ -229,7 +229,7 @@ inline void SystemTest::testExchange()
 
 }
 
-inline void SystemTest::testUpdate()
+inline void SimulationTest::testUpdate()
 {
    printMethod(TEST_FUNC); 
 
@@ -317,7 +317,7 @@ inline void SystemTest::testUpdate()
 
 }
 
-inline void SystemTest::testCalculateForces()
+inline void SimulationTest::testCalculateForces()
 {
    printMethod(TEST_FUNC); 
 
@@ -360,7 +360,7 @@ inline void SystemTest::testCalculateForces()
 
 }
 
-inline void SystemTest::testIntegrate1()
+inline void SimulationTest::testIntegrate1()
 {
    printMethod(TEST_FUNC); 
 
@@ -407,14 +407,14 @@ inline void SystemTest::testIntegrate1()
 
 }
 
-TEST_BEGIN(SystemTest)
-TEST_ADD(SystemTest, testReadParam)
-TEST_ADD(SystemTest, testReadConfig)
-TEST_ADD(SystemTest, testExchangeAtoms)
-TEST_ADD(SystemTest, testExchange)
-TEST_ADD(SystemTest, testUpdate)
-TEST_ADD(SystemTest, testCalculateForces)
-TEST_ADD(SystemTest, testIntegrate1)
-TEST_END(SystemTest)
+TEST_BEGIN(SimulationTest)
+TEST_ADD(SimulationTest, testReadParam)
+TEST_ADD(SimulationTest, testReadConfig)
+TEST_ADD(SimulationTest, testExchangeAtoms)
+TEST_ADD(SimulationTest, testExchange)
+TEST_ADD(SimulationTest, testUpdate)
+TEST_ADD(SimulationTest, testCalculateForces)
+TEST_ADD(SimulationTest, testIntegrate1)
+TEST_END(SimulationTest)
 
 #endif

@@ -22,8 +22,8 @@ namespace DdMd
    /*
    * Constructor.
    */
-   WriteConfig::WriteConfig(System& system) 
-    : Diagnostic(system),
+   WriteConfig::WriteConfig(Simulation& simulation) 
+    : Diagnostic(simulation),
       nSample_(0),
       isInitialized_(false)
    {}
@@ -57,8 +57,8 @@ namespace DdMd
          filename += toString(nSample_);
 
          // Open output file, write data, and close file
-         //system().fileMaster().openOutputFile(filename, outputFile_);
-         system().writeConfig(filename);
+         //simulation().fileMaster().openOutputFile(filename, outputFile_);
+         simulation().writeConfig(filename);
          //outputFile_.close();
          ++nSample_;
 

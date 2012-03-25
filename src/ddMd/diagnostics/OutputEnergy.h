@@ -9,7 +9,7 @@
 */
 
 #include <ddMd/diagnostics/Diagnostic.h>
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 
 namespace DdMd
 {
@@ -17,7 +17,7 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically write system energies to file.
+   * Periodically write simulation energies to file.
    *
    * \ingroup Diagnostic_Module
    */
@@ -29,9 +29,9 @@ namespace DdMd
       /**
       * Constructor.
       *
-      * \param system parent System object. 
+      * \param simulation parent Simulation object. 
       */
-      OutputEnergy(System& system);
+      OutputEnergy(Simulation& simulation);
    
       /**
       * Destructor.
