@@ -19,7 +19,7 @@ namespace DdMd
 {
 
    using namespace Util;
-   class System;
+   class Simulation;
 
    /**
    * Abstract base for periodic output and/or analysis actions.
@@ -35,18 +35,8 @@ namespace DdMd
    * of the static member Diagnostic::baseInterval.
    *
    * The virtual sample() method does not take any parameters. A Diagnostic
-   * must thus access its parent Simulation and/or System via a pointer, 
+   * must thus access its parent Simulation and/or Simulation via a pointer, 
    * which is usually initialized in its subclass constructor.
-   *
-   * Diagnostic subclasses that are associated with one System, McSystem 
-   * or MdSystem (i.e., almost all of them) should be derived from the
-   * SystemDiagnostic<class SystemType> class template. This takes a 
-   * reference to the parent system as parameter to its constructor. 
-   * A Diagnostic subclass that can be used with any System should be
-   * derived from SystemDiagnostic<System>, and one that can be used 
-   * only with a MdSystem or McSystem should be derived from 
-   * SystemDiagnostic<MdSystem> or SystemDiagnostic<MdSystem>, 
-   * respectively.
    *
    * \ingroup Diagnostic_Module
    */
@@ -60,7 +50,7 @@ namespace DdMd
       /**
       * Default constructor.
       */
-      Diagnostic(System& system);
+      Diagnostic(Simulation& simulation);
 
       /**
       * Destructor.
@@ -145,9 +135,9 @@ namespace DdMd
       void readOutputFileName(std::istream &in);
 
       /**
-      * Get the parent System by reference.
+      * Get the parent Simulation by reference.
       */
-      System& system();
+      Simulation& simulation();
 
       /**
       * Return outputFileName string.
@@ -164,8 +154,8 @@ namespace DdMd
       /// Base name of output file(s).
       std::string outputFileName_;
 
-      /// Pointer to parent System
-      System* systemPtr_;
+      /// Pointer to parent Simulation
+      Simulation* simulationPtr_;
 
       /// Number of simulation steps between subsequent actions.
       long   interval_;
@@ -193,10 +183,10 @@ namespace DdMd
    {  return outputFileName_; }
 
    /*
-   * Get the parent System by reference.
+   * Get the parent Simulation by reference.
    */
-   inline System& Diagnostic::system()
-   {  return *systemPtr_; }
+   inline Simulation& Diagnostic::simulation()
+   {  return *simulationPtr_; }
 
 
 

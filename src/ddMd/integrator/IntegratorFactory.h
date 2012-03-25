@@ -16,7 +16,7 @@
 namespace DdMd
 {
 
-   class System;
+   class Simulation;
 
    using namespace Util;
 
@@ -29,7 +29,7 @@ namespace DdMd
    public:
 
       /// Constructor
-      IntegratorFactory(System& system);
+      IntegratorFactory(Simulation& simulation);
 
       /**
       * Method to create any species supplied with Simpatico.
@@ -41,8 +41,8 @@ namespace DdMd
 
    private:
 
-      /// Pointer to a parent System.
-      System* systemPtr_;
+      /// Pointer to a parent Simulation.
+      Simulation* simulationPtr_;
 
    };
 

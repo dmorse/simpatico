@@ -17,14 +17,14 @@
 namespace DdMd
 {
 
-   class System;
+   class Simulation;
    class AtomStorage;
    class Domain;
 
    using namespace Util;
 
    /**
-   * An ExternalPotential calculates exteranl forces for a parent System.
+   * An ExternalPotential calculates exteranl forces for a parent Simulation.
    */
    class ExternalPotential : public ParamComposite
    {
@@ -34,7 +34,7 @@ namespace DdMd
       /**
       * Constructor.
       */
-      ExternalPotential(System& system);
+      ExternalPotential(Simulation& simulation);
 
       /**
       * Constructor (for unit testing).
@@ -115,9 +115,9 @@ namespace DdMd
    protected:
 
       /**
-      * Get the parent System by reference.
+      * Get the parent Simulation by reference.
       */
-      System& system();
+      Simulation& simulation();
 
       /**
       * Get the Boundary by reference.
@@ -136,8 +136,8 @@ namespace DdMd
 
    private:
 
-      // Pointer to parent System object.
-      System* systemPtr_;
+      // Pointer to parent Simulation object.
+      Simulation* simulationPtr_;
 
       // Pointer to associated Boundary object.
       Boundary* boundaryPtr_;
@@ -150,8 +150,8 @@ namespace DdMd
 
    };
 
-   inline System& ExternalPotential::system() 
-   {  return *systemPtr_; }
+   inline Simulation& ExternalPotential::simulation() 
+   {  return *simulationPtr_; }
 
    inline Boundary& ExternalPotential::boundary() 
    {  return *boundaryPtr_; }

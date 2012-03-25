@@ -15,7 +15,7 @@ namespace DdMd
 
    using namespace Util;
 
-   class System;
+   class Simulation;
 
    /**
    * An Integrator numerically integrates the equations of motion. 
@@ -28,7 +28,7 @@ namespace DdMd
       /**
       * Constructor.
       */
-      Integrator(System& system);
+      Integrator(Simulation& simulation);
 
       /**
       * Destructor.
@@ -57,19 +57,19 @@ namespace DdMd
    protected:
 
       /**
-      * Get reference to parent System.
+      * Get reference to parent Simulation.
       */ 
-      System& system();
+      Simulation& simulation();
 
    private:
 
-      System* systemPtr_;
+      Simulation* simulationPtr_;
 
    };
 
-   /// Get reference to parent System.
-   inline System& Integrator::system() 
-   {  return *systemPtr_; }
+   /// Get reference to parent Simulation.
+   inline Simulation& Integrator::simulation() 
+   {  return *simulationPtr_; }
 
 }
 #endif

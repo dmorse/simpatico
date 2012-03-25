@@ -19,9 +19,9 @@ namespace DdMd
    /*
    * Constructor.
    */
-   DiagnosticManager::DiagnosticManager(System& system)
+   DiagnosticManager::DiagnosticManager(Simulation& simulation)
    : Manager<Diagnostic>(),
-     systemPtr_(&system)
+     simulationPtr_(&simulation)
    {}
 
    /*
@@ -81,7 +81,7 @@ namespace DdMd
    */
    Factory<Diagnostic>* DiagnosticManager::newDefaultFactory() const
    {
-      return new DiagnosticFactory(*systemPtr_);
+      return new DiagnosticFactory(*simulationPtr_);
    }
  
 }

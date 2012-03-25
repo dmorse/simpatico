@@ -17,7 +17,7 @@ namespace DdMd
    class Atom;
 
    /**
-   * Iterator for all atoms owned by a System.
+   * Iterator for all atoms owned by an AtomStorage.
    */
    class AtomIterator : public PArrayIterator<Atom>
    {};

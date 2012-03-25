@@ -22,7 +22,7 @@ namespace DdMd
 
    using namespace Util;
 
-   class System;
+   class Simulation;
    template <int N> class GroupStorage;
 
    /**
@@ -39,7 +39,7 @@ namespace DdMd
       /** 
       * Constructor.
       */
-      BondPotentialImpl(System& system);
+      BondPotentialImpl(Simulation& simulation);
 
       /** 
       * Constructor.
@@ -188,7 +188,7 @@ namespace DdMd
 }
 
 #include "BondPotential.h"
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 //#include <mcMd/simulation/stress.h>
 #include <ddMd/storage/GroupStorage.h>
 #include <ddMd/storage/GroupIterator.h>
@@ -212,8 +212,8 @@ namespace DdMd
    * Constructor.
    */
    template <class Interaction>
-   BondPotentialImpl<Interaction>::BondPotentialImpl(System& system)
-    : BondPotential(system),
+   BondPotentialImpl<Interaction>::BondPotentialImpl(Simulation& simulation)
+    : BondPotential(simulation),
       interactionPtr_(0)
    {  interactionPtr_ = new Interaction(); }
  
@@ -416,8 +416,8 @@ namespace DdMd
 
       setToZero(stress);
 
-      // Iterate over all bonds in System
-      System::ConstMoleculeIterator molIter;
+      // Iterate over all bonds in Simulation
+      Simulation::ConstMoleculeIterator molIter;
       Molecule::ConstBondIterator bondIter;
       for (int iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
          if (simulation().species(iSpec).nBond() > 0) {

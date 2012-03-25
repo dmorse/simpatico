@@ -10,9 +10,9 @@
 
 #include "DiagnosticFactory.h" // Class header
 
-//#include <ddMd/system/System.h>
+//#include <ddMd/simulation/Simulation.h>
 
-// Diagnostics for MdSystem only
+// Diagnostics 
 #include "WriteConfig.h"
 #include "OutputEnergy.h"
 
@@ -24,8 +24,8 @@ namespace DdMd
    /*
    * Constructor.
    */
-   DiagnosticFactory::DiagnosticFactory(System& system)
-    : systemPtr_(&system)
+   DiagnosticFactory::DiagnosticFactory(Simulation& simulation)
+    : simulationPtr_(&simulation)
    {}
 
    /* 
@@ -39,12 +39,12 @@ namespace DdMd
       //ptr = trySubfactories(className);
       //if (ptr) return ptr;
 
-      // System Diagnostics
+      // Simulation Diagnostics
       if (className == "WriteConfig") {
-         ptr = new WriteConfig(system());
+         ptr = new WriteConfig(simulation());
       } else 
       if (className == "OutputEnergy") {
-         ptr = new OutputEnergy(system());
+         ptr = new OutputEnergy(simulation());
       }
       return ptr;
    }

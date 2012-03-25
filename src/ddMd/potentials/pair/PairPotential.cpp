@@ -9,7 +9,7 @@
 */
 
 #include "PairPotential.h"
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
@@ -25,12 +25,12 @@ namespace DdMd
    /*
    * Constructor.
    */
-   PairPotential::PairPotential(System& system)
+   PairPotential::PairPotential(Simulation& simulation)
     : skin_(0.0),
       cutoff_(0.0),
-      boundaryPtr_(&system.boundary()),
-      domainPtr_(&system.domain()),
-      storagePtr_(&system.atomStorage()),
+      boundaryPtr_(&simulation.boundary()),
+      domainPtr_(&simulation.domain()),
+      storagePtr_(&simulation.atomStorage()),
       pairCapacity_(0)
    {}
 

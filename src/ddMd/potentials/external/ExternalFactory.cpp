@@ -9,7 +9,7 @@
 */
 
 #include <ddMd/potentials/external/ExternalFactory.h>
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 
 // ExternalPotential interface and implementation classes
 #include <ddMd/potentials/external/ExternalPotential.h>
@@ -26,9 +26,9 @@ namespace DdMd
    /**
    * Default constructor.
    */
-   ExternalFactory::ExternalFactory(System& system)
+   ExternalFactory::ExternalFactory(Simulation& simulation)
     : Factory<ExternalPotential>(),
-      systemPtr_(&system)
+      simulationPtr_(&simulation)
    {}
 
    /*
@@ -44,7 +44,7 @@ namespace DdMd
       if (ptr) return ptr;
 
       if (name == "TanhCosineExternal") {
-         ptr = new ExternalPotentialImpl<TanhCosineExternal>(*systemPtr_);
+         ptr = new ExternalPotentialImpl<TanhCosineExternal>(*simulationPtr_);
       } 
       return ptr;
    }

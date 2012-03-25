@@ -9,7 +9,7 @@
 */
 
 #include "ExternalPotential.h"
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/communicate/Domain.h>
@@ -23,11 +23,11 @@ namespace DdMd
    /*
    * Constructor.
    */
-   ExternalPotential::ExternalPotential(System& system)
-    : systemPtr_(&system),
-      boundaryPtr_(&system.boundary()),
-      domainPtr_(&system.domain()),
-      storagePtr_(&system.atomStorage())
+   ExternalPotential::ExternalPotential(Simulation& simulation)
+    : simulationPtr_(&simulation),
+      boundaryPtr_(&simulation.boundary()),
+      domainPtr_(&simulation.domain()),
+      storagePtr_(&simulation.atomStorage())
    {}
 
    /*

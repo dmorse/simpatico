@@ -1,7 +1,7 @@
 #ifndef DDMD_SYSTEM_TEST_H
 #define DDMD_SYSTEM_TEST_H
 
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/interaction/Interaction.h>
@@ -19,7 +19,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class SystemTest : public ParamFileTest<System>
+class SimulationTest : public ParamFileTest<Simulation>
 {
 
 public:
@@ -31,7 +31,7 @@ public:
 
 };
 
-inline void SystemTest::testIntegrate()
+inline void SimulationTest::testIntegrate()
 {
    printMethod(TEST_FUNC); 
 
@@ -86,8 +86,8 @@ inline void SystemTest::testIntegrate()
 }
 
 
-TEST_BEGIN(SystemTest)
-TEST_ADD(SystemTest, testIntegrate)
-TEST_END(SystemTest)
+TEST_BEGIN(SimulationTest)
+TEST_ADD(SimulationTest, testIntegrate)
+TEST_END(SimulationTest)
 
 #endif

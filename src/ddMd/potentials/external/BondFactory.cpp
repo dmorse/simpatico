@@ -9,7 +9,7 @@
 */
 
 #include <ddMd/potentials/bond/BondFactory.h>
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 
 // BondPotential interface and implementation classes
 #include <ddMd/potentials/bond/BondPotential.h>
@@ -27,9 +27,9 @@ namespace DdMd
    /**
    * Default constructor.
    */
-   BondFactory::BondFactory(System& system)
+   BondFactory::BondFactory(Simulation& simulation)
     : Factory<BondPotential>(),
-      systemPtr_(&system)
+      simulationPtr_(&simulation)
    {}
 
    /*
@@ -45,16 +45,16 @@ namespace DdMd
       if (ptr) return ptr;
 
       if (name == "HarmonicBond") {
-         ptr = new BondPotentialImpl<HarmonicBond>(*systemPtr_);
+         ptr = new BondPotentialImpl<HarmonicBond>(*simulationPtr_);
       } else
       if (name == "HarmonicL0Bond") {
-         ptr = new BondPotentialImpl<HarmonicL0Bond>(*systemPtr_);
+         ptr = new BondPotentialImpl<HarmonicL0Bond>(*simulationPtr_);
       } //else
       //if (name == "FeneBond") {
-      //   ptr = new BondPotentialImpl<FeneBond>(*systemPtr_);
+      //   ptr = new BondPotentialImpl<FeneBond>(*simulationPtr_);
       //} else
       //if (name == "CompositeBond<HarmonicL0Bond,DpdPair>") {
-      //   ptr = new BondPotentialImpl< CompositeBond<HarmonicL0Bond, DpdPair> >(*systemPtr_);
+      //   ptr = new BondPotentialImpl< CompositeBond<HarmonicL0Bond, DpdPair> >(*simulationPtr_);
       //}
       return ptr;
    }

@@ -8,15 +8,15 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include <util/param/Factory.h>    // base class template
-#include <ddMd/diagnostics/Diagnostic.h>     // base template parameter
+#include <util/param/Factory.h>            // base class template
+#include <ddMd/diagnostics/Diagnostic.h>   // base template parameter
 
 namespace DdMd
 {
 
    using namespace Util;
 
-   class System;
+   class Simulation;
 
    /**
    * Factory for DdMd::Diagnostic objects.
@@ -32,9 +32,9 @@ namespace DdMd
       /**
       * Constructor.
       *
-      * \param system     parent System
+      * \param simulation     parent Simulation
       */
-      DiagnosticFactory(System& system);
+      DiagnosticFactory(Simulation& simulation);
 
       /** 
       * Return pointer to a new Diagnostic object.
@@ -47,15 +47,15 @@ namespace DdMd
    protected:
 
       /**
-      * Return reference to parent System.
+      * Return reference to parent Simulation.
       */
-      System& system() const
-      {  return *systemPtr_; }
+      Simulation& simulation() const
+      {  return *simulationPtr_; }
 
    private:
 
-      /// Pointer to parent System.
-      System* systemPtr_;
+      /// Pointer to parent Simulation.
+      Simulation* simulationPtr_;
 
    };
 

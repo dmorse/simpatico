@@ -9,7 +9,7 @@
 */
 
 #include <ddMd/diagnostics/Diagnostic.h>
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 
 namespace DdMd
 {
@@ -17,15 +17,15 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Periodically dump system configuration to a new file.
+   * Periodically dump simulation configuration to a new file.
    *
-   * This class uses the System::writeConfig() method to write the entire
-   * system configuration periodically, at interval read from file. Names 
+   * This class uses the Simulation::writeConfig() method to write the entire
+   * simulation configuration periodically, at interval read from file. Names 
    * of configuration dump files are constructed by concatenating the
-   * System outputPrefix, a dumpPrefix, the literal string "config.", and 
+   * Simulation outputPrefix, a dumpPrefix, the literal string "config.", and 
    * an integer that is incremented after each dump. The dump prefix is a 
    * string that is read by the read() method of this class. For example, 
-   * if System::outputPrefix is "out/" and dumpPrefix is "dump/", the 
+   * if Simulation::outputPrefix is "out/" and dumpPrefix is "dump/", the 
    * configurations will be written to files "out/dump/config.0",
    * "out/dump/config.1", etc.
    *
@@ -39,9 +39,9 @@ namespace DdMd
       /**
       * Constructor.
       *
-      * \param system parent System object. 
+      * \param simulation parent Simulation object. 
       */
-      WriteConfig(System& system);
+      WriteConfig(Simulation& simulation);
    
       /**
       * Destructor.

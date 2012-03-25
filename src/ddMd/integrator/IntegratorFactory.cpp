@@ -24,8 +24,8 @@ namespace DdMd
    /*
    * Constructor
    */
-   IntegratorFactory::IntegratorFactory(System& system)
-    : systemPtr_(&system)
+   IntegratorFactory::IntegratorFactory(Simulation& simulation)
+    : simulationPtr_(&simulation)
    {}
 
    /* 
@@ -41,16 +41,16 @@ namespace DdMd
  
       // Try to match classname
       if (className == "NveIntegrator") {
-         ptr = new NveIntegrator(*systemPtr_);
+         ptr = new NveIntegrator(*simulationPtr_);
       } else
       if (className == "NvtIntegrator") {
-         ptr = new NvtIntegrator(*systemPtr_);
+         ptr = new NvtIntegrator(*simulationPtr_);
       } // else
       //if (className == "NvtDpdVvIntegrator") {
-      //   ptr = new NvtDpdVvIntegrator(*systemPtr_);
+      //   ptr = new NvtDpdVvIntegrator(*simulationPtr_);
       //}
       //if (className == "NphIntegrator") {
-      //   ptr = new NphIntegrator(*systemPtr_);
+      //   ptr = new NphIntegrator(*simulationPtr_);
       //}
       return ptr;
    }

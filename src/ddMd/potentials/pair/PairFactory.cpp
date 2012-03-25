@@ -9,7 +9,7 @@
 */
 
 #include <ddMd/potentials/pair/PairFactory.h>
-#include <ddMd/system/System.h>
+#include <ddMd/simulation/Simulation.h>
 
 // PairPotential interface and implementation classes
 #include <ddMd/potentials/pair/PairPotential.h>
@@ -27,9 +27,9 @@ namespace DdMd
    /**
    * Default constructor.
    */
-   PairFactory::PairFactory(System& system)
+   PairFactory::PairFactory(Simulation& simulation)
     : Factory<PairPotential>(),
-      systemPtr_(&system)
+      simulationPtr_(&simulation)
    {}
 
    /*
@@ -45,10 +45,10 @@ namespace DdMd
       if (ptr) return ptr;
 
       if (name == "LJPair") {
-         ptr = new PairPotentialImpl<LJPair>(*systemPtr_);
+         ptr = new PairPotentialImpl<LJPair>(*simulationPtr_);
       } else
       if (name == "DpdPair") {
-         ptr = new PairPotentialImpl<DpdPair>(*systemPtr_);
+         ptr = new PairPotentialImpl<DpdPair>(*simulationPtr_);
       } 
       return ptr;
    }

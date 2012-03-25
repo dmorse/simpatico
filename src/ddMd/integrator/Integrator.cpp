@@ -13,13 +13,13 @@
 namespace DdMd
 {
 
-   class System;
+   class Simulation;
 
    /*
    * Constructor.
    */
-   Integrator::Integrator(System& system)
-     : systemPtr_(&system)
+   Integrator::Integrator(Simulation& simulation)
+     : simulationPtr_(&simulation)
    {}
 
    /*

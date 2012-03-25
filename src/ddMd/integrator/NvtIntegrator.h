@@ -13,7 +13,7 @@
 namespace DdMd
 {
 
-   class System;
+   class Simulation;
    using namespace Util;
 
    /**
@@ -29,7 +29,7 @@ namespace DdMd
       /**
       * Constructor.
       */
-      NvtIntegrator(System& system);
+      NvtIntegrator(Simulation& simulation);
 
       /**
       * Destructor.
@@ -79,7 +79,7 @@ namespace DdMd
       /// Relaxation rate for energy fluctuations.
       double nuT_;
 
-      /// Total number of atoms in system.
+      /// Total number of atoms in simulation.
       int nAtom_;
 
    };

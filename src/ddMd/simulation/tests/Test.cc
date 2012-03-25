@@ -1,5 +1,5 @@
-#include "SystemTest.h"
-//#include "SystemTest2.h"
+#include "SimulationTest.h"
+//#include "SimulationTest2.h"
 int main()
 {
    #ifdef UTIL_MPI 
@@ -8,7 +8,7 @@ int main()
    Vector::commitMpiType();
    #endif 
 
-   TEST_RUNNER(SystemTest) runner;
+   TEST_RUNNER(SimulationTest) runner;
    runner.run();
 
    #ifdef UTIL_MPI

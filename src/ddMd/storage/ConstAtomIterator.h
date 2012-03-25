@@ -17,7 +17,10 @@ namespace DdMd
    class Atom;
 
    /**
-   * Iterator for all atoms owned by a System.
+   * Const iterator for all atoms owned by an AtomStorage.
+   *
+   * A ConstAtomIterator returns pointers const Atoms, and
+   * thus does not allow atoms to be modified.
    */
    class ConstAtomIterator : public ConstPArrayIterator<Atom>
    {};
