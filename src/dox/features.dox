@@ -1,6 +1,132 @@
-Simpatico is not yet a mature simulation package, but aspires to 
-become one. The core of Simpatico was developed by rewriting a 
-package named PMC that is used in our group for NVT simulations 
-of coarse-grained bead-spring models of flexible polymer liquids. 
-Thus far, both packages provide only those features that we
-have needed for these simulations. 
+/*! \page features_page Features
+
+\section features_potential_sec Potential Energy
+
+McSim and mdSim use a potential energy that can contain:
+
+- nonbonded pair interactions
+
+- covalent two-body bond, three-body angle and four-body dihedral potentials
+
+- external one-body potentials  
+
+Several different types of pair and covalent interactions are provided, 
+and others are easily added. Source code for classes that represent 
+potential energy functions ("interactions") are all in the src/inter
+directory, and are all defined in the "Inter" C++ namespace.  McSim 
+and mdSim also allows for introduction of a type of mutable bond 
+("link") that can be added or removed during a simulation, to represent 
+permanent or transient crosslinks. In order to simplify integration of
+MC and MD simulations, both the MC and MD are currently restricted to 
+models with differentiation potentials (i.e.., not hard spheres). 
+Neither code is designed for use with models with rigid bond or angle
+constraints.
+
+DdSim thus far implements only nonbonded-pair, covalent bond interactions,
+and external potentials. We plan to add angle and dihedral potentials soon.
+
+Long-range electrostatic potentials have not yet been implemented in any 
+of the programs.
+
+\section features_algorithms_sec Simulation Algorithms
+
+For single-processor MD simulations, mdSim currently provides the 
+following integration algorithms:
+<ul>
+  <li> NVE velocity verlet </li>
+  <li> NVT Nose-Hoover </li>
+  <li> NVT dissipative particle dynamics </li>
+  <li> NPH Anderson barostat </li>
+</ul>
+DdSim thus far provides only NVE and Nose-Hoover NVT algorithms.
+For Monte-Carlo integration, mcSim currently provides the following 
+MC moves, among others:
+<ul>
+   <li> Single atom displacement </li>
+   <li> Rigid molecule displacement </li>
+   <li> Hybrid MC moves (short NVE or NPH simulations as proposed MC moves) 
+        in NVT and NVP ensembles. </li>
+   <li> Reptation move for linear chains </li>
+   <li> Configuration bias regrowth of all or part of a linear chain. </li>
+   <li> Double rebridging for linear chains. </li>
+   <li> Double rebridging moves for ring polymers. </li>
+   <li> End-swap move for linear heteropolymers (e.g., diblock copolymers) </li>
+   <li> Semi-grand canonical move (for, e.g., homopolymer blends) </li>
+</ul>
+The available selection of MC moves reflects the fact that mcSim has
+thus far been used only for simulation of coarse-grained models flexible 
+polymers.
+
+\section features_hoomd_sec Hoomd Integration
+
+McSim also provides a module that allows the use of the 
+<a href=http://codeblue.umich.edu/hoomd-blue/>Hoomd-blue</a> 
+code for MD on the GPU as a fast engine for hybrid MC simulations. 
+In this mode, Hoomd-blue is used to implement a hybrid MC move in which 
+short NVE or NPH MD simulations are carried out on a GPU, while the main 
+loop is implemented on the CPU, as are any other MC moves. Integration 
+with Hoomd-blue provides a dramatic increase in the speed of MD and HMC
+simulations: We obtain a speed-up of approximately a factor of 30 for
+for bead-spring polymer melts with repulsive Lennard-Jones pair 
+interactions.
+
+\section features_analysis_sec Data Analysis
+
+Simpatico is distributed with a classes for statistical analysis for use 
+with mcSim and mdSim. These include classes to evaluate:
+<ul>
+  <li> Thermodynamic properties (energies and stress components.) </li>
+  <li> Full and partial radial distribution functions (in real space). </li>
+  <li> Structure factors (in coordinate space). </li>
+  <li> Intramolecular correlation functions. </li>
+  <li> Radii of gyration </li>
+  <li> Mean-squared distances between specific atoms in a molecule.</li>
+  <li> Mean-squared displacements for atoms or molecular centers-of-mass. </li>
+  <li> Auto-correlation functions for vector separations of atom pairs. </li>
+  <li> Intermediate scattering (van Hove) function S(k, t) . </li>
+</ul>
+All mcSim and mdSim diagnostic classes can be used either on-the-fly, 
+during a simulation, or for post-processing of a trajectory file or a 
+sequence of configuration dump files. Postprocessing is done by running 
+the mcSim or mdSim simulation program, using a command that replaces the 
+main simulation loop by a loop over a sequence of system configurations 
+that are read from file.
+
+Thus far, very few data analyis and/or data output classes have been 
+written for use on-the fly with ddSim. MD trajectories from ddSim simulations 
+can instead by post-processed by using mcSim or msSim as analysis tools. 
+
+Simpatico currently provides a very convenient tool for running and 
+analyzing simulations of coarse-grained models of polymer liquids. 
+It is not yet suitable for use with many atomistic models, because of 
+the absence of an electrostatic potential, and the absence of MC 
+conformation sampling algorithms designed specifically for use with 
+stiff angle potentials. 
+
+It is distributed under the terms of the GNU public license (see the 
+LICENSE file). 
+
+\section features_contributors_sec Contributors
+
+Contributors to McSim and MdSim:
+<ul>
+  <li> David Morse (primary author) </li>
+  <li> Jian Qin (MC algorithms, angle and dihedral potentials) </li>
+  <li> Jens Glaser (HOOMD integration) </li>
+  <li> Pavani Medapuram (replica exchange and perturbation theory) </li>
+</ul>
+The parallel DdSim program was written by David Morse.
+
+Simpatico was written by starting from a code named PMC that was used 
+in 2007-2009 by Jun Chung and Jian Qin, but not distributed outside 
+of our research group. Many of the MC algorithms used in mcSim were 
+written by these two users and then ported to Simpatico. 
+
+Navigation:
+<ul>
+ <li> \ref about_page (Next)      </li>
+ <li> \ref index       (Up)        </li>
+ <li> \ref guide_page (Next)      </li>
+</ul>
+
+*/
