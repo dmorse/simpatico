@@ -23,7 +23,7 @@ namespace McMd
    /**
    * Factory for subclasses MdAnglePotential or McAnglePotential.
    * 
-   * \ingroup Angle_Module
+   * \ingroup McMd_Angle_Module
    */
    class AngleFactory : public Factory<AnglePotential>
    {

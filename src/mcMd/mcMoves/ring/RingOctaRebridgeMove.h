@@ -27,7 +27,7 @@ namespace McMd
    * form an octahedron in which the edge lengths satisfying certain distance
    * criterions, before the exchange is attempted.
    *
-   * \ingroup McMove_Module
+   * \ingroup McMd_McMove_Module
    */
    class RingOctaRebridgeMove : public GroupRebridgeBase
    {

@@ -27,7 +27,7 @@ namespace McMd
    /**
    * Interface for a Angle Interaction.
    *
-   * \ingroup Angle_Module
+   * \ingroup McMd_Angle_Module
    */
    class AnglePotential : public ParamComposite
    {

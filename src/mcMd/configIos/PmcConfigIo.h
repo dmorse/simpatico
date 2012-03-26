@@ -27,7 +27,7 @@ namespace McMd
    /**
    * ConfigIo for PMC configuration files.
    *
-   * \ingroup ConfigIo_Module
+   * \ingroup McMd_ConfigIo_Module
    */
    class PmcConfigIo : public ConfigIo
    {

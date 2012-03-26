@@ -18,7 +18,7 @@ namespace McMd
    /**
    * Periodically write step number to a Log file.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class LogProgress : public Diagnostic
    {

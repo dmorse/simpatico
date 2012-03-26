@@ -22,7 +22,7 @@ namespace McMd
    /**
    * McEnergyAverage averages of total potential energy.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class McEnergyAverage : public SystemDiagnostic<McSystem>
    {

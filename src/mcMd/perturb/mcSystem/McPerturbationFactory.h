@@ -23,7 +23,7 @@ namespace McMd
    /**
    * Default Factory for subclasses of Perturbation.
    *
-   * \ingroup Perturb_Module
+   * \ingroup McMd_Perturb_Module
    */
    class McPerturbationFactory : public Factory<Perturbation> 
    {

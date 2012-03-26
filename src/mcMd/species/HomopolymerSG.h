@@ -24,7 +24,7 @@ namespace McMd
    * are of the same type, as are all bonds, but in which the type
    * index for all atoms can be toggled between two values.
    *
-   * \ingroup Species_Module
+   * \ingroup McMd_Species_Module
    */
    class HomopolymerSG : public Linear, public SpeciesMutator
    {

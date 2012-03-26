@@ -28,7 +28,7 @@ namespace McMd
    /**
    * Template implementation of ExternalPotential.
    *
-   * \ingroup External_Module
+   * \ingroup McMd_External_Module
    */
    template <class Interaction>
    class ExternalPotentialImpl : public ExternalPotential, public SubSystem

@@ -23,7 +23,7 @@ namespace McMd
    *  - MaskNone:   all atoms can undergo pair interactions.
    *  - MaskBonded: mask nonbonded pair interactions between bonded atoms.
    *
-   * \ingroup Chemistry_Module
+   * \ingroup McMd_Chemistry_Module
    */
    enum MaskPolicy {MaskNone, MaskBonded};
 

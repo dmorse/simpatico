@@ -2,7 +2,7 @@ namespace McMd
 {
 
    /**
-   * \defgroup Neighbor_Module Nonbonded Neighbors
+   * \defgroup McMd_Neighbor_Module Nonbonded Neighbors
    * \ingroup McMd_Module
    *
    * \brief Classes used to keep track of nonbonded neighbors.

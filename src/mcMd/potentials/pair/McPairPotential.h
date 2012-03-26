@@ -26,7 +26,7 @@ namespace McMd
    /**
    * A PairPotential for MC simulations (abstract).
    *
-   * \ingroup Pair_Module
+   * \ingroup McMd_Pair_Module
    */
    class McPairPotential : public ParamComposite, public SubSystem,
                            public PairPotential

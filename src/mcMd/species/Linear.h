@@ -30,7 +30,7 @@ namespace McMd
    * subclass of Linear must be specified by implementing the pure virtual 
    * functions atomTypeId() and bondTypeId().
    *
-   * \ingroup Species_Module
+   * \ingroup McMd_Species_Module
    */
    class Linear : public Species 
    {

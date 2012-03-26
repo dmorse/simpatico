@@ -22,8 +22,8 @@ namespace McMd
    /**
    * Manager for Diagnostic objects in an McSimulation.
    *
-   * \ingroup Manager_Module
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Manager_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class McDiagnosticManager : public DiagnosticManager
    {

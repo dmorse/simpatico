@@ -23,7 +23,7 @@ namespace Inter
    /**
    * A harmonic bond potential with zero rest length.
    *
-   * \ingroup Bond_Module
+   * \ingroup Inter_Bond_Module
    */
    class HarmonicL0Bond : public ParamComposite 
    {

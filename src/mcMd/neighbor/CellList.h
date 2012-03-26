@@ -49,7 +49,7 @@ namespace McMd
    * CellList is a non-polymorphic class, with no virtual methods, 
    * and a non-virtual destructor. Do not derive subclasses from it.
    *
-   * \ingroup Neighbor_Module
+   * \ingroup McMd_Neighbor_Module
    */
    class CellList
    {
@@ -69,7 +69,7 @@ namespace McMd
       /**
       * Static array for holding neighbors in a cell list.
       *
-      * \ingroup Neighbor_Module
+      * \ingroup McMd_Neighbor_Module
       */
       typedef FSArray<Atom*, MaxNeighbor> NeighborArray;
 

@@ -18,7 +18,7 @@ namespace McMd
    /**
    * A HomoRing species of loop molecules.
    *
-   * \ingroup Species_Module
+   * \ingroup McMd_Species_Module
    */
    class HomoRing : public Ring
    {

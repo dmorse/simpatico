@@ -22,8 +22,8 @@ namespace McMd
    /**
    * McMoveFactory for an McSimulation
    *
-   * \ingroup Factory_Module
-   * \ingroup McMove_Module
+   * \ingroup McMd_Factory_Module
+   * \ingroup McMd_McMove_Module
    */
    class McMoveFactory : public Factory<McMove>
    {

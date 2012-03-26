@@ -17,7 +17,7 @@ namespace McMd
    /**
    * A Module for an MdSimulation.
    *
-   * \ingroup Simulation_Module
+   * \ingroup McMd_Simulation_Module
    */
    class MdModule
    {

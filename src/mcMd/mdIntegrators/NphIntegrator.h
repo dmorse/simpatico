@@ -36,7 +36,7 @@ namespace McMd
    *  on the Trotter expansion technique introduced by Tuckerman et al. J. Chem.
    *  Phys.  97, pp. 1990 (1992).
    *
-   * \ingroup MdIntegrator_Module
+   * \ingroup McMd_MdIntegrator_Module
    */
    class NphIntegrator : public MdIntegrator
    {

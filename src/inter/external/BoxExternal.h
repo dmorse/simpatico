@@ -36,7 +36,7 @@ namespace Inter
    *
    * The potential is independent on the type of atoms.
    * 
-   * \ingroup External_Module
+   * \ingroup Inter_External_Module
    */
    class BoxExternal : public ParamComposite 
    {

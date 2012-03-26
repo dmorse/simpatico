@@ -32,7 +32,7 @@ namespace McMd
    * the friend class TetherMaster. Outside of the implementation of TetherMaster, 
    * a Tether is thus a read-only object.
    *
-   * \ingroup Tether_Module
+   * \ingroup McMd_Tether_Module
    */
    class Tether 
    {

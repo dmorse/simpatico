@@ -22,7 +22,7 @@ namespace McMd
    /**
    * Factory for BondPotential objects.
    *
-   * \ingroup Bond_Module
+   * \ingroup McMd_Bond_Module
    */
    class BondFactory : public Factory<BondPotential>
    {

@@ -24,7 +24,7 @@ namespace McMd
    /**
    * ConfigIo for MD simulations (includes velocities).
    *
-   * \ingroup ConfigIo_Module
+   * \ingroup McMd_ConfigIo_Module
    */
    class MdConfigIo : public McMdConfigIo
    {

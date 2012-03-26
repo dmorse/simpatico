@@ -2,7 +2,7 @@ namespace McMd
 {
 
    /**  
-   * \defgroup MdIntegrator_Module Molecular Dynamics Integrators
+   * \defgroup McMd_MdIntegrator_Module Molecular Dynamics Integrators
    *
    * Molecular dynamics integration algorithms.
    *

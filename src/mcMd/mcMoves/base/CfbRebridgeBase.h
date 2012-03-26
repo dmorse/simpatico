@@ -26,7 +26,7 @@ namespace McMd
    * regrow internal segments of linear polymer chains, with fixed
    * endpoints.
    *
-   * \ingroup McMove_Module
+   * \ingroup McMd_McMove_Module
    */
    class CfbRebridgeBase : public CfbEndBase 
    {

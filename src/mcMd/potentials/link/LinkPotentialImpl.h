@@ -33,7 +33,7 @@ namespace McMd
    * an instance of a bond interaction class, but uses the LinkMaster of
    * the parent System to identify linked atoms.
    *
-   * \ingroup Link_Module
+   * \ingroup McMd_Link_Module
    */
    template <class Interaction>
    class LinkPotentialImpl : public BondPotential, public SubSystem

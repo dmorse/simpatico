@@ -20,8 +20,8 @@ namespace McMd
    /**
    * A Manager for a set of Species objects.
    *
-   * \ingroup Manager_Module
-   * \ingroup Species_Module
+   * \ingroup McMd_Manager_Module
+   * \ingroup McMd_Species_Module
    */
    class SpeciesManager : public Manager<Species>
    {

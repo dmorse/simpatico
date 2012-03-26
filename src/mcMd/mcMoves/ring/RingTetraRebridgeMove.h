@@ -24,7 +24,7 @@ namespace McMd
    * Molecule move that attempt the exchange of interior pieces of one close
    * rings. Analogous to the twist/untwist operations.
    *
-   * \ingroup McMove_Module
+   * \ingroup McMd_McMove_Module
    */
    class RingTetraRebridgeMove : public GroupRebridgeBase
    {

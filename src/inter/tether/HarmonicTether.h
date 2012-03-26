@@ -23,7 +23,7 @@ namespace Inter
    *
    * This class implements a harmonic potential with a zero rest length.
    *
-   * \ingroup Tether_Module
+   * \ingroup Inter_Tether_Module
    */
    class HarmonicTether : public ParamComposite 
    {

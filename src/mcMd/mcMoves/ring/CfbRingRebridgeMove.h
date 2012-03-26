@@ -29,7 +29,7 @@ namespace McMd
    * and the last atom is re-grown using the crank-shaft like trimer re-growth
    * algorithm.
    *
-   * \ingroup McMove_Module
+   * \ingroup McMd_McMove_Module
    */
    class CfbRingRebridgeMove : public CfbRebridgeBase
    {

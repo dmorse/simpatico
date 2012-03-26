@@ -23,7 +23,7 @@ namespace McMd
    * The FileMaster associated with a SystemDiagnostic is the one
    * used by the parent System.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    template <class SystemType>
    class SystemDiagnostic : public Diagnostic 

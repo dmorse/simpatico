@@ -70,7 +70,7 @@ namespace McMd
    * magnitude of the wavevector, and a list of nAtomTypeIdPair structure 
    * factor values for the wavevector, one for each atomTypeId pair.
    * 
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class VanHove : public SystemDiagnostic<System>
    {

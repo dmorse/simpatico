@@ -19,7 +19,7 @@ namespace McMd
    /**
    * Diagnostic to output total potential energy.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class McEnergyOutput : public SystemDiagnostic<McSystem>
    {

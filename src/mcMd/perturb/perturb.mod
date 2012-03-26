@@ -2,7 +2,7 @@
 namespace McMd{
 
    /**  
-   * \defgroup Perturb_Module Free Energy Perturbation
+   * \defgroup McMd_Perturb_Module Free Energy Perturbation
    * \ingroup McMd_Module
    *
    * \brief Classes that implement free energy perturbation theory and

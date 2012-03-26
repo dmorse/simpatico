@@ -36,7 +36,7 @@ namespace McMd
    * that store these state variables and statistical weights, and methods
    * to access them.
    *
-   * \ingroup Species_Module
+   * \ingroup McMd_Species_Module
    */
    class SpeciesMutator 
    {

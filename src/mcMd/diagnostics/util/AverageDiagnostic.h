@@ -20,7 +20,7 @@ namespace McMd
    /**
    * AverageDiagnostic averages of total potential energy.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    template <class SystemType>
    class AverageDiagnostic : public SystemDiagnostic<SystemType>

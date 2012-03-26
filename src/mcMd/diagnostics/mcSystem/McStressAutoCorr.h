@@ -21,7 +21,7 @@ namespace McMd
 
    /**
    * Shear stress autocorrelation function.
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class McStressAutoCorr : public SystemDiagnostic<McSystem>
    {

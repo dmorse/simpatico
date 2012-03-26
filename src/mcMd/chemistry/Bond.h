@@ -18,7 +18,7 @@ namespace McMd
    /**
    * A Group of 2 covalently bonded Atoms.
    *
-   * \ingroup Chemistry_Module
+   * \ingroup McMd_Chemistry_Module
    */
    typedef Group<2> Bond;
 

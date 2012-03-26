@@ -34,7 +34,7 @@ namespace McMd
    * pair interaction between species 0 and 1. The perturbation
    * parameter is the pair interaction parameter epsilon(0, 1).
    *
-   * \ingroup Perturb_Module
+   * \ingroup McMd_Perturb_Module
    */
    template < class Interaction >
    class McPairPerturbation : public LinearPerturbation<McSystem>

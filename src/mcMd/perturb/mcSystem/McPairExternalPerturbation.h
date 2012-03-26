@@ -43,7 +43,7 @@ namespace McMd
    * parameter. The perturbation parameter consists of the pair interaction 
    * parameter epsilon(0, 1) and the external parameter.
    *
-   * \ingroup Perturb_Module
+   * \ingroup McMd_Perturb_Module
    */
    template < class Interaction >
    class McPairExternalPerturbation : public LinearPerturbation<McSystem>

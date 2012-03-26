@@ -25,7 +25,7 @@ namespace McMd
    * the friend class LinkMaster. Outside of the implementation of LinkMaster, 
    * a Link is thus a read-only object.
    *
-   * \ingroup Link_Module
+   * \ingroup McMd_Link_Module
    */
    class Link 
    {

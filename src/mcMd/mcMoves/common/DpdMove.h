@@ -31,7 +31,7 @@ namespace McMd
    * does not rigorously satisfy detailed balance, and is rigorously correct
    * only in the limit of vanishing time step dt.
    *
-   * \ingroup McMove_Module MD_Module
+   * \ingroup McMd_McMove_Module MD_Module
    */
    class DpdMove : public SystemMove
    {

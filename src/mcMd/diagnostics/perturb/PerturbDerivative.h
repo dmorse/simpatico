@@ -23,7 +23,7 @@ namespace McMd
    /**
    * PerturbDerivative average return value of Perturbation::derivative().
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class PerturbDerivative : public SystemDiagnostic<System>
    {

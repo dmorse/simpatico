@@ -18,7 +18,7 @@ namespace McMd
    /**
    * Group of the 4 Atoms in a dihedral interaction.
    *
-   * \ingroup Chemistry_Module
+   * \ingroup McMd_Chemistry_Module
    */
    typedef Group<4> Dihedral;
 

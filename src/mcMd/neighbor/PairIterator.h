@@ -43,7 +43,7 @@ namespace McMd
    *
    * \endcode
    *
-   * \ingroup Neighbor_Module
+   * \ingroup McMd_Neighbor_Module
    */
    class PairIterator
    {

@@ -20,7 +20,7 @@ namespace McMd
    *
    * In this implementation, all of the bonds have the same type Id.
    *
-   * \ingroup Species_Module
+   * \ingroup McMd_Species_Module
    */
    class Diblock : public Linear
    {

@@ -52,7 +52,7 @@ namespace McMd
    * by the Metropolis criterium associated with the Perturbation, the complete
    * configurations of the pair are exchanged (not just their parameters).
    *
-   * \ingroup Perturb_Module
+   * \ingroup McMd_Perturb_Module
    */
    class ReplicaMove : public ParamComposite,
                        public Notifier<int>

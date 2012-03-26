@@ -88,7 +88,7 @@ namespace McMd
    * A System holds a set of pointers to Molecule objects in the array
    * of Molecules owned by parent Simulation. 
    *
-   * \ingroup Simulation_Module
+   * \ingroup McMd_Simulation_Module
    */
    class Simulation : public ParamComposite
    {

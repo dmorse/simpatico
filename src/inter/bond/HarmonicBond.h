@@ -27,7 +27,7 @@ namespace Inter
    *
    * Implements a harmonic potential with a nonzero rest length.
    *
-   * \ingroup Bond_Module
+   * \ingroup Inter_Bond_Module
    */
    class HarmonicBond : public ParamComposite 
    {

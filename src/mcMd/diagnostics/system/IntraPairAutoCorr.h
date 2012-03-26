@@ -41,7 +41,7 @@ namespace McMd
    * \f$ V(t) \cdot V(t') \f$ denotes a dot product of values of the 
    * vector \f$ V(t) \f$  at different times.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class IntraPairAutoCorr 
     : public SystemDiagnostic<System>

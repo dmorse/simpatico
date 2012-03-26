@@ -36,7 +36,7 @@ namespace McMd
    * access active Tethers either sequentially or via the Atoms to
    * which they are attached.
    *
-   * \ingroup Tether_Module
+   * \ingroup McMd_Tether_Module
    */
    class TetherMaster : public ParamComposite
    {

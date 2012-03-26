@@ -24,7 +24,7 @@ namespace Inter
    * Member variables include interaction parameters. Member functions evaluate
    * energy and force for an individual pair of nonbonded interacting particles.
    * 
-   * \ingroup Pair_Module
+   * \ingroup Inter_Pair_Module
    */
    class LJPair : public ParamComposite 
    {

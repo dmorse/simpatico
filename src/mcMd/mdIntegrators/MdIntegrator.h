@@ -25,7 +25,7 @@ namespace McMd
    /**
    * Abstract base for molecular dynamics integrators.
    *
-   * \ingroup MdIntegrator_Module
+   * \ingroup McMd_MdIntegrator_Module
    */
    class MdIntegrator : public ParamComposite, public Serializable
    {

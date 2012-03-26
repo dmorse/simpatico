@@ -33,7 +33,7 @@ namespace McMd
    * This class implements a simple velocity-Verlet (VV) algorithm for
    * the dissipitative particle dynamics (DPD) equations of motion.
    *
-   * \ingroup MdIntegrator_Module
+   * \ingroup McMd_MdIntegrator_Module
    */
    class NvtDpdVvIntegrator : public MdIntegrator
    {

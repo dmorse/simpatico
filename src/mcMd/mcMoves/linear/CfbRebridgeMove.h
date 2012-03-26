@@ -23,7 +23,7 @@ namespace McMd
    /**
    * Config-bias move for internal segment of a flexible linear polymer.
    *
-   * \ingroup McMove_Module
+   * \ingroup McMd_McMove_Module
    */
    class CfbRebridgeMove : public CfbRebridgeBase
    {

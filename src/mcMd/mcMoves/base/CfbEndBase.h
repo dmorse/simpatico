@@ -21,7 +21,7 @@ namespace McMd
    /**
    * Base class for configuration bias end regrowth moves.
    *
-   * \ingroup McMove_Module MD_Module
+   * \ingroup McMd_McMove_Module MD_Module
    */
    class CfbEndBase : public SystemMove 
    {

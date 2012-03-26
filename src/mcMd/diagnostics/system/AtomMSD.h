@@ -22,7 +22,7 @@ namespace McMd
    /**
    * Autocorrelation for vector separation of two atoms on a molecule.  
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class AtomMSD : public SystemDiagnostic<System>
    {
