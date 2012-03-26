@@ -154,6 +154,22 @@ namespace DdMd
 
       int  bondCacheCapacity_;
 
+      /**
+      * Read Group<N> objects from file. 
+      */
+      template <int N>
+      int readGroups(std::istream& file, 
+                     const char* sectionLabel, const char* nGroupLabel,
+                     GroupDistributor<N>& distributor);
+
+      /**
+      * Write Group<N> objects to file. 
+      */
+      template <int N>
+      int writeGroups(std::ostream& file, 
+                      const char* sectionLabel, const char* nGroupLabel,
+                      GroupStorage<N>& storage, GroupCollector<N>& collector);
+
    };
 
    // Inline method definitions
