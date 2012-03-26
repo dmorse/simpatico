@@ -1,14 +1,14 @@
 #ifndef CHAIN_MAKER_H
 #define CHAIN_MAKER_H
 
+#include   <inter/bond/HarmonicBond.h>
 #include   <util/param/ParamComposite.h>
-#include   <mcMd/boundary/Boundary.h>
-#include   <mcMd/potentials/bond/HarmonicBond.h>
+#include   <util/boundary/Boundary.h>
 #include   <util/random/Random.h>
 
 #include <iostream>
 
-using namespace McMd;
+using namespace Inter;
 using namespace Util;
 
 class ChainMaker : public ParamComposite

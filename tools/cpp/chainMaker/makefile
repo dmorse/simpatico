@@ -4,9 +4,11 @@ SRC_DIR=../../../src
 
 include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
+include $(SRC_DIR_REL)/inter/defines.mk
 include $(SRC_DIR_REL)/mcMd/defines.mk
 include $(SRC_DIR_REL)/mcMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
+include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/mcMd/sources.mk
 
 all: ChainMaker.o ChainMaker
@@ -20,4 +22,4 @@ clean:
 
 ChainMaker: ChainMaker.cpp $(mcMd_OBJS) $(util_OBJS)
 	$(CXX) $(LDFLAGS) $(DEFINES) $(INCLUDES) -o ChainMaker ChainMaker.o \
-               $(mcMd_OBJS) $(util_OBJS)
+               $(inter_OBJS) $(util_OBJS)

@@ -103,14 +103,26 @@ namespace McMd
 
       // Count total numbers of atoms and bonds in all species.
       Species  *speciesPtr;
-      int       iSpec, nMolecule;
-      int       nAtom = 0;
-      int       nBond = 0;
+      int iSpec, nMolecule;
+      int nAtom = 0;
+      int nBond = 0;
+      #ifdef INTER_ANGLE
+      int nAngle = 0;
+      #endif
+      #ifdef INTER_DIHEDRAL
+      int nDihedral = 0;
+      #endif
       for (iSpec = 0; iSpec < simulation().nSpecies(); ++iSpec) {
          speciesPtr = &simulation().species(iSpec);
          nMolecule  = system().nMolecule(iSpec);
          nAtom += nMolecule*(speciesPtr->nAtom());
          nBond += nMolecule*(speciesPtr->nBond());
+         #ifdef INTER_ANGLE
+         nAngle += nMolecule*(speciesPtr->nAngle());
+         #endif
+         #ifdef INTER_DIHEDRAL
+         nDihedral += nMolecule*(speciesPtr->nDihedral());
+         #endif
       }
 
       // Write boundary
@@ -140,7 +152,7 @@ namespace McMd
       }
       out << std::endl;
 
-      // Write bond topology
+      // Write Bonds
       out << "BONDS" << std::endl;
       out << "nBond  " << nBond << std::endl;
       Molecule::BondIterator bondIter;
@@ -161,6 +173,50 @@ namespace McMd
          }
       }
       out << std::endl;
+
+      #ifdef INTER_ANGLE
+      // Write Angles
+      Molecule::AngleIterator angleIter;
+      i = 0;
+      for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
+         if (system().simulation().species(iSpec).nAngle() > 0) {
+            system().begin(iSpec, molIter); 
+            for ( ; molIter.notEnd(); ++molIter) {
+               molIter->begin(angleIter); 
+               for ( ; angleIter.notEnd(); ++angleIter) {
+                  out << Int(i, 8) << Int(angleIter->typeId(), 5);
+                  out << Int(angleIter->atom(0).id(), 10);
+                  out << Int(angleIter->atom(1).id(), 10);
+                  out << std::endl;
+                  ++i;
+               }
+            }
+         }
+      }
+      out << std::endl;
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      // Write Dihedral
+      Molecule::DihedralIterator dihedralIter;
+      i = 0;
+      for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
+         if (system().simulation().species(iSpec).nDihedral() > 0) {
+            system().begin(iSpec, molIter); 
+            for ( ; molIter.notEnd(); ++molIter) {
+               molIter->begin(dihedralIter); 
+               for ( ; dihedralIter.notEnd(); ++dihedralIter) {
+                  out << Int(i, 8) << Int(dihedralIter->typeId(), 5);
+                  out << Int(dihedralIter->atom(0).id(), 10);
+                  out << Int(dihedralIter->atom(1).id(), 10);
+                  out << std::endl;
+                  ++i;
+               }
+            }
+         }
+      }
+      out << std::endl;
+      #endif
 
       // Reset Format defaults to initialization values
       Format::initStatic();

@@ -36,8 +36,8 @@ void ChainMaker::writeChainsMcMd(std::ostream& out)
    Vector r;
    Vector v; 
    double beta = 1.0;
-   int    bondType = 0;
-   int    iMol, iAtom;
+   int  bondType = 0;
+   int  iMol, iAtom;
 
    out << "BOUNDARY" << std::endl;
    out << std::endl;
@@ -71,8 +71,9 @@ void ChainMaker::writeChainsDdMd(std::ostream& out)
    Vector velocity;
    Vector v; 
    double beta = 1.0;
-   int    bondType = 0;
-   int    iMol, iAtom, i, j;
+   int atomType = 0;
+   int bondType = 0;
+   int iMol, iAtom, i, j;
 
    out << "BOUNDARY" << std::endl;
    out << std::endl;
@@ -89,7 +90,7 @@ void ChainMaker::writeChainsDdMd(std::ostream& out)
 
       for (iAtom = 0; iAtom < nAtomPerMolecule_; ++iAtom) {
 
-         out << Int(i,6) << Int(bondType, 5);
+         out << Int(i,6) << Int(atomType, 10);
          for (j = 0; j < Dimension; ++j) {
             out << Dbl(r[j], 15, 6);
          }
@@ -116,15 +117,53 @@ void ChainMaker::writeChainsDdMd(std::ostream& out)
    i = 0;
    j = 0;
    for (iMol = 0; iMol < nMolecule_; ++iMol) {
-
-      for (iAtom = 1; iAtom < nAtomPerMolecule_; ++iAtom) {
+      for (iAtom = 0; iAtom < nAtomPerMolecule_ - 1; ++iAtom) {
          out << Int(j,5) <<  Int(bondType, 5) << "  ";
-         out << Int(i, 5) << Int(i + 1, 5) << std::endl;
+         out << Int(i, 10) << Int(i + 1, 10) << std::endl;
          ++i;
          ++j;
       }
       ++i;
-    }
+   }
+
+   #ifdef INTER_ANGLE
+   int angleType = 0;
+   out << std::endl;
+   out << "ANGLES" << std::endl;
+   out << "nAngle  " << nMolecule_*(nAtomPerMolecule_ -2) << std::endl;
+   i = 0;
+   j = 0;
+   for (iMol = 0; iMol < nMolecule_; ++iMol) {
+      for (iAtom = 0; iAtom < nAtomPerMolecule_ - 2; ++iAtom) {
+         out << Int(j,5) <<  Int(angleType, 5) << "  ";
+         out << Int(i, 10) << Int(i + 1, 10) << Int(i + 2, 10)
+             << std::endl;
+         ++i;
+         ++j;
+      }
+      i += 2;
+   }
+   #endif
+
+   #ifdef INTER_DIHEDRAL
+   int dihedralType = 0;
+   out << std::endl;
+   out << "DIHEDRALS" << std::endl;
+   out << "nDihedral  " << nMolecule_*(nAtomPerMolecule_ -3) << std::endl;
+   i = 0;
+   j = 0;
+   for (iMol = 0; iMol < nMolecule_; ++iMol) {
+      for (iAtom = 0; iAtom < nAtomPerMolecule_ - 3; ++iAtom) {
+         out << Int(j,5) <<  Int(dihedralType, 5) << "  ";
+         out << Int(i, 10) << Int(i + 1, 10) << Int(i + 2, 10)
+             << Int(i + 3, 10) << std::endl;
+         ++i;
+         ++j;
+      }
+      i += 3;
+   }
+   #endif
+
 }
 
 int main() 

@@ -1,8 +1,9 @@
-boundary    cubic  25.39841683
-kappa  1.0
-length 1.0
+boundary    cubic  29.95545
+kappa  400.0
+length   1.0
 Random{
   seed   10314761
 }
-nMolecule        1024
+nMolecule         588
 nAtomPerMolecule   32
+DdMd
