@@ -26,7 +26,7 @@ namespace DdMd
    /**
    * Implementation template for a PairPotential.
    *
-   * \ingroup Pair_Module
+   * \ingroup DdMd_Pair_Module
    */
    template <class Interaction>
    class PairPotentialImpl : public PairPotential

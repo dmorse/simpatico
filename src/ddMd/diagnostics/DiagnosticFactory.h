@@ -21,8 +21,8 @@ namespace DdMd
    /**
    * Factory for DdMd::Diagnostic objects.
    *
-   * \ingroup Factory_Module
-   * \ingroup Diagnostic_Module
+   * \ingroup DdMd_Factory_Module
+   * \ingroup DdMd_Diagnostic_Module
    */
    class DiagnosticFactory : public Factory<Diagnostic>
    {

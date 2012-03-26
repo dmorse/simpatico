@@ -25,7 +25,9 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Class for exchanging ownership of Atoms between processors.
+   * Class for exchanging Atoms, Ghosts and Groups between processors.
+   *
+   * \ingroup DdMd_Communicate_Module
    */
    class Exchanger
    {

@@ -70,6 +70,7 @@ namespace DdMd
    * memory limits, and the send() method then sends all remaining
    * atoms.
    *
+   * \ingroup DdMd_Communicate_Module
    */
    class AtomDistributor : public ParamComposite
    {

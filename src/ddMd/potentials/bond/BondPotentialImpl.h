@@ -28,7 +28,7 @@ namespace DdMd
    /**
    * Implementation template for a BondPotential.
    *
-   * \ingroup Bond_Module
+   * \ingroup DdMd_Bond_Module
    */
    template <class Interaction>
    class BondPotentialImpl : public BondPotential

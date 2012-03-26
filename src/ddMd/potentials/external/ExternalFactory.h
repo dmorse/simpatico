@@ -21,7 +21,7 @@ namespace DdMd
    /**
    * Factory for ExternalPotential objects.
    *
-   * \ingroup External_Module
+   * \ingroup DdMd_External_Module
    */
    class ExternalFactory : public Factory<ExternalPotential>
    {

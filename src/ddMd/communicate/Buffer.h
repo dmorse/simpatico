@@ -20,7 +20,9 @@ namespace DdMd
    template <int N> class Group;
 
    /**
-   * Buffer for sending local or ghost atoms.
+   * Buffer for sending atoms and groups between processors.
+   *
+   * \ingroup DdMd_Communicate_Module
    */
    class Buffer: public ParamComposite 
    {

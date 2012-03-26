@@ -21,7 +21,9 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Default Factory for subclasses of Integrator.
+   * Factory for subclasses of Integrator (i.e., MD integrators).
+   *
+   * \ingroup DdMd_Integrator_Module
    */
    class IntegratorFactory : public Factory<Integrator> 
    {

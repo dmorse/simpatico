@@ -19,7 +19,7 @@ namespace DdMd
    /**
    * A pair of atoms connected by a covalent bond.
    *
-   * \ingroup Chemistry_Module
+   * \ingroup DdMd_Chemistry_Module
    */
    class Bond : public Group<2>
    {};

@@ -26,7 +26,7 @@ namespace DdMd
    /**
    * Implementation template for a ExternalPotential.
    *
-   * \ingroup Pair_Module
+   * \ingroup DdMd_Pair_Module
    */
    template <class Interaction>
    class ExternalPotentialImpl : public ExternalPotential

@@ -18,6 +18,8 @@ namespace DdMd
 
    /**
    * Iterator for all Group<N> objects owned by a GroupStorage<N> object.
+   *
+   * \ingroup DdMd_Storage_Module
    */
    template <int N>
    class ConstGroupIterator : public ConstPArrayIterator< Group<N> >

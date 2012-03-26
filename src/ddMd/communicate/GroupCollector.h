@@ -53,6 +53,8 @@ namespace DdMd
    *    }
    *
    * \endcode
+   *
+   * \ingroup DdMd_Communicate_Module
    */
    template <int N>
    class GroupCollector : public ParamComposite

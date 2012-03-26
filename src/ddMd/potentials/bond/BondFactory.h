@@ -21,7 +21,7 @@ namespace DdMd
    /**
    * Factory for BondPotential objects.
    *
-   * \ingroup Bond_Module
+   * \ingroup DdMd_Bond_Module
    */
    class BondFactory : public Factory<BondPotential>
    {

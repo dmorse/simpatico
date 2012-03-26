@@ -21,7 +21,7 @@ namespace DdMd
    * An AtomTypeType has a mass, a name string, and an integer id.
    * [It will later acquire a charge.]
    *
-   * \ingroup Chemistry_Module
+   * \ingroup DdMd_Chemistry_Module
    */
    class AtomType
    {

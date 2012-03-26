@@ -29,8 +29,7 @@ namespace DdMd
    /**
    * A container for all the atoms and ghost atoms on this processor.
    *
-   * The implementation of AtomStorage involves no MPI communication:
-   * All operations are local to one processor.
+   * \ingroup DdMd_Storage_Module
    */
    class AtomStorage : public ParamComposite
    {

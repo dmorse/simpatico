@@ -34,7 +34,7 @@ namespace DdMd
    * A PairIterator object must be used to iterate over all of the pairs in
    * in completed PairList (see documentation of PairIterator for usage).
    *
-   * \ingroup Neighbor_Module
+   * \ingroup DdMd_Neighbor_Module
    */
    class PairList 
    {

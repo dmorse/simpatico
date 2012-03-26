@@ -19,6 +19,8 @@ namespace DdMd
 
    /**
    * An Integrator numerically integrates the equations of motion. 
+   *
+   * \ingroup DdMd_Integrator_Module
    */
    class Integrator : public ParamComposite
    {

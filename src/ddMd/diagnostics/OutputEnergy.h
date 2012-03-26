@@ -19,7 +19,7 @@ namespace DdMd
    /**
    * Periodically write simulation energies to file.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup DdMd_Diagnostic_Module
    */
    class OutputEnergy : public Diagnostic
    {

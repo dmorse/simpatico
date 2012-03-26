@@ -21,6 +21,8 @@ namespace DdMd
    *
    * A ConstAtomIterator returns pointers const Atoms, and
    * thus does not allow atoms to be modified.
+   *
+   * \ingroup DdMd_Storage_Module
    */
    class ConstAtomIterator : public ConstPArrayIterator<Atom>
    {};

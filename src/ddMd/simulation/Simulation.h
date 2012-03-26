@@ -47,6 +47,8 @@ namespace DdMd
    *
    * A DdMd::Simulation contains and coordinates all the components of a parallel
    * MD simulation. 
+   *
+   * \ingroup DdMd_Module
    */
    class Simulation : public ParamComposite
    {

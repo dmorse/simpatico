@@ -601,6 +601,7 @@ WARN_LOGFILE           =
 INPUT                  = util \
                          inter \
                          mcMd \
+                         ddMd \
                          dox
 
 # This tag can be used to specify the character encoding of the source files

@@ -28,6 +28,8 @@ namespace DdMd
 
    /**
    * A container for all the Group<N> objects on this processor.
+   *
+   * \ingroup DdMd_Storage_Module
    */
    template <int N>
    class GroupStorage : public ParamComposite

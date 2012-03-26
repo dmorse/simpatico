@@ -19,7 +19,7 @@ namespace DdMd
    /**
    * A velocity-Verlet constant energy integrator.
    *
-   * All operations of this class are local (no MPI). 
+   * \ingroup DdMd_Integrator_Module
    */
    class NveIntegrator : public Integrator
    {

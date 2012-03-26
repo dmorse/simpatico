@@ -7,7 +7,7 @@ namespace Inter
 {
 
    /**
-   * \defgroup Inter_Module Potential Energy Interactions
+   * \defgroup Inter_Module Inter namespace
    *
    * \brief    Classes that define potential energy functions.
    *

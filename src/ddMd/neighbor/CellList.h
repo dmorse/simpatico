@@ -66,7 +66,7 @@ namespace DdMd
    * See Cell documentation for an example of how to iterate over local cells 
    * and neighboring atom pairs. 
    * 
-   * \ingroup Neighbor_Module
+   * \ingroup DdMd_Neighbor_Module
    */
    class CellList
    {

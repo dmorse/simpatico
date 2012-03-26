@@ -52,6 +52,8 @@ namespace DdMd
    *    }
    *
    * \endcode
+   *
+   * \ingroup DdMd_Communicate_Module
    */
    class AtomCollector : public ParamComposite
    {
