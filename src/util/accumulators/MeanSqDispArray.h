@@ -27,13 +27,13 @@ namespace Util
 {
 
    /**
-   * Calculates mean-squared difference vs. time for an ensembles of sequences.
+   * Mean-squared displacement (MSD) vs. time for an ensembles of sequences.
    *   
    * This class calculates the mean-squared difference <|x(i) - x(i-j)|^2> for
    * an ensemble of statistically equivalent sequences x(i) of values of a
-   * variable of type Data. The meaning of |a - b|^2 is defined for int, double,
-   * and Vector data by explicit specializations of the private method 
-   * double sqDiff(Data&, Data).
+   * variable of type Data. The meaning of |a - b|^2 is defined for int, 
+   * double, and Vector data by explicit specializations of the private 
+   * method double sqDiff(Data&, Data).
    * 
    * \ingroup Accumulators_Module
    */

@@ -28,7 +28,7 @@ namespace Util
    template <typename> class Array;
    
    /**
-   * Calculates auto-correlation function from an ensembles of sequences.
+   * Auto-correlation function for an ensemble of sequences.
    *   
    * This class calculates an autocorrelation function for a ensemble of
    * statistically equivalent sequences x(i) of values of a variable of 

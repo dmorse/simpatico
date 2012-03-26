@@ -7,11 +7,11 @@ namespace Util
    *
    * Serialization of C++ objects to/from file or memory.
    *
-   * The classes, functions and function templates in this module provide a 
-   * system for serializing sequences of C++ objects, to a file or random
-   * access memory, in a form that stores the full internal state and allows
-   * the object to be reconstructed.  The design is loosely based on that 
-   * of the Boost serialization library,
+   * The code in this module provides a system for serializing sequences 
+   * of C++ objects to a file or to random access memory. A serialization
+   * of an object stores the full internal state and allows the object to 
+   * be reconstructed.  The design is loosely based on that of the Boost 
+   * serialization library,
    * http://www.boost.org/doc/libs/1_48_0/libs/serialization/doc/index.html
    * but is much simpler (and less powerful) than the Boost library. 
    */
@@ -19,6 +19,8 @@ namespace Util
    /**
    * \defgroup Archive_Module Archives
    * \ingroup  Serialize_Module
+   *
+   * An archive stores serialized data, either in a file or in RAM.
    *
    * The definition of an archive used here is very similar 
    * to that used in the Boost serialization library. An archive class may 

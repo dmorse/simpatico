@@ -18,7 +18,7 @@ namespace Util
 {
 
    /**
-   * An Average calculates the average and variance of a sampled property.
+   * Calculates the average and variance of a sampled property.
    *
    * Average calculates block and global averages of a sampled value and 
    * its square, from which it obtains a global average and variance for

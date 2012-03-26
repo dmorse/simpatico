@@ -23,6 +23,8 @@ namespace DdMd
    * Each Atom has position, vector, and force Vector objects, an integer 
    * atom type Id, and a global integer id.
    * Each Atom has an associated Mask object. 
+   *
+   * \ingroup DdMd_Chemistry_Module
    */
    class Atom
    {
