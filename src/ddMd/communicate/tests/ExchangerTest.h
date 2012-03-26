@@ -175,7 +175,7 @@ public:
 
    }
 
-   void testGhostExchange()
+   void testExchange()
    {
       printMethod(TEST_FUNC);
 
@@ -367,7 +367,7 @@ public:
 TEST_BEGIN(ExchangerTest)
 TEST_ADD(ExchangerTest, testDistribute)
 TEST_ADD(ExchangerTest, testAtomExchange)
-TEST_ADD(ExchangerTest, testGhostExchange)
+TEST_ADD(ExchangerTest, testExchange)
 TEST_ADD(ExchangerTest, testGhostUpdate)
 TEST_ADD(ExchangerTest, testGhostUpdateCycle)
 TEST_END(ExchangerTest)
