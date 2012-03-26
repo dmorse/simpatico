@@ -23,7 +23,7 @@ namespace Util
 * stress ensembles, and may generalize some or all of the ensembles 
 * to allow for non-Boltzmann statistical ensembles. 
 *
-* \ingroup Util_Module
+* \ingroup Util_NS_Module
 */
 
 }
