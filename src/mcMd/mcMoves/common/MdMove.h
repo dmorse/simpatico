@@ -33,7 +33,7 @@ namespace McMd
    * detailed balance, for all dt, but generally accepts a fraction of 
    * attempted moves. 
    *
-   * \ingroup McMove_Module MD_Module
+   * \ingroup McMd_McMove_Module MD_Module
    */
    class MdMove : public SystemMove 
    {

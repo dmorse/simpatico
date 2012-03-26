@@ -98,7 +98,7 @@ namespace McMd
    * use in MD and MC simulations, respectively, and provide methods 
    * to evaluate energies and forces.
    *
-   * \ingroup System_Module
+   * \ingroup McMd_System_Module
    */
    class System : public ParamComposite, public Serializable
    {

@@ -23,8 +23,8 @@ namespace McMd
    /**
    * DiagnosticFactory for an McSimulation
    *
-   * \ingroup Factory_Module
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Factory_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class McDiagnosticFactory : public Factory<Diagnostic>
    {

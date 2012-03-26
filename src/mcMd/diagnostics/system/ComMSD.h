@@ -25,7 +25,7 @@ namespace McMd
    /**
    * Molecular center of mass mean squared displacement.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class ComMSD : public SystemDiagnostic<System>
    {

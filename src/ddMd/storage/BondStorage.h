@@ -16,6 +16,8 @@ namespace DdMd
 
    /**
    * AtomStorage for bonds.
+   *
+   * \ingroup DdMd_Storage_Module
    */
    class BondStorage : public GroupStorage<2>
    {

@@ -21,11 +21,14 @@ namespace DdMd
    class AtomStorage;
    class BondStorage;
    class Buffer;
+   template <int N> class GroupStorage;
 
    using namespace Util;
 
    /**
-   * Class for exchanging ownership of Atoms between processors.
+   * Class for exchanging Atoms, Ghosts and Groups between processors.
+   *
+   * \ingroup DdMd_Communicate_Module
    */
    class Exchanger
    {
@@ -147,7 +150,7 @@ namespace DdMd
       AtomStorage* atomStoragePtr_;
 
       /// Pointer to associated AtomStorage object.
-      BondStorage* bondStoragePtr_;
+      GroupStorage<2>* bondStoragePtr_;
 
       /// Pointer to associated buffer object.
       Buffer*  bufferPtr_;
@@ -164,6 +167,21 @@ namespace DdMd
       * exchangeAtoms().
       */
       void exchangeGhosts();
+
+      template <int N>
+      void initGroupGhostPlan(GroupStorage<N>& storage);
+
+      template <int N>
+      void packGroups(int i, int j, GroupStorage<N>& storage);
+
+      template <int N>
+      void removeEmptyGroups(GroupStorage<N>& storage);
+
+      template <int N>
+      void unpackGroups(GroupStorage<N>& storage);
+
+      template <int N>
+      void finishGroupGhostPlan(GroupStorage<N>& storage);
 
    };
 

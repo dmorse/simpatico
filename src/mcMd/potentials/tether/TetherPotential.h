@@ -30,7 +30,7 @@ namespace McMd
    /**
    * Abstract Tether Potential class.
    *
-   * \ingroup Tether_Module
+   * \ingroup McMd_Tether_Module
    */
    class TetherPotential : public ParamComposite
    {

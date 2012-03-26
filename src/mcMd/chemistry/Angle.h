@@ -18,7 +18,7 @@ namespace McMd
    /**
    * Group of 3 Atoms involved in an angle potential.
    *
-   * \ingroup Chemistry_Module
+   * \ingroup McMd_Chemistry_Module
    */
    typedef Group<3> Angle;
 

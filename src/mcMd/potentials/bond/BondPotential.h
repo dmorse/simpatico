@@ -29,7 +29,7 @@ namespace McMd
    /**
    * Abstract Bond Potential class.
    *
-   * \ingroup Bond_Module
+   * \ingroup McMd_Bond_Module
    */
    class BondPotential : public ParamComposite
    {

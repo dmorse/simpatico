@@ -23,7 +23,7 @@ namespace McMd
    *
    * This class implements a harmonic potential with a zero rest length.
    *
-   * \ingroup Tether_Module
+   * \ingroup McMd_Tether_Module
    */
    class HarmonicTether : public ParamComposite 
    {

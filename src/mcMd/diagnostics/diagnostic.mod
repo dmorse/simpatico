@@ -2,7 +2,7 @@ namespace McMd
 {
 
    /**
-   * \defgroup Diagnostic_Module Diagnostics
+   * \defgroup McMd_Diagnostic_Module Diagnostics
    * \ingroup McMd_Module
    *  
    * A Diagnostic object represents a data analysis or data output operation

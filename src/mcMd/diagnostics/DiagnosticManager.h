@@ -20,8 +20,8 @@ namespace McMd
    /**
    * Manager for a list of Diagnostic objects.
    *
-   * \ingroup Manager_Module
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Manager_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class DiagnosticManager : public Manager<Diagnostic>, public Serializable
    {

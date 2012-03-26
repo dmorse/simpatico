@@ -31,7 +31,7 @@ namespace McMd
    /**
    * A physical molecule (a set of covalently bonded Atoms).
    *
-   * \ingroup Chemistry_Module
+   * \ingroup McMd_Chemistry_Module
    */
    class Molecule
    {

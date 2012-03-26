@@ -23,7 +23,7 @@ namespace McMd
    * Usage: In the main program, create an instance of the desired subclass
    * of McModule, then call addFactories().
    *
-   * \ingroup Simulation_Module
+   * \ingroup McMd_Simulation_Module
    */
    class McModule
    {

@@ -14,7 +14,7 @@ namespace Util
 {
 
    /**
-   * Calculates a distribution (or histogram) of values for a real variable.
+   * Distribution (or histogram) of values for particle separations.
    * 
    * \ingroup Accumulators_Module
    */

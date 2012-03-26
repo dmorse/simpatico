@@ -22,7 +22,7 @@ namespace McMd
    /**
    * Factory for subclasses of DihedralPotential.
    * 
-   * \ingroup Dihedral_Module
+   * \ingroup McMd_Dihedral_Module
    */
    class DihedralFactory : public Factory<DihedralPotential>
    {

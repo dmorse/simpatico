@@ -15,7 +15,7 @@ namespace Util
 {
 
    /**
-   * Calculates a distribution (or histogram) of values for a real variable.
+   * A distribution (or histogram) of values for a real variable.
    *
    * \ingroup Accumulators_Module
    */

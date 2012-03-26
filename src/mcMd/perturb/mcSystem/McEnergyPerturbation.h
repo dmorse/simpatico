@@ -22,7 +22,7 @@ namespace McMd
    * An McEnergyPerturbation is a series of systems with the same Hamiltonian
    * at different temperatures. The perturbation parameter is beta = 1/kT.
    *
-   * \ingroup Perturb_Module
+   * \ingroup McMd_Perturb_Module
    */
    class McEnergyPerturbation : public LinearPerturbation<McSystem>
    {

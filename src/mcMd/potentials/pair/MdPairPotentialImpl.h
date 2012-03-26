@@ -29,7 +29,7 @@ namespace McMd
    /**
    * Implementation template for an MdPairPotential.
    *
-   * \ingroup Pair_Module
+   * \ingroup McMd_Pair_Module
    */
    template <class Interaction>
    class MdPairPotentialImpl : public MdPairPotential

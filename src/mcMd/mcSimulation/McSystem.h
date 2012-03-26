@@ -42,7 +42,7 @@ namespace McMd
    * McSystem provides methods to evaluate energies of individual
    * atoms, and other functions needed in MC simulations.
    *
-   * \ingroup System_Module
+   * \ingroup McMd_System_Module
    */
    class McSystem : public System
    {

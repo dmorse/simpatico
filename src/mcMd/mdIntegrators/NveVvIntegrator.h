@@ -20,7 +20,7 @@ namespace McMd
    /**
    * An NVE Verlet molecular dynamics integrator.
    *
-   * \ingroup MdIntegrator_Module
+   * \ingroup McMd_MdIntegrator_Module
    */
    class NveVvIntegrator : public MdIntegrator
    {

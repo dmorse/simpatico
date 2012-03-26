@@ -21,7 +21,7 @@ namespace McMd
    /**
    * Periodically write restart file.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class McWriteRestart : public Diagnostic
    {

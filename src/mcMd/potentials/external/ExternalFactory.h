@@ -23,7 +23,7 @@ namespace McMd
    /**
    * Factory for subclasses MdExternalPotential or McExternalPotential.
    * 
-   * \ingroup External_Module
+   * \ingroup McMd_External_Module
    */
    class ExternalFactory : public Factory<ExternalPotential>
    {

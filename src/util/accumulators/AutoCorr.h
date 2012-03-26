@@ -28,7 +28,7 @@ namespace Util
 {
 
    /**
-   * Calculates an auto-correlation function for a sequence of Data values.
+   * Auto-correlation function for one sequence of Data values.
    *   
    * This class calculates an autocorrelation function for a sequence
    * x(i) of values of a variable or object of type Data. The resulting

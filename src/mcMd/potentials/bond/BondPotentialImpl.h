@@ -28,7 +28,7 @@ namespace McMd
    /**
    * Implementation template for a BondPotential.
    *
-   * \ingroup Bond_Module
+   * \ingroup McMd_Bond_Module
    */
    template <class Interaction>
    class BondPotentialImpl : public BondPotential, public SubSystem

@@ -28,7 +28,7 @@ namespace McMd
    /**
    * Implementation template for an AnglePotential.
    *
-   * \ingroup Angle_Module
+   * \ingroup McMd_Angle_Module
    */
    template <class Interaction>
    class AnglePotentialImpl : public AnglePotential, public SubSystem

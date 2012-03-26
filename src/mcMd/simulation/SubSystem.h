@@ -38,7 +38,7 @@ namespace McMd
    * SubSystem is designed as a base class for classes that
    * evaluate configurational properties, energy, and forces.
    *
-   * \ingroup System_Module
+   * \ingroup McMd_System_Module
    */
    class SubSystem
    {

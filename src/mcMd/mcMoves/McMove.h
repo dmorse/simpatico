@@ -27,7 +27,7 @@ namespace McMd
    * to accept or reject it, and update the associated System or Systems
    * if it is accepted.
    *
-   * \ingroup McMove_Module
+   * \ingroup McMd_McMove_Module
    */
    class McMove : public ParamComposite, public Serializable
    {

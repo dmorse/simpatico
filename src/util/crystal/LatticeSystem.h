@@ -20,6 +20,9 @@ namespace Util
    /**
    * Enumeration of the 7 possible Bravais lattice systems.
    *
+   * Allowed values are: Cubic, Tetragonal, Orthorhombic, Monoclinic
+   * Triclinic, Rhombohedral, and Hexagonal.
+   *
    * \ingroup Crystal_Module
    */
    enum LatticeSystem {Cubic, Tetragonal, Orthorhombic, 

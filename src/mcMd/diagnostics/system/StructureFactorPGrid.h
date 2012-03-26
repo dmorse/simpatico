@@ -54,7 +54,7 @@ namespace McMd
    * structure factor values for the wavevector, one for each 
    * atomTypeId pair.
    * 
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class StructureFactorPGrid : public StructureFactorP
    {

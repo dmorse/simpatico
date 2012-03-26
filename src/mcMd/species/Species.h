@@ -87,7 +87,7 @@ namespace McMd
    * such an ensemble to be read from and written to a configuration file.
    * The default implementations of these methods do nothing.
    *
-   * \ingroup Species_Module
+   * \ingroup McMd_Species_Module
    */
    class Species : public ParamComposite
    {

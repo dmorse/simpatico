@@ -22,7 +22,7 @@ namespace McMd
    /**
    * An McMove that acts on one McSystem.
    *
-   * \ingroup McMove_Module
+   * \ingroup McMd_McMove_Module
    */
    class SystemMove : public McMove
    {

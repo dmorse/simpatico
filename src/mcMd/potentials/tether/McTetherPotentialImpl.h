@@ -30,7 +30,7 @@ namespace McMd
    /**
    * Template implementation of McTetherPotential.
    *
-   * \ingroup Tether_Module
+   * \ingroup McMd_Tether_Module
    */
    template <class Evaluator>
    class McTetherPotentialImpl : public McTetherPotential, public SubSystem

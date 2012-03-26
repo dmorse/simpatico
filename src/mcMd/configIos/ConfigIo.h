@@ -40,7 +40,7 @@ namespace McMd
    * explicitly, the System will create and use an instance of 
    * ConfigIo when needed.
    *
-   * \ingroup ConfigIo_Module
+   * \ingroup McMd_ConfigIo_Module
    */
    class ConfigIo
    {

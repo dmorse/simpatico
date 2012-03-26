@@ -2,7 +2,7 @@ namespace McMd
 {
 
    /**
-   * \defgroup System_Module Systems
+   * \defgroup McMd_System_Module Systems
    * \ingroup McMd_Module
    *
    * A System is a set of interacting Molecules enclosed by a Boundary. 

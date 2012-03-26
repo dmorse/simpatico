@@ -26,7 +26,7 @@ namespace McMd
    /**
    * A Monte-Carlo simulation of one McSystem.
    *
-   * \ingroup Simulation_Module
+   * \ingroup McMd_Simulation_Module
    */
    class McSimulation : public Simulation
    {

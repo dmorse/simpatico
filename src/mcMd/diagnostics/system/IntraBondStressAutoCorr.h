@@ -28,7 +28,7 @@ namespace McMd
    /**
    * Autocorrelation for bond stress of a molecule.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    template <class SystemType>
    class IntraBondStressAutoCorr : public SystemDiagnostic<SystemType>

@@ -4,11 +4,8 @@
 #include <unistd.h>
 #include <memory>
 
-using namespace Util;
-using namespace McMd;
-
 /**
-* Main program for Monte Carlo Simulation.
+* Main program for Molecular Dynamics simulation.
 *
 * Options:
 *
@@ -74,14 +71,14 @@ int main(int argc, char **argv)
 
    #ifdef UTIL_MPI
    MPI::Init();
-   MdSimulation simulation(MPI::COMM_WORLD);
+   McMd::MdSimulation simulation(MPI::COMM_WORLD);
    #else
-   MdSimulation simulation;
+   McMd::MdSimulation simulation;
    #endif
 
    // Set flag to echo parameters as they are read.
    if (eflag) {
-      ParamComponent::setEcho(true);
+      Util::ParamComponent::setEcho(true);
    }
 
    #ifdef MCMD_PERTURB

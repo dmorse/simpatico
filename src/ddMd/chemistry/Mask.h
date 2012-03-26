@@ -25,7 +25,7 @@ namespace DdMd
    * A Mask could, for example, contain all atoms that are directly connected 
    * to the target atom by 2-body covalent bonds.
    *
-   * \ingroup Chemistry_Module
+   * \ingroup DdMd_Chemistry_Module
    */
    class Mask 
    {

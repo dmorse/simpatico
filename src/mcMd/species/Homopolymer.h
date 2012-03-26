@@ -18,7 +18,7 @@ namespace McMd
    /**
    * A Homopolymer species of chain molecules.
    *
-   * \ingroup Species_Module
+   * \ingroup McMd_Species_Module
    */
    class Homopolymer : public Linear
    {

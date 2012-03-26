@@ -21,7 +21,7 @@ namespace McMd
    /**
    * A move that changes the type of a HomopolymerSG molecule.
    *
-   * \ingroup McMove_Module
+   * \ingroup McMd_McMove_Module
    */
    class HomopolymerSemiGrandMove : public SystemMove
    {

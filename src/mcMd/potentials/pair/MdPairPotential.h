@@ -32,7 +32,7 @@ namespace McMd
    /**
    * An PairPotential for MD simulation.
    *
-   * \ingroup Pair_Module
+   * \ingroup McMd_Pair_Module
    */
    class MdPairPotential : public ParamComposite, public SubSystem, public PairPotential
    {

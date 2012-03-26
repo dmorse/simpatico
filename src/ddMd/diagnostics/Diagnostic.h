@@ -38,7 +38,7 @@ namespace DdMd
    * must thus access its parent Simulation and/or Simulation via a pointer, 
    * which is usually initialized in its subclass constructor.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup DdMd_Diagnostic_Module
    */
    class Diagnostic : public ParamComposite
    {

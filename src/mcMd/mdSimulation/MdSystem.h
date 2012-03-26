@@ -54,7 +54,7 @@ namespace McMd
    *
    * It provides methods to compute forces, total energy, and stress.
    *
-   * \ingroup System_Module
+   * \ingroup McMd_System_Module
    */
    class MdSystem : public System
    {

@@ -25,7 +25,7 @@ namespace McMd
    /**
    * Base class for default Mc and Md configIos.
    *
-   * \ingroup ConfigIo_Module
+   * \ingroup McMd_ConfigIo_Module
    */
    class McMdConfigIo : public ConfigIo
    {

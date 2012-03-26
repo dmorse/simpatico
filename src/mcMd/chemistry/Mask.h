@@ -23,7 +23,7 @@ namespace McMd
    * A Mask could, for example, contain all atoms that are directly connected 
    * to the target atom by 2-body covalent bonds.
    *
-   * \ingroup Chemistry_Module
+   * \ingroup McMd_Chemistry_Module
    */
    class Mask 
    {

@@ -4,9 +4,6 @@
 #include <unistd.h>
 #include <memory>
 
-using namespace Util;
-using namespace McMd;
-
 /**
 * Main program for Monte Carlo Simulation.
 *
@@ -74,14 +71,14 @@ int main(int argc, char **argv)
 
    #ifdef UTIL_MPI
    MPI::Init();
-   McSimulation simulation(MPI::COMM_WORLD);
+   McMd::McSimulation simulation(MPI::COMM_WORLD);
    #else
-   McSimulation simulation;
+   McMd::McSimulation simulation;
    #endif
 
    // Set flag to echo parameters as they are read.
    if (eflag) {
-      ParamComponent::setEcho(true);
+      McMd::ParamComponent::setEcho(true);
    }
 
    #ifdef MCMD_PERTURB

@@ -24,7 +24,7 @@ namespace McMd
    * It is assumed that the atoms belonging to all species and molecules of a species occur in the file
    * consecutively.
    *
-   * \ingroup TrajectoryIo_Module
+   * \ingroup McMd_TrajectoryIo_Module
    */
    class DCDTrajectoryIo : public TrajectoryIo
    {

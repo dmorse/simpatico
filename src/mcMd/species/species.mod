@@ -1,7 +1,7 @@
 namespace McMd {
 
    /**
-   * \defgroup Species_Module Species
+   * \defgroup McMd_Species_Module Species
    * \ingroup McMd_Module
    *
    * Classes that represent molecular species.

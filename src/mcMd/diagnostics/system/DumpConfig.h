@@ -29,7 +29,7 @@ namespace McMd
    * configurations will be written to files "out/dump/config.0",
    * "out/dump/config.1", etc.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class DumpConfig : public SystemDiagnostic<System>
    {

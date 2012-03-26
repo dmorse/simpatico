@@ -26,8 +26,8 @@ namespace McMd
    /**
    * Manager for a set of McMove objects.
    *
-   * \ingroup Manager_Module
-   * \ingroup McMove_Module
+   * \ingroup McMd_Manager_Module
+   * \ingroup McMd_McMove_Module
    */
    class McMoveManager : public Manager<McMove>, public Serializable
    {

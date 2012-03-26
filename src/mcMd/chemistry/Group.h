@@ -30,7 +30,7 @@ namespace McMd
    * corresponding Natom body potential are different for groups
    * with different type Ids. 
    *
-   * \ingroup Chemistry_Module
+   * \ingroup McMd_Chemistry_Module
    */
    template <int NAtom>
    class Group

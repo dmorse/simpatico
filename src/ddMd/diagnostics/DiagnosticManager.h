@@ -21,8 +21,8 @@ namespace DdMd
    /**
    * Manager for a list of Diagnostic objects.
    *
-   * \ingroup Manager_Module
-   * \ingroup Diagnostic_Module
+   * \ingroup DdMd_Manager_Module
+   * \ingroup DdMd_Diagnostic_Module
    */
    class DiagnosticManager : public Manager<Diagnostic>
    {

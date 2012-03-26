@@ -27,7 +27,7 @@ namespace McMd
    /**
    * Base class for rebridging a group of atoms forming a tetrahedron.
    *
-   * \ingroup McMove_Module MD_Module
+   * \ingroup McMd_McMove_Module MD_Module
    */
    class GroupRebridgeBase : public SystemMove 
    {

@@ -16,6 +16,8 @@ namespace DdMd
    /**
    * Plan for communication pattern for exchanging atoms
    * and communicating ghots.
+   *
+   * \ingroup DdMd_Communicate_Module
    */
    class Plan
    {

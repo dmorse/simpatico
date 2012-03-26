@@ -45,7 +45,7 @@ namespace McMd
    * averages to file at an interval specified by the input parameter
    * nSamplePerBlock. No block averages are output if nSamplePerBlock = 0.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class RadiusGyration : public SystemDiagnostic<System>
    {

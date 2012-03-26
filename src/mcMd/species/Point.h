@@ -19,7 +19,7 @@ namespace McMd
    /**
    * A Species in which each Molecule contains only one Atom.
    *
-   * \ingroup Species_Module
+   * \ingroup McMd_Species_Module
    */
    class Point : public Species
    {

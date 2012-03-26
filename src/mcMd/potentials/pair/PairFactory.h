@@ -28,7 +28,7 @@ namespace McMd
    * objects. Unlike a standard Factory, it also does not provide a 
    * readObject method, and so does not require a param communicator.
    * 
-   * \ingroup Pair_Module
+   * \ingroup McMd_Pair_Module
    */
    class PairFactory 
    {

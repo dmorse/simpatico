@@ -24,7 +24,7 @@ namespace McMd
    /**
    * Interface for a Pair Potential.
    *
-   * \ingroup Pair_Module
+   * \ingroup McMd_Pair_Module
    */
    class PairPotential
    {

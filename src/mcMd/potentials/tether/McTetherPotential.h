@@ -21,7 +21,7 @@ namespace McMd
    /**
    * A TetherPotential for MC simulations.
    *
-   * \ingroup Tether_Module
+   * \ingroup McMd_Tether_Module
    */
    class McTetherPotential : public TetherPotential 
    {

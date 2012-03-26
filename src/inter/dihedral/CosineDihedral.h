@@ -25,7 +25,7 @@ namespace Inter
    * Simple dihedral potential: kappa [1 - cos(theta)], where theta
    * is the dihedral angle.
    *
-   * \ingroup Dihedral_Module
+   * \ingroup Inter_Dihedral_Module
    */
    class CosineDihedral : public ParamComposite 
    {

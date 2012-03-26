@@ -36,7 +36,7 @@ namespace McMd
    * intramolecular or all pairs. Only one histogram (or RDF) can be 
    * calculated.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class RDF : public SystemDiagnostic<System>
    {

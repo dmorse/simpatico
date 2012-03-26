@@ -43,7 +43,7 @@ namespace McMd
    * numbering scheme used in Simpatico. Thus far, none of this is 
    * checked.
    *
-   * \ingroup ConfigIo_Module
+   * \ingroup McMd_ConfigIo_Module
    */
    class DdMdConfigIo : public ConfigIo
    {

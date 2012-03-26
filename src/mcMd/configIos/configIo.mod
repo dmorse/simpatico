@@ -2,7 +2,7 @@ namespace McMd
 {
 
    /**
-   * \defgroup ConfigIo_Module Configuration File IO
+   * \defgroup McMd_ConfigIo_Module Configuration File IO
    * \ingroup McMd_Module
    *  
    * A ConfigIo object can read and write the configuration file for a 

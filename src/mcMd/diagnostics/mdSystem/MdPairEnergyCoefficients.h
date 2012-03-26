@@ -30,7 +30,7 @@ namespace McMd
    * Diagnostic to output the total pair energy and the
    * sum of squares of the monomeric and molecular pair energy
    * 
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class MdPairEnergyCoefficients : public SystemDiagnostic<MdSystem>
    {

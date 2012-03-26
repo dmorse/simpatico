@@ -31,7 +31,7 @@ namespace Inter
    * than a cutoff rl at which the FENE potentail reaches a parameter 
    * energyCutoff, and a linear potential for all r > rl.
    *
-   * \ingroup Bond_Module
+   * \ingroup Inter_Bond_Module
    */
    class FeneBond : public ParamComposite 
    {

@@ -22,8 +22,8 @@ namespace McMd
    /**
    * DiagnosticFactory for any System (for mc or md).
    *
-   * \ingroup Factory_Module
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Factory_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class SystemDiagnosticFactory : public Factory<Diagnostic>
    {

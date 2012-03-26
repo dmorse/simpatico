@@ -27,7 +27,7 @@ namespace McMd
    /**
    * Interface for a Dihedral Potential.
    *
-   * \ingroup Dihedral_Module
+   * \ingroup McMd_Dihedral_Module
    */
    class DihedralPotential : public ParamComposite
    {

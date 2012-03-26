@@ -48,7 +48,7 @@ namespace McMd
    * SystemDiagnostic<MdSystem> or SystemDiagnostic<MdSystem>, 
    * respectively.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class Diagnostic : public ParamComposite, public Serializable
    {

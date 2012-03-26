@@ -34,7 +34,7 @@ namespace Inter
    * along the direction perpendicular to lamellae) and periodicity are given as inputs in the parameter file. 
    * ClipParameter is the inverse of 2*pi*periodicity*interfaceWidth. 
    *
-   * \ingroup Potential_Module
+   * \ingroup Inter_External_Module
    */
    class TanhCosineExternal : public ParamComposite 
    {
@@ -55,7 +55,6 @@ namespace Inter
       * Assignment.
       */
       TanhCosineExternal& operator = (const TanhCosineExternal& other);
-
 
       /**  
       * Set nAtomType value.

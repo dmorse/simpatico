@@ -74,7 +74,7 @@ namespace McMd
    * magnitude of the wavevector, and a list of structure factor
    * values for the wavevector, one for each mode.
    * 
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class StructureFactor : public SystemDiagnostic<System>
    {

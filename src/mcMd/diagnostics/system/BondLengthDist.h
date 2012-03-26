@@ -23,7 +23,7 @@ namespace McMd
    /**
    * BondLengthDist evaluates the distribution function of the lengths of the bonds.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class BondLengthDist : public SystemDiagnostic<System>
    {

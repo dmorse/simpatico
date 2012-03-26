@@ -21,7 +21,7 @@ namespace McMd
    /**
    * A molecular dynamics simulation of a single MdSystem.
    *
-   * \ingroup Simulation_Module
+   * \ingroup McMd_Simulation_Module
    */
    class MdSimulation : public Simulation
    {

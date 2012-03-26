@@ -28,7 +28,7 @@ namespace McMd
    * pointless if applied to a homopolymer, or to a symmetric
    * ABA triblock. 
    *
-   * \ingroup McMove_Module
+   * \ingroup McMd_McMove_Module
    */
    class EndSwapMove : public SystemMove
    {

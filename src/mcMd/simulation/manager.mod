@@ -2,7 +2,7 @@ namespace McMd
 {
 
    /**
-   * \defgroup Manager_Module Managers
+   * \defgroup McMd_Manager_Module Managers
    * \ingroup  McMd_Module 
    *
    * A Manager is used to create and manage a list of objects 

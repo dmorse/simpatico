@@ -1,4 +1,3 @@
-#ifdef  INTER_DIHEDRAL
 #ifndef MCMD_DIHEDRAL_POTENTIAL_IMPL_H
 #define MCMD_DIHEDRAL_POTENTIAL_IMPL_H
 
@@ -29,7 +28,7 @@ namespace McMd
    /**
    * Implementation template for an DihedralPotential.
    *
-   * \ingroup Dihedral_Module
+   * \ingroup McMd_Dihedral_Module
    */
    template <class Interaction>
    class DihedralPotentialImpl : public DihedralPotential, public SubSystem
@@ -439,5 +438,4 @@ namespace McMd
    #endif
 
 }
-#endif
 #endif

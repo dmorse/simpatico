@@ -35,7 +35,7 @@ namespace McMd
    * the simulation. If this happens, the only solution is to recompile 
    * with a larger value of MaxAtomCell.
    *
-   * \ingroup Neighbor_Module
+   * \ingroup McMd_Neighbor_Module
    */
    class Cell 
    {

@@ -23,7 +23,7 @@ namespace McMd
    /**
    * configuration bias trimer double rebridge moves, to reconnect two chains.
    *
-   * \ingroup McMove_Module
+   * \ingroup McMd_McMove_Module
    */
    class CfbDoubleRebridgeMove : public CfbRebridgeBase
    {

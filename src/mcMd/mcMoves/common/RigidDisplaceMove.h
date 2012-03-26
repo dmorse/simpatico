@@ -23,7 +23,7 @@ namespace McMd
    /**
    * Random rigid displacement of a molecule.
    *
-   * \ingroup McMove_Module MD_Module
+   * \ingroup McMd_McMove_Module MD_Module
    */
    class RigidDisplaceMove : public SystemMove 
    {

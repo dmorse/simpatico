@@ -31,7 +31,7 @@ namespace McMd
    /**
    * Abstract External Potential class.
    *
-   * \ingroup External_Module
+   * \ingroup McMd_External_Module
    */
    class ExternalPotential : public ParamComposite
    {

@@ -30,7 +30,7 @@ namespace McMd
    * chosen at random. The only parameter is nTrial, the number of trial 
    * positions for the new position of the head monomer.
    *
-   * \ingroup McMove_Module
+   * \ingroup McMd_McMove_Module
    */
    class CfbReptationMove : public CfbEndBase
    {

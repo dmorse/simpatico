@@ -65,7 +65,7 @@ namespace DdMd
    *
    * \endcode
    * 
-   * \ingroup Neighbor_Module
+   * \ingroup DdMd_Neighbor_Module
    */
    class Cell
    {

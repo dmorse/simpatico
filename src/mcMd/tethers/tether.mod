@@ -1,7 +1,7 @@
 namespace McMd{
 
    /**  
-   * \defgroup Tether_Module Tethers
+   * \defgroup McMd_Tether_Module Tethers
    * \ingroup McMd_Module
    * \ingroup Potential_Module
    *

@@ -71,6 +71,7 @@ namespace DdMd
    * memory limits, and the send() method then sends all remaining
    * groups.
    *
+   * \ingroup DdMd_Communicate_Module
    */
    template <int N>
    class GroupDistributor : public ParamComposite

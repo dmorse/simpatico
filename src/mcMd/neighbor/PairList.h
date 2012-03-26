@@ -55,7 +55,7 @@ namespace McMd
    * the PairList should be rebuilt if its return value is false.
    * 
    *
-   * \ingroup Neighbor_Module 
+   * \ingroup McMd_Neighbor_Module 
    */
    class PairList : public ParamComposite 
    {

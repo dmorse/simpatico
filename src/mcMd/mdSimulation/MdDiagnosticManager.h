@@ -27,8 +27,8 @@ namespace McMd
    * The default Factory<Diagnostic> object for an MdDiagnosticManager is
    * an MdDiagnosticFactory.
    *
-   * \ingroup Manager_Module
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Manager_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class MdDiagnosticManager : public DiagnosticManager
    {

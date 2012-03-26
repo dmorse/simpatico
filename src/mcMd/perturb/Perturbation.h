@@ -36,7 +36,7 @@ namespace McMd
    * given value of p, and methods to evaluate the derivative dW(X,p)/dp
    * and difference W(X, p') - W(X, p) for a given system configuration.
    *
-   * \ingroup Perturb_Module
+   * \ingroup McMd_Perturb_Module
    */
    class Perturbation : public ParamComposite
    {

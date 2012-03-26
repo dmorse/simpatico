@@ -22,7 +22,7 @@ namespace McMd
    *
    * The CellTag class is used only by the CellList class.
    *
-   * \ingroup Neighbor_Module
+   * \ingroup McMd_Neighbor_Module
    */
    class CellTag 
    {

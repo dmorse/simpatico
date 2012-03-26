@@ -23,6 +23,9 @@ namespace DdMd
    using namespace Util;
 
    /**
+   * Decomposition of the system into domains associated with processors.
+   * 
+   * \ingroup DdMd_Communicate_Module
    */
    class Domain : public ParamComposite
    {

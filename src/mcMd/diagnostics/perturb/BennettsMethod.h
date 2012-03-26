@@ -34,7 +34,7 @@ namespace McMd
    /**
    * Bennet's Method gives an estimate of the free energy difference.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class BennettsMethod : public SystemDiagnostic<System>
    {

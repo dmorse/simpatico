@@ -90,6 +90,39 @@ namespace DdMd
    }
 
    /*
+   * Private method to read Group<N> objects.
+   */
+   template <int N>
+   int ConfigIo::readGroups(std::istream& file, 
+                  const char* sectionLabel,
+                  const char* nGroupLabel,
+                  GroupDistributor<N>& distributor) 
+   {
+      int nGroup;  // Total number of groups in file
+      if (domain().isMaster()) {  
+         file >> Label(sectionLabel);
+         file >> Label(nGroupLabel) >> nGroup;
+         Bond* groupPtr;
+         int i, j, k;
+         distributor.initSendBuffer();
+         for (i = 0; i < nGroup; ++i) {
+            groupPtr = distributor.newPtr();
+            file >> *groupPtr;
+            for (j = 0; j < 2; ++j) {
+               k = groupPtr->atomId(j);
+            }
+            distributor.add();
+         }
+         // Send any groups not sent previously.
+         distributor.send();
+      } else { // If I am not the master processor
+         // Receive all groups into BondStorage
+         distributor.receive();
+      }
+      return nGroup;
+   }
+
+   /*
    * Read a configuration file.
    */
    void ConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
@@ -169,36 +202,7 @@ namespace DdMd
          }
       }
 
-      // Bonds
-      int nBond;  // Total number of bonds in file
-      if (domain().isMaster()) {  
-
-         file >> Label("BONDS");
-         file >> Label("nBond") >> nBond;
-
-         // Fill the bond objects
-         Bond* bondPtr;
-         int   i, j, k;
-         bondDistributor().initSendBuffer();
-         for (i = 0; i < nBond; ++i) {
-
-            bondPtr = bondDistributor().newPtr();
-            file >> *bondPtr;
-            for (j = 0; j < 2; ++j) {
-               k = bondPtr->atomId(j);
-            }
-            bondDistributor().add();
-         }
-
-         // Send any bonds not sent previously.
-         bondDistributor().send();
-
-      } else { // If I am not the master processor
-
-         // Receive all bonds into BondStorage
-         bondDistributor().receive();
-
-      }
+      int nBond = readGroups<2>(file, "BONDS", "nBond", bondDistributor());
 
       // Set atom "masks" to suppress pair interactions
       // between covalently bonded atoms.
@@ -206,6 +210,36 @@ namespace DdMd
          setAtomMasks();
       }
 
+   }
+
+   /*
+   * Private method to write Group<N> objects.
+   */
+   template <int N>
+   int ConfigIo::writeGroups(std::ostream& file, 
+                  const char* sectionLabel,
+                  const char* nGroupLabel,
+                  GroupStorage<N>& storage,
+                  GroupCollector<N>& collector) 
+   {
+      Group<2>* groupPtr;
+      int       nGroup;
+      storage.computeNTotal(domain().communicator());
+      nGroup = storage.nTotal();
+      if (domain().isMaster()) {  
+         file << std::endl;
+         file << sectionLabel << std::endl;
+         file << nGroupLabel << Int(nGroup, 10) << std::endl;
+         collector.setup();
+         groupPtr = collector.nextPtr();
+         while (groupPtr) {
+            file << *groupPtr << std::endl;
+            groupPtr = collector.nextPtr();
+         }
+      } else { 
+         collector.send();
+      }
+      return nGroup;
    }
 
    /* 
@@ -244,21 +278,8 @@ namespace DdMd
          atomCollector_.send();
       }
 
-      // Bonds
-      bondStorage().computeNTotal(domain().communicator());
-      if (domain().isMaster()) {  
-         file << std::endl;
-         file << "BONDS" << std::endl;
-         file << "nBOND" << Int(bondStorage().nTotal(), 10) << std::endl;
-         bondCollector_.setup();
-         Group<2>* bondPtr = bondCollector_.nextPtr();
-         while (bondPtr) {
-            file << *bondPtr << std::endl;
-            bondPtr = bondCollector_.nextPtr();
-         }
-      } else { 
-         bondCollector_.send();
-      }
+      // Write the bonds
+      writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector_);
 
    }
  

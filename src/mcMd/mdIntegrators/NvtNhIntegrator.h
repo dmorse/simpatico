@@ -30,7 +30,7 @@ namespace McMd
    * D. Frenkel and B. Smit, "Understanding Molecular Simulation,"  
    * Academic Press, 1996. Chapter 6 (Eqs. 6.1.24 - 6.1.27).
    *
-   * \ingroup MdIntegrator_Module
+   * \ingroup McMd_MdIntegrator_Module
    */
    class NvtNhIntegrator : public MdIntegrator
    {

@@ -23,7 +23,7 @@ namespace McMd
    /**
    * Factory for subclasses of MdBondPotential or McBondPotential.
    * 
-   * \ingroup Link_Module
+   * \ingroup McMd_Link_Module
    */
    class LinkFactory : public Factory<BondPotential>
    {

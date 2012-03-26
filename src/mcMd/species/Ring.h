@@ -26,7 +26,7 @@ namespace McMd
    * subclass of Ring must be specified by implementing the pure virtual 
    * functions atomTypeId() and bondTypeId().
    *
-   * \ingroup Species_Module
+   * \ingroup McMd_Species_Module
    */
    class Ring : public Species 
    {

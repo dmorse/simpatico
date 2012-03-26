@@ -37,7 +37,7 @@ namespace DdMd
    * in the group, and an array of pointers to these atoms. It
    * also has an integer type Id for the group and a global id. 
    *
-   * \ingroup Chemistry_Module
+   * \ingroup DdMd_Chemistry_Module
    */
    template <int N>
    class Group

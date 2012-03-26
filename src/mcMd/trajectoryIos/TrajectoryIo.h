@@ -27,7 +27,7 @@ namespace McMd
    * If either pair is not implemented, calling the standard implementation will result in an
    * error message.
    *
-   * \ingroup TrajectoryIo_Module
+   * \ingroup McMd_TrajectoryIo_Module
    */
    class TrajectoryIo
    {

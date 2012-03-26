@@ -24,7 +24,7 @@ namespace McMd
    /**
    * ConfigIo for MC simulations (no atom velocities).
    *
-   * \ingroup ConfigIo_Module
+   * \ingroup McMd_ConfigIo_Module
    */
    class McConfigIo : public McMdConfigIo
    {

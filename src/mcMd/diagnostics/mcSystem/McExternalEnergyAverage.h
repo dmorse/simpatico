@@ -24,7 +24,7 @@ namespace McMd
    /**
    * McExternalEnergyAverage averages of total external energy.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class McExternalEnergyAverage : public SystemDiagnostic<McSystem>
    {

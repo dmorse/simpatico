@@ -26,7 +26,7 @@ namespace Inter
    * This class is intended for use in a model with transient crosslinks
    * that can be created or destroyed at fixed chemical potential.
    * 
-   * \ingroup Potential_Module
+   * \ingroup Inter_Potential_Module
    */
    template <class BarePair, class LinkPotential>
    class CompensatedPair : public ParamComposite 

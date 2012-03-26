@@ -73,7 +73,7 @@ namespace McMd
    * it impossible to construct individual Atom objects, the default
    * constructor and the copy constructor are declared private.
    *
-   * \ingroup Chemistry_Module
+   * \ingroup McMd_Chemistry_Module
    */
    class Atom
    {

@@ -22,7 +22,7 @@ namespace DdMd
    /**
    * Factory for PairPotential objects.
    *
-   * \ingroup Pair_Module
+   * \ingroup DdMd_Pair_Module
    */
    class PairFactory : public Factory<PairPotential>
    {

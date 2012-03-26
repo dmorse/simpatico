@@ -22,7 +22,7 @@ namespace McMd
    /**
    * MdKineticEnergyAverage averages of total kinetic energy.
    *
-   * \ingroup Diagnostic_Module
+   * \ingroup McMd_Diagnostic_Module
    */
    class MdKineticEnergyAverage : public SystemDiagnostic<MdSystem>
    {

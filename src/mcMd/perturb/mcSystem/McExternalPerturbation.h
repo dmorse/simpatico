@@ -27,7 +27,7 @@ namespace McMd
    * An McExternalPerturbation describes a Hamiltonian with a variable
    * external parameter.
    *
-   * \ingroup Perturb_Module
+   * \ingroup McMd_Perturb_Module
    */
    class McExternalPerturbation : public LinearPerturbation<McSystem>
    {

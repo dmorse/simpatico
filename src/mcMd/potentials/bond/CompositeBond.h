@@ -32,7 +32,7 @@ namespace McMd
    * interactions between bonded atoms are masked, to allow the pair
    * potential to be explicitly added back in.
    * 
-   * \ingroup Potential_Module
+   * \ingroup McMd_Potential_Module
    */
    template <class BareBond, class BarePair>
    class CompositeBond : public ParamComposite 
