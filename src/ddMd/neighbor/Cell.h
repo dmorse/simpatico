@@ -82,7 +82,7 @@ namespace DdMd
       /**
       * Maximum possible number of atoms in this an neighboring cells.
       */
-      static const int MaxNeighborAtom = 200;
+      static const int MaxNeighborAtom = 800;
 
       /**
       * Static array for holding neighbors in a cell list.

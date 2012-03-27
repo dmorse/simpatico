@@ -14,6 +14,7 @@
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
 
+#include "AtomStorage.h"
 #include "GroupIterator.h"
 #include "ConstGroupIterator.h"
 #include <util/global.h>
@@ -23,8 +24,6 @@ namespace DdMd
 {
 
    using namespace Util;
-
-   class AtomStorage;
 
    /**
    * A container for all the Group<N> objects on this processor.

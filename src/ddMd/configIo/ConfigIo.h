@@ -17,6 +17,7 @@
 
 #include <util/containers/DArray.h>              // member
 
+#include <ddMd/chemistry/MaskPolicy.h>
 
 namespace DdMd
 {
@@ -26,7 +27,6 @@ namespace DdMd
    class AtomStorage;
    class BondStorage;
    class Buffer;
-   enum  MaskPolicy;
 
    using namespace Util;
 
