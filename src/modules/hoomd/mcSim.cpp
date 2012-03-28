@@ -11,6 +11,10 @@
 #include <unistd.h>
 #include <memory>
 
+#ifdef UTIL_MPI
+#include <mpi.h>
+#endif
+
 using namespace McMd;
 using namespace Util;
 
@@ -81,7 +85,12 @@ int main(int argc, char **argv)
       }
    }
 
-   McSimulation simulation;
+   #ifdef UTIL_MPI
+   MPI::Init();
+   McMd::McSimulation simulation(MPI::COMM_WORLD);
+   #else
+   McMd::McSimulation simulation;
+   #endif
 
    // Set flag to echo parameters as they are read.
    if (eflag) {
@@ -114,6 +123,9 @@ int main(int argc, char **argv)
    // Read command script to run simulation
    simulation.readCommands();
 
+   #ifdef UTIL_MPI
+   MPI::Finalize();
+   #endif
    // Normal completion
    return 0;
 

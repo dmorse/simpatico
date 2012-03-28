@@ -89,7 +89,7 @@ int main(int argc, char **argv)
       simulation.system().setExpectPerturbation();
 
       #ifdef UTIL_MPI
-      Log::file() << "Set to read parameters from a single file" << std::endl;
+      Util::Log::file() << "Set to read parameters from a single file" << std::endl;
       simulation.setParamCommunicator();
       #endif
 

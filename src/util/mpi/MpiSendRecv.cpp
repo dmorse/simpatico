@@ -2,6 +2,7 @@
 #ifndef MPI_SEND_RECV_CPP
 #define MPI_SEND_RECV_CPP
 
+#include <string.h>
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
