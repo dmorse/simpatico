@@ -43,31 +43,6 @@ name that is constructed by appending a sequential integer
 index to a base file name. The base file name is specified in 
 the DumpConfig parameter file block. 
 
-Diagnostic classes that are used for on-the-fly analysis may 
-also be used for postprocessing of configuration dump files. 
-To postprocess a sequence of configuration files, one must
-create a parameter file very similar to the one used in the 
-original simulation, followed by a command script that contains 
-an "ANALYZE" command, rather than a "SIMULATE" command. The
-ANALYZE command causes the program to read in a sequence of
-configuration files and treat the configurations exactly as 
-if they were generated during a simulation. Normally, the
-"interval" parameter should be set to 1 for all diagnostics
-in a parameter file that is intended for use in postprocessing,
-if one wishes each diagnostic in the DiagnosticManager block
-to be applied to every configuration file. The names of the
-configuration files are constructed by concatenating the
-input prefix, a base name that is specified in the ANALYZE
-command and an integer in a range that is specified in the
-ANALYZE command.  If the input prefix is set to in/, the 
-command
-\code
-   ANALYZE  0   19   config
-\endcode
-causes the main Simulation object to read in and apply all of
-the specified diagnostics to configurations files with names 
-in/config.0 in/config.1 ... in/config.19.
-
 <ul>
  <li> \ref cfgfile_page  (Prev) </li>
  <li> \ref guide_page     (Up)   </li>

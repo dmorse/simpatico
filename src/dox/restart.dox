@@ -5,7 +5,8 @@ namespace McMd
 
 The -r command line option of mcSim or mdSim option can be used to 
 restart a simulation, while preserving the full internal state of 
-the simulation. 
+the simulation. This restart capability has not yet been added to 
+ddSim.
 
 In order to restart a simulation, the original simulation must be run
 using the MdWriteRestart or McWriteRestart diagnostic, which periodically
