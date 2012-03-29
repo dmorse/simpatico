@@ -193,6 +193,8 @@ namespace McMd
 
    void MigratingVanHove::update(const int &partnerId)
    {
+      int myId = communicatorPtr_->Get_rank();
+      
       int size;
       size = memorySize(accumulators_);
       size += memorySize(fourierModes_);
@@ -207,17 +209,26 @@ namespace McMd
       sendCurrent << nBuffer_;
       sendCurrent << nSample_;
       
-      sendCurrent.send(*communicatorPtr_, partnerId);
-       
-      MemoryIArchive recvCurrent;
-      recvCurrent.allocate(size);
- 
-      recvCurrent.recv(*communicatorPtr_, partnerId);
+      MemoryIArchive recvPartner;
+      recvPartner.allocate(size);
+
+      if (myId % 2 == 0)
+      {
+         sendCurrent.send(*communicatorPtr_, partnerId);
+      } else if (myId % 2 == 1) {
+         recvPartner.recv(*communicatorPtr_, partnerId);
+      }
+      if (myId % 2 == 1)
+      {
+         sendCurrent.send(*communicatorPtr_, partnerId);
+      } else if (myId % 2 == 0) {
+         recvPartner.recv(*communicatorPtr_, partnerId);
+      }
       
-      recvCurrent >> accumulators_;
-      recvCurrent >> fourierModes_;
-      recvCurrent >> nBuffer_;
-      recvCurrent >> nSample_;
+      recvPartner >> accumulators_;
+      recvPartner >> fourierModes_;
+      recvPartner >> nBuffer_;
+      recvPartner >> nSample_;
    }
 
    /*
