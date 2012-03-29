@@ -612,6 +612,26 @@ namespace DdMd
    }
 
    /*
+   * Find all ghost members of groups at the end of exchangeGhosts.
+   */
+   template <int N>
+   void Exchanger::findGroupGhosts(GroupStorage<N>& storage)
+   {
+      GroupIterator<N> groupIter;
+      int nAtom;
+      storage.begin(groupIter);
+      for ( ; !groupIter.atEnd(); ++groupIter) {
+         nAtom = groupIter->nPtr();
+         if (nAtom < N) {
+            nAtom = atomStoragePtr_->findGroupAtoms(*groupIter);
+            if (nAtom < N) {
+               UTIL_THROW("Incomplete group after search for ghosts");
+            }
+         }
+      }
+   }
+
+   /*
    * Exchange ghost atoms.
    *
    * Call immediately after exchangeAtoms and before rebuilding the 
@@ -847,19 +867,9 @@ namespace DdMd
 
       } // end for Cartesian index i
 
+
       // Find ghost atoms for all incomplete bonds
-      GroupIterator<2> bondIter;
-      int nAtom;
-      bondStoragePtr_->begin(bondIter);
-      for ( ; !bondIter.atEnd(); ++bondIter) {
-         nAtom = bondIter->nPtr();
-         if (nAtom < 2) {
-            nAtom = atomStoragePtr_->findGroupAtoms(*bondIter);
-            if (nAtom < 2) {
-               UTIL_THROW("Incomplete group at end of exchangeGhosts");
-            }
-         }
-      }
+      findGroupGhosts<2>(*bondStoragePtr_);
 
       #ifdef UTIL_DEBUG
       #ifdef EXCHANGER_DEBUG

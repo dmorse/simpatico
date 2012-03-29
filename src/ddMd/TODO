@@ -1,13 +1,13 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
+Pairs and bonds:
+----------------
+
 - Add needStress to Simulation, and as argument to addForces() method 
   of potentials. 
 
 - Port NPH integrator.
-
-- Absorb code for bonds in ConfigIo and Exchanger into template methods, 
-  to simplify addition of angles and dihedrals.
 
 - Add ConfigIo factory and SET_CONFIG_IO command.
 
@@ -18,3 +18,29 @@ Domain Decomposition MD (DdMd)
   Integrator (check that number of interacting pairs doesn't change),
   System (test with very small system, 1x1x1 grid).
 
+External Potential:
+-------------------
+
+- Finish ExternalPotential class, and associated implementation and
+  factory class. Figure out how to test this. 
+
+- Add externalPotential() to Simulation, invoke methods to test 
+  external forces and energies. 
+
+- Test convservation of energy with external forces. 
+
+
+Angles and dihedrals:
+--------------------
+
+- Add angles and dihedrals to Exchanger, test this thoroughly.
+
+- Create AnglePotential and DihedralPotential classes, with associated
+  implementation and factory classes.
+
+- Add AnglePotential and DihedralPotential classes to Simulation.
+
+- Add methods to (conditionally) calculate angle and dihedral forces 
+  in Simulation.
+
+- Test conservation of energy.

@@ -24,6 +24,7 @@ namespace DdMd
    template <int N>
    GroupCollector<N>::GroupCollector() 
     : domainPtr_(0),
+      storagePtr_(0),
       bufferPtr_(0),
       source_(-1),
       recvBufferSize_(-1),
@@ -71,7 +72,7 @@ namespace DdMd
    {
       // Preconditions
       if (!domainPtr_) {
-         UTIL_THROW("Collector not initialized");
+         UTIL_THROW("Collector not initialized: No associated domain");
       }
       if (!domainPtr_->isInitialized()) {
          UTIL_THROW("Domain is not initialized");
@@ -112,6 +113,9 @@ namespace DdMd
       }
       if (!domainPtr_->isMaster()) {
          UTIL_THROW("Not the master processor");
+      }
+      if (recvArray_.capacity() <= 0) {
+         UTIL_THROW("Cache not allocated");
       }
 
       // If master processor
@@ -201,14 +205,26 @@ namespace DdMd
    {
 
       // Preconditions
-      if (!bufferPtr_->isInitialized()) {
-         UTIL_THROW("Buffer not allocated");
+      if (!domainPtr_) {
+         UTIL_THROW("Collector not initialized: null domainPtr_");
       }
       if (!domainPtr_->isInitialized()) {
          UTIL_THROW("Domain is not initialized");
       }
       if (domainPtr_->isMaster()) {
          UTIL_THROW("GroupCollector<N>::send() called from master node.");
+      }
+      if (!storagePtr_) {
+         UTIL_THROW("Collector not initialized: Null storagePtr_");
+      }
+      if (storagePtr_->capacity() <= 0) {
+         UTIL_THROW("GroupStorage not initialized");
+      }
+      if (!bufferPtr_) {
+         UTIL_THROW("Collector not initialized: Null bufferPtr_");
+      }
+      if (!bufferPtr_->isInitialized()) {
+         UTIL_THROW("Buffer not allocated");
       }
 
       Atom* atomPtr = 0;
@@ -232,6 +248,8 @@ namespace DdMd
          bufferPtr_->clearSendBuffer();
          bufferPtr_->beginSendBlock(Buffer::GROUP, N);
          while (recvArraySize_ < bufferCapacity && !isComplete_) {
+            // Get pointer to first atom in Group
+            // Send group only if this is a local atom.
             atomPtr = iterator_->atomPtr(0);
             if (atomPtr) {
                if (!atomPtr->isGhost()) {

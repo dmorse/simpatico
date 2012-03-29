@@ -12,10 +12,19 @@
 
 #include <ddMd/simulation/Simulation.h>                 
 #include <ddMd/communicate/Domain.h>   
+
 #include <ddMd/storage/AtomStorage.h>               
 #include <ddMd/storage/BondStorage.h>               
+#ifdef INTER_ANGLE
+#include <ddMd/storage/AngleStorage.h>               
+#endif
+#ifdef INTER_DIHEDRAL
+#include <ddMd/storage/DihedralStorage.h>               
+#endif
+
 #include <ddMd/communicate/GroupCollector_inc.h> 
 #include <ddMd/communicate/GroupDistributor.cpp> 
+
 #include <ddMd/communicate/Buffer.h> 
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Bond.h>
@@ -38,27 +47,62 @@ namespace DdMd
       boundaryPtr_(0),
       atomStoragePtr_(0),
       bondStoragePtr_(0),
+      #ifdef INTER_ANGLE
+      angleStoragePtr_(0),
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStoragePtr_(0),
+      #endif
       atomCacheCapacity_(0),
       bondCacheCapacity_(0)
+      #ifdef INTER_ANGLE
+      , angleCacheCapacity_(0)
+      #endif
+      #ifdef INTER_DIHEDRAL
+      , dihedralCacheCapacity_(0)
+      #endif
    {}
 
    /*
-   * Read cache size and allocate memory.
+   * Associate with required domain, boundary, storage, and buffer objects.
    */
    void ConfigIo::associate(Domain& domain, Boundary& boundary,
                             AtomStorage& atomStorage,
                             BondStorage& bondStorage,
+                            #ifdef INTER_ANGLE
+                            AngleStorage& angleStorage,
+                            #endif
+                            #ifdef INTER_DIHEDRAL
+                            DihedralStorage& dihedralStorage,
+                            #endif
                             Buffer& buffer)
    {
       domainPtr_ = &domain;
       boundaryPtr_ = &boundary;
+
       atomStoragePtr_ = &atomStorage;
-      bondStoragePtr_ = &bondStorage;
       atomDistributor_.associate(domain, boundary, atomStorage, buffer);
+      atomCollector_.associate(domain, atomStorage, buffer);
+
+      bondStoragePtr_ = &bondStorage;
       bondDistributor_.associate(domain, atomStorage,
                                  bondStorage, buffer);
-      atomCollector_.associate(domain, atomStorage, buffer);
       bondCollector_.associate(domain, bondStorage, buffer);
+
+      #ifdef INTER_ANGLE
+      angleStoragePtr_ = &angleStorage;
+      angleDistributor_.associate(domain, atomStorage,
+                                  angleStorage, buffer);
+      angleCollector_.associate(domain, angleStorage, buffer);
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      dihedralStoragePtr_ = &dihedralStorage;
+      dihedralDistributor_.associate(domain, atomStorage,
+                                     dihedralStorage, buffer);
+      dihedralCollector_.associate(domain, dihedralStorage, buffer);
+      #endif
+
    }
 
    /*
@@ -68,25 +112,52 @@ namespace DdMd
    {
       readBegin(in, "ConfigIo");
       read<int>(in, "atomCacheCapacity", atomCacheCapacity_);
-      read<int>(in, "bondCacheCapacity", bondCacheCapacity_);
-      readEnd(in);
       atomDistributor_.setParam(atomCacheCapacity_);
-      bondDistributor_.setParam(bondCacheCapacity_);
       atomCollector_.allocate(atomCacheCapacity_);
+      read<int>(in, "bondCacheCapacity", bondCacheCapacity_);
+      bondDistributor_.setParam(bondCacheCapacity_);
       bondCollector_.allocate(bondCacheCapacity_);
+      #ifdef INTER_ANGLE
+      read<int>(in, "angleCacheCapacity", angleCacheCapacity_);
+      angleDistributor_.setParam(angleCacheCapacity_);
+      angleCollector_.allocate(angleCacheCapacity_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      read<int>(in, "dihedralCacheCapacity", dihedralCacheCapacity_);
+      dihedralDistributor_.setParam(dihedralCacheCapacity_);
+      dihedralCollector_.allocate(dihedralCacheCapacity_);
+      #endif
+      readEnd(in);
    }
 
    /*
    * Set parameters and allocate memory.
    */
-   void ConfigIo::initialize(int atomCacheCapacity, int bondCacheCapacity)
+   void ConfigIo::initialize(int atomCacheCapacity, int bondCacheCapacity
+                             #ifdef INTER_ANGLE
+                             , int angleCacheCapacity
+                             #endif
+                             #ifdef INTER_DIHEDRAL
+                             , int dihedralCacheCapacity
+                             #endif
+                            )
    {
       atomCacheCapacity_ = atomCacheCapacity;
       bondCacheCapacity_ = bondCacheCapacity;
       atomDistributor_.setParam(atomCacheCapacity_);
-      bondDistributor_.setParam(bondCacheCapacity_);
       atomCollector_.allocate(atomCacheCapacity_);
+      bondDistributor_.setParam(bondCacheCapacity_);
       bondCollector_.allocate(bondCacheCapacity_);
+      #ifdef INTER_ANGLE
+      angleCacheCapacity_ = angleCacheCapacity;
+      angleDistributor_.setParam(angleCacheCapacity_);
+      angleCollector_.allocate(angleCacheCapacity);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralCacheCapacity_ = dihedralCacheCapacity;
+      dihedralDistributor_.setParam(dihedralCacheCapacity_);
+      dihedralCollector_.allocate(dihedralCacheCapacity_);
+      #endif
    }
 
    /*
@@ -102,7 +173,7 @@ namespace DdMd
       if (domain().isMaster()) {  
          file >> Label(sectionLabel);
          file >> Label(nGroupLabel) >> nGroup;
-         Bond* groupPtr;
+         Group<N>* groupPtr;
          int i, j, k;
          distributor.initSendBuffer();
          for (i = 0; i < nGroup; ++i) {
@@ -202,7 +273,20 @@ namespace DdMd
          }
       }
 
+      bool hasGhosts = false;
+
       int nBond = readGroups<2>(file, "BONDS", "nBond", bondDistributor());
+      bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+
+      #ifdef INTER_ANGLE
+      int nAngle = readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
+      angleStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      int nDihedral = readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
+      dihedralStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+      #endif
 
       // Set atom "masks" to suppress pair interactions
       // between covalently bonded atoms.
@@ -222,7 +306,7 @@ namespace DdMd
                   GroupStorage<N>& storage,
                   GroupCollector<N>& collector) 
    {
-      Group<2>* groupPtr;
+      Group<N>* groupPtr;
       int       nGroup;
       storage.computeNTotal(domain().communicator());
       nGroup = storage.nTotal();
@@ -278,8 +362,14 @@ namespace DdMd
          atomCollector_.send();
       }
 
-      // Write the bonds
+      // Write the groups
       writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector_);
+      #ifdef INTER_ANGLE
+      writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), angleCollector_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(), dihedralCollector_);
+      #endif
 
    }
  

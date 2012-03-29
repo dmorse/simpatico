@@ -9,6 +9,12 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/storage/BondStorage.h>
+#ifdef INTER_ANGLE
+#include <ddMd/storage/AngleStorage.h>
+#endif
+#ifdef INTER_DIHEDRAL
+#include <ddMd/storage/DihedralStorage.h>
+#endif
 #include <ddMd/chemistry/MaskPolicy.h>
 #include <util/random/Random.h>
 #include <util/mpi/MpiLogger.h>
@@ -35,6 +41,12 @@ private:
    Buffer buffer;
    AtomStorage atomStorage;
    BondStorage bondStorage;
+   #ifdef INTER_ANGLE
+   AngleStorage angleStorage;
+   #endif
+   #ifdef INTER_DIHEDRAL
+   DihedralStorage dihedralStorage;
+   #endif
    ConfigIo configIo;
    Random random;
    int atomCount;
@@ -46,7 +58,14 @@ public:
 
       // Set connections between atomDistributors
       domain.setBoundary(boundary);
-      configIo.associate(domain, boundary, atomStorage, bondStorage, buffer);
+      configIo.associate(domain, boundary, atomStorage, bondStorage, 
+                         #ifdef INTER_ANGLE
+                         angleStorage,
+                         #endif
+                         #ifdef INTER_DIHEDRAL
+                         dihedralStorage,
+                         #endif
+                         buffer);
       object().associate(domain, boundary, atomStorage, bondStorage, buffer);
 
       #ifdef UTIL_MPI
@@ -55,6 +74,12 @@ public:
       domain.setParamCommunicator(communicator());
       atomStorage.setParamCommunicator(communicator());
       bondStorage.setParamCommunicator(communicator());
+      #ifdef INTER_ANGLE
+      angleStorage.setParamCommunicator(communicator());
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage.setParamCommunicator(communicator());
+      #endif
       buffer.setParamCommunicator(communicator());
       configIo.setParamCommunicator(communicator());
       random.setParamCommunicator(communicator());
@@ -68,6 +93,12 @@ public:
       domain.readParam(file());
       atomStorage.readParam(file());
       bondStorage.readParam(file());
+      #ifdef INTER_ANGLE
+      angleStorage.readParam(file());
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage.readParam(file());
+      #endif
       buffer.readParam(file());
       configIo.readParam(file());
       random.readParam(file());

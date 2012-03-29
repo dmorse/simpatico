@@ -111,6 +111,7 @@ void ChainMaker::writeChainsDdMd(std::ostream& out)
       }
    }
 
+   // Write bonds
    out << std::endl;
    out << "BONDS" << std::endl;
    out << "nBond  " << nMolecule_*(nAtomPerMolecule_ -1 ) << std::endl;
@@ -126,7 +127,7 @@ void ChainMaker::writeChainsDdMd(std::ostream& out)
       ++i;
    }
 
-   #ifdef INTER_ANGLE
+   // Write angles
    int angleType = 0;
    out << std::endl;
    out << "ANGLES" << std::endl;
@@ -143,9 +144,8 @@ void ChainMaker::writeChainsDdMd(std::ostream& out)
       }
       i += 2;
    }
-   #endif
 
-   #ifdef INTER_DIHEDRAL
+   // Write dihedrals
    int dihedralType = 0;
    out << std::endl;
    out << "DIHEDRALS" << std::endl;
@@ -162,7 +162,6 @@ void ChainMaker::writeChainsDdMd(std::ostream& out)
       }
       i += 3;
    }
-   #endif
 
 }
 

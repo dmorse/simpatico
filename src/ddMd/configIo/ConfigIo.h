@@ -10,8 +10,8 @@
 
 #include <util/param/ParamComposite.h>           // base class
 #include <ddMd/communicate/AtomDistributor.h>    // member 
-#include <ddMd/communicate/GroupDistributor.h>    // member 
 #include <ddMd/communicate/AtomCollector.h>      // member 
+#include <ddMd/communicate/GroupDistributor.h>    // member 
 #include <ddMd/communicate/GroupCollector.h>     // member 
 #include <util/boundary/Boundary.h>              // typedef
 
@@ -26,6 +26,8 @@ namespace DdMd
    class Domain;
    class AtomStorage;
    class BondStorage;
+   class AngleStorage;
+   class DihedralStorage;
    class Buffer;
 
    using namespace Util;
@@ -49,6 +51,12 @@ namespace DdMd
       void associate(Domain& domain, Boundary& boundary,
                      AtomStorage& atomStorage,
                      BondStorage& bondStorage,
+                     #ifdef INTER_ANGLE
+                     AngleStorage& angleStorage,
+                     #endif
+                     #ifdef INTER_DIHEDRAL
+                     DihedralStorage& dihedralStorage,
+                     #endif
                      Buffer& buffer);
 
       /**
@@ -63,7 +71,14 @@ namespace DdMd
       * \param bondCacheCapacity size of internal bond cache. 
       */
       virtual void initialize(int atomCacheCapacity = 100,
-                              int bondCacheCapacity = 100);
+                              int bondCacheCapacity = 100
+                              #ifdef INTER_ANGLE
+                              , int angleCacheCapacity = 100
+                              #endif
+                              #ifdef INTER_DIHEDRAL                             
+                              , int dihedralCacheCapacity = 100
+                              #endif
+                              );
 
       /**
       * Read configuration file.
@@ -98,19 +113,43 @@ namespace DdMd
       AtomDistributor& atomDistributor();
 
       /**
-      * Get the AtomDistributor by reference.
-      */
-      GroupDistributor<2>& bondDistributor();
-
-      /**
       * Get the AtomCollector by reference.
       */
       AtomCollector& atomCollector();
 
       /**
+      * Get the AtomDistributor by reference.
+      */
+      GroupDistributor<2>& bondDistributor();
+
+      /**
       * Get the bond collector by reference.
       */
       GroupCollector<2>& bondCollector();
+
+      #ifdef INTER_ANGLE
+      /**
+      * Get the angle distributor by reference.
+      */
+      GroupDistributor<3>& angleDistributor();
+
+      /**
+      * Get the angle collector by reference.
+      */
+      GroupCollector<3>& angleCollector();
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      /**
+      * Get the dihedral distributor by reference.
+      */
+      GroupDistributor<4>& dihedralDistributor();
+
+      /**
+      * Get the dihedral collector by reference.
+      */
+      GroupCollector<4>& dihedralCollector();
+      #endif
 
       /**
       * Get the Domain by reference.
@@ -128,19 +167,41 @@ namespace DdMd
       AtomStorage& atomStorage();
    
       /**
-      * Get AtomStorage by reference.
+      * Get BondStorage by reference.
       */
       BondStorage& bondStorage();
+  
+      #ifdef INTER_ANGLE 
+      /**
+      * Get AngleStorage by reference.
+      */
+      AngleStorage& angleStorage();
+      #endif
+   
+      #ifdef INTER_DIHEDRAL
+      /**
+      * Get DihedralStorage by reference.
+      */
+      DihedralStorage& dihedralStorage();
+      #endif
    
    private:
 
-      AtomDistributor  atomDistributor_;
+      AtomDistributor atomDistributor_;
+      AtomCollector atomCollector_;
 
       GroupDistributor<2> bondDistributor_;
+      GroupCollector<2> bondCollector_;
 
-      AtomCollector  atomCollector_;
+      #ifdef INTER_ANGLE
+      GroupDistributor<3> angleDistributor_;
+      GroupCollector<3> angleCollector_;
+      #endif
 
-      GroupCollector<2>  bondCollector_;
+      #ifdef INTER_DIHEDRAL
+      GroupDistributor<4> dihedralDistributor_;
+      GroupCollector<4> dihedralCollector_;
+      #endif
 
       Domain* domainPtr_;
 
@@ -150,9 +211,25 @@ namespace DdMd
 
       BondStorage* bondStoragePtr_;
 
+      #ifdef INTER_ANGLE
+      AngleStorage* angleStoragePtr_;
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      DihedralStorage* dihedralStoragePtr_;
+      #endif
+
       int  atomCacheCapacity_;
 
       int  bondCacheCapacity_;
+
+      #ifdef INTER_ANGLE
+      int  angleCacheCapacity_;
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      int  dihedralCacheCapacity_;
+      #endif
 
       /**
       * Read Group<N> objects from file. 
@@ -177,14 +254,30 @@ namespace DdMd
    inline AtomDistributor& ConfigIo::atomDistributor()
    { return atomDistributor_; }
 
-   inline GroupDistributor<2>& ConfigIo::bondDistributor()
-   { return bondDistributor_; }
-
    inline AtomCollector& ConfigIo::atomCollector()
    { return atomCollector_; }
 
+   inline GroupDistributor<2>& ConfigIo::bondDistributor()
+   { return bondDistributor_; }
+
    inline GroupCollector<2>& ConfigIo::bondCollector()
    { return bondCollector_; }
+
+   #ifdef INTER_ANGLE
+   inline GroupDistributor<3>& ConfigIo::angleDistributor()
+   { return angleDistributor_; }
+
+   inline GroupCollector<3>& ConfigIo::angleCollector()
+   { return angleCollector_; }
+   #endif
+
+   #ifdef INTER_DIHEDRAL
+   inline GroupDistributor<4>& ConfigIo::dihedralDistributor()
+   { return dihedralDistributor_; }
+
+   inline GroupCollector<4>& ConfigIo::dihedralCollector()
+   { return dihedralCollector_; }
+   #endif
 
    inline Domain& ConfigIo::domain()
    { return *domainPtr_; }
@@ -197,6 +290,16 @@ namespace DdMd
 
    inline BondStorage& ConfigIo::bondStorage()
    { return *bondStoragePtr_; }
+
+   #ifdef INTER_ANGLE
+   inline AngleStorage& ConfigIo::angleStorage()
+   { return *angleStoragePtr_; }
+   #endif
+
+   #ifdef INTER_DIHEDRAL
+   inline DihedralStorage& ConfigIo::dihedralStorage()
+   { return *dihedralStoragePtr_; }
+   #endif
 
 }
 #endif

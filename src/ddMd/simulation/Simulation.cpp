@@ -77,6 +77,12 @@ namespace DdMd
    #endif
     : atomStorage_(),
       bondStorage_(),
+      #ifdef INTER_ANGLE
+      angleStorage_(),
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage_(),
+      #endif
       boundary_(),
       atomTypes_(),
       domain_(),
@@ -226,6 +232,12 @@ namespace DdMd
       readParamComposite(in, domain_);
       readParamComposite(in, atomStorage_);
       readParamComposite(in, bondStorage_);
+      #ifdef INTER_ANGLE
+      readParamComposite(in, angleStorage_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      readParamComposite(in, dihedralStorage_);
+      #endif
       readParamComposite(in, buffer_);
 
       // Read types
@@ -270,7 +282,14 @@ namespace DdMd
 
       configIoPtr_ = new ConfigIo();             // Todo: Add factory
       configIoPtr_->associate(domain_, boundary_,
-                              atomStorage_, bondStorage_, buffer_);
+                              atomStorage_, bondStorage_, 
+                              #ifdef INTER_ANGLE
+                              angleStorage_,
+                              #endif
+                              #ifdef INTER_DIHEDRAL
+                              dihedralStorage_,
+                              #endif
+                              buffer_);
       //readParamComposite(in, *configIoPtr_);
       configIoPtr_->initialize();
 
@@ -661,7 +680,7 @@ namespace DdMd
       // Calculate maximum square displacment among along nodes
       double maxSqDisp = atomStorage_.maxSqDisplacement();
       double maxSqDispAll;
-      #if UTIL_MPI
+      #ifdef UTIL_MPI
       domain_.communicator().Reduce(&maxSqDisp, &maxSqDispAll, 1, 
                                     MPI::DOUBLE, MPI::MAX, 0);
       #else
@@ -676,7 +695,7 @@ namespace DdMd
          }
       }
 
-      #if UTIL_MPI
+      #ifdef UTIL_MPI
       // Broadcast decision to all nodes
       domain_.communicator().Bcast(&needed, 1, MPI::INT, 0);
       #endif
@@ -854,17 +873,22 @@ namespace DdMd
       #ifdef UTIL_MPI
       domain_.communicator().Reduce(&nGhost, &nGhostAll, 1, 
                                     MPI::INT, MPI::SUM, 0);
+      bcast(domain_.communicator(), nGhostAll, 0);
       #else
       nGhostAll = nGhost;
-      #endif
-      #if UTIL_MPI
-      bcast(domain_.communicator(), nGhostAll, 0);
       #endif
       bool hasGhosts = bool(nGhostAll);
 
       bondStorage_.isValid(atomStorage_, domain_.communicator(), hasGhosts);
-      return true; 
+      #ifdef INTER_ANGLE
+      angleStorage_.isValid(atomStorage_, domain_.communicator(), hasGhosts);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStorage_.isValid(atomStorage_, domain_.communicator(), 
+                               hasGhosts);
+      #endif
 
+      return true; 
    }
 
 }
