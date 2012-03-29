@@ -1,8 +1,6 @@
 #ifndef DDMD_EXCHANGER_CPP
 #define DDMD_EXCHANGER_CPP
 
-#define EXCHANGER_DEBUG
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
@@ -16,7 +14,6 @@
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
-#include <ddMd/storage/BondStorage.h>
 #include <ddMd/storage/GroupStorage.h>
 #include <ddMd/storage/GroupIterator.h>
 #include <util/mpi/MpiLogger.h>
@@ -24,6 +21,8 @@
 
 #include <algorithm>
 #include <string>
+
+//#define EXCHANGER_DEBUG
 
 namespace DdMd
 {
@@ -48,13 +47,25 @@ namespace DdMd
    void Exchanger::associate(const Domain& domain, 
                              const Boundary& boundary, 
                              AtomStorage& atomStorage, 
-                             BondStorage& bondStorage, 
+                             GroupStorage<2>& bondStorage, 
+                             #ifdef INTER_ANGLE
+                             GroupStorage<3>& angleStorage, 
+                             #endif
+                             #ifdef INTER_DIHEDRAL
+                             GroupStorage<4>& dihedralStorage, 
+                             #endif
                              Buffer& buffer)
    {
       domainPtr_ = &domain;
       boundaryPtr_ = &boundary;
       atomStoragePtr_ = &atomStorage;
       bondStoragePtr_ = &bondStorage;
+      #ifdef INTER_ANGLE
+      angleStoragePtr_ = &angleStorage;
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStoragePtr_ = &dihedralStorage;
+      #endif
       bufferPtr_ = &buffer;
    }
 
@@ -79,6 +90,12 @@ namespace DdMd
          }
       }
       emptyBonds_.reserve(sendRecvCapacity);
+      #ifdef INTER_ANGLE
+      emptyAngles_.reserve(sendRecvCapacity);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      emptyDihedrals_.reserve(sendRecvCapacity);
+      #endif
    }
 
    /*
@@ -180,7 +197,9 @@ namespace DdMd
    * Pack bonds that contain postmarked atoms.
    */
    template <int N>
-   void Exchanger::packGroups(int i, int j, GroupStorage<N>& storage)
+   void Exchanger::packGroups(int i, int j, 
+                              GroupStorage<N>& storage, 
+                              APArray< Group<N> >& emptyGroups)
    {
       GroupIterator<N> groupIter;
       Atom* atomPtr;
@@ -188,7 +207,7 @@ namespace DdMd
       bool choose;
 
       bufferPtr_->beginSendBlock(Buffer::GROUP, N);
-      emptyBonds_.clear();
+      emptyGroups.clear();
       storage.begin(groupIter);
       for ( ; !groupIter.atEnd(); ++groupIter) {
          atomStoragePtr_->findGroupAtoms(*groupIter);
@@ -206,7 +225,7 @@ namespace DdMd
             }
          }
          if (nAtom == 0) {
-            emptyBonds_.append(*groupIter);
+            emptyGroups.append(*groupIter);
          }
          if (choose) {
             bufferPtr_->packGroup<N>(*groupIter);
@@ -219,24 +238,25 @@ namespace DdMd
    * Remove empty bonds from GroupStorage<N>.
    */
    template <int N>
-   void Exchanger::removeEmptyGroups(GroupStorage<N>& storage)
+   void Exchanger::removeEmptyGroups(GroupStorage<N>& storage,
+                                     APArray< Group<N> >& emptyGroups)
    {
       Atom* atomPtr;
       int k, m, atomId;
-      int nEmpty = emptyBonds_.size();
+      int nEmpty = emptyGroups.size();
       for (k = 0; k < nEmpty; ++k) {
          #ifdef UTIL_DEBUG
          #ifdef EXCHANGER_DEBUG
-         // Confirm that bond is actually empty
+         // Confirm that group is actually empty
          for (m = 0; m < N; ++m) {
-            atomId  = emptyBonds_[k].atomId(m);
-            atomPtr = emptyBonds_[k].atomPtr(m);
+            atomId  = emptyGroups[k].atomId(m);
+            atomPtr = emptyGroups[k].atomPtr(m);
             assert(atomPtr == 0);
             assert(atomStoragePtr_->find(atomId) == 0);
          }
          #endif
          #endif
-         storage.remove(&(emptyBonds_[k]));
+         storage.remove(&(emptyGroups[k]));
       }
    }
 
@@ -347,7 +367,6 @@ namespace DdMd
       double coordinate;
       AtomIterator atomIter;
       GhostIterator ghostIter;
-      //GroupIterator<2> bondIter;
       Atom* atomPtr;
       int i, j, jc, k, m, source, dest, nSend;
       int atomId, nAtom;
@@ -423,6 +442,12 @@ namespace DdMd
       } // end atom loop, end compute plan
 
       initGroupGhostPlan<2>(*bondStoragePtr_);
+      #ifdef INTER_ANGLE
+      initGroupGhostPlan<3>(*angleStoragePtr_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      initGroupGhostPlan<4>(*dihedralStoragePtr_);
+      #endif
 
       // Clear all ghost atoms from AtomStorage
       atomStoragePtr_->clearGhosts();
@@ -525,7 +550,13 @@ namespace DdMd
                bufferPtr_->endSendBlock();
 
                // Pack bonds that contain postmarked atoms.
-               packGroups<2>(i, j, *bondStoragePtr_);
+               packGroups<2>(i, j, *bondStoragePtr_, emptyBonds_);
+               #ifdef INTER_ANGLE
+               packGroups<3>(i, j, *angleStoragePtr_, emptyAngles_);
+               #endif
+               #ifdef INTER_DIHEDRAL
+               packGroups<4>(i, j, *dihedralStoragePtr_, emptyDihedrals_);
+               #endif
 
                /*
                * Note: Removal cannot be done within the above loops over 
@@ -540,7 +571,13 @@ namespace DdMd
                }
      
                // Remove empty bonds from bondStorage.
-               removeEmptyGroups<2>(*bondStoragePtr_);
+               removeEmptyGroups<2>(*bondStoragePtr_, emptyBonds_);
+               #ifdef INTER_ANGLE
+               removeEmptyGroups<3>(*angleStoragePtr_, emptyAngles_);
+               #endif
+               #ifdef INTER_DIHEDRAL
+               removeEmptyGroups<4>(*dihedralStoragePtr_, emptyDihedrals_);
+               #endif
 
                // Send to processor dest and receive from processor source
                bufferPtr_->sendRecv(domainPtr_->communicator(), 
@@ -579,6 +616,12 @@ namespace DdMd
 
                // Unpack bonds into bondStorage.
                unpackGroups<2>(*bondStoragePtr_);
+               #ifdef INTER_ANGLE
+               unpackGroups<3>(*angleStoragePtr_);
+               #endif
+               #ifdef INTER_DIHEDRAL
+               unpackGroups<4>(*dihedralStoragePtr_);
+               #endif
 
             } // end if gridDimension > 1
 
@@ -601,13 +644,27 @@ namespace DdMd
          assert(nAtomTotal = atomStoragePtr_->nAtomTotal());
       }
       atomStoragePtr_->isValid();
-      bondStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(),
-                               false);
+      bondStoragePtr_->isValid(*atomStoragePtr_, 
+                               domainPtr_->communicator(), false);
+      #ifdef INTER_ANGLE
+      angleStoragePtr_->isValid(*atomStoragePtr_, 
+                                domainPtr_->communicator(), false);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStoragePtr_->isValid(*atomStoragePtr_, 
+                                   domainPtr_->communicator(), false);
+      #endif
       #endif
       #endif
 
       // Set ghost communication flags for atoms in incomplete bonds
-      finishGroupGhostPlan(*bondStoragePtr_);
+      finishGroupGhostPlan<2>(*bondStoragePtr_);
+      #ifdef INTER_ANGLE
+      finishGroupGhostPlan<3>(*angleStoragePtr_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      finishGroupGhostPlan<4>(*dihedralStoragePtr_);
+      #endif
 
    }
 
@@ -870,6 +927,12 @@ namespace DdMd
 
       // Find ghost atoms for all incomplete bonds
       findGroupGhosts<2>(*bondStoragePtr_);
+      #ifdef INTER_ANGLE
+      findGroupGhosts<3>(*angleStoragePtr_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      findGroupGhosts<4>(*dihedralStoragePtr_);
+      #endif
 
       #ifdef UTIL_DEBUG
       #ifdef EXCHANGER_DEBUG

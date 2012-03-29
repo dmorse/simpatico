@@ -143,7 +143,14 @@ namespace DdMd
       // Set connections between member objects
       domain_.setBoundary(boundary_);
       exchanger_.associate(domain_, boundary_,
-                           atomStorage_, bondStorage_, buffer_);
+                           atomStorage_, bondStorage_, 
+                           #ifdef INTER_ANGLE
+                           angleStorage_,
+                           #endif
+                           #ifdef INTER_DIHEDRAL
+                           dihedralStorage_,
+                           #endif
+                           buffer_);
 
       energyEnsemblePtr_  = new EnergyEnsemble;
       boundaryEnsemblePtr_ = new BoundaryEnsemble;

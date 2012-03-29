@@ -27,13 +27,10 @@ External Potential:
 - Add externalPotential() to Simulation, invoke methods to test 
   external forces and energies. 
 
-- Test convservation of energy with external forces. 
-
+- Test conservation of energy with external forces. 
 
 Angles and dihedrals:
 --------------------
-
-- Add angles and dihedrals to Exchanger, test this thoroughly.
 
 - Create AnglePotential and DihedralPotential classes, with associated
   implementation and factory classes.

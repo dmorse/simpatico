@@ -19,7 +19,6 @@ namespace DdMd
 
    class Domain;
    class AtomStorage;
-   class BondStorage;
    class Buffer;
    template <int N> class GroupStorage;
 
@@ -51,7 +50,13 @@ namespace DdMd
       void associate(const Domain& domain, 
                      const Boundary& boundary, 
                      AtomStorage& atomStorage, 
-                     BondStorage& bondStorage, 
+                     GroupStorage<2>& bondStorage, 
+                     #ifdef INTER_ANGLE
+                     GroupStorage<3>& angleStorage, 
+                     #endif
+                     #ifdef INTER_DIHEDRAL
+                     GroupStorage<4>& dihedralStorage, 
+                     #endif
                      Buffer& buffer);
 
       /**
@@ -131,6 +136,20 @@ namespace DdMd
       */
       APArray< Group<2> > emptyBonds_;
 
+      #ifdef INTER_ANGLE
+      /**
+      * Array of pointers to empty angles on this processor.
+      */
+      APArray< Group<3> > emptyAngles_;
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      /**
+      * Array of pointers to empty dihedrals on this processor.
+      */
+      APArray< Group<4> > emptyDihedrals_;
+      #endif
+
       /// Processor boundaries (minima j=0, maxima j=1)
       FMatrix< double, Dimension, 2>  bound_;
 
@@ -149,8 +168,18 @@ namespace DdMd
       /// Pointer to associated AtomStorage object.
       AtomStorage* atomStoragePtr_;
 
-      /// Pointer to associated AtomStorage object.
+      /// Pointer to associated bond storage object.
       GroupStorage<2>* bondStoragePtr_;
+
+      #ifdef INTER_ANGLE 
+      /// Pointer to associated angle storage object.
+      GroupStorage<3>* angleStoragePtr_;
+      #endif
+
+      #ifdef INTER_ANGLE 
+      /// Pointer to associated dihedral storage object.
+      GroupStorage<4>* dihedralStoragePtr_;
+      #endif
 
       /// Pointer to associated buffer object.
       Buffer*  bufferPtr_;
@@ -172,10 +201,12 @@ namespace DdMd
       void initGroupGhostPlan(GroupStorage<N>& storage);
 
       template <int N>
-      void packGroups(int i, int j, GroupStorage<N>& storage);
+      void packGroups(int i, int j, GroupStorage<N>& storage, 
+                                    APArray< Group<N> >& emptyGroups);
 
       template <int N>
-      void removeEmptyGroups(GroupStorage<N>& storage);
+      void removeEmptyGroups(GroupStorage<N>& storage,
+                             APArray< Group<N> >& emptyGroups);
 
       template <int N>
       void unpackGroups(GroupStorage<N>& storage);

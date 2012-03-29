@@ -66,7 +66,14 @@ public:
                          dihedralStorage,
                          #endif
                          buffer);
-      object().associate(domain, boundary, atomStorage, bondStorage, buffer);
+      object().associate(domain, boundary, atomStorage, bondStorage, 
+                         #ifdef INTER_ANGLE
+                         angleStorage,
+                         #endif
+                         #ifdef INTER_DIHEDRAL
+                         dihedralStorage,
+                         #endif
+                         buffer);
 
       #ifdef UTIL_MPI
       // Set communicators
@@ -91,6 +98,9 @@ public:
       openFile("in/Exchanger");
 
       domain.readParam(file());
+      buffer.readParam(file());
+      configIo.readParam(file());
+      random.readParam(file());
       atomStorage.readParam(file());
       bondStorage.readParam(file());
       #ifdef INTER_ANGLE
@@ -99,9 +109,6 @@ public:
       #ifdef INTER_DIHEDRAL
       dihedralStorage.readParam(file());
       #endif
-      buffer.readParam(file());
-      configIo.readParam(file());
-      random.readParam(file());
 
       // Finish reading parameter file
       closeFile();
@@ -243,9 +250,18 @@ public:
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
       }
 
+      // Call isVlaid() methods of all storage containers.
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   true));
+      #ifdef INTER_ANGLE
+      TEST_ASSERT(angleStorage.isValid(atomStorage, 
+                  domain.communicator(), true));
+      #endif
+      #ifdef INTER_DIHEDRAL
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
+                  domain.communicator(), true));
+      #endif
 
       #if 0
       MpiLogger logger;
@@ -320,6 +336,14 @@ public:
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   true));
+      #ifdef INTER_ANGLE
+      TEST_ASSERT(angleStorage.isValid(atomStorage, 
+                  domain.communicator(), true));
+      #endif
+      #ifdef INTER_DIHEDRAL
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
+                  domain.communicator(), true));
+      #endif
 
    }
 
@@ -389,6 +413,14 @@ public:
          TEST_ASSERT(atomStorage.isValid());
          TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
                                          true)); 
+         #ifdef INTER_ANGLE
+         TEST_ASSERT(angleStorage.isValid(atomStorage, 
+                     domain.communicator(), true));
+         #endif
+         #ifdef INTER_DIHEDRAL
+         TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
+                     domain.communicator(), true));
+         #endif
       }
 
    }
