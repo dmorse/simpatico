@@ -7,14 +7,24 @@ AtomStorage{
   totalAtomCapacity  120
 }
 BondStorage{
-  capacity            20
+  capacity            50
+  totalCapacity      100
+}
+AngleStorage{
+  capacity            50
+  totalCapacity      100
+}
+DihedralStorage{
+  capacity            50
   totalCapacity      100
 }
 Buffer{
-  atomCapacity     8
-  ghostCapacity   10
+  atomCapacity    100
+  ghostCapacity   100
 }
 ConfigIo{
-  atomCacheCapacity   35 
-  bondCacheCapacity   35 
+  atomCacheCapacity      100
+  bondCacheCapacity      100
+  angleCacheCapacity     100
+  dihedralCacheCapacity  100
 }

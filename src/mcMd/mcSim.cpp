@@ -78,7 +78,7 @@ int main(int argc, char **argv)
 
    // Set flag to echo parameters as they are read.
    if (eflag) {
-      McMd::ParamComponent::setEcho(true);
+      Util::ParamComponent::setEcho(true);
    }
 
    #ifdef MCMD_PERTURB

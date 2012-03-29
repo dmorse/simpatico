@@ -14,6 +14,8 @@
 #include <ddMd/communicate/Exchanger.h>          // member 
 #include <ddMd/storage/AtomStorage.h>            // member 
 #include <ddMd/storage/BondStorage.h>            // member 
+#include <ddMd/storage/AngleStorage.h>           // member 
+#include <ddMd/storage/DihedralStorage.h>        // member 
 #include <ddMd/chemistry/AtomType.h>             // member
 #include <ddMd/chemistry/MaskPolicy.h>           // member
 #include <ddMd/diagnostics/DiagnosticManager.h>  // member
@@ -277,6 +279,20 @@ namespace DdMd
       * Get the BondStorage by reference.
       */
       BondStorage& bondStorage();
+  
+      #ifdef INTER_ANGLE 
+      /**
+      * Get the angleStorage by reference.
+      */
+      AngleStorage& angleStorage();
+      #endif
+   
+      #ifdef INTER_DIHEDRAL
+      /**
+      * Get the angleStorage by reference.
+      */
+      DihedralStorage& dihedralStorage();
+      #endif
    
       /**
       * Get the Boundary by reference.
@@ -394,8 +410,18 @@ namespace DdMd
       /// Container for all atoms and ghosts.
       AtomStorage   atomStorage_;
 
-      /// Container for all atoms and ghosts.
+      /// Container for bonds.
       BondStorage   bondStorage_;
+
+      #ifdef INTER_ANGLE
+      /// Container for angles.
+      AngleStorage  angleStorage_;
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      /// Container for dihedrals.
+      DihedralStorage  dihedralStorage_;
+      #endif
 
       /// Periodic system boundary.
       Boundary      boundary_;
@@ -520,6 +546,16 @@ namespace DdMd
 
    inline BondStorage& Simulation::bondStorage()
    { return bondStorage_; }
+
+   #ifdef INTER_ANGLE
+   inline AngleStorage& Simulation::angleStorage()
+   { return angleStorage_; }
+   #endif
+
+   #ifdef INTER_DIHEDRAL
+   inline DihedralStorage& Simulation::dihedralStorage()
+   { return dihedralStorage_; }
+   #endif
 
    inline Exchanger& Simulation::exchanger()
    { return exchanger_; }

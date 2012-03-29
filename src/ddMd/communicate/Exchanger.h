@@ -183,6 +183,9 @@ namespace DdMd
       template <int N>
       void finishGroupGhostPlan(GroupStorage<N>& storage);
 
+      template <int N>
+      void findGroupGhosts(GroupStorage<N>& storage);
+
    };
 
 }
