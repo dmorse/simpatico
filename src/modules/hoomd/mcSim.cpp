@@ -7,6 +7,7 @@
 // Custom factory classes
 #include "mcMoves/HoomdMcMoveFactory.h"
 #include "potentials/pair/HoomdPairFactory.h"
+#include "potentials/external/HoomdExternalFactory.h"
 
 #include <unistd.h>
 #include <memory>

@@ -1,4 +1,4 @@
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #ifndef HOOMD_LJ_PAIR_CPP
 #define HOOMD_LJ_PAIR_CPP
 

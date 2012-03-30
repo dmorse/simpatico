@@ -13,7 +13,7 @@
 #include "perturbation/HoomdMcPerturbationFactory.h"
 #endif
 
-#ifdef MCMD_EXTERNAL
+#ifdef INTER_EXTERNAL
 #include "potentials/external/HoomdExternalFactory.h"
 #include <mcMd/potentials/external/ExternalFactory.h>
 #endif 
@@ -34,7 +34,7 @@ namespace McMd
       perturbationFactoryPtr_
           = new HoomdMcPerturbationFactory(system());
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       externalFactoryPtr_ 
           = new HoomdExternalFactory(system());
       #endif
@@ -51,7 +51,7 @@ namespace McMd
 
    void HoomdMcModule::addFactories()
    {
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       system().pairFactory().addSubfactory(*pairFactoryPtr_);
       #endif
       simulation().mcMoveFactory().addSubfactory(*mcMoveFactoryPtr_);
@@ -61,7 +61,7 @@ namespace McMd
             *perturbationFactoryPtr_);
       }
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       system().externalFactory().addSubfactory(*externalFactoryPtr_);
       #endif
    }

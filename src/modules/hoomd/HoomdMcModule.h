@@ -17,7 +17,7 @@ namespace McMd
    class McMove;
    class PairFactory;
 
-   #ifdef MCMD_EXTERNAL
+   #ifdef INTER_EXTERNAL
    class ExternalFactory;
    #endif
 
@@ -54,7 +54,7 @@ namespace McMd
       Factory<Perturbation>* perturbationFactoryPtr_;
       #endif   
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       ExternalFactory*     externalFactoryPtr_;
       #endif
    };

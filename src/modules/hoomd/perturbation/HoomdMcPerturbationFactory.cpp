@@ -12,7 +12,7 @@
 #include "HoomdMcPerturbationFactory.h"  
 
 // Subclasses of Perturbation
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #include <mcMd/perturb/mcSystem/McPairPerturbation.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/pair/McPairPotential.h>
@@ -20,7 +20,7 @@
 #include <modules/hoomd/potentials/pair/HoomdLJPair.h>
 #include <modules/hoomd/potentials/pair/HoomdDpdPair.h>
 #endif
-#ifdef MCMD_EXTERNAL
+#ifdef INTER_EXTERNAL
 #include <mcMd/perturb/mcSystem/McExternalPerturbation.h>
 #include <mcMd/mcSimulation/McSystem.h>
 #include <mcMd/potentials/external/ExternalPotential.h>
@@ -28,8 +28,8 @@
 #include <modules/hoomd/potentials/external/HoomdLamellarExternal.h>
 #endif
 
-#ifndef MCMD_NOPAIR
-#ifdef MCMD_EXTERNAL
+#ifndef INTER_NOPAIR
+#ifdef INTER_EXTERNAL
 #include <mcMd/perturb/mcSystem/McPairExternalPerturbation.h>
 #endif
 #endif
@@ -51,7 +51,7 @@ namespace McMd
    {
       Perturbation *ptr = 0;
 
-      #ifndef MCMD_NOPAIR
+      #ifndef INTER_NOPAIR
       if (className == "McPairPerturbation") {
          const std::string& interactionClassName = systemPtr_->pairPotential().
             interactionClassName();
@@ -62,13 +62,13 @@ namespace McMd
          } 
       } 
       #endif
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       if (className == "McExternalPerturbation") {
          ptr = new McExternalPerturbation(*systemPtr_);
       }
       #endif
-      #ifdef MCMD_EXTERNAL
-      #ifndef MCMD_NOPAIR
+      #ifdef INTER_EXTERNAL
+      #ifndef INTER_NOPAIR
       if (className == "McPairExternalPerturbation") {
          const std::string& interactionClassName = systemPtr_->pairPotential().
             interactionClassName();

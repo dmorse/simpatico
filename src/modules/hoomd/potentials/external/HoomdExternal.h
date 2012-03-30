@@ -1,4 +1,4 @@
-#ifdef MCMD_EXTERNAL
+#ifdef INTER_EXTERNAL
 #ifndef HOOMD_EXTERNAL_H
 #define HOOMD_EXTERNAL_H
 

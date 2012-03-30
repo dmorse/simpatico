@@ -27,7 +27,7 @@
 #include <modules/hoomd/potentials/pair/HoomdPairPotential.h>
 #include <modules/hoomd/potentials/pair/HoomdPair.h>
 #include <modules/hoomd/potentials/bond/HoomdBond.h>
-#ifdef MCMD_EXTERNAL
+#ifdef INTER_EXTERNAL
 #include <mcMd/potentials/external/ExternalPotential.h>
 #include <modules/hoomd/potentials/external/HoomdExternalFactory.h>
 #include <modules/hoomd/potentials/external/HoomdExternal.h>
@@ -327,7 +327,7 @@ namespace McMd
       pairForceSPtr_ = HoomdPairFactory::hoomdFactory(system().pairPotential(),
          system(), systemDefinitionSPtr_,nListSPtr_,skin_);
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       externalForceSPtr_ = HoomdExternalFactory::hoomdFactory(system().externalPotential(),system(),
          systemDefinitionSPtr_);
       #endif 
@@ -392,7 +392,7 @@ namespace McMd
       // register pair and bond forces in Integrator
       integratorSPtr_->addForceCompute(pairForceSPtr_);
       integratorSPtr_->addForceCompute(bondForceSPtr_);
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       integratorSPtr_->addForceCompute(externalForceSPtr_);
       #endif
 

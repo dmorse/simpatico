@@ -1,4 +1,4 @@
-#ifdef MCMD_EXTERNAL
+#ifdef INTER_EXTERNAL
 #ifndef HOOMD_EXTERNAL_FACTORY_H
 #define HOOMD_EXTERNAL_FACTORY_H
 
@@ -94,7 +94,7 @@ namespace McMd
          UTIL_THROW("Not a Hoomd potential.");
 
       HoomdExternal < hoomd_evaluator, gpu_cpef >
-         *hoomdExternalPtr = dynamic_cast< HoomdExternal<hoomd_evaluator, gpu_cpef> *>(&(evalPtr->evaluator()));
+         *hoomdExternalPtr = dynamic_cast< HoomdExternal<hoomd_evaluator, gpu_cpef> *>(&(evalPtr->interaction()));
       assert(hoomdExternalPtr);
         
       // Create and register external potential
