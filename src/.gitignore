@@ -1,2 +1,5 @@
 compiler.mk
 edit.py
+*.a
+*.o
+.gitignore

@@ -1,4 +1,4 @@
-#ifndef MCMD_NOPAIR
+#ifndef INTER_NOPAIR
 #ifndef HOOMD_PAIR_FACTORY_H
 #define HOOMD_PAIR_FACTORY_H
 

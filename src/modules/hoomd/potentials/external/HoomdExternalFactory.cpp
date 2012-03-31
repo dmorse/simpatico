@@ -1,4 +1,4 @@
-#ifdef MCMD_EXTERNAL
+#ifdef INTER_EXTERNAL
 #ifndef HOOMD_EXTERNAL_FACTORY_CPP
 #define HOOMD_EXTERNAL_FACTORY_CPP
 
@@ -60,7 +60,7 @@ namespace McMd
       System &system,
       boost::shared_ptr<SystemDefinition> systemDefinitionSPtr)
    {
-      std::string className = potential.evaluatorClassName();
+      std::string className = potential.interactionClassName();
       boost::shared_ptr<ForceCompute> externalSPtr;
 
       if (className == "HoomdLamellarExternal") {

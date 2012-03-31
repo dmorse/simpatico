@@ -140,7 +140,7 @@ namespace McMd
       /// HOOMD pair potential
       boost::shared_ptr< ForceCompute > pairForceSPtr_;
 
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       /// HOOMD external potential
       boost::shared_ptr< ForceCompute > externalForceSPtr_;
       #endif 

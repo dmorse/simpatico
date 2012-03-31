@@ -95,12 +95,10 @@ namespace McMd
       */
       virtual void getForce(const Vector& position, int typeId, Vector& force) const;
 
-      #if 0
       /**
       * Return external interaction class name (e.g., "TanhCosineExternal").
       */
       virtual std::string interactionClassName() const;
-      #endif
 
       /**
       * Add external force of an Atom to the total force acting on it.
@@ -293,14 +291,12 @@ namespace McMd
    inline const Interaction& ExternalPotentialImpl<Interaction>::interaction() const
    { return *interactionPtr_; }
 
-   #if 0
    /*
    * Return external interaction class name.
    */
    template <class Interaction>
    std::string ExternalPotentialImpl<Interaction>::interactionClassName() const
    {  return interaction().className(); }
-   #endif
 
 }
 #endif

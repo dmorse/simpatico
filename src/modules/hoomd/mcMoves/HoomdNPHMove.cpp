@@ -102,7 +102,7 @@ namespace McMd
       // register pair and bond forces in Integrator
       integratorSPtr_->addForceCompute(pairForceSPtr_);
       integratorSPtr_->addForceCompute(bondForceSPtr_);
-      #ifdef MCMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       integratorSPtr_->addForceCompute(externalForceSPtr_);
       #endif
 
