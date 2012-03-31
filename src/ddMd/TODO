@@ -28,23 +28,16 @@ Pairs and bonds:
 External Potential:
 -------------------
 
-- Finish ExternalPotential class, and associated implementation and
-  factory class. Figure out how to test this. 
+- Write unit test. 
 
-- Add externalPotential() to Simulation, invoke methods to test 
-  external forces and energies. 
-
-- Test conservation of energy with external forces. 
+- Add forces and energies to Simulation, test conservation of energy.
 
 Angles and dihedrals:
 --------------------
 
-- Create AnglePotential and DihedralPotential classes, with associated
-  implementation and factory classes.
+- Write unit test for angles.
 
-- Add AnglePotential and DihedralPotential classes to Simulation.
+- Add forces and energies to Simulation, test conservation of energy.
 
-- Add methods to (conditionally) calculate angle and dihedral forces 
-  in Simulation.
+- Repeat for dihedrals.
 
-- Test conservation of energy.
