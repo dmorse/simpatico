@@ -42,9 +42,9 @@ namespace DdMd
       AnglePotentialImpl(Simulation& simulation);
 
       /** 
-      * Constructor.
+      * Default constructor.
       */
-      AnglePotentialImpl(Boundary& boundary, GroupStorage<3>& storage);
+      AnglePotentialImpl();
 
       /** 
       * Destructor.
@@ -225,9 +225,8 @@ namespace DdMd
    * Default constructor.
    */
    template <class Interaction>
-   AnglePotentialImpl<Interaction>::AnglePotentialImpl(Boundary& boundary,
-                                   GroupStorage<3>& storage)
-    : AnglePotential(boundary, storage),
+   AnglePotentialImpl<Interaction>::AnglePotentialImpl()
+    : AnglePotential(),
       interactionPtr_(0)
    {  interactionPtr_ = new Interaction(); }
  
@@ -367,12 +366,10 @@ namespace DdMd
       Atom* atom0Ptr;
       Atom* atom1Ptr;
       Atom* atom2Ptr;
-      int   type;
-      int   isLocal0, isLocal1, isLocal2;
+      int   type, isLocal0, isLocal1, isLocal2;
 
       storagePtr_->begin(iter);
       for ( ; !iter.atEnd(); ++iter) {
-
          type = iter->typeId();
          atom0Ptr = iter->atomPtr(0);
          atom1Ptr = iter->atomPtr(1);
@@ -380,13 +377,11 @@ namespace DdMd
          isLocal0 = !(atom0Ptr->isGhost());
          isLocal1 = !(atom1Ptr->isGhost());
          isLocal2 = !(atom2Ptr->isGhost());
-
          // Calculate minimimum image separations
          rsq1 = boundaryPtr_->distanceSq(atom1Ptr->position(),
-                                      atom0Ptr->position(), dr1);
+                                         atom0Ptr->position(), dr1);
          rsq2 = boundaryPtr_->distanceSq(atom2Ptr->position(),
-                                      atom1Ptr->position(), dr2);
-
+                                         atom1Ptr->position(), dr2);
          if (needEnergy) {
             cosTheta = dr1.dot(dr2) / sqrt(rsq1 * rsq2);
             angleEnergy += interaction().energy(cosTheta, type);
@@ -402,7 +397,7 @@ namespace DdMd
                atom1Ptr->force() -= f1;
                atom1Ptr->force() += f2;
             }
-            if (isLocal1) {
+            if (isLocal2) {
                atom2Ptr->force() -= f2;
             }
          }

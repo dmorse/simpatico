@@ -24,13 +24,21 @@ namespace DdMd
    {}
 
    /*
-   * Constructor (for unit testing).
+   * Default constructor (for unit testing).
    */
-   BondPotential::BondPotential(Boundary& boundary,
-                                GroupStorage<2>& storage)
-    : boundaryPtr_(&boundary),
-      storagePtr_(&storage)
-   {}
+   BondPotential::BondPotential()
+    : boundaryPtr_(0),
+      storagePtr_(0)
+   {} 
+
+   /*
+   * Associate with related objects. (for unit testing).
+   */
+   void BondPotential::associate(Boundary& boundary, GroupStorage<2>& storage)
+   {
+      boundaryPtr_ = &boundary;
+      storagePtr_ = &storage;
+   } 
 
    /*
    * Destructor.

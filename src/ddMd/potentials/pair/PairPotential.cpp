@@ -23,6 +23,18 @@ namespace DdMd
    using namespace Util;
 
    /*
+   * Default constructor (for unit testing).
+   */
+   PairPotential::PairPotential()
+    : skin_(0.0),
+      cutoff_(0.0),
+      boundaryPtr_(0),
+      domainPtr_(0),
+      storagePtr_(0),
+      pairCapacity_(0)
+   {} 
+
+   /*
    * Constructor.
    */
    PairPotential::PairPotential(Simulation& simulation)
@@ -35,17 +47,15 @@ namespace DdMd
    {}
 
    /*
-   * Constructor (for unit testing).
+   * Associate with related objects. (for unit testing).
    */
-   PairPotential::PairPotential(Boundary& boundary, Domain& domain,
-                                AtomStorage& storage)
-    : skin_(0.0),
-      boundaryPtr_(&boundary),
-      domainPtr_(&domain),
-      storagePtr_(&storage),
-      pairCapacity_(0)
-   
-   {} 
+   void PairPotential::associate(Domain& domain, Boundary& boundary, 
+                                 AtomStorage& storage)
+   {
+      domainPtr_ = &domain;
+      boundaryPtr_ = &boundary;
+      storagePtr_ = &storage;
+   } 
 
    /*
    * Destructor.

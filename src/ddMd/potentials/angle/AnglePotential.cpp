@@ -24,13 +24,21 @@ namespace DdMd
    {}
 
    /*
-   * Constructor (for unit testing).
+   * Default constructor (for unit testing).
    */
-   AnglePotential::AnglePotential(Boundary& boundary,
-                                GroupStorage<3>& storage)
-    : boundaryPtr_(&boundary),
-      storagePtr_(&storage)
-   {}
+   AnglePotential::AnglePotential()
+    : boundaryPtr_(0),
+      storagePtr_(0)
+   {} 
+
+   /*
+   * Associate with related objects. (for unit testing).
+   */
+   void AnglePotential::associate(Boundary& boundary, GroupStorage<3>& storage)
+   {
+      boundaryPtr_ = &boundary;
+      storagePtr_ = &storage;
+   } 
 
    /*
    * Destructor.

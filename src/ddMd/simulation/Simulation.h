@@ -48,7 +48,7 @@ namespace DdMd
    class DihedralPotential;
    #endif
    #ifdef INTER_EXTERNAL
-   class ExternallPotential;
+   class ExternalPotential;
    #endif
 
    using namespace Util;
@@ -392,6 +392,13 @@ namespace DdMd
       int nDihedralType();
       #endif
 
+      #ifdef INTER_EXTERNAL
+      /**
+      * Does this simulation have an external potential?
+      */
+      bool hasExternal();
+      #endif
+
       /**
       * Get an AtomType descriptor by reference.
       */
@@ -600,6 +607,11 @@ namespace DdMd
       int nDihedralType_;
       #endif
 
+      #ifdef INTER_EXTERNAL
+      /// Does this simulation have an external potential?
+      bool hasExternal_;
+      #endif
+
       /**
       * Policy for suppressing pair interactions for some atom pairs.
       *
@@ -755,6 +767,14 @@ namespace DdMd
    */
    inline int Simulation::nDihedralType()
    {  return nDihedralType_; }
+   #endif
+
+   #if INTER_EXTERNAL
+   /*
+   * Does this simulation have an external potential?
+   */
+   inline bool Simulation::hasExternal()
+   {  return hasExternal_; }
    #endif
 
    /*

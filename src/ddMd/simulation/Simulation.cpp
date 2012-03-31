@@ -35,11 +35,11 @@
 #include <ddMd/potentials/dihedral/DihedralPotentialImpl.h>
 #include <ddMd/potentials/dihedral/DihedralFactory.h>
 #endif
+#endif
 #ifdef INTER_EXTERNAL
 #include <ddMd/potentials/external/ExternalPotential.h>
 #include <ddMd/potentials/external/ExternalPotentialImpl.h>
 #include <ddMd/potentials/external/ExternalFactory.h>
-#endif
 #endif
 
 #if 0
@@ -327,13 +327,12 @@ namespace DdMd
       dihedralPotentialPtr_->setNDihedralType(nDihedralType_);
       readParamComposite(in, *dihedralPotentialPtr_);
       #endif
+      #endif // if 0
 
       #ifdef INTER_EXTERNAL
       externalPotentialPtr_ = externalFactory().factory(externalStyle());
       readParamComposite(in, *externalPotentialPtr_);
       #endif
-
-      #endif // if 0
 
       readEnsembles(in);
 

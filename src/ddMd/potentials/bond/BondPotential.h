@@ -37,12 +37,19 @@ namespace DdMd
       BondPotential(Simulation& simulation);
 
       /**
-      * Constructor (for unit testing).
+      * Default constructor (for unit testing).
+      */
+      BondPotential();
+
+      /**
+      * Associate with related objects.
+      *
+      * Call iff object instantiated with default constructor.
       *
       * \param boundary associated Boundary object.
-      * \param storage  associated bond storage.
+      * \param storage  associated GroupStorage<2> object.
       */
-      BondPotential(Boundary& boundary, GroupStorage<2>& storage);
+      void associate(Boundary& boundary, GroupStorage<2>& storage);
 
       /**
       * Destructor.

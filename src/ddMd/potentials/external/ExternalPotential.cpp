@@ -12,7 +12,6 @@
 #include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
-#include <ddMd/communicate/Domain.h>
 #include <util/space/Vector.h>
 #include <util/global.h>
 
@@ -26,19 +25,25 @@ namespace DdMd
    ExternalPotential::ExternalPotential(Simulation& simulation)
     : simulationPtr_(&simulation),
       boundaryPtr_(&simulation.boundary()),
-      domainPtr_(&simulation.domain()),
       storagePtr_(&simulation.atomStorage())
    {}
 
    /*
-   * Constructor (for unit testing).
+   * Default constructor (for unit testing).
    */
-   ExternalPotential::ExternalPotential(Boundary& boundary, Domain& domain,
-                                AtomStorage& storage)
-    : boundaryPtr_(&boundary),
-      domainPtr_(&domain),
-      storagePtr_(&storage)
+   ExternalPotential::ExternalPotential()
+    : boundaryPtr_(0),
+      storagePtr_(0)
    {} 
+
+   /*
+   * Associate with related objects. (for unit testing).
+   */
+   void ExternalPotential::associate(Boundary& boundary, AtomStorage& storage)
+   {
+      boundaryPtr_ = &boundary;
+      storagePtr_ = &storage;
+   } 
 
    /*
    * Destructor.

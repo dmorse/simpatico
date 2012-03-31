@@ -42,9 +42,9 @@ namespace DdMd
       BondPotentialImpl(Simulation& simulation);
 
       /** 
-      * Constructor.
+      * Default constructor.
       */
-      BondPotentialImpl(Boundary& boundary, GroupStorage<2>& storage);
+      BondPotentialImpl();
 
       /** 
       * Destructor.
@@ -221,9 +221,8 @@ namespace DdMd
    * Default constructor.
    */
    template <class Interaction>
-   BondPotentialImpl<Interaction>::BondPotentialImpl(Boundary& boundary,
-                                   GroupStorage<2>& storage)
-    : BondPotential(boundary, storage),
+   BondPotentialImpl<Interaction>::BondPotentialImpl()
+    : BondPotential(),
       interactionPtr_(0)
    {  interactionPtr_ = new Interaction(); }
  

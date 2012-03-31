@@ -37,17 +37,24 @@ namespace DdMd
       AnglePotential(Simulation& simulation);
 
       /**
-      * Constructor (for unit testing).
-      *
-      * \param boundary associated Boundary object.
-      * \param storage  associated angle storage.
+      * Default constructor (for unit testing).
       */
-      AnglePotential(Boundary& boundary, GroupStorage<3>& storage);
+      AnglePotential();
 
       /**
       * Destructor.
       */
       ~AnglePotential();
+
+      /**
+      * Associate with related objects.
+      *
+      * Call iff object instantiated with default constructor.
+      *
+      * \param boundary associated Boundary object.
+      * \param storage  associated angle storage object.
+      */
+      void associate(Boundary& boundary, GroupStorage<3>& storage);
 
       /// \name Interaction interface
       //@{

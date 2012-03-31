@@ -38,18 +38,25 @@ namespace DdMd
    public:
 
       /**
+      * Default constructor (for unit testing).
+      */
+      PairPotential();
+
+      /**
       * Constructor.
       */
       PairPotential(Simulation& simulation);
 
       /**
-      * Constructor (for unit testing).
+      * Associate with related objects.
       *
-      * \param boundary    associated Boundary object.
-      * \param domain      associated Domain object.
-      * \param storage     associated AtomStorage object.
+      * Call iff object instantiated with default constructor.
+      *
+      * \param domain   associated Domain object.
+      * \param boundary associated Boundary object.
+      * \param storage  associated AtomStorage object.
       */
-      PairPotential(Boundary& boundary, Domain& domain, AtomStorage& storage);
+      void associate(Domain& domain, Boundary& boundary, AtomStorage& storage);
 
       /**
       * Destructor.

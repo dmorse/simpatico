@@ -19,7 +19,6 @@ namespace DdMd
 
    class Simulation;
    class AtomStorage;
-   class Domain;
 
    using namespace Util;
 
@@ -37,14 +36,19 @@ namespace DdMd
       ExternalPotential(Simulation& simulation);
 
       /**
-      * Constructor (for unit testing).
-      *
-      * \param boundary    associated Boundary object.
-      * \param domain      associated Domain object.
-      * \param storage     associated AtomStorage object.
+      * Default constructor (for unit testing).
       */
-      ExternalPotential(Boundary& boundary, Domain& domain, 
-                        AtomStorage& storage);
+      ExternalPotential();
+
+      /**
+      * Associate with related objects.
+      *
+      * Call iff object instantiated with default constructor.
+      *
+      * \param boundary associated Boundary object.
+      * \param storage  associated AtomStorage object.
+      */
+      void associate(Boundary& boundary, AtomStorage& storage);
 
       /**
       * Destructor.
@@ -125,11 +129,6 @@ namespace DdMd
       Boundary& boundary();
 
       /**
-      * Get the Domain by reference.
-      */
-      Domain& domain();
-
-      /**
       * Get the AtomStorage by reference.
       */
       AtomStorage& storage();
@@ -142,9 +141,6 @@ namespace DdMd
       // Pointer to associated Boundary object.
       Boundary* boundaryPtr_;
 
-      // Pointer to associated Domain object.
-      Domain* domainPtr_;
-
       // Pointer to associated AtomStorage object.
       AtomStorage* storagePtr_;
 
@@ -155,9 +151,6 @@ namespace DdMd
 
    inline Boundary& ExternalPotential::boundary() 
    {  return *boundaryPtr_; }
-
-   inline Domain& ExternalPotential::domain()
-   {  return *domainPtr_; }
 
    inline AtomStorage& ExternalPotential::storage()
    {  return *storagePtr_; }

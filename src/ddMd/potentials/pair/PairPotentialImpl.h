@@ -40,6 +40,11 @@ namespace DdMd
       PairPotentialImpl(Simulation& simulation);
 
       /** 
+      * Default constructor (for unit testing).
+      */
+      PairPotentialImpl();
+
+      /** 
       * Destructor.
       */
       virtual ~PairPotentialImpl();
@@ -246,7 +251,7 @@ namespace DdMd
    using namespace Util;
 
    /* 
-   * Default constructor.
+   * Constructor.
    */
    template <class Interaction>
    PairPotentialImpl<Interaction>::PairPotentialImpl(Simulation& simulation)
@@ -255,6 +260,17 @@ namespace DdMd
       methodId_(0)
    {  interactionPtr_ = new Interaction; }
  
+   /* 
+   * Default constructor.
+   */
+   template <class Interaction>
+   PairPotentialImpl<Interaction>::PairPotentialImpl()
+    : PairPotential(),
+      interactionPtr_(0),
+      methodId_(0)
+   {  interactionPtr_ = new Interaction; }
+ 
+   /* 
    /* 
    * Destructor. 
    */

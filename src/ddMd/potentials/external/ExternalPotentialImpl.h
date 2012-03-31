@@ -40,6 +40,11 @@ namespace DdMd
       ExternalPotentialImpl(Simulation& simulation);
 
       /** 
+      * Default constructor (for unit testing).
+      */
+      ExternalPotentialImpl();
+
+      /** 
       * Destructor.
       */
       virtual ~ExternalPotentialImpl();
@@ -186,7 +191,6 @@ namespace DdMd
 //#include <ddMd/simulation/stress.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
-#include <ddMd/communicate/Domain.h>
 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
@@ -202,11 +206,20 @@ namespace DdMd
    using namespace Util;
 
    /* 
-   * Default constructor.
+   * Constructor.
    */
    template <class Interaction>
    ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(Simulation& simulation)
     : ExternalPotential(simulation),
+      interactionPtr_(0)
+   {  interactionPtr_ = new Interaction; }
+ 
+   /* 
+   * Default constructor.
+   */
+   template <class Interaction>
+   ExternalPotentialImpl<Interaction>::ExternalPotentialImpl()
+    : ExternalPotential(),
       interactionPtr_(0)
    {  interactionPtr_ = new Interaction; }
  
