@@ -1,6 +1,13 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
+- Move main integration loop into integrator, give the integrator a 
+  method named "run" or "integrate" that takes an integer number of 
+  steps as a parameter.
+
+- Create a DdMd::MdTimer class similar to that in lammps. Add timer
+  to the main loop, to help assessing bottlenecks. 
+
 Pairs and bonds:
 ----------------
 

@@ -35,20 +35,29 @@ namespace McMd {
 namespace DdMd
 {
 
-   class PairPotential;
-   class BondPotential;
-   class Integrator;
    class ConfigIo;
    class FileMaster;
    class DiagnosticManager;
+   class Integrator;
+   class PairPotential;
+   class BondPotential;
+   #ifdef INTER_ANGLE
+   class AnglePotential;
+   #endif
+   #ifdef INTER_DIHEDRAL
+   class DihedralPotential;
+   #endif
+   #ifdef INTER_EXTERNAL
+   class ExternallPotential;
+   #endif
 
    using namespace Util;
 
    /**
    * Main object for a domain-decomposition MD simulation.
    *
-   * A DdMd::Simulation contains and coordinates all the components of a parallel
-   * MD simulation. 
+   * A DdMd::Simulation contains and coordinates all the components of a 
+   * parallel MD simulation. 
    *
    * \ingroup DdMd_Module
    */
@@ -174,18 +183,6 @@ namespace DdMd
       */
       double potentialEnergy();
 
-      #if 0
-      /**
-      * Calculate total bond potential energy.
-      * 
-      * Reduce operation: Must be called on all nodes but returns correct
-      * total value only on grid communicator master.
-      *
-      * \return total bond potential for all nodes on master, 0.0 otherwise.
-      */
-      double bondPotentialEnergy();
-      #endif
-
       /// \name Config File IO
       //@{
 
@@ -215,7 +212,7 @@ namespace DdMd
       /// \name Potential Energy Factories and Styles
       //@{
 
-      #ifndef DDMD_NOPAIR
+      #ifndef INTER_NOPAIR
       /**
       * Get the Factory<PairPotential> by reference.
       */
@@ -237,7 +234,7 @@ namespace DdMd
       */
       std::string bondStyle() const;
 
-      #ifdef DDMD_ANGLE
+      #ifdef INTER_ANGLE
       /**
       * Get the associated AngleFactory by reference.
       */
@@ -249,7 +246,7 @@ namespace DdMd
       std::string angleStyle() const;
       #endif
 
-      #ifdef DDMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /**
       * Get the associated Dihedral Factory by reference.
       */
@@ -259,6 +256,18 @@ namespace DdMd
       * Return dihedral potential style string.
       */
       std::string dihedralStyle() const;
+      #endif
+
+      #ifdef INTER_EXTERNAL
+      /**
+      * Get the associated External Factory by reference.
+      */
+      Factory<ExternalPotential>& externalFactory();
+
+      /**
+      * Return external potential style string.
+      */
+      std::string externalStyle() const;
       #endif
 
       //@}
@@ -308,6 +317,27 @@ namespace DdMd
       * Get the PairPotential by reference.
       */
       BondPotential& bondPotential();
+  
+      #ifdef INTER_ANGLE 
+      /**
+      * Get the AnglePotential by reference.
+      */
+      AnglePotential& anglePotential();
+      #endif
+   
+      #ifdef INTER_DIHEDRAL
+      /**
+      * Get the DihedralPotential by reference.
+      */
+      DihedralPotential& dihedralPotential();
+      #endif
+   
+      #ifdef INTER_EXTERNAL
+      /**
+      * Get the ExternalPotential by reference.
+      */
+      ExternalPotential& externalPotential();
+      #endif
    
       /**
       * Get the Integrator by reference.
@@ -347,6 +377,20 @@ namespace DdMd
       * Get maximum number of bond types.
       */
       int nBondType();
+
+      #ifdef INTER_ANGLE
+      /**
+      * Get maximum number of angle types.
+      */
+      int nAngleType();
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      /**
+      * Get maximum number of dihedral types.
+      */
+      int nDihedralType();
+      #endif
 
       /**
       * Get an AtomType descriptor by reference.
@@ -450,8 +494,23 @@ namespace DdMd
       /// Pointer to force/energy evaluator.
       PairPotential* pairPotentialPtr_;
 
-      /// Pointer to force/energy evaluator.
+      /// Pointer to covalent bond potential.
       BondPotential* bondPotentialPtr_;
+
+      #ifdef INTER_ANGLE
+      /// Pointer to covalent 3-body angle potential.
+      AnglePotential* anglePotentialPtr_;
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      /// Pointer to covalent 4-body dihedral potential.
+      DihedralPotential* dihedralPotentialPtr_;
+      #endif
+
+      #ifdef INTER_EXTERNAL
+      /// Pointer to external 1-body potential.
+      ExternalPotential* externalPotentialPtr_;
+      #endif
 
       /// Pointer to MD integrator.
       Integrator*   integratorPtr_;
@@ -471,22 +530,27 @@ namespace DdMd
       /// DiagnosticManager
       DiagnosticManager*  diagnosticManagerPtr_;
 
-      #ifndef DDMD_NOPAIR
+      #ifndef INTER_NOPAIR
       /// Pointer to a PairPotential factory.
       Factory<PairPotential>*  pairFactoryPtr_;
       #endif
 
       /// Pointer to a Factory<BondPotential>.
-      Factory<BondPotential>*  bondFactoryPtr_;
+      Factory<BondPotential>* bondFactoryPtr_;
 
-      #ifdef DDMD_ANGLE
+      #ifdef INTER_ANGLE
       /// Pointer to the AnglePotential Factory.
-      Factory<AnglePotential>*  angleFactoryPtr_;
+      Factory<AnglePotential>* angleFactoryPtr_;
       #endif
 
-      #ifdef DDMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /// Pointer to DihedralPotential Factory
-      Factory<DihedralPotential>*  dihedralFactoryPtr_;
+      Factory<DihedralPotential>* dihedralFactoryPtr_;
+      #endif
+
+      #ifdef INTER_EXTERNAL
+      /// Pointer to ExternalPotential Factory
+      Factory<ExternalPotential>* externalFactoryPtr_;
       #endif
 
       /// Pointer to MD integrator factory.
@@ -497,7 +561,7 @@ namespace DdMd
       Factory<ConfigIo>* configIoFactoryPtr_;
       #endif
 
-      #ifndef DDMD_NOPAIR
+      #ifndef INTER_NOPAIR
       /// Name of pair potential style.
       std::string pairStyle_;
       #endif
@@ -505,14 +569,19 @@ namespace DdMd
       /// Name of bond potential style.
       std::string bondStyle_;
 
-      #ifdef DDMD_ANGLE
+      #ifdef INTER_ANGLE
       /// Name of angle potential style.
       std::string angleStyle_;
       #endif
 
-      #ifdef DDMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       /// Name of dihedral potential style.
       std::string dihedralStyle_;
+      #endif
+
+      #ifdef INTER_EXTERNAL
+      /// Name of external potential style.
+      std::string externalStyle_;
       #endif
 
       /// Number of distinct atom types.
@@ -520,6 +589,16 @@ namespace DdMd
 
       /// Number of distinct bond types.
       int nBondType_;
+
+      #ifdef INTER_ANGLE
+      /// Number of distinct angle types.
+      int nAngleType_;
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      /// Number of distinct dihedral types.
+      int nDihedralType_;
+      #endif
 
       /**
       * Policy for suppressing pair interactions for some atom pairs.
@@ -572,6 +651,39 @@ namespace DdMd
       return *bondPotentialPtr_; 
    }
 
+   #ifdef INTER_ANGLE
+   inline AnglePotential& Simulation::anglePotential()
+   { 
+      assert(anglePotentialPtr_); 
+      return *anglePotentialPtr_; 
+   }
+   #endif
+
+   #ifdef INTER_DIHEDRAL
+   /*
+   * Get the DihedralPotential by reference.
+   */
+   inline DihedralPotential& Simulation::dihedralPotential()
+   { 
+      assert(dihedralPotentialPtr_); 
+      return *dihedralPotentialPtr_; 
+   }
+   #endif
+
+   #ifdef INTER_EXTERNAL
+   /*
+   * Get the ExternalPotential by reference.
+   */
+   inline ExternalPotential& Simulation::externalPotential()
+   { 
+      assert(externalPotentialPtr_); 
+      return *externalPotentialPtr_; 
+   }
+   #endif
+
+   /*
+   * Get the Integrator by reference.
+   */
    inline Integrator& Simulation::integrator()
    {
       assert(integratorPtr_); 
@@ -629,6 +741,22 @@ namespace DdMd
    inline int Simulation::nBondType()
    {  return nBondType_; }
 
+   #if INTER_ANGLE
+   /*
+   * Get maximum number of angle types.
+   */
+   inline int Simulation::nAngleType()
+   {  return nAngleType_; }
+   #endif
+
+   #if INTER_DIHEDRAL
+   /*
+   * Get maximum number of dihedral types.
+   */
+   inline int Simulation::nDihedralType()
+   {  return nDihedralType_; }
+   #endif
+
    /*
    * Get an AtomType descriptor by reference.
    */
@@ -637,7 +765,6 @@ namespace DdMd
 
    inline MaskPolicy Simulation::maskedPairPolicy() const
    {  return maskedPairPolicy_; }
-
 
 }
 #endif

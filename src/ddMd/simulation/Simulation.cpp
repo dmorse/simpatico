@@ -10,33 +10,38 @@
 
 #include "Simulation.h"
 #include <ddMd/storage/AtomIterator.h>
-#include <ddMd/potentials/pair/PairPotential.h>
-#include <ddMd/potentials/pair/PairPotentialImpl.h>
-#include <ddMd/potentials/bond/BondPotential.h>
-#include <ddMd/potentials/bond/BondPotentialImpl.h>
 #include <ddMd/integrator/Integrator.h>
 #include <ddMd/integrator/IntegratorFactory.h>
-#include <ddMd/integrator/NveIntegrator.h>
 #include <ddMd/configIo/ConfigIo.h>
 #include <ddMd/util/FileMaster.h>
 #include <ddMd/diagnostics/DiagnosticManager.h>
 
 #ifndef DDMD_NOPAIR
+#include <ddMd/potentials/pair/PairPotential.h>
+#include <ddMd/potentials/pair/PairPotentialImpl.h>
 #include <ddMd/potentials/pair/PairFactory.h>
 #endif
+#include <ddMd/potentials/bond/BondPotential.h>
+#include <ddMd/potentials/bond/BondPotentialImpl.h>
 #include <ddMd/potentials/bond/BondFactory.h>
-#ifdef DDMD_ANGLE
+#ifdef INTER_ANGLE
+#include <ddMd/potentials/angle/AnglePotential.h>
+#include <ddMd/potentials/angle/AnglePotentialImpl.h>
 #include <ddMd/potentials/angle/AngleFactory.h>
 #endif
-#ifdef DDMD_DIHEDRAL
+#if 0
+#ifdef INTER_DIHEDRAL
+#include <ddMd/potentials/dihedral/DihedralPotential.h>
+#include <ddMd/potentials/dihedral/DihedralPotentialImpl.h>
 #include <ddMd/potentials/dihedral/DihedralFactory.h>
 #endif
-#ifdef DDMD_EXTERNAL
+#ifdef INTER_EXTERNAL
+#include <ddMd/potentials/external/ExternalPotential.h>
+#include <ddMd/potentials/external/ExternalPotentialImpl.h>
 #include <ddMd/potentials/external/ExternalFactory.h>
 #endif
-#if 0
-#include <ddMd/integrator/IntegratorFactory.h>
 #endif
+
 #if 0
 #include <ddMd/configIos/ConfigIoFactory.h>
 #endif
@@ -93,6 +98,15 @@ namespace DdMd
       kineticEnergy_(0.0),
       pairPotentialPtr_(0),
       bondPotentialPtr_(0),
+      #ifdef INTER_ANGLE
+      anglePotentialPtr_(),
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotentialPtr_(),
+      #endif
+      #ifdef INTER_EXTERNAL
+      externalPotentialPtr_(),
+      #endif
       integratorPtr_(0),
       configIoPtr_(0),
       energyEnsemblePtr_(0),
@@ -102,10 +116,13 @@ namespace DdMd
       pairFactoryPtr_(0),
       #endif
       bondFactoryPtr_(0),
-      #ifdef DDMD_ANGLE
+      #ifdef INTER_ANGLE
       angleFactoryPtr_(0),
       #endif
-      #ifdef DDMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
+      dihedralFactoryPtr_(0),
+      #endif
+      #ifdef INTER_DIHEDRAL
       dihedralFactoryPtr_(0),
       #endif
       integratorFactoryPtr_(0),
@@ -116,14 +133,20 @@ namespace DdMd
       pairStyle_(),
       #endif
       bondStyle_(),
-      #ifdef DDMD_ANGLE
+      #ifdef INTER_ANGLE
       angleStyle_(),
       #endif
-      #ifdef DDMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       dihedralStyle_(),
       #endif
       nAtomType_(0),
       nBondType_(0),
+      #ifdef INTER_ANGLE
+      nAngleType_(0),
+      #endif
+      #ifdef INTER_DIHEDRAL
+      nDihedralType_(0),
+      #endif
       maskedPairPolicy_(MaskBonded)
    {
       Util::initStatic();
@@ -169,6 +192,21 @@ namespace DdMd
       if (bondPotentialPtr_) {
          delete bondPotentialPtr_;
       }
+      #ifdef INTER_ANGLE
+      if (anglePotentialPtr_) {
+         delete anglePotentialPtr_;
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (dihedralPotentialPtr_) {
+         delete dihedralPotentialPtr_;
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      if (externalPotentialPtr_) {
+         delete externalPotentialPtr_;
+      }
+      #endif
       if (energyEnsemblePtr_) {
          delete energyEnsemblePtr_;
       }
@@ -192,17 +230,17 @@ namespace DdMd
       if (bondFactoryPtr_) {
          delete bondFactoryPtr_;
       }
-      #ifdef DDMD_ANGLE
+      #ifdef INTER_ANGLE
       if (angleFactoryPtr_) {
          delete angleFactoryPtr_;
       }
       #endif
-      #ifdef DDMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       if (dihedralFactoryPtr_) {
          delete dihedralFactoryPtr_;
       }
       #endif
-      #ifdef DDMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       if (externalFactoryPtr_) {
          delete externalFactoryPtr_;
       }
@@ -251,6 +289,12 @@ namespace DdMd
       readFileMaster(in);
       read<int>(in, "nAtomType", nAtomType_);
       read<int>(in, "nBondType", nBondType_);
+      #ifdef INTER_ANGLE
+      read<int>(in, "nAngleType", nAngleType_);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      read<int>(in, "nDihedralType", nDihedralType_);
+      #endif
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
@@ -270,6 +314,26 @@ namespace DdMd
       bondPotentialPtr_ = bondFactory().factory(bondStyle());
       bondPotentialPtr_->setNBondType(nBondType_);
       readParamComposite(in, *bondPotentialPtr_);
+
+      #ifdef INTER_ANGLE
+      anglePotentialPtr_ = angleFactory().factory(angleStyle());
+      anglePotentialPtr_->setNAngleType(nAngleType_);
+      readParamComposite(in, *anglePotentialPtr_);
+      #endif
+
+      #if 0
+      #ifdef INTER_DIHEDRAL
+      dihedralPotentialPtr_ = dihedralFactory().factory(dihedralStyle());
+      dihedralPotentialPtr_->setNDihedralType(nDihedralType_);
+      readParamComposite(in, *dihedralPotentialPtr_);
+      #endif
+
+      #ifdef INTER_EXTERNAL
+      externalPotentialPtr_ = externalFactory().factory(externalStyle());
+      readParamComposite(in, *externalPotentialPtr_);
+      #endif
+
+      #endif // if 0
 
       readEnsembles(in);
 
@@ -297,7 +361,6 @@ namespace DdMd
                               dihedralStorage_,
                               #endif
                               buffer_);
-      //readParamComposite(in, *configIoPtr_);
       configIoPtr_->initialize();
 
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
@@ -331,18 +394,18 @@ namespace DdMd
          read<std::string>(in, "bondStyle", bondStyle_);
       }
 
-      #ifdef DDMD_ANGLE
+      #ifdef INTER_ANGLE
       if (nAngleType() > 0) {
          read<std::string>(in, "angleStyle", angleStyle_);
       }
       #endif
 
-      #ifdef DDMD_DIHEDRAL
+      #ifdef INTER_DIHEDRAL
       if (nDihedralType() > 0) {
          read<std::string>(in, "dihedralStyle", dihedralStyle_);
       }
       #endif
-      #ifdef DDMD_EXTERNAL
+      #ifdef INTER_EXTERNAL
       if (hasExternal()) {
          read<std::string>(in, "externalStyle", externalStyle_);
       }
@@ -506,6 +569,17 @@ namespace DdMd
       zeroForces();
       pairPotential().addForces();
       bondPotential().addForces();
+      #if 0
+      #ifdef INTER_ANGLE
+      anglePotential().addForces();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotential().addForces();
+      #endif
+      #ifdef INTER_EXTERNAL
+      externalPotential().addForces();
+      #endif
+      #endif
    }
 
    /*
@@ -629,6 +703,17 @@ namespace DdMd
    {
       pairPotential().computeEnergy(domain_.communicator());
       bondPotential().computeEnergy(domain_.communicator());
+      #if 0
+      #ifdef INTER_ANGLE
+      anglePotential().computeEnergy(domain_.communicator());
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotential().computeEnergy(domain_.communicator());
+      #endif
+      #ifdef INTER_EXTERNAL
+      externalPotential().computeEnergy(domain_.communicator());
+      #endif
+      #endif
    }
 
    /*
@@ -639,6 +724,17 @@ namespace DdMd
       double energy = 0.0;
       energy += pairPotential().energy();
       energy += bondPotential().energy();
+      #if 0
+      #ifdef INTER_ANGLE
+      energy += anglePotential().energy();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      energy += dihedralPotential().energy();
+      #endif
+      #ifdef INTER_EXTERNAL
+      energy += externalPotential().energy();
+      #endif
+      #endif
       return energy;
    }
 
@@ -748,7 +844,7 @@ namespace DdMd
    std::string Simulation::bondStyle() const
    {  return bondStyle_;  }
 
-   #ifdef DDMD_ANGLE
+   #ifdef INTER_ANGLE
    /*
    * Return the AngleFactory by reference.
    */
@@ -768,7 +864,7 @@ namespace DdMd
    {  return angleStyle_;  }
    #endif
 
-   #ifdef DDMD_DIHEDRAL
+   #ifdef INTER_DIHEDRAL
    /*
    * Return the DihedralFactory by reference.
    */
@@ -788,7 +884,7 @@ namespace DdMd
    {  return dihedralStyle_;  }
    #endif
 
-   #ifdef DDMD_EXTERNAL
+   #ifdef INTER_EXTERNAL
    /*
    * Return the ExternalFactory by reference.
    */
