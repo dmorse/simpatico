@@ -34,9 +34,11 @@ namespace DdMd
       atomStoragePtr_(0),
       groupStoragePtr_(0),
       bufferPtr_(0),
-      cacheCapacity_(0),
+      sendType_(Buffer::NONE),
+      nAtomRecv_(0),
+      nSentTotal_(0),
       cacheSize_(0),
-      nSentTotal_(0)
+      cacheCapacity_(0)
    {}
 
    /*

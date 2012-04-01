@@ -271,7 +271,6 @@ namespace DdMd
    {  interactionPtr_ = new Interaction; }
  
    /* 
-   /* 
    * Destructor. 
    */
    template <class Interaction>

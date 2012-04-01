@@ -276,7 +276,7 @@ namespace DdMd
       bool hasGhosts = false;
 
       if (bondStorage().capacity()) {
-         int nBond = readGroups<2>(file, "BONDS", "nBond", bondDistributor());
+         readGroups<2>(file, "BONDS", "nBond", bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
          // Set atom "masks" to suppress pair interactions
          // between covalently bonded atoms.
@@ -287,18 +287,17 @@ namespace DdMd
 
       #ifdef INTER_ANGLE
       if (angleStorage().capacity()) {
-         int nAngle = readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
+         readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
          angleStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
       }
       #endif
 
       #ifdef INTER_DIHEDRAL
       if (dihedralStorage().capacity()) {
-         int nDihedral = readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
+         readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
          dihedralStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
       }
       #endif
-
 
    }
 

@@ -426,7 +426,6 @@ namespace DdMd
    }
 
    /*
-   /*
    * Pack data required to update a ghost atom.
    */
    void Buffer::packUpdate(Atom& atom)
@@ -468,8 +467,6 @@ namespace DdMd
    {
 
       MPI::Request request[2];
-      int* sendBuffPtr = 0;
-      int* recvBuffPtr = 0;
       int  sendBytes = 0;
       int  myRank    = comm.Get_rank();
       int  comm_size = comm.Get_size();
@@ -511,7 +508,6 @@ namespace DdMd
    void Buffer::send(MPI::Intracomm& comm, int dest)
    {
       MPI::Request request;
-      int* sendBuffPtr;
       int  sendBytes = 0;
       int  comm_size = comm.Get_size();
       int  myRank = comm.Get_rank();
@@ -535,7 +531,6 @@ namespace DdMd
    void Buffer::recv(MPI::Intracomm& comm, int source)
    {
       MPI::Request request;
-      int* recvBuffPtr;
       int  myRank     = comm.Get_rank();
       int  comm_size  = comm.Get_size();
 

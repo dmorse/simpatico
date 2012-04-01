@@ -22,7 +22,7 @@
 #include <algorithm>
 #include <string>
 
-//#define EXCHANGER_DEBUG
+#define EXCHANGER_DEBUG
 
 namespace DdMd
 {
@@ -241,21 +241,23 @@ namespace DdMd
    void Exchanger::removeEmptyGroups(GroupStorage<N>& storage,
                                      APArray< Group<N> >& emptyGroups)
    {
-      Atom* atomPtr;
-      int k, m, atomId;
       int nEmpty = emptyGroups.size();
-      for (k = 0; k < nEmpty; ++k) {
-         #ifdef UTIL_DEBUG
-         #ifdef EXCHANGER_DEBUG
-         // Confirm that group is actually empty
-         for (m = 0; m < N; ++m) {
-            atomId  = emptyGroups[k].atomId(m);
+      #ifdef UTIL_DEBUG
+      #ifdef EXCHANGER_DEBUG
+      // Confirm that groups are actually empty
+      Atom* atomPtr;
+      int   atomId;
+      for (int k = 0; k < nEmpty; ++k) {
+         for (int m = 0; m < N; ++m) {
+            atomId = emptyGroups[k].atomId(m);
             atomPtr = emptyGroups[k].atomPtr(m);
             assert(atomPtr == 0);
             assert(atomStoragePtr_->find(atomId) == 0);
          }
-         #endif
-         #endif
+      }
+      #endif
+      #endif
+      for (int k = 0; k < nEmpty; ++k) {
          storage.remove(&(emptyGroups[k]));
       }
    }
@@ -290,7 +292,7 @@ namespace DdMd
    {
       GroupIterator<N> groupIter;
       Atom* atomPtr;
-      int i, j, k, atomId, nAtom;
+      int i, j, k, nAtom;
       bool choose;
 
       // Set ghost communication flags for atoms in incomplete bonds
@@ -299,6 +301,7 @@ namespace DdMd
 
          #ifdef UTIL_DEBUG
          #ifdef EXCHANGER_DEBUG
+         int atomId;
          nAtom  = 0;
          for (k = 0; k < N; ++k) {
             atomPtr = groupIter->atomPtr(k);
@@ -334,7 +337,6 @@ namespace DdMd
             for (i = 0; i < Dimension; ++i) {
                if (domainPtr_->grid().dimension(i) > 1) {
                   for (j = 0; j < 2; ++j) {
-                     // choose = true;
                      choose = groupIter->plan().ghost(i, j);
                      if (choose) {
                         for (k = 0; k < N; ++k) {
@@ -363,14 +365,11 @@ namespace DdMd
    void Exchanger::exchangeAtoms()
    {
       Vector lengths = boundaryPtr_->lengths();
-      double bound, inner, outer, middle;
+      double bound, inner;
       double coordinate;
       AtomIterator atomIter;
-      GhostIterator ghostIter;
       Atom* atomPtr;
-      int i, j, jc, k, m, source, dest, nSend;
-      int atomId, nAtom;
-      int myRank = domainPtr_->gridRank();
+      int i, j, jc, k, source, dest, nSend;
       int shift;
       bool choose;
 
@@ -456,6 +455,7 @@ namespace DdMd
       #ifdef EXCHANGER_DEBUG
       int nAtomTotal;
       atomStoragePtr_->computeNAtomTotal(domainPtr_->communicator());
+      int myRank = domainPtr_->gridRank();
       if (myRank == 0) {
          nAtomTotal = atomStoragePtr_->nAtomTotal();
       }
@@ -709,7 +709,6 @@ namespace DdMd
       GhostIterator ghostIter;
       Atom* atomPtr;
       int i, j, jc, source, dest, shift;
-      int myRank = domainPtr_->gridRank();
 
       // Check that all ghosts are cleared upon entry.
       if (atomStoragePtr_->nGhost() != 0) {

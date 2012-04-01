@@ -166,9 +166,6 @@ namespace DdMd
 
    protected:
 
-      /// Maximum number of items that can be cached on master.
-      int  cacheCapacity_;
-
       /**
       * Allocate memory and initialize object.
       *
@@ -201,14 +198,17 @@ namespace DdMd
       /// Type of object to send.
       Buffer::BlockDataType sendType_;
 
+      /// Total number of atoms in groups recieved (defined on all)
+      int nAtomRecv_;
+
+      /// Total number of groups sent (defined only on master)
+      int nSentTotal_;
+
       /// Current size of cache_ (defined only on master)
       int cacheSize_;
 
-      /// Total number of groups sent(defined only on master)
-      int nSentTotal_;
-
-      /// Total number of atoms in groups recieved (defined on all)
-      int nAtomRecv_;
+      /// Maximum number of items that can be cached on master.
+      int  cacheCapacity_;
 
       /**
       * Validate groups after receipt.

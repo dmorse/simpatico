@@ -55,7 +55,7 @@ namespace DdMd
       assert(!isGhostCell_);
 
       const Cell* cellPtr;
-      int   ic, ia, nc, na;
+      int   ia, nc, na;
 
       neighbors.clear();
 

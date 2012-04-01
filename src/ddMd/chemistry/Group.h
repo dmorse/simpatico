@@ -49,14 +49,15 @@ namespace DdMd
       * Constructor 
       */
       Group()
-       : id_(-1),
-         typeId_(-1),
+       : typeId_(-1),
+         id_(-1),
          nPtr_(0)
       {
          for (int i=0; i < N; ++i) {
             atomIds_[i]  = -1;
             atomPtrs_[i] = 0;
          }
+         plan_.clearFlags();
       }
             
       /**
@@ -64,13 +65,14 @@ namespace DdMd
       */
       void clear()
       {
-         id_ = -1; 
          typeId_ = -1;
+         id_ = -1; 
          nPtr_ = 0;
          for (int i=0; i < N; ++i) {
             atomIds_[i]  = -1;
             atomPtrs_[i] = 0;
          }
+         plan_.clearFlags();
       }
    
       /**
