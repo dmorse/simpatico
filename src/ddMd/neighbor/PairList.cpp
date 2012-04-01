@@ -12,6 +12,7 @@
 #include "PairIterator.h"
 #include <ddMd/chemistry/Atom.h>
 #include <util/space/Vector.h>
+#include <util/format/Int.h>
 #include <util/global.h>
 
 namespace DdMd
@@ -32,6 +33,8 @@ namespace DdMd
       pairCapacity_(0),
       nAtom1_(0),
       nAtom2_(0),
+      maxNAtomLocal_(0),
+      maxNPairLocal_(0),
       maxNAtom_(0),
       maxNPair_(0),
       buildCounter_(0),
@@ -204,8 +207,8 @@ namespace DdMd
       ++buildCounter_;
  
       // Increment maxima
-      if (nAtom1_ > maxNAtom_) maxNAtom_ = nAtom1_;
-      if (nAtom2_ > maxNPair_) maxNPair_ = nAtom2_;
+      if (nAtom1_ > maxNAtomLocal_) maxNAtomLocal_ = nAtom1_;
+      if (nAtom2_ > maxNPairLocal_) maxNPairLocal_ = nAtom2_;
      
    }
 
@@ -228,9 +231,45 @@ namespace DdMd
    */
    void PairList::clearStatistics()
    {
-      maxNAtom_     = 0;
-      maxNPair_     = 0;
+      maxNAtomLocal_ = 0;
+      maxNPairLocal_ = 0;
+      maxNAtom_ = -1;
+      maxNPair_ = -1;
       buildCounter_ = 0;
+   }
+
+   /*
+   * Compute memory usage statistics (call on all processors).
+   */
+   #ifdef UTIL_MPI
+   void PairList::computeStatistics(MPI::Intracomm& communicator)
+   #else
+   void PairList::computeStatistics()
+   #endif
+   { 
+      #ifdef UTIL_MPI
+      communicator.Reduce(&maxNAtomLocal_, &maxNAtom_, 1, 
+                          MPI::INT, MPI::MAX, 0);
+      communicator.Reduce(&maxNPairLocal_, &maxNPair_, 1, 
+                          MPI::INT, MPI::MAX, 0);
+      #else
+      maxNAtom_ = maxNAtomLocal_;
+      maxNPair_ = maxNPairLocal_;
+      #endif
+   }
+
+   /**
+   * Output pairlist statistics.
+   */
+   void PairList::outputStatistics(std::ostream& out) {
+      out << "Maximum number of pairs, pair capacity"
+          << Int(maxNPair_, 10) 
+          << Int(pairCapacity_, 10) 
+          << std::endl;
+      out << "Maximum number of atoms, atom capacity"
+          << Int(maxNAtom_, 10) 
+          << Int(atomCapacity_, 10) 
+          << std::endl;
    }
 
    #if 0

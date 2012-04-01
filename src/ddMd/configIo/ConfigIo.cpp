@@ -275,24 +275,30 @@ namespace DdMd
 
       bool hasGhosts = false;
 
-      int nBond = readGroups<2>(file, "BONDS", "nBond", bondDistributor());
-      bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+      if (bondStorage().capacity()) {
+         int nBond = readGroups<2>(file, "BONDS", "nBond", bondDistributor());
+         bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+         // Set atom "masks" to suppress pair interactions
+         // between covalently bonded atoms.
+         if (maskPolicy == MaskBonded) {
+            setAtomMasks();
+         }
+      }
 
       #ifdef INTER_ANGLE
-      int nAngle = readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
-      angleStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+      if (angleStorage().capacity()) {
+         int nAngle = readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
+         angleStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+      }
       #endif
 
       #ifdef INTER_DIHEDRAL
-      int nDihedral = readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
-      dihedralStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+      if (dihedralStorage().capacity()) {
+         int nDihedral = readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
+         dihedralStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+      }
       #endif
 
-      // Set atom "masks" to suppress pair interactions
-      // between covalently bonded atoms.
-      if (maskPolicy == MaskBonded) {
-         setAtomMasks();
-      }
 
    }
 
@@ -363,12 +369,18 @@ namespace DdMd
       }
 
       // Write the groups
-      writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector_);
+      if (bondStorage().capacity()) {
+         writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector_);
+      }
       #ifdef INTER_ANGLE
-      writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), angleCollector_);
+      if (angleStorage().capacity()) {
+         writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), angleCollector_);
+      }
       #endif
       #ifdef INTER_DIHEDRAL
-      writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(), dihedralCollector_);
+      if (dihedralStorage().capacity()) {
+         writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(), dihedralCollector_);
+      }
       #endif
 
    }

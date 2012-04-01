@@ -99,13 +99,13 @@ namespace DdMd
       pairPotentialPtr_(0),
       bondPotentialPtr_(0),
       #ifdef INTER_ANGLE
-      anglePotentialPtr_(),
+      anglePotentialPtr_(0),
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralPotentialPtr_(),
+      dihedralPotentialPtr_(0),
       #endif
       #ifdef INTER_EXTERNAL
-      externalPotentialPtr_(),
+      externalPotentialPtr_(0),
       #endif
       integratorPtr_(0),
       configIoPtr_(0),
@@ -122,8 +122,8 @@ namespace DdMd
       #ifdef INTER_DIHEDRAL
       dihedralFactoryPtr_(0),
       #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralFactoryPtr_(0),
+      #ifdef INTER_EXTERNAL
+      externalFactoryPtr_(0),
       #endif
       integratorFactoryPtr_(0),
       #if 0
@@ -139,6 +139,9 @@ namespace DdMd
       #ifdef INTER_DIHEDRAL
       dihedralStyle_(),
       #endif
+      #ifdef INTER_EXTERNAL
+      externalStyle_(),
+      #endif
       nAtomType_(0),
       nBondType_(0),
       #ifdef INTER_ANGLE
@@ -146,6 +149,9 @@ namespace DdMd
       #endif
       #ifdef INTER_DIHEDRAL
       nDihedralType_(0),
+      #endif
+      #ifdef INTER_EXTERNAL
+      hasExternal_(false),
       #endif
       maskedPairPolicy_(MaskBonded)
    {
@@ -274,16 +280,8 @@ namespace DdMd
       assert(configIoPtr_ == 0);
 
       readBegin(in, "Simulation");
+
       readParamComposite(in, domain_);
-      readParamComposite(in, atomStorage_);
-      readParamComposite(in, bondStorage_);
-      #ifdef INTER_ANGLE
-      readParamComposite(in, angleStorage_);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      readParamComposite(in, dihedralStorage_);
-      #endif
-      readParamComposite(in, buffer_);
 
       // Read types
       readFileMaster(in);
@@ -295,12 +293,29 @@ namespace DdMd
       #ifdef INTER_DIHEDRAL
       read<int>(in, "nDihedralType", nDihedralType_);
       #endif
+      #ifdef INTER_EXTERNAL
+      read<bool>(in, "hasExternal", hasExternal_);
+      #endif
       atomTypes_.allocate(nAtomType_);
       for (int i = 0; i < nAtomType_; ++i) {
          atomTypes_[i].setId(i);
       }
       readDArray<AtomType>(in, "atomTypes", atomTypes_, nAtomType_);
 
+      // Read storage capacities
+      readParamComposite(in, atomStorage_);
+      readParamComposite(in, bondStorage_);
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         readParamComposite(in, angleStorage_);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         readParamComposite(in, dihedralStorage_);
+      }
+      #endif
+      readParamComposite(in, buffer_);
       readPotentialStyles(in);
 
       #ifndef DDMD_NOPAIR
@@ -316,29 +331,39 @@ namespace DdMd
       readParamComposite(in, *bondPotentialPtr_);
 
       #ifdef INTER_ANGLE
-      anglePotentialPtr_ = angleFactory().factory(angleStyle());
-      anglePotentialPtr_->setNAngleType(nAngleType_);
-      readParamComposite(in, *anglePotentialPtr_);
+      // Angle potential
+      if (nAngleType_) {
+         anglePotentialPtr_ = angleFactory().factory(angleStyle());
+         anglePotentialPtr_->setNAngleType(nAngleType_);
+         readParamComposite(in, *anglePotentialPtr_);
+      }
       #endif
 
       #if 0
       #ifdef INTER_DIHEDRAL
-      dihedralPotentialPtr_ = dihedralFactory().factory(dihedralStyle());
-      dihedralPotentialPtr_->setNDihedralType(nDihedralType_);
-      readParamComposite(in, *dihedralPotentialPtr_);
+      // Dihedral potential
+      if (nDihedralType_) {
+         dihedralPotentialPtr_ = dihedralFactory().factory(dihedralStyle());
+         dihedralPotentialPtr_->setNDihedralType(nDihedralType_);
+         readParamComposite(in, *dihedralPotentialPtr_);
+      }
       #endif
       #endif // if 0
 
       #ifdef INTER_EXTERNAL
-      externalPotentialPtr_ = externalFactory().factory(externalStyle());
-      readParamComposite(in, *externalPotentialPtr_);
+      // External potential
+      if (hasExternal_) {
+         externalPotentialPtr_ = externalFactory().factory(externalStyle());
+         externalPotentialPtr_->setNAtomType(nAtomType_);
+         readParamComposite(in, *externalPotentialPtr_);
+      }
       #endif
 
       readEnsembles(in);
 
       // Integrator
       std::string className;
-      bool        isEnd;
+      bool isEnd;
       integratorPtr_ = 
          integratorFactory().readObject(in, *this, className, isEnd);
       if (!integratorPtr_) {
@@ -388,24 +413,21 @@ namespace DdMd
       #ifndef DDMD_NOPAIR
       read<std::string>(in, "pairStyle", pairStyle_);
       #endif
-
-      if (nBondType() > 0) {
+      if (nBondType_) {
          read<std::string>(in, "bondStyle", bondStyle_);
       }
-
       #ifdef INTER_ANGLE
-      if (nAngleType() > 0) {
+      if (nAngleType_) {
          read<std::string>(in, "angleStyle", angleStyle_);
       }
       #endif
-
       #ifdef INTER_DIHEDRAL
-      if (nDihedralType() > 0) {
+      if (nDihedralType_) {
          read<std::string>(in, "dihedralStyle", dihedralStyle_);
       }
       #endif
       #ifdef INTER_EXTERNAL
-      if (hasExternal()) {
+      if (hasExternal_) {
          read<std::string>(in, "externalStyle", externalStyle_);
       }
       #endif
@@ -478,7 +500,6 @@ namespace DdMd
          if (command == "THERMALIZE") {
             double temperature;
             inBuffer >> temperature;
-            //Log::file() << Dbl(temperature, 15, 6) << std::endl;
             setBoltzmannVelocities(temperature);
             //removeDriftVelocity();
          } else
@@ -568,16 +589,22 @@ namespace DdMd
       zeroForces();
       pairPotential().addForces();
       bondPotential().addForces();
-      #if 0
       #ifdef INTER_ANGLE
-      anglePotential().addForces();
+      if (nAngleType_) {
+         anglePotential().addForces();
+      }
       #endif
+      #if 0
       #ifdef INTER_DIHEDRAL
-      dihedralPotential().addForces();
+      if (nDihedralType_) {
+         dihedralPotential().addForces();
+      }
+      #endif
       #endif
       #ifdef INTER_EXTERNAL
-      externalPotential().addForces();
-      #endif
+      if (hasExternal_) {
+         externalPotential().addForces();
+      }
       #endif
    }
 
@@ -613,7 +640,7 @@ namespace DdMd
       timer.stop();
 
       atomStorage_.computeNAtomTotal(domain_.communicator());
-
+      pairPotential().pairList().computeStatistics(domain_.communicator());
       if (isMaster) {
 
          int nAtomTot = atomStorage_.nAtomTotal();
@@ -634,23 +661,24 @@ namespace DdMd
                      << " sec" << std::endl;
          Log::file() << std::endl;
          Log::file() << std::endl;
-  
-         #if 0 
+ 
+         //pairPotential().pairList().outputStatistics(Log::file());
          Log::file() << "PairList Statistics" << std::endl;
-         Log::file() << "maxNPair           " 
-                     << pairPotential().pairList().maxNPair()
+         Log::file() << "maxNPair, capacity " 
+                     << Int(pairPotential().pairList().maxNPair(), 10)
+                     << Int(pairPotential().pairList().pairCapacity(), 10)
                      << std::endl;
-         Log::file() << "maxNAtom           " 
-                     << pairPotential().pairList().maxNAtom()
+         Log::file() << "maxNAtom, capacity " 
+                     << Int(pairPotential().pairList().maxNAtom(), 10)
+                     << Int(pairPotential().pairList().atomCapacity(), 10)
                      << std::endl;
          Log::file() << "buildCounter       " 
-                     << pairPotential().pairList().buildCounter()
+                     << Int(pairPotential().pairList().buildCounter(), 10)
                      << std::endl;
          Log::file() << "steps / build      "
                      << double(nStep)/double(pairPotential().pairList().buildCounter())
                      << std::endl;
          Log::file() << std::endl;
-         #endif
 
       }
 
@@ -702,16 +730,20 @@ namespace DdMd
    {
       pairPotential().computeEnergy(domain_.communicator());
       bondPotential().computeEnergy(domain_.communicator());
-      #if 0
       #ifdef INTER_ANGLE
-      anglePotential().computeEnergy(domain_.communicator());
+      if (nAngleType_) {
+         anglePotential().computeEnergy(domain_.communicator());
+      }
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralPotential().computeEnergy(domain_.communicator());
+      if (nDihedralType_) {
+         dihedralPotential().computeEnergy(domain_.communicator());
+      }
       #endif
       #ifdef INTER_EXTERNAL
-      externalPotential().computeEnergy(domain_.communicator());
-      #endif
+      if (hasExternal_) {
+         externalPotential().computeEnergy(domain_.communicator());
+      }
       #endif
    }
 
@@ -723,16 +755,22 @@ namespace DdMd
       double energy = 0.0;
       energy += pairPotential().energy();
       energy += bondPotential().energy();
-      #if 0
       #ifdef INTER_ANGLE
-      energy += anglePotential().energy();
+      if (nAngleType_) {
+         energy += anglePotential().energy();
+      }
       #endif
+      #if 0
+      if (nDihedralType_) {
       #ifdef INTER_DIHEDRAL
-      energy += dihedralPotential().energy();
+         energy += dihedralPotential().energy();
+      }
+      #endif
       #endif
       #ifdef INTER_EXTERNAL
-      energy += externalPotential().energy();
-      #endif
+      if (hasExternal_) {
+         energy += externalPotential().energy();
+      }
       #endif
       return energy;
    }
@@ -983,11 +1021,15 @@ namespace DdMd
 
       bondStorage_.isValid(atomStorage_, domain_.communicator(), hasGhosts);
       #ifdef INTER_ANGLE
-      angleStorage_.isValid(atomStorage_, domain_.communicator(), hasGhosts);
+      if (nAngleType_) {
+         angleStorage_.isValid(atomStorage_, domain_.communicator(), hasGhosts);
+      }
       #endif
       #ifdef INTER_DIHEDRAL
-      dihedralStorage_.isValid(atomStorage_, domain_.communicator(), 
-                               hasGhosts);
+      if (nDihedralType_) {
+         dihedralStorage_.isValid(atomStorage_, domain_.communicator(), 
+                                  hasGhosts);
+      }
       #endif
 
       return true; 

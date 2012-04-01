@@ -84,9 +84,6 @@ namespace DdMd
       /// \name Interaction interface
       //@{
 
-
-
-
       /**
       * Set the maximum number of atom types.
       */
@@ -196,14 +193,14 @@ namespace DdMd
       void findNeighbors(const Vector& lower, const Vector& upper);
 
       /**
-      * Get the CellList by const reference.
+      * Get the CellList by reference.
       */
-      const CellList& cellList() const;
+      CellList& cellList();
 
       /**
-      * Get the PairList by const reference.
+      * Get the PairList by reference.
       */
-      const PairList& pairList() const;
+      PairList& pairList();
 
       //@}
 
@@ -274,10 +271,10 @@ namespace DdMd
 
    };
 
-   inline const CellList& PairPotential::cellList() const
+   inline CellList& PairPotential::cellList()
    {  return cellList_; }
 
-   inline const PairList& PairPotential::pairList() const
+   inline PairList& PairPotential::pairList()
    {  return pairList_; }
 
    inline double PairPotential::skin() const

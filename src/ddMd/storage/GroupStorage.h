@@ -337,7 +337,7 @@ namespace DdMd
       newPtr_(0),
       capacity_(0),
       totalCapacity_(0),
-      nTotal_(-1)
+      nTotal_(0)
    {}
  
    /*

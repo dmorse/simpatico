@@ -22,6 +22,7 @@ namespace DdMd
    using namespace Util;
 
    class Simulation;
+   class AtomStorage;
 
    /**
    * Implementation template for a ExternalPotential.
@@ -48,6 +49,16 @@ namespace DdMd
       * Destructor.
       */
       virtual ~ExternalPotentialImpl();
+
+      /**
+      * Associate with related objects.
+      *
+      * Call iff object instantiated with default constructor.
+      *
+      * \param boundary associated Boundary object.
+      * \param storage  associated AtomStorage object.
+      */
+      virtual void associate(Boundary& boundary, AtomStorage& storage);
 
       /**
       * Read external potential interaction.
@@ -99,8 +110,6 @@ namespace DdMd
       * Return external interaction by const reference.
       */
       const Interaction& interaction() const;
-
-      //@}
 
       //@}
       /// \name Total Energy, Forces and Stress 
@@ -212,7 +221,11 @@ namespace DdMd
    ExternalPotentialImpl<Interaction>::ExternalPotentialImpl(Simulation& simulation)
     : ExternalPotential(simulation),
       interactionPtr_(0)
-   {  interactionPtr_ = new Interaction; }
+   {  
+      interactionPtr_ = new Interaction;
+      //interaction().setNAtomType(simulation.nAtomType());
+      interactionPtr_->setBoundary(simulation.boundary());
+   }
  
    /* 
    * Default constructor.
@@ -235,6 +248,19 @@ namespace DdMd
       }
    }
 
+   /*
+   * Associate with related objects. (for unit testing).
+   *
+   * Required iff instantiated with default constructor.
+   */
+   template <class Interaction>
+   void ExternalPotentialImpl<Interaction>
+        ::associate(Boundary& boundary, AtomStorage& storage)
+   {
+      ExternalPotential::associate(boundary, storage);
+      interactionPtr_->setBoundary(boundary);
+   } 
+
    /* 
    * Read parameters from file.
    */
@@ -242,8 +268,6 @@ namespace DdMd
    void ExternalPotentialImpl<Interaction>::readParam(std::istream &in) 
    {
       readBegin(in, "ExternalPotential");
-      interaction().setNAtomType(simulation().nAtomType());
-      interaction().setBoundary(simulation().boundary());
       bool nextIndent = false; // Do not indent interaction block. 
       readParamComposite(in, interaction(), nextIndent);
       readEnd(in);
@@ -263,7 +287,7 @@ namespace DdMd
    double 
    ExternalPotentialImpl<Interaction>::energy(const Vector& position, int typeId) 
       const
-   { return interaction().energy(position, typeId); }
+   {  return interaction().energy(position, typeId); }
 
    /*
    * Return external force on an atom.

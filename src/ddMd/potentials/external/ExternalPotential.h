@@ -48,20 +48,21 @@ namespace DdMd
       * \param boundary associated Boundary object.
       * \param storage  associated AtomStorage object.
       */
-      void associate(Boundary& boundary, AtomStorage& storage);
+      virtual void associate(Boundary& boundary, AtomStorage& storage);
 
       /**
       * Destructor.
       */
       virtual ~ExternalPotential();
 
+      /// \name Interaction interface
+      //@{
+
       /**
       * Set the maximum number of atom types.
       */
       virtual void setNAtomType(int nAtomType) = 0;
   
-      //@{ External Interaction Interface
-
       /**
       * Returns external potential energy of a single particle. 
       *
