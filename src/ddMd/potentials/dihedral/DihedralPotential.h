@@ -80,7 +80,7 @@ namespace DdMd
       */
       virtual
       double energy(const Vector& R1, const Vector& R2, const Vector& R3,
-                    int type) const;
+                    int type) const = 0;
  
       /**
       * Returns derivatives of energy with respect to bond vectors forming the
@@ -96,7 +96,7 @@ namespace DdMd
       */
       virtual
       void force(const Vector& R1, const Vector& R2, const Vector& R3,
-                 Vector& F1, Vector& F2, Vector& F3, int type) const;
+                 Vector& F1, Vector& F2, Vector& F3, int type) const = 0;
 
       #if 0
       /**
