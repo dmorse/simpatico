@@ -16,7 +16,6 @@ int main(int argc, char **argv)
 {
 
    bool  eflag  = false;
-   char* rarg   = 0;
 
    // Read command-line arguments
    int c;

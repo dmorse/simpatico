@@ -23,7 +23,7 @@ MdSimulation{
 
   }
   Random{
-    seed                          -13741892
+    seed                           13741892
   }
   MdSystem{
     pairStyle                        LJPair
@@ -51,7 +51,7 @@ MdSimulation{
       perpDirection             2
       prefactor                 1.000
                                -1.000
-      orderParameter            0.5
+      externalParameter         0.5
       interfaceWidth            0.2
       periodicity               2
     }
@@ -89,7 +89,7 @@ MdSimulation{
        interval                          1000
        outputFileName           CompositionProfile
        nDirections                        3
-       Directions                    0  0  1
+       intVectors                    0  0  1
                                      1  0  0
                                      0  1  0
     }

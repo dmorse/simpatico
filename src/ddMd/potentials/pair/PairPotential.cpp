@@ -28,10 +28,10 @@ namespace DdMd
    PairPotential::PairPotential()
     : skin_(0.0),
       cutoff_(0.0),
-      boundaryPtr_(0),
+      pairCapacity_(0),
       domainPtr_(0),
-      storagePtr_(0),
-      pairCapacity_(0)
+      boundaryPtr_(0),
+      storagePtr_(0)
    {} 
 
    /*
@@ -40,10 +40,10 @@ namespace DdMd
    PairPotential::PairPotential(Simulation& simulation)
     : skin_(0.0),
       cutoff_(0.0),
-      boundaryPtr_(&simulation.boundary()),
+      pairCapacity_(0),
       domainPtr_(&simulation.domain()),
-      storagePtr_(&simulation.atomStorage()),
-      pairCapacity_(0)
+      boundaryPtr_(&simulation.boundary()),
+      storagePtr_(&simulation.atomStorage())
    {}
 
    /*
@@ -71,7 +71,6 @@ namespace DdMd
 
       cutoff_ = maxPairCutoff() + skin_;
       int atomCapacity = storage().atomCapacity();
-                       + storage().ghostCapacity();
 
       // Set upper and lower bound of the processor domain.
       boundary().setLengths(maxBoundary_.lengths());
@@ -97,7 +96,6 @@ namespace DdMd
 
       cutoff_ = maxPairCutoff() + skin;
       int atomCapacity = storage().atomCapacity();
-                       + storage().ghostCapacity();
 
       cellList_.allocate(atomCapacity, lower, upper, cutoff_);
       pairList_.allocate(atomCapacity, pairCapacity_, cutoff_);

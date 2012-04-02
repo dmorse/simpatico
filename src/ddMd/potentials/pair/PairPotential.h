@@ -260,11 +260,11 @@ namespace DdMd
 
    private:
 
-      // Pointer to associated Boundary object.
-      Boundary* boundaryPtr_;
-
       // Pointer to associated Domain object.
       Domain* domainPtr_;
+
+      // Pointer to associated Boundary object.
+      Boundary* boundaryPtr_;
 
       // Pointer to associated AtomStorage object.
       AtomStorage* storagePtr_;

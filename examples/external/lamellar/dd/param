@@ -1,0 +1,80 @@
+Simulation{
+  Domain{
+    gridDimensions    2    2    1
+  }
+  FileMaster{
+    commandFileName commands
+    inputPrefix     in/
+    outputPrefix    out/
+  }
+  nAtomType          2
+  nBondType          1
+  hasExternal        1
+  atomTypes          A    1.0
+                     B    1.0
+  AtomStorage{
+    atomCapacity       1000
+    ghostCapacity      1000
+    totalAtomCapacity  1000
+  }
+  BondStorage{
+    capacity          1000
+    totalCapacity     1000
+  }
+  Buffer{
+    atomCapacity      1000
+    ghostCapacity     1000
+  }
+  pairStyle          LJPair
+  bondStyle          HarmonicBond
+  externalStyle      TanhCosineExternal
+  maskedPairPolicy   maskBonded
+  PairPotential{
+    epsilon          1.00000000    1.00000000
+                     1.00000000    1.00000000
+    sigma            1.00000000    1.00000000
+                     1.00000000    1.00000000
+    cutoff           1.12246205    1.12246205 
+                     1.12246205    1.12246205 
+    skin             0.4
+    pairCapacity     40000
+    maxBoundary      orthorhombic   30.0   30.0   30.0
+  }
+  BondPotential{
+    kappa            400.0
+    length           1.000
+  }
+  ExternalPotential{
+    perpDirection             2
+    prefactor                 1.000   -1.000
+    externalParameter         0.5  
+    interfaceWidth            0.2
+    periodicity               2
+  }
+  EnergyEnsemble{
+    type             adiabatic
+  }
+  BoundaryEnsemble{
+    type             rigid
+  }
+  NveIntegrator{
+    dt               0.0050
+  }
+  Random{
+    seed        8012457890
+  }
+  DiagnosticManager{
+     baseInterval  1000
+
+     OutputEnergy{
+        interval         10000
+        outputFileName  energy
+     }
+  }
+}
+
+     WriteConfig{
+        interval          2000
+        outputFileName  config
+     }
+
