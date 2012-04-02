@@ -1,6 +1,6 @@
 Simulation{
   Domain{
-    gridDimensions    2    1    3
+    gridDimensions    2    2    1
   }
   FileMaster{
     commandFileName commands
@@ -13,7 +13,7 @@ Simulation{
   atomTypes          A    1.0
   AtomStorage{
     atomCapacity      1000 
-    ghostCapacity     1000 
+    ghostCapacity     2000 
     totalAtomCapacity 1000 
   }
   BondStorage{
@@ -54,7 +54,7 @@ Simulation{
     type             rigid
   }
   NveIntegrator{
-    dt               0.005
+    dt               0.001
   }
   Random{
     seed        8012457890

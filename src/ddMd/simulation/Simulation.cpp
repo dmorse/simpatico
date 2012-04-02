@@ -283,8 +283,9 @@ namespace DdMd
 
       readParamComposite(in, domain_);
 
-      // Read types
       readFileMaster(in);
+
+      // Read types
       read<int>(in, "nAtomType", nAtomType_);
       read<int>(in, "nBondType", nBondType_);
       #ifdef INTER_ANGLE

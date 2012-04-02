@@ -22,7 +22,7 @@ MdSimulation{
 
   }
   Random{
-    seed                         -13451892
+    seed                          13451892
   }
   MdSystem{
     pairStyle       LJPair

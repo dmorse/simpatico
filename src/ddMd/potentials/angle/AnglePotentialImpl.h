@@ -384,7 +384,7 @@ namespace DdMd
                                          atom1Ptr->position(), dr2);
          if (needEnergy) {
             cosTheta = dr1.dot(dr2) / sqrt(rsq1 * rsq2);
-            angleEnergy += interaction().energy(cosTheta, type);
+            angleEnergy = interaction().energy(cosTheta, type);
             fraction = (isLocal0 + isLocal1 + isLocal2)*third;
             energy += fraction*angleEnergy;
          }
