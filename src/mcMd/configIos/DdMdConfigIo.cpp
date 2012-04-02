@@ -176,6 +176,8 @@ namespace McMd
 
       #ifdef INTER_ANGLE
       // Write Angles
+      out << "ANGLES" << std::endl;
+      out << "nAngle  " << nAngle << std::endl;
       Molecule::AngleIterator angleIter;
       i = 0;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {
@@ -187,6 +189,7 @@ namespace McMd
                   out << Int(i, 8) << Int(angleIter->typeId(), 5);
                   out << Int(angleIter->atom(0).id(), 10);
                   out << Int(angleIter->atom(1).id(), 10);
+                  out << Int(angleIter->atom(2).id(), 10);
                   out << std::endl;
                   ++i;
                }
@@ -209,6 +212,8 @@ namespace McMd
                   out << Int(i, 8) << Int(dihedralIter->typeId(), 5);
                   out << Int(dihedralIter->atom(0).id(), 10);
                   out << Int(dihedralIter->atom(1).id(), 10);
+                  out << Int(dihedralIter->atom(2).id(), 10);
+                  out << Int(dihedralIter->atom(3).id(), 10);
                   out << std::endl;
                   ++i;
                }
