@@ -1,15 +1,14 @@
 Domain Decomposition MD (DdMd)
 ------------------------------
 
+- Test conservation of energy with dihedrals.
+
 - Move main integration loop into integrator, give the integrator a 
   method named "run" or "integrate" that takes an integer number of 
   steps as a parameter.
 
 - Create a DdMd::MdTimer class similar to that in lammps. Add timer
   to the main loop, to help assessing bottlenecks. 
-
-Pairs and bonds:
-----------------
 
 - Add needStress to Simulation, and as argument to addForces() method 
   of potentials. 
@@ -24,20 +23,4 @@ Pairs and bonds:
 - Improve unit testing of CellList (add atoms and ghosts, small boxes),
   Integrator (check that number of interacting pairs doesn't change),
   System (test with very small system, 1x1x1 grid).
-
-External Potential:
--------------------
-
-- Write unit test. 
-
-- Add forces and energies to Simulation, test conservation of energy.
-
-Angles and dihedrals:
---------------------
-
-- Write unit test for angles.
-
-- Add forces and energies to Simulation, test conservation of energy.
-
-- Repeat for dihedrals.
 

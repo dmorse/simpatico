@@ -1,7 +1,11 @@
 #ifndef DDMD_INTEGRATOR_H
 #define DDMD_INTEGRATOR_H
 
+#include <ddMd/simulation/SimulationAccess.h>
 #include <util/param/ParamComposite.h>
+#include <util/util/Timer.h>
+
+#include <iostream>
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -22,7 +26,7 @@ namespace DdMd
    *
    * \ingroup DdMd_Integrator_Module
    */
-   class Integrator : public ParamComposite
+   class Integrator : public ParamComposite, public SimulationAccess
    {
 
    public:
@@ -56,22 +60,31 @@ namespace DdMd
       */
       virtual void step() = 0;
 
-   protected:
+      /**
+      * Run a simulation of iStep steps.
+      */
+      virtual void run(int nStep) = 0;
 
       /**
-      * Get reference to parent Simulation.
-      */ 
-      Simulation& simulation();
+      * Output statistics immediately after a run.
+      */
+      virtual void outputStatistics(std::ostream& out);
+
+   protected:
+
+      Timer& timer()
+      { return timer_; }
+
+      int   nStep_;
+
+      int   iStep_;
 
    private:
 
-      Simulation* simulationPtr_;
+      Timer timer_;
 
    };
 
-   /// Get reference to parent Simulation.
-   inline Simulation& Integrator::simulation() 
-   {  return *simulationPtr_; }
 
 }
 #endif

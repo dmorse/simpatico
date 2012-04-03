@@ -15,6 +15,7 @@
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/space/Vector.h>
+#include <util/util/Timer.h>
 #include <util/global.h>
 
 #include <iostream>
@@ -54,14 +55,10 @@ namespace DdMd
 
    void NveIntegrator::setup()
    {
-      AtomStorage* atomStoragePtr = &simulation().atomStorage();
-      Exchanger*   exchangerPtr = &simulation().exchanger();
-      PairPotential* pairPotentialPtr = &simulation().pairPotential();
-
-      atomStoragePtr->clearSnapshot();
-      exchangerPtr->exchange();
-      atomStoragePtr->makeSnapshot();
-      pairPotentialPtr->findNeighbors();
+      atomStorage().clearSnapshot();
+      exchanger().exchange();
+      atomStorage().makeSnapshot();
+      pairPotential().findNeighbors();
       simulation().computeForces();
 
       double dtHalf = 0.5*dt_;
@@ -85,12 +82,8 @@ namespace DdMd
       double        prefactor; // = 0.5*dt/mass
       AtomIterator  atomIter;
 
-      AtomStorage* atomStoragePtr = &simulation().atomStorage();
-      Exchanger* exchangerPtr = &simulation().exchanger();
-      PairPotential* pairPotentialPtr = &simulation().pairPotential();
-
       // 1st half of velocity Verlet.
-      atomStoragePtr->begin(atomIter);
+      atomStorage().begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
          prefactor = prefactors_[atomIter->typeId()];
 
@@ -99,30 +92,108 @@ namespace DdMd
 
          dr.multiply(atomIter->velocity(), dt_);
          atomIter->position() += dr;
- 
       }
 
       // Exchange atoms if necessary
       if (simulation().needExchange()) {
-         atomStoragePtr->clearSnapshot();
-         exchangerPtr->exchange();
-         atomStoragePtr->makeSnapshot();
-         pairPotentialPtr->findNeighbors();
+         atomStorage().clearSnapshot();
+         exchanger().exchange();
+         atomStorage().makeSnapshot();
+         pairPotential().findNeighbors();
       } else {
-         exchangerPtr->update();
+         exchanger().update();
       }
 
       // Calculate new forces for all local atoms
       simulation().computeForces();
 
       // 2nd half of velocity Verlet
-      atomStoragePtr->begin(atomIter);
+      atomStorage().begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
          prefactor = prefactors_[atomIter->typeId()];
          dv.multiply(atomIter->force(), prefactor);
          atomIter->velocity() += dv;
       }
 
+   }
+
+   /*
+   * Integrate.
+   */
+   void NveIntegrator::run(int nStep)
+   {
+      if(domain().isMaster()) {
+         Log::file() << std::endl;
+      }
+      nStep_ = nStep;
+
+      // Set prefactor_[i] = 0.5*dt/mass for each atom type i.
+      double mass;
+      int nAtomType = prefactors_.capacity();
+      for (int i = 0; i < nAtomType; ++i) {
+         mass = simulation().atomType(i).mass();
+         prefactors_[i] = 0.5*dt_/mass;
+      }
+
+      atomStorage().clearSnapshot();
+      exchanger().exchange();
+      atomStorage().makeSnapshot();
+      pairPotential().findNeighbors();
+      simulation().computeForces();
+
+      simulation().diagnosticManager().setup();
+
+      Vector        dv;
+      Vector        dr;
+      double        prefactor; // = 0.5*dt/mass
+      AtomIterator  atomIter;
+
+      // Main MD loop
+      timer().start();
+      for (iStep_ = 0; iStep_ < nStep; ++iStep_) {
+
+         if (Diagnostic::baseInterval > 0) {
+            if (iStep_ % Diagnostic::baseInterval == 0) {
+               simulation().diagnosticManager().sample(iStep_);
+            }
+         }
+
+         // 1st half of velocity Verlet.
+         atomStorage().begin(atomIter);
+         for ( ; !atomIter.atEnd(); ++atomIter) {
+            prefactor = prefactors_[atomIter->typeId()];
+   
+            dv.multiply(atomIter->force(), prefactor);
+            atomIter->velocity() += dv;
+   
+            dr.multiply(atomIter->velocity(), dt_);
+            atomIter->position() += dr;
+    
+         }
+   
+         // Exchange atoms if necessary
+         if (simulation().needExchange()) {
+            atomStorage().clearSnapshot();
+            exchanger().exchange();
+            atomStorage().makeSnapshot();
+            pairPotential().findNeighbors();
+         } else {
+            exchanger().update();
+         }
+   
+         // Calculate new forces for all local atoms
+         simulation().computeForces();
+   
+         // 2nd half of velocity Verlet
+         atomStorage().begin(atomIter);
+         for ( ; !atomIter.atEnd(); ++atomIter) {
+            prefactor = prefactors_[atomIter->typeId()];
+            dv.multiply(atomIter->force(), prefactor);
+            atomIter->velocity() += dv;
+         }
+   
+      }
+      timer().stop();
    }
 
 }

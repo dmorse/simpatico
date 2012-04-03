@@ -53,6 +53,13 @@ namespace DdMd
       */
       void step();
 
+      /**
+      * Run a simulation.
+      *
+      * \param int number of steps.
+      */
+      void run(int iStep);
+
    private:
 
       /// Factors of 0.5*dt/mass for different atom types.

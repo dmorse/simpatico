@@ -16,6 +16,7 @@
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/space/Vector.h>
+#include <util/util/Timer.h>
 #include <util/global.h>
 
 #include <iostream>
@@ -72,12 +73,6 @@ namespace DdMd
 
    void NvtIntegrator::setup()
    {
-      AtomStorage* atomStoragePtr = &simulation().atomStorage();
-      Domain*      domainPtr = &simulation().domain();
-      Exchanger*   exchangerPtr = &simulation().exchanger();
-      PairPotential* pairPotentialPtr = &simulation().pairPotential();
-
-
       double dtHalf = 0.5*dt_;
       double mass;
       int nAtomType = prefactors_.capacity();
@@ -86,22 +81,22 @@ namespace DdMd
          prefactors_[i] = dtHalf/mass;
       }
 
-      atomStoragePtr->clearSnapshot();
-      exchangerPtr->exchange();
-      atomStoragePtr->makeSnapshot();
-      pairPotentialPtr->findNeighbors();
+      atomStorage().clearSnapshot();
+      exchanger().exchange();
+      atomStorage().makeSnapshot();
+      pairPotential().findNeighbors();
       simulation().computeForces();
 
       // Initialize nAtom_, xiDot_, xi_
       simulation().computeKineticEnergy();
-      atomStoragePtr->computeNAtomTotal(domainPtr->communicator());
-      if (domainPtr->isMaster()) {
+      atomStorage().computeNAtomTotal(domain().communicator());
+      if (domain().isMaster()) {
          T_target_ = simulation().energyEnsemble().temperature();
-         nAtom_  = atomStoragePtr->nAtomTotal();
+         nAtom_  = atomStorage().nAtomTotal();
          T_kinetic_ = simulation().kineticEnergy()*2.0/double(3*nAtom_);
          xiDot_ = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
       }
-      bcast(domainPtr->communicator(), xiDot_, 0);
+      bcast(domain().communicator(), xiDot_, 0);
       xi_ = 0.0;
    }
 
@@ -121,16 +116,11 @@ namespace DdMd
       double  factor;
       AtomIterator atomIter;
 
-      Domain*  domainPtr = &simulation().domain();
-      AtomStorage* atomStoragePtr = &simulation().atomStorage();
-      Exchanger* exchangerPtr = &simulation().exchanger();
-      PairPotential* pairPotentialPtr = &simulation().pairPotential();
-
       T_target_ = simulation().energyEnsemble().temperature();
       factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
 
       // 1st half of velocity Verlet.
-      atomStoragePtr->begin(atomIter);
+      atomStorage().begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
          atomIter->velocity() *= factor;
          prefactor = prefactors_[atomIter->typeId()];
@@ -142,19 +132,19 @@ namespace DdMd
 
       // Exchange atoms if necessary
       if (simulation().needExchange()) {
-         atomStoragePtr->clearSnapshot();
-         exchangerPtr->exchange();
-         atomStoragePtr->makeSnapshot();
-         pairPotentialPtr->findNeighbors();
+         atomStorage().clearSnapshot();
+         exchanger().exchange();
+         atomStorage().makeSnapshot();
+         pairPotential().findNeighbors();
       } else {
-         exchangerPtr->update();
+         exchanger().update();
       }
 
       // Calculate new forces for all local atoms
       simulation().computeForces();
 
       // 2nd half of velocity Verlet
-      atomStoragePtr->begin(atomIter);
+      atomStorage().begin(atomIter);
       for ( ; !atomIter.atEnd(); ++atomIter) {
          prefactor = prefactors_[atomIter->typeId()];
          dv.multiply(atomIter->force(), prefactor);
@@ -164,14 +154,97 @@ namespace DdMd
 
       // Update xiDot_ and xi_
       simulation().computeKineticEnergy();
-      if (domainPtr->isMaster()) {
+      if (domain().isMaster()) {
          xi_ += xiDot_*dtHalf;
          T_kinetic_ = simulation().kineticEnergy()*2.0/double(3*nAtom_);
          xiDot_ = (T_kinetic_/T_target_  - 1.0)*nuT_*nuT_;
          xi_ += xiDot_*dtHalf;
       }
-      bcast(domainPtr->communicator(), xiDot_, 0);
-      bcast(domainPtr->communicator(), xi_, 0);
+      bcast(domain().communicator(), xiDot_, 0);
+      bcast(domain().communicator(), xi_, 0);
+   }
+
+   /*
+   * Integrate.
+   */
+   void NvtIntegrator::run(int nStep)
+   {
+      nStep_ = nStep;
+
+      if (domain().isMaster()) {
+         Log::file() << std::endl;
+      }
+
+      setup();
+      simulation().diagnosticManager().setup();
+
+      Vector  dv;
+      Vector  dr;
+      double  prefactor; // = 0.5*dt/mass
+      double  dtHalf = 0.5*dt_;
+      double  factor;
+      AtomIterator  atomIter;
+
+      // Main MD loop
+      timer().start();
+      for (iStep_ = 0; iStep_ < nStep_; ++iStep_) {
+
+         if (Diagnostic::baseInterval > 0) {
+            if (iStep_ % Diagnostic::baseInterval == 0) {
+               simulation().diagnosticManager().sample(iStep_);
+            }
+         }
+   
+         T_target_ = simulation().energyEnsemble().temperature();
+         factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
+   
+         // 1st half of velocity Verlet.
+         atomStorage().begin(atomIter);
+         for ( ; !atomIter.atEnd(); ++atomIter) {
+            atomIter->velocity() *= factor;
+            prefactor = prefactors_[atomIter->typeId()];
+            dv.multiply(atomIter->force(), prefactor);
+            atomIter->velocity() += dv;
+            dr.multiply(atomIter->velocity(), dt_);
+            atomIter->position() += dr;
+         }
+   
+         // Exchange atoms if necessary
+         if (simulation().needExchange()) {
+            atomStorage().clearSnapshot();
+            exchanger().exchange();
+            atomStorage().makeSnapshot();
+            pairPotential().findNeighbors();
+         } else {
+            exchanger().update();
+         }
+   
+         // Calculate new forces for all local atoms
+         simulation().computeForces();
+   
+         // 2nd half of velocity Verlet
+         atomStorage().begin(atomIter);
+         for ( ; !atomIter.atEnd(); ++atomIter) {
+            prefactor = prefactors_[atomIter->typeId()];
+            dv.multiply(atomIter->force(), prefactor);
+            atomIter->velocity() += dv;
+            atomIter->velocity() *=factor;
+         }
+   
+         // Update xiDot_ and xi_
+         simulation().computeKineticEnergy();
+         if (domain().isMaster()) {
+            xi_ += xiDot_*dtHalf;
+            T_kinetic_ = simulation().kineticEnergy()*2.0/double(3*nAtom_);
+            xiDot_ = (T_kinetic_/T_target_  - 1.0)*nuT_*nuT_;
+            xi_ += xiDot_*dtHalf;
+         }
+         bcast(domain().communicator(), xiDot_, 0);
+         bcast(domain().communicator(), xi_, 0);
+   
+      }
+      timer().stop();
+
    }
 
 }

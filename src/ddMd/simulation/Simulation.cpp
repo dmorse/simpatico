@@ -611,12 +611,14 @@ namespace DdMd
       // Preconditions
       assert(integratorPtr_);
 
-      Timer timer;
-      bool isMaster = bool(domain_.isMaster());
-      if (isMaster) {
+      if (domain_.isMaster()) {
          Log::file() << std::endl;
       }
 
+      integratorPtr_->run(nStep);
+      integratorPtr_->outputStatistics(Log::file());
+
+      #if 0
       integratorPtr_->setup();
       diagnosticManager().setup();
 
@@ -676,6 +678,7 @@ namespace DdMd
          Log::file() << std::endl;
 
       }
+      #endif
 
    }
 
@@ -755,8 +758,8 @@ namespace DdMd
          energy += anglePotential().energy();
       }
       #endif
-      if (nDihedralType_) {
       #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
          energy += dihedralPotential().energy();
       }
       #endif

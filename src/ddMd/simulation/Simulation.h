@@ -369,6 +369,11 @@ namespace DdMd
       Exchanger& exchanger();
   
       /**
+      * Return associated DiagnosticManager by reference.
+      */
+      DiagnosticManager& diagnosticManager();
+
+      /**
       * Get maximum number of atom types.
       */
       int nAtomType();
@@ -450,11 +455,6 @@ namespace DdMd
       * \param in input parameter stream
       */
       void readEnsembles(std::istream& in);
-
-      /**
-      * Return associated DiagnosticManager by reference.
-      */
-      DiagnosticManager& diagnosticManager();
 
    private:
 
@@ -621,6 +621,10 @@ namespace DdMd
       *  - MaskBonded:  mask pair interaction between bonded atoms
       */
       MaskPolicy  maskedPairPolicy_;
+
+   // friends:
+
+      friend class SimulationAccess;
 
    };
 
