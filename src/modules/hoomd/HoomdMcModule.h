@@ -14,6 +14,7 @@ namespace McMd
 
    using namespace Util;
 
+   class Diagnostic;
    class McMove;
    class PairFactory;
 
@@ -45,7 +46,8 @@ namespace McMd
       virtual void addFactories();
    
    private:
-   
+      Factory<Diagnostic>* diagnosticFactoryPtr_;   
+
       Factory<McMove>*     mcMoveFactoryPtr_;
 
       PairFactory*         pairFactoryPtr_;

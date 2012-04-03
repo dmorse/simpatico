@@ -6,6 +6,7 @@
 #include <mcMd/mcSimulation/McSystem.h>
 
 // Custom factory classes
+#include "diagnostics/HoomdDiagnosticFactory.h"
 #include "mcMoves/HoomdMcMoveFactory.h"
 #include "potentials/pair/HoomdPairFactory.h"
 
@@ -26,6 +27,8 @@ namespace McMd
    HoomdMcModule::HoomdMcModule(McSimulation& simulation)
     : McModule(simulation)
    {
+      diagnosticFactoryPtr_
+          = new HoomdDiagnosticFactory(simulation, system());
       pairFactoryPtr_ 
           = new HoomdPairFactory();
       mcMoveFactoryPtr_     
@@ -42,6 +45,7 @@ namespace McMd
 
    HoomdMcModule::~HoomdMcModule()
    {
+      delete diagnosticFactoryPtr_;
       delete pairFactoryPtr_;
       delete mcMoveFactoryPtr_;
       #ifdef MCMD_PERTURB
@@ -51,6 +55,7 @@ namespace McMd
 
    void HoomdMcModule::addFactories()
    {
+      system().simulation().diagnosticFactory().addSubfactory(*diagnosticFactoryPtr_);
       #ifndef INTER_NOPAIR
       system().pairFactory().addSubfactory(*pairFactoryPtr_);
       #endif
