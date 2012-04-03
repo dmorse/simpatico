@@ -22,7 +22,7 @@
 #include <algorithm>
 #include <string>
 
-#define EXCHANGER_DEBUG
+//#define EXCHANGER_DEBUG
 
 namespace DdMd
 {

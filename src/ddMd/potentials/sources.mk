@@ -11,6 +11,11 @@ include $(SRC_DIR)/ddMd/potentials/angle/sources.mk
 ddMd_potentials_SRCS+=$(ddMd_potentials_angle_SRCS)
 endif
 
+ifdef INTER_DIHEDRAL
+include $(SRC_DIR)/ddMd/potentials/dihedral/sources.mk
+ddMd_potentials_SRCS+=$(ddMd_potentials_dihedral_SRCS)
+endif
+
 ifdef INTER_EXTERNAL
 include $(SRC_DIR)/ddMd/potentials/external/sources.mk
 ddMd_potentials_SRCS+=$(ddMd_potentials_external_SRCS)

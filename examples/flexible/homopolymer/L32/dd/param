@@ -1,6 +1,6 @@
 Simulation{
   Domain{
-    gridDimensions    2    2    2
+    gridDimensions    2    1    3
   }
   FileMaster{
     commandFileName commands
@@ -9,8 +9,6 @@ Simulation{
   }
   nAtomType          1
   nBondType          1
-  nAngleType         0
-  hasExternal        0
   atomTypes          A    1.0
   AtomStorage{
     atomCapacity      12000
@@ -67,3 +65,5 @@ Simulation{
         outputFileName  config
      }
 
+  nAngleType         0
+  hasExternal        0

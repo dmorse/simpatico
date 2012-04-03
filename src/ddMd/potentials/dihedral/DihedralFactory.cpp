@@ -1,0 +1,54 @@
+#ifndef DDMD_DIHEDRAL_FACTORY_CPP
+#define DDMD_DIHEDRAL_FACTORY_CPP
+
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
+#include <ddMd/potentials/dihedral/DihedralFactory.h>
+#include <ddMd/simulation/Simulation.h>
+
+// DihedralPotential interface and implementation classes
+#include <ddMd/potentials/dihedral/DihedralPotential.h>
+#include <ddMd/potentials/dihedral/DihedralPotentialImpl.h>
+
+// Dihedral interaction classes
+#include <inter/dihedral/CosineDihedral.h>
+
+namespace DdMd
+{
+
+   using namespace Inter;
+
+   /**
+   * Default constructor.
+   */
+   DihedralFactory::DihedralFactory(Simulation& simulation)
+    : Factory<DihedralPotential>(),
+      simulationPtr_(&simulation)
+   {}
+
+   /*
+   * Return a pointer to a new DihedralPotential, if possible.
+   */
+   DihedralPotential* 
+   DihedralFactory::factory(const std::string& name) const
+   {
+      DihedralPotential* ptr = 0;
+
+      // Try subfactories first.
+      ptr = trySubfactories(name);
+      if (ptr) return ptr;
+
+      if (name == "CosineDihedral") {
+         ptr = new DihedralPotentialImpl<CosineDihedral>(*simulationPtr_);
+      } //else
+      return ptr;
+
+   }
+
+}
+#endif

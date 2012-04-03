@@ -1,9 +1,0 @@
-SET_CONFIG_IO   McConfigIo
-WRITE_PARAM          param
-READ_CONFIG         config
-THERMALIZE             1.0
-SIMULATE              2000
-SET_CONFIG_IO  DdMdConfigIo
-WRITE_CONFIG        config
-FINISH
-

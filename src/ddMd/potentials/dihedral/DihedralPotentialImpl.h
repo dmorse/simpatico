@@ -1,5 +1,5 @@
-#ifndef DDMD_ANGLE_POTENTIAL_IMPL_H
-#define DDMD_ANGLE_POTENTIAL_IMPL_H
+#ifndef DDMD_DIHEDRAL_POTENTIAL_IMPL_H
+#define DDMD_DIHEDRAL_POTENTIAL_IMPL_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "AnglePotential.h" // base class
+#include "DihedralPotential.h" // base class
 #include <util/global.h>
 
 namespace Util
@@ -26,12 +26,12 @@ namespace DdMd
    template <int N> class GroupStorage;
 
    /**
-   * Implementation template for a AnglePotential.
+   * Implementation template for a DihedralPotential.
    *
-   * \ingroup DdMd_Angle_Module
+   * \ingroup DdMd_Dihedral_Module
    */
    template <class Interaction>
-   class AnglePotentialImpl : public AnglePotential
+   class DihedralPotentialImpl : public DihedralPotential
    {
 
    public:
@@ -39,29 +39,24 @@ namespace DdMd
       /** 
       * Constructor.
       */
-      AnglePotentialImpl(Simulation& simulation);
+      DihedralPotentialImpl(Simulation& simulation);
 
       /** 
       * Default constructor.
       */
-      AnglePotentialImpl();
+      DihedralPotentialImpl();
 
       /** 
       * Destructor.
       */
-      virtual ~AnglePotentialImpl();
+      virtual ~DihedralPotentialImpl();
 
-      /**
-      * Set the maximum number of atom types.
-      */
-      virtual void setNAngleType(int nAtomType);
-  
       /**
       * Read potential energy parameters.
       * 
-      * This method reads the angle potential Interaction parameter
+      * This method reads the dihedral potential Interaction parameter
       * block. Before calling Interaction::readParam(), it passes
-      * simulation().nAngleType() to Interaction::setNAtomType().
+      * simulation().nDihedralType() to Interaction::setNAtomType().
       */
       virtual void readParam(std::istream& in);
 
@@ -69,40 +64,58 @@ namespace DdMd
       //@{
 
       /**
-      * Returns potential energy for one angle.
-      *
-      * \param cosTheta  cosine of the bend angle.
-      * \param type      type of bend angle.
+      * Set the maximum number of atom types.
       */
-      double energy(double cosTheta, int type) const;
+      virtual void setNDihedralType(int nAtomType);
+  
+      /**
+      * Returns potential energy for one dihedral.
+      *
+      *     0   2    3
+      *     o   o----o
+      *      \ /
+      *       o 
+      *       1 
+      *
+      * \param R1     bond vector from atom 0 to 1
+      * \param R2     bond vector from atom 1 to 2
+      * \param R3     bond vector from atom 2 to 3
+      * \param type   type of dihedral
+      */
+      virtual
+      double energy(const Vector& R1, const Vector& R2, const Vector& R3,
+                    int type) const;
  
       /**
-      * Returns forces along two bonds at the angle, for use in MD and stress
-      * calculation.
+      * Returns derivatives of energy with respect to bond vectors forming the
+      * dihedral group.
       *
-      * \param R1     bond vector from atom 1 to 2.
-      * \param R2     bond vector from atom 2 to 3.
-      * \param F1     return force along R1 direction.
-      * \param F2     return force along R2 direction.
-      * \param type   type of angle.
+      * \param R1     bond vector from atom 0 to 1
+      * \param R2     bond vector from atom 1 to 2
+      * \param R3     bond vector from atom 2 to 3
+      * \param F1     force along R1 direction (upon return)
+      * \param F2     force along R2 direction (upon return)
+      * \param F3     force along R2 direction (upon return)
+      * \param type   type of dihedral
       */
-      void force(const Vector& R1, const Vector& R2,
-                       Vector& F1, Vector& F2, int type) const;
+      virtual
+      void force(const Vector& R1, const Vector& R2, const Vector& R3,
+                 Vector& F1, Vector& F2, Vector& F3, int type) const;
 
       #if 0
       /**
-      * Return pair interaction class name (e.g., "CosineAngle").
+      * Return pair interaction class name (e.g., "CosineDihedral").
       */
       virtual std::string interactionClassName() const;
       #endif
 
       /**
-      * Return angle interaction by const reference.
+      * Return dihedral interaction by const reference.
       */
       const Interaction& interaction() const;
 
       /**
-      * Return angle interaction by reference.
+      * Return dihedral interaction by reference.
       */
       Interaction& interaction();
 
@@ -111,17 +124,17 @@ namespace DdMd
       //@{
 
       /**
-      * Add the angle forces for all atoms.
+      * Add the dihedral forces for all atoms.
       */
       virtual void addForces();
 
       /**
-      * Add the angle forces for all atoms and compute energy.
+      * Add the dihedral forces for all atoms and compute energy.
       */
       virtual void addForces(double& energy);
 
       /**
-      * Compute the total angle energy for all processors
+      * Compute the total dihedral energy for all processors
       * 
       * Call on all processors (MPI reduce operation).
       */
@@ -132,7 +145,7 @@ namespace DdMd
       #endif
 
       /**
-      * Get the total angle energy, computed previously by computeEnergy().
+      * Get the total dihedral energy, computed previously by computeEnergy().
       *
       * Call only on master. 
       */
@@ -140,21 +153,21 @@ namespace DdMd
 
       #if 0
       /**
-      * Compute total angle pressure.
+      * Compute total dihedral pressure.
       *
       * \param stress (output) pressure.
       */
       virtual void computeStress(double& stress) const;
 
       /**
-      * Compute x, y, z angle pressure components.
+      * Compute x, y, z dihedral pressure components.
       *
       * \param stress (output) pressures.
       */
       virtual void computeStress(Util::Vector& stress) const;
 
       /**
-      * Compute angle stress tensor.
+      * Compute dihedral stress tensor.
       *
       * \param stress (output) pressures.
       */
@@ -166,12 +179,12 @@ namespace DdMd
    private:
 
       /**
-      * Total angle energy on all processors.
+      * Total dihedral energy on all processors.
       */
       double energy_;
  
       /**
-      * Pointer to Interaction (evaluates the angle potential function).
+      * Pointer to Interaction (evaluates the dihedral potential function).
       */ 
       Interaction* interactionPtr_;
 
@@ -191,7 +204,7 @@ namespace DdMd
 
 }
 
-#include "AnglePotential.h"
+#include "DihedralPotential.h"
 #include <ddMd/simulation/Simulation.h>
 //#include <mcMd/simulation/stress.h>
 #include <ddMd/storage/GroupStorage.h>
@@ -216,8 +229,8 @@ namespace DdMd
    * Constructor.
    */
    template <class Interaction>
-   AnglePotentialImpl<Interaction>::AnglePotentialImpl(Simulation& simulation)
-    : AnglePotential(simulation),
+   DihedralPotentialImpl<Interaction>::DihedralPotentialImpl(Simulation& simulation)
+    : DihedralPotential(simulation),
       interactionPtr_(0)
    {  interactionPtr_ = new Interaction(); }
  
@@ -225,8 +238,8 @@ namespace DdMd
    * Default constructor.
    */
    template <class Interaction>
-   AnglePotentialImpl<Interaction>::AnglePotentialImpl()
-    : AnglePotential(),
+   DihedralPotentialImpl<Interaction>::DihedralPotentialImpl()
+    : DihedralPotential(),
       interactionPtr_(0)
    {  interactionPtr_ = new Interaction(); }
  
@@ -234,7 +247,7 @@ namespace DdMd
    * Destructor. 
    */
    template <class Interaction>
-   AnglePotentialImpl<Interaction>::~AnglePotentialImpl() 
+   DihedralPotentialImpl<Interaction>::~DihedralPotentialImpl() 
    {
       if (interactionPtr_) {
          delete interactionPtr_;
@@ -243,47 +256,47 @@ namespace DdMd
    }
 
    /*
-   * Set the maximum number of atom types.
+   * Set the maximum number of dihedral types.
    */
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::setNAngleType(int nAngleType)
-   {  interaction().setNAngleType(nAngleType); }
+   void DihedralPotentialImpl<Interaction>::setNDihedralType(int nDihedralType)
+   {  interaction().setNDihedralType(nDihedralType); }
 
    /*
-   * Read angle interaction parameters.
+   * Read dihedral interaction parameters.
    */
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::readParam(std::istream& in)
+   void DihedralPotentialImpl<Interaction>::readParam(std::istream& in)
    {
-      readBegin(in,"AnglePotential");
+      readBegin(in,"DihedralPotential");
       bool nextIndent = false;
       readParamComposite(in, interaction(), nextIndent);
       readEnd(in);
    }
 
    /*
-   * Return energy for a single angle.
+   * Return energy for a single dihedral.
    */
    template <class Interaction>
-   double 
-   AnglePotentialImpl<Interaction>::energy(double cosTheta, int angleTypeId) 
-      const
-   {  return interaction().energy(cosTheta, angleTypeId); }
+   inline double DihedralPotentialImpl<Interaction>::
+      energy(const Vector& R1, const Vector& R2, const Vector& R3, int typeId) const
+   {  return interaction().energy(R1, R2, R3, typeId); }
 
    /*
-   * Return forces for a single angle.
+   * Return forces for a single dihedral.
    */
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::force(const Vector& R1, const Vector& R2, 
-                                          Vector& F1, Vector& F2, int typeId) const
-   {  interaction().force(R1, R2, F1, F2, typeId); }
+   inline void DihedralPotentialImpl<Interaction>::
+      force(const Vector& R1, const Vector& R2, const Vector& R3,
+            Vector& F1, Vector& F2, Vector& F3, int typeId) const
+   {  interaction().force(R1, R2, R3, F1, F2, F3, typeId); }
 
    #if 0
    /*
-   * Return angle potential interaction class name.
+   * Return dihedral potential interaction class name.
    */
    template <class Interaction>
-   std::string AnglePotentialImpl<Interaction>::interactionClassName() const
+   std::string DihedralPotentialImpl<Interaction>::interactionClassName() const
    {  return interaction().className(); }
    #endif
 
@@ -291,39 +304,39 @@ namespace DdMd
    * Get Interaction by reference.
    */
    template <class Interaction>
-   inline Interaction& AnglePotentialImpl<Interaction>::interaction()
+   inline Interaction& DihedralPotentialImpl<Interaction>::interaction()
    {  return *interactionPtr_; }
 
    /**
    * Get Interaction by const reference.
    */
    template <class Interaction>
-   inline const Interaction& AnglePotentialImpl<Interaction>::interaction() const
+   inline const Interaction& DihedralPotentialImpl<Interaction>::interaction() const
    {  return *interactionPtr_; }
 
    /*
    * Increment atomic forces, without calculating energy.
    */
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::addForces()
+   void DihedralPotentialImpl<Interaction>::addForces()
    {  addForces(true, false);  }
 
    /*
    * Increment atomic forces and compute pair energy for this processor.
    */
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::addForces(double& energy)
+   void DihedralPotentialImpl<Interaction>::addForces(double& energy)
    {  energy = addForces(true, true);  }
 
    /*
-   * Compute total angle energy on all processors.
+   * Compute total dihedral energy on all processors.
    */
    template <class Interaction>
    #ifdef UTIL_MPI
    void 
-   AnglePotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
+   DihedralPotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
    #else
-   void AnglePotentialImpl<Interaction>::computeEnergy()
+   void DihedralPotentialImpl<Interaction>::computeEnergy()
    #endif
    { 
       double localEnergy = 0; 
@@ -340,33 +353,33 @@ namespace DdMd
    * Return total pair energy from all processors.
    */
    template <class Interaction>
-   double AnglePotentialImpl<Interaction>::energy()
+   double DihedralPotentialImpl<Interaction>::energy()
    {  return energy_; } 
 
    /*
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction> double 
-   AnglePotentialImpl<Interaction>::addForces(bool needForce, bool needEnergy)
+   DihedralPotentialImpl<Interaction>::addForces(bool needForce, bool needEnergy)
    {
       // Preconditions
       //if (!storagePtr_->isInitialized()) {
-      //   UTIL_THROW("AtomStorage must be initialized");
+      //   UTIL_THROW("GroupStorage must be initialized");
       //}
 
       Vector dr1; // R[1] - R[0]
       Vector dr2; // R[2] - R[1]
-      Vector f1, f2;
-      double rsq1, rsq2, cosTheta;
+      Vector dr3; // R[3] - R[2]
+      Vector f1, f2, f3;
       double energy = 0.0;
-      double angleEnergy;
+      double dihedralEnergy;
       double fraction;
-      double third = 1.0/3.0;
-      GroupIterator<3> iter;
+      GroupIterator<4> iter;
       Atom* atom0Ptr;
       Atom* atom1Ptr;
       Atom* atom2Ptr;
-      int   type, isLocal0, isLocal1, isLocal2;
+      Atom* atom3Ptr;
+      int   type, isLocal0, isLocal1, isLocal2, isLocal3;
 
       storagePtr_->begin(iter);
       for ( ; !iter.atEnd(); ++iter) {
@@ -374,22 +387,25 @@ namespace DdMd
          atom0Ptr = iter->atomPtr(0);
          atom1Ptr = iter->atomPtr(1);
          atom2Ptr = iter->atomPtr(2);
+         atom3Ptr = iter->atomPtr(3);
          isLocal0 = !(atom0Ptr->isGhost());
          isLocal1 = !(atom1Ptr->isGhost());
          isLocal2 = !(atom2Ptr->isGhost());
+         isLocal3 = !(atom3Ptr->isGhost());
          // Calculate minimimum image separations
-         rsq1 = boundaryPtr_->distanceSq(atom1Ptr->position(),
-                                         atom0Ptr->position(), dr1);
-         rsq2 = boundaryPtr_->distanceSq(atom2Ptr->position(),
-                                         atom1Ptr->position(), dr2);
+         boundaryPtr_->distanceSq(atom1Ptr->position(),
+                                  atom0Ptr->position(), dr1);
+         boundaryPtr_->distanceSq(atom2Ptr->position(),
+                                  atom1Ptr->position(), dr2);
+         boundaryPtr_->distanceSq(atom3Ptr->position(),
+                                  atom2Ptr->position(), dr3);
          if (needEnergy) {
-            cosTheta = dr1.dot(dr2) / sqrt(rsq1 * rsq2);
-            angleEnergy = interaction().energy(cosTheta, type);
-            fraction = (isLocal0 + isLocal1 + isLocal2)*third;
-            energy += fraction*angleEnergy;
+            dihedralEnergy = interaction().energy(dr1, dr2, dr3, type);
+            fraction = (isLocal0 + isLocal1 + isLocal2 + isLocal3)*0.25;
+            energy += fraction*dihedralEnergy;
          }
          if (needForce) {
-            interaction().force(dr1, dr2, f1, f2, type);
+            interaction().force(dr1, dr2, dr2, f1, f2, f3, type);
             if (isLocal0) {
                atom0Ptr->force() += f1;
             }
@@ -399,6 +415,10 @@ namespace DdMd
             }
             if (isLocal2) {
                atom2Ptr->force() -= f2;
+               atom2Ptr->force() += f3;
+            }
+            if (isLocal3) {
+               atom3Ptr->force() -= f3;
             }
          }
       }
@@ -407,18 +427,18 @@ namespace DdMd
 
    #if 0
    /* 
-   * Compute angle contribution to stress.
+   * Compute dihedral contribution to stress.
    */
    template <class Interaction>
    template <typename T>
-   void AnglePotentialImpl<Interaction>::computeStressImpl(T& stress) const
+   void DihedralPotentialImpl<Interaction>::computeStressImpl(T& stress) const
    {
       Vector dr1, dr2, f1, f2;
       const Atom *atom0Ptr, *atom1Ptr, *atom2Ptr;
 
       setToZero(stress);
 
-      // Iterate over all angles in System.
+      // Iterate over all dihedrals in System.
       storagePtr_->begin(iter);
       for ( ; iter.notEnd(); ++iter){
          atom0Ptr = &(iter->atom(0));
@@ -445,16 +465,16 @@ namespace DdMd
    }
 
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::computeStress(double& stress) const
+   void DihedralPotentialImpl<Interaction>::computeStress(double& stress) const
    {  computeStressImpl(stress); }
 
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
+   void DihedralPotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
         const
    {  computeStressImpl(stress); }
 
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
+   void DihedralPotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
         const
    {  computeStressImpl(stress); }
    #endif

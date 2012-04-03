@@ -29,12 +29,10 @@
 #include <ddMd/potentials/angle/AnglePotentialImpl.h>
 #include <ddMd/potentials/angle/AngleFactory.h>
 #endif
-#if 0
 #ifdef INTER_DIHEDRAL
 #include <ddMd/potentials/dihedral/DihedralPotential.h>
 #include <ddMd/potentials/dihedral/DihedralPotentialImpl.h>
 #include <ddMd/potentials/dihedral/DihedralFactory.h>
-#endif
 #endif
 #ifdef INTER_EXTERNAL
 #include <ddMd/potentials/external/ExternalPotential.h>
@@ -283,8 +281,9 @@ namespace DdMd
 
       readParamComposite(in, domain_);
 
-      // Read types
       readFileMaster(in);
+
+      // Read types
       read<int>(in, "nAtomType", nAtomType_);
       read<int>(in, "nBondType", nBondType_);
       #ifdef INTER_ANGLE
@@ -339,7 +338,6 @@ namespace DdMd
       }
       #endif
 
-      #if 0
       #ifdef INTER_DIHEDRAL
       // Dihedral potential
       if (nDihedralType_) {
@@ -348,7 +346,6 @@ namespace DdMd
          readParamComposite(in, *dihedralPotentialPtr_);
       }
       #endif
-      #endif // if 0
 
       #ifdef INTER_EXTERNAL
       // External potential
@@ -594,12 +591,10 @@ namespace DdMd
          anglePotential().addForces();
       }
       #endif
-      #if 0
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
          dihedralPotential().addForces();
       }
-      #endif
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
@@ -760,12 +755,10 @@ namespace DdMd
          energy += anglePotential().energy();
       }
       #endif
-      #if 0
       if (nDihedralType_) {
       #ifdef INTER_DIHEDRAL
          energy += dihedralPotential().energy();
       }
-      #endif
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
