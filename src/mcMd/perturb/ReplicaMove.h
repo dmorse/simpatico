@@ -106,20 +106,18 @@ namespace McMd
       bool isAtInterval(long counter) const;
       
       /**
-      * Number of attempts in specified direction.
+      * Number of swap attempts
       *
       * \param left index for direction of attempted exchange.
       */
-      long nAttempt(int left);
+      long nAttempt();
        
-      void notifyObservers(int partnerId);
+      void notifyObservers(int recvPt);
 
       /**
-      * Number of accepted moves in specified direction.
-      *
-      * \param left index for direction of attempted exchange.
+      * Number of accepted swaps
       */
-      long nAccept(int left); 
+      long nAccept(); 
 
    protected:
 
@@ -129,11 +127,6 @@ namespace McMd
       System& system();
 
    private:
-
-      /// Tempering variable.
-      DArray<double> myParam_;
-      
-      DArray<double> ptParam_;
 
       /// System reference.
       System* systemPtr_;
@@ -147,21 +140,17 @@ namespace McMd
       /// Current processor's rank.
       int   myId_;
 
-      /// Active neighboring (partner) replica's rank.
-      int   ptId_;
-
       /// Number of perturbation parameters.
       int   nParameters_;
       
-      /// Count the number of times the replica move is called to determine
-      /// when this processor should attempt a replica exchange
-      int   stepCount_;
+      /// Count of attempted swaps
+      long  swapAttempt_;
 
-      /// Count of attempted moves.
-      long  repxAttempt_[2];
+      /// Count of accepted swaps
+      long  swapAccept_;
 
-      /// Count of accepted moves.
-      long  repxAccept_[2];
+      /// Number of state swaps before exchanging
+      int nSampling_;
 
       /// Pointer to allocated buffer to store atom positions.
       Vector   *ptPositionPtr_;
@@ -172,18 +161,11 @@ namespace McMd
       /// Output file stream storing the acceptance statistics.
       std::ofstream outputFile_;
 
+      /// Current number of steps
+      long stepCount_;
 
       /// Number of simulation steps between subsequent actions.
       long interval_;
-
-      /// Tags for exchanging parameters.
-      static const int TagParam[2];
-
-      /// Tags for exchanging energy/decision.
-      static const int TagDecision[2];
-
-      /// Tags for exchanging configuration.
-      static const int TagConfig[2];
 
    };
    // Inline methods
@@ -203,14 +185,14 @@ namespace McMd
    /*
    * Number of attempts in given direction.
    */
-   inline long ReplicaMove::nAttempt(int left) 
-   {  return (left == 0 ? repxAttempt_[0]:repxAttempt_[1]); }
+   inline long ReplicaMove::nAttempt() 
+   {  return swapAttempt_; }
    
    /*
    * Number of accepted moves in given direction.
    */
-   inline long ReplicaMove::nAccept(int left) 
-   {  return (left == 0 ? repxAccept_[0]:repxAccept_[1]); }
+   inline long ReplicaMove::nAccept()
+   {  return swapAccept_; }
 
    /*
    * Return reference to parent System.
