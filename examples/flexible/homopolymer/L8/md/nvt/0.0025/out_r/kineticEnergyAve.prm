@@ -1,5 +1,0 @@
-    MdKineticEnergyAverage{
-      interval                             200
-      outputFileName          kineticEnergyAve
-      nSamplePerBlock                       10
-    }
