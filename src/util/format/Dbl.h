@@ -59,10 +59,10 @@ namespace Util
       */
       Dbl(double value, int width);
 
-      /**      
-      * Constructor: value, width, and precision.
+      /** 
+      * Constructor: value, width, precision, and format.
       */
-      Dbl(double value, int width, int precision);
+      Dbl(double value, int width, int precision, bool isFixed = false);
 
       //@}
       ///\name Mutators
@@ -114,6 +114,9 @@ namespace Util
 
       /// Output floating point precision.
       int    precision_;
+
+      /// Is format fixed precision?
+      bool   isFixed_;
 
    //friends:
 

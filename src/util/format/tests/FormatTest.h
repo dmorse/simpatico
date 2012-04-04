@@ -26,7 +26,10 @@ public:
    { 
       printMethod(TEST_FUNC);
       printEndl();
-      std::cout << Dbl(2.0) << Dbl(4.0, 15) << Dbl(3.0, 15, 7) << std::endl; 
+      std::cout << Dbl(2.0) << Dbl(4.0, 15) 
+                << Dbl(3.0, 15, 7) 
+                << Dbl(3.5, 15, 7, true) 
+                << std::endl; 
    }
 
    void testInt() 
