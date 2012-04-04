@@ -194,6 +194,7 @@ namespace DdMd
                simulation().diagnosticManager().sample(iStep_);
             }
          }
+         timer().stamp(DIAGNOSTIC);
    
          T_target_ = simulation().energyEnsemble().temperature();
          factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
@@ -208,19 +209,24 @@ namespace DdMd
             dr.multiply(atomIter->velocity(), dt_);
             atomIter->position() += dr;
          }
+         timer().stamp(INTEGRATE1);
    
          // Exchange atoms if necessary
          if (simulation().needExchange()) {
             atomStorage().clearSnapshot();
             exchanger().exchange();
+            timer().stamp(EXCHANGE);
             atomStorage().makeSnapshot();
             pairPotential().findNeighbors();
+            timer().stamp(NEIGHBOR);
          } else {
             exchanger().update();
+            timer().stamp(UPDATE);
          }
    
          // Calculate new forces for all local atoms
          simulation().computeForces();
+         timer().stamp(FORCE);
    
          // 2nd half of velocity Verlet
          atomStorage().begin(atomIter);
@@ -241,6 +247,7 @@ namespace DdMd
          }
          bcast(domain().communicator(), xiDot_, 0);
          bcast(domain().communicator(), xi_, 0);
+         timer().stamp(INTEGRATE2);
    
       }
       timer().stop();

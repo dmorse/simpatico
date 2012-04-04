@@ -11,7 +11,6 @@
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
 #include <util/format/Bool.h>
-#include <util/util/Timer.h>
 #include <util/global.h>
 
 
@@ -31,7 +30,8 @@ namespace DdMd
    * Constructor.
    */
    Integrator::Integrator(Simulation& simulation)
-     : SimulationAccess(simulation)
+     : SimulationAccess(simulation),
+       timer_(NTime)
    {}
 
    /*
@@ -45,6 +45,7 @@ namespace DdMd
    */
    void Integrator::outputStatistics(std::ostream& out)
    {
+      timer().reduce(domain().communicator());
       atomStorage().computeNAtomTotal(domain().communicator());
       pairPotential().pairList().computeStatistics(domain().communicator());
 
@@ -56,16 +57,43 @@ namespace DdMd
          nProc = domain().communicator().Get_size();
          #endif
 
+         double time = timer().time();;
+
          // Output total time for the run
          out << std::endl;
          out << "Time Statistics" << std::endl;
          out << "nStep                " << nStep_ << std::endl;
-         out << "run time             " << timer().time() << " sec" << std::endl;
-         out << "time / nStep         " << timer().time()/double(nStep_) 
-   	             << " sec" << std::endl;
-         out << "time / (nStep*nAtom) " 
-                     << timer().time()*double(nProc)/double(nStep_*nAtomTot)
-                     << " sec" << std::endl;
+         out << "run time             " << time << " sec" << std::endl;
+         out << "time / nStep         " << time/double(nStep_) 
+             << " sec" << std::endl;
+
+         double ratio = double(nProc)/double(nStep_*nAtomTot);
+         double diagnosticT =  timer().time(DIAGNOSTIC);
+         double integrate1T =  timer().time(INTEGRATE1);
+         double exchangeT =  timer().time(EXCHANGE);
+         double neighborT =  timer().time(NEIGHBOR);
+         double updateT =  timer().time(UPDATE);
+         double forceT =  timer().time(FORCE);
+         double integrate2T =  timer().time(INTEGRATE2);
+
+         out << std::endl;
+         out << "time * nproc / (nStep*nAtom):" << std::endl;
+         out << "Total                " << Dbl(time*ratio, 12, 6)
+             << " sec   " << std::endl;
+         out << "Diagnostics          " << Dbl(diagnosticT*ratio, 12, 6)
+             << " sec   " << Dbl(diagnosticT/time, 12, 6, true) << std::endl;
+         out << "Integrate1           " << Dbl(integrate1T*ratio, 12, 6) 
+             << " sec   " << Dbl(integrate1T/time, 12, 6, true) << std::endl;
+         out << "Exchange             " << Dbl(exchangeT*ratio, 12, 6)
+             << " sec   " << Dbl(exchangeT/time, 12, 6, true) << std::endl;
+         out << "Neighbor             " << Dbl(neighborT*ratio, 12, 6)
+             << " sec   " << Dbl(neighborT/time, 12, 6, true) << std::endl;
+         out << "Update               " << Dbl(updateT*ratio, 12, 6)
+             << " sec   " << Dbl(updateT/time, 12, 6, true) << std::endl;
+         out << "Force                " << Dbl(forceT*ratio, 12, 6)
+             << " sec   " << Dbl(forceT/time, 12 , 6, true) << std::endl;
+         out << "Integrate2           " << Dbl(integrate2T*ratio, 12, 6) 
+             << " sec   " << Dbl(integrate2T/time, 12, 6, true) << std::endl;
          out << std::endl;
          out << std::endl;
  

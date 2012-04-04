@@ -3,13 +3,6 @@ Domain Decomposition MD (DdMd)
 
 - Test conservation of energy with dihedrals.
 
-- Move main integration loop into integrator, give the integrator a 
-  method named "run" or "integrate" that takes an integer number of 
-  steps as a parameter.
-
-- Create a DdMd::MdTimer class similar to that in lammps. Add timer
-  to the main loop, to help assessing bottlenecks. 
-
 - Add needStress to Simulation, and as argument to addForces() method 
   of potentials. 
 

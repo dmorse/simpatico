@@ -1,9 +1,9 @@
 #ifndef DDMD_INTEGRATOR_H
 #define DDMD_INTEGRATOR_H
 
-#include <ddMd/simulation/SimulationAccess.h>
-#include <util/param/ParamComposite.h>
-#include <util/util/Timer.h>
+#include <util/param/ParamComposite.h>          // base class
+#include <ddMd/simulation/SimulationAccess.h>   // base class
+#include <ddMd/util/DdTimer.h>                  // member
 
 #include <iostream>
 
@@ -41,15 +41,6 @@ namespace DdMd
       */
       ~Integrator();
 
-      #if 0
-      /**
-      * Read required parameters.
-      *
-      * For velocity-verlet algorithm, reads the time step dt.
-      */
-      virtual void readParam(std::istream& in);
-      #endif
-
       /**
       * Initialize just before integration.
       */
@@ -72,7 +63,10 @@ namespace DdMd
 
    protected:
 
-      Timer& timer()
+      enum TimeId {DIAGNOSTIC, INTEGRATE1, EXCHANGE, NEIGHBOR, UPDATE, 
+                   FORCE, INTEGRATE2, NTime};
+
+      DdTimer& timer()
       { return timer_; }
 
       int   nStep_;
@@ -81,7 +75,7 @@ namespace DdMd
 
    private:
 
-      Timer timer_;
+      DdTimer timer_;
 
    };
 

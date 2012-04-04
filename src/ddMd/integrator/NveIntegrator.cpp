@@ -15,7 +15,6 @@
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
 #include <util/space/Vector.h>
-#include <util/util/Timer.h>
 #include <util/global.h>
 
 #include <iostream>
@@ -157,6 +156,7 @@ namespace DdMd
                simulation().diagnosticManager().sample(iStep_);
             }
          }
+         timer().stamp(Integrator::DIAGNOSTIC);
 
          // 1st half of velocity Verlet.
          atomStorage().begin(atomIter);
@@ -170,19 +170,24 @@ namespace DdMd
             atomIter->position() += dr;
     
          }
+         timer().stamp(Integrator::INTEGRATE1);
    
          // Exchange atoms if necessary
          if (simulation().needExchange()) {
             atomStorage().clearSnapshot();
             exchanger().exchange();
+            timer().stamp(Integrator::EXCHANGE);
             atomStorage().makeSnapshot();
             pairPotential().findNeighbors();
+            timer().stamp(Integrator::NEIGHBOR);
          } else {
             exchanger().update();
+            timer().stamp(Integrator::UPDATE);
          }
    
          // Calculate new forces for all local atoms
          simulation().computeForces();
+         timer().stamp(Integrator::FORCE);
    
          // 2nd half of velocity Verlet
          atomStorage().begin(atomIter);
@@ -191,6 +196,7 @@ namespace DdMd
             dv.multiply(atomIter->force(), prefactor);
             atomIter->velocity() += dv;
          }
+         timer().stamp(Integrator::INTEGRATE2);
    
       }
       timer().stop();
