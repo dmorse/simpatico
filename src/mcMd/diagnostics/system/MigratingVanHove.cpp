@@ -191,7 +191,7 @@ namespace McMd
 
    }
 
-   void MigratingVanHove::update(const int &partnerId)
+   void MigratingVanHove::update(const sendRecvPair &partners)
    {
       int myId = communicatorPtr_->Get_rank();
       
@@ -214,15 +214,15 @@ namespace McMd
 
       if (myId % 2 == 0)
       {
-         sendCurrent.send(*communicatorPtr_, partnerId);
+         sendCurrent.send(*communicatorPtr_, partners[0]);
       } else if (myId % 2 == 1) {
-         recvPartner.recv(*communicatorPtr_, partnerId);
+         recvPartner.recv(*communicatorPtr_, partners[1]);
       }
       if (myId % 2 == 1)
       {
-         sendCurrent.send(*communicatorPtr_, partnerId);
+         sendCurrent.send(*communicatorPtr_, partners[0]);
       } else if (myId % 2 == 0) {
-         recvPartner.recv(*communicatorPtr_, partnerId);
+         recvPartner.recv(*communicatorPtr_, partners[1]);
       }
       
       recvPartner >> accumulators_;

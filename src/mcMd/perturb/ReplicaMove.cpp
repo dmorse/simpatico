@@ -193,7 +193,8 @@ namespace McMd
             // apply acceptance criterium
             double weight = 0;
             for (int k = 0; k < nParameters_; k++) {
-               double deltaE = allDerivatives[permutation[i]][k] - allDerivatives[permutation[j]][k];
+               double deltaE = allDerivatives[i][k] - allDerivatives[j][k];
+               // the permutations operate on the states (the perturbation parameters)
                weight += (allParameters[permutation[j]][k] - allParameters[permutation[i]][k])*deltaE;
              }
             double exponential = exp(-weight);
@@ -208,37 +209,33 @@ namespace McMd
                }
          }
     
-         for (int i = 0; i < nProcs_; i++)
-            std::cout << permutation[i] << " ";
-
-         std::cout << std::endl;
          // send exchange partner information to all other processors
          for (int i = 0; i < nProcs_; i++) {
             if (i != 0)
                 communicatorPtr_->Send(&permutation[i], 1, MPI::INT, i, 0);
             else
-                recvPt = permutation[i];
+                sendPt = permutation[i];
 
             if (permutation[i] != 0)
                communicatorPtr_->Send(&i, 1, MPI::INT, permutation[i], 1);
             else
-               sendPt = i;
+               recvPt = i;
          }
-         std::cout << std::endl;
       }
 
       
       if (myId_ != 0)
          {
          // partner id to receive from
-         communicatorPtr_->Recv(&recvPt, 1, MPI::INT, 0, 0);
+         communicatorPtr_->Recv(&sendPt, 1, MPI::INT, 0, 0);
          // partner id to send to
-         communicatorPtr_->Recv(&sendPt, 1, MPI::INT, 0, 1);
+         communicatorPtr_->Recv(&recvPt, 1, MPI::INT, 0, 1);
          }
 
-      if (recvPt == myId_ && sendPt == myId_)
+      if (recvPt != myId_ || sendPt == myId_)
          {
          // no exchange necessary
+         outputFile_ << sendPt << std::endl;
          return true;
          }
 
@@ -297,8 +294,10 @@ namespace McMd
       
 
       // Notify component observers.
-      //notifyObservers(ptId_);
-      //Notifier<int>::notifyObservers(recvPt, sendPt);
+      sendRecvPair partners;
+      partners[0] = sendPt;
+      partners[1] = recvPt;
+      Notifier<sendRecvPair>::notifyObservers(partners);
 
 
       // log information about exchange partner to file

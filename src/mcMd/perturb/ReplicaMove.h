@@ -15,6 +15,7 @@
 #include <util/space/Vector.h>          // Util namespace
 #include <util/util/Notifier.h>          // Util namespace
 #include <util/containers/DArray.h>
+#include <util/containers/Pair.h>
 #include <util/global.h>
 
 #include <fstream>
@@ -25,6 +26,12 @@ namespace McMd
    using namespace Util;
 
    class System;
+
+   /**
+    * A pair of receiving and sending partner ranks
+    */
+   typedef Pair<int> sendRecvPair;
+
 
    /**
    * Staggered Replica exchange Monte Carlo move.
@@ -55,7 +62,7 @@ namespace McMd
    * \ingroup McMd_Perturb_Module
    */
    class ReplicaMove : public ParamComposite,
-                       public Notifier<int>
+                       public Notifier<sendRecvPair>
    {
    
    public:
@@ -112,7 +119,7 @@ namespace McMd
       */
       long nAttempt();
        
-      void notifyObservers(int recvPt);
+      void notifyObservers(sendRecvPair partners);
 
       /**
       * Number of accepted swaps
