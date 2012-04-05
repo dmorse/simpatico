@@ -52,9 +52,7 @@ clean-deps:
 #-------------------------------------------------------------------
 # Executables 
 
-LIBCUBLAS=-L$(CUDA_INSTALL_PATH)/lib -lcublas 
-
 $(MCSIM_EXE): mcSim.o $(modules_hoomd_NVCC_OBJS) $(modules_hoomd_OBJS) $(modules_hoomd_NVCC_OBJS) $(util_LIB) $(inter_LIB) $(mcMd_LIB) $(LIBS)
 	$(CXX) $(LDFLAGS) -o $(MCSIM_EXE) mcSim.o \
-		 $(modules_hoomd_OBJS) $(modules_hoomd_NVCC_OBJS) $(mcMd_LIB) $(util_LIB) $(inter_LIB) $(LIBPATH) $(LIBS) $(LIBCUBLAS)
+		 $(modules_hoomd_OBJS) $(modules_hoomd_NVCC_OBJS) $(mcMd_LIB) $(util_LIB) $(inter_LIB) $(LIBPATH) $(LIBS)
 
