@@ -212,18 +212,10 @@ namespace McMd
       MemoryIArchive recvPartner;
       recvPartner.allocate(size);
 
-      if (myId % 2 == 0)
-      {
-         sendCurrent.send(*communicatorPtr_, partners[0]);
-      } else if (myId % 2 == 1) {
-         recvPartner.recv(*communicatorPtr_, partners[1]);
-      }
-      if (myId % 2 == 1)
-      {
-         sendCurrent.send(*communicatorPtr_, partners[0]);
-      } else if (myId % 2 == 0) {
-         recvPartner.recv(*communicatorPtr_, partners[1]);
-      }
+      MPI::Request req;
+      sendCurrent.iSend(*communicatorPtr_, req, partners[0]);
+      recvPartner.recv(*communicatorPtr_, partners[1]);
+      req.Wait();
       
       recvPartner >> accumulators_;
       recvPartner >> fourierModes_;
