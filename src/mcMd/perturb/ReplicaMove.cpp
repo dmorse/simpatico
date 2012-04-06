@@ -193,9 +193,9 @@ namespace McMd
             // apply acceptance criterium
             double weight = 0;
             for (int k = 0; k < nParameters_; k++) {
-               double deltaE = allDerivatives[i][k] - allDerivatives[j][k];
+               double deltaDerivative = allDerivatives[i][k] - allDerivatives[j][k];
                // the permutations operate on the states (the perturbation parameters)
-               weight += (allParameters[permutation[j]][k] - allParameters[permutation[i]][k])*deltaE;
+               weight += (allParameters[permutation[j]][k] - allParameters[permutation[i]][k])*deltaDerivative;
              }
             double exponential = exp(-weight);
             int accept = system().simulation().random(). metropolis(exponential) ? 1 : 0;
@@ -232,7 +232,7 @@ namespace McMd
          communicatorPtr_->Recv(&recvPt, 1, MPI::INT, 0, 1);
          }
 
-      if (recvPt != myId_ || sendPt == myId_)
+      if (recvPt == myId_ || sendPt == myId_)
          {
          // no exchange necessary
          outputFile_ << sendPt << std::endl;
