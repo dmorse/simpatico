@@ -15,7 +15,6 @@
 #include <util/space/Vector.h>          // Util namespace
 #include <util/util/Notifier.h>          // Util namespace
 #include <util/containers/DArray.h>
-#include <util/containers/Pair.h>
 #include <util/global.h>
 
 #include <fstream>
@@ -28,13 +27,7 @@ namespace McMd
    class System;
 
    /**
-    * A pair of receiving and sending partner ranks
-    */
-   typedef Pair<int> sendRecvPair;
-
-
-   /**
-   * Replica exchange Monte Carlo move using Gibbs sampling
+   * Staggered Replica exchange Monte Carlo move.
    *
    * This class implements a rather general form of the algorithm for a 
    * replica exchange / parallel tempering move.  The algorithm assumes that 
@@ -45,22 +38,24 @@ namespace McMd
    * the System has an associated Perturbation object when the ReplicaMove
    * is constructed.
    *
-   * This move implements a version replica exchange that uses the Gibbs sampler
-   * technique to sample permutations in replica space from the corresponding
-   * distribution.  The sampling is done by running a small (inexpensive)
-   * Markov chain Monte Carlo simulation of \b nSamling steps at every replica
-   * exchange step, at the end of which a permutation is obtained that is used
-   * to swap configurations between replicas. This implies that all
-   * configurations are permuted simultaneously (but there may be
-   * configurations which stay on the same processor).
+   * This implements a cyclic replica exchange, where at the first call
+   * a move between replicas 0<>1 is attempted, at the second call betweeen
+   * replicas 1<>2,  ..., at the (N-1)th call between N-1 <> N, then 
+   * 0<>1 again and so forth.
+   * The replica exchange interval is set in the parameter
+   * block (see the readParam() documentation) and determines
+   * how many integration steps are performed between replica exchange
+   * intervals. A full sweep over all replicas takes
+   * (number of replicas -1) attempts.
    *
-   * The technique is described in detail in
-   * John D. Chodera and Michael R. Shirts, J. Chem. Phys. 135, 194110 (2011)
-   * 
+   * If the replica exchange for a given pair is successful, as determined
+   * by the Metropolis criterium associated with the Perturbation, the complete
+   * configurations of the pair are exchanged (not just their parameters).
+   *
    * \ingroup McMd_Perturb_Module
    */
    class ReplicaMove : public ParamComposite,
-                       public Notifier<sendRecvPair>
+                       public Notifier<int>
    {
    
    public:
@@ -80,11 +75,8 @@ namespace McMd
       * 
       * The parameter block takes the parameter \b interval,
       * which sets the interval between successive replica exchange attempts.
-      *
-      * At every replica exchange attempt, the permutation is sampled
-      * from a MCMC run of \b nSampling steps.
-      * Empirically, \b nSampling should be on the order of P^3 .. P^5,
-      * where P is the number of processors.
+      * A full sweep of all replicas is accomplished after
+      * \b interval*(number of replicas - 1) integration steps.
       *
       * \param in input stream from which to read parameters.
       */
@@ -114,18 +106,20 @@ namespace McMd
       bool isAtInterval(long counter) const;
       
       /**
-      * Number of swap attempts
+      * Number of attempts in specified direction.
       *
       * \param left index for direction of attempted exchange.
       */
-      long nAttempt();
+      long nAttempt(int left);
        
-      void notifyObservers(sendRecvPair partners);
+      void notifyObservers(int partnerId);
 
       /**
-      * Number of accepted swaps
+      * Number of accepted moves in specified direction.
+      *
+      * \param left index for direction of attempted exchange.
       */
-      long nAccept(); 
+      long nAccept(int left); 
 
    protected:
 
@@ -135,6 +129,11 @@ namespace McMd
       System& system();
 
    private:
+
+      /// Tempering variable.
+      DArray<double> myParam_;
+      
+      DArray<double> ptParam_;
 
       /// System reference.
       System* systemPtr_;
@@ -148,17 +147,21 @@ namespace McMd
       /// Current processor's rank.
       int   myId_;
 
+      /// Active neighboring (partner) replica's rank.
+      int   ptId_;
+
       /// Number of perturbation parameters.
       int   nParameters_;
       
-      /// Count of attempted swaps
-      long  swapAttempt_;
+      /// Count the number of times the replica move is called to determine
+      /// when this processor should attempt a replica exchange
+      int   stepCount_;
 
-      /// Count of accepted swaps
-      long  swapAccept_;
+      /// Count of attempted moves.
+      long  repxAttempt_[2];
 
-      /// Number of state swaps before exchanging
-      int nSampling_;
+      /// Count of accepted moves.
+      long  repxAccept_[2];
 
       /// Pointer to allocated buffer to store atom positions.
       Vector   *ptPositionPtr_;
@@ -169,11 +172,18 @@ namespace McMd
       /// Output file stream storing the acceptance statistics.
       std::ofstream outputFile_;
 
-      /// Current number of steps
-      long stepCount_;
 
       /// Number of simulation steps between subsequent actions.
       long interval_;
+
+      /// Tags for exchanging parameters.
+      static const int TagParam[2];
+
+      /// Tags for exchanging energy/decision.
+      static const int TagDecision[2];
+
+      /// Tags for exchanging configuration.
+      static const int TagConfig[2];
 
    };
    // Inline methods
@@ -193,14 +203,14 @@ namespace McMd
    /*
    * Number of attempts in given direction.
    */
-   inline long ReplicaMove::nAttempt() 
-   {  return swapAttempt_; }
+   inline long ReplicaMove::nAttempt(int left) 
+   {  return (left == 0 ? repxAttempt_[0]:repxAttempt_[1]); }
    
    /*
    * Number of accepted moves in given direction.
    */
-   inline long ReplicaMove::nAccept()
-   {  return swapAccept_; }
+   inline long ReplicaMove::nAccept(int left) 
+   {  return (left == 0 ? repxAccept_[0]:repxAccept_[1]); }
 
    /*
    * Return reference to parent System.
