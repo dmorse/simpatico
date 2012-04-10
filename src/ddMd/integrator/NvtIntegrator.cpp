@@ -89,14 +89,18 @@ namespace DdMd
 
       // Initialize nAtom_, xiDot_, xi_
       simulation().computeKineticEnergy();
+      #ifdef UTIL_MPI
       atomStorage().computeNAtomTotal(domain().communicator());
+      #endif
       if (domain().isMaster()) {
          T_target_ = simulation().energyEnsemble().temperature();
          nAtom_  = atomStorage().nAtomTotal();
          T_kinetic_ = simulation().kineticEnergy()*2.0/double(3*nAtom_);
          xiDot_ = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
       }
+      #ifdef UTIL_MPI
       bcast(domain().communicator(), xiDot_, 0);
+      #endif
       xi_ = 0.0;
    }
 
@@ -160,8 +164,10 @@ namespace DdMd
          xiDot_ = (T_kinetic_/T_target_  - 1.0)*nuT_*nuT_;
          xi_ += xiDot_*dtHalf;
       }
+      #ifdef UTIL_MPI
       bcast(domain().communicator(), xiDot_, 0);
       bcast(domain().communicator(), xi_, 0);
+      #endif
    }
 
    /*
@@ -245,8 +251,10 @@ namespace DdMd
             xiDot_ = (T_kinetic_/T_target_  - 1.0)*nuT_*nuT_;
             xi_ += xiDot_*dtHalf;
          }
+         #ifdef UTIL_MPI
          bcast(domain().communicator(), xiDot_, 0);
          bcast(domain().communicator(), xi_, 0);
+         #endif
          timer().stamp(INTEGRATE2);
    
       }

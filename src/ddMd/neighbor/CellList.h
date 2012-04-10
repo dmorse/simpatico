@@ -98,7 +98,7 @@ namespace DdMd
       *
       * \param atomCapacity dimension of global array of atoms
       * \param lower        lower bound used to allocate array of cells.
-      * \param uppper       upper bound used to allocate array of cells.
+      * \param upper        upper bound used to allocate array of cells.
       * \param cutoff       minimum dimension of a cell in any direction
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
@@ -113,7 +113,6 @@ namespace DdMd
       * parameter should thus be equal to or greater than the maximum range of
       * nonbonded interactions.
       *
-      * \param boundary Boundary object for the system
       * \param lower    lower bound of local atom coordinates.
       * \param upper    upper bound of local atom coordinates.
       * \param cutoff   minimum dimension of a cell in any direction
@@ -167,7 +166,7 @@ namespace DdMd
       * Returns a null value of -1 if the position is outside the 
       * expanded domain for nonbonded ghost atoms. 
       *
-      * \param position position Vector, inside the boundary.
+      * \param position position Vector, inside the boundary
       */
       int cellIndexFromPosition(const Vector& position) const;
 
@@ -179,7 +178,7 @@ namespace DdMd
       /**
       * Return a specified cell by const reference.
       * 
-      * \int i cell index.
+      * \param i cell index
       */
       const Cell& cell(int i) const;
 

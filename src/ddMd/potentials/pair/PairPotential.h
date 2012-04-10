@@ -73,10 +73,10 @@ namespace DdMd
       * of cells required for the specified upper and lower coordinate bounds, 
       * with the specified cutoff. 
       *
-      * \param lower        lower dimension of the largest expected domain.
-      * \param upper        upper dimension of the largest expected domain.
-      * \param cutoff       pair list skin length.
-      * \param pairCapacity maximum number of pairs per processor.
+      * \param lower        lower dimension of the largest expected domain
+      * \param upper        upper dimension of the largest expected domain
+      * \param skin         pair list skin length
+      * \param pairCapacity maximum number of pairs per processor
       */
       void setParam(const Vector& lower, const Vector& upper,
                     double skin, int pairCapacity);
@@ -188,7 +188,7 @@ namespace DdMd
       * Build the cell and pair lists. 
       *
       * \param lower Vector of lower coordinate bounds for this processor.
-      * \param lower Vector of upper coordinate bounds for this processor.
+      * \param upper Vector of upper coordinate bounds for this processor.
       */
       void findNeighbors(const Vector& lower, const Vector& upper);
 

@@ -66,38 +66,7 @@ information about which atoms are connected by bonds. Several simple
 subclasses of Species are provided with the package, and users can 
 write others.
 
-See also: \ref Chemistry_Module "Chemistry Module"
-
-\section boundary_sec Boundary
-
-\ref Boundary is a typename for a periodic simulation cell.  Each 
-Boundary object has the dimensions of the unit cell, and provides 
-methods to calculate separation vectors and distances using the 
-nearest image convention, and to shift a position Util::Vector into 
-the primary unit cell.
-
-In the current implementation, the name Boundary is a typedef for
-the class OrthorhombicBoundary. The use of a typedef is intended 
-to make it easier to later compile versions of the code with more 
-general boundaries (e.g., non-orthogonal axes). 
-
-\section ensemble_sec Statistical Ensembles
-
-EnergyEnsemble, BoundaryEnsemble, and SpeciesEnsemble are simple
-classes that specify the statistical ensemble to be used to sample
-fluctuations in energy, boundary volume and/or shape, and number of 
-molecules of each species, respectively.  Each such ensemble has a 
-type, to specify whether the associated macroscopic variable is 
-constrained or has a Boltzmann weight, and can also store for an 
-intensive parameter or parameters required to define the Boltzmann 
-weight. For example, the EnergyEnsemble type can be "adiabatic" or 
-"isothermal", and stores a value of the temperature if the type is
-isothermal.  Each System has one associated EnergyEnsemble object 
-and one associated BoundaryEnsemble object. Each Species object 
-will have [not yet implemented] one associated SpeciesEnsemble 
-object.
-
-See also: \ref Ensemble_Module "Ensemble Module"
+See also: \ref McMd_Chemistry_Module "Chemistry Module"
 
 \section system_sec Systems 
 
@@ -122,25 +91,25 @@ a specified species at random (for Monte Carlo moves).
 
 Simpatico contains two kinds of classes to calculate different
 types of potential energies and forces, which we will refer to
-as "evaluator" and "potential" classes. 
+as "interaction" and "potential" classes. 
 
-An "evaluator" class is a simple class that provides methods to 
+"Interaction" classes are simple class that provides methods to 
 calculate the energy and forces for a small group of interacting 
-atoms. Each evaluator class implements a specific functional form 
+atoms. Each interaction class implements a specific functional form 
 for the interaction. Thus, for example the "LJPair" class is a 
-pair potential evaluator that provides methods to calculate the 
+pair potential interaction that provides methods to calculate the 
 Lennard-Jones nonbonded pair energy and force for a single nonbonded 
 pair of non-bonded atoms. The "HarmonicBond" class provides analogous 
-methods for a harmonic covalent bond interaction. The evaluator 
+methods for a harmonic covalent bond interaction. The interaction 
 classes are non-polymorphic (there is no "PairEvaluator" base 
-class), but all evaluators of the same type (e.g. all pair
-evaluators) use the same interface for energy and force methods.
-The pair evaluators are all in the directory src/potentials/pair,
-and the bond evaluators are all in src/potentials/bond, etc. 
+class), but all interactions of the same type (e.g. all pair
+interactions) use the same interface for energy and force methods.
+The pair interactions are all in the directory src/potentials/pair,
+and the bond interactions are all in src/potentials/bond, etc. 
 
 A "potential" class is an abstract base classes that declares
 methods to calculate energies and atomic forces for an entire 
-System.  Each of the potential classes also provides a set of 
+System. Each of the potential classes also provides a set of 
 virtual functions to calculate the energy for a single group 
 (e.g., pair) of interacting atoms, using the same interface 
 as that of the associated "evalutor" classes.  The classes 
@@ -171,37 +140,36 @@ adding the suffix "Impl" (for "implementation") to the name
 of the parent abstract potential class. Thus, for example, 
 MdPairPotentialImpl<LJPair> is a concrete subclass of 
 MdPairPotential for Lennard-Jones pair interactions, which 
-uses an instance of the LJPair evaluator class to calculate 
+uses an instance of the LJPair interaction class to calculate 
 pair energies and forces for individual nonbonded pairs of 
 atoms. The methods of such a template that calculate energies 
 or forces for an entire system must implement a loop over 
 all or groups of the relevant kind, and calls the methods
-of the evaluator class to evaluate energies and forces for
+of the interaction class to evaluate energies and forces for
 individual pairs or groups. The virtual methods of each 
 such template that provide energies and forces for individual 
 pairs or groups simply call the corresponding methods of the 
-evaluator class, and thus provide a polymorphic interface 
-for the evaluator class methods. 
+interaction class, and thus provide a polymorphic interface 
+for the interaction class methods. 
 
 This somewhat complicated scheme for potential energies was
 chosen in order to allow the user to choose a form of each
 potential energy at run time without sacrificing efficiency.
-Because the evaluator classes methods are not virtual, this 
+Because the interaction classes methods are not virtual, this 
 design allows each template to implement the inner loop for 
 force or energy calculations to be free of virtual function 
 calls, and allows the compiler to inline some force and 
-energy evaluator functions. Deriving each template from an 
+energy interaction functions. Deriving each template from an 
 associated abstract base class, however, also provides a 
 generic interface for the code that uses each potential 
 class.
 
-The choice of which evaluator class to use for each type
-of potential energy is specified in the parameter file by
-the parameters pairStyle, BondStyle, etc. The value of 
-each such "style" variable is the name of the desired
-evaluator class.
+The choice of which interaction class to use for each type
+of potential energy is specified in the parameter file by the 
+parameters pairStyle, BondStyle, etc. The value of each such 
+"style" variable is the name of the desired interaction class.
 
-See also: \ref Potential_Module "Potential Module"
+See also: \ref McMd_Potential_Module "Potential Module"
 
 \section mcmdsystem_sec McSystem and MdSystem
 
@@ -220,7 +188,7 @@ In MC simulations, the parent McSimulation has an McMoveManager
 container that holds a set of instances of McMove, which 
 represent different Monte Carlo moves.
 
-See also: \ref System_Module "System Module"
+See also: \ref McMd_System_Module "System Module"
 
 \section MdIntegrator_sec Molecular Dynamics Integrators
 
@@ -237,7 +205,7 @@ for operations such as iterating over molecules and calculating forces.
 This pointer is initialized in the constructor for an MdIntegrator, 
 which takes a reference to the parent MdSystem as a parameter.
 
-See also: \ref MdIntegrator_Module "MdIntegrator Module"
+See also: \ref McMd_MdIntegrator_Module "MdIntegrator Module"
 
 \section McMove_sec Monte Carlo Moves
 Monte Carlo move algorithms are represented by subclasses of McMove. 
@@ -248,7 +216,7 @@ As for an MdSystem, access to the associated System or Systems is
 provided through a pointer or pointers that are initialized in the 
 constructor.
 
-See also: \ref McMove_Module "McMove Module"
+See also: \ref McMd_McMove_Module "McMove Module"
 
 \section Diagnostic_sec Diagnostics and Accumulators
 
@@ -275,7 +243,7 @@ simulation. Often, a subclass of Diagnostic that does a statistical
 analysis on a specific physical quantity has a private member that 
 is an instance of an accumulator class.
 
-See also: \ref Diagnostic_Module   "Diagnostic Module"
+See also: \ref McMd_Diagnostic_Module   "Diagnostic Module"
 
 See also: \ref Accumulators_Module "Accumulators Module"
 
@@ -334,7 +302,7 @@ The main simulation loop was implemented in the parent Simulation
 object, rather than within a System, in order to allow for Gibbs 
 ensemble molecular exchange moves, which involve two systems. 
 
-See also: \ref Simulation_Module "Simulation Module"
+See also: \ref McMd_Simulation_Module "Simulation Module"
 
 <ul>
  <li> \ref Util_NS_page (Previous)  </li>

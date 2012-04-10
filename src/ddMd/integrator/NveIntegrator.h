@@ -56,7 +56,7 @@ namespace DdMd
       /**
       * Run a simulation.
       *
-      * \param int number of steps.
+      * \param iStep number of steps
       */
       void run(int iStep);
 

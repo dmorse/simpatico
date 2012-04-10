@@ -78,6 +78,7 @@ namespace DdMd
       /**
       * Constructor.
       *
+      * \param mcSimulation parent McSimulation object.
       * \param communicator MPI communicator for MD processors.
       */
       Simulation(McMd::McSimulation& mcSimulation,

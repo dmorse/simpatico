@@ -78,7 +78,7 @@ namespace DdMd
       /**
       * Set the global id for this group.
       *
-      * \param typeId value of covalent group typeId
+      * \param id value of global id (tag) for this group.
       */
       void setId(int id)
       {  id_ = id; }
@@ -94,7 +94,8 @@ namespace DdMd
       /**
       * Set the id for a specific atom.
       *
-      * \param i index within group (0,..., N-1)
+      * \param i      index within group (0,..., N-1)
+      * \param atomId global atom identifier (atom tag)
       */
       void setAtomId(int i, int atomId) 
       {  atomIds_[i] = atomId; }
@@ -102,8 +103,8 @@ namespace DdMd
       /**
       * Set the pointer to a specific atom.
       *
-      * \param i index of atom within group.
-      * \param atomPtr atom pointer to be added.
+      * \param i       index of atom within group
+      * \param atomPtr pointer to Atom to be added
       */
       void setAtomPtr(int i, Atom* atomPtr)
       {

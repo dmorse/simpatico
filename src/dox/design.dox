@@ -22,8 +22,9 @@ list.
 
 Contents:
 <ul>
- <li> \subpage Util_NS_page </li>
- <li> \subpage McMd_NS_page </li>
+ <li> \subpage Util_NS_page  </li>
+ <li> \subpage Inter_NS_page </li>
+ <li> \subpage McMd_NS_page  </li>
 </ul>
 
 Navigation:

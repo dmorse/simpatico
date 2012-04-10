@@ -72,8 +72,8 @@ namespace McMd
 
    };
    
-   /*
-   * Event signalling removal of Link from the LinkMaster.
+   /**
+   * Event signalling removal of a Link from the LinkMaster.
    */
    struct LinkRemoveEvent 
    {
@@ -110,7 +110,8 @@ namespace McMd
       /**
       * Constructor.
       *
-      * \param ptr Pointer to reset link and atom.
+      * \param ptr   Pointer to reset link and atom.
+      * \param endId end index for the reset atom.
       */
       ReSetAtomEvent(Link* ptr, int endId)
       {  ptr_ = ptr;
@@ -124,12 +125,12 @@ namespace McMd
        /// Get pointer to reset link end.
       int getEndId() const
       {  return Id_; }   
-      
 
    private:
 
       /// Pointer to link with a reset atom.
       Link* ptr_;
+
       /// End id for the reset atom.
       int Id_;      
 

@@ -31,7 +31,10 @@ namespace DdMd {
       void stop();
       double time(int id);
       double time();
+
+      #ifdef UTIL_MPI
       void reduce(MPI::Intracomm& communicator);
+      #endif
    
    private:
    
