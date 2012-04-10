@@ -1,45 +1,105 @@
 #include <cuda.h>
-#include <cublas_v2.h>
 #include <stdio.h>
+#include <cuComplex.h>
 
-__global__ void kernel_load_mode_vec(
+__global__ void kernel_calculate_sq_partial(
             int n_particles,
-            float *d_modes, 
-            int *d_type,
-            cuComplex *d_mode_vec)
-    {
-    int n = blockIdx.x*blockDim.x + threadIdx.x;
-
-    if (n >= n_particles)
-        return;
-
-    int type = d_type[n];
-    d_mode_vec[n] = make_cuComplex(d_modes[type],0.0f);
-    }
-
-__global__ void kernel_load_matrix(
-            int n_wave,
-            cuComplex *exp_matrix,
-            int pitch,
+            cuComplex *fourier_mode_partial,
             float3 *pos,
-            float3 *wave_vectors)
+            int n_wave,
+            float3 *wave_vectors,
+            float *d_modes, 
+            int *d_type)
     {
-    int i = blockIdx.x * blockDim.x + threadIdx.x;
+    extern __shared__ cuComplex sdata[];
 
-    if (i >= n_wave)
-        return;
+    unsigned int tidx = threadIdx.x;
 
-    int j = blockIdx.y;
+    int j = blockIdx.x * blockDim.x + threadIdx.x;
 
-    float3 q = wave_vectors[i];
-    float3 p = pos[j];
-    float dotproduct = q.x * p.x + q.y * p.y + q.z * p.z;
-    // store in column-major format
-    exp_matrix[j * pitch + i] = make_cuComplex(cosf(dotproduct),
-                                                   sinf(dotproduct));
-    }
+    for (unsigned int i = 0; i < n_wave; i++) {
+        float3 q = wave_vectors[i];
 
-__global__ void kernel_calculate_norms(cuComplex* fourier_mode_vec,
+        cuComplex mySum = make_cuComplex(0.0,0.0);
+
+        if (j < n_particles) {
+            
+            float3 p = pos[j];
+            float dotproduct = q.x * p.x + q.y * p.y + q.z * p.z;
+            int type = d_type[j];
+            float mode = d_modes[type];
+            cuComplex exponential = make_cuComplex(mode*cosf(dotproduct),
+                                                   mode*sinf(dotproduct));
+            mySum = cuCaddf(mySum,exponential);
+        }
+        sdata[tidx] = mySum;
+    
+       __syncthreads();
+
+        // reduce in shared memory
+        if (blockDim.x >= 512) {
+           if (tidx < 256) {sdata[tidx] = mySum = cuCaddf(mySum,sdata[tidx+256]); }
+            __syncthreads();
+        }
+
+        if (blockDim.x >= 256) {
+           if (tidx < 128) {sdata[tidx] = mySum = cuCaddf(mySum, sdata[tidx + 128]); }
+           __syncthreads(); 
+        }
+
+        if (blockDim.x >= 128) {
+           if (tidx <  64) {sdata[tidx] = mySum = cuCaddf(mySum, sdata[tidx +  64]); }
+           __syncthreads();
+        }
+
+        if (tidx < 32) {
+            volatile cuComplex* smem = sdata;
+            if (blockDim.x >= 64) {
+                cuComplex rhs = cuCaddf(mySum, smem[tidx + 32]); 
+                smem[tidx].x = rhs.x;
+                smem[tidx].y = rhs.y;
+                mySum = rhs;
+            }
+            if (blockDim.x >= 32) {
+                cuComplex rhs = cuCaddf(mySum, smem[tidx + 16]); 
+                smem[tidx].x = rhs.x;
+                smem[tidx].y = rhs.y;
+                mySum = rhs;
+            }
+            if (blockDim.x >= 16) {
+                cuComplex rhs = cuCaddf(mySum, smem[tidx + 8]); 
+                smem[tidx].x = rhs.x;
+                smem[tidx].y = rhs.y;
+                mySum = rhs;
+            }
+            if (blockDim.x >=  8) {
+                cuComplex rhs = cuCaddf(mySum, smem[tidx + 4]); 
+                smem[tidx].x = rhs.x;
+                smem[tidx].y = rhs.y;
+                mySum = rhs;
+            }
+            if (blockDim.x >=  4) {
+                cuComplex rhs = cuCaddf(mySum, smem[tidx + 2]); 
+                smem[tidx].x = rhs.x;
+                smem[tidx].y = rhs.y;
+                mySum = rhs;
+            } 
+            if (blockDim.x >=  2) {
+                cuComplex rhs = cuCaddf(mySum, smem[tidx + 1]); 
+                smem[tidx].x = rhs.x;
+                smem[tidx].y = rhs.y;
+                mySum = rhs;
+            } 
+        }
+
+        // write result to global memeory
+        if (tidx == 0)
+           fourier_mode_partial[blockIdx.x + gridDim.x*i] = sdata[0];
+    } // end loop over wave vectors
+}
+
+__global__ void kernel_calculate_norms(cuComplex* fourier_mode_partial,
+                                       unsigned int nblocks, 
                                        float *sq_vec,
                                        int n_wave,
                                        float V)
@@ -47,7 +107,12 @@ __global__ void kernel_calculate_norms(cuComplex* fourier_mode_vec,
     int i = blockDim.x * blockIdx.x + threadIdx.x;
     if (i >= n_wave)
         return;
-    cuComplex fourier_mode = fourier_mode_vec[i];
+
+    // do final reduction of fourier mode
+    cuComplex fourier_mode = make_cuComplex(0.0,0.0);
+    for (unsigned int j = 0; j < nblocks; j++)
+       fourier_mode = cuCaddf(fourier_mode, fourier_mode_partial[j + i*nblocks]);
+ 
     float normsq = fourier_mode.x * fourier_mode.x + fourier_mode.y * fourier_mode.y;
     sq_vec[i] = normsq/V;
     }
@@ -68,8 +133,7 @@ int gpu_sample_structure_factor(int n_wave,
     float3* d_pos;
     int *d_type;
     float *d_modes;
-    cuComplex *d_mode_vec;
-    cuComplex *d_fourier_mode_vec;
+    cuComplex *d_fourier_mode_partial;
     float *d_sq_vec;
 
     cudaError_t cudaStatus;
@@ -84,105 +148,48 @@ int gpu_sample_structure_factor(int n_wave,
     cudaMemcpy(d_type, h_types, sizeof(int)*n_particles, cudaMemcpyHostToDevice);
 
     cudaMalloc(&d_modes, sizeof(float)*n_type*n_mode);
-    cudaMemcpy(d_modes, h_modes,sizeof(float)*n_type*n_mode,cudaMemcpyHostToDevice);
+    cudaMemcpy(d_modes, h_modes, sizeof(float)*n_type*n_mode, cudaMemcpyHostToDevice);
 
-    cudaMalloc(&d_mode_vec, sizeof(cuComplex)*n_particles);
-    cuComplex *d_exp_matrix;
-    size_t pitch;
+    const unsigned int block_size_x = 256;
+    unsigned int n_blocks_x = n_particles/block_size_x + 1;
 
-    cudaMallocPitch((void **)&d_exp_matrix, &pitch, (size_t) (sizeof(cuComplex)*n_wave), (size_t)n_particles);
-    pitch/=sizeof(cuComplex);
-    cudaMalloc(&d_fourier_mode_vec, sizeof(cuComplex)*n_wave);
+    cudaMalloc(&d_fourier_mode_partial, sizeof(cuComplex)*n_wave*n_blocks_x);
     cudaMalloc(&d_sq_vec, sizeof(float)*n_wave*n_mode);
-
-
-    // initialize cuBLAS
-    cublasStatus_t stat;
-    cublasHandle_t handle;
-    stat = cublasCreate(&handle);
-    if ( stat != CUBLAS_STATUS_SUCCESS )
-        {
-        printf("CUBLAS Error %d\n", stat);
-        return 1;
-        }
 
     for (int i = 0; i < n_mode; i++)
         {
-        // load mode vector
-        int block_size = 512;
+        unsigned int shared_size = block_size_x * sizeof(cuComplex);
+        kernel_calculate_sq_partial<<<n_blocks_x, block_size_x, shared_size>>>(
+               n_particles,
+               d_fourier_mode_partial,
+               d_pos,
+               n_wave,
+               d_wave_vectors,
+               d_modes + i*n_type,
+               d_type);
+ 
+        if (cudaStatus = cudaGetLastError()) {
+               printf("CUDA ERROR (kernel_calculate_sq_partial): %s\n", cudaGetErrorString(cudaStatus));
+               return 1;
+        }
 
-        kernel_load_mode_vec<<<n_particles/block_size + 1, block_size>>>(
-            n_particles,
-            d_modes + i*n_type, 
-            d_type,
-            d_mode_vec);
-
-        if (cudaStatus = cudaGetLastError())
-            {
-            printf("CUDA ERROR: %s\n", cudaGetErrorString(cudaStatus));
-            return 1;
-            }
-
-        // load exponential factor matrix
-        dim3 dimGrid(n_wave/block_size + 1,n_particles);
-        dim3 dimBlock(block_size,1);
-        kernel_load_matrix<<<dimGrid, dimBlock>>>(
-            n_wave,
-            d_exp_matrix,
-            pitch,
-            d_pos,
-            d_wave_vectors);
-
-        if (cudaStatus = cudaGetLastError())
-            {
-            printf("CUDA ERROR: %s\n", cudaGetErrorString(cudaStatus));
-            return 1;
-            }
-
-        // matrix multiplication of exp_matrix with mode_vec
-        cuComplex alpha = make_cuComplex(1.0f,0.0f);
-
-        cuComplex beta = make_cuComplex(0.0f,0.0f);
-
-        stat = cublasCgemv(handle,
-                    CUBLAS_OP_N,
-                    n_wave, 
-                    n_particles,
-                    &alpha,
-                    d_exp_matrix,
-                    pitch,
-                    d_mode_vec, 1,
-                    &beta,
-                    d_fourier_mode_vec, 1);
-
-        if ( stat != CUBLAS_STATUS_SUCCESS )
-            {
-            printf("CUBLAS Error %d\n", stat);
-            return 1;
-            }
-
-        // calculate norms of the entries of sq_vec
-        
-        kernel_calculate_norms<<<n_wave/block_size + 1, block_size>>>(d_fourier_mode_vec,
+        // calculate final S(q) values of this mode
+        const unsigned int block_size = 512;
+        kernel_calculate_norms<<<n_wave/block_size + 1, block_size>>>(d_fourier_mode_partial,
+                                                                      n_blocks_x,
                                                                       d_sq_vec + i*n_wave,
                                                                       n_wave,
                                                                       V);
 
         if (cudaStatus = cudaGetLastError())
             {
-            printf("CUDA ERROR: %s\n", cudaGetErrorString(cudaStatus));
+            printf("CUDA ERROR (kernel_calculate_norms): %s\n", cudaGetErrorString(cudaStatus));
             return 1;
             }
 
 
         } // end loop over modes
 
-    stat = cublasDestroy ( handle ) ;
-    if ( stat != CUBLAS_STATUS_SUCCESS )
-        {
-        printf("CUBLAS Error %d\n", stat);
-        return 1;
-        }
     // copy back structure factors
     cudaMemcpy(h_sq, d_sq_vec, n_wave*n_mode*sizeof(float), cudaMemcpyDeviceToHost);
 
@@ -190,9 +197,7 @@ int gpu_sample_structure_factor(int n_wave,
     cudaFree(d_pos);
     cudaFree(d_type);
     cudaFree(d_modes);
-    cudaFree(d_mode_vec);
-    cudaFree(d_exp_matrix);
-    cudaFree(d_fourier_mode_vec);
+    cudaFree(d_fourier_mode_partial);
     cudaFree(d_sq_vec);
 
     return 0;

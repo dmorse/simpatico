@@ -82,7 +82,7 @@ namespace McMd
    * \ingroup McMd_Diagnostic_Module
    */
    class MigratingVanHove : public SystemDiagnostic<System>,
-                            public Observer<int>
+                            public Observer<sendRecvPair>
    {
 
    public:
@@ -127,7 +127,8 @@ namespace McMd
       */
       void sample(long iStep);
       
-      virtual void update(const int &partnerId);
+      virtual void update(const sendRecvPair &partners);
+
       /**
       * Output results to predefined output file.
       */

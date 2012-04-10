@@ -70,7 +70,7 @@ namespace McMd
          }
             
          // Calculate structure factors
-         gpu_sample_structure_factor(nWave_,
+         int res = gpu_sample_structure_factor(nWave_,
                                      h_wave_vectors,
                                      nAtom,
                                      h_pos,
@@ -81,6 +81,9 @@ namespace McMd
                                      h_sq,
                                      system().boundary().volume()
                                      );
+          
+         if (res)
+             UTIL_THROW("Error updating structure factor.");
 
          // increment structure factors
          for (i = 0; i < nWave_; ++i) {

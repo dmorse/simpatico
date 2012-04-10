@@ -191,7 +191,7 @@ namespace McMd
 
    }
 
-   void MigratingVanHove::update(const int &partnerId)
+   void MigratingVanHove::update(const sendRecvPair &partners)
    {
       int myId = communicatorPtr_->Get_rank();
       
@@ -212,18 +212,10 @@ namespace McMd
       MemoryIArchive recvPartner;
       recvPartner.allocate(size);
 
-      if (myId % 2 == 0)
-      {
-         sendCurrent.send(*communicatorPtr_, partnerId);
-      } else if (myId % 2 == 1) {
-         recvPartner.recv(*communicatorPtr_, partnerId);
-      }
-      if (myId % 2 == 1)
-      {
-         sendCurrent.send(*communicatorPtr_, partnerId);
-      } else if (myId % 2 == 0) {
-         recvPartner.recv(*communicatorPtr_, partnerId);
-      }
+      MPI::Request req;
+      sendCurrent.iSend(*communicatorPtr_, req, partners[0]);
+      recvPartner.recv(*communicatorPtr_, partners[1]);
+      req.Wait();
       
       recvPartner >> accumulators_;
       recvPartner >> fourierModes_;
