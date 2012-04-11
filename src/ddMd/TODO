@@ -3,6 +3,8 @@ Domain Decomposition MD (DdMd)
 
 - Test conservation of energy with dihedrals.
 
+- Remove unused functions for incomplete groups from GroupStorage<N>
+
 - Add needStress to Simulation, and as argument to addForces() method 
   of potentials. 
 

@@ -37,6 +37,8 @@ namespace DdMd
    *
    * ConfigIo is a polymorphic class with a default implementation that
    * encodes the default DdMd configuration file format.
+   *
+   * \ingroup DdMd_ConfigIo_Module
    */
    class ConfigIo  : public ParamComposite
    {
