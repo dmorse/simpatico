@@ -43,19 +43,29 @@ namespace McMd
 
       /**   
       * Constructor.
+      *       
+      * \param system reference to parent System object
       */
       BennettsMethod(System& system);
 
       /**
-      * Read parameters and initialize.
+      * Read parameters from file.
+      *  
+      * \param in input parameter stream
       */
       virtual void readParam(std::istream& in);
 
+      /** 
+      * Clear accumulators.
+      */
+      virtual void initialize();
+
       /* 
-      * Evaluate energy per particle, and add to ensemble. 
+      * Evaluate the Fermi functions and add to accumulators.
+      *       
+      * \param iStep step counter
       */
       virtual void sample(long iStep);
-      virtual void initialize();
    
       /**
       * Output results at end of simulation.
@@ -63,64 +73,89 @@ namespace McMd
       virtual void output();
    
    protected:
-      /// Value of the shift constant for the associated System.
+  
+      /// Value of the shift constant for the associated system.
       double shift_;
+      
+      /// Value of the shift constant for the lower replica system.
       double lowerShift_;
 
       #if UTIL_MPI
 
-      // Values of shift constants for all processors.
+      // Values of shift constants for all replicas.
       DArray<double> shifts_;
 
       #endif
      
    private:
-      /// Tempering variable.
-      DArray<double> myParam_;
-      DArray<double> lowerParam_;
-      DArray<double> upperParam_;
-      double myDerivative_;
-
-      /// System reference.
-      System* systemPtr_;
-
-      /// Get the communicator in the simulation.
-      MPI::Intracomm* communicatorPtr_;
-      double myArg_;
-      double lowerArg_;
-      double myFermi_;
-      double upperFermi_;
-      double lowerFermi_;
-
-      /// Number of processors.
-      int   nProcs_;
-
-      /// Current processor's rank.
-      int   myId_;
-
-      /// Active neighboring (partner) replica's rank.
-      int   lowerId_;
-      int   upperId_;
-
-      /// Number of simulation steps between subsequent actions.
-      long interval_;
 
       /// Tags for exchanging parameters.
       static const int TagDerivative[2];
+      
+      /// Tags for exchanging parameters.
       static const int TagFermi[2];
+      
+      /// Get the communicator in the simulation.
+      MPI::Intracomm* communicatorPtr_;
+      
+      /// Current processor's rank.
+      int   myId_;
 
-      /// Output file stream
-      std::ofstream outputFile_;
+      /// Number of processors.
+      int   nProcs_;
+      
+      /// Lower replica's rank.
+      int   lowerId_;
+      
+      /// Upper replica's rank.
+      int   upperId_;
+      
+      /// Number of perturbation parameters.
+      int nParameters_;
+      
+      /// Tempering variable.
+      DArray<double> myParam_;
 
-      /// Average object - statistical accumulator
-      Average  myAccumulator_;
-      Average  upperAccumulator_;
+      /// Tempering variable of lower replica.
+      DArray<double> lowerParam_;
+
+      /// Tempering variable of upper replica.
+      DArray<double> upperParam_;
 
       /// Number of samples per block average output.
       int nSamplePerBlock_;
 
-      int nParameters_;
+      /// Average object - statistical accumulator.
+      Average  myAccumulator_;
+      
+      /// Average object associated with samples from upper replica.
+      Average  upperAccumulator_;
+
+      /// Used to store an argument associated with this system.
+      double myArg_;
+      
+      /// Used to store an argument associated with system of lower replica.
+      double lowerArg_;
+      
+      /// Fermi function of argument associated with this system.
+      double myFermi_;
+      
+      /// Fermi function of argument associated with system of lower replica.
+      double lowerFermi_;
+      
+      /// Fermi function of argument associated with system of upper replica.
+      double upperFermi_;
+
+      /// Output file stream.
+      std::ofstream outputFile_;
+      
+      /// Number of simulation steps between subsequent actions.
+      long interval_;
   
+      /**
+      * Average of the collected samples used to estimate free energy 
+      * differences at end of simulation.
+      */
       virtual void analyze();
    };
 

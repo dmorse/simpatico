@@ -112,16 +112,20 @@ namespace McMd
       * \param counter simulation step counter
       */
       bool isAtInterval(long counter) const;
-      
+
+      /**
+      * Notify observers of a successful replica exchange
+      *
+      * \param partners a pair of indices of partner replicas. Needs to be known
+      *  for communication.
+      */
+      void notifyObservers(sendRecvPair partners);
+ 
       /**
       * Number of swap attempts
-      *
-      * \param left index for direction of attempted exchange.
       */
       long nAttempt();
        
-      void notifyObservers(sendRecvPair partners);
-
       /**
       * Number of accepted swaps
       */
@@ -142,20 +146,20 @@ namespace McMd
       /// Get the communicator in the simulation.
       MPI::Intracomm* communicatorPtr_;
 
+      /// Current processor's rank.
+      int   myId_;
+
       /// Number of processors.
       int   nProcs_;
 
-      /// Current processor's rank.
-      int   myId_;
+      /// Output file stream storing the acceptance statistics.
+      std::ofstream outputFile_;
 
       /// Number of perturbation parameters.
       int   nParameters_;
       
-      /// Count of attempted swaps
-      long  swapAttempt_;
-
-      /// Count of accepted swaps
-      long  swapAccept_;
+      /// Number of simulation steps between subsequent actions.
+      long interval_;
 
       /// Number of state swaps before exchanging
       int nSampling_;
@@ -166,14 +170,11 @@ namespace McMd
       /// Local copy of the system atom pointer.
       Vector   *myPositionPtr_;
 
-      /// Output file stream storing the acceptance statistics.
-      std::ofstream outputFile_;
+      /// Count of attempted swaps
+      long  swapAttempt_;
 
-      /// Current number of steps
-      long stepCount_;
-
-      /// Number of simulation steps between subsequent actions.
-      long interval_;
+      /// Count of accepted swaps
+      long  swapAccept_;
 
    };
    // Inline methods

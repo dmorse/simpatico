@@ -171,7 +171,7 @@ namespace McMd
       if (i >= nParameters_) {
          UTIL_THROW("perturbation parameter index is out of bounds");
       }
-      double param;
+      double param = 0.0;
       if (i == 0) {
         param = interaction().epsilon(0, 1); 
       } else if (i == 1) {
@@ -191,7 +191,7 @@ namespace McMd
       if (i >= nParameters_) {
          UTIL_THROW("perturbation parameter index is out of bounds");
       }
-      double deriv;
+      double deriv = 0.0;
       if ( i == 0 ) {
          if (fabs(parameter_[i] - parameter(i)) > 1.0E-8) {
             UTIL_THROW("Pair perturbation parameter is not set correctly");

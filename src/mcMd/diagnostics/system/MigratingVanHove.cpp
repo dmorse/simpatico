@@ -193,8 +193,6 @@ namespace McMd
 
    void MigratingVanHove::update(const sendRecvPair &partners)
    {
-      int myId = communicatorPtr_->Get_rank();
-      
       int size;
       size = memorySize(accumulators_);
       size += memorySize(fourierModes_);

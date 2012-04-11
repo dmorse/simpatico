@@ -41,15 +41,16 @@ namespace McMd
    ReplicaMove::ReplicaMove(System& system) :
       systemPtr_(&system),
       communicatorPtr_(0),
-      nProcs_(0),
       myId_(-1),
+      nProcs_(0),
+      outputFile_(),
       nParameters_(0),
-      swapAttempt_(0),
-      swapAccept_(0),
+      interval_(-1),
+      nSampling_(-1),
       ptPositionPtr_(0),
       myPositionPtr_(0),
-      stepCount_(0),
-      interval_(-1)
+      swapAttempt_(0),
+      swapAccept_(0)
    {
 
       // Precondition

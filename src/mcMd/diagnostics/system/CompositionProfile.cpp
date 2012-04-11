@@ -90,8 +90,6 @@ namespace McMd
  
    void CompositionProfile::sample(long iStep) 
    {
-      int bin;
-      double min, max;
       Vector blengths;
 
       // Lengths of simulation box
