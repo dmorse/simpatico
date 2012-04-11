@@ -55,7 +55,7 @@ namespace DdMd
    * which it holds pointers, and after values are set for the
    * variables nAtomType, nBondType, etc.
    *
-   * \ingroup DdMd_Module
+   * \ingroup DdMd_Simulation_Module
    */
    class SimulationAccess 
    {

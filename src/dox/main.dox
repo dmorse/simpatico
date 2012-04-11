@@ -23,13 +23,15 @@ and hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \subpage perturb_page     "Free Energy Perturbation" </li>
    </ul>
  </li>
- <li> \subpage overview_page "Overview"
+ <li> \subpage overview_page "Library Design"
    <ul>
    <li> \subpage directory_page  "Directory Structure" </li>
-   <li> \subpage design_page     "Class Library" 
+   <li> \subpage design_page     "Namespaces and Classes" 
    <ul>
      <li> \subpage Util_NS_page  "Util namespace" </li>
+     <li> \subpage Inter_NS_page "Inter namespace" </li>
      <li> \subpage McMd_NS_page  "McMd namespace" </li>
+     <li> \subpage DdMd_NS_page  "DdMd namespace" </li>
    </ul>
    </li>
    </ul>
