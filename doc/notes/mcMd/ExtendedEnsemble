@@ -1,0 +1,78 @@
+
+Several types of simulation algorithm and diagnostics 
+involve the definition of a Boltzmann weight W(x) that depends 
+upon a continuous parameter x, and an ensemble of allowed values 
+for this parameter. In each of these applications, each System 
+has a unique value for this parameter, which can be identified 
+by a stateId.
+
+1) Replica Exchange - Each processor has one System with a 
+stateId. The stateId may be permanently determined by its 
+MPI rank, in an implementation in which configurations are 
+exchanged, or may change as a result of replica exhchanges,
+in an implementation in which only stateId values are 
+exchanged.
+
+2) Extended Ensemble - Each processor has a System with a 
+stateId that can change over a range of values.
+
+3) Perturbation theory by Bennet's acceptance ratio method: This
+requires only that, when a System has a particular StateId, it has 
+access to the values of the parameters "above" and "below" it
+
+
+ExpandedEnsemble
+{
+ 
+   void setPerturbation(Perturbation&); 
+
+   /**
+   * Use value of nState() from Perturbation to allocate memory.
+   */
+   void init();
+
+   /**
+   * Set free energy estimate used in weighting.
+   */ 
+   void setF(state Id);
+
+   /*
+   * Return free energy estimate used in weighting.
+   */
+   double f(state Id);
+
+   /*
+   * Ratio of statistical weights exp(f(final) - f(init))
+   */
+   double ratio(int initId, int finalId);
+
+   /*
+   * Record a visit to specified.
+   */
+   void markVisit(int stateId);
+
+   /*
+   * Total number of visits, to all states.
+   */
+   long totalVisits();
+
+   /*
+   * Get number of visits to one state.
+   */
+   long totalVisits(int stateId);
+
+   /*
+   * Clear histogram of visits.
+   */
+   void clearVisits();
+
+private:
+
+   DArray<double> f_;
+   DArray<long>   visits_;
+   long           totalVisits_
+
+   Perturbation* perturbationPtr_;
+   bool isInitialize_;
+
+}

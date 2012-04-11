@@ -1,6 +1,6 @@
 Class EeMcSimatulation : public Simulation {
 
-   Always has a perturbation
+   Has a Perturbation
    Has an ExtendedEnsemble
 
 }
