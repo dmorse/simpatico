@@ -12,16 +12,16 @@
 
 #include <mcMd/diagnostics/SystemDiagnostic.h>  // base class template
 #include <mcMd/simulation/System.h>             // base class template parameter
-#include <mcMd/mcSimulation/McSystem.h>             // base class template parameter
+#include <mcMd/mcSimulation/McSystem.h>       
 #include <util/containers/DArray.h>             // member template
 #include <util/accumulators/AutoCorr.h>         // member template parameter
-#include <util/space/Vector.h>                   // member template parameter
-#include <util/util/Observer.h>                   // member template parameter
-#include <util/util/Notifier.h>                   // member template parameter
+#include <util/space/Vector.h>                  // member template parameter
+#include <util/util/Observer.h>                   
+#include <util/util/Notifier.h>                  
 #include <util/mpi/MpiSendRecv.h>
 #include <util/mpi/MpiLogger.h>
 
-#include <mcMd/perturb/ReplicaMove.h>                   // member template parameter
+#include <mcMd/perturb/ReplicaMove.h>          
 
 #include <util/global.h>
 
@@ -34,50 +34,17 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Evaluates the van Hove function S(k,t) for several k.
+   * MigratingVanHove class evaluates VanHove function 
+   * of a configuration by monitoring its trajectory through 
+   * different states in space.
    *
-   * The van Hove function S(k,t) is defined here as an expectation value
-   * \f[
-   *     S(k,t)  = < \psi(k,t) \psi^{*}(k,0) > / V
-   * \f]
-   * where V is system volume, and \f$\psi(k,t)\f$ is given by a sum
-   * \f[
-   *     \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i )
-   * \f]
-   * over all atoms in the system, where \f$ c_{a} \f$ is a user-specified 
-   * coefficient for monomers of type a. 
-   *
-   * The Van Hove class can calculate S(k,t) for a list of wavevectors.
-   * Each wavevector is specified as an IntVector containing integer 
-   * Miller indices. These are the coefficients in an expansion of a 
-   * reciprocal lattice wavevector in terms of recprocal lattice basis 
-   * vectors.
-   *
-   * In a system with nAtomType = 2, with two monomer types 0 and 1,
-   * the parameter file input for calculating the autocorrelation of
-   * an order parameter \f$ \psi = \rho_0 - \rho_1 \f$ for 5 wavevectors 
-   * along the x axis in an orthorhombic unit cell might look like 
-   * this:
-   *
-   * \code
-   * VanHove{
-   *    interval                      1000
-   *    outputFileName             VanHove
-   *    atomTypeCoeffs              1.0000      -1.0000
-   *    nBuffer                        100
-   *    nWave                            5
-   *    waveIntVectors     8      0      0
-   *                       9      0      0 
-   *                      10      0      0 
-   *                      11      0      0 
-   *                      12      0      0 
-   * }
-   * \endcode
-   * At the end of a simulation, all of the autocorrelation functions 
-   * are output in a file with a suffix *.dat. Each line in this file
-   * contains the 3 Miller indices of a wavevector, the absolute
-   * magnitude of the wavevector, and a list of nAtomTypeIdPair structure 
-   * factor values for the wavevector, one for each atomTypeId pair.
+   * MigratingVanHove is derived from Observer class (of Observer
+   * design pattern) and is therefore notified of any changes in 
+   * state by a Notifier (eg. ReplicaExchange, here). Notification is
+   * done by invoking the update(sendRecvPair& partners) method,
+   * which sends (and receives) all information encapsulated in 
+   * VanHove function of current state to (and from) its partner
+   * (subsequent) state.
    * 
    * \ingroup McMd_Diagnostic_Module
    */
@@ -127,6 +94,11 @@ namespace McMd
       */
       void sample(long iStep);
       
+      /**
+      * Send (and receive) VanHove information to (and from) partners.
+      *
+      * \param partners pair of indices specifying partner states
+      */
       virtual void update(const sendRecvPair &partners);
 
       /**

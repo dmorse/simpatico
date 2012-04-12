@@ -64,20 +64,6 @@ namespace McMd
       //@{
 
       /**
-      * Sets external parameter
-      *
-      * \param externalParameter external parameter of system
-      */
-      virtual void setExternalParameter(double externalParameter);
-
-      /**
-      * Returns external parameter
-      *
-      * \return external parameter
-      */
-      virtual double externalParameter() const;
-
-      /**
       * Returns external potential energy of a single particle. 
       *
       * \param position atomic position Vector
@@ -205,16 +191,16 @@ namespace McMd
    /* 
    * Set external parameter.
    */
-   template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::setExternalParameter(double externalParameter) 
-   { interaction().setExternalParameter(externalParameter); }
+   //template <class Interaction>
+   //void ExternalPotentialImpl<Interaction>::setExternalParameter(double externalParameter) 
+   //{ interaction().setExternalParameter(externalParameter); }
  
    /* 
    * Returns external parameter.
    */
-   template <class Interaction>
-   double ExternalPotentialImpl<Interaction>::externalParameter() const 
-   { return interaction().externalParameter(); }
+   //template <class Interaction>
+   //double ExternalPotentialImpl<Interaction>::externalParameter() const 
+   //{ return interaction().externalParameter(); }
   
    /*
    * Return external energy of an atom.

@@ -50,20 +50,6 @@ namespace McMd
       virtual ~ExternalPotential()
       {}
 
-      /**
-      * Sets external parameter
-      *
-      * \param externalParameter external parameter of system
-      */
-      virtual void setExternalParameter(double externalParameter)  = 0;
-
-      /**
-      * Returns external parameter
-      *
-      * \return external parameter
-      */
-      virtual double externalParameter() const = 0;
-
       //@{ External Interaction Interface
 
       /**

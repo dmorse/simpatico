@@ -1,0 +1,78 @@
+--------------------------------------------------
+IntraMSDDiagnostic:
+
+   AtomMSD : SystemDiagnostic<System>
+
+   private: 
+
+        std::ofstream             outputFile_;
+
+        Internal State:
+        MeanSqDispArray<Vector>   accumulator_;
+        DArray<Vector>            truePositions_;
+        DArray<Vector>            oldPositions_;
+        DArray<IntVector>         shifts_;
+        int                       nMolecule_;
+        int                       capacity_;
+
+        int                       speciesId_;
+        int                       atomId_;
+
+   Outputs prm and dat files only at end
+
+   Classes:
+
+       ComMSD
+       AtomMSD
+--------------------------------------------------
+IntraAverageDiagnostic
+
+   DArray<Average>  accumulators_ 
+   int              nMolecule_;
+
+   RadiusGyration
+   BlockRadiusGyration 
+
+--------------------------------------------------
+ThermoAverageDiagnostic
+
+   Average          accumulator_
+
+   PressureAverage
+   Energies
+   BoundaryAverage
+--------------------------------------------------
+ThermoOutputDiagnostic
+
+   McBondEnergyAverage
+   McEnergyAverage
+   McPressureAverage
+   McPairEnergyAverage
+
+   MdPairEnergyCoefficients
+   MdKineticEnergyAverage
+   MdPressureAverage
+
+   Combine all into one for Mc and one for Md?
+--------------------------------------------------
+template<class T>
+IntraAutocCorrDiagnostic<T>
+
+   IntraPairAutoCorr
+   IntraBondStressAutoCorr
+   LinearRouseAutoCorr
+   RingRouseAutoCorr
+
+--------------------------------------------------
+template<class T>
+ThermoAutocCorrDiagnostic<T>
+
+--------------------------------------------------
+DistributionDiagnostic
+
+   BondLengthDist
+
+--------------------------------------------------
+RadialDistributionDiagnostic
+
+   RDF
