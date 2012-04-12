@@ -1,4 +1,4 @@
-/*! \page features_page Features
+/*! \page capabilities_page Capabilities
 
 \section features_potential_sec Potential Energy
 
@@ -21,8 +21,8 @@ integration of MC and MD simulations, all programs are currently
 restricted to models with differentiation potentials (i.e., not hard 
 spheres), with no explicit constraints on bond lengths or bond angles.
 
-Long-range electrostatic potentials have not yet been implemented in 
-any of the programs. This is the most important missing feature 
+Long-range electrostatic potentials have not yet been implemented 
+in any of the programs. This is the most important missing feature 
 required to make the package suitable for general atomistic models. 
 
 \section features_algorithms_sec Simulation Algorithms
@@ -35,9 +35,8 @@ following integration algorithms:
   <li> NVT dissipative particle dynamics </li>
   <li> NPH Anderson barostat </li>
 </ul>
-DdSim thus far provides only NVE velocity-Verlet and NVT Nose-Hoover 
-algorithms. For Monte-Carlo integration, mcSim currently provides the 
-following MC moves, among others:
+For Monte-Carlo integration, mcSim currently provides the following 
+MC moves, among others:
 <ul>
    <li> Single atom displacement </li>
    <li> Rigid molecule displacement </li>
@@ -50,8 +49,12 @@ following MC moves, among others:
    <li> End-swap move for linear heteropolymers (e.g., diblock copolymers) </li>
    <li> Semi-grand canonical move (for, e.g., homopolymer blends) </li>
 </ul>
-The current selection of MC moves reflects the fact that mcSim has thus far 
-been used only for simulation of coarse-grained models flexible polymers.
+The current selection of MC moves reflects the fact that mcSim has thus 
+far been used only for simulation of coarse-grained models flexible 
+polymers.
+
+For parallel Md simulations, DdSim thus far provides only NVE velocity-Verlet 
+and NVT Nose-Hoover integration algorithms. 
 
 \section features_hoomd_sec Hoomd Integration
 
@@ -109,27 +112,11 @@ the absence of an electrostatic potential, and the absence of MC
 conformation sampling algorithms designed specifically for use with 
 stiff angle potentials. 
 
-\section features_contributors_sec Contributors
-
-Contributors to McSim and MdSim:
-<ul>
-  <li> David Morse (primary author) </li>
-  <li> Jian Qin (MC algorithms, angle and dihedral potentials) </li>
-  <li> Jens Glaser (HOOMD integration) </li>
-  <li> Pavani Medapuram (replica exchange and perturbation theory) </li>
-</ul>
-The parallel DdSim program was written by David Morse.
-
-Simpatico was written by starting from a code named PMC that was used 
-in 2007-2009 by Jun Chung and Jian Qin, but not distributed outside 
-of our research group. Many of the MC algorithms used in mcSim were 
-written by these two users and then ported to Simpatico. 
-
 Navigation:
 <ul>
- <li> \ref about_page (Next)      </li>
- <li> \ref index       (Up)        </li>
- <li> \ref guide_page (Next)      </li>
+ <li> \ref about_page        (Next) </li>
+ <li> \ref index             (Up)   </li>
+ <li> \ref contributors_page (Next) </li>
 </ul>
 
 */
