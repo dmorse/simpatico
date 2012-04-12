@@ -49,9 +49,11 @@ namespace DdMd
       /**
       * Read parameters, allocate memory and initialize.
       *
-      * Parameters (file format):
+      * Parameter file format:
       *  - capacity      [int]  max number of groups owned by processor.
       *  - totalcapacity [int]  max number of groups on all processors.
+      *
+      * \param in input stream from which to read parameters.
       */
       virtual void readParam(std::istream& in);
 
@@ -59,7 +61,7 @@ namespace DdMd
       * Set parameters, allocate memory and initialize.
       *
       * \param capacity      max number of groups owned by processor.
-      * \param totalcapacity max number of groups on all processors.
+      * \param totalCapacity max number of groups on all processors.
       */
       void setParam(int capacity, int totalCapacity);
 
@@ -259,8 +261,9 @@ namespace DdMd
       * false, the method requires that no group contain a pointer to a ghost 
       * atom. If hasGhosts is true, requires that every Group be complete.
       *
-      * \param atomStorage associated AtomStorage object.
-      * \param hasGhosts   true if the atomStorage has ghosts, false otherwise.
+      * \param atomStorage  associated AtomStorage object
+      * \param hasGhosts    true if the atomStorage has ghosts, false otherwise
+      * \param communicator domain communicator 
       */
       #ifdef UTIL_MPI
       bool isValid(AtomStorage& atomStorage, MPI::Intracomm& communicator, 

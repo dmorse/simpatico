@@ -47,9 +47,9 @@ namespace DdMd
    void DdTimer::stop()
    {  time_ = MPI_Wtime() - begin_; }
 
+   #ifdef UTIL_MPI
    void DdTimer::reduce(MPI::Intracomm& communicator) 
    {
-      #ifdef UTIL_MPI
       int procs = communicator.Get_size();
       int rank  = communicator.Get_rank();
       bool isMaster = bool(rank == 0);
@@ -60,8 +60,8 @@ namespace DdMd
       }
       communicator.Reduce(&time_, &sum, 1, MPI::DOUBLE, MPI::SUM, 0);
       if (isMaster) time_ = sum/double(procs);
-      #endif
    }
+   #endif
 
    double DdTimer::time(int id)
    {  return times_[id]; }

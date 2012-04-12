@@ -59,7 +59,7 @@ namespace DdMd
    * A DdMd::Simulation contains and coordinates all the components of a 
    * parallel MD simulation. 
    *
-   * \ingroup DdMd_Module
+   * \ingroup DdMd_Simulation_Module
    */
    class Simulation : public ParamComposite
    {
@@ -78,6 +78,7 @@ namespace DdMd
       /**
       * Constructor.
       *
+      * \param mcSimulation parent McSimulation object.
       * \param communicator MPI communicator for MD processors.
       */
       Simulation(McMd::McSimulation& mcSimulation,

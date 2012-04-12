@@ -11,7 +11,6 @@ The root simpatico/ directory has the following subdirectories:
   bin/
   examples/ 
   tools/
-  user/
 \endcode
 The content of each of these directories is discussed below.
 
@@ -31,9 +30,6 @@ The content of each of these directories is discussed below.
 
 - tools/ contains C++ and python programs that are useful 
     for manipulating data or generating initial configurations.
-
-- user/ provides a skeleton of the code required to 
-    integrate new user-defined classes.
 
 <ul>
  <li> \ref overview_page (Up)    </li>

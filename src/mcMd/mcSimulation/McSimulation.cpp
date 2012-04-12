@@ -415,20 +415,12 @@ namespace McMd
             double ratio; 
             int    nAttempt, nAccept;
    
-            nAttempt = system().replicaMove().nAttempt(0);
-            nAccept = system().replicaMove().nAccept(0);
+            nAttempt = system().replicaMove().nAttempt();
+            nAccept = system().replicaMove().nAccept();
             ratio = nAttempt == 0 ? 0.0 : double(nAccept)/double(nAttempt);
-            Log::file() << "Replica Exchange (0) "
+            Log::file() << "Replica Exchange "
                         << Int(nAttempt) << Int(nAccept) << Dbl(ratio)
                         << std::endl;
-   
-            nAttempt = system().replicaMove().nAttempt(1);
-            nAccept = system().replicaMove().nAccept(1);
-            ratio = nAttempt == 0 ? 0.0 : double(nAccept)/double(nAttempt);
-            Log::file() << "Replica Exchange (1) "
-                        << Int(nAttempt) << Int(nAccept) << Dbl(ratio)
-                        << std::endl;
-   
          }
       }
       #endif

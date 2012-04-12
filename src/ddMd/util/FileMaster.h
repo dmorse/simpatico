@@ -96,7 +96,7 @@ namespace DdMd
       *
       * \param rootPrefix root prefix for all file names.
       */
-      void setRootPrefix(const std::string& directoryId);
+      void setRootPrefix(const std::string& rootPrefix);
 
       /**
       * Set an integer directory identifier for this processor.

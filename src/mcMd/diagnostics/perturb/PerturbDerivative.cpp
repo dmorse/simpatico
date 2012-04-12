@@ -52,7 +52,7 @@ namespace McMd
    }
 
    /* 
-   * Evaluate perturb derivative, and add to accumulator.
+   * Evaluate perturbation derivative, and add to accumulator.
    */
    void PerturbDerivative::sample(long iStep) 
    {

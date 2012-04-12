@@ -86,6 +86,29 @@ namespace Util
       comm.Send(buffer_, sendBytes, MPI::UNSIGNED_CHAR, dest, 5);
 
    }
+
+   /*
+   * Send a block (nonblocking)
+   */
+   void MemoryOArchive::iSend(MPI::Intracomm& comm, MPI::Request& req, int dest)
+   {
+      int  comm_size = comm.Get_size();
+      int  myRank = comm.Get_rank();
+
+      // Preconditions
+      if (dest > comm_size - 1 || dest < 0) {
+         UTIL_THROW("Destination rank out of bounds");
+      }
+      if (dest == myRank) {
+         UTIL_THROW("Source and desination identical");
+      }
+
+      size_t  sendBytes = cursor_ - buffer_;
+      size_t* sizePtr = (size_t*)buffer_;
+      *sizePtr = sendBytes;
+      req = comm.Isend(buffer_, sendBytes, MPI::UNSIGNED_CHAR, dest, 5);
+   }
+ 
    #endif
 
 }

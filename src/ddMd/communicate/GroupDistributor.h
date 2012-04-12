@@ -143,9 +143,6 @@ namespace DdMd
       *
       * If the addition of this atom to the cache would make the cache
       * full, this method broadcasts the cache to all processors.
-      *
-      * \param  storage GroupStorage<N> object on master processor.
-      * \return rank of processor that owns the active atom.
       */
       void add();
 

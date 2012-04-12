@@ -37,21 +37,21 @@ namespace McMd
    */
    BennettsMethod::BennettsMethod(System& system)
     : SystemDiagnostic<System>(system),
+      shift_(0.0),
+      lowerShift_(0.0),
+      shifts_(),
       communicatorPtr_(0),
       myId_(-1),
       nProcs_(0),
       lowerId_(-1),
       upperId_(-1),
-      nParameters_(0),
-      shift_(0.0),
-      myAccumulator_(),
-      upperAccumulator_(),
-      nSamplePerBlock_(1),
-      lowerShift_(0.0),
+      nParameter_(0),
       myParam_(),
       lowerParam_(),
       upperParam_(),
-      myDerivative_(0.0),
+      nSamplePerBlock_(1),
+      myAccumulator_(),
+      upperAccumulator_(),
       myArg_(0.0),
       lowerArg_(0.0),
       myFermi_(0.0),
@@ -72,10 +72,10 @@ namespace McMd
       } else {
          upperId_ = myId_;
       }
-      nParameters_ = system.perturbation().getNParameters(); 
-      myParam_.allocate(nParameters_);
-      lowerParam_.allocate(nParameters_);
-      upperParam_.allocate(nParameters_);
+      nParameter_ = system.perturbation().getNParameters(); 
+      myParam_.allocate(nParameter_);
+      lowerParam_.allocate(nParameter_);
+      upperParam_.allocate(nParameter_);
    }
 
    /*
@@ -121,12 +121,13 @@ namespace McMd
       int myPort, upperPort;
       MPI::Request requestFermi[2];
       MPI::Status  status;
-      // Exchange derivatives with partner
+
+      // Exchange perturbation parameters and differences
       if (myId_ != 0 && myId_ != nProcs_ - 1) {
          myPort = myId_%2;
          upperPort = upperId_%2;
 
-         for (int i = 0; i < nParameters_; ++i) {
+         for (int i = 0; i < nParameter_; ++i) {
             myParam_[i] = system().perturbation().parameter(i);
             lowerParam_[i] = system().perturbation().parameter(i,lowerId_);
             upperParam_[i] = system().perturbation().parameter(i,upperId_);
@@ -159,7 +160,7 @@ namespace McMd
             myPort = myId_%2;
             upperPort = upperId_%2;
 
-            for (int i = 0; i < nParameters_; ++i) {
+            for (int i = 0; i < nParameter_; ++i) {
                myParam_[i] = system().perturbation().parameter(i);
                upperParam_[i] = system().perturbation().parameter(i, upperId_);
             }
@@ -182,7 +183,7 @@ namespace McMd
             
             myPort = myId_%2;
 
-            for (int i = 0; i < nParameters_; ++i) {
+            for (int i = 0; i < nParameter_; ++i) {
                myParam_[i] = system().perturbation().parameter(i);
                lowerParam_[i] = system().perturbation().parameter(i, lowerId_);
             }
@@ -202,17 +203,17 @@ namespace McMd
 
    void BennettsMethod::analyze()
    {
-      double EnergyDiff_, ratio_, improvedShift_;
+      double EnergyDiff, ratio, improvedShift;
       if (myId_ != nProcs_ - 1) {
        
-         ratio_ = upperAccumulator_.average()/myAccumulator_.average();
+         ratio = upperAccumulator_.average()/myAccumulator_.average();
       
-         EnergyDiff_ = log(ratio_)+shift_;
+         EnergyDiff = log(ratio)+shift_;
       
-         improvedShift_ = EnergyDiff_;
+         improvedShift = EnergyDiff;
             
-         shifts_[myId_] = improvedShift_; 
-         shift_ = improvedShift_; 
+         shifts_[myId_] = improvedShift; 
+         shift_ = improvedShift; 
     
       } else {}
    
@@ -220,7 +221,6 @@ namespace McMd
    
    
    // Output results to file after simulation is completed.
-   
    void BennettsMethod::output() 
    {
       analyze(); 

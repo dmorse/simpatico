@@ -19,6 +19,10 @@
 #include <mcMd/simulation/System.h>
 #include <util/boundary/OrthorhombicBoundary.h>
 #include <util/mpi/MpiSendRecv.h>
+#include <util/archives/MemoryOArchive.h>
+#include <util/archives/MemoryIArchive.h>
+#include <util/archives/MemoryCounter.h>
+#include <util/random/Random.h>
 #include <util/util/Observer.h>
 
 #include <sstream>
@@ -31,31 +35,22 @@ namespace McMd
 
    // Define static constant MPI message Tag.
 
-   const int ReplicaMove::TagParam[2]    = {10, 11};
-
-   const int ReplicaMove::TagDecision[2] = {20, 21};
-
-   const int ReplicaMove::TagConfig[2]   = {30, 31};
-
    /*
    * Constructor.
    */
    ReplicaMove::ReplicaMove(System& system) :
+      systemPtr_(&system),
       communicatorPtr_(0),
       myId_(-1),
       nProcs_(0),
       outputFile_(),
-      repxAttempt_(),
-      repxAccept_(),
-      interval_(-1),
       nParameters_(0),
-      myParam_(),
-      ptParam_(),
-      systemPtr_(&system),
-      ptId_(-1),
-      stepCount_(0),
+      interval_(-1),
+      nSampling_(-1),
       ptPositionPtr_(0),
-      myPositionPtr_(0)
+      myPositionPtr_(0),
+      swapAttempt_(0),
+      swapAccept_(0)
    {
 
       // Precondition
@@ -81,10 +76,6 @@ namespace McMd
       //energyfName += energysMyId.str();
 
       // Initialize statistical accumulators.
-      repxAttempt_[0] = 0;
-      repxAttempt_[1] = 0;
-      repxAccept_[0]  = 0;
-      repxAccept_[1]  = 0;
       nParameters_ = system.perturbation().getNParameters();
    }
 
@@ -107,6 +98,10 @@ namespace McMd
       if (interval_ <= 0) {
          UTIL_THROW("Invalid value input for interval_");
       }
+      read<int>(in, "nSampling", nSampling_);
+      if (nSampling_ <= 0) {
+         UTIL_THROW("Invalid value input for nSampling_");
+      }
       readEnd(in);
    }
 
@@ -115,12 +110,6 @@ namespace McMd
    */
    void ReplicaMove::initialize()
    {
-      // Get the perturbation parameter
-      myParam_.allocate(nParameters_);
-      ptParam_.allocate(nParameters_);
-      for (int i = 0; i < nParameters_; ++i) {
-         myParam_[i] = system().perturbation().parameter(i);
-      }
       // Allocate memory
       int nAtom = system().simulation().atomCapacity();
       ptPositionPtr_ = new Vector[nAtom];
@@ -132,170 +121,190 @@ namespace McMd
    */
    bool ReplicaMove::move()
    {
-      MPI::Request request[8];
+      MPI::Request request[4];
       MPI::Status  status;
-      double myWeight, ptWeight, exponential;
-      int    isLeft, iAccept, myPort, ptPort;
       System::MoleculeIterator molIter;
       Molecule::AtomIterator   atomIter;
       int iA;
-      
-      // Default value for no replica exchange
-      isLeft  = -1;
-      iAccept = 0;
+      int recvPt, sendPt;
+  
+      DArray<int> permutation;
+      permutation.allocate(nProcs_);
 
-      if ((myId_ < nProcs_ - 1) && (stepCount_ >= myId_) &&
-         ((stepCount_ - myId_) % (nProcs_ - 1)  ==0)) {
-         // we are exchanging with processor myId_ + 1
-         isLeft = 1;
-         ptId_ = myId_ + 1;
+      // Gather all derivatives of the perturbation Hamiltonians and parameters on processor with rank 0
+      DArray<double> myDerivatives;
+      myDerivatives.allocate(nParameters_);
+      DArray<double> myParameters;
+      myParameters.allocate(nParameters_);
 
-      } else if ((myId_ > 0) && (stepCount_ >= myId_ - 1) &&
-                ((stepCount_  - (myId_ - 1)) % (nProcs_ -1 ) == 0)) {
-         // we are exchanging with processor myId_ - 1
-         isLeft = 0;
-         ptId_ = myId_ - 1; 
-      } 
-      if (isLeft == 0 || isLeft == 1) {
-         // Set the port value for message tag
-         myPort = myId_%2;
-         ptPort = ptId_%2;
- 
-         // Update accumulator
-         repxAttempt_[isLeft] += 1;
-
-         // Exchange coupling parameters with partner
-         for (int i = 0; i < nParameters_; ++i) {
-            request[0] = communicatorPtr_->Irecv(&ptParam_[i], 1, MPI::DOUBLE, ptId_,
-                                              TagParam[ptPort]);
-            request[1] = communicatorPtr_->Isend(&myParam_[i], 1, MPI::DOUBLE, ptId_,
-                                              TagParam[myPort]);
-         
-            // Synchronizing
-            request[0].Wait();
-            request[1].Wait();
-         }   
-         myWeight = system().perturbation().difference(ptParam_);
-         
-         // Collect tempering weights and make decision
-         if (isLeft == 1) {
-
-            // Receive energy difference from the right box
-            request[2] = communicatorPtr_->Irecv(&ptWeight, 1, MPI::DOUBLE,
-                                                ptId_, TagDecision[ptPort]);
-            request[2].Wait();
-
-            exponential = exp(-myWeight - ptWeight);
-
-         } else {
-
-            // Send energy difference to the left box
-            request[2] = communicatorPtr_->Isend(&myWeight, 1, MPI::DOUBLE,
-                                                 ptId_, TagDecision[myPort]);
-            request[2].Wait();
+      for (int i=0; i< nParameters_; i++) {
+         myDerivatives[i] = system().perturbation().derivative(i);
+         myParameters[i] = system().perturbation().parameter(i);
          }
 
-         // Collect tempering weights and make decision
-         if (isLeft == 1) {
+
+      int size = 0;
+      size += memorySize(myDerivatives);
+      size += memorySize(myParameters);
+
+      if (myId_ != 0) {
+
+         MemoryOArchive sendCurrent;
+         sendCurrent.allocate(size);
+
+         sendCurrent << myDerivatives;
+         sendCurrent << myParameters;
+
+         sendCurrent.send(*communicatorPtr_, 0);
+      } else {
+         DArray< DArray<double> > allDerivatives;
+         DArray< DArray<double> > allParameters;
+         allDerivatives.allocate(nProcs_);
+         allParameters.allocate(nProcs_);
    
-            // Metropolis test
-            iAccept = system().simulation().random().
-                      metropolis(exponential) ? 1 : 0;
+         allDerivatives[0].allocate(nParameters_);
+         allDerivatives[0] = myDerivatives;
+         allParameters[0].allocate(nParameters_);
+         allParameters[0] = myParameters;
 
-            // Send decision to the right box
-            request[3] = communicatorPtr_->Isend(&iAccept, 1, MPI::INT,
-                                                 ptId_, TagDecision[myPort]);
-            request[3].Wait();
-
-         } else {
-
-            // Receive decision from the left box
-            request[3] = communicatorPtr_->Irecv(&iAccept, 1, MPI::INT,
-                                                 ptId_, TagDecision[ptPort]);
-            request[3].Wait();
-
-         }
-         // Exchange particle configurations if the move is accepted
-         if (iAccept == 1) {
-         
-            // Update accumulator
-            repxAccept_[isLeft] += 1;
-
-            Vector myBoundary;
-            myBoundary = system().boundary().lengths();
-                  
-            Vector ptBoundary;
-                  
-            // Accomodate new boundary dimensions.
-            request[4] = communicatorPtr_->Irecv(&ptBoundary, 1,
-                                                 MpiTraits<Vector>::type, ptId_, TagConfig[ptPort]);
-
-            // Send old boundary dimensions.
-            request[5] = communicatorPtr_->Isend(&myBoundary, 1,
-                                                  MpiTraits<Vector>::type, ptId_, TagConfig[myPort]);
-
-            request[4].Wait();
-            request[5].Wait();
-                   
-            system().boundary().setLengths(ptBoundary);
-
-            // Pack atomic positions and types.
-            iA = 0;
-            for (int iSpec=0; iSpec < system().simulation().nSpecies(); ++iSpec){
-               for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter){
-                  for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
-                     myPositionPtr_[iA] = atomIter->position();
-                     iA++;
-                  }
-               }
-            }
-            
-            // Accomodate new configuration.
-            request[6] = communicatorPtr_->Irecv(ptPositionPtr_, iA,
-                             MpiTraits<Vector>::type, ptId_, TagConfig[ptPort]);
-
-            // Send old configuration.
-            request[7] = communicatorPtr_->Isend(myPositionPtr_, iA,
-                             MpiTraits<Vector>::type, ptId_, TagConfig[myPort]);
-
-            request[6].Wait();
-            request[7].Wait();
-            
-            // Adopt the new atomic positions.
-            iA = 0;
-            for (int iSpec=0; iSpec < system().simulation().nSpecies(); ++iSpec){
-               for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter){
-                  for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter){
-                     atomIter->position() = ptPositionPtr_[iA];
-                     ++iA;
-                  }
-               }
-            }
-            
-
-            // Notify component observers.
-            //notifyObservers(ptId_);
-            Notifier<int>::notifyObservers(ptId_);
-
-         }  else {
-            // the move was not accepted, do nothing
+         for (int i = 1; i<nProcs_; i++) {
+            MemoryIArchive recvPartner;
+            recvPartner.allocate(size);
+            recvPartner.recv(*communicatorPtr_, i);
+            allDerivatives[i].allocate(nParameters_);
+            allParameters[i].allocate(nParameters_);
+            recvPartner >> allDerivatives[i];
+            recvPartner >> allParameters[i];
          }
 
+         // Now we have the complete matrix U_ij = u_i(x_j), permutate nsampling steps according
+         // to acceptance criterium
+  
+         // start with identity permutation
+         for (int i = 0; i < nProcs_; i++)
+            permutation[i] = i;
+
+         for (int n =0; n < nSampling_; n++) {
+            swapAttempt_++;
+            // choose a pair i,j, i!= j at random
+            int i = system().simulation().random().uniformInt(0,nProcs_);
+            int j = system().simulation().random().uniformInt(0,nProcs_-1);
+            if (i<=j) j++;
+
+            // apply acceptance criterium
+            double weight = 0;
+            for (int k = 0; k < nParameters_; k++) {
+               double deltaDerivative = allDerivatives[i][k] - allDerivatives[j][k];
+               // the permutations operate on the states (the perturbation parameters)
+               weight += (allParameters[permutation[j]][k] - allParameters[permutation[i]][k])*deltaDerivative;
+             }
+            double exponential = exp(-weight);
+            int accept = system().simulation().random(). metropolis(exponential) ? 1 : 0;
+   
+            if (accept) {
+               swapAccept_++;
+               // swap states of pair i,j
+               int tmp = permutation[i];
+               permutation[i] = permutation[j];
+               permutation[j] = tmp;
+               }
+         }
+    
+         // send exchange partner information to all other processors
+         for (int i = 0; i < nProcs_; i++) {
+            if (i != 0)
+                communicatorPtr_->Send(&permutation[i], 1, MPI::INT, i, 0);
+            else
+                sendPt = permutation[i];
+
+            if (permutation[i] != 0)
+               communicatorPtr_->Send(&i, 1, MPI::INT, permutation[i], 1);
+            else
+               recvPt = i;
+         }
       }
 
+      
+      if (myId_ != 0)
+         {
+         // partner id to receive from
+         communicatorPtr_->Recv(&sendPt, 1, MPI::INT, 0, 0);
+         // partner id to send to
+         communicatorPtr_->Recv(&recvPt, 1, MPI::INT, 0, 1);
+         }
 
-      // Output results needed to build exchange profile.
-      if (isLeft == -1) {
-        outputFile_ << "n" << std::endl;
-      } else if ( isLeft != -1 && iAccept == 0) {
-        outputFile_ << myId_ << std::endl;
-      } else if ( isLeft != -1 && iAccept == 1) {
-        outputFile_ << ptId_ << std::endl;
+      if (recvPt == myId_ || sendPt == myId_)
+         {
+         // no exchange necessary
+         outputFile_ << sendPt << std::endl;
+         return true;
+         }
+
+      assert(recvPt != myId_ && sendPt != myId_);
+
+      Vector myBoundary;
+      myBoundary = system().boundary().lengths();
+            
+      Vector ptBoundary;
+            
+      // Accomodate new boundary dimensions.
+      request[0] = communicatorPtr_->Irecv(&ptBoundary, 1,
+                                           MpiTraits<Vector>::type, recvPt, 1);
+
+      // Send old boundary dimensions.
+      request[1] = communicatorPtr_->Isend(&myBoundary, 1,
+                                            MpiTraits<Vector>::type, sendPt, 1);
+
+      request[0].Wait();
+      request[1].Wait();
+             
+      system().boundary().setLengths(ptBoundary);
+
+      // Pack atomic positions and types.
+      iA = 0;
+      for (int iSpec=0; iSpec < system().simulation().nSpecies(); ++iSpec){
+         for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter){
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
+               myPositionPtr_[iA] = atomIter->position();
+               iA++;
+            }
+         }
       }
+      
+      // Accomodate new configuration.
+      request[2] = communicatorPtr_->Irecv(ptPositionPtr_, iA,
+                       MpiTraits<Vector>::type, recvPt, 2); 
 
-      stepCount_++;
+      // Send old configuration.
+      request[3] = communicatorPtr_->Isend(myPositionPtr_, iA,
+                       MpiTraits<Vector>::type, sendPt, 2);
 
-      return (iAccept == 1 ? true : false);
+      request[2].Wait();
+      request[3].Wait();
+      
+      // Adopt the new atomic positions.
+      iA = 0;
+      for (int iSpec=0; iSpec < system().simulation().nSpecies(); ++iSpec){
+         for (system().begin(iSpec, molIter); molIter.notEnd(); ++molIter){
+            for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter){
+               atomIter->position() = ptPositionPtr_[iA];
+               ++iA;
+            }
+         }
+      }
+      
+
+      // Notify component observers.
+      sendRecvPair partners;
+      partners[0] = sendPt;
+      partners[1] = recvPt;
+      Notifier<sendRecvPair>::notifyObservers(partners);
+
+
+      // log information about exchange partner to file
+      outputFile_ << sendPt << std::endl;
+
+      return true;
 
    }
 

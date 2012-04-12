@@ -1,0 +1,96 @@
+   Recommended Changes to Perturbation class
+   -----------------------------------------
+
+   1) Rename nParameters_ as nParameter_.
+   2) Change int getNParameters() to int nParameter().
+
+   Rational: Stylistic consistency with rest of code.
+
+   3) Add a protected variable nState_ that is the number of states in
+   the ensemble, a public method nState() that returns its value, and
+   a public method setNState(int nState) that can set its value.
+
+   Rational: These are needed for single-processor extended-ensemble
+   simulations, where the number of states is not simply the number
+   of processors.  The readParam method should read a value for nState
+   unless a value has been set previously by setNState. McSimulation
+   should call setNState to set nState equal to the number of processors
+   prior to calling readParam. Extended ensemble simulations should
+   read nState from the parameter file. 
+
+   4) Add variable int stateId_ that gives current value of the stateId
+   for this system, and methods int stateId() and void setStateId(int)
+   to get and set its value. In replica exchange, with our current
+   implementation, the stateid_ variable would be permanently set to
+   the processor rank.  In extended ensemble, it would be changed by
+   MC moves.
+
+   5) Pass nParameter_ to constructor as a required argument, and then
+   make the constructor protected
+
+   Rational: The value of nParameter_ number is constant for each subclass,
+   so it can be passed to the constructor as a integer constant.  The 
+   Perturbation class is abstract, so the constructor can only be called 
+   by subclass constructors.
+
+   6) Remove #ifdef UTIL_MPI ... #endif blocks around, e.g., parameters_ 
+   method
+
+   Rational: We'd like to be able to use this class to define a set of
+   states for a single-processor extended ensemble simulation. In this
+   context, there is no reason to require mpi to define values for
+   different states.
+
+   7) Remove variables mode, initial parameter, final parameter.
+
+    Rational: These are implementation details that don't belong
+    in an abstract base class. Let's keep the base class conceptually
+    clean, and implement these conveniences in subclasses. 
+
+   8) Use more descriptive or conventional names for method parameters.
+   (see below);
+
+   i  -> parameterId
+   id -> stateId
+   iPartnerParameter -> partnerParameter.
+   
+
+
+   class Perturbation : public ParamComposite
+   {
+
+   public:
+
+      Perturbation(int nParameter);
+      virtual ~Perturbation();
+
+      void    setNState(int nState);                           <- new
+      void    setStateId(int stateId);                         <- new
+      void    readParameters(std::istream& in);
+
+      int     nParameter() const;
+      int     nState() const;                               <- new
+      int     stateId() const;                              <- new
+
+      void    setParameter(DArray<double> parameter);
+      double  parameter(int parameterId, int stateId);
+      virtual double parameter(int parameterId) const = 0;
+      virtual double derivative(int parameterId) const = 0;
+      virtual double difference(DArray<double> partnerParameter) const = 0;
+
+   protected:
+
+      int nParameter_;
+      int nState_;                          <- new
+      DArray<double>  parameter_;
+      DMatrix<double> parameters_;
+
+      virtual void setParameter() = 0;
+
+   private:
+
+      int stateId_;                         <-new
+
+   };
+
+}

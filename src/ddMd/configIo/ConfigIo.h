@@ -33,7 +33,12 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * 
+   * Class to read and write configuration files.
+   *
+   * ConfigIo is a polymorphic class with a default implementation that
+   * encodes the default DdMd configuration file format.
+   *
+   * \ingroup DdMd_ConfigIo_Module
    */
    class ConfigIo  : public ParamComposite
    {
@@ -83,10 +88,11 @@ namespace DdMd
       /**
       * Read configuration file.
       *
-      * This routine opens and reads a file on the master,
-      * and distributes atom data among the processors.
+      * This routine opens and reads a file on the master, and distributes
+      * atom data among the processors.
       *
-      * \param filename name of configuration file.
+      * \param file input file stream
+      * \param maskPolicy MaskPolicy to be used in setting atom masks
       */
       virtual void readConfig(std::istream& file, MaskPolicy maskPolicy);
 
@@ -96,7 +102,7 @@ namespace DdMd
       * This routine opens and writes a file on the master,
       * collecting atom data from all processors.
       *
-      * \param filename name of output configuration file.
+      * \param file output file stream
       */
       virtual void writeConfig(std::ostream& file);
 

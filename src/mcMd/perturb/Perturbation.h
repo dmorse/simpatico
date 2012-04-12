@@ -116,18 +116,15 @@ namespace McMd
       virtual double derivative(int i) const = 0;
 
       /**
-      * Returns the difference W(X, p'[i]) - W(X, p[i]).
+      * Returns the difference W(X, p') - W(X, p).
       *
-      * This method returns the difference W(X, p'[i]) - W(X, p[i]) between value
-      * of the statistical weight W(X,p[i]) = H/kT for the current microstate,
-      * where p[i] is the value of the perturbation parameter in this system,
-      * and p'[i] = iPartnerParameter is the partner perturbation parameter value 
-      * that is passed to this function.
+      * This method returns the difference W(X, p') - W(X, p) between 
+      * value of the statistical weight W(X,p[i]) = H/kT for the current 
+      * microstate, where p[i] is the value of the perturbation parameter in 
+      * this system, and p'[i] = iPartnerParameter is the partner perturbation 
+      * parameter value that is passed to this function.
       *
-      * \param iPartnerParameter the value of the perturbation parameter p'[i] of
-      *        the partner system.
-      * \param i index of the perturbation parameter with respect to which the 
-      *        derivative and thereby, the difference is evaluated.
+      * \param iPartnerParameter perturbation parameters for partner system.
       */
       virtual double difference(DArray<double> iPartnerParameter) const = 0;
 

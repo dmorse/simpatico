@@ -41,29 +41,29 @@ namespace DdMd
       Mask();
 
       /**
-      * Clear the mask set (remove all atoms).
+      * Clear the masked set (remove all atoms).
       */
       void clear();
 
       /**
       * Add an Atom to the masked set.
       *  
-      * \param atom Atom to be added to the masked set.
+      * \param id global index (tag) of atom to be added
       */
       void append(int id);
 
       /**
       * True if the atom is in the masked set for the target Atom.
       *
-      * \param  id integer id of atom to be tested.
-      * \return true if atom is masked, false otherwise.
+      * \param  id integer id of atom to be tested
+      * \return true if atom is masked, false otherwise
       */
       bool isMasked(int id) const;
 
       /**
       * Return value of atom index number i.
       *
-      * \param i array index for desired atom index.
+      * \param i array index for desired atom index
       */
       int operator [] (int i) const;
 

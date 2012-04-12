@@ -63,7 +63,7 @@ namespace DdMd
       *
       * \param atomCapacity      max number of atoms owned by processor.
       * \param ghostCapacity     max number of ghosts on this processor.
-      * \param totalatomCapacity max number of atoms on all processors.
+      * \param totalAtomCapacity max number of atoms on all processors.
       */
       void setParam(int atomCapacity, int ghostCapacity,
                     int totalAtomCapacity);

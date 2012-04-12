@@ -61,37 +61,37 @@ namespace Util
    * are equivalent, and both load the state of variable data from archive 
    * ar.
    *
-   * Objects of type T can be saved to or loaded from an archive that is
-   * is an instance of class Archive if and only if the compiler can find 
-   * a function named serialize with the signature
+   * Objects of type T can be saved to or loaded from an instance of a
+   * class Archive if and only if the compiler can find a function named 
+   * serialize with the signature
    * \code
    *     void serialize(Archive& ar, T& data, unsigned int version)
    * \endcode
    * Here, "version" is an integer index that indicates the version of the
-   * archive, which is normally given by an integer member of the archive
-   * class. The operator & for a class Archive is normally implemented by 
-   * a method template 
-   * \endcode
+   * archive. This version id is normally given by an integer member of the 
+   * archive class. The operator & for a class Archive is normally implemented 
+   * by a method template 
+   * \code
    *
    *  template <typename T>
    *  void Archive::operator & (T& data);
-   *  { serialize(*this, data, version_); }
+   *  {  serialize(*this, data, version_); }
    *
    * \endcode
    * that simply calls the appropiate serialize method. Here, version_ is
-   * an integer member of the Archive class that stores a version id. 
-   * Similar templates must be provided for the << or >> operator.
-   * Definitions of the serialize function for saving archive types must 
-   * save (write) data, and those for loading archive types must load 
-   * (read) data. Each archive class provides serialize functions for all
-   * of the built-in C++ types, as well as few other common data types 
-   * such as std::string. 
+   * an integer member of the Archive class that stores the archive version 
+   * id. Similar templates must be provided for the << or >> operator.
+   *
+   * Each archive class provides serialize functions for all of the built-in
+   * C/C++ types, as well as few other common data types such as std::string. 
+   * Definitions of the serialize function for saving archive types must save 
+   * (write) data, and those for loading archive types must load (read) data. 
    * 
    * Instances of user-defined classes may also be serialized if an appropriate 
-   * serialize function is provided. Serialization of instances of a class T 
-   * may be enabled by defining either:
+   * serialize function can be found by the compiler. Serialization of instances 
+   * of a class T may be enabled by defining either:
    * 
-   * - A global serialize function template with a signature
+   * - A global serialize function template, with a signature
    * \code
    *
    * template <class Archive>
@@ -106,9 +106,26 @@ namespace Util
    * void T::serialize(Archive& ar, const unsigned int version);
    * 
    * \endcode
-   * Note that, in either case, the archive type is left as a template 
-   * parameter. If a serialize class method is defined, it is accessed
-   * by the following default template serialize function:
+   * Note that, in either case, the archive type is normally a template
+   * parameter, so that the same serialize function can work with multiple
+   * types of archives. 
+   *
+   * In order to use this system, it is worth understanding how the compiler
+   * finds an appropriate serialize method.  When the C++ compiler needs a 
+   * serialize method for a particular archive type Archive and data type T, 
+   * it will look first for a function serialize(Archive&, T&, unsigned int) 
+   * with exactly the required signature, and then for an appropriate template. 
+   * Such functions are provided for each archive classes for all of the
+   * built-in C/C++ types, and are always used to serialize such types.
+   * For class types, their is normally no such non-template function, and 
+   * so the compiler will look for an appropriate template, giving priority
+   * to templates in which fewer of the function parameters have types given
+   * by template arguments, rather than explicit types. If the compiler has
+   * access to a global serialize function template for class T with the 
+   * signature described above, in which the archive type is a template 
+   * parameter but the data type T is explicit, it will use this. If no such 
+   * global serialize function template is found, the compiler will try to 
+   * compile the following generic template, 
    * \code
    *
    * template <class Archive, typename T>
@@ -116,27 +133,24 @@ namespace Util
    * {  data.serialize(ar, version); }
    *
    * \endcode
-   * This template, which is defined in the file serialize.h, 
-   * simply calls the serialize method of class T, if one exists.
-   * When the C++ compiler needs a serialize method for a particular 
-   * archive type Archive and data type T, it will look first for a
-   * function serialize(Archive&, T&, unsigned int) with exactly the 
-   * required signature, and then for an appropriate template. If a
-   * global serialize function template is defined for class T with
-   * the signature described above, in which the archive type is a 
-   * template parameter but the data type T is explicit, this will 
-   * be chosen in preference to the default template, in which both 
-   * both the archive and data types are template parameters. 
-   * Serialization of built-in C++ types always uses the explicit 
-   * specializations that must be defined for these types for each
-   * archive class.
+   * which is defined in the file src/util/serialize.h. This template
+   * simply calls the serialize method of class T, and so will not 
+   * compile if no such method exists. The compiler can thus use, in
+   * decreasing order of priority: 1) An explicit serialize function
+   * for type T and a specific archive type, 2) A serialize function
+   * template for a specific type T in which the archive type is a
+   * template parameter, or 3) A serialize method of class T in which
+   * the archive type is a template parameter. If none of these are
+   * accessible for class T, compilation will fail for any code that
+   * attempts to serialize an instance of class T.
    *
-   * The use of a single operator & to represent both output (when applied to a 
-   * saving archive) and input (when applied to a loading archive), makes it 
-   * possible to write a single serialize function template for each class that
-   * specifies both how to save and how to load instances of that class.  For 
-   * example, consider the following definition of a simple complex number 
-   * class:
+   * The use of a single operator & to represent both output (when applied 
+   * to a saving archive) and input (when applied to a loading archive), 
+   * makes it possible to write a single serialize function template for 
+   * each class that specifies how to order save or load instances of 
+   * that class, by specifying the order in which members of the class
+   * are serialized. For example, consider the following definition of 
+   * a simple complex number class:
    * \code 
    *
    *   class Complex  {
@@ -159,20 +173,21 @@ namespace Util
    *   } 
    *
    * \endcode
-   * The serialize method template provides instructions for the order in which
-   * to either save the two floating point members of the class to a saving 
-   * archive or load them from a loading archive. The use of a template in 
-   * which the archive type is a parameter allows a single serialize method 
-   * to be used with any type of saving or loading archive.
+   * The serialize method template provides instructions for the order in 
+   * which to either save the two floating point members of the class to
+   * a saving archive, or to load them from a loading archive. The use of 
+   * a template in which the archive type is a parameter allows a single 
+   * serialize method to be used with any type of saving or loading archive.
    *
-   * The most serious disadvantage of this system is that definition of a 
-   * serialize method as a template implies that this method cannot be 
-   * virtual. As a result, the serialize method template for a class cannot 
-   * be accessed polymorphically, via a pointer or reference to a base class. 
+   * The most serious disadvantage of this system is that, if the serialize
+   * method is defined by a template, it cannot also be a virtual method.
+   * As a result, the serialize method template for a class cannot be 
+   * accessed polymorphically, via a pointer or reference to a base class. 
    * This limitation becomes a problem in designs in which some objects are 
    * accessed only via base class pointers.  The Serializable abstract base
-   * class partially solves this problem, by replacing the serialize method 
-   * template by a pair of virtual save() and load() methods.
+   * class, discussed below, partially solves this problem, by replacing 
+   * the serialize method template by a pair of virtual save() and load() 
+   * methods.
    */
 
    /**
@@ -192,14 +207,17 @@ namespace Util
    *
    * The advantage of using virtual functions is that it allows these methods 
    * to be accessed polymorphically, via base class pointers or references.
-   * The disadvantage is that it requires the hard-coding (via a pair of
-   * typedefs) of a single type of saving and loading archive. A serialize
-   * method template for a class instead allows instances of that class to
-   * be serialized to or from any type of archive, but cannot be virtual 
-   * because C++ does not allow a method template to be virtual. In practice, 
-   * a serialize method or function template should be defined for relatively 
-   * simple, non-polymorphic classes, but more complicated polymorphic types 
-   * should be derived from Serializable. 
+   * The disadvantage is that it requires the hard-coding of a single type
+   * type of saving and loading archive. To retain some flexibility, these
+   * saving and loading types are defined in the Serializable class by a 
+   * pair of typedefs. This allows the type of archives used with Serializable
+   * objects to be changed throughout the code by changing these two typedefs
+   * and recompiling. 
+   *
+   * In practice, a serialize method or function template should be defined 
+   * for relatively simple, non-polymorphic classes, but polymorhpic classes
+   * that are normally accessed via base class pointers should be derived 
+   * from Serializable, and must implement save and load methods.
    *
    * \ingroup Serialize_Module
    */

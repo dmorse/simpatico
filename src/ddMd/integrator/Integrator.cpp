@@ -45,9 +45,13 @@ namespace DdMd
    */
    void Integrator::outputStatistics(std::ostream& out)
    {
+      #ifdef UTIL_MPI
       timer().reduce(domain().communicator());
       atomStorage().computeNAtomTotal(domain().communicator());
       pairPotential().pairList().computeStatistics(domain().communicator());
+      #else
+      pairPotential().pairList().computeStatistics();
+      #endif
 
       if (domain().isMaster()) {
 

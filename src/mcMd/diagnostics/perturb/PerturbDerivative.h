@@ -21,7 +21,7 @@ namespace McMd
    using namespace Util;
 
    /**
-   * PerturbDerivative average return value of Perturbation::derivative().
+   * PerturbDerivative returns average value of Perturbation::derivative().
    *
    * \ingroup McMd_Diagnostic_Module
    */
@@ -41,7 +41,7 @@ namespace McMd
       virtual void readParam(std::istream& in);
 
       /* 
-      * Evaluate energy per particle, and add to ensemble. 
+      * Evaluate derivative and add to ensemble. 
       */
       virtual void sample(long iStep);
    
@@ -61,8 +61,8 @@ namespace McMd
       /// Number of samples per block average output.
       int nSamplePerBlock_;
       
+      /// Index of perturbation parameter associated with derivative.
       int parameterIndex_;
-
    };
 
 }
