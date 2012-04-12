@@ -16,8 +16,8 @@ namespace DdMd
    DdTimer::DdTimer(int size)
    {
       times_.allocate(size);
-      clear();
       size_ = size;
+      clear();
    }
 
    DdTimer::~DdTimer()

@@ -105,78 +105,15 @@ namespace DdMd
    }
 
    /*
-   * Nose-Hoover integrator step.
+   * Integrate Nose-Hoover.
    *
    * This implements a reversible Velocity-Verlet MD NVT integrator step.
    *
    * Reference: Winkler, Kraus, and Reineker, J. Chem. Phys. 102, 9018 (1995).
    */
-   void NvtIntegrator::step() 
-   {
-      Vector  dv;
-      Vector  dr;
-      double  dtHalf = 0.5*dt_;
-      double  prefactor;
-      double  factor;
-      AtomIterator atomIter;
-
-      T_target_ = simulation().energyEnsemble().temperature();
-      factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
-
-      // 1st half of velocity Verlet.
-      atomStorage().begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
-         atomIter->velocity() *= factor;
-         prefactor = prefactors_[atomIter->typeId()];
-         dv.multiply(atomIter->force(), prefactor);
-         atomIter->velocity() += dv;
-         dr.multiply(atomIter->velocity(), dt_);
-         atomIter->position() += dr;
-      }
-
-      // Exchange atoms if necessary
-      if (simulation().needExchange()) {
-         atomStorage().clearSnapshot();
-         exchanger().exchange();
-         atomStorage().makeSnapshot();
-         pairPotential().findNeighbors();
-      } else {
-         exchanger().update();
-      }
-
-      // Calculate new forces for all local atoms
-      simulation().computeForces();
-
-      // 2nd half of velocity Verlet
-      atomStorage().begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
-         prefactor = prefactors_[atomIter->typeId()];
-         dv.multiply(atomIter->force(), prefactor);
-         atomIter->velocity() += dv;
-         atomIter->velocity() *=factor;
-      }
-
-      // Update xiDot_ and xi_
-      simulation().computeKineticEnergy();
-      if (domain().isMaster()) {
-         xi_ += xiDot_*dtHalf;
-         T_kinetic_ = simulation().kineticEnergy()*2.0/double(3*nAtom_);
-         xiDot_ = (T_kinetic_/T_target_  - 1.0)*nuT_*nuT_;
-         xi_ += xiDot_*dtHalf;
-      }
-      #ifdef UTIL_MPI
-      bcast(domain().communicator(), xiDot_, 0);
-      bcast(domain().communicator(), xi_, 0);
-      #endif
-   }
-
-   /*
-   * Integrate.
-   */
    void NvtIntegrator::run(int nStep)
    {
       nStep_ = nStep;
-
       if (domain().isMaster()) {
          Log::file() << std::endl;
       }
@@ -184,15 +121,18 @@ namespace DdMd
       setup();
       simulation().diagnosticManager().setup();
 
-      Vector  dv;
-      Vector  dr;
-      double  prefactor; // = 0.5*dt/mass
-      double  dtHalf = 0.5*dt_;
-      double  factor;
-      AtomIterator  atomIter;
+      Vector dv;
+      Vector dr;
+      double prefactor; // = 0.5*dt/mass
+      double dtHalf = 0.5*dt_;
+      double factor;
+      AtomIterator atomIter;
+      bool needExchange;
+
 
       // Main MD loop
       timer().start();
+      exchanger().timer().start();
       for (iStep_ = 0; iStep_ < nStep_; ++iStep_) {
 
          if (Diagnostic::baseInterval > 0) {
@@ -217,8 +157,13 @@ namespace DdMd
          }
          timer().stamp(INTEGRATE1);
    
+   
+         // Check if exchange and reneighboring is necessary
+         needExchange = simulation().needExchange();
+         timer().stamp(Integrator::CHECK);
+
          // Exchange atoms if necessary
-         if (simulation().needExchange()) {
+         if (needExchange) {
             atomStorage().clearSnapshot();
             exchanger().exchange();
             timer().stamp(EXCHANGE);
@@ -258,6 +203,7 @@ namespace DdMd
          timer().stamp(INTEGRATE2);
    
       }
+      exchanger().timer().stop();
       timer().stop();
 
    }

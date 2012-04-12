@@ -320,10 +320,10 @@ namespace DdMd
          }
 
       }
-
       validate();
 
       // Validate Group Storage
+      groupStoragePtr_->computeNTotal(domainPtr_->communicator());
       groupStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(),
                                 false);
 

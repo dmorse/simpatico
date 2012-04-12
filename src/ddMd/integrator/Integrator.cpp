@@ -47,6 +47,7 @@ namespace DdMd
    {
       #ifdef UTIL_MPI
       timer().reduce(domain().communicator());
+      exchanger().timer().reduce(domain().communicator());
       atomStorage().computeNAtomTotal(domain().communicator());
       pairPotential().pairList().computeStatistics(domain().communicator());
       #else
@@ -72,8 +73,10 @@ namespace DdMd
              << " sec" << std::endl;
 
          double ratio = double(nProc)/double(nStep_*nAtomTot);
+
          double diagnosticT =  timer().time(DIAGNOSTIC);
          double integrate1T =  timer().time(INTEGRATE1);
+         double checkT =  timer().time(CHECK);
          double exchangeT =  timer().time(EXCHANGE);
          double neighborT =  timer().time(NEIGHBOR);
          double updateT =  timer().time(UPDATE);
@@ -88,6 +91,8 @@ namespace DdMd
              << " sec   " << Dbl(diagnosticT/time, 12, 6, true) << std::endl;
          out << "Integrate1           " << Dbl(integrate1T*ratio, 12, 6) 
              << " sec   " << Dbl(integrate1T/time, 12, 6, true) << std::endl;
+         out << "Check                " << Dbl(checkT*ratio, 12, 6)
+             << " sec   " << Dbl(checkT/time, 12, 6, true) << std::endl;
          out << "Exchange             " << Dbl(exchangeT*ratio, 12, 6)
              << " sec   " << Dbl(exchangeT/time, 12, 6, true) << std::endl;
          out << "Neighbor             " << Dbl(neighborT*ratio, 12, 6)
@@ -100,7 +105,58 @@ namespace DdMd
              << " sec   " << Dbl(integrate2T/time, 12, 6, true) << std::endl;
          out << std::endl;
          out << std::endl;
- 
+
+         double AtomPlanT =  exchanger().timer().time(Exchanger::ATOM_PLAN);
+         out << "AtomPlan              " << Dbl(AtomPlanT*ratio, 12, 6)
+             << " sec   " << Dbl(AtomPlanT/time, 12, 6, true) << std::endl;
+         double InitGroupPlanT =  exchanger().timer().time(Exchanger::INIT_GROUP_PLAN);
+         out << "InitGroupPlan         " << Dbl(InitGroupPlanT*ratio, 12, 6)
+             << " sec   " << Dbl(InitGroupPlanT/time, 12, 6, true) << std::endl;
+         double ClearGhostsT =  exchanger().timer().time(Exchanger::CLEAR_GHOSTS);
+         out << "ClearGhosts           " << Dbl(ClearGhostsT*ratio, 12, 6)
+             << " sec   " << Dbl(ClearGhostsT/time, 12, 6, true) << std::endl;
+         double PackAtomsT =  exchanger().timer().time(Exchanger::PACK_ATOMS);
+         out << "PackAtoms             " << Dbl(PackAtomsT*ratio, 12, 6)
+             << " sec   " << Dbl(PackAtomsT/time, 12, 6, true) << std::endl;
+         double PackGroupsT =  exchanger().timer().time(Exchanger::PACK_GROUPS);
+         out << "PackGroups            " << Dbl(PackGroupsT*ratio, 12, 6)
+             << " sec   " << Dbl(PackGroupsT/time, 12, 6, true) << std::endl;
+         double RemoveAtomsT =  exchanger().timer().time(Exchanger::REMOVE_ATOMS);
+         out << "RemoveAtoms           " << Dbl(RemoveAtomsT*ratio, 12, 6)
+             << " sec   " << Dbl(RemoveAtomsT/time, 12, 6, true) << std::endl;
+         double RemoveGroupsT =  exchanger().timer().time(Exchanger::REMOVE_GROUPS);
+         out << "RemoveGroups          " << Dbl(RemoveGroupsT*ratio, 12, 6)
+             << " sec   " << Dbl(RemoveGroupsT/time, 12, 6, true) << std::endl;
+         double SendRecvAtomsT =  exchanger().timer().time(Exchanger::SEND_RECV_ATOMS);
+         out << "SendRecvAtoms         " << Dbl(SendRecvAtomsT*ratio, 12, 6)
+             << " sec   " << Dbl(SendRecvAtomsT/time, 12, 6, true) << std::endl;
+         double UnpackAtomsT =  exchanger().timer().time(Exchanger::UNPACK_ATOMS);
+         out << "UnpackAtoms           " << Dbl(UnpackAtomsT*ratio, 12, 6)
+             << " sec   " << Dbl(UnpackAtomsT/time, 12, 6, true) << std::endl;
+         double UnpackGroupsT =  exchanger().timer().time(Exchanger::UNPACK_GROUPS);
+         out << "UnpackGroups          " << Dbl(UnpackGroupsT*ratio, 12, 6)
+             << " sec   " << Dbl(UnpackGroupsT/time, 12, 6, true) << std::endl;
+         double FinishGroupPlanT =  exchanger().timer().time(Exchanger::FINISH_GROUP_PLAN);
+         out << "FinishGroupPlan       " << Dbl(FinishGroupPlanT*ratio, 12, 6)
+             << " sec   " << Dbl(FinishGroupPlanT/time, 12, 6, true) << std::endl;
+         double PackLocalGhostsT =  exchanger().timer().time(Exchanger::PACK_LOCAL_GHOSTS);
+         out << "PackLocalGhosts       " << Dbl(PackLocalGhostsT*ratio, 12, 6)
+             << " sec   " << Dbl(PackLocalGhostsT/time, 12, 6, true) << std::endl;
+         double PackGhostGhostsT =  exchanger().timer().time(Exchanger::PACK_GHOST_GHOSTS);
+         out << "PackGhostGhosts       " << Dbl(PackGhostGhostsT*ratio, 12, 6)
+             << " sec   " << Dbl(PackGhostGhostsT/time, 12, 6, true) << std::endl;
+         double SendRecvGhostsT =  exchanger().timer().time(Exchanger::SEND_RECV_GHOSTS);
+         out << "SendRecvGhosts        " << Dbl(SendRecvGhostsT*ratio, 12, 6)
+             << " sec   " << Dbl(SendRecvGhostsT/time, 12, 6, true) << std::endl;
+         double UnpackGhostsT =  exchanger().timer().time(Exchanger::UNPACK_GHOSTS);
+         out << "UnpackGhosts          " << Dbl(UnpackGhostsT*ratio, 12, 6)
+             << " sec   " << Dbl(UnpackGhostsT/time, 12, 6, true) << std::endl;
+         double FindGroupGhostsT =  exchanger().timer().time(Exchanger::FIND_GROUP_GHOSTS);
+         out << "FindGroupGhosts       " << Dbl(FindGroupGhostsT*ratio, 12, 6)
+             << " sec   " << Dbl(FindGroupGhostsT/time, 12, 6, true) << std::endl;
+         out << std::endl;
+         out << std::endl;
+
          //pairPotential().pairList().outputStatistics(out);
          out << "PairList Statistics" << std::endl;
          out << "maxNPair, capacity " 

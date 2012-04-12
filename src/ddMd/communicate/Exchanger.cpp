@@ -32,7 +32,31 @@ namespace DdMd
    * Constructor.
    */
    Exchanger::Exchanger()
-    : pairCutoff_(-1.0)
+    : sendArray_(),
+      recvArray_(),
+      emptyBonds_(),
+      #ifdef INTER_ANGLE
+      emptyAngles_(),
+      #endif
+      #ifdef INTER_DIHEDRAL
+      emptyDihedrals_(),
+      #endif
+      bound_(),
+      inner_(),
+      outer_(),
+      boundaryPtr_(0),
+      domainPtr_(0),
+      atomStoragePtr_(0),
+      bondStoragePtr_(0),
+      #ifdef INTER_ANGLE 
+      angleStoragePtr_(0),
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStoragePtr_(0),
+      #endif
+      bufferPtr_(0),
+      pairCutoff_(-1.0),
+      timer_(Exchanger::NTime)
    {}
 
    /*
@@ -110,6 +134,7 @@ namespace DdMd
    */
    void Exchanger::exchange()
    {
+      timer_.stamp(START);
       exchangeAtoms();
       exchangeGhosts();
    }
@@ -193,7 +218,7 @@ namespace DdMd
       }
    }
 
-   /**
+   /*
    * Pack bonds that contain postmarked atoms.
    */
    template <int N>
@@ -439,6 +464,7 @@ namespace DdMd
          } // end for i
 
       } // end atom loop, end compute plan
+      timer_.stamp(ATOM_PLAN);
 
       initGroupGhostPlan<2>(*bondStoragePtr_);
       #ifdef INTER_ANGLE
@@ -447,9 +473,11 @@ namespace DdMd
       #ifdef INTER_DIHEDRAL
       initGroupGhostPlan<4>(*dihedralStoragePtr_);
       #endif
+      timer_.stamp(INIT_GROUP_PLAN);
 
       // Clear all ghost atoms from AtomStorage
       atomStoragePtr_->clearGhosts();
+      timer_.stamp(CLEAR_GHOSTS);
 
       #ifdef UTIL_DEBUG
       #ifdef EXCHANGER_DEBUG
@@ -542,6 +570,7 @@ namespace DdMd
                }
 
             } // end atom loop
+            timer_.stamp(PACK_ATOMS);
 
             // Send and receive only if dimension(i) > 1
             if (domainPtr_->grid().dimension(i) > 1) {
@@ -557,6 +586,7 @@ namespace DdMd
                #ifdef INTER_DIHEDRAL
                packGroups<4>(i, j, *dihedralStoragePtr_, emptyDihedrals_);
                #endif
+               timer_.stamp(PACK_GROUPS);
 
                /*
                * Note: Removal cannot be done within the above loops over 
@@ -569,6 +599,7 @@ namespace DdMd
                for (k = 0; k < nSend; ++k) {
                   atomStoragePtr_->removeAtom(&sendArray_(i, j)[k]);
                }
+               timer_.stamp(REMOVE_ATOMS);
      
                // Remove empty bonds from bondStorage.
                removeEmptyGroups<2>(*bondStoragePtr_, emptyBonds_);
@@ -578,10 +609,12 @@ namespace DdMd
                #ifdef INTER_DIHEDRAL
                removeEmptyGroups<4>(*dihedralStoragePtr_, emptyDihedrals_);
                #endif
+               timer_.stamp(REMOVE_GROUPS);
 
                // Send to processor dest and receive from processor source
                bufferPtr_->sendRecv(domainPtr_->communicator(), 
                                     source, dest);
+               timer_.stamp(SEND_RECV_ATOMS);
 
                // Unpack atoms into atomStorage
                bufferPtr_->beginRecvBlock();
@@ -613,6 +646,7 @@ namespace DdMd
                   atomStoragePtr_->addNewAtom();
                }
                assert(bufferPtr_->recvSize() == 0);
+               timer_.stamp(UNPACK_ATOMS);
 
                // Unpack bonds into bondStorage.
                unpackGroups<2>(*bondStoragePtr_);
@@ -622,6 +656,7 @@ namespace DdMd
                #ifdef INTER_DIHEDRAL
                unpackGroups<4>(*dihedralStoragePtr_);
                #endif
+               timer_.stamp(UNPACK_GROUPS);
 
             } // end if gridDimension > 1
 
@@ -665,6 +700,7 @@ namespace DdMd
       #ifdef INTER_DIHEDRAL
       finishGroupGhostPlan<4>(*dihedralStoragePtr_);
       #endif
+      timer_.stamp(FINISH_GROUP_PLAN);
 
    }
 
@@ -805,6 +841,7 @@ namespace DdMd
                }
 
             }
+            timer_.stamp(PACK_LOCAL_GHOSTS);
 
             // Loop over ghosts on this processor, for resending.
             atomStoragePtr_->begin(ghostIter);
@@ -865,6 +902,7 @@ namespace DdMd
                }
 
             }
+            timer_.stamp(PACK_GHOST_GHOSTS);
 
             // Send and receive buffers
             if (domainPtr_->grid().dimension(i) > 1) {
@@ -874,6 +912,7 @@ namespace DdMd
                source = domainPtr_->sourceRank(i, j);
                dest   = domainPtr_->destRank(i, j);
                bufferPtr_->sendRecv(domainPtr_->communicator(), source, dest);
+               timer_.stamp(SEND_RECV_GHOSTS);
 
                // Unpack ghosts and add to recvArray
                bufferPtr_->beginRecvBlock();
@@ -916,6 +955,7 @@ namespace DdMd
                   #endif
 
                }
+               timer_.stamp(UNPACK_GHOSTS);
 
             }
 
@@ -941,6 +981,7 @@ namespace DdMd
       #endif
       #endif
 
+      timer_.stamp(FIND_GROUP_GHOSTS);
    }
 
    /*

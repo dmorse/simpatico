@@ -14,6 +14,8 @@
 #include <util/containers/FMatrix.h>
 #include <util/containers/APArray.h>
 
+#include <ddMd/util/DdTimer.h>
+
 namespace DdMd
 {
 
@@ -103,6 +105,21 @@ namespace DdMd
       */
       void update();
 
+      /**
+      * Return internal timer by reference
+      */
+      DdTimer& timer()
+      {  return timer_; }
+
+      /**
+      * Enumeration of time stamp identifiers.
+      */
+      enum timeId {START, ATOM_PLAN, INIT_GROUP_PLAN, CLEAR_GHOSTS,
+                   PACK_ATOMS, PACK_GROUPS, REMOVE_ATOMS, REMOVE_GROUPS,
+                   SEND_RECV_ATOMS, UNPACK_ATOMS, UNPACK_GROUPS, 
+                   FINISH_GROUP_PLAN, PACK_LOCAL_GHOSTS, PACK_GHOST_GHOSTS,
+                   SEND_RECV_GHOSTS, UNPACK_GHOSTS, FIND_GROUP_GHOSTS, NTime};
+
    private:
 
       /**
@@ -176,7 +193,7 @@ namespace DdMd
       GroupStorage<3>* angleStoragePtr_;
       #endif
 
-      #ifdef INTER_ANGLE 
+      #ifdef INTER_DIHEDRAL
       /// Pointer to associated dihedral storage object.
       GroupStorage<4>* dihedralStoragePtr_;
       #endif
@@ -186,6 +203,9 @@ namespace DdMd
 
       /// Cutoff for pair list (potential cutoff + skin).
       double pairCutoff_;
+
+      /// Timer
+      DdTimer timer_;
 
       /**
       * Exchange ghosts.
