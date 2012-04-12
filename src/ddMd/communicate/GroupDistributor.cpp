@@ -203,9 +203,9 @@ namespace DdMd
    }
 
    /*
-   * Send any atoms that have not be sent previously.
+   * Send any groups that have not been sent previously.
    *
-   * This method should be called only by the master processor.
+   * This method must be called only by the master processor.
    */
    template <int N>
    void GroupDistributor<N>::send()
@@ -243,11 +243,17 @@ namespace DdMd
       bufferPtr_->clearSendBuffer();
 
       validate();
-      groupStoragePtr_->setNTotal(nSentTotal_);
+      groupStoragePtr_->computeNTotal(domainPtr_->communicator());
+      if (groupStoragePtr_->nTotal() != nSentTotal_) {
+         UTIL_THROW("Number of groups not equal number sent");
+      }
       groupStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(), 
                                 false);
       #else
-      groupStoragePtr_->setNTotal(nSentTotal_);
+      groupStoragePtr_->computeNTotal();
+      if (groupStoragePtr_->nTotal() != nSentTotal_) {
+         UTIL_THROW("Number of groups not equal number sent");
+      }
       groupStoragePtr_->isValid(*atomStoragePtr_, false);
       #endif
 
