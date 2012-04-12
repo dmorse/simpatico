@@ -1,5 +1,5 @@
-#ifndef MCMD_VOLUME_AVERAGE_CPP
-#define MCMD_VOLUME_AVERAGE_CPP
+#ifndef MCMD_BOUNDARY_AVERAGE_CPP
+#define MCMD_BOUNDARY_AVERAGE_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "VolumeAverage.h"
+#include "BoundaryAverage.h"
 #include <mcMd/simulation/Simulation.h>
 #include <mcMd/species/Species.h>
 #include <util/boundary/Boundary.h>
@@ -26,7 +26,7 @@ namespace McMd
    /*
    * Constructor.
    */
-   VolumeAverage::VolumeAverage(System& system) 
+   BoundaryAverage::BoundaryAverage(System& system) 
     : SystemDiagnostic<System>(system),
       outputFile_(),
       accumulators_(),
@@ -35,9 +35,9 @@ namespace McMd
    {}
 
    /*
-   * Read parameters from file, and allocate data array.
+   * Read parameters from file, and allocate accumulators array.
    */
-   void VolumeAverage::readParam(std::istream& in) 
+   void BoundaryAverage::readParam(std::istream& in) 
    {
 
       readInterval(in);
@@ -61,7 +61,7 @@ namespace McMd
    /*
    * Initialize at beginning of simulation.
    */
-   void VolumeAverage::initialize() 
+   void BoundaryAverage::initialize() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Error: object is not initialized");
@@ -73,9 +73,9 @@ namespace McMd
    }
 
    /*
-   * Evaluate end-to-end vectors of all chains, add to ensemble.
+   * Evaluate volume and lengths of cell, add to ensemble.
    */
-   void VolumeAverage::sample(long iStep) 
+   void BoundaryAverage::sample(long iStep) 
    { 
       if (!isAtInterval(iStep)) return;
 
@@ -93,7 +93,7 @@ namespace McMd
    }
 
    /// Output results to file after simulation is completed.
-   void VolumeAverage::output() 
+   void BoundaryAverage::output() 
    { 
       // If outputFile_ was used to write block averages, close it.
       if (accumulators_[0].nSamplePerBlock()) {
@@ -118,13 +118,13 @@ namespace McMd
    /*   
    * Save state to binary file archive.
    */
-   void VolumeAverage::save(Serializable::OArchiveType& ar)
+   void BoundaryAverage::save(Serializable::OArchiveType& ar)
    { ar & *this; }
 
    /*
    * Load state from a binary file archive.
    */
-   void VolumeAverage::load(Serializable::IArchiveType& ar)
+   void BoundaryAverage::load(Serializable::IArchiveType& ar)
    { ar & *this; }
 
 }

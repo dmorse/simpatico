@@ -32,7 +32,7 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Bennet's Method gives an estimate of the free energy difference.
+   * Bennett's method estimates free energy difference between two states.
    *
    * \ingroup McMd_Diagnostic_Module
    */
@@ -61,7 +61,7 @@ namespace McMd
       virtual void initialize();
 
       /* 
-      * Evaluate the Fermi functions and add to accumulators.
+      * Evaluate Fermi functions and add to accumulators.
       *       
       * \param iStep step counter
       */
@@ -74,10 +74,10 @@ namespace McMd
    
    protected:
   
-      /// Value of the shift constant for the associated system.
+      /// Value of shift constant for associated system.
       double shift_;
       
-      /// Value of the shift constant for the lower replica system.
+      /// Value of shift constant for lower replica system.
       double lowerShift_;
 
       #if UTIL_MPI
@@ -89,13 +89,13 @@ namespace McMd
      
    private:
 
-      /// Tags for exchanging parameters.
+      /// Tags for exchanging derivatives.
       static const int TagDerivative[2];
       
-      /// Tags for exchanging parameters.
+      /// Tags for exchanging Fermi functions.
       static const int TagFermi[2];
       
-      /// Get the communicator in the simulation.
+      /// MPI communicator in the simulation.
       MPI::Intracomm* communicatorPtr_;
       
       /// Current processor's rank.
@@ -111,7 +111,7 @@ namespace McMd
       int   upperId_;
       
       /// Number of perturbation parameters.
-      int nParameters_;
+      int nParameter_;
       
       /// Tempering variable.
       DArray<double> myParam_;
@@ -128,33 +128,33 @@ namespace McMd
       /// Average object - statistical accumulator.
       Average  myAccumulator_;
       
-      /// Average object associated with samples from upper replica.
+      /// Average object associated with upper replica.
       Average  upperAccumulator_;
 
-      /// Used to store an argument associated with this system.
+      /// Used to store an argument.
       double myArg_;
       
-      /// Used to store an argument associated with system of lower replica.
+      /// Used to store an argument of lower replica.
       double lowerArg_;
       
-      /// Fermi function of argument associated with this system.
+      /// Fermi function of the argument variable.
       double myFermi_;
       
-      /// Fermi function of argument associated with system of lower replica.
+      /// Fermi function of argument of lower replica.
       double lowerFermi_;
       
-      /// Fermi function of argument associated with system of upper replica.
+      /// Fermi function of argument of upper replica.
       double upperFermi_;
 
       /// Output file stream.
       std::ofstream outputFile_;
       
-      /// Number of simulation steps between subsequent actions.
+      /// Sampling interval.
       long interval_;
   
       /**
-      * Average of the collected samples used to estimate free energy 
-      * differences at end of simulation.
+      * Estimate free energy difference between two states (replicas) 
+      * from accumulators of two states.
       */
       virtual void analyze();
    };

@@ -3,3 +3,5 @@ edit.py
 *.a
 *.o
 .gitignore
+/modules/hoomd/defines.mk
+/modules/hoomd/makefile

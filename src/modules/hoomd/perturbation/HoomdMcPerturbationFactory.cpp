@@ -64,7 +64,7 @@ namespace McMd
       #endif
       #ifdef INTER_EXTERNAL
       if (className == "McExternalPerturbation") {
-         const std::string& interactionClassName = systemPtr_->pairPotential().
+         const std::string& interactionClassName = systemPtr_->externalPotential().
             interactionClassName();
          if (interactionClassName == "HoomdLamellarExternal") {
             ptr = new McExternalPerturbation<HoomdLamellarExternal> (*systemPtr_);

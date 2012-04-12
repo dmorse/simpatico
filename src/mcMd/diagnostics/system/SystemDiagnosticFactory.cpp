@@ -32,7 +32,7 @@
 #include "IntraPairAutoCorr.h"
 #include "RingRouseAutoCorr.h"
 #include "LinearRouseAutoCorr.h"
-#include "VolumeAverage.h"
+#include "BoundaryAverage.h"
 
 #ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
@@ -89,8 +89,8 @@ namespace McMd
       if (className == "VanHove") {
          ptr = new VanHove(system());
       } else 
-      if (className == "VolumeAverage") {
-         ptr = new VolumeAverage(system());
+      if (className == "BoundaryAverage") {
+         ptr = new BoundaryAverage(system());
       } else 
       if (className == "RadiusGyration") {
          ptr = new RadiusGyration(system());

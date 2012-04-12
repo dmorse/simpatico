@@ -182,7 +182,7 @@ namespace McMd
    void McPairExternalPerturbation<PairInteraction, ExternalInteraction>::setParameter()
    { 
       pairInteraction().setEpsilon(0, 1, parameter_[0]);
-      externalInteraction().setExternalParameter(parameter_[0]);
+      externalInteraction().setExternalParameter(parameter_[1]);
    }
 
    /* 

@@ -1,5 +1,5 @@
-#ifndef MCMD_VOLUME_AVERAGE_H
-#define MCMD_VOLUME_AVERAGE_H
+#ifndef MCMD_BOUNDARY_AVERAGE_H
+#define MCMD_BOUNDARY_AVERAGE_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -20,11 +20,11 @@ namespace McMd
    using namespace Util;
 
    /**
-   * Autocorrelation for vector separation of two atoms on a molecule.  
+   * Average of boundary lengths and volume of simulation cell.  
    *
    * \ingroup McMd_Diagnostic_Module
    */
-   class VolumeAverage : public SystemDiagnostic<System>
+   class BoundaryAverage : public SystemDiagnostic<System>
    {
    
    public:
@@ -34,7 +34,7 @@ namespace McMd
       *
       * \param system reference to parent System
       */
-      VolumeAverage(System &system);
+      BoundaryAverage(System &system);
   
       /** 
       * Read parameters from file.
@@ -49,12 +49,12 @@ namespace McMd
       virtual void initialize();
    
       /** 
-      * Evaluate volume of simulation cell, and add to ensemble.
+      * Evaluate volume and lengths of simulation cell, 
+      * and add to ensemble.
       *
       * \param iStep counter for number of steps
       */
       virtual void sample(long iStep);
-   
 
       /**
       * Output results to file after simulation is completed.
@@ -86,24 +86,25 @@ namespace McMd
 
    private:
    
-      /// Output file stream
+      /// Output file stream.
       std::ofstream outputFile_;
 
-      /// Array of Average objects - statistical accumulators
+      /// (Dimension + 1) sized array of Average objects. 
       DArray<Average>  accumulators_;
 
-      /// Number of samples per block average output.
+      /// Number of samples per block average object.
       int nSamplePerBlock_;
 
       /// Has readParam been called?
       bool    isInitialized_;
    
    };
+
    /*
    * Serialize to/from an archive. 
    */
    template <class Archive>
-   void VolumeAverage::serialize(Archive& ar, const unsigned int version)
+   void BoundaryAverage::serialize(Archive& ar, const unsigned int version)
    {
       if (!isInitialized_) {
          UTIL_THROW("Error: Object not initialized.");

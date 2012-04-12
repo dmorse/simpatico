@@ -38,19 +38,18 @@ namespace McMd
    {
 
       // Read interval and output file 
-      //SystemDiagnostic<System>::readParam(in);
       readInterval(in);
       readOutputFileName(in);
 
       nAtomType_ = system().simulation().nAtomType();
 
       // Read number of direction vectors and direction vectors 
-      read<int>(in, "nDirections", nDirections_);
-      intVectors_.allocate(nDirections_);
-      waveVectors_.allocate(nDirections_);
-      readDArray<IntVector>(in, "intVectors", intVectors_, nDirections_);
+      read<int>(in, "nDirections", nDirection_);
+      intVectors_.allocate(nDirection_);
+      waveVectors_.allocate(nDirection_);
+      readDArray<IntVector>(in, "intVectors", intVectors_, nDirection_);
 
-      accumulators_.allocate(nDirections_*nAtomType_);
+      accumulators_.allocate(nDirection_*nAtomType_);
 
       isInitialized_ = true;
    
@@ -64,7 +63,7 @@ namespace McMd
       int bin;
       double min, max;
       
-      for (int i=0; i < nDirections_; ++i) {
+      for (int i=0; i < nDirection_; ++i) {
          for (int j=0; j < nAtomType_; ++j) {
 
             min = 0.0;
@@ -73,16 +72,16 @@ namespace McMd
             // number of bins in histogram = int(((max-min)/0.05));
             bin = 500;
 
-            accumulators_[i+j*nDirections_].setParam(min, max, bin);
+            accumulators_[i+j*nDirection_].setParam(min, max, bin);
          }
       }
 
       makeWaveVectors();
 
       // Clear accumulators
-      for (int i = 0; i < nDirections_; ++i) {
+      for (int i = 0; i < nDirection_; ++i) {
          for (int j = 0; j < nAtomType_; ++j){
-            accumulators_[i+j*nDirections_].clear();
+            accumulators_[i+j*nDirection_].clear();
          }
       } 
       nSample_ = 0;
@@ -118,10 +117,10 @@ namespace McMd
                      position[i] /= blengths[i];
                   }
 		  // Loop over direction vectors
-                  for (int i = 0; i < nDirections_; ++i) {
+                  for (int i = 0; i < nDirection_; ++i) {
                      product = position.dot(waveVectors_[i]);
                      product /= waveVectors_[i].abs();
-                     accumulators_[i+typeId*nDirections_].sample(product);
+                     accumulators_[i+typeId*nDirection_].sample(product);
                   }
 		 
                }
@@ -145,7 +144,7 @@ namespace McMd
       int       i, j;
 
       // Calculate wavevectors
-      for (i = 0; i < nDirections_; ++i) {
+      for (i = 0; i < nDirection_; ++i) {
          waveVectors_[i] = Vector::Zero;
          for (j = 0; j < Dimension; ++j) {
             dWave  = boundaryPtr->reciprocalBasisVector(j);
@@ -168,14 +167,14 @@ namespace McMd
 
       // Output statistical analysis to separate data file
       fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
-      for (i = 0; i < nDirections_; ++i) {
+      for (i = 0; i < nDirection_; ++i) {
          for (j = 0; j < Dimension; ++j) {
             outputFile_ << Dbl(waveVectors_[i][j], 5);
          }
          outputFile_ << std::endl;
       
          for (k = 0; k < nAtomType_; ++k) {
-            accumulators_[i+k*nDirections_].output(outputFile_);
+            accumulators_[i+k*nDirection_].output(outputFile_);
             outputFile_ << std::endl;
             outputFile_ << std::endl;
          }
