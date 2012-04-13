@@ -1,16 +1,55 @@
+
+Instrumentation (for optimization):
+-----------------------------------
+
+- Add timing stamps to update method.
+
+- Replace timing stamps by private inline method that do nothing
+  if DDMD_EXCHANGER_TIMER is not defined.
+
+- Add timer to time construction of pair list and cell list.
+
+- Add memory statistics for Buffer.
+
+CellList and PairList
+---------------------
+
+- Review design, see if better use can be made of information
+  implicit in Cell List (i.e., which cells are ghost cells).
+
+- Consider how neighbor list would be built if we used Newton's
+  law (evaluate each force only once).
+
+- Consider providing separate pair iterators for ghost neighbors
+  and local neighbors.
+
+Single Processor Operation
+--------------------------
+
+- Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
+  work ifndef UTIL_MPI, continue with other classes, to enable 
+  single processor operation with no MPI.
+
+Integer Types
+-------------
+
+- Introduce typedefs for integer names in global.h.
+
+  Try uint4 for all integers except those which must be of either sign.
+  Where are there integers that can have a sign, other than in IntVector?
+
+- Make typeId and id for atoms and groups type index throughout the code. 
+
+Atom Class Implementation
+--------------------------
+
+
 Configuration File IO
 --------------------------
 
 - Add ConfigIo factory and SET_CONFIG_IO command.
 
 - Add LammpsConfigIo class
-
-
-Single Processor Operation
---------------------------
-
-- Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
-  work ifndef UTIL_MPI, continue with other classes.
 
 Restart
 -------

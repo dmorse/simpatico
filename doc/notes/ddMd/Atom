@@ -1,0 +1,92 @@
+An atom currently has:
+
+24 24   Position
+ 4 28   typeId
+ 4 32   isGhost
+-----
+24 56   force
+4  60   id
+4  64   plan
+-----
+24 88   velocity
+20 108  Mask
+
+To be added:
+12      shift
+
+5       bonds
+?       angles
+?       dihedrals
+?       impropers
+
+
+Different parts of this are used in different operations.
+
+Inner nonbonded force loop:    Position, typeId, isGhost, force
+
+Inner bonded force loop:       Position, isGhost (to distribute forces and energies) force
+
+Building nonbonded pairlist:   Position, Mask, isGhost(optional?) id (optional)
+
+                               Notes:
+
+                               1) Id is used only to avoid double counting local pairs in 
+                                  same cell. We could also use pointers or local counters.
+
+                               2) isGhost bool could be encoded in pairlist, using cells
+                                  to identify ghosts. Better yet, perhaps return two iterators.
+                                  This would remove all if statements from the inner loop.
+
+
+Communication:                 plan, bonds, angles, dihedrals, everything upon packing and unpacking.
+
+Integration:                   position, force, velocity
+
+
+Notes: 
+
+1) Atom Id is currently used only during exchange, to locate an atom in a storage
+   and to set pointers in associated groups.
+
+2) Id could be used quite heavily, if we break up an array of atoms into many arrays.
+
+3) isGhost is absolutely essential only in inner bonded force loop.
+
+
+Proposal 1 - Many arrays indexed by a common array index
+----------
+
+Atom:        Position, typeId, isGhost, id, force, pointer to array
+Mask:        (Only used in building pair list)
+Velocity:    (Only used in integration)
+
+AtomComm:
+plan         (Only used in exchange)
+shift        (Only used in exchange and some diagnostics)
+bonds        (Only used in exchange, to keep track of bond exchange)
+angles       (Only used in exchange, ...)
+dihedrals 
+
+Combine isGhost with:
+1) typeId -> required in inner nonbonded force loop (bad, but perhaps not really)
+2) id     -> required to access everything else (not quite as bad).
+             Limits range of id to 2 billion (that's fine).
+
+Accessing other elements:
+
+1) When building pair list, access Mask once per root atom
+2) In integrator, need to get pointer to velocity, once.
+3) In exchanger, need to retrieve pointer to AtomComm:
+     - Once per atom, making atom plan.
+     - Once per atom, when initializing ghost send lists.
+     - To pack an atom.
+     - To unpack an atom.
+     - After unpacking, to make various connections.
+
+Required changes:
+
+1) Make typeId and id unsigned 4 bye int. Perhaps introduce typeId index = unsigned 4 byte int.
+   Introduce constant NullIndex = All 1's.
+
+2) Rebuild Atom and AtomArray (initially make plan a separate array, later create AtomComm).
+
