@@ -1,0 +1,37 @@
+1) Find NullIndex, replace by a global definition.
+2) main should return int.
+
+Look at these files to identify integers that must be signed,
+change all signed ints to s_int, and all unsigned to u_int.
+
+./configIos/LammpsConfigIo.cpp:      int shift = 0;
+./diagnostics/system/IntraStructureFactor.cpp:  int  i, j, k;
+./diagnostics/system/StructureFactor.cpp:       int  i, j, k;
+./diagnostics/system/StructureFactorGrid.cpp:   int  i, j, k, m, n;
+./diagnostics/system/StructureFactorPGrid.cpp:  int     i, j, k, m, n;
+./diagnostics/system/MigratingVanHove.cpp:      int  i, j;
+./diagnostics/system/VanHove.cpp:               int  i, j;
+
+./mcMoves/base/CfbRebridgeBase.cpp:   void CfbRebridgeBase::addSequence(int nActive, int sign, Atom* beginPtr,
+./mcMoves/base/CfbRebridgeBase.cpp:   void CfbRebridgeBase::deleteSequence(int nActive, int sign, Atom* endPtr,
+./mcMoves/base/GroupRebridgeBase.cpp:               int bondType, double &energy)
+
+./mcMoves/linear/CfbDoubleRebridgeMove.h:      bool forwardScan(int sign, int &iMol, int &jMol,
+./mcMoves/linear/CfbDoubleRebridgeMove.cpp:      int       iMol, jMol, sign, beginId, nEnd, i;
+./mcMoves/linear/CfbEndMove.cpp:      int       length, sign, beginId, endId, bondType, i;
+./mcMoves/linear/CfbHomoReptationMove.cpp:      int       length, sign, headId, tailId, bondType, i;
+./mcMoves/linear/CfbHomoReptationMove.h:      int speciesId_;
+./mcMoves/linear/CfbRebridgeMove.cpp:      int       length, sign, beginId, endId, i;
+./mcMoves/linear/CfbReptationMove.h:      double junctionFactor(Molecule* molPtr, int sign);
+
+./mcMoves/ring/CfbRingRebridgeMove.cpp:      int       nAtom, sign, beginId, endId, i;
+
+./neighbor/CellList.cpp:      int   icx, icy, icz;
+./neighbor/CellList.cpp:      int   jc, jcx, jcy, jcz;
+./neighbor/CellList.cpp:      int   dcx, dcy, dcz, jp;
+
+./neighbor/CellList.h:      int    minDel_[3];    ///<  Min difference along each axis (usually -1)
+./neighbor/CellList.h:      int    maxDel_[3];    ///<  Max difference along each axis (usually +1)
+./perturb/mcSystem/McPairExternalPerturbation.h:         int    ic, nc, j, k, jId, kId, jType, kType;
+
+
