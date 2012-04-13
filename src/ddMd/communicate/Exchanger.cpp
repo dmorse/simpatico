@@ -44,6 +44,7 @@ namespace DdMd
       bound_(),
       inner_(),
       outer_(),
+      multiProcessorDirection_(),
       boundaryPtr_(0),
       domainPtr_(0),
       atomStoragePtr_(0),
@@ -156,7 +157,7 @@ namespace DdMd
          // Compute ghost communication plan for group
          groupIter->plan().clearFlags();
          for (i = 0; i < Dimension; ++i) {
-            if (domainPtr_->grid().dimension(i) > 1) {
+            if (multiProcessorDirection_[i]) {
                for (j = 0; j < 2; ++j) {
                   choose = false;
                   nIn = 0;
@@ -360,7 +361,7 @@ namespace DdMd
          nAtom = groupIter->nPtr();
          if (nAtom < N) {
             for (i = 0; i < Dimension; ++i) {
-               if (domainPtr_->grid().dimension(i) > 1) {
+               if (multiProcessorDirection_[i]) {
                   for (j = 0; j < 2; ++j) {
                      choose = groupIter->plan().ghost(i, j);
                      if (choose) {
@@ -412,6 +413,11 @@ namespace DdMd
                inner_(i, j) = bound - pairCutoff_;
                outer_(i, j) = bound + pairCutoff_;
             }
+         }
+         if (domainPtr_->grid().dimension(i) > 1) {
+            multiProcessorDirection_[i] = 1;
+         } else {
+            multiProcessorDirection_[i] = 0;
          }
       }
 
@@ -513,7 +519,7 @@ namespace DdMd
 
             sendArray_(i, j).clear();
 
-            if (domainPtr_->grid().dimension(i) > 1) {
+            if (multiProcessorDirection_[i]) {
                bufferPtr_->clearSendBuffer();
                bufferPtr_->beginSendBlock(Buffer::ATOM);
             }
@@ -536,7 +542,7 @@ namespace DdMd
                choose = atomIter->plan().exchange(i, j);
                if (choose) {
 
-                  if (domainPtr_->grid().dimension(i) > 1) {
+                  if (multiProcessorDirection_[i]) {
 
                      sendArray_(i, j).append(*atomIter);
                      bufferPtr_->packAtom(*atomIter);
@@ -572,8 +578,8 @@ namespace DdMd
             } // end atom loop
             timer_.stamp(PACK_ATOMS);
 
-            // Send and receive only if dimension(i) > 1
-            if (domainPtr_->grid().dimension(i) > 1) {
+            // Send and receive only if processor grid dimension(i) > 1
+            if (multiProcessorDirection_[i]) {
 
                // End atom send block
                bufferPtr_->endSendBlock();
@@ -770,7 +776,7 @@ namespace DdMd
             // Shift on receiving processor for periodic boundary conditions
             shift = domainPtr_->shift(i, j);
 
-            if (domainPtr_->grid().dimension(i) > 1)  {
+            if (multiProcessorDirection_[i]) {
                bufferPtr_->clearSendBuffer();
                bufferPtr_->beginSendBlock(Buffer::GHOST);
             }
@@ -804,7 +810,7 @@ namespace DdMd
 
                   sendArray_(i, j).append(*localIter);
 
-                  if (domainPtr_->grid().dimension(i) > 1)  {
+                  if (multiProcessorDirection_[i]) {
 
                      // Pack atom for sending 
                      bufferPtr_->packGhost(*localIter);
@@ -867,7 +873,7 @@ namespace DdMd
 
                   sendArray_(i, j).append(*ghostIter);
 
-                  if (domainPtr_->grid().dimension(i) > 1)  {
+                  if (multiProcessorDirection_[i]) {
                      
                      // Pack ghost for resending
                      bufferPtr_->packGhost(*ghostIter);
@@ -905,7 +911,7 @@ namespace DdMd
             timer_.stamp(PACK_GHOST_GHOSTS);
 
             // Send and receive buffers
-            if (domainPtr_->grid().dimension(i) > 1) {
+            if (multiProcessorDirection_[i]) {
 
                bufferPtr_->endSendBlock();
 
@@ -1001,7 +1007,7 @@ namespace DdMd
             // Shift on receiving processor for periodic boundary conditions
             shift = domainPtr_->shift(i, j);
 
-            if (domainPtr_->grid().dimension(i) > 1) {
+            if (multiProcessorDirection_[i]) {
 
                // Pack ghost positions for sending
                bufferPtr_->clearSendBuffer();
