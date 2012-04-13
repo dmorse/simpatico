@@ -139,12 +139,12 @@ namespace DdMd
          double FinishGroupPlanT =  exchanger().timer().time(Exchanger::FINISH_GROUP_PLAN);
          out << "FinishGroupPlan       " << Dbl(FinishGroupPlanT*ratio, 12, 6)
              << " sec   " << Dbl(FinishGroupPlanT/time, 12, 6, true) << std::endl;
-         double PackLocalGhostsT =  exchanger().timer().time(Exchanger::PACK_LOCAL_GHOSTS);
-         out << "PackLocalGhosts       " << Dbl(PackLocalGhostsT*ratio, 12, 6)
-             << " sec   " << Dbl(PackLocalGhostsT/time, 12, 6, true) << std::endl;
-         double PackGhostGhostsT =  exchanger().timer().time(Exchanger::PACK_GHOST_GHOSTS);
-         out << "PackGhostGhosts       " << Dbl(PackGhostGhostsT*ratio, 12, 6)
-             << " sec   " << Dbl(PackGhostGhostsT/time, 12, 6, true) << std::endl;
+         double SendArraysT =  exchanger().timer().time(Exchanger::INIT_SEND_ARRAYS);
+         out << "SendArrays            " << Dbl(SendArraysT*ratio, 12, 6)
+             << " sec   " << Dbl(SendArraysT/time, 12, 6, true) << std::endl;
+         double PackGhostsT =  exchanger().timer().time(Exchanger::PACK_GHOSTS);
+         out << "PackGhosts            " << Dbl(PackGhostsT*ratio, 12, 6)
+             << " sec   " << Dbl(PackGhostsT/time, 12, 6, true) << std::endl;
          double SendRecvGhostsT =  exchanger().timer().time(Exchanger::SEND_RECV_GHOSTS);
          out << "SendRecvGhosts        " << Dbl(SendRecvGhostsT*ratio, 12, 6)
              << " sec   " << Dbl(SendRecvGhostsT/time, 12, 6, true) << std::endl;
