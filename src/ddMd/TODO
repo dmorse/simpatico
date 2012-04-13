@@ -1,21 +1,49 @@
-Domain Decomposition MD (DdMd)
-------------------------------
+Configuration File IO
+--------------------------
 
-- Test conservation of energy with dihedrals.
+- Add ConfigIo factory and SET_CONFIG_IO command.
 
-- Remove unused functions for incomplete groups from GroupStorage<N>
+- Add LammpsConfigIo class
+
+
+Single Processor Operation
+--------------------------
+
+- Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
+  work ifndef UTIL_MPI, continue with other classes.
+
+Restart
+-------
+
+- Add restart capability.
+
+
+Files
+-----
+
+- Think about separating topology and configuration files. 
+
+
+Parallelization
+----------------
+
+- Write variant with Newton's law an reverse communication.
+
+Stress and NPT ensemble:
+------------------------
 
 - Add needStress to Simulation, and as argument to addForces() method 
   of potentials. 
 
 - Port NPH integrator.
 
-- Add ConfigIo factory and SET_CONFIG_IO command.
+- Write a reversible NPT integrator.
 
-- Modify Distributor, Exchanger and Exchanger classes to work ifndef 
-  UTIL_MPI, continue with other classes.
+Testing
+-------
+
+- Test conservation of energy with dihedrals.
 
 - Improve unit testing of CellList (add atoms and ghosts, small boxes),
   Integrator (check that number of interacting pairs doesn't change),
   System (test with very small system, 1x1x1 grid).
-

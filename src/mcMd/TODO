@@ -17,14 +17,6 @@ Testing
 
 - More thorough tests of dihedral potentials.
 
-Documentation:
---------------
-
-- Write introductory documentation.
-
-- Convert style guide documentation to doxygen format, and add 
-  to Developers Guide.
-
 SubSystem base classes:
 -----------------------
 
@@ -107,4 +99,19 @@ Interface changes:
 - Source file names and locations:
 
   * Separate directories for observer, string, error, timer, misc
+
+Design Changes
+--------------
+
+Interactions:
+
+- Make Interaction class apply to only one choice of type index / indices.
+  Potential class would then hold an array of Interactions.
+
+- Create << and >> operators for each Interaction class. 
+
+- Change file format to read typeId (ids) << Interaction.
+
+- Add a constructor to each potential that takes an Interaction as an
+  argument. 
 
