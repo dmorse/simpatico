@@ -49,7 +49,7 @@ ExpandedEnsemble
    /*
    * Record a visit to specified.
    */
-   void markVisit(int stateId);
+   void increment(int stateId);
 
    /*
    * Total number of visits, to all states.
