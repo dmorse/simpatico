@@ -31,7 +31,8 @@ namespace DdMd
       pairCapacity_(0),
       domainPtr_(0),
       boundaryPtr_(0),
-      storagePtr_(0)
+      storagePtr_(0),
+      timer_(PairPotential::NTime)
    {} 
 
    /*
@@ -43,7 +44,8 @@ namespace DdMd
       pairCapacity_(0),
       domainPtr_(&simulation.domain()),
       boundaryPtr_(&simulation.boundary()),
-      storagePtr_(&simulation.atomStorage())
+      storagePtr_(&simulation.atomStorage()),
+      timer_(PairPotential::NTime)
    {}
 
    /*
@@ -106,6 +108,8 @@ namespace DdMd
    */
    void PairPotential::findNeighbors(const Vector& lower, const Vector& upper)
    {
+      stamp(PairPotential::START);
+
       cellList_.makeGrid(lower, upper, cutoff_);
       cellList_.clear();
      
@@ -125,8 +129,10 @@ namespace DdMd
 
       cellList_.build();
       assert(cellList_.isValid());
+      stamp(PairPotential::BUILD_CELL_LIST);
 
       pairList_.build(cellList_);
+      stamp(PairPotential::BUILD_PAIR_LIST);
    }
 
    /*

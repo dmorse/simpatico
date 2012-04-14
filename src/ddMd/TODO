@@ -1,72 +1,24 @@
+Clean-up
+--------
 
-Instrumentation (for optimization):
------------------------------------
+- Rename implementation files *.tpp for
+  Group_Distributor and Group_Collector
 
-- Add timing stamps to update method.
+- Move DdMd::DdTimer to Util::Timer, use
+  in both namespaces.
 
-- Replace timing stamps by private inline method that do nothing
-  if DDMD_EXCHANGER_TIMER is not defined.
+Performance Issue:
+------------------
 
-- Add timer to time construction of pair list and cell list.
+- PackGroups: Add back references from atoms to groups,
+  so that groups can be added as atoms are exchanged.
 
-- Add memory statistics for Buffer.
+- InitSendArray: Consider initializing ghost send arrays
+  during initial construction of plan. Add rank for owner?
+  Then add to sendArray as soon as arrives on owner.
 
-CellList and PairList
----------------------
-
-- Review design, see if better use can be made of information
-  implicit in Cell List (i.e., which cells are ghost cells).
-
-- Consider how neighbor list would be built if we used Newton's
-  law (evaluate each force only once).
-
-- Consider providing separate pair iterators for ghost neighbors
-  and local neighbors.
-
-Single Processor Operation
---------------------------
-
-- Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
-  work ifndef UTIL_MPI, continue with other classes, to enable 
-  single processor operation with no MPI.
-
-Integer Types
--------------
-
-- Introduce typedefs for integer names in global.h.
-
-  Try uint4 for all integers except those which must be of either sign.
-  Where are there integers that can have a sign, other than in IntVector?
-
-- Make typeId and id for atoms and groups type index throughout the code. 
-
-Atom Class Implementation
---------------------------
-
-
-Configuration File IO
---------------------------
-
-- Add ConfigIo factory and SET_CONFIG_IO command.
-
-- Add LammpsConfigIo class
-
-Restart
--------
-
-- Add restart capability.
-
-
-Files
------
-
-- Think about separating topology and configuration files. 
-
-
-Parallelization
-----------------
-
-- Write variant with Newton's law an reverse communication.
+- Building PairList: Consider use of micro-cell indices
+  in CellList to allow faster rejection during PairList.
 
 Stress and NPT ensemble:
 ------------------------
@@ -77,6 +29,71 @@ Stress and NPT ensemble:
 - Port NPH integrator.
 
 - Write a reversible NPT integrator.
+
+Buffer:
+------
+
+- Add memory statistics for Buffer.
+
+- Figure out how to make pack/unpack methods the atom 
+  class, so that they can use private information.
+
+CellList and PairList
+---------------------
+
+- Consider how neighbor list would be built if we used Newton's
+  law (evaluate each force only once).
+
+- Consider providing separate pair iterators for ghost neighbors
+  and local neighbors.
+
+- Consider introducing micro-cell indices in CellList (noted above).
+
+Single Processor Operation
+--------------------------
+
+- Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
+  work ifndef UTIL_MPI, continue with other classes, to enable 
+  single processor operation with no MPI.
+
+Atom Class Implementation
+--------------------------
+
+- see doc/notes/ddMd/Atom file
+
+Configuration File IO
+--------------------------
+
+- Add ConfigIo factory and SET_CONFIG_IO command.
+
+- Add LammpsConfigIo class
+
+
+Reverse Communication
+---------------------
+
+- Write variant with Newton's law and reverse communication.
+
+Files
+-----
+
+- Think about separating topology and configuration files. 
+
+Restart
+-------
+
+- Add restart capability.
+
+
+Integer Types
+-------------
+
+- Introduce typedefs for integer names in global.h.
+
+  Try uint4 for all integers except those which must be of either sign.
+  Where are there integers that can have a sign, other than in IntVector?
+
+- Make typeId and id for atoms and groups type index throughout the code. 
 
 Testing
 -------

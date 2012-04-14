@@ -10,11 +10,12 @@
 
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Group.h>
+#include <ddMd/util/DdTimer.h>
 #include <util/boundary/Boundary.h>
 #include <util/containers/FMatrix.h>
 #include <util/containers/APArray.h>
 
-#include <ddMd/util/DdTimer.h>
+#define DDMD_EXCHANGER_TIMER
 
 namespace DdMd
 {
@@ -118,7 +119,9 @@ namespace DdMd
                    PACK_ATOMS, PACK_GROUPS, REMOVE_ATOMS, REMOVE_GROUPS,
                    SEND_RECV_ATOMS, UNPACK_ATOMS, UNPACK_GROUPS, 
                    FINISH_GROUP_PLAN, INIT_SEND_ARRAYS, PACK_GHOSTS, 
-                   SEND_RECV_GHOSTS, UNPACK_GHOSTS, FIND_GROUP_GHOSTS, NTime};
+                   SEND_RECV_GHOSTS, UNPACK_GHOSTS, FIND_GROUP_GHOSTS, 
+                   PACK_UPDATE, SEND_RECV_UPDATE, UNPACK_UPDATE, 
+                   LOCAL_UPDATE, NTime};
 
    private:
 
@@ -239,6 +242,12 @@ namespace DdMd
 
       template <int N>
       void findGroupGhosts(GroupStorage<N>& storage);
+
+      void stamp(unsigned int timeId) {
+         #ifdef DDMD_EXCHANGER_TIMER
+         timer_.stamp(timeId);
+         #endif
+      }
 
    };
 

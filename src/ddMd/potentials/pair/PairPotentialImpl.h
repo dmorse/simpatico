@@ -342,6 +342,7 @@ namespace DdMd
    template <class Interaction>
    void PairPotentialImpl<Interaction>::addForces()
    {  
+       stamp(PairPotential::START);
        if (methodId_ == 0) {
           addForcesList(true, false); 
        } else
@@ -350,6 +351,7 @@ namespace DdMd
        } else {
           addForcesNSq(true, false); 
        }
+       stamp(PairPotential::FORCES);
    }
 
    /*
