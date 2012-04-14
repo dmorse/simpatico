@@ -31,7 +31,7 @@ namespace DdMd
    */
    Integrator::Integrator(Simulation& simulation)
      : SimulationAccess(simulation),
-       timer_(NTime)
+       timer_(Integrator::NTime)
    {}
 
    /*
@@ -106,6 +106,7 @@ namespace DdMd
          out << std::endl;
          out << std::endl;
 
+         #ifdef DDMD_EXCHANGER_TIMER
          double AtomPlanT =  exchanger().timer().time(Exchanger::ATOM_PLAN);
          out << "AtomPlan              " << Dbl(AtomPlanT*ratio, 12, 6)
              << " sec   " << Dbl(AtomPlanT/time, 12, 6, true) << std::endl;
@@ -154,8 +155,35 @@ namespace DdMd
          double FindGroupGhostsT =  exchanger().timer().time(Exchanger::FIND_GROUP_GHOSTS);
          out << "FindGroupGhosts       " << Dbl(FindGroupGhostsT*ratio, 12, 6)
              << " sec   " << Dbl(FindGroupGhostsT/time, 12, 6, true) << std::endl;
+         double PackUpdateT =  exchanger().timer().time(Exchanger::PACK_UPDATE);
+         out << "PackUpdate            " << Dbl(PackUpdateT*ratio, 12, 6)
+             << " sec   " << Dbl(PackUpdateT/time, 12, 6, true) << std::endl;
+         double SendRecvUpdateT =  exchanger().timer().time(Exchanger::SEND_RECV_UPDATE);
+         out << "SendRecvUpdate        " << Dbl(SendRecvUpdateT*ratio, 12, 6)
+             << " sec   " << Dbl(SendRecvUpdateT/time, 12, 6, true) << std::endl;
+         double UnpackUpdateT =  exchanger().timer().time(Exchanger::UNPACK_UPDATE);
+         out << "UnpackUpdate          " << Dbl(UnpackUpdateT*ratio, 12, 6)
+             << " sec   " << Dbl(UnpackUpdateT/time, 12, 6, true) << std::endl;
+         double LocalUpdateT =  exchanger().timer().time(Exchanger::LOCAL_UPDATE);
+         out << "LocalUpdate           " << Dbl(LocalUpdateT*ratio, 12, 6)
+             << " sec   " << Dbl(LocalUpdateT/time, 12, 6, true) << std::endl;
          out << std::endl;
          out << std::endl;
+         #endif
+
+         #ifdef DDMD_PAIR_POTENTIAL_TIMER
+         double BuildCellListT = pairPotential().timer().time(PairPotential::BUILD_CELL_LIST);
+         out << "BuildCellList         " << Dbl(BuildCellListT*ratio, 12, 6)
+             << " sec   " << Dbl(BuildCellListT/time, 12, 6, true) << std::endl;
+         double BuildPairListT = pairPotential().timer().time(PairPotential::BUILD_PAIR_LIST);
+         out << "BuildPairList         " << Dbl(BuildPairListT*ratio, 12, 6)
+             << " sec   " << Dbl(BuildPairListT/time, 12, 6, true) << std::endl;
+         double PairForcesT = pairPotential().timer().time(PairPotential::FORCES);
+         out << "PairForces            " << Dbl(PairForcesT*ratio, 12, 6)
+             << " sec   " << Dbl(PairForcesT/time, 12, 6, true) << std::endl;
+         out << std::endl;
+         out << std::endl;
+         #endif
 
          //pairPotential().pairList().outputStatistics(out);
          out << "PairList Statistics" << std::endl;
