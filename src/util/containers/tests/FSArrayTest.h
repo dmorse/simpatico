@@ -61,13 +61,13 @@ void FSArrayTest::testIterator()
 
    ArrayIterator<int> it;
    v.begin(it);
-   TEST_ASSERT(!it.atEnd());
+   TEST_ASSERT(it.notEnd());
    TEST_ASSERT(*it == 3 );
    ++it;
-   TEST_ASSERT(!it.atEnd());
+   TEST_ASSERT(it.notEnd());
    TEST_ASSERT(*it == 4 );
    ++it;
-   TEST_ASSERT(!it.atEnd());
+   TEST_ASSERT(it.notEnd());
    TEST_ASSERT(*it == 5 );
    ++it;
    TEST_ASSERT(it.atEnd());
