@@ -104,6 +104,7 @@ namespace DdMd
       // Main MD loop
       timer().start();
       exchanger().timer().start();
+      pairPotential().timer().start();
       for (iStep_ = 0; iStep_ < nStep; ++iStep_) {
 
          if (Diagnostic::baseInterval > 0) {
@@ -160,6 +161,7 @@ namespace DdMd
       }
       timer().stop();
       exchanger().timer().stop();
+      pairPotential().timer().stop();
    }
 
 }

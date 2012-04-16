@@ -4,10 +4,13 @@
 #include <util/param/ParamComposite.h>  // base class
 #include <ddMd/neighbor/CellList.h>     // member
 #include <ddMd/neighbor/PairList.h>     // member
+#include <ddMd/util/DdTimer.h>          // member
 #include <util/boundary/Boundary.h>     // member (typedef)
 #include <util/global.h>
 
 #include <iostream>
+
+#define DDMD_PAIR_POTENTIAL_TIMER
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -214,6 +217,17 @@ namespace DdMd
       */
       double cutoff() const;
 
+      /**
+      * Return internal timer by reference
+      */
+      DdTimer& timer();
+
+      /**
+      * Enumeration of time stamp identifiers.
+      */
+      enum TimeId {START, BUILD_CELL_LIST, BUILD_PAIR_LIST, 
+                   FORCES, NTime};
+
    protected:
 
       // CellList to construct PairList or calculate nonbonded pair forces.
@@ -258,6 +272,11 @@ namespace DdMd
       */
       AtomStorage& storage();
 
+      /**
+      * Stamp timer with int/enum TimeId.
+      */
+      void stamp(unsigned int timeId);
+
    private:
 
       // Pointer to associated Domain object.
@@ -268,6 +287,9 @@ namespace DdMd
 
       // Pointer to associated AtomStorage object.
       AtomStorage* storagePtr_;
+
+      /// Timer
+      DdTimer timer_;
 
    };
 
@@ -291,6 +313,16 @@ namespace DdMd
 
    inline AtomStorage& PairPotential::storage()
    {  return *storagePtr_; }
+
+   inline DdTimer& PairPotential::timer()
+   {  return timer_; }
+
+   inline void PairPotential::stamp(unsigned int timeId) 
+   {
+      #ifdef DDMD_PAIR_POTENTIAL_TIMER
+      timer_.stamp(timeId);
+      #endif
+   }
 
 }
 #endif
