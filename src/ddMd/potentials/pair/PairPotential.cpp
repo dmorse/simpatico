@@ -116,14 +116,14 @@ namespace DdMd
       // Add all atoms to the cell list. 
       AtomIterator atomIter;
       storage().begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      for ( ; atomIter.notEnd(); ++atomIter) {
          cellList_.placeAtom(*atomIter);
       }
 
       // Add all ghosts to the cell list. 
       GhostIterator ghostIter;
       storage().begin(ghostIter);
-      for ( ; !ghostIter.atEnd(); ++ghostIter) {
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
          cellList_.placeAtom(*ghostIter);
       }
 
@@ -158,7 +158,7 @@ namespace DdMd
    {
       AtomIterator atomIter;
       storage().begin(atomIter); 
-      for( ; !atomIter.atEnd(); ++atomIter){
+      for( ; atomIter.notEnd(); ++atomIter){
          atomIter->force().zero();
       }
    }

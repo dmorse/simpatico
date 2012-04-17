@@ -147,7 +147,7 @@ namespace DdMd
    
          // 1st half of velocity Verlet.
          atomStorage().begin(atomIter);
-         for ( ; !atomIter.atEnd(); ++atomIter) {
+         for ( ; atomIter.notEnd(); ++atomIter) {
             atomIter->velocity() *= factor;
             prefactor = prefactors_[atomIter->typeId()];
             dv.multiply(atomIter->force(), prefactor);
@@ -181,7 +181,7 @@ namespace DdMd
    
          // 2nd half of velocity Verlet
          atomStorage().begin(atomIter);
-         for ( ; !atomIter.atEnd(); ++atomIter) {
+         for ( ; atomIter.notEnd(); ++atomIter) {
             prefactor = prefactors_[atomIter->typeId()];
             dv.multiply(atomIter->force(), prefactor);
             atomIter->velocity() += dv;

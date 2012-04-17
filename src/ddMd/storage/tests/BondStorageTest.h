@@ -175,7 +175,7 @@ void BondStorageTest::testIterator()
  
    BondIterator localIter;
    int n = 0; 
-   for (object().begin(localIter); !localIter.atEnd(); ++localIter) {
+   for (object().begin(localIter); localIter.notEnd(); ++localIter) {
       ++n;
       //std::cout << localIter->id() << std::endl;
    }

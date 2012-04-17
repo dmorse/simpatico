@@ -234,7 +234,7 @@ namespace DdMd
       bufferPtr_->beginSendBlock(Buffer::GROUP, N);
       emptyGroups.clear();
       storage.begin(groupIter);
-      for ( ; !groupIter.atEnd(); ++groupIter) {
+      for ( ; groupIter.notEnd(); ++groupIter) {
          atomStoragePtr_->findGroupAtoms(*groupIter);
          choose = false;
          nAtom = 0;
@@ -423,7 +423,7 @@ namespace DdMd
 
       // Compute communication plans for all local atoms
       atomStoragePtr_->begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      for ( ; atomIter.notEnd(); ++atomIter) {
 
          atomIter->plan().clearFlags();
 
@@ -526,7 +526,7 @@ namespace DdMd
 
             // Choose atoms for sending, pack and mark for removal.
             atomStoragePtr_->begin(atomIter);
-            for ( ; !atomIter.atEnd(); ++atomIter) {
+            for ( ; atomIter.notEnd(); ++atomIter) {
 
                #ifdef UTIL_DEBUG
                #ifdef EXCHANGER_DEBUG
@@ -719,7 +719,7 @@ namespace DdMd
       GroupIterator<N> groupIter;
       int nAtom;
       storage.begin(groupIter);
-      for ( ; !groupIter.atEnd(); ++groupIter) {
+      for ( ; groupIter.notEnd(); ++groupIter) {
          nAtom = groupIter->nPtr();
          if (nAtom < N) {
             nAtom = atomStoragePtr_->findGroupAtoms(*groupIter);
@@ -766,7 +766,7 @@ namespace DdMd
 
       // Add local atoms to all appropriate send arrays
       atomStoragePtr_->begin(localIter);
-      for ( ; !localIter.atEnd(); ++localIter) {
+      for ( ; localIter.notEnd(); ++localIter) {
          for (i = 0; i < Dimension; ++i) {
             for (j = 0; j < 2; ++j) {
                if (localIter->plan().ghost(i, j)) {

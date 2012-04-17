@@ -110,7 +110,7 @@ namespace DdMd
       // If master processor
       Atom* ptr;
       if (source_ == 0) {
-         if (!iterator_.atEnd()) {
+         if (iterator_.notEnd()) {
             ptr = iterator_.get();
             ++iterator_;
             return ptr;

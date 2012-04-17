@@ -284,7 +284,7 @@ namespace DdMd
    {
       AtomIterator iter;
       int i = 0;
-      for (begin(iter); !iter.atEnd(); ++iter) {
+      for (begin(iter); iter.notEnd(); ++iter) {
          snapshot_[i] = iter->position();
          ++i;
       }
@@ -307,7 +307,7 @@ namespace DdMd
       double max = 0;
       AtomIterator iter;
       int i = 0;
-      for (begin(iter); !iter.atEnd(); ++iter) {
+      for (begin(iter); iter.notEnd(); ++iter) {
          dr.subtract(iter->position(), snapshot_[i]);
          norm = dr.square();
          if (norm > max) max = norm;
@@ -383,7 +383,7 @@ namespace DdMd
       // Count local atoms on this processor.
       ConstAtomIterator localIter;
       j = 0;
-      for (begin(localIter); !localIter.atEnd(); ++localIter) {
+      for (begin(localIter); localIter.notEnd(); ++localIter) {
          ++j;
          ptr = find(localIter->id());
          if (ptr == 0)
@@ -397,7 +397,7 @@ namespace DdMd
       // Count ghost atoms
       ConstGhostIterator ghostIter;
       j = 0;
-      for (begin(ghostIter); !ghostIter.atEnd(); ++ghostIter) {
+      for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
          ++j;
          ptr = find(ghostIter->id());
          if (ptr == 0)

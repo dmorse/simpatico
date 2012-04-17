@@ -154,7 +154,7 @@ public:
       int recvCount = atomStorage.nAtom();
       AtomIterator iter;
       atomStorage.begin(iter);
-      for ( ; !iter.atEnd(); ++iter) {
+      for ( ; iter.notEnd(); ++iter) {
          TEST_ASSERT(domain.isInDomain(iter->position()));
       }
 
@@ -357,7 +357,7 @@ public:
       int recvCount = atomStorage.nAtom();
       AtomIterator iter;
       atomStorage.begin(iter);
-      for ( ; !iter.atEnd(); ++iter) {
+      for ( ; iter.notEnd(); ++iter) {
          TEST_ASSERT(domain.isInDomain(iter->position()));
       }
 
