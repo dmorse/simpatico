@@ -34,23 +34,8 @@ SubSystem base classes:
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
 
 
-Convenience / Clarity
----------------------
-
-- Add code to Simulation to distinguish different input modes for MPI.
-  Define enum Simulation::MpiMode {INDEPENDENT, PERTURBATION}, defined 
-  only when UTIL_MPI is defined. The default mode would be INDEPDENDENT.
-
-  Public methods:
-
-           void setPerturbationMpiMode(MPI::Intracomm& paramCommunicator);
-           void setPerturbationMpiMode();
-           MpiMode mpiMode() const;
-
-  The setPerturbationMode() method would call setParamCommunicator internally.
-
-  Add if (simulation.mpiMode() == PERTURBATION) { .... } around perturbation 
-  code.
+New Commands
+------------
 
 - Allow diagnostics to be enabled, disabled, and cleared (reset accumulators) 
   from the command script. Add commands:
@@ -115,3 +100,23 @@ Interactions:
 - Add a constructor to each potential that takes an Interaction as an
   argument. 
 
+MPI Input modes
+---------------------
+
+- Add code to Simulation to more clearly distinguish different input 
+  modes for the MPI version.
+
+  Define enum Simulation::MpiMode {INDEPENDENT, PERTURBATION}, defined 
+  only when UTIL_MPI is defined. The default mode would be INDEPDENDENT.
+
+  Public methods:
+
+     void setPerturbationMpiMode(MPI::Intracomm& paramCommunicator);
+     void setPerturbationMpiMode();
+     MpiMode mpiMode() const;
+
+  The setPerturbationMode() method would call setParamCommunicator 
+  internally.
+
+  Add if (simulation.mpiMode() == PERTURBATION) { .... } around 
+  perturbation code.

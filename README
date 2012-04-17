@@ -11,11 +11,9 @@ version control repository.  The code must be compiled from source.
 
 Web documentation is provided with downloadable releases, in the
 directory simpatico/doc/html, but is not retained in the git 
-repository. Developer/users who are using a clone of the git 
-repository may want to regenerate the documentation. Instructions
-for doing so below.  A coy of the html docmentation is also 
-accessible via the Simpatico web page.
-
+repository. Instructions for regenerating the html documentation,
+if needed, is given below. A copy of the html docmentation is 
+also accessible via the Simpatico web page.
 
 Compiling:
 ---------
@@ -59,4 +57,3 @@ The basic instructions (after installing dOxygen) are:
 
   - cd to the src/ directory
   - type "make doc"
-
