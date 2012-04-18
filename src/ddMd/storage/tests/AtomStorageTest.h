@@ -214,7 +214,7 @@ void AtomStorageTest::testIterators()
  
    AtomIterator localIter;
    int nLocal = 0; 
-   for (object().begin(localIter); !localIter.atEnd(); ++localIter) {
+   for (object().begin(localIter); localIter.notEnd(); ++localIter) {
       ++nLocal;
       //std::cout << localIter->id() << std::endl;
    }
@@ -223,7 +223,7 @@ void AtomStorageTest::testIterators()
 
    GhostIterator ghostIter;
    int nGhost = 0; 
-   for (object().begin(ghostIter); !ghostIter.atEnd(); ++ghostIter) {
+   for (object().begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
       ++nGhost;
       //std::cout << ghostIter->id() << std::endl;
    }

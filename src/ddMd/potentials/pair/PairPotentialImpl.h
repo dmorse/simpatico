@@ -422,7 +422,7 @@ namespace DdMd
       Atom*  atom1Ptr;
       int    type0, type1;
 
-      for (pairList_.begin(iter); !iter.atEnd(); ++iter) {
+      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
          iter.getPair(atom0Ptr, atom1Ptr);
          type0 = atom0Ptr->typeId();
          type1 = atom1Ptr->typeId();
@@ -550,12 +550,12 @@ namespace DdMd
 
       // Iterate over atom 0
       storage().begin(atomIter0);
-      for ( ; !atomIter0.atEnd(); ++atomIter0) {
+      for ( ; atomIter0.notEnd(); ++atomIter0) {
          type0 = atomIter0->typeId();
 
          // Iterate over atom 1
          storage().begin(atomIter1);
-         for ( ; !atomIter1.atEnd(); ++atomIter1) {
+         for ( ; atomIter1.notEnd(); ++atomIter1) {
             type1 = atomIter1->typeId();
 
             if (atomIter0->id() < atomIter1->id()) {
@@ -585,7 +585,7 @@ namespace DdMd
 
          // Iterate over ghosts
          storage().begin(ghostIter);
-         for ( ; !ghostIter.atEnd(); ++ghostIter) {
+         for ( ; ghostIter.notEnd(); ++ghostIter) {
             type1 = ghostIter->typeId();
 
             // Set f = r0 - r1, separation between atoms

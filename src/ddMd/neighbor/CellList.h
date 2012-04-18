@@ -49,11 +49,11 @@ namespace DdMd
    *    // Place all atoms and ghosts
    *    cellList.clear();
    *    AtomStorage::AtomIterator  atomIter;
-   *    for (storage.begin(atomIter); !atomIter.atEnd(); ++atomIter) {
+   *    for (storage.begin(atomIter); atomIter.notEnd(); ++atomIter) {
    *       cellList.placeAtom(*atomIter);
    *    }
    *    AtomStorage::GhostIterator ghostIter;
-   *    for (storage.begin(ghostIter); !ghostIter.atEnd(); ++ghostIter){
+   *    for (storage.begin(ghostIter); ghostIter.notEnd(); ++ghostIter){
    *       cellList.placeAtom(*ghostIter);
    *    }
    *    

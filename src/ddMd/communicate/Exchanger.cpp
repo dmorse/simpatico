@@ -23,6 +23,7 @@
 #include <string>
 
 //#define EXCHANGER_DEBUG
+#define EXCHANGER_GHOST
 
 namespace DdMd
 {
@@ -234,8 +235,7 @@ namespace DdMd
       bufferPtr_->beginSendBlock(Buffer::GROUP, N);
       emptyGroups.clear();
       storage.begin(groupIter);
-      for ( ; !groupIter.atEnd(); ++groupIter) {
-         atomStoragePtr_->findGroupAtoms(*groupIter);
+      for ( ; groupIter.notEnd(); ++groupIter) {
          choose = false;
          nAtom = 0;
          for (k = 0; k < N; ++k) {
@@ -317,6 +317,7 @@ namespace DdMd
    {
       GroupIterator<N> groupIter;
       Atom* atomPtr;
+      Plan* planPtr;
       int i, j, k, nAtom;
       bool choose;
 
@@ -362,14 +363,20 @@ namespace DdMd
             for (i = 0; i < Dimension; ++i) {
                if (multiProcessorDirection_[i]) {
                   for (j = 0; j < 2; ++j) {
-                     choose = groupIter->plan().ghost(i, j);
-                     if (choose) {
+                     if (groupIter->plan().ghost(i, j)) {
                         for (k = 0; k < N; ++k) {
                            atomPtr = groupIter->atomPtr(k);
                            if (atomPtr) {
-                              if (!atomPtr->isGhost()) {
-                                 atomPtr->plan().setGhost(i, j);
+                              assert(!atomPtr->isGhost());
+                              #ifdef EXCHANGER_GHOST
+                              planPtr = &atomPtr->plan();
+                              if (!planPtr->ghost(i, j)) { 
+                                 planPtr->setGhost(i, j);
+                                 sendArray_(i,j).append(*atomPtr);
                               }
+                              #else
+                              atomPtr->plan().setGhost(i, j);
+                              #endif
                            }
                         }
                      }
@@ -395,9 +402,12 @@ namespace DdMd
       double coordinate;
       AtomIterator atomIter;
       Atom* atomPtr;
-      int i, j, jc, k, source, dest, nSend;
+      Plan* planPtr;
+      int i, j, jc, ip, jp, k, source, dest, nSend;
       int shift;
       bool choose;
+      bool isHome;
+      bool isGhost;
 
       // Set domain and slab boundaries
       for (i = 0; i < Dimension; ++i) {
@@ -413,6 +423,7 @@ namespace DdMd
                inner_(i, j) = bound - pairCutoff_;
                outer_(i, j) = bound + pairCutoff_;
             }
+            sendArray_(i, j).clear();
          }
          if (domainPtr_->grid().dimension(i) > 1) {
             multiProcessorDirection_[i] = 1;
@@ -421,11 +432,22 @@ namespace DdMd
          }
       }
 
-      // Compute communication plans for all local atoms
-      atomStoragePtr_->begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      /**
+      * In this function:
+      *  - sendArray_ is filled with ptrs to ghosts for transfer
+      *  - recvArray_ is filled with ptrs to local atoms for removal
+      * In exchangeGhosts(), recvArray is cleared, and then refilled 
+      * with pointers to ghosts as they are received (hence the name).
+      */
 
-         atomIter->plan().clearFlags();
+      // Compute communication plan for every local atom
+      atomStoragePtr_->begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+
+         planPtr = &atomIter->plan();
+         planPtr->clearFlags();
+         isHome  = true;
+         isGhost = false;
 
          // Cartesian directions
          for (i = 0; i < Dimension; ++i) {
@@ -444,24 +466,38 @@ namespace DdMd
    
                if (j == 0) { // Communicate with lower index
                   if (coordinate < bound_(i, j)) {
-                     atomIter->plan().setExchange(i, j);
+                     planPtr->setExchange(i, j);
+                     #ifdef EXCHANGER_GHOST
+                     if (multiProcessorDirection_[i]) {
+                        isHome = false;
+                     }
+                     #endif
                      if (coordinate > outer_(i, j)) {
-                        atomIter->plan().setGhost(i, jc);
+                        planPtr->setGhost(i, jc);
+                        isGhost = true;
                      }
                   } else {
                      if (coordinate < inner_(i, j)) {
-                        atomIter->plan().setGhost(i, j);
+                        planPtr->setGhost(i, j);
+                        isGhost = true;
                      }
                   }
                } else { // j == 1, communicate with upper index
                   if (coordinate > bound_(i, j)) {
-                     atomIter->plan().setExchange(i, j);
+                     planPtr->setExchange(i, j);
+                     #ifdef EXCHANGER_GHOST
+                     if (multiProcessorDirection_[i]) {
+                        isHome = false;
+                     }
+                     #endif
                      if (coordinate < outer_(i, j)) {
-                        atomIter->plan().setGhost(i, jc);
+                        planPtr->setGhost(i, jc);
+                        isGhost = true;
                      }
                   } else {
                      if (coordinate > inner_(i, j)) {
-                        atomIter->plan().setGhost(i, j);
+                        planPtr->setGhost(i, j);
+                        isGhost = true;
                      }
                   }
                }
@@ -469,15 +505,37 @@ namespace DdMd
             } // end for j
          } // end for i
 
+         #ifdef EXCHANGER_GHOST
+         // Add atoms that will be retained by this processor,
+         // but will be communicated as ghosts to sendArray_
+         if (isGhost && isHome) {
+            for (i = 0; i < Dimension; ++i) {
+               for (j = 0; j < 2; ++j) {
+                  if (planPtr->ghost(i, j)) {
+                     sendArray_(i, j).append(*atomIter);
+                  }
+               }
+            }
+         }
+         #endif
+
       } // end atom loop, end compute plan
       stamp(ATOM_PLAN);
 
-      initGroupGhostPlan<2>(*bondStoragePtr_);
+      /*
+      * Find groups that span boundaries (uses information about ghosts).
+      * Clear pointers to ghosts in each Group after inspecting the Group.
+      *
+      * Atoms in Group<N> objects that span boundaries, and are incomplete
+      * after atom migration, are marked for sending as ghosts in the
+      * finishGroupGhostPlan<N> function, further below.
+      */
+      initGroupGhostPlan<2>(*bondStoragePtr_);      // bonds
       #ifdef INTER_ANGLE
-      initGroupGhostPlan<3>(*angleStoragePtr_);
+      initGroupGhostPlan<3>(*angleStoragePtr_);     // angles
       #endif
       #ifdef INTER_DIHEDRAL
-      initGroupGhostPlan<4>(*dihedralStoragePtr_);
+      initGroupGhostPlan<4>(*dihedralStoragePtr_);  // dihedrals
       #endif
       stamp(INIT_GROUP_PLAN);
 
@@ -498,14 +556,13 @@ namespace DdMd
       #endif
       #endif
 
-      // Cartesian directions
+      // Cartesian directions for exchange (0=x, 1=y, 2=z)
       for (i = 0; i < Dimension; ++i) {
 
          // Transmission direction
+         // j = 0 sends to processor with lower grid coordinate i
+         // j = 1 sends to processor with higher grid coordinate i
          for (j = 0; j < 2; ++j) {
-
-            // j = 0 sends to lower  coordinate i
-            // j = 1 sends to higher coordinate i
 
             // Index for conjugate (reverse) direction
             if (j == 0) jc = 1;
@@ -517,16 +574,15 @@ namespace DdMd
             inner = inner_(i, jc);             // inner bound upon receipt 
             shift = domainPtr_->shift(i, j);   // shift for periodic b.c.
 
-            sendArray_(i, j).clear();
-
             if (multiProcessorDirection_[i]) {
                bufferPtr_->clearSendBuffer();
                bufferPtr_->beginSendBlock(Buffer::ATOM);
             }
 
             // Choose atoms for sending, pack and mark for removal.
+            sentAtoms_.clear();
             atomStoragePtr_->begin(atomIter);
-            for ( ; !atomIter.atEnd(); ++atomIter) {
+            for ( ; atomIter.notEnd(); ++atomIter) {
 
                #ifdef UTIL_DEBUG
                #ifdef EXCHANGER_DEBUG
@@ -539,12 +595,11 @@ namespace DdMd
                #endif
                #endif
 
-               choose = atomIter->plan().exchange(i, j);
-               if (choose) {
+               if (atomIter->plan().exchange(i, j)) {
 
                   if (multiProcessorDirection_[i]) {
 
-                     sendArray_(i, j).append(*atomIter);
+                     sentAtoms_.append(*atomIter);
                      bufferPtr_->packAtom(*atomIter);
 
                   } else {
@@ -600,10 +655,10 @@ namespace DdMd
                * PArray iterator.
                */
 
-               // Remove chosen atoms from atomStorage
-               nSend = sendArray_(i, j).size();
+               // Remove chosen atoms (listed in recvArray) from atomStorage
+               nSend = sentAtoms_.size();
                for (k = 0; k < nSend; ++k) {
-                  atomStoragePtr_->removeAtom(&sendArray_(i, j)[k]);
+                  atomStoragePtr_->removeAtom(&sentAtoms_[k]);
                }
                stamp(REMOVE_ATOMS);
      
@@ -625,8 +680,10 @@ namespace DdMd
                // Unpack atoms into atomStorage
                bufferPtr_->beginRecvBlock();
                while (bufferPtr_->recvSize() > 0) {
+
                   atomPtr = atomStoragePtr_->newAtomPtr();
                   bufferPtr_->unpackAtom(*atomPtr);
+                  atomStoragePtr_->addNewAtom();
 
                   if (shift) {
                      atomPtr->position()[i] += shift * lengths[i];
@@ -649,7 +706,35 @@ namespace DdMd
                   }
                   #endif
 
-                  atomStoragePtr_->addNewAtom();
+                  #ifdef EXCHANGER_GHOST
+                  planPtr = &atomPtr->plan();
+
+                  // Determine if new atom will stay on this processor.
+                  isHome = true;
+                  if (i < Dimension - 1) {
+                     for (ip = i + 1; ip < Dimension; ++ip) {
+                        if (multiProcessorDirection_[ip]) {
+                           for (jp = 0; jp < 2; ++jp) {
+                              if (planPtr->exchange(ip, jp)) {
+                                 isHome = false;
+                              }
+                           }
+                        }
+                    }
+                  }
+
+                  // If atom will stay, add to ghost sendArrays
+                  if (isHome) {
+                     for (ip = 0; ip < Dimension; ++ip) {
+                        for (jp = 0; jp < 2; ++jp) {
+                           if (planPtr->ghost(ip, jp)) {
+                              sendArray_(ip, jp).append(*atomPtr);
+                           }
+                        }
+                     }
+                  }
+                  #endif
+
                }
                assert(bufferPtr_->recvSize() == 0);
                stamp(UNPACK_ATOMS);
@@ -680,6 +765,7 @@ namespace DdMd
 
       #ifdef UTIL_DEBUG
       #ifdef EXCHANGER_DEBUG
+      // Validity checks
       atomStoragePtr_->computeNAtomTotal(domainPtr_->communicator());
       if (myRank == 0) {
          assert(nAtomTotal = atomStoragePtr_->nAtomTotal());
@@ -698,7 +784,7 @@ namespace DdMd
       #endif
       #endif
 
-      // Set ghost communication flags for atoms in incomplete bonds
+      // Set ghost communication flags for atoms in incomplete groups
       finishGroupGhostPlan<2>(*bondStoragePtr_);
       #ifdef INTER_ANGLE
       finishGroupGhostPlan<3>(*angleStoragePtr_);
@@ -719,7 +805,7 @@ namespace DdMd
       GroupIterator<N> groupIter;
       int nAtom;
       storage.begin(groupIter);
-      for ( ; !groupIter.atEnd(); ++groupIter) {
+      for ( ; groupIter.notEnd(); ++groupIter) {
          nAtom = groupIter->nPtr();
          if (nAtom < N) {
             nAtom = atomStoragePtr_->findGroupAtoms(*groupIter);
@@ -754,19 +840,19 @@ namespace DdMd
       AtomIterator  localIter;
       Atom* atomPtr;
       Atom* sendPtr;
+      Plan* planPtr;
       int i, j, jc, ip, jp, k, source, dest, shift, size;
 
       // Clear all send and receive arrays
       for (i = 0; i < Dimension; ++i) {
          for (j = 0; j < 2; ++j) {
-            sendArray_(i, j).clear();
             recvArray_(i, j).clear();
          }
       }
 
-      // Add local atoms to all appropriate send arrays
+      #ifndef EXCHANGER_GHOST
       atomStoragePtr_->begin(localIter);
-      for ( ; !localIter.atEnd(); ++localIter) {
+      for ( ; localIter.notEnd(); ++localIter) {
          for (i = 0; i < Dimension; ++i) {
             for (j = 0; j < 2; ++j) {
                if (localIter->plan().ghost(i, j)) {
@@ -775,6 +861,39 @@ namespace DdMd
             }
          }
       }
+      #else
+      #ifdef UTIL_DEBUG
+      #ifdef EXCHANGER_DEBUG
+      // Add local atoms to all appropriate send arrays
+      {
+         FMatrix<int, Dimension, 2> sendCounter;
+         for (i = 0; i < Dimension; ++i) {
+            for (j = 0; j < 2; ++j) {
+               sendCounter(i, j) = 0;
+            }
+         }
+         atomStoragePtr_->begin(localIter);
+         for ( ; localIter.notEnd(); ++localIter) {
+            planPtr = &localIter->plan();
+            for (i = 0; i < Dimension; ++i) {
+               for (j = 0; j < 2; ++j) {
+                  if (planPtr->ghost(i, j)) {
+                      ++sendCounter(i, j);
+                  }
+               }
+            }
+         }
+         for (i = 0; i < Dimension; ++i) {
+            for (j = 0; j < 2; ++j) {
+               if (sendCounter(i, j) != sendArray_(i, j).size()) {
+                  UTIL_THROW("Incorrect sendArray size");
+               }
+            }
+         }
+      }
+      #endif
+      #endif
+      #endif
       stamp(INIT_SEND_ARRAYS);
 
       // Cartesian directions
@@ -783,8 +902,8 @@ namespace DdMd
          // Transmit directions
          for (j = 0; j < 2; ++j) {
 
-            // j = 0: Send ghosts near minimum boundary to lower coordinate
-            // j = 1: Send ghosts near maximum boundary to higher coordinate
+            // j = 0: Send ghosts near minimum bound to lower coordinate
+            // j = 1: Send ghosts near maximum bound to higher coordinate
 
             // Set index for reverse direction
             if (j == 0) jc = 1;
@@ -793,7 +912,7 @@ namespace DdMd
             bound = bound_(i, j);
             inner = inner_(i, j);
        
-            // Shift on receiving processor for periodic boundary conditions
+            // Shift on receiving node for periodic b.c.s
             shift = domainPtr_->shift(i, j);
 
             if (multiProcessorDirection_[i]) {
@@ -809,7 +928,7 @@ namespace DdMd
 
                if (multiProcessorDirection_[i]) {
 
-                  // Pack atom for sending 
+                  // If grid dimension > 1, pack atom for sending 
                   bufferPtr_->packGhost(*sendPtr);
 
                } else {  // if grid dimension == 1
@@ -839,7 +958,7 @@ namespace DdMd
                   // following loop over ghosts on same processor.
                   // atomPtr->plan().clearGhost(i, j);
  
-                  // Add to send arrays for remaining directions
+                  // Add to send arrays for any remaining directions
                   if (i < Dimension - 1) {
                      for (ip = i + 1; ip < Dimension; ++ip) {
                         for (jp = 0; jp < 2; ++jp) {
@@ -894,7 +1013,7 @@ namespace DdMd
                   }
 
                   #ifdef UTIL_DEBUG
-                  // Validate ghost coordinate on receiving processor.
+                  // Validate ghost coordinate on the receiving processor.
                   if (j == 0) {
                      if (atomPtr->position()[i] < bound_(i, 1)) {
                         std::cout << i << "  " << j 
@@ -938,8 +1057,8 @@ namespace DdMd
       #ifdef UTIL_DEBUG
       #ifdef EXCHANGER_DEBUG
       atomStoragePtr_->isValid();
-      bondStoragePtr_->isValid(*atomStoragePtr_, domainPtr_->communicator(),
-                               true);
+      bondStoragePtr_->isValid(*atomStoragePtr_, 
+                               domainPtr_->communicator(), true);
       #endif
       #endif
 

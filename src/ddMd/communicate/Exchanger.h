@@ -150,6 +150,13 @@ namespace DdMd
       FMatrix< APArray<Atom>, Dimension, 2>  recvArray_;
 
       /**
+      * Array of pointers to atoms that have been packed and sent.
+      * 
+      * Used to mark missing atoms for subsequent removal.
+      */
+      APArray<Atom> sentAtoms_;
+
+      /**
       * Array of pointers to empty bonds on this processor.
       * 
       * Used to mark bonds for later removal.

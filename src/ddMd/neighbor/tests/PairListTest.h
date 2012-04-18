@@ -241,7 +241,7 @@ public:
 
       // Check that all pairs have distance less than cutoff^2
       pairList.begin(iter);
-      for ( ; !iter.atEnd(); ++iter) {
+      for ( ; iter.notEnd(); ++iter) {
          iter.getPair(atom1Ptr, atom2Ptr);
          dr.subtract(atom1Ptr->position(), atom2Ptr->position());
          drSq = dr.square();

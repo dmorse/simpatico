@@ -559,7 +559,7 @@ namespace DdMd
       int i;
 
       atomStorage_.begin(atomIter); 
-      for( ; !atomIter.atEnd(); ++atomIter){
+      for( ; atomIter.notEnd(); ++atomIter){
          for (i = 0; i < Dimension; ++i) {
             atomIter->velocity()[i] = scale*random_.gaussian();
          }
@@ -573,7 +573,7 @@ namespace DdMd
    {
       AtomIterator atomIter;
       atomStorage_.begin(atomIter); 
-      for( ; !atomIter.atEnd(); ++atomIter){
+      for( ; atomIter.notEnd(); ++atomIter){
          atomIter->force().zero();
       }
    }

@@ -93,19 +93,19 @@ void FPArrayTest::testIterator()
 
    parray.begin(iterator);
 
-   TEST_ASSERT(!iterator.atEnd());
+   TEST_ASSERT(iterator.notEnd());
    TEST_ASSERT(*iterator == array[8]);
    ++iterator;
 
-   TEST_ASSERT(!iterator.atEnd());
+   TEST_ASSERT(iterator.notEnd());
    TEST_ASSERT(*iterator == array[4]);
    ++iterator;
 
-   TEST_ASSERT(!iterator.atEnd());
+   TEST_ASSERT(iterator.notEnd());
    TEST_ASSERT(*iterator == array[3]);
    ++iterator;
 
-   TEST_ASSERT(!iterator.atEnd());
+   TEST_ASSERT(iterator.notEnd());
    TEST_ASSERT(*iterator == array[5]);
    ++iterator;
 
@@ -127,19 +127,19 @@ void FPArrayTest::testConstIterator()
 
    carray.begin(constIterator);
 
-   TEST_ASSERT(!constIterator.atEnd());
+   TEST_ASSERT(constIterator.notEnd());
    TEST_ASSERT(*constIterator == array[8]);
    ++constIterator;
 
-   TEST_ASSERT(!constIterator.atEnd());
+   TEST_ASSERT(constIterator.notEnd());
    TEST_ASSERT(*constIterator == array[4]);
    ++constIterator;
 
-   TEST_ASSERT(!constIterator.atEnd());
+   TEST_ASSERT(constIterator.notEnd());
    TEST_ASSERT(*constIterator == array[3]);
    ++constIterator;
 
-   TEST_ASSERT(!constIterator.atEnd());
+   TEST_ASSERT(constIterator.notEnd());
    TEST_ASSERT(*constIterator == array[5]);
    ++constIterator;
 

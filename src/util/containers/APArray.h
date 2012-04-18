@@ -239,9 +239,6 @@ namespace Util
    template <typename Data>
    void APArray<Data>::clear()
    {
-      for (int i = 0; i < capacity_; ++i) {
-         ptrs_[i] = 0;
-      }
       size_ = 0;
    }
 

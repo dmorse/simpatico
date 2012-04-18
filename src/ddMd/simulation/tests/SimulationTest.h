@@ -111,7 +111,7 @@ inline void SimulationTest::testReadConfig()
    int j = 0;
    AtomIterator atomIter;
    storage.begin(atomIter);
-   for ( ; !atomIter.atEnd(); ++atomIter) {
+   for ( ; atomIter.notEnd(); ++atomIter) {
       j++;
       TEST_ASSERT( domain.isInDomain( atomIter->position() ) );
    }
@@ -141,7 +141,7 @@ inline void SimulationTest::testExchangeAtoms()
    AtomIterator atomIter;
    for (int i = 0; i < Dimension; ++i) {
      storage.begin(atomIter);
-     for ( ; !atomIter.atEnd(); ++atomIter) {
+     for ( ; atomIter.notEnd(); ++atomIter) {
         atomIter->position()[i] += random.uniform(range1, range2);
      }
    }
@@ -160,7 +160,7 @@ inline void SimulationTest::testExchangeAtoms()
    // Check that all atoms are within the processor domain.
    int j = 0;
    storage.begin(atomIter);
-   for ( ; !atomIter.atEnd(); ++atomIter) {
+   for ( ; atomIter.notEnd(); ++atomIter) {
       j++;
       TEST_ASSERT( domain.isInDomain( atomIter->position() ) );
    }
@@ -190,7 +190,7 @@ inline void SimulationTest::testExchange()
    AtomIterator atomIter;
    for (int i = 0; i < Dimension; ++i) {
      storage.begin(atomIter);
-     for ( ; !atomIter.atEnd(); ++atomIter) {
+     for ( ; atomIter.notEnd(); ++atomIter) {
         atomIter->position()[i] += random.uniform(range1, range2);
      }
    }
@@ -208,7 +208,7 @@ inline void SimulationTest::testExchange()
    // Check that all atoms are within the processor domain.
    int j = 0;
    storage.begin(atomIter);
-   for ( ; !atomIter.atEnd(); ++atomIter) {
+   for ( ; atomIter.notEnd(); ++atomIter) {
       j++;
       TEST_ASSERT( domain.isInDomain( atomIter->position() ) );
    }
@@ -218,7 +218,7 @@ inline void SimulationTest::testExchange()
    // Check that all ghosts are outside the processor domain.
    GhostIterator ghostIter;
    storage.begin(ghostIter);
-   for ( ; !ghostIter.atEnd(); ++ghostIter) {
+   for ( ; ghostIter.notEnd(); ++ghostIter) {
       TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
    }
 
@@ -249,7 +249,7 @@ inline void SimulationTest::testUpdate()
    AtomIterator atomIter;
    for (int i = 0; i < Dimension; ++i) {
      storage.begin(atomIter);
-     for ( ; !atomIter.atEnd(); ++atomIter) {
+     for ( ; atomIter.notEnd(); ++atomIter) {
         atomIter->position()[i] += random.uniform(range1, range2);
      }
    }
@@ -267,7 +267,7 @@ inline void SimulationTest::testUpdate()
    // Check that all atoms are within the processor domain.
    int j = 0;
    storage.begin(atomIter);
-   for ( ; !atomIter.atEnd(); ++atomIter) {
+   for ( ; atomIter.notEnd(); ++atomIter) {
       j++;
       TEST_ASSERT( domain.isInDomain( atomIter->position() ) );
    }
@@ -277,7 +277,7 @@ inline void SimulationTest::testUpdate()
    // Check that all ghosts are outside the processor domain.
    GhostIterator ghostIter;
    storage.begin(ghostIter);
-   for ( ; !ghostIter.atEnd(); ++ghostIter) {
+   for ( ; ghostIter.notEnd(); ++ghostIter) {
       TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
    }
 
@@ -307,7 +307,7 @@ inline void SimulationTest::testUpdate()
    range1 = double(-0.1);
    range2 = double(+0.1);
    storage.begin(atomIter);
-   for ( ; !atomIter.atEnd(); ++atomIter) {
+   for ( ; atomIter.notEnd(); ++atomIter) {
       for (int i = 0; i < Dimension; ++i) {
          atomIter->position()[i] += random.uniform(range1, range2);
       }
@@ -341,7 +341,7 @@ inline void SimulationTest::testCalculateForces()
    Vector t(0.0); // total force on all processors
    AtomIterator iter;
    storage.begin(iter);
-   for ( ; !iter.atEnd(); ++iter) {
+   for ( ; iter.notEnd(); ++iter) {
       f += iter->force();
    }
 

@@ -33,7 +33,7 @@ namespace DdMd
    *    // Loop over pairs
    *    Atom* atom1Ptr;
    *    Atom* atom2Ptr;
-   *    for (pairList.begin(iter); !iterator.atEnd(); ++iter) {
+   *    for (pairList.begin(iter); iterator.notEnd(); ++iter) {
    *       iterator.getPair(atom1Ptr, atom2Ptr);
    *
    *       // [Do something with atom1Ptr and atom2Ptr]
@@ -82,6 +82,13 @@ namespace DdMd
       * the end of the pairlist, and is thus invalid.
       */
       bool atEnd() const;
+   
+      /** 
+      * Return true if not at end of PairList.
+      *
+      * If notEnd(), continue iteration loop.  Equivalent to not atEnd().
+      */
+      bool notEnd() const;
    
       /**
       * Get pointers for current pair of Atoms. 
@@ -181,6 +188,13 @@ namespace DdMd
    inline bool PairIterator::atEnd() const
    { return (atom2Id_ == nAtom2_); }
    
+   /*
+   * Return false if one past last pair in list.
+   */
+   inline bool PairIterator::notEnd() const
+   { return (atom2Id_ != nAtom2_); }
+   
+ 
  
 } 
 #endif
