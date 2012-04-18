@@ -35,12 +35,14 @@ namespace DdMd
    Exchanger::Exchanger()
     : sendArray_(),
       recvArray_(),
+      #ifdef UTIL_MPI
       emptyBonds_(),
       #ifdef INTER_ANGLE
       emptyAngles_(),
       #endif
       #ifdef INTER_DIHEDRAL
       emptyDihedrals_(),
+      #endif
       #endif
       bound_(),
       inner_(),
@@ -115,12 +117,15 @@ namespace DdMd
             recvArray_(i, j).reserve(sendRecvCapacity);
          }
       }
+
+      #ifdef UTIL_MPI
       emptyBonds_.reserve(sendRecvCapacity);
       #ifdef INTER_ANGLE
       emptyAngles_.reserve(sendRecvCapacity);
       #endif
       #ifdef INTER_DIHEDRAL
       emptyDihedrals_.reserve(sendRecvCapacity);
+      #endif
       #endif
    }
 
@@ -219,6 +224,7 @@ namespace DdMd
       }
    }
 
+   #ifdef UTIL_MPI
    /*
    * Pack bonds that contain postmarked atoms.
    */
@@ -311,6 +317,7 @@ namespace DdMd
       }
       assert(bufferPtr_->recvSize() == 0);
    }
+   #endif
 
    template <int N>
    void Exchanger::finishGroupGhostPlan(GroupStorage<N>& storage)
@@ -574,10 +581,12 @@ namespace DdMd
             inner = inner_(i, jc);             // inner bound upon receipt 
             shift = domainPtr_->shift(i, j);   // shift for periodic b.c.
 
+            #ifdef UTIL_MPI
             if (multiProcessorDirection_[i]) {
                bufferPtr_->clearSendBuffer();
                bufferPtr_->beginSendBlock(Buffer::ATOM);
             }
+            #endif
 
             // Choose atoms for sending, pack and mark for removal.
             sentAtoms_.clear();
@@ -597,12 +606,15 @@ namespace DdMd
 
                if (atomIter->plan().exchange(i, j)) {
 
+                  #ifdef UTIL_MPI
                   if (multiProcessorDirection_[i]) {
 
                      sentAtoms_.append(*atomIter);
                      bufferPtr_->packAtom(*atomIter);
 
-                  } else {
+                  } else 
+                  #endif
+                  {
 
                      // Shift position if required by periodic b.c.
                      if (shift) {
@@ -633,6 +645,7 @@ namespace DdMd
             } // end atom loop
             stamp(PACK_ATOMS);
 
+            #ifdef UTIL_MPI
             // Send and receive only if processor grid dimension(i) > 1
             if (multiProcessorDirection_[i]) {
 
@@ -750,6 +763,7 @@ namespace DdMd
                stamp(UNPACK_GROUPS);
 
             } // end if gridDimension > 1
+            #endif
 
          } // end for j (direction 0, 1)
       } // end for i (Cartesian index)
@@ -915,10 +929,12 @@ namespace DdMd
             // Shift on receiving node for periodic b.c.s
             shift = domainPtr_->shift(i, j);
 
+            #ifdef UTIL_MPI
             if (multiProcessorDirection_[i]) {
                bufferPtr_->clearSendBuffer();
                bufferPtr_->beginSendBlock(Buffer::GHOST);
             }
+            #endif
 
             // Pack atoms in sendArray_(i, j)
             size = sendArray_(i, j).size();
@@ -926,12 +942,15 @@ namespace DdMd
 
                sendPtr = &sendArray_(i, j)[k];
 
+               #ifdef UTIL_MPI
                if (multiProcessorDirection_[i]) {
 
                   // If grid dimension > 1, pack atom for sending 
                   bufferPtr_->packGhost(*sendPtr);
 
-               } else {  // if grid dimension == 1
+               } else 
+               #endif
+               {  // if grid dimension == 1
 
                   // Make a ghost copy of local atom on this processor
                   atomPtr = atomStoragePtr_->newGhostPtr();
@@ -974,6 +993,7 @@ namespace DdMd
             }
             stamp(PACK_GHOSTS);
 
+            #ifdef UTIL_MPI
             // Send and receive buffers
             if (multiProcessorDirection_[i]) {
 
@@ -1039,6 +1059,7 @@ namespace DdMd
                stamp(UNPACK_GHOSTS);
 
             }
+            #endif
 
          } // end for transmit direction j = 0, 1
 

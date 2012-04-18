@@ -21,7 +21,7 @@ namespace DdMd
    /*
    * Constructor.
    */
-   Buffer::Buffer()
+   Buffer::Buffer() 
     : Util::ParamComposite(),
       #ifdef UTIL_MPI
       sendBufferBegin_(0),
@@ -369,7 +369,7 @@ namespace DdMd
 
    }
 
-   /**
+   /*
    * Unpack data required for a ghost Atom.
    */
    void Buffer::unpackGhost(Atom& atom)
@@ -542,7 +542,8 @@ namespace DdMd
          UTIL_THROW("Source and desination identical");
       }
 
-      request = comm.Irecv(recvBufferBegin_, bufferCapacity_, MPI::CHAR, source, 5);
+      request = comm.Irecv(recvBufferBegin_, bufferCapacity_, 
+                           MPI::CHAR, source, 5);
       request.Wait();
       recvType_ = NONE;
       recvPtr_ = recvBufferBegin_;
@@ -575,7 +576,6 @@ namespace DdMd
       }
 
    }
-   #endif
 
    /*
    * Number of items currently in data send block. 
@@ -594,6 +594,7 @@ namespace DdMd
    */
    bool Buffer::isAllocated() const
    {  return (bufferCapacity_ > 0); }
+   #endif
 
 }
 #endif

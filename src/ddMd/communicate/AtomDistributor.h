@@ -108,7 +108,7 @@ namespace DdMd
       *
       * \param cacheCapacity max number of atoms cached for sending
       */
-      void setParam(int cacheCapacity = -1);
+      void setParam(int cacheCapacity = 100);
 
       /**
       * Read cacheCapacity, allocate memory and initialize object.
@@ -125,7 +125,6 @@ namespace DdMd
       virtual void readParam(std::istream& in);
 
       #ifdef UTIL_MPI
-
       /**
       * Initialize buffer before the loop over atoms.
       *
@@ -133,7 +132,6 @@ namespace DdMd
       * just before entering the loop to read atoms from file. 
       */
       void initSendBuffer();
-
       #endif
 
       /**
@@ -169,6 +167,7 @@ namespace DdMd
       */
       int addAtom();
 
+      #ifdef UTIL_MPI
       /**
       * Send all atoms that have not be sent previously.
       *
@@ -183,6 +182,7 @@ namespace DdMd
       * This should be called by all processes except the master.
       */ 
       void receive();
+      #endif 
 
    private:
 
@@ -193,7 +193,8 @@ namespace DdMd
       /// Stack of pointers to unused elements of cache_ array.
       /// Allocated only on the master processor.
       ArrayStack<Atom> reservoir_;
-      
+     
+      #ifdef UTIL_MPI 
       /// Matrix of ptrs to elements of cache_ array. Each row contains
       /// pointers to atoms to be sent to one processor.
       /// Allocated only on the master processor.
@@ -202,6 +203,7 @@ namespace DdMd
       /// Array of sendArrays_ row sizes.
       /// Allocated only on the master processor.
       DArray<int> sendSizes_;
+      #endif
 
       /// Pointer to associated Boundary object.
       Boundary*   boundaryPtr_;
@@ -212,8 +214,10 @@ namespace DdMd
       /// Pointer to associated Domain object.
       AtomStorage* storagePtr_;
 
+      #ifdef UTIL_MPI
       /// Pointer to associated Buffer object.
       Buffer*     bufferPtr_;
+      #endif
 
       /// Pointer to space for a new local Atom. Null when inactive.
       Atom*       newPtr_;
