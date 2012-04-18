@@ -83,6 +83,16 @@ namespace Inter
       */
       void setSigma(int i, int j, double sigma);
 
+      /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      atom type index 1
+      * \param j      atom type index 2
+      * \param value  new value of parameter
+      */
+      void set(std::string name, int i, int j, double value);
+
       //@}
       /// \name Accessors
       //@{ 
@@ -133,6 +143,15 @@ namespace Inter
       */
       double sigma(int i, int j) const;
  
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      atom type index 1
+      * \param j      atom type index 2
+      */
+      double get(std::string name, int i, int j) const;
+
       /**
       * Get maximum of pair cutoff distance, for all atom type pairs.
       */

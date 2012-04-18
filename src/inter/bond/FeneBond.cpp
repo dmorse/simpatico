@@ -87,7 +87,7 @@ namespace Inter
    }
 
    /*
-   * Read bond interaction parameters kappa and length from file
+   * Read bond interaction parameters kappa and r0 from file
    */
    void FeneBond::readParam(std::istream &in)
    {
@@ -117,8 +117,8 @@ namespace Inter
          g = 1.0 - rlSq_[i]*r0SqInv_[i];
          energyCutoff_[i] = ce_[i]*log(g);
          //std::cout << "Force cutoff    = " << kappa_[i]*rl_[i]/g << std::endl;
-         std::cout << "Distance cutoff = " << rl_[i] << std::endl;
-         std::cout << "Energy cutoff   = " << energyCutoff_[i] << std::endl;
+         //std::cout << "Distance cutoff = " << rl_[i] << std::endl;
+         //std::cout << "Energy cutoff   = " << energyCutoff_[i] << std::endl;
       }
 
       //readEnd(in);
@@ -158,6 +158,51 @@ namespace Inter
             return sqrt(rSq);
          };
       }
+   }
+
+   /*
+   * Modify a parameter, identified by a string.
+   */
+   void FeneBond::set(std::string name, int type, double value)
+   {
+      if (name == "kappa") {
+         kappa_[type] = value;
+      } else
+      if (name == "r0") {
+         r0_[type] = value;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+      r0Sq_[type] = r0_[type]*r0_[type];
+      r0SqInv_[type] = 1.0/r0Sq_[type];
+      ce_[type] = -0.5*r0Sq_[type]*kappa_[type];
+      //a_[type] = exp(-2.0*energyCutoff_/(r0Sq_[type]*kappa_[type]));
+      //rl_[type] = r0_[type]*sqrt(1-a_[type]);
+      double y = 0.5*kappa_[type]*r0_[type]/forceCutoff_;
+      rl_[type] = r0_[type]*(sqrt(1.0 + y*y) - y);
+      rlSq_[type] = rl_[type]*rl_[type];
+      double g = 1.0 - rlSq_[type]*r0SqInv_[type];
+      energyCutoff_[type] = ce_[type]*log(g);
+      //std::cout << "Force cutoff    = " << kappa_[type]*rl_[type]/g << std::endl;
+      //std::cout << "Distance cutoff = " << rl_[type] << std::endl;
+      //std::cout << "Energy cutoff   = " << energyCutoff_[type] << std::endl;
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double FeneBond::get(std::string name, int type) const
+   {
+      double value;
+      if (name == "kappa") {
+         value = kappa_[type];
+      } else
+      if (name == "r0") {
+         value = r0_[type];
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+      return value;
    }
 
    /*

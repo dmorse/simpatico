@@ -1,11 +1,11 @@
-SRC_DIR_REL =../../..
+SRC_DIR_REL =../..
 
 include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
-include $(SRC_DIR_REL)/mcMd/defines.mk
-include $(SRC_DIR_REL)/mcMd/patterns.mk
+include $(SRC_DIR_REL)/inter/defines.mk
+include $(SRC_DIR_REL)/inter/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
-include $(SRC_DIR_REL)/mcMd/sources.mk
+include $(SRC_DIR_REL)/inter/sources.mk
 include sources.mk
 
 all: $(inter_tests_OBJS) Test
@@ -16,9 +16,9 @@ clean:
 clean-deps:
 	rm -f $(inter_tests_OBJS:.o=.d)
 
-Test: Test.o $(mcMd_LIB) $(util_LIB)
+Test: Test.o $(inter_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(mcMd_LIB) $(util_LIB)
+	       $(inter_LIB) $(util_LIB)
 
 -include $(inter_tests_OBJS:.o=.d)
 

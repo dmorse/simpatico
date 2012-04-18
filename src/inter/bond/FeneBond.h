@@ -77,6 +77,15 @@ namespace Inter
       void readParam(std::istream &in);
 
       /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name   parameter name
+      * \param type bond type index 
+      * \param value  new value of parameter
+      */
+      void set(std::string name, int type, double value);
+
+      /**
       * Returns potential energy for one bond.
       *
       * \param rSq  square of distance between bonded particles.
@@ -110,6 +119,14 @@ namespace Inter
       */
       double randomBondLength(Random *random, double beta, int type) const;
    
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name parameter name
+      * \param type bond type index 
+      */
+      double get(std::string name, int type) const;
+
       /**
       * Return name string "FeneBond" for this evaluator class.
       */
