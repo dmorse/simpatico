@@ -207,5 +207,39 @@ namespace Inter
    std::string DpdPair::className() const
    {  return std::string("DpdPair"); }
  
+   /*
+   * Set a potential energy parameter, identified by a string.
+   */
+   void DpdPair::set(std::string name, int i, int j, double value)
+   {
+      if (name == "epsilon") {
+         epsilon_[i][j] = value;
+         epsilon_[j][i] = value;
+      } else
+      if (name == "sigma") {
+         sigma_[i][j] = value;
+         sigma_[j][i] = value;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double DpdPair::get(std::string name, int i, int j) const
+   {
+      double value;
+      if (name == "epsilon") {
+         value = epsilon_[i][j];
+      } else
+      if (name == "sigma") {
+         value = sigma_[i][j];
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+      return value;
+   }
+
 } 
 #endif

@@ -53,6 +53,25 @@ namespace McMd
       double forceOverR(double rsq, int iAtomType, int jAtomType) const = 0;
 
       /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      type index of first atom
+      * \param j      type index of first atom
+      * \param value  new value of parameter
+      */
+      virtual void set(std::string name, int i, int j, double value) = 0;
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      type index of first atom
+      * \param j      type index of first atom
+      */
+      virtual double get(std::string name, int i, int j) const = 0;
+
+      /**
       * Return maximum cutoff distance.
       */
       virtual double maxPairCutoff() const = 0;

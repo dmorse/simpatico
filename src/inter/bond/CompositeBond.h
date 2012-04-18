@@ -47,6 +47,13 @@ namespace Inter
 
       // Mutators
 
+      /**  
+      * Set nAtomType value.
+      *
+      * \param nBondType number of atom types.
+      */
+      void setNBondType(int nBondType);
+
       /**
       * Read epsilon and sigma, initialize other variables.
       *
@@ -56,12 +63,14 @@ namespace Inter
       */
       void readParam(std::istream &in);
       
-      /**  
-      * Set nAtomType value.
+      /**
+      * Modify a parameter, identified by a string.
       *
-      * \param nBondType number of atom types.
+      * \param name   parameter name
+      * \param typeId bond type index 
+      * \param value  new value of parameter
       */
-      void setNBondType(int nBondType);
+      void set(std::string name, int typeId, double value);
 
       // Accessors
       
@@ -95,6 +104,14 @@ namespace Inter
       * \param typeId    type index for bond.
       */  
       double randomBondLength(Random* randomPtr, double beta, int typeId) const;
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param typeId bond type index 1
+      */
+      double get(std::string name, int typeId) const;
 
       /**
       * Return name of instantiated class, with no spaces.
@@ -213,18 +230,43 @@ namespace Inter
    }
 
    /*
+   * Modify a parameter, identified by a string.
+   */
+   template <class BareBond, class BarePair>
+   void CompositeBond<BareBond, BarePair>
+        ::set(std::string name, int typeId, double value)
+   {
+      UTIL_THROW("Unrecognized parameter name");
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   template <class BareBond, class BarePair>
+   double CompositeBond<BareBond, BarePair>::
+          get(std::string name, int typeId) const
+   {
+      UTIL_THROW("Unrecognized parameter name");
+      return 0.0;
+   }
+
+   /*
    * Return name of instantiated class, with no spaces in template.
    */
    template <class BareBond, class BarePair>
    std::string CompositeBond<BareBond, BarePair>::className() const
    {  return className_; }
   
-   /**
+
+   /*
    * Throws exception if called.
    */  
    template <class BareBond, class BarePair>
    double CompositeBond<BareBond, BarePair>::randomBondLength(Random* randomPtr, double beta, int typeId) const
-   {  UTIL_THROW("Unimplemented function"); }
+   {  
+      UTIL_THROW("Unimplemented function"); 
+      return 0.0; // To avoid compiler warnings.
+   }
 
 }
 #endif

@@ -55,11 +55,6 @@ namespace Inter
       void setNBondType(int nBondType);
 
       /**
-      * Returns bond stiffness
-      */
-      double stiffness(unsigned int bondType) const;
-      
-      /**
       * Read bond interaction parameters from input stream.
       *
       * Format:
@@ -105,6 +100,28 @@ namespace Inter
       */
       double randomBondLength(Random *random, double beta, int type) const;
    
+      /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name   parameter name
+      * \param typeId bond type index 
+      * \param value  new value of parameter
+      */
+      void set(std::string name, int typeId, double value);
+
+      /**
+      * Returns bond stiffness
+      */
+      double stiffness(unsigned int bondType) const;
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param typeId bond type index 1
+      */
+      double get(std::string name, int typeId) const;
+
       /**
       * Return name string "HarmonicL0Bond" for this evaluator class.
       */

@@ -157,10 +157,67 @@ public:
       TEST_ASSERT(eq(pairPotential.sigma(1, 1), 1.0));
       TEST_ASSERT(eq(pairPotential.sigma(0, 1), 1.05));
       TEST_ASSERT(eq(pairPotential.sigma(1, 0), 1.05));
-      
 
    }
 
+   void testModify() {
+      printMethod(TEST_FUNC);
+
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 0), 1.0));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 1), 2.0));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 0), 2.0));
+      TEST_ASSERT(eq(pairPotential.sigma(0, 0), 1.0));
+      TEST_ASSERT(eq(pairPotential.sigma(1, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.sigma(0, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.sigma(1, 0), 1.0));
+
+      pairPotential.modify("epsilon", 0, 1, 1.3);
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 0), 1.0));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 1), 1.3));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 0), 1.3));
+      
+      pairPotential.modify("epsilon", 0, 0, 1.1);
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 0), 1.1));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 1), 1.3));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 0), 1.3));
+      TEST_ASSERT(eq(pairPotential.sigma(0, 0), 1.0));
+      TEST_ASSERT(eq(pairPotential.sigma(1, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.sigma(0, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.sigma(1, 0), 1.0));
+      
+      pairPotential.modify("epsilon", 0, 1, 1.05);
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 0), 1.1));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 1), 1.05));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 0), 1.05));
+      TEST_ASSERT(eq(pairPotential.sigma(0, 0), 1.0));
+      TEST_ASSERT(eq(pairPotential.sigma(1, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.sigma(0, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.sigma(1, 0), 1.0));
+
+      pairPotential.modify("sigma", 0, 1, 1.05);
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 0), 1.1));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 1), 1.05));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 0), 1.05));
+      TEST_ASSERT(eq(pairPotential.sigma(0, 0), 1.0));
+      TEST_ASSERT(eq(pairPotential.sigma(1, 1), 1.0));
+      TEST_ASSERT(eq(pairPotential.sigma(0, 1), 1.05));
+      TEST_ASSERT(eq(pairPotential.sigma(1, 0), 1.05));
+
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 0), pairPotential.get("epsilon", 0, 0)));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 1), pairPotential.get("epsilon", 1, 1)));
+      TEST_ASSERT(eq(pairPotential.epsilon(1, 0), pairPotential.get("epsilon", 1, 0)));
+      TEST_ASSERT(eq(pairPotential.epsilon(0, 1), pairPotential.get("epsilon", 0, 1)));
+      TEST_ASSERT(eq(pairPotential.sigma(0, 0), pairPotential.get("sigma", 0, 0)));
+      TEST_ASSERT(eq(pairPotential.sigma(1, 1), pairPotential.get("sigma", 1, 1)));
+      TEST_ASSERT(eq(pairPotential.sigma(1, 0), pairPotential.get("sigma", 1, 0)));
+      TEST_ASSERT(eq(pairPotential.sigma(0, 1), pairPotential.get("sigma", 0, 1)));
+
+   }
 };
 
 TEST_BEGIN(LJPairTest)
@@ -169,6 +226,7 @@ TEST_ADD(LJPairTest, testWrite)
 TEST_ADD(LJPairTest, testEnergy1)
 TEST_ADD(LJPairTest, testForceOverR)
 TEST_ADD(LJPairTest, testGetSet)
+TEST_ADD(LJPairTest, testModify)
 TEST_END(LJPairTest)
 
 

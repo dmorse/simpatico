@@ -324,11 +324,10 @@ namespace Util
    template <typename Data>
    std::string Manager<Data>::className(int i) const
    {
-      if (i < size_) {
-         return names_[i];
-      } else {
-         UTIL_THROW("Access null name\n");
+      if (i >= size_) {
+         UTIL_THROW("Invalid array index\n");
       }
+      return names_[i];
    }
 
    /*

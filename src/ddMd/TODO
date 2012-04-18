@@ -10,13 +10,6 @@ Clean-up
 Performance Issue:
 ------------------
 
-- PackGroups: Add back references from atoms to groups,
-  so that groups can be added as atoms are exchanged.
-
-- InitSendArray: Consider initializing ghost send arrays
-  during initial construction of plan. Add rank for owner?
-  Then add to sendArray as soon as arrives on owner.
-
 - Building PairList: Consider use of micro-cell indices
   in CellList to allow faster rejection during PairList.
 

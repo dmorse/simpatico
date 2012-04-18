@@ -81,6 +81,25 @@ namespace McMd
              const;
 
       /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name   parameter name
+      * \param type   bond type index 
+      * \param value  new value of parameter
+      */
+      void set(std::string name, int type, double value)
+      {   interactionPtr_->set(name, type, value); }
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param type bond type index 1
+      */
+      double get(std::string name, int type)
+      {   return interactionPtr_->get(name, type); }
+
+      /**
       * Return pair interaction class name (e.g., "HarmonicBond").
       */
       virtual std::string interactionClassName() const;

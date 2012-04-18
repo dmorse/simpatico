@@ -41,7 +41,6 @@ namespace Inter
 
       /// \name Mutators
 
-
       /**
       * Read epsilon and sigma, initialize other variables.
       *
@@ -67,14 +66,22 @@ namespace Inter
       */
       void setEpsilon(int i, int j, double epsilon);     
 
- 
+      /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      atom type index 1
+      * \param j      atom type index 2
+      * \param value  new value of parameter
+      */
+      void set(std::string name, int i, int j, double value);
+
       /// \name Accessors
       
       /**
       * Get maximum of pair cutoff distance, for all atom type pairs.
       */
       double maxPairCutoff() const;      
- 
  
       /**
       * Returns interaction energy for a single pair of particles. 
@@ -111,6 +118,15 @@ namespace Inter
       */
       double epsilon(int i, int j) const;      
 
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      atom type index 1
+      * \param j      atom type index 2
+      */
+      double get(std::string name, int i, int j) const;
+ 
       /** 
       * Return name of instantiated class.
       */
@@ -250,7 +266,7 @@ namespace Inter
    */
    template <class BarePair, class LinkPotential>   
    void CompensatedPair<BarePair, LinkPotential>::setEpsilon(int i, int j, double epsilon) 
-   {  pair_.setEpsilon(i,j,epsilon); }   
+   {  pair_.setEpsilon(i, j, epsilon); }   
 
 
    /* 
@@ -287,6 +303,36 @@ namespace Inter
            total -= activity_ * exp(-beta_ * link_.energy(rsq, 0)) * link_.forceOverR(rsq, 0);
         }
         return total;
+   }
+
+   /*
+   * Modify a parameter, identified by a string.
+   */
+   template <class BarePair, class LinkPotential>
+   void CompensatedPair<BarePair, LinkPotential>
+        ::set(std::string name, int i, int j, double value)
+   {
+      if (name == "epsilon") {
+         pair_.setEpsilon(i, j, value);
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   template <class BarePair, class LinkPotential>
+   double CompensatedPair<BarePair, LinkPotential>
+          ::get(std::string name, int i, int j) const
+   {
+      double value;
+      if (name == "epsilon") {
+         value = pair_.epsilon(i, j);
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+      return value;
    }
 
    /* 
