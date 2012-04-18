@@ -386,7 +386,7 @@ namespace DdMd
       int type;
 
       storage().begin(iter);
-      for ( ; !iter.atEnd(); ++iter) {
+      for ( ; iter.notEnd(); ++iter) {
          type = iter->typeId();
          if (needEnergy) {
             energy += 

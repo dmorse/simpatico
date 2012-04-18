@@ -49,16 +49,11 @@ namespace DdMd
       void setup();
 
       /**
-      * Implement one MD step.
-      */
-      void step();
-
-      /**
       * Run a simulation.
       *
-      * \param iStep number of steps
+      * \param nStep number of steps
       */
-      void run(int iStep);
+      void run(int nStep);
 
    private:
 

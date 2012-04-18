@@ -1,0 +1,155 @@
+An atom currently has:
+
+24 24   Position
+ 4 28   typeId
+ 4 32   isGhost
+-----
+24 56   force
+4  60   id
+4  64   plan
+-----
+24 88   velocity
+20 108  Mask
+
+To be added:
+12      shift
+
+5       bonds
+?       angles
+?       dihedrals
+?       impropers
+
+
+Different parts of this are used in different operations.
+
+Inner nonbonded force loop:    Position, typeId, isGhost, force
+
+Inner bonded force loop:       Position, isGhost (to distribute forces and energies) force
+
+Building nonbonded pairlist:   Position, Mask, isGhost(optional?) id (optional)
+
+                               Notes:
+
+                               1) Id is used only to avoid double counting local pairs in 
+                                  same cell. We could also use pointers or local counters.
+
+                               2) isGhost bool could be encoded in pairlist, using cells
+                                  to identify ghosts. Better yet, perhaps return two iterators.
+                                  This would remove all if statements from the inner loop.
+
+
+Communication:                 plan, bonds, angles, dihedrals, everything upon packing and unpacking.
+
+Integration:                   position, force, velocity
+
+
+Notes: 
+
+1) Atom Id is currently used only during exchange, to locate an atom in a storage
+   and to set pointers in associated groups.
+
+2) Id could be used quite heavily, if we break up an array of atoms into many arrays.
+
+3) isGhost is absolutely essential only in inner bonded force loop.
+
+
+Proposal 1 - Many arrays indexed by a common array index
+----------
+
+Atom (64 bytes object):
+    position_          24 bytes
+    typeId_             4 bytes
+    arrayId | isGhost   4 bytes
+    force              24 bytes
+    arrayPtr          4-8 bytes
+
+Mask:        (Only used when building pair list)
+Velocity:    (Only used in integration)
+
+AtomComm:
+id           (Only used in exchange, when adding an atom to a storage)
+plan         (Only used in exchange, when constructing plan, upon receipt)
+shift        (Only used in exchange, upon receipt)
+bonds        (Only used in exchange, to identify bonds to send)
+angles       (Only used in exchange, ...)
+dihedrals    (Only used in exchange, ...)
+
+Combine isGhost with:
+1) typeId  -> required in inner nonbonded force loop (bad, but perhaps not really)
+2) arrayId -> required to access everything else (not quite as bad).
+              Limits range of id to 2 billion (that's fine).
+
+Accessing other elements:
+-------------------------
+
+1) When building pair list, access Mask once per root atom
+2) In integrator, need to get pointer to velocity, once.
+3) In exchanger, need to retrieve pointer to AtomComm (id or plan)
+     - Once per atom, need plan to compute atom nonbonded communication plan.
+     - Once per atom, access plan to initialize ghost send lists.
+     - Twice per exchanged atom, to pack and unpack atom, to make connections.
+     - Twice per exchanged ghost, to pack and unpack atom.
+
+Required changes:
+-----------------
+
+1) Make localId an unsigned 4 byte int, and add bit operation to identify isGhost.
+   Test effect on speed.
+
+   If isGhost is the least signficant bit:
+   -> isGhost = (arrayId_ & 00000001) to get isGhost
+   -> index   = (arrayId_ >> 1)
+
+   If isGhost is the most significant bit:
+   -> isGhost = (arrayId_ & 10000000) to get isGhost
+   -> index   = (arrayId_ << 1)
+
+2) Rebuild Atom and AtomArray, making plan and id separate arrays. Test effect 
+   on speed. Later provide access to AtomContext.
+
+3) Create internal AtomContext, initially as member of Atom. Modify Distributor,
+   Collector and Exchanger code to keep track of bonds_ ids.
+
+4) Redesign CellList to return local neighbors followed by ghost neighbors.
+   Modify PairList to provide separate iterators that allow us to lift tests
+   for isGhost out of inner loop (but how?).
+
+Where is the atomId referenced?
+-------------------------------
+
+During packing and unpacking of atoms and of ghosts:
+communicate/Buffer.cpp:      pack<int>(atom.id());
+communicate/Buffer.cpp:      atom.setId(i);
+
+Stop packing for ghost?
+communicate/Buffer.cpp:      pack<int>(atom.id());
+communicate/Buffer.cpp:      atom.setId(i);
+
+communicate/Exchanger.cpp:   atomPtr->setId(sendPtr->id());
+communicate/Exchanger.cpp:   atomPtr->setId(sendPtr->id());
+
+configIo/ConfigIo.cpp:       file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6)
+neighbor/PairList.cpp:       atom2Id  = atom2Ptr->id();
+neighbor/PairList.cpp:       atom2Id  = atom2Ptr->id();
+
+storage/AtomStorage.cpp:     int atomId = newAtomPtr_->id();
+storage/AtomStorage.cpp:     int atomId = atomPtr->id();
+storage/AtomStorage.cpp:     int atomId = newGhostPtr_->id();
+storage/AtomStorage.cpp:     int atomId = atomPtr->id();
+storage/AtomStorage.cpp:     atomId = atomPtr->id();
+storage/AtomStorage.cpp:     ptr->setId(id);
+storage/AtomStorage.cpp:     atomPtr->setId(-1);
+
+configIo/ConfigIo.cpp:       atomPtr->setId(id);
+
+Unavoidable uses of atom id:
+
+  - When an exchanged atom is received (packing and unpacking, adding to storage).
+  - When a ghost is received (packing and unpacking id, adding to storage).
+  - When a group is received ? No, uses storage array index to find the atom.
+
+Removable uses:
+
+  - Nullifying of id in storage (let it contain junk)
+  - Use of atom ids in pairlist (use pointers for atoms in same cell)
+  - Packing of ids with ghosts ? (Actually, needed for bonded interactions)

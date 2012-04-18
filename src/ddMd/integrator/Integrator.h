@@ -47,11 +47,6 @@ namespace DdMd
       virtual void setup() = 0;
 
       /**
-      * Implement one step.
-      */
-      virtual void step() = 0;
-
-      /**
       * Run a simulation of iStep steps.
       */
       virtual void run(int nStep) = 0;
@@ -63,14 +58,18 @@ namespace DdMd
 
    protected:
 
-      enum TimeId {DIAGNOSTIC, INTEGRATE1, EXCHANGE, NEIGHBOR, UPDATE, 
-                   FORCE, INTEGRATE2, NTime};
+      /// Timestamps for loop timing.
+      enum TimeId {DIAGNOSTIC, INTEGRATE1, CHECK, EXCHANGE, NEIGHBOR, 
+                   UPDATE, FORCE, INTEGRATE2, NTime};
 
+      /// Return the timer by reference.
       DdTimer& timer()
       { return timer_; }
 
+      /// Total number of steps
       int   nStep_;
 
+      /// Current step number.
       int   iStep_;
 
    private:

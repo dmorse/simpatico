@@ -6,7 +6,8 @@ and hybrid MD/MC simulations of polymeric and molecular liquids.
 <h3> Table of contents: </h3>
 <ul>
  <li> \subpage about_page "About Simpatico"
- <li> \subpage features_page "Features"
+ <li> \subpage capabilities_page "Capabilities"
+ <li> \subpage contributors_page "Contributors"
  <li> \subpage guide_page "User Guide"
    <ul>
    <li> \subpage compile_page     "Compilation" </li>

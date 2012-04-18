@@ -31,7 +31,8 @@ namespace DdMd
       pairCapacity_(0),
       domainPtr_(0),
       boundaryPtr_(0),
-      storagePtr_(0)
+      storagePtr_(0),
+      timer_(PairPotential::NTime)
    {} 
 
    /*
@@ -43,7 +44,8 @@ namespace DdMd
       pairCapacity_(0),
       domainPtr_(&simulation.domain()),
       boundaryPtr_(&simulation.boundary()),
-      storagePtr_(&simulation.atomStorage())
+      storagePtr_(&simulation.atomStorage()),
+      timer_(PairPotential::NTime)
    {}
 
    /*
@@ -106,27 +108,31 @@ namespace DdMd
    */
    void PairPotential::findNeighbors(const Vector& lower, const Vector& upper)
    {
+      stamp(PairPotential::START);
+
       cellList_.makeGrid(lower, upper, cutoff_);
       cellList_.clear();
      
       // Add all atoms to the cell list. 
       AtomIterator atomIter;
       storage().begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      for ( ; atomIter.notEnd(); ++atomIter) {
          cellList_.placeAtom(*atomIter);
       }
 
       // Add all ghosts to the cell list. 
       GhostIterator ghostIter;
       storage().begin(ghostIter);
-      for ( ; !ghostIter.atEnd(); ++ghostIter) {
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
          cellList_.placeAtom(*ghostIter);
       }
 
       cellList_.build();
       assert(cellList_.isValid());
+      stamp(PairPotential::BUILD_CELL_LIST);
 
       pairList_.build(cellList_);
+      stamp(PairPotential::BUILD_PAIR_LIST);
    }
 
    /*
@@ -152,7 +158,7 @@ namespace DdMd
    {
       AtomIterator atomIter;
       storage().begin(atomIter); 
-      for( ; !atomIter.atEnd(); ++atomIter){
+      for( ; atomIter.notEnd(); ++atomIter){
          atomIter->force().zero();
       }
    }

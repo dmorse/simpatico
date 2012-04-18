@@ -559,7 +559,7 @@ namespace DdMd
       int i;
 
       atomStorage_.begin(atomIter); 
-      for( ; !atomIter.atEnd(); ++atomIter){
+      for( ; atomIter.notEnd(); ++atomIter){
          for (i = 0; i < Dimension; ++i) {
             atomIter->velocity()[i] = scale*random_.gaussian();
          }
@@ -573,7 +573,7 @@ namespace DdMd
    {
       AtomIterator atomIter;
       atomStorage_.begin(atomIter); 
-      for( ; !atomIter.atEnd(); ++atomIter){
+      for( ; atomIter.notEnd(); ++atomIter){
          atomIter->force().zero();
       }
    }
@@ -721,6 +721,8 @@ namespace DdMd
    double Simulation::kineticEnergy()
    {  return kineticEnergy_; }
 
+   #ifdef UTIL_MPI
+
    /*
    * Compute all potential energy contributions.
    */
@@ -744,6 +746,34 @@ namespace DdMd
       }
       #endif
    }
+
+   #else
+
+   /*
+   * Compute all potential energy contributions.
+   */
+   void Simulation::computePotentialEnergies() 
+   {
+      pairPotential().computeEnergy();
+      bondPotential().computeEnergy();
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         anglePotential().computeEnergy();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         dihedralPotential().computeEnergy();
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      if (hasExternal_) {
+         externalPotential().computeEnergy();
+      }
+      #endif
+   }
+
+   #endif
 
    /*
    * Compute all potential energy contributions.
@@ -1015,6 +1045,8 @@ namespace DdMd
       #endif
       bool hasGhosts = bool(nGhostAll);
 
+      #ifdef UTIL_MPI
+
       bondStorage_.isValid(atomStorage_, domain_.communicator(), hasGhosts);
       #ifdef INTER_ANGLE
       if (nAngleType_) {
@@ -1027,6 +1059,22 @@ namespace DdMd
                                   hasGhosts);
       }
       #endif
+
+      #else
+
+      bondStorage_.isValid(atomStorage_, hasGhosts);
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         angleStorage_.isValid(atomStorage_, hasGhosts);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         dihedralStorage_.isValid(atomStorage_, hasGhosts);
+      }
+      #endif
+
+      #endif // ifdef UTIL_MPI
 
       return true; 
    }

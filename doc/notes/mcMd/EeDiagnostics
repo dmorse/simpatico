@@ -1,0 +1,70 @@
+
+Diagnostics in EeEnsemble may need a new
+base class that keeps track of the stateId,
+and that allows for an MPI reduce at the
+end of a simulation.
+
+class EeDiagnostic : public Diagnostic
+{
+
+   void setStateId(int size);
+
+   int stateId() const;
+
+   #endif UTIL_MPI
+   virtual bool isReplicated() const
+   { return false}
+
+   virtual void reduce(MPI::Intracomm& comm)
+   {}
+   #endif
+
+}
+
+
+/**
+* Replicated diagnostic for extended ensemble.
+*
+* Create copies of diagnostic by creating an array with a
+* default constructor, and using an assignment operator to 
+* make clones.
+*/
+template <class BaseDiagnostic, class SystemType>
+class ReplicatedDiagnostic : public Diagnostic
+{
+
+   // Construct (allocates array using default constructor).
+   ReplicatedDiagnotic(int nState);
+
+   // Construct array.
+   ReplicatedDiagnotic(BaseDiagnostic& diagnostic, int nState);
+
+   // Read first array, assign same state to others.
+   virtual void readParam(std::istream& in);
+
+   // Apply setup to all elements of array.
+   void setup();
+
+   // Call whenever state changes.
+   virtual void setStateId()
+   { stateId_ = stateId; }
+
+   // Call sample of approriate element.
+   void sample();
+
+   #ifdef UTIL_MPI
+   virtual bool isReplicated() const
+   { return true; }
+
+   void reduce(MPI::Intracomm& comm);
+   #endif
+
+private:
+
+   DArray<BaseDiagnostic> diagnostics_;
+
+   int stateId_;
+
+   int nState_;
+
+}

@@ -23,13 +23,17 @@ namespace DdMd
    /*
    * Constructor.
    */
-   AtomDistributor::AtomDistributor() 
-    : sendArrays_(),
+   AtomDistributor::AtomDistributor() :
+      #ifdef UTIL_MPI 
+      sendArrays_(),
       sendSizes_(),
+      #endif
       boundaryPtr_(0),
       domainPtr_(0),
       storagePtr_(0),
+      #ifdef UTIL_MPI
       bufferPtr_(0),
+      #endif
       newPtr_(0),
       cacheCapacity_(0),
       sendCapacity_(0),
@@ -53,7 +57,9 @@ namespace DdMd
       domainPtr_ = &domain;
       boundaryPtr_ = &boundary;
       storagePtr_ = &storage;
+      #ifdef UTIL_MPI
       bufferPtr_ = &buffer;
+      #endif
    }
 
    /*
@@ -85,23 +91,26 @@ namespace DdMd
    void AtomDistributor::allocate()
    {
       // Preconditions
-      if (bufferPtr_ == 0) {
+      if (domainPtr_ == 0) {
          UTIL_THROW("AtomDistributor not initialized");
-      }
-      if (!bufferPtr_->isInitialized()) {
-         UTIL_THROW("Buffer not initialized");
       }
       if (!domainPtr_->isInitialized()) {
          UTIL_THROW("Domain is not initialized");
       }
+      #ifdef UTIL_MPI
+      if (!bufferPtr_->isInitialized()) {
+         UTIL_THROW("Buffer not initialized");
+      }
+      #endif
 
       int gridSize  = domainPtr_->grid().size();
       int rank      = domainPtr_->gridRank();
+      #ifdef UTIL_MPI
       sendCapacity_ = bufferPtr_->atomCapacity();
+      #endif
 
       // If master processor
       if (rank == 0) {
-         int i, j;
 
          // Default cacheCapacity_ = (# processors)*(max atoms per send)
          if (cacheCapacity_ <= 0) {
@@ -113,26 +122,27 @@ namespace DdMd
          reservoir_.allocate(cacheCapacity_);
 
          // Push all atoms onto the reservoir stack, in reverse order.
-         for (i = cacheCapacity_ - 1; i >= 0; --i) {
+         for (int i = cacheCapacity_ - 1; i >= 0; --i) {
             reservoir_.push(cache_[i]);
          }
 
+         #ifdef UTIL_MPI
          // Allocate memory for sendArrays_ matrix, and nullify all elements.
          sendArrays_.allocate(gridSize, sendCapacity_);
          sendSizes_.allocate(gridSize);
-         for (i = 0; i < gridSize; ++i) {
+         for (int i = 0; i < gridSize; ++i) {
             sendSizes_[i] = 0; 
-            for (j = 0; j < sendCapacity_; ++j) {
+            for (int j = 0; j < sendCapacity_; ++j) {
                sendArrays_(i, j) = 0;      
             }
          }
+         #endif
 
       }
 
    }
 
    #ifdef UTIL_MPI
-
    /*
    * Initialize the send buffer.
    */ 
@@ -141,7 +151,6 @@ namespace DdMd
       bufferPtr_->clearSendBuffer(); 
       bufferPtr_->beginSendBlock(Buffer::ATOM); 
    }
-
    #endif
 
    /*
@@ -153,9 +162,11 @@ namespace DdMd
       if (domainPtr_ == 0) {
          UTIL_THROW("AtomDistributor is not initialized");
       }
+      #ifdef UTIL_MPI
       if (bufferPtr_ == 0) {
          UTIL_THROW("AtomDistributor is not initialized");
       }
+      #endif
       if (cacheCapacity_ <= 0) {
          UTIL_THROW("AtomDistributor is not allocated");
       }
@@ -203,7 +214,6 @@ namespace DdMd
       // Return pointer to new atom.
       newPtr_ = &reservoir_.pop();
       return newPtr_;
-
    }
 
    /*
@@ -234,13 +244,25 @@ namespace DdMd
       // Shift position to lie within boundary.
       boundaryPtr_->shift(newPtr_->position());
 
+      #ifdef UTIL_MPI
       // Identify rank of processor that owns this atom.
       int rank = domainPtr_->ownerRank(newPtr_->position());
+      #else
+      int rank = 0;
+      #endif
 
       // If not owned by the master, queue this atom for sending.
-      if (rank != 0) {
+      if (rank == 0) {
 
-         #ifdef UTIL_MPI
+         Atom* ptr = storagePtr_->newAtomPtr();
+         *ptr = *newPtr_;
+         storagePtr_->addNewAtom();
+
+         reservoir_.push(*newPtr_); 
+
+      }
+      #ifdef UTIL_MPI
+      else { // if rank !=0
 
          // Add newPtr_ to array of pointers for processor rank.
          assert(sendSizes_[rank] < sendCapacity_);
@@ -279,20 +301,8 @@ namespace DdMd
             bufferPtr_->beginSendBlock(Buffer::ATOM);
          }
 
-         #else 
-
-         UTIL_THROW("Atom not owned by master but UTIL_MPI not defined");
-
-         #endif
-
-      } else { // rank == 0
-
-         Atom* ptr = storagePtr_->newAtomPtr();
-         *ptr = *newPtr_;
-         storagePtr_->addNewAtom();
-
-         reservoir_.push(*newPtr_); 
       }
+      #endif
 
       // Nullify newPtr_ to release for reuse.
       newPtr_ = 0;
@@ -302,6 +312,7 @@ namespace DdMd
 
    }
 
+   #ifdef UTIL_MPI
    /*
    * Send any atoms that have not be sent previously.
    *
@@ -309,8 +320,6 @@ namespace DdMd
    */
    void AtomDistributor::send()
    {
-
-      #ifdef UTIL_MPI
 
       // Preconditions
       if (domainPtr_ == 0) {
@@ -377,10 +386,10 @@ namespace DdMd
 
       nCachedTotal_ = 0;
       nSentTotal_   = 0;
-      #endif
-
    }
+   #endif
 
+   #ifdef UTIL_MPI
    /*
    * Receive all atoms sent by the master processor.
    *
@@ -388,7 +397,6 @@ namespace DdMd
    */ 
    void AtomDistributor::receive()
    {
-      #ifdef UTIL_MPI
       Atom* ptr;                 // Ptr to atom for storage
       int   rank;                // Rank of this processor
       const int source = 0;      // Rank of source processor
@@ -426,8 +434,8 @@ namespace DdMd
 
       // Compute total number of atoms on all processors.
       storagePtr_->computeNAtomTotal(domainPtr_->communicator());
-      #endif
    }
+   #endif
 
 }
 #endif

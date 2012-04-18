@@ -218,11 +218,8 @@ namespace Util
    */
    template <typename Data>
    void DPArray<Data>::clear()
-   { 
+   {
       assert(ptrs_ != 0);
-      for (int i = 0; i < capacity_; ++i) {
-         ptrs_[i] = 0;
-      }
       size_ = 0;
    }
 

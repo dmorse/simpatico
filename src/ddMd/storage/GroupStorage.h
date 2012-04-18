@@ -593,7 +593,7 @@ namespace DdMd
       // Count local groups
       GroupIterator<N> iter;
       j = 0;
-      for (begin(iter); !iter.atEnd(); ++iter) {
+      for (begin(iter); iter.notEnd(); ++iter) {
          ++j;
          ptr = find(iter->id());
          if (ptr == 0)

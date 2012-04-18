@@ -382,7 +382,7 @@ namespace DdMd
       int   type, isLocal0, isLocal1, isLocal2, isLocal3;
 
       storagePtr_->begin(iter);
-      for ( ; !iter.atEnd(); ++iter) {
+      for ( ; iter.notEnd(); ++iter) {
          type = iter->typeId();
          atom0Ptr = iter->atomPtr(0);
          atom1Ptr = iter->atomPtr(1);

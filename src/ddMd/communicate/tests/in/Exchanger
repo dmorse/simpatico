@@ -8,8 +8,6 @@ Buffer{
 ConfigIo{
   atomCacheCapacity      50
   bondCacheCapacity      50
-  angleCacheCapacity     50
-  dihedralCacheCapacity  50
 }
 Random{
    seed 8762018674
@@ -31,3 +29,6 @@ DihedralStorage{
   capacity             40
   totalCapacity       150
 }
+
+  angleCacheCapacity     50
+  dihedralCacheCapacity  50

@@ -1,120 +1,22 @@
+How is an EeMcSimulation different from an McSimulation?
+Can one be a subclass of the other?
+
 Class EeMcSimatulation : public Simulation {
 
-   Has a Perturbation
-   Has an ExtendedEnsemble
+   Has a Perturbation (required)
 
-}
+   Has an ExtendedEnsemble (required)
 
-ExpandedEnsemble{
- 
-   /**
-   * Set free energy estimate used in weighting.
-   */ 
-   void setF(state Id);
+   Has an EeDiagnosticManager
 
-   /*
-   * Estimate of free energy used in weighting.
-   */
-   double f(state Id);
+   Has some sort of method to periodically
+       update free energy estimates.
 
-   /*
-   * Ratio of statistical weights W(final)/W(initial).
-   */
-   double weightRatio(stateId init, stateId final);
-
-   /*
-   * Record a visit to specified.
-   */
-   void markVisit(int stateId);
-
-   /*
-   * Number of visits.
-   */
-   long totalVisits();
-
-   /*
-   * Number of visits to one state.
-   */
-   long totalVisits(int stateId);
-
-   /*
-   * Clear histogram of visits.
-   */
-   void clearVisits();
-
-   void equilibrate(Array<double>& energies);
-
-private:
-
-   DArray<double> f_;
-   DArray<long>   visits_;
-   long           total_
-
-}
-
-class EeDiagnostic : public Diagnostic
-{
-
-   virtual void setStateId(int size)
-   {}
-
-   #endif UTIL_MPI
-   virtual bool isReplicated() const
-   { return false}
-
-   virtual void reduce(MPI::Intracomm& comm)
-   {}
-   #endif
-
-}
-
-class EeDiagnosticManager {
-}
-
-/**
-* Expanded diagnostic.
-*
-* Create copies of diagnostic by creating an array with a
-* default constructor, and using an assignment operator to 
-* make clones.
-*/
-template <class BaseDiagnostic, class SystemType>
-class ReplicatedDiagnostic : public Diagnostic
-{
-
-   // Construct (allocates array using default constructor).
-   ReplicatedDiagnotic(int nState);
-
-   // Construct array.
-   ReplicatedDiagnotic(BaseDiagnostic& diagnostic, int nState);
-
-   // Read first array, assign same state to others.
-   virtual void readParam(std::istream& in);
-
-   // Apply setup to all elements of array.
-   void setup();
-
-   // Call whenever state changes.
-   virtual void setStateId()
-   { stateId_ = stateId; }
-
-   // Call sample of approriate element.
-   void sample();
-
-   #ifdef UTIL_MPI
-   virtual bool isReplicated() const
-   { return true; }
-
-   void reduce(MPI::Intracomm& comm);
-   #endif
-
-private:
-
-   DArray<BaseDiagnostic> diagnostics_;
-
-   int stateId_;
-
-   int nState_;
+   Has a simulate or run method that is based
+       on the idea of "sweeps", in which free
+       energy estimates are updated after each
+       sweep
+   
 
 }
 

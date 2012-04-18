@@ -134,11 +134,11 @@ public:
       GhostIterator ghostIter;
 
       storage.begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      for ( ; atomIter.notEnd(); ++atomIter) {
          atomIter->force().zero();
       }
       storage.begin(ghostIter);
-      for ( ; !ghostIter.atEnd(); ++ghostIter) {
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
          ghostIter->force().zero();
       }
 
@@ -150,14 +150,14 @@ public:
 
       AtomIterator  atomIter;
       storage.begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      for ( ; atomIter.notEnd(); ++atomIter) {
          std::cout << atomIter->force() << "  " << 0 << std::endl;
       }
 
       #if 0
       GhostIterator ghostIter;
       storage.begin(ghostIter);
-      for ( ; !ghostIter.atEnd(); ++ghostIter) {
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
          std::cout << ghostIter->force() << "  " << 1 << std::endl;
       }
       #endif
@@ -171,11 +171,11 @@ public:
       GhostIterator ghostIter;
 
       storage.begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      for ( ; atomIter.notEnd(); ++atomIter) {
          force_[i] = atomIter->force();
       }
       storage.begin(ghostIter);
-      for ( ; !ghostIter.atEnd(); ++ghostIter) {
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
          force_[i] = ghostIter->force();
       }
 
@@ -193,7 +193,7 @@ public:
       AtomIterator iter;
       std::cout << std::endl;
       storage.begin(iter);
-      for ( ; !iter.atEnd(); ++iter) {
+      for ( ; iter.notEnd(); ++iter) {
          std::cout << iter->position() << std::endl;
       }      
 
@@ -202,7 +202,7 @@ public:
 
       std::cout << std::endl;
       storage.begin(iter);
-      for ( ; !iter.atEnd(); ++iter) {
+      for ( ; iter.notEnd(); ++iter) {
          std::cout << iter->force() << std::endl;
       }      
    }

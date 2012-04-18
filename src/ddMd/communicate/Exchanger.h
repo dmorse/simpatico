@@ -10,9 +10,12 @@
 
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Group.h>
+#include <ddMd/util/DdTimer.h>
 #include <util/boundary/Boundary.h>
 #include <util/containers/FMatrix.h>
 #include <util/containers/APArray.h>
+
+#define DDMD_EXCHANGER_TIMER
 
 namespace DdMd
 {
@@ -103,6 +106,23 @@ namespace DdMd
       */
       void update();
 
+      /**
+      * Return internal timer by reference
+      */
+      DdTimer& timer()
+      {  return timer_; }
+
+      /**
+      * Enumeration of time stamp identifiers.
+      */
+      enum timeId {START, ATOM_PLAN, INIT_GROUP_PLAN, CLEAR_GHOSTS,
+                   PACK_ATOMS, PACK_GROUPS, REMOVE_ATOMS, REMOVE_GROUPS,
+                   SEND_RECV_ATOMS, UNPACK_ATOMS, UNPACK_GROUPS, 
+                   FINISH_GROUP_PLAN, INIT_SEND_ARRAYS, PACK_GHOSTS, 
+                   SEND_RECV_GHOSTS, UNPACK_GHOSTS, FIND_GROUP_GHOSTS, 
+                   PACK_UPDATE, SEND_RECV_UPDATE, UNPACK_UPDATE, 
+                   LOCAL_UPDATE, NTime};
+
    private:
 
       /**
@@ -129,6 +149,14 @@ namespace DdMd
       */
       FMatrix< APArray<Atom>, Dimension, 2>  recvArray_;
 
+      #ifdef UTIL_MPI
+      /**
+      * Array of pointers to atoms that have been packed and sent.
+      * 
+      * Used to mark missing atoms for subsequent removal.
+      */
+      APArray<Atom> sentAtoms_;
+
       /**
       * Array of pointers to empty bonds on this processor.
       * 
@@ -150,6 +178,8 @@ namespace DdMd
       APArray< Group<4> > emptyDihedrals_;
       #endif
 
+      #endif // UTIL_MPI
+
       /// Processor boundaries (minima j=0, maxima j=1)
       FMatrix< double, Dimension, 2>  bound_;
 
@@ -158,6 +188,9 @@ namespace DdMd
 
       /// Outer boundaries of nonbonded slabs
       FMatrix< double, Dimension, 2>  outer_;
+
+      /// Elements are 1 if grid dimension > 1, 0 otherwise.
+      IntVector multiProcessorDirection_;
 
       /// Pointer to associated const Boundary object.
       const Boundary*  boundaryPtr_;
@@ -176,7 +209,7 @@ namespace DdMd
       GroupStorage<3>* angleStoragePtr_;
       #endif
 
-      #ifdef INTER_ANGLE 
+      #ifdef INTER_DIHEDRAL
       /// Pointer to associated dihedral storage object.
       GroupStorage<4>* dihedralStoragePtr_;
       #endif
@@ -186,6 +219,9 @@ namespace DdMd
 
       /// Cutoff for pair list (potential cutoff + skin).
       double pairCutoff_;
+
+      /// Timer
+      DdTimer timer_;
 
       /**
       * Exchange ghosts.
@@ -200,6 +236,7 @@ namespace DdMd
       template <int N>
       void initGroupGhostPlan(GroupStorage<N>& storage);
 
+      #ifdef UTIL_MPI
       template <int N>
       void packGroups(int i, int j, GroupStorage<N>& storage, 
                                     APArray< Group<N> >& emptyGroups);
@@ -210,12 +247,19 @@ namespace DdMd
 
       template <int N>
       void unpackGroups(GroupStorage<N>& storage);
+      #endif
 
       template <int N>
       void finishGroupGhostPlan(GroupStorage<N>& storage);
 
       template <int N>
       void findGroupGhosts(GroupStorage<N>& storage);
+
+      void stamp(unsigned int timeId) {
+         #ifdef DDMD_EXCHANGER_TIMER
+         timer_.stamp(timeId);
+         #endif
+      }
 
    };
 

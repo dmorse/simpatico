@@ -123,7 +123,7 @@ namespace DdMd
       Atom*     atomPtr;
       if (source_ == 0) {
          while (!isComplete_) {
-            if (!iterator_.atEnd()) {
+            if (iterator_.notEnd()) {
                groupPtr = iterator_.get();
                ++iterator_;
                atomPtr = groupPtr->atomPtr(0);

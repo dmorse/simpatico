@@ -64,13 +64,13 @@
       Perturbation(int nParameter);
       virtual ~Perturbation();
 
-      void    setNState(int nState);                           <- new
-      void    setStateId(int stateId);                         <- new
-      void    readParameters(std::istream& in);
+      void setNState(int nState);                           <- new
+      void setStateId(int stateId);                         <- new
+      void readParameters(std::istream& in);
 
-      int     nParameter() const;
-      int     nState() const;                               <- new
-      int     stateId() const;                              <- new
+      int nParameter() const;
+      int nState() const;                               <- new
+      int stateId() const;                              <- new
 
       void    setParameter(DArray<double> parameter);
       double  parameter(int parameterId, int stateId);
@@ -94,3 +94,10 @@
    };
 
 }
+
+Question: Do we need both a stateId_ and a current value for parameter_?
+Couldn't we just take: parameter_[j] = parameters_(stateId, j)
+
+If so, we would remove the setParameter() method, and just have a 
+setStateId(int ) method.
+

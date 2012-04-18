@@ -141,7 +141,7 @@ public:
       AtomIterator atomIter;
       for(int i = 0; i < 3; i++) {
          atomStorage.begin(atomIter);
-         for ( ; !atomIter.atEnd(); ++atomIter) {
+         for ( ; atomIter.notEnd(); ++atomIter) {
             atomIter->position()[i] += random.uniform(min, max);
          }
       }
@@ -163,7 +163,7 @@ public:
       // Check that all atoms are within the processor domain.
       AtomIterator  atomIter;
       atomStorage.begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      for ( ; atomIter.notEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
@@ -195,7 +195,7 @@ public:
 
       // Check that all atoms are within the processor domain.
       atomStorage.begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      for ( ; atomIter.notEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
@@ -240,13 +240,13 @@ public:
 
       // Check that all local atoms are within the processor domain.
       atomStorage.begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      for ( ; atomIter.notEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
       // Check that all ghosts are outside the processor domain.
       atomStorage.begin(ghostIter);
-      for ( ; !ghostIter.atEnd(); ++ghostIter) {
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
       }
 
@@ -323,13 +323,13 @@ public:
 
       // Check that all atoms are within the processor domain.
       atomStorage.begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      for ( ; atomIter.notEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
       // Check that all ghosts are outside the processor domain.
       atomStorage.begin(ghostIter);
-      for ( ; !ghostIter.atEnd(); ++ghostIter) {
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
       }
 
@@ -368,13 +368,13 @@ public:
 
       // Assert that all atoms are within the processor domain.
       atomStorage.begin(atomIter);
-      for ( ; !atomIter.atEnd(); ++atomIter) {
+      for ( ; atomIter.notEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
       // Assert that all ghosts are outside the processor domain.
       atomStorage.begin(ghostIter);
-      for ( ; !ghostIter.atEnd(); ++ghostIter) {
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
       }
 
@@ -400,13 +400,13 @@ public:
 
          // Check that all atoms are within the processor domain.
          atomStorage.begin(atomIter);
-         for ( ; !atomIter.atEnd(); ++atomIter) {
+         for ( ; atomIter.notEnd(); ++atomIter) {
             TEST_ASSERT(domain.isInDomain(atomIter->position()));
          }
 
          // Check that all ghosts are outside the processor domain.
          atomStorage.begin(ghostIter);
-         for ( ; !ghostIter.atEnd(); ++ghostIter) {
+         for ( ; ghostIter.notEnd(); ++ghostIter) {
             TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
          }
 
