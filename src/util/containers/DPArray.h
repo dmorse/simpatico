@@ -221,9 +221,6 @@ namespace Util
    {
       assert(ptrs_ != 0);
       size_ = 0;
-      //for (int i = 0; i < capacity_; ++i) {
-      //   ptrs_[i] = 0;
-      //}
    }
 
 
