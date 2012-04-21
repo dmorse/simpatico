@@ -58,7 +58,7 @@ namespace McMd
       /**
       * Initialize before a run.
       */
-      virtual void initialize();
+      virtual void setup();
 
       /**
       * Generate, attempt and accept or reject a move.

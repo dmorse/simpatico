@@ -78,7 +78,7 @@ namespace McMd
       *
       * The default implementation is an empty function.
       */
-      virtual void initialize()
+      virtual void setup()
       {}
 
       /**

@@ -93,7 +93,7 @@ namespace McMd
    /*
    * Clear accumulators.
    */
-   void BlockRadiusGyration::initialize() 
+   void BlockRadiusGyration::setup() 
    {  
       if (!isInitialized_) UTIL_THROW("Object is not initialized");
 

@@ -56,7 +56,7 @@ namespace McMd
    /*
    * Set actual number of molecules and clear accumulator.
    */
-   void McStressAutoCorr::initialize()
+   void McStressAutoCorr::setup()
    {
       accumulator_.clear();
    }

@@ -46,7 +46,7 @@ namespace McMd
       /** 
       * Clear accumulator.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /** 
       * Evaluate volume and lengths of simulation cell, 

@@ -65,7 +65,7 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void EndtoEndXYZ::initialize() 
+   void EndtoEndXYZ::setup() 
    {  accumulatorX_.clear(); 
       accumulatorY_.clear();
       accumulatorZ_.clear();

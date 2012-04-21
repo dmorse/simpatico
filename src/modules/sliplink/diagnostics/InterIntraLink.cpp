@@ -47,7 +47,7 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void InterIntraLink::initialize() 
+   void InterIntraLink::setup() 
    {  accumulatorInter_.clear(); 
       accumulatorIntra_.clear();
    }

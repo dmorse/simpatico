@@ -44,7 +44,7 @@ namespace McMd
       /** 
       * Clear accumulator.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /* 
       * Evaluate external energy per particle, and add to ensemble. 

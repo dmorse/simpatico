@@ -63,7 +63,7 @@ namespace McMd
       void setProbability(double probability);
 
       /**
-      * Initialization at the beginning of each simulation run.
+      * Setup before the beginning of each simulation run.
       *
       * This method zeros the statistical accumulators nAttempt
       * and nAccept. Derived class implementations should 
@@ -71,7 +71,7 @@ namespace McMd
       * the beginning of each simulation run within a sequence
       * of several such runs.
       */
-      virtual void initialize();
+      virtual void setup();
 
       /**
       * Generate, attempt, and accept or reject a Monte Carlo move.

@@ -51,7 +51,7 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void MdKineticEnergyAverage::initialize() 
+   void MdKineticEnergyAverage::setup() 
    {  accumulator_.clear(); }
  
    /* 

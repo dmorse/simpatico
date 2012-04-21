@@ -51,7 +51,7 @@ namespace McMd
       CfbRebridgeBase::readParam(in);
 
       // Initialize tables for spring constants and normalizations.
-      initialize();
+      setup();
 
       // Use dynamic_cast to check that the Species is actually a Linear species
       Linear* chainPtr;

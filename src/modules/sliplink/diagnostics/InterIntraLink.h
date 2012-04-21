@@ -65,7 +65,7 @@ namespace McMd
       /** 
       * Clear accumulator.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /**
       * Evaluate inter and intramolecule number of links, add to ensemble.

@@ -40,7 +40,7 @@ namespace McMd
       virtual ~McIntraBondStressAutoCorr();
   
       using IntraBondStressAutoCorr<McSystem>::readParam;
-      using IntraBondStressAutoCorr<McSystem>::initialize;
+      using IntraBondStressAutoCorr<McSystem>::setup;
       using IntraBondStressAutoCorr<McSystem>::sample;
       using IntraBondStressAutoCorr<McSystem>::output;
 

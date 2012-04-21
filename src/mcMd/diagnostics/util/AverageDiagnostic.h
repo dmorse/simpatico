@@ -41,7 +41,7 @@ namespace McMd
       /**
       * Clear accumulators.
       */
-      virtual void initialize();
+      virtual void setup();
 
       /**
       * Output results at end of simulation.
@@ -97,7 +97,7 @@ namespace McMd
    * Clear accumulators.
    */
    template <class SystemType>
-   void AverageDiagnostic<SystemType>::initialize()
+   void AverageDiagnostic<SystemType>::setup()
    {  accumulator_.clear(); }
 
    /*

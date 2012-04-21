@@ -59,7 +59,7 @@ namespace McMd
 
    
    /// Empty.
-   void LinkMSD::initialize() 
+   void LinkMSD::setup() 
    {    
      system().linkMaster().Notifier<LinkAddEvent>::registerObserver(*this);
      system().linkMaster().Notifier<LinkRemoveEvent>::registerObserver(*this); 

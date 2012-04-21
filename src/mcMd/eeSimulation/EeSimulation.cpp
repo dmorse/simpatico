@@ -10,7 +10,7 @@
 
 #include <util/global.h>
 
-#include "McSimulation.h"
+#include "EeSimulation.h"
 #include "McDiagnosticManager.h"
 #include <mcMd/simulation/serialize.h>
 #include <mcMd/diagnostics/Diagnostic.h>
@@ -49,7 +49,7 @@ namespace McMd
    /*
    * Constructor.
    */
-   McSimulation::McSimulation(MPI::Intracomm& communicator)
+   EeSimulation::EeSimulation(MPI::Intracomm& communicator)
     : Simulation(communicator),
       system_(),
       mcMoveManagerPtr_(0),
@@ -58,7 +58,7 @@ namespace McMd
       isInitialized_(false),
       isRestarting_(false)
    {
-      // Set connections between this McSimulation and child McSystem
+      // Set connections between this EeSimulation and child McSystem
       system().setId(0);
       system().setSimulation(*this);
       system().setFileMaster(fileMaster());
@@ -75,7 +75,7 @@ namespace McMd
    /*
    * Constructor.
    */
-   McSimulation::McSimulation()
+   EeSimulation::EeSimulation()
     : Simulation(),
       system_(),
       mcMoveManagerPtr_(0),
@@ -84,7 +84,7 @@ namespace McMd
       isInitialized_(false),
       isRestarting_(false)
    {
-      // Set connections between this McSimulation and child McSystem
+      // Set connections between this EeSimulation and child McSystem
       system().setId(0);
       system().setSimulation(*this);
       system().setFileMaster(fileMaster());
@@ -100,7 +100,7 @@ namespace McMd
    /*
    * Destructor.
    */
-   McSimulation::~McSimulation()
+   EeSimulation::~EeSimulation()
    {
       delete mcMoveManagerPtr_;
       delete mcDiagnosticManagerPtr_;
@@ -109,12 +109,12 @@ namespace McMd
    /*
    * Read parameters from file.
    */
-   void McSimulation::readParam(std::istream &in)
+   void EeSimulation::readParam(std::istream &in)
    {
       // Record identity of parameter file
       paramFilePtr_ = &in;
 
-      readBegin(in,"McSimulation");
+      readBegin(in,"EeSimulation");
 
       // Read all species, diagnostics, random number seed
       Simulation::readParam(in);
@@ -137,16 +137,16 @@ namespace McMd
    /*
    * Read default parameter file.
    */
-   void McSimulation::readParam()
+   void EeSimulation::readParam()
    {  readParam(fileMaster().paramFile()); }
 
    /*
    * Read and execute commands from a specified command file.
    */
-   void McSimulation::readCommands(std::istream &in)
+   void EeSimulation::readCommands(std::istream &in)
    {
       if (!isInitialized_) {
-         UTIL_THROW("McSimulation is not initialized");
+         UTIL_THROW("EeSimulation is not initialized");
       }
 
       std::string    command;
@@ -297,16 +297,16 @@ namespace McMd
    /*
    * Read and execute commands from the default command file.
    */
-   void McSimulation::readCommands()
+   void EeSimulation::readCommands()
    {  readCommands(fileMaster().commandFile()); }
 
    /*
    * Run this MC simulation.
    */
-   void McSimulation::simulate(int endStep, bool isContinuation)
+   void EeSimulation::simulate(int endStep, bool isContinuation)
    {
       if (!isInitialized_) {
-         UTIL_THROW("McSimulation not initialized");
+         UTIL_THROW("EeSimulation not initialized");
       }
 
       if (isContinuation) {
@@ -431,7 +431,7 @@ namespace McMd
    /*
    * Read and analyze a sequence of configuration files.
    */
-   void McSimulation::analyze(int min, int max, std::string dumpPrefix)
+   void EeSimulation::analyze(int min, int max, std::string dumpPrefix)
    {
       // Preconditions
       if (min < 0)    UTIL_THROW("min < 0");
@@ -497,7 +497,7 @@ namespace McMd
       iStep_ = 0;
    }
 
-   void McSimulation::writeRestart(const std::string& filename)
+   void EeSimulation::writeRestart(const std::string& filename)
    {
       std::ofstream out;
       fileMaster().openParamOFile(filename, ".prm", out);
@@ -515,7 +515,7 @@ namespace McMd
       out.close();
    }
 
-   void McSimulation::readRestart(const std::string& filename)
+   void EeSimulation::readRestart(const std::string& filename)
    {
       isRestarting_ = true;
       std::ifstream in;
@@ -547,13 +547,13 @@ namespace McMd
    /*
    * Get the McMove factory.
    */
-   Factory<McMove>& McSimulation::mcMoveFactory()
+   Factory<McMove>& EeSimulation::mcMoveFactory()
    {  return mcMoveManagerPtr_->factory(); }
 
    /*
    * Check validity: return true if valid, or throw Exception.
    */
-   bool McSimulation::isValid() const
+   bool EeSimulation::isValid() const
    {
       Simulation::isValid();
       system().isValid();

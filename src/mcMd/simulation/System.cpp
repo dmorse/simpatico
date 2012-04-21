@@ -589,7 +589,7 @@ namespace McMd
           if (hasReplicaMove_) {
              replicaMovePtr_ = new ReplicaMove(*this);
              readParamComposite(in, *replicaMovePtr_);
-             replicaMovePtr_->initialize();
+             // replicaMovePtr_->initialize();
           }
           createdReplicaMove_ = true;
       } else {

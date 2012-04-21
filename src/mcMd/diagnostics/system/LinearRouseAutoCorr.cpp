@@ -87,7 +87,7 @@ namespace McMd
    /*
    * Evaluate end-to-end vectors of all chains, add to ensemble.
    */
-   void LinearRouseAutoCorr::initialize() 
+   void LinearRouseAutoCorr::setup() 
    { 
 
       if (!isInitialized_) {

@@ -52,7 +52,7 @@ namespace McMd
       /** 
       * Empty.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /**
       * Evaluate and output x-velocity profile as a function of z.

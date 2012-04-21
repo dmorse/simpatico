@@ -52,7 +52,7 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void MdPotentialEnergyAverage::initialize() 
+   void MdPotentialEnergyAverage::setup() 
    {  accumulator_.clear(); }
  
    /* 

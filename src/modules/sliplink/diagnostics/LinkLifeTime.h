@@ -52,7 +52,7 @@ namespace McMd
       /** 
       * Register Observer.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /** 
       * Don't do anything.

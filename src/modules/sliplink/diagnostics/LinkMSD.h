@@ -58,7 +58,7 @@ namespace McMd
       /** 
       * Empty.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /**
       * Evaluate.

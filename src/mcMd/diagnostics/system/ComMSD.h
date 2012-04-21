@@ -49,7 +49,7 @@ namespace McMd
       /** 
       * Determine number of molecules and allocate memory.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /** 
       * Evaluate center of mass displacement of all chains and add to ensemble.

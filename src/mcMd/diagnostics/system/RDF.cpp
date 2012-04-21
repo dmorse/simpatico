@@ -48,7 +48,7 @@ namespace McMd
    }
 
    /// Add particle pairs to RDF histogram.
-   void RDF::initialize() 
+   void RDF::setup() 
    { 
       if (!isInitialized_) {
          UTIL_THROW("Object not initialized");

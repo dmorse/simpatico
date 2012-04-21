@@ -48,7 +48,7 @@ namespace McMd
    /*
    * Trivial implementation - initializes counters.
    */
-   void McMove::initialize()
+   void McMove::setup()
    { 
       nAttempt_ = 0;
       nAccept_  = 0;

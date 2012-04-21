@@ -64,7 +64,7 @@ namespace McMd
    /*
    * Setup immediately before simulation.
    */
-   void StructureFactorP::initialize() 
+   void StructureFactorP::setup() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Object not initialized");

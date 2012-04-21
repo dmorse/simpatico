@@ -124,7 +124,7 @@ namespace McMd
       isInitialized_ = true;
    }
 
-   void StructureFactorGrid::initialize() 
+   void StructureFactorGrid::setup() 
    {}
 
    void StructureFactorGrid::output() 

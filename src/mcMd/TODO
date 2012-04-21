@@ -1,14 +1,13 @@
 New features:
 -------------
 
+- Write and test NptNhIntegrator subclass.
+
 - Check restart system for parallel jobs.
 
 - Write and test HarmonicAngle class.
 
 - Write and test MultiHarmonicDihedral class.
-
-- Write and test NptNhIntegrator subclass.
-
 
 Testing
 -------
@@ -16,6 +15,51 @@ Testing
 - Add capacity for regression tests, using comparison to old files.
 
 - More thorough tests of dihedral potentials.
+
+New Commands
+------------
+
+- Add SET_... commands to command script parser.  Start with :
+  SET_PAIR  (format defined by class)
+  SET_BOND  (format defined by class), etc.
+
+- Allow diagnostics to be enabled, disabled, and cleared (reset accumulators) 
+  from the command script. Add commands:
+
+  ENABLE_DIAGNOSTICS 
+  DISABLE_DIAGNOSTICS 
+  CLEAR_DIAGNOSTICS 
+
+  to enable, disable, or clear diagnostic. Add ability to enable or
+  disable specific diagnostics later.
+
+Python File Tools:
+------------------
+
+- Tools for manipulating files and directories. We need scripts to:
+
+  * Create standard directory structures for serial or parallel jobs.
+  * Copy config and param files into a newly created directory structure.
+  * Copy and move files to continue a run.
+
+Interface changes:
+------------------
+
+- Modify preprocessor macros so that the default version includes 
+  angles and dihedrals, which can be excluded by defining 
+  MCMD_NO_ANGLE and MCMD_NO_DIHEDRAL.
+
+- Method names changes (possible):
+
+  * If possible, remove moleculeId() and molecule(speciesId, moleculeId)
+    methods of System.
+
+  * Change iterator.atEnd() to iterator.isEnd()
+
+- Source file names and locations:
+
+  * Separate directories for observer, string, error, timer, misc
+
 
 SubSystem base classes:
 -----------------------
@@ -32,58 +76,6 @@ SubSystem base classes:
 - Derive MdIntegrator from a protected MdSubSystem.
 
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
-
-
-New Commands
-------------
-
-- Allow diagnostics to be enabled, disabled, and cleared (reset accumulators) 
-  from the command script. Add commands:
-
-  ENABLE_DIAGNOSTICS 
-  DISABLE_DIAGNOSTICS 
-  CLEAR_DIAGNOSTICS 
-  ENABLE_DIAGNOSTIC  i
-  DISABLE_DIAGNOSTIC i
-
-  to enable or disable a specific diagnostic, and to enable, disable, or
-  clear all of the diagnostics. 
-
-- Add SET_... commands to command script parser.  Start with :
-  SET_OUTPUT_PREFIX 
-  SET_INPUT_PREFIX
-
-- Add MODIFY_... commands to command script parser.  Start with :
-  MODIFY_PAIR  (format defined by class)
-  MODIFY_BOND  (format defined by class), etc.
-
-Python File Tools:
-------------------
-
-- Tools for manipulating files and directories. We need scripts to:
-
-  * Create standard directory structures for serial or parallel jobs.
-  * Copy config and param files into a newly created directory structure.
-  * Copy and move files to continue a run.
-
-
-Interface changes:
-------------------
-
-- Modify preprocessor macros so that the default version includes 
-  angles and dihedrals, which can be excluded by defining 
-  MCMD_NOANGLE and MCMD_NODIHEDRAL.
-
-- Method names changes (possible):
-
-  * If possible, remove moleculeId() and molecule(speciesId, moleculeId)
-    methods of System.
-
-  * Change iterator.atEnd() to iterator.isEnd()
-
-- Source file names and locations:
-
-  * Separate directories for observer, string, error, timer, misc
 
 Design Changes
 --------------

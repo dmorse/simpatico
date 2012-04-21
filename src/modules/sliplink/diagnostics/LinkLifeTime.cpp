@@ -40,7 +40,7 @@ namespace McMd
 
    
    /// Register Observer.
-   void LinkLifeTime::initialize() 
+   void LinkLifeTime::setup() 
    {  
      system().linkMaster().Notifier<LinkAddEvent>::registerObserver(*this);
      system().linkMaster().Notifier<LinkRemoveEvent>::registerObserver(*this); 

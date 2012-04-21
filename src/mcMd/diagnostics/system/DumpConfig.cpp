@@ -42,7 +42,7 @@ namespace McMd
    /*
    * Read interval and outputFileName. 
    */
-   void DumpConfig::initialize() 
+   void DumpConfig::setup() 
    {  nSample_ = 0; }
 
    /*

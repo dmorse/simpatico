@@ -47,7 +47,7 @@ namespace McMd
       /** 
       * Clear accumulator.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /** 
       * Add particle pairs to BondLengthDist histogram.

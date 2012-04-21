@@ -94,10 +94,10 @@ namespace McMd
    /*
    * Initialize all moves just prior to a run.
    */
-   void McMoveManager::initialize()
+   void McMoveManager::setup()
    {
       for (int iMove = 0; iMove < size(); ++iMove) {
-         (*this)[iMove].initialize();
+         (*this)[iMove].setup();
       }
    }
 

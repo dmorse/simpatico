@@ -61,7 +61,7 @@ namespace McMd
    /*
    * Initialize at beginning of simulation.
    */
-   void BoundaryAverage::initialize() 
+   void BoundaryAverage::setup() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Error: object is not initialized");

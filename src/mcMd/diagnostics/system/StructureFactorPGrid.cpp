@@ -123,7 +123,7 @@ namespace McMd
       this->isInitialized_ = true;
    }
 
-   void StructureFactorPGrid::initialize() 
+   void StructureFactorPGrid::setup() 
    {}
 
    void StructureFactorPGrid::output() 

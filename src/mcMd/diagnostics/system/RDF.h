@@ -60,7 +60,7 @@ namespace McMd
       /** 
       * Setup before a simulation (clear accumulator).
       */
-      virtual void initialize();
+      virtual void setup();
 
       /** 
       * Add particle pairs to RDF histogram.

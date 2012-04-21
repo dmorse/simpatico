@@ -44,7 +44,7 @@ namespace McMd
 
    
    /// Clear accumulator.   
-   void SSChainDist::initialize() 
+   void SSChainDist::setup() 
    {  accumulator_.clear(); }
  
    /// Add atoms attached to links to SSChainDist histogram.
