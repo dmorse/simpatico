@@ -11,7 +11,7 @@
 #include <util/global.h>
 
 #include "EeSimulation.h"
-#include "McDiagnosticManager.h"
+#include <mcMd/mcSimulation/McDiagnosticManager.h>
 #include <mcMd/simulation/serialize.h>
 #include <mcMd/diagnostics/Diagnostic.h>
 #include <mcMd/mcMoves/McMoveManager.h>
