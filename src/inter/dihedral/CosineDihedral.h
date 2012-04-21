@@ -69,6 +69,15 @@ namespace Inter
       void readParam(std::istream &in);
 
       /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name  parameter name
+      * \param type  dihedral type index 
+      * \param value new value of parameter
+      */
+      void set(std::string name, int type, double value);
+
+      /**
       * Returns potential energy for one dihedral.
       *
       *     1   3    4
@@ -99,6 +108,15 @@ namespace Inter
       */
       void force(const Vector& R1, const Vector& R2, const Vector& R3,
                  Vector& F1, Vector& F2, Vector& F3, int type) const;
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name  parameter name
+      * \param type  dihedral type index
+      * \return parameter value
+      */
+      double get(std::string name, int type) const;
 
       /**
       * Return name string "CosineDihedral" for this evaluator class.

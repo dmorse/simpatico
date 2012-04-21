@@ -79,12 +79,28 @@ namespace McMd
       void force(const Vector& R1, const Vector& R2, const Vector& R3,
                  Vector& F1, Vector& F2, Vector& F3, int type) const = 0;
 
-      #if 0
+      /**
+      * Modify an interaction parameter, identified by a string.
+      *
+      * \param name  parameter name
+      * \param type  dihedral type index 
+      * \param value new value of parameter
+      */
+      virtual void set(std::string name, int type, double value) = 0;
+
+      /**
+      * Get an interaction parameter value, identified by a string.
+      *
+      * \param  name  parameter name
+      * \param  type  dihedral type index
+      * \return value of parameter
+      */
+      virtual double get(std::string name, int type) const = 0;
+
       /**
       * Return name of pair interaction class (e.g., "HarmonicDihedral").
       */
       virtual std::string interactionClassName() const = 0;
-      #endif
 
       //@}
       /// \name System energy, force, and stress

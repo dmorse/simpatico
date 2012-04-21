@@ -108,11 +108,11 @@ namespace Inter
       /**
       * Modify a parameter, identified by a string.
       *
-      * \param name   parameter name
-      * \param typeId bond type index 
-      * \param value  new value of parameter
+      * \param name  parameter name
+      * \param type  bond type index 
+      * \param value new value of parameter
       */
-      void set(std::string name, int typeId, double value);
+      void set(std::string name, int type, double value);
 
       /**
       * Returns bond stiffness
@@ -127,10 +127,10 @@ namespace Inter
       /**
       * Get a parameter value, identified by a string.
       *
-      * \param name   parameter name
-      * \param typeId bond type index 1
+      * \param name parameter name
+      * \param type bond type index 1
       */
-      double get(std::string name, int typeId) const;
+      double get(std::string name, int type) const;
 
       /**
       * Return name string "HarmonicBond" for this evaluator class.

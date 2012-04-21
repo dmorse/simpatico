@@ -96,7 +96,7 @@ namespace McMd
       * \param name   parameter name
       * \param type bond type index 1
       */
-      double get(std::string name, int type)
+      double get(std::string name, int type) const
       {   return interactionPtr_->get(name, type); }
 
       /**

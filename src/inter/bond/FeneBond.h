@@ -80,7 +80,7 @@ namespace Inter
       * Modify a parameter, identified by a string.
       *
       * \param name   parameter name
-      * \param type bond type index 
+      * \param type   bond type index 
       * \param value  new value of parameter
       */
       void set(std::string name, int type, double value);

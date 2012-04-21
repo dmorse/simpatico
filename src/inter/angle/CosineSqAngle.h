@@ -69,6 +69,15 @@ namespace Inter
       void readParam(std::istream &in);
 
       /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name  parameter name
+      * \param type  angle type index 
+      * \param value new value of parameter
+      */
+      void set(std::string name, int type, double value);
+
+      /**
       * Returns potential energy for one angle.
       *
       * \param cosTheta  cosine of the bend angle.
@@ -77,8 +86,9 @@ namespace Inter
       double energy(double cosTheta, int type) const;
  
       /**
-      * Returns forces along two bonds at the angle, for use in MD and stress
-      * calculation.
+      * Compute angle forces.
+      *
+      * Computes forces F1 and F2 along the two bonds in the angle.
       *
       * \param R1     bond vector from atom 1 to 2.
       * \param R2     bond vector from atom 2 to 3.
@@ -87,7 +97,16 @@ namespace Inter
       * \param type   type of angle.
       */
       void force(const Vector& R1, const Vector& R2,
-                      Vector& F1, Vector& F2, int type) const;
+                       Vector& F1, Vector& F2, int type) const;
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param  name  parameter name
+      * \param  type  angle type index
+      * \return parameter value
+      */
+      double get(std::string name, int type) const;
 
       /**
       * Return name string "CosineSqAngle" for this evaluator class.

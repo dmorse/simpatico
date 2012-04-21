@@ -100,7 +100,7 @@ namespace McMd
       * \param name parameter name
       * \param type bond type index 1
       */
-      virtual double get(std::string name, int type) = 0;
+      virtual double get(std::string name, int type) const = 0;
 
       /**
       * Return name of pair interaction class (e.g., "HarmonicBond").

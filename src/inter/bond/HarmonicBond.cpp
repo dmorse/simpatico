@@ -128,13 +128,13 @@ namespace Inter
    /*
    * Modify a parameter, identified by a string.
    */
-   void HarmonicBond::set(std::string name, int typeId, double value)
+   void HarmonicBond::set(std::string name, int type, double value)
    {
       if (name == "kappa") {
-         kappa_[typeId] = value;
+         kappa_[type] = value;
       } else
       if (name == "length") {
-         length_[typeId] = value;
+         length_[type] = value;
       } else {
          UTIL_THROW("Unrecognized parameter name");
       }
@@ -143,14 +143,14 @@ namespace Inter
    /*
    * Get a parameter value, identified by a string.
    */
-   double HarmonicBond::get(std::string name, int typeId) const
+   double HarmonicBond::get(std::string name, int type) const
    {
       double value;
       if (name == "kappa") {
-         value = kappa_[typeId];
+         value = kappa_[type];
       } else
       if (name == "length") {
-         value = length_[typeId];
+         value = length_[type];
       } else {
          UTIL_THROW("Unrecognized parameter name");
       }

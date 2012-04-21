@@ -43,7 +43,7 @@ namespace McMd
       virtual ~AnglePotential()
       {}
 
-      /// \name Angle interaction interface
+      /// \name Angle Interaction interface
       //@{
 
       /**
@@ -67,12 +67,27 @@ namespace McMd
       virtual void force(const Vector& R1, const Vector& R2,
                          Vector& F1, Vector& F2, int type) const = 0;
 
-      #if 0 
+      /**
+      * Modify an interaction parameter, identified by a string.
+      *
+      * \param name  parameter name
+      * \param type  angle type index 
+      * \param value new value of parameter
+      */
+      virtual void set(std::string name, int type, double value) = 0;
+
+      /**
+      * Get an interaction parameter value, identified by a string.
+      *
+      * \param name parameter name
+      * \param type angle type index 1
+      */
+      virtual double get(std::string name, int type) const = 0;
+
       /**
       * Return name of pair interaction class (e.g., "HarmonicAngle").
       */
       virtual std::string interactionClassName() const = 0;
-      #endif
 
       //@}
       /// \name System energy, force, and stress.
