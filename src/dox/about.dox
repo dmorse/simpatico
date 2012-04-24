@@ -4,8 +4,8 @@ Simpatico is a library of C++ classes and programs for Monte
 Carlo and molecular dynamics simulations of molecular and
 polymer liquids. It contains the following main programs:
 
-- Closely related programs for Monte Carlo (MC) and molecular 
-  dynamics (MD) simulations on a single processor.
+- Programs for Monte Carlo (MC) and molecular dynamics (MD) 
+  simulations on a single processor.
 
 - A program for parallel MD simulations, using a domain
   decomposition algorithm.
