@@ -1,46 +1,40 @@
 Clean-up
 --------
 
-- Rename implementation files *.tpp for
-  Group_Distributor and Group_Collector
+- Rename implementation files *.tpp for Group_Distributor and Group_Collector
 
-- Move DdMd::DdTimer to Util::Timer, use
-  in both namespaces.
-
-Performance Issue:
+Cell List:
 ------------------
 
-- Building PairList: Consider use of micro-cell indices
-  in CellList to allow faster rejection during PairList.
+- Make AtomTag struct a public class, add an IntVector
+  of micro-cell indices to CellTag, to allow fast rejection
+  of most pairs.
 
-Stress and NPT ensemble:
-------------------------
+- Modify neighbors method to pass pack a list of AtomTag objects,
+  rather than an array of pointers. Provide a CellList isInPair 
+  method to decide if a particular pair is within the cutoff.
 
-- Add needStress to Simulation, and as argument to addForces() method 
-  of potentials. 
+- Consider how neighbor list would be built if we used Newton's
+  law (to evaluate each force only once).
+
+
+Constant Pressure:
+------------------
+
+- Add vFlag and eFlag to Simulation, and as an argument to addForce() 
+  method of each potential.
 
 - Port NPH integrator.
 
 - Write a reversible NPT integrator.
 
 Buffer:
-------
+-------
 
 - Add memory statistics for Buffer.
 
-- Figure out how to make pack/unpack methods the atom 
-  class, so that they can use private information.
-
-CellList and PairList
----------------------
-
-- Consider how neighbor list would be built if we used Newton's
-  law (evaluate each force only once).
-
-- Consider providing separate pair iterators for ghost neighbors
-  and local neighbors.
-
-- Consider introducing micro-cell indices in CellList (noted above).
+- Figure out how to make pack/unpack methods of the atom class, so 
+  that they can use private information.
 
 Single Processor Operation
 --------------------------
@@ -49,10 +43,22 @@ Single Processor Operation
   work ifndef UTIL_MPI, continue with other classes, to enable 
   single processor operation with no MPI.
 
+
+Hybrid MD
+----------
+
+- Add lists of old positions to AtomStorage.
+
+- Add arriving_ and departing_ pointer arrays to storage classes.
+
+- Add methods to commit or revert the state of each storage.
+
+
 Atom Class Implementation
 --------------------------
 
 - see doc/notes/ddMd/Atom file
+
 
 Configuration File IO
 --------------------------
@@ -65,7 +71,12 @@ Configuration File IO
 Reverse Communication
 ---------------------
 
-- Write variant with Newton's law and reverse communication.
+- Write and test reverse_update() method.
+
+- Add bool reverseCommunicate_ accessor and setter to Simulation.
+
+- Modify potentials, Exchanger, etc. to accomodate reverseCommunicate.
+
 
 Files
 -----
@@ -93,6 +104,5 @@ Testing
 
 - Test conservation of energy with dihedrals.
 
-- Improve unit testing of CellList (add atoms and ghosts, small boxes),
-  Integrator (check that number of interacting pairs doesn't change),
-  System (test with very small system, 1x1x1 grid).
+- Improve testing of PairList - provide method to count number of pairs
+  that are currently within the cutoff, and check that it doesn't change.
