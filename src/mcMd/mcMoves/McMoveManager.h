@@ -52,7 +52,7 @@ namespace McMd
       *
       * This method calls the initialize method for every McMove.
       */
-      void initialize();
+      void setup();
 
       /**
       * Choose an McMove at random, using specified probabilities.

@@ -282,7 +282,7 @@ namespace McMd
                      << iStep_ << std::endl;
       } else {
          iStep_ = 0;
-         diagnosticManager().initialize();
+         diagnosticManager().setup();
          system_.mdIntegrator().setup();
       }
       int beginStep = iStep_;
@@ -408,7 +408,7 @@ namespace McMd
          #endif
 
          // Initialize diagnostics (taking in molecular information).
-         if (iStep_ == min) diagnosticManager().initialize();
+         if (iStep_ == min) diagnosticManager().setup();
 
          // Sample property values
          diagnosticManager().sample(iStep_);
@@ -498,7 +498,7 @@ namespace McMd
          #endif
 
          // Initialize diagnostics (taking in molecular information).
-         if (iStep_ == min) diagnosticManager().initialize();
+         if (iStep_ == min) diagnosticManager().setup();
 
          // Sample property values only for iStep >= min
          if (iStep_ >= min) diagnosticManager().sample(iStep_);

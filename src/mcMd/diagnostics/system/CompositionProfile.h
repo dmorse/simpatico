@@ -65,7 +65,7 @@ namespace McMd
       /** 
       * Clear accumulators.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /**
       * Add particle positions to histogram.

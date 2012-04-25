@@ -56,7 +56,7 @@ namespace McMd
    /*
    * Setup before simulation run.
    */
-   void DpdMove::initialize()
+   void DpdMove::setup()
    {  mdSystemPtr_->mdIntegrator().setup(); }
 
    /*

@@ -81,7 +81,7 @@ namespace McMd
    /*
    * Allocate memory, initialize accumulator, and initialize eigenvector.
    */
-   void RingRouseAutoCorr::initialize() 
+   void RingRouseAutoCorr::setup() 
    { 
 
       // Get nMolecule for this species and nAtom per molecule

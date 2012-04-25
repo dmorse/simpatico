@@ -79,7 +79,7 @@ namespace McMd
    /*
    * Set number of molecules and initialize state.
    */
-   void ComMSD::initialize() 
+   void ComMSD::setup() 
    {
 
       // Precondition: Confirm that readParam was called

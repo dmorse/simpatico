@@ -46,7 +46,7 @@ namespace McMd
       /** 
       * Determine number of molecules and allocate memory.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /** 
       * Evaluate end-to-end vectors of all chains, add to ensemble.

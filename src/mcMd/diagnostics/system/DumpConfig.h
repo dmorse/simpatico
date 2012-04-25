@@ -59,7 +59,7 @@ namespace McMd
       /**
       * Clear nSample counter.
       */
-      virtual void initialize();
+      virtual void setup();
   
       /**
       * Dump configuration to file

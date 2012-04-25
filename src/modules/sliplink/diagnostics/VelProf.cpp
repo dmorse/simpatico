@@ -65,7 +65,7 @@ namespace McMd
 
    
    /// Empty.
-   void VelProf::initialize() 
+   void VelProf::setup() 
    {       
      nSpec_ = system().simulation().nSpecies(); 
      slabWidth_ = system().boundary().lengths()[2]/(double)nSlabs_;

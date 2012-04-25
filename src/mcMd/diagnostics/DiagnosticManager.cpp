@@ -45,10 +45,10 @@ namespace McMd
    /*
    * Call initialize method of each diagnostic.
    */
-   void DiagnosticManager::initialize() 
+   void DiagnosticManager::setup() 
    {
       for (int i = 0; i < size(); ++i) {
-         (*this)[i].initialize();
+         (*this)[i].setup();
       }
    }
  

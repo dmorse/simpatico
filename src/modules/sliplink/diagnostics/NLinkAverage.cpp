@@ -42,7 +42,7 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void NLinkAverage::initialize() 
+   void NLinkAverage::setup() 
    {  accumulator_.clear(); }
  
    /// Evaluate end-to-end vectors of all chains.

@@ -58,7 +58,7 @@ namespace McMd
    /*
    * Clear accumulators.
    */
-   void CompositionProfile::initialize() 
+   void CompositionProfile::setup() 
    {  
       int bin;
       double min, max;

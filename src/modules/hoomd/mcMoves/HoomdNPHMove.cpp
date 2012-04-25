@@ -138,11 +138,12 @@ namespace McMd
 
       // set hoomd simulation box
       BoxDim box;
-      lengths_ = system().boundary().lengths();
-      box.xlo = -lengths_[0]/Scalar(2.); box.xhi = lengths_[0]/Scalar(2.);
-      box.ylo = -lengths_[1]/Scalar(2.); box.yhi = lengths_[1]/Scalar(2.);
-      box.zlo = -lengths_[2]/Scalar(2.); box.zhi = lengths_[2]/Scalar(2.);
-      particleDataSPtr_->setBox(box);
+      Boundary boundary = system().boundary();
+      lengths_ = boundary.lengths();
+      const Scalar3 boundaryLengths = make_scalar3(lengths_[0], lengths_[1], lengths_[2]);
+      box.setL(boundaryLengths);
+
+      particleDataSPtr_->setGlobalBoxL(boundaryLengths);
       {
       // copy atom coordinates into hoomd
       ArrayHandle<Scalar4> h_pos(particleDataSPtr_->getPositions(), access_location::host, access_mode::readwrite);
@@ -236,9 +237,9 @@ namespace McMd
 
       Vector newLengths;
       box = particleDataSPtr_->getBox();
-      newLengths[0] = box.xhi - box.xlo;
-      newLengths[1] = box.yhi - box.ylo;
-      newLengths[2] = box.zhi - box.zlo;
+      newLengths[0] = (box.getL()).x;
+      newLengths[1] = (box.getL()).y;
+      newLengths[2] = (box.getL()).z;
       volume = newLengths[0]*newLengths[1]*newLengths[2];
  
 

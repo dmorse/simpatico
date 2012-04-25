@@ -1,6 +1,9 @@
 #ifndef PARAM_TEST_CLASSES_H
 #define PARAM_TEST_CLASSES_H
 
+#include <util/space/Vector.h>
+#include <util/space/IntVector.h>
+#include <util/containers/Matrix.h>
 
    // Base class for Factory and Manager. 
    class A : public ParamComposite 

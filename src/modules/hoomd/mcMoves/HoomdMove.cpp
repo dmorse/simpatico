@@ -288,9 +288,11 @@ namespace McMd
       BoxDim box;
       Boundary boundary = system().boundary();
       lengths_ = boundary.lengths();
-      box.xlo = -lengths_[0]/2.; box.xhi = lengths_[0]/2.;
-      box.ylo = -lengths_[1]/2.; box.yhi = lengths_[1]/2.;
-      box.zlo = -lengths_[2]/2.; box.zhi = lengths_[2]/2.;
+      const Scalar3 boundaryLengths = make_scalar3(lengths_[0], lengths_[1], lengths_[2]);
+      box.setL(boundaryLengths);
+      //box.xlo = -lengths_[0]/2.; box.xhi = lengths_[0]/2.;
+      //box.ylo = -lengths_[1]/2.; box.yhi = lengths_[1]/2.;
+      //box.zlo = -lengths_[2]/2.; box.zhi = lengths_[2]/2.;
 
       // create HOOMD system
       systemDefinitionSPtr_ =

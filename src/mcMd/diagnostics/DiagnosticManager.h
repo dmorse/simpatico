@@ -52,7 +52,7 @@ namespace McMd
       * simulation loop, after an initial configuration is
       * known.
       */
-      void initialize();
+      void setup();
  
       /**
       * Call sample method of each Diagnostic.

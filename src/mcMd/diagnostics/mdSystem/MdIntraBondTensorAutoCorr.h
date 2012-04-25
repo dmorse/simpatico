@@ -40,7 +40,7 @@ namespace McMd
       virtual ~MdIntraBondTensorAutoCorr();
   
       using IntraBondTensorAutoCorr<MdSystem>::readParam;
-      using IntraBondTensorAutoCorr<MdSystem>::initialize;
+      using IntraBondTensorAutoCorr<MdSystem>::setup;
       using IntraBondTensorAutoCorr<MdSystem>::sample;
       using IntraBondTensorAutoCorr<MdSystem>::output;
 

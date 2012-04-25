@@ -44,7 +44,7 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void LinkLengthDist::initialize() 
+   void LinkLengthDist::setup() 
    {  accumulator_.clear(); }
  
    /// Add particle pairs to RDF histogram.

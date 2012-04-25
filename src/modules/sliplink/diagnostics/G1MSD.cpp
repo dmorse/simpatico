@@ -63,7 +63,7 @@ namespace McMd
    /*
    * Allocate arrays.
    */
-   void G1MSD::initialize() 
+   void G1MSD::setup() 
    {
  
       // Get number of molecules of this species in the System. 

@@ -106,7 +106,7 @@ namespace McMd
 
    }
     
-   void BennettsMethod::initialize()
+   void BennettsMethod::setup()
    { 
       communicatorPtr_->Bcast((void*)&shifts_[0], nProcs_, MPI::DOUBLE, 0);
       if ( myId_ != 0 ) {

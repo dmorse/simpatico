@@ -11,6 +11,7 @@
 #include "LJPair.h"
 
 #include <iostream>
+#include <cstring>
 
 namespace Inter
 {
@@ -219,6 +220,43 @@ namespace Inter
       assert(i >= 0 && i < nAtomType_); 
       assert(j >= 0 && j < nAtomType_); 
       return sigma_[i][j]; 
+   }
+
+   /*
+   * Modify a parameter, identified by a string.
+   */
+   void LJPair::set(std::string name, int i, int j, double value)
+   {
+      if (name == "epsilon") {
+         epsilon_[i][j] = value;
+         epsilon_[j][i] = value;
+      } else
+      if (name == "sigma") {
+         sigma_[i][j] = value;
+         sigma_[j][i] = value;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double LJPair::get(std::string name, int i, int j) const
+   {
+      double value;
+      if (name == "epsilon") {
+         value = epsilon_[i][j];
+      } else
+      if (name == "sigma") {
+         value = sigma_[i][j];
+      } else
+      if (name == "cutoff") {
+         value = cutoff_[i][j];
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+      return value;
    }
 
 } 

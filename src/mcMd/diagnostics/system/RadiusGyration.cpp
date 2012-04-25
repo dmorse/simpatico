@@ -65,7 +65,7 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void RadiusGyration::initialize() 
+   void RadiusGyration::setup() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Object is not initialized");

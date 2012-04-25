@@ -88,7 +88,7 @@ namespace McMd
    * Evaluate end-to-end vectors of all chains, add to ensemble.
    */
    template <class SystemType>
-   void IntraBondTensorAutoCorr<SystemType>::initialize() 
+   void IntraBondTensorAutoCorr<SystemType>::setup() 
    { 
 
       if (!isInitialized_) {

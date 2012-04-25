@@ -80,6 +80,9 @@ namespace McMd
 
       /// Epsilon parameter
       double epsilon_[MaxAtomType][MaxAtomType];
+
+      /// Sigma parameter
+      double sigma_[MaxAtomType][MaxAtomType];
    };
   
 }

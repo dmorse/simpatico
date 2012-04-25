@@ -33,7 +33,7 @@ namespace McMd
       /// Read output file and nStepPerSample.
       virtual void readParam(std::istream& in);
 
-      void initialize();
+      void setup();
  
       /// Create crosslinks and dump configuration to file.
       void sample(long iStep);

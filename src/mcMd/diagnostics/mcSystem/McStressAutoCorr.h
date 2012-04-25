@@ -51,7 +51,7 @@ namespace McMd
       /** 
       * Set number of molecules and clear accumulator.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /** 
       * Evaluate separation vector for all chains, add to ensemble.

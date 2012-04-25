@@ -92,7 +92,7 @@ namespace McMd
    /*
    * Set actual number of molecules and clear accumulator.
    */
-   void IntraPairAutoCorr::initialize()
+   void IntraPairAutoCorr::setup()
    {
       if (!isInitialized_) {
          UTIL_THROW("Object not initialized.");

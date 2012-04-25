@@ -45,7 +45,7 @@ namespace McMd
 
    
    /// Register Observer.
-   void LinkLTPos::initialize() 
+   void LinkLTPos::setup() 
    {  
      system().linkMaster().Notifier<LinkAddEvent>::registerObserver(*this);
      system().linkMaster().Notifier<LinkRemoveEvent>::registerObserver(*this); 

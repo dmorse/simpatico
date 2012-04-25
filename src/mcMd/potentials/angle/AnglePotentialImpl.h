@@ -62,7 +62,7 @@ namespace McMd
       */
       virtual void readParam(std::istream& in);
 
-      /// \name Energy, Force, Stress Interactions
+      /// \name Interactions Interface
       //@{
 
       /**
@@ -86,13 +86,44 @@ namespace McMd
       void force(const Vector& R1, const Vector& R2,
                        Vector& F1, Vector& F2, int type) const;
 
-     
-      #if 0
+      /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name  parameter name
+      * \param type  angle type index 
+      * \param value new value of parameter
+      */
+      void set(std::string name, int type, double value)
+      {   interactionPtr_->set(name, type, value); }
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name  parameter name
+      * \param type  angle type index
+      * \return parameter value
+      */
+      double get(std::string name, int type) const
+      {   return interactionPtr_->get(name, type); }
+
       /**
       * Return pair interaction class name (e.g., "CosineAngle").
       */
       virtual std::string interactionClassName() const;
-      #endif
+
+      /**
+      * Return angle interaction by reference.
+      */
+      Interaction& interaction();
+
+      /**
+      * Return angle interaction by const reference.
+      */
+      const Interaction& interaction() const;
+
+      //@}
+      /// \name System Energy and Force Calculators
+      //@{
 
       /**
       * Calculate the angle energy for one Atom.
@@ -134,16 +165,6 @@ namespace McMd
       virtual void computeStress(Util::Tensor& stress) const;
 
       //@}
-
-      /**
-      * Return angle interaction by reference.
-      */
-      Interaction& interaction();
-
-      /**
-      * Return angle interaction by const reference.
-      */
-      const Interaction& interaction() const;
 
    private:
   
@@ -403,14 +424,12 @@ namespace McMd
    inline const Interaction& AnglePotentialImpl<Interaction>::interaction() const
    { return *interactionPtr_; }
 
-   #if 0
    /*
    * Return angle potential interaction class name.
    */
    template <class Interaction>
    std::string AnglePotentialImpl<Interaction>::interactionClassName() const
    {  return interaction().className(); }
-   #endif
 
 }
 #endif

@@ -99,15 +99,43 @@ namespace McMd
       void force(const Vector& R1, const Vector& R2, const Vector& R3,
                  Vector& F1, Vector& F2, Vector& F3, int type) const;
 
-      #if 0
+      /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name  parameter name
+      * \param type  angle type index 
+      * \param value new value of parameter
+      */
+      void set(std::string name, int type, double value)
+      {   interactionPtr_->set(name, type, value); }
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name  parameter name
+      * \param type  angle type index
+      * \return parameter value
+      */
+      double get(std::string name, int type) const
+      {   return interactionPtr_->get(name, type); }
+
       /**
       * Return pair interaction class name (e.g., "CosineDihedral").
       */
       virtual std::string interactionClassName() const;
-      #endif
+
+      /**
+      * Return dihedral potential interaction by reference.
+      */
+      Interaction& interaction();
+
+      /**
+      * Return dihedral potential interaction by const reference.
+      */
+      const Interaction& interaction() const;
 
       //@}
-      /// \name Global Energy, Force, Stress methods.
+      /// \name System Energy, Force, Stress calculators
       //@{
 
       /**
@@ -150,16 +178,6 @@ namespace McMd
       virtual void computeStress(Util::Tensor& stress) const;
 
       //@}
-
-      /**
-      * Return dihedral potential interaction by reference.
-      */
-      Interaction& interaction();
-
-      /**
-      * Return dihedral potential interaction by const reference.
-      */
-      const Interaction& interaction() const;
 
    private:
   
@@ -428,14 +446,12 @@ namespace McMd
    inline const Interaction& DihedralPotentialImpl<Interaction>::interaction() const
    { return *interactionPtr_; }
 
-   #if 0
    /*
    * Return dihedral potential interaction class name.
    */
    template <class Interaction>
    std::string DihedralPotentialImpl<Interaction>::interactionClassName() const
    {  return interaction().className(); }
-   #endif
 
 }
 #endif

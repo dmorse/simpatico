@@ -54,7 +54,7 @@ namespace McMd
       /** 
       * Allocate memory and initialize Rouse mode eigenvector p.
       */
-      virtual void initialize();
+      virtual void setup();
 
       /** 
       * Evaluate end-to-end vectors of all chains, add to ensemble.

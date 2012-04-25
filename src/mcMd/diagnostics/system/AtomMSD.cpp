@@ -86,7 +86,7 @@ namespace McMd
    /*
    * Initialize at beginning of simulation.
    */
-   void AtomMSD::initialize() 
+   void AtomMSD::setup() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Error: object is not initialized");

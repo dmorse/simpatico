@@ -76,6 +76,27 @@ namespace McMd
       virtual double maxPairCutoff() const;
 
       /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      type index of first atom
+      * \param j      type index of first atom
+      * \param value  parameter value
+      */
+      void set(std::string name, int i, int j, double value)
+      {  interaction_.set(name, i, j, value); }
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      type index of first atom
+      * \param j      type index of first atom
+      */
+      double get(std::string name, int i, int j) const
+      {  return interaction_.get(name, i, j); }
+
+      /**
       * Return pair interaction class name (e.g., "LJPair").
       */
       virtual std::string interactionClassName() const;

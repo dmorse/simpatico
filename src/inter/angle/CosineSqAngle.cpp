@@ -91,6 +91,38 @@ namespace Inter
    }
 
    /*
+   * Modify a parameter, identified by a string.
+   */
+   void CosineSqAngle::set(std::string name, int type, double value)
+   {
+      if (name == "kappa") {
+         kappa_[type] = value;
+      } else
+      if (name == "theta0") {
+         theta0_[type] = value;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double CosineSqAngle::get(std::string name, int type) const
+   {
+      double value = 0.0;
+      if (name == "kappa") {
+         value = kappa_[type];
+      } else
+      if (name == "theta0") {
+         value = theta0_[type];
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+      return value;
+   }
+
+   /*
    * Return name string "CosineSqAngle" for this evaluator class.
    */
    std::string CosineSqAngle::className() const

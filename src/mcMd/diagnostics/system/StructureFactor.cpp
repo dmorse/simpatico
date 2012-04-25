@@ -65,7 +65,7 @@ namespace McMd
    /*
    * Clear accumulators.
    */
-   void StructureFactor::initialize() 
+   void StructureFactor::setup() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Error: object is not initialized");

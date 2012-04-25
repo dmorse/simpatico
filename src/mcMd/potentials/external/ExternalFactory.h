@@ -1,4 +1,3 @@
-#ifdef  INTER_EXTERNAL
 #ifndef MCMD_EXTERNAL_FACTORY_H
 #define MCMD_EXTERNAL_FACTORY_H
 
@@ -48,5 +47,4 @@ namespace McMd
    };
   
 }
-#endif
 #endif

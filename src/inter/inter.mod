@@ -29,38 +29,38 @@ namespace Inter
    */
 
    /**
-   * \defgroup Inter_Pair_Module Pair Potentials
+   * \defgroup Inter_Pair_Module Pair Interactions
    * \ingroup  Inter_Module
    *
-   * \brief    Classes that represent non-bonded pair potentials.
+   * \brief    Classes that represent non-bonded pair interactions.
    */
 
    /**
-   * \defgroup Inter_Bond_Module Bond Potentials
+   * \defgroup Inter_Bond_Module Bond Interactions
    * \ingroup  Inter_Module
    *
-   * \brief    Classes that represent covalent bond potentials.
+   * \brief    Classes that represent covalent bond interactions.
    */
 
    /**
-   * \defgroup Inter_Angle_Module Angle Potentials
+   * \defgroup Inter_Angle_Module Angle Interactions
    * \ingroup  Inter_Module
    *
-   * \brief    Classes that represent covalent angle potentials.
+   * \brief    Classes that represent covalent angle interactions.
    */
 
    /**
-   * \defgroup Inter_Dihedral_Module Dihedral Potentials
+   * \defgroup Inter_Dihedral_Module Dihedral Interactions
    * \ingroup  Inter_Module
    *
-   * \brief    Classes that represent covalent dihedral potentials.
+   * \brief    Classes that represent covalent dihedral interactions.
    */
 
    /**
-   * \defgroup Inter_External_Module External Potentials
+   * \defgroup Inter_External_Module External Interactions
    * \ingroup  Inter_Module
    *
-   * \brief    Classes that represent external one-body potentials.
+   * \brief    Classes that represent external one-body interactions.
    */
 
 }

@@ -2,7 +2,6 @@
 #define PARAM_COMPOSITE_TEST_H
 
 #include <util/global.h>
-#ifndef UTIL_MPI
 
 #include <util/param/ParamComposite.h>
 #include <util/param/Factory.h>
@@ -157,5 +156,4 @@ TEST_ADD(ParamCompositeTest, testReadWrite)
 TEST_ADD(ParamCompositeTest, testSerialize)
 TEST_END(ParamCompositeTest)
 
-#endif // ifndef UTIL_MPI
 #endif // ifndef PARAM_COMPOSITE_TEST_H

@@ -61,7 +61,7 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void EndtoEnd::initialize() 
+   void EndtoEnd::setup() 
    {  accumulator_.clear(); }
  
    /// Evaluate end-to-end vectors of all chains.

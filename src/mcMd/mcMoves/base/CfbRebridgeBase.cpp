@@ -59,7 +59,7 @@ namespace McMd
    /* 
    * Initialize tables for spring constants and normalizations.
    */
-   void CfbRebridgeBase::initialize()
+   void CfbRebridgeBase::setup()
    {
       double l20;
       double lmin, lmax, del, pi;

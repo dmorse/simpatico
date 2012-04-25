@@ -39,7 +39,7 @@ namespace McMd
 
    }
 
-   void Crosslinker::initialize() 
+   void Crosslinker::setup() 
    {
      // Initialize the private CellList
      cellList_.allocate(system().nAtom(), system().boundary(), cutoff_);

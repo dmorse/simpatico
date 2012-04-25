@@ -51,7 +51,7 @@ namespace McMd
       /** 
       * Clear accumulator.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /** 
       * Add atoms attached to links to SSChainDist histogram.

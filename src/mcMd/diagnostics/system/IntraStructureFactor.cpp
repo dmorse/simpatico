@@ -63,7 +63,7 @@ namespace McMd
    /*
    * Set up before simulation.
    */
-   void IntraStructureFactor::initialize() 
+   void IntraStructureFactor::setup() 
    {
       if (!isInitialized_) 
          UTIL_THROW("Object is not initialized");

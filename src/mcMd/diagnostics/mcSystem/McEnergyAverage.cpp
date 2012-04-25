@@ -54,7 +54,7 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void McEnergyAverage::initialize() 
+   void McEnergyAverage::setup() 
    {  accumulator_.clear(); }
  
    /* 

@@ -35,6 +35,7 @@ namespace McMd
       for (int i = 0; i < nAtomType_; ++i) {
          for (int j = 0; j < nAtomType_; ++j) {
             epsilon_[i][j] = other.epsilon_[i][j];
+            sigma_[i][j] = other.sigma_[i][j];
          }
       }
    }
@@ -44,13 +45,12 @@ namespace McMd
    */
    void HoomdDpdPair::readParam(std::istream &in)
    {
-      double sigma[MaxAtomType][MaxAtomType];
 
       // Read parameters
       readCArray2D<double> (
                   in, "epsilon", epsilon_[0], nAtomType_, nAtomType_);
       readCArray2D<double> (
-                  in, "sigma",   sigma[0], nAtomType_, nAtomType_);
+                  in, "sigma",   sigma_[0], nAtomType_, nAtomType_);
 
       // calculate maxPairCutoff and assign parameters
       maxPairCutoff_ = 0.0;
@@ -58,7 +58,7 @@ namespace McMd
          for (int j = 0; j < nAtomType_; ++j) {
             params_[i][j].x = epsilon_[i][j]; // A parameter
             params_[i][j].y = 0;              // gamma parameter
-            cutoff_[i][j] = sigma[i][j];
+            cutoff_[i][j] = sigma_[i][j];
             if (cutoff_[i][j] > maxPairCutoff_)
                maxPairCutoff_ = cutoff_[i][j];
             cutoffSq_[i][j] = cutoff_[i][j] * cutoff_[i][j];

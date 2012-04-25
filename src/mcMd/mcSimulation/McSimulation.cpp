@@ -313,8 +313,8 @@ namespace McMd
          Log::file() << "Restarting from iStep = " << iStep_ << std::endl;
       } else {
          iStep_ = 0;
-         diagnosticManager().initialize();
-         mcMoveManagerPtr_->initialize();
+         diagnosticManager().setup();
+         mcMoveManagerPtr_->setup();
       }
       int beginStep = iStep_;
       int nStep = endStep - beginStep;
@@ -470,7 +470,7 @@ namespace McMd
          #endif
 
          // Initialize diagnostics (taking in molecular information).
-         if (iStep_ == min) diagnosticManager().initialize();
+         if (iStep_ == min) diagnosticManager().setup();
 
          // Sample property values
          diagnosticManager().sample(iStep_);

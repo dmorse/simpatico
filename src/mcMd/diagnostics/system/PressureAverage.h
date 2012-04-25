@@ -47,7 +47,7 @@ namespace McMd
       /** 
       * Set up before simulation.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /* 
       * Evaluate energy per particle, and add to ensemble. 
@@ -143,7 +143,7 @@ namespace McMd
    * Set up immediately before simulation.
    */
    template <class SystemType>
-   void PressureAverage<SystemType>::initialize() 
+   void PressureAverage<SystemType>::setup() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Object not initialized");

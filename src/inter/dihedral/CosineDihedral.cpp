@@ -67,6 +67,32 @@ namespace Inter
    }
 
    /*
+   * Modify a parameter, identified by a string.
+   */
+   void CosineDihedral::set(std::string name, int type, double value)
+   {
+      if (name == "kappa") {
+         kappa_[type] = value;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double CosineDihedral::get(std::string name, int type) const
+   {
+      double value = 0.0;
+      if (name == "kappa") {
+         value = kappa_[type];
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+      return value;
+   }
+
+   /*
    * Return name string "CosineDihedral" for this evaluator class.
    */
    std::string CosineDihedral::className() const

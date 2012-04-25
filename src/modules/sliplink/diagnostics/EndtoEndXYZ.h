@@ -76,7 +76,7 @@ namespace McMd
       /** 
       * Clear accumulator.
       */
-      virtual void initialize();
+      virtual void setup();
    
       /**
       * Evaluate squared radii of gyration for all molecules, add to ensemble.

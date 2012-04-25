@@ -86,7 +86,7 @@ namespace McMd
       /**
       * Set up before a simulation.
       */
-      virtual void initialize();
+      virtual void setup();
 
       /**
       * Output structure factors, averaged over stars.

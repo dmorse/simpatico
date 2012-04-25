@@ -82,7 +82,7 @@ namespace McMd
    /*
    * Clear accumulators.
    */
-   void MigratingVanHove::initialize() 
+   void MigratingVanHove::setup() 
    {
       replicaMovePtr_->registerObserver(*this);
       assert (nBuffer_ > 0);

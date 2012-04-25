@@ -58,7 +58,7 @@ namespace McMd
       /** 
       * Clear accumulators.
       */
-      virtual void initialize();
+      virtual void setup();
 
       /* 
       * Evaluate Fermi functions and add to accumulators.

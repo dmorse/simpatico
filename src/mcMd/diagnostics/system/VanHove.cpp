@@ -65,7 +65,7 @@ namespace McMd
    /*
    * Clear accumulators.
    */
-   void VanHove::initialize() 
+   void VanHove::setup() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Error: Object not initialized");

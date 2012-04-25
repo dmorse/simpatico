@@ -149,6 +149,7 @@ namespace DdMd
       */
       FMatrix< APArray<Atom>, Dimension, 2>  recvArray_;
 
+      #ifdef UTIL_MPI
       /**
       * Array of pointers to atoms that have been packed and sent.
       * 
@@ -176,6 +177,8 @@ namespace DdMd
       */
       APArray< Group<4> > emptyDihedrals_;
       #endif
+
+      #endif // UTIL_MPI
 
       /// Processor boundaries (minima j=0, maxima j=1)
       FMatrix< double, Dimension, 2>  bound_;
@@ -233,6 +236,7 @@ namespace DdMd
       template <int N>
       void initGroupGhostPlan(GroupStorage<N>& storage);
 
+      #ifdef UTIL_MPI
       template <int N>
       void packGroups(int i, int j, GroupStorage<N>& storage, 
                                     APArray< Group<N> >& emptyGroups);
@@ -243,6 +247,7 @@ namespace DdMd
 
       template <int N>
       void unpackGroups(GroupStorage<N>& storage);
+      #endif
 
       template <int N>
       void finishGroupGhostPlan(GroupStorage<N>& storage);

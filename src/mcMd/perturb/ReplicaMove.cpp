@@ -102,18 +102,13 @@ namespace McMd
       if (nSampling_ <= 0) {
          UTIL_THROW("Invalid value input for nSampling_");
       }
-      readEnd(in);
-   }
 
-   /*
-   * Find the tempering variable and create data files.
-   */
-   void ReplicaMove::initialize()
-   {
       // Allocate memory
       int nAtom = system().simulation().atomCapacity();
       ptPositionPtr_ = new Vector[nAtom];
       myPositionPtr_ = new Vector[nAtom];
+
+      readEnd(in);
    }
 
    /*

@@ -58,7 +58,7 @@ namespace McMd
       /** 
       * Set number of molecules, initialize eigenvector, and clear accumulator.
       */
-      virtual void initialize();
+      virtual void setup();
   
       /** 
       * Evaluate end-to-end vectors of all chains, add to ensemble.

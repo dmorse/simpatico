@@ -209,13 +209,12 @@ namespace DdMd
       * Number of unread items in current recv block.
       */
       int recvSize() const;
+      #endif
 
       /**
       * Has memory been allocated for this Buffer?
       */
       bool isAllocated() const;
-
-      #endif
 
       /**
       * Has this Buffer been initialized?
@@ -298,6 +297,7 @@ namespace DdMd
       /// Has this buffer been initialized ?
       bool isInitialized_;
 
+      #ifdef UTIL_MPI
       /// Return packed size of Atom, in bytes.
       static int atomSize();
 
@@ -307,7 +307,6 @@ namespace DdMd
       /// Return packed size of Group<N>, in bytes.
       static int groupSize(int N);
 
-      #ifdef UTIL_MPI
       /**
       * Template method for packing a variable
       *

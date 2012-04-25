@@ -95,6 +95,32 @@ namespace Inter
    }
 
    /*
+   * Modify a parameter, identified by a string.
+   */
+   void HarmonicL0Bond::set(std::string name, int type, double value)
+   {
+      if (name == "kappa") {
+         kappa_[type] = value;
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+   }
+
+   /*
+   * Get a parameter value, identified by a string.
+   */
+   double HarmonicL0Bond::get(std::string name, int type) const
+   {
+      double value;
+      if (name == "kappa") {
+         value = kappa_[type];
+      } else {
+         UTIL_THROW("Unrecognized parameter name");
+      }
+      return value;
+   }
+
+   /*
    * Return name string "HarmonicL0Bond" for this evaluator class.
    */
    std::string HarmonicL0Bond::className() const

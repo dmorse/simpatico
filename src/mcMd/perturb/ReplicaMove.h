@@ -7,7 +7,9 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids 
 * 
-* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu) 
+* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu).
+* Gibbs sampler algorithm implemented by Jens Glaser, March 2012.
+*
 * Distributed under the terms of the GNU General Public License.  
 */ 
 
@@ -89,12 +91,6 @@ namespace McMd
       * \param in input stream from which to read parameters.
       */
       virtual void readParam(std::istream& in);
-
-      /**
-      * Initialize variables needed by a replica move. Needs to be invoked
-      * prior to any replica move.
-      */
-      virtual void initialize();
 
       /**
       * Attempt, and accept or reject a replica exchange move.

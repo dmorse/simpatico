@@ -47,7 +47,7 @@ namespace McMd
    /*
    * Clear accumulator.
    */
-   void BondLengthDist::initialize() 
+   void BondLengthDist::setup() 
    {
       if (!isInitialized_) {
          UTIL_THROW("Object is not initialized"); 

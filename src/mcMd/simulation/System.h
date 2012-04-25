@@ -604,10 +604,9 @@ namespace McMd
       /**
       * Allocate and initialize molecule sets for all species.
       *
-      * This method is called within System::initialize() to allocate 
-      * an array of MoleculeSet objects for all Species, and then
-      * allocate each MoleculeSet and associate it with the block
-      * of Molecules for the appropriate Species.
+      * This method is called within Simulation::initialize() private 
+      * method to allocate and initialize an array of MoleculeSet objects 
+      * for all Species for this System.
       *
       * Preconditions: This System must be associated with a parent
       * Simulation, and all of the Species objects must have been

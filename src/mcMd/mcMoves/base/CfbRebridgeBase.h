@@ -53,7 +53,7 @@ namespace McMd
       * Initialize the arrays for preferential angle, effective spring constant
       * and normalization factor.
       */
-      virtual void initialize();
+      virtual void setup();
    
    protected:
 
