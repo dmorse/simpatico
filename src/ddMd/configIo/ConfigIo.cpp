@@ -22,8 +22,8 @@
 #include <ddMd/storage/DihedralStorage.h>               
 #endif
 
-#include <ddMd/communicate/GroupCollector_inc.h> 
-#include <ddMd/communicate/GroupDistributor.cpp> 
+#include <ddMd/communicate/GroupCollector.tpp> 
+#include <ddMd/communicate/GroupDistributor.tpp> 
 
 #include <ddMd/communicate/Buffer.h> 
 #include <ddMd/chemistry/Atom.h>
