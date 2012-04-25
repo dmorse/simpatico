@@ -1,5 +1,5 @@
-#ifndef MCMD_POTENTIAL_TEST_COMPOSITE_H
-#define MCMD_POTENTIAL_TEST_COMPOSITE_H
+#ifndef INTERACTION_TEST_COMPOSITE_H
+#define INTERACTION_TEST_COMPOSITE_H
 
 #include <test/CompositeTestRunner.h>
 
@@ -10,7 +10,7 @@
 #include "dihedral/CosineDihedralTest.h"
 #endif
 
-TEST_COMPOSITE_BEGIN(PotentialTestComposite)
+TEST_COMPOSITE_BEGIN(InteractionTestComposite)
 TEST_COMPOSITE_ADD_UNIT(LJPairTest);
 TEST_COMPOSITE_ADD_UNIT(HarmonicBondTest);
 TEST_COMPOSITE_ADD_UNIT(HarmonicL0BondTest);

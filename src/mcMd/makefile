@@ -10,8 +10,13 @@ include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/mcMd/sources.mk
 
 #-----------------------------------------------------------------------
+# Variable definitions
+
 MDSIM=$(SRC_DIR)/mcMd/mdSim
 MCSIM=$(SRC_DIR)/mcMd/mcSim
+MDSIM_EXE=$(ROOT_DIR)/bin/mdSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
+MCSIM_EXE=$(ROOT_DIR)/bin/mcSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
+#-----------------------------------------------------------------------
 
 all: $(mcMd_OBJS) $(mcMd_LIB) $(MDSIM).o $(MCSIM).o $(MCSIM_EXE) $(MDSIM_EXE)
 
@@ -60,6 +65,6 @@ mdSim:
 
 Test: $(mcMd_LIB) $(SRC_DIR)/mcMd/Test.o
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test $(SRC_DIR)/mcMd/Test.o \
-	       $(mcMd_LIB) $(util_LIB)
+	       $(mcMd_LIB) $(inter_LIB) $(util_LIB)
 
 -include Test.d

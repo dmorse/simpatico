@@ -12,6 +12,7 @@
 #include <mcMd/mdSimulation/MdDiagnosticManager.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
+#include <mcMd/potentials/bond/BondPotential.h>
 #include <mcMd/diagnostics/Diagnostic.h>
 #include <mcMd/trajectoryIos/TrajectoryIo.h>
 #include <mcMd/species/Species.h>
@@ -158,6 +159,10 @@ namespace McMd
 
          } else {
 
+            if (command == "FINISH") {
+               Log::file() << std::endl;
+               readNext = false;
+            } else 
             if (command == "READ_CONFIG") {
                inBuffer >> filename;
                Log::file() << Str(filename, 15) << std::endl;
@@ -252,10 +257,29 @@ namespace McMd
                      boundary);
                }
             } else
-            if (command == "FINISH") {
-               Log::file() << std::endl;
-               readNext = false;
-            } else {
+            #ifndef UTIL_MPI
+            if (command == "SET_PAIR") {
+               std::string paramName;
+               int typeId1, typeId2; 
+               double value;
+               inBuffer >> paramName >> typeId1 >> typeId2 >> value;
+               Log::file() << "  " <<  paramName 
+                           << "  " <<  typeId1 << "  " <<  typeId2
+                           << "  " <<  value << std::endl;
+               system().pairPotential()
+                       .set(paramName, typeId1, typeId2, value);
+            } else 
+            if (command == "SET_BOND") {
+               std::string paramName;
+               int typeId; 
+               double value;
+               inBuffer >> paramName >> typeId >> value;
+               Log::file() << "  " <<  paramName << "  " <<  typeId 
+                           << "  " <<  value << std::endl;
+               system().bondPotential().set(paramName, typeId, value);
+            } else 
+            #endif
+            {
                Log::file() << "Error: Unknown command  " << std::endl;
                readNext = false;
             }

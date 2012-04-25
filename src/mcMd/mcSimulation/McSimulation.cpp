@@ -19,6 +19,7 @@
 #ifndef INTER_NOPAIR
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
+#include <mcMd/potentials/bond/BondPotential.h>
 #ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
 #include <mcMd/perturb/ReplicaMove.h>
@@ -285,7 +286,30 @@ namespace McMd
                // Generate cell list
                system().pairPotential().buildCellList();
                #endif
-            } else {
+            } else
+            #ifndef UTIL_MPI
+            if (command == "SET_PAIR") {
+               std::string paramName;
+               int typeId1, typeId2; 
+               double value;
+               inBuffer >> paramName >> typeId1 >> typeId2 >> value;
+               Log::file() << "  " <<  paramName 
+                           << "  " <<  typeId1 << "  " <<  typeId2
+                           << "  " <<  value << std::endl;
+               system().pairPotential()
+                       .set(paramName, typeId1, typeId2, value);
+            } else 
+            if (command == "SET_BOND") {
+               std::string paramName;
+               int typeId; 
+               double value;
+               inBuffer >> paramName >> typeId >> value;
+               Log::file() << "  " <<  paramName << "  " <<  typeId 
+                           << "  " <<  value << std::endl;
+               system().bondPotential().set(paramName, typeId, value);
+            } else 
+            #endif
+            {
                Log::file() << "  Error: Unknown command  " << std::endl;
                readNext = false;
             }
