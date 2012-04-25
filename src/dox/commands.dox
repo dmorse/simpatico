@@ -60,47 +60,60 @@ GENERATE_MOLECULES is used to generate such a initial configuration of
 molecules using hard-core excluded volume and ensures that no two atoms 
 are closer together than the sum of their exclusion radii.
 
-The following commands that are recognized by in command files for either 
-an McSimulation or an MdSimulation:
+The following table shows a list of available commands for all three programs. 
+The last three columns indicate which commands are recognized by each program, 
+using an "X" represents a valid command for mcSim, mdSim, or ddSim.
 <table>
   <tr> 
     <td> <b>command     </b> </td>
     <td> <b>parameter(s)</b> </td>
     <td> <b>description </b> </td>
+    <td> <b>mcSim</b> </td>
+    <td> <b>mdSim</b> </td>
+    <td> <b>ddSim</b> </td>
   </tr>
   <tr> 
     <td> READ_CONFIG </td>
     <td> filename [string] </td>
     <td> Read configuration from file filename, with input prefix  </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
   </tr>
   <tr> 
     <td> SIMULATE </td>
-    <td> endStep [integer] </td>
+    <td> endStep [int] </td>
     <td> Run a new simulation of endStep MD or MC steps. 
          Initialize state of simulation, and set iStep = 0, before
          entering the main loop. </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
   </tr>
   <tr> 
     <td> CONTINUE </td>
-    <td> endStep [integer] </td>
+    <td> endStep [int] </td>
     <td> Continue a simulation simulation until step counter iStep 
          reaches endStep, with no re-initialization. </td>
-  </tr>
-  <tr> 
-    <td> ANALYZE_DUMPS </td>
-    <td> min [integer], max [integer], filename [string] </td>
-    <td> Postprocess a series of configuration dump files with integer suffix 
-         labels min <= i <= max and a specified base filename </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>-</b> </td>
   </tr>
   <tr> 
     <td> WRITE_CONFIG </td>
     <td> filename [string] </td>
     <td> Write configuration from file filename, with output prefix  </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
   </tr>
   <tr> 
     <td> WRITE_PARAM </td>
     <td> filename [string] </td>
     <td> Write parameter file block to file filename, with output prefix </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
   </tr>
   <tr> 
     <td> SET_CONFIG_IO </td>
@@ -109,39 +122,51 @@ an McSimulation or an MdSimulation:
          creating a new instance of a specified subclass className of
          ConfigIo to be used for these purposes. The resulting object
          will be used until the next SET_CONFIG_IO command. </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>-</b> </td>
   </tr>
-   <tr>
-    <td> GENERATE_MOLECULES </td>
-    <td> boxL [float], nMolecule0 [int], nMolecule1 [int], ...,
-         exclusionRadius0 [float], exclusionRadius1[float], ... </td>
-    <td> Generate a random set of molecules using hard-core excluded
-         volume in a cubix box of size boxL.
-         The number of molecules is nMolecule0 for species 0,
-         nMolecule1 for species 1, etc.. Use exclusion radii exclusionRadius0
-         for particle type 0, exclusionRadius1 for particle type 1, etc.
-         </td>
-   </tr>
-</table>
-The className argument of the SET_CONFIG_IO command can be "McConfigIo" or "MdConfigIo". This command 
-effects subsequent calls to READ_CONFIG and WRITE_CONFIG. If READ_CONFIG and/or WRITE_CONFIG is 
-encountered before any SET_CONFIG_IO command, the default MC or MD file format will be used.
-
-In addition, MdSimulation recognizes the commands
-<table>
   <tr> 
     <td> THERMALIZE </td>
     <td> temperature [float] </td>
     <td> 
        Generate random velocities for specified temperature (in energy units). 
     </td>
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>-</b> </td>
+  </tr>
+  <tr>
+    <td> GENERATE_MOLECULES </td>
+    <td> boxL [float], nMol0 [int], nMol1 [int], ...,
+         radius0 [float], radius1[float], ... </td>
+    <td> Generate random molecules in a cubix box of size boxL.
+         The number of molecules is nMol0 for species 0, nMol1
+         for species 1, etc. The hard core exclusion radius is
+         radius0 for atoms of type 0, etc.
+         </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>-</b> </td>
+  </tr>
+  <tr> 
+    <td> ANALYZE_DUMPS </td>
+    <td> min [int], max [int], filename [string] </td>
+    <td> Postprocess a series of configuration dump files with integer suffix 
+         labels min <= i <= max and a specified base filename </td>
+    <td> <b>X</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>-</b> </td>
   </tr>
   <tr>
     <td> ANALYZE_TRAJECTORY </td>
-    <td> min[integer], max[integer], classname [string], filename [string] </td>
-    <td> Postprocess a trajectory dump using classname (a TrajectoryIo) by
-         reading from the input trajectory file filename. Reads frame numbers
-         min <= i <= max.  Negative values for min, max are also allowed and
-         are counted from the end of the trajectory file. 
+    <td> min[int], max[int], classname [string], filename [string] </td>
+    <td> Postprocess frames from a trajectory file filename using an instance 
+         of TrajectoryIo classname. Reads frame numbers min <= i <= max.  
+         Negative values for min, max are counted from the end of the file.
+    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
+    <td> <b>-</b> </td>
     </td>
   </tr>
 </table>
