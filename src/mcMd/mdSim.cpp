@@ -1,8 +1,4 @@
 #include <mcMd/mdSimulation/MdSimulation.h>
-#include <util/param/ParamComponent.h>
-
-#include <unistd.h>
-#include <memory>
 
 /**
 * Main program for Molecular Dynamics simulation.
@@ -38,37 +34,6 @@
 */
 int main(int argc, char **argv)
 {
-
-   bool  eflag  = false;
-   bool  rflag  = false;
-   char* rarg   = 0;
-   #ifdef MCMD_PERTURB
-   bool pflag = false;
-   #endif
-
-   // Read program arguments
-   int c;
-   opterr = 0;
-   while ((c = getopt(argc, argv, "epr:")) != -1) {
-      switch (c) {
-      case 'e':
-        eflag = true;
-        break;
-      case 'r':
-        rflag = true;
-        rarg  = optarg;
-        break;
-      #ifdef MCMD_PERTURB
-      case 'p':
-        pflag = true;
-        break;
-      #endif
-      case '?':
-        std::cout << "Unknown option -" << optopt << std::endl;
-        return 1;
-      }
-   }
-
    #ifdef UTIL_MPI
    MPI::Init();
    McMd::MdSimulation simulation(MPI::COMM_WORLD);
@@ -76,42 +41,14 @@ int main(int argc, char **argv)
    McMd::MdSimulation simulation;
    #endif
 
-   // Set flag to echo parameters as they are read.
-   if (eflag) {
-      Util::ParamComponent::setEcho(true);
-   }
+   // Process command line options
+   simulation.setOptions(argc, argv);
 
-   #ifdef MCMD_PERTURB
-   // Set to use a perturbation.
-   if (pflag) {
+   // Read parameters from default parameter file
+   simulation.readParam();
 
-      // Set to expect perturbation in the param file.
-      simulation.system().setExpectPerturbation();
-
-      #ifdef UTIL_MPI
-      Util::Log::file() << "Set to read parameters from a single file" << std::endl;
-      simulation.setParamCommunicator();
-      #endif
-
-   }
-   #endif
-
-   if (rflag) {
-
-      std::cout << "Reading restart" << std::endl;
-      std::cout << "Base file name " << std::string(rarg) << std::endl;
-
-      simulation.readRestart(std::string(rarg));
-
-   } else {
-
-      // Read parameters from default parameter file
-      simulation.readParam();
-   
-      // Read command script to run simulation
-      simulation.readCommands();
-
-   }
+   // Read command script to run simulation
+   simulation.readCommands();
 
    #if UTIL_MPI
    if (MPI::Is_initialized()) {
@@ -119,7 +56,5 @@ int main(int argc, char **argv)
    }
    #endif
 
-   // Normal completion
    return 0;
-
 }

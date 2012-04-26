@@ -51,6 +51,26 @@ namespace McMd
       virtual ~McSimulation();
 
       /**
+      * Process command line options.
+      *
+      * Options:
+      *
+      *   -e  Enable echoing of the parameter file to a file.
+      *
+      *   -p  Enable use of a free energy perturbation. 
+      *
+      *   -r filename. Restart a simulation.
+      *
+      * When restarting a simulation, the required parameter "filename"
+      * is the base name for the 3 required input files: filename.prm, 
+      * filename.rst, and filename.cmd.
+      *
+      * \param argc number of arguments
+      * \param argv vector of pointers to char* string arguments
+      */
+      void setOptions(int argc, char **argv);
+
+      /**
       * Read parameters from a specific stream.
       *
       * \param in parameter file input stream.

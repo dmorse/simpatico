@@ -1,4 +1,3 @@
-
 Angles and Dihedrals
 --------------------
 
@@ -22,11 +21,6 @@ Constant Pressure
 New Commands
 ------------
 
-- Add SET_... commands to command script parser.  Start with :
-  SET_PAIR  (format defined by class)
-  SET_BOND  (format defined by class), etc.
-  SET_ANGLE (format defined by class), etc.
-
 - Allow diagnostics to be enabled, disabled, and cleared (reset accumulators) 
   from the command script. Add commands:
 
@@ -34,14 +28,7 @@ New Commands
   DISABLE_DIAGNOSTICS 
   CLEAR_DIAGNOSTICS 
 
-  to enable, disable, or clear diagnostic. Add ability to enable or
-  disable specific diagnostics later.
-
-Command Line Options
---------------------
-
-- Move code to parse command line options into new setOptions()
-  methods of McSimulation and MdSimulation.
+  to enable, disable, or clear diagnostics.
 
 Restart System
 --------------
