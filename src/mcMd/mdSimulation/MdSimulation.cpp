@@ -349,6 +349,28 @@ namespace McMd
                            << "  " <<  value << std::endl;
                system().bondPotential().set(paramName, typeId, value);
             } else 
+            #ifdef INTER_ANGLE
+            if (command == "SET_ANGLE") {
+               std::string paramName;
+               int typeId; 
+               double value;
+               inBuffer >> paramName >> typeId >> value;
+               Log::file() << "  " <<  paramName << "  " <<  typeId 
+                           << "  " <<  value << std::endl;
+               system().anglePotential().set(paramName, typeId, value);
+            } else 
+            #endif
+            #ifdef INTER_DIHEDRAL
+            if (command == "SET_DIHEDRAL") {
+               std::string paramName;
+               int typeId; 
+               double value;
+               inBuffer >> paramName >> typeId >> value;
+               Log::file() << "  " <<  paramName << "  " <<  typeId 
+                           << "  " <<  value << std::endl;
+               system().dihedralPotential().set(paramName, typeId, value);
+            } else 
+            #endif
             #endif
             {
                Log::file() << "Error: Unknown command  " << std::endl;

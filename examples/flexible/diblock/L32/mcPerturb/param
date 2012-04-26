@@ -22,7 +22,7 @@ McSimulation{
 
   }
   Random{
-    seed                          -13741892
+    seed                           13741892
   }
   McSystem{
     pairStyle                           LJPair
@@ -48,28 +48,33 @@ McSimulation{
       type                  rigid
     }
     McPairPerturbation{
+       mode                     0
+       nParameters              1
        parameters           1.000
                             1.100
                             1.200
     }
+    hasReplicaMove             0
   }
-  hasReplicaMove             0
   McMoveManager{
 
     HybridMdMove{
+      probability           1.000000000000e+00
       nStep                                 10
       MdSystem{
-        PairList{
-          atomCapacity                       20000
-          pairCapacity                      100000
-          skin                  3.000000000000e-01
+        MdPairPotential{
+          maxBoundary             orthorhombic 30.0  30.0  30.0
+          PairList{
+            atomCapacity                       20000
+            pairCapacity                      100000
+            skin                  3.000000000000e-01
+          }
         }
         NveVvIntegrator{
           dt                    2.500000000000e-03
         }
       }
     }
-    probability           1.000000000000e+00
 
   }
   DiagnosticManager{
