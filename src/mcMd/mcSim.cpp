@@ -1,23 +1,18 @@
 #include <mcMd/mcSimulation/McSimulation.h>
-#include <util/param/ParamComponent.h>
-
-#include <unistd.h>
-#include <memory>
 
 /**
 * Main program for Monte Carlo Simulation.
 *
 * Options:
 *
-*   -e  Enable echoing of the parameter file to the log file as it
-*       is read.
+*   -e  Enable echoing of the parameter file as it s read.
 *
 *   -p  Enable use of a free energy perturbation. 
 *
-*   -r filename
-*      Restart a simulation. The required parameter "filename" is 
-*      the base name for 3 input files: filename.prm, filename.rst, 
-*      and filename.cmd.
+*   -r filename. Restart a simulation. 
+*
+* The required parameter "filename" is the base name for the 
+* 3 input files: filename.prm, filename.rst, and filename.cmd.
 *
 * Files:
 *
@@ -38,7 +33,6 @@
 */
 int main(int argc, char **argv)
 {
-
    #ifdef UTIL_MPI
    MPI::Init();
    McMd::McSimulation simulation(MPI::COMM_WORLD);

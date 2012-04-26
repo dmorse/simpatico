@@ -1,8 +1,4 @@
 #include <mcMd/mdSimulation/MdSimulation.h>
-#include <util/param/ParamComponent.h>
-
-#include <unistd.h>
-#include <memory>
 
 /**
 * Main program for Molecular Dynamics simulation.
@@ -38,8 +34,6 @@
 */
 int main(int argc, char **argv)
 {
-
-
    #ifdef UTIL_MPI
    MPI::Init();
    McMd::MdSimulation simulation(MPI::COMM_WORLD);
