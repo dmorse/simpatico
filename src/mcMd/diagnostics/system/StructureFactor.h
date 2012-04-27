@@ -12,6 +12,7 @@
 #include <mcMd/simulation/System.h>               // base class template parameter
 #include <util/containers/DMatrix.h>              // member template
 #include <util/containers/DArray.h>               // member template
+#include <util/accumulators/History.h>            
 
 #include <util/global.h>
 
@@ -81,6 +82,9 @@ namespace McMd
 
    public:
 
+      /// Number of diagnostic samples in simulation.
+      static const int Samples = 100000;
+      
       /**	
       * Constructor.
       *
@@ -151,7 +155,7 @@ namespace McMd
       * First index is wavevector, second index is mode index.
       */
       DMatrix<double> structureFactors_;
-
+      
       /**
       * Fourier modes of concentration.
       *
@@ -175,6 +179,21 @@ namespace McMd
       * First index is mode, second is atomType.
       */
       DMatrix<double>  modes_;
+
+      /**
+      * Array of maximum structure factor values. 
+      */
+      DArray<double> maximumValue_;
+
+      /**
+      * Array of Miller index IntVector with maximum S(q).
+      */
+      DArray<IntVector> maximumWaveIntVector_;
+
+      /**
+      * Array of magnitudes of waveVector with maximum S(q).
+      */
+      DArray<double> maximumQ_;
 
       /// Number of wavevectors.
       int  nWave_;

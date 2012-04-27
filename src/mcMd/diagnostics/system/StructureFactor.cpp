@@ -59,6 +59,10 @@ namespace McMd
       fourierModes_.allocate(nWave_, nMode_);
       structureFactors_.allocate(nWave_, nMode_);
 
+      maximumValue_.allocate(Samples);
+      maximumWaveIntVector_.allocate(Samples);
+      maximumQ_.allocate(Samples);
+
       isInitialized_ = true;
    }
 
@@ -80,6 +84,11 @@ namespace McMd
             structureFactors_(i, j) = 0.0;
          }
       }
+
+      for (i=0; i < Samples; ++i) {
+         maximumValue_[i] = 0.0;
+      }
+
       nSample_ = 0;
    }
  
@@ -137,6 +146,11 @@ namespace McMd
             for (j = 0; j < nMode_; ++j) {
                norm = std::norm(fourierModes_(i, j));
                structureFactors_(i, j) += norm/volume;
+               if (structureFactors_(i,j) >= maximumValue_[nSample_]) {
+                  maximumValue_[nSample_] = structureFactors_(i,j);
+                  maximumWaveIntVector_[nSample_] = waveIntVectors_[i];
+                  maximumQ_[nSample_] = waveVectors_[i].abs();
+               }
             }
          }
 

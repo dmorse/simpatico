@@ -18,6 +18,7 @@
 #include "StructureFactorPGrid.h"
 #include "StructureFactor.h"
 #include "StructureFactorGrid.h"
+#include "MaximumSf.h"
 #include "IntraStructureFactor.h"
 #include "VanHove.h"
 #ifdef UTIL_MPI
@@ -82,6 +83,9 @@ namespace McMd
       } else 
       if (className == "StructureFactorGrid") {
          ptr = new StructureFactorGrid(system());
+      } else 
+      if (className == "MaximumSf") {
+         ptr = new MaximumSf(system());
       } else 
       if (className == "IntraStructureFactor") {
          ptr = new IntraStructureFactor(system());
