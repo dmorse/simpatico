@@ -40,6 +40,11 @@ namespace McMd
       */
       virtual void readParam(std::istream& in);
 
+      /** 
+      * Clear accumulator.
+      */
+      virtual void setup();
+
       /* 
       * Evaluate derivative and add to ensemble. 
       */
@@ -63,6 +68,10 @@ namespace McMd
       
       /// Index of perturbation parameter associated with derivative.
       int parameterIndex_;
+      
+      /// Has readParam been called?
+      bool    isInitialized_;
+      
    };
 
 }

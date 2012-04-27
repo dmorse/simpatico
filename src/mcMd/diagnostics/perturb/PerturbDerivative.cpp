@@ -25,10 +25,7 @@ namespace McMd
    */
    PerturbDerivative::PerturbDerivative(System& system)
     : SystemDiagnostic<System>(system),
-      outputFile_(),
-      accumulator_(),
-      nSamplePerBlock_(1),
-      parameterIndex_(0)
+      isInitialized_(false)
    {}
 
    /*
@@ -40,16 +37,30 @@ namespace McMd
       readInterval(in);
       readOutputFileName(in);
       read<int>(in,"nSamplePerBlock", nSamplePerBlock_);
-      read<int>(in,"parameterIndex", parameterIndex_);
 
       accumulator_.setNSamplePerBlock(nSamplePerBlock_);
+
+      read<int>(in,"parameterIndex", parameterIndex_);
 
       // If nSamplePerBlock != 0, open an output file for block averages.
       if (accumulator_.nSamplePerBlock()) {
          fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
       }
 
+      isInitialized_ = true;
    }
+
+   /*
+   * Clear accumulator.
+   */
+   void PerturbDerivative::setup()
+   {
+      if (!isInitialized_) {
+         UTIL_THROW("Object is not initialized");
+      }
+      accumulator_.clear();
+   }
+
 
    /* 
    * Evaluate perturbation derivative, and add to accumulator.
