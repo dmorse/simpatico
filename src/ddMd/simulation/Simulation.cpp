@@ -64,6 +64,7 @@
 #include <util/util/initStatic.h>
 
 #include <fstream>
+#include <unistd.h>
 
 namespace DdMd
 {
@@ -264,6 +265,32 @@ namespace DdMd
       #ifdef UTIL_MPI
       //if (logFile_.is_open()) logFile_.close();
       #endif
+   }
+
+   /*
+   * Process command line options.
+   */
+   void Simulation::setOptions(int argc, char **argv)
+   {
+      bool  eflag  = false;
+   
+      // Read command-line arguments
+      int c;
+      opterr = 0;
+      while ((c = getopt(argc, argv, "epr:")) != -1) {
+         switch (c) {
+         case 'e':
+           eflag = true;
+           break;
+         case '?':
+           std::cout << "Unknown option -" << optopt << std::endl;
+         }
+      }
+   
+      if (eflag) {
+         // Enable echoing of parameters to log file as they are read.
+         Util::ParamComponent::setEcho(true);
+      }
    }
 
    /**

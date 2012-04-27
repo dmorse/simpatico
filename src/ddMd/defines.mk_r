@@ -38,8 +38,7 @@ DDMD_SUFFIX:=
 # Names of library and executable files.
 
 ddMd_LIBNAME=ddMd$(DDMD_SUFFIX)
-ddMd_LIBDIR=$(ROOT_DIR)/lib
-ddMd_LIB=$(ddMd_LIBDIR)/lib$(ddMd_LIBNAME).a
+ddMd_LIB=$(LIB_DIR)/lib$(ddMd_LIBNAME).a
 
-DDSIM_EXE=$(BIN_DIR)/ddSim$(INTER_SUFFIX)$(DDMD_SUFFIX)
+DDSIM_EXE=$(BIN_DIR)/ddSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(DDMD_SUFFIX)
 #-----------------------------------------------------------------------

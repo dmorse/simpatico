@@ -98,6 +98,19 @@ namespace DdMd
       ~Simulation();
 
       /**
+      * Process command line options.
+      *
+      * Options:
+      *
+      *   -e  Enable echoing of the parameter file to the log file as it
+      *       is read.
+      *
+      * \param argc number of arguments
+      * \param argv vector of C-string argument strings
+      */
+      void setOptions(int argc, char **argv);
+
+      /**
       * Read parameters, allocate memory and initialize.
       */
       virtual void readParam(std::istream& in);

@@ -55,11 +55,12 @@
 # Initialize to empty strings
 UTIL_DEFS=
 UTIL_SUFFIX:=
+UTIL_MPI_SUFFIX:=
 
 # Enable message passing interface
 ifdef UTIL_MPI
 UTIL_DEFS+= -DUTIL_MPI
-UTIL_SUFFIX:=$(UTIL_SUFFIX)_m
+UTIL_MPI_SUFFIX:=_m
 endif
 
 # Enable debugging assertions
@@ -77,6 +78,5 @@ endif
 # Library file name 
 
 util_LIBNAME=util$(UTIL_SUFFIX)
-util_LIBDIR=$(ROOT_DIR)/lib
-util_LIB=$(util_LIBDIR)/lib$(util_LIBNAME).a
+util_LIB=$(LIB_DIR)/lib$(util_LIBNAME).a
 #-----------------------------------------------------------------------

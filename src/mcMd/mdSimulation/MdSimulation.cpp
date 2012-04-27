@@ -13,6 +13,12 @@
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
 #include <mcMd/potentials/bond/BondPotential.h>
+#ifdef INTER_ANGLE
+#include <mcMd/potentials/angle/AnglePotential.h>
+#endif
+#ifdef INTER_DIHEDRAL
+#include <mcMd/potentials/dihedral/DihedralPotential.h>
+#endif
 #include <mcMd/diagnostics/Diagnostic.h>
 #include <mcMd/trajectoryIos/TrajectoryIo.h>
 #include <mcMd/species/Species.h>

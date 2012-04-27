@@ -5,116 +5,155 @@ from source. The single-processor programs mcSim and mdSim have no
 external dependencies.  The ddSim program requires a Message Passing 
 Interface (MPI) library to run on multiple processors. An MPI library
 is also required to run mcSim or mdSim on multiple processors, for, 
-e.g., replica exchange simulations. The code has been developed and 
-tested using the gcc and intel compilers in a linux environement and 
-the gcc compiler in Mac OS X. 
-The code should compile with any modern, standard compliant C++ 
-compiler.  The build system uses unix makefiles, using gnu make 
-(gmake), which is standard in any unix-like environment (linux or
-Mac OS), but not on windows. 
+e.g., replica exchange simulations. 
+
+Simpatico has been developed and tested using the gcc and intel compilers 
+in a linux environement and the gcc compiler in Mac OS X.  It should 
+compile with any modern, standard compliant C++ compiler.  
+
+The build system uses unix makefiles, using gnu make (gmake), which
+is a standard part of in any unix-like environment (linux or Mac OS). 
+We assume that the makefile system would also work using Cygwin on 
+Windows operating system, but have never tried this.
 
 The source code for Simpatico is contained in a directory tree with
 a root directory named simpatico/. All of the the header (*.h) and 
 source (*.cpp) files for Simpatico are are in the src/ subdirectory.
-By default, executable files are installed in the bin/ subdirectory 
-of the simpatico/ root directory. 
+By default, executable files are installed in the bin/ subdirectory. 
+Throughout this documentation, paths that do not start explicitly 
+with "simpatico/" should be understood to refer to subdirectories 
+of the simpatico/ root directory.
 
-\section compile_section Compiling
-Before compiling any of the programs:
+\section configure_section Configuration
+Before the first time you compile any of the programs, you must:
+
   - Change working directory (cd) to the root simpatico/ directory.
 
   - Enter "./configure".
 
 The configure script only needs to be invoked once, before the 
-first time you compile any program. The configure comand must be
-entered from within the root directory. 
+first time you compile any program. The configure script must be
+entered from within the root directory. The script creates 
+several configurations files that are required for compilation.
+The contents of the resulting configuration files are discussed
+below (\ref compile_config_section).
 
 After running the configure script, inspect the file src/compiler.mk
 makefile fragment, which is created by the configure script. The 
-variable ROOT_DIR should be set to the absolute path to the
-simpatico/ root directory on your machine. The COMPILER variable
-chooses from among several different compilers. By default, it is
-set to "gcc", which is the gnu C++ compiler.  To choose another
-compiler from among those listed (e.g., the intel compiler), 
-cooment out the line defining COMPILER=gcc and uncomment the
-line that uses the preferred compiler. Compiler names such as
-gcc_mpi and intel_mpi that end with the suffix _mpi are intended
-for use to compile programs that use MPI. 
+value of the variable ROOT_DIR must be set to the absolute path to 
+the simpatico/ root directory on your machine. 
 
-To compile the default serial versions of the mcSim and mdSim 
-single-processor simulation programs, using the default gcc
-compiler, you must:
+The COMPILER variable defined in src/compiler.mk chooses from among 
+several different compilers. By default, COMPILER is set to "gcc", 
+which denotes the gnu C++ compiler.  To choose another compiler from 
+among those listed (e.g., the intel compiler), comment out the line 
+defining COMPILER=gcc and uncomment the line that uses the preferred 
+compiler.  Compiler names such as gcc_mpi and intel_mpi that end with 
+the string _mpi denote compilers that link to an MPI library. These 
+are needed to compile ddSim or the multi-processor versions of mcSim 
+and mdSim.
+
+\section compile_mcMd_section Compiling mcSim and mdSim 
+
+To compile the default single-processor versions of the mcSim and 
+mdSim, using the default gcc compiler, you must first run the
+configure script (see above), and then:
 
   - Change working directory to the src/ directory ("cd src").
 
   - Enter "make mcMd"
 
-The above procedure should create executables bin/mcSim and 
-bin/mdSim for single-processor MC and MD simulations, and 
-compile all of the classes in the src/util, src/inter, and
-src/mcMd directories.  If compilation is successful, an *.o 
-object file will be created for each class in these three
-directories.  Each of the resulting object files is placed 
-in the same directory as the corresponding header (*.h) and 
-source (*.cpp) files (i.e., the makefile system uses an 
-in-place build). Three corresponding static (*.a) files
-named libutil.a, libinter.a and libmcmd.a will also be
-installed in the simpatico/lib directory. These libraries
+If successful, the above procedure should create executables 
+bin/mcSim and bin/mdSim for single-processor MC and MD simulations. 
+To do so, it first compiles all of the classes in the src/util, 
+src/inter, and src/mcMd directories, and creates three static
+library files that contain the resulting objects. The *.o 
+object file that is created by each *.cpp class in these 
+three is placed in the same directory as the corresponding 
+source file, which usually also contains the corresponding
+header (*.h) file.  Three static library (*.a) files named 
+libutil.a, libinter.a and libmcmd.a will also be created and
+(by default) placed in the lib/ directory. These libraries
 contain all of the objects from the util/, inter/, and 
-mcMd/ directories, respectively, which are linked to 
-create the main executables. 
+mcMd/ directories, respectively. These libraries are linked
+to the main programs to create the executables.
 
-If "make all" fails, inspect the file src/compiler.mk, and
-make sure that the variable $(ROOT_DIR) contains the correct
+If the above procedure fails, inspect the file src/compiler.mk, 
+and make sure that the variable $(ROOT_DIR) contains the correct
 path for the simpatico/ root directory, and that makefile 
 variables specify choices of compiler executable name and 
 compiler options that are appropriate for your system.  
 
-To compile the multi-processor ddMd program:
+Users may change the locations of the executable and library 
+files. The directory to which all executables files are written 
+is given by the makefile variable BIN_DIR defined in the file 
+src/compiler.mk. All libraries are written in the directory
+specified by the variable LIB_DIR, which is also defined in 
+src/compiler.mk. The names of the MC and MD single-processor 
+executables (mcSim and mdSim, by default) are given by the 
+values of the variables MCSIM_EXE and MDSIM_EXE defined in 
+src/mcMd/defines.mk.  Users may thus rename the executables 
+either by changing the values of any of these makefile 
+variables, or by simply moving the executable files after 
+they are created. 
 
-  - Edit the file src/compiler.mk by choosing a value for the
-    COMPILER string that ends with a suffix _mpi, such as 
-    gcc_mpi or intel_mpi, in order to choose a compiler 
-    that links to the MPI library. 
+To make the executables accessible from the command line
+(without requiring the use of an absolute path), users 
+should either add the directory containing these files to 
+their unix PATH environment, or install all executable 
+files in a directory that is already in their PATH.
+
+To remove all of the object files, libraries, and executable 
+files created by "make mcMd", enter "make clean-mcMd" from
+the src/ directory. Entering "make clean" removes all of
+these files, as well as any created by the "make ddMd" 
+command (discussed below).
+
+\section compile_ddMd_section Compiling ddSim
+
+To compile, the multi-processor ddMd program, one must
+select a compiler that links to an MPI library, and then
+follow a procedure similar to that used to compile mdSim
+and mcSim:
+
+  - Edit the file src/compiler.mk by choosing a value for 
+    the COMPILER string that ends with a suffix _mpi, such 
+    as gcc_mpi or intel_mpi. These compilers link to the 
+    MPI library. 
 
   - cd to the src/ directory (if not already there).
 
   - Enter "make ddMd".
 
-This procedure will recompile all of the code in the util/
-and inter/ directories, and compile the classes and the
-main program in the ddMd/ directory. It will create new
-MPI-enabled versions of the libraries containing objects 
-from the src/util/ and src/inter/ directories (which are
-distinguished from the serial versions by the addition 
-of a suffix _m to the end of each library name), create
-new library lib/libddMd.a for the classes in the ddMd/
-directory, and create an executable named bin/ddMd. 
+If successful, this procedure will create an executable
+named bin/ddMd. To do so, it will recompile all of the code 
+in the src/util/ and src/inter/ directories, and compile the 
+classes and the main program in the src/ddMd/ directory. It 
+will create new MPI-enabled versions of the libraries containing 
+objects from the src/util/ and src/inter/ directories (which 
+are distinguished from the serial versions by the addition 
+of a suffix _m to the end of each library name), and create 
+a library lib/libddMd.a for the classes in the ddMd/
+directory.
 
-To remove all of the object files, libraries, and executable 
-files created by "make mcMd", enter "make clean-mcMd" from
-the src/ directory. To remove the object files libraries 
-and executable created by "make mcMd', enter "make clean-ddMd".
-from the src/directory. Entering "make clean" from the same 
-directory removes all of the files created by either make
-command. 
+If the above procedure fails, check the name and options 
+for the compiler. The gcc_mpi and intel_mpi compilers in the 
+default makefile use a compiler name "mpicxx", which is the
+name of a script that is used on computers at the Minnesota
+Supercomputig Institute (where the code was developed) to
+represent an mpi-enabled compiler that is selected by loading
+an appropriate software module. To compile using openmpi on 
+a multi-core Mac laptop, we replaced "mpicxx" by 
+"openmpicxx". Users may have to change this and/or other
+definitions in the compilers.mk file. 
 
-The directory to which all executables files are written is 
-given by the makefile variable BIN_DIR defined the file 
-src/compiler.mk. The names of the MC and MD single-processor 
-executables (mcSim and mdSim, by default) are given by the 
-values of the macros MCSIM_EXE and MDSIM_EXE defined in 
-mcMd/defines.mk. The name of the domain decomposition MD
-code executable is defined by the variable DDSIM_EXE defined 
-in ddMd/defines.mk. Users may rename the executables either
-by changing the values of any of these variables, or by 
-moving the executable files after they are created. 
+The name of the parallel MD executable (ddSim by default)
+is defined by the variable DDSIM_EXE defined in 
+src/ddMd/defines.mk. The executable is placed in the 
+BIN_DIR directory.
 
-To make the executables accessible from the command line
-(without having to use an absolute path), users should
-either add the directory containing these files to their 
-unix PATH environment, or install the executable files 
-in a directory that is already in their PATH.
+To remove all object files libraries and executable created by 
+the "make ddMd' command, enter "make clean-ddMd".
 
 \section compile_config_section Configuration Files
 
@@ -145,8 +184,8 @@ users git repository without effecting synchronization
 between the user repository and the origin repository from
 which it was cloned. 
 
-Files with names that end in *.mk are makefile fragments
-that are included in other makefiles. 
+Files with names that end in *.mk are makefile fragments that 
+are included in other makefiles. 
 
 The file src/compiler.mk defines makefile variables that specify 
 the choice of C++ compiler and compiler options (as discussed
@@ -257,7 +296,7 @@ are almost never a problem. To enable automatic dependency generation
   - Add the Simpatico tools/python directory to the PYTHONPATH 
     unix shell variable, and 
 
-  - Either add the directory simpatico/bin to the users PATH
+  - Either add the simpatico/bin/ directory to the users PATH
     environment variable, or replace the value of the MAKEDEP 
     variable in the compiler.mk file by the absolute path of 
     the file simpatico/bin/makeDep.

@@ -20,6 +20,12 @@
 #include <mcMd/potentials/pair/McPairPotential.h>
 #endif
 #include <mcMd/potentials/bond/BondPotential.h>
+#ifdef INTER_ANGLE
+#include <mcMd/potentials/angle/AnglePotential.h>
+#endif
+#ifdef INTER_DIHEDRAL
+#include <mcMd/potentials/dihedral/DihedralPotential.h>
+#endif
 #ifdef MCMD_PERTURB
 #ifdef UTIL_MPI
 #include <mcMd/perturb/ReplicaMove.h>

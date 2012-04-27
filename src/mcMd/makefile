@@ -14,8 +14,8 @@ include $(SRC_DIR_REL)/mcMd/sources.mk
 
 MDSIM=$(SRC_DIR)/mcMd/mdSim
 MCSIM=$(SRC_DIR)/mcMd/mcSim
-MDSIM_EXE=$(ROOT_DIR)/bin/mdSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
-MCSIM_EXE=$(ROOT_DIR)/bin/mcSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
+MDSIM_EXE=$(ROOT_DIR)/bin/mdSim$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
+MCSIM_EXE=$(ROOT_DIR)/bin/mcSim$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
 #-----------------------------------------------------------------------
 
 all: $(mcMd_OBJS) $(mcMd_LIB) $(MDSIM).o $(MCSIM).o $(MCSIM_EXE) $(MDSIM_EXE)

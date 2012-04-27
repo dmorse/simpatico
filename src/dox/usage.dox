@@ -53,9 +53,12 @@ simplified version of the main program src/mcMd/mcSim.cpp for
 MC simulations:
 \code
 
-int main 
+int main(int argc, char** argv)
 {
    McMd::McSimulation simulation;
+  
+   \\ Process command line options
+   simulation.setOptions(argc, argv);
   
    \\ Read the parameter file from standard input
    simulation.readParam();
@@ -71,33 +74,34 @@ that is an instance of the class McSimulation in namespace McMd.
 An McSimulation object is the main object for an MC simulation,
 which coordinates the actions of many child objects. 
 
-The second line invokes the readParam() method of the McSimulation.
-Invoking readParam() with no argument (as here) reads the parameter file 
-from standard input. Despite its name, the readParam() method does not 
-merely read parameters: It initializes the simulation, allocates and
-required memory, and leaves the main simulation object ready for use.
+The the setOptions() method, which is invoked in the second line,
+is needed to process any command line options that are passed to
+the program.
 
-The third line invokes the readCommands() method. This method reads 
-a file containing a list of commands that are interpreted and executed 
-in sequence.  The name of the command file must be specified in the 
-param file. The command file usually contains (at a minimum) 
-commands to read a specific input configuration file, run a simulation, 
-and write a final configuration to file. 
+The readParam() method reads a parameter file and initializes the
+simulation.  Invoking readParam() with no argument (as here) reads 
+the parameter file from standard input. Despite its name, the 
+readParam() method does not merely read parameters: It allocates
+any required memory, initializes the simulation, and leaves the
+main simulation object ready for use.
+
+The last line invokes the readCommands() method. This method reads 
+a file containing a list of one-line commands, each of which is
+interpreted and executed before the next command is read from file.
+The name of the command file must be specified in the param file. 
+The command file usually contains (at a minimum) commands to read 
+an input configuration from file, run a simulation, and write a 
+final configuration to file. 
 
 The analogous code for the single-processor MD (mdSim) and parallel 
 MD (ddSim) program is almost identical. The only difference is that 
 the main object in mdSim.cpp is an instance of McMd::MdSimulation, 
 and the main object in ddSim.ccpp is an instance of DdMd::System.
 
-The actual main programs src/mcMd/mcSim.cpp, src/mcMd/mdSim.cpp 
-and src/ddMd/mdSim.cpp are more complicated than the above example 
-only because they also contain code to process command line 
-options. 
-
 \section io_Parameter Parameter File
 
-The parameter file contains all the data required to initialize 
-a simulation, i.e., to allocate all required memory and initialize 
+The parameter file contains all the data required to initialize a 
+simulation, i.e., to allocate all required memory and initialize 
 all variables to valid values. This data includes: (1) information
 required to allocate memory, such as the maximum allowable number
 of atoms or molecules, (2) physical parameters such as the 
@@ -198,21 +202,22 @@ The mdSim and mcSim programs can each be invoked with three command
 line options:
 <ul>
   <li> -e: Activates echoing of ach line of the parameter file as it is read.</li>
-  <li> -e filename: Restarts a previous simulation. The required parameter "filename"
-          is the base name of the required input files, which have suffixes *.prm,
-          *.rst, and *.cmd. </li>
+  <li> -e filename: Restarts and continues a previous simulation. </li>
   <li> -p: Enables the use of free energy perturbation theory.
   </li>
 </ul>
-The -e option can be useful for locating errors in the parameter file 
-block.  
+The -e option can be very useful for locating errors in the parameter file.
 
-The -p option is generally only useful when used with a version of mcSim or
-mdSim that is compiled for use on multiple processors, and is discussed in 
-more detail \ref perturb_page "here".
+The -r (restart) option takes a required parameter "filename". This is the 
+base name of three input files required to restart a simulation, which have 
+filename suffixes *.prm, *.rst, and *.cmd. 
 
-The "-e" (echo) option may also be used for ddSim, which takes no other
-command line options. 
+The -p (perturbation) option is generally only useful when used with a 
+version of mcSim or mdSim that is compiled for use on multiple processors.
+This option is discussed in more detail \ref perturb_page "here".
+
+The only valid option for the ddSim parallel program is the "-e" (echo) 
+option, which has the same effect in all programs.
 
 <ul>
  <li> \ref compile_page  (Previous) </li>

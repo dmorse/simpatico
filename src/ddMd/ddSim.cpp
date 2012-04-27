@@ -15,22 +15,6 @@
 int main(int argc, char **argv)
 {
 
-   bool  eflag  = false;
-
-   // Read command-line arguments
-   int c;
-   opterr = 0;
-   while ((c = getopt(argc, argv, "epr:")) != -1) {
-      switch (c) {
-      case 'e':
-        eflag = true;
-        break;
-      case '?':
-        std::cout << "Unknown option -" << optopt << std::endl;
-        return 1;
-      }
-   }
-
    #ifdef UTIL_MPI
    MPI::Init();
    DdMd::Simulation simulation(MPI::COMM_WORLD);
@@ -38,10 +22,8 @@ int main(int argc, char **argv)
    DdMd::Simulation simulation();
    #endif
 
-   if (eflag) {
-      // Enable echoing of parameters to log file as they are read.
-      Util::ParamComponent::setEcho(true);
-   }
+   // Read parameter file from standard input (read on master).
+   simulation.setOptions(argc, argv); 
 
    // Read parameter file from standard input (read on master).
    simulation.readParam(std::cin); 

@@ -25,11 +25,13 @@
 # trunk/ directory of the repository), the value of ROOT_DIR should be 
 # set to the absolute path to that directory.
 #-----------------------------------------------------------------------
-# Absolute paths
+# Absolute directory paths
 
 ROOT_DIR=PWD
 SRC_DIR=$(ROOT_DIR)/src
 BIN_DIR=$(ROOT_DIR)/bin
+LIB_DIR=$(ROOT_DIR)/lib
+
 #-----------------------------------------------------------------------
 # Automatic dependency generation:
 #

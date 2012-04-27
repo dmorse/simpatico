@@ -102,6 +102,5 @@ endif
 # Name of static library for Inter namespace.
 
 inter_LIBNAME=inter$(UTIL_SUFFIX)$(INTER_SUFFIX)
-inter_LIBDIR=$(ROOT_DIR)/lib
-inter_LIB=$(inter_LIBDIR)/lib$(inter_LIBNAME).a
+inter_LIB=$(LIB_DIR)/lib$(inter_LIBNAME).a
 #-----------------------------------------------------------------------
