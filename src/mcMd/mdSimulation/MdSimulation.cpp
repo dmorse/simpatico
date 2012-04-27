@@ -48,7 +48,8 @@ namespace McMd
     : Simulation(communicator),
       system_(),
       mdDiagnosticManagerPtr_(0),
-      isRestarting_(false)
+      isRestarting_(false),
+      isInitialized_(false)
    {
       system_.setId(0);
       system_.setSimulation(*this);
