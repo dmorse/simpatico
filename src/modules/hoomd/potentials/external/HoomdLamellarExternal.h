@@ -11,19 +11,20 @@
 
 #include "HoomdExternal.h"
 
-#include <hoomd/EvaluatorExternalLamellar.h>
+#include <hoomd/EvaluatorExternalPeriodic.h>
 #include <hoomd/AllDriverPotentialExternalGPU.cuh>
 
 namespace McMd
 {
+   extern char classNameHoomdLamellar[];
 
    /**
    * A potential encapsulating the HOOMD Lamellar evaluator
    *
    * \ingroup External_Module
    */
-   class HoomdLamellarExternal : public HoomdExternal< EvaluatorExternalLamellar,
-      gpu_compute_lamellar_forces >
+   class HoomdLamellarExternal : public HoomdExternal< EvaluatorExternalPeriodic,
+      gpu_compute_periodic_forces, classNameHoomdLamellar >
    {
    
    public:
@@ -49,7 +50,7 @@ namespace McMd
       * Set external potential parameter
       *
       */
-      void setExternalParameter(double orderParameter);
+      void setExternalParameter(double externalParameter);
 
       /**
       * returns external potential parameter
@@ -72,8 +73,8 @@ namespace McMd
       /// per-type prefactor of potential
       DArray<double> prefactor_;
 
-      /// order parameter
-      double orderParameter_;
+      /// external parameter
+      double externalParameter_;
 
       /// Number of periods in a cell
       int periodicity_;
