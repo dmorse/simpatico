@@ -32,7 +32,7 @@ namespace Inter
    * interactions between bonded atoms are masked, to allow the pair
    * potential to be explicitly added back in.
    * 
-   * \ingroup Inter_Potential_Module
+   * \ingroup Inter_Bond_Module
    */
    template <class BareBond, class BarePair>
    class CompositeBond : public ParamComposite 

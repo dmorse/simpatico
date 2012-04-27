@@ -7,41 +7,56 @@ namespace McMd
    * \ingroup  McMd_Module
    *
    * \brief    Classes used by a System calculate potential energies.
+   *
+   * Separate potential energy classes are provided for nonbonded pairs,
+   * different types of covalent potentials (pairs, angles, and dihedrals),
+   * and for one-body external potentials. Each type of potential energy 
+   * is represented by an abstract base class, which declares pure virtual 
+   * methods to calculate energies and forces for an entire System, and a 
+   * separate implementation class template. Each implementation template 
+   * takes an interaction class as a template argument, and uses an instance 
+   * of this interaction class to calculate energies and forces for small
+   * groups of atoms (pairs, bonds, etc.). Specific instantiations of each 
+   * implementation template, with an interaction class specified in by
+   * a style string in the parameter file, are instantiated by an 
+   * associated Factory class.
+   *
+   * \sa Inter_Module
    */
 
    /**
    * \defgroup McMd_Pair_Module Pair Potentials
    * \ingroup McMd_Potential_Module
    *
-   * \brief    Classes that represent non-bonded pair potentials.
+   * \brief    Non-bonded pair potentials.
    */
 
    /**
    * \defgroup McMd_Bond_Module Bond Potentials
    * \ingroup McMd_Potential_Module
    *
-   * \brief    Classes that represent covalent bond potentials.
+   * \brief    Covalent 2-body bond potentials.
    */
 
    /**
    * \defgroup McMd_Angle_Module Angle Potentials
    * \ingroup McMd_Potential_Module
    *
-   * \brief    Classes that represent covalent angle potentials.
+   * \brief    Covalent 3-body angle potentials.
    */
 
    /**
    * \defgroup McMd_Dihedral_Module Dihedral Potentials
    * \ingroup McMd_Potential_Module
    *
-   * \brief    Classes that represent covalent dihedral potentials.
+   * \brief    Covalent 4-body dihedral potentials.
    */
 
    /**
    * \defgroup McMd_External_Module External Potentials
    * \ingroup McMd_Potential_Module
    *
-   * \brief    Classes that represent external one-body potentials.
+   * \brief    External one-body potentials.
    */
 
 }

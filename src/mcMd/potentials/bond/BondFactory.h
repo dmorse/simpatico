@@ -35,7 +35,7 @@ namespace McMd
       BondFactory(System& system);
 
       /**
-      * Return a pointer to a new McBondInteration, if possible.
+      * Return a pointer to a new BondPotential, if possible.
       */
       BondPotential* factory(const std::string& subclass) const;
 
