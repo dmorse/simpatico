@@ -1,21 +1,9 @@
-Clean-up
---------
+Configuration File IO
+---------------------
 
-- Rename implementation files *.tpp for Group_Distributor and Group_Collector
+- Add ConfigIo factory and SET_CONFIG_IO command.
 
-Cell List:
-------------------
-
-- Make AtomTag struct a public class, add an IntVector
-  of micro-cell indices to CellTag, to allow fast rejection
-  of most pairs.
-
-- Modify neighbors method to pass pack a list of AtomTag objects,
-  rather than an array of pointers. Provide a CellList isInPair 
-  method to decide if a particular pair is within the cutoff.
-
-- Consider how neighbor list would be built if we used Newton's
-  law (to evaluate each force only once).
+- Add LammpsConfigIo class
 
 
 Constant Pressure:
@@ -28,6 +16,35 @@ Constant Pressure:
 
 - Write a reversible NPT integrator.
 
+
+Reverse Communication
+---------------------
+
+- Write and test reverse_update() method.
+
+- Add bool reverseCommunicate_ accessor and setter to Simulation.
+
+- Modify potentials, Exchanger, etc. to accomodate reverseCommunicate.
+
+
+Cell List and Pair List:
+------------------------
+
+- Make AtomTag struct a public class, add an IntVector
+  of micro-cell indices to CellTag, to allow fast rejection
+  of most pairs.
+
+- Modify neighbors method to pass pack a list of AtomTag objects,
+  rather than an array of pointers. Provide a CellList isInPair 
+  method to decide if a particular pair is within the cutoff.
+
+- Consider how neighbor list would be built if we used Newton's
+  law (to evaluate each force only once).
+
+- Improve testing of PairList - provide method to count number of pairs
+  that are currently within the cutoff, and check that it doesn't change.
+
+
 Buffer:
 -------
 
@@ -36,11 +53,12 @@ Buffer:
 - Figure out how to make pack/unpack methods of the atom class, so 
   that they can use private information.
 
+
 Single Processor Operation
 --------------------------
 
-- Modify Distributor, Collector, ConfigIo, and Exchanger classes to 
-  work ifndef UTIL_MPI, continue with other classes, to enable 
+- Modify Distributor, Collector, ConfigIo, and Exchanger classes
+  to work ifndef UTIL_MPI, continue with other classes, to enable 
   single processor operation with no MPI.
 
 
@@ -58,24 +76,6 @@ Atom Class Implementation
 --------------------------
 
 - see doc/notes/ddMd/Atom file
-
-
-Configuration File IO
---------------------------
-
-- Add ConfigIo factory and SET_CONFIG_IO command.
-
-- Add LammpsConfigIo class
-
-
-Reverse Communication
----------------------
-
-- Write and test reverse_update() method.
-
-- Add bool reverseCommunicate_ accessor and setter to Simulation.
-
-- Modify potentials, Exchanger, etc. to accomodate reverseCommunicate.
 
 
 Files
@@ -99,10 +99,8 @@ Integer Types
 
 - Make typeId and id for atoms and groups type index throughout the code. 
 
+
 Testing
 -------
 
 - Test conservation of energy with dihedrals.
-
-- Improve testing of PairList - provide method to count number of pairs
-  that are currently within the cutoff, and check that it doesn't change.

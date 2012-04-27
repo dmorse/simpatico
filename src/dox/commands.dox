@@ -84,8 +84,8 @@ than the sum of their exclusion radii.
 \section commands_sec Available Commands
 
 The following table shows a list of available commands for all three programs. 
-The last three columns indicate which commands are recognized by each program, 
-using an "X" represents a valid command for mcSim, mdSim, or ddSim.
+The last three columns indicate which commands are valid for each program: An 
+"X" represents a valid command for mcSim, mdSim, or ddSim.
 <table>
   <tr> 
     <td> <b>command     </b> </td>
@@ -157,7 +157,7 @@ using an "X" represents a valid command for mcSim, mdSim, or ddSim.
     </td>
     <td> <b>-</b> </td>
     <td> <b>X</b> </td>
-    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
   </tr>
   <tr>
     <td> GENERATE_MOLECULES </td>
