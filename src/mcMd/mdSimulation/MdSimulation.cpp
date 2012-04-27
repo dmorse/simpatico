@@ -12,6 +12,13 @@
 #include <mcMd/mdSimulation/MdDiagnosticManager.h>
 #include <mcMd/mdIntegrators/MdIntegrator.h>
 #include <mcMd/potentials/pair/MdPairPotential.h>
+#include <mcMd/potentials/bond/BondPotential.h>
+#ifdef INTER_ANGLE
+#include <mcMd/potentials/angle/AnglePotential.h>
+#endif
+#ifdef INTER_DIHEDRAL
+#include <mcMd/potentials/dihedral/DihedralPotential.h>
+#endif
 #include <mcMd/diagnostics/Diagnostic.h>
 #include <mcMd/trajectoryIos/TrajectoryIo.h>
 #include <mcMd/species/Species.h>
@@ -24,9 +31,9 @@
 #include <util/util/ioUtil.h>
 #include <util/util/Timer.h>
 
-
 #include <sstream>
 #include <iostream>
+#include <unistd.h>
 
 namespace McMd
 {
@@ -81,11 +88,82 @@ namespace McMd
       }
    }
 
+   /*
+   * Process command line options.
+   */
+   void MdSimulation::setOptions(int argc, char **argv)
+   {
+      char* rarg   = 0;
+      bool  eflag  = false;
+      bool  rflag  = false;
+      #ifdef MCMD_PERTURB
+      bool  pflag = false;
+      #endif
+   
+      // Read program arguments
+      int c;
+      opterr = 0;
+      while ((c = getopt(argc, argv, "epr:")) != -1) {
+         switch (c) {
+         case 'e':
+           eflag = true;
+           break;
+         case 'r':
+           rflag = true;
+           rarg  = optarg;
+           break;
+         #ifdef MCMD_PERTURB
+         case 'p':
+           pflag = true;
+           break;
+         #endif
+         case '?':
+           std::cout << "Unknown option -" << optopt << std::endl;
+           UTIL_THROW("Invalid command line option");
+         }
+      }
+   
+      // Set flag to echo parameters as they are read.
+      if (eflag) {
+         Util::ParamComponent::setEcho(true);
+      }
+      #ifdef MCMD_PERTURB
+      // Set to use a perturbation.
+      if (pflag) {
+   
+         // Set to expect perturbation in the param file.
+         system().setExpectPerturbation();
+   
+         #ifdef UTIL_MPI
+         Util::Log::file() << "Set to read parameters from a single file" 
+                           << std::endl;
+         setParamCommunicator();
+         #endif
+   
+      }
+      #endif
+      if (rflag) {
+         std::cout << "Reading restart" << std::endl;
+         std::cout << "Base file name " << std::string(rarg) << std::endl;
+         isRestarting_ = true; 
+         readRestart(std::string(rarg));
+      }
+   }
+
    /* 
    * Read parameters from file.
    */
    void MdSimulation::readParam(std::istream &in)
    { 
+      if (isRestarting_) {
+         if (isInitialized_) {
+            return;
+         }
+      } else 
+      if (isInitialized_) {
+         UTIL_THROW("Error: Called readParam when already initialized");
+      }
+
       readBegin(in, "MdSimulation");
 
       Simulation::readParam(in); 
@@ -158,6 +236,10 @@ namespace McMd
 
          } else {
 
+            if (command == "FINISH") {
+               Log::file() << std::endl;
+               readNext = false;
+            } else 
             if (command == "READ_CONFIG") {
                inBuffer >> filename;
                Log::file() << Str(filename, 15) << std::endl;
@@ -252,10 +334,51 @@ namespace McMd
                      boundary);
                }
             } else
-            if (command == "FINISH") {
-               Log::file() << std::endl;
-               readNext = false;
-            } else {
+            #ifndef UTIL_MPI
+            if (command == "SET_PAIR") {
+               std::string paramName;
+               int typeId1, typeId2; 
+               double value;
+               inBuffer >> paramName >> typeId1 >> typeId2 >> value;
+               Log::file() << "  " <<  paramName 
+                           << "  " <<  typeId1 << "  " <<  typeId2
+                           << "  " <<  value << std::endl;
+               system().pairPotential()
+                       .set(paramName, typeId1, typeId2, value);
+            } else 
+            if (command == "SET_BOND") {
+               std::string paramName;
+               int typeId; 
+               double value;
+               inBuffer >> paramName >> typeId >> value;
+               Log::file() << "  " <<  paramName << "  " <<  typeId 
+                           << "  " <<  value << std::endl;
+               system().bondPotential().set(paramName, typeId, value);
+            } else 
+            #ifdef INTER_ANGLE
+            if (command == "SET_ANGLE") {
+               std::string paramName;
+               int typeId; 
+               double value;
+               inBuffer >> paramName >> typeId >> value;
+               Log::file() << "  " <<  paramName << "  " <<  typeId 
+                           << "  " <<  value << std::endl;
+               system().anglePotential().set(paramName, typeId, value);
+            } else 
+            #endif
+            #ifdef INTER_DIHEDRAL
+            if (command == "SET_DIHEDRAL") {
+               std::string paramName;
+               int typeId; 
+               double value;
+               inBuffer >> paramName >> typeId >> value;
+               Log::file() << "  " <<  paramName << "  " <<  typeId 
+                           << "  " <<  value << std::endl;
+               system().dihedralPotential().set(paramName, typeId, value);
+            } else 
+            #endif
+            #endif
+            {
                Log::file() << "Error: Unknown command  " << std::endl;
                readNext = false;
             }
@@ -551,7 +674,13 @@ namespace McMd
 
    void MdSimulation::readRestart(const std::string& filename)
    {
-      isRestarting_ = true;
+      // readRestart
+      if (isInitialized_) {
+         UTIL_THROW("Error: Called readRestart when already initialized");
+      }
+      if (!isRestarting_) {
+         UTIL_THROW("Error: Called readRestart without restart option");
+      }
 
       // Open and read parameter (*.prm) file
       std::ifstream in;
@@ -573,9 +702,10 @@ namespace McMd
       in.close();
 
       // Read command (*.cmd) file
-      fileMaster().openParamIFile(filename, ".cmd", in);
-      readCommands(in);
-      in.close();
+      std::string commandFileName = filename + ".cmd";
+      fileMaster().setCommandFileName(commandFileName);
+
+      isInitialized_ = true;
    }
 
    /* 

@@ -71,10 +71,9 @@ endif
 #-----------------------------------------------------------------------
 # Names of the library and executable files.
 
-mcMd_LIBNAME=mcMd$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
-mcMd_LIBDIR=$(ROOT_DIR)/lib
-mcMd_LIB=$(mcMd_LIBDIR)/lib$(mcMd_LIBNAME).a
+mcMd_LIBNAME=mcMd$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
+mcMd_LIB=$(LIB_DIR)/lib$(mcMd_LIBNAME).a
 
-MCSIM_EXE=$(BIN_DIR)/mcSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
-MDSIM_EXE=$(BIN_DIR)/mdSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
+MCSIM_EXE=$(BIN_DIR)/mcSim$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
+MDSIM_EXE=$(BIN_DIR)/mdSim$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
 #-----------------------------------------------------------------------

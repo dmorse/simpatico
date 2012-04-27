@@ -1,20 +1,25 @@
-New features:
--------------
-
-- Write and test NptIntegrator subclass.
+Angles and Dihedrals
+--------------------
 
 - Write and test HarmonicAngle class.
 
 - Write and test MultiHarmonicDihedral class.
 
-- Check restart system for parallel jobs.
+- Switch macros from, e.g., ifdef INTER_ANGLE to ifndef INTER_NO_ANGLE
+
+- Change examples accordingly to work with code with everything enabled.
+
+Constant Pressure
+-----------------
+
+- Write and test NptIntegrator subclass.
+
+- Modify integrators to preserve ratios of unequal lengths.
+
+- Check criterion for reneighboring with fluctuating boundary.
 
 New Commands
 ------------
-
-- Add SET_... commands to command script parser.  Start with :
-  SET_PAIR  (format defined by class)
-  SET_BOND  (format defined by class), etc.
 
 - Allow diagnostics to be enabled, disabled, and cleared (reset accumulators) 
   from the command script. Add commands:
@@ -23,8 +28,12 @@ New Commands
   DISABLE_DIAGNOSTICS 
   CLEAR_DIAGNOSTICS 
 
-  to enable, disable, or clear diagnostic. Add ability to enable or
-  disable specific diagnostics later.
+  to enable, disable, or clear diagnostics.
+
+Restart System
+--------------
+
+- Check restart system for parallel jobs.
 
 Python File Tools:
 ------------------
@@ -45,10 +54,6 @@ Testing
 Interface changes:
 ------------------
 
-- Modify preprocessor macros so that the default version includes 
-  angles and dihedrals, which can be excluded by defining 
-  MCMD_NO_ANGLE and MCMD_NO_DIHEDRAL.
-
 - Method names changes (possible):
 
   * If possible, remove moleculeId() and molecule(speciesId, moleculeId)
@@ -59,6 +64,7 @@ Interface changes:
 - Source file names and locations:
 
   * Separate directories for observer, string, error, timer, misc
+
 
 SubSystem base classes:
 -----------------------
@@ -76,6 +82,7 @@ SubSystem base classes:
 
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
 
+
 Design Changes
 --------------
 
@@ -90,10 +97,4 @@ Interactions:
 
 - Add a constructor to each potential that takes an Interaction as an
   argument. 
-
-Command Line Options
---------------------
-
-- Move code to parse command line options into new setOptions()
-  methods of McSimulation and MdSimulation.
 

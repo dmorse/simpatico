@@ -28,14 +28,14 @@ required to make the package suitable for general atomistic models.
 \section features_algorithms_sec Simulation Algorithms
 
 For single-processor MD simulations, mdSim currently provides the 
-following integration algorithms:
+following integration algorithms and ensembles:
 <ul>
   <li> NVE velocity verlet </li>
   <li> NVT Nose-Hoover </li>
   <li> NVT dissipative particle dynamics </li>
   <li> NPH Anderson barostat </li>
 </ul>
-For Monte-Carlo integration, mcSim currently provides the following 
+For Monte-Carlo simulation, mcSim currently provides the following 
 MC moves, among others:
 <ul>
    <li> Single atom displacement </li>
@@ -49,14 +49,13 @@ MC moves, among others:
    <li> End-swap move for linear heteropolymers (e.g., diblock copolymers) </li>
    <li> Semi-grand canonical move (for, e.g., homopolymer blends) </li>
 </ul>
-The current selection of MC moves reflects the fact that mcSim has thus 
-far been used only for simulation of coarse-grained models flexible 
-polymers.
+For parallel Md simulations, DdSim thus far provides only two integrators:
+<ul>
+  <li> NVE velocity verlet </li>
+  <li> NVT Nose-Hoover </li>
+</ul>
 
-For parallel Md simulations, DdSim thus far provides only NVE velocity-Verlet 
-and NVT Nose-Hoover integration algorithms. 
-
-\section features_hoomd_sec Hoomd Integration
+\section features_hoomd_sec GPU Acceleration via integration with Hoomd 
 
 Simpatico provides an optional module that allows the use of the 
 <a href=http://codeblue.umich.edu/hoomd-blue/>Hoomd-blue</a> code 
@@ -70,21 +69,13 @@ simulations: We obtain a speed-up of approximately a factor of 30 for
 for bead-spring polymer melts with repulsive Lennard-Jones (i.e.,
 Weeks-Chandler-Anderson) pair interactions.
 
-We plan to write a similar master-slave simulation that uses a serial
-MC simulation as a master to drive a parallel domain decomposition MD 
-slave.  When complete, this will enable use of multiple CPUs, rather 
-than a single GPU, as an alternative way to accelerate hybrid MC 
-simulations. This was an important motiviations for writing our own 
-parallel MD code. The required integration of the two codes is, 
-however, not completed.
-
 \section features_analysis_sec Data Analysis
 
 Simpatico is distributed with a classes for statistical analysis, for 
 use with the single-processor mcSim and mdSim programs. These include 
 classes to evaluate:
 <ul>
-  <li> Thermodynamic properties (energies and stress components.) </li>
+  <li> Thermodynamic properties (energies and stress components) </li>
   <li> Full and partial radial distribution functions (in real space). </li>
   <li> Structure factors (in coordinate space). </li>
   <li> Intramolecular correlation functions. </li>

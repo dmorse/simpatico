@@ -1,7 +1,7 @@
-#include "PotentialTestComposite.h"
+#include "InteractionTestComposite.h"
 
 int main() 
 {
-   PotentialTestComposite runner;
+   InteractionTestComposite runner;
    runner.run();
 }

@@ -24,20 +24,24 @@ non-polymorphic (they have no virtual methods), but all interactions of the
 same type (e.g. all pair interactions) use the same interface for energy and 
 force methods.
 
-These interaction classes are used in both the McMd namespace, for the single
-processor programs mcSim and mdSim, and in the DdMd namespace, for the parallel
-ddSim MD program. Both the McMd and DdMd namespaces contain a separate set of
+See also: \ref Inter_Module "Inter Module"
+
+The interaction classes are used in both the McMd namespace, for the single
+processor program mcSim and mdSim, and in the DdMd namespace, for the parallel
+MD program ddSim. The McMd and DdMd namespaces each contain a separate set of
 "potential" energy classes, which are distinct from the "interaction" classes
-defined in the Inter namespace.  A "potential" class is an abstract base class 
-that declares methods to calculate energies and atomic forces for an entire 
-system and (in some cases) for individual atoms or molecules within a system.
-Each of the potential classes also provides a set of virtual functions to 
-calculate the energy for a single group (e.g., pair) of interacting atoms, 
-using the same interface as that of the associated "interaction" class. The
-potential classes are implemented in both the McMd namespace using class
-templates that take interaction classes as template parameters, and that
-hold an instance of an associated interaction class, which is used for all
-of the core calculations of energies and forces for, e.g., individual pairs.
+in the Inter namespace.  In Simpatico, a "potential" class is a class that
+provides methods to calculate energies and atomic forces for an entire system 
+and (in some cases) for individual atoms or molecules within a system, as well
+as for individual pairs, bonds, etc. The implementtion of each potential class 
+uses a simpler bond interaction class for the core calculation of the energies 
+and forces of individual bonds.  
+
+See also:
+
+\ref McMd_Potential_Module "McMd Potential Module"
+
+\ref DdMd_Potential_Module "DdMd Potential Module"
 
 <ul>
  <li> \ref Util_NS_page (previous)  </li>
