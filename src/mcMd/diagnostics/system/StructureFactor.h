@@ -12,7 +12,6 @@
 #include <mcMd/simulation/System.h>               // base class template parameter
 #include <util/containers/DMatrix.h>              // member template
 #include <util/containers/DArray.h>               // member template
-#include <util/accumulators/History.h>            
 
 #include <util/global.h>
 
