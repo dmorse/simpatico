@@ -205,6 +205,16 @@ namespace McMd
       }
       outputFile_.close();
 
+      // Outputs history of maximum structure factors
+      fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_);
+      for (int i = 0; i < nSample_; ++i) {
+         outputFile_ << maximumWaveIntVector_[i];
+         outputFile_ << Dbl(maximumQ_[i], 20, 8);
+         outputFile_ << Dbl(maximumValue_[i], 20, 8);
+         outputFile_ << std::endl;
+      }
+      outputFile_.close();
+
       #if 0
       // Output each structure factor to a separate file
       std::string suffix;

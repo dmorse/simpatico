@@ -12,7 +12,6 @@ mcMd_diagnostics_system_SRCS=$(SRC_DIR)/mcMd/diagnostics/system/AtomMSD.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/RingRouseAutoCorr.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/StructureFactor.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/StructureFactorGrid.cpp \
-    $(SRC_DIR)/mcMd/diagnostics/system/MaximumSf.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/StructureFactorP.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/StructureFactorPGrid.cpp \
     $(SRC_DIR)/mcMd/diagnostics/system/SystemDiagnosticFactory.cpp \

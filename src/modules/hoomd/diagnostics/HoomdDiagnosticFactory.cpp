@@ -8,7 +8,6 @@
 #include "HoomdDiagnosticFactory.h" // Class header
 
 #include "GPUStructureFactorGrid.h"
-#include "GPUMaximumSf.h"
 
 namespace McMd
 {
@@ -33,8 +32,6 @@ namespace McMd
 
       if (className == "GPUStructureFactorGrid") {
          ptr = new GPUStructureFactorGrid(*systemPtr_);
-      } else if (className == "GPUMaximumSf") {
-         ptr = new GPUMaximumSf(*systemPtr_);
       } 
 
       return ptr;
