@@ -67,7 +67,8 @@ namespace McMd
     : Simulation(),
       system_(),
       mdDiagnosticManagerPtr_(0),
-      isRestarting_(false)
+      isRestarting_(false),
+      isInitialized_(false)
    {
       system_.setId(0);
       system_.setSimulation(*this);
@@ -173,7 +174,7 @@ namespace McMd
       readParamComposite(in, diagnosticManager());
 
       isValid();
-
+      isInitialized_ = true;
       readEnd(in);
    }
  
