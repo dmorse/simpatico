@@ -69,7 +69,7 @@ namespace Util
    * has a class name string. 
    *
    * \par
-   * <b>read < T > </b>: The read < T >() method template reads a single parameter 
+   * <b>read()</b>: The read < T >() method template reads a single parameter 
    * of type T from stream and adds an associated ScalaraParam<T> object object 
    * to the format array. This template may be used with any type T for which
    * an inserter (>>) and extractor (<<) are defined. Each ScalarParam object 

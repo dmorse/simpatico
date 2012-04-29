@@ -1,27 +1,36 @@
 namespace McMd
 {
 
-/*! \page restart_page Restarting a Simulation
+/*! \page restart_page Restarting
 
-The -r command line option of mcSim or mdSim option can be used to 
-restart a simulation, while preserving the full internal state of 
-the simulation. This restart capability has not yet been added to 
-ddSim.
+The -r command line option can be used to restart an mcSim or 
+mdSim simulation, while preserving the full internal state of 
+the simulation. It is also, of course, possible to restart any 
+simulation from a configuration file, but this loses some 
+information about the internal state of statistical accumulators
+used by on-the-fly diagnostics and the axuiliary state variables 
+used by some MD integrators. No analogous restart capability has 
+been implemented for ddSim simulations: Thus far, these can only 
+be restarted from a configuration file. 
 
-In order to restart a simulation, the original simulation must be run
-using the MdWriteRestart or McWriteRestart diagnostic, which periodically
-writes the required restart file. This diagnostic takes a filename 
-parameter which is the base name for the two restart files. The two 
-required files are *.rst file, which is a restart file, and a *.prm
-file, which is a copy of the parameter file. Both of these files are 
-repeatedly are overwritten repeatedly, so that only the most recent
-state is available. 
+In order to restart an mcSim or ddSim simulation, the original 
+simulation must be run using the MdWriteRestart or McWriteRestart 
+diagnostic, which periodically writes the required data to file.
+This diagnostic takes a filename parameter which is the base name 
+for the two restart files. The two required files are *.rst file, 
+which is a restart file, and a *.prm file, which is a copy of the 
+parameter file. Both of these files are overwritten repeatedly, 
+so that only the most recent state is available. The DumpConfig
+diagnostic writes configurations to file without overwriting 
+them, and should be used to write configurations for data 
+analysis. 
 
-To restart a simulation, one must write a short *.cmd command file.
-This file must have the same base name as the *.prm and *.rst files
-produced during the original run.  The simplest possible *.cmd 
-restart command file looks like this
-this
+To restart a simulation, one must write a short *.cmd command 
+file.  This file must have the same base name as the *.prm and 
+*.rst files produced during the original run, and be placed in 
+the same directory (usually the directory from which the program 
+was invoked). The simplest possible *.cmd restart command file 
+looks like this
 \code
    RESTART   150000
    FINISH
@@ -47,12 +56,12 @@ files, one would type
    mcSim -r restart
 \endcode
 to restart the simulation. This causes the program to read the files
-restart.prm, restart.rst, and restart.cmd, in that order, and to execute
-the commands in restart.cmd. As already noted, the first command must be
-a RESTART command. 
+restart.prm, restart.rst, and restart.cmd, in that order, and to 
+execute the commands in restart.cmd. As already noted, the first 
+command must be a RESTART command. 
 
 <ul>
- <li> \ref read_param_page (Prev) </li>
+ <li> \ref analysis_page (Prev) </li>
  <li> \ref guide_page      (Up)   </li>
  <li> \ref parallel_page   (Next) </li>
 </ul>

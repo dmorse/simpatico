@@ -1,4 +1,4 @@
-/*! \page design_page Class Library
+/*! \page design_page Source Code
 
 The classes used in the current version of Simpatico are divided into four
 namespaces, and four corresponding subdirectories: The Util namespace (or
