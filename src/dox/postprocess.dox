@@ -67,9 +67,9 @@ sample method, rather than MD or MC steps. For postprocessing,
 the interval for most diagnostics should thus be set to 1.
 
 <ul>
- <li> \ref diagnostics_page  (Prev) </li>
- <li> \ref guide_page     (Up)   </li>
- <li> \ref examples_page  (Next) </li>
+ <li> \ref diagnostics_page (Prev) </li>
+ <li> \ref guide_page       (Up)   </li>
+ <li> \ref read_param_page  (Next) </li>
 </ul>
 
 */

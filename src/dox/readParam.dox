@@ -107,7 +107,7 @@ methods throws an Exception, and thereby abort program execution,
 if the expected label is not found. 
 
 <ul>
- <li> \ref examples_page     (Prev) </li>
+ <li> \ref analysis_page  (Prev) </li>
  <li> \ref guide_page        (Up)   </li>
  <li> \ref restart_page      (Next) </li>
 </ul>

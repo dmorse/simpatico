@@ -1,35 +1,34 @@
 namespace McMd
 {
 
-/*! \page data_page Data Structures
+/*! \page data_page Data Structures (mcSim and mdSim)
 
 In this section, we discuss details of how the most important data
-structures are organized in the implementation of Simpatico. 
+structures are organized in the implementation of the mcSim and 
+mdSim single-processor programs. The organization of data in the
+parallel ddSim program is signficantly different.
 
-The underlying organization of memory in Simpatico is intentionally 
-hidden by the public interface. The public interface allows Molecule 
-objects to be accessed only through methods of the System class that 
-either return a Molecule of a particular species by reference, or 
-initialize an iterator for all molecules of one Species. To access a
-particular atom, one must first obtain a reference or pointer to 
-the parent Molecule, and then invoke a method of the Molecule that 
-either returns a particular Atom by reference or initialize an iterator 
-for all atoms in one Molecule. Particular Group<NAtom> objects within 
-a molecule, which represent covalent bonds (NAtom=2), angle groups 
-and torsion groups can be accessed by patterns similar to those used 
-for access Atoms. 
+The underlying organization of memory in mcSim and mdSim is not 
+apparent from the public interface. The public interface of the
+System class allows Molecule objects to be accessed only through 
+methods of a System that either return a Molecule of a particular 
+species by reference, or initialize an iterator for all molecules 
+of one Species. To access a particular atom, one must first obtain 
+a reference or pointer to the parent Molecule, and then invoke a 
+method of the Molecule that either returns a particular Atom by 
+reference or that initializes an iterator for all atoms in one 
+Molecule. Particular Group<NAtom> objects within a molecule, which 
+represent covalent bonds (NAtom=2), angle groups and torsion groups 
+can be accessed by patterns similar to those used for access Atoms. 
 
-This public interface would be compatible with a heirarchical 
-organization of memory, in which each Molecule actually has a member 
-array of Atom objects, and an array of Group<NAtom> objects of each 
-type, and in which each System actually holds Molecule objects of each 
-Species in an array.  The implementation of Simpatico actually uses a 
-set of large global arrays of Molecule, Atom, and Group objects. These 
-global arrays are private members of the main Simulation object, and 
-are all allocated during the initialization of the simulation. Each 
-of these arrays holds all of the Molecule, Atom, and Group objects 
-that are available for use by molecules of any Species in any 
-System during a simulation. 
+The implementation of Simpatico actually uses a set of large 
+arrays of Molecule, Atom, and Group objects, each of which acts
+as a sort of memory pool. Each of these arrays is a private 
+member of the main Simulation object, and is allocated during 
+the initialization of the simulation. Each of these arrays holds 
+all of the Molecule, Atom, and Group objects that are available 
+for use by molecules of any Species in any System during a 
+simulation. 
 
 Each molecule object is permanently associated with a block of Atom 
 objects in the global Atom array, a block of Bond (i.e,. Group<2>) 
@@ -37,11 +36,13 @@ objects in the global array of Bond objects, and so forth for Angle
 (Group<3>) and Torsion (Group<4>) objects. This association of each
 molecule with blocks of constitutent objects is created immediately 
 after these arrays are allocated, by setting pointer members of 
-each molecule to point to the first element of the associated block 
-of Atom and Group<NAtom> objects. This association is never changed 
-thereafter. Each Atom object also has a pointer to its parent Molecule, 
-and each Molecule has a pointer to its parent Species, which is also 
-set during initialization of the Simulation.
+each molecule to point to the first element of the associated blocks 
+of Atom and Group<NAtom> objects. This association of Molecule 
+objects with blocks of atoms and groups is permanent: It is never
+changed after it is created. Each Atom object also has a pointer 
+to its parent Molecule, and each Molecule has a pointer to its 
+parent Species, which are also set during initialization of the 
+Simulation, and unchanged thereafter.
 
 Molecule objects and associated blocks of atoms and Group objects
 are never created or destroyed after initialization. Ownership of 
@@ -55,8 +56,8 @@ more detail below.
 
 The private molecules_ array container of a Simulation holds all 
 of the Molecule objects of that are available for all Species in 
-a Simulation. Molecules of each species are assigned a contiguous
-block of elements within this array. 
+a Simulation. Each species is assigned a contiguous block of 
+Molecule elements within this array. 
 
 The number of molecules that is allocated for each species is the 
 capacity of the Species.  The capacity of the molecules_ array is 
@@ -69,20 +70,20 @@ the Species capacity must be chosen to be large enough to accomodate
 any fluctuations that might be encountered during the simulation.  
 
 Each System in a Simulation has a container for each Species that
-that holds pointers to all Molecule objects of that Species that 
-are currently in that System.  In addition, each Species object 
+that holds pointers to Molecules of that Species that are 
+currently in the System.  In addition, each Species object 
 has a container, known as a reservoir, that holds pointers to
-"unused" molecules that are not in any System. The reservoir is 
-implemented as a stack of pointers to Molecule objects (an 
-ArrayStack < Molecule > container). The typedef Species::Reservoir
-is a synonym for ArrayStack < Molecule >. The container used by 
-each System to hold molecules of one Species is an 
-ArraySet < Molecule > object.  The typedef System::MoleculeSet 
+"unused" molecules within the block of memory reserved for that 
+species. The reservoir is implemented as a stack of pointers to 
+Molecule objects (an ArrayStack < Molecule > container). The typedef 
+Species::Reservoir is a synonym for ArrayStack < Molecule >. The 
+container used by each System to hold molecules of one Species is 
+an ArraySet < Molecule > object.  The typedef System::MoleculeSet 
 is a synonym for ArraySet < Molecule >.  An ArraySet < Molecule > 
 is a container for Molecule pointers that provides rapid O(1) 
 random access and O(1) insertion and deletion, but that generally 
-changes the order in which the remaining Molecule* pointers are 
-stored when a Molecule is removed. 
+changes the order in which the Molecule* pointers are stored 
+when a Molecule is removed. 
 
 When a Simulation is initialized, all the molecules of each Species 
 are initially pushed onto the associated reservoir. Ownership of 
@@ -106,14 +107,14 @@ the appropriate reservoir. In Gibbs ensemble, a Molecule may be
 transferred from one System to another by invoking the addMolecule() 
 and removeMolecule() methods of the two System.
 
-The organization of data in Simpatico is a result of the desire to: 
-(1) Avoid dynamical allocation of memory after initialization of the 
-simulation, (2) Arrange memory as much as possible in contiguous 
-arrays, and (3) Allow for eventual extension to open ensemble 
-simulations. Criteria (1) and (2) were motivated by efficiency 
-considerations, in the belief that these criteria might be 
-necessary to implement molecular dynamics with an efficiency that 
-rivals that of well optimized MD programs.
+The organization of data in Simpatico is a result of the desire 
+to: (1) Avoid dynamical allocation of memory after initialization 
+of the simulation, (2) Arrange memory as much as possible in 
+contiguous arrays, and (3) Allow for eventual extension to open 
+ensemble simulations. Criteria (1) and (2) were motivated by 
+efficiency considerations, in the belief that these criteria might 
+be necessary to implement molecular dynamics with an efficiency 
+that rivals that of well optimized MD programs.
 
 <b> Atom Objects </b>
 

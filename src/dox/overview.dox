@@ -12,7 +12,9 @@ Contents:
    <li> \subpage design_page     "Class Library" 
    <ul>
      <li> \subpage Util_NS_page  "Util namespace" </li>
+     <li> \subpage Inter_NS_page "Inter namespace" </li>
      <li> \subpage McMd_NS_page  "McMd namespace" </li>
+     <li> \subpage DdMd_NS_page  "DdMd namespace" </li>
    </ul>
    </li>
    

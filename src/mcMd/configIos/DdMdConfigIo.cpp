@@ -85,8 +85,9 @@ namespace McMd
             for (molPtr->begin(atomIter); atomIter.notEnd(); ++atomIter) {
 
                in >> atomId >> atomTypeId;
-               if (atomId != atomIter->id()) 
+               if (atomId != atomIter->id()) {
                   UTIL_THROW("Atom tags not ordered");
+               }
 
                in >> atomIter->position();
                in >> atomIter->velocity();
@@ -100,7 +101,6 @@ namespace McMd
 
    void DdMdConfigIo::write(std::ostream &out)
    {
-
       // Count total numbers of atoms and bonds in all species.
       Species  *speciesPtr;
       int iSpec, nMolecule;
@@ -201,6 +201,8 @@ namespace McMd
 
       #ifdef INTER_DIHEDRAL
       // Write Dihedral
+      out << "DIHEDRALS" << std::endl;
+      out << "nDihedral  " << nDihedral << std::endl;
       Molecule::DihedralIterator dihedralIter;
       i = 0;
       for (iSpec=0; iSpec < simulation().nSpecies(); ++iSpec) {

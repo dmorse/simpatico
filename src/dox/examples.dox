@@ -9,39 +9,39 @@ A set of examples are provided with Simpatico in the examples/
 directory. Examining and running these examples is the easiest
 way to start becoming familiar with the program.
 
-Different subdirectories of examples/ contain examples that are
-designed to work with different versions of Simpatico, which are
-created by defining preprocessor macros to enable or disable 
-various optional features. The examples in the directory 
-examples/flexible are designed to work with the default version
-of the code. The default version of the code contains nonbonded 
-and bond potentials, but not angle, dihedral or several other 
-types of potential, and is suitable for simulating atomic liqids,
-and simple bead-spring models of flexible polymers (and not much
-else). The file examples/README contains a section that explains
-which features must be enabled at compile executables appropriate
-for the examples in the other subdirectories of the examples/ 
-directory. 
+The subdirectories of the examples/ directory each contain examples 
+that are designed to work with different versions of Simpatico, in
+which different features of the code are enabled or disabled by
+preprocessor macros.  The file examples/README explains which 
+features must be enabled or disabled at compile time run the 
+examples in each subdirectory.
 
-Each subdirectory of examples/flexible contains subdirectories
-with examples of both MC and MD simulations for different types 
-of system. Most of these contain simple bead-spring models of
-polymer liquids, such as homopolymer liquid, a diblock copolymer 
-liquid, or a polymer blend. Examples with more than one chain 
-length are provided for some examples, using the notation (for 
-example) L32/ to denote a directory containing examples with 
-chains of 32 beads. 
+The examples in the flexible/ subdirectory are designed to work 
+with the default version of the code, which contains only nonbonded 
+pair and covalent bond potentials, but no angle, dihedral or 
+external potentials.  Each subdirectory of examples/flexible 
+contains subdirectories with examples of both MC and MD simulations 
+for different types of system. These examples all involve either
+atomic liquids or simple bead-spring models of polymer liquids, 
+such as homopolymer liquid, a diblock copolymer liquid, or a 
+polymer blend.  Examples with more than one chain length are
+provided for some types of system, using the notation (for
+example) L32/ to denote a system containing chains of 32 beads. 
+Subdirectories containing examples for mcSim, mdSim and ddSim 
+are labelled mc/, md/ and dd/, respectively.
 
-In each of the examples that is intended for use on a single processor,
-the parameter file is named "param" and the command file is named 
-"commands". In all such examples, we have set inputPrefix == "in/" 
-and outputPrefix == "out/". As a result, the configuration file is 
-read from subdirectory "in/" of the directory from which the main 
-program is invoked, and all output files are written to a
-subdirectory "out/". In all examples the READ_CONFIG and 
-WRITE_CONFIG commands specify a file name "config". The directory 
-structure for each of the examples provided with the package is 
-thus:
+In each of the examples for the single-processor versions of 
+mcSim and mdSim, the parameter file is named "param" and the 
+command file is named "commands". Some directories contain
+different parameter files named "param.nve" and "param.nvt"
+for simulations of the same system in different ensembles.
+In all such examples, the input configuration file is in a
+subdirectory "in/" of the main directory for the example,
+and is named in/config.  In all such examples, we have set 
+inputPrefix == "in/" and outputPrefix == "out/" in the 
+FileMaster block of parameter file(s). All output files
+are thus written to a subdirectory "out/".  The directory
+structure for each such examples is thus:
 \code
 
     param
@@ -49,26 +49,32 @@ thus:
     in/
        config
     out/
-       config
-       (other output files)
+       (output files)
 
 \endcode
 To run a MC example simulation on a single processor, one must 
-cd to the root directory for the example (which contains the 
-param file) and issue the command
-<code>
+cd to the main directory for the example (the directory that
+contains the param and command files) and issue the command
+\code
     > mcSim < param
-</code>
-The above assumes that the directory containing the mcSim 
-executable has been added to the users command search $PATH 
-shell variable.  If everything works correctly, the contents 
-of a log file will be sent to standard output (i.e., the screen) 
-during execution, or can be redirected to another file.
+\endcode
+to send the log output to the screen, or 
+\code
+    > mcSim < param > log &
+\endcode
+to run the example in the background and send this output 
+to a file named "log".  Among the output files that will be 
+created in the out/ directory is a configuration file named 
+out/config, which contains the final system configuration. 
+
+The above directions assume that the users PATH shell variable
+has been set to include the directory that contains the mcSim 
+(or mdSim) executable file.
 
 <ul>
- <li> \ref diagnostics_page (Previous) </li>
- <li> \ref guide_page      (Up)       </li>
- <li> \ref read_param_page   (Next)     </li>
+ <li> \ref cfgfile_page      (Previous) </li>
+ <li> \ref guide_page        (Up)       </li>
+ <li> \ref analysis_page  (Next) </li>
 </ul>
 
 */
