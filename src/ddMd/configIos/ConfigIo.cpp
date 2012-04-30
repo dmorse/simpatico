@@ -64,6 +64,43 @@ namespace DdMd
    {}
 
    /*
+   * Constructor.
+   */
+   ConfigIo::ConfigIo(Simulation& simulation)
+    : domainPtr_(0),
+      boundaryPtr_(0),
+      atomStoragePtr_(0),
+      bondStoragePtr_(0),
+      #ifdef INTER_ANGLE
+      angleStoragePtr_(0),
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralStoragePtr_(0),
+      #endif
+      atomCacheCapacity_(0),
+      bondCacheCapacity_(0)
+      #ifdef INTER_ANGLE
+      , angleCacheCapacity_(0)
+      #endif
+      #ifdef INTER_DIHEDRAL
+      , dihedralCacheCapacity_(0)
+      #endif
+   {
+      associate(simulation.domain(),
+                simulation.boundary(),
+                simulation.atomStorage(),
+                simulation.bondStorage(),
+                #ifdef INTER_ANGLE
+                simulation.angleStorage(),
+                #endif
+                #ifdef INTER_DIHEDRAL
+                simulation.dihedralStorage(),
+                #endif
+                simulation.buffer()
+               );
+   }
+
+   /*
    * Associate with required domain, boundary, storage, and buffer objects.
    */
    void ConfigIo::associate(Domain& domain, Boundary& boundary,

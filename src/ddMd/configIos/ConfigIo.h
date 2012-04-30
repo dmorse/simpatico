@@ -46,12 +46,21 @@ namespace DdMd
    public:
 
       /**
-      * Constructor.
+      * Default constructor.
       */
       ConfigIo();
 
       /**
+      * Constructor.
+      *
+      * \param simulation parent Simulation object.
+      */
+      ConfigIo(Simulation& simulation);
+
+      /**
       * Associate with related objects.
+      *
+      * Required iff instantiated with default constructor.
       */
       void associate(Domain& domain, Boundary& boundary,
                      AtomStorage& atomStorage,
