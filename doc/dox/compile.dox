@@ -270,9 +270,6 @@ this system thus requires that:
   - The makefile variable MAKEDEP must be defined in the file 
     src/compiler.mk. (The definition is commented out by default).
 
-  - The makeDep script in the Simpatico bin/ directory must 
-    be accessible via the shell PATH variable.
-
 The gcc compiler and a python interpreter are installed by default 
 on modern linux installations, and on Mac OS X with developer tools
 installed.  To enable automatic dependency generation (after running 
@@ -284,11 +281,6 @@ the configure script) one must thus normally:
   - Add the Simpatico tools/python directory to the PYTHONPATH 
     unix shell variable, and 
 
-  - Either add the simpatico/bin/ directory to the user PATH
-    environment variable, or replace the value of the MAKEDEP 
-    variable in the compiler.mk file by the absolute path of 
-    the file simpatico/bin/makeDep.
-
 After making these changes, enter "make clean" once more from 
 the src/ directory, and then recompile any programs you wish
 to use.  After compilation is complete, a new dependency file 
@@ -297,13 +289,13 @@ file, in addition to a new *.o object file.  The *.d
 dependency file associated with an object file will also be 
 regenerated whenever the object file is regenerated.
 
-Dependency generation is disabled by default in order to 
-allow inexperienced users to quickly compile the code with 
-the simplified instructions given above 
-("./configure; cd src; make mcMd"), without having to first 
-modify their PYTHONPATH. This is sufficient for users who 
-want to try out the code, but who do not immediately need 
-to modify any source code.
+Dependency generation is disabled by default in order to allow 
+inexperienced users to quickly compile the single processor 
+versions of mcSim and mdSim with the simplified instructions 
+given above ("./configure; cd src; make mcMd"), without having 
+to first modify their PYTHONPATH. Dependency generation is not
+necessary for users who want to try out the code, but who do 
+not immediately need to modify any source code.
 
 Automatic dependency generation works by applying the script 
 bin/makeDep to each *.cpp source file whenever that file is 
@@ -320,8 +312,8 @@ file and all of the *.h header files that this source file
 includes, including headers that are included indirectly. 
 Once such a dependency file exists, it will be used the 
 next time "make" is invoked in order to determine if the 
-corresponding object file needs to be recreated as a result
-of changes in any of its dependencies. 
+corresponding object file target needs to be recreated as 
+a result of changes in any of its dependencies. 
 
 The dependency list for every *.o file contains the files 
 src/compiler.mk and one or more of the defines.mk files,
@@ -337,8 +329,8 @@ Modifying src/util/defines.mk force recompilation of all
 of the source files in src/inter, src/mcMd, and src/ddMd. 
 Modifying src/mcMd/defines.mk forces recompilation of all 
 files in src/mcMd. 
-Modifying src/ddMd/defines.mk force recompilation of 
-all files in src/ddMd.
+Modifying src/ddMd/defines.mk forces recompilation of all 
+files in src/ddMd.
 
 \section compile_doc_section Documentation
 The html documentation you are reading was generated using the 
@@ -346,14 +338,14 @@ dOxygen documentation utility.  If dOxygen is installed on your
 machine, you can regenerate all of the html documentation by 
 changing the working directory to the src/ directory and entering
 <code>
-    /src> make doc
+    make doc
 </code>
 from there. This generates documentation for all of the code in 
 the Util and McMD namespaces. The resulting html documentation 
 is deposited in the doc/html directory. 
 
 The text of the page you are reading now, along with the other 
-pages of introductory material, are in the src/dox directory. These
+pages of introductory material, are in the doc/dox directory. These
 are written in plain text, and so are readable with a text editor.
 Documentation for each C++ class is extracted from documentation 
 blocks in the class header file. 

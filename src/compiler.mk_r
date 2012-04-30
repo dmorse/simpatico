@@ -17,13 +17,13 @@
 # discussed below.
 #
 # Users may modify the file src/compiler.mk, but should avoid modifying 
-# the default copy src/compiler.mk_r, which is under version control. 
+# the repository copy src/compiler.mk_r, which is under version control. 
 # The operational file src/compiler.mk is created by the configure script,
 # by making a copy of src/compiler.mk_r and modifying the value of the
 # variable ROOT_DIR (which has a placeholder value in src/compiler.mk_r).
-# After the configure script is run from the root directory (e.g., the
-# trunk/ directory of the repository), the value of ROOT_DIR should be 
-# set to the absolute path to that directory.
+# After the configure script is run from the root simpatico/ directory,
+# the value of ROOT_DIR should have been set to the absolute path to 
+# that directory on the users machine.
 #-----------------------------------------------------------------------
 # Absolute directory paths
 
@@ -36,27 +36,25 @@ LIB_DIR=$(ROOT_DIR)/lib
 # Automatic dependency generation:
 #
 # To enable automatic dependency generation: (1) uncomment the line below
-# that defines MAKEDEP, (2) extend your unix PATH environment variable to
-# include the Simpatico $(ROOT_DIR)/bin directory, and (3) extend the 
-# PYTHONPATH variable to include the $(ROOT_DIR)/tools/python directory.
-# The script makeDep is located in the $(ROOT_DIR)/bin/ directory, and is 
-# invoked as a side effect of compilation in order to generate a dependency 
-# file.  The PATH must include the bin/ directory in order for the shell to 
-# find the makeDep script.  The PYTHONPATH must include the tools/python 
-# directory in order for the python interpreter to find the python modules 
-# that are used by the makeDep script.
+# that defines MAKEDEP, and (2) Modify the PYTHONPATH unix environment
+# variable to include the $(ROOT_DIR)/tools/python directory. The script 
+# makeDep is located in the $(ROOT_DIR)/bin/ directory, and is invoked 
+# as a side effect of compilation in order to generate a dependency file.  
+# The PYTHONPATH must include the $(ROOT_DIR)/tools/python directory so
+# that the python interpreter can find the python modules that are used 
+# by the makeDep script.
  
 #MAKEDEP=$(ROOT_DIR)/bin/makeDep
 
 #-----------------------------------------------------------------------
-# Selecting a compiler:
+# COMPILER identifier:
 #
+# The variable COMPILER is a string that identifies a choice of compiler.
 # To select a compiler for which default settings are available, set
 # the variable COMPILER by uncommenting one of the following lines
 # and commenting out all others. The default choice is gcc, the gnu
-# compiler collection.  The user may modify values of compiler options 
-# and/or add blocks for other compilers.
-
+# compiler collection.  
+#
 # String values that end with _mpi set compiler options so as to 
 # link to an mpi library. All of these blocks use the mpicxx script
 # to invoke the compiler, but users may modify this if needed.
@@ -69,9 +67,11 @@ COMPILER:=gcc
 #COMPILER:=pathscale_mpi
 
 # ------------------------------------------------------------------
-# Each of the following blocks define makefile variables appropriate
-# to a particular compiler that has been used during development. 
-# Specifically, each block sets the variables:
+# Compiler settings:
+#
+# Each of the following blocks sets values for the following set
+# of makefile variables, using values appropriate to a particular
+# compiler:
 #
 # CXX        - path to C++ compiler
 # CXXFLAGS   - flags used to compile source files, without linking
@@ -80,12 +80,13 @@ COMPILER:=gcc
 # AR         - path to archiver, to create library (*.a) files
 # ARFLAGS    - flags used by archiver
 #
-# Blocks for compilers that link to the MPI library all must define 
-# UTIL_MPI=1. These blocks all also set CXX=mpicxx, which is the
-# name of a script that invokes the mpi compiler on the systems 
-# we have used at the Minnesota Supercomputing Institute. On these
-# systems, the actual choice of compiler used by mpicxx is determined
-# by loading a module (e.g., module load intel-mpi).
+# Blocks for compilers that link to the MPI library also define 
+# UTIL_MPI=1. The default value of CXX for gcc_mpi and intel_mpi
+# is CXX=mpicxx. The string mpicxx is the name of a script that 
+# invokes an mpi compiler on the systems that we have used for
+# development.  On these systems, the choices of actual compiler 
+# and mpi library are determined by loading appropriate software
+#  modules (e.g., module load intel-mpi).
 # ------------------------------------------------------------------
 
 #-- Gnu GCC compiler (Serial) ------
@@ -98,7 +99,7 @@ ifeq ($(COMPILER),gcc)
   ARFLAGS=rcs
 endif
 
-# -- Gnu GCC compiler (MPI) ------
+# -- Gnu GCC compiler (MPI) --------
 ifeq ($(COMPILER),gcc_mpi)
   CXX=mpicxx
   CXXFLAGS= -O3 -ffast-math -Wall -Winline -std=c++98
@@ -109,7 +110,7 @@ ifeq ($(COMPILER),gcc_mpi)
   UTIL_MPI=1
 endif
 
-# -- Intel ICC compiler ----
+# -- Intel ICC compiler (serial) ---
 ifeq ($(COMPILER),intel)
   CXX=icpc
   CXXFLAGS= -fast -ansi
@@ -119,7 +120,7 @@ ifeq ($(COMPILER),intel)
   ARFLAGS=rcs
 endif
 
-# -- Intel ICC MPI compiler ----
+# -- Intel ICC compiler (MPI) ------
 ifeq ($(COMPILER),intel_mpi)
   CXX=mpicxx
   CXXFLAGS= -ansi
@@ -130,7 +131,7 @@ ifeq ($(COMPILER),intel_mpi)
   UTIL_MPI=1
 endif
 
-# -- PathScale compiler -----
+# -- PathScale compiler ------------
 ifeq ($(COMPILER),pathscale)
   CXX=pathCXX
   CXXFLAGS= -Ofast
@@ -140,7 +141,7 @@ ifeq ($(COMPILER),pathscale)
   ARFLAGS=rcs
 endif
 
-# -- PathScale compiler -----
+# -- PathScale compiler (MPI) ------
 ifeq ($(COMPILER),pathscale_mpi)
   CXX=mpicxx
   CXXFLAGS= -Ofast

@@ -16,11 +16,31 @@ if needed, is given below. A copy of the html docmentation is
 also accessible via the Simpatico web page.
 
 Compiling:
----------
+----------
 
 Instructions for compiling Simpatico are given in the text file
-src/dox/compile.dox, or in the corresponding html web page in 
-the doc/html directory, which is generated from this text file.
+simpatico/doc/dox/compile.dox, or in the corresponding html web 
+page in the doc/html directory, which is generated from this text 
+file. 
+
+Basic instructions for compiling the default single-processor 
+versions of mcSim and mdSim (for the impatient) are:
+
+- cd to the simpatico/ root directory
+
+- Enter "./configure" to run a configure script
+
+- cd to the src/ directory
+
+- Enter "make mcMd".
+
+The resulting executables, name "mcSim" and "mdSim", will 
+be installed in the simpatico/bin directory.
+
+Further instructions for enabling automatic dependency
+generation and compiling multi-processor programs are given
+in simpatico/dox/dox/compile.dox and in the corresponding 
+html page. 
 
 Documentation:
 --------------
@@ -29,10 +49,10 @@ Web documentation for Simpatico is prepared using the Doxygen
 utility (www.doxygen.org). Doxygen creates html web pages that 
 are deposited in the directory doc/html/.  These pages are created 
 from comments extracted from the C++ source code, and from a set 
-of *.dox files in the directory simpatico/src/dox/, which contain 
-the text for a set of introductory web pages. The *.dox files are 
-readable in any text editor.  The html pages are included in the 
-downloadable distribution, but are not retained in the git 
+of *.dox files in the directory simpatico/doc/dox/, which contain 
+the text for a set of introductory web pages. These *.dox files 
+are readable in any text editor.  The html pages are included in 
+the downloadable distribution, but are not retained in the git 
 repository.  
 
 If you are using a downloaded version, you can read it by pointing 
@@ -43,17 +63,11 @@ index.html.
 
 If you are using a clone of the git source code repository, you 
 may want to use dOxygen to regenerate the html documentation.  
-Before, or instead of, regenerating the html pages, you can 
-also begin by use a text editor to readi the corresponding
-*.dox source files src/dox directory, which contain the text
-of the introductory html pages. 
+The file simpatico/doc/dox/compile.dox also contains instructions 
+for how to use dOxygen to regenerate the html documentation, if 
+necessary.  This requires that dOxygen be installed and that the
+executable be in a directory in your PATH.  The basic instructions 
+(after installing dOxygen) are:
 
-The file src/dox/compile.dox contains instructions for how to 
-use dOxygen to regenerate the html documentation, if necessary. 
-This requires that dOxygen be installed and that the doxygen
-executable be in a directory in your $PATH environment variable. 
-
-The basic instructions (after installing dOxygen) are:
-
-  - cd to the src/ directory
-  - type "make doc"
+  - cd to the simpatico/src directory
+  - Enter "make doc"
