@@ -11,13 +11,13 @@ Simulation{
   nBondType          1
   atomTypes          A    1.0
   AtomStorage{
-    atomCapacity       16000
-    ghostCapacity      16000
-    totalAtomCapacity 32000
+    atomCapacity       20000
+    ghostCapacity      20000
+    totalAtomCapacity  32000
   }
   BondStorage{
     capacity         20000
-    totalCapacity    30000
+    totalCapacity    32000
   }
   Buffer{
     atomCapacity     20000

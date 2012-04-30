@@ -46,6 +46,14 @@ namespace McMd
       ExternalPotential* factory(const std::string& subclass) const;
 
       /**
+      * Convert a potential to a HoomdPairPotential pointer
+      *
+      * \param potential the pair potential
+      */
+      static HoomdExternalPotential *hoomdExternalPotentialPtr(ExternalPotential&
+         potential);
+
+      /**
       * Return a ForceCompute
       *
       * \param potential the external potential the parameters of which are used
@@ -64,10 +72,10 @@ namespace McMd
       template < class hoomd_evaluator,
                  cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
                                                const typename hoomd_evaluator::param_type *d_params),
-                 class T >
+                 const char *name >
 
       static boost::shared_ptr<ForceCompute> hoomdFactoryImpl(
-         ExternalPotential *externalPotentialPtr,
+         HoomdExternalPotential *hoomdExternalPotentialPtr,
          System &system,
          boost::shared_ptr<SystemDefinition> systemDefinitionSPtr);
 
@@ -81,27 +89,20 @@ namespace McMd
   template < class hoomd_evaluator,
              cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
                                                const typename hoomd_evaluator::param_type *d_params),
-             class T>
+             const char *name>
   boost::shared_ptr<ForceCompute> HoomdExternalFactory::hoomdFactoryImpl(
-     ExternalPotential *externalPotentialPtr,
+     HoomdExternalPotential *hoomdExternalPotentialPtr,
      System &system,
      boost::shared_ptr<SystemDefinition> systemDefinitionSPtr)
    {
-      ExternalPotentialImpl< T > *evalPtr =
-         (dynamic_cast< ExternalPotentialImpl< T > *>( externalPotentialPtr));
-
-      if (! evalPtr)
-         UTIL_THROW("Not a Hoomd potential.");
-
-      HoomdExternal < hoomd_evaluator, gpu_cpef >
-         *hoomdExternalPtr = dynamic_cast< HoomdExternal<hoomd_evaluator, gpu_cpef> *>(&(evalPtr->interaction()));
+      HoomdExternal < hoomd_evaluator, gpu_cpef, name >
+         *hoomdExternalPtr = dynamic_cast< HoomdExternal<hoomd_evaluator, gpu_cpef, name> *>(hoomdExternalPotentialPtr);
       assert(hoomdExternalPtr);
         
       // Create and register external potential
       boost::shared_ptr< PotentialExternalGPU< hoomd_evaluator, gpu_cpef > >
          externalSPtr(new PotentialExternalGPU< hoomd_evaluator, gpu_cpef >(
          systemDefinitionSPtr));
-
 
       // FIXME: need to set optimized values based on GPU capability
       //externalSPtr->setBlockSize(512);

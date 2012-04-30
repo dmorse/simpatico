@@ -77,6 +77,6 @@ endif
 #-----------------------------------------------------------------------
 # Library file name 
 
-util_LIBNAME=util$(UTIL_SUFFIX)
+util_LIBNAME=util$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)
 util_LIB=$(LIB_DIR)/lib$(util_LIBNAME).a
 #-----------------------------------------------------------------------

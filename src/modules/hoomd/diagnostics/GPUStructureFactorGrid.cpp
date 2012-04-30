@@ -89,6 +89,11 @@ namespace McMd
          for (i = 0; i < nWave_; ++i) {
              for (j = 0; j < nMode_; ++j) {
                 structureFactors_(i, j) += (double) h_sq[j*nWave_ + i];
+                if (structureFactors_(i,j) >= maximumValue_[nSample_]) {
+                  maximumValue_[nSample_] = structureFactors_(i,j);
+                  maximumWaveIntVector_[nSample_] = waveIntVectors_[i];
+                  maximumQ_[nSample_] = waveVectors_[i].abs();
+                }
              }
           }
 

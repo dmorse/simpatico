@@ -14,11 +14,13 @@
 
 namespace McMd
 {
+   char classNameHoomdLamellar[] = "HoomdLamellarExternal";
+
    /**
    * Default constructor.
    */
    HoomdLamellarExternal::HoomdLamellarExternal()   
-    : HoomdExternal< EvaluatorExternalLamellar, gpu_compute_lamellar_forces >()
+    : HoomdExternal< EvaluatorExternalPeriodic, gpu_compute_periodic_forces, classNameHoomdLamellar >()
    {
    }
 
@@ -26,9 +28,10 @@ namespace McMd
    * Copy constructor
    */
    HoomdLamellarExternal::HoomdLamellarExternal(const HoomdLamellarExternal& other)
-    : HoomdExternal< EvaluatorExternalLamellar, gpu_compute_lamellar_forces >(other)
+    : HoomdExternal< EvaluatorExternalPeriodic, gpu_compute_periodic_forces, 
+          classNameHoomdLamellar >(other)
    {
-      orderParameter_ = other.orderParameter_;
+      externalParameter_ = other.externalParameter_;
    }
 
    /**
@@ -43,27 +46,26 @@ namespace McMd
       }
       prefactor_.allocate(nAtomType_);
       readDArray<double>(in, "prefactor", prefactor_, nAtomType_);
-      read<double>(in, "orderParameter", orderParameter_);
+      read<double>(in, "externalParameter", externalParameter_);
       read<double>(in, "interfaceWidth", width_);
       read<int>(in, "periodicity", periodicity_);
 
       for (int i = 0; i < nAtomType_; ++i) {
          params_[i].x = __int_as_scalar(perpDirection_);
-         params_[i].y = Scalar(prefactor_[i]*orderParameter_);
+         params_[i].y = Scalar(prefactor_[i]*externalParameter_);
          params_[i].z = Scalar(width_);
          params_[i].w = __int_as_scalar(periodicity_);
       } 
-      isInitialized_ = true;
    }
 
    /*
    * set external potential parameter
    */
-   void HoomdLamellarExternal::setExternalParameter(double orderParameter)
+   void HoomdLamellarExternal::setExternalParameter(double externalParameter)
    {
-      orderParameter_ = orderParameter;
+      externalParameter_ = externalParameter;
       for (int i = 0; i < nAtomType_; ++i) {
-         params_[i].y = prefactor_[i]*orderParameter_;
+         params_[i].y = prefactor_[i]*externalParameter_;
       }
    }
 
@@ -72,7 +74,7 @@ namespace McMd
    */
    double HoomdLamellarExternal::externalParameter() const
    {
-      return orderParameter_;
+      return externalParameter_;
    }
 
    /*

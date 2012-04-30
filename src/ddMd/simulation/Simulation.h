@@ -383,6 +383,11 @@ namespace DdMd
       Exchanger& exchanger();
   
       /**
+      * Get the Buffer by reference.
+      */
+      Buffer& buffer();
+  
+      /**
       * Return associated DiagnosticManager by reference.
       */
       DiagnosticManager& diagnosticManager();
@@ -668,6 +673,9 @@ namespace DdMd
 
    inline Exchanger& Simulation::exchanger()
    { return exchanger_; }
+
+   inline Buffer& Simulation::buffer()
+   { return buffer_; }
 
    inline PairPotential& Simulation::pairPotential()
    { 

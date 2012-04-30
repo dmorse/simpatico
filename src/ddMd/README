@@ -10,3 +10,17 @@ from the McMD namespace (or mcMd/ directory).  Most files in the DdMd
 namespace contain a "using namespace Util" directive that brings the 
 entire Util namespace into scope within the DdMd namespace. 
 
+Subdirectories:
+
+chemistry/    - atoms and covalent groups (bonds, etc.)
+communicate/  - interprocessor communication
+configIos/    - configuration file reader/writers
+diagnostics/  - classes for data analysis and output
+integrators/  - molecular dynamics integrator algorithms
+neighbor/     - cell list and pair list data structures
+potentials/   - potential energy classes
+simulation/   - main Simulation class
+storage/      - data structures that manage Atom and Group objects
+util/         - miscellaneous utility classes
+
+

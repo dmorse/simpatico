@@ -27,6 +27,8 @@
 #include <hoomd/PotentialExternalGPU.h>
 #include <hoomd/HOOMDMath.h>
 
+#include "HoomdExternalPotential.h"
+
 namespace McMd
 {
 
@@ -41,8 +43,10 @@ namespace McMd
    */
    template < class hoomd_evaluator,
       cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
-      const typename hoomd_evaluator::param_type *d_params)>
-   class HoomdExternal : public ParamComposite
+      const typename hoomd_evaluator::param_type *d_params),
+      const char *name>
+   class HoomdExternal : public ParamComposite,
+                         public HoomdExternalPotential
    {
    
    public:
@@ -57,7 +61,7 @@ namespace McMd
       /**
       * Copy constructor
       */
-      HoomdExternal(const HoomdExternal<hoomd_evaluator, gpu_cpef>& other);
+      HoomdExternal(const HoomdExternal<hoomd_evaluator, gpu_cpef, name>& other);
 
       /**
       * read parameters from file
@@ -72,9 +76,9 @@ namespace McMd
       void setBoundary(Boundary &boundary);
  
       /**
-      * Return class name
+      * Returns internal name of HOOMD evaluator
       */
-      virtual std::string className() const = 0;
+      virtual std::string hoomdName() const;
  
       /* Calculate force divided by distance 
       *
@@ -86,7 +90,17 @@ namespace McMd
       void getForce(const Vector& position, int type,
                                      Vector& force) const;
 
+      /* Get interaction energy for a specific atom
+      *
+      * \param position vector position of atom
+      * \param type     type of atom 
+      */
       double energy(const Vector& position, int type) const;
+
+      /**
+      * Return class name
+      */      
+      std::string className() const;
 
       /**  
       * Set nAtomType value.
@@ -113,11 +127,15 @@ namespace McMd
       /// Potential parameters
       param_type params_[MaxAtomType]; 
 
+   private:
+
+      /// The class name
+      std::string className_;
+
       /// Are all parameters and pointers initialized?
       bool  isInitialized_;
 
-   private:
-
+      /// Pointer to system boundary
       Boundary* boundaryPtr_;
    };
   
@@ -128,9 +146,11 @@ namespace McMd
    */
    template < class hoomd_evaluator,
       cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
-      const typename hoomd_evaluator::param_type *d_params) >
-   HoomdExternal< hoomd_evaluator, gpu_cpef >::HoomdExternal()
+      const typename hoomd_evaluator::param_type *d_params),
+     const char *name>
+   HoomdExternal< hoomd_evaluator, gpu_cpef, name >::HoomdExternal()
     : nAtomType_(0),
+      className_(name),
       isInitialized_(false),
       boundaryPtr_(NULL)
    {
@@ -141,10 +161,12 @@ namespace McMd
    */
    template < class hoomd_evaluator,
       cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
-      const typename hoomd_evaluator::param_type *d_params)>
-   HoomdExternal<hoomd_evaluator, gpu_cpef>::HoomdExternal(
-      const HoomdExternal<hoomd_evaluator, gpu_cpef>& other)
+      const typename hoomd_evaluator::param_type *d_params),
+      const char *name>
+   HoomdExternal<hoomd_evaluator, gpu_cpef, name>::HoomdExternal(
+      const HoomdExternal<hoomd_evaluator, gpu_cpef, name>& other)
    : nAtomType_(other.nAtomType_),
+     className_(name),
      isInitialized_(other.isInitialized_)
    {
       int i;
@@ -159,8 +181,9 @@ namespace McMd
    */
    template < class hoomd_evaluator,
       cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
-      const typename hoomd_evaluator::param_type *d_params)>
-   inline void HoomdExternal< hoomd_evaluator, gpu_cpef >::getForce(
+      const typename hoomd_evaluator::param_type *d_params),
+      const char *name>
+   inline void HoomdExternal< hoomd_evaluator, gpu_cpef, name >::getForce(
       const Vector& position, int i, Vector& force) const
    {
       Vector lengths = boundaryPtr_->lengths();
@@ -181,8 +204,9 @@ namespace McMd
    */ 
    template < class hoomd_evaluator,
       cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
-      const typename hoomd_evaluator::param_type *d_params)>
-   inline double HoomdExternal< hoomd_evaluator, gpu_cpef>::energy(
+      const typename hoomd_evaluator::param_type *d_params),
+      const char *name>
+   inline double HoomdExternal< hoomd_evaluator, gpu_cpef, name >::energy(
       const Vector& position, int i) const
    {
       Vector lengths = boundaryPtr_->lengths();
@@ -196,12 +220,38 @@ namespace McMd
    }
 
    /*
+   * get the class name
+   */
+   template < class hoomd_evaluator,
+      cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
+      const typename hoomd_evaluator::param_type *d_params),
+      const char *name>
+   std::string HoomdExternal< hoomd_evaluator, gpu_cpef, name >::className() const
+   {
+      return className_;
+   }
+
+   /*
+   * get internal name of the HOOMD evaluator
+   */
+   template < class hoomd_evaluator,
+      cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
+      const typename hoomd_evaluator::param_type *d_params),
+      const char *name>
+   std::string HoomdExternal< hoomd_evaluator, gpu_cpef, name >
+      ::hoomdName() const
+   {
+      return hoomd_evaluator::getName();
+   }
+
+   /*
    * set the number of atom types
    */
    template < class hoomd_evaluator,
       cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
-      const typename hoomd_evaluator::param_type *d_params)>
-   void HoomdExternal< hoomd_evaluator, gpu_cpef >::setNAtomType(
+      const typename hoomd_evaluator::param_type *d_params),
+      const char *name>
+   void HoomdExternal< hoomd_evaluator, gpu_cpef, name >::setNAtomType(
       int nAtomType)
    {
       if (nAtomType <= 0) {
@@ -218,17 +268,19 @@ namespace McMd
    */
    template < class hoomd_evaluator,
       cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
-      const typename hoomd_evaluator::param_type *d_params)>
-   const typename HoomdExternal<hoomd_evaluator, gpu_cpef>::param_type
-    HoomdExternal<hoomd_evaluator, gpu_cpef>::params(int i) const
+      const typename hoomd_evaluator::param_type *d_params),
+      const char *name>
+   const typename HoomdExternal<hoomd_evaluator, gpu_cpef, name>::param_type
+    HoomdExternal<hoomd_evaluator, gpu_cpef, name>::params(int i) const
    {
       return params_[i];
    }
 
    template < class hoomd_evaluator,
       cudaError_t gpu_cpef(const external_potential_args_t& external_potential_args,
-      const typename hoomd_evaluator::param_type *d_params)>
-   void HoomdExternal< hoomd_evaluator, gpu_cpef >::setBoundary(Boundary& boundary)
+      const typename hoomd_evaluator::param_type *d_params),
+      const char *name>
+   void HoomdExternal< hoomd_evaluator, gpu_cpef, name >::setBoundary(Boundary& boundary)
    {
       boundaryPtr_ = &boundary;
    }

@@ -1,0 +1,31 @@
+namespace McMd
+{
+
+/*! \page overview_page Design Overview
+
+These pages present an overview of the organization of the source
+code, and of the class library design.
+
+Contents: 
+   <ul>
+   <li> \subpage directory_page  "Directory Structure" </li>
+   <li> \subpage design_page     "Class Library" 
+   <ul>
+     <li> \subpage Util_NS_page  "Util namespace" </li>
+     <li> \subpage Inter_NS_page "Inter namespace" </li>
+     <li> \subpage McMd_NS_page  "McMd namespace" </li>
+     <li> \subpage DdMd_NS_page  "DdMd namespace" </li>
+   </ul>
+   </li>
+   
+   </ul>
+
+Navigation: 
+<ul>
+ <li> \ref guide_page    (Prev)   </li>
+ <li> \ref index         (Up)     </li>
+ <li> \ref custom_page   (Next)   </li>
+</ul>
+ 
+*/
+}

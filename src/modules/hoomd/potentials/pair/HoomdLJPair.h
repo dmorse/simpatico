@@ -67,6 +67,26 @@ namespace McMd
       double epsilon(int i, int j) const;
 
       /**
+      * Modify a parameter, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      atom type index 1
+      * \param j      atom type index 2
+      * \param value  new value of parameter
+      */
+      void set(std::string name, int i, int j, double value);
+
+      /**
+      * Get a parameter value, identified by a string.
+      *
+      * \param name   parameter name
+      * \param i      atom type index 1
+      * \param j      atom type index 2
+      */
+      double get(std::string name, int i, int j) const;
+
+
+      /**
       * Get the Hoomd shift mode for this potential.
       */
       PotentialPairGPU<EvaluatorPairLJ,

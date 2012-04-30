@@ -1,6 +1,4 @@
 #ifdef INTER_EXTERNAL
-#ifndef HOOMD_EXTERNAL_FACTORY_CPP
-#define HOOMD_EXTERNAL_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -24,7 +22,7 @@
 
 
 #include <hoomd/HOOMDMath.h>
-#include <hoomd/EvaluatorExternalLamellar.h>
+#include <hoomd/EvaluatorExternalPeriodic.h>
 #include <hoomd/AllDriverPotentialExternalGPU.cuh>
 
 #include "HoomdExternalFactory.h"
@@ -46,8 +44,26 @@ namespace McMd
    HoomdExternalFactory::factory(const std::string& name) const
    {
       ExternalPotential* ptr = 0;
-      if (name == "HoomdLamellarExternal") {
+      if (name == classNameHoomdLamellar) {
          ptr = new ExternalPotentialImpl< HoomdLamellarExternal> (*systemPtr_);
+      }
+      return ptr;
+   }
+
+   /** 
+   * return a HoomdExternalPotential
+   */
+   HoomdExternalPotential *HoomdExternalFactory::hoomdExternalPotentialPtr(ExternalPotential&
+      potential)
+   {
+      std::string name = potential.interactionClassName();
+      HoomdExternalPotential* ptr = 0;
+
+      if (name == classNameHoomdLamellar) {
+         ptr = dynamic_cast< HoomdExternalPotential *>(
+            dynamic_cast< HoomdLamellarExternal * >(
+            &(dynamic_cast< ExternalPotentialImpl< HoomdLamellarExternal > * >
+            (&potential))->interaction()));
       }
       return ptr;
    }
@@ -60,18 +76,21 @@ namespace McMd
       System &system,
       boost::shared_ptr<SystemDefinition> systemDefinitionSPtr)
    {
+      // first get a pointer to a HoomdExternalPotential
+      HoomdExternalPotential* ptr = hoomdExternalPotentialPtr(potential);
+             
       std::string className = potential.interactionClassName();
       boost::shared_ptr<ForceCompute> externalSPtr;
 
-      if (className == "HoomdLamellarExternal") {
-         externalSPtr = hoomdFactoryImpl<EvaluatorExternalLamellar, gpu_compute_lamellar_forces, HoomdLamellarExternal >(&potential, system, systemDefinitionSPtr );
-      } else
+      if (className == classNameHoomdLamellar) {
+         externalSPtr = hoomdFactoryImpl<EvaluatorExternalPeriodic, gpu_compute_periodic_forces, 
+                                         classNameHoomdLamellar >(ptr, system, systemDefinitionSPtr );
+      } else 
          UTIL_THROW("Unsupported Hoomd potential." );
-
+      
       return externalSPtr; 
    }
 
 
 }
-#endif
 #endif

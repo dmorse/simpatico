@@ -1,0 +1,115 @@
+/*! \page capabilities_page Capabilities
+
+\section features_potential_sec Potential Energy
+
+All of the Simpatico programs use a potential energy that can contain:
+
+- nonbonded pair interactions
+
+- covalent two-body bond, three-body angle and four-body dihedral potentials
+
+- external one-body potentials  
+
+Several different types of potential energy functions are provided 
+for the nonbonded pair interaction and for each type of covalent 
+interactions, and others are easily added. Source code for classes 
+that represent potential energy functions, which we refer to as 
+"interactions", are all in the src/inter directory, and are all 
+defined in the "Inter" C++ namespace.  The same set of interaction
+classes are used by mcSim, mdSim, and ddSim programs.  To simplify 
+integration of MC and MD simulations, all programs are currently 
+restricted to models with differentiation potentials (i.e., not hard 
+spheres), with no explicit constraints on bond lengths or bond angles.
+
+Long-range electrostatic potentials have not yet been implemented 
+in any of the programs. This is the most important missing feature 
+required to make the package suitable for general atomistic models. 
+
+\section features_algorithms_sec Simulation Algorithms
+
+For single-processor MD simulations, mdSim currently provides the 
+following integration algorithms and ensembles:
+<ul>
+  <li> NVE velocity verlet </li>
+  <li> NVT Nose-Hoover </li>
+  <li> NVT dissipative particle dynamics </li>
+  <li> NPH Anderson barostat </li>
+</ul>
+For Monte-Carlo simulation, mcSim currently provides the following 
+MC moves, among others:
+<ul>
+   <li> Single atom displacement </li>
+   <li> Rigid molecule displacement </li>
+   <li> Hybrid MC moves (short NVE or NPH simulations as proposed MC moves) 
+        in NVT and NPT ensembles. </li>
+   <li> Reptation move for linear chains </li>
+   <li> Configuration bias regrowth of all or part of a linear chain. </li>
+   <li> Double rebridging for linear chains. </li>
+   <li> Double rebridging moves for ring polymers. </li>
+   <li> End-swap move for linear heteropolymers (e.g., diblock copolymers) </li>
+   <li> Semi-grand canonical move (for, e.g., homopolymer blends) </li>
+</ul>
+For parallel Md simulations, DdSim thus far provides only two integrators:
+<ul>
+  <li> NVE velocity verlet </li>
+  <li> NVT Nose-Hoover </li>
+</ul>
+
+\section features_hoomd_sec GPU Acceleration via integration with Hoomd 
+
+Simpatico provides an optional module that allows the use of the 
+<a href=http://codeblue.umich.edu/hoomd-blue/>Hoomd-blue</a> code 
+for MD on the GPU as a fast engine for hybrid MC simulations. 
+In this mode, an instance of Hoomd-blue is used to implement a 
+hybrid MC move within an mcSim simulation. Short NVE (for NVT ensemble) 
+or NPH (for NPT ensembles) MD simulations are carried out on a GPU, 
+while the main loop is implemented on the CPU, as are any other MC 
+moves. Integration with Hoomd-blue provides a dramatic increase in 
+the speed of MD and HMC simulations: We obtain a speed-up by
+approximately a factor of 30 for for bead-spring polymer melts 
+with repulsive Lennard-Jones (i.e., Weeks-Chandler-Anderson) pair 
+interactions.
+
+\section features_analysis_sec Data Analysis
+
+Simpatico is distributed with a collection of classes for statistical 
+analysis, for use with the single-processor mcSim and mdSim programs. 
+These include classes to evaluate:
+<ul>
+  <li> Thermodynamic properties (energies and stress components) </li>
+  <li> Full and partial radial distribution functions (in real space). </li>
+  <li> Structure factors (in coordinate space). </li>
+  <li> Intramolecular correlation functions. </li>
+  <li> Radii of gyration </li>
+  <li> Mean-squared distances between specific atoms in a molecule.</li>
+  <li> Mean-squared displacements for atoms or molecular centers-of-mass. </li>
+  <li> Auto-correlation functions for vector separations of atom pairs. </li>
+  <li> Intermediate scattering (van Hove) function S(k, t) . </li>
+</ul>
+All mcSim and mdSim data analysis classes can be used either on-the-fly, 
+during a simulation, or for post-processing of a trajectory file or a 
+sequence of configuration dump files. Postprocessing is done by the
+the mcSim and mdSim programs, by invoking a command that replaces the 
+main the mcSim or mdSim simulation program, using a command that 
+replaces the main simulation loop by a loop that reads a sequence of
+configurations from file. 
+
+Thus far, very few data analyis and data output classes have been written 
+for use with ddSim. MD trajectories from ddSim simulations can instead by 
+post-processed by using mcSim or msSim as analysis tools. 
+
+Simpatico currently provides a very convenient tool for running and 
+analyzing simulations of coarse-grained models of polymer liquids. 
+It is not yet suitable for use with atomistic models, because of the 
+absence of an electrostatic potential, and the absence of MC conformation 
+sampling algorithms designed specifically for use with stiff angle 
+potentials. 
+
+Navigation:
+<ul>
+ <li> \ref about_page        (Next) </li>
+ <li> \ref index             (Up)   </li>
+ <li> \ref contributors_page (Next) </li>
+</ul>
+
+*/
