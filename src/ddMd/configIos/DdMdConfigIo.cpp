@@ -1,5 +1,5 @@
-#ifndef DDMD_CONFIG_IO_CPP
-#define DDMD_CONFIG_IO_CPP
+#ifndef DDMD_DDMD_CONFIG_IO_CPP
+#define DDMD_DDMD_CONFIG_IO_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ConfigIo.h"
+#include "DdMdConfigIo.h"
 
 #include <ddMd/simulation/Simulation.h>                 
 #include <ddMd/communicate/Domain.h>   
@@ -42,166 +42,22 @@ namespace DdMd
    /*
    * Constructor.
    */
-   ConfigIo::ConfigIo()
-    : domainPtr_(0),
-      boundaryPtr_(0),
-      atomStoragePtr_(0),
-      bondStoragePtr_(0),
-      #ifdef INTER_ANGLE
-      angleStoragePtr_(0),
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_(0),
-      #endif
-      atomCacheCapacity_(0),
-      bondCacheCapacity_(0)
-      #ifdef INTER_ANGLE
-      , angleCacheCapacity_(0)
-      #endif
-      #ifdef INTER_DIHEDRAL
-      , dihedralCacheCapacity_(0)
-      #endif
+   DdMdConfigIo::DdMdConfigIo()
+    : ConfigIo()
    {}
 
    /*
    * Constructor.
    */
-   ConfigIo::ConfigIo(Simulation& simulation)
-    : domainPtr_(0),
-      boundaryPtr_(0),
-      atomStoragePtr_(0),
-      bondStoragePtr_(0),
-      #ifdef INTER_ANGLE
-      angleStoragePtr_(0),
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_(0),
-      #endif
-      atomCacheCapacity_(0),
-      bondCacheCapacity_(0)
-      #ifdef INTER_ANGLE
-      , angleCacheCapacity_(0)
-      #endif
-      #ifdef INTER_DIHEDRAL
-      , dihedralCacheCapacity_(0)
-      #endif
-   {
-      associate(simulation.domain(),
-                simulation.boundary(),
-                simulation.atomStorage(),
-                simulation.bondStorage(),
-                #ifdef INTER_ANGLE
-                simulation.angleStorage(),
-                #endif
-                #ifdef INTER_DIHEDRAL
-                simulation.dihedralStorage(),
-                #endif
-                simulation.buffer()
-               );
-   }
-
-   /*
-   * Associate with required domain, boundary, storage, and buffer objects.
-   */
-   void ConfigIo::associate(Domain& domain, Boundary& boundary,
-                            AtomStorage& atomStorage,
-                            BondStorage& bondStorage,
-                            #ifdef INTER_ANGLE
-                            AngleStorage& angleStorage,
-                            #endif
-                            #ifdef INTER_DIHEDRAL
-                            DihedralStorage& dihedralStorage,
-                            #endif
-                            Buffer& buffer)
-   {
-      domainPtr_ = &domain;
-      boundaryPtr_ = &boundary;
-
-      atomStoragePtr_ = &atomStorage;
-      atomDistributor_.associate(domain, boundary, atomStorage, buffer);
-      atomCollector_.associate(domain, atomStorage, buffer);
-
-      bondStoragePtr_ = &bondStorage;
-      bondDistributor_.associate(domain, atomStorage,
-                                 bondStorage, buffer);
-      bondCollector_.associate(domain, bondStorage, buffer);
-
-      #ifdef INTER_ANGLE
-      angleStoragePtr_ = &angleStorage;
-      angleDistributor_.associate(domain, atomStorage,
-                                  angleStorage, buffer);
-      angleCollector_.associate(domain, angleStorage, buffer);
-      #endif
-
-      #ifdef INTER_DIHEDRAL
-      dihedralStoragePtr_ = &dihedralStorage;
-      dihedralDistributor_.associate(domain, atomStorage,
-                                     dihedralStorage, buffer);
-      dihedralCollector_.associate(domain, dihedralStorage, buffer);
-      #endif
-
-   }
-
-   /*
-   * Read cache size and allocate memory.
-   */
-   void ConfigIo::readParam(std::istream& in)
-   {
-      readBegin(in, "ConfigIo");
-      read<int>(in, "atomCacheCapacity", atomCacheCapacity_);
-      atomDistributor_.setParam(atomCacheCapacity_);
-      atomCollector_.allocate(atomCacheCapacity_);
-      read<int>(in, "bondCacheCapacity", bondCacheCapacity_);
-      bondDistributor_.setParam(bondCacheCapacity_);
-      bondCollector_.allocate(bondCacheCapacity_);
-      #ifdef INTER_ANGLE
-      read<int>(in, "angleCacheCapacity", angleCacheCapacity_);
-      angleDistributor_.setParam(angleCacheCapacity_);
-      angleCollector_.allocate(angleCacheCapacity_);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      read<int>(in, "dihedralCacheCapacity", dihedralCacheCapacity_);
-      dihedralDistributor_.setParam(dihedralCacheCapacity_);
-      dihedralCollector_.allocate(dihedralCacheCapacity_);
-      #endif
-      readEnd(in);
-   }
-
-   /*
-   * Set parameters and allocate memory.
-   */
-   void ConfigIo::initialize(int atomCacheCapacity, int bondCacheCapacity
-                             #ifdef INTER_ANGLE
-                             , int angleCacheCapacity
-                             #endif
-                             #ifdef INTER_DIHEDRAL
-                             , int dihedralCacheCapacity
-                             #endif
-                            )
-   {
-      atomCacheCapacity_ = atomCacheCapacity;
-      bondCacheCapacity_ = bondCacheCapacity;
-      atomDistributor_.setParam(atomCacheCapacity_);
-      atomCollector_.allocate(atomCacheCapacity_);
-      bondDistributor_.setParam(bondCacheCapacity_);
-      bondCollector_.allocate(bondCacheCapacity_);
-      #ifdef INTER_ANGLE
-      angleCacheCapacity_ = angleCacheCapacity;
-      angleDistributor_.setParam(angleCacheCapacity_);
-      angleCollector_.allocate(angleCacheCapacity);
-      #endif
-      #ifdef INTER_DIHEDRAL
-      dihedralCacheCapacity_ = dihedralCacheCapacity;
-      dihedralDistributor_.setParam(dihedralCacheCapacity_);
-      dihedralCollector_.allocate(dihedralCacheCapacity_);
-      #endif
-   }
+   DdMdConfigIo::DdMdConfigIo(Simulation& simulation)
+    : ConfigIo(simulation)
+   {}
 
    /*
    * Private method to read Group<N> objects.
    */
    template <int N>
-   int ConfigIo::readGroups(std::istream& file, 
+   int DdMdConfigIo::readGroups(std::istream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupDistributor<N>& distributor) 
@@ -233,7 +89,7 @@ namespace DdMd
    /*
    * Read a configuration file.
    */
-   void ConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
+   void DdMdConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
    {
 
       // Read and broadcast boundary
@@ -342,7 +198,7 @@ namespace DdMd
    * Private method to write Group<N> objects.
    */
    template <int N>
-   int ConfigIo::writeGroups(std::ostream& file, 
+   int DdMdConfigIo::writeGroups(std::ostream& file, 
                   const char* sectionLabel,
                   const char* nGroupLabel,
                   GroupStorage<N>& storage,
@@ -371,7 +227,7 @@ namespace DdMd
    /* 
    * Write the configuration file.
    */
-   void ConfigIo::writeConfig(std::ostream& file)
+   void DdMdConfigIo::writeConfig(std::ostream& file)
    {
 
       // Write Boundary dimensions
@@ -386,8 +242,8 @@ namespace DdMd
       if (domain().isMaster()) {  
          file << "ATOMS" << std::endl;
          file << "nAtom" << Int(atomStorage().nAtomTotal(), 10) << std::endl;
-         atomCollector_.setup();
-         Atom* atomPtr = atomCollector_.nextPtr();
+         atomCollector().setup();
+         Atom* atomPtr = atomCollector().nextPtr();
          while (atomPtr) {
             file << Int(atomPtr->id(), 10) << Int(atomPtr->typeId(), 6)
                  << atomPtr->position() << std::endl
@@ -398,56 +254,28 @@ namespace DdMd
             }
             #endif
             file << std::endl;
-            atomPtr = atomCollector_.nextPtr();
+            atomPtr = atomCollector().nextPtr();
          }
       } else { 
-         atomCollector_.send();
+         atomCollector().send();
       }
 
       // Write the groups
       if (bondStorage().capacity()) {
-         writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector_);
+         writeGroups<2>(file, "BONDS", "nBond", bondStorage(), bondCollector());
       }
       #ifdef INTER_ANGLE
       if (angleStorage().capacity()) {
-         writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), angleCollector_);
+         writeGroups<3>(file, "ANGLES", "nAngle", angleStorage(), angleCollector());
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (dihedralStorage().capacity()) {
-         writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(), dihedralCollector_);
+         writeGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralStorage(), dihedralCollector());
       }
       #endif
 
    }
  
-   void ConfigIo::setAtomMasks() 
-   {
-
-      AtomIterator     atomIter;
-      atomStorage().begin(atomIter);
-      for ( ; atomIter.notEnd(); ++atomIter) {
-         atomIter->mask().clear();
-      }
-  
-      int   atomId0, atomId1; 
-      Atom* atomPtr0;
-      Atom* atomPtr1;
-      GroupIterator<2> bondIter;
-      bondStorage().begin(bondIter);
-      for ( ; bondIter.notEnd(); ++bondIter) {
-         atomId0  = bondIter->atomId(0);
-         atomId1  = bondIter->atomId(1);
-         atomPtr0 = atomStorage().find(atomId0);
-         atomPtr1 = atomStorage().find(atomId1);
-         if (atomPtr0) {
-            atomPtr0->mask().append(atomId1);
-         }
-         if (atomPtr1) {
-            atomPtr1->mask().append(atomId0);
-         }
-      }
-   }
-
 }
 #endif

@@ -147,7 +147,7 @@ The last three columns indicate which commands are valid for each program: An
          will be used until the next SET_CONFIG_IO command. </td>
     <td> <b>X</b> </td>
     <td> <b>X</b> </td>
-    <td> <b>-</b> </td>
+    <td> <b>X</b> </td>
   </tr>
   <tr> 
     <td> THERMALIZE </td>

@@ -214,15 +214,22 @@ namespace DdMd
       */
       void writeConfig(const std::string& filename);
 
-      #if 0
       /**
       * Get the configuration file reader/writer factory by reference.
       */
       Factory<ConfigIo>& configIoFactory();
-      #endif
+
+      /**
+      * Create a new configuration file reader/writer.
+      *
+      * This method creates a new instance of the specified subclass
+      * of ConfigIo, and retains a pointer to the new object.
+      *
+      * \param classname name of desired ConfigIo subclass.
+      */
+      void setConfigIo(std::string& classname);
 
       //@}
-
       /// \name Potential Energy Factories and Styles
       //@{
 
@@ -541,9 +548,6 @@ namespace DdMd
       /// Pointer to MD integrator.
       Integrator*   integratorPtr_;
 
-      /// Pointer to configuration file reader/writer.
-      ConfigIo*     configIoPtr_;
-
       /// Pointer to an EnergyEnsemble.
       EnergyEnsemble*   energyEnsemblePtr_;
 
@@ -553,6 +557,9 @@ namespace DdMd
       /// Pointer to a FileMaster.
       FileMaster*         fileMasterPtr_;
 
+      /// Pointer to a configuration reader/writer.
+      ConfigIo*         configIoPtr_;
+   
       /// DiagnosticManager
       DiagnosticManager*  diagnosticManagerPtr_;
 
@@ -582,10 +589,8 @@ namespace DdMd
       /// Pointer to MD integrator factory.
       Factory<Integrator>* integratorFactoryPtr_;
 
-      #if 0
       /// Pointer to a configuration reader/writer factory.
       Factory<ConfigIo>* configIoFactoryPtr_;
-      #endif
 
       #ifndef INTER_NOPAIR
       /// Name of pair potential style.
@@ -759,7 +764,7 @@ namespace DdMd
    }
 
    /*
-   * Get the FileMaster by reference.
+   * Get the DiagnosticManager by reference.
    */
    inline DiagnosticManager& Simulation::diagnosticManager()
    {

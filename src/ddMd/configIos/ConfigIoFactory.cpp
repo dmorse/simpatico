@@ -11,7 +11,7 @@
 #include "ConfigIoFactory.h"  
 
 // Subclasses of ConfigIo 
-#include "ConfigIo.h"
+#include "DdMdConfigIo.h"
 
 namespace DdMd
 {
@@ -36,9 +36,10 @@ namespace DdMd
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
-      if (className == "ConfigIo") {
-         ptr = new ConfigIo(*simulationPtr_);
+      if (className == "DdMdConfigIo") {
+         ptr = new DdMdConfigIo(*simulationPtr_);
       }
+ 
       return ptr;
    }
 

@@ -13,6 +13,8 @@
 #include <ddMd/integrators/Integrator.h>
 #include <ddMd/integrators/IntegratorFactory.h>
 #include <ddMd/configIos/ConfigIo.h>
+#include <ddMd/configIos/ConfigIoFactory.h>
+#include <ddMd/configIos/DdMdConfigIo.h>
 #include <ddMd/util/FileMaster.h>
 #include <ddMd/diagnostics/DiagnosticManager.h>
 
@@ -38,10 +40,6 @@
 #include <ddMd/potentials/external/ExternalPotential.h>
 #include <ddMd/potentials/external/ExternalPotentialImpl.h>
 #include <ddMd/potentials/external/ExternalFactory.h>
-#endif
-
-#if 0
-#include <ddMd/configIos/ConfigIoFactory.h>
 #endif
 
 // namespace McMd
@@ -107,10 +105,11 @@ namespace DdMd
       externalPotentialPtr_(0),
       #endif
       integratorPtr_(0),
-      configIoPtr_(0),
       energyEnsemblePtr_(0),
       boundaryEnsemblePtr_(0),
       fileMasterPtr_(0),
+      configIoPtr_(0),
+      diagnosticManagerPtr_(0),
       #ifndef DDMD_NOPAIR
       pairFactoryPtr_(0),
       #endif
@@ -125,9 +124,7 @@ namespace DdMd
       externalFactoryPtr_(0),
       #endif
       integratorFactoryPtr_(0),
-      #if 0
       configIoFactoryPtr_(0),
-      #endif
       #ifndef DDMD_NOPAIR
       pairStyle_(),
       #endif
@@ -221,11 +218,14 @@ namespace DdMd
       if (integratorPtr_) {
          delete integratorPtr_;
       }
+      if (fileMasterPtr_) {
+         delete fileMasterPtr_;
+      }
       if (configIoPtr_) {
          delete configIoPtr_;
       }
-      if (fileMasterPtr_) {
-         delete fileMasterPtr_;
+      if (diagnosticManagerPtr_) {
+         delete diagnosticManagerPtr_;
       }
       #ifndef DDMD_NOPAIR
       if (pairFactoryPtr_) {
@@ -253,13 +253,8 @@ namespace DdMd
       if (integratorFactoryPtr_) {
          delete integratorFactoryPtr_;
       }
-      #if 0
       if (configIoFactoryPtr_) {
          delete configIoFactoryPtr_;
-      }
-      #endif
-      if (diagnosticManagerPtr_) {
-         delete diagnosticManagerPtr_;
       }
 
       #ifdef UTIL_MPI
@@ -399,7 +394,8 @@ namespace DdMd
       readParamComposite(in, random_);
       readParamComposite(in, *diagnosticManagerPtr_);
 
-      configIoPtr_ = new ConfigIo();             // Todo: Add factory
+      #if 0
+      configIoPtr_ = new DdMdConfigIo();  
       configIoPtr_->associate(domain_, boundary_,
                               atomStorage_, bondStorage_, 
                               #ifdef INTER_ANGLE
@@ -410,6 +406,7 @@ namespace DdMd
                               #endif
                               buffer_);
       configIoPtr_->initialize();
+      #endif
 
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
@@ -510,16 +507,6 @@ namespace DdMd
          if (command == "READ_CONFIG") {
             inBuffer >> filename;
             readConfig(filename);
-            #if 0
-            if (domain_.isMaster()) {
-               fileMaster().openInputFile(filename, inputFile);
-            }
-            configIoPtr_->readConfig(inputFile, maskedPairPolicy_);
-            exchanger_.exchange();
-            if (domain_.isMaster()) {
-               inputFile.close();
-            }
-            #endif
          } else
          if (command == "THERMALIZE") {
             double temperature;
@@ -535,31 +522,18 @@ namespace DdMd
          if (command == "WRITE_CONFIG") {
             inBuffer >> filename;
             writeConfig(filename);
-            #if 0
-            if (domain_.isMaster()) {
-               fileMaster().openOutputFile(filename, outputFile);
-            }
-            configIoPtr_->writeConfig(outputFile);
-            if (domain_.isMaster()) {
-               outputFile.close();
-            }
-            #endif
          } else
          if (command == "WRITE_PARAM") {
             inBuffer >> filename;
             fileMaster().openOutputFile(filename, outputFile);
-            //outputFile.open(filename.c_str());
             writeParam(outputFile);
             outputFile.close();
          } else
-         #if 0
          if (command == "SET_CONFIG_IO") {
             std::string classname;
             inBuffer >> classname;
-            Log::file() << Str(classname, 15) << std::endl;
             setConfigIo(classname);
          } else
-         #endif
          if (command == "FINISH") {
             readNext = false;
          } else {
@@ -644,69 +618,6 @@ namespace DdMd
 
       integratorPtr_->run(nStep);
       integratorPtr_->outputStatistics(Log::file());
-
-      #if 0
-      integratorPtr_->setup();
-      diagnosticManager().setup();
-
-      // Main MD loop
-      timer.start();
-      for (int iStep_ = 0; iStep_ < nStep; ++iStep_) {
-
-         if (Diagnostic::baseInterval > 0) {
-            if (iStep_ % Diagnostic::baseInterval == 0) {
-               diagnosticManager().sample(iStep_);
-            }
-         }
-
-         integratorPtr_->step();
-      }
-      timer.stop();
-
-      atomStorage_.computeNAtomTotal(domain_.communicator());
-      pairPotential().pairList().computeStatistics(domain_.communicator());
-      if (isMaster) {
-
-         int nAtomTot = atomStorage_.nAtomTotal();
-         int nProc = 1;
-         #ifdef UTIL_MPI
-         nProc = domain_.communicator().Get_size();
-         #endif
-
-         // Output total time for the run
-         Log::file() << std::endl;
-         Log::file() << "Time Statistics" << std::endl;
-         Log::file() << "nStep                " << nStep << std::endl;
-         Log::file() << "run time             " << timer.time() << " sec" << std::endl;
-         Log::file() << "time / nStep         " << timer.time()/double(nStep) 
-   	             << " sec" << std::endl;
-         Log::file() << "time / (nStep*nAtom) " 
-                     << timer.time()*double(nProc)/double(nStep*nAtomTot)
-                     << " sec" << std::endl;
-         Log::file() << std::endl;
-         Log::file() << std::endl;
- 
-         //pairPotential().pairList().outputStatistics(Log::file());
-         Log::file() << "PairList Statistics" << std::endl;
-         Log::file() << "maxNPair, capacity " 
-                     << Int(pairPotential().pairList().maxNPair(), 10)
-                     << Int(pairPotential().pairList().pairCapacity(), 10)
-                     << std::endl;
-         Log::file() << "maxNAtom, capacity " 
-                     << Int(pairPotential().pairList().maxNAtom(), 10)
-                     << Int(pairPotential().pairList().atomCapacity(), 10)
-                     << std::endl;
-         Log::file() << "buildCounter       " 
-                     << Int(pairPotential().pairList().buildCounter(), 10)
-                     << std::endl;
-         Log::file() << "steps / build      "
-                     << double(nStep)/double(pairPotential().pairList().buildCounter())
-                     << std::endl;
-         Log::file() << std::endl;
-
-      }
-      #endif
-
    }
 
    /*
@@ -830,15 +741,25 @@ namespace DdMd
 
    /*
    * Read configuration file on master and distribute atoms.
-   *
-   * \param filename name of configuration file.
    */
    void Simulation::readConfig(const std::string& filename)
    {
-      assert(configIoPtr_);
       std::ifstream inputFile;
       if (domain_.isMaster()) {
          fileMaster().openInputFile(filename, inputFile);
+      }
+      if (configIoPtr_ == 0) {
+         configIoPtr_ = new DdMdConfigIo(*this);
+         configIoPtr_->associate(domain_, boundary_,
+                                 atomStorage_, bondStorage_, 
+                                 #ifdef INTER_ANGLE
+                                 angleStorage_,
+                                 #endif
+                                 #ifdef INTER_DIHEDRAL
+                                 dihedralStorage_,
+                                 #endif
+                                 buffer_);
+         configIoPtr_->initialize();
       }
       configIoPtr_->readConfig(inputFile, maskedPairPolicy_);
       exchanger_.exchange();
@@ -849,15 +770,25 @@ namespace DdMd
 
    /*
    * Write configuration file on master.
-   *
-   * \param filename name of configuration file.
    */
    void Simulation::writeConfig(const std::string& filename)
    {
-      assert(configIoPtr_);
       std::ofstream outputFile;
       if (domain_.isMaster()) {
          fileMaster().openOutputFile(filename, outputFile);
+      }
+      if (configIoPtr_ == 0) {
+         configIoPtr_ = new DdMdConfigIo(*this);
+         configIoPtr_->associate(domain_, boundary_,
+                                 atomStorage_, bondStorage_, 
+                                 #ifdef INTER_ANGLE
+                                 angleStorage_,
+                                 #endif
+                                 #ifdef INTER_DIHEDRAL
+                                 dihedralStorage_,
+                                 #endif
+                                 buffer_);
+         configIoPtr_->initialize();
       }
       configIoPtr_->writeConfig(outputFile);
       if (domain_.isMaster()) {
@@ -865,7 +796,7 @@ namespace DdMd
       }
    }
 
-   /**
+   /*
    * Determine whether an atom exchange and reneighboring is needed.
    */
    bool Simulation::needExchange() 
@@ -1006,35 +937,26 @@ namespace DdMd
       return *integratorFactoryPtr_;
    }
 
-   #if 0
    // ConfigIoIo Management
 
    /*
-   * Get the ConfigIo factory by reference.
+   * Return the ConfigIoFactory by reference.
    */
    Factory<ConfigIo>& Simulation::configIoFactory()
    {
-      if (!configIoFactoryPtr_) {
-         configIoFactoryPtr_ = newDefaultConfigIoFactory();
+      if (configIoFactoryPtr_ == 0) {
+         configIoFactoryPtr_ = new ConfigIoFactory(*this);
       }
+      assert(configIoFactoryPtr_);
       return *configIoFactoryPtr_;
    }
-
-   /*
-   * Return a pointer to a new ConfigIoFactory.
-   */
-   Factory<ConfigIo>* Simulation::newDefaultConfigIoFactory()
-   {  return new ConfigIoFactory(*this); }
 
    /*
    * Set the ConfigIo, identified by subclass name.
    */
    void Simulation::setConfigIo(std::string& classname)
    {
-      if (!configIoFactoryPtr_) {
-         configIoFactoryPtr_ = newDefaultConfigIoFactory();
-      }
-      ConfigIo* ptr = configIoFactoryPtr_->factory(classname);
+      ConfigIo* ptr = configIoFactory().factory(classname);
       if (!ptr) {
          UTIL_THROW("Unrecognized ConfigIo subclass name");
       } 
@@ -1042,16 +964,17 @@ namespace DdMd
          delete configIoPtr_;
       }
       configIoPtr_ = ptr;
+      configIoPtr_->associate(domain_, boundary_,
+                              atomStorage_, bondStorage_, 
+                              #ifdef INTER_ANGLE
+                              angleStorage_,
+                              #endif
+                              #ifdef INTER_DIHEDRAL
+                              dihedralStorage_,
+                              #endif
+                              buffer_);
+      configIoPtr_->initialize();
    }
-   #endif
-
-   #if 0
-   /*
-   * Return a pointer to a new default ConfigIo.
-   */
-   ConfigIo* Simulation::newDefaultConfigIo()
-   {  return new McConfigIo(*this); }
-   #endif
 
    /**
    * Return true if this Simulation is valid, or throw an Exception.
