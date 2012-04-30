@@ -9,13 +9,13 @@ include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
 
-all: $(ddMd_configIo_OBJS)
+all: $(ddMd_integrators_OBJS)
 
 clean:
-	rm -f $(ddMd_configIo_OBJS) $(ddMd_configIo_OBJS:.o=.d)
+	rm -f $(ddMd_integrators_OBJS) $(ddMd_integrators_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(ddMd_configIo_OBJS:.o=.d)
+	rm -f $(ddMd_integrators_OBJS:.o=.d)
 
--include $(ddMd_configIo_OBJS:.o=.d)
+-include $(ddMd_integrators_OBJS:.o=.d)
 

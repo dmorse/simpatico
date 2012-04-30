@@ -10,18 +10,18 @@ include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
 include sources.mk
 
-all: $(ddMd_configIo_tests_OBJS) ConfigIoTest
+all: $(ddMd_configIos_tests_OBJS) ConfigIoTest
 
 clean:
-	rm -f $(ddMd_configIo_tests_OBJS) $(ddMd_configIo_tests_OBJS:.o=.d)
+	rm -f $(ddMd_configIos_tests_OBJS) $(ddMd_configIos_tests_OBJS:.o=.d)
 	rm -f ConfigIoTest
 
 clean-deps:
-	rm -f $(ddMd_configIo_tests_OBJS:.o=.d)
+	rm -f $(ddMd_configIos_tests_OBJS:.o=.d)
 
 ConfigIoTest: ConfigIoTest.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) \
                -o ConfigIoTest ConfigIoTest.o $(ddMd_LIB) $(util_LIB)
 
--include $(ddMd_configIo_tests_OBJS:.o=.d)
+-include $(ddMd_configIos_tests_OBJS:.o=.d)
 

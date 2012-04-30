@@ -1,7 +1,7 @@
 #ifndef DDMD_CONFIG_IO_TEST_H
 #define DDMD_CONFIG_IO_TEST_H
 
-#include <ddMd/configIo/ConfigIo.h>
+#include <ddMd/configIos/ConfigIo.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/storage/AtomStorage.h>

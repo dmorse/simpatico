@@ -23,7 +23,7 @@ clean:
 	cd communicate/tests; make clean
 	cd neighbor/tests; make clean
 	cd potentials/tests; make clean
-	cd configIo/tests; make clean
+	cd configIos/tests; make clean
 	cd simulation/tests; make clean
 
 clean-deps:

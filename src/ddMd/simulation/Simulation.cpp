@@ -10,9 +10,9 @@
 
 #include "Simulation.h"
 #include <ddMd/storage/AtomIterator.h>
-#include <ddMd/integrator/Integrator.h>
-#include <ddMd/integrator/IntegratorFactory.h>
-#include <ddMd/configIo/ConfigIo.h>
+#include <ddMd/integrators/Integrator.h>
+#include <ddMd/integrators/IntegratorFactory.h>
+#include <ddMd/configIos/ConfigIo.h>
 #include <ddMd/util/FileMaster.h>
 #include <ddMd/diagnostics/DiagnosticManager.h>
 

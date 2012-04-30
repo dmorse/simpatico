@@ -9,7 +9,7 @@
 */
 
 #include <util/param/Factory.h>  
-#include <ddMd/integrator/Integrator.h>
+#include <ddMd/integrators/Integrator.h>
 
 #include <string>
 
