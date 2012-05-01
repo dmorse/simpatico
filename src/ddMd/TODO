@@ -1,11 +1,3 @@
-Configuration File IO
----------------------
-
-- Add ConfigIo factory and SET_CONFIG_IO command.
-
-- Add LammpsConfigIo class
-
-
 Constant Pressure:
 ------------------
 
@@ -43,6 +35,12 @@ Cell List and Pair List:
 
 - Improve testing of PairList - provide method to count number of pairs
   that are currently within the cutoff, and check that it doesn't change.
+
+
+Configuration File IO
+---------------------
+
+- Add LammpsConfigIo class
 
 
 Buffer:
