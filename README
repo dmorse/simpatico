@@ -5,9 +5,50 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-Simpatico source code may be obtained either by download from the 
-project website or (for developers) by cloning a copy of the git 
-version control repository.  The code must be compiled from source. 
+Simpatico is a C++ package for Monte Carlo (MC), Molecular Dynamics 
+(MD) and hybrid MD/MC simulations of classical mechanical models of
+polymeric and molecular liquids. It contains:
+
+- Programs for Monte Carlo (MC) and molecular dynamics (MD) 
+  simulations on a single processor, named mcSim and mdSim.
+
+- A program for parallel MD simulations, named ddSim.
+
+The parallel MD program ddSim uses a domain decomposition (or
+spatial decomposition) parallelization algorithm.
+
+The design of Simpatico was motivated by the following goals: 
+
+- Extensibility: New algorithms may be added for most elements 
+  of a simulation via C++ inheritance, without modifying the 
+  core source code. Extensible elements include Monte Carlo 
+  moves, molecular dynamics integrators, potential energy 
+  functions, molecular species, data analysis algorithms, and 
+  configuration file formats.
+
+- Efficiency: Simpatico is designed to be competitive as a tool 
+  for computationally demanding research projects. 
+
+- Integrating Monte Carlo and molecular dynamics:
+  The single processor mcSim and mdSim programs provide efficient
+  implementations of both MC and MD algorithms, based on a shared
+  code base. The resulting code is particularly suitable for 
+  hybrid Monte Carlo (HMC) simulations, in which short MD 
+  simulations are used as proposed Monte Carlo moves. 
+
+- Integrated data analysis: mcSim and mdSim come bundled with 
+  a set of data analysis classes that can be used either 
+  "on-the-fly", during a simulation, or for post-processing
+  of configurations that were dumped to file during an earlier
+  simulation.
+   
+Simpatico source code may be obtained either by download from 
+the project website
+<http://research.cems.umn.edu/morse/code/simpatico/home.php> 
+or by cloning a copy of the git version control repository.  
+The code is standard C++ and must be compiled from source. 
+Multi-processor programs (ddSim and multi-processor versions 
+of mcSim and mdSim) require an MPI library.
 
 Web documentation is provided with downloadable releases, in the
 directory simpatico/doc/html, but is not retained in the git 
@@ -18,12 +59,10 @@ also accessible via the Simpatico web page.
 Compiling:
 ----------
 
-Instructions for compiling Simpatico are given in the text file
+Instructions for compiling Simpatico are given in the text file 
 simpatico/doc/dox/compile.dox, or in the corresponding html web 
 page in the doc/html directory, which is generated from this text 
-file. 
-
-Basic instructions for compiling the default single-processor 
+file.  Short instructions for compiling the default single-processor 
 versions of mcSim and mdSim (for the impatient) are:
 
 - cd to the simpatico/ root directory
@@ -34,13 +73,11 @@ versions of mcSim and mdSim (for the impatient) are:
 
 - Enter "make mcMd".
 
-The resulting executables, name "mcSim" and "mdSim", will 
-be installed in the simpatico/bin directory.
-
-Further instructions for enabling automatic dependency
-generation and compiling multi-processor programs are given
-in simpatico/dox/dox/compile.dox and in the corresponding 
-html page. 
+The resulting executables, name "mcSim" and "mdSim", will be 
+installed in the simpatico/bin directory. Further instructions
+for compiling multi-processor programs, and for enabling or
+disabling various features, are given in the file 
+simpatico/dox/dox/compile.dox and in the corresponding html page. 
 
 Documentation:
 --------------
@@ -55,19 +92,18 @@ are readable in any text editor.  The html pages are included in
 the downloadable distribution, but are not retained in the git 
 repository.  
 
-If you are using a downloaded version, you can read it by pointing 
-a browser at any *.html file in the simpatico/doc/html directory, 
-and then using the links at the top of any page to navigate to 
-the main manual page.  The html file for the main page is called 
-index.html.
+If you are using a downloaded version, you can read the web
+documentation by pointing a browser at any *.html file in the 
+directory simpatico/doc/html, and then using the links at the 
+top of any page to navigate to the main manual page.  The html 
+file for the main page is named index.html.
 
 If you are using a clone of the git source code repository, you 
-may want to use dOxygen to regenerate the html documentation.  
-The file simpatico/doc/dox/compile.dox also contains instructions 
-for how to use dOxygen to regenerate the html documentation, if 
-necessary.  This requires that dOxygen be installed and that the
-executable be in a directory in your PATH.  The basic instructions 
-(after installing dOxygen) are:
+can use dOxygen to regenerate the html documentation.  The file 
+simpatico/doc/dox/compile.dox contains instructions for how to
+do so. This requires that dOxygen be installed and that the
+executable be in a directory in your PATH. The basic instructions 
+(after dOxygen is installed) are:
 
   - cd to the simpatico/src directory
   - Enter "make doc"
