@@ -666,6 +666,8 @@ namespace McMd
 
    /*
    * Return all molecules of all Species to their reservoirs.
+   *
+   * Ifdef MCMD_LINK, it also clears the LinkMaster.
    */
    void System::removeAllMolecules()
    {
@@ -682,6 +684,10 @@ namespace McMd
             nMol = nMolecule(iSpecies);
          }
       }
+
+      #ifdef MCMD_LINK
+      linkMaster().clear();
+      #endif
 
       // notify observers
       notifyMoleculeSetObservers();
