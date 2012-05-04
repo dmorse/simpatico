@@ -1,0 +1,51 @@
+In order to get reverse communication working:
+
+1) Add a bool member forceUpdate() to CellList, with a 
+   setter and getter. Initialize to false in constructor.
+
+2) Pass forceUpdate as an argument to Cell::getNeighbors,
+   with a default value of false. Atoms in a neighboring cell 
+   should be included in the list if:
+
+   if (cellId > cellIdSelf || (forceUpdate && isGhost)) { ... }
+
+3) Do I need to modify PairList? I think not.
+
+4) Add Exchanger::forceUpdate() method to send all forces back
+   along reverse path. 
+
+5) Add bool forceUpdate_ to PairPotential, and modify so as
+   to always add forces to both atoms if (reverseComunicate()).
+
+5) Add bool argument forceUpdate_ to MdIntegrator.  Modify 
+   subclasses so as to call forceUpdate method after calculating
+   forces.
+
+6) Add bool forceUpdate_ to DdMd::Simulation, which sets values
+   for subobjects (CellList, PairPotential, and Integrator.
+
+Stage #1: Use reverse communication for pair forces, and nothing else.
+---------
+
+  - Leave selection of ghosts unchanged (it's okay if we send too many,
+    which won't effect correctness.
+
+  - Leave covalent potentials unchanged (it's okay if we use reverse 
+    update only for pairs).
+
+Stage #2
+--------
+
+   - Suppress communication of unnecesary nonbonded ghosts.
+
+
+Stage #3: Reverse communication for bonded forces
+---------
+
+  - Modify exchanger to keep covalent groups only on one processor.
+
+  - Modify covalent potentials to calculate forces for all atoms in Group,
+    if reverseCommunicate.
+
+  - Send only necesary bonded ghosts.
+
