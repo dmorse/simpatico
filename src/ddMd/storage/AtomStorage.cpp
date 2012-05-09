@@ -63,7 +63,7 @@ namespace DdMd
    /*
    * Set parameters and allocate memory.
    */
-   void AtomStorage::setParam(int atomCapacity, int ghostCapacity, 
+   void AtomStorage::initialize(int atomCapacity, int ghostCapacity, 
       int totalAtomCapacity)
    {
       atomCapacity_ = atomCapacity;

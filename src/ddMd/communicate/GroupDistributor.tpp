@@ -67,7 +67,7 @@ namespace DdMd
    * Set cache capacity and allocate all required memory.
    */
    template <int N>
-   void GroupDistributor<N>::setParam(int cacheCapacity)
+   void GroupDistributor<N>::initialize(int cacheCapacity)
    {
       cacheCapacity_ = cacheCapacity;
       allocate();

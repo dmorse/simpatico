@@ -65,7 +65,7 @@ namespace DdMd
       * \param ghostCapacity     max number of ghosts on this processor.
       * \param totalAtomCapacity max number of atoms on all processors.
       */
-      void setParam(int atomCapacity, int ghostCapacity,
+      void initialize(int atomCapacity, int ghostCapacity,
                     int totalAtomCapacity);
 
       // Atom Mutators

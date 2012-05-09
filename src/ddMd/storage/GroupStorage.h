@@ -63,7 +63,7 @@ namespace DdMd
       * \param capacity      max number of groups owned by processor.
       * \param totalCapacity max number of groups on all processors.
       */
-      void setParam(int capacity, int totalCapacity);
+      void initialize(int capacity, int totalCapacity);
 
       /**
       * Set value for total number of distinct groups on all processors.
@@ -365,7 +365,7 @@ namespace DdMd
    * Set parameters and allocate memory.
    */
    template <int N>
-   void GroupStorage<N>::setParam(int capacity, int totalCapacity)
+   void GroupStorage<N>::initialize(int capacity, int totalCapacity)
    {
       capacity_      = capacity;
       totalCapacity_ = totalCapacity;

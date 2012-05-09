@@ -149,19 +149,19 @@ namespace DdMd
    {
       readBegin(in, "ConfigIo");
       read<int>(in, "atomCacheCapacity", atomCacheCapacity_);
-      atomDistributor_.setParam(atomCacheCapacity_);
+      atomDistributor_.initialize(atomCacheCapacity_);
       atomCollector_.allocate(atomCacheCapacity_);
       read<int>(in, "bondCacheCapacity", bondCacheCapacity_);
-      bondDistributor_.setParam(bondCacheCapacity_);
+      bondDistributor_.initialize(bondCacheCapacity_);
       bondCollector_.allocate(bondCacheCapacity_);
       #ifdef INTER_ANGLE
       read<int>(in, "angleCacheCapacity", angleCacheCapacity_);
-      angleDistributor_.setParam(angleCacheCapacity_);
+      angleDistributor_.initialize(angleCacheCapacity_);
       angleCollector_.allocate(angleCacheCapacity_);
       #endif
       #ifdef INTER_DIHEDRAL
       read<int>(in, "dihedralCacheCapacity", dihedralCacheCapacity_);
-      dihedralDistributor_.setParam(dihedralCacheCapacity_);
+      dihedralDistributor_.initialize(dihedralCacheCapacity_);
       dihedralCollector_.allocate(dihedralCacheCapacity_);
       #endif
       readEnd(in);
@@ -181,18 +181,18 @@ namespace DdMd
    {
       atomCacheCapacity_ = atomCacheCapacity;
       bondCacheCapacity_ = bondCacheCapacity;
-      atomDistributor_.setParam(atomCacheCapacity_);
+      atomDistributor_.initialize(atomCacheCapacity_);
       atomCollector_.allocate(atomCacheCapacity_);
-      bondDistributor_.setParam(bondCacheCapacity_);
+      bondDistributor_.initialize(bondCacheCapacity_);
       bondCollector_.allocate(bondCacheCapacity_);
       #ifdef INTER_ANGLE
       angleCacheCapacity_ = angleCacheCapacity;
-      angleDistributor_.setParam(angleCacheCapacity_);
+      angleDistributor_.initialize(angleCacheCapacity_);
       angleCollector_.allocate(angleCacheCapacity);
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralCacheCapacity_ = dihedralCacheCapacity;
-      dihedralDistributor_.setParam(dihedralCacheCapacity_);
+      dihedralDistributor_.initialize(dihedralCacheCapacity_);
       dihedralCollector_.allocate(dihedralCacheCapacity_);
       #endif
    }

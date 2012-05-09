@@ -90,7 +90,7 @@ namespace DdMd
    /*
    * Allocate memory for the cell list.
    */
-   void PairPotential::setParam(const Vector& lower, const Vector& upper, 
+   void PairPotential::initialize(const Vector& lower, const Vector& upper, 
                                 double skin, int pairCapacity)
    {
       skin_ = skin;

@@ -218,7 +218,7 @@ public:
       Vector  upper(2.0, 3.0, 4.0);
       randomAtoms(nAtom, lower, upper, cutoff);
 
-      object().setParam(lower, upper, cutoff, pairCapacity);
+      object().initialize(lower, upper, cutoff, pairCapacity);
       object().findNeighbors(lower, upper);
 
       zeroForces();
