@@ -53,7 +53,7 @@ public:
       #endif
 
       #ifdef UTIL_MPI
-
+      #if 0
       MpiLogger logger;
       logger.begin();
       std::cout << "Processor " << mpiRank() 
@@ -61,17 +61,16 @@ public:
                 << ",  isFileOpen "    << file().is_open()
                 << std::endl;
       logger.end();
-
+      #endif
       #else
-
       int rank = 0;
       object().setRank(rank);
-
       #endif
 
       object().setBoundary(boundary);
       object().readParam(file()); 
 
+      #if 0
       #ifdef UTIL_MPI
       logger.begin();
       #endif
@@ -123,6 +122,8 @@ public:
       logger.end();
       #endif
 
+      #endif // if 0
+
    }
 
    #if UTIL_MPI
@@ -146,13 +147,16 @@ public:
          for (j = 0; j < 2; ++j) {
             s = object().sourceRank(i, j);
             d = object().destRank(i, j);
+            int size = object().communicator().Get_size();
 
+            #if 0
             logger.begin();
             std::cout << Int(i) << Int(j);
             std::cout << Int(myRank) << Int(d) << Int(s) << std::endl;
+            std::cout << "Size is "<<size<<std::endl;
             logger.end();
-            int size = object().communicator().Get_size();
-            std::cout<<"Size is "<<size<<std::endl;
+            #endif
+
             if (s != myRank) {
                request[0] = object().communicator().Irecv(&rr, 1, MPI::INT, s, 34);
             }

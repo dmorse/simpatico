@@ -2,7 +2,7 @@
 #define DDMD_GROUP_DISTRIBUTOR_TEST_H
 
 #include <ddMd/communicate/AtomDistributor.h>
-#include <ddMd/communicate/GroupDistributor.cpp>
+#include <ddMd/communicate/GroupDistributor.tpp>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/storage/AtomStorage.h>
@@ -122,7 +122,7 @@ public:
          //          << atomCount << std::endl;
 
          // Initialize the sendbuffer.
-         atomDistributor.initSendBuffer();
+         atomDistributor.setup();
 
          // Fill the atom atomDistributors
          Atom*   ptr;
@@ -195,7 +195,7 @@ public:
 
          #if UTIL_MPI
          // Initialize the sendbuffer.
-         bondDistributor.initSendBuffer();
+         bondDistributor.setup();
          #endif
 
          // Read bonds and add to bondDistributor
@@ -231,7 +231,7 @@ public:
 
          #if UTIL_MPI
          // Initialize the sendbuffer.
-         angleDistributor.initSendBuffer();
+         angleDistributor.setup();
          #endif
 
          // Read angles and add to angleDistributor
@@ -325,7 +325,7 @@ public:
          //          << atomCount << std::endl;
 
          // Initialize the sendbuffer.
-         atomDistributor.initSendBuffer();
+         atomDistributor.setup();
 
          // Fill the atom atomDistributors
          Atom*   ptr;
@@ -397,7 +397,7 @@ public:
 
          #if UTIL_MPI
          // Initialize the sendbuffer.
-         bondDistributor.initSendBuffer();
+         bondDistributor.setup();
          #endif
 
          // Read bonds and add to bondDistributor

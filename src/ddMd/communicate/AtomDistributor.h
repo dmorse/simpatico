@@ -41,7 +41,7 @@ namespace DdMd
    *
    *    if (rank = 0) {  // If master processor
    *
-   *       distributor.initSendBuffer();
+   *       distributor.setup();
    *
    *       // Read from file
    *       for (i = 0; i < nAtom; ++i) {
@@ -131,7 +131,7 @@ namespace DdMd
       * This method should be called only by the master processor,
       * just before entering the loop to read atoms from file. 
       */
-      void initSendBuffer();
+      void setup();
       #endif
 
       /**

@@ -146,7 +146,7 @@ namespace DdMd
    /*
    * Initialize the send buffer.
    */ 
-   void AtomDistributor::initSendBuffer() 
+   void AtomDistributor::setup() 
    {  
       bufferPtr_->clearSendBuffer(); 
       bufferPtr_->beginSendBlock(Buffer::ATOM); 
