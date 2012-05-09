@@ -81,7 +81,7 @@ namespace DdMd
       * \param skin         pair list skin length
       * \param pairCapacity maximum number of pairs per processor
       */
-      void setParam(const Vector& lower, const Vector& upper,
+      void initialize(const Vector& lower, const Vector& upper,
                     double skin, int pairCapacity);
 
       /// \name Interaction interface

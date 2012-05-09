@@ -67,7 +67,7 @@ public:
       // Allocate memory for received atoms on the local processor
       // Maximum total number of atoms received on one processor
       // int atomCapacity = 100; 
-      // storage.setParam(atomCapacity, atomCapacity, 200);
+      // storage.initialize(atomCapacity, atomCapacity, 200);
       storage.readParam(file());
 
       // Initialize buffer
@@ -77,7 +77,7 @@ public:
 
       // Initialize AtomDistributor object
       // int cacheCapacity = 35; 
-      // object().setParam(cacheCapacity);
+      // object().initialize(cacheCapacity);
       object().readParam(file());
 
       // Finish reading parameter file

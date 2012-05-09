@@ -110,7 +110,7 @@ namespace DdMd
       *
       * \param cacheCapacity max number of groups cached for sending
       */
-      void setParam(int cacheCapacity = -1);
+      void initialize(int cacheCapacity = -1);
 
       /**
       * Read cacheCapacity, allocate memory and initialize object.
