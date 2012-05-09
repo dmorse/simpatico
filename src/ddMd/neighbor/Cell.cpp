@@ -47,7 +47,8 @@ namespace DdMd
    *
    * \param neighbors array of pointers to neighbor Atoms
    */
-   void Cell::getNeighbors(NeighborArray &neighbors) const
+   void Cell::getNeighbors(NeighborArray &neighbors, 
+                           bool forceCommFlag) const
    {
 
       // Preconditions
@@ -58,19 +59,30 @@ namespace DdMd
       int   ia, nc, na;
 
       neighbors.clear();
-
       nc = offsetsPtr_->size();
-      for (int ic = 0; ic < nc; ++ic) {
-         cellPtr = this + (*offsetsPtr_)[ic];
-         if (cellPtr->id() >= id_ || cellPtr->isGhostCell()) {
-            na = cellPtr->nAtom();
-            for (ia = 0; ia < na; ++ia) {
-               neighbors.append(cellPtr->atomPtr(ia));
+
+      if (forceCommFlag) {
+         for (int ic = 0; ic < nc; ++ic) {
+            cellPtr = this + (*offsetsPtr_)[ic];
+            if (cellPtr->id() >= id_) {
+               na = cellPtr->nAtom();
+               for (ia = 0; ia < na; ++ia) {
+                  neighbors.append(cellPtr->atomPtr(ia));
+               }
+            }
+         }
+      } else {
+         for (int ic = 0; ic < nc; ++ic) {
+            cellPtr = this + (*offsetsPtr_)[ic];
+            if (cellPtr->id() >= id_ || cellPtr->isGhostCell()) {
+               na = cellPtr->nAtom();
+               for (ia = 0; ia < na; ++ia) {
+                  neighbors.append(cellPtr->atomPtr(ia));
+               }
             }
          }
       }
    }
-
 
 }
 #endif
