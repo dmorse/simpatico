@@ -68,7 +68,7 @@ namespace DdMd
          file >> Label(nGroupLabel) >> nGroup;
          Group<N>* groupPtr;
          int i, j, k;
-         distributor.initSendBuffer();
+         distributor.setup();
          for (i = 0; i < nGroup; ++i) {
             groupPtr = distributor.newPtr();
             file >> *groupPtr;
@@ -115,7 +115,7 @@ namespace DdMd
 
          #if UTIL_MPI
          //Initialize the send buffer.
-         atomDistributor().initSendBuffer();
+         atomDistributor().setup();
          #endif
 
          // Read atoms

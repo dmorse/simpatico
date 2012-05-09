@@ -43,7 +43,7 @@ namespace DdMd
    *
    *    if (rank = 0) {  // If master processor
    *
-   *       distributor.initSendBuffer();
+   *       distributor.setup();
    *
    *       // Read from file
    *       for (i = 0; i < nGroup; ++i) {
@@ -100,7 +100,7 @@ namespace DdMd
       /**
       * Initialize Buffer for sending.
       */
-      void initSendBuffer();
+      void setup();
 
       /**
       * Set cacheCapacity, allocate memory and initialize object.

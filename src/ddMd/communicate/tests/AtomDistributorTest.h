@@ -105,7 +105,7 @@ public:
 
          #if UTIL_MPI
          // Initialize the sendbuffer.
-         object().initSendBuffer();
+         object().setup();
          #endif
 
          // Fill the atom objects

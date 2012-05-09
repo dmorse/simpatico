@@ -3,6 +3,7 @@
 #include "AtomDistributorTest.h"
 #include "BondDistributorTest.h"
 #include "ExchangerTest.h"
+#include "ExchangerForceTest.h"
 #include "AtomCollectorTest.h"
 #include "BondCollectorTest.h"
 
@@ -28,11 +29,14 @@ int main()
    TEST_RUNNER(ExchangerTest) runner5;
    runner5.run();
 
-   TEST_RUNNER(AtomCollectorTest) runner6;
+   TEST_RUNNER(ExchangerForceTest) runner6;
    runner6.run();
 
-   TEST_RUNNER(BondCollectorTest) runner7;
+   TEST_RUNNER(AtomCollectorTest) runner7;
    runner7.run();
+
+   TEST_RUNNER(BondCollectorTest) runner8;
+   runner8.run();
 
    MPI::Finalize();
    #endif

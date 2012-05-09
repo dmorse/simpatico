@@ -107,7 +107,7 @@ namespace DdMd
    *
    */
    template <int N>
-   void GroupDistributor<N>::initSendBuffer()
+   void GroupDistributor<N>::setup()
    {
       bufferPtr_->clearSendBuffer();
       bufferPtr_->beginSendBlock(Buffer::GROUP, N);

@@ -90,7 +90,7 @@ public:
 
          #if UTIL_MPI
          // Initialize the sendbuffer.
-         distributor.initSendBuffer();
+         distributor.setup();
          #endif
          for(i = 0; i < atomCount; ++i) {
             ptr = distributor.newAtomPtr();
@@ -121,13 +121,15 @@ public:
          TEST_ASSERT(domain.isInDomain(iter->position()));
       }
 
+      #if 0
       #ifdef UTIL_MPI
       MpiLogger logger;
       logger.begin();
-      //std::cout << "Processor: " << myRank
-      //          << ", recvCount = " << recvCount << std::endl;
+      std::cout << "Processor: " << myRank
+                << ", recvCount = " << recvCount << std::endl;
       logger.end();
       #endif 
+      #endif
 
       // Check that all atoms are accounted for after distribution.
       #ifdef UTIL_MPI
