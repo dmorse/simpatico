@@ -84,6 +84,13 @@ namespace DdMd
       void initialize(const Vector& lower, const Vector& upper,
                     double skin, int pairCapacity);
 
+      /**
+      * Set flag to identify if force communication is enabled.
+      *
+      * \param forceCommFlag true if force communication is enabled.
+      */
+      void setForceCommFlag(bool forceCommFlag);
+
       /// \name Interaction interface
       //@{
 
@@ -218,6 +225,11 @@ namespace DdMd
       double cutoff() const;
 
       /**
+      * Is reverse force communication enabled?
+      */
+      bool forceCommFlag() const;
+
+      /**
       * Return internal timer by reference
       */
       DdTimer& timer();
@@ -291,6 +303,9 @@ namespace DdMd
       /// Timer
       DdTimer timer_;
 
+      /// Is reverse force communication enabled?
+      bool forceCommFlag_;
+
    };
 
    inline CellList& PairPotential::cellList()
@@ -304,6 +319,9 @@ namespace DdMd
 
    inline double PairPotential::cutoff() const
    {  return cutoff_; }
+
+   inline bool PairPotential::forceCommFlag() const
+   {  return forceCommFlag_; }
 
    inline Boundary& PairPotential::boundary() 
    {  return *boundaryPtr_; }

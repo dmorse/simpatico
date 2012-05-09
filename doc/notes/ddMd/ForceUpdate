@@ -1,51 +1,88 @@
 In order to get reverse communication working:
 
-1) Add a bool member forceUpdate() to CellList, with a 
-   setter and getter. Initialize to false in constructor.
+1) Add methods to Buffer to pack and unpack forces
 
-2) Pass forceUpdate as an argument to Cell::getNeighbors,
-   with a default value of false. Atoms in a neighboring cell 
-   should be included in the list if:
+   Status: Done, not tested.
 
-   if (cellId > cellIdSelf || (forceUpdate && isGhost)) { ... }
+2) Add Exchanger::forceUpdate() method to send all forces back along 
+   reverse path.
 
-3) Do I need to modify PairList? I think not.
+   Status: Done, not tested.
 
-4) Add Exchanger::forceUpdate() method to send all forces back
-   along reverse path. 
+3) Pass forceUpdateFlag as an argument to Cell::getNeighbors, with
+   a default value of false. Atoms in a neighboring cell should be 
+   included in the array of neighbors if:
 
-5) Add bool forceUpdate_ to PairPotential, and modify so as
-   to always add forces to both atoms if (reverseComunicate()).
+   if (cellId > cellIdSelf || (forceUpdateFlag && isGhost)) { ... }
 
-5) Add bool argument forceUpdate_ to MdIntegrator.  Modify 
-   subclasses so as to call forceUpdate method after calculating
-   forces.
+   Status: Done, not tested.
 
-6) Add bool forceUpdate_ to DdMd::Simulation, which sets values
-   for subobjects (CellList, PairPotential, and Integrator.
+4) Pass bool variable forceUpdateFlag to PairList::build, which
+   calls Cell::getNeighbors. 
+
+   Status: Done, not tested.
+
+5) Add bool forceUpdateFlag_ member to PairPotential. Pass value
+   to Cell::getNeighbors within PairPotential::findNeighbors().
+
+   Status: Done, not tested.
+
+6) Modify PairPotentialImpl.h so as to always add forces to both
+   atoms if forceUpdateFlag.
+
+   Status: Done, not tested.
+
+   Possible alternative: Pass forceUpdateFlag as an argument to the 
+   findNeighbors and addForces methods.
+
+7) Add bool member forceUpdate_ to MdIntegrator.  Modify subclasses 
+   so as to call forceUpdate method after calculating forces.
+
+   Possible alternative: Make forceUpdate_ a local variable of the
+   run method, copied from the parent Simulation.
+
+8) Add bool forceUpdateFlag to DdMd::Simulation. Make setter function 
+   sets values for Integrator and PairPotential.
+
+9) Modify DdMd::Simulation::zeroForces so as to zero ghost forces iff
+   Simulation::forceUpdateFlag is set.
+
 
 Stage #1: Use reverse communication for pair forces, and nothing else.
 ---------
 
-  - Leave selection of ghosts unchanged (it's okay if we send too many,
-    which won't effect correctness.
+ - Leave selection of ghosts in Exchanger unchanged. It's okay if we 
+   send some unnecessary ghost - this should not effect correctness.
 
-  - Leave covalent potentials unchanged (it's okay if we use reverse 
-    update only for pairs).
+ - Leave covalent potentials unchanged: It's okay if we use reverse 
+   update only for pairs, and repeat the force calculation for bonded
+   interactions.
 
-Stage #2
+ - Unit test by adding tests that involves the pair potential to 
+   ddMd/communicate/tests/ExchangerTest.h
+
+Stage #2:
 --------
 
-   - Suppress communication of unnecesary nonbonded ghosts.
+ - Add velocityCommunicateFlag, and allow for possible forward
+   communication of velocities.
+
+ - Test DPD integrator
+
+Stage #3:
+--------
+
+ - Suppress communication of (some) unnecesary nonbonded ghosts.
 
 
-Stage #3: Reverse communication for bonded forces
+Stage #4: Reverse communication for bonded forces (if desired)
 ---------
 
   - Modify exchanger to keep covalent groups only on one processor.
+    The group migrates with the "owner" atom.
 
-  - Modify covalent potentials to calculate forces for all atoms in Group,
-    if reverseCommunicate.
+  - Modify covalent potentials to calculate forces for all atoms in 
+    Group, if forceCommFlag.
 
   - Send only necesary bonded ghosts.
 

@@ -424,11 +424,12 @@ namespace DdMd
 
       for (pairList_.begin(iter); iter.notEnd(); ++iter) {
          iter.getPair(atom0Ptr, atom1Ptr);
+         assert(!atom0Ptr->isGhost());
          type0 = atom0Ptr->typeId();
          type1 = atom1Ptr->typeId();
          f.subtract(atom0Ptr->position(), atom1Ptr->position());
          rsq = f.square();
-         if (!atom1Ptr->isGhost()) {
+         if (!atom1Ptr->isGhost() || forceCommFlag()) {
             if (needEnergy) {
                energy += interactionPtr_->energy(rsq, type0, type1);
             }

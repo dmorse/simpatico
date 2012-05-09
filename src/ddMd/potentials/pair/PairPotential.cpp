@@ -32,7 +32,8 @@ namespace DdMd
       domainPtr_(0),
       boundaryPtr_(0),
       storagePtr_(0),
-      timer_(PairPotential::NTime)
+      timer_(PairPotential::NTime),
+      forceCommFlag_(false)
    {} 
 
    /*
@@ -45,7 +46,8 @@ namespace DdMd
       domainPtr_(&simulation.domain()),
       boundaryPtr_(&simulation.boundary()),
       storagePtr_(&simulation.atomStorage()),
-      timer_(PairPotential::NTime)
+      timer_(PairPotential::NTime),
+      forceCommFlag_(false)
    {}
 
    /*
@@ -64,6 +66,12 @@ namespace DdMd
    */
    PairPotential::~PairPotential()
    {}
+
+   /*
+   * Set flag to specify if reverse force communication is enabled.
+   */
+   void PairPotential::setForceCommFlag(bool forceCommFlag)
+   {  forceCommFlag_ = forceCommFlag; }
 
    void PairPotential::readPairListParam(std::istream& in)
    {
@@ -131,7 +139,7 @@ namespace DdMd
       assert(cellList_.isValid());
       stamp(PairPotential::BUILD_CELL_LIST);
 
-      pairList_.build(cellList_);
+      pairList_.build(cellList_, forceCommFlag());
       stamp(PairPotential::BUILD_PAIR_LIST);
    }
 
