@@ -2,9 +2,11 @@ SRC_DIR_REL =../../..
 
 include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
+include $(SRC_DIR_REL)/inter/defines.mk
 include $(SRC_DIR_REL)/ddMd/defines.mk
 include $(SRC_DIR_REL)/ddMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
+include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
 include sources.mk
 
@@ -17,9 +19,9 @@ clean:
 clean-deps:
 	rm -f $(ddMd_potentials_tests_OBJS:.o=.d)
 
-Test: Test.o $(ddMd_LIB) $(util_LIB)
+Test: Test.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
-	       $(ddMd_LIB) $(util_LIB)
+	       $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 
 -include $(ddMd_potentials_tests_OBJS:.o=.d)
 

@@ -184,6 +184,7 @@ namespace DdMd
       }
 
       nAtom_ = 0;
+      nReject_ = 0;
 
       #if 0
       // Clear all CellTag objects
@@ -224,6 +225,12 @@ namespace DdMd
    */
    int CellList::nAtom() const
    {  return nAtom_; }
+
+   /*
+   * Get number of atoms that were rejected (not added to cells).
+   */
+   int CellList::nReject() const
+   {  return nReject_; }
 
    /*
    * Get the maximum number of atoms for which space is allocated.

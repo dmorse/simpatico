@@ -1,14 +1,17 @@
 #ifndef DDMD_PAIR_POTENTIAL_TEST_H
 #define DDMD_PAIR_POTENTIAL_TEST_H
 
-#include <ddMd/potentials/PairPotential.h>
-#include <ddMd/potentials/PairInteraction.h>
+#include <ddMd/potentials/pair/PairPotential.h>
+#include <ddMd/potentials/pair/PairPotentialImpl.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/communicate/Domain.h>
 #include <util/boundary/Boundary.h>
 #include <ddMd/chemistry/Atom.h>
+
+#include <inter/pair/DpdPair.h>
+
 #include <util/random/Random.h>
 
 #include <test/UnitTest.h>
@@ -16,9 +19,10 @@
 #include <test/ParamFileTest.h>
 
 using namespace Util;
+using namespace Inter;
 using namespace DdMd;
 
-class PairPotentialTest: public ParamFileTest<PairPotential>
+class PairPotentialTest: public ParamFileTest< PairPotentialImpl<DpdPair> >
 {
 
 private:
@@ -26,21 +30,20 @@ private:
       Boundary    boundary;
       Domain      domain;
       AtomStorage storage;
-      PairInteraction pairInteraction;
 
 public:
 
    virtual void setUp()
    {
-      pairInteraction.setNAtomType(1);
-      object().associate(boundary, domain, storage, pairInteraction);
+      object().setNAtomType(1);
+      object().associate(domain, boundary, storage);
 
       // Read parameter file
       openFile("in/PairPotential");
+      domain.readParam(file());
       storage.readParam(file());
-      pairInteraction.readParam(file());
+      object().readParam(file());
       closeFile();
-
    }
 
    void readAtoms(const char* filename)
