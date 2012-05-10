@@ -150,20 +150,6 @@ namespace DdMd
       void computeForces();
 
       /**
-      * Is exchange of atoms among processors needed?
-      *
-      * This method returns true if any atom in the AtomStorage has moved
-      * a distance skin/2 or greater since the last snapshot (i.e., the
-      * last time atoms were exchanged and pair list was rebuilt).
-      *
-      * Reduce-to-all operation: Must be called on all nodes and returns 
-      * same result on all node.
-      * 
-      * \return true if exchange / reneighboring is needed, false otherwise.
-      */
-      bool needExchange();
-
-      /**
       * Compute total kinetic energy.
       * 
       * Reduce operation: Must be called on all nodes.

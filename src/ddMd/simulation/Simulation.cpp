@@ -796,37 +796,6 @@ namespace DdMd
       }
    }
 
-   /*
-   * Determine whether an atom exchange and reneighboring is needed.
-   */
-   bool Simulation::needExchange() 
-   {
-      // Calculate maximum square displacment among along nodes
-      double maxSqDisp = atomStorage_.maxSqDisplacement();
-      double maxSqDispAll;
-      #ifdef UTIL_MPI
-      domain_.communicator().Reduce(&maxSqDisp, &maxSqDispAll, 1, 
-                                    MPI::DOUBLE, MPI::MAX, 0);
-      #else
-      maxSqDispAll = maxSqDisp;
-      #endif
-
-      // Decide if maximum exceeds threshhold (on master)
-      int needed = 0;
-      if (domain_.isMaster()) {
-         if (sqrt(maxSqDispAll) > 0.5*pairPotentialPtr_->skin()) {
-            needed = 1; 
-         }
-      }
-
-      #ifdef UTIL_MPI
-      // Broadcast decision to all nodes
-      domain_.communicator().Bcast(&needed, 1, MPI::INT, 0);
-      #endif
-
-      return bool(needed);
-   }
-
    #ifndef DDMD_NOPAIR
    /*
    * Return the PairFactory by reference.

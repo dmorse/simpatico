@@ -353,8 +353,6 @@ public:
 
       int  nAtom  = 0;    // Number of atoms on this processor.
       int  nGhost = 0;    // Number of ghosts on this processor.
-      int  nAtomAll  = 0; // Number received on all processors.
-      int  myRank = domain.gridRank();
 
       AtomIterator   atomIter;
       GhostIterator  ghostIter;

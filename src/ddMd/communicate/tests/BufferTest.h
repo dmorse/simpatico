@@ -262,11 +262,9 @@ public:
    {
       printMethod(TEST_FUNC);
       //std::cout << std::endl;
-      int i;
 
       AtomArray atoms;
       Vector    pos;
-      Buffer::BlockDataType atomtype = Buffer::GHOST;
       int myrank, commsize;
       atoms.allocate(4);
 
@@ -296,7 +294,7 @@ public:
       object().clearSendBuffer();
 
       //Pack 2 local atoms into the send buffer
-      object().beginSendBlock(atomtype);
+      object().beginSendBlock(Buffer::GHOST);
       object().packGhost(atoms[0]);
       object().packGhost(atoms[1]);
       object().endSendBlock();
@@ -338,7 +336,6 @@ public:
 
       AtomArray atoms;
       Vector    pos, vel;
-      Buffer::BlockDataType atomtype = Buffer::ATOM;
       int myrank, commsize;
 
       atoms.allocate(4);
@@ -375,7 +372,7 @@ public:
 
       // Pack 2 local atoms into the send buffer
       // Set isComplete parameter false.
-      object().beginSendBlock(atomtype);
+      object().beginSendBlock(Buffer::ATOM);
       object().packAtom(atoms[0]);
       object().packAtom(atoms[1]);
       object().endSendBlock(false);
@@ -462,11 +459,9 @@ public:
    {
       printMethod(TEST_FUNC);
       //std::cout << std::endl;
-      int i;
 
       AtomArray atoms;
       Vector    pos;
-      Buffer::BlockDataType atomtype = Buffer::GHOST;
       int myrank, commsize;
       atoms.allocate(4);
 
@@ -492,7 +487,7 @@ public:
 
       //Initialize the sendbuffer, set atomtype to GHOST
       object().clearSendBuffer();
-      object().beginSendBlock(atomtype);
+      object().beginSendBlock(Buffer::GHOST);
 
       //Pack 2 local atoms into the send buffer
       object().packGhost(atoms[0]);
@@ -539,7 +534,6 @@ public:
 
       AtomArray atoms;
       Vector    pos, vel;
-      Buffer::BlockDataType atomtype = Buffer::ATOM;
       int myrank, commsize;
 
       atoms.allocate(8);
@@ -841,7 +835,7 @@ public:
          bonds[1].setAtomId(0, myrank + 38);
          bonds[1].setAtomId(1, myrank + 39);
    
-         //Initialize the sendbuffer, set atomtype to ATOM
+         //Initialize the sendbuffer, set atomtype to GROUP
          object().clearSendBuffer();
          object().beginSendBlock(Buffer::GROUP, 2);
    

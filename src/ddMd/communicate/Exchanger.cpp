@@ -326,7 +326,6 @@ namespace DdMd
       Atom* atomPtr;
       Plan* planPtr;
       int i, j, k, nAtom;
-      bool choose;
 
       // Set ghost communication flags for atoms in incomplete bonds
       storage.begin(groupIter);
@@ -412,7 +411,6 @@ namespace DdMd
       Plan* planPtr;
       int i, j, jc, ip, jp, k, source, dest, nSend;
       int shift;
-      bool choose;
       bool isHome;
       bool isGhost;
 
@@ -850,11 +848,9 @@ namespace DdMd
       }
 
       Vector  lengths = boundaryPtr_->lengths();
-      double  bound, inner, coord;
-      AtomIterator  localIter;
+      double  bound, inner;
       Atom* atomPtr;
       Atom* sendPtr;
-      Plan* planPtr;
       int i, j, jc, ip, jp, k, source, dest, shift, size;
 
       // Clear all send and receive arrays
@@ -865,6 +861,7 @@ namespace DdMd
       }
 
       #ifndef EXCHANGER_GHOST
+      AtomIterator  localIter;
       atomStoragePtr_->begin(localIter);
       for ( ; localIter.notEnd(); ++localIter) {
          for (i = 0; i < Dimension; ++i) {
@@ -886,6 +883,8 @@ namespace DdMd
                sendCounter(i, j) = 0;
             }
          }
+         AtomIterator  localIter;
+         Plan* planPtr;
          atomStoragePtr_->begin(localIter);
          for ( ; localIter.notEnd(); ++localIter) {
             planPtr = &localIter->plan();

@@ -323,26 +323,22 @@ namespace DdMd
    */
    bool AtomStorage::needExchange(MPI::Intracomm& communicator, double skin) 
    {
-      double maxSqDisp = maxSqDisplacement();
-
       // Calculate maximum square displacment among along nodes
-      double maxSqDispAll;
+      double maxSqDisp = maxSqDisplacement(); // maximum on node
+      double maxSqDispAll;                    // global maximum
       communicator.Reduce(&maxSqDisp, &maxSqDispAll, 1, 
                           MPI::DOUBLE, MPI::MAX, 0);
 
-      // Decide if maximum exceeds threshhold (on rank 0 node)
-      int needed = 0;
+      // Decide on master node if maximum exceeds threshhold.
+      int needed;
       if (communicator.Get_rank() == 0) {
+         needed = 0;
          if (sqrt(maxSqDispAll) > 0.5*skin) {
             needed = 1; 
          }
       }
-
-      // Broadcast decision to all nodes
       communicator.Bcast(&needed, 1, MPI::INT, 0);
-      if (sqrt(maxSqDisp) > 0.5*skin) {
-         needed = 1; 
-      }
+
       return bool(needed);
    }
 
@@ -351,7 +347,7 @@ namespace DdMd
    bool AtomStorage::needExchange(double skin) 
    {
       int needed = 0;
-      if (sqrt(maxSqDisplacement()) > 0.5*skin()) {
+      if (sqrt(maxSqDisplacement()) > 0.5*skin) {
          needed = 1; 
       }
       return bool(needed);
