@@ -129,7 +129,9 @@ namespace DdMd
          timer().stamp(Integrator::INTEGRATE1);
    
          // Check if exchange and reneighboring is necessary
-         needExchange = simulation().needExchange();
+         //needExchange = simulation().needExchange();
+         needExchange = atomStorage().needExchange(domain().communicator(), 
+                                                 pairPotential().skin());
          timer().stamp(Integrator::CHECK);
 
          // Exchange atoms if necessary

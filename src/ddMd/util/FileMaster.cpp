@@ -41,7 +41,7 @@ namespace DdMd
      outputPrefix_(other.outputPrefix_),
      directoryIdPrefix_(other.directoryIdPrefix_),
      rootPrefix_(other.rootPrefix_),
-     paramFilePtr_(paramFilePtr_),
+     paramFilePtr_(other.paramFilePtr_),
      commandFilePtr_(other.commandFilePtr_),
      hasDirectoryId_(other.hasDirectoryId_),
      isSetParamFileStdIn_(other.isSetParamFileStdIn_)

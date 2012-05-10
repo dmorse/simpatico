@@ -147,9 +147,9 @@ public:
          for (j = 0; j < 2; ++j) {
             s = object().sourceRank(i, j);
             d = object().destRank(i, j);
-            int size = object().communicator().Get_size();
 
             #if 0
+            int size = object().communicator().Get_size();
             logger.begin();
             std::cout << Int(i) << Int(j);
             std::cout << Int(myRank) << Int(d) << Int(s) << std::endl;
