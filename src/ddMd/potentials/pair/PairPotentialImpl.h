@@ -135,13 +135,6 @@ namespace DdMd
       virtual void addForces();
 
       /**
-      * Add pair forces to atom forces, and compute energy.
-      *
-      * \param energy on output, contains energy for this processor.
-      */
-      virtual void addForces(double& energy);
-
-      /**
       * Compute the total nonBonded pair energy for all processors
       * 
       * Call on all processors.
@@ -200,25 +193,36 @@ namespace DdMd
       int methodId_;
 
       /**
-      * Calculate atomic pair forces and/or pair potential energy.
-      *
-      * Use the Verlet pair list. 
+      * Calculate atomic pair energy, using PairList.
       */
-      double addForcesList(bool needForce, bool needEnergy);
+      double energyList();
+
+      /**
+      * Calculate atomic pair forces, using PairList.
+      */
+      void addForcesList();
 
       /**
       * Calculate atomic pair forces and/or pair potential energy.
-      *
-      * Use cell list (but not pair list).
       */
-      double addForcesCell(bool needForce, bool needEnergy);
+      double energyCell();
 
       /**
       * Calculate atomic pair forces and/or pair potential energy.
+      */
+      void addForcesCell();
+
+      /**
+      * Calculate atomic pair energy, using N^2 loop.
       * 
       * Use an O(N^2) double loop over all atoms.
       */
-      double addForcesNSq(bool needForce, bool needEnergy);
+      double energyNSq();
+
+      /**
+      * Calculate atomic pair forces, using N^2 loop.
+      */
+      void addForcesNSq();
 
       #if 0 
       template <typename T>
@@ -344,30 +348,14 @@ namespace DdMd
    {  
        stamp(PairPotential::START);
        if (methodId_ == 0) {
-          addForcesList(true, false); 
+          addForcesList(); 
        } else
        if (methodId_ == 1) {
-          addForcesCell(true, false); 
+          addForcesCell(); 
        } else {
-          addForcesNSq(true, false); 
+          addForcesNSq(); 
        }
        stamp(PairPotential::FORCES);
-   }
-
-   /*
-   * Increment atomic forces and compute pair energy.
-   */
-   template <class Interaction>
-   void PairPotentialImpl<Interaction>::addForces(double& energy)
-   {  
-       if (methodId_ == 0) {
-          energy = addForcesList(true, true); 
-       } else
-       if (methodId_ == 1) {
-          energy = addForcesCell(true, true); 
-       } else {
-          energy = addForcesNSq(true, true); 
-       }
    }
 
    /*
@@ -383,12 +371,12 @@ namespace DdMd
    { 
       double localEnergy = 0; 
       if (methodId_ == 0) {
-         localEnergy = addForcesList(false, true); 
+         localEnergy = energyList(); 
       } else 
       if (methodId_ == 1) {
-         localEnergy = addForcesCell(false, true); 
+         localEnergy = energyCell(); 
       } else {
-         localEnergy = addForcesNSq(false, true); 
+         localEnergy = energyNSq(); 
       }
 
       #ifdef UTIL_MPI
@@ -410,9 +398,7 @@ namespace DdMd
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction>
-   double 
-   PairPotentialImpl<Interaction>::addForcesList(bool needForce, 
-                                                 bool needEnergy)
+   double PairPotentialImpl<Interaction>::energyList()
    {
       Vector f;
       double rsq;
@@ -421,7 +407,6 @@ namespace DdMd
       Atom*  atom0Ptr;
       Atom*  atom1Ptr;
       int    type0, type1;
-
       for (pairList_.begin(iter); iter.notEnd(); ++iter) {
          iter.getPair(atom0Ptr, atom1Ptr);
          assert(!atom0Ptr->isGhost());
@@ -430,34 +415,47 @@ namespace DdMd
          f.subtract(atom0Ptr->position(), atom1Ptr->position());
          rsq = f.square();
          if (!atom1Ptr->isGhost() || forceCommFlag()) {
-            if (needEnergy) {
-               energy += interactionPtr_->energy(rsq, type0, type1);
-            }
-            if (needForce) {
-               f *= interactionPtr_->forceOverR(rsq, type0, type1);
-               atom0Ptr->force() += f;
-               atom1Ptr->force() -= f;
-            }
+            energy += interactionPtr_->energy(rsq, type0, type1);
          } else {
-            if (needEnergy) {
-               energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
-            }
-            if (needForce) {
-               f *= interactionPtr_->forceOverR(rsq, type0, type1);
-               atom0Ptr->force() += f;
-            }
+            energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
          }
       }
       return energy;
+   }
+
+
+   /*
+   * Increment atomic forces and/or pair energy (private).
+   */
+   template <class Interaction>
+   void PairPotentialImpl<Interaction>::addForcesList()
+   {
+      Vector f;
+      double rsq;
+      PairIterator iter;
+      Atom*  atom0Ptr;
+      Atom*  atom1Ptr;
+      int    type0, type1;
+      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+         iter.getPair(atom0Ptr, atom1Ptr);
+         f.subtract(atom0Ptr->position(), atom1Ptr->position());
+         rsq = f.square();
+         type0 = atom0Ptr->typeId();
+         type1 = atom1Ptr->typeId();
+         f *= interactionPtr_->forceOverR(rsq, type0, type1);
+         atom0Ptr->force() += f;
+         if (!atom1Ptr->isGhost() || forceCommFlag()) {
+            atom1Ptr->force() -= f;
+         }
+      }
    }
 
    /*
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction>
-   double PairPotentialImpl<Interaction>::addForcesCell(bool needForce, bool needEnergy)
+   double PairPotentialImpl<Interaction>::energyCell()
    {
-
       // Find all neighbors (cell list)
       Cell::NeighborArray neighbors;
       Vector f;
@@ -466,6 +464,58 @@ namespace DdMd
       Atom*  atomPtr0;
       Atom*  atomPtr1;
       const Cell*  cellPtr;
+      int    type0, type1, na, nn, i, j;
+
+      // Iterate over linked list of local cells.
+      cellPtr = cellList_.begin();
+      while (cellPtr) {
+         cellPtr->getNeighbors(neighbors);
+         na = cellPtr->nAtom();
+         nn = neighbors.size();
+         for (i = 0; i < na; ++i) {
+            atomPtr0 = neighbors[i];
+            type0 = atomPtr0->typeId();
+            // Loop over atoms in this cell
+            for (j = 0; j < na; ++j) {
+               atomPtr1 = neighbors[j];
+               type1 = atomPtr1->typeId();
+               if (atomPtr1 > atomPtr0) {
+                  f.subtract(atomPtr0->position(), atomPtr1->position());
+                  rsq = f.square();
+                  energy += interactionPtr_->energy(rsq, type0, type1);
+               }
+            }
+            // Loop over atoms in neighboring cells.
+            for (j = na; j < nn; ++j) {
+               atomPtr1 = neighbors[j];
+               type1 = atomPtr1->typeId();
+               f.subtract(atomPtr0->position(), atomPtr1->position());
+               rsq = f.square();
+               if (!atomPtr1->isGhost() || forceCommFlag()) {
+                  energy += interactionPtr_->energy(rsq, type0, type1);
+               } else {
+                  energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
+               }
+            }
+         }
+         cellPtr = cellPtr->nextCellPtr();
+      } // while (cellPtr) 
+      return energy;
+   }
+
+   /*
+   * Increment atomic forces using Cell List (private).
+   */
+   template <class Interaction>
+   void PairPotentialImpl<Interaction>::addForcesCell()
+   {
+      // Find all neighbors (cell list)
+      Cell::NeighborArray neighbors;
+      Vector f;
+      double rsq;
+      Atom*  atomPtr0;
+      Atom*  atomPtr1;
+      const Cell* cellPtr;
       int    type0, type1, na, nn, i, j;
 
       // Iterate over local cells.
@@ -477,7 +527,6 @@ namespace DdMd
          for (i = 0; i < na; ++i) {
             atomPtr0 = neighbors[i];
             type0 = atomPtr0->typeId();
-
             // Loop over atoms in this cell
             for (j = 0; j < na; ++j) {
                atomPtr1 = neighbors[j];
@@ -485,63 +534,34 @@ namespace DdMd
                if (atomPtr1 > atomPtr0) {
                   f.subtract(atomPtr0->position(), atomPtr1->position());
                   rsq = f.square();
-                  if (needEnergy) {
-                     energy += interactionPtr_->energy(rsq, type0, type1);
-                  }
-                  if (needForce) {
-                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                     atomPtr0->force() += f;
-                     atomPtr1->force() -= f;
-                  }
+                  f *= interactionPtr_->forceOverR(rsq, type0, type1);
+                  atomPtr0->force() += f;
+                  atomPtr1->force() -= f;
                }
             }
-
             // Loop over atoms in neighboring cells.
             for (j = na; j < nn; ++j) {
                atomPtr1 = neighbors[j];
                type1 = atomPtr1->typeId();
                f.subtract(atomPtr0->position(), atomPtr1->position());
                rsq = f.square();
-               if (!atomPtr1->isGhost()) {
-                  if (needEnergy) {
-                     energy += interactionPtr_->energy(rsq, type0, type1);
-                  }
-                  if (needForce) {
-                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                     atomPtr0->force() += f;
-                     atomPtr1->force() -= f;
-                  }
-               } else {
-                  if (needEnergy) {
-                     energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
-                  }
-                  if (needForce) {
-                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
-                     atomPtr0->force() += f;
-                  }
+               f *= interactionPtr_->forceOverR(rsq, type0, type1);
+               atomPtr0->force() += f;
+               if (!atomPtr1->isGhost() || forceCommFlag()) {
+                  atomPtr1->force() -= f;
                }
             }
-
          }
-
          cellPtr = cellPtr->nextCellPtr();
-
       } // while (cellPtr) 
-
-      return energy;
    }
 
    /*
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction>
-   double PairPotentialImpl<Interaction>::addForcesNSq(bool needForce, bool needEnergy)
+   double PairPotentialImpl<Interaction>::energyNSq()
    {
-      // Preconditions
-      //if (!storage().isInitialized()) {
-      //   UTIL_THROW("AtomStorage must be initialized");
-      //}
-
       Vector f;
       double rsq;
       double energy = 0.0;
@@ -549,66 +569,84 @@ namespace DdMd
       GhostIterator ghostIter;
       int           type0, type1;
 
+      // Iterate over local atom 0
+      storage().begin(atomIter0);
+      for ( ; atomIter0.notEnd(); ++atomIter0) {
+         type0 = atomIter0->typeId();
+         // Iterate over local atom 1
+         storage().begin(atomIter1);
+         for ( ; atomIter1.notEnd(); ++atomIter1) {
+            type1 = atomIter1->typeId();
+            if (atomIter0->id() < atomIter1->id()) {
+               f.subtract(atomIter0->position(), atomIter1->position());
+               rsq = f.square();
+               energy += interactionPtr_->energy(rsq, type0, type1);
+            }
+         }
+         // Iterate over ghost atoms
+         storage().begin(ghostIter);
+         for ( ; ghostIter.notEnd(); ++ghostIter) {
+            type1 = ghostIter->typeId();
+            f.subtract(atomIter0->position(), ghostIter->position());
+            rsq = f.square();
+            energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
+         }
+      }
+      return energy;
+   }
+
+   /*
+   * Increment atomic forces and/or pair energy (private).
+   */
+   template <class Interaction>
+   void PairPotentialImpl<Interaction>::addForcesNSq()
+   {
+      Vector f;
+      double rsq;
+      AtomIterator  atomIter0, atomIter1;
+      GhostIterator ghostIter;
+      int           type0, type1, id0, id1;
+
       // Iterate over atom 0
       storage().begin(atomIter0);
       for ( ; atomIter0.notEnd(); ++atomIter0) {
+         id0 = atomIter0->id();
          type0 = atomIter0->typeId();
 
          // Iterate over atom 1
          storage().begin(atomIter1);
          for ( ; atomIter1.notEnd(); ++atomIter1) {
             type1 = atomIter1->typeId();
-
-            if (atomIter0->id() < atomIter1->id()) {
-
-               // Set f = r0 - r1, separation between atoms
-               f.subtract(atomIter0->position(), atomIter1->position());
-               rsq = f.square();
- 
-               if (needEnergy) {
-                  energy += interactionPtr_->energy(rsq, type0, type1);
-               }
-
-               if (needForce) {
- 
+            id1 =   atomIter1->id();
+            if (id0 < id1) {
+               if (!atomIter0->mask().isMasked(id1)) {
+                  // Set f = r0 - r1, separation between atoms
+                  f.subtract(atomIter0->position(), atomIter1->position());
+                  rsq = f.square();
                   // Set vector force = (r0-r1)*(forceOverR)
                   f *= interactionPtr_->forceOverR(rsq, type0, type1);
-           
-                  // Add equal and opposite forces.
                   atomIter0->force() += f;
                   atomIter1->force() -= f;
-
                }
-
             }
-            
          }
 
          // Iterate over ghosts
          storage().begin(ghostIter);
          for ( ; ghostIter.notEnd(); ++ghostIter) {
+            id1 = ghostIter->id();
             type1 = ghostIter->typeId();
-
-            // Set f = r0 - r1, separation between atoms
-            f.subtract(atomIter0->position(), ghostIter->position());
-            rsq = f.square();
-
-            // Set force = (r0-r1)*(forceOverR)
-            f *= interactionPtr_->forceOverR(rsq, type0, type1);
-     
-            // Add half energy of local-ghost interaction. 
-            if (needEnergy) {
-               energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
+            if (!atomIter0->mask().isMasked(id1)) {
+               // Set f = r0 - r1, separation between atoms
+               f.subtract(atomIter0->position(), ghostIter->position());
+               rsq = f.square();
+               // force = (r0-r1)*(forceOverR)
+               f *= interactionPtr_->forceOverR(rsq, type0, type1);
+               atomIter0->force() += f;
             }
- 
-            // Add force to local atom
-            atomIter0->force() += f;
-            
          }
 
       }
-
-      return energy;
    }
 
    #if 0

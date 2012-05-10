@@ -21,6 +21,8 @@
 #include <inter/pair/DpdPair.h>
 
 #include <util/random/Random.h>
+#include <util/containers/DArray.h>
+#include <util/space/Vector.h>
 
 #include <util/mpi/MpiLogger.h>
 
@@ -40,6 +42,7 @@ using namespace DdMd;
 
 class ExchangerForceTest: public ParamFileTest<Exchanger>
 {
+
 private:
 
    Boundary boundary;
@@ -57,6 +60,8 @@ private:
    Random random;
 
    PairPotentialImpl<DpdPair> pairPotential;
+
+   DArray<Vector> forces;
 
    int atomCount;
 
@@ -102,6 +107,7 @@ public:
       buffer.setParamCommunicator(communicator());
       configIo.setParamCommunicator(communicator());
       random.setParamCommunicator(communicator());
+      pairPotential.setParamCommunicator(communicator());
       #else
       domain.setRank(0);
       #endif
@@ -120,15 +126,17 @@ public:
       #ifdef INTER_DIHEDRAL
       dihedralStorage.readParam(file());
       #endif
-      //pairPotential.readParam(file());
+      pairPotential.readParam(file());
       closeFile();
+
+      object().setPairCutoff(pairPotential.cutoff());
+      object().allocate();
+
+      forces.allocate(atomStorage.totalAtomCapacity());
 
       MaskPolicy policy = MaskBonded;
       std::ifstream configFile("in/config");
       configIo.readConfig(configFile, policy);
-
-      object().allocate();
-      object().setPairCutoff(0.5);
 
       int  nAtom = 0;     // Number received on this processor.
       int  nAtomAll  = 0; // Number received on all processors.
@@ -157,6 +165,70 @@ public:
       }
    }
 
+   void zeroForces()
+   {
+      AtomIterator  atomIter;
+      GhostIterator ghostIter;
+
+      // Zero atom forces
+      atomStorage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         atomIter->force().zero();
+      }
+
+      // Zero ghost forces
+      atomStorage.begin(ghostIter);
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
+         ghostIter->force().zero();
+      }
+
+   }
+
+   void writeForces()
+   {
+      std::cout << std::endl;
+
+      AtomIterator  atomIter;
+      atomStorage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         std::cout << atomIter->force() << "  " << 0 << std::endl;
+      }
+
+      #if 0
+      GhostIterator ghostIter;
+      atomStorage.begin(ghostIter);
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
+         std::cout << ghostIter->force() << "  " << 1 << std::endl;
+      }
+      #endif
+
+   }
+
+   void saveForces()
+   {
+      AtomIterator  atomIter;
+      GhostIterator ghostIter;
+      int id;
+
+      for (id = 0; id < forces.capacity(); ++id) {
+         forces[id].zero();
+      }
+ 
+      atomStorage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         id = atomIter->id();
+         forces[id] = atomIter->force();
+      }
+
+      #if 0
+      atomStorage.begin(ghostIter);
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
+         id = ghostIter->id();
+         forces[id] = ghostIter->force();
+      }
+      #endif
+   }
+
    void testGhostUpdate()
    {
       printMethod(TEST_FUNC);
@@ -168,7 +240,6 @@ public:
 
       AtomIterator   atomIter;
       GhostIterator  ghostIter;
-      DArray<Vector> ghostPositions;
 
       double range = 0.4;
       displaceAtoms(range);
@@ -298,84 +369,94 @@ public:
 
    }
 
-
-   void zeroForces()
-   {
-      AtomIterator  atomIter;
-      GhostIterator ghostIter;
-
-      atomStorage.begin(atomIter);
-      for ( ; atomIter.notEnd(); ++atomIter) {
-         atomIter->force().zero();
-      }
-      atomStorage.begin(ghostIter);
-      for ( ; ghostIter.notEnd(); ++ghostIter) {
-         ghostIter->force().zero();
-      }
-
-   }
-
-   void writeForces()
-   {
-      std::cout << std::endl;
-
-      AtomIterator  atomIter;
-      atomStorage.begin(atomIter);
-      for ( ; atomIter.notEnd(); ++atomIter) {
-         std::cout << atomIter->force() << "  " << 0 << std::endl;
-      }
-
-      #if 0
-      GhostIterator ghostIter;
-      atomStorage.begin(ghostIter);
-      for ( ; ghostIter.notEnd(); ++ghostIter) {
-         std::cout << ghostIter->force() << "  " << 1 << std::endl;
-      }
-      #endif
-
-   }
-
-   #if 0
-   void saveForces()
-   {
-      AtomIterator  atomIter;
-      GhostIterator ghostIter;
-
-      atomStorage.begin(atomIter);
-      for ( ; atomIter.notEnd(); ++atomIter) {
-         force_[i] = atomIter->force();
-      }
-      atomStorage.begin(ghostIter);
-      for ( ; ghostIter.notEnd(); ++ghostIter) {
-         force_[i] = ghostIter->force();
-      }
-
-   }
-   #endif
-
-   void testRead1()
+   void testInitialForces()
    {
       printMethod(TEST_FUNC);
-      //readAtoms("in/positions1");
-     
-      TEST_ASSERT(atomStorage.nAtom()  == 3); 
-      TEST_ASSERT(atomStorage.nGhost() == 0); 
 
-      AtomIterator iter;
-      std::cout << std::endl;
-      atomStorage.begin(iter);
-      for ( ; iter.notEnd(); ++iter) {
-         std::cout << iter->position() << std::endl;
-      }      
+      int  nAtom  = 0;    // Number of atoms on this processor.
+      int  nGhost = 0;    // Number of ghosts on this processor.
+      int  nAtomAll  = 0; // Number received on all processors.
+      int  myRank = domain.gridRank();
 
+      AtomIterator   atomIter;
+      GhostIterator  ghostIter;
+
+      //double range = 0.4;
+      //displaceAtoms(range);
+      object().exchange();
+
+      // Record number of atoms and ghosts after exchange
+      nAtom = atomStorage.nAtom();
+      nGhost = atomStorage.nGhost();
+
+      #if 0
+      // Update ghost positions
+      object().update();
+
+      // Check number of atoms and ghosts on each processor is unchanged.
+      TEST_ASSERT(nAtom == atomStorage.nAtom());
+      TEST_ASSERT(nGhost == atomStorage.nGhost());
+      #endif
+
+      // Check that all atoms are accounted for after atom and ghost exchanges.
+      nAtom = atomStorage.nAtom();
+      communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
+      if (myRank == 0) {
+         // std::cout << "Total atom count (post ghost exchange) = " 
+         //           << nAtomAll << std::endl;
+         TEST_ASSERT(nAtomAll == atomCount);
+      }
+
+      // Check that all atoms are within the processor domain.
+      atomStorage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         TEST_ASSERT(domain.isInDomain(atomIter->position()));
+      }
+
+      // Check that all ghosts are outside the processor domain.
+      atomStorage.begin(ghostIter);
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
+         TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
+      }
+
+      TEST_ASSERT(atomStorage.isValid());
+      TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
+                  true));
+      #ifdef INTER_ANGLE
+      TEST_ASSERT(angleStorage.isValid(atomStorage, 
+                  domain.communicator(), true));
+      #endif
+      #ifdef INTER_DIHEDRAL
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
+                  domain.communicator(), true));
+      #endif
+
+      // Check that reverse force communication is off (by default)
+      // TEST_ASSERT(!pairPotential.forceCommFlag());
+      pairPotential.findNeighbors();
+
+      zeroForces();
       pairPotential.setMethodId(2); // N^2 loop
       pairPotential.addForces();
+      saveForces();
 
+      zeroForces();
+      pairPotential.setMethodId(0); // PairList
+      pairPotential.addForces();
+
+      int id;
       std::cout << std::endl;
-      atomStorage.begin(iter);
-      for ( ; iter.notEnd(); ++iter) {
-         std::cout << iter->force() << std::endl;
-      }      
+      atomStorage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         id = atomIter->id();
+         //std::cout << id << "  "
+         //          << forces[id] << "  "
+         //          << atomIter->force() << std::endl;
+         TEST_ASSERT(eq(forces[id][0], atomIter->force()[0]));
+         TEST_ASSERT(eq(forces[id][1], atomIter->force()[1]));
+         TEST_ASSERT(eq(forces[id][2], atomIter->force()[2]));
+      }
+
    }
 
 };
@@ -383,6 +464,7 @@ public:
 TEST_BEGIN(ExchangerForceTest)
 TEST_ADD(ExchangerForceTest, testGhostUpdate)
 TEST_ADD(ExchangerForceTest, testGhostUpdateCycle)
+TEST_ADD(ExchangerForceTest, testInitialForces)
 TEST_END(ExchangerForceTest)
 
 #endif /* EXCHANGER_TEST_H */

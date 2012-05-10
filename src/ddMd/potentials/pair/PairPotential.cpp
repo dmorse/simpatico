@@ -79,9 +79,6 @@ namespace DdMd
       read<int>(in, "pairCapacity", pairCapacity_);
       read<Boundary>(in, "maxBoundary", maxBoundary_);
 
-      cutoff_ = maxPairCutoff() + skin_;
-      int atomCapacity = storage().atomCapacity();
-
       // Set upper and lower bound of the processor domain.
       boundary().setLengths(maxBoundary_.lengths());
       Vector lower;
@@ -91,6 +88,9 @@ namespace DdMd
          upper[i] = domain().domainBound(i, 1);
       }
 
+      // Allocate CellList and PairList
+      int atomCapacity = storage().atomCapacity() + storage().atomCapacity();
+      cutoff_ = maxPairCutoff() + skin_;
       cellList_.allocate(atomCapacity, lower, upper, cutoff_);
       pairList_.allocate(atomCapacity, pairCapacity_, cutoff_);
    }
@@ -137,6 +137,7 @@ namespace DdMd
 
       cellList_.build();
       assert(cellList_.isValid());
+      assert(cellList_.nAtom() + cellList_.nReject() == storage().nAtom() + storage().nGhost());
       stamp(PairPotential::BUILD_CELL_LIST);
 
       pairList_.build(cellList_, forceCommFlag());
@@ -157,29 +158,6 @@ namespace DdMd
       }
       findNeighbors(lower, upper);
    }
-
-   #if 0
-   /*
-   * Set forces on all local atoms to zero.
-   */
-   void PairPotential::zeroForces()
-   {
-      AtomIterator atomIter;
-      storage().begin(atomIter); 
-      for( ; atomIter.notEnd(); ++atomIter){
-         atomIter->force().zero();
-      }
-   }
-
-   /*
-   * Set forces on all local atoms to zero.
-   */
-   void PairPotential::calculateForces()
-   {
-      zeroForces();
-      addForces();
-   }
-   #endif
 
 }
 #endif

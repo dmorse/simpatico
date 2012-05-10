@@ -28,12 +28,10 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * An PairPotential calculates forces for a parent Simulation.
+   * A PairPotential calculates forces for a parent Simulation.
    *
-   * An PairPotential has a private CellList and PairList which it
+   * A PairPotential has a private CellList and PairList which it
    * uses to calculate nonbonded pair forces. 
-   * 
-   * All operations in this class are local (no MPI).
    */
    class PairPotential : public ParamComposite
    {
@@ -82,7 +80,7 @@ namespace DdMd
       * \param pairCapacity maximum number of pairs per processor
       */
       void initialize(const Vector& lower, const Vector& upper,
-                    double skin, int pairCapacity);
+                      double skin, int pairCapacity);
 
       /**
       * Set flag to identify if force communication is enabled.
@@ -141,11 +139,6 @@ namespace DdMd
       virtual void addForces() = 0;
 
       /**
-      * Add pair forces to atom forces, and compute energy.
-      */
-      virtual void addForces(double& energy) = 0;
-
-      /**
       * Calculate total pair potential on this processor
       */
       #ifdef UTIL_MPI
@@ -155,7 +148,7 @@ namespace DdMd
       #endif
 
       /**
-      * Calculate total pair potential on this processor
+      * Calculate total pair potential.
       */
       virtual double energy() = 0;
 
@@ -220,7 +213,7 @@ namespace DdMd
       double skin() const;
 
       /**
-      * Get value of the pair list cutoff.
+      * Get value of the pair list cutoff (maxPairCutoff + skin).
       */
       double cutoff() const;
 

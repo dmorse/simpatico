@@ -38,7 +38,7 @@ namespace DdMd
    *    Vector   lower;        // Vector of lower bounds (local atoms)
    *    Vector   upper;        // Vector of upper bounds (local atoms)
    *    double   cutoff;       // minimum cell dimension
-   *    int      atomCapacity  // maximum number of atoms
+   *    int      atomCapacity  // max number of atoms on this processor
    *
    *    // Bounds on lower and upper used here to allocate memory.
    *    cellList.allocate(atomCapacity, lower, upper, cutoff);
@@ -62,6 +62,10 @@ namespace DdMd
    *
    *
    * \endcode
+   *
+   * The atomCapacity parameter should be set equal to the sum of atomCapacity 
+   * and the ghostCapacity of the associated atomStorage, which is the maximum 
+   * total number of atoms that can exist on this processor.
    *
    * See Cell documentation for an example of how to iterate over local cells 
    * and neighboring atom pairs. 
@@ -183,9 +187,14 @@ namespace DdMd
       const Cell& cell(int i) const;
 
       /**
-      * Get total number of atoms in this CellList.
+      * Get total number of atoms (local and ghost) in this CellList.
       */
       int nAtom() const;
+
+      /**
+      * Get number of atoms that were rejected (not placed in cells)
+      */
+      int nReject() const;
 
       /**
       * Maximum number of atoms for which space is allocated.
@@ -270,6 +279,9 @@ namespace DdMd
       /// Total number of atoms in cell list.
       int nAtom_;
 
+      /// Number of atoms that were not placed in cells.
+      int nReject_;
+
       /// Has this CellList been built?
       bool isBuilt_;
 
@@ -333,6 +345,8 @@ namespace DdMd
          tags_[nAtom_].handle = &atom;
          cells_[rank].incrementCapacity();
          ++nAtom_;
+      } else {
+         ++nReject_;
       }
    }
 

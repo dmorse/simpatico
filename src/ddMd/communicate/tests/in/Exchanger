@@ -21,6 +21,19 @@ BondStorage{
   capacity             40
   totalCapacity       150
 }
+PairPotential{
+  epsilon          5.0
+  sigma            1.0
+  skin             0.2
+  pairCapacity     4000
+  maxBoundary      orthorhombic   6.0   3.0   9.0
+}
+BondPotential{
+  kappa            400.0
+  length           1.000
+}
+
+
 AngleStorage{
   capacity             40
   totalCapacity       150
@@ -29,6 +42,5 @@ DihedralStorage{
   capacity             40
   totalCapacity       150
 }
-
   angleCacheCapacity     50
   dihedralCacheCapacity  50
