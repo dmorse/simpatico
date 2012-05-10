@@ -14,6 +14,7 @@
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
+#include <util/global.h>
 
 namespace DdMd
 {
@@ -227,6 +228,29 @@ namespace DdMd
       * Throws exception if no valid snapshot is available.
       */
       double maxSqDisplacement();
+
+      #ifdef UTIL_MPI
+
+      /**
+      * Determine whether an atom exchange and reneighboring is needed.
+      *
+      * \param  communicator domain communicator
+      * \param  skin         pair potential skin for pair list
+      * \return true if reneighboring is necessary
+      */
+      bool needExchange(MPI::Intracomm& communicator, double skin);
+
+      #else
+
+      /**
+      * Determine whether an atom exchange and reneighboring is needed.
+      *
+      * \param skin  pair potential skin for pair list
+      * \return true if reneighboring is necessary
+      */
+      bool needExchange(double skin);
+
+      #endif
 
       // Accessors (iterators)
 
