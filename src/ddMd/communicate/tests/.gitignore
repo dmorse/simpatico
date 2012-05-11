@@ -2,6 +2,7 @@ DomainTest
 BufferTest
 AtomDistributorTest
 BondDistributorTest
+GroupDistributorTest
 PlanTest
 ExchangerTest
 ExchangerForceTest

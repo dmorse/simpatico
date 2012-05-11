@@ -11,13 +11,15 @@ include $(SRC_DIR_REL)/ddMd/sources.mk
 include sources.mk
 
 all: $(ddMd_communicate_tests_OBJS) BufferTest DomainTest PlanTest \
-     AtomDistributorTest BondDistributorTest ExchangerTest ExchangerForceTest \
+     AtomDistributorTest BondDistributorTest GroupDistributorTest \
+     ExchangerTest ExchangerForceTest \
      AtomCollectorTest BondCollectorTest Test
 
 clean:
-	rm -f $(ddMd_communicate_tests_OBJS) BufferTest DomainTest \
-        PlanTest AtomDistributorTest BondDistributorTest ExchangerTest \
-        ExchangerForceTest AtomCollectorTest BondCollectorTest Test \
+	rm -f $(ddMd_communicate_tests_OBJS) BufferTest DomainTest PlanTest\
+        AtomDistributorTest BondDistributorTest GroupDistributorTest \
+        ExchangerTest ExchangerForceTest \
+        AtomCollectorTest BondCollectorTest Test \
         $(ddMd_communicate_tests_OBJS:.o=.d)
 
 clean-deps:
