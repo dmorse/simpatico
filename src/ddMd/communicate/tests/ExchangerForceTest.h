@@ -157,9 +157,9 @@ public:
    {
       double min = -max;
       AtomIterator atomIter;
-      for(int i = 0; i < 3; i++) {
-         atomStorage.begin(atomIter);
-         for ( ; atomIter.notEnd(); ++atomIter) {
+      atomStorage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         for(int i = 0; i < 3; i++) {
             atomIter->position()[i] += random.uniform(min, max);
          }
       }
@@ -167,21 +167,19 @@ public:
 
    void zeroForces()
    {
-      AtomIterator  atomIter;
-      GhostIterator ghostIter;
-
       // Zero atom forces
+      AtomIterator  atomIter;
       atomStorage.begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          atomIter->force().zero();
       }
 
       // Zero ghost forces
+      GhostIterator ghostIter;
       atomStorage.begin(ghostIter);
       for ( ; ghostIter.notEnd(); ++ghostIter) {
          ghostIter->force().zero();
       }
-
    }
 
    void writeForces()
@@ -378,20 +376,14 @@ public:
 
       //double range = 0.4;
       //displaceAtoms(range);
+
+      atomStorage.clearSnapshot();
       object().exchange();
+      atomStorage.makeSnapshot();
 
       // Record number of atoms and ghosts after exchange
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
-
-      #if 0
-      // Update ghost positions
-      object().update();
-
-      // Check number of atoms and ghosts on each processor is unchanged.
-      TEST_ASSERT(nAtom == atomStorage.nAtom());
-      TEST_ASSERT(nGhost == atomStorage.nGhost());
-      #endif
 
       // Check that all atoms are accounted for after atom and ghost exchanges.
       nAtom = atomStorage.nAtom();
@@ -429,7 +421,7 @@ public:
       #endif
 
       // Check that reverse force communication is off (by default)
-      // TEST_ASSERT(!pairPotential.forceCommFlag());
+      //TEST_ASSERT(!pairPotential.forceCommFlag());
       pairPotential.findNeighbors();
 
       zeroForces();
@@ -441,11 +433,10 @@ public:
       pairPotential.setMethodId(0); // PairList
       pairPotential.addForces();
 
-      std::cout << std::endl;
-
       Vector nodeForce;
       nodeForce.zero();
       int id;
+      //std::cout << std::endl;
       atomStorage.begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          id = atomIter->id();
@@ -462,7 +453,8 @@ public:
       Vector totForce;
       communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI::DOUBLE, MPI::SUM, 0);
       if (communicator().Get_rank() == 0) {
-         std::cout << "Total force = " << totForce; 
+         //std::cout << std::endl;
+         //std::cout << "Total force = " << totForce; 
          TEST_ASSERT(eq(totForce[0], 0.0));
          TEST_ASSERT(eq(totForce[1], 0.0));
          TEST_ASSERT(eq(totForce[2], 0.0));
@@ -478,25 +470,25 @@ public:
       int  nGhost = 0;    // Number of ghosts on this processor.
       bool needExchange;
 
-      AtomIterator   atomIter;
-      GhostIterator  ghostIter;
-
       // double range = 0.4;
       // displaceAtoms(range);
 
       atomStorage.clearSnapshot();
       object().exchange();
       atomStorage.makeSnapshot();
+
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
 
       // Assert that all atoms are within the processor domain.
+      AtomIterator   atomIter;
       atomStorage.begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
       // Assert that all ghosts are outside the processor domain.
+      GhostIterator  ghostIter;
       atomStorage.begin(ghostIter);
       for ( ; ghostIter.notEnd(); ++ghostIter) {
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
@@ -506,13 +498,16 @@ public:
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   true));
 
-      pairPotential.setMethodId(0); // PairList
+      //TEST_ASSERT(!pairPotential.forceCommFlag());
       pairPotential.findNeighbors();
+      pairPotential.setMethodId(0); // PairList
+
       zeroForces();
       pairPotential.addForces();
 
-      double range = 0.1;
-      for (int i=0; i < 1000; ++i) {
+      double range = 0.05;
+      int j = 0;
+      for (int i=0; i < 20; ++i) {
 
          displaceAtoms(range);
    
@@ -520,11 +515,21 @@ public:
          needExchange = atomStorage.needExchange(domain.communicator(), 
                                                  pairPotential.skin());
          if (needExchange) {
+            if (domain.isMaster()) {
+               std::cout << "Step " << i << ",  exchange " << j << std::endl;
+            }
             atomStorage.clearSnapshot();
             object().exchange();
             atomStorage.makeSnapshot();
             pairPotential.findNeighbors();
+            if (domain.isMaster()) {
+               std::cout << "Finished exchange" << std::endl;
+            }
+            ++j;
          } else {
+            if (domain.isMaster()) {
+               std::cout << "Step " << i << ",  update" << std::endl;
+            }
             object().update();
          }
    
