@@ -20,7 +20,7 @@ McSimulation{
 
   }
   Random{
-    seed                          -15526457
+    seed                           15526457
   }
   McSystem{
     pairStyle                          DpdPair
