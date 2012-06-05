@@ -5,76 +5,29 @@ namespace McMd
 
 /*! \page McMd_NS_page McMd namespace
 
-The McMd namespace contains most of the classes used to construct Monte Carlo 
-and molecular dynamics simulations.
+The McMd namespace contains most of the classes used to construct Monte Carlo and molecular dynamics simulations.
+
+See also: \ref McMd_Module "McMd Module"
 
 \section chemistry_sec Chemical Structure
 
-An Atom object represents a point particle that is part of a Molecule. 
-Each Atom has a position, velocity and force, each of which is represented
-by a Util::Vector object. The velocity and force vectors are not used in
-many MC move algorithms, but are provided even in MC simulations for use 
-in hybrid MC/MD algorithms. An Atom has an integer atom type index, and 
-an integer id that is unique within the simulation. The atom type ids are 
-used to identify atom types within the calculation of non-bonded pair 
-interactions. Each Atom is associated with a parent Molecule object, and 
-can return a reference to its parent Molecule.  
+An Atom object represents a point particle that is part of a Molecule.  Each Atom has a position, velocity and force, each of which is represented by a Util::Vector object. The velocity and force vectors are not used in many MC move algorithms, but are provided even in MC simulations for use in hybrid MC/MD algorithms. An Atom has an integer atom type index, and an integer id that is unique within the simulation. The atom type ids are used to identify atom types within the calculation of non-bonded pair interactions. Each Atom is associated with a parent Molecule object, and can return a reference to its parent Molecule.  
 
-Each Atom is also associated with a Mask object that contains a list of 
-other atoms for which the nonbonded pair interaction with the target atom 
-is suppressed (i.e., "masked").
+Each Atom is also associated with a Mask object that contains a list of other atoms for which the nonbonded pair interaction with the target atom is suppressed (i.e., "masked").
 
-The Group < int N > class template is a template class for objects 
-that represent a small group of N covalently interacting atoms. 
-Specializations with N=2, 3, and 4 are used to represent 2-body 
-covalent bonds, 3-body angle interaction groups, and 4-body dihedral 
-interaction groups, respectively. These are referred to throughout the 
-code as Bond, Angle, and Torsion objects, but these names are typedefs
-for Group<2>, Group<3>, and Group<4>. A Group < N > object has an array 
-of N pointers to N Atom objects that interact via an N-body covalent 
-interaction. It also has an integer group type id, which is used to 
-associate different sets of interaction parameters to groups with 
-different group type id values.
+The Group < int N > class template is a template class for objects that represent a small group of N covalently interacting atoms.  Specializations with N=2, 3, and 4 are used to represent 2-body covalent bonds, 3-body angle interaction groups, and 4-body dihedral interaction groups, respectively. These are referred to throughout the code as Bond, Angle, and Torsion objects, but these names are typedefs for Group<2>, Group<3>, and Group<4>. A Group < N > object has an array of N pointers to N Atom objects that interact via an N-body covalent interaction. It also has an integer group type id, which is used to associate different sets of interaction parameters to groups with different group type id values.
  
-A Molecule object represents a chemical molecule, i.e., a set of atoms 
-that are connected by covalent bonds. Each Molecule is associated with 
-a list of constituent Atom objects. Each Molecule is also associated
-with lists of Bond, Angle, and Torsion objects. The Molecule class 
-provides methods to access its constituent Atom and Group < N > 
-objects, using a local indexing scheme in which Atom and Group < N > 
-objects are indexed from zero within each molecule of a species. For 
-example, the method Atom& Molecule::atom(i) returns a reference to Atom 
-number i of the invoking molecule, where i ranges from 0 up to one less 
-than the number of atoms in the molecule. Each Molecule belongs to a 
-Species, and holds a pointer to its parent Species.
+A Molecule object represents a chemical molecule, i.e., a set of atoms that are connected by covalent bonds. Each Molecule is associated with a list of constituent Atom objects. Each Molecule is also associated with lists of Bond, Angle, and Torsion objects. The Molecule class provides methods to access its constituent Atom and Group < N > objects, using a local indexing scheme in which Atom and Group < N > objects are indexed from zero within each molecule of a species. For example, the method Atom& Molecule::atom(i) returns a reference to Atom number i of the invoking molecule, where i ranges from 0 up to one less than the number of atoms in the molecule. Each Molecule belongs to a Species, and holds a pointer to its parent Species.
  
-A Species object contains a description of the structure of a set 
-of chemically similiar molecules within a mixture. Species is an
-extensible base class. Subclasses of Species can be used to describe 
-either uniquely defined molecules whose structure can be hard coded 
-into the class definition (e.g., water or methane) or categories of 
-molecule (e.g., linear bead-spring polymers) for which the structure 
-is partly hard-coded into the definition and is determined in part
-by parameters that must be read from an input file (e.g., the chain 
-length and monomer types for a linear homopolymer). Each subclass 
-of Species is responsible for defining its own input parameter 
-format and for reading and writing the information it needs to fully 
-specify a chemical structure. The default implementation of Species 
-simply reads all of the information needed to describe an arbitary 
-molecule from file, i.e., it reads a list of atom types, and 
-information about which atoms are connected by bonds. Several simple 
-subclasses of Species are provided with the package, and users can 
-write others.
+A Species object contains a description of the structure of a set of chemically similiar molecules within a mixture. Species is an extensible base class. Subclasses of Species can be used to describe either uniquely defined molecules whose structure can be hard coded into the class definition (e.g., water or methane) or categories of molecule (e.g., linear bead-spring polymers) for which the structure is partly hard-coded into the definition and is determined in part by parameters that must be read from an input file (e.g., the chain length and monomer types for a linear homopolymer). Each subclass of Species is responsible for defining its own input parameter format and for reading and writing the information it needs to fully specify a chemical structure. The default implementation of Species simply reads all of the information needed to describe an arbitary molecule from file, i.e., it reads a list of atom types, and information about which atoms are connected by bonds. Several simple subclasses of Species are provided with the package, and users can write others.
 
 See also: \ref McMd_Chemistry_Module "Chemistry Module"
 
 \section system_sec Systems 
 
-A System object represents a set of interacting molecules within 
-a region of space. Every System has: 
+A System object represents a set of interacting molecules within a region of space. Every System has: 
 
-   - a set of containers, one per Species, each of which holds 
-     pointers to all Molecule objects of one Species in this System.
+   - a set of containers, one per Species, each of which holds pointers to all Molecule objects of one Species in this System.
 
    - a Util::Boundary object.
 
@@ -82,149 +35,49 @@ a region of space. Every System has:
 
    - a Util::BoundaryEnsemble object.
 
-A System provides methods to access the molecules in a system. 
-It provides methods to add and remove molecules, to iterate over 
-all the molecules of each species, and to choose a molecule of 
-a specified species at random (for Monte Carlo moves).
+A System provides methods to access the molecules in a system.  It provides methods to add and remove molecules, to iterate over all the molecules of each species, and to choose a molecule of a specified species at random (for Monte Carlo moves).
 
 \section mcmdsystem_sec McSystem and MdSystem
 
-McSystem and MdSystem are subclasses of System that are specialized
-for MD and MC simulations, respectively. Unlike the System base
-class, McSystem and MdSystem each have associated potential energy
-classes (discussed below), some of which are specialized for use
-with MC or MD simulations.
+McSystem and MdSystem are subclasses of System that are specialized for MD and MC simulations, respectively. Unlike the System base class, McSystem and MdSystem each have associated potential energy classes (discussed below), some of which are specialized for use with MC or MD simulations.
 
-An MdSystem also has an associated molecular dynamics integrator,
-which is an instance of MdIntegrator (see below).
+An MdSystem also has an associated molecular dynamics integrator, which is an instance of MdIntegrator (see below).
 
-In MC simulations, the parent McSimulation (discussed below) has 
-an McMoveManager container that holds a set of instances of McMove, 
-which represent different Monte Carlo moves.
+In MC simulations, the parent McSimulation (discussed below) has an McMoveManager container that holds a set of instances of McMove, which represent different Monte Carlo moves.
 
 See also: \ref McMd_System_Module "System Module"
 
 \section potential_sec Potential Energies
 
-The "potential" classes in the mcMd/potentials/ directory are
-polymorphic classes that provide virtual methods to calculate 
-specific contributions to energies and atomic forces for an 
-entire System, as well as for small groups (e.g., pairs) of
-interacting atoms.  The classes BondPotential, AnglePotential, 
-DihedralPotential provide interfaces for bond, angle, and 
-dihedral potentials, respectively, which are used in both
-MD and MC simulations. The classes McPairPotential and 
-MdPairPotential provide slightly different interfaces for 
-nonbonded pair interactions for use in MC and MD simulations, 
-respectively. Every potential class provides an energy() 
-method that returns the associated energy for the entire 
-system. The covalent potential energy classes (BondPotential, 
-AnglePotential, and DihedralPotential) and the MdPairPotential 
-class all provide an addForces() method that adds the 
-contribution of the associated type of interaction to the 
-atomic forces for every atom in the system.  The covalent 
-potential energy classes and McPairPotential all provide 
-an atomEnergy() method that returns the value of a particular 
-energy contribution (i.e., the nonbonded pair energy or 
-covalent bond energy) for a specific atom, for use in MC 
-algorithms. 
+The "potential" classes in the mcMd/potentials/ directory are polymorphic classes that provide virtual methods to calculate specific contributions to energies and atomic forces for an entire System, as well as for small groups (e.g., pairs) of interacting atoms.  The classes BondPotential, AnglePotential, DihedralPotential provide interfaces for bond, angle, and dihedral potentials, respectively, which are used in both MD and MC simulations. The classes McPairPotential and MdPairPotential provide slightly different interfaces for nonbonded pair interactions for use in MC and MD simulations, respectively. Every potential class provides an energy() method that returns the associated energy for the entire system. The covalent potential energy classes (BondPotential, AnglePotential, and DihedralPotential) and the MdPairPotential class all provide an addForces() method that adds the contribution of the associated type of interaction to the atomic forces for every atom in the system.  The covalent potential energy classes and McPairPotential all provide an atomEnergy() method that returns the value of a particular energy contribution (i.e., the nonbonded pair energy or covalent bond energy) for a specific atom, for use in MC algorithms. 
 
-The "potential" classes discussed above are abstract base 
-classes. An implementation of each of the potential energy 
-classes is provided by an associated class template. Each 
-such potential energy template takes one of the Interaction
-classes defined in the Inter namespace as a template 
-argument, and has a instance of that Interaction class as 
-a private member. The name of each template is obtained by 
-adding the suffix "Impl" (for "implementation") to the name 
-of the parent abstract potential class. Thus, for example, 
-MdPairPotentialImpl<LJPair> is a concrete subclass of 
-MdPairPotential for Lennard-Jones pair interactions, which 
-uses an instance of the LJPair interaction class to calculate 
-pair energies and forces for individual nonbonded pairs of 
-atoms. The methods of such a template that calculate energies 
-or forces for an entire system must implement a loop over 
-all or groups of the relevant kind, and calls the methods
-of the interaction class to evaluate energies and forces for
-individual pairs or groups. The virtual methods of each 
-such template that provide energies and forces for individual 
-pairs or groups simply call the corresponding methods of the 
-interaction class, and thus provide a polymorphic interface 
-for the interaction class methods. 
+The "potential" classes discussed above are abstract base classes. An implementation of each of the potential energy classes is provided by an associated class template. Each such potential energy template takes one of the Interaction classes defined in the Inter namespace as a template argument, and has a instance of that Interaction class as a private member. The name of each template is obtained by adding the suffix "Impl" (for "implementation") to the name of the parent abstract potential class. Thus, for example, MdPairPotentialImpl<LJPair> is a concrete subclass of MdPairPotential for Lennard-Jones pair interactions, which uses an instance of the LJPair interaction class to calculate pair energies and forces for individual nonbonded pairs of atoms. The methods of such a template that calculate energies or forces for an entire system must implement a loop over all or groups of the relevant kind, and calls the methods of the interaction class to evaluate energies and forces for individual pairs or groups. The virtual methods of each such template that provide energies and forces for individual pairs or groups simply call the corresponding methods of the interaction class, and thus provide a polymorphic interface for the interaction class methods. 
 
-This use of templates to implement potential energies was
-chosen in order to allow the user to choose a form of each
-potential energy at run time without sacrificing efficiency,
-and without redundant code.  Because the interaction class
-methods are not virtual method, this design allows each 
-template to implement the inner loop for force or energy 
-calculations to be free of virtual function calls, and 
-allows the compiler to inline many force and energy 
-interaction functions. 
+This use of templates to implement potential energies was chosen in order to allow the user to choose a form of each potential energy at run time without sacrificing efficiency, and without redundant code.  Because the interaction class methods are not virtual method, this design allows each template to implement the inner loop for force or energy calculations to be free of virtual function calls, and allows the compiler to inline many force and energy interaction functions. 
 
-The choice of which interaction class to use for each type
-of potential energy is specified in the parameter file by the 
-parameters pairStyle, BondStyle, etc. The value of each such 
-"style" variable is the name of the desired interaction class.
-For example, specifying a "pairStyle" to be "LJPair" in an
-Md program instructs the program to construct an instance of
-MdPairPotentialImpl<LJPair> which is accessed through a 
-pointer to an MdPairPotential. 
+The choice of which interaction class to use for each type of potential energy is specified in the parameter file by the parameters pairStyle, BondStyle, etc. The value of each such "style" variable is the name of the desired interaction class.  For example, specifying a "pairStyle" to be "LJPair" in an Md program instructs the program to construct an instance of MdPairPotentialImpl<LJPair> which is accessed through a pointer to an MdPairPotential. 
 
 See also: \ref McMd_Potential_Module "Potential Module"
 
 \section MdIntegrator_sec Molecular Dynamics Integrators
 
-Molecular dynamics integration algorithms are represented by subclasses 
-of MdIntegrator. Each MdIntegrator is associated with a parent MdSystem.
-Each MdIntegrator implements a step() method that applies one complete 
-MD step to the molecules of the associated System.  An MdIntegrator may 
-store internal state variables that are specific to the algorithm and 
-that must be retained between steps. 
+Molecular dynamics integration algorithms are represented by subclasses of MdIntegrator. Each MdIntegrator is associated with a parent MdSystem.  Each MdIntegrator implements a step() method that applies one complete MD step to the molecules of the associated System.  An MdIntegrator may store internal state variables that are specific to the algorithm and that must be retained between steps. 
 
-Each MdIntegrator holds a pointer to its parent MdSystem, so that the 
-implementation of the step() method use the public methods of MdSystem 
-for operations such as iterating over molecules and calculating forces. 
-This pointer is initialized in the constructor for an MdIntegrator, 
-which takes a reference to the parent MdSystem as a parameter.
-
+Each MdIntegrator holds a pointer to its parent MdSystem, so that the implementation of the step() method use the public methods of MdSystem for operations such as iterating over molecules and calculating forces.  This pointer is initialized in the constructor for an MdIntegrator, which takes a reference to the parent MdSystem as a parameter.
+  
 See also: \ref McMd_MdIntegrator_Module "MdIntegrator Module"
 
 \section McMove_sec Monte Carlo Moves
-Monte Carlo move algorithms are represented by subclasses of McMove. 
-Each McMove implements a move() method that attempts a Markov move, 
-decides whether to accept or reject it, and then updates or restores 
-the state of the associated McSystem or (in Gibbs ensemble) McSystems. 
-As for an MdSystem, access to the associated System or Systems is 
-provided through a pointer or pointers that are initialized in the 
+Monte Carlo move algorithms are represented by subclasses of McMove.  Each McMove implements a move() method that attempts a Markov move, decides whether to accept or reject it, and then updates or restores the state of the associated McSystem or (in Gibbs ensemble) McSystems.  As for an MdSystem, access to the associated System or Systems is provided through a pointer or pointers that are initialized in the 
 constructor.
 
 See also: \ref McMd_McMove_Module "McMove Module"
 
 \section Diagnostic_sec Diagnostics and Accumulators
 
-Diagnostic is an abstract base class for objects that represent data
-analysis or data output operations that must be carried out periodically
-during a simulation with a specified interval.  Each Diagnostic has a 
-sample() method that is called to implement the desired operation, and 
-an integer "interval" member that specifies the number of MD steps or 
-MC moves should between subsequent invocations of sample(). The 
-simplest subclasses of Diagnostic periodically output values of 
-specific variables for later analysis. The DumpConfig class outputs 
-a sequence of complete configuration files for postprocessing. Other 
-subclasses of Diagnostic implement statistical analyses of particular 
-physical quantities on the fly, e.g., they may evaluate the average, 
-variance, distribution, and/or autocorrelation of a sequence of values 
-for a specific quantity, and may also output values to a file.
+Diagnostic is an abstract base class for objects that represent data analysis or data output operations that must be carried out periodically during a simulation with a specified interval.  Each Diagnostic has a sample() method that is called to implement the desired operation, and an integer "interval" member that specifies the number of MD steps or MC moves should between subsequent invocations of sample(). The simplest subclasses of Diagnostic periodically output values of specific variables for later analysis. The DumpConfig class outputs a sequence of complete configuration files for postprocessing. Other subclasses of Diagnostic implement statistical analyses of particular physical quantities on the fly, e.g., they may evaluate the average, variance, distribution, and/or autocorrelation of a sequence of values for a specific quantity, and may also output values to a file.
 
-Diagnostics that conduct a statistical analysis are usually implemented 
-using one of the accumulator classes from the src/util/accumulators 
-directory. The accumulators classes implement abstract mathematical 
-operations, such as evaluation of an average, a histogram, or an
-autorcorrelation function, in a form that is not specific to molecular 
-simulation. Often, a subclass of Diagnostic that does a statistical 
-analysis on a specific physical quantity has a private member that 
-is an instance of an accumulator class.
+Diagnostics that conduct a statistical analysis are usually implemented using one of the accumulator classes from the src/util/accumulators directory. The accumulators classes implement abstract mathematical operations, such as evaluation of an average, a histogram, or an autorcorrelation function, in a form that is not specific to molecular simulation. Often, a subclass of Diagnostic that does a statistical analysis on a specific physical quantity has a private member that is an instance of an accumulator class.
 
 See also: \ref McMd_Diagnostic_Module   "Diagnostic Module"
 
@@ -232,8 +85,7 @@ See also: \ref Accumulators_Module "Accumulators Module"
 
 \section simulation_sec Simulations
 
-A complete MC or MD simulation is represented by a Simulation object. 
-Each Simulation object has:
+A complete MC or MD simulation is represented by a Simulation object.  Each Simulation object has:
 
  - One or more McSystem or MdSystem objects.
 
@@ -243,47 +95,19 @@ Each Simulation object has:
 
  - A DiagnosticManager that holds a set of Diagnostic objects.
 
-The Simulation is also responsible for reading a command file, and
-for implementing the main simulation loop. 
+The Simulation is also responsible for reading a command file, and for implementing the main simulation loop. 
 
-The MdSimulation and McSimulation subclasses of Simulation are used for 
-MD and MC simulations of a single system, respectively. An MdSimulation 
-contains one McSystem. An McSimulation contains one MdSystem. A subclass
-designed for Gibbs ensemble simulation [not yet implemented] will have 
-two or more associated McSystem objects. 
+The MdSimulation and McSimulation subclasses of Simulation are used for MD and MC simulations of a single system, respectively. An MdSimulation contains one McSystem. An McSimulation contains one MdSystem. A subclass designed for Gibbs ensemble simulation [not yet implemented] will have two or more associated McSystem objects. 
 
-Both MdSimulation and McSimulation provide a readCommands() method that
-reads a command file and implements commands in sequence. The SIMULATE 
-command causes the simulation to invoke the simulate() method of either 
-class, which implements than main simulation loop.
+Both MdSimulation and McSimulation provide a readCommands() method that reads a command file and implements commands in sequence. The SIMULATE command causes the simulation to invoke the simulate() method of either class, which implements than main simulation loop.
 
-The simulate() method of an McSimulation implements a loop in which
-each step involves a choice of one of several possible Monte Carlo 
-Markov moves.  An McSimulation has an McMoveManager that holds pointers 
-to a set of McMove objects. The McMoveManager provides a method to 
-choose one of the moves at random, weighted by a user-defined 
-probabilities. Each step of the main loop in the simulate() method 
-chooses one of these McMove objects and invokes its move() method.
+The simulate() method of an McSimulation implements a loop in which each step involves a choice of one of several possible Monte Carlo Markov moves.  An McSimulation has an McMoveManager that holds pointers to a set of McMove objects. The McMoveManager provides a method to choose one of the moves at random, weighted by a user-defined probabilities. Each step of the main loop in the simulate() method chooses one of these McMove objects and invokes its move() method.
 
-The simulate() method of an MdSimulation repeatedly calls the step() 
-method of the MdIntegrator associated with its MdSystem.
+The simulate() method of an MdSimulation repeatedly calls the step() method of the MdIntegrator associated with its MdSystem.
 
-The analyze() method of an MdSimulation or McSimulation reads a series
-of config files that have been written during a previous simulation by
-a DumpConfig Diagnostic object. The analyze() method implements a loop
-that reads in configuration files and applies each of the Diagnostic
-objects.
+The analyze() method of an MdSimulation or McSimulation reads a series of config files that have been written during a previous simulation by a DumpConfig Diagnostic object. The analyze() method implements a loop that reads in configuration files and applies each of the Diagnostic objects.
 
-The conceptual distinction between a System and a Simulation is not 
-necessary in simulations of single system. A design with distinct
-Simualtion and System classes was introduced to simplify later
-implementation of Gibbs ensemble simulations. In a Gibbs ensemble 
-simulation, the molecules of each Species will be divided among two 
-or more System sub-objects, and each System will maintain a record 
-of which molecules are currently in that system.  The main simulation 
-loop was implemented in the parent Simulation object, rather than 
-within a System, in order to allow for Gibbs ensemble molecular 
-exchange moves, which are MC moves that involve two systems. 
+The conceptual distinction between a System and a Simulation is not necessary in simulations of single system. A design with distinct Simualtion and System classes was introduced to simplify later implementation of Gibbs ensemble simulations. In a Gibbs ensemble simulation, the molecules of each Species will be divided among two or more System sub-objects, and each System will maintain a record of which molecules are currently in that system.  The main simulation loop was implemented in the parent Simulation object, rather than within a System, in order to allow for Gibbs ensemble molecular exchange moves, which are MC moves that involve two systems. 
 
 See also: \ref McMd_Simulation_Module "Simulation Module"
 

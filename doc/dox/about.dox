@@ -1,65 +1,26 @@
 /*! \page about_page About Simpatico
 
-Simpatico is a library of C++ classes and programs for Monte 
-Carlo and molecular dynamics simulations of molecular and
-polymer liquids. It contains the following main programs:
+Simpatico is a library of C++ classes and programs for Monte Carlo and molecular dynamics simulations of molecular and polymer liquids. It contains the following main programs:
 
-- Programs for Monte Carlo (MC) and molecular dynamics (MD) 
-  simulations on a single processor.
+- Programs for Monte Carlo (MC) and molecular dynamics (MD) simulations on a single processor.
 
-- A program for parallel MD simulations, using a domain
-  decomposition algorithm.
+- A program for parallel MD simulations, using a domain decomposition algorithm.
 
-The single-processor MC and MD programs are named mcSim and mdSim, 
-respectively. These programs can also execute replica exchange
-simulations in which each of processors simulates a different 
-replica of the system.  The parallel domain decomposition MD 
-program is called ddSim.  ddSim is a recent addition to the 
-package, and is less mature than that the other two programs. 
-Simpatico is distributed under the terms of the GNU public 
-license (see the LICENSE file). 
-
+The single-processor MC and MD programs are named mcSim and mdSim, respectively. Eachof these programs can also execute multi-processor replica exchange simulations in which processor simulates a different system.  The parallel domain decomposition MD program is called ddSim.  ddSim is a recent addition to the package, and is less mature than mcSim or mdSim. Simpatico is distributed under the terms of the GNU public license (see the LICENSE file). 
+ 
 The design of Simpatico was motivated by the following goals: 
 
-- Extensibility: New algorithms may be added for most elements 
-  of a simulation via C++ inheritance, without modifying the 
-  core source code.  Extensible elements of a simulation include 
-  Monte Carlo moves, molecular dynamics integrators, potential 
-  energy functions, molecular species, data analysis algorithms, 
-  and configuration file formats.
+- Extensibility: New algorithms may be added for most elements of a simulation via C++ inheritance, without modifying the core source code.  Extensible elements of a simulation include Monte Carlo moves, molecular dynamics integrators, potential energy functions, molecular species, data analysis algorithms, and configuration file formats.
 
-- Efficiency: Simpatico is designed to be competitive as a tool 
-  for computationally demanding research projects. 
+- Efficiency: Simpatico is designed to be competitive as a tool for computationally demanding research projects. 
 
-- Integrated Monte Carlo and molecular dynamics:
-  The single processor mcSim and mdSim programs use similar data
-  structures to provide efficient implementations of both MC and 
-  MD algorithms. They are thus particularly suitable for hybrid 
-  Monte Carlo (HMC) algorithms, in which short MD simulations are 
-  used as proposed Monte Carlo moves. Simpatico also provides an 
-  module that allows the HOOMD-blue code for MD on graphical 
-  processing units (GPUs) to be used as an engine for very fast 
-  hybrid MC simulations.
+- Integration of Monte Carlo and molecular dynamics: The single processor mcSim and mdSim programs use similar data structures to provide efficient implementations of both MC and MD algorithms. They are thus particularly suitable for hybrid Monte Carlo (HMC) algorithms, in which short MD simulations are used as proposed Monte Carlo moves. Simpatico also provides an module that allows the HOOMD-blue code for MD on graphical processing units (GPUs) to be used as an engine for very fast hybrid MC simulations.
 
-- Integrated data analysis: mcSim and mdSim come bundled with 
-  a set of data analysis classes that can all be used either 
-  "on-the-fly", during a simulation, or by using the same two
-  programs for post-processing of trajectory files.
+- Integration of data analysis: mcSim and mdSim come bundled with a set of data analysis classes that can be used either "on-the-fly", during a simulation, or by using the same two programs for post-processing of trajectory files.
 
-The design of mcSim and mdSim (which share a great deal of code) 
-is similar in many ways to that of 
-<a href=http://www.etomica.org>Etomica</a>, 
-which was written in Java by David Kofke's group at the University 
-of Buffalo.  
-The domain decomposition algorithm used in ddSim is similar to
-that used in LAMMPS.
+The design of mcSim and mdSim (which share a great deal of code) is similar in many ways to that of <a href=http://www.etomica.org>Etomica</a>, which was written in Java by David Kofke's group at the University of Buffalo.  The domain decomposition algorithm used in ddSim is similar to that originally introduced in the <a href=http://www.lammps.sandia.gov>LAMMMPS</a> molecular dynamics code.
 
-Simpatico is a young project, and lacks some features found in 
-any of several more mature molecular dynamics packages, such as 
-Lammps, NAMD, Gromacs, and Espresso, and in a smaller number of
-MC packages, such as Towhee. It has thus far been used only for
-simulations of coarse-grained bead-spring models of polymer 
-liquids.
+Simpatico is a young project, and lacks some features found in any of several more mature molecular dynamics packages, such as Lammps, NAMD, Gromacs, and Espresso, and in a smaller number of MC packages, such as Towhee. It has thus far been used only for simulations of coarse-grained bead-spring models of polymer liquids.
 
 Navigation:
 <ul>
