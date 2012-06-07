@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------
 # Users may need to change the following Makefile macros:
-#  - SRC_DIR, if this directory is moved or copied to another location.
+#  - SRC_DIR_REL, if this directory is moved or copied to another location.
 #  - BIN_DIR, to change the directory for executables
 
 # Relative path to to Simpatico src directory.
@@ -10,11 +10,11 @@ SRC_DIR_REL=../..
 
 include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
-include $(SRC_DIR_REL)/mcMd/defines.mk
 include $(SRC_DIR_REL)/inter/defines.mk
+include $(SRC_DIR_REL)/mcMd/defines.mk
 include $(SRC_DIR_REL)/mcMd/patterns.mk
-include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/util/sources.mk
+include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/mcMd/sources.mk
 include $(SRC_DIR_REL)/modules/hoomd/sources.mk
 include $(SRC_DIR_REL)/modules/hoomd/defines.mk
@@ -23,7 +23,7 @@ include $(SRC_DIR_REL)/modules/hoomd/defines.mk
 # Executable file name macros
 
 BIN_DIR=$(ROOT_DIR)/bin
-BIN_SUFFIX:=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)_h
+BIN_SUFFIX:=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)_h
 
 MCSIM_EXE=$(BIN_DIR)/mcSim$(BIN_SUFFIX)
 

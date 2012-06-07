@@ -20,7 +20,7 @@ MdSimulation{
 
   }
   Random{
-    seed                          -15526457
+    seed                           15526457
   }
   MdSystem{
     pairStyle                          DpdPair

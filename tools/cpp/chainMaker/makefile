@@ -20,6 +20,6 @@ clean:
 
 -include ChainMaker.d
 
-ChainMaker: ChainMaker.cpp $(mcMd_OBJS) $(util_OBJS)
+ChainMaker: ChainMaker.cpp $(inter_OBJS) $(util_OBJS)
 	$(CXX) $(LDFLAGS) $(DEFINES) $(INCLUDES) -o ChainMaker ChainMaker.o \
                $(inter_OBJS) $(util_OBJS)

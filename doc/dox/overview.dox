@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page overview_page Design Overview
+/*! \page overview_page Source Code Overview
 
 These pages present an overview of the organization of the source
 code, and of the class library design.
@@ -9,7 +9,7 @@ code, and of the class library design.
 Contents: 
    <ul>
    <li> \subpage directory_page  "Directory Structure" </li>
-   <li> \subpage design_page     "Class Library" 
+   <li> \subpage design_page     "Namespace" 
    <ul>
      <li> \subpage Util_NS_page  "Util namespace" </li>
      <li> \subpage Inter_NS_page "Inter namespace" </li>

@@ -10,33 +10,24 @@ All of the Simpatico programs use a potential energy that can contain:
 
 - external one-body potentials  
 
-Several different types of potential energy functions are provided 
-for the nonbonded pair interaction and for each type of covalent 
-interactions, and others are easily added. Source code for classes 
-that represent potential energy functions, which we refer to as 
-"interactions", are all in the src/inter directory, and are all 
-defined in the "Inter" C++ namespace.  The same set of interaction
-classes are used by mcSim, mdSim, and ddSim programs.  To simplify 
-integration of MC and MD simulations, all programs are currently 
-restricted to models with differentiation potentials (i.e., not hard 
-spheres), with no explicit constraints on bond lengths or bond angles.
+Several different types of potential energy functions are provided for the nonbonded pair interaction and for each type of covalent interactions, and others are easily added. To simplify integration of MC and MD simulations, all programs are currently restricted to models with differentiation potentials (i.e., not hard 
+spheres), with no explicit constraints on bond lengths or bond angles. The default version of the program currently includes only non-bonded pair interactions and two-body covalent bond interactions. Other types of interactions can be enabled when the program is compiled by defining corresponding makefile variables.
 
-Long-range electrostatic potentials have not yet been implemented 
-in any of the programs. This is the most important missing feature 
-required to make the package suitable for general atomistic models. 
+Source code for classes that represent potential energy functions, which we refer to as "interactions", are all in the src/inter directory, and are all 
+defined in the "Inter" C++ namespace.  The same set of interaction classes are used by the mcSim, mdSim, and ddSim programs.  
+
+Long-range electrostatic potentials have not yet been implemented in any of the programs. This is the most important missing feature required to make the package suitable for atomistic models. 
 
 \section features_algorithms_sec Simulation Algorithms
 
-For single-processor MD simulations, mdSim currently provides the 
-following integration algorithms and ensembles:
+For single-processor MD simulations, mdSim currently provides the following integration algorithms and ensembles:
 <ul>
   <li> NVE velocity verlet </li>
   <li> NVT Nose-Hoover </li>
   <li> NVT dissipative particle dynamics </li>
   <li> NPH Anderson barostat </li>
 </ul>
-For Monte-Carlo simulation, mcSim currently provides the following 
-MC moves, among others:
+For Monte-Carlo simulation, mcSim currently provides the following MC moves, and a few others:
 <ul>
    <li> Single atom displacement </li>
    <li> Rigid molecule displacement </li>

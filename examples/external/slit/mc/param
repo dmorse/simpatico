@@ -21,7 +21,7 @@ McSimulation{
     }
   }
   Random{
-    seed                         -13451892
+    seed                          13451892
   }
   McSystem{
     pairStyle                        LJPair

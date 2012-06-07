@@ -1,12 +1,12 @@
 
-namespace McMd
+namespace DdMd
 {
 
    /**
    * \defgroup DdMd_Potential_Module Potential Energies
    * \ingroup  DdMd_Module
    *
-   * \brief    Classes used by a System calculate potential energies.
+   * \brief    Classes used to calculate potential energies.
    */
 
    /**
