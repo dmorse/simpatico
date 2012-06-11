@@ -1,4 +1,4 @@
-SRC_DIR_REL =../../..
+SRC_DIR_REL =../../../src
 
 include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
@@ -8,20 +8,22 @@ include $(SRC_DIR_REL)/ddMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
+
+TESTS_DIR=$(ROOT_DIR)/tests
 include sources.mk
 
-all: $(ddMd_communicate_tests_OBJS) BufferTest DomainTest PlanTest \
+all: $(tests_ddMd_communicate_OBJS) BufferTest DomainTest PlanTest \
      AtomDistributorTest BondDistributorTest ExchangerTest ExchangerForceTest \
      AtomCollectorTest BondCollectorTest Test
 
 clean:
-	rm -f $(ddMd_communicate_tests_OBJS) BufferTest DomainTest \
+	rm -f $(tests_ddMd_communicate_OBJS) BufferTest DomainTest \
         PlanTest AtomDistributorTest BondDistributorTest ExchangerTest \
         ExchangerForceTest AtomCollectorTest BondCollectorTest Test \
-        $(ddMd_communicate_tests_OBJS:.o=.d)
+        $(tests_ddMd_communicate_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(ddMd_communicate_tests_OBJS:.o=.d)
+	rm -f $(tests_ddMd_communicate_OBJS:.o=.d)
 
 BufferTest: BufferTest.o $(ddMd_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) \
@@ -67,5 +69,5 @@ Test: Test.o $(ddMd_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(INTER_DEFS) $(DDMD_DEFS) \
         -o Test Test.o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
 
--include $(ddMd_communicate_tests_OBJS:.o=.d)
+-include $(tests_ddMd_communicate_OBJS:.o=.d)
 

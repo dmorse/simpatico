@@ -1,4 +1,4 @@
-SRC_DIR_REL =../../..
+SRC_DIR_REL =../../../src
 
 include $(SRC_DIR_REL)/compiler.mk
 include $(SRC_DIR_REL)/util/defines.mk
@@ -6,21 +6,21 @@ include $(SRC_DIR_REL)/ddMd/defines.mk
 include $(SRC_DIR_REL)/ddMd/patterns.mk
 include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
+
+TESTS_DIR=$(ROOT_DIR)/tests
 include sources.mk
 
-all: $(ddMd_simulation_tests_OBJS) Test
+all: $(tests_ddMd_storage_OBJS) Test
 
 clean:
-	rm -f $(ddMd_simulation_tests_OBJS)
-	rm -f $(ddMd_simulation_tests_OBJS:.o=.d)
-	rm -f Test 
+	rm -f $(tests_ddMd_storage_OBJS) Test $(tests_ddMd_storage_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(ddMd_simulation_tests_OBJS:.o=.d)
+	rm -f $(tests_ddMd_storage_OBJS:.o=.d)
 
 Test: Test.o $(ddMd_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
 	       $(ddMd_LIB) $(util_LIB)
 
--include $(ddMd_simulation_tests_OBJS:.o=.d)
+-include $(tests_ddMd_storage_OBJS:.o=.d)
 

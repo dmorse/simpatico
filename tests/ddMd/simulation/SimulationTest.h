@@ -4,7 +4,6 @@
 #include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
-#include <ddMd/interaction/Interaction.h>
 #include <util/random/Random.h>
 #include <util/format/Dbl.h>
 #include <util/mpi/MpiLogger.h>
