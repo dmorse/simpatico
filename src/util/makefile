@@ -10,21 +10,11 @@ all: $(util_OBJS) $(util_LIB)
 clean:
 	rm -f $(util_OBJS) $(util_OBJS:.o=.d) $(util_LIB)
 	rm -f $(util_LIB)
-	rm -f Test Test.o Test.d
 	rm -f */*.o */*/*.o 
 	rm -f */*.d */*/*.d
 
 clean-deps:
 	rm -f $(util_OBJS:.o=.d)
 
-clean-test:
-	rm -f Test Test.o Test.d
-
 -include $(util_OBJS:.o=.d)
-
-Test: $(util_LIB) $(SRC_DIR)/util/Test.o
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test $(SRC_DIR)/util/Test.o \
-	       $(util_LIB)
-
--include Test.d
 

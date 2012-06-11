@@ -21,10 +21,4 @@ clean-deps:
 -include $(util_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
 
-#Test: $(inter_LIB) $(SRC_DIR)/inter/Test.o
-#	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) \
-#              -o Test $(SRC_DIR)/inter/Test.o \
-#	       $(inter_LIB) $(util_LIB)
-
-#-include Test.d
 
