@@ -20,13 +20,6 @@ clean:
 	-rm -f $(DDSIM_EXE)
 	-rm -f */*.o */*/*.o
 	-rm -f */*.d */*/*.d
-	cd chemistry/tests; make clean
-	cd storage/tests; make clean
-	cd communicate/tests; make clean
-	cd neighbor/tests; make clean
-	cd potentials/tests; make clean
-	cd configIos/tests; make clean
-	cd simulation/tests; make clean
 
 clean-deps:
 	-rm -f $(ddMd_OBJS:.o=.d)
