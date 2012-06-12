@@ -4,8 +4,8 @@
 #   - A variable $(DDMD_DEFS) that is passed to the processor to define 
 #     any preprocessor flags that effect the code in the ddMd/ directory. 
 #
-#   - A variable $(DDMD_SUFFIX) which is added as a suffix to the name
-#     of the ddMd library and (by default) the main executables. 
+#   - A variable $(DDMD_SUFFIX) which is added as a suffix to the name of
+#     the ddMd library and (by default) the main executables. 
 #
 #   - Name $(DDMD_LIB) and $(DDSIM_EXE) of the DdMd library and 
 #     executable files.
@@ -13,6 +13,12 @@
 # This file is included by every makefile in the ddMd directory. 
 # It must be included after $(SRC_DIR)/compiler.mk and before
 # $(SRC_DIR)/mcmd/patterns.mk.
+# 
+# Note: The structure of this file is the same as that of defines.mk
+# files in the src/util, src/inter and src/mcMd directories, but this
+# one does not yet define any preprocessor macros. The DDMD_DEFS and
+# DDMD_SUFFIX strings are thus left empty. 
+#
 #-----------------------------------------------------------------------
 # Makefile variables to define preprocessor macros (None yet defined).
 
@@ -36,9 +42,12 @@ DDMD_SUFFIX:=
 
 #-----------------------------------------------------------------------
 # Names of library and executable files.
+# Note: LIB_DIR and BIN_DIR are defined in src/compiler.mk.
 
-ddMd_LIBNAME=ddMd$(UTIL_SUFFIX)$(INTER_SUFFIX)$(DDMD_SUFFIX)
+DDMD_ALL_SUFFIX=$(UTIL_SUFFIX)$(INTER_SUFFIX)$(DDMD_SUFFIX)
+
+ddMd_LIBNAME=ddMd$(DDMD_ALL_SUFFIX)
 ddMd_LIB=$(LIB_DIR)/lib$(ddMd_LIBNAME).a
 
-DDSIM_EXE=$(BIN_DIR)/ddSim$(UTIL_SUFFIX)$(INTER_SUFFIX)$(DDMD_SUFFIX)
+DDSIM_EXE=$(BIN_DIR)/ddSim$(DDMD_ALL_SUFFIX)
 #-----------------------------------------------------------------------

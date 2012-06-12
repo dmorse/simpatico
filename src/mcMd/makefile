@@ -14,11 +14,10 @@ include $(SRC_DIR_REL)/mcMd/sources.mk
 
 MDSIM=$(SRC_DIR)/mcMd/mdSim
 MCSIM=$(SRC_DIR)/mcMd/mcSim
-MCMD_EXE_SUFFIX=$(UTIL_MPI_SUFFIX)$(UTIL_SUFFIX)$(INTER_SUFFIX)$(MCMD_SUFFIX)
-MDSIM_EXE=$(BIN_DIR)/mdSim$(MCMD_EXE_SUFFIX)
-MCSIM_EXE=$(BIN_DIR)/mcSim$(MCMD_EXE_SUFFIX)
-MCMD_LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
+MCMD_LIBS=$(mcMd_LIB) $(inter_LIB) $(util_LIB)
+
 #-----------------------------------------------------------------------
+# Main targets
 
 all: $(mcMd_OBJS) $(mcMd_LIB) $(MDSIM).o $(MCSIM).o $(MCSIM_EXE) $(MDSIM_EXE)
 
@@ -37,14 +36,6 @@ clean-deps:
 	rm -f */*.d */*/*.d
 
 #-----------------------------------------------------------------------
-# Include dependency files
-
--include $(util_OBJS:.o=.d)
--include $(inter_OBJS:.o=.d)
--include $(mcMd_OBJS:.o=.d)
--include $(MDSIM).d 
--include $(MCSIM).d 
-#-----------------------------------------------------------------------
 # Executables
 
 $(MCSIM_EXE): $(MCSIM).o $(MCMD_LIBS)
@@ -53,7 +44,7 @@ $(MCSIM_EXE): $(MCSIM).o $(MCMD_LIBS)
 $(MDSIM_EXE): $(MDSIM).o $(MCMD_LIBS)
 	$(CXX) $(LDFLAGS) -o $(MDSIM_EXE) $(MDSIM).o $(MCMD_LIBS)
 
-# Targets without full path (for convenience)
+# Short names for executable targets (for convenience)
  
 mcSim:
 	make $(MCSIM_EXE)
@@ -61,3 +52,11 @@ mcSim:
 mdSim:
 	make $(MDSIM_EXE)
 
+#-----------------------------------------------------------------------
+# Include dependency files
+
+-include $(util_OBJS:.o=.d)
+-include $(inter_OBJS:.o=.d)
+-include $(mcMd_OBJS:.o=.d)
+-include $(MDSIM).d 
+-include $(MCSIM).d 

@@ -9,8 +9,14 @@ include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
 
-DDSIM=$(SRC_DIR)/ddMd/ddSim
 #-----------------------------------------------------------------------
+# Variable definitions
+
+DDSIM=$(SRC_DIR)/ddMd/ddSim
+DDSIM_LIBS= $(ddMd_LIB) $(inter_LIB) $(util_LIB)
+
+#-----------------------------------------------------------------------
+# Main targets
 
 all: $(ddMd_OBJS) $(ddMd_LIB) $(DDSIM).o $(DDSIM_EXE)
 
@@ -20,28 +26,23 @@ clean:
 	-rm -f $(DDSIM_EXE)
 	-rm -f */*.o */*/*.o
 	-rm -f */*.d */*/*.d
-	cd chemistry/tests; make clean
-	cd storage/tests; make clean
-	cd communicate/tests; make clean
-	cd neighbor/tests; make clean
-	cd potentials/tests; make clean
-	cd configIos/tests; make clean
-	cd simulation/tests; make clean
 
 clean-deps:
 	-rm -f $(ddMd_OBJS:.o=.d)
 	-rm -f $(DDSIM).d
 	-rm -f */*.d */*/*.d
 
+$(DDSIM_EXE): $(DDSIM).o $(DDSIM_LIBS)
+	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o $(DDSIM_LIBS)
+
+ddSim:
+	make $(DDSIM_EXE)
+
+#-----------------------------------------------------------------------
+# Include dependency files
+ 
 -include $(util_OBJS:.o=.d)
 -include $(inter_OBJS:.o=.d)
 -include $(ddMd_OBJS:.o=.d)
 -include $(DDSIM).d
-
-$(DDSIM_EXE): $(DDSIM).o $(ddMd_LIB) $(inter_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) -o $(DDSIM_EXE) $(DDSIM).o \
-               $(ddMd_LIB) $(inter_LIB) $(util_LIB) $(LIBS)
-
-ddSim:
-	make $(DDSIM_EXE)
 

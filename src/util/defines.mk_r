@@ -18,10 +18,6 @@
 # To define UTIL_DEBUG, and enable debugging, uncomment the following:
 #UTIL_DEBUG=1
 
-# Note: The flag UTIL_MPI that enables MPI parallel operation must be 
-# defined (or not) in the file src/compiler.mk. The compiler.mk file 
-# must thus be included before this file.
-
 # Most users will not need to modify the rest of this file. 
 #-----------------------------------------------------------------------
 # Comments:
@@ -62,6 +58,9 @@ ifdef UTIL_MPI
 UTIL_DEFS+= -DUTIL_MPI
 UTIL_MPI_SUFFIX:=_m
 endif
+# Note: The flag UTIL_MPI that enables MPI parallel operation must be 
+# defined (or not) in the file src/compiler.mk. The compiler.mk file
+# must thus be included before this file.
 
 # Enable debugging assertions
 ifdef UTIL_DEBUG
