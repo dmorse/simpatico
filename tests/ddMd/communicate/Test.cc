@@ -1,7 +1,7 @@
 #include "DomainTest.h"
 #include "BufferTest.h"
 #include "AtomDistributorTest.h"
-#include "BondDistributorTest.h"
+#include "GroupDistributorTest.h"
 #include "ExchangerTest.h"
 #include "ExchangerForceTest.h"
 #include "AtomCollectorTest.h"
@@ -23,7 +23,7 @@ int main()
    TEST_RUNNER(AtomDistributorTest) runner3;
    runner3.run();
 
-   TEST_RUNNER(BondDistributorTest) runner4;
+   TEST_RUNNER(GroupDistributorTest) runner4;
    runner4.run();
 
    TEST_RUNNER(ExchangerTest) runner5;

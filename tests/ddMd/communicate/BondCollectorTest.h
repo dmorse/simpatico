@@ -68,16 +68,16 @@ public:
 
       // Open parameter file
       #ifdef UTIL_MPI
-      openFile("in/BondDistributor.213");
+      openFile("in/GroupDistributor.213");
       #else
-      openFile("in/BondDistributor.111");
+      openFile("in/GroupDistributor.111");
       #endif
 
       domain.readParam(file());
-      atomStorage.readParam(file());
-      bondStorage.readParam(file());
       buffer.readParam(file());
+      atomStorage.readParam(file());
       atomDistributor.readParam(file());
+      bondStorage.readParam(file());
       bondDistributor.readParam(file());
 
       // Finish reading parameter file
@@ -85,7 +85,7 @@ public:
 
       atomCount = 0; // Number of atoms to be distributed by master
       bondCount = 0; // Number to bonds be distributed by master
-      int myRank    = domain.gridRank();
+      int myRank = domain.gridRank();
 
       // If I am the master processor.
       std::ifstream configFile;
