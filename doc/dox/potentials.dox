@@ -41,57 +41,55 @@ provide a method to calculate the forces exerted on all atoms in
 a System due to the associated type of potential (e.g., all 
 nonbonded pair forces, all bond forces, etc.)
 
-\section potentials_evaluator_sec Evaluator Classes and Templates
+\section potentials_interaction_sec Interaction Classes and Potential Energy Class Templates
 
 Subclassses of these potential energy base classes are all
-implemented using a simpler set of "evaluator" classes.
+implemented using a simpler set of "interaction" classes.
 Evaluator classes represent specific functional forms for the 
 associated potential energy functions, and provide implementations
 of the core energy and force calculations for such a function.
-For example, LJPair is a pair evaluator class that represents 
+For example, LJPair is a pair interaction class that represents 
 the Lennard-Jones pair interaction, and HarmonicBond is a bond
-evaluator class that represents a harmonic bond potential.  
-The evaluator classes are simple, non-polymorphic classes, 
+interaction class that represents a harmonic bond potential.  
+The interaction classes are simple, non-polymorphic classes, 
 rather than subclasses of the base clases described above, 
 that provide non-virtual methods to calculate the energy 
 and forces for a single group of interacting atoms, such 
 as a single pair of nonbonded or bonded atoms.  Unlike 
-potential energy classes, evaluator classes do not provide 
+potential energy classes, interaction classes do not provide 
 methods to do calculations that involve, e.g., looping over 
 all of the atoms or bonds of an associated system.
 
-Subclasses of the potential energy base classes are 
-implemented by a set of class templates that each take 
-an Evaluator class as an argument. The names of each
-such class templates is given in all but a few cases by 
-the name of the associated base class followed by the 
-suffix "Impl" (for implementation). For example, the 
-template that implements the BondPotential interface
-is called BondPotentialImpl. The class
-BondPotentialImpl<HarmonicBond> is a subclass of
-BondPotential that represents a harmonic bond potential,
-in which HarmonicBond is the name of the required evaluator 
-class. The template BondPotentialImpl defines methods that 
-implement the loop over all bonds in a system, as required 
-to calculate the total bond energy of a System and to
-calculate bond forces for all atoms in a system. The 
-template also provides other methods that simply call the 
-methods of the underlying evaluator to obtain the energy 
-or force for a single bond. Analogous templates are 
-provided for angle, dihedral, link and external forces. 
+Subclasses of the potential energy base classes that represent
+particular interactions are implemented by class templates,
+each of which takes an Evaluator class as a template argument. 
+The names of each such class templates is given in all but a 
+few cases by the name of the associated base class followed 
+by the suffix "Impl" (for implementation). For example, the 
+template that implements the BondPotential interface is called 
+BondPotentialImpl. The specific template instantiation
+BondPotentialImpl<HarmonicBond> is a subclass of BondPotential 
+that represents a harmonic bond potential.  The template 
+BondPotentialImpl defines methods that implement the loop 
+over all bonds in a system, as required to calculate the 
+total bond energy of a System and to calculate bond forces 
+for all atoms in a system. Each such template also provides 
+methods that simply call one of the methods of the underlying 
+interaction class to obtain the energy or force for a single 
+bond. Analogous templates are provided for angle, dihedral, 
+link and external forces. 
 
-In the case of non-bonded pair potentials, there are two
-different implementation templates, named McPairPotentialImpl 
-and MdPairPotentialImpl, for use in MC and MD simulations, 
+In the special case of non-bonded pair potentials, there are 
+two different implementation templates, named McPairPotentialImpl 
+and MdPairPotentialImpl, designed for MC and MD simulations, 
 respectively. These use different algorithms to do the 
-energy and force calculations required in MC and MD 
-simulations, and implement the different interfaces 
-defined by the McPairPotential and MdPairPotential base 
-classes.  The McPairPotentialImpl uses a cell list that 
-is designed for use in MC simulations, allows efficient
-updating of the position of a single atom. The 
-MdPairPotentialImpl uses a Verlet pair list that is 
-designed to provide an efficient implementation of the
+energy and force calculations required in MC and MD simulations, 
+and implement the slightly different interfaces defined by the 
+McPairPotential and MdPairPotential base classes.  The 
+McPairPotentialImpl uses a cell list that is designed for use 
+in MC simulations, allows efficient updating of the position of 
+a single atom. The MdPairPotentialImpl uses a Verlet pair list 
+that is designed to provide an efficient implementation of the
 force loop required in MD simulations.
 
 \section potentials_factory_sec Factory Classes 
@@ -109,7 +107,7 @@ name string that is passed as an argument to the factory method
 is actually the name of the required Evaluator classes, rather 
 than the name of a subclass of, e.g., BondPotential.  For 
 example, if the BondFactory::factory(std::string&) method 
-is passed the evaluator class name "HarmonicBond", it 
+is passed the interaction class name "HarmonicBond", it 
 constructs an instance of BondPotentialImpl<HarmonicBond>, 
 and returns a "HarmonicBond* base class pointer to this 
 new object.  This is different from the convention used 
@@ -119,7 +117,7 @@ of a desired subclass of the associated base class.
 
 The PairFactory class actually provides two methods, named 
 mdFactory() and mcFactory(), that each take the name of a
-pair evaluator, such as "LJPair" for a Lennard-Jones 
+pair interaction, such as "LJPair" for a Lennard-Jones 
 interaction, and return a pointer to a new MdPairPotential 
 or McPairPotential object that is constructed using the
 appropriate implementation template.  The method signatures 

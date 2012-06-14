@@ -2,7 +2,7 @@
  
 Simpatico is a C++ package for Monte Carlo (MC), Molecular Dynamics (MD) 
 and hybrid MD/MC simulations of polymeric and molecular liquids. It provides 
-programs for MC and MD simulations on single processors, and a parallel MD 
+programs for MC and MD simulations on a single processor, and a parallel MD 
 simulation program.
 
 <h3> Table of contents: </h3>

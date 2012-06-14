@@ -9,7 +9,7 @@ code, and of the class library design.
 Contents: 
    <ul>
    <li> \subpage directory_page  "Directory Structure" </li>
-   <li> \subpage design_page     "Namespace" 
+   <li> \subpage design_page     "Namespaces" 
    <ul>
      <li> \subpage Util_NS_page  "Util namespace" </li>
      <li> \subpage Inter_NS_page "Inter namespace" </li>

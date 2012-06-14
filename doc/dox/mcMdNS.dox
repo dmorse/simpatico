@@ -112,9 +112,9 @@ The conceptual distinction between a System and a Simulation is not necessary in
 See also: \ref McMd_Simulation_Module "Simulation Module"
 
 <ul>
- <li> \ref Util_NS_page (Previous)  </li>
- <li> \ref design_page  (up)        </li>
- <li> \ref custom_page (Next)      </li>
+ <li> \ref Inter_NS_page  (Previous)  </li>
+ <li> \ref design_page   (Up)        </li>
+ <li> \ref DdMd_NS_page (Next)      </li>
 </ul>
 
 */

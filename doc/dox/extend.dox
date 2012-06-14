@@ -14,7 +14,7 @@ integrate such new classes into operation of Simpatico.
   </li>
   <li> \subpage factory_page      "Factory Classes" 
   </li>
-  <li> \subpage potentials_page   "Potential Energy Factories" 
+  <li> \subpage potentials_page   "Potential Energies" 
   </li>
   <li> \subpage module_page       "Module Classes"
   </li>

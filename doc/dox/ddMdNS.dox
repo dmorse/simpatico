@@ -173,7 +173,7 @@ The Buffer class provides an interface to blocks of memory
 that are used for MPI communication, and is used by all of
 the other classes discussed above.
 
-\section system_sec Simulation
+\section simulation_sec Simulation
 
 A DdMd::Simulation object is the top level object in a DdMd simulation.
 There is no distinction in the DdMd namespace between a "System" and a 
