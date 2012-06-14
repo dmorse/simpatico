@@ -1,29 +1,29 @@
 Domain{
   gridDimensions    2    1     3
 }
+Buffer{
+  atomCapacity    20
+  ghostCapacity   30
+}
 AtomStorage{
    atomCapacity        50
    ghostCapacity      150
    totalAtomCapacity  120
 }
+AtomDistributor{
+  cacheCapacity   35
+}
 BondStorage{
    capacity            20
    totalCapacity      100
+}
+GroupDistributor{
+  cacheCapacity   35
 }
 AngleStorage{
    capacity            20
    totalCapacity      100
 }
-Buffer{
-  atomCapacity    20
-  ghostCapacity   30
-}
-AtomDistributor{
+GroupDistributor{
   cacheCapacity   35
-}
-GroupDistributor{
-  cacheCapacity   35 
-}
-GroupDistributor{
-  cacheCapacity   35 
 }

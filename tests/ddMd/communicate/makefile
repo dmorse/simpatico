@@ -13,13 +13,16 @@ TESTS_DIR=$(ROOT_DIR)/tests
 include sources.mk
 
 all: $(tests_ddMd_communicate_OBJS) BufferTest DomainTest PlanTest \
-     AtomDistributorTest BondDistributorTest ExchangerTest ExchangerForceTest \
+     AtomDistributorTest GroupDistributorTest \
+     ExchangerTest ExchangerForceTest \
      AtomCollectorTest BondCollectorTest Test
 
 clean:
-	rm -f $(tests_ddMd_communicate_OBJS) BufferTest DomainTest \
-        PlanTest AtomDistributorTest BondDistributorTest ExchangerTest \
-        ExchangerForceTest AtomCollectorTest BondCollectorTest Test \
+	rm -f $(tests_ddMd_communicate_OBJS) \
+        BufferTest DomainTest PlanTest \
+        AtomDistributorTest GroupDistributorTest \
+        ExchangerTest ExchangerForceTest \
+        AtomCollectorTest BondCollectorTest Test \
         $(tests_ddMd_communicate_OBJS:.o=.d)
 
 clean-deps:
@@ -40,10 +43,6 @@ PlanTest: PlanTest.o $(ddMd_LIB) $(util_LIB)
 AtomDistributorTest: AtomDistributorTest.o $(ddMd_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) \
                -o AtomDistributorTest AtomDistributorTest.o $(ddMd_LIB) $(util_LIB)
-
-BondDistributorTest: BondDistributorTest.o $(ddMd_LIB) $(util_LIB)
-	$(CXX) $(LDFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) \
-                -o BondDistributorTest BondDistributorTest.o $(ddMd_LIB) $(util_LIB)
 
 GroupDistributorTest: GroupDistributorTest.o $(ddMd_LIB) $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) \

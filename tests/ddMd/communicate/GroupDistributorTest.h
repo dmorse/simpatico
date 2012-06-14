@@ -10,7 +10,7 @@
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/storage/BondStorage.h>
 #include <ddMd/storage/AngleStorage.h>
-#include <ddMd/storage/DihedralStorage.h>
+//#include <ddMd/storage/DihedralStorage.h>
 #include <util/param/Label.h>
 #include <util/space/Grid.h>
 #include <util/mpi/MpiLogger.h>
@@ -36,6 +36,8 @@ public:
    virtual void setUp()
    {}
 
+
+
    void testDistribute()
    {
       printMethod(TEST_FUNC);
@@ -47,18 +49,27 @@ public:
       AtomDistributor  atomDistributor;
       BondStorage  bondStorage;
       GroupDistributor<2>  bondDistributor;
+      #ifdef INTER_ANGLE
       AngleStorage angleStorage;
       GroupDistributor<3>  angleDistributor;
+      #endif
+      #ifdef INTER_DIHEDRAL
       //DihedralStorage  dihedralStorage;
       //GroupDistributor<4>  dihedralDistributor;
+      #endif
       std::ifstream configFile;
 
-      // Set connections between atomDistributors
+      // Create associations for distributors
       domain.setBoundary(boundary);
       atomDistributor.associate(domain, boundary, atomStorage, buffer);
       bondDistributor.associate(domain, atomStorage, bondStorage, buffer);
+      #ifdef INTER_ANGLE
       angleDistributor.associate(domain, atomStorage, angleStorage, buffer);
-      //dihedralDistributor.associate(domain, atomStorage, dihedralStorage, buffer);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      //dihedralDistributor.associate(domain, atomStorage, dihedralStorage, 
+      //                              buffer);
+      #endif
 
       #ifdef UTIL_MPI
       // Set communicators
@@ -69,15 +80,20 @@ public:
       atomDistributor.setParamCommunicator(communicator());
       bondStorage.setParamCommunicator(communicator());
       bondDistributor.setParamCommunicator(communicator());
+      #ifdef INTER_ANGLE
       angleStorage.setParamCommunicator(communicator());
       angleDistributor.setParamCommunicator(communicator());
+      #endif
+      #ifdef INTER_DIHEDRAL
       //dihedralStorage.setParamCommunicator(communicator());
       //dihedralDistributor.setParamCommunicator(communicator());
-      #else
+      #endif
+      #else // ifndef UTIL_MPI
       domain.setRank(0);
       #endif
+      int myRank = domain.gridRank();
 
-      // Open parameter file
+      // Open and read parameter file
       #ifdef UTIL_MPI
       openFile("in/GroupDistributor.213");
       #else
@@ -85,23 +101,30 @@ public:
       #endif
 
       domain.readParam(file());
-      atomStorage.readParam(file());
-      bondStorage.readParam(file());
-      angleStorage.readParam(file());
-      //dihedralStorage.readParam(file());
       buffer.readParam(file());
+
+      atomStorage.readParam(file());
       atomDistributor.readParam(file());
+      int atomCount = 0;  // Number of atoms to be distributed by master
+
+      bondStorage.readParam(file());
       bondDistributor.readParam(file());
+      int bondCount = 0;  // Number of bonds be distributed by master
+
+      #ifdef INTER_ANGLE
+      angleStorage.readParam(file());
       angleDistributor.readParam(file());
+      int angleCount = 0; // Number of angles be distributed by master
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      //dihedralStorage.readParam(file());
       //dihedralDistributor.readParam(file());
+      //int dihedralCount = 0; // Number of dihedrals be distributed by master
+      #endif
 
       // Finish reading parameter file
       closeFile();
-
-      int atomCount = 0;  // Number of atoms to be distributed by master
-      int bondCount = 0;  // Number to bonds be distributed by master
-      int angleCount = 0; // Number to angles be distributed by master
-      int myRank    = domain.gridRank();
 
       // If I am the master processor.
       if (myRank == 0) {
@@ -113,7 +136,7 @@ public:
 
       if (myRank == 0) {
 
-         // Read Max number of atoms to be distributed by the master processor
+         // Read number of atoms to be distributed 
          configFile >> Label("ATOMS");
          configFile >> Label("nAtom") >> atomCount;
 
@@ -124,7 +147,7 @@ public:
          // Initialize the sendbuffer.
          atomDistributor.setup();
 
-         // Fill the atom atomDistributors
+         // Read atoms
          Atom*   ptr;
          int     id, typeId;
          for(int i = 0; i < atomCount; ++i) {
@@ -151,47 +174,29 @@ public:
 
       }
 
-      int recvCount = atomStorage.nAtom();
+      // Check that all atoms are in correct processor domain.
       AtomIterator iter;
       atomStorage.begin(iter);
       for ( ; iter.notEnd(); ++iter) {
          TEST_ASSERT(domain.isInDomain(iter->position()));
       }
 
-      #if 0
-      #ifdef UTIL_MPI
-      MpiLogger logger;
-      logger.begin();
-      std::cout << "Processor: " << myRank
-                << ", recvCount = " << recvCount << std::endl;
-      logger.end();
-      #endif 
-      #endif 
-
-
       // Check that all atoms are accounted for after distribution.
       #ifdef UTIL_MPI
-      int nRecvAll;
-      communicator().Reduce(&recvCount, &nRecvAll, 1, MPI::INT, MPI::SUM, 0);
+      atomStorage.computeNAtomTotal(communicator());
       if (myRank == 0) {
-         //std::cout << "Total atom count = " << nRecvAll << std::endl;
-         TEST_ASSERT(nRecvAll == atomCount);
+         TEST_ASSERT(atomStorage.nAtomTotal() == atomCount);
       }
       #else
-      //std::cout << "Total atom count = " << recvCount << std::endl;
-      TEST_ASSERT(recvCount == atomCount);
+      TEST_ASSERT(atomStorage.nAtom() == atomCount);
       #endif
 
       // Read bonds
       if (myRank == 0) {
 
-         // Read Max number of atoms to be distributed by the master processor
+         // Read number of bonds to be distributed 
          configFile >> Label("BONDS");
          configFile >> Label("nBond") >> bondCount;
-
-         //std::cout << std::endl;
-         //std::cout << "Num Bonds to be distributed = " 
-         //          << bondCount << std::endl;
 
          #if UTIL_MPI
          // Initialize the sendbuffer.
@@ -215,19 +220,15 @@ public:
          bondDistributor.receive();
 
       }
-      #if 0
-      #endif
+      // Note: Validation is done inside send and receive methods
 
+      #ifdef INTER_ANGLE
       // Read angles
       if (myRank == 0) {
 
-         // Read Max number of atoms to be distributed by the master processor
+         // Read number of angles to be distributed 
          configFile >> Label("ANGLES");
          configFile >> Label("nAngle") >> angleCount;
-
-         //std::cout << std::endl;
-         //std::cout << "Num Bonds to be distributed = " 
-         //          << angleCount << std::endl;
 
          #if UTIL_MPI
          // Initialize the sendbuffer.
@@ -251,6 +252,8 @@ public:
          angleDistributor.receive();
 
       }
+      // Note: Validation is done inside send and receive methods
+      #endif
 
    }
 
@@ -261,50 +264,86 @@ public:
       Boundary boundary;
       Domain   domain;
       Buffer   buffer;
-      AtomStorage atomStorage;
-      BondStorage bondStorage;
-      AtomDistributor atomDistributor;
-      GroupDistributor<2> bondDistributor;
+      AtomStorage  atomStorage;
+      AtomDistributor  atomDistributor;
+      BondStorage  bondStorage;
+      GroupDistributor<2>  bondDistributor;
+      #ifdef INTER_ANGLE
+      AngleStorage angleStorage;
+      GroupDistributor<3>  angleDistributor;
+      #endif
+      #ifdef INTER_DIHEDRAL
+      //DihedralStorage  dihedralStorage;
+      //GroupDistributor<4>  dihedralDistributor;
+      #endif
       std::ifstream configFile;
 
-      // Set connections between atomDistributors
+      // Create associations for distributors
       domain.setBoundary(boundary);
       atomDistributor.associate(domain, boundary, atomStorage, buffer);
       bondDistributor.associate(domain, atomStorage, bondStorage, buffer);
+      #ifdef INTER_ANGLE
+      angleDistributor.associate(domain, atomStorage, angleStorage, buffer);
+      #endif
+      #ifdef INTER_DIHEDRAL
+      //dihedralDistributor.associate(domain, atomStorage, dihedralStorage, 
+      //                              buffer);
+      #endif
 
       #ifdef UTIL_MPI
       // Set communicators
       domain.setGridCommunicator(communicator());
       domain.setParamCommunicator(communicator());
-      atomStorage.setParamCommunicator(communicator());
-      bondStorage.setParamCommunicator(communicator());
       buffer.setParamCommunicator(communicator());
+      atomStorage.setParamCommunicator(communicator());
       atomDistributor.setParamCommunicator(communicator());
+      bondStorage.setParamCommunicator(communicator());
       bondDistributor.setParamCommunicator(communicator());
-      #else
+      #ifdef INTER_ANGLE
+      angleStorage.setParamCommunicator(communicator());
+      angleDistributor.setParamCommunicator(communicator());
+      #endif
+      #ifdef INTER_DIHEDRAL
+      //dihedralStorage.setParamCommunicator(communicator());
+      //dihedralDistributor.setParamCommunicator(communicator());
+      #endif
+      #else // ifndef UTIL_MPI
       domain.setRank(0);
       #endif
+      int myRank = domain.gridRank();
 
-      // Open parameter file
+      // Open and read parameter file
       #ifdef UTIL_MPI
-      openFile("in2/BondDistributor.213");
+      openFile("in2/GroupDistributor.213");
       #else
-      openFile("in2/BondDistributor.111");
+      openFile("in2/GroupDistributor.111");
       #endif
 
       domain.readParam(file());
-      atomStorage.readParam(file());
-      bondStorage.readParam(file());
       buffer.readParam(file());
+
+      atomStorage.readParam(file());
       atomDistributor.readParam(file());
+      int atomCount = 0;  // Number of atoms to be distributed by master
+
+      bondStorage.readParam(file());
       bondDistributor.readParam(file());
+      int bondCount = 0;  // Number of bonds be distributed by master
+
+      #ifdef INTER_ANGLE
+      angleStorage.readParam(file());
+      angleDistributor.readParam(file());
+      int angleCount = 0; // Number of angles be distributed by master
+      #endif
+
+      #ifdef INTER_DIHEDRAL
+      //dihedralStorage.readParam(file());
+      //dihedralDistributor.readParam(file());
+      //int dihedralCount = 0; // Number of dihedrals be distributed by master
+      #endif
 
       // Finish reading parameter file
       closeFile();
-
-      int atomCount = 0; // Number of atoms to be distributed by master
-      int bondCount = 0; // Number to bonds be distributed by master
-      int myRank    = domain.gridRank();
 
       // If I am the master processor.
       if (myRank == 0) {
@@ -316,7 +355,7 @@ public:
 
       if (myRank == 0) {
 
-         // Read Max number of atoms to be distributed by the master processor
+         // Read number of atoms to be distributed 
          configFile >> Label("ATOMS");
          configFile >> Label("nAtom") >> atomCount;
 
@@ -327,7 +366,7 @@ public:
          // Initialize the sendbuffer.
          atomDistributor.setup();
 
-         // Fill the atom atomDistributors
+         // Read atoms
          Atom*   ptr;
          int     id, typeId;
          for(int i = 0; i < atomCount; ++i) {
@@ -354,46 +393,29 @@ public:
 
       }
 
-      int recvCount = atomStorage.nAtom();
+      // Check that all atoms are in correct processor domain.
       AtomIterator iter;
       atomStorage.begin(iter);
       for ( ; iter.notEnd(); ++iter) {
          TEST_ASSERT(domain.isInDomain(iter->position()));
       }
 
-      #if 0
-      #ifdef UTIL_MPI
-      MpiLogger logger;
-      logger.begin();
-      std::cout << "Processor: " << myRank
-                << ", recvCount = " << recvCount << std::endl;
-      logger.end();
-      #endif 
-      #endif 
-
       // Check that all atoms are accounted for after distribution.
       #ifdef UTIL_MPI
-      int nRecvAll;
-      communicator().Reduce(&recvCount, &nRecvAll, 1, MPI::INT, MPI::SUM, 0);
+      atomStorage.computeNAtomTotal(communicator());
       if (myRank == 0) {
-         //std::cout << "Total atom count = " << nRecvAll << std::endl;
-         TEST_ASSERT(nRecvAll == atomCount);
+         TEST_ASSERT(atomStorage.nAtomTotal() == atomCount);
       }
       #else
-      //std::cout << "Total atom count = " << recvCount << std::endl;
-      TEST_ASSERT(recvCount == atomCount);
+      TEST_ASSERT(atomStorage.nAtom() == atomCount);
       #endif
 
       // Read bonds
       if (myRank == 0) {
 
-         // Read Max number of atoms to be distributed by the master processor
+         // Read number of bonds to be distributed 
          configFile >> Label("BONDS");
          configFile >> Label("nBond") >> bondCount;
-
-         std::cout << std::endl;
-         std::cout << "Num Bonds to be distributed = " 
-                   << bondCount << std::endl;
 
          #if UTIL_MPI
          // Initialize the sendbuffer.
@@ -417,21 +439,47 @@ public:
          bondDistributor.receive();
 
       }
+      // Note: Validation is done inside send and receive methods
 
-      bondStorage.computeNTotal(domain.communicator());
+      #ifdef INTER_ANGLE
+      // Read angles
       if (myRank == 0) {
-         int nTotal = bondStorage.nTotal();
-         //std::cout << "BondStorage.nTotal() =" 
-         //          << nTotal << std::endl;
-         TEST_ASSERT(bondCount == bondStorage.nTotal());
+
+         // Read number of angles to be distributed 
+         configFile >> Label("ANGLES");
+         configFile >> Label("nAngle") >> angleCount;
+
+         #if UTIL_MPI
+         // Initialize the sendbuffer.
+         angleDistributor.setup();
+         #endif
+
+         // Read angles and add to angleDistributor
+         int i;
+         Group<3>* ptr;
+         for(i = 0; i < angleCount; ++i) {
+            ptr = angleDistributor.newPtr();
+            configFile >> *ptr;
+            angleDistributor.add();
+         }
+
+         // Send any angles not sent previously.
+         angleDistributor.send();
+
+      } else { // If I am not the master processor
+
+         angleDistributor.receive();
+
       }
+      // Note: Validation is done inside send and receive methods
+      #endif
 
    }
 };
 
 TEST_BEGIN(GroupDistributorTest)
 TEST_ADD(GroupDistributorTest, testDistribute)
-//TEST_ADD(GroupDistributorTest, testDistribute2)
+TEST_ADD(GroupDistributorTest, testDistribute2)
 TEST_END(GroupDistributorTest)
 
-#endif /* BOND_DISTRIBUTOR_TEST_H */
+#endif // DDMD_GROUP_DISTRIBUTOR_TEST_H 
