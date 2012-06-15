@@ -3,71 +3,26 @@ namespace McMd
 
 /*! \page factory_page Factory Classes
 
-Simpatico is designed to allow users to use a parameter file to 
-choose at run time from among subclasses of each the extensible 
-base classes, and thereby choose the particular molecular species, 
-file formats, and algorithms required in a particular simulation.
-time. Each such subclass of one these base classes is associated 
-with a polymorphic block in the parameter file, i.e., a block 
-that may specify the name and input parameters for any known 
-subclass of the required base class.
+The use of polymorphic blocks in the simpatico parameter file is designed allow users to use a parameter file to choose at run time from among subclasses of each the extensible base classes, and thereby choose the particular molecular species, file formats, and algorithms required in a particular simulation.  The algorithm used by Simpatico to read polymorphic parameter file blocks relies on the definition of an associated Factory class, which is responsible for recognizing the name of any valid subclass of a particular base class, and can instantiate an object of any such base class. Thus, for example, the MdIntegratorFactory class is responsible for parsing the polymorphic block that contains the MdIntegrator for an MD simulation.
 
-The algorithm used by Simpatico to read these blocks in the parameter
-file blocks relies on the existence of a Factory class associated with
-each of these polymorphic base class.  Each such Factory class provides 
-a method that takes the name of a subclass as a string. If this method
-can match the string to the name of a known subclass of the associated
-base class, it instantiates a new object of the desired subclass, and 
-returns a pointer to the new object.  Simpatico provides a default 
-implementation of each of these Factory classes, each of which will 
-recognize the names of any of the subclasses that are distributed 
-with Simpatico. To allow user-defined subclasses to be treated in the
-same manner, each new subclass must be added to the set of classes 
-that are recognized by the associated factory.
-
+Each Factory class provides a method that takes the name of a subclass as a string. If this method can match the string to the name of a known subclass of the associated base class, it instantiates a new object of the desired subclass, and returns a pointer to the new object.  Simpatico provides a default implementation of each of these Factory classes, each of which will recognize the names of any of the subclasses that are distributed with Simpatico. To allow user-defined subclasses to be treated in the same manner, each new user defined subclass of must be added to the set of classes that are recognized by the associated factory.  
 \section factory_structure_sec Factory Class Structure
 
-The Factory class associated with a class named "Base" (where "Base"
-could be McMove, MdIntegrator, Diagnostic, etc.) is normally derived 
-from the class template Util::Factory < Base >. For example, 
-McMoveFactory is derived from the template instantiation 
-Util::Factory < McMove >. The Util::Factory template declares a pure 
-virtual method named factory() with the following interface.
+The Factory class associated with a class named "Base" (where "Base" could be McMove, MdIntegrator, Diagnostic, etc.) is normally derived from the class template Util::Factory < Base >. For example, McMoveFactory is derived from the template instantiation Util::Factory < McMove >. The Util::Factory template declares a pure virtual method named factory() with the following interface.
 \code
    template <class Base>
    Base* Factory<Base>::factory(const std::string className) const = 0;
 \endcode
-This method take the name of a subclass of Base as a string parameter 
-className. If the method recognizes this name, it creates a new instance 
-of the specified subclass, and returns a Base* pointer to the new 
-object.  The pointer to the new object can then be used by the invoking 
-function to read the associated parameter file block, by invoking the 
-readParam() method of the new object. If the classname string is not 
-recognized, the factory method returns a null pointer, and the program 
-throws an Exception.
+This method take the name of a subclass of Base as a string parameter className. If the method recognizes this name, it creates a new instance of the specified subclass, and returns a Base* pointer to the new object.  The pointer to the new object can then be used by the invoking function to read the associated parameter file block, by invoking the readParam() method of the new object. If the classname string is not recognized, the factory method returns a null pointer, and the program throws an Exception.
 
-Each Factory can also contain a list of subfactories. Each subfactory
-of a Factory<Base> object is another Factory<Base> object.
-recognize and instantiate a set of additional subclasses of base.
-A Factory and its subfactories form a tree that is searched in a
-depth first manner: The factory() method of the default Factory for
-a particular base class such as Species or McMove first calls the 
-factory() method of each of its subfactories, before attempting
-to match the name against its own list of names.  The Factory
-template provides a method with the following signature:
+Each Factory can also contain a list of subfactories. Each subfactory of a Factory<Base> object is another Factory<Base> object that can recognize and instantiate a set of additional subclasses of base.  A Factory and its subfactories form a tree that is searched in a depth first manner: The factory() method of the default Factory for a particular base class such as Species or McMove first calls the factory() method of each of its subfactories, before attempting to match the name against its own list of names.  The Factory template provides a method with the following signature:
 \code
    template <class Base>
-   void Factory<Base>::addSubfactory(Factory<Base>& subfactory) = 0;
+   void Factory<Base>::addSubfactory(Factory<Base>& subfactory);
 \endcode
-which can be used to add a subfactory to a parent factory. Normally,
-to add a new class to Simpatico, the use must also provide a custom
-factory that can construct an instance of the class, and add this
-custom factory as a subfactory of the default Factory for the
-associated base classe. 
+which can be used to add a subfactory to a parent factory. 
 
-As an example, consider the MdIntegratorFactory that is distributed
-with Simpatico, which is a subclass of Factory<MdIntegrator>. Here 
-is the code that defines the MdIntegratorFactory::factory() method:
+As an example, consider the MdIntegratorFactory that is distributed with Simpatico, which is a subclass of Factory<MdIntegrator>. Here is the code that defines the MdIntegratorFactory::factory() method:
 \code
 #include "MdIntegratorFactory.h"
 
@@ -104,30 +59,13 @@ namespace McMd
 
 }
 \endcode
-Note that trySubfactories() is called before the method attempts to 
-match className to the name of several specific MdIntegrator subclass 
-names.  The trySubfactories() method and the factory() method each
-returns a null pointer if it cannot find a match for the name, and 
-returns a pointer to a new object if it can.
+Note that trySubfactories() is called before the method attempts to match className to the name of several specific MdIntegrator subclass names.  The trySubfactories() method and the factory() method each return a null pointer if it cannot find a match for the name, and return a pointer to a new object if it can.
 
 \section custom_factory_extend_sec Writing a Custom Subfactory
 
-To "teach" a factory that is derived from Factory<Base> to recognize 
-new user-defined subclasses of Base by name one must either: (1) Edit 
-the implementation of the factory that is provided with Simpatico 
-(e.g., edit the file MdIntegrator.cpp), or (2) Define a new subclass
-of Factory<Base> that recognizes the names of the new subclasses, and 
-add this to the default Factory as a subfactory. Though method (1) is 
-simpler, we recommend method (2) because it avoids the need to modify 
-files that are provided with Simpatico.  We describe method (2) here. 
+To "teach" a factory that is derived from Factory<Base> to recognize new user-defined subclasses of Base by name, the developer of a new subclass must either: (1) Edit the implementation of the factory that is provided with Simpatico (e.g., edit the file MdIntegratorFactory.cpp), or (2) Define a new subclass of Factory<Base> that recognizes the names of the new subclasses, and add this to the default Factory as a subfactory. Though method (1) is simpler, we recommend method (2) because it avoids the need to modify files that are provided with Simpatico.  We describe method (2) here.  
 
-As an example, imagine that you have written an NvtLangevinIntegrator 
-subclass of MdIntegrator, because no Langevin integrator is (thus far)
-provided by Simpatico. You would then also define a subclass of 
-Factory<MdIntegrator>, which we will called MyMdIntegratorFactory, with 
-a factory() method that can recognize the name "NvtLangevinIntegrator"
-and instantiate an object of this class.  Here is an example of the 
-required class definition:
+As an example, imagine that you have written an NvtLangevinIntegrator subclass of MdIntegrator, because no Langevin integrator is (thus far) provided by Simpatico. You would then also define a subclass of Factory<MdIntegrator>, which we will called MyMdIntegratorFactory, with a factory() method that can recognize the name "NvtLangevinIntegrator" and instantiate an object of this class.  Here is an example of the required class definition:
 \code
 #include "MdIntegratorFactory.h"
 #include "NvtLangevinIntegrator.h"
@@ -156,20 +94,12 @@ namespace McMd
 
 }
 \endcode
-The factory method for this subclass returns a pointer to a new 
-NvtLangevinIntegrator, if the string is "NvtLangevinIntegrator",
-or returns a null pointer otherwise. 
+The factory method for this subclass returns a pointer to a new NvtLangevinIntegrator, if the subclassName string is "NvtLangevinIntegrator", or returns a null pointer otherwise. 
 
 \section set_factory_extend_sec Registering a Custom Factory 
-After writing a Factory, one must invoke the addSubfactory() method 
-of the default factory that is provided with Simpatico to register 
-the new Factory as a subfactory of the default Factory. This must
-be done in the main program, before the readParam() method is
-invoked.  
+After writing a custom factory, one must invoke the addSubfactory() method of the default factory that is provided with Simpatico to register the new Factory as a subfactory of the default Factory. This must be done in the main program, before the readParam() method is invoked.  
 
-Below, we show an example of a main program for an MdSimulation 
-that adds a custom factory MyMdIntegratorFactory as a subfactory
-to the MdIntegratorFactory. 
+Below, we show an example of a main program for an MdSimulation that adds a custom factory MyMdIntegratorFactory as a subfactory to the MdIntegratorFactory. 
 \code
 namespace McMd
 {
@@ -192,19 +122,11 @@ namespace McMd
 
 }
 \endcode
-A similar pattern is used to set user defined Factory classes for
-subclasses of Species, McMove, and Diagnostic. The SpeciesFactory
-and DiagnosticFactory are accessed through methods of the 
-Simulation class. The McMoveFactory is accessible through a method 
-of McSimulation.
+A similar pattern is used to set user defined Factory classes for subclasses of Species, McMove, and Diagnostic. The SpeciesFactory and DiagnosticFactory are accessed through methods of the Simulation class. The McMoveFactory is accessible through a method of McSimulation.
 
 \section custom_factory_accessor_sec Factory Accessor Methods
 
-Each of the default factory object for each of the polymorphic 
-base classes can be accessed by reference via a method of either the 
-Simulation or System classes, or of the McSimulation, MdSimulation, 
-McSystem or MdSystem subclasses. The required accessor methods for 
-factory classes other than the potential energy factories are: 
+Each of the default factory object for each of the polymorphic base classes in an mcSim or mdSim simulation can be accessed by reference via a method of either the Simulation or McMd::System classes, or of the McSimulation, MdSimulation, McSystem or MdSystem subclasses. The required accessor methods for factory classes other than the potential energy factories are: 
 <ul>
 <li> Factory<Species>&       Simulation::speciesFactory(); </li>
 <li> Factory<Diagnostic>&    Simulation::diagnosticFactory(); </li>
@@ -214,8 +136,7 @@ factory classes other than the potential energy factories are:
 <li> Factory<TrajectoryIo>&  MdSystem::trajectoryIoFactory(); </li>
 <li> Factory<Perturbation>&  System::perturbationFactory(); </li>
 </ul>
-Access to various potential energy factories is provided by methods
-of the System class:
+Access to various potential energy factories is provided by methods of the System class:
 <ul>
   <li> PairFactory&                 System::pairFactory(); </li>
   <li> Factory<BondPotential>&      System::bondFactory(); </li>
@@ -224,30 +145,18 @@ of the System class:
   <li> Factory<BondPotential>&      System::linkFactory(); </li>
   <li> Factory<ExternalPotential>&  System::externalFactory(); </li>
 </ul>
-See the page about \ref potentials_page for a more detailed discussion 
-of the potential energy and potential energy factory classes.
+These methods are also avaiable in the MdSystem and McSystem subclasses.  See the page about \ref potentials_page for a more detailed discussion of the potential energy and potential energy factory classes.
 
-When a factory must be accessed via an instance of System or 
-one of its subclasesses, a reference to the required McSystem or 
-MdSystem object can be obtained using the system() method of the 
-parent McSimulation or MdSimulation object. This is done in the 
-above example, in which the MdIntegratorFactory is accessed via
-the line 
+When a factory must be accessed via an instance of System or one of its subclasesses, a reference to the required McSystem or MdSystem object can be obtained using the system() method of the parent McSimulation or MdSimulation object. This is done in the above example, in which the MdIntegratorFactory is accessed via the line 
 \code
     sim.system().mdIntegratorFactory().addSubfactory(myFactory);
 \endcode
-Here, sim is an instance of McSimulation. The method 
-McSimulation::system() returns a reference to the associated 
-McSystem object. The method System::mdIntegratorFactory() then 
-returns a reference to the default Factory<MdIntegrator>. 
-Invoking the method method Factory<MdIntegrator>::addSubFactory() 
-of this factory object then adds the user-defined subfactory to 
-the default factory.
+Here, sim is an instance of McSimulation. The method McSimulation::system() returns a reference to the associated McSystem object. The method System::mdIntegratorFactory() then returns a reference to the default Factory<MdIntegrator>.  Invoking the method method Factory<MdIntegrator>::addSubFactory() of this factory object then adds the user-defined subfactory to the default factory.
 
 <ul>
- <li> \ref inherit_page      (Previous)    </li>
- <li> \ref extend_page       (Up)    </li>
- <li> \ref potentials_page    (Next)    </li>
+ <li> \ref inherit_page     (Previous)    </li>
+ <li> \ref extend_page      (Up)    </li>
+ <li> \ref potentials_page  (Next)    </li>
 </ul>
  
 */

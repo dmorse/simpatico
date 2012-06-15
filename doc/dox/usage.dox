@@ -46,10 +46,9 @@ int main(int argc, char** argv)
 }
 
 \endcode
-The first line of the program creates an object named simulation that is an instance of the class McSimulation in namespace McMd.  An McSimulation object is the main object for an MC simulation,
-which coordinates the actions of many child objects. 
+The first line within the program creates an object named simulation that is an instance of the class McSimulation in namespace McMd.  An McSimulation object represents a complete  Monte Carlo simulation. 
 
-The the setOptions() method processes any any command line options that are passed to the program. 
+The setOptions() method, which is invoked in the second executable line, processes any command line options that are passed to the program.  The available command line options are discussed \ref section_options "below".
 
 The readParam() method reads a parameter file and initializes the simulation.  Invoking readParam() with no argument (as here) reads the parameter file from standard input. Despite its name, the readParam() method does not merely read parameters: It allocates any required memory, initializes the simulation, and leaves the main simulation object ready for use.
 
@@ -86,13 +85,14 @@ Configuration file formats for all programs are described in more detail \ref cf
 
 \section io_Output Output Files
 
-A typical simulation writes a log file to report the progress of the simulation. In simulations of single system (i.e., in ddSim or in the single-processor versions of mdSim and mcSim), the log file is written to standard output. 
+Each simulation writes a limited amount of information to report the progress of the simulation. In simulations of single system (i.e., using ddSim or the single-processor versions of mdSim and mcSim), this is written to standard output, but can redirected 
+to a log file. 
  
 A typical command file contains a command to write a final system configuration to a file.  The parameter file may also specify that the system configuration be dumped to file periodically during a simulation.
 
-A variety of other output files may also be written by classes that implement on-the-fly statistical analyses or data output operations. These data analysis and data output classes are all subclasses of the Diagnostic base class. The parameter file may specify a set of Diagnostic objects that should used during a simulation, each of which samples or outputs data at a specified interval, and each of which writes its output one or more separate files. The path to each such output files is constructed by prepending a common outputPrefix string to a base name that is specified in the parameter file. 
+A variety of other output files may also be written by classes that implement on-the-fly statistical analyses or data output operations. These data analysis and data output classes are all subclasses of the Diagnostic base class. The parameter file may specify a set of Diagnostic objects that should used during a simulation, each of which samples or outputs data at a specified interval, and each of which writes its output to one or more separate files. The path to each such output files is constructed by prepending a common outputPrefix string to a base name that is specified in the parameter file. 
 
-\section options Command Line Options
+\section section_options Command Line Options
 
 The mdSim and mcSim programs can each be invoked with any combination of three command line options:
 <ul>

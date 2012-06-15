@@ -102,12 +102,12 @@ analogous to those in the McMd namespace: Each potential class
 is a polymorphic classes that provide virtual methods to 
 calculate specific contributions to energies and atomic forces 
 for an entire System. The classes PairPotential, BondPotential, 
-AnglePotential, DihedralPotential provide interfaces for 
-nonbonded pair, bond, angle, and dihedral potentials, 
-respectively. Each potential energy class provides an
-addForces() method that adds forces arising from the 
-corresponding potential energy to every local atom on 
-this processor. 
+AnglePotential, DihedralPotential in the DdMd namespace provide 
+interfaces for nonbonded pair, bond, angle, and dihedral 
+potentials, respectively. Each potential energy class provides 
+an addForces() method that adds forces arising from the 
+corresponding potential energy to every local atom on this 
+processor. 
 
 The "potential" classes discussed above are abstract base 
 classes. The implementation of each such potential energy 
@@ -115,10 +115,11 @@ classes is provided by an associated class template, which
 takes one of the Interaction classes defined in the Inter 
 namespace as a template argument. Thus, for example, the
 template instantiation PairPotentialImpl<LJPair> is a concrete 
-subclass of PairPotential for Lennard-Jones pair interactions, 
-which uses an instance of the LJPair interaction class to 
-calculate pair energies and forces for individual nonbonded 
-pairs of atoms in the inner loop of the addForces() method.
+subclass of PairPotential for Lennard-Jones pair interactions.
+The template uses uses an instance of the LJPair interaction 
+class to calculate pair energies and forces for individual 
+nonbonded pairs of atoms in the inner loop of the addForces() 
+method.
 
 The choice of which interaction class to use for each type
 of potential energy is specified in the parameter file by the 
@@ -140,7 +141,7 @@ See also: \ref DdMd_Potential_Module "Potential Module"
 \section Integrator_sec Molecular Dynamics Integrators
 
 DdMd molecular dynamics integration algorithms are represented by 
-subclasses of DdMd::Integrator.  Each MdIntegrator implements a method
+subclasses of DdMd::Integrator.  Each Integrator implements a method
 run(int nStep) method that runs a simulation of a prescribed number of
 steps.  An Integrator may store internal state variables that are 
 specific to the algorithm and that must be retained between steps. 
@@ -152,50 +153,41 @@ that are used to communicate between processors, to transfer
 ownership of atoms and groups between processors, and to 
 update positions of ghosts. 
 
-The Exchanger class implements the main domain decomposition
-communication algorithms. The exchange() method is called 
-only on time steps when the pair list must be rebuilt, to
-exchange ownership of atoms and groups. The update() method 
-is called every time step that exchange() is not called,
-and updates the positions of ghost atoms.
+The Exchanger class implements the main domain decomposition communication algorithms. The exchange() method is called only on time steps when the pair list must be rebuilt, to exchange ownership of atoms and groups. The update() method is called every time step that exchange() is not called, and updates the positions of ghost atoms.
 
-The AtomDistributor, AtomCollector classes, and the 
-GroupDistributor<N> and GroupCollector<N> class templates are 
-used by the ConfigIo objects that read and write configuration
-files. The "Distributor" classes distribute atoms and groups 
-from a master processor that reads configuration files to the
-processors that own these objects. The "Collector" classes
-collect atoms and groups from among all processors prior to
-a master processor in order to allow the master processor to
-write atom coordinates and topology information to a file. 
+The AtomDistributor, AtomCollector classes, and the GroupDistributor <N> and GroupCollector <N> class templates are used by the ConfigIo objects that read and write configuration files. The "Distributor" classes distribute atoms and groups from a master processor that reads configuration files to the processors that own these objects. The "Collector" classes collect atoms and groups from all processors and send them to a master processor, in order to allow the master processor to write atom coordinates and topology information to a file.  Configuration files are always written and read by the master processor.
 
-The Buffer class provides an interface to blocks of memory
-that are used for MPI communication, and is used by all of
-the other classes discussed above.
+The Buffer class provides an interface to blocks of memory that are used for MPI communication, and is used by all of the other communication classes discussed above.
 
 \section simulation_sec Simulation
 
-A DdMd::Simulation object is the top level object in a DdMd simulation.
-There is no distinction in the DdMd namespace between a "System" and a 
-"Simulation". Every Simulation has: 
-
-   - An AtomStorage.
+A DdMd::Simulation object is the top level object in a DdMd simulation.  There is no distinction in the DdMd namespace between a "System" and a "Simulation". Every Simulation has:
+ 
+   - An DdMd::AtomStorage.
     
-   - A set of GroupStorage<N> objects with N=2, 3, and 4 for bond,
+   - A set of DdMd::GroupStorage <N> objects with N=2 and (optionally) N=3 and 4 for bond,
      angle and dihedral objects. 
 
-   - A set of potential energy classes for pair, bond, angle, dihedral,
-     and (optionally) external potentials.
+   - A set of potential energy classes for pair and bond potentials, and (optionally) 
+     angle, dihedral, and external potentials.
+
+   - a Util::Boundary object, which defines periodic boundary conditions.
 
    - a Util::EnergyEnsemble object.
 
    - a Util::BoundaryEnsemble object.
 
-   - An Exchanger object to manage communication.
+   - A DdMd::Integrator to integrate the equations of motion.
 
-   - An Integrator to integrate the equations of motion.
+   - A DdMd::Domain object that defines the spatial decomposition.
 
-   - A ConfigIo to read and write configuration files.
+   - A DdMd::Exchanger object to manage interprocessor communication.
+
+   - A DdMd::ConfigIo to read and write configuration files.
+
+   - A DdMd::Buffer to provide memory for communication.
+
+   - A Util::Random random number generator object.
 
 See also: \ref DdMd_Simulation_Module "Simulation Module"
 

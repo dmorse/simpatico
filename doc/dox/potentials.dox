@@ -137,15 +137,14 @@ are used as proposed MC moves, to construct an
 MdPairPotential of the McPairPotential used by the 
 parent MC simulation. 
 
-Except for the differences arisiing from the use of
-template to construct subclasses, andd the need to 
-write several different factory methods in the case 
-of a PairFactory, the implementations of the potential 
-energy factory classes are very similar to those of 
-other factory classes. Developers should consult the 
-implementations of the default factory classes for 
-different types of potential the src/potential/ 
-directory for further guidance. 
+Except for the differences arising from the use of
+template to construct subclasses, and the need to write 
+several factory methods in the case of a PairFactory, the 
+implementations of the potential energy factory classes 
+are very similar to those of other factory classes. 
+Developers should consult the implementations of the 
+default factory classes for different types of potential 
+the src/potential/ directory for further guidance. 
 
 <ul>
  <li> \ref factory_page   (Previous)  </li>

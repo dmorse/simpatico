@@ -18,28 +18,18 @@ are:
 In order to implement, for instance, a new data analysis operation, the
 user must write a subclass of the Diagnostic base class, which must 
 implement the interface defined by the base class.  The required interface 
-for each of these base class is described in the documentation for each 
-of these base classes, and is not described in detail. 
+for each base class is described in the documentation for the base class.
 
 There are also base classes for each of the different types of potential 
 energy (pair, bond, angle, dihedral, etc). Users may also extend these
 classes in order to define new functional forms for the various types
 of potential energy. The procedure for doing so is, however, somewhat
-different than that required for the base classes listed above, because
-it involves the use of a template to define new subclasses. The 
-peculiarities of the potential energy classes described here.
-
-Simpatico is designed to allow users to use a parameter file to choose 
-from among available subclasses of each of these base classes at run 
-time, and thus choose the particular molecular species, file formats, 
-and algorithms required in a particular simulation. The algorithm used
-to interpret the relevant parts of the parameter file involves the
-definition of a "Factory" class for each polymorphic base class. 
-The implementation of the Factory class defines a set of available 
-subclasses of that base class. In order to allow instances of a 
-user-defined subclass of any of these base classes to be controlled
-in the same way, the writer of a new subclass must also add the new
-subclass to the appropriate Factory class. 
+different than that required for the base classes listed above. Each
+potential energy function is defined by a non-polymorphic class that
+we refer to as an interaction class. Subclasses of each potential energy
+base classes are defined using a class template that takes an interaction
+class as a template parameter.  These peculiarities of the potential 
+energy classes are described in more detail \ref potentials_page "here" .
 
 Navigation: 
 <ul>
