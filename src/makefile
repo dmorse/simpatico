@@ -37,6 +37,7 @@ clean:
  
 veryclean:
 	make clean
+	cd ../tests; make clean
 	-rm -f ../lib/*
 	-rm -f ../bin/mcSim*
 	-rm -f ../bin/mdSim*

@@ -1,5 +1,5 @@
-util_accumulators_tests_stochastic_random_SRCS=\
-    $(SRC_DIR)/util/accumulators/tests/stochastic/random/RandomTest.cc 
+tests_util_accumulators_stochastic_random_SRCS=\
+    $(TESTS_DIR)/util/accumulators/stochastic/random/RandomTest.cc 
 
-util_accumulators_tests_stochastic_random_OBJS=$(util_accumulators_tests_stochastic_random_SRCS:.cc=.o)
+tests_util_accumulators_stochastic_random_OBJS=$(tests_util_accumulators_stochastic_random_SRCS:.cc=.o)
 
