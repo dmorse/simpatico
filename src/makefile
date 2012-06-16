@@ -1,5 +1,5 @@
 # ==============================================================================
-.PHONY: mcMd ddMd mcMd-clean ddMd-clean clean doc cleandoc veryclean
+.PHONY: mcMd ddMd mcMd-clean ddMd-clean clean veryclean
 
 include compiler.mk
 
@@ -22,12 +22,6 @@ clean-ddMd:
 	cd util;  make clean
 	cd inter; make clean
 	cd mcMd;  make clean
-
-doc:    
-	doxygen Doxyfile
-
-cleandoc:
-	-rm -fr ../doc/html/*
 
 clean:
 	cd util;  make clean

@@ -20,7 +20,7 @@ Before the first time you compile any of the programs, you must run a configure 
 
 The configure script must be entered from within the root directory. The script creates several configurations files that are required for compilation.  The contents of the resulting configuration files are discussed below (\ref compile_config_section).  The configure script only needs to be invoked once, before the first time you compile any source code.
 
-After running the configure script, inspect the file src/compiler.mk makefile fragment, which is created by the configure script. The value of the variable ROOT_DIR should have been set to the absolute  path to the simpatico/ root directory on your machine. 
+After running the configure script, inspect the file src/compiler.mk makefile fragment, which is created by the configure script. The value of the variable ROOT_DIR should have been set to the absolute path to the simpatico/ root directory on your machine. 
 
 The COMPILER variable defined in src/compiler.mk chooses from among several different compilers. By default, COMPILER is set to "gcc", which denotes the gnu C++ compiler.  To choose another compiler from among those listed (e.g., the intel compiler), comment out the line defining COMPILER=gcc and uncomment the line that uses the preferred compiler. Compiler names such as gcc_mpi and intel_mpi that end with the string _mpi denote compilers that link to an MPI library. These are needed to compile ddSim or the multi-processor versions of mcSim and mdSim.
 
@@ -110,13 +110,13 @@ Automatic dependency generation works by applying the script bin/makeDep to each
 The dependency list for every *.o file contains the files src/compiler.mk and one or more of the defines.mk files, in addition to C++ source and header files.  This is because these makefile fragments contain definitions of compiler options and C++ preprocessor macros that can effect the object code produced by compilation. Modifying any of these makefile fragments will thus force recompilation of a large number of C++ source files. Modifying src/compiler.mk or src/util/defines.mk forces recompilation of every source file in Simpatico.  Modifying src/util/defines.mk force recompilation of all of the source files in src/inter, src/mcMd, and src/ddMd.  Modifying src/mcMd/defines.mk forces recompilation of all files in src/mcMd.  Modifying src/ddMd/defines.mk forces recompilation of all files in src/ddMd.
 
 \section compile_doc_section Documentation
-The html documentation you are reading was generated using the dOxygen documentation utility.  If dOxygen is installed on your machine, you can regenerate all of the html documentation by changing the working directory to the src/ directory and entering 
+The html documentation you are reading was generated using the dOxygen documentation utility.  If dOxygen is installed on your machine, you can regenerate all of the html documentation by changing the working directory to the doc/ directory and entering 
 <code> make doc </code>
 from there. This generates documentation for all of the code in the Util and McMD namespaces. The resulting html documentation is deposited in the doc/html directory. 
 
 The text of the page you are reading now, along with the other pages of introductory material, are in the doc/dox directory. These are written in plain text, and so are readable with a text editor.  Documentation for each C++ class is extracted from documentation blocks in the class header file. 
 
-Entering 'make cleandoc' from the src/ directory will remove all the html documentation from the doc/html directory. If you have a copy of Simpatico that contains html documentation, do NOT do this unless you are sure that you will be able to regenerate the documentation by running dOxygen. If you have the html documentation, and are not sure whether you can regenerate it, recursively copy (cp -R) the 
+Entering 'make cleandoc' from the doc/ directory will remove all the html documentation from the doc/html directory. If you have a copy of Simpatico that contains html documentation, do NOT do this unless you are sure that you will be able to regenerate the documentation by running dOxygen. If you have the html documentation, and are not sure whether you can regenerate it, recursively copy (cp -R) the 
 doc/html directory to another location before entering make cleandoc.
 
 <ul>

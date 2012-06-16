@@ -14,8 +14,8 @@ polymeric and molecular liquids. It contains:
 
 - A program for parallel MD simulations, named ddSim.
 
-The parallel MD program ddSim uses a domain decomposition (or
-spatial decomposition) parallelization algorithm.
+The parallel MD program ddSim uses a domain (or spatial) 
+decomposition algorithm for parallelization.
 
 The design of Simpatico was motivated by the following goals: 
 
@@ -31,16 +31,12 @@ The design of Simpatico was motivated by the following goals:
 
 - Integrating Monte Carlo and molecular dynamics:
   The single processor mcSim and mdSim programs provide efficient
-  implementations of both MC and MD algorithms, based on a shared
-  code base. The resulting code is particularly suitable for 
-  hybrid Monte Carlo (HMC) simulations, in which short MD 
-  simulations are used as proposed Monte Carlo moves. 
+  implementations of MC, MD, and hybrid integration algorithms, 
+  based on a shared code base. 
 
 - Integrated data analysis: mcSim and mdSim come bundled with 
   a set of data analysis classes that can be used either 
-  "on-the-fly", during a simulation, or for post-processing
-  of configurations that were dumped to file during an earlier
-  simulation.
+  "on-the-fly", during a simulation, or for post-processing.
    
 Simpatico source code may be obtained either by download from 
 the project website
@@ -50,7 +46,7 @@ The code is standard C++ and must be compiled from source.
 Multi-processor programs (ddSim and multi-processor versions 
 of mcSim and mdSim) require an MPI library.
 
-Web documentation is provided with downloadable releases, in the
+Web documentation is provided with downloadable releases, in the 
 directory simpatico/doc/html, but is not retained in the git 
 repository. Instructions for regenerating the html documentation,
 if needed, is given below. A copy of the html docmentation is 
@@ -105,5 +101,5 @@ do so. This requires that dOxygen be installed and that the
 executable be in a directory in your PATH. The basic instructions 
 (after dOxygen is installed) are:
 
-  - cd to the simpatico/src directory
+  - cd to the simpatico/doc directory
   - Enter "make doc"
