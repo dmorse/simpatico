@@ -6,10 +6,18 @@ The single-processor programs mcSim and mdSim have no external dependencies.  Th
 
 The build system uses unix makefiles, using gnu make (gmake), which is a standard component of in any unix-like environment (linux or Mac OS). We assume that the makefile system would also work using Cygwin on Windows operating system, but have never tried this.
 
-The source files for Simpatico may be obtained either by downloading a distribution from the program <a href=http://research.cems.umn.edu/morse/code/simpatico/home.php>home page</a> or by cloning the public 
-<a href=https://github.com/dmorse/simpatico>git repository</a>, which is hosted on github.
+The source files for Simpatico may be obtained either by downloading a distribution from the program <a href=http://dmorse.github.com/simpatico/index.html>home page</a> or by cloning the public 
+<a href=https://github.com/dmorse/simpatico>git repository</a>. Both the repository and the download page are hosted on github.
 
-The source files for Simpatico is contained in a directory tree with a root directory named simpatico/. All of the the header (*.h) and source (*.cpp) files for Simpatico are are in the src/ subdirectory. By default, executable files are installed in the bin/ subdirectory. Throughout this documentation, references to paths in this directory tree that do not start explicitly with "simpatico/" should be understood to be relative paths, relative to the simpatico/ root directory.
+If you download a compressed tar file from the download page, unzipping and 
+extracting the tar file (gunzip tarball; tar -xvf tarball) will install the
+source files in a directory named dmorse-simpatico-commit/, where "commit"
+represents a hexadecimal identifier for the most recent commit in the git
+repository. We recommend that you immediately rename this directory simpatico/,
+which is the name of the corresponding directory in a git working tree. The
+rest of this documentation assumes that this root directory is named simpatico/.
+
+All of the the header (*.h) and source (*.cpp) files for Simpatico are are in the src/ subdirectory. By default, executable files are installed in the bin/ subdirectory. Throughout this documentation, references to paths in this directory tree that do not start explicitly with "simpatico/" should be understood to be relative paths, relative to the simpatico/ root directory.
 
 \section configure_section Configuration
 Before the first time you compile any of the programs, you must run a configure script from the root simpatico directory. You must:
