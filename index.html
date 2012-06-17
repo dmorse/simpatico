@@ -36,34 +36,26 @@
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
-          <p>/*</p>
+
+<p>Simpatico is a C++ package for Monte Carlo (MC), Molecular Dynamics (MD) and hybrid MD/MC simulations of classical mechanical models of polymeric and molecular liquids.  It is distributed under the terms of the GNU General Public License.
+The package contains:</p>
 
 <ul>
-<li>Simpatico - Simulation Package for Polymeric and Molecular Liquids
-*</li>
-<li>Copyright 2010, David Morse (<a href="mailto:morse@cems.umn.edu">morse@cems.umn.edu</a>)</li>
-<li>Distributed under the terms of the GNU General Public License.
-*/</li>
-</ul><p>Simpatico is a C++ package for Monte Carlo (MC), Molecular Dynamics 
-(MD) and hybrid MD/MC simulations of classical mechanical models of
-polymeric and molecular liquids. It contains:</p>
-
-<ul>
-<li><p>Programs for Monte Carlo (MC) and molecular dynamics (MD) 
-simulations on a single processor, named mcSim and mdSim.</p></li>
-<li><p>A program for parallel MD simulations, named ddSim.</p></li>
-</ul><p>The parallel MD program ddSim uses a domain (or spatial) 
+<li>Programs for Monte Carlo (MC) and molecular dynamics (MD) 
+simulations on a single processor, named mcSim and mdSim.</li>
+<li>A program for parallel MD simulations, named ddSim. </li>
+</ul>The parallel MD program ddSim uses a domain (or spatial) 
 decomposition algorithm for parallelization.</p>
 
 <p>The design of Simpatico was motivated by the following goals: </p>
 
 <ul>
-<li><p>Extensibility: New algorithms may be added for most elements 
+<li>Extensibility: New algorithms may be added for most elements 
 of a simulation via C++ inheritance, without modifying the 
 core source code. Extensible elements include Monte Carlo 
 moves, molecular dynamics integrators, potential energy 
 functions, molecular species, data analysis algorithms, and 
-configuration file formats.</p></li>
+configuration file formats.</li>
 <li><p>Efficiency: Simpatico is designed to be competitive as a tool 
 for computationally demanding research projects. </p></li>
 <li><p>Integrating Monte Carlo and molecular dynamics:
