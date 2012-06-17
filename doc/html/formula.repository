@@ -1,0 +1,28 @@
+\form#0:$ R_0, R_1, ...., R_{N_{i}-1} $
+\form#1:\[ R_{g,i}^2 = \sum_j \langle | R_j - R_{cm,i} |^2 \rangle / N_i \]
+\form#2:$ R_{cm,i} = (R_0 + R_1 + ... R_{N_{i}-1})/N_i $
+\form#3:$ \langle \cdots \rangle $
+\form#4:$ V(t) = R_i(t) - R_j(t) $
+\form#5:\[ F(\tau) \equiv \langle V(t) \cdot V(t-\tau) \rangle \]
+\form#6:$ \tau $
+\form#7:$ \langle \cdots \rangle$
+\form#8:$ V(t) \cdot V(t') $
+\form#9:$ V(t) $
+\form#10:\[ S(k) = \sum_{m} < \rho_{ma}(k) \rho_{mb}(-k) / V > \]
+\form#11:$\rho_a(k)$
+\form#12:\[ \rho_{ma}(k) = \sum_{i} \exp( i k \cdot r_{mi} ) \]
+\form#13:$ \rho_{ma}(k) $
+\form#14:$ \rho_a(k) $
+\form#15:$ R_0, R_1, ...., R_{N-1} $
+\form#16:\[ R_g^2 = \sum_i \langle | R_i - R_{cm} |^2 \rangle / N \]
+\form#17:$ R_{cm} = (R_0 + R_1 + ... R_{N-1})/N $
+\form#18:\[ S_{m}(k) = < \rho(k) \rho(-k) / V > \]
+\form#19:$\rho(k)$
+\form#20:\[ \rho(k) = \sum_{a} \sum_{i} v(m, a)\exp( i k \cdot r_i ) \]
+\form#21:\[ S(k) = < \rho_a(k) \rho_b(-k) / V > \]
+\form#22:\[ \rho_a(k) = \sum_{i} \exp( i k \cdot r_i ) \]
+\form#23:\[ S(k,t) = < \psi(k,t) \psi^{*}(k,0) > / V \]
+\form#24:$\psi(k,t)$
+\form#25:\[ \psi(k,t) = \sum_{i} c_{a} \exp( i k \cdot r_i ) \]
+\form#26:$ c_{a} $
+\form#27:$ \psi = \rho_0 - \rho_1 $
