@@ -11,15 +11,15 @@ include $(SRC_DIR_REL)/util/sources.mk
 include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/mcMd/sources.mk
 
-all: RingMaker.o RingMaker
+all: AtomicMaker.o AtomicMaker
 
 clean:	
-	-rm -f RingMaker.o
-	-rm -f RingMaker.d
-	-rm -f RingMaker
+	-rm -f AtomicMaker.o
+	-rm -f AtomicMaker
+	-rm -f AtomicMaker.d
 
--include RingMaker.d
+-include AtomicMaker.d
 
-RingMaker: RingMaker.cpp $(inter_OBJS) $(util_OBJS)
-	$(CXX) $(LDFLAGS) $(DEFINES) $(INCLUDES) -o RingMaker RingMaker.o \
+AtomicMaker: AtomicMaker.cpp $(inter_OBJS) $(util_OBJS)
+	$(CXX) $(LDFLAGS) $(DEFINES) $(INCLUDES) -o AtomicMaker AtomicMaker.o \
                $(inter_OBJS) $(util_OBJS)

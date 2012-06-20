@@ -1,13 +1,12 @@
-#ifndef CHAIN_MAKER_H
-#define CHAIN_MAKER_H
+#ifndef ATOMIC_MAKER_H
+#define ATOMIC_MAKER_H
 
 #include   <util/param/ParamComposite.h>
-#include   <mcMd/boundary/Boundary.h>
+#include   <util/boundary/Boundary.h>
 #include   <util/random/Random.h>
 
 #include <iostream>
 
-using namespace McMd;
 using namespace Util;
 
 class AtomicMaker : public ParamComposite

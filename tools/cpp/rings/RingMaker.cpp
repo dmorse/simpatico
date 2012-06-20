@@ -1,18 +1,16 @@
 #ifndef CHAIN_MAKER_CPP
 #define CHAIN_MAKER_CPP
 
-#include  <mcMd/boundary/Boundary.h>
-//#include  "mcMd/potentials/BondPotential.h>
 #include  <util/param/ParamComposite.h>
-#include  <mcMd/potentials/bond/HarmonicL0Bond.h>
-#include  <util/math/Random.h>
-#include  <util/math/Vector.h>               // template parameter
+#include  <util/random/Random.h>
+#include  <util/space/Vector.h>              // template parameter
 #include  <util/containers/DArray.h>         // member template
+#include  <util/boundary/Boundary.h>
+#include  <inter/bond/HarmonicL0Bond.h>
 
 #include <iostream>
 #include <string>
 
-using namespace McMd;
 using namespace Util;
 
 class RingMaker : public ParamComposite
@@ -27,7 +25,7 @@ private:
 
    Boundary       boundary_;
    Random         random_;
-   HarmonicL0Bond bondPotential_;
+   Inter::HarmonicL0Bond bondPotential_;
    DArray<Vector> v_;
    int            nAtom_;
    int            nMolecule_;

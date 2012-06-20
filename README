@@ -52,16 +52,23 @@ or by using git to cloning a working tree from
 Either method gets you a current copy of the master branch
 from the git repository.
 
-If you download a tarball, after unzipping and extracting the
-tarball (gunzip tarball; tar -xvf tarball), the source files will 
-be extracted into a directory named dmorse-simpatico-commit/
-where "commit" represents a hexadecimal identifier for the most 
-recent commit to the git repository.  You may rename this package 
-root directory something simpler, like "simpatico/", before
-running the ./configure script. If you mv the root directory 
-after running the configure script (see below), you must rerun
-the script. The documentation assumes that the root directory 
-is named simpatico/.
+If you download a tarball, the tar file will be named something
+like dmorse-simpatico-commit.tar, where "commit" denotes a
+denotes a hexadecimal identifier for the most recent commit 
+to the git repository.  When you extract the tar file
+(tar -xvf), the source files will be extracted into a directory 
+with the same name, dmorse-simpatico-commit/.  In order to 
+create the same directory structure as that used in the 
+repository, in which the root directory is named simpatico/
+you should rename this root directory to simpatico/ before 
+running the ./configure script. You thus need to enter:
+\code
+   tar -xvf dmorse-simpatico-commit.tar
+   mv  dmorse-simpatico-commit simpatico
+\endcode
+from the directory that should contain the simpatico root
+directory.  If you mv the root directory after running the 
+configure script (see below), you must rerun the script. 
 
 Documentation:
 --------------
@@ -71,16 +78,17 @@ Simpatico is prepared using the Doxygen utility (www.doxygen.org).
 Doxygen creates html web pages that are deposited in the directory 
 doc/html/ of the working tree. These pages are created from 
 comments extracted from the C++ source code, and from a set of 
-*.dox text files in the directory doc/dox/. These *.dox files 
-contain the text for a set of documentation pages, and are 
-readable in any text editor. 
+text files in the directory doc/dox/. These text files, which 
+have the file extension *.dox, contain the text for a set of 
+introductory documentation pages, and are readable in any text 
+editor. 
 
 A recent copy of the documentation is available online, at
 <http://dmorse.github.com/simpatico/index.html>.
 
-After getting a copy of the source code (either by download or
-by cloning the git repository), you can use dOxygen to generate
-a copy of the html documentation within the simpatico/doc/html 
+After getting a copy of the source code (either by download or by 
+cloning the git repository), you can use dOxygen to generate a 
+local copy of the html documentation within the simpatico/doc/html 
 directory of the source code tree.  This requires that dOxygen 
 be installed on your computer and that the executable be in a 
 directory in your PATH. The basic instructions (after dOxygen is 
