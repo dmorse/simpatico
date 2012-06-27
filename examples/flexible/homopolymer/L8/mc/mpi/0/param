@@ -187,7 +187,3 @@ SIMULATE         100000000
 WRITE_CONFIG     config
 FINISH
 
-    HarmonicTether{
-      nTetherType                            1
-      kappa                 1.000000000000e+00
-    }
