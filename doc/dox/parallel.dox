@@ -197,11 +197,153 @@ a value obtained from the appropriate elements of the array
 corresponding to element 4 in this array). 
 
 \section parallel_exchange_sec Replica Exchange 
-A replicated MC simulation with an associated Perburbation may or 
-may not use a replica exchange algorithm. The replica exchange 
-algorithm implements a Monte Carlo move that exchanges configurations 
-between processors with neighboring MPI ranks.
 
+Simpatico provides a replica exchange algorithm, which can be 
+used replicated MC simulations with any associated Perburbation. 
+The replca exchange algorithm is implemented by the class
+McMd::ReplicaMove, which implements a Monte Carlo move that 
+exchanges configurations between processors with neighboring 
+MPI ranks. Please see the documentation of the "ReplicaMove"
+class for further information.
+
+In the parameter file format for a replicated MC simulation, 
+the block associated with the Perturbation must be followed by a 
+line containing a boolean parameter "hasReplicaMove", which may
+take on values 1 (true) or 0 (false). This parameter is required
+only in multi-system replicated simulations. If the parameter
+"hasReplicaMove" is false (0), it is the last parameter in the
+McSystem block. If "hasReplicaMove" is true (1), it must be 
+followed by a parameter block associated with the ReplicaMove
+class, which contains a single "interval" parameter that 
+specifies the interval (in MC steps) between subsequent
+attempted MC moves. 
+
+\section parallel_example_sec Example Parameter File
+Show below is an example of a parameter file for a replicated
+mcSim simulation of a polymer blend, which is simulated on
+three processors. This example uses the McPairPerturbation 
+subclass of Perturbation to define a sequence of systems with
+different values of the epsilon parameter for interactions 
+between A and B atoms, and uses a replica exchange move.
+The parameter block associated with the McPairPerturbation
+and ReplicaMove appear at the end of the McSystem block.
+
+\code
+McSimulation{
+  FileMaster{
+    commandFileName                paramfile
+    inputPrefix                          in/
+    outputPrefix                        out/
+  }
+  nAtomType                              2
+  nBondType                              1
+  atomTypes                    A       1.0
+                               B       1.0
+  maskedPairPolicy                MaskBonded
+  SpeciesManager{
+
+    Homopolymer{
+      moleculeCapacity                      50
+      nAtom                                  8
+      atomType                               0
+      bondType                               0
+    }
+
+    Homopolymer{
+      moleculeCapacity                       50
+      nAtom                                   8
+      atomType                                1
+      bondType                                0
+    }
+
+  }
+  Random{
+    seed                           13451892
+  }
+  McSystem{
+    pairStyle                        LJPair
+    bondStyle                  HarmonicBond
+    McPairPotential{
+      epsilon               1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      sigma                 1.000000000000e+00  1.000000000000e+00
+                            1.000000000000e+00  1.000000000000e+00
+      cutoff                1.122460000000e+00  1.122460000000e+00
+                            1.122460000000e+00  1.122460000000e+00
+      maxBoundary             cubic  10.5 
+    }
+    BondPotential{
+      kappa                 2.000000000000e+03
+      length                1.000000000000e+00
+    }
+    EnergyEnsemble{
+      type                  isothermal
+      temperature           1.000000000000e+00
+    }
+    BoundaryEnsemble{
+      type                  rigid
+    }
+    McPairPerturbation{
+      parameters            1.000000000000e+00
+                            1.150000000000e+00
+                            1.300000000000e+00
+    }
+    hasReplicaMove                             1
+    ReplicaMove{
+      interval                             2000
+    }
+  }
+  McMoveManager{
+
+    HybridMdMove{
+      probability           0.010000000000e+00
+      nStep                                100
+      MdSystem{
+        MdPairPotential{
+          maxBoundary             cubic  10.5 
+          PairList{
+            atomCapacity                        1000
+            pairCapacity                       10000
+            skin                  3.000000000000e-01
+          }
+        }
+        NveVvIntegrator{
+          dt                    5.000000000000e-03
+        }
+      }
+    }
+
+    CfbReptationMove{
+      probability           0.990000000000e+00
+      speciesId                              0
+      nTrial                                20
+      hasAutoCorr 0
+    }
+
+  }
+  DiagnosticManager{
+    baseInterval                        1000
+
+    LogProgress{
+      interval                         20000
+    }
+
+    McEnergyAverage{
+      interval                          1000
+      outputFileName               energyAve
+      nSamplePerBlock                     10
+    }
+
+    McPairEnergyAverage{
+      interval                          1000
+      outputFileName              pairEnergy
+      nSamplePerBlock                     10
+      selector                           inter  -1  -1
+    }
+   
+  }
+}
+\endcode
 
 <ul>
  <li> \ref restart_page   (Prev)  </li>
