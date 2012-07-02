@@ -33,8 +33,8 @@ namespace DdMd
       /**
       * Method to create any species supplied with Simpatico.
       *
-      * \param speciesName name of the ConfigIo subclass
-      * \return ConfigIo* pointer to new instance of speciesName
+      * \param  subclassName  name of the ConfigIo subclass
+      * \return ConfigIo*     pointer to new instance of subclassName
       */
       ConfigIo* factory(const std::string &subclassName) const;
 

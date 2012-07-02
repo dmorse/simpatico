@@ -14,21 +14,24 @@ a way to submit multiple independent simulations as an MPI job.
 \section parallel_compile_sec Compilation
 
 Instructions for compiling the multi-processor versions of mcSim 
-and mdSim are given \ref compile_multi_sec here. Briefly, one must
+and mdSim are given \ref compile_page elsewhere. Briefly, one must
 choose compiler settings that link to an MPI library, by choosing
 an appropriate value for the COMPILER variable in the file 
-src/compiler.mk. This, by itself, only allows one to run several
+src/compiler.mk. 
+
+Choosing an MPI compiler, by itself, only allows one to run several
 independent simulations as an MPI job.  To enable free energy 
 perturbation and replica exchange algorithms, one must also
-uncomment the line "MCMD_PERTURB=1" in the file src/mcMd/defines.mk, 
-in addition to enabling MPI.  Defining MCMD_PERTURB causes a C++ 
-preprocessor macro of the same name to be defined during compilation 
-via a string passed to the compiler.
+uncomment the line "MCMD_PERTURB=1" in the file src/mcMd/defines.mk.
+Defining MCMD_PERTURB causes a C++ preprocessor macro of the same 
+name to be defined during compilation via a string passed to the 
+compiler.
 
 When Simpatico is compiled with mpi and free energy perturbation 
 enabled, but no other preprocessor macros defined, the default 
 names of the resulting MC and MD executables are mcSim_m_f and 
-mdSim_m_f.
+mdSim_m_f. The _m suffix stands for "mpi" and the _f for "free
+energy perturbation".
 
 \section parallel_file_sec Directory Conventions
 Conventions for paths to input and ouput file names are different 
@@ -40,8 +43,9 @@ associated with a processor with rank "n" are put in a subdirectory
 of the working directory named "n/", e.g., in a directory named "3/" 
 for the processor with rank 3 in the MPI communicator. To do this, 
 the FileMaster class for processor 3 prepends the string "3/" to the 
-paths for all of the input and and output configuration and data files 
-used by processor 3, with an analogous convention for other processors.
+paths for all of the input and and output configuration and data 
+files used by processor 3, with an analogous convention for other 
+processors.
 
 The treatment of parameter and command files in an MPI mcSim or
 mdSim job depends upon whether or not the executable is invoked 
