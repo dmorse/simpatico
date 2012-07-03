@@ -21,12 +21,12 @@ Getting the Source Code:
 ------------------------
 
 Simpatico source code may be obtained either by downloading 
-a tarball from github project web page
+a tar filefrom the github project web page
 <http://dmorse.github.com/simpatico/index.html> 
 or by using git to cloning a working tree from
 <https://github.com/dmorse/simpatico>.
-Either method gets you a current copy of the master branch
-from the git repository.
+Either method gets you a current copy of the master branch from 
+the git repository.
 
 If you download a tarball, the tar file will be named something
 like dmorse-simpatico-id.tar, where "id" denotes a denotes a 
@@ -35,14 +35,14 @@ repository.  When you extract the tar file (tar -xvf), the
 source files will be extracted into a directory with the same 
 name, dmorse-simpatico-id/.  To recreate the same directory 
 structure as that used in the repository, in which the root 
-directory is named simpatico/ you may want to rename this root 
-directory to simpatico/ before running the ./configure script. 
-by entering:
-\code
-   tar -xvf dmorse-simpatico-id.tar
-   mv  dmorse-simpatico-id simpatico
-\endcode
-from the directory that should contain the simpatico root
+directory is named simpatico/, you may want to rename this root 
+directory to simpatico/, before running the ./configure script.
+To unpack the tar file and move the directory, enter:
+
+   > tar -xvf dmorse-simpatico-id.tar
+   > mv  dmorse-simpatico-id simpatico
+
+from the directory that will contain the simpatico root
 directory. If you mv the root directory after running the 
 configure script (see below), you must rerun the script. 
 
@@ -82,11 +82,10 @@ Compiling:
 
 The code is standard C++ and must be compiled from source. 
 Multi-processor programs (ddSim and multi-processor versions 
-of mcSim and mdSim) require an MPI library.
-Instructions for compiling Simpatico are given in the text file 
-simpatico/doc/dox/compile.dox, or in the corresponding html web 
-page in the doc/html directory, which is generated from this text 
-file. 
+of mcSim and mdSim) require an MPI library.  Complete instructions 
+for compiling various versions of Simpatico are given in the text 
+file simpatico/doc/dox/compile.dox, or in the corresponding html 
+web page in the doc/html directory.
 
 Short instructions for compiling the default single-processor 
 versions of mcSim and mdSim (for the impatient) are:
@@ -99,9 +98,7 @@ versions of mcSim and mdSim (for the impatient) are:
 
 - Enter "make mcMd".
 
-The resulting executables, name "mcSim" and "mdSim", will be 
+The resulting executables, named "mcSim" and "mdSim", will be 
 installed in the simpatico bin/ directory. Further instructions
 for compiling multi-processor programs, and for enabling or
-disabling various features, are given in the file 
-doc/dox/compile.dox and in the corresponding html page. 
-
+disabling various features, are given in the documentation.
