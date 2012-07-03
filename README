@@ -16,30 +16,6 @@ polymeric and molecular liquids. It contains:
 
 The parallel MD program ddSim uses a domain (or spatial) 
 decomposition algorithm for parallelization.
-
-Design Goals:
--------------
-
-The design of Simpatico was motivated by the following goals: 
-
-- Extensibility: New algorithms may be added for most elements 
-  of a simulation via C++ inheritance, without modifying the 
-  core source code. Extensible elements include Monte Carlo 
-  moves, molecular dynamics integrators, potential energy 
-  functions, molecular species, data analysis algorithms, and 
-  configuration file formats.
-
-- Efficiency: Simpatico is designed to be competitive as a tool 
-  for computationally demanding research projects. 
-
-- Integrating Monte Carlo and molecular dynamics:
-  The single processor mcSim and mdSim programs provide efficient
-  implementations of MC, MD, and hybrid integration algorithms, 
-  based on a shared code base. 
-
-- Integrated data analysis: mcSim and mdSim come bundled with 
-  a set of data analysis classes that can be used either 
-  "on-the-fly", during a simulation, or for post-processing.
    
 Getting the Source Code:
 ------------------------
@@ -53,21 +29,21 @@ Either method gets you a current copy of the master branch
 from the git repository.
 
 If you download a tarball, the tar file will be named something
-like dmorse-simpatico-commit.tar, where "commit" denotes a
-denotes a hexadecimal identifier for the most recent commit 
-to the git repository.  When you extract the tar file
-(tar -xvf), the source files will be extracted into a directory 
-with the same name, dmorse-simpatico-commit/.  In order to 
-create the same directory structure as that used in the 
-repository, in which the root directory is named simpatico/
-you should rename this root directory to simpatico/ before 
-running the ./configure script. You thus need to enter:
+like dmorse-simpatico-id.tar, where "id" denotes a denotes a 
+hexadecimal identifier for the most recent commit to the git 
+repository.  When you extract the tar file (tar -xvf), the 
+source files will be extracted into a directory with the same 
+name, dmorse-simpatico-id/.  To recreate the same directory 
+structure as that used in the repository, in which the root 
+directory is named simpatico/ you may want to rename this root 
+directory to simpatico/ before running the ./configure script. 
+by entering:
 \code
-   tar -xvf dmorse-simpatico-commit.tar
-   mv  dmorse-simpatico-commit simpatico
+   tar -xvf dmorse-simpatico-id.tar
+   mv  dmorse-simpatico-id simpatico
 \endcode
 from the directory that should contain the simpatico root
-directory.  If you mv the root directory after running the 
+directory. If you mv the root directory after running the 
 configure script (see below), you must rerun the script. 
 
 Documentation:
@@ -95,7 +71,7 @@ directory in your PATH. The basic instructions (after dOxygen is
 installed) are:
 
   - cd to the simpatico/doc directory
-  - Enter "make doc"
+  - Enter "make html"
 
 This should create a large set of html files in the 
 simpatico/doc/html directory. To begin reading the documentation, 
