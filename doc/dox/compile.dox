@@ -20,6 +20,8 @@ If you download a compressed tar file from the download page, extracting the tar
 
 All of the the header (*.h) and source (*.cpp) files for Simpatico are are in the src/ subdirectory. By default, executable files are installed in the bin/ subdirectory. Throughout this documentation, references to paths in this directory tree that do not start explicitly with "simpatico/" should be understood to be relative paths, relative to the simpatico/ root directory.
 
+The source code tree that is obtained by either method does not contain a copy of the html documentation. If desired, you may generate a local copy of the documentation with the <a href=http://www.doxygen.org>Doxygen</a> utility, by following instructions given \ref compile_doc_section here.
+
 \section configure_section Configuration
 Before the first time you compile any of the programs, you must run a configure script from the root simpatico/ directory. You must:
 
@@ -150,14 +152,15 @@ Automatic dependency generation works by applying the script bin/makeDep to each
 The dependency list for every *.o file contains the files src/compiler.mk and one or more of the defines.mk files, in addition to C++ source and header files.  This is because these makefile fragments contain definitions of compiler options and C++ preprocessor macros that can effect the object code produced by compilation. Modifying any of these makefile fragments will thus force recompilation of a large number of C++ source files. Modifying src/compiler.mk or src/util/defines.mk forces recompilation of every source file in Simpatico.  Modifying src/util/defines.mk force recompilation of all of the source files in src/inter, src/mcMd, and src/ddMd.  Modifying src/mcMd/defines.mk forces recompilation of all files in src/mcMd.  Modifying src/ddMd/defines.mk forces recompilation of all files in src/ddMd.
 
 \section compile_doc_section Documentation
-The html documentation you are reading was generated using the dOxygen documentation utility.  If dOxygen is installed on your machine, you can regenerate all of the html documentation by changing the working directory to the doc/ directory and entering 
-<code> make doc </code>
-from there. This generates documentation for all of the code in the Util and McMD namespaces. The resulting html documentation is deposited in the doc/html directory. 
+The html documentation you are reading was generated using the <a href=http://www.doxygen.org> doxygen </a> documentation utility.  If dOxygen is installed on your machine, you can regenerate all of the html documentation by changing the working directory to the doc/ directory and entering 
+<code> 
+> make html 
+</endcode>
+The resulting html documentation is deposited in the doc/html/ directory. To read the documentation, open the file index.html in a browser to open the main page, or open any other html file and follow the link to the main page. 
 
-The text of the page you are reading now, along with the other pages of introductory material, are in the doc/dox directory. These are written in plain text, and so are readable with a text editor.  Documentation for each C++ class is extracted from documentation blocks in the class header file. 
+The text of the page you are reading now, along with other web pages that are not extracted from the C++ header files, are in files in the doc/dox directory. These are written in plain text, and so can also be read with a text editor.  Documentation for each C++ class is instead extracted from documentation blocks in the class header file. 
 
-Entering 'make cleandoc' from the doc/ directory will remove all the html documentation from the doc/html directory. If you have a copy of Simpatico that contains html documentation, do NOT do this unless you are sure that you will be able to regenerate the documentation by running dOxygen. If you have the html documentation, and are not sure whether you can regenerate it, recursively copy (cp -R) the 
-doc/html directory to another location before entering make cleandoc.
+Entering 'make clean' from the doc/ directory will remove all the html documentation from the doc/html directory. 
 
 <ul>
  <li> \ref guide_page   (Up)    </li>

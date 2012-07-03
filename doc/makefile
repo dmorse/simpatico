@@ -1,7 +1,7 @@
 # ==============================================================================
-.PHONY: doc doc
+.PHONY: html clean
 
-doc:    
+html:    
 	doxygen Doxyfile
 
 clean:

@@ -5,7 +5,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010, Veronica Chappa and David Morse (morse@cems.umn.edu)
+* Copyright 2010 - 2012, Veronica Chappa and David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
