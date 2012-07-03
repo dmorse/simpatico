@@ -65,15 +65,8 @@ namespace DdMd
       */
       void initialize(int capacity, int totalCapacity);
 
-      /**
-      * Set value for total number of distinct groups on all processors.
-      *
-      * This value is used by the isValid() method, and should be set only 
-      * on the master processor.
-      */
-      void setNTotal(int nTotal);
-
-      // Mutators
+      /// \name Group Management
+      //@{
 
       /**
       * Returns pointer to an address available for a new Group.
@@ -150,6 +143,57 @@ namespace DdMd
       */
       void remove(Group<N>* groupPtr); 
 
+      //@}
+      /// \name Iterator Interface
+      //@{
+      
+      /**
+      * Set iterator to beginning of the set of groups.
+      *
+      * \param iterator iterator for all groups.
+      */
+      void begin(GroupIterator<N>& iterator);
+ 
+      /**
+      * Set iterator to beginning of the set of groups.
+      *
+      * \param iterator iterator for all groups.
+      */
+      void begin(ConstGroupIterator<N>& iterator) const;
+
+      //@}
+      /// \name Accessors
+      //@{
+
+      /**
+      * Find local Group<N> indexed by global id.
+      * 
+      * \return pointer to Group<N> object, or null pointer if absent.
+      */
+      Group<N>* find(int id) const;
+
+      /**
+      * Return current number of groups on this processor.
+      */
+      int size() const;
+
+      /**
+      * Return capacity for groups on this processor.
+      */
+      int capacity() const;
+
+      /**
+      * Return maximum allowable number of groups on all processors.
+      *
+      * Note: Group ids must be in range 0, ..., totalCapacity-1
+      */
+      int totalCapacity() const;
+
+      /**
+      * Return total number of distinct groups on all processors.
+      */
+      int nTotal() const;
+
       /**
       * Compute and store the number of distinct groups on all processors.
       *
@@ -166,51 +210,6 @@ namespace DdMd
       void computeNTotal();
       #endif
    
-      // Accessors
-
-      /**
-      * Find local Group<N> indexed by global id.
-      * 
-      * \return pointer to Group<N> object, or null pointer if absent.
-      */
-      Group<N>* find(int id) const;
-
-      /**
-      * Set iterator to beginning of the set of groups.
-      *
-      * \param iterator iterator for all groups.
-      */
-      void begin(GroupIterator<N>& iterator);
- 
-      /**
-      * Set iterator to beginning of the set of groups.
-      *
-      * \param iterator iterator for all groups.
-      */
-      void begin(ConstGroupIterator<N>& iterator) const;
-
-      /**
-      * Return current number of groups on this processor.
-      */
-      int size() const;
-
-      /**
-      * Return capacity for groups on this processor.
-      */
-      int capacity() const;
-
-      /**
-      * Return maximum number of groups on all processors.
-      *
-      * Group ids are labelled from 0, ..., totalCapacity-1
-      */
-      int totalCapacity() const;
-
-      /**
-      * Return total number of distinct groups on all processors.
-      */
-      int nTotal() const;
-
       /**
       * Return true if the container is valid, or throw an Exception.
       */
@@ -235,6 +234,8 @@ namespace DdMd
       bool isValid(AtomStorage& atomStorage, bool hasGhosts);
       #endif
 
+      //@}
+      
    private:
 
       // Array that holds all available group objects.
@@ -331,13 +332,6 @@ namespace DdMd
       totalCapacity_ = totalCapacity;
       allocate();
    }
-
-   /*
-   * Set total number of distinct groups on all processors.
-   */
-   template <int N>
-   void GroupStorage<N>::setNTotal(int nTotal)
-   {  nTotal_ = nTotal; }
 
    /*
    * Allocate and initialize all containers (private).
