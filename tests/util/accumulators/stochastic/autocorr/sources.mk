@@ -1,5 +1,5 @@
-util_accumulators_tests_stochastic_autocorr_SRCS=\
-    $(SRC_DIR)/util/accumulators/tests/stochastic/autocorr/AutoCorrTest.cc 
+tests_util_accumulators_stochastic_autocorr_SRCS=\
+    $(TESTS_DIR)/util/accumulators/stochastic/autocorr/AutoCorrTest.cc 
 
-util_accumulators_tests_stochastic_autocorr_OBJS=$(util_accumulators_tests_stochastic_autocorr_SRCS:.cc=.o)
+tests_util_accumulators_stochastic_autocorr_OBJS=$(tests_util_accumulators_stochastic_autocorr_SRCS:.cc=.o)
 

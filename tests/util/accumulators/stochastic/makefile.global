@@ -1,4 +1,0 @@
-
-include $(SRC)/makefile.cc
-include $(SRC)/makefile.inc
-

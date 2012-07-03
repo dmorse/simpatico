@@ -56,7 +56,7 @@ public:
       }
       std::cout << "Average  = " << average.average()  << std::endl;
       std::cout << "Variance = " << average.variance() << std::endl;
-      average.outputError(std::cout);
+      //average.outputError(std::cout);
 
       tearDown();
    }

@@ -97,7 +97,7 @@ public:
 
       long x;
       for (int i=0; i < nSample; i++) {
-         x = random().getInteger(0, nBin);
+         x = random().uniformInt(0, nBin);
          average.sample(double(x));
          distribution.sample(x);
       }

@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -21,8 +21,8 @@ namespace Util
    * and also calculates the variance for sequences of block averages,
    * for multiple block sizes. The algorithm is implemented by a
    * chain of AverageStage objects, in which each object is assigned
-   * an integer chainId. The ``primary" AverageStage object (chainId=0)
-   * in this chain calculates the average and variance for a ``primary"
+   * an integer chainId. The "primary" AverageStage object (chainId=0)
+   * in this chain calculates the average and variance for a "primary"
    * sequence of measured values that are passed as parameters to
    * its sample method. This object hold a pointer to an AverageStage
    * with chainId=1 that calculates the variance of a sequence in which
@@ -69,8 +69,8 @@ namespace Util
    * blockFactor steps thereafter, the sample method of the parent
    * passes a block average to the sample method of its child and
    * then resets the block sum to zero. The resulting chain of objects
-   * is extended as needed: After blockFactor**2 samples have been
-   * passed to a parent, so that blockFactor block average values
+   * is extended as needed: After blockFactor*blockFactor samples have 
+   * been passed to a parent, so that blockFactor block average values
    * have been passed to a child object, the child will create a
    * grandchild. The public interface of the primary AverageStage
    * object allows all of the objects in the resulting chain to

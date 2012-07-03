@@ -28,6 +28,16 @@ namespace McMd
    * \defgroup McMd_Pair_Module Pair Potentials
    * \ingroup McMd_Potential_Module
    *
+   * \brief Nonbonded pair potentials.
+   *
+   * McPairPotential and MdPairPotential are abstract base classes that define
+   * slightly different interfaces use with MC and MD simulations, respectively.
+   * These interfaces are implemented by corresponding class templates 
+   * MdPairPotentialImpl and MdPairPotentialImpl, each of which takes an
+   * interaction class as a template argument. Thus, for example, the class
+   * MdPairPotentialImpl<LJPair> implements a Lennard-Jones pair potential for
+   * use in MD simulations.
+   *
    * \brief    Non-bonded pair potentials.
    */
 

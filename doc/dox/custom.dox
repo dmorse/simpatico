@@ -4,15 +4,12 @@ namespace McMd
 /*! \page custom_page Compilation Options
 
 Many features and behaviors of Simpatico can be modified when the program is compiled:
-
-
    
    Contents: 
    <ul>
-   <li> \subpage preprocessor_page "Conditional Compilation": 
-   Some optional features can be conditionally enabled or disabled at 
-   compile time by C++ preprocessor macros that control conditional
-   compilation.
+   <li> \subpage preprocessor_page "Preprocessor Macros": 
+   Some optional features can be enabled or disabled at compile time by 
+   C++ preprocessor macros that control conditional compilation.
    </li>
    <li> \subpage boundary_page      "Unit Cell Type": 
    The type of unit cell (cubic, orthorhombic, etc) is also specified by 

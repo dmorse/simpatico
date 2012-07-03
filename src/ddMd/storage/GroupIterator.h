@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -17,19 +17,12 @@ namespace DdMd
    template <int N> class Group; 
 
    /**
-   * Iterator for all Group<N> objects owned by this processor.
+   * Iterator for all Group < N > objects owned by a GroupStorage< N >.
    *
    * \ingroup DdMd_Storage_Module
    */
    template <int N>
    class GroupIterator : public PArrayIterator< Group<N> >
-   {};
-
-   /**
-   * Iterator for all incomplete Group<N> objects owned by this processor.
-   */
-   template <int N>
-   class IncompleteGroupIterator : public PArrayIterator< Group<N> >
    {};
 
 }

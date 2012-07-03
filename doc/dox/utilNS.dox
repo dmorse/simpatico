@@ -96,7 +96,7 @@ See also: \ref Param_Module     "Parameter File IO Module"
 
 \section boundary_sec Boundary
 
-A \ref Boundary object defines periodic boundary conditions for 
+A Util::Boundary object defines periodic boundary conditions for 
 a simulation. A Boundary contains the dimensions of periodic simulation 
 unit cell, and provides methods to calculate separation vectors and 
 distances using the nearest image convention, and to shift a position 
@@ -135,7 +135,7 @@ See also: \ref Random_Module "Random Module"
 Navigation:
 <ul>
  <li> \ref design_page  (Up)  </li>
- <li> \ref McMd_NS_page (Next)      </li>
+ <li> \ref Inter_NS_page (Next)      </li>
 </ul>
 
 */

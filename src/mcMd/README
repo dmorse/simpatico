@@ -29,8 +29,6 @@ trajectoryIos  classes for MD trajectory (multi-configuration) file IO.
 perturb        class for free energy perturbation theory
 util           miscellaneous utilities
 
-dox            source files for dOxygen html documentation.
-
 Makefile targets 
 ----------------
 

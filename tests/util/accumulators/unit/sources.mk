@@ -1,5 +1,5 @@
-util_accumulators_tests_unit_SRCS= \
-    $(SRC_DIR)/util/accumulators/tests/unit/Test.cc
+tests_util_accumulators_unit_SRCS= \
+    $(TESTS_DIR)/util/accumulators/unit/Test.cc
 
-util_accumulators_tests_unit_OBJS=$(util_accumulators_tests_unit_SRCS:.cc=.o)
+tests_util_accumulators_unit_OBJS=$(tests_util_accumulators_unit_SRCS:.cc=.o)
 

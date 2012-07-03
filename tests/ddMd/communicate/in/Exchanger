@@ -29,8 +29,7 @@ PairPotential{
   maxBoundary      orthorhombic   6.0   3.0   9.0
 }
 BondPotential{
-  kappa            400.0
-  length           1.000
+  kappa            20.0
 }
 
 

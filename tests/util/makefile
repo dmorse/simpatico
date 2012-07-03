@@ -11,6 +11,16 @@ all:  Test
 
 clean:
 	rm -f Test Test.o Test.d
+	cd accumulators; make clean
+	cd archives; make clean
+	cd boundary; make clean
+	cd containers; make clean
+	cd crystal; make clean
+	cd format; make clean
+	cd param; make clean
+	cd random; make clean
+	cd space; make clean
+	cd util; make clean
 	rm -f */*.o */*/*.o 
 	rm -f */*.d */*/*.d
 

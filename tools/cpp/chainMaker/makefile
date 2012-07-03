@@ -14,9 +14,9 @@ include $(SRC_DIR_REL)/mcMd/sources.mk
 all: ChainMaker.o ChainMaker
 
 clean:	
-	-rm ChainMaker.o
-	-rm ChainMaker.d
-	-rm ChainMaker
+	-rm -f ChainMaker.o
+	-rm -f ChainMaker.d
+	-rm -f ChainMaker
 
 -include ChainMaker.d
 

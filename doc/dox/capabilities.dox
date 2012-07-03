@@ -10,19 +10,17 @@ All of the Simpatico programs use a potential energy that can contain:
 
 - external one-body potentials  
 
-Several different types of potential energy functions are provided for the nonbonded pair interaction and for each type of covalent interactions, and others are easily added. To simplify integration of MC and MD simulations, all programs are currently restricted to models with differentiation potentials (i.e., not hard 
-spheres), with no explicit constraints on bond lengths or bond angles. The default version of the program currently includes only non-bonded pair interactions and two-body covalent bond interactions. Other types of interactions can be enabled when the program is compiled by defining corresponding makefile variables.
+Several different choices of potential energy function are provided for the nonbonded pair interaction and for each type of covalent interactions. Others are easily added. To simplify integration of MC and MD simulations, all programs are currently restricted to models with differentiation potentials (i.e., not hard spheres), with no explicit constraints on bond lengths or bond angles. The default version of the program currently includes only non-bonded pair interactions and two-body covalent bond interactions. Other types of interactions can be enabled when the program is compiled by setting appropriate flags.
 
-Source code for classes that represent potential energy functions, which we refer to as "interactions", are all in the src/inter directory, and are all 
-defined in the "Inter" C++ namespace.  The same set of interaction classes are used by the mcSim, mdSim, and ddSim programs.  
+Source code for classes that represent particular potential energy functions, which we refer to as "interactions", are all in the src/inter directory, and are all defined in the "Inter" C++ namespace.  The same set of such interaction classes is available in the mcSim, mdSim, and ddSim programs.  
 
 Long-range electrostatic potentials have not yet been implemented in any of the programs. This is the most important missing feature required to make the package suitable for atomistic models. 
 
 \section features_algorithms_sec Simulation Algorithms
 
-For single-processor MD simulations, mdSim currently provides the following integration algorithms and ensembles:
+For single-processor MD simulations, mdSim currently provides:
 <ul>
-  <li> NVE velocity verlet </li>
+  <li> NVE velocity Verlet </li>
   <li> NVT Nose-Hoover </li>
   <li> NVT dissipative particle dynamics </li>
   <li> NPH Anderson barostat </li>
@@ -42,7 +40,7 @@ For Monte-Carlo simulation, mcSim currently provides the following MC moves, and
 </ul>
 For parallel Md simulations, DdSim thus far provides only two integrators:
 <ul>
-  <li> NVE velocity verlet </li>
+  <li> NVE velocity Verlet </li>
   <li> NVT Nose-Hoover </li>
 </ul>
 
@@ -77,29 +75,16 @@ These include classes to evaluate:
   <li> Auto-correlation functions for vector separations of atom pairs. </li>
   <li> Intermediate scattering (van Hove) function S(k, t) . </li>
 </ul>
-All mcSim and mdSim data analysis classes can be used either on-the-fly, 
-during a simulation, or for post-processing of a trajectory file or a 
-sequence of configuration dump files. Postprocessing is done by the
-the mcSim and mdSim programs, by invoking a command that replaces the 
-main the mcSim or mdSim simulation program, using a command that 
-replaces the main simulation loop by a loop that reads a sequence of
-configurations from file. 
+All mcSim and mdSim data analysis classes can be used either on-the-fly, during a simulation, or for post-processing of a trajectory file or a sequence of configuration dump files. Postprocessing is done by the the mcSim and mdSim programs, by invoking a command that replaces the main simulation loop by a loop that reads a sequence of configurations from file. 
 
-Thus far, very few data analyis and data output classes have been written 
-for use with ddSim. MD trajectories from ddSim simulations can instead by 
-post-processed by using mcSim or msSim as analysis tools. 
+Thus far, very few data analyis or data output classes have been written for use on-the-fly with ddSim. MD trajectories from ddSim simulations can instead by post-processed by using mcSim or msSim as analysis tools. 
 
-Simpatico currently provides a very convenient tool for running and 
-analyzing simulations of coarse-grained models of polymer liquids. 
-It is not yet suitable for use with atomistic models, because of the 
-absence of an electrostatic potential, and the absence of MC conformation 
-sampling algorithms designed specifically for use with stiff angle 
-potentials. 
+Simpatico currently provides a very convenient tool for running and analyzing simulations of coarse-grained models of polymer liquids.  It is not yet suitable for use with atomistic models, because of the absence of an electrostatic potential, and the absence of MC conformation sampling algorithms designed specifically for use with stiff angle potentials. 
 
 Navigation:
 <ul>
- <li> \ref about_page        (Next) </li>
- <li> \ref index             (Up)   </li>
+ <li> \ref goals_page        (Next) </li>
+ <li> \ref about_page        (Up)   </li>
  <li> \ref contributors_page (Next) </li>
 </ul>
 
