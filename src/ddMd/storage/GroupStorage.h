@@ -151,29 +151,6 @@ namespace DdMd
       void remove(Group<N>* groupPtr); 
 
       /**
-      * Add to set of incomplete groups.
-      *
-      * \throw Exception if groupPtr is not address of a local Group.
-      *
-      * \param groupPtr pointer to the group to be added to set.
-      */
-      void addIncomplete(Group<N>* groupPtr); 
-
-      /**
-      * Remove from set of incomplete groups.
-      *
-      * \throw Exception if groupPtr is not address of a Group.
-      *
-      * \param groupPtr pointer to the group to be removed
-      */
-      void removeIncomplete(Group<N>* groupPtr); 
-
-      /**
-      * Clear the set of incomplete groups.
-      */
-      void clearIncompleteSet(); 
-
-      /**
       * Compute and store the number of distinct groups on all processors.
       *
       * This is an MPI reduce operation. The correct result is stored and
@@ -211,21 +188,7 @@ namespace DdMd
       * \param iterator iterator for all groups.
       */
       void begin(ConstGroupIterator<N>& iterator) const;
- 
-      /**
-      * Set iterator to beginning of the set of incomplete groups.
-      *
-      * \param iterator iterator for all incomplete groups.
-      */
-      void begin(IncompleteGroupIterator<N>& iterator);
- 
-      /**
-      * Set const iterator to beginning of the set of incomplete groups.
-      *
-      * \param iterator iterator for all incomplete groups.
-      */
-      void begin(ConstIncompleteGroupIterator<N>& iterator) const;
- 
+
       /**
       * Return current number of groups on this processor.
       */
@@ -279,9 +242,6 @@ namespace DdMd
 
       // Set of pointers to local groups.
       ArraySet< Group<N> >   groupSet_;
-
-      // Set of pointers to incomplete local groups.
-      ArraySet< Group<N> >   incompleteGroupSet_;
 
       // Stack of pointers to unused local Group objects.
       ArrayStack< Group<N> > reservoir_;
@@ -388,7 +348,6 @@ namespace DdMd
       groups_.allocate(capacity_);
       reservoir_.allocate(capacity_);
       groupSet_.allocate(groups_);
-      incompleteGroupSet_.allocate(groups_);
       groupPtrs_.allocate(totalCapacity_);
 
       // Push all groups onto reservoir stack, in reverse order.
@@ -495,39 +454,6 @@ namespace DdMd
       groupPtr->setId(-1);
    }
 
-   /*
-   * Add to set of incomplete groups.
-   */
-   template <int N>
-   void GroupStorage<N>::addIncomplete(Group<N>* groupPtr)
-   {
-      int id = groupPtr->id();
-      if (groupPtrs_[id] == 0) {
-         UTIL_THROW("Ptr does not point to local group");
-      }
-      incompleteGroupSet_.append(*groupPtr);
-   }
-
-   /*
-   * Remove from set of incomplete groups.
-   */
-   template <int N>
-   void GroupStorage<N>::removeIncomplete(Group<N>* groupPtr)
-   {
-      int id = groupPtr->id();
-      if (groupPtrs_[id] == 0) {
-         UTIL_THROW("Ptr does not point to local group");
-      }
-      incompleteGroupSet_.remove(*groupPtr);
-   }
-
-   /*
-   * Clear incomplete group set (remove all).
-   */
-   template <int N>
-   void GroupStorage<N>::clearIncompleteSet()
-   {  incompleteGroupSet_.clear(); }
-
    // Accessors
 
    /*
@@ -550,21 +476,7 @@ namespace DdMd
    template <int N>
    void GroupStorage<N>::begin(ConstGroupIterator<N>& iterator) const
    {  groupSet_.begin(iterator); }
- 
-   /*
-   * Set iterator to beginning of the set of incomplete local groups.
-   */
-   template <int N>
-   void GroupStorage<N>::begin(IncompleteGroupIterator<N>& iterator)
-   {  incompleteGroupSet_.begin(iterator); }
- 
-   /*
-   * Set const iterator to beginning of the set of incomplete local groups.
-   */
-   template <int N>
-   void GroupStorage<N>::begin(ConstIncompleteGroupIterator<N>& iterator) const
-   {  incompleteGroupSet_.begin(iterator); }
- 
+
    /*
    * Check validity of this GroupStorage.
    *

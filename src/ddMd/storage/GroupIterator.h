@@ -17,19 +17,12 @@ namespace DdMd
    template <int N> class Group; 
 
    /**
-   * Iterator for all Group<N> objects owned by this processor.
+   * Iterator for all Group < N > objects owned by a GroupStorage< N >.
    *
    * \ingroup DdMd_Storage_Module
    */
    template <int N>
    class GroupIterator : public PArrayIterator< Group<N> >
-   {};
-
-   /**
-   * Iterator for all incomplete Group<N> objects owned by this processor.
-   */
-   template <int N>
-   class IncompleteGroupIterator : public PArrayIterator< Group<N> >
    {};
 
 }

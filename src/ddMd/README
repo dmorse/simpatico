@@ -20,7 +20,7 @@ integrators/  - molecular dynamics integrator algorithms
 neighbor/     - cell list and pair list data structures
 potentials/   - potential energy classes
 simulation/   - main Simulation class
-storage/      - data structures that manage Atom and Group objects
+storage/      - containers that manage Atom and Group objects
 util/         - miscellaneous utility classes
 
 

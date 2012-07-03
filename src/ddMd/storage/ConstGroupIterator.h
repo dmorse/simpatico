@@ -17,21 +17,14 @@ namespace DdMd
    template <int N> class Group; 
 
    /**
-   * Const iterator for all Group<N> objects owned by a GroupStorage<N> object.
+   * Const iterator for all Group < N > objects owned by a GroupStorage < N >.
    *
-   * This iterator provides read-only (const) access to Group<N> objects.
+   * This iterator provides read-only (const) access to Group < N > objects.
    *
    * \ingroup DdMd_Storage_Module
    */
    template <int N>
    class ConstGroupIterator : public ConstPArrayIterator< Group<N> >
-   {};
-
-   /**
-   * Iterator for all Group<N> objects owned by a GroupStorage<N> object.
-   */
-   template <int N>
-   class ConstIncompleteGroupIterator : public ConstPArrayIterator< Group<N> >
    {};
 
 }
