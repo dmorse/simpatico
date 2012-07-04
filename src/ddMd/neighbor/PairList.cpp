@@ -139,7 +139,7 @@ namespace DdMd
                            UTIL_THROW("Overflow: # pairs > pairCapacity_");
                         }
       
-                        // If first neighbor of atom1, record atom1 in atom1Ptrs_
+                        // If first neighbor of atom1, add atom1 to atom1Ptrs_
                         if (!foundNeighbor) {
    
                            if (nAtom1_ >= atomCapacity_) {
@@ -151,7 +151,7 @@ namespace DdMd
                            foundNeighbor = true;
                         }
       
-                        // Append pointer to 2nd atom to atom2Ptrs_[]
+                        // Append 2nd atom to atom2Ptrs_[]
                         atom2Ptrs_[nAtom2_] = atom2Ptr;
                         ++nAtom2_;
       

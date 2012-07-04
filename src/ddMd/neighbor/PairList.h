@@ -115,11 +115,13 @@ namespace DdMd
       * Has memory been allocated for this PairList?
       */
       bool isAllocated() const;
-  
+ 
+      #if 0 
       /** 
       * Return true if valid, or throw Exception.
       */
       bool isValid() const;
+      #endif
   
       //@}
       /// \name Statistics

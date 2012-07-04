@@ -46,6 +46,7 @@ namespace DdMd
    * are the atoms in this cell.
    *
    * \param neighbors array of pointers to neighbor Atoms
+   * \param force if true, use reverse force communication
    */
    void Cell::getNeighbors(NeighborArray &neighbors, 
                            bool forceCommFlag) const
