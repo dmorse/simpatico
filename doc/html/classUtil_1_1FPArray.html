@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: FPArray&lt; Data, Capacity &gt; Class Template Reference</title>
+<title>Simpatico: Util::FPArray&lt; Data, Capacity &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<h1>FPArray&lt; Data, Capacity &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Pointer__Array__Module.html">Pointer Arrays</a></div></h1>  </div>
+<h1>Util::FPArray&lt; Data, Capacity &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Pointer__Array__Module.html">Pointer Arrays</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::FPArray" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -59,7 +59,7 @@
 
 <p>Statically allocated pointer array. </p>
 <p>A <a class="el" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray</a> is a statically allocated array that only holds pointers to Data objects, but for which the [] operator returns a reference to the associated data. It is implemented as a wrapper for a statically allocated C array of Data* pointers. A <a class="el" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray</a> is not responsible for destroying the associated Data objects.</p>
-<p>The interface of an <a class="el" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray</a> is identical to that of an <a class="el" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray</a>. An <a class="el" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray</a> has both a capacity, which is the physical size of the underlying C array, and a size, which is the number of contiguous elements (from 0 to one less than size) that contain initialized data. The size can only be increased only by the <a class="el" href="classUtil_1_1FPArray.html#a079948f17008f2c6e2c97162c1f45c1e" title="Append data to the end of the array.">append()</a> method, which adds an element to the end of the array. When bounds checking is on, the operator [] checks that the index is less than the size. </p>
+<p>The interface of an <a class="el" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray</a> is identical to that of an <a class="el" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray</a>. An <a class="el" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray</a> has both a capacity, which is the physical size of the underlying C array, and a size, which is the number of contiguous elements (from 0 to one less than size) that contain initialized data. The size can only be increased only by the <a class="el" href="classUtil_1_1FPArray.html#a92c2e3541b37d351d5e94d84ce681c46" title="Append data to the end of the array.">append()</a> method, which adds an element to the end of the array. When bounds checking is on, the operator [] checks that the index is less than the size. </p>
 
 <p>Definition at line <a class="el" href="FPArray_8h_source.html#l00038">38</a> of file <a class="el" href="FPArray_8h_source.html">FPArray.h</a>.</p>
 </div>
@@ -69,44 +69,46 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#ab3ccdfdb1b4c1fc2cf2968febac76ec9">FPArray</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ab3ccdfdb1b4c1fc2cf2968febac76ec9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a982ed582c258d15241a6242f8c99a82a">FPArray</a> (const <a class="el" href="classUtil_1_1FPArray.html">FPArray</a>&lt; Data, Capacity &gt; &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#a982ed582c258d15241a6242f8c99a82a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1FPArray.html">FPArray</a>&lt; Data, Capacity &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#aa1c789533c393172f0148af4f26a5f86">operator=</a> (const <a class="el" href="classUtil_1_1FPArray.html">FPArray</a>&lt; Data, Capacity &gt; &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment, element by element.  <a href="#aa1c789533c393172f0148af4f26a5f86"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#ae6573a7fff53031d55db0bfc031d5919">~FPArray</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ae6573a7fff53031d55db0bfc031d5919"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a079948f17008f2c6e2c97162c1f45c1e">append</a> (Data &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Append data to the end of the array.  <a href="#a079948f17008f2c6e2c97162c1f45c1e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#ac8bb3912a3ce86b15842e79d0b421204">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set logical size to zero and nullify all elements.  <a href="#ac8bb3912a3ce86b15842e79d0b421204"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a104736719cd4e5f21c25705c77064dde">capacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return physical capacity of array.  <a href="#a104736719cd4e5f21c25705c77064dde"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">size</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return logical size of this array.  <a href="#ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#ac82b6761d0a238ce17a72293d40d62e8">begin</a> (<a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt; Data &gt; &amp;iterator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a <a class="el" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#ac82b6761d0a238ce17a72293d40d62e8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a58a40ba80e6cd5e75e898440ed56b802">begin</a> (<a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstPArrayIterator</a>&lt; Data &gt; &amp;iterator) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a <a class="el" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#a58a40ba80e6cd5e75e898440ed56b802"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a8cc8b5696ce4a17c06360e7f41f95096">operator[]</a> (int i)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#a8cc8b5696ce4a17c06360e7f41f95096"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a6ec4b9cb529f024cd28e96290a4ca410">operator[]</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#a6ec4b9cb529f024cd28e96290a4ca410"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a334c513c03ed5250836e7b6b412af698">FPArray</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a334c513c03ed5250836e7b6b412af698"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a3e003076eca37c568a9b95c7992138c0">FPArray</a> (const <a class="el" href="classUtil_1_1FPArray.html">FPArray</a>&lt; Data, Capacity &gt; &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#a3e003076eca37c568a9b95c7992138c0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1FPArray.html">FPArray</a>&lt; Data, Capacity &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#aea1ae935a392c2116eb84c01ff961f51">operator=</a> (const <a class="el" href="classUtil_1_1FPArray.html">FPArray</a>&lt; Data, Capacity &gt; &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment, element by element.  <a href="#aea1ae935a392c2116eb84c01ff961f51"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a3019cd50e9b1db6c97adf2fff89c71b9">~FPArray</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a3019cd50e9b1db6c97adf2fff89c71b9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a92c2e3541b37d351d5e94d84ce681c46">append</a> (Data &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Append data to the end of the array.  <a href="#a92c2e3541b37d351d5e94d84ce681c46"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a266f12e22535485418288b4137664d33">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set logical size to zero and nullify all elements.  <a href="#a266f12e22535485418288b4137664d33"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#aa7b08999fb452ad8d03b14c977313940">capacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return physical capacity of array.  <a href="#aa7b08999fb452ad8d03b14c977313940"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#af6ba14fba8c617c67ada26dc8d07ebe6">size</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return logical size of this array.  <a href="#af6ba14fba8c617c67ada26dc8d07ebe6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#acf11384cb26c7a3c40a98afe0aab7f84">begin</a> (<a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt; Data &gt; &amp;iterator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a <a class="el" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#acf11384cb26c7a3c40a98afe0aab7f84"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a5dfe88079c6b4ff1b775f29bcbd1464e">begin</a> (<a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstPArrayIterator</a>&lt; Data &gt; &amp;iterator) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a <a class="el" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#a5dfe88079c6b4ff1b775f29bcbd1464e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a004d5b290ae68240fe50fb8c1ab24150">operator[]</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#a004d5b290ae68240fe50fb8c1ab24150"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a65ab35266a48c304b09be65edb464070">operator[]</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#a65ab35266a48c304b09be65edb464070"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a9358d3acdeffeb6f94759a236c26c80c">ptrs_</a> [Capacity]</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> of pointers to Data objects.  <a href="#a9358d3acdeffeb6f94759a236c26c80c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80">size_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Logical size of array (number of elements used).  <a href="#a6947fa5d6ba628dd62d59ffbad8b8d80"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a22e7fa9f7fccd292606e2d883b4f6efa">ptrs_</a> [Capacity]</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> of pointers to Data objects.  <a href="#a22e7fa9f7fccd292606e2d883b4f6efa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1FPArray.html#a85026ccfb57ce84ea928148d366286d2">size_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Logical size of array (number of elements used).  <a href="#a85026ccfb57ce84ea928148d366286d2"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ab3ccdfdb1b4c1fc2cf2968febac76ec9"></a><!-- doxytag: member="Util::FPArray::FPArray" ref="ab3ccdfdb1b4c1fc2cf2968febac76ec9" args="()" -->
+<a class="anchor" id="a334c513c03ed5250836e7b6b412af698"></a><!-- doxytag: member="Util::FPArray::FPArray" ref="a334c513c03ed5250836e7b6b412af698" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1FPArray.html">FPArray</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::<a class="el" href="classUtil_1_1FPArray.html">FPArray</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -122,12 +124,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a982ed582c258d15241a6242f8c99a82a"></a><!-- doxytag: member="Util::FPArray::FPArray" ref="a982ed582c258d15241a6242f8c99a82a" args="(const FPArray&lt; Data, Capacity &gt; &amp;other)" -->
+<a class="anchor" id="a3e003076eca37c568a9b95c7992138c0"></a><!-- doxytag: member="Util::FPArray::FPArray" ref="a3e003076eca37c568a9b95c7992138c0" args="(const FPArray&lt; Data, Capacity &gt; &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1FPArray.html">FPArray</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::<a class="el" href="classUtil_1_1FPArray.html">FPArray</a> </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1FPArray.html">FPArray</a>&lt; Data, Capacity &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -148,16 +152,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="FPArray_8h_source.html#l00145">145</a> of file <a class="el" href="FPArray_8h_source.html">FPArray.h</a>.</p>
 
-<p>References <a class="el" href="FPArray_8h_source.html#l00124">FPArray&lt; Data, Capacity &gt;::ptrs_</a>, and <a class="el" href="FPArray_8h_source.html#l00127">FPArray&lt; Data, Capacity &gt;::size_</a>.</p>
+<p>References <a class="el" href="FPArray_8h_source.html#l00124">Util::FPArray&lt; Data, Capacity &gt;::ptrs_</a>, and <a class="el" href="FPArray_8h_source.html#l00127">Util::FPArray&lt; Data, Capacity &gt;::size_</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae6573a7fff53031d55db0bfc031d5919"></a><!-- doxytag: member="Util::FPArray::~FPArray" ref="ae6573a7fff53031d55db0bfc031d5919" args="()" -->
+<a class="anchor" id="a3019cd50e9b1db6c97adf2fff89c71b9"></a><!-- doxytag: member="Util::FPArray::~FPArray" ref="a3019cd50e9b1db6c97adf2fff89c71b9" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1FPArray.html">FPArray</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::~<a class="el" href="classUtil_1_1FPArray.html">FPArray</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -173,12 +179,14 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="aa1c789533c393172f0148af4f26a5f86"></a><!-- doxytag: member="Util::FPArray::operator=" ref="aa1c789533c393172f0148af4f26a5f86" args="(const FPArray&lt; Data, Capacity &gt; &amp;other)" -->
+<a class="anchor" id="aea1ae935a392c2116eb84c01ff961f51"></a><!-- doxytag: member="Util::FPArray::operator=" ref="aea1ae935a392c2116eb84c01ff961f51" args="(const FPArray&lt; Data, Capacity &gt; &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1FPArray.html">FPArray</a>&lt; Data, Capacity &gt; &amp; operator= </td>
+          <td class="memname"><a class="el" href="classUtil_1_1FPArray.html">FPArray</a>&lt; Data, Capacity &gt; &amp; <a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1FPArray.html">FPArray</a>&lt; Data, Capacity &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -198,16 +206,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="FPArray_8h_source.html#l00169">169</a> of file <a class="el" href="FPArray_8h_source.html">FPArray.h</a>.</p>
 
-<p>References <a class="el" href="FPArray_8h_source.html#l00127">FPArray&lt; Data, Capacity &gt;::size_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="FPArray_8h_source.html#l00127">Util::FPArray&lt; Data, Capacity &gt;::size_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a079948f17008f2c6e2c97162c1f45c1e"></a><!-- doxytag: member="Util::FPArray::append" ref="a079948f17008f2c6e2c97162c1f45c1e" args="(Data &amp;data)" -->
+<a class="anchor" id="a92c2e3541b37d351d5e94d84ce681c46"></a><!-- doxytag: member="Util::FPArray::append" ref="a92c2e3541b37d351d5e94d84ce681c46" args="(Data &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void append </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::append </td>
           <td>(</td>
           <td class="paramtype">Data &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -231,12 +241,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac8bb3912a3ce86b15842e79d0b421204"></a><!-- doxytag: member="Util::FPArray::clear" ref="ac8bb3912a3ce86b15842e79d0b421204" args="()" -->
+<a class="anchor" id="a266f12e22535485418288b4137664d33"></a><!-- doxytag: member="Util::FPArray::clear" ref="a266f12e22535485418288b4137664d33" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void clear </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -251,12 +263,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a104736719cd4e5f21c25705c77064dde"></a><!-- doxytag: member="Util::FPArray::capacity" ref="a104736719cd4e5f21c25705c77064dde" args="() const " -->
+<a class="anchor" id="aa7b08999fb452ad8d03b14c977313940"></a><!-- doxytag: member="Util::FPArray::capacity" ref="aa7b08999fb452ad8d03b14c977313940" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int capacity </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::capacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -271,12 +285,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><!-- doxytag: member="Util::FPArray::size" ref="ab8e4e3e2a7bf18888b71bdf9dda0770b" args="() const " -->
+<a class="anchor" id="af6ba14fba8c617c67ada26dc8d07ebe6"></a><!-- doxytag: member="Util::FPArray::size" ref="af6ba14fba8c617c67ada26dc8d07ebe6" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int size </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -291,12 +307,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac82b6761d0a238ce17a72293d40d62e8"></a><!-- doxytag: member="Util::FPArray::begin" ref="ac82b6761d0a238ce17a72293d40d62e8" args="(PArrayIterator&lt; Data &gt; &amp;iterator)" -->
+<a class="anchor" id="acf11384cb26c7a3c40a98afe0aab7f84"></a><!-- doxytag: member="Util::FPArray::begin" ref="acf11384cb26c7a3c40a98afe0aab7f84" args="(PArrayIterator&lt; Data &gt; &amp;iterator)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void begin </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::begin </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>iterator</em></td><td>)</td>
@@ -316,16 +334,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="FPArray_8h_source.html#l00222">222</a> of file <a class="el" href="FPArray_8h_source.html">FPArray.h</a>.</p>
 
-<p>References <a class="el" href="PArrayIterator_8h_source.html#l00055">PArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="PArrayIterator_8h_source.html#l00066">PArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
+<p>References <a class="el" href="PArrayIterator_8h_source.html#l00055">Util::PArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="PArrayIterator_8h_source.html#l00066">Util::PArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a58a40ba80e6cd5e75e898440ed56b802"></a><!-- doxytag: member="Util::FPArray::begin" ref="a58a40ba80e6cd5e75e898440ed56b802" args="(ConstPArrayIterator&lt; Data &gt; &amp;iterator) const " -->
+<a class="anchor" id="a5dfe88079c6b4ff1b775f29bcbd1464e"></a><!-- doxytag: member="Util::FPArray::begin" ref="a5dfe88079c6b4ff1b775f29bcbd1464e" args="(ConstPArrayIterator&lt; Data &gt; &amp;iterator) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void begin </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::begin </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstPArrayIterator</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>iterator</em></td><td>)</td>
@@ -345,16 +365,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="FPArray_8h_source.html#l00233">233</a> of file <a class="el" href="FPArray_8h_source.html">FPArray.h</a>.</p>
 
-<p>References <a class="el" href="ConstPArrayIterator_8h_source.html#l00055">ConstPArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="ConstPArrayIterator_8h_source.html#l00066">ConstPArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
+<p>References <a class="el" href="ConstPArrayIterator_8h_source.html#l00055">Util::ConstPArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="ConstPArrayIterator_8h_source.html#l00066">Util::ConstPArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8cc8b5696ce4a17c06360e7f41f95096"></a><!-- doxytag: member="Util::FPArray::operator[]" ref="a8cc8b5696ce4a17c06360e7f41f95096" args="(int i)" -->
+<a class="anchor" id="a004d5b290ae68240fe50fb8c1ab24150"></a><!-- doxytag: member="Util::FPArray::operator[]" ref="a004d5b290ae68240fe50fb8c1ab24150" args="(int i)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data &amp; operator[] </td>
+          <td class="memname">Data &amp; <a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -377,12 +399,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6ec4b9cb529f024cd28e96290a4ca410"></a><!-- doxytag: member="Util::FPArray::operator[]" ref="a6ec4b9cb529f024cd28e96290a4ca410" args="(int i) const " -->
+<a class="anchor" id="a65ab35266a48c304b09be65edb464070"></a><!-- doxytag: member="Util::FPArray::operator[]" ref="a65ab35266a48c304b09be65edb464070" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Data &amp; operator[] </td>
+          <td class="memname">const Data &amp; <a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -406,12 +430,14 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a9358d3acdeffeb6f94759a236c26c80c"></a><!-- doxytag: member="Util::FPArray::ptrs_" ref="a9358d3acdeffeb6f94759a236c26c80c" args="[Capacity]" -->
+<a class="anchor" id="a22e7fa9f7fccd292606e2d883b4f6efa"></a><!-- doxytag: member="Util::FPArray::ptrs_" ref="a22e7fa9f7fccd292606e2d883b4f6efa" args="[Capacity]" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data, int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data* <a class="el" href="classUtil_1_1FPArray.html#a9358d3acdeffeb6f94759a236c26c80c">ptrs_</a>[Capacity]<code> [protected]</code></td>
+          <td class="memname">Data* <a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::<a class="el" href="classUtil_1_1FPArray.html#a22e7fa9f7fccd292606e2d883b4f6efa">ptrs_</a>[Capacity]<code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -421,16 +447,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="FPArray_8h_source.html#l00124">124</a> of file <a class="el" href="FPArray_8h_source.html">FPArray.h</a>.</p>
 
-<p>Referenced by <a class="el" href="FPArray_8h_source.html#l00145">FPArray&lt; Data, Capacity &gt;::FPArray()</a>.</p>
+<p>Referenced by <a class="el" href="FPArray_8h_source.html#l00145">Util::FPArray&lt; Data, Capacity &gt;::FPArray()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6947fa5d6ba628dd62d59ffbad8b8d80"></a><!-- doxytag: member="Util::FPArray::size_" ref="a6947fa5d6ba628dd62d59ffbad8b8d80" args="" -->
+<a class="anchor" id="a85026ccfb57ce84ea928148d366286d2"></a><!-- doxytag: member="Util::FPArray::size_" ref="a85026ccfb57ce84ea928148d366286d2" args="" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data, int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classUtil_1_1FPArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80">size_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classUtil_1_1FPArray.html">Util::FPArray</a>&lt; Data, Capacity &gt;::<a class="el" href="classUtil_1_1FPArray.html#a85026ccfb57ce84ea928148d366286d2">size_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -440,7 +468,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="FPArray_8h_source.html#l00127">127</a> of file <a class="el" href="FPArray_8h_source.html">FPArray.h</a>.</p>
 
-<p>Referenced by <a class="el" href="FPArray_8h_source.html#l00145">FPArray&lt; Data, Capacity &gt;::FPArray()</a>, and <a class="el" href="FPArray_8h_source.html#l00169">FPArray&lt; Data, Capacity &gt;::operator=()</a>.</p>
+<p>Referenced by <a class="el" href="FPArray_8h_source.html#l00145">Util::FPArray&lt; Data, Capacity &gt;::FPArray()</a>, and <a class="el" href="FPArray_8h_source.html#l00169">Util::FPArray&lt; Data, Capacity &gt;::operator=()</a>.</p>
 
 </div>
 </div>
@@ -448,7 +476,7 @@ Protected Attributes</h2></td></tr>
 <li><a class="el" href="FPArray_8h_source.html">FPArray.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

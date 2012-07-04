@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: ReplicaMove Class Reference</title>
+<title>Simpatico: McMd::ReplicaMove Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>ReplicaMove Class Reference<div class="ingroups"><a class="el" href="group__McMd__Perturb__Module.html">Free Energy Perturbation</a></div></h1>  </div>
+<h1>McMd::ReplicaMove Class Reference<div class="ingroups"><a class="el" href="group__McMd__Perturb__Module.html">Free Energy Perturbation</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::ReplicaMove" --><!-- doxytag: inherits="Util::ParamComposite,Notifier&lt; sendRecvPair &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -63,14 +63,14 @@
 </div>
 <p><code>#include &lt;<a class="el" href="ReplicaMove_8h_source.html">ReplicaMove.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for ReplicaMove:</div>
+Inheritance diagram for McMd::ReplicaMove:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1ReplicaMove.png" usemap="#ReplicaMove_map" alt=""/>
-  <map id="ReplicaMove_map" name="ReplicaMove_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,156,80"/>
-<area href="classUtil_1_1Notifier.html" alt="Notifier&lt; sendRecvPair &gt;" shape="rect" coords="166,56,322,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,156,24"/>
+  <img src="classMcMd_1_1ReplicaMove.png" usemap="#McMd::ReplicaMove_map" alt=""/>
+  <map id="McMd::ReplicaMove_map" name="McMd::ReplicaMove_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,179,80"/>
+<area href="classUtil_1_1Notifier.html" alt="Util::Notifier&lt; sendRecvPair &gt;" shape="rect" coords="189,56,368,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,179,24"/>
 </map>
  </div></div>
 
@@ -78,36 +78,36 @@ Inheritance diagram for ReplicaMove:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#a369d52010f498b478c132bf308bd8294">ReplicaMove</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a369d52010f498b478c132bf308bd8294"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#a165bb284bc8b5322feff8eeafc80523a">~ReplicaMove</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a165bb284bc8b5322feff8eeafc80523a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635">move</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempt, and accept or reject a replica exchange move.  <a href="#af3ca0f83b79b4d5acbc3b0fc849d3635"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#ac0e39d50c995c66042028f1bac5051f1">interval</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get interval (number of steps between successives attempts).  <a href="#ac0e39d50c995c66042028f1bac5051f1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#a56d6fc996d1e17d408288f86b6d9b4e7">isAtInterval</a> (long counter) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true iff counter is a multiple of the interval.  <a href="#a56d6fc996d1e17d408288f86b6d9b4e7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#a64c8b2083390c7f47cf9d7404a567981">notifyObservers</a> (<a class="el" href="classUtil_1_1Pair.html">sendRecvPair</a> partners)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Notify observers of a successful replica exchange.  <a href="#a64c8b2083390c7f47cf9d7404a567981"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#a24f75c5f0bd66451876442d3f82230b9">nAttempt</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of swap attempts.  <a href="#a24f75c5f0bd66451876442d3f82230b9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#a2027e773ec55a405c39f0dcb407969a1">nAccept</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of accepted swaps.  <a href="#a2027e773ec55a405c39f0dcb407969a1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#af01ffed71cc8066d70b6af69132eddfa">ReplicaMove</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#af01ffed71cc8066d70b6af69132eddfa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#ac7b12d5aeb1fcf6d5ded324a816d154d">~ReplicaMove</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ac7b12d5aeb1fcf6d5ded324a816d154d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#abe246fa0378db9226661134adda3b30e">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters.  <a href="#abe246fa0378db9226661134adda3b30e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#ad968452b731c73ed0176b12b0bb34022">move</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempt, and accept or reject a replica exchange move.  <a href="#ad968452b731c73ed0176b12b0bb34022"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#a95a83e51b562f9c9225cc637bff54378">interval</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get interval (number of steps between successives attempts).  <a href="#a95a83e51b562f9c9225cc637bff54378"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#af76f5d68af4dc9adbacc59f59ef199bf">isAtInterval</a> (long counter) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true iff counter is a multiple of the interval.  <a href="#af76f5d68af4dc9adbacc59f59ef199bf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#a293a48440241e25a6e29e81c70aae5c8">notifyObservers</a> (<a class="el" href="classUtil_1_1Pair.html">sendRecvPair</a> partners)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Notify observers of a successful replica exchange.  <a href="#a293a48440241e25a6e29e81c70aae5c8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#a678458d10e38a31692e76e204257d817">nAttempt</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of swap attempts.  <a href="#a678458d10e38a31692e76e204257d817"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#afb4102cda1be4b835869d050d9c1e218">nAccept</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of accepted swaps.  <a href="#afb4102cda1be4b835869d050d9c1e218"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#a45d908d72a406e9417882370868e9878">system</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the associated system by reference.  <a href="#a45d908d72a406e9417882370868e9878"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ReplicaMove.html#aa3829fa46df183960b3bd2b1f580cd0d">system</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the associated system by reference.  <a href="#aa3829fa46df183960b3bd2b1f580cd0d"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a369d52010f498b478c132bf308bd8294"></a><!-- doxytag: member="McMd::ReplicaMove::ReplicaMove" ref="a369d52010f498b478c132bf308bd8294" args="(System &amp;system)" -->
+<a class="anchor" id="af01ffed71cc8066d70b6af69132eddfa"></a><!-- doxytag: member="McMd::ReplicaMove::ReplicaMove" ref="af01ffed71cc8066d70b6af69132eddfa" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1ReplicaMove.html">ReplicaMove</a> </td>
+          <td class="memname">McMd::ReplicaMove::ReplicaMove </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -125,12 +125,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a165bb284bc8b5322feff8eeafc80523a"></a><!-- doxytag: member="McMd::ReplicaMove::~ReplicaMove" ref="a165bb284bc8b5322feff8eeafc80523a" args="()" -->
+<a class="anchor" id="ac7b12d5aeb1fcf6d5ded324a816d154d"></a><!-- doxytag: member="McMd::ReplicaMove::~ReplicaMove" ref="ac7b12d5aeb1fcf6d5ded324a816d154d" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1ReplicaMove.html">ReplicaMove</a> </td>
+          <td class="memname">McMd::ReplicaMove::~ReplicaMove </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -146,12 +146,12 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::ReplicaMove::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="abe246fa0378db9226661134adda3b30e"></a><!-- doxytag: member="McMd::ReplicaMove::readParam" ref="abe246fa0378db9226661134adda3b30e" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::ReplicaMove::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -171,7 +171,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="ReplicaMove_8cpp_source.html#l00095">95</a> of file <a class="el" href="ReplicaMove_8cpp_source.html">ReplicaMove.cpp</a>.</p>
 
@@ -179,12 +179,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af3ca0f83b79b4d5acbc3b0fc849d3635"></a><!-- doxytag: member="McMd::ReplicaMove::move" ref="af3ca0f83b79b4d5acbc3b0fc849d3635" args="()" -->
+<a class="anchor" id="ad968452b731c73ed0176b12b0bb34022"></a><!-- doxytag: member="McMd::ReplicaMove::move" ref="ad968452b731c73ed0176b12b0bb34022" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool move </td>
+          <td class="memname">bool McMd::ReplicaMove::move </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -197,18 +197,18 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ReplicaMove_8cpp_source.html#l00118">118</a> of file <a class="el" href="ReplicaMove_8cpp_source.html">ReplicaMove.cpp</a>.</p>
 
-<p>References <a class="el" href="MemoryIArchive_8cpp_source.html#l00045">MemoryIArchive::allocate()</a>, <a class="el" href="MemoryOArchive_8cpp_source.html#l00041">MemoryOArchive::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00226">DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="MemoryCounter_8h_source.html#l00130">Util::memorySize()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Notifier_8h_source.html#l00098">Notifier&lt; Event &gt;::notifyObservers()</a>, <a class="el" href="MemoryIArchive_8cpp_source.html#l00131">MemoryIArchive::recv()</a>, and <a class="el" href="MemoryOArchive_8cpp_source.html#l00070">MemoryOArchive::send()</a>.</p>
+<p>References <a class="el" href="MemoryIArchive_8cpp_source.html#l00045">Util::MemoryIArchive::allocate()</a>, <a class="el" href="MemoryOArchive_8cpp_source.html#l00041">Util::MemoryOArchive::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00226">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="MemoryCounter_8h_source.html#l00130">Util::memorySize()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">Util::ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Notifier_8h_source.html#l00098">Util::Notifier&lt; Event &gt;::notifyObservers()</a>, <a class="el" href="MemoryIArchive_8cpp_source.html#l00131">Util::MemoryIArchive::recv()</a>, and <a class="el" href="MemoryOArchive_8cpp_source.html#l00070">Util::MemoryOArchive::send()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00430">McSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00430">McMd::McSimulation::simulate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac0e39d50c995c66042028f1bac5051f1"></a><!-- doxytag: member="McMd::ReplicaMove::interval" ref="ac0e39d50c995c66042028f1bac5051f1" args="() const " -->
+<a class="anchor" id="a95a83e51b562f9c9225cc637bff54378"></a><!-- doxytag: member="McMd::ReplicaMove::interval" ref="a95a83e51b562f9c9225cc637bff54378" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long interval </td>
+          <td class="memname">long McMd::ReplicaMove::interval </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -223,12 +223,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a56d6fc996d1e17d408288f86b6d9b4e7"></a><!-- doxytag: member="McMd::ReplicaMove::isAtInterval" ref="a56d6fc996d1e17d408288f86b6d9b4e7" args="(long counter) const " -->
+<a class="anchor" id="af76f5d68af4dc9adbacc59f59ef199bf"></a><!-- doxytag: member="McMd::ReplicaMove::isAtInterval" ref="af76f5d68af4dc9adbacc59f59ef199bf" args="(long counter) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isAtInterval </td>
+          <td class="memname">bool McMd::ReplicaMove::isAtInterval </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>counter</em></td><td>)</td>
@@ -250,12 +250,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a64c8b2083390c7f47cf9d7404a567981"></a><!-- doxytag: member="McMd::ReplicaMove::notifyObservers" ref="a64c8b2083390c7f47cf9d7404a567981" args="(sendRecvPair partners)" -->
+<a class="anchor" id="a293a48440241e25a6e29e81c70aae5c8"></a><!-- doxytag: member="McMd::ReplicaMove::notifyObservers" ref="a293a48440241e25a6e29e81c70aae5c8" args="(sendRecvPair partners)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void notifyObservers </td>
+          <td class="memname">void McMd::ReplicaMove::notifyObservers </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Pair.html">sendRecvPair</a>&#160;</td>
           <td class="paramname"><em>partners</em></td><td>)</td>
@@ -275,12 +275,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a24f75c5f0bd66451876442d3f82230b9"></a><!-- doxytag: member="McMd::ReplicaMove::nAttempt" ref="a24f75c5f0bd66451876442d3f82230b9" args="()" -->
+<a class="anchor" id="a678458d10e38a31692e76e204257d817"></a><!-- doxytag: member="McMd::ReplicaMove::nAttempt" ref="a678458d10e38a31692e76e204257d817" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long nAttempt </td>
+          <td class="memname">long McMd::ReplicaMove::nAttempt </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -293,16 +293,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ReplicaMove_8h_source.html#l00193">193</a> of file <a class="el" href="ReplicaMove_8h_source.html">ReplicaMove.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00430">McSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00430">McMd::McSimulation::simulate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2027e773ec55a405c39f0dcb407969a1"></a><!-- doxytag: member="McMd::ReplicaMove::nAccept" ref="a2027e773ec55a405c39f0dcb407969a1" args="()" -->
+<a class="anchor" id="afb4102cda1be4b835869d050d9c1e218"></a><!-- doxytag: member="McMd::ReplicaMove::nAccept" ref="afb4102cda1be4b835869d050d9c1e218" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long nAccept </td>
+          <td class="memname">long McMd::ReplicaMove::nAccept </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -315,16 +315,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ReplicaMove_8h_source.html#l00199">199</a> of file <a class="el" href="ReplicaMove_8h_source.html">ReplicaMove.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00430">McSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00430">McMd::McSimulation::simulate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a45d908d72a406e9417882370868e9878"></a><!-- doxytag: member="McMd::ReplicaMove::system" ref="a45d908d72a406e9417882370868e9878" args="()" -->
+<a class="anchor" id="aa3829fa46df183960b3bd2b1f580cd0d"></a><!-- doxytag: member="McMd::ReplicaMove::system" ref="aa3829fa46df183960b3bd2b1f580cd0d" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1System.html">System</a> &amp; system </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1System.html">System</a> &amp; McMd::ReplicaMove::system </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -344,7 +344,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="ReplicaMove_8cpp_source.html">ReplicaMove.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:56 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:28 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

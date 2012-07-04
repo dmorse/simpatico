@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -69,13 +69,13 @@
 <a name="l00018"></a>00018    <span class="comment">/*</span>
 <a name="l00019"></a>00019 <span class="comment">   * Constructor.</span>
 <a name="l00020"></a>00020 <span class="comment">   */</span>
-<a name="l00021"></a>00021    <a class="code" href="classMcMd_1_1TetherMaster.html#a08e71db822c687d5c743a2ac19b04ab1" title="Constructor.">TetherMaster::TetherMaster</a>()
-<a name="l00022"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a08e71db822c687d5c743a2ac19b04ab1">00022</a>     : tetherCapacity_(0),
+<a name="l00021"></a>00021    <a class="code" href="classMcMd_1_1TetherMaster.html#a014ae6a63e40f536ee8d813d07b37ef1" title="Constructor.">TetherMaster::TetherMaster</a>()
+<a name="l00022"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a014ae6a63e40f536ee8d813d07b37ef1">00022</a>     : tetherCapacity_(0),
 <a name="l00023"></a>00023       atomCapacity_(0)
 <a name="l00024"></a>00024    {}
 <a name="l00025"></a>00025 
-<a name="l00029"></a>00029    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#ab5421d3c9175985c9acbf723e5392075" title="Read tetherCapacity and allocate.">TetherMaster::readParam</a>(std::istream&amp; in)
-<a name="l00030"></a><a class="code" href="classMcMd_1_1TetherMaster.html#ab5421d3c9175985c9acbf723e5392075">00030</a>    {
+<a name="l00029"></a>00029    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#aeaf0700bb5766807a00171b2c5a36944" title="Read tetherCapacity and allocate.">TetherMaster::readParam</a>(std::istream&amp; in)
+<a name="l00030"></a><a class="code" href="classMcMd_1_1TetherMaster.html#aeaf0700bb5766807a00171b2c5a36944">00030</a>    {
 <a name="l00031"></a>00031       readBegin(in, <span class="stringliteral">&quot;TetherMaster&quot;</span>);
 <a name="l00032"></a>00032       read&lt;int&gt;(in, <span class="stringliteral">&quot;tetherCapacity&quot;</span>, tetherCapacity_); 
 <a name="l00033"></a>00033       read&lt;int&gt;(in, <span class="stringliteral">&quot;atomCapacity&quot;</span>, atomCapacity_); 
@@ -84,15 +84,15 @@
 <a name="l00036"></a>00036       allocate();
 <a name="l00037"></a>00037    }
 <a name="l00038"></a>00038 
-<a name="l00042"></a>00042    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#aa1c18e4387e9e11f158474cf35bef044" title="Add a tether to a specific Atom.">TetherMaster::addTether</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; anchor)
-<a name="l00043"></a><a class="code" href="classMcMd_1_1TetherMaster.html#aa1c18e4387e9e11f158474cf35bef044">00043</a>    {
+<a name="l00042"></a>00042    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a2bc0d459fa1d55dfa94f2153c09e87e7" title="Add a tether to a specific Atom.">TetherMaster::addTether</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; anchor)
+<a name="l00043"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a2bc0d459fa1d55dfa94f2153c09e87e7">00043</a>    {
 <a name="l00044"></a>00044       <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>* tetherPtr;
-<a name="l00045"></a>00045       <span class="keywordtype">int</span>     atomId = atom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00045"></a>00045       <span class="keywordtype">int</span>     atomId = atom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00046"></a>00046 
 <a name="l00047"></a>00047       <span class="comment">// Check preconditions</span>
 <a name="l00048"></a>00048       <span class="keywordflow">if</span> (atomId &lt; 0 || atomId &gt;= atomCapacity_) {
-<a name="l00049"></a>00049          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;AtomId       = &quot;</span> &lt;&lt; atomId &lt;&lt; std::endl;
-<a name="l00050"></a>00050          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
+<a name="l00049"></a>00049          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;AtomId       = &quot;</span> &lt;&lt; atomId &lt;&lt; std::endl;
+<a name="l00050"></a>00050          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
 <a name="l00051"></a>00051          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atom id&quot;</span>);
 <a name="l00052"></a>00052       }
 <a name="l00053"></a>00053       <span class="keywordflow">if</span> (tetherPtrs_[atomId]) {
@@ -110,14 +110,14 @@
 <a name="l00065"></a>00065 
 <a name="l00066"></a>00066    }
 <a name="l00067"></a>00067 
-<a name="l00071"></a>00071    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a13ce814dd0e687a0848702f232d1a619" title="Transfer a tether from one Atom to another.">TetherMaster::transferTether</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; oldAtom, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; newAtom)
-<a name="l00072"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a13ce814dd0e687a0848702f232d1a619">00072</a>    {
+<a name="l00071"></a>00071    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#ab9a34ff3fee1275c081ef5a472c8d15e" title="Transfer a tether from one Atom to another.">TetherMaster::transferTether</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; oldAtom, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; newAtom)
+<a name="l00072"></a><a class="code" href="classMcMd_1_1TetherMaster.html#ab9a34ff3fee1275c081ef5a472c8d15e">00072</a>    {
 <a name="l00073"></a>00073       <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>* tetherPtr;
 <a name="l00074"></a>00074       <span class="keywordtype">int</span>     oldId, newId;
 <a name="l00075"></a>00075 
 <a name="l00076"></a>00076       <span class="comment">// Check preconditions</span>
-<a name="l00077"></a>00077       oldId = oldAtom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>(); 
-<a name="l00078"></a>00078       newId = newAtom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>(); 
+<a name="l00077"></a>00077       oldId = oldAtom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>(); 
+<a name="l00078"></a>00078       newId = newAtom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>(); 
 <a name="l00079"></a>00079       <span class="keywordflow">if</span> (oldId &lt; 0 || oldId &gt;= atomCapacity_) {
 <a name="l00080"></a>00080          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid old atom id&quot;</span>);
 <a name="l00081"></a>00081       }
@@ -143,20 +143,20 @@
 <a name="l00101"></a>00101    <span class="comment">/*</span>
 <a name="l00102"></a>00102 <span class="comment">   * Transfer a tether from one Atom to another.</span>
 <a name="l00103"></a>00103 <span class="comment">   */</span> 
-<a name="l00104"></a>00104    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a13ce814dd0e687a0848702f232d1a619" title="Transfer a tether from one Atom to another.">TetherMaster::transferTether</a>(<a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; tether, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; newAtom)
-<a name="l00105"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a6f8ff41e92fc369fcb53ada28b2a3a88">00105</a>    {
+<a name="l00104"></a>00104    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#ab9a34ff3fee1275c081ef5a472c8d15e" title="Transfer a tether from one Atom to another.">TetherMaster::transferTether</a>(<a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; tether, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; newAtom)
+<a name="l00105"></a><a class="code" href="classMcMd_1_1TetherMaster.html#ac435f95c9330e1b2f6d0aa5fb49b0a7e">00105</a>    {
 <a name="l00106"></a>00106       <span class="keywordtype">int</span>     oldId, newId;
 <a name="l00107"></a>00107 
 <a name="l00108"></a>00108       <span class="comment">// Check preconditions</span>
-<a name="l00109"></a>00109       <span class="keywordflow">if</span> (!tether.<a class="code" href="classMcMd_1_1Tether.html#aa3d0cf1d61b62b37020e034c5de0c479" title="Is this Tether associated with Atom?">hasAtom</a>()) {
+<a name="l00109"></a>00109       <span class="keywordflow">if</span> (!tether.<a class="code" href="classMcMd_1_1Tether.html#ad9d4074d9d13f1677cce0a1c3df7eef1" title="Is this Tether associated with Atom?">hasAtom</a>()) {
 <a name="l00110"></a>00110          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to transfer inactive tether&quot;</span>);
 <a name="l00111"></a>00111       }
-<a name="l00112"></a>00112       oldId = tether.<a class="code" href="classMcMd_1_1Tether.html#ab77355ce6db0825e593a8d1736eb4645" title="Get the tethered Atom by reference.">atom</a>().<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>(); 
+<a name="l00112"></a>00112       oldId = tether.<a class="code" href="classMcMd_1_1Tether.html#a60100964eb3c31a6c02208f6120bdb21" title="Get the tethered Atom by reference.">atom</a>().<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>(); 
 <a name="l00113"></a>00113       <span class="keywordflow">if</span> (oldId &lt; 0 || oldId &gt;= atomCapacity_) {
 <a name="l00114"></a>00114          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid old atom id&quot;</span>);
 <a name="l00115"></a>00115       }
 <a name="l00116"></a>00116 
-<a name="l00117"></a>00117       newId = newAtom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>(); 
+<a name="l00117"></a>00117       newId = newAtom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>(); 
 <a name="l00118"></a>00118       <span class="keywordflow">if</span> (newId &lt; 0 || newId &gt;= atomCapacity_) {
 <a name="l00119"></a>00119          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid new atom id&quot;</span>);
 <a name="l00120"></a>00120       }
@@ -174,12 +174,12 @@
 <a name="l00132"></a>00132    <span class="comment">/*</span>
 <a name="l00133"></a>00133 <span class="comment">   * Associate two Tethered atoms as partners.</span>
 <a name="l00134"></a>00134 <span class="comment">   */</span> 
-<a name="l00135"></a>00135    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a92d0b6d261d71fe0313261254f85842c" title="Associate the Tethers associated with two atoms as partners.">TetherMaster::pairTethers</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom1, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom2)
-<a name="l00136"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a92d0b6d261d71fe0313261254f85842c">00136</a>    {
+<a name="l00135"></a>00135    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a8740abf4d2994a8b87634993db07afff" title="Associate the Tethers associated with two atoms as partners.">TetherMaster::pairTethers</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom1, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom2)
+<a name="l00136"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a8740abf4d2994a8b87634993db07afff">00136</a>    {
 <a name="l00137"></a>00137 
 <a name="l00138"></a>00138       <span class="comment">// Retrieve and validate atom Ids</span>
-<a name="l00139"></a>00139       <span class="keywordtype">int</span> id1 = atom1.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>(); 
-<a name="l00140"></a>00140       <span class="keywordtype">int</span> id2 = atom2.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>(); 
+<a name="l00139"></a>00139       <span class="keywordtype">int</span> id1 = atom1.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>(); 
+<a name="l00140"></a>00140       <span class="keywordtype">int</span> id2 = atom2.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>(); 
 <a name="l00141"></a>00141       <span class="keywordflow">if</span> (id1 &lt; 0 || id1 &gt;= atomCapacity_) {
 <a name="l00142"></a>00142          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atom id for atom1&quot;</span>);
 <a name="l00143"></a>00143       }
@@ -206,20 +206,20 @@
 <a name="l00164"></a>00164    <span class="comment">/*</span>
 <a name="l00165"></a>00165 <span class="comment">   * Associate two Tethers as partners.</span>
 <a name="l00166"></a>00166 <span class="comment">   */</span> 
-<a name="l00167"></a>00167    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a92d0b6d261d71fe0313261254f85842c" title="Associate the Tethers associated with two atoms as partners.">TetherMaster::pairTethers</a>(<a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; tether1, <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; tether2)
-<a name="l00168"></a><a class="code" href="classMcMd_1_1TetherMaster.html#ad50165f81de1382bcf6e621b1497e6d8">00168</a>    {
+<a name="l00167"></a>00167    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a8740abf4d2994a8b87634993db07afff" title="Associate the Tethers associated with two atoms as partners.">TetherMaster::pairTethers</a>(<a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; tether1, <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; tether2)
+<a name="l00168"></a><a class="code" href="classMcMd_1_1TetherMaster.html#ab89a3948a4ba7386272d1efcf3ac3bfa">00168</a>    {
 <a name="l00169"></a>00169 
 <a name="l00170"></a>00170       <span class="comment">// Check preconditions</span>
-<a name="l00171"></a>00171       <span class="keywordflow">if</span> (!tether1.<a class="code" href="classMcMd_1_1Tether.html#aa3d0cf1d61b62b37020e034c5de0c479" title="Is this Tether associated with Atom?">hasAtom</a>()) {
+<a name="l00171"></a>00171       <span class="keywordflow">if</span> (!tether1.<a class="code" href="classMcMd_1_1Tether.html#ad9d4074d9d13f1677cce0a1c3df7eef1" title="Is this Tether associated with Atom?">hasAtom</a>()) {
 <a name="l00172"></a>00172          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to pair inactive tether&quot;</span>);
 <a name="l00173"></a>00173       }
-<a name="l00174"></a>00174       <span class="keywordflow">if</span> (!tether2.<a class="code" href="classMcMd_1_1Tether.html#aa3d0cf1d61b62b37020e034c5de0c479" title="Is this Tether associated with Atom?">hasAtom</a>()) {
+<a name="l00174"></a>00174       <span class="keywordflow">if</span> (!tether2.<a class="code" href="classMcMd_1_1Tether.html#ad9d4074d9d13f1677cce0a1c3df7eef1" title="Is this Tether associated with Atom?">hasAtom</a>()) {
 <a name="l00175"></a>00175          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to pair inactive tether&quot;</span>);
 <a name="l00176"></a>00176       }
-<a name="l00177"></a>00177       <span class="keywordflow">if</span> (tether1.<a class="code" href="classMcMd_1_1Tether.html#a57859d02a9629a442af1574a7c253baa" title="Is Tether associated with a partner Tether?">hasPartner</a>()) {
+<a name="l00177"></a>00177       <span class="keywordflow">if</span> (tether1.<a class="code" href="classMcMd_1_1Tether.html#a9bf44353aab9269c8ab05ee6b5216681" title="Is Tether associated with a partner Tether?">hasPartner</a>()) {
 <a name="l00178"></a>00178          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to pair Tether that has a partner&quot;</span>);
 <a name="l00179"></a>00179       }
-<a name="l00180"></a>00180       <span class="keywordflow">if</span> (tether2.<a class="code" href="classMcMd_1_1Tether.html#a57859d02a9629a442af1574a7c253baa" title="Is Tether associated with a partner Tether?">hasPartner</a>()) {
+<a name="l00180"></a>00180       <span class="keywordflow">if</span> (tether2.<a class="code" href="classMcMd_1_1Tether.html#a9bf44353aab9269c8ab05ee6b5216681" title="Is Tether associated with a partner Tether?">hasPartner</a>()) {
 <a name="l00181"></a>00181          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to pair Tether that has a partner&quot;</span>);
 <a name="l00182"></a>00182       }
 <a name="l00183"></a>00183 
@@ -230,14 +230,14 @@
 <a name="l00188"></a>00188    }
 <a name="l00189"></a>00189 
 <a name="l00190"></a>00190 
-<a name="l00194"></a>00194    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a3bc61c797ed9bf65f58de6358e2653dd" title="Remove the Tether associated with an Atom.">TetherMaster::removeTether</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)
-<a name="l00195"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a3bc61c797ed9bf65f58de6358e2653dd">00195</a>    {
+<a name="l00194"></a>00194    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a754da2fece155883519e1353402c13ea" title="Remove the Tether associated with an Atom.">TetherMaster::removeTether</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)
+<a name="l00195"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a754da2fece155883519e1353402c13ea">00195</a>    {
 <a name="l00196"></a>00196 
 <a name="l00197"></a>00197       <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>* tetherPtr;
 <a name="l00198"></a>00198       <span class="keywordtype">int</span>     id;
 <a name="l00199"></a>00199 
 <a name="l00200"></a>00200       <span class="comment">// Check preconditions</span>
-<a name="l00201"></a>00201       <span class="keywordtype">id</span> = atom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00201"></a>00201       <span class="keywordtype">id</span> = atom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00202"></a>00202       <span class="keywordflow">if</span> (id &lt; 0 || id &gt;= atomCapacity_) {
 <a name="l00203"></a>00203          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atom id&quot;</span>);
 <a name="l00204"></a>00204       }
@@ -251,14 +251,14 @@
 <a name="l00212"></a>00212 
 <a name="l00213"></a>00213    }
 <a name="l00214"></a>00214 
-<a name="l00218"></a>00218    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a3bc61c797ed9bf65f58de6358e2653dd" title="Remove the Tether associated with an Atom.">TetherMaster::removeTether</a>(<a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; tether)
-<a name="l00219"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a82f4dce04f2c186f98ed73196ecf8fa0">00219</a>    {
+<a name="l00218"></a>00218    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a754da2fece155883519e1353402c13ea" title="Remove the Tether associated with an Atom.">TetherMaster::removeTether</a>(<a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; tether)
+<a name="l00219"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a7e1d2adacad4ff94e15550c91d1a56b6">00219</a>    {
 <a name="l00220"></a>00220 
 <a name="l00221"></a>00221       <span class="comment">// Check preconditions</span>
-<a name="l00222"></a>00222       <span class="keywordflow">if</span> (!tether.<a class="code" href="classMcMd_1_1Tether.html#aa3d0cf1d61b62b37020e034c5de0c479" title="Is this Tether associated with Atom?">hasAtom</a>()) {
+<a name="l00222"></a>00222       <span class="keywordflow">if</span> (!tether.<a class="code" href="classMcMd_1_1Tether.html#ad9d4074d9d13f1677cce0a1c3df7eef1" title="Is this Tether associated with Atom?">hasAtom</a>()) {
 <a name="l00223"></a>00223          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to destroy inactive tether&quot;</span>);
 <a name="l00224"></a>00224       }
-<a name="l00225"></a>00225       <span class="keywordtype">int</span> <span class="keywordtype">id</span> = tether.<a class="code" href="classMcMd_1_1Tether.html#ab77355ce6db0825e593a8d1736eb4645" title="Get the tethered Atom by reference.">atom</a>().<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00225"></a>00225       <span class="keywordtype">int</span> <span class="keywordtype">id</span> = tether.<a class="code" href="classMcMd_1_1Tether.html#a60100964eb3c31a6c02208f6120bdb21" title="Get the tethered Atom by reference.">atom</a>().<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00226"></a>00226       <span class="keywordflow">if</span> (id &lt; 0 || id &gt;= atomCapacity_) {
 <a name="l00227"></a>00227          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atom id&quot;</span>);
 <a name="l00228"></a>00228       }
@@ -268,7 +268,7 @@
 <a name="l00232"></a>00232 
 <a name="l00233"></a>00233    }
 <a name="l00234"></a>00234 
-<a name="l00238"></a>00238    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a3bc61c797ed9bf65f58de6358e2653dd" title="Remove the Tether associated with an Atom.">TetherMaster::removeTether</a>(<a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>* tetherPtr, <span class="keywordtype">int</span> <span class="keywordtype">id</span>)
+<a name="l00238"></a>00238    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a754da2fece155883519e1353402c13ea" title="Remove the Tether associated with an Atom.">TetherMaster::removeTether</a>(<a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>* tetherPtr, <span class="keywordtype">int</span> <span class="keywordtype">id</span>)
 <a name="l00239"></a>00239    {
 <a name="l00240"></a>00240 
 <a name="l00241"></a>00241       <span class="comment">// Deactivate this tether</span>
@@ -276,16 +276,16 @@
 <a name="l00243"></a>00243       tetherPtr-&gt;unsetAtom();
 <a name="l00244"></a>00244 
 <a name="l00245"></a>00245       <span class="comment">// Deactivate partner, if any.</span>
-<a name="l00246"></a>00246       <span class="keywordflow">if</span> (tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a57859d02a9629a442af1574a7c253baa" title="Is Tether associated with a partner Tether?">hasPartner</a>()) {
+<a name="l00246"></a>00246       <span class="keywordflow">if</span> (tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a9bf44353aab9269c8ab05ee6b5216681" title="Is Tether associated with a partner Tether?">hasPartner</a>()) {
 <a name="l00247"></a>00247 
-<a name="l00248"></a>00248          <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>* partnerPtr = &amp;tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a2df28f0c855f9c9f2556ea1c7d9921b7" title="Get the partner (if any) by reference.">partner</a>();
+<a name="l00248"></a>00248          <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>* partnerPtr = &amp;tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a0e89b10ff34102103cc6e8f6df23a256" title="Get the partner (if any) by reference.">partner</a>();
 <a name="l00249"></a>00249 
 <a name="l00250"></a>00250     <span class="comment">// Break association</span>
 <a name="l00251"></a>00251     tetherPtr-&gt;unsetPartner();
 <a name="l00252"></a>00252          partnerPtr-&gt;unsetPartner();
 <a name="l00253"></a>00253 
 <a name="l00254"></a>00254     <span class="comment">// Deactivate partner</span>
-<a name="l00255"></a>00255          <span class="keywordtype">id</span> = partnerPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#ab77355ce6db0825e593a8d1736eb4645" title="Get the tethered Atom by reference.">atom</a>().<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>(); 
+<a name="l00255"></a>00255          <span class="keywordtype">id</span> = partnerPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a60100964eb3c31a6c02208f6120bdb21" title="Get the tethered Atom by reference.">atom</a>().<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>(); 
 <a name="l00256"></a>00256          <span class="keywordflow">if</span> (id &lt; 0 || id &gt;= atomCapacity_) {
 <a name="l00257"></a>00257             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atom id&quot;</span>);
 <a name="l00258"></a>00258          }
@@ -331,8 +331,8 @@
 <a name="l00298"></a>00298    <span class="comment">/*</span>
 <a name="l00299"></a>00299 <span class="comment">   * Return true if this TetherMaster is valid, or throw an Exception.</span>
 <a name="l00300"></a>00300 <span class="comment">   */</span>
-<a name="l00301"></a>00301    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1TetherMaster.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if this TetherMaster is valid, or throw an Exception.">TetherMaster::isValid</a>()<span class="keyword"> const</span>
-<a name="l00302"></a><a class="code" href="classMcMd_1_1TetherMaster.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">00302</a> <span class="keyword">   </span>{
+<a name="l00301"></a>00301    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a98e19ac7c67f71effeb5fd1109fc6a79" title="Return true if this TetherMaster is valid, or throw an Exception.">TetherMaster::isValid</a>()<span class="keyword"> const</span>
+<a name="l00302"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a98e19ac7c67f71effeb5fd1109fc6a79">00302</a> <span class="keyword">   </span>{
 <a name="l00303"></a>00303 
 <a name="l00304"></a>00304       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>* tetherPtr;
 <a name="l00305"></a>00305       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>* partnerPtr;
@@ -353,22 +353,22 @@
 <a name="l00320"></a>00320             tetherPtr = &amp;(tetherSet_[i]); 
 <a name="l00321"></a>00321 
 <a name="l00322"></a>00322             <span class="comment">// Check pointer to an Atom</span>
-<a name="l00323"></a>00323             <span class="keywordflow">if</span> (!tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#aa3d0cf1d61b62b37020e034c5de0c479" title="Is this Tether associated with Atom?">hasAtom</a>()) {
+<a name="l00323"></a>00323             <span class="keywordflow">if</span> (!tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#ad9d4074d9d13f1677cce0a1c3df7eef1" title="Is this Tether associated with Atom?">hasAtom</a>()) {
 <a name="l00324"></a>00324                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Tether in tetherSet has no Atom&quot;</span>);
 <a name="l00325"></a>00325             }
-<a name="l00326"></a>00326             atomPtr = &amp;tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#ab77355ce6db0825e593a8d1736eb4645" title="Get the tethered Atom by reference.">atom</a>();
-<a name="l00327"></a>00327             atomId  = atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00326"></a>00326             atomPtr = &amp;tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a60100964eb3c31a6c02208f6120bdb21" title="Get the tethered Atom by reference.">atom</a>();
+<a name="l00327"></a>00327             atomId  = atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00328"></a>00328             <span class="keywordflow">if</span> (tetherPtrs_[atomId] != tetherPtr) {
 <a name="l00329"></a>00329                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistency a Tether and tetherPtrs_ array&quot;</span>);
 <a name="l00330"></a>00330             }
 <a name="l00331"></a>00331 
 <a name="l00332"></a>00332             <span class="comment">// Check partner, if any</span>
-<a name="l00333"></a>00333             <span class="keywordflow">if</span> (tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a57859d02a9629a442af1574a7c253baa" title="Is Tether associated with a partner Tether?">hasPartner</a>()) {
-<a name="l00334"></a>00334                partnerPtr = &amp;tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a2df28f0c855f9c9f2556ea1c7d9921b7" title="Get the partner (if any) by reference.">partner</a>();
-<a name="l00335"></a>00335                <span class="keywordflow">if</span> (!partnerPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a57859d02a9629a442af1574a7c253baa" title="Is Tether associated with a partner Tether?">hasPartner</a>()) {
+<a name="l00333"></a>00333             <span class="keywordflow">if</span> (tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a9bf44353aab9269c8ab05ee6b5216681" title="Is Tether associated with a partner Tether?">hasPartner</a>()) {
+<a name="l00334"></a>00334                partnerPtr = &amp;tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a0e89b10ff34102103cc6e8f6df23a256" title="Get the partner (if any) by reference.">partner</a>();
+<a name="l00335"></a>00335                <span class="keywordflow">if</span> (!partnerPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a9bf44353aab9269c8ab05ee6b5216681" title="Is Tether associated with a partner Tether?">hasPartner</a>()) {
 <a name="l00336"></a>00336                   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Partner of Tether has no Partner&quot;</span>);
 <a name="l00337"></a>00337                }
-<a name="l00338"></a>00338                <span class="keywordflow">if</span> (tetherPtr != &amp;partnerPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a2df28f0c855f9c9f2556ea1c7d9921b7" title="Get the partner (if any) by reference.">partner</a>()) {
+<a name="l00338"></a>00338                <span class="keywordflow">if</span> (tetherPtr != &amp;partnerPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#a0e89b10ff34102103cc6e8f6df23a256" title="Get the partner (if any) by reference.">partner</a>()) {
 <a name="l00339"></a>00339                   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistency partner addresses&quot;</span>);
 <a name="l00340"></a>00340                }
 <a name="l00341"></a>00341             }
@@ -379,7 +379,7 @@
 <a name="l00346"></a>00346          <span class="keywordtype">int</span> nCount = 0;
 <a name="l00347"></a>00347          <span class="keywordflow">for</span> (i = 0; i &lt; tetherCapacity_; ++i) {
 <a name="l00348"></a>00348             tetherPtr = &amp;tethers_[i]; 
-<a name="l00349"></a>00349             <span class="keywordflow">if</span> (tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#aa3d0cf1d61b62b37020e034c5de0c479" title="Is this Tether associated with Atom?">hasAtom</a>()) {
+<a name="l00349"></a>00349             <span class="keywordflow">if</span> (tetherPtr-&gt;<a class="code" href="classMcMd_1_1Tether.html#ad9d4074d9d13f1677cce0a1c3df7eef1" title="Is this Tether associated with Atom?">hasAtom</a>()) {
 <a name="l00350"></a>00350                ++nCount;
 <a name="l00351"></a>00351             } <span class="keywordflow">else</span> {
 <a name="l00352"></a>00352                <span class="comment">//if (tetherPtr-&gt;hasPartner()) {</span>
@@ -411,7 +411,7 @@
 <a name="l00378"></a>00378 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

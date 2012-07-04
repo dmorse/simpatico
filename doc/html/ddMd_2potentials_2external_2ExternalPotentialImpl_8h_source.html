@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -88,7 +88,7 @@
 <a name="l00047"></a>00047 
 <a name="l00051"></a>00051       <span class="keyword">virtual</span> ~<a class="code" href="classDdMd_1_1ExternalPotentialImpl.html" title="Implementation template for a ExternalPotential.">ExternalPotentialImpl</a>();
 <a name="l00052"></a>00052 
-<a name="l00061"></a>00061       <span class="keyword">virtual</span> <span class="keywordtype">void</span> associate(Boundary&amp; boundary, <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; storage);
+<a name="l00061"></a>00061       <span class="keyword">virtual</span> <span class="keywordtype">void</span> associate(<a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary, <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; storage);
 <a name="l00062"></a>00062 
 <a name="l00068"></a>00068       <span class="keyword">virtual</span> <span class="keywordtype">void</span> readParam(std::istream&amp; in);
 <a name="l00069"></a>00069 
@@ -174,20 +174,20 @@
 <a name="l00218"></a>00218 <span class="comment">   * Constructor.</span>
 <a name="l00219"></a>00219 <span class="comment">   */</span>
 <a name="l00220"></a>00220    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00221"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#adba64e4fcd5b02f27f1bcdb3d2eb4431">00221</a>    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html" title="Implementation template for a ExternalPotential.">ExternalPotentialImpl&lt;Interaction&gt;::ExternalPotentialImpl</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation)
+<a name="l00221"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a61f2f2326ad46d03b29e2e4a8cc98811">00221</a>    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html" title="Implementation template for a ExternalPotential.">ExternalPotentialImpl&lt;Interaction&gt;::ExternalPotentialImpl</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation)
 <a name="l00222"></a>00222     : <a class="code" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a>(simulation),
 <a name="l00223"></a>00223       interactionPtr_(0)
 <a name="l00224"></a>00224    {  
 <a name="l00225"></a>00225       interactionPtr_ = <span class="keyword">new</span> Interaction;
 <a name="l00226"></a>00226       <span class="comment">//interaction().setNAtomType(simulation.nAtomType());</span>
-<a name="l00227"></a>00227       interactionPtr_-&gt;setBoundary(simulation.<a class="code" href="classDdMd_1_1Simulation.html#a5daa73910cfb398e1ba647b4821d18ba" title="Get the Boundary by reference.">boundary</a>());
+<a name="l00227"></a>00227       interactionPtr_-&gt;setBoundary(simulation.<a class="code" href="classDdMd_1_1Simulation.html#a976114ff90d628068ccaa7b62be9ed08" title="Get the Boundary by reference.">boundary</a>());
 <a name="l00228"></a>00228    }
 <a name="l00229"></a>00229  
 <a name="l00230"></a>00230    <span class="comment">/* </span>
 <a name="l00231"></a>00231 <span class="comment">   * Default constructor.</span>
 <a name="l00232"></a>00232 <span class="comment">   */</span>
 <a name="l00233"></a>00233    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00234"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a23e8286dbe0bb42c6c885d86464abc95">00234</a>    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a23e8286dbe0bb42c6c885d86464abc95" title="Default constructor (for unit testing).">ExternalPotentialImpl&lt;Interaction&gt;::ExternalPotentialImpl</a>()
+<a name="l00234"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#afcd62784040942095fda15027a68f694">00234</a>    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#afcd62784040942095fda15027a68f694" title="Default constructor (for unit testing).">ExternalPotentialImpl&lt;Interaction&gt;::ExternalPotentialImpl</a>()
 <a name="l00235"></a>00235     : <a class="code" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a>(),
 <a name="l00236"></a>00236       interactionPtr_(0)
 <a name="l00237"></a>00237    {  interactionPtr_ = <span class="keyword">new</span> Interaction; }
@@ -196,7 +196,7 @@
 <a name="l00240"></a>00240 <span class="comment">   * Destructor. </span>
 <a name="l00241"></a>00241 <span class="comment">   */</span>
 <a name="l00242"></a>00242    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00243"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a4af68c64604605cc2ab58463df1d9c6e">00243</a>    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a4af68c64604605cc2ab58463df1d9c6e" title="Destructor.">ExternalPotentialImpl&lt;Interaction&gt;::~ExternalPotentialImpl</a>() 
+<a name="l00243"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a88eed6c311a3fd03bd547c5f93ea5eaf">00243</a>    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a88eed6c311a3fd03bd547c5f93ea5eaf" title="Destructor.">ExternalPotentialImpl&lt;Interaction&gt;::~ExternalPotentialImpl</a>() 
 <a name="l00244"></a>00244    {
 <a name="l00245"></a>00245       <span class="keywordflow">if</span> (interactionPtr_) {
 <a name="l00246"></a>00246          <span class="keyword">delete</span> interactionPtr_;
@@ -210,10 +210,10 @@
 <a name="l00254"></a>00254 <span class="comment">   * Required iff instantiated with default constructor.</span>
 <a name="l00255"></a>00255 <span class="comment">   */</span>
 <a name="l00256"></a>00256    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00257"></a>00257    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a3c2de0d0c09fa5766331a23cb66eb099" title="Associate with related objects.">ExternalPotentialImpl&lt;Interaction&gt;</a>
-<a name="l00258"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a3c2de0d0c09fa5766331a23cb66eb099">00258</a> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a3c2de0d0c09fa5766331a23cb66eb099" title="Associate with related objects.">        ::associate</a>(Boundary&amp; boundary, <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; storage)
+<a name="l00257"></a>00257    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a6497bed3aa77bb769278341d63074b59" title="Associate with related objects.">ExternalPotentialImpl&lt;Interaction&gt;</a>
+<a name="l00258"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a6497bed3aa77bb769278341d63074b59">00258</a> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a6497bed3aa77bb769278341d63074b59" title="Associate with related objects.">        ::associate</a>(<a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary, <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; storage)
 <a name="l00259"></a>00259    {
-<a name="l00260"></a>00260       <a class="code" href="classDdMd_1_1ExternalPotential.html#a3c2de0d0c09fa5766331a23cb66eb099" title="Associate with related objects.">ExternalPotential::associate</a>(boundary, storage);
+<a name="l00260"></a>00260       <a class="code" href="classDdMd_1_1ExternalPotential.html#a380e54479cf8d4725c810eee0a5589fc" title="Associate with related objects.">ExternalPotential::associate</a>(boundary, storage);
 <a name="l00261"></a>00261       interactionPtr_-&gt;setBoundary(boundary);
 <a name="l00262"></a>00262    } 
 <a name="l00263"></a>00263 
@@ -221,7 +221,7 @@
 <a name="l00265"></a>00265 <span class="comment">   * Read parameters from file.</span>
 <a name="l00266"></a>00266 <span class="comment">   */</span>
 <a name="l00267"></a>00267    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00268"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#ab5421d3c9175985c9acbf723e5392075">00268</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#ab5421d3c9175985c9acbf723e5392075" title="Read external potential interaction.">ExternalPotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream &amp;in) 
+<a name="l00268"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#aab9a90a507b268edfc112f012c052dda">00268</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#aab9a90a507b268edfc112f012c052dda" title="Read external potential interaction.">ExternalPotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream &amp;in) 
 <a name="l00269"></a>00269    {
 <a name="l00270"></a>00270       readBegin(in, <span class="stringliteral">&quot;ExternalPotential&quot;</span>);
 <a name="l00271"></a>00271       <span class="keywordtype">bool</span> nextIndent = <span class="keyword">false</span>; <span class="comment">// Do not indent interaction block. </span>
@@ -230,7 +230,7 @@
 <a name="l00274"></a>00274    }
 <a name="l00275"></a>00275   
 <a name="l00279"></a>00279    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00280"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a9549e24ee72625c94fd6ae7d61ceeee8">00280</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a9549e24ee72625c94fd6ae7d61ceeee8" title="Set the maximum number of atom types.">ExternalPotentialImpl&lt;Interaction&gt;::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType)
+<a name="l00280"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a98a919454e263b9932cc04e0d74ea212">00280</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a98a919454e263b9932cc04e0d74ea212" title="Set the maximum number of atom types.">ExternalPotentialImpl&lt;Interaction&gt;::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType)
 <a name="l00281"></a>00281    {  interaction().setNAtomType(nAtomType); }
 <a name="l00282"></a>00282 
 <a name="l00283"></a>00283    <span class="comment">/*</span>
@@ -238,7 +238,7 @@
 <a name="l00285"></a>00285 <span class="comment">   */</span>
 <a name="l00286"></a>00286    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
 <a name="l00287"></a>00287    <span class="keywordtype">double</span> 
-<a name="l00288"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a6be7248b85b0a26123f0129f7eb3bed4">00288</a>    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521" title="Get the total energy calculated previously by computeEnergy().">ExternalPotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position, <span class="keywordtype">int</span> typeId)<span class="keyword"> </span>
+<a name="l00288"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a196ffc3400e4b493741e6829592156f9">00288</a>    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a477e3338090f1294c1911fa395edcd05" title="Get the total energy calculated previously by computeEnergy().">ExternalPotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position, <span class="keywordtype">int</span> typeId)<span class="keyword"> </span>
 <a name="l00289"></a>00289 <span class="keyword">      const</span>
 <a name="l00290"></a>00290 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().energy(position, typeId); }
 <a name="l00291"></a>00291 
@@ -246,7 +246,7 @@
 <a name="l00293"></a>00293 <span class="comment">   * Return external force on an atom.</span>
 <a name="l00294"></a>00294 <span class="comment">   */</span>
 <a name="l00295"></a>00295    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00296"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#ac59aa2bd31a1b0d4fc9df6373fe4bf63">00296</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#ac59aa2bd31a1b0d4fc9df6373fe4bf63" title="Returns force caused by the external potential.">ExternalPotentialImpl&lt;Interaction&gt;::getForce</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position, 
+<a name="l00296"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#ab4a3e4f86176ff07630cd7b732200bbd">00296</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#ab4a3e4f86176ff07630cd7b732200bbd" title="Returns force caused by the external potential.">ExternalPotentialImpl&lt;Interaction&gt;::getForce</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position, 
 <a name="l00297"></a>00297                                                <span class="keywordtype">int</span> typeId, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; force)<span class="keyword"> const</span>
 <a name="l00298"></a>00298 <span class="keyword">   </span>{ interaction().getForce(position, typeId, force); }
 <a name="l00299"></a>00299 
@@ -260,18 +260,18 @@
 <a name="l00307"></a>00307 <span class="preprocessor">   #endif</span>
 <a name="l00308"></a>00308 <span class="preprocessor"></span>
 <a name="l00312"></a>00312    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00313"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a7c088e3beaea91f544fa2929b1cb13bf">00313</a>    <span class="keyword">const</span> Interaction&amp; <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0" title="Return external interaction by reference.">ExternalPotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
+<a name="l00313"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#afcdd34fc5bfaa0b5a6bc0ff0df7a90e1">00313</a>    <span class="keyword">const</span> Interaction&amp; <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a905c7b707cae42f8b1d201de415eff15" title="Return external interaction by reference.">ExternalPotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
 <a name="l00314"></a>00314 <span class="keyword">   </span>{  <span class="keywordflow">return</span> *interactionPtr_; }
 <a name="l00315"></a>00315 
 <a name="l00319"></a>00319    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00320"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0">00320</a>    Interaction&amp; <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0" title="Return external interaction by reference.">ExternalPotentialImpl&lt;Interaction&gt;::interaction</a>()
+<a name="l00320"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a905c7b707cae42f8b1d201de415eff15">00320</a>    Interaction&amp; <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a905c7b707cae42f8b1d201de415eff15" title="Return external interaction by reference.">ExternalPotentialImpl&lt;Interaction&gt;::interaction</a>()
 <a name="l00321"></a>00321    {  <span class="keywordflow">return</span> *interactionPtr_; }
 <a name="l00322"></a>00322 
 <a name="l00323"></a>00323    <span class="comment">/*</span>
 <a name="l00324"></a>00324 <span class="comment">   * Increment atomic forces, without calculating energy.</span>
 <a name="l00325"></a>00325 <span class="comment">   */</span>
 <a name="l00326"></a>00326    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00327"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d">00327</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::addForces</a>()
+<a name="l00327"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#af7911992893fa2aa36e2af24ea0b481c">00327</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#af7911992893fa2aa36e2af24ea0b481c" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::addForces</a>()
 <a name="l00328"></a>00328    {  
 <a name="l00329"></a>00329       addForces(<span class="keyword">true</span>, <span class="keyword">false</span>); 
 <a name="l00330"></a>00330    }
@@ -280,7 +280,7 @@
 <a name="l00333"></a>00333 <span class="comment">   * Increment atomic forces, and compute total external energy.</span>
 <a name="l00334"></a>00334 <span class="comment">   */</span>
 <a name="l00335"></a>00335    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00336"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#ab2d51f7c0ec14e310c3e19047bc5e8e0">00336</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">double</span>&amp; energy)
+<a name="l00336"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a2977814562145681c2692f01eb2e240a">00336</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#af7911992893fa2aa36e2af24ea0b481c" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">double</span>&amp; energy)
 <a name="l00337"></a>00337    {  
 <a name="l00338"></a>00338       energy = addForces(<span class="keyword">true</span>, <span class="keyword">true</span>); 
 <a name="l00339"></a>00339    }
@@ -291,9 +291,9 @@
 <a name="l00344"></a>00344    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
 <a name="l00345"></a>00345 <span class="preprocessor">   #ifdef UTIL_MPI</span>
 <a name="l00346"></a>00346 <span class="preprocessor"></span>   <span class="keywordtype">void</span> 
-<a name="l00347"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a75c8fc396bfb65c3d317943f64666d08">00347</a>    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a75c8fc396bfb65c3d317943f64666d08" title="Compute the total external energy for all processors.">ExternalPotentialImpl&lt;Interaction&gt;::computeEnergy</a>(MPI::Intracomm&amp; communicator)
+<a name="l00347"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#ac57aa4034e47a11aab599c8c21d19d95">00347</a>    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#ac57aa4034e47a11aab599c8c21d19d95" title="Compute the total external energy for all processors.">ExternalPotentialImpl&lt;Interaction&gt;::computeEnergy</a>(MPI::Intracomm&amp; communicator)
 <a name="l00348"></a>00348    <span class="preprocessor">#else</span>
-<a name="l00349"></a>00349 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a75c8fc396bfb65c3d317943f64666d08" title="Compute the total external energy for all processors.">ExternalPotentialImpl&lt;Interaction&gt;::computeEnergy</a>()
+<a name="l00349"></a>00349 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#ac57aa4034e47a11aab599c8c21d19d95" title="Compute the total external energy for all processors.">ExternalPotentialImpl&lt;Interaction&gt;::computeEnergy</a>()
 <a name="l00350"></a>00350    <span class="preprocessor">#endif</span>
 <a name="l00351"></a>00351 <span class="preprocessor"></span>   { 
 <a name="l00352"></a>00352       <span class="keywordtype">double</span> localEnergy = 0; 
@@ -311,7 +311,7 @@
 <a name="l00364"></a>00364 <span class="comment">   * Return total external energy from all processors.</span>
 <a name="l00365"></a>00365 <span class="comment">   */</span>
 <a name="l00366"></a>00366    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00367"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521">00367</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521" title="Get the total energy calculated previously by computeEnergy().">ExternalPotentialImpl&lt;Interaction&gt;::energy</a>()
+<a name="l00367"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a477e3338090f1294c1911fa395edcd05">00367</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a477e3338090f1294c1911fa395edcd05" title="Get the total energy calculated previously by computeEnergy().">ExternalPotentialImpl&lt;Interaction&gt;::energy</a>()
 <a name="l00368"></a>00368    {  <span class="keywordflow">return</span> energy_; } 
 <a name="l00369"></a>00369 
 <a name="l00370"></a>00370    <span class="comment">/*</span>
@@ -319,7 +319,7 @@
 <a name="l00372"></a>00372 <span class="comment">   */</span>
 <a name="l00373"></a>00373    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
 <a name="l00374"></a>00374    <span class="keywordtype">double</span> 
-<a name="l00375"></a>00375    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">bool</span> needForce, 
+<a name="l00375"></a>00375    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#af7911992893fa2aa36e2af24ea0b481c" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">bool</span> needForce, 
 <a name="l00376"></a>00376                                                  <span class="keywordtype">bool</span> needEnergy)
 <a name="l00377"></a>00377    {
 <a name="l00378"></a>00378       <span class="comment">// Preconditions</span>
@@ -333,7 +333,7 @@
 <a name="l00386"></a>00386       <span class="keywordtype">int</span> type;
 <a name="l00387"></a>00387 
 <a name="l00388"></a>00388       storage().begin(iter);
-<a name="l00389"></a>00389       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
+<a name="l00389"></a>00389       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
 <a name="l00390"></a>00390          type = iter-&gt;typeId();
 <a name="l00391"></a>00391          <span class="keywordflow">if</span> (needEnergy) {
 <a name="l00392"></a>00392             energy += 
@@ -351,7 +351,7 @@
 <a name="l00404"></a>00404 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Simulation Class Reference</title>
+<title>Simpatico: DdMd::Simulation Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Simulation Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Simulation__Module.html">Simulations</a></div></h1>  </div>
+<h1>DdMd::Simulation Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Simulation__Module.html">Simulations</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::Simulation" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -61,13 +61,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">Simulation.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Simulation:</div>
+Inheritance diagram for DdMd::Simulation:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1Simulation.png" usemap="#Simulation_map" alt=""/>
-  <map id="Simulation_map" name="Simulation_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classDdMd_1_1Simulation.png" usemap="#DdMd::Simulation_map" alt=""/>
+  <map id="DdMd::Simulation_map" name="DdMd::Simulation_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,134,24"/>
 </map>
  </div></div>
 
@@ -75,117 +75,117 @@ Inheritance diagram for Simulation:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a2e359c534f363837d52e05e27f3be28e">Simulation</a> (MPI::Intracomm &amp;communicator=MPI::COMM_WORLD)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a2e359c534f363837d52e05e27f3be28e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a24835ff46588e1f5ab1431a2b4464966">Simulation</a> (<a class="el" href="classMcMd_1_1McSimulation.html">McMd::McSimulation</a> &amp;mcSimulation, MPI::Intracomm &amp;communicator=MPI::COMM_WORLD)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a24835ff46588e1f5ab1431a2b4464966"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a64bd15ebce28bcb42aaa0231780933fe">~Simulation</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a64bd15ebce28bcb42aaa0231780933fe"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a4384bd78719fb12cae61a83d02b5ec66">setOptions</a> (int argc, char **argv)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Process command line options.  <a href="#a4384bd78719fb12cae61a83d02b5ec66"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters, allocate memory and initialize.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ab2474de57ea9de1def29ca73c9d66686">readCommands</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read and execute commands from the default command file.  <a href="#ab2474de57ea9de1def29ca73c9d66686"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aaf4cedda6653cf870c97001af7881c2a">simulate</a> (int nStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Integrate equations of motion.  <a href="#aaf4cedda6653cf870c97001af7881c2a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a0e463234fddc9f35cf6b3fb2ad5e380b">setBoltzmannVelocities</a> (double temperature)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set random velocities chosen from Boltzmann distribution.  <a href="#a0e463234fddc9f35cf6b3fb2ad5e380b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a60373e339e2adf8daeba20e5440fac11">zeroForces</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set forces for all local atoms to zero.  <a href="#a60373e339e2adf8daeba20e5440fac11"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a572d3d87d67757b60819e7ace0285437">computeForces</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute forces for all local atoms.  <a href="#a572d3d87d67757b60819e7ace0285437"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a092706453835069b92f41a413760a980">computeKineticEnergy</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total kinetic energy.  <a href="#a092706453835069b92f41a413760a980"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a0139efc90de1d0e9b0488a18a651dfdb">kineticEnergy</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute precomputed total kinetic energy.  <a href="#a0139efc90de1d0e9b0488a18a651dfdb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a7253cca3bfaaba9bad4a8b8741ec59b2">computePotentialEnergies</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total potential energy on all processors.  <a href="#a7253cca3bfaaba9bad4a8b8741ec59b2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a3b69eed28747f5c7af55bc3ef911da53">potentialEnergy</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return precomputed total potential energy.  <a href="#a3b69eed28747f5c7af55bc3ef911da53"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#afe93e17ac89cd97917811068ba2af214">isValid</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> is valid, or throw an Exception.  <a href="#afe93e17ac89cd97917811068ba2af214"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a0e5546137dca89bb96077da6e2af3103">Simulation</a> (MPI::Intracomm &amp;communicator=MPI::COMM_WORLD)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a0e5546137dca89bb96077da6e2af3103"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a82d308c718b69f995d1ec9591c808798">Simulation</a> (<a class="el" href="classMcMd_1_1McSimulation.html">McMd::McSimulation</a> &amp;mcSimulation, MPI::Intracomm &amp;communicator=MPI::COMM_WORLD)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a82d308c718b69f995d1ec9591c808798"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a2a3bc93d0f5586bbde035256520d45bd">~Simulation</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a2a3bc93d0f5586bbde035256520d45bd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aca76be0b3b11bd4c3499b5513102cbfc">setOptions</a> (int argc, char **argv)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Process command line options.  <a href="#aca76be0b3b11bd4c3499b5513102cbfc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a24277545642a0b701181ffea85613b57">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters, allocate memory and initialize.  <a href="#a24277545642a0b701181ffea85613b57"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a58f73ad42249ca9d08aea965ec0140a3">readCommands</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read and execute commands from the default command file.  <a href="#a58f73ad42249ca9d08aea965ec0140a3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#abbd769765ed0e640232b475a9cc3baab">simulate</a> (int nStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Integrate equations of motion.  <a href="#abbd769765ed0e640232b475a9cc3baab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ae04aeb46428f975caea76e1c2df873db">setBoltzmannVelocities</a> (double temperature)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set random velocities chosen from Boltzmann distribution.  <a href="#ae04aeb46428f975caea76e1c2df873db"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ad29214d7595ff51e6fc0172e681f606a">zeroForces</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set forces for all local atoms to zero.  <a href="#ad29214d7595ff51e6fc0172e681f606a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a2983b5e88ce2bbf7b0f247921037f26f">computeForces</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute forces for all local atoms.  <a href="#a2983b5e88ce2bbf7b0f247921037f26f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a8589034d49d77db29774fe9bc67287cb">computeKineticEnergy</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total kinetic energy.  <a href="#a8589034d49d77db29774fe9bc67287cb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a10c17ef9707e9c64b0295b19089ad6e4">kineticEnergy</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute precomputed total kinetic energy.  <a href="#a10c17ef9707e9c64b0295b19089ad6e4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#abd33378ad2f63ff05d667915be115926">computePotentialEnergies</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total potential energy on all processors.  <a href="#abd33378ad2f63ff05d667915be115926"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a37a102d9d4fad341b53e8a08bab1d7f0">potentialEnergy</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return precomputed total potential energy.  <a href="#a37a102d9d4fad341b53e8a08bab1d7f0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ae1fec95c5c1fa9948ab3e7e5425e35c2">isValid</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> is valid, or throw an Exception.  <a href="#ae1fec95c5c1fa9948ab3e7e5425e35c2"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Config File IO</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a9160e671ca2963da84a4932568432095">readConfig</a> (const std::string &amp;filename)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read configuration file on master and distribute atoms.  <a href="#a9160e671ca2963da84a4932568432095"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a08dbe976cc87f72e3a1ca9775b0d494d">writeConfig</a> (const std::string &amp;filename)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write configuration file.  <a href="#a08dbe976cc87f72e3a1ca9775b0d494d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1ConfigIo.html">ConfigIo</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#adf809dd00e6e980c6230becc119b5429">configIoFactory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the configuration file reader/writer factory by reference.  <a href="#adf809dd00e6e980c6230becc119b5429"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ad05e4313ced6e3e8b84e6de6a9c796c7">setConfigIo</a> (std::string &amp;classname)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new configuration file reader/writer.  <a href="#ad05e4313ced6e3e8b84e6de6a9c796c7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ab9b92083e998d136df9df75cb8677667">readConfig</a> (const std::string &amp;filename)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read configuration file on master and distribute atoms.  <a href="#ab9b92083e998d136df9df75cb8677667"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#afda8eea88c0e81663b145a47d1d90588">writeConfig</a> (const std::string &amp;filename)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write configuration file.  <a href="#afda8eea88c0e81663b145a47d1d90588"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1ConfigIo.html">ConfigIo</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a7e41cb8e89401e39a90f4942a51c88d2">configIoFactory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the configuration file reader/writer factory by reference.  <a href="#a7e41cb8e89401e39a90f4942a51c88d2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aefaea5d3fe48d50291e0dbfcd4956737">setConfigIo</a> (std::string &amp;classname)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new configuration file reader/writer.  <a href="#aefaea5d3fe48d50291e0dbfcd4956737"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Potential Energy Factories and Styles</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a5dd7e39a86b01cf70d08220bf5253a80">pairFactory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classUtil_1_1Factory.html">Factory&lt;PairPotential&gt;</a> by reference.  <a href="#a5dd7e39a86b01cf70d08220bf5253a80"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ab5df9a80f1bd3006eb704724ca8e2def">pairStyle</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return nonbonded pair style string.  <a href="#ab5df9a80f1bd3006eb704724ca8e2def"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1BondPotential.html">BondPotential</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ac5eaa682a9e4dd7bf3b166071e1d69a8">bondFactory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classUtil_1_1Factory.html">Factory&lt;BondPotential&gt;</a> by reference.  <a href="#ac5eaa682a9e4dd7bf3b166071e1d69a8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a4d83d946cf31b1ac66aece56b7133683">bondStyle</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return covalent bond style string.  <a href="#a4d83d946cf31b1ac66aece56b7133683"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1ExternalPotential.html">ExternalPotential</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#affe41c37893b4fb65b5aabb705b4271c">externalFactory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated External Factory by reference.  <a href="#affe41c37893b4fb65b5aabb705b4271c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a70125de9a41d1ad0aa7c002e69fd9af6">externalStyle</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return external potential style string.  <a href="#a70125de9a41d1ad0aa7c002e69fd9af6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ab48939227b9e29f5f8cf935ec92868e2">pairFactory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classUtil_1_1Factory.html">Factory&lt;PairPotential&gt;</a> by reference.  <a href="#ab48939227b9e29f5f8cf935ec92868e2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a3f59d4cda8e4dd1c3f5a4a4ca902cf0a">pairStyle</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return nonbonded pair style string.  <a href="#a3f59d4cda8e4dd1c3f5a4a4ca902cf0a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1BondPotential.html">BondPotential</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a4127ff1f0bd3458414d496e0c76df4e4">bondFactory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classUtil_1_1Factory.html">Factory&lt;BondPotential&gt;</a> by reference.  <a href="#a4127ff1f0bd3458414d496e0c76df4e4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a434fa4a57478f1941d924446a41627b3">bondStyle</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return covalent bond style string.  <a href="#a434fa4a57478f1941d924446a41627b3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1ExternalPotential.html">ExternalPotential</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aa502eac2282707b7a8e6898f21cbf1ca">externalFactory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated External Factory by reference.  <a href="#aa502eac2282707b7a8e6898f21cbf1ca"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aefa0323fdb3cab7a38db0b7f547c2c10">externalStyle</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return external potential style string.  <a href="#aefa0323fdb3cab7a38db0b7f547c2c10"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors (Miscellaneous)</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a64ddaf9dd004b6c301f8f23e8995b6d1">domain</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a> by reference.  <a href="#a64ddaf9dd004b6c301f8f23e8995b6d1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aa34b0aab4d37e8b42704954d57b5c126">atomStorage</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> by reference.  <a href="#aa34b0aab4d37e8b42704954d57b5c126"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1BondStorage.html">BondStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ac0ff8b7a630972e48ad29b007ae770de">bondStorage</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a> by reference.  <a href="#ac0ff8b7a630972e48ad29b007ae770de"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a5daa73910cfb398e1ba647b4821d18ba">boundary</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Boundary by reference.  <a href="#a5daa73910cfb398e1ba647b4821d18ba"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a441a47ecbdc730455562537c533d08f5">pairPotential</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a> by reference.  <a href="#a441a47ecbdc730455562537c533d08f5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1BondPotential.html">BondPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#af743badbda187883a98ee4e0ec923381">bondPotential</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a> by reference.  <a href="#af743badbda187883a98ee4e0ec923381"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1ExternalPotential.html">ExternalPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a0099c1558bb236318dea07f388df7495">externalPotential</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a> by reference.  <a href="#a0099c1558bb236318dea07f388df7495"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Integrator.html">Integrator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#add786e8bf81a1ce15721ddec114563b0">integrator</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Integrator.html" title="An Integrator numerically integrates the equations of motion.">Integrator</a> by reference.  <a href="#add786e8bf81a1ce15721ddec114563b0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1EnergyEnsemble.html">EnergyEnsemble</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aac5b843385b6224e664f16e8cc70e4dc">energyEnsemble</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the EnergyEnsemble by reference.  <a href="#aac5b843385b6224e664f16e8cc70e4dc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1BoundaryEnsemble.html">BoundaryEnsemble</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a4c72b5c96b0544814ab613998a3385d8">boundaryEnsemble</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the BoundaryEnsemble by reference.  <a href="#a4c72b5c96b0544814ab613998a3385d8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1FileMaster.html">FileMaster</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aab4571631d952de626f3a08388c45272">fileMaster</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> by reference.  <a href="#aab4571631d952de626f3a08388c45272"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1Integrator.html">Integrator</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#af5c28a7cf119c9491af8679ee8ca5cda">integratorFactory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Md integrator factory by reference.  <a href="#af5c28a7cf119c9491af8679ee8ca5cda"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Random.html">Random</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a3e9d2379455b7dc1bc206383917cd3b0">random</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Random number generator by reference.  <a href="#a3e9d2379455b7dc1bc206383917cd3b0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Exchanger.html">Exchanger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a5c68cd5c85b83899f832b1fa250ea299">exchanger</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a> by reference.  <a href="#a5c68cd5c85b83899f832b1fa250ea299"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ad6f298ccec40b581e758eec243021929">buffer</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a> by reference.  <a href="#ad6f298ccec40b581e758eec243021929"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1DiagnosticManager.html">DiagnosticManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a405063196da9838550fc44d066c3b7bc">diagnosticManager</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return associated <a class="el" href="classDdMd_1_1DiagnosticManager.html" title="Manager for a list of Diagnostic objects.">DiagnosticManager</a> by reference.  <a href="#a405063196da9838550fc44d066c3b7bc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a41e7e39e41db8f55dfec1873ed574ba1">nAtomType</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get maximum number of atom types.  <a href="#a41e7e39e41db8f55dfec1873ed574ba1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a35e189729c1865f7f2bf7d68788f0749">nBondType</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get maximum number of bond types.  <a href="#a35e189729c1865f7f2bf7d68788f0749"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a6a005309fb2192d3204bfc71735dbcf3">hasExternal</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does this simulation have an external potential?  <a href="#a6a005309fb2192d3204bfc71735dbcf3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomType.html">AtomType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a60cb488f03a605d0214c1adbae33ffcb">atomType</a> (int i)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an <a class="el" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a> descriptor by reference.  <a href="#a60cb488f03a605d0214c1adbae33ffcb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__DdMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7">MaskPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ac2760568e710bf2ed84a05ea91345c61">maskedPairPolicy</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the value of the mask policy (MaskNone or MaskBonded).  <a href="#ac2760568e710bf2ed84a05ea91345c61"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a4bcb8e6e1482b6e825e54d71e93b9e6c">domain</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a> by reference.  <a href="#a4bcb8e6e1482b6e825e54d71e93b9e6c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a08b21df742e75449aa5d57a7c9fc9b5c">atomStorage</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> by reference.  <a href="#a08b21df742e75449aa5d57a7c9fc9b5c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1BondStorage.html">BondStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a843e0d761026f9a766486a2a26039815">bondStorage</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a> by reference.  <a href="#a843e0d761026f9a766486a2a26039815"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a976114ff90d628068ccaa7b62be9ed08">boundary</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Boundary by reference.  <a href="#a976114ff90d628068ccaa7b62be9ed08"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a1b4296f896768dd20000a2d9fc4d1ad6">pairPotential</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a> by reference.  <a href="#a1b4296f896768dd20000a2d9fc4d1ad6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1BondPotential.html">BondPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ab32f9cba063db6d24f7e694067486a7d">bondPotential</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a> by reference.  <a href="#ab32f9cba063db6d24f7e694067486a7d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1ExternalPotential.html">ExternalPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aca6c5c7aa885faac51ad1a1075a261ef">externalPotential</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a> by reference.  <a href="#aca6c5c7aa885faac51ad1a1075a261ef"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Integrator.html">Integrator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#abdeb3c3c35c89fa92383442b09dd4ffe">integrator</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Integrator.html" title="An Integrator numerically integrates the equations of motion.">Integrator</a> by reference.  <a href="#abdeb3c3c35c89fa92383442b09dd4ffe"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1EnergyEnsemble.html">EnergyEnsemble</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a4f0645169fdd0f0a6f0f2ae83feca18b">energyEnsemble</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the EnergyEnsemble by reference.  <a href="#a4f0645169fdd0f0a6f0f2ae83feca18b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1BoundaryEnsemble.html">BoundaryEnsemble</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aa5ff1ea348825e3624f6ec7dcb7c4c20">boundaryEnsemble</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the BoundaryEnsemble by reference.  <a href="#aa5ff1ea348825e3624f6ec7dcb7c4c20"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1FileMaster.html">FileMaster</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a">fileMaster</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> by reference.  <a href="#af5d7a044aaf35ef9fb74e79ce640ab3a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1Integrator.html">Integrator</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a1466f5ccbcd070b984cf8602a5b8bb43">integratorFactory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Md integrator factory by reference.  <a href="#a1466f5ccbcd070b984cf8602a5b8bb43"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Random.html">Random</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a9adda821e4551b7b0291903a2ec99e50">random</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Random number generator by reference.  <a href="#a9adda821e4551b7b0291903a2ec99e50"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Exchanger.html">Exchanger</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a87a973845278e6f7a94cdec00c81166b">exchanger</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a> by reference.  <a href="#a87a973845278e6f7a94cdec00c81166b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a6c78802f0ee142f772aa7dd86679d4db">buffer</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a> by reference.  <a href="#a6c78802f0ee142f772aa7dd86679d4db"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1DiagnosticManager.html">DiagnosticManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a97078a43b926eba8fc79735d89adaa36">diagnosticManager</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return associated <a class="el" href="classDdMd_1_1DiagnosticManager.html" title="Manager for a list of Diagnostic objects.">DiagnosticManager</a> by reference.  <a href="#a97078a43b926eba8fc79735d89adaa36"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69">nAtomType</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get maximum number of atom types.  <a href="#a9988011a7dc2634badaa61dfb81f1a69"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aa6f40dc5a680c3e8e0b38fc88608f039">nBondType</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get maximum number of bond types.  <a href="#aa6f40dc5a680c3e8e0b38fc88608f039"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a87ad9927ead6d83f230d8635cf165609">hasExternal</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does this simulation have an external potential?  <a href="#a87ad9927ead6d83f230d8635cf165609"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomType.html">AtomType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#adb69f41e67ea48facaaeed0a94c7d218">atomType</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an <a class="el" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a> descriptor by reference.  <a href="#adb69f41e67ea48facaaeed0a94c7d218"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4">MaskPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a3d42913c5edc53adbe6e200b7f5a9e1f">maskedPairPolicy</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the value of the mask policy (MaskNone or MaskBonded).  <a href="#a3d42913c5edc53adbe6e200b7f5a9e1f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a29cb9ccd6e27b8c44c0e35476cb9414a">readFileMaster</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the <a class="el" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>.  <a href="#a29cb9ccd6e27b8c44c0e35476cb9414a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ada500231e17bfb7f1b9097caca487f15">readPotentialStyles</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read potential styles and maskedPairPolicy.  <a href="#ada500231e17bfb7f1b9097caca487f15"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a7e4f36650a5fa0818045413f37e9bd9a">readEnsembles</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read energy and boundary ensembles.  <a href="#a7e4f36650a5fa0818045413f37e9bd9a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aeb091178ff7457e841eb208be068ed64">readFileMaster</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the <a class="el" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>.  <a href="#aeb091178ff7457e841eb208be068ed64"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ac28e2495b88ebf03b2833187f5034bb3">readPotentialStyles</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read potential styles and maskedPairPolicy.  <a href="#ac28e2495b88ebf03b2833187f5034bb3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ac6951f28a65d6e9e985f3dc511afb025">readEnsembles</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read energy and boundary ensembles.  <a href="#ac6951f28a65d6e9e985f3dc511afb025"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a2e359c534f363837d52e05e27f3be28e"></a><!-- doxytag: member="DdMd::Simulation::Simulation" ref="a2e359c534f363837d52e05e27f3be28e" args="(MPI::Intracomm &amp;communicator=MPI::COMM_WORLD)" -->
+<a class="anchor" id="a0e5546137dca89bb96077da6e2af3103"></a><!-- doxytag: member="DdMd::Simulation::Simulation" ref="a0e5546137dca89bb96077da6e2af3103" args="(MPI::Intracomm &amp;communicator=MPI::COMM_WORLD)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> </td>
+          <td class="memname">DdMd::Simulation::Simulation </td>
           <td>(</td>
           <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
           <td class="paramname"><em>communicator</em> = <code>MPI::COMM_WORLD</code></td><td>)</td>
@@ -205,16 +205,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00077">77</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>References <a class="el" href="IntVector_8cpp_source.html#l00096">IntVector::commitMpiType()</a>, <a class="el" href="Vector_8cpp_source.html#l00101">Vector::commitMpiType()</a>, <a class="el" href="ddMd_2chemistry_2AtomType_8cpp_source.html#l00059">AtomType::initStatic()</a>, <a class="el" href="initStatic_8cpp_source.html#l00029">Util::initStatic()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="IntVector_8cpp_source.html#l00096">Util::IntVector::commitMpiType()</a>, <a class="el" href="Vector_8cpp_source.html#l00101">Util::Vector::commitMpiType()</a>, <a class="el" href="ddMd_2chemistry_2AtomType_8cpp_source.html#l00059">DdMd::AtomType::initStatic()</a>, <a class="el" href="initStatic_8cpp_source.html#l00029">Util::initStatic()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a24835ff46588e1f5ab1431a2b4464966"></a><!-- doxytag: member="DdMd::Simulation::Simulation" ref="a24835ff46588e1f5ab1431a2b4464966" args="(McMd::McSimulation &amp;mcSimulation, MPI::Intracomm &amp;communicator=MPI::COMM_WORLD)" -->
+<a class="anchor" id="a82d308c718b69f995d1ec9591c808798"></a><!-- doxytag: member="DdMd::Simulation::Simulation" ref="a82d308c718b69f995d1ec9591c808798" args="(McMd::McSimulation &amp;mcSimulation, MPI::Intracomm &amp;communicator=MPI::COMM_WORLD)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> </td>
+          <td class="memname">DdMd::Simulation::Simulation </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1McSimulation.html">McMd::McSimulation</a> &amp;&#160;</td>
           <td class="paramname"><em>mcSimulation</em>, </td>
@@ -245,12 +245,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a64bd15ebce28bcb42aaa0231780933fe"></a><!-- doxytag: member="DdMd::Simulation::~Simulation" ref="a64bd15ebce28bcb42aaa0231780933fe" args="()" -->
+<a class="anchor" id="a2a3bc93d0f5586bbde035256520d45bd"></a><!-- doxytag: member="DdMd::Simulation::~Simulation" ref="a2a3bc93d0f5586bbde035256520d45bd" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> </td>
+          <td class="memname">DdMd::Simulation::~Simulation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -266,12 +266,12 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a4384bd78719fb12cae61a83d02b5ec66"></a><!-- doxytag: member="DdMd::Simulation::setOptions" ref="a4384bd78719fb12cae61a83d02b5ec66" args="(int argc, char **argv)" -->
+<a class="anchor" id="aca76be0b3b11bd4c3499b5513102cbfc"></a><!-- doxytag: member="DdMd::Simulation::setOptions" ref="aca76be0b3b11bd4c3499b5513102cbfc" args="(int argc, char **argv)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setOptions </td>
+          <td class="memname">void DdMd::Simulation::setOptions </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>argc</em>, </td>
@@ -304,16 +304,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00269">269</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComponent_8cpp_source.html#l00079">ParamComponent::setEcho()</a>.</p>
+<p>References <a class="el" href="ParamComponent_8cpp_source.html#l00079">Util::ParamComponent::setEcho()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="DdMd::Simulation::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a24277545642a0b701181ffea85613b57"></a><!-- doxytag: member="DdMd::Simulation::readParam" ref="a24277545642a0b701181ffea85613b57" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void DdMd::Simulation::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -325,7 +325,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Read parameters, allocate memory and initialize. </p>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00295">295</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
@@ -333,12 +333,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab2474de57ea9de1def29ca73c9d66686"></a><!-- doxytag: member="DdMd::Simulation::readCommands" ref="ab2474de57ea9de1def29ca73c9d66686" args="()" -->
+<a class="anchor" id="a58f73ad42249ca9d08aea965ec0140a3"></a><!-- doxytag: member="DdMd::Simulation::readCommands" ref="a58f73ad42249ca9d08aea965ec0140a3" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readCommands </td>
+          <td class="memname">void DdMd::Simulation::readCommands </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -353,12 +353,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aaf4cedda6653cf870c97001af7881c2a"></a><!-- doxytag: member="DdMd::Simulation::simulate" ref="aaf4cedda6653cf870c97001af7881c2a" args="(int nStep)" -->
+<a class="anchor" id="abbd769765ed0e640232b475a9cc3baab"></a><!-- doxytag: member="DdMd::Simulation::simulate" ref="abbd769765ed0e640232b475a9cc3baab" args="(int nStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void simulate </td>
+          <td class="memname">void DdMd::Simulation::simulate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>nStep</em></td><td>)</td>
@@ -372,16 +372,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00611">611</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>References <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>.</p>
+<p>References <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0e463234fddc9f35cf6b3fb2ad5e380b"></a><!-- doxytag: member="DdMd::Simulation::setBoltzmannVelocities" ref="a0e463234fddc9f35cf6b3fb2ad5e380b" args="(double temperature)" -->
+<a class="anchor" id="ae04aeb46428f975caea76e1c2df873db"></a><!-- doxytag: member="DdMd::Simulation::setBoltzmannVelocities" ref="ae04aeb46428f975caea76e1c2df873db" args="(double temperature)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setBoltzmannVelocities </td>
+          <td class="memname">void DdMd::Simulation::setBoltzmannVelocities </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>temperature</em></td><td>)</td>
@@ -401,16 +401,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00557">557</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a60373e339e2adf8daeba20e5440fac11"></a><!-- doxytag: member="DdMd::Simulation::zeroForces" ref="a60373e339e2adf8daeba20e5440fac11" args="()" -->
+<a class="anchor" id="ad29214d7595ff51e6fc0172e681f606a"></a><!-- doxytag: member="DdMd::Simulation::zeroForces" ref="ad29214d7595ff51e6fc0172e681f606a" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void zeroForces </td>
+          <td class="memname">void DdMd::Simulation::zeroForces </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -423,16 +423,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00574">574</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>References <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
+<p>References <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a572d3d87d67757b60819e7ace0285437"></a><!-- doxytag: member="DdMd::Simulation::computeForces" ref="a572d3d87d67757b60819e7ace0285437" args="()" -->
+<a class="anchor" id="a2983b5e88ce2bbf7b0f247921037f26f"></a><!-- doxytag: member="DdMd::Simulation::computeForces" ref="a2983b5e88ce2bbf7b0f247921037f26f" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void computeForces </td>
+          <td class="memname">void DdMd::Simulation::computeForces </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -445,16 +445,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00586">586</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">NveIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a092706453835069b92f41a413760a980"></a><!-- doxytag: member="DdMd::Simulation::computeKineticEnergy" ref="a092706453835069b92f41a413760a980" args="()" -->
+<a class="anchor" id="a8589034d49d77db29774fe9bc67287cb"></a><!-- doxytag: member="DdMd::Simulation::computeKineticEnergy" ref="a8589034d49d77db29774fe9bc67287cb" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void computeKineticEnergy </td>
+          <td class="memname">void DdMd::Simulation::computeKineticEnergy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -468,18 +468,18 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00629">629</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>References <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
+<p>References <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">OutputEnergy::sample()</a>, and <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">NvtIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>, and <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0139efc90de1d0e9b0488a18a651dfdb"></a><!-- doxytag: member="DdMd::Simulation::kineticEnergy" ref="a0139efc90de1d0e9b0488a18a651dfdb" args="()" -->
+<a class="anchor" id="a10c17ef9707e9c64b0295b19089ad6e4"></a><!-- doxytag: member="DdMd::Simulation::kineticEnergy" ref="a10c17ef9707e9c64b0295b19089ad6e4" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double kineticEnergy </td>
+          <td class="memname">double DdMd::Simulation::kineticEnergy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -494,16 +494,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00660">660</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">OutputEnergy::sample()</a>, and <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">NvtIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>, and <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7253cca3bfaaba9bad4a8b8741ec59b2"></a><!-- doxytag: member="DdMd::Simulation::computePotentialEnergies" ref="a7253cca3bfaaba9bad4a8b8741ec59b2" args="()" -->
+<a class="anchor" id="abd33378ad2f63ff05d667915be115926"></a><!-- doxytag: member="DdMd::Simulation::computePotentialEnergies" ref="abd33378ad2f63ff05d667915be115926" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void computePotentialEnergies </td>
+          <td class="memname">void DdMd::Simulation::computePotentialEnergies </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -518,16 +518,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00668">668</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="OutputEnergy_8cpp_source.html#l00057">OutputEnergy::sample()</a>.</p>
+<p>Referenced by <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3b69eed28747f5c7af55bc3ef911da53"></a><!-- doxytag: member="DdMd::Simulation::potentialEnergy" ref="a3b69eed28747f5c7af55bc3ef911da53" args="()" -->
+<a class="anchor" id="a37a102d9d4fad341b53e8a08bab1d7f0"></a><!-- doxytag: member="DdMd::Simulation::potentialEnergy" ref="a37a102d9d4fad341b53e8a08bab1d7f0" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double potentialEnergy </td>
+          <td class="memname">double DdMd::Simulation::potentialEnergy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -542,16 +542,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00720">720</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="OutputEnergy_8cpp_source.html#l00057">OutputEnergy::sample()</a>.</p>
+<p>Referenced by <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9160e671ca2963da84a4932568432095"></a><!-- doxytag: member="DdMd::Simulation::readConfig" ref="a9160e671ca2963da84a4932568432095" args="(const std::string &amp;filename)" -->
+<a class="anchor" id="ab9b92083e998d136df9df75cb8677667"></a><!-- doxytag: member="DdMd::Simulation::readConfig" ref="ab9b92083e998d136df9df75cb8677667" args="(const std::string &amp;filename)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readConfig </td>
+          <td class="memname">void DdMd::Simulation::readConfig </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>filename</em></td><td>)</td>
@@ -573,12 +573,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a08dbe976cc87f72e3a1ca9775b0d494d"></a><!-- doxytag: member="DdMd::Simulation::writeConfig" ref="a08dbe976cc87f72e3a1ca9775b0d494d" args="(const std::string &amp;filename)" -->
+<a class="anchor" id="afda8eea88c0e81663b145a47d1d90588"></a><!-- doxytag: member="DdMd::Simulation::writeConfig" ref="afda8eea88c0e81663b145a47d1d90588" args="(const std::string &amp;filename)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void writeConfig </td>
+          <td class="memname">void DdMd::Simulation::writeConfig </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>filename</em></td><td>)</td>
@@ -598,16 +598,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00775">775</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">WriteConfig::sample()</a>.</p>
+<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">DdMd::WriteConfig::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="adf809dd00e6e980c6230becc119b5429"></a><!-- doxytag: member="DdMd::Simulation::configIoFactory" ref="adf809dd00e6e980c6230becc119b5429" args="()" -->
+<a class="anchor" id="a7e41cb8e89401e39a90f4942a51c88d2"></a><!-- doxytag: member="DdMd::Simulation::configIoFactory" ref="a7e41cb8e89401e39a90f4942a51c88d2" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1ConfigIo.html">ConfigIo</a> &gt; &amp; configIoFactory </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1ConfigIo.html">ConfigIo</a> &gt; &amp; DdMd::Simulation::configIoFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -622,12 +622,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad05e4313ced6e3e8b84e6de6a9c796c7"></a><!-- doxytag: member="DdMd::Simulation::setConfigIo" ref="ad05e4313ced6e3e8b84e6de6a9c796c7" args="(std::string &amp;classname)" -->
+<a class="anchor" id="aefaea5d3fe48d50291e0dbfcd4956737"></a><!-- doxytag: member="DdMd::Simulation::setConfigIo" ref="aefaea5d3fe48d50291e0dbfcd4956737" args="(std::string &amp;classname)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setConfigIo </td>
+          <td class="memname">void DdMd::Simulation::setConfigIo </td>
           <td>(</td>
           <td class="paramtype">std::string &amp;&#160;</td>
           <td class="paramname"><em>classname</em></td><td>)</td>
@@ -648,16 +648,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00927">927</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00107">ConfigIo::associate()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00107">DdMd::ConfigIo::associate()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5dd7e39a86b01cf70d08220bf5253a80"></a><!-- doxytag: member="DdMd::Simulation::pairFactory" ref="a5dd7e39a86b01cf70d08220bf5253a80" args="()" -->
+<a class="anchor" id="ab48939227b9e29f5f8cf935ec92868e2"></a><!-- doxytag: member="DdMd::Simulation::pairFactory" ref="ab48939227b9e29f5f8cf935ec92868e2" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> &gt; &amp; pairFactory </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> &gt; &amp; DdMd::Simulation::pairFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -672,12 +672,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab5df9a80f1bd3006eb704724ca8e2def"></a><!-- doxytag: member="DdMd::Simulation::pairStyle" ref="ab5df9a80f1bd3006eb704724ca8e2def" args="() const " -->
+<a class="anchor" id="a3f59d4cda8e4dd1c3f5a4a4ca902cf0a"></a><!-- doxytag: member="DdMd::Simulation::pairStyle" ref="a3f59d4cda8e4dd1c3f5a4a4ca902cf0a" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string pairStyle </td>
+          <td class="memname">std::string DdMd::Simulation::pairStyle </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -692,12 +692,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac5eaa682a9e4dd7bf3b166071e1d69a8"></a><!-- doxytag: member="DdMd::Simulation::bondFactory" ref="ac5eaa682a9e4dd7bf3b166071e1d69a8" args="()" -->
+<a class="anchor" id="a4127ff1f0bd3458414d496e0c76df4e4"></a><!-- doxytag: member="DdMd::Simulation::bondFactory" ref="a4127ff1f0bd3458414d496e0c76df4e4" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1BondPotential.html">BondPotential</a> &gt; &amp; bondFactory </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1BondPotential.html">BondPotential</a> &gt; &amp; DdMd::Simulation::bondFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -712,12 +712,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4d83d946cf31b1ac66aece56b7133683"></a><!-- doxytag: member="DdMd::Simulation::bondStyle" ref="a4d83d946cf31b1ac66aece56b7133683" args="() const " -->
+<a class="anchor" id="a434fa4a57478f1941d924446a41627b3"></a><!-- doxytag: member="DdMd::Simulation::bondStyle" ref="a434fa4a57478f1941d924446a41627b3" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string bondStyle </td>
+          <td class="memname">std::string DdMd::Simulation::bondStyle </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -732,12 +732,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="affe41c37893b4fb65b5aabb705b4271c"></a><!-- doxytag: member="DdMd::Simulation::externalFactory" ref="affe41c37893b4fb65b5aabb705b4271c" args="()" -->
+<a class="anchor" id="aa502eac2282707b7a8e6898f21cbf1ca"></a><!-- doxytag: member="DdMd::Simulation::externalFactory" ref="aa502eac2282707b7a8e6898f21cbf1ca" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1ExternalPotential.html">ExternalPotential</a> &gt; &amp; externalFactory </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1ExternalPotential.html">ExternalPotential</a> &gt; &amp; DdMd::Simulation::externalFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -752,12 +752,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a70125de9a41d1ad0aa7c002e69fd9af6"></a><!-- doxytag: member="DdMd::Simulation::externalStyle" ref="a70125de9a41d1ad0aa7c002e69fd9af6" args="() const " -->
+<a class="anchor" id="aefa0323fdb3cab7a38db0b7f547c2c10"></a><!-- doxytag: member="DdMd::Simulation::externalStyle" ref="aefa0323fdb3cab7a38db0b7f547c2c10" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string externalStyle </td>
+          <td class="memname">std::string DdMd::Simulation::externalStyle </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -772,12 +772,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a64ddaf9dd004b6c301f8f23e8995b6d1"></a><!-- doxytag: member="DdMd::Simulation::domain" ref="a64ddaf9dd004b6c301f8f23e8995b6d1" args="()" -->
+<a class="anchor" id="a4bcb8e6e1482b6e825e54d71e93b9e6c"></a><!-- doxytag: member="DdMd::Simulation::domain" ref="a4bcb8e6e1482b6e825e54d71e93b9e6c" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp; domain </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp; DdMd::Simulation::domain </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -790,16 +790,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00646">646</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">ConfigIo::ConfigIo()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00057">OutputEnergy::sample()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa34b0aab4d37e8b42704954d57b5c126"></a><!-- doxytag: member="DdMd::Simulation::atomStorage" ref="aa34b0aab4d37e8b42704954d57b5c126" args="()" -->
+<a class="anchor" id="a08b21df742e75449aa5d57a7c9fc9b5c"></a><!-- doxytag: member="DdMd::Simulation::atomStorage" ref="a08b21df742e75449aa5d57a7c9fc9b5c" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp; atomStorage </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp; DdMd::Simulation::atomStorage </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -812,16 +812,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00649">649</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">ConfigIo::ConfigIo()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac0ff8b7a630972e48ad29b007ae770de"></a><!-- doxytag: member="DdMd::Simulation::bondStorage" ref="ac0ff8b7a630972e48ad29b007ae770de" args="()" -->
+<a class="anchor" id="a843e0d761026f9a766486a2a26039815"></a><!-- doxytag: member="DdMd::Simulation::bondStorage" ref="a843e0d761026f9a766486a2a26039815" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1BondStorage.html">BondStorage</a> &amp; bondStorage </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1BondStorage.html">BondStorage</a> &amp; DdMd::Simulation::bondStorage </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -834,16 +834,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00652">652</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">ConfigIo::ConfigIo()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5daa73910cfb398e1ba647b4821d18ba"></a><!-- doxytag: member="DdMd::Simulation::boundary" ref="a5daa73910cfb398e1ba647b4821d18ba" args="()" -->
+<a class="anchor" id="a976114ff90d628068ccaa7b62be9ed08"></a><!-- doxytag: member="DdMd::Simulation::boundary" ref="a976114ff90d628068ccaa7b62be9ed08" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Boundary &amp; boundary </td>
+          <td class="memname">Boundary &amp; DdMd::Simulation::boundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -856,16 +856,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00643">643</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">ConfigIo::ConfigIo()</a>, and <a class="el" href="ddMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00221">ExternalPotentialImpl&lt; Interaction &gt;::ExternalPotentialImpl()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>, and <a class="el" href="ddMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00221">DdMd::ExternalPotentialImpl&lt; Interaction &gt;::ExternalPotentialImpl()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a441a47ecbdc730455562537c533d08f5"></a><!-- doxytag: member="DdMd::Simulation::pairPotential" ref="a441a47ecbdc730455562537c533d08f5" args="()" -->
+<a class="anchor" id="a1b4296f896768dd20000a2d9fc4d1ad6"></a><!-- doxytag: member="DdMd::Simulation::pairPotential" ref="a1b4296f896768dd20000a2d9fc4d1ad6" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> &amp; pairPotential </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> &amp; DdMd::Simulation::pairPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -880,12 +880,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af743badbda187883a98ee4e0ec923381"></a><!-- doxytag: member="DdMd::Simulation::bondPotential" ref="af743badbda187883a98ee4e0ec923381" args="()" -->
+<a class="anchor" id="ab32f9cba063db6d24f7e694067486a7d"></a><!-- doxytag: member="DdMd::Simulation::bondPotential" ref="ab32f9cba063db6d24f7e694067486a7d" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1BondPotential.html">BondPotential</a> &amp; bondPotential </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1BondPotential.html">BondPotential</a> &amp; DdMd::Simulation::bondPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -900,12 +900,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0099c1558bb236318dea07f388df7495"></a><!-- doxytag: member="DdMd::Simulation::externalPotential" ref="a0099c1558bb236318dea07f388df7495" args="()" -->
+<a class="anchor" id="aca6c5c7aa885faac51ad1a1075a261ef"></a><!-- doxytag: member="DdMd::Simulation::externalPotential" ref="aca6c5c7aa885faac51ad1a1075a261ef" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1ExternalPotential.html">ExternalPotential</a> &amp; externalPotential </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1ExternalPotential.html">ExternalPotential</a> &amp; DdMd::Simulation::externalPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -920,12 +920,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="add786e8bf81a1ce15721ddec114563b0"></a><!-- doxytag: member="DdMd::Simulation::integrator" ref="add786e8bf81a1ce15721ddec114563b0" args="()" -->
+<a class="anchor" id="abdeb3c3c35c89fa92383442b09dd4ffe"></a><!-- doxytag: member="DdMd::Simulation::integrator" ref="abdeb3c3c35c89fa92383442b09dd4ffe" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Integrator.html">Integrator</a> &amp; integrator </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Integrator.html">Integrator</a> &amp; DdMd::Simulation::integrator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -940,12 +940,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aac5b843385b6224e664f16e8cc70e4dc"></a><!-- doxytag: member="DdMd::Simulation::energyEnsemble" ref="aac5b843385b6224e664f16e8cc70e4dc" args="()" -->
+<a class="anchor" id="a4f0645169fdd0f0a6f0f2ae83feca18b"></a><!-- doxytag: member="DdMd::Simulation::energyEnsemble" ref="a4f0645169fdd0f0a6f0f2ae83feca18b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1EnergyEnsemble.html">EnergyEnsemble</a> &amp; energyEnsemble </td>
+          <td class="memname"><a class="el" href="classUtil_1_1EnergyEnsemble.html">EnergyEnsemble</a> &amp; DdMd::Simulation::energyEnsemble </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -958,16 +958,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00728">728</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00031">NvtIntegrator::NvtIntegrator()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, and <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">NvtIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00031">DdMd::NvtIntegrator::NvtIntegrator()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, and <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4c72b5c96b0544814ab613998a3385d8"></a><!-- doxytag: member="DdMd::Simulation::boundaryEnsemble" ref="a4c72b5c96b0544814ab613998a3385d8" args="()" -->
+<a class="anchor" id="aa5ff1ea348825e3624f6ec7dcb7c4c20"></a><!-- doxytag: member="DdMd::Simulation::boundaryEnsemble" ref="aa5ff1ea348825e3624f6ec7dcb7c4c20" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1BoundaryEnsemble.html">BoundaryEnsemble</a> &amp; boundaryEnsemble </td>
+          <td class="memname"><a class="el" href="classUtil_1_1BoundaryEnsemble.html">BoundaryEnsemble</a> &amp; DdMd::Simulation::boundaryEnsemble </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -982,12 +982,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aab4571631d952de626f3a08388c45272"></a><!-- doxytag: member="DdMd::Simulation::fileMaster" ref="aab4571631d952de626f3a08388c45272" args="()" -->
+<a class="anchor" id="af5d7a044aaf35ef9fb74e79ce640ab3a"></a><!-- doxytag: member="DdMd::Simulation::fileMaster" ref="af5d7a044aaf35ef9fb74e79ce640ab3a" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1FileMaster.html">FileMaster</a> &amp; fileMaster </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1FileMaster.html">FileMaster</a> &amp; DdMd::Simulation::fileMaster </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -1002,12 +1002,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af5c28a7cf119c9491af8679ee8ca5cda"></a><!-- doxytag: member="DdMd::Simulation::integratorFactory" ref="af5c28a7cf119c9491af8679ee8ca5cda" args="()" -->
+<a class="anchor" id="a1466f5ccbcd070b984cf8602a5b8bb43"></a><!-- doxytag: member="DdMd::Simulation::integratorFactory" ref="a1466f5ccbcd070b984cf8602a5b8bb43" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1Integrator.html">Integrator</a> &gt; &amp; integratorFactory </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1Integrator.html">Integrator</a> &gt; &amp; DdMd::Simulation::integratorFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1022,12 +1022,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3e9d2379455b7dc1bc206383917cd3b0"></a><!-- doxytag: member="DdMd::Simulation::random" ref="a3e9d2379455b7dc1bc206383917cd3b0" args="()" -->
+<a class="anchor" id="a9adda821e4551b7b0291903a2ec99e50"></a><!-- doxytag: member="DdMd::Simulation::random" ref="a9adda821e4551b7b0291903a2ec99e50" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Random.html">Random</a> &amp; random </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Random.html">Random</a> &amp; DdMd::Simulation::random </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -1042,12 +1042,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5c68cd5c85b83899f832b1fa250ea299"></a><!-- doxytag: member="DdMd::Simulation::exchanger" ref="a5c68cd5c85b83899f832b1fa250ea299" args="()" -->
+<a class="anchor" id="a87a973845278e6f7a94cdec00c81166b"></a><!-- doxytag: member="DdMd::Simulation::exchanger" ref="a87a973845278e6f7a94cdec00c81166b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Exchanger.html">Exchanger</a> &amp; exchanger </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Exchanger.html">Exchanger</a> &amp; DdMd::Simulation::exchanger </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -1062,12 +1062,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad6f298ccec40b581e758eec243021929"></a><!-- doxytag: member="DdMd::Simulation::buffer" ref="ad6f298ccec40b581e758eec243021929" args="()" -->
+<a class="anchor" id="a6c78802f0ee142f772aa7dd86679d4db"></a><!-- doxytag: member="DdMd::Simulation::buffer" ref="a6c78802f0ee142f772aa7dd86679d4db" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp; buffer </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp; DdMd::Simulation::buffer </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -1080,16 +1080,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00668">668</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">ConfigIo::ConfigIo()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a405063196da9838550fc44d066c3b7bc"></a><!-- doxytag: member="DdMd::Simulation::diagnosticManager" ref="a405063196da9838550fc44d066c3b7bc" args="()" -->
+<a class="anchor" id="a97078a43b926eba8fc79735d89adaa36"></a><!-- doxytag: member="DdMd::Simulation::diagnosticManager" ref="a97078a43b926eba8fc79735d89adaa36" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1DiagnosticManager.html">DiagnosticManager</a> &amp; diagnosticManager </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1DiagnosticManager.html">DiagnosticManager</a> &amp; DdMd::Simulation::diagnosticManager </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -1102,16 +1102,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00755">755</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a41e7e39e41db8f55dfec1873ed574ba1"></a><!-- doxytag: member="DdMd::Simulation::nAtomType" ref="a41e7e39e41db8f55dfec1873ed574ba1" args="()" -->
+<a class="anchor" id="a9988011a7dc2634badaa61dfb81f1a69"></a><!-- doxytag: member="DdMd::Simulation::nAtomType" ref="a9988011a7dc2634badaa61dfb81f1a69" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nAtomType </td>
+          <td class="memname">int DdMd::Simulation::nAtomType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -1124,16 +1124,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00764">764</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00059">NvtIntegrator::readParam()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00042">NveIntegrator::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00059">DdMd::NvtIntegrator::readParam()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00042">DdMd::NveIntegrator::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a35e189729c1865f7f2bf7d68788f0749"></a><!-- doxytag: member="DdMd::Simulation::nBondType" ref="a35e189729c1865f7f2bf7d68788f0749" args="()" -->
+<a class="anchor" id="aa6f40dc5a680c3e8e0b38fc88608f039"></a><!-- doxytag: member="DdMd::Simulation::nBondType" ref="aa6f40dc5a680c3e8e0b38fc88608f039" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nBondType </td>
+          <td class="memname">int DdMd::Simulation::nBondType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -1148,12 +1148,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6a005309fb2192d3204bfc71735dbcf3"></a><!-- doxytag: member="DdMd::Simulation::hasExternal" ref="a6a005309fb2192d3204bfc71735dbcf3" args="()" -->
+<a class="anchor" id="a87ad9927ead6d83f230d8635cf165609"></a><!-- doxytag: member="DdMd::Simulation::hasExternal" ref="a87ad9927ead6d83f230d8635cf165609" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool hasExternal </td>
+          <td class="memname">bool DdMd::Simulation::hasExternal </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -1168,12 +1168,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a60cb488f03a605d0214c1adbae33ffcb"></a><!-- doxytag: member="DdMd::Simulation::atomType" ref="a60cb488f03a605d0214c1adbae33ffcb" args="(int i)" -->
+<a class="anchor" id="adb69f41e67ea48facaaeed0a94c7d218"></a><!-- doxytag: member="DdMd::Simulation::atomType" ref="adb69f41e67ea48facaaeed0a94c7d218" args="(int i)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1AtomType.html">AtomType</a> &amp; atomType </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1AtomType.html">AtomType</a> &amp; DdMd::Simulation::atomType </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -1187,16 +1187,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00800">800</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">NveIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac2760568e710bf2ed84a05ea91345c61"></a><!-- doxytag: member="DdMd::Simulation::maskedPairPolicy" ref="ac2760568e710bf2ed84a05ea91345c61" args="() const " -->
+<a class="anchor" id="a3d42913c5edc53adbe6e200b7f5a9e1f"></a><!-- doxytag: member="DdMd::Simulation::maskedPairPolicy" ref="a3d42913c5edc53adbe6e200b7f5a9e1f" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__DdMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7">MaskPolicy</a> maskedPairPolicy </td>
+          <td class="memname"><a class="el" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4">MaskPolicy</a> DdMd::Simulation::maskedPairPolicy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -1211,12 +1211,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afe93e17ac89cd97917811068ba2af214"></a><!-- doxytag: member="DdMd::Simulation::isValid" ref="afe93e17ac89cd97917811068ba2af214" args="()" -->
+<a class="anchor" id="ae1fec95c5c1fa9948ab3e7e5425e35c2"></a><!-- doxytag: member="DdMd::Simulation::isValid" ref="ae1fec95c5c1fa9948ab3e7e5425e35c2" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool DdMd::Simulation::isValid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1233,12 +1233,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a29cb9ccd6e27b8c44c0e35476cb9414a"></a><!-- doxytag: member="DdMd::Simulation::readFileMaster" ref="a29cb9ccd6e27b8c44c0e35476cb9414a" args="(std::istream &amp;in)" -->
+<a class="anchor" id="aeb091178ff7457e841eb208be068ed64"></a><!-- doxytag: member="DdMd::Simulation::readFileMaster" ref="aeb091178ff7457e841eb208be068ed64" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readFileMaster </td>
+          <td class="memname">void DdMd::Simulation::readFileMaster </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -1261,12 +1261,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ada500231e17bfb7f1b9097caca487f15"></a><!-- doxytag: member="DdMd::Simulation::readPotentialStyles" ref="ada500231e17bfb7f1b9097caca487f15" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ac28e2495b88ebf03b2833187f5034bb3"></a><!-- doxytag: member="DdMd::Simulation::readPotentialStyles" ref="ac28e2495b88ebf03b2833187f5034bb3" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readPotentialStyles </td>
+          <td class="memname">void DdMd::Simulation::readPotentialStyles </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -1289,12 +1289,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7e4f36650a5fa0818045413f37e9bd9a"></a><!-- doxytag: member="DdMd::Simulation::readEnsembles" ref="a7e4f36650a5fa0818045413f37e9bd9a" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ac6951f28a65d6e9e985f3dc511afb025"></a><!-- doxytag: member="DdMd::Simulation::readEnsembles" ref="ac6951f28a65d6e9e985f3dc511afb025" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readEnsembles </td>
+          <td class="memname">void DdMd::Simulation::readEnsembles </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -1321,7 +1321,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

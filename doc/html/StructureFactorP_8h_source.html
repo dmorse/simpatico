@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -95,31 +95,31 @@
 <a name="l00136"></a>00136       <span class="keyword">virtual</span> <span class="keywordtype">void</span> output();
 <a name="l00137"></a>00137 
 <a name="l00144"></a>00144       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00145"></a>00145       <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00145"></a>00145       <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00146"></a>00146 
 <a name="l00147"></a>00147    <span class="keyword">protected</span>:
 <a name="l00148"></a>00148 
-<a name="l00150"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a405a931ed1680bb5a3da7c89e5b2dd06">00150</a>       std::ofstream <a class="code" href="classMcMd_1_1StructureFactorP.html#a405a931ed1680bb5a3da7c89e5b2dd06" title="Output file stream.">outputFile_</a>;
+<a name="l00150"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#ad93a7bb81c8d74d1d33b7158f0dbddc6">00150</a>       std::ofstream <a class="code" href="classMcMd_1_1StructureFactorP.html#ad93a7bb81c8d74d1d33b7158f0dbddc6" title="Output file stream.">outputFile_</a>;
 <a name="l00151"></a>00151 
-<a name="l00157"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a071ab9e6b8fdeeda77f4623230df8df9">00157</a>       <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;double&gt;</a>          <a class="code" href="classMcMd_1_1StructureFactorP.html#a071ab9e6b8fdeeda77f4623230df8df9" title="Structure factor accumulators.">structureFactors_</a>;
+<a name="l00157"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a548c32576c4b3c307f98aba4237cdc35">00157</a>       <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;double&gt;</a>          <a class="code" href="classMcMd_1_1StructureFactorP.html#a548c32576c4b3c307f98aba4237cdc35" title="Structure factor accumulators.">structureFactors_</a>;
 <a name="l00158"></a>00158 
-<a name="l00160"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#ab4a595439c5b8d1be081c8f623aa54ef">00160</a>       <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt; std::complex&lt;double&gt;</a> &gt;  <a class="code" href="classMcMd_1_1StructureFactorP.html#ab4a595439c5b8d1be081c8f623aa54ef" title="Fourier modes. First index is wavevector, second is atom type.">fourierModes_</a>;
+<a name="l00160"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a1a38c1b8775c844a825f1521cceaccf1">00160</a>       <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt; std::complex&lt;double&gt;</a> &gt;  <a class="code" href="classMcMd_1_1StructureFactorP.html#a1a38c1b8775c844a825f1521cceaccf1" title="Fourier modes. First index is wavevector, second is atom type.">fourierModes_</a>;
 <a name="l00161"></a>00161 
-<a name="l00163"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a7fd280018781fba38c437290fdf968c7">00163</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;IntVector&gt;</a>        <a class="code" href="classMcMd_1_1StructureFactorP.html#a7fd280018781fba38c437290fdf968c7" title="Array of miller index IntVectors for wavevectors.">waveIntVectors_</a>;
+<a name="l00163"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a354f775aeb7961cd96cbae2900ade76a">00163</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;IntVector&gt;</a>        <a class="code" href="classMcMd_1_1StructureFactorP.html#a354f775aeb7961cd96cbae2900ade76a" title="Array of miller index IntVectors for wavevectors.">waveIntVectors_</a>;
 <a name="l00164"></a>00164 
-<a name="l00166"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#adba77ea9ca32e7d0e0b8f8d904f361fc">00166</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Vector&gt;</a>           <a class="code" href="classMcMd_1_1StructureFactorP.html#adba77ea9ca32e7d0e0b8f8d904f361fc" title="Array of wave vectors.">waveVectors_</a>;
+<a name="l00166"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#ae24386f0369584435fbd3d5f5a1115c5">00166</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Vector&gt;</a>           <a class="code" href="classMcMd_1_1StructureFactorP.html#ae24386f0369584435fbd3d5f5a1115c5" title="Array of wave vectors.">waveVectors_</a>;
 <a name="l00167"></a>00167 
-<a name="l00169"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a9b498af9e8109ad650423b57e6ad5e6f">00169</a>       <a class="code" href="classUtil_1_1DArray.html" title="Dynamically allocatable Array class template.">DArray&lt; Pair&lt;int&gt;</a> &gt;      <a class="code" href="classMcMd_1_1StructureFactorP.html#a9b498af9e8109ad650423b57e6ad5e6f" title="Array of atom type indices (-1 indicates a sum of all types)">atomTypeIdPairs_</a>;
+<a name="l00169"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a129bb85708b9cedc83e6683c6c860ae2">00169</a>       <a class="code" href="classUtil_1_1DArray.html" title="Dynamically allocatable Array class template.">DArray&lt; Pair&lt;int&gt;</a> &gt;      <a class="code" href="classMcMd_1_1StructureFactorP.html#a129bb85708b9cedc83e6683c6c860ae2" title="Array of atom type indices (-1 indicates a sum of all types)">atomTypeIdPairs_</a>;
 <a name="l00170"></a>00170 
-<a name="l00172"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a29df5d42c9507011a82361258a632f0f">00172</a>       <span class="keywordtype">int</span>                      <a class="code" href="classMcMd_1_1StructureFactorP.html#a29df5d42c9507011a82361258a632f0f" title="Number of wavevectors.">nWave_</a>;
+<a name="l00172"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a7b65a77b6e4075f7260003309d4c89da">00172</a>       <span class="keywordtype">int</span>                      <a class="code" href="classMcMd_1_1StructureFactorP.html#a7b65a77b6e4075f7260003309d4c89da" title="Number of wavevectors.">nWave_</a>;
 <a name="l00173"></a>00173 
-<a name="l00175"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a76af617fb75a20fc3d611fdd13025ea4">00175</a>       <span class="keywordtype">int</span>                      <a class="code" href="classMcMd_1_1StructureFactorP.html#a76af617fb75a20fc3d611fdd13025ea4" title="Number of selected atom type pairs.">nAtomTypeIdPair_</a>;
+<a name="l00175"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a4848320eeabc4641102c560cacccff2a">00175</a>       <span class="keywordtype">int</span>                      <a class="code" href="classMcMd_1_1StructureFactorP.html#a4848320eeabc4641102c560cacccff2a" title="Number of selected atom type pairs.">nAtomTypeIdPair_</a>;
 <a name="l00176"></a>00176 
-<a name="l00178"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#ac50cf6ede880aad2a811578ab9b34b4d">00178</a>       <span class="keywordtype">int</span>                      <a class="code" href="classMcMd_1_1StructureFactorP.html#ac50cf6ede880aad2a811578ab9b34b4d" title="Number of samples thus far.">nSample_</a>;
+<a name="l00178"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#ae7a7e73ff084f0c8d0c8e342f8165c08">00178</a>       <span class="keywordtype">int</span>                      <a class="code" href="classMcMd_1_1StructureFactorP.html#ae7a7e73ff084f0c8d0c8e342f8165c08" title="Number of samples thus far.">nSample_</a>;
 <a name="l00179"></a>00179 
-<a name="l00181"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a47e8e463ee625fa1bc77c9e1534b26cf">00181</a>       <span class="keywordtype">int</span>                      <a class="code" href="classMcMd_1_1StructureFactorP.html#a47e8e463ee625fa1bc77c9e1534b26cf" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>;
+<a name="l00181"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a57385e9d2508a753a8d308650f61452b">00181</a>       <span class="keywordtype">int</span>                      <a class="code" href="classMcMd_1_1StructureFactorP.html#a57385e9d2508a753a8d308650f61452b" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>;
 <a name="l00182"></a>00182 
-<a name="l00184"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a48d9764bd8f58673da1d598b37581d8c">00184</a>       <span class="keywordtype">bool</span>    <a class="code" href="classMcMd_1_1StructureFactorP.html#a48d9764bd8f58673da1d598b37581d8c" title="Has readParam been called?">isInitialized_</a>;
+<a name="l00184"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a1c223712ddc8be269dc76377ef435665">00184</a>       <span class="keywordtype">bool</span>    <a class="code" href="classMcMd_1_1StructureFactorP.html#a1c223712ddc8be269dc76377ef435665" title="Has readParam been called?">isInitialized_</a>;
 <a name="l00185"></a>00185 
 <a name="l00189"></a>00189       <span class="keywordtype">void</span> makeWaveVectors();
 <a name="l00190"></a>00190 
@@ -129,7 +129,7 @@
 <a name="l00194"></a>00194 <span class="comment">   * Serialize to/from an archive. </span>
 <a name="l00195"></a>00195 <span class="comment">   */</span>
 <a name="l00196"></a>00196    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00197"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a6765e839ab267e4959384e35a4112451">00197</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactorP.html#a6765e839ab267e4959384e35a4112451" title="Serialize to/from an archive.">StructureFactorP::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00197"></a><a class="code" href="classMcMd_1_1StructureFactorP.html#a093dd7a82f170540fa28a58b61c95a38">00197</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactorP.html#a093dd7a82f170540fa28a58b61c95a38" title="Serialize to/from an archive.">StructureFactorP::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00198"></a>00198    {
 <a name="l00199"></a>00199       <span class="keywordflow">if</span> (!isInitialized_) {
 <a name="l00200"></a>00200          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: Object not initialized.&quot;</span>);
@@ -150,7 +150,7 @@
 <a name="l00215"></a>00215 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

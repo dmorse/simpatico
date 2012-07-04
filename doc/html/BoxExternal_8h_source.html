@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -85,7 +85,7 @@
 <a name="l00063"></a>00063 
 <a name="l00069"></a>00069       <span class="keywordtype">void</span> setNAtomType(<span class="keywordtype">int</span> nAtomType);
 <a name="l00070"></a>00070 
-<a name="l00076"></a>00076       <span class="keywordtype">void</span> setBoundary(Boundary &amp;boundary);
+<a name="l00076"></a>00076       <span class="keywordtype">void</span> setBoundary(<a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary);
 <a name="l00077"></a>00077 
 <a name="l00083"></a>00083       <span class="keywordtype">void</span> setExternalParameter(<span class="keywordtype">double</span> externalParameter);
 <a name="l00084"></a>00084 
@@ -121,7 +121,7 @@
 <a name="l00169"></a>00169 
 <a name="l00171"></a>00171       <span class="keywordtype">double</span> coeff_;
 <a name="l00172"></a>00172   
-<a name="l00174"></a>00174       Boundary *boundaryPtr_;
+<a name="l00174"></a>00174       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> *boundaryPtr_;
 <a name="l00175"></a>00175    
 <a name="l00177"></a>00177       <span class="keywordtype">int</span>    nAtomType_; 
 <a name="l00178"></a>00178 
@@ -137,7 +137,7 @@
 <a name="l00189"></a>00189 <span class="comment">   * 7.905694 = 25/sqrt(10), which is the negative of the minimum of the</span>
 <a name="l00190"></a>00190 <span class="comment">   * unshifted 9-3 potential.</span>
 <a name="l00191"></a>00191 <span class="comment">   */</span>
-<a name="l00192"></a><a class="code" href="classInter_1_1BoxExternal.html#a9f7703d172dc4de0dc27146f8e0473ca">00192</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1BoxExternal.html#a9f7703d172dc4de0dc27146f8e0473ca" title="Returns external potential energy of a particle of type i.">BoxExternal::energy</a>(<span class="keywordtype">double</span> d, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
+<a name="l00192"></a><a class="code" href="classInter_1_1BoxExternal.html#a530a490e4028d35b794fc99d14b45297">00192</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1BoxExternal.html#a530a490e4028d35b794fc99d14b45297" title="Returns external potential energy of a particle of type i.">BoxExternal::energy</a>(<span class="keywordtype">double</span> d, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
 <a name="l00193"></a>00193 <span class="keyword">   </span>{
 <a name="l00194"></a>00194       <span class="keywordflow">if</span> (d &lt; cutoff_) {
 <a name="l00195"></a>00195          <span class="keywordtype">double</span> r3i;
@@ -153,13 +153,13 @@
 <a name="l00205"></a>00205    <span class="comment">/* </span>
 <a name="l00206"></a>00206 <span class="comment">   * Calculate external potential energy for a single atom.</span>
 <a name="l00207"></a>00207 <span class="comment">   */</span>
-<a name="l00208"></a><a class="code" href="classInter_1_1BoxExternal.html#a31f6e82a6ad0df912e5d8447e28b77ad">00208</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1BoxExternal.html#a9f7703d172dc4de0dc27146f8e0473ca" title="Returns external potential energy of a particle of type i.">BoxExternal::energy</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
+<a name="l00208"></a><a class="code" href="classInter_1_1BoxExternal.html#ab390c4eb06f48e8aacfc34ef86c760c0">00208</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1BoxExternal.html#a530a490e4028d35b794fc99d14b45297" title="Returns external potential energy of a particle of type i.">BoxExternal::energy</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
 <a name="l00209"></a>00209 <span class="keyword">   </span>{
 <a name="l00210"></a>00210       <span class="keywordtype">double</span> d, totalEnergy;
 <a name="l00211"></a>00211       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> halfL = boundaryPtr_-&gt;lengths();
 <a name="l00212"></a>00212       halfL *= 0.5;
 <a name="l00213"></a>00213       totalEnergy = 0.0;
-<a name="l00214"></a>00214       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00214"></a>00214       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00215"></a>00215          d = position[i];
 <a name="l00216"></a>00216          <span class="keywordflow">if</span> (d &gt; halfL[i]) d = halfL[i] + halfL[i] - d;
 <a name="l00217"></a>00217             totalEnergy += energy(d, type);
@@ -170,7 +170,7 @@
 <a name="l00222"></a>00222    <span class="comment">/* </span>
 <a name="l00223"></a>00223 <span class="comment">   * Calculate force for a particle as a function of distance to boundary.</span>
 <a name="l00224"></a>00224 <span class="comment">   */</span>
-<a name="l00225"></a><a class="code" href="classInter_1_1BoxExternal.html#a0c67ad23f557256a604942b58fe3050a">00225</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1BoxExternal.html#a0c67ad23f557256a604942b58fe3050a" title="Returns magnitude of the repulsive force.">BoxExternal::forceScalar</a>(<span class="keywordtype">double</span> d, <span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00225"></a><a class="code" href="classInter_1_1BoxExternal.html#a74369b58330b3413a6febd2ec6135105">00225</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1BoxExternal.html#a74369b58330b3413a6febd2ec6135105" title="Returns magnitude of the repulsive force.">BoxExternal::forceScalar</a>(<span class="keywordtype">double</span> d, <span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00226"></a>00226 <span class="keyword">   </span>{
 <a name="l00227"></a>00227       <span class="keywordflow">if</span> (d &lt; cutoff_) {
 <a name="l00228"></a>00228          <span class="keywordtype">double</span> r3i;
@@ -187,13 +187,13 @@
 <a name="l00239"></a>00239 <span class="comment">   * Calculate external force for a single atom.</span>
 <a name="l00240"></a>00240 <span class="comment">   */</span>
 <a name="l00241"></a>00241    <span class="keyword">inline</span> <span class="keywordtype">void</span> 
-<a name="l00242"></a><a class="code" href="classInter_1_1BoxExternal.html#a0902fde96065d5ca327d705e9e5948ad">00242</a>    <a class="code" href="classInter_1_1BoxExternal.html#a0902fde96065d5ca327d705e9e5948ad" title="Returns force caused by the external potential.">BoxExternal::getForce</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position, <span class="keywordtype">int</span> type, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; force)<span class="keyword"> const</span>
+<a name="l00242"></a><a class="code" href="classInter_1_1BoxExternal.html#a4dd9ba3cd39bcaff9f835d4b1d34cf00">00242</a>    <a class="code" href="classInter_1_1BoxExternal.html#a4dd9ba3cd39bcaff9f835d4b1d34cf00" title="Returns force caused by the external potential.">BoxExternal::getForce</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position, <span class="keywordtype">int</span> type, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; force)<span class="keyword"> const</span>
 <a name="l00243"></a>00243 <span class="keyword">   </span>{
 <a name="l00244"></a>00244       <span class="keywordtype">double</span> d = position[2];
 <a name="l00245"></a>00245       <span class="keywordtype">double</span> scalarf;
 <a name="l00246"></a>00246       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> halfL = boundaryPtr_-&gt;lengths();
 <a name="l00247"></a>00247       halfL *= 0.5;
-<a name="l00248"></a>00248       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00248"></a>00248       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00249"></a>00249          d = position[i];
 <a name="l00250"></a>00250          <span class="keywordflow">if</span> (d &gt; halfL[i]) {
 <a name="l00251"></a>00251             d = halfL[i] + halfL[i] - d;
@@ -210,7 +210,7 @@
 <a name="l00262"></a>00262 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

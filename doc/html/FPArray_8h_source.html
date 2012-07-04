@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -72,42 +72,42 @@
 <a name="l00040"></a>00040 
 <a name="l00041"></a>00041    <span class="keyword">public</span>:
 <a name="l00042"></a>00042 
-<a name="l00046"></a>00046       <a class="code" href="classUtil_1_1FPArray.html#ab3ccdfdb1b4c1fc2cf2968febac76ec9" title="Default constructor.">FPArray</a>();
+<a name="l00046"></a>00046       <a class="code" href="classUtil_1_1FPArray.html#a334c513c03ed5250836e7b6b412af698" title="Default constructor.">FPArray</a>();
 <a name="l00047"></a>00047 
-<a name="l00055"></a>00055       <a class="code" href="classUtil_1_1FPArray.html#ab3ccdfdb1b4c1fc2cf2968febac76ec9" title="Default constructor.">FPArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray&lt;Data, Capacity&gt;</a>&amp; other);
+<a name="l00055"></a>00055       <a class="code" href="classUtil_1_1FPArray.html#a334c513c03ed5250836e7b6b412af698" title="Default constructor.">FPArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray&lt;Data, Capacity&gt;</a>&amp; other);
 <a name="l00056"></a>00056 
-<a name="l00062"></a>00062       <a class="code" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray&lt;Data, Capacity&gt;</a>&amp; <a class="code" href="classUtil_1_1FPArray.html#aa1c789533c393172f0148af4f26a5f86" title="Assignment, element by element.">operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray&lt;Data, Capacity&gt;</a>&amp; other);
+<a name="l00062"></a>00062       <a class="code" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray&lt;Data, Capacity&gt;</a>&amp; <a class="code" href="classUtil_1_1FPArray.html#aea1ae935a392c2116eb84c01ff961f51" title="Assignment, element by element.">operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray&lt;Data, Capacity&gt;</a>&amp; other);
 <a name="l00063"></a>00063 
-<a name="l00067"></a>00067       <a class="code" href="classUtil_1_1FPArray.html#ae6573a7fff53031d55db0bfc031d5919" title="Destructor.">~FPArray</a>();
+<a name="l00067"></a>00067       <a class="code" href="classUtil_1_1FPArray.html#a3019cd50e9b1db6c97adf2fff89c71b9" title="Destructor.">~FPArray</a>();
 <a name="l00068"></a>00068 
-<a name="l00074"></a>00074       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#a079948f17008f2c6e2c97162c1f45c1e" title="Append data to the end of the array.">append</a>(Data &amp;data);
+<a name="l00074"></a>00074       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#a92c2e3541b37d351d5e94d84ce681c46" title="Append data to the end of the array.">append</a>(Data &amp;data);
 <a name="l00075"></a>00075 
-<a name="l00079"></a>00079       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#ac8bb3912a3ce86b15842e79d0b421204" title="Set logical size to zero and nullify all elements.">clear</a>();
+<a name="l00079"></a>00079       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#a266f12e22535485418288b4137664d33" title="Set logical size to zero and nullify all elements.">clear</a>();
 <a name="l00080"></a>00080 
-<a name="l00084"></a>00084       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FPArray.html#a104736719cd4e5f21c25705c77064dde" title="Return physical capacity of array.">capacity</a>() <span class="keyword">const</span>;
+<a name="l00084"></a>00084       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FPArray.html#aa7b08999fb452ad8d03b14c977313940" title="Return physical capacity of array.">capacity</a>() <span class="keyword">const</span>;
 <a name="l00085"></a>00085 
-<a name="l00089"></a>00089       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FPArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array.">size</a>() <span class="keyword">const</span>;
+<a name="l00089"></a>00089       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FPArray.html#af6ba14fba8c617c67ada26dc8d07ebe6" title="Return logical size of this array.">size</a>() <span class="keyword">const</span>;
 <a name="l00090"></a>00090 
-<a name="l00096"></a>00096       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#ac82b6761d0a238ce17a72293d40d62e8" title="Set a PArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator&lt;Data&gt;</a> &amp;iterator);
+<a name="l00096"></a>00096       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#acf11384cb26c7a3c40a98afe0aab7f84" title="Set a PArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator&lt;Data&gt;</a> &amp;iterator);
 <a name="l00097"></a>00097 
-<a name="l00103"></a>00103       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#ac82b6761d0a238ce17a72293d40d62e8" title="Set a PArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator&lt;Data&gt;</a> &amp;iterator) <span class="keyword">const</span>;
+<a name="l00103"></a>00103       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#acf11384cb26c7a3c40a98afe0aab7f84" title="Set a PArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator&lt;Data&gt;</a> &amp;iterator) <span class="keyword">const</span>;
 <a name="l00104"></a>00104 
-<a name="l00111"></a>00111       Data&amp; <a class="code" href="classUtil_1_1FPArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i);
+<a name="l00111"></a>00111       Data&amp; <a class="code" href="classUtil_1_1FPArray.html#a004d5b290ae68240fe50fb8c1ab24150" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i);
 <a name="l00112"></a>00112 
-<a name="l00119"></a>00119       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FPArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;
+<a name="l00119"></a>00119       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FPArray.html#a004d5b290ae68240fe50fb8c1ab24150" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;
 <a name="l00120"></a>00120 
 <a name="l00121"></a>00121    <span class="keyword">protected</span>:
 <a name="l00122"></a>00122 
-<a name="l00124"></a><a class="code" href="classUtil_1_1FPArray.html#a9358d3acdeffeb6f94759a236c26c80c">00124</a>       Data* <a class="code" href="classUtil_1_1FPArray.html#a9358d3acdeffeb6f94759a236c26c80c" title="Array of pointers to Data objects.">ptrs_</a>[Capacity];
+<a name="l00124"></a><a class="code" href="classUtil_1_1FPArray.html#a22e7fa9f7fccd292606e2d883b4f6efa">00124</a>       Data* <a class="code" href="classUtil_1_1FPArray.html#a22e7fa9f7fccd292606e2d883b4f6efa" title="Array of pointers to Data objects.">ptrs_</a>[Capacity];
 <a name="l00125"></a>00125 
-<a name="l00127"></a><a class="code" href="classUtil_1_1FPArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80">00127</a>       <span class="keywordtype">int</span>  <a class="code" href="classUtil_1_1FPArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>;
+<a name="l00127"></a><a class="code" href="classUtil_1_1FPArray.html#a85026ccfb57ce84ea928148d366286d2">00127</a>       <span class="keywordtype">int</span>  <a class="code" href="classUtil_1_1FPArray.html#a85026ccfb57ce84ea928148d366286d2" title="Logical size of array (number of elements used).">size_</a>;
 <a name="l00128"></a>00128 
 <a name="l00129"></a>00129    };
 <a name="l00130"></a>00130       
 <a name="l00131"></a>00131    <span class="comment">// Method definitions</span>
 <a name="l00132"></a>00132 
 <a name="l00136"></a>00136    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00137"></a><a class="code" href="classUtil_1_1FPArray.html#ab3ccdfdb1b4c1fc2cf2968febac76ec9">00137</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FPArray.html#ab3ccdfdb1b4c1fc2cf2968febac76ec9" title="Default constructor.">FPArray&lt;Data, Capacity&gt;::FPArray</a>()
+<a name="l00137"></a><a class="code" href="classUtil_1_1FPArray.html#a334c513c03ed5250836e7b6b412af698">00137</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FPArray.html#a334c513c03ed5250836e7b6b412af698" title="Default constructor.">FPArray&lt;Data, Capacity&gt;::FPArray</a>()
 <a name="l00138"></a>00138     : size_(0)
 <a name="l00139"></a>00139    {}
 <a name="l00140"></a>00140 
@@ -115,15 +115,15 @@
 <a name="l00142"></a>00142 <span class="comment">   * Copy constructor, copy all pointers.</span>
 <a name="l00143"></a>00143 <span class="comment">   */</span>
 <a name="l00144"></a>00144    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00145"></a><a class="code" href="classUtil_1_1FPArray.html#a982ed582c258d15241a6242f8c99a82a">00145</a>    <a class="code" href="classUtil_1_1FPArray.html#ab3ccdfdb1b4c1fc2cf2968febac76ec9" title="Default constructor.">FPArray&lt;Data, Capacity&gt;::FPArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray&lt;Data, Capacity&gt;</a>&amp; other) 
+<a name="l00145"></a><a class="code" href="classUtil_1_1FPArray.html#a3e003076eca37c568a9b95c7992138c0">00145</a>    <a class="code" href="classUtil_1_1FPArray.html#a334c513c03ed5250836e7b6b412af698" title="Default constructor.">FPArray&lt;Data, Capacity&gt;::FPArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray&lt;Data, Capacity&gt;</a>&amp; other) 
 <a name="l00146"></a>00146    {
 <a name="l00147"></a>00147 
 <a name="l00148"></a>00148       <span class="comment">// Copy pointer values</span>
 <a name="l00149"></a>00149       <span class="keywordtype">int</span> i;
-<a name="l00150"></a>00150       <span class="keywordflow">for</span> (i = 0; i &lt; other.<a class="code" href="classUtil_1_1FPArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>; ++i) {
-<a name="l00151"></a>00151          ptrs_[i] = other.<a class="code" href="classUtil_1_1FPArray.html#a9358d3acdeffeb6f94759a236c26c80c" title="Array of pointers to Data objects.">ptrs_</a>[i];
+<a name="l00150"></a>00150       <span class="keywordflow">for</span> (i = 0; i &lt; other.<a class="code" href="classUtil_1_1FPArray.html#a85026ccfb57ce84ea928148d366286d2" title="Logical size of array (number of elements used).">size_</a>; ++i) {
+<a name="l00151"></a>00151          ptrs_[i] = other.<a class="code" href="classUtil_1_1FPArray.html#a22e7fa9f7fccd292606e2d883b4f6efa" title="Array of pointers to Data objects.">ptrs_</a>[i];
 <a name="l00152"></a>00152       }
-<a name="l00153"></a>00153       size_ = other.<a class="code" href="classUtil_1_1FPArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>;
+<a name="l00153"></a>00153       size_ = other.<a class="code" href="classUtil_1_1FPArray.html#a85026ccfb57ce84ea928148d366286d2" title="Logical size of array (number of elements used).">size_</a>;
 <a name="l00154"></a>00154 
 <a name="l00155"></a>00155       <span class="comment">// Nullify any unused elements</span>
 <a name="l00156"></a>00156       <span class="keywordflow">if</span> (Capacity &gt; size_) {
@@ -139,22 +139,22 @@
 <a name="l00166"></a>00166 <span class="comment">   */</span>
 <a name="l00167"></a>00167    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
 <a name="l00168"></a>00168    <a class="code" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray&lt;Data, Capacity&gt;</a>&amp; 
-<a name="l00169"></a><a class="code" href="classUtil_1_1FPArray.html#aa1c789533c393172f0148af4f26a5f86">00169</a>    <a class="code" href="classUtil_1_1FPArray.html#aa1c789533c393172f0148af4f26a5f86" title="Assignment, element by element.">FPArray&lt;Data, Capacity&gt;::operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray&lt;Data, Capacity&gt;</a>&amp; other) 
+<a name="l00169"></a><a class="code" href="classUtil_1_1FPArray.html#aea1ae935a392c2116eb84c01ff961f51">00169</a>    <a class="code" href="classUtil_1_1FPArray.html#aea1ae935a392c2116eb84c01ff961f51" title="Assignment, element by element.">FPArray&lt;Data, Capacity&gt;::operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray&lt;Data, Capacity&gt;</a>&amp; other) 
 <a name="l00170"></a>00170    {
 <a name="l00171"></a>00171 
 <a name="l00172"></a>00172       <span class="comment">// Check for self assignment</span>
 <a name="l00173"></a>00173       <span class="keywordflow">if</span> (<span class="keyword">this</span> == &amp;other) <span class="keywordflow">return</span> *<span class="keyword">this</span>;
 <a name="l00174"></a>00174 
 <a name="l00175"></a>00175       <span class="comment">// Precondition</span>
-<a name="l00176"></a>00176       <span class="keywordflow">if</span> (Capacity &lt; other.<a class="code" href="classUtil_1_1FPArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>) {
+<a name="l00176"></a>00176       <span class="keywordflow">if</span> (Capacity &lt; other.<a class="code" href="classUtil_1_1FPArray.html#a85026ccfb57ce84ea928148d366286d2" title="Logical size of array (number of elements used).">size_</a>) {
 <a name="l00177"></a>00177          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;LHS FPArray is too small&quot;</span>);
 <a name="l00178"></a>00178       }
 <a name="l00179"></a>00179 
 <a name="l00180"></a>00180       <span class="comment">// Copy pointers</span>
-<a name="l00181"></a>00181       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; other.<a class="code" href="classUtil_1_1FPArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>; ++i) {
+<a name="l00181"></a>00181       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; other.<a class="code" href="classUtil_1_1FPArray.html#a85026ccfb57ce84ea928148d366286d2" title="Logical size of array (number of elements used).">size_</a>; ++i) {
 <a name="l00182"></a>00182          ptrs_[i] = other[i];
 <a name="l00183"></a>00183       }
-<a name="l00184"></a>00184       size_ = other.<a class="code" href="classUtil_1_1FPArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>;
+<a name="l00184"></a>00184       size_ = other.<a class="code" href="classUtil_1_1FPArray.html#a85026ccfb57ce84ea928148d366286d2" title="Logical size of array (number of elements used).">size_</a>;
 <a name="l00185"></a>00185 
 <a name="l00186"></a>00186       <span class="comment">// Nullify any unused elements</span>
 <a name="l00187"></a>00187       <span class="keywordflow">if</span> (Capacity &gt; size_) {
@@ -167,18 +167,18 @@
 <a name="l00194"></a>00194    }
 <a name="l00195"></a>00195  
 <a name="l00199"></a>00199    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00200"></a><a class="code" href="classUtil_1_1FPArray.html#ae6573a7fff53031d55db0bfc031d5919">00200</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FPArray.html#ae6573a7fff53031d55db0bfc031d5919" title="Destructor.">FPArray&lt;Data, Capacity&gt;::~FPArray</a>()
+<a name="l00200"></a><a class="code" href="classUtil_1_1FPArray.html#a3019cd50e9b1db6c97adf2fff89c71b9">00200</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FPArray.html#a3019cd50e9b1db6c97adf2fff89c71b9" title="Destructor.">FPArray&lt;Data, Capacity&gt;::~FPArray</a>()
 <a name="l00201"></a>00201    {}
 <a name="l00202"></a>00202 
 <a name="l00206"></a>00206    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00207"></a><a class="code" href="classUtil_1_1FPArray.html#a104736719cd4e5f21c25705c77064dde">00207</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FPArray.html#a104736719cd4e5f21c25705c77064dde" title="Return physical capacity of array.">FPArray&lt;Data, Capacity&gt;::capacity</a>()<span class="keyword"> const</span>
+<a name="l00207"></a><a class="code" href="classUtil_1_1FPArray.html#aa7b08999fb452ad8d03b14c977313940">00207</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FPArray.html#aa7b08999fb452ad8d03b14c977313940" title="Return physical capacity of array.">FPArray&lt;Data, Capacity&gt;::capacity</a>()<span class="keyword"> const</span>
 <a name="l00208"></a>00208 <span class="keyword">   </span>{ <span class="keywordflow">return</span> Capacity; }
 <a name="l00209"></a>00209 
 <a name="l00210"></a>00210    <span class="comment">/*</span>
 <a name="l00211"></a>00211 <span class="comment">   * Return logical size of this array.</span>
 <a name="l00212"></a>00212 <span class="comment">   */</span>
 <a name="l00213"></a>00213    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00214"></a><a class="code" href="classUtil_1_1FPArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">00214</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FPArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array.">FPArray&lt;Data, Capacity&gt;::size</a>()<span class="keyword"> const</span>
+<a name="l00214"></a><a class="code" href="classUtil_1_1FPArray.html#af6ba14fba8c617c67ada26dc8d07ebe6">00214</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FPArray.html#af6ba14fba8c617c67ada26dc8d07ebe6" title="Return logical size of this array.">FPArray&lt;Data, Capacity&gt;::size</a>()<span class="keyword"> const</span>
 <a name="l00215"></a>00215 <span class="keyword">   </span>{ <span class="keywordflow">return</span> size_; }
 <a name="l00216"></a>00216 
 <a name="l00217"></a>00217    <span class="comment">/*</span>
@@ -186,10 +186,10 @@
 <a name="l00219"></a>00219 <span class="comment">   */</span>
 <a name="l00220"></a>00220    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
 <a name="l00221"></a>00221    <span class="keyword">inline</span> 
-<a name="l00222"></a><a class="code" href="classUtil_1_1FPArray.html#ac82b6761d0a238ce17a72293d40d62e8">00222</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#ac82b6761d0a238ce17a72293d40d62e8" title="Set a PArrayIterator to the beginning of this Array.">FPArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator&lt;Data&gt;</a> &amp;iterator)
+<a name="l00222"></a><a class="code" href="classUtil_1_1FPArray.html#acf11384cb26c7a3c40a98afe0aab7f84">00222</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#acf11384cb26c7a3c40a98afe0aab7f84" title="Set a PArrayIterator to the beginning of this Array.">FPArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator&lt;Data&gt;</a> &amp;iterator)
 <a name="l00223"></a>00223    {
-<a name="l00224"></a>00224       iterator.<a class="code" href="classUtil_1_1PArrayIterator.html#a4e76e7894a3fb90953af94a3339d6ec7" title="Set the current pointer value.">setCurrent</a>(const_cast&lt;Data**&gt;(ptrs_));
-<a name="l00225"></a>00225       iterator.<a class="code" href="classUtil_1_1PArrayIterator.html#a05f78f359a646a2e9370d99a23c58c5c" title="Set the value of the end pointer.">setEnd</a>(const_cast&lt;Data**&gt;(ptrs_ + size_));
+<a name="l00224"></a>00224       iterator.<a class="code" href="classUtil_1_1PArrayIterator.html#afca88258b51ab50fb694a3e910666534" title="Set the current pointer value.">setCurrent</a>(const_cast&lt;Data**&gt;(ptrs_));
+<a name="l00225"></a>00225       iterator.<a class="code" href="classUtil_1_1PArrayIterator.html#acfc2e9cb1f932424fe773df52a5acb15" title="Set the value of the end pointer.">setEnd</a>(const_cast&lt;Data**&gt;(ptrs_ + size_));
 <a name="l00226"></a>00226    }
 <a name="l00227"></a>00227 
 <a name="l00228"></a>00228    <span class="comment">/*</span>
@@ -197,10 +197,10 @@
 <a name="l00230"></a>00230 <span class="comment">   */</span>
 <a name="l00231"></a>00231    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
 <a name="l00232"></a>00232    <span class="keyword">inline</span> 
-<a name="l00233"></a><a class="code" href="classUtil_1_1FPArray.html#a58a40ba80e6cd5e75e898440ed56b802">00233</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#ac82b6761d0a238ce17a72293d40d62e8" title="Set a PArrayIterator to the beginning of this Array.">FPArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator&lt;Data&gt;</a> &amp;iterator)<span class="keyword"> const</span>
+<a name="l00233"></a><a class="code" href="classUtil_1_1FPArray.html#a5dfe88079c6b4ff1b775f29bcbd1464e">00233</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#acf11384cb26c7a3c40a98afe0aab7f84" title="Set a PArrayIterator to the beginning of this Array.">FPArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator&lt;Data&gt;</a> &amp;iterator)<span class="keyword"> const</span>
 <a name="l00234"></a>00234 <span class="keyword">   </span>{
-<a name="l00235"></a>00235       iterator.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a4e76e7894a3fb90953af94a3339d6ec7" title="Set the current pointer value.">setCurrent</a>(const_cast&lt;Data**&gt;(ptrs_));
-<a name="l00236"></a>00236       iterator.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a05f78f359a646a2e9370d99a23c58c5c" title="Set the value of the end pointer.">setEnd</a>(const_cast&lt;Data**&gt;(ptrs_ + size_));
+<a name="l00235"></a>00235       iterator.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a527a5e7aa3ff82ef4d2f73cc8e2a83e4" title="Set the current pointer value.">setCurrent</a>(const_cast&lt;Data**&gt;(ptrs_));
+<a name="l00236"></a>00236       iterator.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a0a8be86610173337dbb3c30adccb36d6" title="Set the value of the end pointer.">setEnd</a>(const_cast&lt;Data**&gt;(ptrs_ + size_));
 <a name="l00237"></a>00237    }
 <a name="l00238"></a>00238 
 <a name="l00239"></a>00239    <span class="comment">/*</span>
@@ -210,7 +210,7 @@
 <a name="l00243"></a>00243 <span class="comment">   * \return reference to element i</span>
 <a name="l00244"></a>00244 <span class="comment">   */</span>
 <a name="l00245"></a>00245    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00246"></a><a class="code" href="classUtil_1_1FPArray.html#a8cc8b5696ce4a17c06360e7f41f95096">00246</a>    <span class="keyword">inline</span> Data&amp; <a class="code" href="classUtil_1_1FPArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">FPArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i)
+<a name="l00246"></a><a class="code" href="classUtil_1_1FPArray.html#a004d5b290ae68240fe50fb8c1ab24150">00246</a>    <span class="keyword">inline</span> Data&amp; <a class="code" href="classUtil_1_1FPArray.html#a004d5b290ae68240fe50fb8c1ab24150" title="Mimic C array subscripting.">FPArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i)
 <a name="l00247"></a>00247    {
 <a name="l00248"></a>00248       assert(i &lt; size_);
 <a name="l00249"></a>00249       assert(i &gt;= 0);
@@ -224,7 +224,7 @@
 <a name="l00257"></a>00257 <span class="comment">   * \return const reference to element i</span>
 <a name="l00258"></a>00258 <span class="comment">   */</span>
 <a name="l00259"></a>00259    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00260"></a><a class="code" href="classUtil_1_1FPArray.html#a6ec4b9cb529f024cd28e96290a4ca410">00260</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FPArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">FPArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00260"></a><a class="code" href="classUtil_1_1FPArray.html#a65ab35266a48c304b09be65edb464070">00260</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FPArray.html#a004d5b290ae68240fe50fb8c1ab24150" title="Mimic C array subscripting.">FPArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00261"></a>00261 <span class="keyword">   </span>{
 <a name="l00262"></a>00262       assert(i &lt; size_);
 <a name="l00263"></a>00263       assert(i &gt;= 0 );
@@ -237,7 +237,7 @@
 <a name="l00270"></a>00270 <span class="comment">   * \param data Data to add to end of array.</span>
 <a name="l00271"></a>00271 <span class="comment">   */</span>
 <a name="l00272"></a>00272    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00273"></a><a class="code" href="classUtil_1_1FPArray.html#a079948f17008f2c6e2c97162c1f45c1e">00273</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#a079948f17008f2c6e2c97162c1f45c1e" title="Append data to the end of the array.">FPArray&lt;Data, Capacity&gt;::append</a>(Data &amp;data) 
+<a name="l00273"></a><a class="code" href="classUtil_1_1FPArray.html#a92c2e3541b37d351d5e94d84ce681c46">00273</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#a92c2e3541b37d351d5e94d84ce681c46" title="Append data to the end of the array.">FPArray&lt;Data, Capacity&gt;::append</a>(Data &amp;data) 
 <a name="l00274"></a>00274    {
 <a name="l00275"></a>00275       <span class="keywordflow">if</span> (size_ == Capacity) {
 <a name="l00276"></a>00276          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to add to full FPArray&quot;</span>);
@@ -250,7 +250,7 @@
 <a name="l00283"></a>00283 <span class="comment">   * Set logical size to zero.</span>
 <a name="l00284"></a>00284 <span class="comment">   */</span>
 <a name="l00285"></a>00285    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00286"></a><a class="code" href="classUtil_1_1FPArray.html#ac8bb3912a3ce86b15842e79d0b421204">00286</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#ac8bb3912a3ce86b15842e79d0b421204" title="Set logical size to zero and nullify all elements.">FPArray&lt;Data, Capacity&gt;::clear</a>() 
+<a name="l00286"></a><a class="code" href="classUtil_1_1FPArray.html#a266f12e22535485418288b4137664d33">00286</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FPArray.html#a266f12e22535485418288b4137664d33" title="Set logical size to zero and nullify all elements.">FPArray&lt;Data, Capacity&gt;::clear</a>() 
 <a name="l00287"></a>00287    { 
 <a name="l00288"></a>00288       size_ = 0; 
 <a name="l00289"></a>00289       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; Capacity; ++i) {
@@ -262,7 +262,7 @@
 <a name="l00295"></a>00295 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

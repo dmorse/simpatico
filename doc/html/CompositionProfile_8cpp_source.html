@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -76,16 +76,16 @@
 <a name="l00024"></a>00024 
 <a name="l00025"></a>00025    <span class="keyword">using namespace </span>Util;
 <a name="l00026"></a>00026 
-<a name="l00028"></a>00028    <a class="code" href="classMcMd_1_1CompositionProfile.html#a101e8e3c6774ab7dba0e52e526d4c4a5" title="Constructor.">CompositionProfile::CompositionProfile</a>(System&amp; system) 
-<a name="l00029"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a101e8e3c6774ab7dba0e52e526d4c4a5">00029</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
+<a name="l00028"></a>00028    <a class="code" href="classMcMd_1_1CompositionProfile.html#acf591a9a05d0be8ad1be7e7c4ae0b12a" title="Constructor.">CompositionProfile::CompositionProfile</a>(System&amp; system) 
+<a name="l00029"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#acf591a9a05d0be8ad1be7e7c4ae0b12a">00029</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
 <a name="l00030"></a>00030       isInitialized_(false)
 <a name="l00031"></a>00031    {}
 <a name="l00032"></a>00032 
-<a name="l00033"></a>00033    <a class="code" href="classMcMd_1_1CompositionProfile.html#a2e144293c380504d94b2a11709617a0f" title="Destructor.">CompositionProfile::~CompositionProfile</a>() 
-<a name="l00034"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a2e144293c380504d94b2a11709617a0f">00034</a>    {}
+<a name="l00033"></a>00033    <a class="code" href="classMcMd_1_1CompositionProfile.html#a47a233af939092e502188111fc17b055" title="Destructor.">CompositionProfile::~CompositionProfile</a>() 
+<a name="l00034"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a47a233af939092e502188111fc17b055">00034</a>    {}
 <a name="l00035"></a>00035 
-<a name="l00037"></a>00037    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file.">CompositionProfile::readParam</a>(std::istream&amp; in) 
-<a name="l00038"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#ab5421d3c9175985c9acbf723e5392075">00038</a>    {
+<a name="l00037"></a>00037    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#a518cbcf46ab7e9ff6c2de83355ae08da" title="Read parameters from file.">CompositionProfile::readParam</a>(std::istream&amp; in) 
+<a name="l00038"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a518cbcf46ab7e9ff6c2de83355ae08da">00038</a>    {
 <a name="l00039"></a>00039 
 <a name="l00040"></a>00040       <span class="comment">// Read interval and output file </span>
 <a name="l00041"></a>00041       readInterval(in);
@@ -108,8 +108,8 @@
 <a name="l00058"></a>00058    <span class="comment">/*</span>
 <a name="l00059"></a>00059 <span class="comment">   * Clear accumulators.</span>
 <a name="l00060"></a>00060 <span class="comment">   */</span>
-<a name="l00061"></a>00061    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#a4fc01d736fe50cf5b977f755b675f11d" title="Clear accumulators.">CompositionProfile::setup</a>() 
-<a name="l00062"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a4fc01d736fe50cf5b977f755b675f11d">00062</a>    {  
+<a name="l00061"></a>00061    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#ad37184940b19e05e5a606c85aa706f11" title="Clear accumulators.">CompositionProfile::setup</a>() 
+<a name="l00062"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#ad37184940b19e05e5a606c85aa706f11">00062</a>    {  
 <a name="l00063"></a>00063       <span class="keywordtype">int</span> bin;
 <a name="l00064"></a>00064       <span class="keywordtype">double</span> min, max;
 <a name="l00065"></a>00065       
@@ -137,8 +137,8 @@
 <a name="l00087"></a>00087       nSample_ = 0;
 <a name="l00088"></a>00088    }
 <a name="l00089"></a>00089  
-<a name="l00090"></a>00090    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Add particle positions to histogram.">CompositionProfile::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00091"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#afc17577823a371a5ead4e51ebb8ec2ef">00091</a>    {
+<a name="l00090"></a>00090    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#a3ff92ac3f112232ca65bc933eb59fe5d" title="Add particle positions to histogram.">CompositionProfile::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00091"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a3ff92ac3f112232ca65bc933eb59fe5d">00091</a>    {
 <a name="l00092"></a>00092       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> blengths;
 <a name="l00093"></a>00093 
 <a name="l00094"></a>00094       <span class="comment">// Lengths of simulation box</span>
@@ -157,18 +157,18 @@
 <a name="l00107"></a>00107          <span class="keywordflow">for</span> (iSpecies = 0; iSpecies &lt; nSpecies; ++iSpecies) {
 <a name="l00108"></a>00108             system().begin(iSpecies, molIter); 
 <a name="l00109"></a>00109           
-<a name="l00110"></a>00110             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00110"></a>00110             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
 <a name="l00111"></a>00111                molIter-&gt;begin(atomIter); 
 <a name="l00112"></a>00112           
-<a name="l00113"></a>00113                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00113"></a>00113                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00114"></a>00114                   position = atomIter-&gt;position();
 <a name="l00115"></a>00115                   typeId   = atomIter-&gt;typeId();
-<a name="l00116"></a>00116                   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00116"></a>00116                   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00117"></a>00117                      position[i] /= blengths[i];
 <a name="l00118"></a>00118                   }
 <a name="l00119"></a>00119         <span class="comment">// Loop over direction vectors</span>
 <a name="l00120"></a>00120                   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nDirection_; ++i) {
-<a name="l00121"></a>00121                      product = position.<a class="code" href="classUtil_1_1Vector.html#a5431123ac320a0ed069d9c7a30702c7b" title="Return dot product of this vector and vector v.">dot</a>(waveVectors_[i]);
+<a name="l00121"></a>00121                      product = position.<a class="code" href="classUtil_1_1Vector.html#aa1b64030ac95721bc39038c003240c09" title="Return dot product of this vector and vector v.">dot</a>(waveVectors_[i]);
 <a name="l00122"></a>00122                      product /= waveVectors_[i].abs();
 <a name="l00123"></a>00123                      accumulators_[i+typeId*nDirection_].sample(product);
 <a name="l00124"></a>00124                   }
@@ -184,16 +184,16 @@
 <a name="l00134"></a>00134 
 <a name="l00135"></a>00135    }
 <a name="l00136"></a>00136 
-<a name="l00140"></a>00140    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#ac8f153070ac13cd33c3ff5c00cf3ef4a" title="Update wavevectors.">CompositionProfile::makeWaveVectors</a>()
-<a name="l00141"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#ac8f153070ac13cd33c3ff5c00cf3ef4a">00141</a>    {
+<a name="l00140"></a>00140    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#a0ba3289b9623394a2b8b7d7d3b8904d8" title="Update wavevectors.">CompositionProfile::makeWaveVectors</a>()
+<a name="l00141"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a0ba3289b9623394a2b8b7d7d3b8904d8">00141</a>    {
 <a name="l00142"></a>00142       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>    dWave;
-<a name="l00143"></a>00143       Boundary* boundaryPtr = &amp;system().boundary();
+<a name="l00143"></a>00143       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>* boundaryPtr = &amp;system().boundary();
 <a name="l00144"></a>00144       <span class="keywordtype">int</span>       i, j;
 <a name="l00145"></a>00145 
 <a name="l00146"></a>00146       <span class="comment">// Calculate wavevectors</span>
 <a name="l00147"></a>00147       <span class="keywordflow">for</span> (i = 0; i &lt; nDirection_; ++i) {
-<a name="l00148"></a>00148          waveVectors_[i] = <a class="code" href="classUtil_1_1Vector.html#a9295b4b42a83e7087e7eb10e4a65fa5d" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>;
-<a name="l00149"></a>00149          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00148"></a>00148          waveVectors_[i] = <a class="code" href="classUtil_1_1Vector.html#a2b7442f15bc3e08a496e3dc3c684525b" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>;
+<a name="l00149"></a>00149          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00150"></a>00150             dWave  = boundaryPtr-&gt;reciprocalBasisVector(j);
 <a name="l00151"></a>00151             dWave *= intVectors_[i][j];
 <a name="l00152"></a>00152             waveVectors_[i] += dWave;
@@ -202,8 +202,8 @@
 <a name="l00155"></a>00155       }
 <a name="l00156"></a>00156    }
 <a name="l00157"></a>00157 
-<a name="l00158"></a>00158    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results to predefined output file.">CompositionProfile::output</a>() 
-<a name="l00159"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a7437b254e19e7e12fc2ec99945f4ecea">00159</a>    {
+<a name="l00158"></a>00158    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#ab19ea36df65ad91ed93c8982bdb3add0" title="Output results to predefined output file.">CompositionProfile::output</a>() 
+<a name="l00159"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#ab19ea36df65ad91ed93c8982bdb3add0">00159</a>    {
 <a name="l00160"></a>00160       <span class="keywordtype">int</span> i, j, k;
 <a name="l00161"></a>00161       std::string suffix;
 <a name="l00162"></a>00162       
@@ -215,7 +215,7 @@
 <a name="l00168"></a>00168       <span class="comment">// Output statistical analysis to separate data file</span>
 <a name="l00169"></a>00169       fileMaster().openOutputFile(outputFileName(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
 <a name="l00170"></a>00170       <span class="keywordflow">for</span> (i = 0; i &lt; nDirection_; ++i) {
-<a name="l00171"></a>00171          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00171"></a>00171          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00172"></a>00172             outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[i][j], 5);
 <a name="l00173"></a>00173          }
 <a name="l00174"></a>00174          outputFile_ &lt;&lt; std::endl;
@@ -235,7 +235,7 @@
 <a name="l00188"></a>00188 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

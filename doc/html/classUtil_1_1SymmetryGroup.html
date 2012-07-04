@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: SymmetryGroup&lt; Symmetry &gt; Class Template Reference</title>
+<title>Simpatico: Util::SymmetryGroup&lt; Symmetry &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>SymmetryGroup&lt; Symmetry &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Crystal__Module.html">Crystal</a></div></h1>  </div>
+<h1>Util::SymmetryGroup&lt; Symmetry &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Crystal__Module.html">Crystal</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::SymmetryGroup" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -69,38 +69,40 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a90abd2527af1b29b9f1e5f65b588fca7">SymmetryGroup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a90abd2527af1b29b9f1e5f65b588fca7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a150f434aa8d08f82aaeaf5f68f730953">SymmetryGroup</a> (const <a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#a150f434aa8d08f82aaeaf5f68f730953"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a2cea4428409ff552e1b97d2a8d3acec5">~SymmetryGroup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a2cea4428409ff552e1b97d2a8d3acec5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a86914fceffea65b4ebfcede1a56d5fbf">add</a> (Symmetry &amp;symmetry)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new element to the group.  <a href="#a86914fceffea65b4ebfcede1a56d5fbf"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a3cf4f9b2309c8cee5c99a4e153fd63e2">makeCompleteGroup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a complete group from the current elements.  <a href="#a3cf4f9b2309c8cee5c99a4e153fd63e2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const Symmetry *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a46852863f1204c2bd4a55495fb305622">find</a> (const Symmetry &amp;symmetry) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a symmetry within a group.  <a href="#a46852863f1204c2bd4a55495fb305622"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const Symmetry &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#ae68b44467c56427312a50c66300bd754">identity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to the identity element.  <a href="#ae68b44467c56427312a50c66300bd754"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">size</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of elements in group.  <a href="#ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a2ed6fcdd3502502c5b7a90987e366cf6">operator=</a> (const <a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment operator.  <a href="#a2ed6fcdd3502502c5b7a90987e366cf6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Symmetry &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a5bbe28b7440a8e899967c177a312681b">operator[]</a> (int i)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Element access operator (by reference).  <a href="#a5bbe28b7440a8e899967c177a312681b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const Symmetry &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a57355dad55b0517ff2ca5e4d5168a162">operator[]</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Element access operator (by reference).  <a href="#a57355dad55b0517ff2ca5e4d5168a162"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">isValid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if valid complete group, or throw an <a class="el" href="classUtil_1_1Exception.html" title="A user-defined exception.">Exception</a>.  <a href="#aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a26defa1abce38d13c0e71de75a860099">SymmetryGroup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a26defa1abce38d13c0e71de75a860099"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#abd49c4ac3ae6a83a7ff2888280d5b340">SymmetryGroup</a> (const <a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#abd49c4ac3ae6a83a7ff2888280d5b340"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#aa96bb287a98f2485fb1bdfeb8b0c5ac4">~SymmetryGroup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#aa96bb287a98f2485fb1bdfeb8b0c5ac4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97">add</a> (Symmetry &amp;symmetry)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new element to the group.  <a href="#a4c71c4734b4fd629297f4916b33e2f97"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a7130dde3c90984d24bb2d0886101f20f">makeCompleteGroup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a complete group from the current elements.  <a href="#a7130dde3c90984d24bb2d0886101f20f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const Symmetry *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a8f22bfc2ace83a2b13b5c703dab29d92">find</a> (const Symmetry &amp;symmetry) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a symmetry within a group.  <a href="#a8f22bfc2ace83a2b13b5c703dab29d92"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const Symmetry &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#aae2a470fa10458d29c76071d7d970644">identity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to the identity element.  <a href="#aae2a470fa10458d29c76071d7d970644"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a715613decb8f5ce477562764146d1dd8">size</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of elements in group.  <a href="#a715613decb8f5ce477562764146d1dd8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#aaa515e2cd5b1ef8dd313c50545324c77">operator=</a> (const <a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment operator.  <a href="#aaa515e2cd5b1ef8dd313c50545324c77"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Symmetry &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#af478f5ca65d0d13bbb4ca003716613dd">operator[]</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Element access operator (by reference).  <a href="#af478f5ca65d0d13bbb4ca003716613dd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const Symmetry &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#a3447ca18e78b588be85b591577b6ba06">operator[]</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Element access operator (by reference).  <a href="#a3447ca18e78b588be85b591577b6ba06"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SymmetryGroup.html#af87202e8c2051e9a7f0b72382f3ea105">isValid</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if valid complete group, or throw an <a class="el" href="classUtil_1_1Exception.html" title="A user-defined exception.">Exception</a>.  <a href="#af87202e8c2051e9a7f0b72382f3ea105"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a90abd2527af1b29b9f1e5f65b588fca7"></a><!-- doxytag: member="Util::SymmetryGroup::SymmetryGroup" ref="a90abd2527af1b29b9f1e5f65b588fca7" args="()" -->
+<a class="anchor" id="a26defa1abce38d13c0e71de75a860099"></a><!-- doxytag: member="Util::SymmetryGroup::SymmetryGroup" ref="a26defa1abce38d13c0e71de75a860099" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::<a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -115,12 +117,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a150f434aa8d08f82aaeaf5f68f730953"></a><!-- doxytag: member="Util::SymmetryGroup::SymmetryGroup" ref="a150f434aa8d08f82aaeaf5f68f730953" args="(const SymmetryGroup &amp;other)" -->
+<a class="anchor" id="abd49c4ac3ae6a83a7ff2888280d5b340"></a><!-- doxytag: member="Util::SymmetryGroup::SymmetryGroup" ref="abd49c4ac3ae6a83a7ff2888280d5b340" args="(const SymmetryGroup &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::<a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a>&lt; Symmetry &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -134,16 +138,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SymmetryGroup_8h_source.html#l00127">127</a> of file <a class="el" href="SymmetryGroup_8h_source.html">SymmetryGroup.h</a>.</p>
 
-<p>References <a class="el" href="SymmetryGroup_8h_source.html#l00290">SymmetryGroup&lt; Symmetry &gt;::identity()</a>, and <a class="el" href="SymmetryGroup_8h_source.html#l00283">SymmetryGroup&lt; Symmetry &gt;::size()</a>.</p>
+<p>References <a class="el" href="SymmetryGroup_8h_source.html#l00290">Util::SymmetryGroup&lt; Symmetry &gt;::identity()</a>, and <a class="el" href="SymmetryGroup_8h_source.html#l00283">Util::SymmetryGroup&lt; Symmetry &gt;::size()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2cea4428409ff552e1b97d2a8d3acec5"></a><!-- doxytag: member="Util::SymmetryGroup::~SymmetryGroup" ref="a2cea4428409ff552e1b97d2a8d3acec5" args="()" -->
+<a class="anchor" id="aa96bb287a98f2485fb1bdfeb8b0c5ac4"></a><!-- doxytag: member="Util::SymmetryGroup::~SymmetryGroup" ref="aa96bb287a98f2485fb1bdfeb8b0c5ac4" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::~<a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -159,12 +165,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a86914fceffea65b4ebfcede1a56d5fbf"></a><!-- doxytag: member="Util::SymmetryGroup::add" ref="a86914fceffea65b4ebfcede1a56d5fbf" args="(Symmetry &amp;symmetry)" -->
+<a class="anchor" id="a4c71c4734b4fd629297f4916b33e2f97"></a><!-- doxytag: member="Util::SymmetryGroup::add" ref="a4c71c4734b4fd629297f4916b33e2f97" args="(Symmetry &amp;symmetry)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool add </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::add </td>
           <td>(</td>
           <td class="paramtype">Symmetry &amp;&#160;</td>
           <td class="paramname"><em>symmetry</em></td><td>)</td>
@@ -186,16 +194,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SymmetryGroup_8h_source.html#l00180">180</a> of file <a class="el" href="SymmetryGroup_8h_source.html">SymmetryGroup.h</a>.</p>
 
-<p>Referenced by <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00035">StructureFactorPGrid::readParam()</a>, and <a class="el" href="StructureFactorGrid_8cpp_source.html#l00036">StructureFactorGrid::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00035">McMd::StructureFactorPGrid::readParam()</a>, and <a class="el" href="StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3cf4f9b2309c8cee5c99a4e153fd63e2"></a><!-- doxytag: member="Util::SymmetryGroup::makeCompleteGroup" ref="a3cf4f9b2309c8cee5c99a4e153fd63e2" args="()" -->
+<a class="anchor" id="a7130dde3c90984d24bb2d0886101f20f"></a><!-- doxytag: member="Util::SymmetryGroup::makeCompleteGroup" ref="a7130dde3c90984d24bb2d0886101f20f" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void makeCompleteGroup </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::makeCompleteGroup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -208,16 +218,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SymmetryGroup_8h_source.html#l00198">198</a> of file <a class="el" href="SymmetryGroup_8h_source.html">SymmetryGroup.h</a>.</p>
 
-<p>Referenced by <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00035">StructureFactorPGrid::readParam()</a>, and <a class="el" href="StructureFactorGrid_8cpp_source.html#l00036">StructureFactorGrid::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00035">McMd::StructureFactorPGrid::readParam()</a>, and <a class="el" href="StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a46852863f1204c2bd4a55495fb305622"></a><!-- doxytag: member="Util::SymmetryGroup::find" ref="a46852863f1204c2bd4a55495fb305622" args="(const Symmetry &amp;symmetry) const " -->
+<a class="anchor" id="a8f22bfc2ace83a2b13b5c703dab29d92"></a><!-- doxytag: member="Util::SymmetryGroup::find" ref="a8f22bfc2ace83a2b13b5c703dab29d92" args="(const Symmetry &amp;symmetry) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Symmetry * find </td>
+          <td class="memname">const Symmetry * <a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::find </td>
           <td>(</td>
           <td class="paramtype">const Symmetry &amp;&#160;</td>
           <td class="paramname"><em>symmetry</em></td><td>)</td>
@@ -234,12 +246,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae68b44467c56427312a50c66300bd754"></a><!-- doxytag: member="Util::SymmetryGroup::identity" ref="ae68b44467c56427312a50c66300bd754" args="() const " -->
+<a class="anchor" id="aae2a470fa10458d29c76071d7d970644"></a><!-- doxytag: member="Util::SymmetryGroup::identity" ref="aae2a470fa10458d29c76071d7d970644" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Symmetry &amp; identity </td>
+          <td class="memname">const Symmetry &amp; <a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::identity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -252,16 +266,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SymmetryGroup_8h_source.html#l00290">290</a> of file <a class="el" href="SymmetryGroup_8h_source.html">SymmetryGroup.h</a>.</p>
 
-<p>Referenced by <a class="el" href="SymmetryGroup_8h_source.html#l00147">SymmetryGroup&lt; Symmetry &gt;::operator=()</a>, and <a class="el" href="SymmetryGroup_8h_source.html#l00127">SymmetryGroup&lt; Symmetry &gt;::SymmetryGroup()</a>.</p>
+<p>Referenced by <a class="el" href="SymmetryGroup_8h_source.html#l00147">Util::SymmetryGroup&lt; Symmetry &gt;::operator=()</a>, and <a class="el" href="SymmetryGroup_8h_source.html#l00127">Util::SymmetryGroup&lt; Symmetry &gt;::SymmetryGroup()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><!-- doxytag: member="Util::SymmetryGroup::size" ref="ab8e4e3e2a7bf18888b71bdf9dda0770b" args="() const " -->
+<a class="anchor" id="a715613decb8f5ce477562764146d1dd8"></a><!-- doxytag: member="Util::SymmetryGroup::size" ref="a715613decb8f5ce477562764146d1dd8" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int size </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -274,16 +290,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SymmetryGroup_8h_source.html#l00283">283</a> of file <a class="el" href="SymmetryGroup_8h_source.html">SymmetryGroup.h</a>.</p>
 
-<p>Referenced by <a class="el" href="SymmetryGroup_8h_source.html#l00147">SymmetryGroup&lt; Symmetry &gt;::operator=()</a>, and <a class="el" href="SymmetryGroup_8h_source.html#l00127">SymmetryGroup&lt; Symmetry &gt;::SymmetryGroup()</a>.</p>
+<p>Referenced by <a class="el" href="SymmetryGroup_8h_source.html#l00147">Util::SymmetryGroup&lt; Symmetry &gt;::operator=()</a>, and <a class="el" href="SymmetryGroup_8h_source.html#l00127">Util::SymmetryGroup&lt; Symmetry &gt;::SymmetryGroup()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2ed6fcdd3502502c5b7a90987e366cf6"></a><!-- doxytag: member="Util::SymmetryGroup::operator=" ref="a2ed6fcdd3502502c5b7a90987e366cf6" args="(const SymmetryGroup &amp;other)" -->
+<a class="anchor" id="aaa515e2cd5b1ef8dd313c50545324c77"></a><!-- doxytag: member="Util::SymmetryGroup::operator=" ref="aaa515e2cd5b1ef8dd313c50545324c77" args="(const SymmetryGroup &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a>&lt; Symmetry &gt; &amp; operator= </td>
+          <td class="memname"><a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a>&lt; Symmetry &gt; &amp; <a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1SymmetryGroup.html">SymmetryGroup</a>&lt; Symmetry &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -297,16 +315,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SymmetryGroup_8h_source.html#l00147">147</a> of file <a class="el" href="SymmetryGroup_8h_source.html">SymmetryGroup.h</a>.</p>
 
-<p>References <a class="el" href="SymmetryGroup_8h_source.html#l00290">SymmetryGroup&lt; Symmetry &gt;::identity()</a>, and <a class="el" href="SymmetryGroup_8h_source.html#l00283">SymmetryGroup&lt; Symmetry &gt;::size()</a>.</p>
+<p>References <a class="el" href="SymmetryGroup_8h_source.html#l00290">Util::SymmetryGroup&lt; Symmetry &gt;::identity()</a>, and <a class="el" href="SymmetryGroup_8h_source.html#l00283">Util::SymmetryGroup&lt; Symmetry &gt;::size()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5bbe28b7440a8e899967c177a312681b"></a><!-- doxytag: member="Util::SymmetryGroup::operator[]" ref="a5bbe28b7440a8e899967c177a312681b" args="(int i)" -->
+<a class="anchor" id="af478f5ca65d0d13bbb4ca003716613dd"></a><!-- doxytag: member="Util::SymmetryGroup::operator[]" ref="af478f5ca65d0d13bbb4ca003716613dd" args="(int i)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Symmetry &amp; operator[] </td>
+          <td class="memname">Symmetry &amp; <a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -322,12 +342,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a57355dad55b0517ff2ca5e4d5168a162"></a><!-- doxytag: member="Util::SymmetryGroup::operator[]" ref="a57355dad55b0517ff2ca5e4d5168a162" args="(int i) const " -->
+<a class="anchor" id="a3447ca18e78b588be85b591577b6ba06"></a><!-- doxytag: member="Util::SymmetryGroup::operator[]" ref="a3447ca18e78b588be85b591577b6ba06" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Symmetry &amp; operator[] </td>
+          <td class="memname">const Symmetry &amp; <a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -343,12 +365,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><!-- doxytag: member="Util::SymmetryGroup::isValid" ref="aac1b70a2ed67ead038c4d3f5ac4d8a81" args="() const " -->
+<a class="anchor" id="af87202e8c2051e9a7f0b72382f3ea105"></a><!-- doxytag: member="Util::SymmetryGroup::isValid" ref="af87202e8c2051e9a7f0b72382f3ea105" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Symmetry &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1SymmetryGroup.html">Util::SymmetryGroup</a>&lt; Symmetry &gt;::isValid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -369,7 +393,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="SymmetryGroup_8h_source.html">SymmetryGroup.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

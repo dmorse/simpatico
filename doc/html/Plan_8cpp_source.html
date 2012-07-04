@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -73,14 +73,14 @@
 <a name="l00022"></a>00022    <span class="comment">/* </span>
 <a name="l00023"></a>00023 <span class="comment">   * Input a Plan from an istream, as a pair of 0s and ones</span>
 <a name="l00024"></a>00024 <span class="comment">   */</span>
-<a name="l00025"></a>00025    std::istream&amp; <a class="code" href="namespaceDdMd.html#a74181b023cf44a9612ac683897cd203d" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, Plan &amp;plan)
-<a name="l00026"></a><a class="code" href="namespaceDdMd.html#ab65f5f658759bf1edeaa5e0639609f7e">00026</a>    {
+<a name="l00025"></a>00025    std::istream&amp; <a class="code" href="namespaceDdMd.html#ad617f8951e7f59b0ca691c28163ab63a" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, Plan &amp;plan)
+<a name="l00026"></a><a class="code" href="namespaceDdMd.html#aec2ba5b29621aeec388d9c5c52d31f4d">00026</a>    {
 <a name="l00027"></a>00027       std::string string;
 <a name="l00028"></a>00028       <span class="keywordtype">int</span> i, j, k;
 <a name="l00029"></a>00029 
 <a name="l00030"></a>00030       in &gt;&gt; string;
 <a name="l00031"></a>00031       k = 0;
-<a name="l00032"></a>00032       <span class="keywordflow">for</span> (i=0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00032"></a>00032       <span class="keywordflow">for</span> (i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00033"></a>00033          <span class="keywordflow">for</span> (j=0; j &lt; 2; ++j) {
 <a name="l00034"></a>00034             <span class="keywordflow">if</span> (<span class="keywordtype">string</span>[k] == <span class="charliteral">&#39;1&#39;</span>) {
 <a name="l00035"></a>00035                plan.setExchange(i, j);
@@ -93,7 +93,7 @@
 <a name="l00042"></a>00042 
 <a name="l00043"></a>00043       in &gt;&gt; string;
 <a name="l00044"></a>00044       k = 0;
-<a name="l00045"></a>00045       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00045"></a>00045       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00046"></a>00046          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j &lt; 2; ++j) {
 <a name="l00047"></a>00047             <span class="keywordflow">if</span> (<span class="keywordtype">string</span>[k] == <span class="charliteral">&#39;1&#39;</span>) {
 <a name="l00048"></a>00048                plan.setGhost(i, j);
@@ -109,10 +109,10 @@
 <a name="l00058"></a>00058    <span class="comment">/* </span>
 <a name="l00059"></a>00059 <span class="comment">   * Output a Plan to an ostream, without line breaks.</span>
 <a name="l00060"></a>00060 <span class="comment">   */</span>
-<a name="l00061"></a>00061    std::ostream&amp; <a class="code" href="namespaceDdMd.html#a1dabcc9af06e19085b4abbdd1babb8e5" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> Plan &amp;plan) 
-<a name="l00062"></a><a class="code" href="namespaceDdMd.html#a63a458b13bebe422ca933a3f95adc0b4">00062</a>    {
+<a name="l00061"></a>00061    std::ostream&amp; <a class="code" href="namespaceDdMd.html#aeba54fe325a569df0f7c2a53f2d35ee9" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> Plan &amp;plan) 
+<a name="l00062"></a><a class="code" href="namespaceDdMd.html#a51c4642c771a03c8f6d38cf3f611cba2">00062</a>    {
 <a name="l00063"></a>00063       <span class="keywordtype">int</span> i, j;
-<a name="l00064"></a>00064       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00064"></a>00064       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00065"></a>00065          <span class="keywordflow">for</span> (j = 0; j &lt; 2; ++j) {
 <a name="l00066"></a>00066             <span class="keywordflow">if</span> (plan.exchange(i, j)) {
 <a name="l00067"></a>00067                out &lt;&lt; <span class="charliteral">&#39;1&#39;</span>;
@@ -122,7 +122,7 @@
 <a name="l00071"></a>00071          }
 <a name="l00072"></a>00072       }
 <a name="l00073"></a>00073       out &lt;&lt; <span class="stringliteral">&quot;  &quot;</span>;
-<a name="l00074"></a>00074       <span class="keywordflow">for</span> (i=0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00074"></a>00074       <span class="keywordflow">for</span> (i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00075"></a>00075          <span class="keywordflow">for</span> (j=0; j &lt; 2; ++j) {
 <a name="l00076"></a>00076             <span class="keywordflow">if</span> (plan.ghost(i, j)) {
 <a name="l00077"></a>00077                out &lt;&lt; <span class="charliteral">&#39;1&#39;</span>;
@@ -138,7 +138,7 @@
 <a name="l00087"></a>00087 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

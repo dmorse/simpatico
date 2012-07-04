@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: McEnergyPerturbation Class Reference</title>
+<title>Simpatico: McMd::McEnergyPerturbation Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>McEnergyPerturbation Class Reference<div class="ingroups"><a class="el" href="group__McMd__Perturb__Module.html">Free Energy Perturbation</a></div></h1>  </div>
+<h1>McMd::McEnergyPerturbation Class Reference<div class="ingroups"><a class="el" href="group__McMd__Perturb__Module.html">Free Energy Perturbation</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::McEnergyPerturbation" --><!-- doxytag: inherits="LinearPerturbation&lt; McSystem &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -60,15 +60,15 @@
 </div>
 <p><code>#include &lt;<a class="el" href="McEnergyPerturbation_8h_source.html">McEnergyPerturbation.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for McEnergyPerturbation:</div>
+Inheritance diagram for McMd::McEnergyPerturbation:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1McEnergyPerturbation.png" usemap="#McEnergyPerturbation_map" alt=""/>
-  <map id="McEnergyPerturbation_map" name="McEnergyPerturbation_map">
-<area href="classMcMd_1_1LinearPerturbation.html" alt="LinearPerturbation&lt; McSystem &gt;" shape="rect" coords="0,168,199,192"/>
-<area href="classMcMd_1_1Perturbation.html" alt="Perturbation" shape="rect" coords="0,112,199,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,199,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,199,24"/>
+  <img src="classMcMd_1_1McEnergyPerturbation.png" usemap="#McMd::McEnergyPerturbation_map" alt=""/>
+  <map id="McMd::McEnergyPerturbation_map" name="McMd::McEnergyPerturbation_map">
+<area href="classMcMd_1_1LinearPerturbation.html" alt="McMd::LinearPerturbation&lt; McSystem &gt;" shape="rect" coords="0,168,241,192"/>
+<area href="classMcMd_1_1Perturbation.html" alt="McMd::Perturbation" shape="rect" coords="0,112,241,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,241,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,241,24"/>
 </map>
  </div></div>
 
@@ -76,24 +76,24 @@ Inheritance diagram for McEnergyPerturbation:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McEnergyPerturbation.html#aaff5e8f6820259870a0bd2accde9c1f1">McEnergyPerturbation</a> (<a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aaff5e8f6820259870a0bd2accde9c1f1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McEnergyPerturbation.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read beta parameter (inverse temperature) from file.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McEnergyPerturbation.html#a425b4045d456b053c63dd08178d58abb">setParameter</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set inverse temperature of the parent system.  <a href="#a425b4045d456b053c63dd08178d58abb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McEnergyPerturbation.html#aa442fe452a774006424e54b6fb6719fa">parameter</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get inverse temperature of the parent system.  <a href="#aa442fe452a774006424e54b6fb6719fa"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McEnergyPerturbation.html#ad282b731b9b51ee21f6ae3f58006dcac">derivative</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get derivative of the Boltzmann weight with respect to the perturbation parameter.  <a href="#ad282b731b9b51ee21f6ae3f58006dcac"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McEnergyPerturbation.html#a2a0c7951e52eaed140f63ca0b78a494f">McEnergyPerturbation</a> (<a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a2a0c7951e52eaed140f63ca0b78a494f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McEnergyPerturbation.html#ac27ce95f5bc535ef19e2faa3577409c3">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read beta parameter (inverse temperature) from file.  <a href="#ac27ce95f5bc535ef19e2faa3577409c3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McEnergyPerturbation.html#af5d2a104e1f17c0886e14f185f86de09">setParameter</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set inverse temperature of the parent system.  <a href="#af5d2a104e1f17c0886e14f185f86de09"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McEnergyPerturbation.html#add7292fa260a4568a9f1cc2871eaac2f">parameter</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get inverse temperature of the parent system.  <a href="#add7292fa260a4568a9f1cc2871eaac2f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McEnergyPerturbation.html#a83e5657cb9f9c93b1e800d7e697b792f">derivative</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get derivative of the Boltzmann weight with respect to the perturbation parameter.  <a href="#a83e5657cb9f9c93b1e800d7e697b792f"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aaff5e8f6820259870a0bd2accde9c1f1"></a><!-- doxytag: member="McMd::McEnergyPerturbation::McEnergyPerturbation" ref="aaff5e8f6820259870a0bd2accde9c1f1" args="(McSystem &amp;system)" -->
+<a class="anchor" id="a2a0c7951e52eaed140f63ca0b78a494f"></a><!-- doxytag: member="McMd::McEnergyPerturbation::McEnergyPerturbation" ref="a2a0c7951e52eaed140f63ca0b78a494f" args="(McSystem &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1McEnergyPerturbation.html">McEnergyPerturbation</a> </td>
+          <td class="memname">McMd::McEnergyPerturbation::McEnergyPerturbation </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -110,12 +110,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::McEnergyPerturbation::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ac27ce95f5bc535ef19e2faa3577409c3"></a><!-- doxytag: member="McMd::McEnergyPerturbation::readParam" ref="ac27ce95f5bc535ef19e2faa3577409c3" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::McEnergyPerturbation::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -133,20 +133,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00032">32</a> of file <a class="el" href="McEnergyPerturbation_8cpp_source.html">McEnergyPerturbation.cpp</a>.</p>
 
-<p>References <a class="el" href="Perturbation_8cpp_source.html#l00095">Perturbation::getNParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00035">Perturbation::readParameters()</a>.</p>
+<p>References <a class="el" href="Perturbation_8cpp_source.html#l00095">McMd::Perturbation::getNParameters()</a>, and <a class="el" href="Perturbation_8cpp_source.html#l00035">McMd::Perturbation::readParameters()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a425b4045d456b053c63dd08178d58abb"></a><!-- doxytag: member="McMd::McEnergyPerturbation::setParameter" ref="a425b4045d456b053c63dd08178d58abb" args="()" -->
+<a class="anchor" id="af5d2a104e1f17c0886e14f185f86de09"></a><!-- doxytag: member="McMd::McEnergyPerturbation::setParameter" ref="af5d2a104e1f17c0886e14f185f86de09" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setParameter </td>
+          <td class="memname">void McMd::McEnergyPerturbation::setParameter </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -157,18 +157,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Set inverse temperature of the parent system. </p>
 
-<p>Implements <a class="el" href="classMcMd_1_1Perturbation.html#acaf4f7195deedd88e3ca2e5b7774a972">Perturbation</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Perturbation.html#a8b84bfcebd9cda813eb7ee5f50dfe0a0">McMd::Perturbation</a>.</p>
 
 <p>Definition at line <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00043">43</a> of file <a class="el" href="McEnergyPerturbation_8cpp_source.html">McEnergyPerturbation.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa442fe452a774006424e54b6fb6719fa"></a><!-- doxytag: member="McMd::McEnergyPerturbation::parameter" ref="aa442fe452a774006424e54b6fb6719fa" args="(int i) const " -->
+<a class="anchor" id="add7292fa260a4568a9f1cc2871eaac2f"></a><!-- doxytag: member="McMd::McEnergyPerturbation::parameter" ref="add7292fa260a4568a9f1cc2871eaac2f" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double parameter </td>
+          <td class="memname">double McMd::McEnergyPerturbation::parameter </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -186,7 +186,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classMcMd_1_1Perturbation.html#a54054cfffd3a790c44bdcbe4702b8a8c">Perturbation</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Perturbation.html#ac09a657a9fc435eadaee334fd9054a80">McMd::Perturbation</a>.</p>
 
 <p>Definition at line <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00049">49</a> of file <a class="el" href="McEnergyPerturbation_8cpp_source.html">McEnergyPerturbation.cpp</a>.</p>
 
@@ -194,12 +194,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad282b731b9b51ee21f6ae3f58006dcac"></a><!-- doxytag: member="McMd::McEnergyPerturbation::derivative" ref="ad282b731b9b51ee21f6ae3f58006dcac" args="(int i) const " -->
+<a class="anchor" id="a83e5657cb9f9c93b1e800d7e697b792f"></a><!-- doxytag: member="McMd::McEnergyPerturbation::derivative" ref="a83e5657cb9f9c93b1e800d7e697b792f" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double derivative </td>
+          <td class="memname">double McMd::McEnergyPerturbation::derivative </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -218,7 +218,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classMcMd_1_1Perturbation.html#a1d95d45ca3a795172c2be834ffef3188">Perturbation</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Perturbation.html#a9a5c73206914b4a95bdc21cdd837b113">McMd::Perturbation</a>.</p>
 
 <p>Definition at line <a class="el" href="McEnergyPerturbation_8cpp_source.html#l00061">61</a> of file <a class="el" href="McEnergyPerturbation_8cpp_source.html">McEnergyPerturbation.cpp</a>.</p>
 
@@ -231,7 +231,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="McEnergyPerturbation_8cpp_source.html">McEnergyPerturbation.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:56 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:27 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

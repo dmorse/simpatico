@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: SSet&lt; Data, Capacity &gt; Class Template Reference</title>
+<title>Simpatico: Util::SSet&lt; Data, Capacity &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<h1>SSet&lt; Data, Capacity &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Pointer__Array__Module.html">Pointer Arrays</a></div></h1>  </div>
+<h1>Util::SSet&lt; Data, Capacity &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Pointer__Array__Module.html">Pointer Arrays</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::SSet" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -58,7 +58,7 @@
  class Util::SSet&lt; Data, Capacity &gt;</h3>
 
 <p>Statically allocated array of pointers to an unordered set. </p>
-<p>An <a class="el" href="classUtil_1_1SSet.html" title="Statically allocated array of pointers to an unordered set.">SSet</a> is a statically allocated array that holds pointers to a set of objects. It implements the same interface as <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a> and <a class="el" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray</a>, plus additional <a class="el" href="classUtil_1_1SSet.html#af1d4696b31a60f108ef03c9fb230ba66" title="Remove an object from the set.">remove()</a> and <a class="el" href="classUtil_1_1SSet.html#a883095d5e4830b50cc35f5fb2755f6e2" title="Return the current index of an object within the set, if any.">index()</a> methods. As for any pointer array container, the [] operator returns an associated object by reference .</p>
+<p>An <a class="el" href="classUtil_1_1SSet.html" title="Statically allocated array of pointers to an unordered set.">SSet</a> is a statically allocated array that holds pointers to a set of objects. It implements the same interface as <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a> and <a class="el" href="classUtil_1_1FPArray.html" title="Statically allocated pointer array.">FPArray</a>, plus additional <a class="el" href="classUtil_1_1SSet.html#ad4d8da7889987726d40e003cde2d6684" title="Remove an object from the set.">remove()</a> and <a class="el" href="classUtil_1_1SSet.html#a4ecdc9cfa928b416885a71148ad67171" title="Return the current index of an object within the set, if any.">index()</a> methods. As for any pointer array container, the [] operator returns an associated object by reference .</p>
 <p>An <a class="el" href="classUtil_1_1SSet.html" title="Statically allocated array of pointers to an unordered set.">SSet</a> holds a set of pointers in a contiguous array. The size is the number of pointers now in the container, and the Capacity is the maximum number it can hold. The class is implemented as a wrapper for a statically allocated C array of Capacity elements.</p>
 <p>The append method adds a pointer to the end of the sequence. The remove method removes an object from the set, or throws an exception if the object is not found in the set. As for an <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a>, the remove method repacks the sequence of pointers by moving the last element to the position of the element that is being removed. Removal of an element thus generally changes the order in which the remaining elements are stored. </p>
 
@@ -70,50 +70,52 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#aa4abd3a49ea6e87777cf843094f7bdbb">SSet</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#aa4abd3a49ea6e87777cf843094f7bdbb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#ac68dbd4459227f186951a7cf5b0d3469">SSet</a> (const <a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; Data, Capacity &gt; &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#ac68dbd4459227f186951a7cf5b0d3469"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; Data, Capacity &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#ad42e91d4d03761a01faafd919c298993">operator=</a> (const <a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; Data, Capacity &gt; &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment, element by element.  <a href="#ad42e91d4d03761a01faafd919c298993"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#abf1a646c8a986cbcb230de88ee4c4bbe">~SSet</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#abf1a646c8a986cbcb230de88ee4c4bbe"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a079948f17008f2c6e2c97162c1f45c1e">append</a> (Data &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an object to the set.  <a href="#a079948f17008f2c6e2c97162c1f45c1e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#af1d4696b31a60f108ef03c9fb230ba66">remove</a> (const Data &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove an object from the set.  <a href="#af1d4696b31a60f108ef03c9fb230ba66"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#ac8bb3912a3ce86b15842e79d0b421204">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set logical size to zero and nullify all elements.  <a href="#ac8bb3912a3ce86b15842e79d0b421204"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a104736719cd4e5f21c25705c77064dde">capacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return physical capacity of array.  <a href="#a104736719cd4e5f21c25705c77064dde"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">size</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return logical size of this array.  <a href="#ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#ac06c7993697b41d250ac0983042de3a8">isElement</a> (const Data &amp;data) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is an object an element of the set?  <a href="#ac06c7993697b41d250ac0983042de3a8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a883095d5e4830b50cc35f5fb2755f6e2">index</a> (const Data &amp;data) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current index of an object within the set, if any.  <a href="#a883095d5e4830b50cc35f5fb2755f6e2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#ac82b6761d0a238ce17a72293d40d62e8">begin</a> (<a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt; Data &gt; &amp;iterator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a <a class="el" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#ac82b6761d0a238ce17a72293d40d62e8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a58a40ba80e6cd5e75e898440ed56b802">begin</a> (<a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstPArrayIterator</a>&lt; Data &gt; &amp;iterator) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a <a class="el" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#a58a40ba80e6cd5e75e898440ed56b802"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a8cc8b5696ce4a17c06360e7f41f95096">operator[]</a> (int i)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#a8cc8b5696ce4a17c06360e7f41f95096"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a6ec4b9cb529f024cd28e96290a4ca410">operator[]</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#a6ec4b9cb529f024cd28e96290a4ca410"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a2b191b1d3f7c33b6cdc1b70c6104f044">SSet</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a2b191b1d3f7c33b6cdc1b70c6104f044"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#adc80e364de544a8a54aa04026ebaf205">SSet</a> (const <a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; Data, Capacity &gt; &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#adc80e364de544a8a54aa04026ebaf205"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; Data, Capacity &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#aa24be2995e04cab52f87b4dd06f09903">operator=</a> (const <a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; Data, Capacity &gt; &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment, element by element.  <a href="#aa24be2995e04cab52f87b4dd06f09903"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a2c7cec56d731afdf3508257b385ef13c">~SSet</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a2c7cec56d731afdf3508257b385ef13c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a501c50a581c92ea158553ba72adaa556">append</a> (Data &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an object to the set.  <a href="#a501c50a581c92ea158553ba72adaa556"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#ad4d8da7889987726d40e003cde2d6684">remove</a> (const Data &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove an object from the set.  <a href="#ad4d8da7889987726d40e003cde2d6684"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a5d8d1e22aefb0f699ed068ac3993c20d">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set logical size to zero and nullify all elements.  <a href="#a5d8d1e22aefb0f699ed068ac3993c20d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a1111c31d9a9878419fb4c722f6cafe21">capacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return physical capacity of array.  <a href="#a1111c31d9a9878419fb4c722f6cafe21"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#ac21b35f9659d3bdf20418add303c0303">size</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return logical size of this array.  <a href="#ac21b35f9659d3bdf20418add303c0303"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#ad9036b311c46d7a478e84f2836fc6517">isElement</a> (const Data &amp;data) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is an object an element of the set?  <a href="#ad9036b311c46d7a478e84f2836fc6517"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a4ecdc9cfa928b416885a71148ad67171">index</a> (const Data &amp;data) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current index of an object within the set, if any.  <a href="#a4ecdc9cfa928b416885a71148ad67171"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#ae01360a4f9ff7b84c4be04fcb96ad0f8">begin</a> (<a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt; Data &gt; &amp;iterator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a <a class="el" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#ae01360a4f9ff7b84c4be04fcb96ad0f8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a35a95bcb030d544b4a3c92aea871b29d">begin</a> (<a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstPArrayIterator</a>&lt; Data &gt; &amp;iterator) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a <a class="el" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#a35a95bcb030d544b4a3c92aea871b29d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a5981e6fe654eb9bec38807a27522a618">operator[]</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#a5981e6fe654eb9bec38807a27522a618"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#aede4a8e794113fae8d3f8209a31d5319">operator[]</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#aede4a8e794113fae8d3f8209a31d5319"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a9358d3acdeffeb6f94759a236c26c80c">ptrs_</a> [Capacity]</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> of pointers to Data objects.  <a href="#a9358d3acdeffeb6f94759a236c26c80c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a6947fa5d6ba628dd62d59ffbad8b8d80">size_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Logical size of array (number of elements used).  <a href="#a6947fa5d6ba628dd62d59ffbad8b8d80"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#a9c6ef3a80f57dfebda6f021a1dc22640">ptrs_</a> [Capacity]</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> of pointers to Data objects.  <a href="#a9c6ef3a80f57dfebda6f021a1dc22640"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1SSet.html#af5614a63e67c67a0a179fd150d9c1d1c">size_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Logical size of array (number of elements used).  <a href="#af5614a63e67c67a0a179fd150d9c1d1c"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aa4abd3a49ea6e87777cf843094f7bdbb"></a><!-- doxytag: member="Util::SSet::SSet" ref="aa4abd3a49ea6e87777cf843094f7bdbb" args="()" -->
+<a class="anchor" id="a2b191b1d3f7c33b6cdc1b70c6104f044"></a><!-- doxytag: member="Util::SSet::SSet" ref="a2b191b1d3f7c33b6cdc1b70c6104f044" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1SSet.html">SSet</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::<a class="el" href="classUtil_1_1SSet.html">SSet</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -129,12 +131,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac68dbd4459227f186951a7cf5b0d3469"></a><!-- doxytag: member="Util::SSet::SSet" ref="ac68dbd4459227f186951a7cf5b0d3469" args="(const SSet&lt; Data, Capacity &gt; &amp;other)" -->
+<a class="anchor" id="adc80e364de544a8a54aa04026ebaf205"></a><!-- doxytag: member="Util::SSet::SSet" ref="adc80e364de544a8a54aa04026ebaf205" args="(const SSet&lt; Data, Capacity &gt; &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1SSet.html">SSet</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::<a class="el" href="classUtil_1_1SSet.html">SSet</a> </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; Data, Capacity &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -155,16 +159,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SSet_8h_source.html#l00185">185</a> of file <a class="el" href="SSet_8h_source.html">SSet.h</a>.</p>
 
-<p>References <a class="el" href="SSet_8h_source.html#l00164">SSet&lt; Data, Capacity &gt;::ptrs_</a>, and <a class="el" href="SSet_8h_source.html#l00167">SSet&lt; Data, Capacity &gt;::size_</a>.</p>
+<p>References <a class="el" href="SSet_8h_source.html#l00164">Util::SSet&lt; Data, Capacity &gt;::ptrs_</a>, and <a class="el" href="SSet_8h_source.html#l00167">Util::SSet&lt; Data, Capacity &gt;::size_</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abf1a646c8a986cbcb230de88ee4c4bbe"></a><!-- doxytag: member="Util::SSet::~SSet" ref="abf1a646c8a986cbcb230de88ee4c4bbe" args="()" -->
+<a class="anchor" id="a2c7cec56d731afdf3508257b385ef13c"></a><!-- doxytag: member="Util::SSet::~SSet" ref="a2c7cec56d731afdf3508257b385ef13c" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1SSet.html">SSet</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::~<a class="el" href="classUtil_1_1SSet.html">SSet</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -180,12 +186,14 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ad42e91d4d03761a01faafd919c298993"></a><!-- doxytag: member="Util::SSet::operator=" ref="ad42e91d4d03761a01faafd919c298993" args="(const SSet&lt; Data, Capacity &gt; &amp;other)" -->
+<a class="anchor" id="aa24be2995e04cab52f87b4dd06f09903"></a><!-- doxytag: member="Util::SSet::operator=" ref="aa24be2995e04cab52f87b4dd06f09903" args="(const SSet&lt; Data, Capacity &gt; &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; Data, Capacity &gt; &amp; operator= </td>
+          <td class="memname"><a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; Data, Capacity &gt; &amp; <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; Data, Capacity &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -205,16 +213,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SSet_8h_source.html#l00209">209</a> of file <a class="el" href="SSet_8h_source.html">SSet.h</a>.</p>
 
-<p>References <a class="el" href="SSet_8h_source.html#l00167">SSet&lt; Data, Capacity &gt;::size_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="SSet_8h_source.html#l00167">Util::SSet&lt; Data, Capacity &gt;::size_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a079948f17008f2c6e2c97162c1f45c1e"></a><!-- doxytag: member="Util::SSet::append" ref="a079948f17008f2c6e2c97162c1f45c1e" args="(Data &amp;data)" -->
+<a class="anchor" id="a501c50a581c92ea158553ba72adaa556"></a><!-- doxytag: member="Util::SSet::append" ref="a501c50a581c92ea158553ba72adaa556" args="(Data &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void append </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::append </td>
           <td>(</td>
           <td class="paramtype">Data &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -241,12 +251,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af1d4696b31a60f108ef03c9fb230ba66"></a><!-- doxytag: member="Util::SSet::remove" ref="af1d4696b31a60f108ef03c9fb230ba66" args="(const Data &amp;data)" -->
+<a class="anchor" id="ad4d8da7889987726d40e003cde2d6684"></a><!-- doxytag: member="Util::SSet::remove" ref="ad4d8da7889987726d40e003cde2d6684" args="(const Data &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void remove </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::remove </td>
           <td>(</td>
           <td class="paramtype">const Data &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -277,12 +289,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac8bb3912a3ce86b15842e79d0b421204"></a><!-- doxytag: member="Util::SSet::clear" ref="ac8bb3912a3ce86b15842e79d0b421204" args="()" -->
+<a class="anchor" id="a5d8d1e22aefb0f699ed068ac3993c20d"></a><!-- doxytag: member="Util::SSet::clear" ref="a5d8d1e22aefb0f699ed068ac3993c20d" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void clear </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -298,12 +312,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a104736719cd4e5f21c25705c77064dde"></a><!-- doxytag: member="Util::SSet::capacity" ref="a104736719cd4e5f21c25705c77064dde" args="() const " -->
+<a class="anchor" id="a1111c31d9a9878419fb4c722f6cafe21"></a><!-- doxytag: member="Util::SSet::capacity" ref="a1111c31d9a9878419fb4c722f6cafe21" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int capacity </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::capacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -318,12 +334,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><!-- doxytag: member="Util::SSet::size" ref="ab8e4e3e2a7bf18888b71bdf9dda0770b" args="() const " -->
+<a class="anchor" id="ac21b35f9659d3bdf20418add303c0303"></a><!-- doxytag: member="Util::SSet::size" ref="ac21b35f9659d3bdf20418add303c0303" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int size </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -336,16 +354,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SSet_8h_source.html#l00254">254</a> of file <a class="el" href="SSet_8h_source.html">SSet.h</a>.</p>
 
-<p>Referenced by <a class="el" href="LinkPotentialImpl_8h_source.html#l00281">LinkPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>.</p>
+<p>Referenced by <a class="el" href="LinkPotentialImpl_8h_source.html#l00281">McMd::LinkPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac06c7993697b41d250ac0983042de3a8"></a><!-- doxytag: member="Util::SSet::isElement" ref="ac06c7993697b41d250ac0983042de3a8" args="(const Data &amp;data) const " -->
+<a class="anchor" id="ad9036b311c46d7a478e84f2836fc6517"></a><!-- doxytag: member="Util::SSet::isElement" ref="ad9036b311c46d7a478e84f2836fc6517" args="(const Data &amp;data) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool isElement </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::isElement </td>
           <td>(</td>
           <td class="paramtype">const Data &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -368,12 +388,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a883095d5e4830b50cc35f5fb2755f6e2"></a><!-- doxytag: member="Util::SSet::index" ref="a883095d5e4830b50cc35f5fb2755f6e2" args="(const Data &amp;data) const " -->
+<a class="anchor" id="a4ecdc9cfa928b416885a71148ad67171"></a><!-- doxytag: member="Util::SSet::index" ref="a4ecdc9cfa928b416885a71148ad67171" args="(const Data &amp;data) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int index </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::index </td>
           <td>(</td>
           <td class="paramtype">const Data &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -385,7 +407,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Return the current index of an object within the set, if any. </p>
 <p>Return the current index of an element within the set, or return -1 if the element is not in the set.</p>
-<p>This method returns the current index of the pointer to object data within this <a class="el" href="classUtil_1_1SSet.html" title="Statically allocated array of pointers to an unordered set.">SSet</a>, in the range 0 &lt; index &lt; <a class="el" href="classUtil_1_1SSet.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array.">size()</a> - 1. The method returns -1 if data is the object is not in the set.</p>
+<p>This method returns the current index of the pointer to object data within this <a class="el" href="classUtil_1_1SSet.html" title="Statically allocated array of pointers to an unordered set.">SSet</a>, in the range 0 &lt; index &lt; <a class="el" href="classUtil_1_1SSet.html#ac21b35f9659d3bdf20418add303c0303" title="Return logical size of this array.">size()</a> - 1. The method returns -1 if data is the object is not in the set.</p>
 <p>Throws an exception if data is not in the associated array.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -399,12 +421,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac82b6761d0a238ce17a72293d40d62e8"></a><!-- doxytag: member="Util::SSet::begin" ref="ac82b6761d0a238ce17a72293d40d62e8" args="(PArrayIterator&lt; Data &gt; &amp;iterator)" -->
+<a class="anchor" id="ae01360a4f9ff7b84c4be04fcb96ad0f8"></a><!-- doxytag: member="Util::SSet::begin" ref="ae01360a4f9ff7b84c4be04fcb96ad0f8" args="(PArrayIterator&lt; Data &gt; &amp;iterator)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void begin </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::begin </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>iterator</em></td><td>)</td>
@@ -424,16 +448,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SSet_8h_source.html#l00263">263</a> of file <a class="el" href="SSet_8h_source.html">SSet.h</a>.</p>
 
-<p>References <a class="el" href="PArrayIterator_8h_source.html#l00055">PArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="PArrayIterator_8h_source.html#l00066">PArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
+<p>References <a class="el" href="PArrayIterator_8h_source.html#l00055">Util::PArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="PArrayIterator_8h_source.html#l00066">Util::PArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a58a40ba80e6cd5e75e898440ed56b802"></a><!-- doxytag: member="Util::SSet::begin" ref="a58a40ba80e6cd5e75e898440ed56b802" args="(ConstPArrayIterator&lt; Data &gt; &amp;iterator) const " -->
+<a class="anchor" id="a35a95bcb030d544b4a3c92aea871b29d"></a><!-- doxytag: member="Util::SSet::begin" ref="a35a95bcb030d544b4a3c92aea871b29d" args="(ConstPArrayIterator&lt; Data &gt; &amp;iterator) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void begin </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::begin </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstPArrayIterator</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>iterator</em></td><td>)</td>
@@ -455,16 +481,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SSet_8h_source.html#l00275">275</a> of file <a class="el" href="SSet_8h_source.html">SSet.h</a>.</p>
 
-<p>References <a class="el" href="ConstPArrayIterator_8h_source.html#l00055">ConstPArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="ConstPArrayIterator_8h_source.html#l00066">ConstPArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
+<p>References <a class="el" href="ConstPArrayIterator_8h_source.html#l00055">Util::ConstPArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="ConstPArrayIterator_8h_source.html#l00066">Util::ConstPArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8cc8b5696ce4a17c06360e7f41f95096"></a><!-- doxytag: member="Util::SSet::operator[]" ref="a8cc8b5696ce4a17c06360e7f41f95096" args="(int i)" -->
+<a class="anchor" id="a5981e6fe654eb9bec38807a27522a618"></a><!-- doxytag: member="Util::SSet::operator[]" ref="a5981e6fe654eb9bec38807a27522a618" args="(int i)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data &amp; operator[] </td>
+          <td class="memname">Data &amp; <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -487,12 +515,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6ec4b9cb529f024cd28e96290a4ca410"></a><!-- doxytag: member="Util::SSet::operator[]" ref="a6ec4b9cb529f024cd28e96290a4ca410" args="(int i) const " -->
+<a class="anchor" id="aede4a8e794113fae8d3f8209a31d5319"></a><!-- doxytag: member="Util::SSet::operator[]" ref="aede4a8e794113fae8d3f8209a31d5319" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Data &amp; operator[] </td>
+          <td class="memname">const Data &amp; <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -516,12 +546,14 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a9358d3acdeffeb6f94759a236c26c80c"></a><!-- doxytag: member="Util::SSet::ptrs_" ref="a9358d3acdeffeb6f94759a236c26c80c" args="[Capacity]" -->
+<a class="anchor" id="a9c6ef3a80f57dfebda6f021a1dc22640"></a><!-- doxytag: member="Util::SSet::ptrs_" ref="a9c6ef3a80f57dfebda6f021a1dc22640" args="[Capacity]" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data, int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data* <a class="el" href="classUtil_1_1SSet.html#a9358d3acdeffeb6f94759a236c26c80c">ptrs_</a>[Capacity]<code> [protected]</code></td>
+          <td class="memname">Data* <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::<a class="el" href="classUtil_1_1SSet.html#a9c6ef3a80f57dfebda6f021a1dc22640">ptrs_</a>[Capacity]<code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -531,16 +563,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SSet_8h_source.html#l00164">164</a> of file <a class="el" href="SSet_8h_source.html">SSet.h</a>.</p>
 
-<p>Referenced by <a class="el" href="SSet_8h_source.html#l00185">SSet&lt; Data, Capacity &gt;::SSet()</a>.</p>
+<p>Referenced by <a class="el" href="SSet_8h_source.html#l00185">Util::SSet&lt; Data, Capacity &gt;::SSet()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6947fa5d6ba628dd62d59ffbad8b8d80"></a><!-- doxytag: member="Util::SSet::size_" ref="a6947fa5d6ba628dd62d59ffbad8b8d80" args="" -->
+<a class="anchor" id="af5614a63e67c67a0a179fd150d9c1d1c"></a><!-- doxytag: member="Util::SSet::size_" ref="af5614a63e67c67a0a179fd150d9c1d1c" args="" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data, int Capacity&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classUtil_1_1SSet.html#a6947fa5d6ba628dd62d59ffbad8b8d80">size_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classUtil_1_1SSet.html">Util::SSet</a>&lt; Data, Capacity &gt;::<a class="el" href="classUtil_1_1SSet.html#af5614a63e67c67a0a179fd150d9c1d1c">size_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -550,7 +584,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="SSet_8h_source.html#l00167">167</a> of file <a class="el" href="SSet_8h_source.html">SSet.h</a>.</p>
 
-<p>Referenced by <a class="el" href="SSet_8h_source.html#l00209">SSet&lt; Data, Capacity &gt;::operator=()</a>, and <a class="el" href="SSet_8h_source.html#l00185">SSet&lt; Data, Capacity &gt;::SSet()</a>.</p>
+<p>Referenced by <a class="el" href="SSet_8h_source.html#l00209">Util::SSet&lt; Data, Capacity &gt;::operator=()</a>, and <a class="el" href="SSet_8h_source.html#l00185">Util::SSet&lt; Data, Capacity &gt;::SSet()</a>.</p>
 
 </div>
 </div>
@@ -558,7 +592,7 @@ Protected Attributes</h2></td></tr>
 <li><a class="el" href="SSet_8h_source.html">SSet.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -78,9 +78,9 @@
 <a name="l00042"></a>00042      
 <a name="l00043"></a>00043    <span class="keyword">public</span>:
 <a name="l00044"></a>00044 
-<a name="l00046"></a><a class="code" href="classMcMd_1_1Cell.html#add04409374e0cdbb2d8fbadc2b88aa30">00046</a>       <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> MaxAtomCell = 61; 
+<a name="l00046"></a><a class="code" href="classMcMd_1_1Cell.html#a7cc8c945fc6918e225cc8d6d2d2c0843">00046</a>       <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> MaxAtomCell = 61; 
 <a name="l00047"></a>00047    
-<a name="l00049"></a><a class="code" href="classMcMd_1_1Cell.html#af2414ca46b856cd6f066938cae9cdfcc">00049</a>       <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> NullIndex   = -1; 
+<a name="l00049"></a><a class="code" href="classMcMd_1_1Cell.html#a889d2e31265fd8da2d9632eee58cb5f8">00049</a>       <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> NullIndex   = -1; 
 <a name="l00050"></a>00050    
 <a name="l00054"></a>00054       <a class="code" href="classMcMd_1_1Cell.html" title="A set of Atoms in a small region.">Cell</a>();
 <a name="l00055"></a>00055    
@@ -139,9 +139,9 @@
 <a name="l00150"></a>00150    <span class="comment">/* </span>
 <a name="l00151"></a>00151 <span class="comment">   * Delete atom from Cell</span>
 <a name="l00152"></a>00152 <span class="comment">   */</span>
-<a name="l00153"></a><a class="code" href="classMcMd_1_1Cell.html#ae317a2cebd970451575998eb7b39fb9b">00153</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Cell.html#ae317a2cebd970451575998eb7b39fb9b" title="Remove a specified atom from the Cell.">Cell::deleteAtom</a>(<a class="code" href="classMcMd_1_1CellTag.html" title="Location of the pointer to a particular Atom in a CellList.">CellTag</a> &amp;cellTag) 
+<a name="l00153"></a><a class="code" href="classMcMd_1_1Cell.html#aaba1cdd7f31c45841ec6946941f0183a">00153</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Cell.html#aaba1cdd7f31c45841ec6946941f0183a" title="Remove a specified atom from the Cell.">Cell::deleteAtom</a>(<a class="code" href="classMcMd_1_1CellTag.html" title="Location of the pointer to a particular Atom in a CellList.">CellTag</a> &amp;cellTag) 
 <a name="l00154"></a>00154    {
-<a name="l00155"></a>00155       <span class="keywordtype">int</span> cellPos = cellTag.<a class="code" href="classMcMd_1_1CellTag.html#a304f493df564d70d54bd27f87f2c6126" title="Array index of Atom pointer in a Cell::part_ array.">cellPos</a>;
+<a name="l00155"></a>00155       <span class="keywordtype">int</span> cellPos = cellTag.<a class="code" href="classMcMd_1_1CellTag.html#a860d99af0c3e617bbb6f5dbf8ce77382" title="Array index of Atom pointer in a Cell::part_ array.">cellPos</a>;
 <a name="l00156"></a>00156    
 <a name="l00157"></a>00157       <span class="comment">// Delete atom from Cell member variables.</span>
 <a name="l00158"></a>00158       <span class="comment">// Set atoms_[cellPos] to 0 to mark empty.</span>
@@ -162,15 +162,15 @@
 <a name="l00173"></a>00173    
 <a name="l00174"></a>00174       <span class="comment">// Reset cellTag cellId and cellPos to negative integer values </span>
 <a name="l00175"></a>00175       <span class="comment">// to indicate that the atom is no longer associated with a Cell.</span>
-<a name="l00176"></a>00176       cellTag.<a class="code" href="classMcMd_1_1CellTag.html#a56e03f67e0db44ed6ecd58e54f005f86" title="Cell index of Cell containing associated Atom.">cellId</a>  = NullIndex;
-<a name="l00177"></a>00177       cellTag.<a class="code" href="classMcMd_1_1CellTag.html#a304f493df564d70d54bd27f87f2c6126" title="Array index of Atom pointer in a Cell::part_ array.">cellPos</a> = NullIndex;
+<a name="l00176"></a>00176       cellTag.<a class="code" href="classMcMd_1_1CellTag.html#aa2e8980f3c665c86fca15d75613a6857" title="Cell index of Cell containing associated Atom.">cellId</a>  = NullIndex;
+<a name="l00177"></a>00177       cellTag.<a class="code" href="classMcMd_1_1CellTag.html#a860d99af0c3e617bbb6f5dbf8ce77382" title="Array index of Atom pointer in a Cell::part_ array.">cellPos</a> = NullIndex;
 <a name="l00178"></a>00178    
 <a name="l00179"></a>00179    }
 <a name="l00180"></a>00180    
 <a name="l00181"></a>00181    <span class="comment">/* </span>
 <a name="l00182"></a>00182 <span class="comment">   * Add a atom to a Cell</span>
 <a name="l00183"></a>00183 <span class="comment">   */</span>
-<a name="l00184"></a><a class="code" href="classMcMd_1_1Cell.html#ad9a874a6b65da2aed073b49a65da95bd">00184</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Cell.html#ad9a874a6b65da2aed073b49a65da95bd" title="Add one atom to a Cell.">Cell::addAtom</a>(<a class="code" href="classMcMd_1_1CellTag.html" title="Location of the pointer to a particular Atom in a CellList.">CellTag</a> &amp;cellTag, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom, <span class="keywordtype">int</span> cellId) 
+<a name="l00184"></a><a class="code" href="classMcMd_1_1Cell.html#a171758c1ed1f189c8205655c3084e45c">00184</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Cell.html#a171758c1ed1f189c8205655c3084e45c" title="Add one atom to a Cell.">Cell::addAtom</a>(<a class="code" href="classMcMd_1_1CellTag.html" title="Location of the pointer to a particular Atom in a CellList.">CellTag</a> &amp;cellTag, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom, <span class="keywordtype">int</span> cellId) 
 <a name="l00185"></a>00185    {
 <a name="l00186"></a>00186    
 <a name="l00187"></a>00187       <span class="comment">// If cell is already full, throw Exception</span>
@@ -183,8 +183,8 @@
 <a name="l00194"></a>00194       ++nAtomCell_;
 <a name="l00195"></a>00195    
 <a name="l00196"></a>00196       <span class="comment">// Record cell in cellTag</span>
-<a name="l00197"></a>00197       cellTag.<a class="code" href="classMcMd_1_1CellTag.html#a56e03f67e0db44ed6ecd58e54f005f86" title="Cell index of Cell containing associated Atom.">cellId</a>  = cellId;
-<a name="l00198"></a>00198       cellTag.<a class="code" href="classMcMd_1_1CellTag.html#a304f493df564d70d54bd27f87f2c6126" title="Array index of Atom pointer in a Cell::part_ array.">cellPos</a> = firstEmptyPos_;
+<a name="l00197"></a>00197       cellTag.<a class="code" href="classMcMd_1_1CellTag.html#aa2e8980f3c665c86fca15d75613a6857" title="Cell index of Cell containing associated Atom.">cellId</a>  = cellId;
+<a name="l00198"></a>00198       cellTag.<a class="code" href="classMcMd_1_1CellTag.html#a860d99af0c3e617bbb6f5dbf8ce77382" title="Array index of Atom pointer in a Cell::part_ array.">cellPos</a> = firstEmptyPos_;
 <a name="l00199"></a>00199    
 <a name="l00200"></a>00200       <span class="comment">// Reset firstEmptyPos_ and firstClearPos_</span>
 <a name="l00201"></a>00201       <span class="keywordflow">if</span> (firstEmptyPos_ &lt; MaxAtomCell - 1) {
@@ -217,13 +217,13 @@
 <a name="l00228"></a>00228       }
 <a name="l00229"></a>00229    }
 <a name="l00230"></a>00230 
-<a name="l00231"></a><a class="code" href="classMcMd_1_1Cell.html#a9a37fa83c03e97153c79be53d30f3d89">00231</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Cell.html#a9a37fa83c03e97153c79be53d30f3d89" title="Get number of atoms in cell.">Cell::nAtomCell</a>()<span class="keyword"> const</span>
+<a name="l00231"></a><a class="code" href="classMcMd_1_1Cell.html#adf98cc7fabc85273c502339f2842e087">00231</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Cell.html#adf98cc7fabc85273c502339f2842e087" title="Get number of atoms in cell.">Cell::nAtomCell</a>()<span class="keyword"> const</span>
 <a name="l00232"></a>00232 <span class="keyword">   </span>{ <span class="keywordflow">return</span> nAtomCell_; }
 <a name="l00233"></a>00233          
-<a name="l00234"></a><a class="code" href="classMcMd_1_1Cell.html#ad85b146834b8b0fb468d2ebf08b56b01">00234</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Cell.html#ad85b146834b8b0fb468d2ebf08b56b01" title="Get index of first clear element of atoms_.">Cell::firstClearPos</a>()<span class="keyword"> const</span>
+<a name="l00234"></a><a class="code" href="classMcMd_1_1Cell.html#a583b349e368e79098e4a227f5543cd43">00234</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Cell.html#a583b349e368e79098e4a227f5543cd43" title="Get index of first clear element of atoms_.">Cell::firstClearPos</a>()<span class="keyword"> const</span>
 <a name="l00235"></a>00235 <span class="keyword">   </span>{ <span class="keywordflow">return</span> firstClearPos_; }
 <a name="l00236"></a>00236 
-<a name="l00237"></a><a class="code" href="classMcMd_1_1Cell.html#a42c8c49f7af3b5bb8c5b2c5e81faf814">00237</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* <a class="code" href="classMcMd_1_1Cell.html#a42c8c49f7af3b5bb8c5b2c5e81faf814" title="Get a pointer to Atom (may be null).">Cell::atomPtr</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const</span>
+<a name="l00237"></a><a class="code" href="classMcMd_1_1Cell.html#a973e7d1c86822af87e4c987a86ef6ff9">00237</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* <a class="code" href="classMcMd_1_1Cell.html#a973e7d1c86822af87e4c987a86ef6ff9" title="Get a pointer to Atom (may be null).">Cell::atomPtr</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const</span>
 <a name="l00238"></a>00238 <span class="keyword">   </span>{ <span class="keywordflow">return</span> atoms_[index]; }
 <a name="l00239"></a>00239          
 <a name="l00240"></a>00240 } 
@@ -231,7 +231,7 @@
 <a name="l00242"></a>00242 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

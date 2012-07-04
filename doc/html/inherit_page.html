@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -41,25 +41,34 @@
 <h1>Polymorphic Base Classes </h1>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p>Simpatico defines several base classes that can be extended by users to implement new algorithms, molecular species or file formats. Among these are: </p>
+<div class="textblock"><p>The mcSim and mdSim programs use several base classes that can be extended by users to implement new algorithms, molecular species or file formats. Among these are: </p>
 <ul>
 <li>
-<a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>, which represents a molecular species.  </li>
+<a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">McMd::Species</a>, which represents a molecular species.  </li>
 <li>
-<a class="el" href="classMcMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>, which represents a data analysis or output operation.  </li>
+<a class="el" href="classMcMd_1_1McMove.html" title="McMove is an abstract base class for Monte Carlo moves.">McMd::McMove</a>, which represents a MC Markov move.  </li>
 <li>
-<a class="el" href="classMcMd_1_1McMove.html" title="McMove is an abstract base class for Monte Carlo moves.">McMove</a>, which represents a MC Markov move.  </li>
+<a class="el" href="classMcMd_1_1MdIntegrator.html" title="Abstract base for molecular dynamics integrators.">McMd::MdIntegrator</a>, which represents an MD integration algorithm.  </li>
 <li>
-<a class="el" href="classMcMd_1_1MdIntegrator.html" title="Abstract base for molecular dynamics integrators.">MdIntegrator</a>, which represents an MD integration algorithm. </li>
+<a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">McMd::ConfigIo</a>, which represents a configuration file format. </li>
 <li>
-<a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>, which represents a configuration file format. </li>
+<a class="el" href="classMcMd_1_1TrajectoryIo.html" title="Trajectory file reader and writer.">McMd::TrajectoryIo</a>, which represents an MD trajectory file format. </li>
 <li>
-<a class="el" href="classMcMd_1_1TrajectoryIo.html" title="Trajectory file reader and writer.">TrajectoryIo</a>, which represents an MD trajectory file format. </li>
+<a class="el" href="classMcMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">McMd::Diagnostic</a>, which represents a data analysis or output operation.  </li>
 <li>
-<a class="el" href="classMcMd_1_1Perturbation.html" title="Model of parameter dependence in a free energy perturbation theory.">Perturbation</a>, which defines a free energy perturbation. </li>
+<a class="el" href="classMcMd_1_1Perturbation.html" title="Model of parameter dependence in a free energy perturbation theory.">McMd::Perturbation</a>, which defines a free energy perturbation. </li>
 </ul>
-<p>In order to implement, for instance, a new data analysis operation, the user must write a subclass of the <a class="el" href="classMcMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a> base class, which must implement the interface defined by the base class. The required interface for each base class is described in the documentation for the base class.</p>
-<p>There are also base classes for each of the different types of potential energy (pair, bond, angle, dihedral, etc). Users may also extend these classes in order to define new functional forms for the various types of potential energy. The procedure for doing so is, however, somewhat different than that required for the base classes listed above. Each potential energy function is defined by a non-polymorphic class that we refer to as an interaction class. Subclasses of each potential energy base classes are defined using a class template that takes an interaction class as a template parameter. These peculiarities of the potential energy classes are described in more detail <a class="el" href="potentials_page.html">here</a> .</p>
+<p>In order to implement, for instance, a new data analysis operation, the user must write a subclass of the <a class="el" href="classMcMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a> base class.</p>
+<p>The ddSim parallel program uses a smaller set of base classes, which are defined in the <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) molecular dynamics MD simulation.">DdMd</a> namespace and have the same or similar names as analogous base classes defined in the <a class="el" href="namespaceMcMd.html" title="Classes for Monte Carlo (MC) and molecular dynamics (MC) simulation.">McMd</a> namespace. These include; </p>
+<ul>
+<li>
+<a class="el" href="classDdMd_1_1Integrator.html" title="An Integrator numerically integrates the equations of motion.">DdMd::Integrator</a>  </li>
+<li>
+<a class="el" href="classDdMd_1_1ConfigIo.html" title="Class to read and write configuration files.">DdMd::ConfigIo</a>  </li>
+<li>
+<a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">DdMd::Diagnostic</a>  </li>
+</ul>
+<p>There are also base classes defined in both the <a class="el" href="namespaceMcMd.html" title="Classes for Monte Carlo (MC) and molecular dynamics (MC) simulation.">McMd</a> and <a class="el" href="namespaceDdMd.html" title="Parallel domain decomposition (DD) molecular dynamics MD simulation.">DdMd</a> namespaces for each of the different types of potential energy (pair, bond, angle, dihedral, etc). Users may extend these classes in order to introduce new functional forms for the various types of potential energy. The procedure for doing so is, however, somewhat different than that for other base classes listed above. Each potential energy function is actually defined by a non-polymorphic class that we refer to as an interaction class. Users that want to introduce, e.g., a new pair potential energy function, must write a new pair potential interction class. Subclasses of each of the polymorphic potential energy base classes are defined using a class template that takes an interaction class as a template parameter. These peculiarities of the potential energy classes are described in more detail <a class="el" href="potentials_page.html">here</a> .</p>
 <p>Navigation: </p>
 <ul>
 <li>
@@ -68,7 +77,7 @@
 <a class="el" href="factory_page.html">Factory Classes</a> (Next)  </li>
 </ul>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -59,7 +59,7 @@
 <a name="l00007"></a>00007 <span class="comment">/*</span>
 <a name="l00008"></a>00008 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00009"></a>00009 <span class="comment">*</span>
-<a name="l00010"></a>00010 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00010"></a>00010 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00011"></a>00011 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00012"></a>00012 <span class="comment">*/</span>
 <a name="l00013"></a>00013 
@@ -79,7 +79,7 @@
 <a name="l00027"></a>00027 <span class="comment">   */</span>
 <a name="l00028"></a>00028    <span class="keyword">template</span> &lt; <span class="keyword">class</span> Interaction &gt;
 <a name="l00029"></a>00029    McExternalPerturbation&lt;Interaction&gt;::McExternalPerturbation(McSystem&amp; system)
-<a name="l00030"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#a3affa5fcaa1fd1be3e78b944dcc320bc">00030</a>     : <a class="code" href="classMcMd_1_1LinearPerturbation.html" title="A Perturbation that is a linear function of a parameter.">LinearPerturbation</a>&lt;<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&gt;(system),
+<a name="l00030"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#a7eb9c11d5a0960c6c7dcbbe2d5f97d4c">00030</a>     : <a class="code" href="classMcMd_1_1LinearPerturbation.html" title="A Perturbation that is a linear function of a parameter.">LinearPerturbation</a>&lt;<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&gt;(system),
 <a name="l00031"></a>00031       interactionPtr_(0)
 <a name="l00032"></a>00032    { }
 <a name="l00033"></a>00033 
@@ -88,23 +88,23 @@
 <a name="l00036"></a>00036 <span class="comment">   */</span>
 <a name="l00037"></a>00037    <span class="keyword">template</span> &lt; <span class="keyword">class</span> Interaction &gt;
 <a name="l00038"></a>00038    <a class="code" href="classMcMd_1_1McExternalPerturbation.html" title="A Perturbation in the external potential external parameter.">McExternalPerturbation&lt;Interaction&gt;</a>::~McExternalPerturbation&lt;Interaction&gt;()
-<a name="l00039"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#ad43da7627515ee022038d3bb9c6cff09">00039</a>    { }
+<a name="l00039"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#a281c3f297ec728567c7ea685524728c2">00039</a>    { }
 <a name="l00040"></a>00040 
 <a name="l00041"></a>00041    <span class="comment">/*</span>
 <a name="l00042"></a>00042 <span class="comment">   * Read external parameter from file</span>
 <a name="l00043"></a>00043 <span class="comment">   */</span>
 <a name="l00044"></a>00044    <span class="keyword">template</span> &lt; <span class="keyword">class</span> Interaction &gt;
 <a name="l00045"></a>00045    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McExternalPerturbation.html" title="A Perturbation in the external potential external parameter.">McExternalPerturbation&lt;Interaction&gt;::readParam</a>(std::istream&amp; in)
-<a name="l00046"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#ab5421d3c9175985c9acbf723e5392075">00046</a>    {  
-<a name="l00047"></a>00047       <a class="code" href="classMcMd_1_1Perturbation.html#a32f520577a6158f1f5c6831ce35529c9" title="Read perturbation parameter(s) from file.">Perturbation::readParameters</a>(in); 
-<a name="l00048"></a>00048       nParameters_ = <a class="code" href="classMcMd_1_1Perturbation.html#a3e5684d9033624cba933d06b5b031b55" title="Gets the number of perturbation parameters asssociated with a system.">Perturbation::getNParameters</a>();
+<a name="l00046"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#a5fcc63c498757f64f53f9117509b0d94">00046</a>    {  
+<a name="l00047"></a>00047       <a class="code" href="classMcMd_1_1Perturbation.html#a6734738d947980f4ca6a33c1c0cd45d2" title="Read perturbation parameter(s) from file.">Perturbation::readParameters</a>(in); 
+<a name="l00048"></a>00048       nParameters_ = <a class="code" href="classMcMd_1_1Perturbation.html#a985515ab0da2fa46321b790fa50c21e5" title="Gets the number of perturbation parameters asssociated with a system.">Perturbation::getNParameters</a>();
 <a name="l00049"></a>00049    }
 <a name="l00050"></a>00050 
 <a name="l00051"></a>00051    <span class="comment">/*</span>
 <a name="l00052"></a>00052 <span class="comment">   */</span>
 <a name="l00053"></a>00053    <span class="keyword">template</span> &lt; <span class="keyword">class</span> Interaction &gt;
 <a name="l00054"></a>00054    Interaction&amp; <a class="code" href="classMcMd_1_1McExternalPerturbation.html" title="A Perturbation in the external potential external parameter.">McExternalPerturbation&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
-<a name="l00055"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#af5887df480e8e9738817ef60f3dc1cbc">00055</a> <span class="keyword">   </span>{
+<a name="l00055"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#a9de5b20a0698a5185eba2c0265a07ace">00055</a> <span class="keyword">   </span>{
 <a name="l00056"></a>00056       <span class="keywordflow">if</span> (interactionPtr_ == 0) {
 <a name="l00057"></a>00057          <a class="code" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class.">ExternalPotential</a>* externalPtr = &amp;(system().externalPotential());
 <a name="l00058"></a>00058          <a class="code" href="classMcMd_1_1ExternalPotentialImpl.html" title="Template implementation of ExternalPotential.">ExternalPotentialImpl&lt; Interaction &gt;</a>* implPtr = 0;
@@ -112,7 +112,7 @@
 <a name="l00060"></a>00060          <span class="keywordflow">if</span> (implPtr == 0) {
 <a name="l00061"></a>00061             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Failed dynamic cast of ExternalPotential&quot;</span>);
 <a name="l00062"></a>00062          }
-<a name="l00063"></a>00063          interactionPtr_ = &amp;implPtr-&gt;<a class="code" href="classMcMd_1_1ExternalPotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0" title="Return external interaction by reference.">interaction</a>();
+<a name="l00063"></a>00063          interactionPtr_ = &amp;implPtr-&gt;<a class="code" href="classMcMd_1_1ExternalPotentialImpl.html#a4e5700d419562b0d238854ea2958b20a" title="Return external interaction by reference.">interaction</a>();
 <a name="l00064"></a>00064       }
 <a name="l00065"></a>00065       <span class="keywordflow">return</span> *interactionPtr_;
 <a name="l00066"></a>00066    }
@@ -122,7 +122,7 @@
 <a name="l00070"></a>00070 <span class="comment">   */</span>
 <a name="l00071"></a>00071    <span class="keyword">template</span> &lt; <span class="keyword">class</span> Interaction &gt;
 <a name="l00072"></a>00072    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McExternalPerturbation.html" title="A Perturbation in the external potential external parameter.">McExternalPerturbation&lt;Interaction&gt;::setParameter</a>()
-<a name="l00073"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#a425b4045d456b053c63dd08178d58abb">00073</a>    {  
+<a name="l00073"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#a0a119cff727b402b7129c88cc777a3cf">00073</a>    {  
 <a name="l00074"></a>00074      interaction().setExternalParameter(parameter_[0]);
 <a name="l00075"></a>00075    }
 <a name="l00076"></a>00076 
@@ -131,7 +131,7 @@
 <a name="l00079"></a>00079 <span class="comment">   */</span>
 <a name="l00080"></a>00080    <span class="keyword">template</span> &lt; <span class="keyword">class</span> Interaction &gt;
 <a name="l00081"></a>00081    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McExternalPerturbation.html" title="A Perturbation in the external potential external parameter.">McExternalPerturbation&lt;Interaction&gt;::parameter</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
-<a name="l00082"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#aa442fe452a774006424e54b6fb6719fa">00082</a> <span class="keyword">   </span>{ 
+<a name="l00082"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#aeeb771eeb2bbb9d109ce1849548c5141">00082</a> <span class="keyword">   </span>{ 
 <a name="l00083"></a>00083       <span class="keywordflow">if</span> (i &gt; nParameters_) {
 <a name="l00084"></a>00084          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;perturbation parameter index is out of bounds&quot;</span>);
 <a name="l00085"></a>00085       }
@@ -143,7 +143,7 @@
 <a name="l00091"></a>00091 <span class="comment">   */</span>
 <a name="l00092"></a>00092    <span class="keyword">template</span> &lt; <span class="keyword">class</span> Interaction &gt;
 <a name="l00093"></a>00093    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McExternalPerturbation.html" title="A Perturbation in the external potential external parameter.">McExternalPerturbation&lt;Interaction&gt;::derivative</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
-<a name="l00094"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#ad282b731b9b51ee21f6ae3f58006dcac">00094</a> <span class="keyword">   </span>{  
+<a name="l00094"></a><a class="code" href="classMcMd_1_1McExternalPerturbation.html#ae83f2ee3c92df467ece9e0e1c6c813d0">00094</a> <span class="keyword">   </span>{  
 <a name="l00095"></a>00095       <span class="comment">// Preconditions</span>
 <a name="l00096"></a>00096       <span class="keywordflow">if</span> (i &gt; nParameters_) {
 <a name="l00097"></a>00097          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;perturbation parameter index is out of bounds&quot;</span>);
@@ -160,8 +160,8 @@
 <a name="l00108"></a>00108       energy = 0.0;
 <a name="l00109"></a>00109 
 <a name="l00110"></a>00110       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; system().simulation().nSpecies(); ++iSpec){
-<a name="l00111"></a>00111            <span class="keywordflow">for</span> (system().begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter){
-<a name="l00112"></a>00112                 <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00111"></a>00111            <span class="keywordflow">for</span> (system().begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter){
+<a name="l00112"></a>00112                 <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00113"></a>00113                energy += interaction().energy(atomIter-&gt;position(), atomIter-&gt;typeId());
 <a name="l00114"></a>00114                     
 <a name="l00115"></a>00115                 }
@@ -184,7 +184,7 @@
 <a name="l00132"></a>00132 <span class="preprocessor"></span><span class="preprocessor">#endif  // #ifdef  MCMD_PERTURB</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

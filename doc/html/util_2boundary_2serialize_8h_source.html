@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -69,13 +69,13 @@
 <a name="l00018"></a>00018 <span class="comment">   * Serialize an OrthoRegion to/from an archive.</span>
 <a name="l00019"></a>00019 <span class="comment">   */</span>
 <a name="l00020"></a>00020    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00021"></a><a class="code" href="structUtil_1_1OrthoRegion.html#a6765e839ab267e4959384e35a4112451">00021</a>    <span class="keywordtype">void</span> <a class="code" href="structUtil_1_1OrthoRegion.html#a6765e839ab267e4959384e35a4112451" title="Serialize to/from an archive.">OrthoRegion::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00021"></a><a class="code" href="structUtil_1_1OrthoRegion.html#a30db3609d8f06dec33edd1c468702d2a">00021</a>    <span class="keywordtype">void</span> <a class="code" href="structUtil_1_1OrthoRegion.html#a30db3609d8f06dec33edd1c468702d2a" title="Serialize to/from an archive.">OrthoRegion::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00022"></a>00022    {
-<a name="l00023"></a>00023       ar &amp; <a class="code" href="structUtil_1_1OrthoRegion.html#aeccd452e15923af0d3c336f2ec6dda4c" title="Minimum coordinates: Require r[i] &amp;gt;= minima_[i].">minima_</a>;
-<a name="l00024"></a>00024       ar &amp; <a class="code" href="structUtil_1_1OrthoRegion.html#a4bd4a792a1fd265e889031d853405eb9" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>;
-<a name="l00025"></a>00025       ar &amp; <a class="code" href="structUtil_1_1OrthoRegion.html#ae6931ea42b68b8c0a236fb42933bdf0a" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>;
-<a name="l00026"></a>00026       ar &amp; <a class="code" href="structUtil_1_1OrthoRegion.html#a89025366e0b524950c542f05a56e85c0" title="Half region lengths: halfLengths_[i] = 0.5*lengths_[i].">halfLengths_</a>;
-<a name="l00027"></a>00027       ar &amp; <a class="code" href="structUtil_1_1OrthoRegion.html#af3906d6f1c18d3c0bfac43f97db33273" title="Volume: V = lengths_[0]*lengths_[1]*lengths_[2].">volume_</a>;
+<a name="l00023"></a>00023       ar &amp; <a class="code" href="structUtil_1_1OrthoRegion.html#aece7a5e154b5511a4b24d46c5c32ce21" title="Minimum coordinates: Require r[i] &amp;gt;= minima_[i].">minima_</a>;
+<a name="l00024"></a>00024       ar &amp; <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>;
+<a name="l00025"></a>00025       ar &amp; <a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>;
+<a name="l00026"></a>00026       ar &amp; <a class="code" href="structUtil_1_1OrthoRegion.html#a6ca4d95186a47da01403d09931e5dbce" title="Half region lengths: halfLengths_[i] = 0.5*lengths_[i].">halfLengths_</a>;
+<a name="l00027"></a>00027       ar &amp; <a class="code" href="structUtil_1_1OrthoRegion.html#af4cf08bd6f1205e80ad0614be9aab145" title="Volume: V = lengths_[0]*lengths_[1]*lengths_[2].">volume_</a>;
 <a name="l00028"></a>00028    }
 <a name="l00029"></a>00029 
 <a name="l00030"></a>00030    <span class="comment">/*</span>
@@ -83,13 +83,13 @@
 <a name="l00032"></a>00032 <span class="comment">   */</span>
 <a name="l00033"></a>00033    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
 <a name="l00034"></a>00034    <span class="keywordtype">void</span> 
-<a name="l00035"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a6765e839ab267e4959384e35a4112451">00035</a>    <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a6765e839ab267e4959384e35a4112451" title="Serialize to/from an archive.">OrthorhombicBoundary::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00035"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#afc43e50ace9adb2fb601d49db3528519">00035</a>    <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#afc43e50ace9adb2fb601d49db3528519" title="Serialize to/from an archive.">OrthorhombicBoundary::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00036"></a>00036    {
-<a name="l00037"></a>00037       <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a6765e839ab267e4959384e35a4112451" title="Serialize to/from an archive.">OrthoRegion::serialize</a>(ar, version);
+<a name="l00037"></a>00037       <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#afc43e50ace9adb2fb601d49db3528519" title="Serialize to/from an archive.">OrthoRegion::serialize</a>(ar, version);
 <a name="l00038"></a>00038       <a class="code" href="namespaceUtil.html#a58a588c34a3adf0401b8c0c0bb33ffd3" title="Serialize an enumeration value.">serializeEnum</a>(ar, lattice_, version);
 <a name="l00039"></a>00039       reset();
 <a name="l00040"></a>00040       <span class="keywordflow">if</span> (Archive::is_loading()) {
-<a name="l00041"></a>00041          <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#afe93e17ac89cd97917811068ba2af214" title="Return true if valid, or throw Exception.">isValid</a>();
+<a name="l00041"></a>00041          <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#ab0e3a5522a939d51a26bffcab4844bf6" title="Return true if valid, or throw Exception.">isValid</a>();
 <a name="l00042"></a>00042       }
 <a name="l00043"></a>00043    }
 <a name="l00044"></a>00044 
@@ -97,7 +97,7 @@
 <a name="l00046"></a>00046 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

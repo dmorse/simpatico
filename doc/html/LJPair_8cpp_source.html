@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -72,8 +72,8 @@
 <a name="l00021"></a>00021    <span class="comment">/* </span>
 <a name="l00022"></a>00022 <span class="comment">   * Constructor.</span>
 <a name="l00023"></a>00023 <span class="comment">   */</span>
-<a name="l00024"></a>00024    <a class="code" href="classInter_1_1LJPair.html#a1d860fe6d6c29ef14a981b01be12fadf" title="Default constructor.">LJPair::LJPair</a>() 
-<a name="l00025"></a><a class="code" href="classInter_1_1LJPair.html#a1d860fe6d6c29ef14a981b01be12fadf">00025</a>     : maxPairCutoff_(0.0),
+<a name="l00024"></a>00024    <a class="code" href="classInter_1_1LJPair.html#ac018de101591bdd0db7a12e950fe25be" title="Default constructor.">LJPair::LJPair</a>() 
+<a name="l00025"></a><a class="code" href="classInter_1_1LJPair.html#ac018de101591bdd0db7a12e950fe25be">00025</a>     : maxPairCutoff_(0.0),
 <a name="l00026"></a>00026       nAtomType_(0),
 <a name="l00027"></a>00027       isInitialized_(false)
 <a name="l00028"></a>00028    {}
@@ -81,8 +81,8 @@
 <a name="l00030"></a>00030    <span class="comment">/* </span>
 <a name="l00031"></a>00031 <span class="comment">   * Copy constructor.</span>
 <a name="l00032"></a>00032 <span class="comment">   */</span>
-<a name="l00033"></a>00033    <a class="code" href="classInter_1_1LJPair.html#a1d860fe6d6c29ef14a981b01be12fadf" title="Default constructor.">LJPair::LJPair</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1LJPair.html" title="A cutoff Lennard-Jones nonbonded pair potential.">LJPair</a>&amp; other)
-<a name="l00034"></a><a class="code" href="classInter_1_1LJPair.html#a06fc689effe719e8f3e765a2a1178e5c">00034</a>     : maxPairCutoff_(other.maxPairCutoff_),
+<a name="l00033"></a>00033    <a class="code" href="classInter_1_1LJPair.html#ac018de101591bdd0db7a12e950fe25be" title="Default constructor.">LJPair::LJPair</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1LJPair.html" title="A cutoff Lennard-Jones nonbonded pair potential.">LJPair</a>&amp; other)
+<a name="l00034"></a><a class="code" href="classInter_1_1LJPair.html#ad95cb42e2ff4036148a200982d46a875">00034</a>     : maxPairCutoff_(other.maxPairCutoff_),
 <a name="l00035"></a>00035       nAtomType_(other.nAtomType_),
 <a name="l00036"></a>00036       isInitialized_(other.isInitialized_)
 <a name="l00037"></a>00037    {
@@ -102,8 +102,8 @@
 <a name="l00051"></a>00051    <span class="comment">/* </span>
 <a name="l00052"></a>00052 <span class="comment">   * Assignment operator.</span>
 <a name="l00053"></a>00053 <span class="comment">   */</span>
-<a name="l00054"></a>00054    <a class="code" href="classInter_1_1LJPair.html" title="A cutoff Lennard-Jones nonbonded pair potential.">LJPair</a>&amp; <a class="code" href="classInter_1_1LJPair.html#a21e49af3d9af43a17b3276060a6ab979" title="Assignment.">LJPair::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1LJPair.html" title="A cutoff Lennard-Jones nonbonded pair potential.">LJPair</a>&amp; other)
-<a name="l00055"></a><a class="code" href="classInter_1_1LJPair.html#a21e49af3d9af43a17b3276060a6ab979">00055</a>    {
+<a name="l00054"></a>00054    <a class="code" href="classInter_1_1LJPair.html" title="A cutoff Lennard-Jones nonbonded pair potential.">LJPair</a>&amp; <a class="code" href="classInter_1_1LJPair.html#a27d1fdc789773621722aaf1119358f7b" title="Assignment.">LJPair::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1LJPair.html" title="A cutoff Lennard-Jones nonbonded pair potential.">LJPair</a>&amp; other)
+<a name="l00055"></a><a class="code" href="classInter_1_1LJPair.html#a27d1fdc789773621722aaf1119358f7b">00055</a>    {
 <a name="l00056"></a>00056       maxPairCutoff_ = other.maxPairCutoff_;
 <a name="l00057"></a>00057       nAtomType_     = other.nAtomType_;
 <a name="l00058"></a>00058       isInitialized_ = other.isInitialized_;
@@ -124,8 +124,8 @@
 <a name="l00073"></a>00073    <span class="comment">/* </span>
 <a name="l00074"></a>00074 <span class="comment">   * Set nAtomType</span>
 <a name="l00075"></a>00075 <span class="comment">   */</span>
-<a name="l00076"></a>00076    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1LJPair.html#a9549e24ee72625c94fd6ae7d61ceeee8" title="Set nAtomType value.">LJPair::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType) 
-<a name="l00077"></a><a class="code" href="classInter_1_1LJPair.html#a9549e24ee72625c94fd6ae7d61ceeee8">00077</a>    {  
+<a name="l00076"></a>00076    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1LJPair.html#a560c415ca5ce4cd1e51ad4fb9d1dcfa8" title="Set nAtomType value.">LJPair::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType) 
+<a name="l00077"></a><a class="code" href="classInter_1_1LJPair.html#a560c415ca5ce4cd1e51ad4fb9d1dcfa8">00077</a>    {  
 <a name="l00078"></a>00078       <span class="keywordflow">if</span> (nAtomType &lt;= 0) {
 <a name="l00079"></a>00079          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtomType &lt;= 0&quot;</span>);
 <a name="l00080"></a>00080       }
@@ -138,8 +138,8 @@
 <a name="l00087"></a>00087    <span class="comment">/*</span>
 <a name="l00088"></a>00088 <span class="comment">   * Reset epsilon_[i][j] after initialization</span>
 <a name="l00089"></a>00089 <span class="comment">   */</span>
-<a name="l00090"></a>00090    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1LJPair.html#a78afa63dd8620f66db0688bb490ccf96" title="Set LJ interaction energy for a specific pair of Atom types.">LJPair::setEpsilon</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> epsilon)
-<a name="l00091"></a><a class="code" href="classInter_1_1LJPair.html#a78afa63dd8620f66db0688bb490ccf96">00091</a>    {
+<a name="l00090"></a>00090    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1LJPair.html#a7ae69315960a4ef7d4cae0c821afc359" title="Set LJ interaction energy for a specific pair of Atom types.">LJPair::setEpsilon</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> epsilon)
+<a name="l00091"></a><a class="code" href="classInter_1_1LJPair.html#a7ae69315960a4ef7d4cae0c821afc359">00091</a>    {
 <a name="l00092"></a>00092 
 <a name="l00093"></a>00093       <span class="comment">// Preconditions</span>
 <a name="l00094"></a>00094       <span class="keywordflow">if</span> (!isInitialized_) {
@@ -169,8 +169,8 @@
 <a name="l00118"></a>00118    <span class="comment">/*</span>
 <a name="l00119"></a>00119 <span class="comment">   * Reset sigma_[i][j] after initialization</span>
 <a name="l00120"></a>00120 <span class="comment">   */</span>
-<a name="l00121"></a>00121    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1LJPair.html#ae001917d181455636476541cb5149e37" title="Get LJ range for a specific pair of Atom types.">LJPair::setSigma</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> sigma)
-<a name="l00122"></a><a class="code" href="classInter_1_1LJPair.html#ae001917d181455636476541cb5149e37">00122</a>    {
+<a name="l00121"></a>00121    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1LJPair.html#a25876fa95a0e2c26d6cc48565cfa9db2" title="Get LJ range for a specific pair of Atom types.">LJPair::setSigma</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> sigma)
+<a name="l00122"></a><a class="code" href="classInter_1_1LJPair.html#a25876fa95a0e2c26d6cc48565cfa9db2">00122</a>    {
 <a name="l00123"></a>00123 
 <a name="l00124"></a>00124       <span class="comment">// Preconditions</span>
 <a name="l00125"></a>00125       <span class="keywordflow">if</span> (!isInitialized_) {
@@ -203,8 +203,8 @@
 <a name="l00152"></a>00152    <span class="comment">/* </span>
 <a name="l00153"></a>00153 <span class="comment">   * Read potential parameters from file.</span>
 <a name="l00154"></a>00154 <span class="comment">   */</span>
-<a name="l00155"></a>00155    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1LJPair.html#ab5421d3c9175985c9acbf723e5392075" title="Read epsilon, sigma, and cutoff, and initialize other variables.">LJPair::readParam</a>(std::istream &amp;in) 
-<a name="l00156"></a><a class="code" href="classInter_1_1LJPair.html#ab5421d3c9175985c9acbf723e5392075">00156</a>    {
+<a name="l00155"></a>00155    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1LJPair.html#ab80e0e998d1f77bfb7c777bd8f7a0278" title="Read epsilon, sigma, and cutoff, and initialize other variables.">LJPair::readParam</a>(std::istream &amp;in) 
+<a name="l00156"></a><a class="code" href="classInter_1_1LJPair.html#ab80e0e998d1f77bfb7c777bd8f7a0278">00156</a>    {
 <a name="l00157"></a>00157       <span class="keywordflow">if</span> (nAtomType_ == 0) {
 <a name="l00158"></a>00158          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>( <span class="stringliteral">&quot;nAtomType must be set before readParam&quot;</span>);
 <a name="l00159"></a>00159       }
@@ -244,17 +244,17 @@
 <a name="l00193"></a>00193    <span class="comment">/* </span>
 <a name="l00194"></a>00194 <span class="comment">   * Get maximum of pair cutoff distance, for all atom type pairs.</span>
 <a name="l00195"></a>00195 <span class="comment">   */</span>
-<a name="l00196"></a>00196    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#a30a3c4cfc7e46e5e8ac052556fd945f0" title="Get maximum of pair cutoff distance, for all atom type pairs.">LJPair::maxPairCutoff</a>()<span class="keyword"> const</span>
-<a name="l00197"></a><a class="code" href="classInter_1_1LJPair.html#a30a3c4cfc7e46e5e8ac052556fd945f0">00197</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> maxPairCutoff_; }
+<a name="l00196"></a>00196    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#ac2ddeeba413b7719c36ddea6a717a8fd" title="Get maximum of pair cutoff distance, for all atom type pairs.">LJPair::maxPairCutoff</a>()<span class="keyword"> const</span>
+<a name="l00197"></a><a class="code" href="classInter_1_1LJPair.html#ac2ddeeba413b7719c36ddea6a717a8fd">00197</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> maxPairCutoff_; }
 <a name="l00198"></a>00198 
-<a name="l00202"></a>00202    std::string <a class="code" href="classInter_1_1LJPair.html#a13c07285e858b2c232919fd57b635e1b" title="Return name string &amp;quot;LJPair&amp;quot; for this evaluator class.">LJPair::className</a>()<span class="keyword"> const</span>
-<a name="l00203"></a><a class="code" href="classInter_1_1LJPair.html#a13c07285e858b2c232919fd57b635e1b">00203</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;LJPair&quot;</span>); }
+<a name="l00202"></a>00202    std::string <a class="code" href="classInter_1_1LJPair.html#a676d5b15b090a231e3ffb098f7e37a6d" title="Return name string &amp;quot;LJPair&amp;quot; for this evaluator class.">LJPair::className</a>()<span class="keyword"> const</span>
+<a name="l00203"></a><a class="code" href="classInter_1_1LJPair.html#a676d5b15b090a231e3ffb098f7e37a6d">00203</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;LJPair&quot;</span>); }
 <a name="l00204"></a>00204  
 <a name="l00205"></a>00205    <span class="comment">/* </span>
 <a name="l00206"></a>00206 <span class="comment">   * Get pair interaction strength.</span>
 <a name="l00207"></a>00207 <span class="comment">   */</span>
-<a name="l00208"></a>00208    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#a57f5db662d4017f2765d6c233b5ed5c2" title="Get LJ interaction energy for a specific pair of Atom types.">LJPair::epsilon</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
-<a name="l00209"></a><a class="code" href="classInter_1_1LJPair.html#a57f5db662d4017f2765d6c233b5ed5c2">00209</a> <span class="keyword">   </span>{ 
+<a name="l00208"></a>00208    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#ab888b60adba0d512153a1aca55ce8759" title="Get LJ interaction energy for a specific pair of Atom types.">LJPair::epsilon</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00209"></a><a class="code" href="classInter_1_1LJPair.html#ab888b60adba0d512153a1aca55ce8759">00209</a> <span class="keyword">   </span>{ 
 <a name="l00210"></a>00210       assert(i &gt;= 0 &amp;&amp; i &lt; nAtomType_); 
 <a name="l00211"></a>00211       assert(j &gt;= 0 &amp;&amp; j &lt; nAtomType_); 
 <a name="l00212"></a>00212       <span class="keywordflow">return</span> epsilon_[i][j]; 
@@ -263,8 +263,8 @@
 <a name="l00215"></a>00215    <span class="comment">/* </span>
 <a name="l00216"></a>00216 <span class="comment">   * Get pair interaction strength.</span>
 <a name="l00217"></a>00217 <span class="comment">   */</span>
-<a name="l00218"></a>00218    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#aac621c763f885981ed7fd54a3e4759b6" title="Get LJ range for a specific pair of Atom types.">LJPair::sigma</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
-<a name="l00219"></a><a class="code" href="classInter_1_1LJPair.html#aac621c763f885981ed7fd54a3e4759b6">00219</a> <span class="keyword">   </span>{
+<a name="l00218"></a>00218    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#af722eb3402033f5aa0749baf8dc74ee7" title="Get LJ range for a specific pair of Atom types.">LJPair::sigma</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00219"></a><a class="code" href="classInter_1_1LJPair.html#af722eb3402033f5aa0749baf8dc74ee7">00219</a> <span class="keyword">   </span>{
 <a name="l00220"></a>00220       assert(i &gt;= 0 &amp;&amp; i &lt; nAtomType_); 
 <a name="l00221"></a>00221       assert(j &gt;= 0 &amp;&amp; j &lt; nAtomType_); 
 <a name="l00222"></a>00222       <span class="keywordflow">return</span> sigma_[i][j]; 
@@ -273,8 +273,8 @@
 <a name="l00225"></a>00225    <span class="comment">/*</span>
 <a name="l00226"></a>00226 <span class="comment">   * Modify a parameter, identified by a string.</span>
 <a name="l00227"></a>00227 <span class="comment">   */</span>
-<a name="l00228"></a>00228    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1LJPair.html#a1d5b9097db680b4eace98f69fc8dec1a" title="Modify a parameter, identified by a string.">LJPair::set</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> value)
-<a name="l00229"></a><a class="code" href="classInter_1_1LJPair.html#a1d5b9097db680b4eace98f69fc8dec1a">00229</a>    {
+<a name="l00228"></a>00228    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1LJPair.html#ad1d3294b5fd7366279481403f564a86e" title="Modify a parameter, identified by a string.">LJPair::set</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> value)
+<a name="l00229"></a><a class="code" href="classInter_1_1LJPair.html#ad1d3294b5fd7366279481403f564a86e">00229</a>    {
 <a name="l00230"></a>00230       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;epsilon&quot;</span>) {
 <a name="l00231"></a>00231          epsilon_[i][j] = value;
 <a name="l00232"></a>00232          epsilon_[j][i] = value;
@@ -290,8 +290,8 @@
 <a name="l00242"></a>00242    <span class="comment">/*</span>
 <a name="l00243"></a>00243 <span class="comment">   * Get a parameter value, identified by a string.</span>
 <a name="l00244"></a>00244 <span class="comment">   */</span>
-<a name="l00245"></a>00245    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#ab633dae15c30d4918f3d8f937be076dc" title="Get a parameter value, identified by a string.">LJPair::get</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
-<a name="l00246"></a><a class="code" href="classInter_1_1LJPair.html#ab633dae15c30d4918f3d8f937be076dc">00246</a> <span class="keyword">   </span>{
+<a name="l00245"></a>00245    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#a5ebc70514c893ea6bc6b3ca5a7dfa987" title="Get a parameter value, identified by a string.">LJPair::get</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00246"></a><a class="code" href="classInter_1_1LJPair.html#a5ebc70514c893ea6bc6b3ca5a7dfa987">00246</a> <span class="keyword">   </span>{
 <a name="l00247"></a>00247       <span class="keywordtype">double</span> value;
 <a name="l00248"></a>00248       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;epsilon&quot;</span>) {
 <a name="l00249"></a>00249          value = epsilon_[i][j];
@@ -311,7 +311,7 @@
 <a name="l00263"></a>00263 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

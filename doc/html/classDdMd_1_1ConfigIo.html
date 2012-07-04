@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: ConfigIo Class Reference</title>
+<title>Simpatico: DdMd::ConfigIo Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>ConfigIo Class Reference<div class="ingroups"><a class="el" href="group__DdMd__ConfigIo__Module.html">ConfigIos</a></div></h1>  </div>
+<h1>DdMd::ConfigIo Class Reference<div class="ingroups"><a class="el" href="group__DdMd__ConfigIo__Module.html">ConfigIos</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::ConfigIo" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -61,14 +61,14 @@
 </div>
 <p><code>#include &lt;<a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html">ConfigIo.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for ConfigIo:</div>
+Inheritance diagram for DdMd::ConfigIo:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1ConfigIo.png" usemap="#ConfigIo_map" alt=""/>
-  <map id="ConfigIo_map" name="ConfigIo_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
-<area href="classDdMd_1_1DdMdConfigIo.html" alt="DdMdConfigIo" shape="rect" coords="0,168,111,192"/>
+  <img src="classDdMd_1_1ConfigIo.png" usemap="#DdMd::ConfigIo_map" alt=""/>
+  <map id="DdMd::ConfigIo_map" name="DdMd::ConfigIo_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,134,24"/>
+<area href="classDdMd_1_1DdMdConfigIo.html" alt="DdMd::DdMdConfigIo" shape="rect" coords="0,168,134,192"/>
 </map>
  </div></div>
 
@@ -76,48 +76,48 @@ Inheritance diagram for ConfigIo:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a5fc23d19298cda65d2cbdaf29af60ee8">ConfigIo</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a5fc23d19298cda65d2cbdaf29af60ee8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a1e0db8c600da8145d2bf69563fa245ba">ConfigIo</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a1e0db8c600da8145d2bf69563fa245ba"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#ad25bfa92e599efa4705f10d1c537dec2">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, Boundary &amp;boundary, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;atomStorage, <a class="el" href="classDdMd_1_1BondStorage.html">BondStorage</a> &amp;bondStorage, <a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate with related objects.  <a href="#ad25bfa92e599efa4705f10d1c537dec2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read cache size and allocate memory.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#add9aa36be3771b2b9b0a16032c6dd58e">initialize</a> (int atomCacheCapacity=100, int bondCacheCapacity=100)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read cache size and allocate memory.  <a href="#add9aa36be3771b2b9b0a16032c6dd58e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#aa7daff48dfb96ede37b960254bf1f4a2">readConfig</a> (std::istream &amp;file, <a class="el" href="group__DdMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7">MaskPolicy</a> maskPolicy)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read configuration file.  <a href="#aa7daff48dfb96ede37b960254bf1f4a2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#abe00fbfb36b9498ec7da0b99554c815a">writeConfig</a> (std::ostream &amp;file)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write configuration file.  <a href="#abe00fbfb36b9498ec7da0b99554c815a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a3faa07354c6fcdbf932605d87d598662">ConfigIo</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a3faa07354c6fcdbf932605d87d598662"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#aa65db2b9c8dafa37607e359ba3f152f5">ConfigIo</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aa65db2b9c8dafa37607e359ba3f152f5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a36fdd33b4d149bc67aaf1ac3fede6a8f">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, Boundary &amp;boundary, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;atomStorage, <a class="el" href="classDdMd_1_1BondStorage.html">BondStorage</a> &amp;bondStorage, <a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate with related objects.  <a href="#a36fdd33b4d149bc67aaf1ac3fede6a8f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a9f85afd769fcbbb91825adb79dd6fec7">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read cache size and allocate memory.  <a href="#a9f85afd769fcbbb91825adb79dd6fec7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#adbb0944d2f7ca26893da0439fd227f7d">initialize</a> (int atomCacheCapacity=100, int bondCacheCapacity=100)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read cache size and allocate memory.  <a href="#adbb0944d2f7ca26893da0439fd227f7d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a025c2daa1291a3ec0071f36968c1eaad">readConfig</a> (std::istream &amp;file, <a class="el" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4">MaskPolicy</a> maskPolicy)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read configuration file.  <a href="#a025c2daa1291a3ec0071f36968c1eaad"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a4e0634a8251592e6cbc1299b8c433979">writeConfig</a> (std::ostream &amp;file)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write configuration file.  <a href="#a4e0634a8251592e6cbc1299b8c433979"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#ad145b4d58646be27fd728356390c9b1c">setAtomMasks</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set masks on all atoms.  <a href="#ad145b4d58646be27fd728356390c9b1c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomDistributor.html">AtomDistributor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a4061a400fc3a2a7393aaaee3a0a8d738">atomDistributor</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomDistributor.html" title="Class for distributing Atoms among processors.">AtomDistributor</a> by reference.  <a href="#a4061a400fc3a2a7393aaaee3a0a8d738"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomCollector.html">AtomCollector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a20a2aec3473d4411a84923258128af7e">atomCollector</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomCollector.html" title="Class for collecting Atoms from processors to master processor.">AtomCollector</a> by reference.  <a href="#a20a2aec3473d4411a84923258128af7e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1GroupDistributor.html">GroupDistributor</a>&lt; 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#afc349ee8e049fb13fd5f2552e92fe721">bondDistributor</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomDistributor.html" title="Class for distributing Atoms among processors.">AtomDistributor</a> by reference.  <a href="#afc349ee8e049fb13fd5f2552e92fe721"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1GroupCollector.html">GroupCollector</a>&lt; 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a9c989bcc01a488af0105351267d19154">bondCollector</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the bond collector by reference.  <a href="#a9c989bcc01a488af0105351267d19154"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a64ddaf9dd004b6c301f8f23e8995b6d1">domain</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a> by reference.  <a href="#a64ddaf9dd004b6c301f8f23e8995b6d1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a5daa73910cfb398e1ba647b4821d18ba">boundary</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Boundary by reference.  <a href="#a5daa73910cfb398e1ba647b4821d18ba"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#aa34b0aab4d37e8b42704954d57b5c126">atomStorage</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> by reference.  <a href="#aa34b0aab4d37e8b42704954d57b5c126"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1BondStorage.html">BondStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#ac0ff8b7a630972e48ad29b007ae770de">bondStorage</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a> by reference.  <a href="#ac0ff8b7a630972e48ad29b007ae770de"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a80e1df26bbd0f714e39a83df37d08b8e">setAtomMasks</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set masks on all atoms.  <a href="#a80e1df26bbd0f714e39a83df37d08b8e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomDistributor.html">AtomDistributor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a8a6d0d92fdf8ee254bbb14cc2162e672">atomDistributor</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomDistributor.html" title="Class for distributing Atoms among processors.">AtomDistributor</a> by reference.  <a href="#a8a6d0d92fdf8ee254bbb14cc2162e672"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomCollector.html">AtomCollector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#ae2d6a3768f69720306d65e828f46cba7">atomCollector</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomCollector.html" title="Class for collecting Atoms from processors to master processor.">AtomCollector</a> by reference.  <a href="#ae2d6a3768f69720306d65e828f46cba7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1GroupDistributor.html">GroupDistributor</a>&lt; 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a3b10dc2fef0240450220f357e0e69864">bondDistributor</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomDistributor.html" title="Class for distributing Atoms among processors.">AtomDistributor</a> by reference.  <a href="#a3b10dc2fef0240450220f357e0e69864"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1GroupCollector.html">GroupCollector</a>&lt; 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#af946ffe613ae3b7879f76674051b7dce">bondCollector</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the bond collector by reference.  <a href="#af946ffe613ae3b7879f76674051b7dce"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a981f9fdec5a3c0fd49b27db4e59ba345">domain</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a> by reference.  <a href="#a981f9fdec5a3c0fd49b27db4e59ba345"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#aa561695e34b6f85db7aabae5a19319eb">boundary</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Boundary by reference.  <a href="#aa561695e34b6f85db7aabae5a19319eb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a8ff8114f2fb6e24904857e63bb314435">atomStorage</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> by reference.  <a href="#a8ff8114f2fb6e24904857e63bb314435"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1BondStorage.html">BondStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ConfigIo.html#a1489593cc1bc0d635d908c47ea4510a0">bondStorage</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a> by reference.  <a href="#a1489593cc1bc0d635d908c47ea4510a0"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a5fc23d19298cda65d2cbdaf29af60ee8"></a><!-- doxytag: member="DdMd::ConfigIo::ConfigIo" ref="a5fc23d19298cda65d2cbdaf29af60ee8" args="()" -->
+<a class="anchor" id="a3faa07354c6fcdbf932605d87d598662"></a><!-- doxytag: member="DdMd::ConfigIo::ConfigIo" ref="a3faa07354c6fcdbf932605d87d598662" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1ConfigIo.html">ConfigIo</a> </td>
+          <td class="memname">DdMd::ConfigIo::ConfigIo </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -132,12 +132,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1e0db8c600da8145d2bf69563fa245ba"></a><!-- doxytag: member="DdMd::ConfigIo::ConfigIo" ref="a1e0db8c600da8145d2bf69563fa245ba" args="(Simulation &amp;simulation)" -->
+<a class="anchor" id="aa65db2b9c8dafa37607e359ba3f152f5"></a><!-- doxytag: member="DdMd::ConfigIo::ConfigIo" ref="aa65db2b9c8dafa37607e359ba3f152f5" args="(Simulation &amp;simulation)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1ConfigIo.html">ConfigIo</a> </td>
+          <td class="memname">DdMd::ConfigIo::ConfigIo </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td>
           <td class="paramname"><em>simulation</em></td><td>)</td>
@@ -157,17 +157,17 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">70</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html">ddMd/configIos/ConfigIo.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00649">Simulation::atomStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00652">Simulation::bondStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00643">Simulation::boundary()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00668">Simulation::buffer()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00646">Simulation::domain()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00649">DdMd::Simulation::atomStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00652">DdMd::Simulation::bondStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00643">DdMd::Simulation::boundary()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00668">DdMd::Simulation::buffer()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00646">DdMd::Simulation::domain()</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ad25bfa92e599efa4705f10d1c537dec2"></a><!-- doxytag: member="DdMd::ConfigIo::associate" ref="ad25bfa92e599efa4705f10d1c537dec2" args="(Domain &amp;domain, Boundary &amp;boundary, AtomStorage &amp;atomStorage, BondStorage &amp;bondStorage, Buffer &amp;buffer)" -->
+<a class="anchor" id="a36fdd33b4d149bc67aaf1ac3fede6a8f"></a><!-- doxytag: member="DdMd::ConfigIo::associate" ref="a36fdd33b4d149bc67aaf1ac3fede6a8f" args="(Domain &amp;domain, Boundary &amp;boundary, AtomStorage &amp;atomStorage, BondStorage &amp;bondStorage, Buffer &amp;buffer)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void associate </td>
+          <td class="memname">void DdMd::ConfigIo::associate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td>
           <td class="paramname"><em>domain</em>, </td>
@@ -210,16 +210,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00107">107</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html">ddMd/configIos/ConfigIo.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00927">Simulation::setConfigIo()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00927">DdMd::Simulation::setConfigIo()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="DdMd::ConfigIo::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a9f85afd769fcbbb91825adb79dd6fec7"></a><!-- doxytag: member="DdMd::ConfigIo::readParam" ref="a9f85afd769fcbbb91825adb79dd6fec7" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void DdMd::ConfigIo::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -231,18 +231,18 @@ Protected Member Functions</h2></td></tr>
 
 <p>Read cache size and allocate memory. </p>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00149">149</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html">ddMd/configIos/ConfigIo.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="add9aa36be3771b2b9b0a16032c6dd58e"></a><!-- doxytag: member="DdMd::ConfigIo::initialize" ref="add9aa36be3771b2b9b0a16032c6dd58e" args="(int atomCacheCapacity=100, int bondCacheCapacity=100)" -->
+<a class="anchor" id="adbb0944d2f7ca26893da0439fd227f7d"></a><!-- doxytag: member="DdMd::ConfigIo::initialize" ref="adbb0944d2f7ca26893da0439fd227f7d" args="(int atomCacheCapacity=100, int bondCacheCapacity=100)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void initialize </td>
+          <td class="memname">void DdMd::ConfigIo::initialize </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>atomCacheCapacity</em> = <code>100</code>, </td>
@@ -275,12 +275,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa7daff48dfb96ede37b960254bf1f4a2"></a><!-- doxytag: member="DdMd::ConfigIo::readConfig" ref="aa7daff48dfb96ede37b960254bf1f4a2" args="(std::istream &amp;file, MaskPolicy maskPolicy)" -->
+<a class="anchor" id="a025c2daa1291a3ec0071f36968c1eaad"></a><!-- doxytag: member="DdMd::ConfigIo::readConfig" ref="a025c2daa1291a3ec0071f36968c1eaad" args="(std::istream &amp;file, MaskPolicy maskPolicy)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readConfig </td>
+          <td class="memname">void DdMd::ConfigIo::readConfig </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>file</em>, </td>
@@ -288,7 +288,7 @@ Protected Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__DdMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7">MaskPolicy</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4">MaskPolicy</a>&#160;</td>
           <td class="paramname"><em>maskPolicy</em>&#160;</td>
         </tr>
         <tr>
@@ -310,20 +310,20 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classDdMd_1_1DdMdConfigIo.html#aa7daff48dfb96ede37b960254bf1f4a2">DdMdConfigIo</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1DdMdConfigIo.html#a85b37aba9167fa0c9fa812ee37c4d2c3">DdMd::DdMdConfigIo</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00237">237</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html">ddMd/configIos/ConfigIo.cpp</a>.</p>
 
-<p>References <a class="el" href="MpiSendRecv_8h_source.html#l00133">Util::bcast()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00193">Atom::setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00197">Atom::setTypeId()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00225">Atom::velocity()</a>.</p>
+<p>References <a class="el" href="MpiSendRecv_8h_source.html#l00133">Util::bcast()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00193">DdMd::Atom::setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00197">DdMd::Atom::setTypeId()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00225">DdMd::Atom::velocity()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abe00fbfb36b9498ec7da0b99554c815a"></a><!-- doxytag: member="DdMd::ConfigIo::writeConfig" ref="abe00fbfb36b9498ec7da0b99554c815a" args="(std::ostream &amp;file)" -->
+<a class="anchor" id="a4e0634a8251592e6cbc1299b8c433979"></a><!-- doxytag: member="DdMd::ConfigIo::writeConfig" ref="a4e0634a8251592e6cbc1299b8c433979" args="(std::ostream &amp;file)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void writeConfig </td>
+          <td class="memname">void DdMd::ConfigIo::writeConfig </td>
           <td>(</td>
           <td class="paramtype">std::ostream &amp;&#160;</td>
           <td class="paramname"><em>file</em></td><td>)</td>
@@ -342,20 +342,20 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classDdMd_1_1DdMdConfigIo.html#abe00fbfb36b9498ec7da0b99554c815a">DdMdConfigIo</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1DdMdConfigIo.html#adf518df6d5066904e796c806bcedbdbc">DdMd::DdMdConfigIo</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00375">375</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html">ddMd/configIos/ConfigIo.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00205">Atom::id()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">Atom::mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00099">Mask::size()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00209">Atom::typeId()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00225">Atom::velocity()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00205">DdMd::Atom::id()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">DdMd::Atom::mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00099">DdMd::Mask::size()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00209">DdMd::Atom::typeId()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00225">DdMd::Atom::velocity()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad145b4d58646be27fd728356390c9b1c"></a><!-- doxytag: member="DdMd::ConfigIo::setAtomMasks" ref="ad145b4d58646be27fd728356390c9b1c" args="()" -->
+<a class="anchor" id="a80e1df26bbd0f714e39a83df37d08b8e"></a><!-- doxytag: member="DdMd::ConfigIo::setAtomMasks" ref="a80e1df26bbd0f714e39a83df37d08b8e" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setAtomMasks </td>
+          <td class="memname">void DdMd::ConfigIo::setAtomMasks </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [protected]</code></td>
@@ -368,18 +368,18 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00425">425</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html">ddMd/configIos/ConfigIo.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00045">Mask::append()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">Atom::mask()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, and <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00045">DdMd::Mask::append()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">DdMd::Atom::mask()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, and <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4061a400fc3a2a7393aaaee3a0a8d738"></a><!-- doxytag: member="DdMd::ConfigIo::atomDistributor" ref="a4061a400fc3a2a7393aaaee3a0a8d738" args="()" -->
+<a class="anchor" id="a8a6d0d92fdf8ee254bbb14cc2162e672"></a><!-- doxytag: member="DdMd::ConfigIo::atomDistributor" ref="a8a6d0d92fdf8ee254bbb14cc2162e672" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1AtomDistributor.html">AtomDistributor</a> &amp; atomDistributor </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1AtomDistributor.html">AtomDistributor</a> &amp; DdMd::ConfigIo::atomDistributor </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -392,16 +392,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00269">269</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html">ddMd/configIos/ConfigIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a20a2aec3473d4411a84923258128af7e"></a><!-- doxytag: member="DdMd::ConfigIo::atomCollector" ref="a20a2aec3473d4411a84923258128af7e" args="()" -->
+<a class="anchor" id="ae2d6a3768f69720306d65e828f46cba7"></a><!-- doxytag: member="DdMd::ConfigIo::atomCollector" ref="ae2d6a3768f69720306d65e828f46cba7" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1AtomCollector.html">AtomCollector</a> &amp; atomCollector </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1AtomCollector.html">AtomCollector</a> &amp; DdMd::ConfigIo::atomCollector </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -414,16 +414,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00272">272</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html">ddMd/configIos/ConfigIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMdConfigIo::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMd::DdMdConfigIo::writeConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afc349ee8e049fb13fd5f2552e92fe721"></a><!-- doxytag: member="DdMd::ConfigIo::bondDistributor" ref="afc349ee8e049fb13fd5f2552e92fe721" args="()" -->
+<a class="anchor" id="a3b10dc2fef0240450220f357e0e69864"></a><!-- doxytag: member="DdMd::ConfigIo::bondDistributor" ref="a3b10dc2fef0240450220f357e0e69864" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1GroupDistributor.html">GroupDistributor</a>&lt; 2 &gt; &amp; bondDistributor </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1GroupDistributor.html">GroupDistributor</a>&lt; 2 &gt; &amp; DdMd::ConfigIo::bondDistributor </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -436,16 +436,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00275">275</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html">ddMd/configIos/ConfigIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9c989bcc01a488af0105351267d19154"></a><!-- doxytag: member="DdMd::ConfigIo::bondCollector" ref="a9c989bcc01a488af0105351267d19154" args="()" -->
+<a class="anchor" id="af946ffe613ae3b7879f76674051b7dce"></a><!-- doxytag: member="DdMd::ConfigIo::bondCollector" ref="af946ffe613ae3b7879f76674051b7dce" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1GroupCollector.html">GroupCollector</a>&lt; 2 &gt; &amp; bondCollector </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1GroupCollector.html">GroupCollector</a>&lt; 2 &gt; &amp; DdMd::ConfigIo::bondCollector </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -458,16 +458,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00278">278</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html">ddMd/configIos/ConfigIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMdConfigIo::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMd::DdMdConfigIo::writeConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a64ddaf9dd004b6c301f8f23e8995b6d1"></a><!-- doxytag: member="DdMd::ConfigIo::domain" ref="a64ddaf9dd004b6c301f8f23e8995b6d1" args="()" -->
+<a class="anchor" id="a981f9fdec5a3c0fd49b27db4e59ba345"></a><!-- doxytag: member="DdMd::ConfigIo::domain" ref="a981f9fdec5a3c0fd49b27db4e59ba345" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp; domain </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp; DdMd::ConfigIo::domain </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -480,16 +480,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00297">297</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html">ddMd/configIos/ConfigIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMdConfigIo::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMd::DdMdConfigIo::writeConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5daa73910cfb398e1ba647b4821d18ba"></a><!-- doxytag: member="DdMd::ConfigIo::boundary" ref="a5daa73910cfb398e1ba647b4821d18ba" args="()" -->
+<a class="anchor" id="aa561695e34b6f85db7aabae5a19319eb"></a><!-- doxytag: member="DdMd::ConfigIo::boundary" ref="aa561695e34b6f85db7aabae5a19319eb" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Boundary &amp; boundary </td>
+          <td class="memname">Boundary &amp; DdMd::ConfigIo::boundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -502,16 +502,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00300">300</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html">ddMd/configIos/ConfigIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMdConfigIo::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMd::DdMdConfigIo::writeConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa34b0aab4d37e8b42704954d57b5c126"></a><!-- doxytag: member="DdMd::ConfigIo::atomStorage" ref="aa34b0aab4d37e8b42704954d57b5c126" args="()" -->
+<a class="anchor" id="a8ff8114f2fb6e24904857e63bb314435"></a><!-- doxytag: member="DdMd::ConfigIo::atomStorage" ref="a8ff8114f2fb6e24904857e63bb314435" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp; atomStorage </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp; DdMd::ConfigIo::atomStorage </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -524,16 +524,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00303">303</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html">ddMd/configIos/ConfigIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMdConfigIo::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMd::DdMdConfigIo::writeConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac0ff8b7a630972e48ad29b007ae770de"></a><!-- doxytag: member="DdMd::ConfigIo::bondStorage" ref="ac0ff8b7a630972e48ad29b007ae770de" args="()" -->
+<a class="anchor" id="a1489593cc1bc0d635d908c47ea4510a0"></a><!-- doxytag: member="DdMd::ConfigIo::bondStorage" ref="a1489593cc1bc0d635d908c47ea4510a0" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1BondStorage.html">BondStorage</a> &amp; bondStorage </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1BondStorage.html">BondStorage</a> &amp; DdMd::ConfigIo::bondStorage </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -546,7 +546,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html#l00306">306</a> of file <a class="el" href="ddMd_2configIos_2ConfigIo_8h_source.html">ddMd/configIos/ConfigIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMdConfigIo::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>, and <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMd::DdMdConfigIo::writeConfig()</a>.</p>
 
 </div>
 </div>
@@ -555,7 +555,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html">ddMd/configIos/ConfigIo.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

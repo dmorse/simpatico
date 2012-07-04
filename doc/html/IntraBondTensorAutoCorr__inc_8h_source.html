@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -81,7 +81,7 @@
 <a name="l00029"></a>00029 <span class="comment">   */</span>
 <a name="l00030"></a>00030    <span class="keyword">template</span> &lt;<span class="keyword">class</span> SystemType&gt;
 <a name="l00031"></a>00031    IntraBondTensorAutoCorr&lt;SystemType&gt;::IntraBondTensorAutoCorr(SystemType&amp; system) 
-<a name="l00032"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#a6a04d67a2675f73dab234f203bde8121">00032</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;SystemType&gt;(system),
+<a name="l00032"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#a349e0c70e188fea0388e50dddc2c220f">00032</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;SystemType&gt;(system),
 <a name="l00033"></a>00033       outputFile_(),
 <a name="l00034"></a>00034       accumulator_(),
 <a name="l00035"></a>00035       speciesId_(-1),
@@ -96,14 +96,14 @@
 <a name="l00044"></a>00044 <span class="comment">   */</span>
 <a name="l00045"></a>00045    <span class="keyword">template</span> &lt;<span class="keyword">class</span> SystemType&gt;
 <a name="l00046"></a>00046    <a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html" title="Autocorrelation for bond stress of a molecule.">IntraBondTensorAutoCorr&lt;SystemType&gt;::~IntraBondTensorAutoCorr</a>() 
-<a name="l00047"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#a59283a05fb6ba9222ed5534b54523541">00047</a>    {}
+<a name="l00047"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#a023255a0be11aa31bb87902a839e53ca">00047</a>    {}
 <a name="l00048"></a>00048 
 <a name="l00049"></a>00049    <span class="comment">/*</span>
 <a name="l00050"></a>00050 <span class="comment">   * Read parameters from file.</span>
 <a name="l00051"></a>00051 <span class="comment">   */</span>
 <a name="l00052"></a>00052    <span class="keyword">template</span> &lt;<span class="keyword">class</span> SystemType&gt;
 <a name="l00053"></a>00053    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html" title="Autocorrelation for bond stress of a molecule.">IntraBondTensorAutoCorr&lt;SystemType&gt;::readParam</a>(std::istream&amp; in) 
-<a name="l00054"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#ab5421d3c9175985c9acbf723e5392075">00054</a>    {
+<a name="l00054"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#a939fe8faa7c88f948fcf51ffd75c1df2">00054</a>    {
 <a name="l00055"></a>00055 
 <a name="l00056"></a>00056       <span class="comment">// Read interval and parameters for AutoCorrArray</span>
 <a name="l00057"></a>00057       readInterval(in);
@@ -141,7 +141,7 @@
 <a name="l00089"></a>00089 <span class="comment">   */</span>
 <a name="l00090"></a>00090    <span class="keyword">template</span> &lt;<span class="keyword">class</span> SystemType&gt;
 <a name="l00091"></a>00091    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html" title="Autocorrelation for bond stress of a molecule.">IntraBondTensorAutoCorr&lt;SystemType&gt;::setup</a>() 
-<a name="l00092"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#a4fc01d736fe50cf5b977f755b675f11d">00092</a>    { 
+<a name="l00092"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#ac228b3f1318158fe1b47fdcfc3b95ef8">00092</a>    { 
 <a name="l00093"></a>00093 
 <a name="l00094"></a>00094       <span class="keywordflow">if</span> (!isInitialized_) {
 <a name="l00095"></a>00095          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Object is not intitialized&quot;</span>);
@@ -160,7 +160,7 @@
 <a name="l00108"></a>00108 <span class="comment">   */</span>
 <a name="l00109"></a>00109    <span class="keyword">template</span> &lt;<span class="keyword">class</span> SystemType&gt;
 <a name="l00110"></a>00110    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html" title="Autocorrelation for bond stress of a molecule.">IntraBondTensorAutoCorr&lt;SystemType&gt;::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00111"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#afc17577823a371a5ead4e51ebb8ec2ef">00111</a>    { 
+<a name="l00111"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#a55c88f564ef9bae971a742b57c4d4017">00111</a>    { 
 <a name="l00112"></a>00112       <span class="keywordflow">if</span> (isAtInterval(iStep))  {
 <a name="l00113"></a>00113 
 <a name="l00114"></a>00114          <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>  t;
@@ -173,29 +173,29 @@
 <a name="l00121"></a>00121             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Number of molecules has changed.&quot;</span>);
 <a name="l00122"></a>00122          }
 <a name="l00123"></a>00123 
-<a name="l00124"></a>00124          Boundary&amp; boundary = system().boundary();
+<a name="l00124"></a>00124          <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary = system().boundary();
 <a name="l00125"></a>00125          <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">System::ConstMoleculeIterator</a> molIter;
 <a name="l00126"></a>00126          <a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">Molecule::ConstBondIterator</a>   bondIter;
 <a name="l00127"></a>00127 
 <a name="l00128"></a>00128          <span class="comment">// Loop over molecules</span>
 <a name="l00129"></a>00129          i = 0;
 <a name="l00130"></a>00130          system().begin(speciesId_, molIter); 
-<a name="l00131"></a>00131          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++ molIter) {
+<a name="l00131"></a>00131          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++ molIter) {
 <a name="l00132"></a>00132             data_[i].zero();
 <a name="l00133"></a>00133 
 <a name="l00134"></a>00134             <span class="comment">// Loop over bonds</span>
 <a name="l00135"></a>00135             molIter-&gt;begin(bondIter);
-<a name="l00136"></a>00136             <span class="keywordflow">for</span> ( ; bondIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is this not the end of the array?">notEnd</a>(); ++bondIter) {
+<a name="l00136"></a>00136             <span class="keywordflow">for</span> ( ; bondIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++bondIter) {
 <a name="l00137"></a>00137                boundary.distanceSq(bondIter-&gt;atom(0).position(), 
 <a name="l00138"></a>00138                                    bondIter-&gt;atom(1).position(), dr);
-<a name="l00139"></a>00139                u.<a class="code" href="classUtil_1_1Vector.html#ad0f5aa1053c8260f14d39aa7e8543033" title="Calculate unit vector parallel to input vector v.">versor</a>(dr);
-<a name="l00140"></a>00140                t.<a class="code" href="classUtil_1_1Tensor.html#afdb9d8254b36b073117c6cabef37f4c4" title="Create dyad of two vectors.">dyad</a>(u, u);
+<a name="l00139"></a>00139                u.<a class="code" href="classUtil_1_1Vector.html#a4400f5fc2f9210abf54ad13c8925a758" title="Calculate unit vector parallel to input vector v.">versor</a>(dr);
+<a name="l00140"></a>00140                t.<a class="code" href="classUtil_1_1Tensor.html#a7571741bc53301d594df62d27899a000" title="Create dyad of two vectors.">dyad</a>(u, u);
 <a name="l00141"></a>00141                data_[i] += t;
 <a name="l00142"></a>00142             }
 <a name="l00143"></a>00143 
 <a name="l00144"></a>00144             <span class="comment">// Remove trace</span>
-<a name="l00145"></a>00145             trace  = data_[i].<a class="code" href="classUtil_1_1Tensor.html#a8bb842348e5c75a1f359d97fc9bce207" title="Return trace this tensor.">trace</a>()/double(<a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>);
-<a name="l00146"></a>00146             <span class="keywordflow">for</span> (j=0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00145"></a>00145             trace  = data_[i].<a class="code" href="classUtil_1_1Tensor.html#a37fea5e6d7bda01b52050c9df048c5cd" title="Return trace this tensor.">trace</a>()/double(<a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>);
+<a name="l00146"></a>00146             <span class="keywordflow">for</span> (j=0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00147"></a>00147                data_[i](j, j) -= trace;
 <a name="l00148"></a>00148             }
 <a name="l00149"></a>00149 
@@ -209,7 +209,7 @@
 <a name="l00157"></a>00157 
 <a name="l00159"></a>00159    <span class="keyword">template</span> &lt;<span class="keyword">class</span> SystemType&gt;
 <a name="l00160"></a>00160    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html" title="Autocorrelation for bond stress of a molecule.">IntraBondTensorAutoCorr&lt;SystemType&gt;::output</a>() 
-<a name="l00161"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#a7437b254e19e7e12fc2ec99945f4ecea">00161</a>    {  
+<a name="l00161"></a><a class="code" href="classMcMd_1_1IntraBondTensorAutoCorr.html#a61bffc5880a5e945189856d38451bec4">00161</a>    {  
 <a name="l00162"></a>00162 
 <a name="l00163"></a>00163       <span class="comment">// Echo parameters to diagnostic log file</span>
 <a name="l00164"></a>00164       fileMaster().openOutputFile(outputFileName(), outputFile_);
@@ -227,7 +227,7 @@
 <a name="l00176"></a>00176 <span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

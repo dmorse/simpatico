@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -101,18 +101,18 @@
 <a name="l00049"></a>00049    <span class="comment">/*</span>
 <a name="l00050"></a>00050 <span class="comment">   * Constructor.</span>
 <a name="l00051"></a>00051 <span class="comment">   */</span>
-<a name="l00052"></a>00052    <a class="code" href="classMcMd_1_1SystemDiagnosticFactory.html#ae4ed2c24181d7f804e02bc8c0b098f5f" title="Constructor.">SystemDiagnosticFactory::SystemDiagnosticFactory</a>(Simulation&amp; simulation, 
+<a name="l00052"></a>00052    <a class="code" href="classMcMd_1_1SystemDiagnosticFactory.html#ab9049690b525fbadb81950afe34ac8a8" title="Constructor.">SystemDiagnosticFactory::SystemDiagnosticFactory</a>(Simulation&amp; simulation, 
 <a name="l00053"></a>00053                                             System&amp; system)
-<a name="l00054"></a><a class="code" href="classMcMd_1_1SystemDiagnosticFactory.html#ae4ed2c24181d7f804e02bc8c0b098f5f">00054</a>     : simulationPtr_(&amp;simulation),
+<a name="l00054"></a><a class="code" href="classMcMd_1_1SystemDiagnosticFactory.html#ab9049690b525fbadb81950afe34ac8a8">00054</a>     : simulationPtr_(&amp;simulation),
 <a name="l00055"></a>00055       systemPtr_(&amp;system)
 <a name="l00056"></a>00056    {}
 <a name="l00057"></a>00057 
 <a name="l00058"></a>00058    <span class="comment">/* </span>
 <a name="l00059"></a>00059 <span class="comment">   * Return a pointer to a instance of Species subclass className.</span>
 <a name="l00060"></a>00060 <span class="comment">   */</span>
-<a name="l00061"></a>00061    <a class="code" href="classMcMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>* <a class="code" href="classMcMd_1_1SystemDiagnosticFactory.html#aaf3b2cfb35ea281e6db85b4e0f7f432d" title="Return pointer to a new Diagnostic object.">SystemDiagnosticFactory::factory</a>(<span class="keyword">const</span> std::string &amp;className)<span class="keyword"> const</span>
+<a name="l00061"></a>00061    <a class="code" href="classMcMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>* <a class="code" href="classMcMd_1_1SystemDiagnosticFactory.html#a3eedb24f970be583be466bc9aa1b4919" title="Return pointer to a new Diagnostic object.">SystemDiagnosticFactory::factory</a>(<span class="keyword">const</span> std::string &amp;className)<span class="keyword"> const</span>
 <a name="l00062"></a>00062 <span class="keyword">   </span>{
-<a name="l00063"></a><a class="code" href="classMcMd_1_1SystemDiagnosticFactory.html#aaf3b2cfb35ea281e6db85b4e0f7f432d">00063</a>       <a class="code" href="classMcMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>* ptr = 0;
+<a name="l00063"></a><a class="code" href="classMcMd_1_1SystemDiagnosticFactory.html#a3eedb24f970be583be466bc9aa1b4919">00063</a>       <a class="code" href="classMcMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>* ptr = 0;
 <a name="l00064"></a>00064 
 <a name="l00065"></a>00065       <span class="keywordflow">if</span> (className == <span class="stringliteral">&quot;LogProgress&quot;</span>) {
 <a name="l00066"></a>00066          ptr = <span class="keyword">new</span> <a class="code" href="classMcMd_1_1LogProgress.html" title="Periodically write step number to a Log file.">LogProgress</a>();
@@ -197,7 +197,7 @@
 <a name="l00145"></a>00145 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

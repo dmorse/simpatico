@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -81,8 +81,8 @@
 <a name="l00029"></a>00029    <span class="comment">/* </span>
 <a name="l00030"></a>00030 <span class="comment">   * Constructor</span>
 <a name="l00031"></a>00031 <span class="comment">   */</span>
-<a name="l00032"></a>00032    <a class="code" href="classMcMd_1_1CfbRebridgeMove.html#af7a3a6f657292c92a0aab78c0f2a3dff" title="Constructor.">CfbRebridgeMove::CfbRebridgeMove</a>(McSystem&amp; system) : 
-<a name="l00033"></a><a class="code" href="classMcMd_1_1CfbRebridgeMove.html#af7a3a6f657292c92a0aab78c0f2a3dff">00033</a>       <a class="code" href="classMcMd_1_1CfbRebridgeBase.html" title="Base class configuration bias moves internal segment regrowth moves.">CfbRebridgeBase</a>(system),
+<a name="l00032"></a>00032    <a class="code" href="classMcMd_1_1CfbRebridgeMove.html#a13abad8d21f3290eed45e18405522b2d" title="Constructor.">CfbRebridgeMove::CfbRebridgeMove</a>(McSystem&amp; system) : 
+<a name="l00033"></a><a class="code" href="classMcMd_1_1CfbRebridgeMove.html#a13abad8d21f3290eed45e18405522b2d">00033</a>       <a class="code" href="classMcMd_1_1CfbRebridgeBase.html" title="Base class configuration bias moves internal segment regrowth moves.">CfbRebridgeBase</a>(system),
 <a name="l00034"></a>00034       speciesId_(-1),
 <a name="l00035"></a>00035       nRegrow_(-1)
 <a name="l00036"></a>00036    {} 
@@ -90,15 +90,15 @@
 <a name="l00038"></a>00038    <span class="comment">/* </span>
 <a name="l00039"></a>00039 <span class="comment">   * Read parameters speciesId, nRegrow, and nTrial</span>
 <a name="l00040"></a>00040 <span class="comment">   */</span>
-<a name="l00041"></a>00041    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeMove.html#ab5421d3c9175985c9acbf723e5392075" title="Read species to which displacement is applied.">CfbRebridgeMove::readParam</a>(std::istream&amp; in) 
-<a name="l00042"></a><a class="code" href="classMcMd_1_1CfbRebridgeMove.html#ab5421d3c9175985c9acbf723e5392075">00042</a>    {
+<a name="l00041"></a>00041    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeMove.html#a82c04857b003f4576fd3be4c19d7d131" title="Read species to which displacement is applied.">CfbRebridgeMove::readParam</a>(std::istream&amp; in) 
+<a name="l00042"></a><a class="code" href="classMcMd_1_1CfbRebridgeMove.html#a82c04857b003f4576fd3be4c19d7d131">00042</a>    {
 <a name="l00043"></a>00043       <span class="comment">// Read parameters</span>
 <a name="l00044"></a>00044       readProbability(in);
 <a name="l00045"></a>00045       read&lt;int&gt;(in, <span class="stringliteral">&quot;speciesId&quot;</span>, speciesId_);
 <a name="l00046"></a>00046       read&lt;int&gt;(in, <span class="stringliteral">&quot;nRegrow&quot;</span>, nRegrow_);
 <a name="l00047"></a>00047 
 <a name="l00048"></a>00048       <span class="comment">// Read parameters hold by RebridgeBase</span>
-<a name="l00049"></a>00049       <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#ab5421d3c9175985c9acbf723e5392075" title="Read species type, nTrial, and parameters needed to evaluate the orientation bias.">CfbRebridgeBase::readParam</a>(in);
+<a name="l00049"></a>00049       <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a8e87f778ba49f26898825f5cfdfaa99e" title="Read species type, nTrial, and parameters needed to evaluate the orientation bias.">CfbRebridgeBase::readParam</a>(in);
 <a name="l00050"></a>00050 
 <a name="l00051"></a>00051       <span class="comment">// Initialize tables for spring constants and normalizations.</span>
 <a name="l00052"></a>00052       setup();
@@ -108,7 +108,7 @@
 <a name="l00056"></a>00056       chainPtr = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract).">Linear</a>*<span class="keyword">&gt;</span>(&amp;(simulation().species(speciesId_)));
 <a name="l00057"></a>00057   
 <a name="l00058"></a>00058       <span class="comment">// Allocate array to store old positions </span>
-<a name="l00059"></a>00059       oldPos_.<a class="code" href="classMcMd_1_1Species.html#acaefe811b78a2fdc4a0dba0c4029c3ef" title="Allocate chemical structure arrays.">allocate</a>(nRegrow_); 
+<a name="l00059"></a>00059       oldPos_.<a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca" title="Allocate chemical structure arrays.">allocate</a>(nRegrow_); 
 <a name="l00060"></a>00060    }
 <a name="l00061"></a>00061 
 <a name="l00062"></a>00062 
@@ -124,8 +124,8 @@
 <a name="l00072"></a>00072 <span class="comment">   *                valid beginId    nRegrow</span>
 <a name="l00073"></a>00073 <span class="comment">   *</span>
 <a name="l00074"></a>00074 <span class="comment">   */</span>
-<a name="l00075"></a>00075    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1CfbRebridgeMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635" title="Generate and accept or reject configuration bias move.">CfbRebridgeMove::move</a>() 
-<a name="l00076"></a><a class="code" href="classMcMd_1_1CfbRebridgeMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635">00076</a>    {
+<a name="l00075"></a>00075    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1CfbRebridgeMove.html#a777e3e3ea05fb8f09a5b68bbb31e2c80" title="Generate and accept or reject configuration bias move.">CfbRebridgeMove::move</a>() 
+<a name="l00076"></a><a class="code" href="classMcMd_1_1CfbRebridgeMove.html#a777e3e3ea05fb8f09a5b68bbb31e2c80">00076</a>    {
 <a name="l00077"></a>00077       <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> *molPtr;   <span class="comment">// pointer to randomly chosen molecule</span>
 <a name="l00078"></a>00078       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>     *thisPtr;  <span class="comment">// pointer to the current end atom</span>
 <a name="l00079"></a>00079       <span class="keywordtype">int</span>       length, sign, beginId, endId, i;
@@ -138,7 +138,7 @@
 <a name="l00086"></a>00086 
 <a name="l00087"></a>00087       <span class="comment">// Choose a molecule at random</span>
 <a name="l00088"></a>00088       molPtr = &amp;(system().randomMolecule(speciesId_));
-<a name="l00089"></a>00089       length = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ac91579bd63979a294891d330a5533838" title="Get the number of Atoms in this Molecule.">nAtom</a>();
+<a name="l00089"></a>00089       length = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>();
 <a name="l00090"></a>00090 
 <a name="l00091"></a>00091       <span class="comment">// Require that chain length - 2 &gt;= nRegrow_</span>
 <a name="l00092"></a>00092       <span class="keywordflow">if</span> (nRegrow_ &gt; length - 2) {
@@ -162,27 +162,27 @@
 <a name="l00110"></a>00110       }
 <a name="l00111"></a>00111 
 <a name="l00112"></a>00112       <span class="comment">// Store current atomic positions from segment to be regrown</span>
-<a name="l00113"></a>00113       thisPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00113"></a>00113       thisPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
 <a name="l00114"></a>00114       <span class="keywordflow">for</span> (i = 0; i &lt; nRegrow_; ++i) {
-<a name="l00115"></a>00115          oldPos_[i] = thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00115"></a>00115          oldPos_[i] = thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00116"></a>00116          thisPtr += sign;
 <a name="l00117"></a>00117       }
 <a name="l00118"></a>00118 
 <a name="l00119"></a>00119       <span class="comment">// Get bond types.</span>
 <a name="l00120"></a>00120       <span class="keywordflow">if</span> (sign == +1) {
 <a name="l00121"></a>00121          <span class="keywordflow">for</span> (i = 0; i &lt; nRegrow_ + 1; ++i)
-<a name="l00122"></a>00122             bonds[i] = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a1dee63eefb65e4b66b6d643c4a093fc9" title="Get a specific Bond in this Molecule by reference.">bond</a>(endId - i).<a class="code" href="classMcMd_1_1Group.html#af68aca851173d8f261a70897bff349c9" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00122"></a>00122             bonds[i] = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(endId - i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00123"></a>00123       } <span class="keywordflow">else</span> {
 <a name="l00124"></a>00124          <span class="keywordflow">for</span> (i = 0; i &lt; nRegrow_ + 1; ++i)
-<a name="l00125"></a>00125             bonds[i] = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a1dee63eefb65e4b66b6d643c4a093fc9" title="Get a specific Bond in this Molecule by reference.">bond</a>(endId - 1 + i).<a class="code" href="classMcMd_1_1Group.html#af68aca851173d8f261a70897bff349c9" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00125"></a>00125             bonds[i] = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(endId - 1 + i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00126"></a>00126       }
 <a name="l00127"></a>00127 
 <a name="l00128"></a>00128       <span class="comment">// Delete atoms: endId -&gt; beginId</span>
-<a name="l00129"></a>00129       thisPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(endId));
+<a name="l00129"></a>00129       thisPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(endId));
 <a name="l00130"></a>00130       deleteSequence(nRegrow_, sign, thisPtr, bonds, rosen_r, energy_r);
 <a name="l00131"></a>00131 
 <a name="l00132"></a>00132       <span class="comment">// Regrow atoms: endId -&gt; beginId</span>
-<a name="l00133"></a>00133       thisPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00133"></a>00133       thisPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
 <a name="l00134"></a>00134       addSequence(nRegrow_, sign, thisPtr, bonds, rosen_f, energy_f);
 <a name="l00135"></a>00135 
 <a name="l00136"></a>00136       <span class="comment">// Release bonds array</span>
@@ -200,10 +200,10 @@
 <a name="l00148"></a>00148       } <span class="keywordflow">else</span> {
 <a name="l00149"></a>00149 
 <a name="l00150"></a>00150          <span class="comment">// If the move is rejected, restore old positions</span>
-<a name="l00151"></a>00151          thisPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00151"></a>00151          thisPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
 <a name="l00152"></a>00152          <span class="keywordflow">for</span> (i = 0; i &lt; nRegrow_; ++i) {
 <a name="l00153"></a>00153             <span class="comment">//system().moveAtom(*thisPtr, oldPos_[i]);</span>
-<a name="l00154"></a>00154             thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = oldPos_[i];
+<a name="l00154"></a>00154             thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = oldPos_[i];
 <a name="l00155"></a>00155 <span class="preprocessor">            #ifndef INTER_NOPAIR</span>
 <a name="l00156"></a>00156 <span class="preprocessor"></span>            system().pairPotential().updateAtomCell(*thisPtr);
 <a name="l00157"></a>00157 <span class="preprocessor">            #endif</span>
@@ -218,7 +218,7 @@
 <a name="l00166"></a>00166 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: AtomDistributor Class Reference</title>
+<title>Simpatico: DdMd::AtomDistributor Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,14 +49,14 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>AtomDistributor Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
+<h1>DdMd::AtomDistributor Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::AtomDistributor" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Class for distributing Atoms among processors. </p>
 <p>A <a class="el" href="classDdMd_1_1AtomDistributor.html" title="Class for distributing Atoms among processors.">AtomDistributor</a> is used to distribute items among processors during startup, when the master process must read a configuration file.</p>
 <p>Usage: </p>
-<div class="fragment"><pre class="fragment">    <a class="code" href="classDdMd_1_1AtomDistributor.html#a06fa673b06f2f29e9bc4bd7601ddae7b" title="Constructor.">AtomDistributor</a>   distributor;
+<div class="fragment"><pre class="fragment">    <a class="code" href="classDdMd_1_1AtomDistributor.html#a251a1b76004612e19311393af4641bb0" title="Constructor.">AtomDistributor</a>   distributor;
     AtomStorage   storage;
     Atom*         ptr;
     std::ifstream file
@@ -86,19 +86,19 @@
        distributor.receive(storage);
 
     }
-</pre></div><p> The addAtom(storage) method can send items if required by memory limits, and the <a class="el" href="classDdMd_1_1AtomDistributor.html#ae9399f5ec7881c5d18173def8068108e" title="Send all atoms that have not be sent previously.">send()</a> method then sends all remaining atoms. </p>
+</pre></div><p> The addAtom(storage) method can send items if required by memory limits, and the <a class="el" href="classDdMd_1_1AtomDistributor.html#a7db868b432bda314ff90fe779154e607" title="Send all atoms that have not be sent previously.">send()</a> method then sends all remaining atoms. </p>
 
 <p>Definition at line <a class="el" href="AtomDistributor_8h_source.html#l00075">75</a> of file <a class="el" href="AtomDistributor_8h_source.html">AtomDistributor.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="AtomDistributor_8h_source.html">AtomDistributor.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for AtomDistributor:</div>
+Inheritance diagram for DdMd::AtomDistributor:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1AtomDistributor.png" usemap="#AtomDistributor_map" alt=""/>
-  <map id="AtomDistributor_map" name="AtomDistributor_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classDdMd_1_1AtomDistributor.png" usemap="#DdMd::AtomDistributor_map" alt=""/>
+  <map id="DdMd::AtomDistributor_map" name="DdMd::AtomDistributor_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,138,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,138,24"/>
 </map>
  </div></div>
 
@@ -106,34 +106,34 @@ Inheritance diagram for AtomDistributor:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a06fa673b06f2f29e9bc4bd7601ddae7b">AtomDistributor</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a06fa673b06f2f29e9bc4bd7601ddae7b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#af6055f26df7ba893de58759941dd3ec0">~AtomDistributor</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#af6055f26df7ba893de58759941dd3ec0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a52a36fec50ee94ed24f5ca802cc01052">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, Boundary &amp;boundary, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;storage, <a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pointers to boundary, domain, and buffer.  <a href="#a52a36fec50ee94ed24f5ca802cc01052"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a59691bda7a156a77fbe7023f60d6a56a">initialize</a> (int cacheCapacity=100)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set cacheCapacity, allocate memory and initialize object.  <a href="#a59691bda7a156a77fbe7023f60d6a56a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read cacheCapacity, allocate memory and initialize object.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize buffer before the loop over atoms.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a66368eb5960fe94561084251ce7a20b3">newAtomPtr</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer an address available for a new <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>.  <a href="#a66368eb5960fe94561084251ce7a20b3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#abb74ee5e16ebce9c584b4ca5c98a9658">addAtom</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Process the active atom for sending.  <a href="#abb74ee5e16ebce9c584b4ca5c98a9658"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#ae9399f5ec7881c5d18173def8068108e">send</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send all atoms that have not be sent previously.  <a href="#ae9399f5ec7881c5d18173def8068108e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a815cc316754eed11120036e04cd321d2">receive</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive all atoms sent by master processor.  <a href="#a815cc316754eed11120036e04cd321d2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a251a1b76004612e19311393af4641bb0">AtomDistributor</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a251a1b76004612e19311393af4641bb0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#ac01053af8c89fb1463d88a700936ada2">~AtomDistributor</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ac01053af8c89fb1463d88a700936ada2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a342cdb0b33d09f8e8c16a079cd8ee167">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, Boundary &amp;boundary, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;storage, <a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pointers to boundary, domain, and buffer.  <a href="#a342cdb0b33d09f8e8c16a079cd8ee167"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a357b04f23528f44d50eaf84065f53ae5">initialize</a> (int cacheCapacity=100)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set cacheCapacity, allocate memory and initialize object.  <a href="#a357b04f23528f44d50eaf84065f53ae5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a0dbb84cc395b70f6c3b178b6e9d55717">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read cacheCapacity, allocate memory and initialize object.  <a href="#a0dbb84cc395b70f6c3b178b6e9d55717"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a66c9e5396bccd71cc6723687504c43f0">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize buffer before the loop over atoms.  <a href="#a66c9e5396bccd71cc6723687504c43f0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a90bcc378acb7aff30016bd01ebbf9116">newAtomPtr</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer an address available for a new <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>.  <a href="#a90bcc378acb7aff30016bd01ebbf9116"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#ae886a036e9985172666dbb1bb78e1fb2">addAtom</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Process the active atom for sending.  <a href="#ae886a036e9985172666dbb1bb78e1fb2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a7db868b432bda314ff90fe779154e607">send</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send all atoms that have not be sent previously.  <a href="#a7db868b432bda314ff90fe779154e607"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomDistributor.html#a02d76d4f40c4a3d92f05aaea082f001b">receive</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive all atoms sent by master processor.  <a href="#a02d76d4f40c4a3d92f05aaea082f001b"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a06fa673b06f2f29e9bc4bd7601ddae7b"></a><!-- doxytag: member="DdMd::AtomDistributor::AtomDistributor" ref="a06fa673b06f2f29e9bc4bd7601ddae7b" args="()" -->
+<a class="anchor" id="a251a1b76004612e19311393af4641bb0"></a><!-- doxytag: member="DdMd::AtomDistributor::AtomDistributor" ref="a251a1b76004612e19311393af4641bb0" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1AtomDistributor.html">AtomDistributor</a> </td>
+          <td class="memname">DdMd::AtomDistributor::AtomDistributor </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -148,12 +148,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af6055f26df7ba893de58759941dd3ec0"></a><!-- doxytag: member="DdMd::AtomDistributor::~AtomDistributor" ref="af6055f26df7ba893de58759941dd3ec0" args="()" -->
+<a class="anchor" id="ac01053af8c89fb1463d88a700936ada2"></a><!-- doxytag: member="DdMd::AtomDistributor::~AtomDistributor" ref="ac01053af8c89fb1463d88a700936ada2" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1AtomDistributor.html">AtomDistributor</a> </td>
+          <td class="memname">DdMd::AtomDistributor::~AtomDistributor </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -169,12 +169,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a52a36fec50ee94ed24f5ca802cc01052"></a><!-- doxytag: member="DdMd::AtomDistributor::associate" ref="a52a36fec50ee94ed24f5ca802cc01052" args="(Domain &amp;domain, Boundary &amp;boundary, AtomStorage &amp;storage, Buffer &amp;buffer)" -->
+<a class="anchor" id="a342cdb0b33d09f8e8c16a079cd8ee167"></a><!-- doxytag: member="DdMd::AtomDistributor::associate" ref="a342cdb0b33d09f8e8c16a079cd8ee167" args="(Domain &amp;domain, Boundary &amp;boundary, AtomStorage &amp;storage, Buffer &amp;buffer)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void associate </td>
+          <td class="memname">void DdMd::AtomDistributor::associate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td>
           <td class="paramname"><em>domain</em>, </td>
@@ -222,12 +222,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a59691bda7a156a77fbe7023f60d6a56a"></a><!-- doxytag: member="DdMd::AtomDistributor::initialize" ref="a59691bda7a156a77fbe7023f60d6a56a" args="(int cacheCapacity=100)" -->
+<a class="anchor" id="a357b04f23528f44d50eaf84065f53ae5"></a><!-- doxytag: member="DdMd::AtomDistributor::initialize" ref="a357b04f23528f44d50eaf84065f53ae5" args="(int cacheCapacity=100)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void initialize </td>
+          <td class="memname">void DdMd::AtomDistributor::initialize </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>cacheCapacity</em> = <code>100</code></td><td>)</td>
@@ -250,12 +250,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="DdMd::AtomDistributor::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a0dbb84cc395b70f6c3b178b6e9d55717"></a><!-- doxytag: member="DdMd::AtomDistributor::readParam" ref="a0dbb84cc395b70f6c3b178b6e9d55717" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void DdMd::AtomDistributor::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -275,18 +275,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="AtomDistributor_8cpp_source.html#l00078">78</a> of file <a class="el" href="AtomDistributor_8cpp_source.html">AtomDistributor.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="DdMd::AtomDistributor::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a66c9e5396bccd71cc6723687504c43f0"></a><!-- doxytag: member="DdMd::AtomDistributor::setup" ref="a66c9e5396bccd71cc6723687504c43f0" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void DdMd::AtomDistributor::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -300,16 +300,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AtomDistributor_8cpp_source.html#l00150">150</a> of file <a class="el" href="AtomDistributor_8cpp_source.html">AtomDistributor.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a66368eb5960fe94561084251ce7a20b3"></a><!-- doxytag: member="DdMd::AtomDistributor::newAtomPtr" ref="a66368eb5960fe94561084251ce7a20b3" args="()" -->
+<a class="anchor" id="a90bcc378acb7aff30016bd01ebbf9116"></a><!-- doxytag: member="DdMd::AtomDistributor::newAtomPtr" ref="a90bcc378acb7aff30016bd01ebbf9116" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> * newAtomPtr </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> * DdMd::AtomDistributor::newAtomPtr </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -319,23 +319,23 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Returns pointer an address available for a new <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>. </p>
-<p>This method should be called only by the master processor. It returns the address within the internal cache for a new <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> object. Each call to <a class="el" href="classDdMd_1_1AtomDistributor.html#a66368eb5960fe94561084251ce7a20b3" title="Returns pointer an address available for a new Atom.">newAtomPtr()</a> must be followed by a matching call to <a class="el" href="classDdMd_1_1AtomDistributor.html#abb74ee5e16ebce9c584b4ca5c98a9658" title="Process the active atom for sending.">addAtom()</a>.</p>
+<p>This method should be called only by the master processor. It returns the address within the internal cache for a new <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> object. Each call to <a class="el" href="classDdMd_1_1AtomDistributor.html#a90bcc378acb7aff30016bd01ebbf9116" title="Returns pointer an address available for a new Atom.">newAtomPtr()</a> must be followed by a matching call to <a class="el" href="classDdMd_1_1AtomDistributor.html#ae886a036e9985172666dbb1bb78e1fb2" title="Process the active atom for sending.">addAtom()</a>.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>address for a new <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>. </dd></dl>
 
 <p>Definition at line <a class="el" href="AtomDistributor_8cpp_source.html#l00160">160</a> of file <a class="el" href="AtomDistributor_8cpp_source.html">AtomDistributor.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abb74ee5e16ebce9c584b4ca5c98a9658"></a><!-- doxytag: member="DdMd::AtomDistributor::addAtom" ref="abb74ee5e16ebce9c584b4ca5c98a9658" args="()" -->
+<a class="anchor" id="ae886a036e9985172666dbb1bb78e1fb2"></a><!-- doxytag: member="DdMd::AtomDistributor::addAtom" ref="ae886a036e9985172666dbb1bb78e1fb2" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int addAtom </td>
+          <td class="memname">int DdMd::AtomDistributor::addAtom </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -345,7 +345,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Process the active atom for sending. </p>
-<p>This method may be called only by the master processor, after a matching call to <a class="el" href="classDdMd_1_1AtomDistributor.html#a66368eb5960fe94561084251ce7a20b3" title="Returns pointer an address available for a new Atom.">newAtomPtr()</a>. It identifies and returns the rank of the processor that owns the active atom (i.e., the atom returned by the recent call to newAtomPtr), based on its position. If this atom is owned by the master (rank == 0), it adds it to the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> on the master node. Otherwise, it adds the atom to the cache of stored atoms, and adds a pointer to this atom to the sendList for the relevant processor.</p>
+<p>This method may be called only by the master processor, after a matching call to <a class="el" href="classDdMd_1_1AtomDistributor.html#a90bcc378acb7aff30016bd01ebbf9116" title="Returns pointer an address available for a new Atom.">newAtomPtr()</a>. It identifies and returns the rank of the processor that owns the active atom (i.e., the atom returned by the recent call to newAtomPtr), based on its position. If this atom is owned by the master (rank == 0), it adds it to the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> on the master node. Otherwise, it adds the atom to the cache of stored atoms, and adds a pointer to this atom to the sendList for the relevant processor.</p>
 <p>Whenever addition of an atom to the cache would exceed the cache capacity, or exceed the capacity of the sendlist for the owner processor, this method sends a buffer to the processor with the the largest sendList, before caching and marking the current atom.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>rank of processor that owns the active atom. </dd></dl>
 
@@ -353,16 +353,16 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae9399f5ec7881c5d18173def8068108e"></a><!-- doxytag: member="DdMd::AtomDistributor::send" ref="ae9399f5ec7881c5d18173def8068108e" args="()" -->
+<a class="anchor" id="a7db868b432bda314ff90fe779154e607"></a><!-- doxytag: member="DdMd::AtomDistributor::send" ref="a7db868b432bda314ff90fe779154e607" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void send </td>
+          <td class="memname">void DdMd::AtomDistributor::send </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -378,16 +378,16 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a815cc316754eed11120036e04cd321d2"></a><!-- doxytag: member="DdMd::AtomDistributor::receive" ref="a815cc316754eed11120036e04cd321d2" args="()" -->
+<a class="anchor" id="a02d76d4f40c4a3d92f05aaea082f001b"></a><!-- doxytag: member="DdMd::AtomDistributor::receive" ref="a02d76d4f40c4a3d92f05aaea082f001b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void receive </td>
+          <td class="memname">void DdMd::AtomDistributor::receive </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -401,9 +401,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AtomDistributor_8cpp_source.html#l00399">399</a> of file <a class="el" href="AtomDistributor_8cpp_source.html">AtomDistributor.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
 
 </div>
 </div>
@@ -412,7 +412,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="AtomDistributor_8cpp_source.html">AtomDistributor.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: PairPotential Class Reference</title>
+<title>Simpatico: McMd::PairPotential Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>PairPotential Class Reference<div class="ingroups"><a class="el" href="group__McMd__Pair__Module.html">Pair Potentials</a></div></h1>  </div>
+<h1>McMd::PairPotential Class Reference<div class="ingroups"><a class="el" href="group__McMd__Pair__Module.html">Pair Potentials</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::PairPotential" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -59,15 +59,15 @@
 </div>
 <p><code>#include &lt;<a class="el" href="mcMd_2potentials_2pair_2PairPotential_8h_source.html">PairPotential.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for PairPotential:</div>
+Inheritance diagram for McMd::PairPotential:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1PairPotential.png" usemap="#PairPotential_map" alt=""/>
-  <map id="PairPotential_map" name="PairPotential_map">
-<area href="classMcMd_1_1McPairPotential.html" alt="McPairPotential" shape="rect" coords="0,56,206,80"/>
-<area href="classMcMd_1_1MdPairPotential.html" alt="MdPairPotential" shape="rect" coords="216,56,422,80"/>
-<area href="classMcMd_1_1McPairPotentialImpl.html" alt="McPairPotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,112,206,136"/>
-<area href="classMcMd_1_1MdPairPotentialImpl.html" alt="MdPairPotentialImpl&lt; Interaction &gt;" shape="rect" coords="216,112,422,136"/>
+  <img src="classMcMd_1_1PairPotential.png" usemap="#McMd::PairPotential_map" alt=""/>
+  <map id="McMd::PairPotential_map" name="McMd::PairPotential_map">
+<area href="classMcMd_1_1McPairPotential.html" alt="McMd::McPairPotential" shape="rect" coords="0,56,248,80"/>
+<area href="classMcMd_1_1MdPairPotential.html" alt="McMd::MdPairPotential" shape="rect" coords="258,56,506,80"/>
+<area href="classMcMd_1_1McPairPotentialImpl.html" alt="McMd::McPairPotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,112,248,136"/>
+<area href="classMcMd_1_1MdPairPotentialImpl.html" alt="McMd::MdPairPotentialImpl&lt; Interaction &gt;" shape="rect" coords="258,112,506,136"/>
 </map>
  </div></div>
 
@@ -75,38 +75,38 @@ Inheritance diagram for PairPotential:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#afed81141d576564772adfa10689caa11">~PairPotential</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor (does nothing)  <a href="#afed81141d576564772adfa10689caa11"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#af44d935dc00d2394db50699988def71a">~PairPotential</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor (does nothing)  <a href="#af44d935dc00d2394db50699988def71a"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Pair Interaction Interface</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a180348fce7f1059a0ad043110433d1c7">energy</a> (double rsq, int iAtomType, int jAtomType) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pair energy for a single pair.  <a href="#a180348fce7f1059a0ad043110433d1c7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a6b16da69d384b4951c926c0ec7ab7073">forceOverR</a> (double rsq, int iAtomType, int jAtomType) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return force / separation for a single pair.  <a href="#a6b16da69d384b4951c926c0ec7ab7073"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a0942c43283be26f1d40df82aa466a646">set</a> (std::string name, int i, int j, double value)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify a parameter, identified by a string.  <a href="#a0942c43283be26f1d40df82aa466a646"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a4b007be6aadd65726348abed736f6ee1">get</a> (std::string name, int i, int j) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a parameter value, identified by a string.  <a href="#a4b007be6aadd65726348abed736f6ee1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a3765733830acc59bea4f07866a4ebb38">maxPairCutoff</a> () const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum cutoff distance.  <a href="#a3765733830acc59bea4f07866a4ebb38"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#ae355aef85b464e790c9e22b1364dabee">interactionClassName</a> () const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name of pair interaction class (e.g., "LJPair").  <a href="#ae355aef85b464e790c9e22b1364dabee"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a04e3c8f31425931a8b8f5c5e2c8ea1a3">energy</a> (double rsq, int iAtomType, int jAtomType) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pair energy for a single pair.  <a href="#a04e3c8f31425931a8b8f5c5e2c8ea1a3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a38403eb1b38e341e849c8411f328b970">forceOverR</a> (double rsq, int iAtomType, int jAtomType) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return force / separation for a single pair.  <a href="#a38403eb1b38e341e849c8411f328b970"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#acfeca4f7227669083fdce6c5788c7fae">set</a> (std::string name, int i, int j, double value)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify a parameter, identified by a string.  <a href="#acfeca4f7227669083fdce6c5788c7fae"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a5ed6da767b909507e72706d7d8f44fe6">get</a> (std::string name, int i, int j) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a parameter value, identified by a string.  <a href="#a5ed6da767b909507e72706d7d8f44fe6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a04935e01d5bccc27d9e69b1a7b2279f5">maxPairCutoff</a> () const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum cutoff distance.  <a href="#a04935e01d5bccc27d9e69b1a7b2279f5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#ab41ce7b4f7f1e421a44295c0dbb357d5">interactionClassName</a> () const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name of pair interaction class (e.g., "LJPair").  <a href="#ab41ce7b4f7f1e421a44295c0dbb357d5"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Global Energy, Force, and Stress Evaluators</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a7785da22485c8b780033cb2f315a311f">energy</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total nonBonded pair energy for the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.  <a href="#a7785da22485c8b780033cb2f315a311f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a6ebcf9d6c871aa23104ec5b1cb944742">computeStress</a> (double &amp;stress) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total nonbonded pressure.  <a href="#a6ebcf9d6c871aa23104ec5b1cb944742"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#ad2f8669a34d8e38a952b205e8f5a4e62">computeStress</a> (<a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;stress) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute x, y, z nonbonded pressures.  <a href="#ad2f8669a34d8e38a952b205e8f5a4e62"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a269a490a22f1c00f49ca931646749031">computeStress</a> (<a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;stress) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute stress tensor.  <a href="#a269a490a22f1c00f49ca931646749031"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a4f9b1460856bc9c74852ff3668528c9d">energy</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total nonBonded pair energy for the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.  <a href="#a4f9b1460856bc9c74852ff3668528c9d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#ac7063834db2c14b7c44e42d13e83b3f5">computeStress</a> (double &amp;stress) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total nonbonded pressure.  <a href="#ac7063834db2c14b7c44e42d13e83b3f5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#a2ec1dc72889595feeff0bbe56f5552de">computeStress</a> (<a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;stress) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute x, y, z nonbonded pressures.  <a href="#a2ec1dc72889595feeff0bbe56f5552de"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairPotential.html#ad6c36fd005e659c8b449382082777db1">computeStress</a> (<a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;stress) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute stress tensor.  <a href="#ad6c36fd005e659c8b449382082777db1"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="afed81141d576564772adfa10689caa11"></a><!-- doxytag: member="McMd::PairPotential::~PairPotential" ref="afed81141d576564772adfa10689caa11" args="()" -->
+<a class="anchor" id="af44d935dc00d2394db50699988def71a"></a><!-- doxytag: member="McMd::PairPotential::~PairPotential" ref="af44d935dc00d2394db50699988def71a" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual ~<a class="el" href="classMcMd_1_1PairPotential.html">PairPotential</a> </td>
+          <td class="memname">virtual McMd::PairPotential::~PairPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, virtual]</code></td>
@@ -122,12 +122,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a180348fce7f1059a0ad043110433d1c7"></a><!-- doxytag: member="McMd::PairPotential::energy" ref="a180348fce7f1059a0ad043110433d1c7" args="(double rsq, int iAtomType, int jAtomType) const =0" -->
+<a class="anchor" id="a04e3c8f31425931a8b8f5c5e2c8ea1a3"></a><!-- doxytag: member="McMd::PairPotential::energy" ref="a04e3c8f31425931a8b8f5c5e2c8ea1a3" args="(double rsq, int iAtomType, int jAtomType) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double energy </td>
+          <td class="memname">virtual double McMd::PairPotential::energy </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rsq</em>, </td>
@@ -155,18 +155,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Return pair energy for a single pair. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a44f33af381e78359603f4ee400834589">McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a44f33af381e78359603f4ee400834589">MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a725f3c0d7eb96e673fdc954e14281add">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#af6ac73ba8a709cb131bafac42df742ab">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00506">MdSystem::potentialEnergy()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">MdPairEnergyCoefficients::sample()</a>, <a class="el" href="MdEnergyOutput_8cpp_source.html#l00035">MdEnergyOutput::sample()</a>, and <a class="el" href="McEnergyOutput_8cpp_source.html#l00034">McEnergyOutput::sample()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00506">McMd::MdSystem::potentialEnergy()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">McMd::MdPairEnergyCoefficients::sample()</a>, <a class="el" href="MdEnergyOutput_8cpp_source.html#l00035">McMd::MdEnergyOutput::sample()</a>, and <a class="el" href="McEnergyOutput_8cpp_source.html#l00034">McMd::McEnergyOutput::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6b16da69d384b4951c926c0ec7ab7073"></a><!-- doxytag: member="McMd::PairPotential::forceOverR" ref="a6b16da69d384b4951c926c0ec7ab7073" args="(double rsq, int iAtomType, int jAtomType) const =0" -->
+<a class="anchor" id="a38403eb1b38e341e849c8411f328b970"></a><!-- doxytag: member="McMd::PairPotential::forceOverR" ref="a38403eb1b38e341e849c8411f328b970" args="(double rsq, int iAtomType, int jAtomType) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double forceOverR </td>
+          <td class="memname">virtual double McMd::PairPotential::forceOverR </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rsq</em>, </td>
@@ -194,16 +194,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Return force / separation for a single pair. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a5867b0e7d3850c4e246165435267744a">McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a5867b0e7d3850c4e246165435267744a">MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#accd9927a12fd8fca4b6c90a78c7abada">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#add3cdfb0f7aef6343e1fec05c225ad31">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0942c43283be26f1d40df82aa466a646"></a><!-- doxytag: member="McMd::PairPotential::set" ref="a0942c43283be26f1d40df82aa466a646" args="(std::string name, int i, int j, double value)=0" -->
+<a class="anchor" id="acfeca4f7227669083fdce6c5788c7fae"></a><!-- doxytag: member="McMd::PairPotential::set" ref="acfeca4f7227669083fdce6c5788c7fae" args="(std::string name, int i, int j, double value)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void set </td>
+          <td class="memname">virtual void McMd::PairPotential::set </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -246,18 +246,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a1d5b9097db680b4eace98f69fc8dec1a">McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a1d5b9097db680b4eace98f69fc8dec1a">MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a83695b396283f95a97fa1a2cde6f1e92">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a23a1ddabcde4bdb9b67066be0dcb721c">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00191">MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00225">McSimulation::readCommands()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00191">McMd::MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00225">McMd::McSimulation::readCommands()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4b007be6aadd65726348abed736f6ee1"></a><!-- doxytag: member="McMd::PairPotential::get" ref="a4b007be6aadd65726348abed736f6ee1" args="(std::string name, int i, int j) const =0" -->
+<a class="anchor" id="a5ed6da767b909507e72706d7d8f44fe6"></a><!-- doxytag: member="McMd::PairPotential::get" ref="a5ed6da767b909507e72706d7d8f44fe6" args="(std::string name, int i, int j) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double get </td>
+          <td class="memname">virtual double McMd::PairPotential::get </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -293,16 +293,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#ab633dae15c30d4918f3d8f937be076dc">McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#ab633dae15c30d4918f3d8f937be076dc">MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a298e3d561af56403bdc2f3abbf86c268">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a787dd534d592924e6a9ee28f5d64f411">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3765733830acc59bea4f07866a4ebb38"></a><!-- doxytag: member="McMd::PairPotential::maxPairCutoff" ref="a3765733830acc59bea4f07866a4ebb38" args="() const =0" -->
+<a class="anchor" id="a04935e01d5bccc27d9e69b1a7b2279f5"></a><!-- doxytag: member="McMd::PairPotential::maxPairCutoff" ref="a04935e01d5bccc27d9e69b1a7b2279f5" args="() const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double maxPairCutoff </td>
+          <td class="memname">virtual double McMd::PairPotential::maxPairCutoff </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [pure virtual]</code></td>
@@ -313,18 +313,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Return maximum cutoff distance. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a30a3c4cfc7e46e5e8ac052556fd945f0">McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a30a3c4cfc7e46e5e8ac052556fd945f0">MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a9bcee7c1732c4c69fe17292206286f5f">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#aa05df0b0c5e0f91260edd8b633131b9d">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00068">NvtDpdVvIntegrator::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00068">McMd::NvtDpdVvIntegrator::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae355aef85b464e790c9e22b1364dabee"></a><!-- doxytag: member="McMd::PairPotential::interactionClassName" ref="ae355aef85b464e790c9e22b1364dabee" args="() const =0" -->
+<a class="anchor" id="ab41ce7b4f7f1e421a44295c0dbb357d5"></a><!-- doxytag: member="McMd::PairPotential::interactionClassName" ref="ab41ce7b4f7f1e421a44295c0dbb357d5" args="() const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::string interactionClassName </td>
+          <td class="memname">virtual std::string McMd::PairPotential::interactionClassName </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [pure virtual]</code></td>
@@ -335,18 +335,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Return name of pair interaction class (e.g., "LJPair"). </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#af02a7265da2c0156eeb829fea1be4747">McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#af02a7265da2c0156eeb829fea1be4747">MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a92a14ad4cf4cd5b034c3501f4b05a355">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#aab51ca9deb3bef8ca52287c5c600c817">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00099">PairFactory::mdFactory()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00099">McMd::PairFactory::mdFactory()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7785da22485c8b780033cb2f315a311f"></a><!-- doxytag: member="McMd::PairPotential::energy" ref="a7785da22485c8b780033cb2f315a311f" args="()=0" -->
+<a class="anchor" id="a4f9b1460856bc9c74852ff3668528c9d"></a><!-- doxytag: member="McMd::PairPotential::energy" ref="a4f9b1460856bc9c74852ff3668528c9d" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double energy </td>
+          <td class="memname">virtual double McMd::PairPotential::energy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [pure virtual]</code></td>
@@ -357,16 +357,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Calculate the total nonBonded pair energy for the associated <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521">McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521">MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a49e535350c113eb883679f32cbe9bf97">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a1bec16b69126f45b4d0c25822d5b4808">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6ebcf9d6c871aa23104ec5b1cb944742"></a><!-- doxytag: member="McMd::PairPotential::computeStress" ref="a6ebcf9d6c871aa23104ec5b1cb944742" args="(double &amp;stress) const =0" -->
+<a class="anchor" id="ac7063834db2c14b7c44e42d13e83b3f5"></a><!-- doxytag: member="McMd::PairPotential::computeStress" ref="ac7063834db2c14b7c44e42d13e83b3f5" args="(double &amp;stress) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void computeStress </td>
+          <td class="memname">virtual void McMd::PairPotential::computeStress </td>
           <td>(</td>
           <td class="paramtype">double &amp;&#160;</td>
           <td class="paramname"><em>stress</em></td><td>)</td>
@@ -384,16 +384,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d">McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d">MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#ab2547cae3cbcac76ad57f9919815b1a2">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#ae6cd1f004e6dac320cc796c1bcfe3e87">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad2f8669a34d8e38a952b205e8f5a4e62"></a><!-- doxytag: member="McMd::PairPotential::computeStress" ref="ad2f8669a34d8e38a952b205e8f5a4e62" args="(Util::Vector &amp;stress) const =0" -->
+<a class="anchor" id="a2ec1dc72889595feeff0bbe56f5552de"></a><!-- doxytag: member="McMd::PairPotential::computeStress" ref="a2ec1dc72889595feeff0bbe56f5552de" args="(Util::Vector &amp;stress) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void computeStress </td>
+          <td class="memname">virtual void McMd::PairPotential::computeStress </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>stress</em></td><td>)</td>
@@ -411,16 +411,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a664e9e28ebd82ef0744a495912c8131c">McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a664e9e28ebd82ef0744a495912c8131c">MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a4a8b4523ac3dae4a0b9ad26327847786">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#af09a0439db065c93bf71e75f0fdc175b">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a269a490a22f1c00f49ca931646749031"></a><!-- doxytag: member="McMd::PairPotential::computeStress" ref="a269a490a22f1c00f49ca931646749031" args="(Util::Tensor &amp;stress) const =0" -->
+<a class="anchor" id="ad6c36fd005e659c8b449382082777db1"></a><!-- doxytag: member="McMd::PairPotential::computeStress" ref="ad6c36fd005e659c8b449382082777db1" args="(Util::Tensor &amp;stress) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void computeStress </td>
+          <td class="memname">virtual void McMd::PairPotential::computeStress </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>stress</em></td><td>)</td>
@@ -438,7 +438,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#a7179cc96d78bbce80d68170bdfdab3fb">McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a7179cc96d78bbce80d68170bdfdab3fb">MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McPairPotentialImpl.html#ad53446264cd8a327956d2142fc34f5b8">McMd::McPairPotentialImpl&lt; Interaction &gt;</a>, and <a class="el" href="classMcMd_1_1MdPairPotentialImpl.html#a25cb0dd69e076be9f234a8596b8c170b">McMd::MdPairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
@@ -446,7 +446,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="mcMd_2potentials_2pair_2PairPotential_8h_source.html">mcMd/potentials/pair/PairPotential.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:57 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:28 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

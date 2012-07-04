@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -83,91 +83,91 @@
 <a name="l00099"></a>00099    
 <a name="l00100"></a>00100    <span class="keyword">public</span>:
 <a name="l00101"></a>00101   
-<a name="l00105"></a>00105       <a class="code" href="classUtil_1_1ParamComposite.html#aefab9fa39860208011baaca6aa4510aa" title="Constructor.">ParamComposite</a>();
+<a name="l00105"></a>00105       <a class="code" href="classUtil_1_1ParamComposite.html#a1a3a5cfa6ddb4c021e441adcd1263953" title="Constructor.">ParamComposite</a>();
 <a name="l00106"></a>00106   
-<a name="l00110"></a>00110       <a class="code" href="classUtil_1_1ParamComposite.html#aefab9fa39860208011baaca6aa4510aa" title="Constructor.">ParamComposite</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>&amp; other);
+<a name="l00110"></a>00110       <a class="code" href="classUtil_1_1ParamComposite.html#a1a3a5cfa6ddb4c021e441adcd1263953" title="Constructor.">ParamComposite</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>&amp; other);
 <a name="l00111"></a>00111   
-<a name="l00119"></a>00119       <a class="code" href="classUtil_1_1ParamComposite.html#aefab9fa39860208011baaca6aa4510aa" title="Constructor.">ParamComposite</a>(<span class="keywordtype">int</span> listCapacity);
+<a name="l00119"></a>00119       <a class="code" href="classUtil_1_1ParamComposite.html#a1a3a5cfa6ddb4c021e441adcd1263953" title="Constructor.">ParamComposite</a>(<span class="keywordtype">int</span> listCapacity);
 <a name="l00120"></a>00120   
-<a name="l00124"></a>00124       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1ParamComposite.html#a43db828677f6af8b16df0f13ffc09de0" title="Virtual destructor.">~ParamComposite</a>();
+<a name="l00124"></a>00124       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1ParamComposite.html#a3aca9fd9a600e308a42573d243910fc0" title="Virtual destructor.">~ParamComposite</a>();
 <a name="l00125"></a>00125    
-<a name="l00134"></a>00134       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComposite.html#a0ede5c0cdee5e0ff1360f1a564457072" title="Resets ParamComposite to its empty state.">resetParam</a>();
+<a name="l00134"></a>00134       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComposite.html#a38068a7ef2846b9301df02b32f6f5bfd" title="Resets ParamComposite to its empty state.">resetParam</a>();
 <a name="l00135"></a>00135    
-<a name="l00143"></a><a class="code" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">00143</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf" title="Read all parameters from an input stream.">readParam</a>(std::istream &amp;in) 
+<a name="l00143"></a><a class="code" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">00143</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724" title="Read all parameters from an input stream.">readParam</a>(std::istream &amp;in) 
 <a name="l00144"></a>00144       {}
 <a name="l00145"></a>00145    
-<a name="l00154"></a>00154       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComposite.html#a3919e7db0ce53e1ead2be4016d4d09ac" title="Write all parameters to an output stream.">writeParam</a>(std::ostream &amp;out);
+<a name="l00154"></a>00154       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">writeParam</a>(std::ostream &amp;out);
 <a name="l00155"></a>00155    
 <a name="l00160"></a>00160 
 <a name="l00161"></a>00161       
 <a name="l00169"></a>00169       <span class="keywordtype">void</span> 
-<a name="l00170"></a>00170       <a class="code" href="classUtil_1_1ParamComposite.html#a4e9c12570de6ec52c319b66d306d9625" title="Add and read a child ParamComposite.">readParamComposite</a>(std::istream &amp;in, <a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a> &amp;child, 
+<a name="l00170"></a>00170       <a class="code" href="classUtil_1_1ParamComposite.html#ab2372dcc5d7d8db632b2b9844caf206e" title="Add and read a child ParamComposite.">readParamComposite</a>(std::istream &amp;in, <a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a> &amp;child, 
 <a name="l00171"></a>00171                                            <span class="keywordtype">bool</span> next = <span class="keyword">true</span>);
 <a name="l00172"></a>00172    
 <a name="l00180"></a>00180       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;
-<a name="l00181"></a>00181       <a class="code" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable.">ScalarParam&lt;Type&gt;</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a725f62ddba13ef45cb42e597d4d8b402" title="Add a new Param &amp;lt; Type &amp;gt; object, and read its value.">read</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type &amp;value);
+<a name="l00181"></a>00181       <a class="code" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable.">ScalarParam&lt;Type&gt;</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#ae6aa7ef9cfde8f96bec1bb34eecf451d" title="Add a new Param &amp;lt; Type &amp;gt; object, and read its value.">read</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type &amp;value);
 <a name="l00182"></a>00182    
 <a name="l00192"></a>00192       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;
 <a name="l00193"></a>00193       <a class="code" href="classUtil_1_1CArrayParam.html" title="A Parameter associated with a 1D C array.">CArrayParam&lt;Type&gt;</a>&amp; 
-<a name="l00194"></a>00194       <a class="code" href="classUtil_1_1ParamComposite.html#a4b5732c0ee97e35491473e07183f3268" title="Add a C array parameter, and read its elements.">readCArray</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> n);
+<a name="l00194"></a>00194       <a class="code" href="classUtil_1_1ParamComposite.html#a4eaaeaffb9f57f285c78b4fe091fd09f" title="Add a C array parameter, and read its elements.">readCArray</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> n);
 <a name="l00195"></a>00195    
 <a name="l00205"></a>00205       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;
 <a name="l00206"></a>00206       <a class="code" href="classUtil_1_1DArrayParam.html" title="A Parameter associated with a DArray container.">DArrayParam&lt;Type&gt;</a>&amp;
-<a name="l00207"></a>00207       <a class="code" href="classUtil_1_1ParamComposite.html#ae3bb27aca8d1b2ff7c7029533a5ceff4" title="Add a DArray &amp;lt; Type &amp;gt; parameter, and read its elements.">readDArray</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Type&gt;</a>&amp; array, <span class="keywordtype">int</span> n);
+<a name="l00207"></a>00207       <a class="code" href="classUtil_1_1ParamComposite.html#a6c229b03b66101a989ff65c31589b7f9" title="Add a DArray &amp;lt; Type &amp;gt; parameter, and read its elements.">readDArray</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Type&gt;</a>&amp; array, <span class="keywordtype">int</span> n);
 <a name="l00208"></a>00208    
 <a name="l00217"></a>00217       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type, <span class="keywordtype">int</span> N&gt;
 <a name="l00218"></a>00218       <a class="code" href="classUtil_1_1FArrayParam.html" title="A Parameter associated with a FArray container.">FArrayParam&lt;Type, N&gt;</a>&amp;
-<a name="l00219"></a>00219       <a class="code" href="classUtil_1_1ParamComposite.html#ae718ad883dce5a0220239beddd5500dc" title="Add and read an FArray &amp;lt; Type, N &amp;gt; fixed-size array parameter.">readFArray</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1FArray.html">FArray&lt;Type, N &gt;</a>&amp; array);
+<a name="l00219"></a>00219       <a class="code" href="classUtil_1_1ParamComposite.html#ada1b28a0a7bc789ffde705e054543a53" title="Add and read an FArray &amp;lt; Type, N &amp;gt; fixed-size array parameter.">readFArray</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1FArray.html">FArray&lt;Type, N &gt;</a>&amp; array);
 <a name="l00220"></a>00220    
 <a name="l00231"></a>00231       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt; 
 <a name="l00232"></a>00232       <a class="code" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array.">CArray2DParam&lt;Type&gt;</a>&amp;
-<a name="l00233"></a>00233       <a class="code" href="classUtil_1_1ParamComposite.html#a0f505817549587f791c1fce1622aaa2b" title="Add and read a CArray2DParam &amp;lt; Type &amp;gt; C two-dimensional array parameter.">readCArray2D</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, 
+<a name="l00233"></a>00233       <a class="code" href="classUtil_1_1ParamComposite.html#a0b86db8727c92fb019739007401927ec" title="Add and read a CArray2DParam &amp;lt; Type &amp;gt; C two-dimensional array parameter.">readCArray2D</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, 
 <a name="l00234"></a>00234                         Type *value, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n);
 <a name="l00235"></a>00235   
 <a name="l00246"></a>00246       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt; 
 <a name="l00247"></a>00247       <a class="code" href="classUtil_1_1DMatrixParam.html" title="A Parameter associated with a 2D built-in C array.">DMatrixParam&lt;Type&gt;</a>&amp;
-<a name="l00248"></a>00248       <a class="code" href="classUtil_1_1ParamComposite.html#af0605af500e52254829617a3fa825435" title="Add and read a DMatrix &amp;lt; Type &amp;gt; C two-dimensional matrix parameter.">readDMatrix</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, 
+<a name="l00248"></a>00248       <a class="code" href="classUtil_1_1ParamComposite.html#a19f21e86b9ad0d9589bd31e1145c75ea" title="Add and read a DMatrix &amp;lt; Type &amp;gt; C two-dimensional matrix parameter.">readDMatrix</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, 
 <a name="l00249"></a>00249                        <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>&amp; matrix, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n);
 <a name="l00250"></a>00250   
-<a name="l00258"></a>00258       <a class="code" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block.">Begin</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#ae62d63b03a6f5cb70c0978082e455e03" title="Add and read a class label and opening bracket.">readBegin</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span>* label);
+<a name="l00258"></a>00258       <a class="code" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block.">Begin</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#af21bd2c40a05014df5f0ee85ed73d8f7" title="Add and read a class label and opening bracket.">readBegin</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span>* label);
 <a name="l00259"></a>00259    
-<a name="l00266"></a>00266       <a class="code" href="classUtil_1_1End.html" title="End bracket of a ParamComposite parameter block.">End</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a38c7f73d3a857afb146812da527b14f7" title="Add and read the closing bracket.">readEnd</a>(std::istream &amp;in);
+<a name="l00266"></a>00266       <a class="code" href="classUtil_1_1End.html" title="End bracket of a ParamComposite parameter block.">End</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#ad688a41bbbd4d5c88d72c0edc7b1f55c" title="Add and read the closing bracket.">readEnd</a>(std::istream &amp;in);
 <a name="l00267"></a>00267    
-<a name="l00274"></a>00274       <a class="code" href="classUtil_1_1Blank.html" title="An empty line within a parameter file.">Blank</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a6dc713b6025b86f82bbc748cbf1b6047" title="Add and read a new Blank object, representing a blank line.">readBlank</a>(std::istream &amp;in);
+<a name="l00274"></a>00274       <a class="code" href="classUtil_1_1Blank.html" title="An empty line within a parameter file.">Blank</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#aa4e99b175d55ee6e1cbdfe99c3cbf8e5" title="Add and read a new Blank object, representing a blank line.">readBlank</a>(std::istream &amp;in);
 <a name="l00275"></a>00275 
 <a name="l00277"></a>00277 
 <a name="l00278"></a>00278 
 <a name="l00279"></a>00279 
 <a name="l00280"></a>00280 
 <a name="l00281"></a>00281    
-<a name="l00288"></a>00288       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComposite.html#acedea0b2a1de1b7319463924bbcd66a5" title="Add a child ParamComposite object to the list.">addParamComposite</a>(<a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>&amp; child, <span class="keywordtype">bool</span> next = <span class="keyword">true</span>);
+<a name="l00288"></a>00288       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComposite.html#a2aed32d4ef18bc05a4bc6f02f0ce7010" title="Add a child ParamComposite object to the list.">addParamComposite</a>(<a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>&amp; child, <span class="keywordtype">bool</span> next = <span class="keyword">true</span>);
 <a name="l00289"></a>00289    
 <a name="l00297"></a>00297       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;
-<a name="l00298"></a>00298       <a class="code" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable.">ScalarParam&lt;Type&gt;</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#ad65e89d4780d17b3d10c924d04a8dbc7" title="Add a new Param &amp;lt; Type &amp;gt; object to the list.">add</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type &amp;value);
+<a name="l00298"></a>00298       <a class="code" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable.">ScalarParam&lt;Type&gt;</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a8053a755a7fc776c7c1bcebbab25354d" title="Add a new Param &amp;lt; Type &amp;gt; object to the list.">add</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type &amp;value);
 <a name="l00299"></a>00299    
 <a name="l00308"></a>00308       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;
-<a name="l00309"></a>00309       <a class="code" href="classUtil_1_1CArrayParam.html" title="A Parameter associated with a 1D C array.">CArrayParam&lt;Type&gt;</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#ad0e3d20578ec3b4a3009093b6717daf3" title="Add a C array parameter.">addCArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> n);
+<a name="l00309"></a>00309       <a class="code" href="classUtil_1_1CArrayParam.html" title="A Parameter associated with a 1D C array.">CArrayParam&lt;Type&gt;</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a522511271401a06552fd5627f79ee3f2" title="Add a C array parameter.">addCArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> n);
 <a name="l00310"></a>00310    
 <a name="l00319"></a>00319       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;
-<a name="l00320"></a>00320       <a class="code" href="classUtil_1_1DArrayParam.html" title="A Parameter associated with a DArray container.">DArrayParam&lt;Type&gt;</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a4287727a41c2f0202f53e230de09468e" title="Add a DArray&amp;lt;Type&amp;gt; parameter.">addDArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Type&gt;</a>&amp; array, <span class="keywordtype">int</span> n);
+<a name="l00320"></a>00320       <a class="code" href="classUtil_1_1DArrayParam.html" title="A Parameter associated with a DArray container.">DArrayParam&lt;Type&gt;</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a7874c884926bf21f3eac96e7fd461d83" title="Add a DArray&amp;lt;Type&amp;gt; parameter.">addDArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Type&gt;</a>&amp; array, <span class="keywordtype">int</span> n);
 <a name="l00321"></a>00321    
 <a name="l00329"></a>00329       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type, <span class="keywordtype">int</span> N&gt;
 <a name="l00330"></a>00330       <a class="code" href="classUtil_1_1FArrayParam.html" title="A Parameter associated with a FArray container.">FArrayParam&lt;Type, N&gt;</a>&amp; 
-<a name="l00331"></a>00331       <a class="code" href="classUtil_1_1ParamComposite.html#ae827989a47d029371b63404b70ed9168" title="Add a FArray&amp;lt;Type&amp;gt; parameter.">addFArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1FArray.html">FArray&lt;Type, N&gt;</a>&amp; array);
+<a name="l00331"></a>00331       <a class="code" href="classUtil_1_1ParamComposite.html#a6c0366a1286508b71aae279001d3447a" title="Add a FArray&amp;lt;Type&amp;gt; parameter.">addFArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1FArray.html">FArray&lt;Type, N&gt;</a>&amp; array);
 <a name="l00332"></a>00332    
 <a name="l00342"></a>00342       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;
 <a name="l00343"></a>00343       <a class="code" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array.">CArray2DParam&lt;Type&gt;</a>&amp;
-<a name="l00344"></a>00344       <a class="code" href="classUtil_1_1ParamComposite.html#a24bec8d45f1549eef7fb864720bfd9a2" title="Add a C two-dimensional array parameter.">addCArray2D</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n);
+<a name="l00344"></a>00344       <a class="code" href="classUtil_1_1ParamComposite.html#ab160c3c7b3a740eab74b8f87844c7309" title="Add a C two-dimensional array parameter.">addCArray2D</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n);
 <a name="l00345"></a>00345   
 <a name="l00355"></a>00355       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;
 <a name="l00356"></a>00356       <a class="code" href="classUtil_1_1DMatrixParam.html" title="A Parameter associated with a 2D built-in C array.">DMatrixParam&lt;Type&gt;</a>&amp;
-<a name="l00357"></a>00357       <a class="code" href="classUtil_1_1ParamComposite.html#a6e60ce3467b4b7fe2085f49a2d177de1" title="Add a C two-dimensional array parameter.">addDMatrix</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>&amp; matrix, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n);
+<a name="l00357"></a>00357       <a class="code" href="classUtil_1_1ParamComposite.html#aba06743928d1252a9d3408f616556871" title="Add a C two-dimensional array parameter.">addDMatrix</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>&amp; matrix, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n);
 <a name="l00358"></a>00358 
-<a name="l00365"></a>00365       <a class="code" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block.">Begin</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a6325896e9da0710df30dae17a186709e" title="Add a class label and opening bracket.">addBegin</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* label);
+<a name="l00365"></a>00365       <a class="code" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block.">Begin</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a416792811b4e1c8348203934a95167f8" title="Add a class label and opening bracket.">addBegin</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* label);
 <a name="l00366"></a>00366    
-<a name="l00372"></a>00372       <a class="code" href="classUtil_1_1End.html" title="End bracket of a ParamComposite parameter block.">End</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#ac1dc2f33f4c3e9f0c4d9d619af52a072" title="Add a closing bracket.">addEnd</a>();
+<a name="l00372"></a>00372       <a class="code" href="classUtil_1_1End.html" title="End bracket of a ParamComposite parameter block.">End</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a8678701878ef3dfc27ce3bedf403aff8" title="Add a closing bracket.">addEnd</a>();
 <a name="l00373"></a>00373    
-<a name="l00379"></a>00379       <a class="code" href="classUtil_1_1Blank.html" title="An empty line within a parameter file.">Blank</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#af36b77776107ecb389263ddc52ea140b" title="Add a new Blank object, representing a blank line.">addBlank</a>();
+<a name="l00379"></a>00379       <a class="code" href="classUtil_1_1Blank.html" title="An empty line within a parameter file.">Blank</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a72bfd2aef18ed296a2959a2d2020d3d2" title="Add a new Blank object, representing a blank line.">addBlank</a>();
 <a name="l00380"></a>00380    
 <a name="l00382"></a>00382       
 <a name="l00383"></a>00383    <span class="keyword">private</span>:
@@ -186,16 +186,16 @@
 <a name="l00399"></a>00399 <span class="comment">   * Add a ScalarParam to the list.</span>
 <a name="l00400"></a>00400 <span class="comment">   */</span> 
 <a name="l00401"></a>00401    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;
-<a name="l00402"></a><a class="code" href="classUtil_1_1ParamComposite.html#ad65e89d4780d17b3d10c924d04a8dbc7">00402</a>    <a class="code" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable.">ScalarParam&lt;Type&gt;</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#ad65e89d4780d17b3d10c924d04a8dbc7" title="Add a new Param &amp;lt; Type &amp;gt; object to the list.">ParamComposite::add</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type &amp;value) 
+<a name="l00402"></a><a class="code" href="classUtil_1_1ParamComposite.html#a8053a755a7fc776c7c1bcebbab25354d">00402</a>    <a class="code" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable.">ScalarParam&lt;Type&gt;</a>&amp; <a class="code" href="classUtil_1_1ParamComposite.html#a8053a755a7fc776c7c1bcebbab25354d" title="Add a new Param &amp;lt; Type &amp;gt; object to the list.">ParamComposite::add</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type &amp;value) 
 <a name="l00403"></a>00403    {
 <a name="l00404"></a>00404       <a class="code" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable.">ScalarParam&lt;Type&gt;</a>* ptr = <span class="keyword">new</span> <a class="code" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable.">ScalarParam&lt;Type&gt;</a>(label, value);
 <a name="l00405"></a>00405       list_.push_back(ptr);
 <a name="l00406"></a>00406       isLeaf_.push_back(<span class="keyword">true</span>);
 <a name="l00407"></a>00407       ++size_;
-<a name="l00408"></a>00408       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
+<a name="l00408"></a>00408       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
 <a name="l00409"></a>00409 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00410"></a>00410 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#ac6781f223c4e1ef925ab847bd927d486" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
-<a name="l00411"></a>00411          ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#acebbb541ac87f56979a5b03a8604887a" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#a47f5915e785a2c48758048a04e1d3389" title="Return the parameter communicator.">paramCommunicator</a>());
+<a name="l00410"></a>00410 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#a38972de00a768f2db43cc1149b264d8a" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
+<a name="l00411"></a>00411          ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#afa226f06622cd0dce587da2b56eccbbd" title="Return the parameter communicator.">paramCommunicator</a>());
 <a name="l00412"></a>00412 <span class="preprocessor">      #endif</span>
 <a name="l00413"></a>00413 <span class="preprocessor"></span>      <span class="keywordflow">return</span> *ptr;
 <a name="l00414"></a>00414    }
@@ -205,10 +205,10 @@
 <a name="l00418"></a>00418 <span class="comment">   */</span> 
 <a name="l00419"></a>00419    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;
 <a name="l00420"></a>00420    <a class="code" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable.">ScalarParam&lt;Type&gt;</a>&amp; 
-<a name="l00421"></a><a class="code" href="classUtil_1_1ParamComposite.html#a725f62ddba13ef45cb42e597d4d8b402">00421</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a725f62ddba13ef45cb42e597d4d8b402" title="Add a new Param &amp;lt; Type &amp;gt; object, and read its value.">ParamComposite::read</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type &amp;value) 
+<a name="l00421"></a><a class="code" href="classUtil_1_1ParamComposite.html#ae6aa7ef9cfde8f96bec1bb34eecf451d">00421</a>    <a class="code" href="classUtil_1_1ParamComposite.html#ae6aa7ef9cfde8f96bec1bb34eecf451d" title="Add a new Param &amp;lt; Type &amp;gt; object, and read its value.">ParamComposite::read</a>(std::istream &amp;in, <span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type &amp;value) 
 <a name="l00422"></a>00422    {
 <a name="l00423"></a>00423       <a class="code" href="classUtil_1_1ScalarParam.html" title="Template for a Parameter object associated with a scalar variable.">ScalarParam&lt;Type&gt;</a>* ptr = &amp;add&lt;Type&gt;(label, value);
-<a name="l00424"></a>00424       ptr-&gt;<a class="code" href="classUtil_1_1ScalarParam.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameter from stream.">readParam</a>(in);
+<a name="l00424"></a>00424       ptr-&gt;<a class="code" href="classUtil_1_1ScalarParam.html#afb2f28b6cea3eb785da51ac024f24ff5" title="Read parameter from stream.">readParam</a>(in);
 <a name="l00425"></a>00425       <span class="keywordflow">return</span> *ptr;
 <a name="l00426"></a>00426    }
 <a name="l00427"></a>00427   
@@ -219,16 +219,16 @@
 <a name="l00432"></a>00432 <span class="comment">   */</span>
 <a name="l00433"></a>00433    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;   
 <a name="l00434"></a>00434    <a class="code" href="classUtil_1_1CArrayParam.html" title="A Parameter associated with a 1D C array.">CArrayParam&lt;Type&gt;</a>&amp; 
-<a name="l00435"></a><a class="code" href="classUtil_1_1ParamComposite.html#ad0e3d20578ec3b4a3009093b6717daf3">00435</a>    <a class="code" href="classUtil_1_1ParamComposite.html#ad0e3d20578ec3b4a3009093b6717daf3" title="Add a C array parameter.">ParamComposite::addCArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> n) 
+<a name="l00435"></a><a class="code" href="classUtil_1_1ParamComposite.html#a522511271401a06552fd5627f79ee3f2">00435</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a522511271401a06552fd5627f79ee3f2" title="Add a C array parameter.">ParamComposite::addCArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> n) 
 <a name="l00436"></a>00436    {
 <a name="l00437"></a>00437       <a class="code" href="classUtil_1_1CArrayParam.html" title="A Parameter associated with a 1D C array.">CArrayParam&lt;Type&gt;</a>* ptr = <span class="keyword">new</span> <a class="code" href="classUtil_1_1CArrayParam.html" title="A Parameter associated with a 1D C array.">CArrayParam&lt;Type&gt;</a>(label, value, n);
 <a name="l00438"></a>00438       list_.push_back(ptr);
 <a name="l00439"></a>00439       isLeaf_.push_back(<span class="keyword">true</span>);
 <a name="l00440"></a>00440       ++size_;
-<a name="l00441"></a>00441       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
+<a name="l00441"></a>00441       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
 <a name="l00442"></a>00442 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00443"></a>00443 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#ac6781f223c4e1ef925ab847bd927d486" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
-<a name="l00444"></a>00444             ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#acebbb541ac87f56979a5b03a8604887a" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#a47f5915e785a2c48758048a04e1d3389" title="Return the parameter communicator.">paramCommunicator</a>());
+<a name="l00443"></a>00443 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#a38972de00a768f2db43cc1149b264d8a" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
+<a name="l00444"></a>00444             ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#afa226f06622cd0dce587da2b56eccbbd" title="Return the parameter communicator.">paramCommunicator</a>());
 <a name="l00445"></a>00445 <span class="preprocessor">      #endif</span>
 <a name="l00446"></a>00446 <span class="preprocessor"></span>      <span class="keywordflow">return</span> *ptr;
 <a name="l00447"></a>00447    }
@@ -238,11 +238,11 @@
 <a name="l00451"></a>00451 <span class="comment">   */</span>
 <a name="l00452"></a>00452    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;   
 <a name="l00453"></a>00453    <a class="code" href="classUtil_1_1CArrayParam.html" title="A Parameter associated with a 1D C array.">CArrayParam&lt;Type&gt;</a>&amp; 
-<a name="l00454"></a><a class="code" href="classUtil_1_1ParamComposite.html#a4b5732c0ee97e35491473e07183f3268">00454</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a4b5732c0ee97e35491473e07183f3268" title="Add a C array parameter, and read its elements.">ParamComposite::readCArray</a>(std::istream &amp;in, 
+<a name="l00454"></a><a class="code" href="classUtil_1_1ParamComposite.html#a4eaaeaffb9f57f285c78b4fe091fd09f">00454</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a4eaaeaffb9f57f285c78b4fe091fd09f" title="Add a C array parameter, and read its elements.">ParamComposite::readCArray</a>(std::istream &amp;in, 
 <a name="l00455"></a>00455                    <span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> n) 
 <a name="l00456"></a>00456    {
 <a name="l00457"></a>00457       <a class="code" href="classUtil_1_1CArrayParam.html" title="A Parameter associated with a 1D C array.">CArrayParam&lt;Type&gt;</a>* ptr = &amp;addCArray&lt;Type&gt;(label, value, n);
-<a name="l00458"></a>00458       ptr-&gt;<a class="code" href="classUtil_1_1CArrayParam.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameter from stream.">readParam</a>(in);
+<a name="l00458"></a>00458       ptr-&gt;<a class="code" href="classUtil_1_1CArrayParam.html#a3a0eb1d46433c17176d1a47050ff8a36" title="Read parameter from stream.">readParam</a>(in);
 <a name="l00459"></a>00459       <span class="keywordflow">return</span> *ptr;
 <a name="l00460"></a>00460    }
 <a name="l00461"></a>00461    
@@ -253,16 +253,16 @@
 <a name="l00466"></a>00466 <span class="comment">   */</span>
 <a name="l00467"></a>00467    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;   
 <a name="l00468"></a>00468    <a class="code" href="classUtil_1_1DArrayParam.html" title="A Parameter associated with a DArray container.">DArrayParam&lt;Type&gt;</a>&amp;
-<a name="l00469"></a><a class="code" href="classUtil_1_1ParamComposite.html#a4287727a41c2f0202f53e230de09468e">00469</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a4287727a41c2f0202f53e230de09468e" title="Add a DArray&amp;lt;Type&amp;gt; parameter.">ParamComposite::addDArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Type&gt;</a>&amp; array, <span class="keywordtype">int</span> n) 
+<a name="l00469"></a><a class="code" href="classUtil_1_1ParamComposite.html#a7874c884926bf21f3eac96e7fd461d83">00469</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a7874c884926bf21f3eac96e7fd461d83" title="Add a DArray&amp;lt;Type&amp;gt; parameter.">ParamComposite::addDArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Type&gt;</a>&amp; array, <span class="keywordtype">int</span> n) 
 <a name="l00470"></a>00470    {
 <a name="l00471"></a>00471       <a class="code" href="classUtil_1_1DArrayParam.html" title="A Parameter associated with a DArray container.">DArrayParam&lt;Type&gt;</a>* ptr = <span class="keyword">new</span> <a class="code" href="classUtil_1_1DArrayParam.html" title="A Parameter associated with a DArray container.">DArrayParam&lt;Type&gt;</a>(label, array, n);
 <a name="l00472"></a>00472       list_.push_back(ptr);
 <a name="l00473"></a>00473       isLeaf_.push_back(<span class="keyword">true</span>);
 <a name="l00474"></a>00474       ++size_;
-<a name="l00475"></a>00475       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
+<a name="l00475"></a>00475       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
 <a name="l00476"></a>00476 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00477"></a>00477 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#ac6781f223c4e1ef925ab847bd927d486" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
-<a name="l00478"></a>00478             ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#acebbb541ac87f56979a5b03a8604887a" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#a47f5915e785a2c48758048a04e1d3389" title="Return the parameter communicator.">paramCommunicator</a>());
+<a name="l00477"></a>00477 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#a38972de00a768f2db43cc1149b264d8a" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
+<a name="l00478"></a>00478             ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#afa226f06622cd0dce587da2b56eccbbd" title="Return the parameter communicator.">paramCommunicator</a>());
 <a name="l00479"></a>00479 <span class="preprocessor">      #endif</span>
 <a name="l00480"></a>00480 <span class="preprocessor"></span>      <span class="keywordflow">return</span> *ptr;
 <a name="l00481"></a>00481    }
@@ -272,11 +272,11 @@
 <a name="l00485"></a>00485 <span class="comment">   */</span>
 <a name="l00486"></a>00486    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;   
 <a name="l00487"></a>00487    <a class="code" href="classUtil_1_1DArrayParam.html" title="A Parameter associated with a DArray container.">DArrayParam&lt;Type&gt;</a>&amp; 
-<a name="l00488"></a><a class="code" href="classUtil_1_1ParamComposite.html#ae3bb27aca8d1b2ff7c7029533a5ceff4">00488</a>    <a class="code" href="classUtil_1_1ParamComposite.html#ae3bb27aca8d1b2ff7c7029533a5ceff4" title="Add a DArray &amp;lt; Type &amp;gt; parameter, and read its elements.">ParamComposite::readDArray</a>(std::istream &amp;in, 
+<a name="l00488"></a><a class="code" href="classUtil_1_1ParamComposite.html#a6c229b03b66101a989ff65c31589b7f9">00488</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a6c229b03b66101a989ff65c31589b7f9" title="Add a DArray &amp;lt; Type &amp;gt; parameter, and read its elements.">ParamComposite::readDArray</a>(std::istream &amp;in, 
 <a name="l00489"></a>00489                               <span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Type&gt;</a>&amp; array, <span class="keywordtype">int</span> n) 
 <a name="l00490"></a>00490    {
 <a name="l00491"></a>00491       <a class="code" href="classUtil_1_1DArrayParam.html" title="A Parameter associated with a DArray container.">DArrayParam&lt;Type&gt;</a>* ptr = &amp;addDArray&lt;Type&gt;(label, array, n);
-<a name="l00492"></a>00492       ptr-&gt;<a class="code" href="classUtil_1_1DArrayParam.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameter from stream.">readParam</a>(in);
+<a name="l00492"></a>00492       ptr-&gt;<a class="code" href="classUtil_1_1DArrayParam.html#af44901edc7a9062d8f8272873d961946" title="Read parameter from stream.">readParam</a>(in);
 <a name="l00493"></a>00493       <span class="keywordflow">return</span> *ptr;
 <a name="l00494"></a>00494    }
 <a name="l00495"></a>00495 
@@ -287,16 +287,16 @@
 <a name="l00500"></a>00500 <span class="comment">   */</span>
 <a name="l00501"></a>00501    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type, <span class="keywordtype">int</span> N&gt; 
 <a name="l00502"></a>00502    <a class="code" href="classUtil_1_1FArrayParam.html" title="A Parameter associated with a FArray container.">FArrayParam&lt;Type, N&gt;</a>&amp;
-<a name="l00503"></a><a class="code" href="classUtil_1_1ParamComposite.html#ae827989a47d029371b63404b70ed9168">00503</a>    <a class="code" href="classUtil_1_1ParamComposite.html#ae827989a47d029371b63404b70ed9168" title="Add a FArray&amp;lt;Type&amp;gt; parameter.">ParamComposite::addFArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1FArray.html">FArray&lt;Type, N&gt;</a>&amp; array) 
+<a name="l00503"></a><a class="code" href="classUtil_1_1ParamComposite.html#a6c0366a1286508b71aae279001d3447a">00503</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a6c0366a1286508b71aae279001d3447a" title="Add a FArray&amp;lt;Type&amp;gt; parameter.">ParamComposite::addFArray</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1FArray.html">FArray&lt;Type, N&gt;</a>&amp; array) 
 <a name="l00504"></a>00504    {
 <a name="l00505"></a>00505       <a class="code" href="classUtil_1_1FArrayParam.html" title="A Parameter associated with a FArray container.">FArrayParam&lt;Type, N&gt;</a>* ptr = <span class="keyword">new</span> <a class="code" href="classUtil_1_1FArrayParam.html" title="A Parameter associated with a FArray container.">FArrayParam&lt;Type, N&gt;</a>(label, array);
 <a name="l00506"></a>00506       list_.push_back(ptr);
 <a name="l00507"></a>00507       isLeaf_.push_back(<span class="keyword">true</span>);
 <a name="l00508"></a>00508       ++size_;
-<a name="l00509"></a>00509       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
+<a name="l00509"></a>00509       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
 <a name="l00510"></a>00510 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00511"></a>00511 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#ac6781f223c4e1ef925ab847bd927d486" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
-<a name="l00512"></a>00512          ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#acebbb541ac87f56979a5b03a8604887a" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#a47f5915e785a2c48758048a04e1d3389" title="Return the parameter communicator.">paramCommunicator</a>());
+<a name="l00511"></a>00511 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#a38972de00a768f2db43cc1149b264d8a" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
+<a name="l00512"></a>00512          ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#afa226f06622cd0dce587da2b56eccbbd" title="Return the parameter communicator.">paramCommunicator</a>());
 <a name="l00513"></a>00513 <span class="preprocessor">      #endif</span>
 <a name="l00514"></a>00514 <span class="preprocessor"></span>      <span class="keywordflow">return</span> *ptr;
 <a name="l00515"></a>00515    }
@@ -306,11 +306,11 @@
 <a name="l00519"></a>00519 <span class="comment">   */</span>
 <a name="l00520"></a>00520    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type, <span class="keywordtype">int</span> N&gt;   
 <a name="l00521"></a>00521    <a class="code" href="classUtil_1_1FArrayParam.html" title="A Parameter associated with a FArray container.">FArrayParam&lt;Type, N&gt;</a>&amp;
-<a name="l00522"></a><a class="code" href="classUtil_1_1ParamComposite.html#ae718ad883dce5a0220239beddd5500dc">00522</a>    <a class="code" href="classUtil_1_1ParamComposite.html#ae718ad883dce5a0220239beddd5500dc" title="Add and read an FArray &amp;lt; Type, N &amp;gt; fixed-size array parameter.">ParamComposite::readFArray</a>(std::istream &amp;in, 
+<a name="l00522"></a><a class="code" href="classUtil_1_1ParamComposite.html#ada1b28a0a7bc789ffde705e054543a53">00522</a>    <a class="code" href="classUtil_1_1ParamComposite.html#ada1b28a0a7bc789ffde705e054543a53" title="Add and read an FArray &amp;lt; Type, N &amp;gt; fixed-size array parameter.">ParamComposite::readFArray</a>(std::istream &amp;in, 
 <a name="l00523"></a>00523                    <span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1FArray.html">FArray&lt;Type, N&gt;</a>&amp; array) 
 <a name="l00524"></a>00524    {
 <a name="l00525"></a>00525       <a class="code" href="classUtil_1_1FArrayParam.html" title="A Parameter associated with a FArray container.">FArrayParam&lt;Type, N&gt;</a>* ptr = &amp;addFArray&lt;Type, N&gt;(label, array);
-<a name="l00526"></a>00526       ptr-&gt;<a class="code" href="classUtil_1_1FArrayParam.html#ab5421d3c9175985c9acbf723e5392075" title="Read FArray parameter from stream.">readParam</a>(in);
+<a name="l00526"></a>00526       ptr-&gt;<a class="code" href="classUtil_1_1FArrayParam.html#aaf6028589cb228b7f73057cec8e134fb" title="Read FArray parameter from stream.">readParam</a>(in);
 <a name="l00527"></a>00527       <span class="keywordflow">return</span> *ptr;
 <a name="l00528"></a>00528    }
 <a name="l00529"></a>00529 
@@ -321,16 +321,16 @@
 <a name="l00534"></a>00534 <span class="comment">   */</span>
 <a name="l00535"></a>00535    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;   
 <a name="l00536"></a>00536    <a class="code" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array.">CArray2DParam&lt;Type&gt;</a>&amp;
-<a name="l00537"></a><a class="code" href="classUtil_1_1ParamComposite.html#a24bec8d45f1549eef7fb864720bfd9a2">00537</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a24bec8d45f1549eef7fb864720bfd9a2" title="Add a C two-dimensional array parameter.">ParamComposite::addCArray2D</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n) 
+<a name="l00537"></a><a class="code" href="classUtil_1_1ParamComposite.html#ab160c3c7b3a740eab74b8f87844c7309">00537</a>    <a class="code" href="classUtil_1_1ParamComposite.html#ab160c3c7b3a740eab74b8f87844c7309" title="Add a C two-dimensional array parameter.">ParamComposite::addCArray2D</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n) 
 <a name="l00538"></a>00538    {
 <a name="l00539"></a>00539       <a class="code" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array.">CArray2DParam&lt;Type&gt;</a>* ptr = <span class="keyword">new</span> <a class="code" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array.">CArray2DParam&lt;Type&gt;</a>(label, value, m, n);
 <a name="l00540"></a>00540       list_.push_back(ptr);
 <a name="l00541"></a>00541       isLeaf_.push_back(<span class="keyword">true</span>);
 <a name="l00542"></a>00542       ++size_;
-<a name="l00543"></a>00543       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
+<a name="l00543"></a>00543       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
 <a name="l00544"></a>00544 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00545"></a>00545 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#ac6781f223c4e1ef925ab847bd927d486" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
-<a name="l00546"></a>00546          ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#acebbb541ac87f56979a5b03a8604887a" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#a47f5915e785a2c48758048a04e1d3389" title="Return the parameter communicator.">paramCommunicator</a>());
+<a name="l00545"></a>00545 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#a38972de00a768f2db43cc1149b264d8a" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
+<a name="l00546"></a>00546          ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#afa226f06622cd0dce587da2b56eccbbd" title="Return the parameter communicator.">paramCommunicator</a>());
 <a name="l00547"></a>00547 <span class="preprocessor">      #endif</span>
 <a name="l00548"></a>00548 <span class="preprocessor"></span>      <span class="keywordflow">return</span> *ptr;
 <a name="l00549"></a>00549    }
@@ -340,11 +340,11 @@
 <a name="l00553"></a>00553 <span class="comment">   */</span>
 <a name="l00554"></a>00554    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;   
 <a name="l00555"></a>00555    <a class="code" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array.">CArray2DParam&lt;Type&gt;</a>&amp;
-<a name="l00556"></a><a class="code" href="classUtil_1_1ParamComposite.html#a0f505817549587f791c1fce1622aaa2b">00556</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a0f505817549587f791c1fce1622aaa2b" title="Add and read a CArray2DParam &amp;lt; Type &amp;gt; C two-dimensional array parameter.">ParamComposite::readCArray2D</a>(std::istream &amp;in, 
+<a name="l00556"></a><a class="code" href="classUtil_1_1ParamComposite.html#a0b86db8727c92fb019739007401927ec">00556</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a0b86db8727c92fb019739007401927ec" title="Add and read a CArray2DParam &amp;lt; Type &amp;gt; C two-dimensional array parameter.">ParamComposite::readCArray2D</a>(std::istream &amp;in, 
 <a name="l00557"></a>00557                    <span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type *value, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n) 
 <a name="l00558"></a>00558    {
 <a name="l00559"></a>00559       <a class="code" href="classUtil_1_1CArray2DParam.html" title="A Parameter associated with a 2D built-in C array.">CArray2DParam&lt;Type&gt;</a>* ptr = &amp;addCArray2D&lt;Type&gt;(label, value, m, n);
-<a name="l00560"></a>00560       ptr-&gt;<a class="code" href="classUtil_1_1CArray2DParam.html#ab5421d3c9175985c9acbf723e5392075" title="Read 2D array from file.">readParam</a>(in);
+<a name="l00560"></a>00560       ptr-&gt;<a class="code" href="classUtil_1_1CArray2DParam.html#ae095187de0701ce871789510c5c2330a" title="Read 2D array from file.">readParam</a>(in);
 <a name="l00561"></a>00561       <span class="keywordflow">return</span> *ptr;
 <a name="l00562"></a>00562    }
 <a name="l00563"></a>00563  
@@ -355,16 +355,16 @@
 <a name="l00568"></a>00568 <span class="comment">   */</span>
 <a name="l00569"></a>00569    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;   
 <a name="l00570"></a>00570    <a class="code" href="classUtil_1_1DMatrixParam.html" title="A Parameter associated with a 2D built-in C array.">DMatrixParam&lt;Type&gt;</a>&amp;
-<a name="l00571"></a><a class="code" href="classUtil_1_1ParamComposite.html#a6e60ce3467b4b7fe2085f49a2d177de1">00571</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a6e60ce3467b4b7fe2085f49a2d177de1" title="Add a C two-dimensional array parameter.">ParamComposite::addDMatrix</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>&amp; matrix, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n) 
+<a name="l00571"></a><a class="code" href="classUtil_1_1ParamComposite.html#aba06743928d1252a9d3408f616556871">00571</a>    <a class="code" href="classUtil_1_1ParamComposite.html#aba06743928d1252a9d3408f616556871" title="Add a C two-dimensional array parameter.">ParamComposite::addDMatrix</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>&amp; matrix, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n) 
 <a name="l00572"></a>00572    {
 <a name="l00573"></a>00573       <a class="code" href="classUtil_1_1DMatrixParam.html" title="A Parameter associated with a 2D built-in C array.">DMatrixParam&lt;Type&gt;</a>* ptr = <span class="keyword">new</span> <a class="code" href="classUtil_1_1DMatrixParam.html" title="A Parameter associated with a 2D built-in C array.">DMatrixParam&lt;Type&gt;</a>(label, matrix, m, n);
 <a name="l00574"></a>00574       list_.push_back(ptr);
 <a name="l00575"></a>00575       isLeaf_.push_back(<span class="keyword">true</span>);
 <a name="l00576"></a>00576       ++size_;
-<a name="l00577"></a>00577       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
+<a name="l00577"></a>00577       ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
 <a name="l00578"></a>00578 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00579"></a>00579 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#ac6781f223c4e1ef925ab847bd927d486" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
-<a name="l00580"></a>00580          ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#acebbb541ac87f56979a5b03a8604887a" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#a47f5915e785a2c48758048a04e1d3389" title="Return the parameter communicator.">paramCommunicator</a>());
+<a name="l00579"></a>00579 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#a38972de00a768f2db43cc1149b264d8a" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()) 
+<a name="l00580"></a>00580          ptr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(<a class="code" href="classUtil_1_1ParamComponent.html#afa226f06622cd0dce587da2b56eccbbd" title="Return the parameter communicator.">paramCommunicator</a>());
 <a name="l00581"></a>00581 <span class="preprocessor">      #endif</span>
 <a name="l00582"></a>00582 <span class="preprocessor"></span>      <span class="keywordflow">return</span> *ptr;
 <a name="l00583"></a>00583    }
@@ -374,11 +374,11 @@
 <a name="l00587"></a>00587 <span class="comment">   */</span>
 <a name="l00588"></a>00588    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Type&gt;   
 <a name="l00589"></a>00589    <a class="code" href="classUtil_1_1DMatrixParam.html" title="A Parameter associated with a 2D built-in C array.">DMatrixParam&lt;Type&gt;</a>&amp;
-<a name="l00590"></a><a class="code" href="classUtil_1_1ParamComposite.html#af0605af500e52254829617a3fa825435">00590</a>    <a class="code" href="classUtil_1_1ParamComposite.html#af0605af500e52254829617a3fa825435" title="Add and read a DMatrix &amp;lt; Type &amp;gt; C two-dimensional matrix parameter.">ParamComposite::readDMatrix</a>(std::istream &amp;in, 
+<a name="l00590"></a><a class="code" href="classUtil_1_1ParamComposite.html#a19f21e86b9ad0d9589bd31e1145c75ea">00590</a>    <a class="code" href="classUtil_1_1ParamComposite.html#a19f21e86b9ad0d9589bd31e1145c75ea" title="Add and read a DMatrix &amp;lt; Type &amp;gt; C two-dimensional matrix parameter.">ParamComposite::readDMatrix</a>(std::istream &amp;in, 
 <a name="l00591"></a>00591                    <span class="keyword">const</span> <span class="keywordtype">char</span> *label, <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>&amp; matrix, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n) 
 <a name="l00592"></a>00592    {
 <a name="l00593"></a>00593       <a class="code" href="classUtil_1_1DMatrixParam.html" title="A Parameter associated with a 2D built-in C array.">DMatrixParam&lt;Type&gt;</a>* ptr = &amp;addDMatrix&lt;Type&gt;(label, matrix, m, n);
-<a name="l00594"></a>00594       ptr-&gt;<a class="code" href="classUtil_1_1DMatrixParam.html#ab5421d3c9175985c9acbf723e5392075" title="Read 2D array from file.">readParam</a>(in);
+<a name="l00594"></a>00594       ptr-&gt;<a class="code" href="classUtil_1_1DMatrixParam.html#a8d9b73c0bceb3c52ac47b9a60a54cd97" title="Read 2D array from file.">readParam</a>(in);
 <a name="l00595"></a>00595       <span class="keywordflow">return</span> *ptr;
 <a name="l00596"></a>00596    }
 <a name="l00597"></a>00597  
@@ -386,7 +386,7 @@
 <a name="l00599"></a>00599 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

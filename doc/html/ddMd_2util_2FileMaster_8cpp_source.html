@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,8 +71,8 @@
 <a name="l00020"></a>00020    <span class="comment">/* </span>
 <a name="l00021"></a>00021 <span class="comment">   * Default constructor.   </span>
 <a name="l00022"></a>00022 <span class="comment">   */</span>
-<a name="l00023"></a>00023    <a class="code" href="classDdMd_1_1FileMaster.html#a75f81fa76d4642c52c46a04779fb0727" title="Constructor.">FileMaster::FileMaster</a>() 
-<a name="l00024"></a><a class="code" href="classDdMd_1_1FileMaster.html#a75f81fa76d4642c52c46a04779fb0727">00024</a>    : commandFileName_(),
+<a name="l00023"></a>00023    <a class="code" href="classDdMd_1_1FileMaster.html#af2a656971de16b80e7d0e9de952a77d5" title="Constructor.">FileMaster::FileMaster</a>() 
+<a name="l00024"></a><a class="code" href="classDdMd_1_1FileMaster.html#af2a656971de16b80e7d0e9de952a77d5">00024</a>    : commandFileName_(),
 <a name="l00025"></a>00025      inputPrefix_(),
 <a name="l00026"></a>00026      outputPrefix_(),
 <a name="l00027"></a>00027      directoryIdPrefix_(),
@@ -86,8 +86,8 @@
 <a name="l00035"></a>00035    <span class="comment">/* </span>
 <a name="l00036"></a>00036 <span class="comment">   * Copy constructor.   </span>
 <a name="l00037"></a>00037 <span class="comment">   */</span>
-<a name="l00038"></a>00038    <a class="code" href="classDdMd_1_1FileMaster.html#a75f81fa76d4642c52c46a04779fb0727" title="Constructor.">FileMaster::FileMaster</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">McMd::FileMaster</a>&amp; other) 
-<a name="l00039"></a><a class="code" href="classDdMd_1_1FileMaster.html#a62cccf0f6a5f1f562e5211c6593f854a">00039</a>    : commandFileName_(other.commandFileName_),
+<a name="l00038"></a>00038    <a class="code" href="classDdMd_1_1FileMaster.html#af2a656971de16b80e7d0e9de952a77d5" title="Constructor.">FileMaster::FileMaster</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">McMd::FileMaster</a>&amp; other) 
+<a name="l00039"></a><a class="code" href="classDdMd_1_1FileMaster.html#a24621cc646c41fec5855679955d11050">00039</a>    : commandFileName_(other.commandFileName_),
 <a name="l00040"></a>00040      inputPrefix_(other.inputPrefix_),
 <a name="l00041"></a>00041      outputPrefix_(other.outputPrefix_),
 <a name="l00042"></a>00042      directoryIdPrefix_(other.directoryIdPrefix_),
@@ -101,8 +101,8 @@
 <a name="l00050"></a>00050    <span class="comment">/* </span>
 <a name="l00051"></a>00051 <span class="comment">   * Copy constructor.   </span>
 <a name="l00052"></a>00052 <span class="comment">   */</span>
-<a name="l00053"></a>00053    <a class="code" href="classDdMd_1_1FileMaster.html#a75f81fa76d4642c52c46a04779fb0727" title="Constructor.">FileMaster::FileMaster</a>(<span class="keyword">const</span> <a class="code" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; other) 
-<a name="l00054"></a><a class="code" href="classDdMd_1_1FileMaster.html#ab622bfc9509861f53dfc6951176091bc">00054</a>    : inputPrefix_(other.inputPrefix_),
+<a name="l00053"></a>00053    <a class="code" href="classDdMd_1_1FileMaster.html#af2a656971de16b80e7d0e9de952a77d5" title="Constructor.">FileMaster::FileMaster</a>(<span class="keyword">const</span> <a class="code" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; other) 
+<a name="l00054"></a><a class="code" href="classDdMd_1_1FileMaster.html#a06701fd3ffe27d5842e0f91bb5ce5398">00054</a>    : inputPrefix_(other.inputPrefix_),
 <a name="l00055"></a>00055      outputPrefix_(other.outputPrefix_),
 <a name="l00056"></a>00056      directoryIdPrefix_(other.directoryIdPrefix_),
 <a name="l00057"></a>00057      paramFilePtr_(0),
@@ -113,8 +113,8 @@
 <a name="l00062"></a>00062    <span class="comment">/* </span>
 <a name="l00063"></a>00063 <span class="comment">   * Destructor.   </span>
 <a name="l00064"></a>00064 <span class="comment">   */</span>
-<a name="l00065"></a>00065    <a class="code" href="classDdMd_1_1FileMaster.html#a9b9ef07de5135022afdb5db190689ad7" title="Destructor.">FileMaster::~FileMaster</a>() 
-<a name="l00066"></a><a class="code" href="classDdMd_1_1FileMaster.html#a9b9ef07de5135022afdb5db190689ad7">00066</a>    {
+<a name="l00065"></a>00065    <a class="code" href="classDdMd_1_1FileMaster.html#acca3550bf99169092fecc965e58fd110" title="Destructor.">FileMaster::~FileMaster</a>() 
+<a name="l00066"></a><a class="code" href="classDdMd_1_1FileMaster.html#acca3550bf99169092fecc965e58fd110">00066</a>    {
 <a name="l00067"></a>00067       <span class="keywordflow">if</span> (paramFilePtr_) {
 <a name="l00068"></a>00068          paramFilePtr_-&gt;close();
 <a name="l00069"></a>00069          <span class="keyword">delete</span> paramFilePtr_;
@@ -128,14 +128,14 @@
 <a name="l00077"></a>00077    <span class="comment">/*</span>
 <a name="l00078"></a>00078 <span class="comment">   * Set root prefix for all path names.</span>
 <a name="l00079"></a>00079 <span class="comment">   */</span>
-<a name="l00080"></a>00080    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a04438d5ac9292c2e70984772f0f4c346" title="Set the path from current directory to root data directory.">FileMaster::setRootPrefix</a>(<span class="keyword">const</span> std::string&amp; rootPrefix)
-<a name="l00081"></a><a class="code" href="classDdMd_1_1FileMaster.html#a04438d5ac9292c2e70984772f0f4c346">00081</a>    {  rootPrefix_ = rootPrefix; }
+<a name="l00080"></a>00080    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#ac8ba3b6e61b092b0fd66dd04aed10a4a" title="Set the path from current directory to root data directory.">FileMaster::setRootPrefix</a>(<span class="keyword">const</span> std::string&amp; rootPrefix)
+<a name="l00081"></a><a class="code" href="classDdMd_1_1FileMaster.html#ac8ba3b6e61b092b0fd66dd04aed10a4a">00081</a>    {  rootPrefix_ = rootPrefix; }
 <a name="l00082"></a>00082 
 <a name="l00083"></a>00083    <span class="comment">/*</span>
 <a name="l00084"></a>00084 <span class="comment">   * Set a directory Id prefix.</span>
 <a name="l00085"></a>00085 <span class="comment">   */</span>
-<a name="l00086"></a>00086    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#aab84750bb4d76c9571e9f2e91a8f5361" title="Set an integer directory identifier for this processor.">FileMaster::setDirectoryId</a>(<span class="keywordtype">int</span> rank)
-<a name="l00087"></a><a class="code" href="classDdMd_1_1FileMaster.html#aab84750bb4d76c9571e9f2e91a8f5361">00087</a>    {
+<a name="l00086"></a>00086    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a7d37ffa1b7ecb52f7b9f6a455bfdc8b8" title="Set an integer directory identifier for this processor.">FileMaster::setDirectoryId</a>(<span class="keywordtype">int</span> rank)
+<a name="l00087"></a><a class="code" href="classDdMd_1_1FileMaster.html#a7d37ffa1b7ecb52f7b9f6a455bfdc8b8">00087</a>    {
 <a name="l00088"></a>00088       std::stringstream sMyId;
 <a name="l00089"></a>00089       sMyId &lt;&lt; rank;
 <a name="l00090"></a>00090       directoryIdPrefix_ = sMyId.str();
@@ -146,44 +146,44 @@
 <a name="l00095"></a>00095    <span class="comment">/*</span>
 <a name="l00096"></a>00096 <span class="comment">   * Set paramFile() to return std::cin even if a directory id has been set.</span>
 <a name="l00097"></a>00097 <span class="comment">   */</span>
-<a name="l00098"></a>00098    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a9cc0b6fd727995179e88765647de22ae" title="Set paramFile() to return std::cin even if a directory id is set.">FileMaster::setParamFileStdIn</a>()
-<a name="l00099"></a><a class="code" href="classDdMd_1_1FileMaster.html#a9cc0b6fd727995179e88765647de22ae">00099</a>    {  isSetParamFileStdIn_ = <span class="keyword">true</span>; }
+<a name="l00098"></a>00098    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#ad313aeb198af43b14cb8e077f59608c1" title="Set paramFile() to return std::cin even if a directory id is set.">FileMaster::setParamFileStdIn</a>()
+<a name="l00099"></a><a class="code" href="classDdMd_1_1FileMaster.html#ad313aeb198af43b14cb8e077f59608c1">00099</a>    {  isSetParamFileStdIn_ = <span class="keyword">true</span>; }
 <a name="l00100"></a>00100 
 <a name="l00101"></a>00101    <span class="comment">/* </span>
 <a name="l00102"></a>00102 <span class="comment">   * Set the input prefix.</span>
 <a name="l00103"></a>00103 <span class="comment">   */</span>
-<a name="l00104"></a>00104    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a1e3956e031effcc422ca873a7f3eac31" title="Set the input file prefix string.">FileMaster::setInputPrefix</a>(<span class="keyword">const</span> std::string&amp; inputPrefix) 
-<a name="l00105"></a><a class="code" href="classDdMd_1_1FileMaster.html#a1e3956e031effcc422ca873a7f3eac31">00105</a>    {  inputPrefix_ = inputPrefix; }
+<a name="l00104"></a>00104    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a08185defe7c86b666b2e738e108461d7" title="Set the input file prefix string.">FileMaster::setInputPrefix</a>(<span class="keyword">const</span> std::string&amp; inputPrefix) 
+<a name="l00105"></a><a class="code" href="classDdMd_1_1FileMaster.html#a08185defe7c86b666b2e738e108461d7">00105</a>    {  inputPrefix_ = inputPrefix; }
 <a name="l00106"></a>00106 
 <a name="l00107"></a>00107    <span class="comment">/* </span>
 <a name="l00108"></a>00108 <span class="comment">   * Set the output prefix.</span>
 <a name="l00109"></a>00109 <span class="comment">   */</span>
-<a name="l00110"></a>00110    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#ac0f5a16bb9955e6549e5ba105a7df9af" title="Set the output file prefix string.">FileMaster::setOutputPrefix</a>(<span class="keyword">const</span> std::string&amp; outputPrefix) 
-<a name="l00111"></a><a class="code" href="classDdMd_1_1FileMaster.html#ac0f5a16bb9955e6549e5ba105a7df9af">00111</a>    {  outputPrefix_ = outputPrefix; }
+<a name="l00110"></a>00110    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a44fa98b4fa331eb87acdd3348db6925e" title="Set the output file prefix string.">FileMaster::setOutputPrefix</a>(<span class="keyword">const</span> std::string&amp; outputPrefix) 
+<a name="l00111"></a><a class="code" href="classDdMd_1_1FileMaster.html#a44fa98b4fa331eb87acdd3348db6925e">00111</a>    {  outputPrefix_ = outputPrefix; }
 <a name="l00112"></a>00112 
 <a name="l00113"></a>00113    <span class="comment">/* </span>
 <a name="l00114"></a>00114 <span class="comment">   * Set the output prefix.</span>
 <a name="l00115"></a>00115 <span class="comment">   */</span>
-<a name="l00116"></a>00116    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#acb16f5af02641521717f5b3e182489c0" title="Set the command file name.">FileMaster::setCommandFileName</a>(<span class="keyword">const</span> std::string&amp; commandFileName) 
-<a name="l00117"></a><a class="code" href="classDdMd_1_1FileMaster.html#acb16f5af02641521717f5b3e182489c0">00117</a>    {  commandFileName_ = <a class="code" href="classDdMd_1_1FileMaster.html#a4e0dbeb09621fcc3ef4f38631a420b0e" title="Return the command file name.">commandFileName</a>; }
+<a name="l00116"></a>00116    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a0396084124c8a3006076da63bf30d4eb" title="Set the command file name.">FileMaster::setCommandFileName</a>(<span class="keyword">const</span> std::string&amp; commandFileName) 
+<a name="l00117"></a><a class="code" href="classDdMd_1_1FileMaster.html#a0396084124c8a3006076da63bf30d4eb">00117</a>    {  commandFileName_ = <a class="code" href="classDdMd_1_1FileMaster.html#affe72189b8d8e11578bf9d121e8803a5" title="Return the command file name.">commandFileName</a>; }
 <a name="l00118"></a>00118 
 <a name="l00119"></a>00119    <span class="comment">/* </span>
 <a name="l00120"></a>00120 <span class="comment">   * Read parameters from file.</span>
 <a name="l00121"></a>00121 <span class="comment">   */</span>
-<a name="l00122"></a>00122    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameter file.">FileMaster::readParam</a>(std::istream &amp;in) 
-<a name="l00123"></a><a class="code" href="classDdMd_1_1FileMaster.html#ab5421d3c9175985c9acbf723e5392075">00123</a>    {
-<a name="l00124"></a>00124       <a class="code" href="classUtil_1_1ParamComposite.html#ae62d63b03a6f5cb70c0978082e455e03" title="Add and read a class label and opening bracket.">readBegin</a>(in, <span class="stringliteral">&quot;FileMaster&quot;</span>);
+<a name="l00122"></a>00122    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#afc74fe63a6d5737bec4344044b16dbc8" title="Read parameter file.">FileMaster::readParam</a>(std::istream &amp;in) 
+<a name="l00123"></a><a class="code" href="classDdMd_1_1FileMaster.html#afc74fe63a6d5737bec4344044b16dbc8">00123</a>    {
+<a name="l00124"></a>00124       <a class="code" href="classUtil_1_1ParamComposite.html#af21bd2c40a05014df5f0ee85ed73d8f7" title="Add and read a class label and opening bracket.">readBegin</a>(in, <span class="stringliteral">&quot;FileMaster&quot;</span>);
 <a name="l00125"></a>00125       read&lt;std::string&gt;(in, <span class="stringliteral">&quot;commandFileName&quot;</span>,  commandFileName_);
 <a name="l00126"></a>00126       read&lt;std::string&gt;(in, <span class="stringliteral">&quot;inputPrefix&quot;</span>,  inputPrefix_);
 <a name="l00127"></a>00127       read&lt;std::string&gt;(in, <span class="stringliteral">&quot;outputPrefix&quot;</span>, outputPrefix_);
-<a name="l00128"></a>00128       <a class="code" href="classUtil_1_1ParamComposite.html#a38c7f73d3a857afb146812da527b14f7" title="Add and read the closing bracket.">readEnd</a>(in);
+<a name="l00128"></a>00128       <a class="code" href="classUtil_1_1ParamComposite.html#ad688a41bbbd4d5c88d72c0edc7b1f55c" title="Add and read the closing bracket.">readEnd</a>(in);
 <a name="l00129"></a>00129    }
 <a name="l00130"></a>00130 
 <a name="l00131"></a>00131    <span class="comment">/*</span>
 <a name="l00132"></a>00132 <span class="comment">   * Get the default parameter stream.</span>
 <a name="l00133"></a>00133 <span class="comment">   */</span>
-<a name="l00134"></a>00134    std::istream&amp; <a class="code" href="classDdMd_1_1FileMaster.html#a646f901da703f1f9e3f74b7bf6b99cbd" title="Get a default parameter stream by reference.">FileMaster::paramFile</a>()
-<a name="l00135"></a><a class="code" href="classDdMd_1_1FileMaster.html#a646f901da703f1f9e3f74b7bf6b99cbd">00135</a>    {
+<a name="l00134"></a>00134    std::istream&amp; <a class="code" href="classDdMd_1_1FileMaster.html#a3aa02958446f7d97f1c1aa67c74bce15" title="Get a default parameter stream by reference.">FileMaster::paramFile</a>()
+<a name="l00135"></a><a class="code" href="classDdMd_1_1FileMaster.html#a3aa02958446f7d97f1c1aa67c74bce15">00135</a>    {
 <a name="l00136"></a>00136 
 <a name="l00137"></a>00137       <span class="keywordflow">if</span> ((!hasDirectoryId_) || isSetParamFileStdIn_) { 
 <a name="l00138"></a>00138 
@@ -219,12 +219,12 @@
 <a name="l00168"></a>00168    <span class="comment">/*</span>
 <a name="l00169"></a>00169 <span class="comment">   * Get the command input stream by reference.</span>
 <a name="l00170"></a>00170 <span class="comment">   */</span>
-<a name="l00171"></a>00171    std::istream&amp; <a class="code" href="classDdMd_1_1FileMaster.html#ab6a6eb5d0082aea2546f58b7ca1a63c1" title="Get the command input stream by reference.">FileMaster::commandFile</a>()
-<a name="l00172"></a><a class="code" href="classDdMd_1_1FileMaster.html#ab6a6eb5d0082aea2546f58b7ca1a63c1">00172</a>    {
+<a name="l00171"></a>00171    std::istream&amp; <a class="code" href="classDdMd_1_1FileMaster.html#a337c13366f20d1ed3cc10b0f5c5e6ef8" title="Get the command input stream by reference.">FileMaster::commandFile</a>()
+<a name="l00172"></a><a class="code" href="classDdMd_1_1FileMaster.html#a337c13366f20d1ed3cc10b0f5c5e6ef8">00172</a>    {
 <a name="l00173"></a>00173 
 <a name="l00174"></a>00174       <span class="keywordflow">if</span> (commandFileName_ == <span class="stringliteral">&quot;paramfile&quot;</span>) {
 <a name="l00175"></a>00175 
-<a name="l00176"></a>00176          <span class="keywordflow">return</span> <a class="code" href="classDdMd_1_1FileMaster.html#a646f901da703f1f9e3f74b7bf6b99cbd" title="Get a default parameter stream by reference.">paramFile</a>();
+<a name="l00176"></a>00176          <span class="keywordflow">return</span> <a class="code" href="classDdMd_1_1FileMaster.html#a3aa02958446f7d97f1c1aa67c74bce15" title="Get a default parameter stream by reference.">paramFile</a>();
 <a name="l00177"></a>00177 
 <a name="l00178"></a>00178       } <span class="keywordflow">else</span> { 
 <a name="l00179"></a>00179 
@@ -258,8 +258,8 @@
 <a name="l00207"></a>00207 <span class="comment">   * Open and return an input file named inputPrefix + name</span>
 <a name="l00208"></a>00208 <span class="comment">   */</span>
 <a name="l00209"></a>00209    <span class="keywordtype">void</span>
-<a name="l00210"></a>00210    <a class="code" href="classDdMd_1_1FileMaster.html#a808bbf547ced08a4e6aa8cbb3e966e64" title="Open an input file named [directoryIdPrefix] + inputPrefix + filename.">FileMaster::openInputFile</a>(<span class="keyword">const</span> std::string&amp; name, std::ifstream&amp; in)<span class="keyword"> const</span>
-<a name="l00211"></a><a class="code" href="classDdMd_1_1FileMaster.html#a808bbf547ced08a4e6aa8cbb3e966e64">00211</a> <span class="keyword">   </span>{
+<a name="l00210"></a>00210    <a class="code" href="classDdMd_1_1FileMaster.html#a4c61f4e461bd870ba69fc8b19bdbcdc3" title="Open an input file named [directoryIdPrefix] + inputPrefix + filename.">FileMaster::openInputFile</a>(<span class="keyword">const</span> std::string&amp; name, std::ifstream&amp; in)<span class="keyword"> const</span>
+<a name="l00211"></a><a class="code" href="classDdMd_1_1FileMaster.html#a4c61f4e461bd870ba69fc8b19bdbcdc3">00211</a> <span class="keyword">   </span>{
 <a name="l00212"></a>00212       <span class="comment">// Construct filename = inputPrefix_ + name</span>
 <a name="l00213"></a>00213       std::string filename(rootPrefix_);
 <a name="l00214"></a>00214       <span class="keywordflow">if</span> (hasDirectoryId_) {
@@ -283,8 +283,8 @@
 <a name="l00232"></a>00232 <span class="comment">   * Open and return an output file named outputPrefix + name</span>
 <a name="l00233"></a>00233 <span class="comment">   */</span>
 <a name="l00234"></a>00234    <span class="keywordtype">void</span>
-<a name="l00235"></a>00235    <a class="code" href="classDdMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">FileMaster::openOutputFile</a>(<span class="keyword">const</span> std::string&amp; name, std::ofstream&amp; out)<span class="keyword"> </span>
-<a name="l00236"></a><a class="code" href="classDdMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81">00236</a> <span class="keyword">   const</span>
+<a name="l00235"></a>00235    <a class="code" href="classDdMd_1_1FileMaster.html#a1da00a0de5adb7d1ebf0ad2dd92f1a2a" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">FileMaster::openOutputFile</a>(<span class="keyword">const</span> std::string&amp; name, std::ofstream&amp; out)<span class="keyword"> </span>
+<a name="l00236"></a><a class="code" href="classDdMd_1_1FileMaster.html#a1da00a0de5adb7d1ebf0ad2dd92f1a2a">00236</a> <span class="keyword">   const</span>
 <a name="l00237"></a>00237 <span class="keyword">   </span>{
 <a name="l00238"></a>00238       <span class="comment">// Construct filename = outputPrefix_ + name</span>
 <a name="l00239"></a>00239       std::string filename(rootPrefix_);
@@ -308,8 +308,8 @@
 <a name="l00257"></a>00257    <span class="comment">/*</span>
 <a name="l00258"></a>00258 <span class="comment">   * Open an input restart parameter file.</span>
 <a name="l00259"></a>00259 <span class="comment">   */</span>
-<a name="l00260"></a>00260    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a91548c59e7d173cdbe9372c8e1f1ded1" title="Open an input restart parameter file.">FileMaster::openParamIFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext,
-<a name="l00261"></a><a class="code" href="classDdMd_1_1FileMaster.html#a91548c59e7d173cdbe9372c8e1f1ded1">00261</a>                                    std::ifstream&amp; in)<span class="keyword"> const</span>
+<a name="l00260"></a>00260    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#aaf613b55f76f81ed1e36019c6ab7306f" title="Open an input restart parameter file.">FileMaster::openParamIFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext,
+<a name="l00261"></a><a class="code" href="classDdMd_1_1FileMaster.html#aaf613b55f76f81ed1e36019c6ab7306f">00261</a>                                    std::ifstream&amp; in)<span class="keyword"> const</span>
 <a name="l00262"></a>00262 <span class="keyword">   </span>{
 <a name="l00263"></a>00263       <span class="comment">// Construct filename </span>
 <a name="l00264"></a>00264       std::string filename(rootPrefix_);
@@ -330,8 +330,8 @@
 <a name="l00279"></a>00279    <span class="comment">/*</span>
 <a name="l00280"></a>00280 <span class="comment">   * Open a restart parameter file for writing.</span>
 <a name="l00281"></a>00281 <span class="comment">   */</span>
-<a name="l00282"></a>00282    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#acd2c63082f5d552a56d301dfbb3819e9" title="Open a restart parameter file for writing.">FileMaster::openParamOFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext,
-<a name="l00283"></a><a class="code" href="classDdMd_1_1FileMaster.html#acd2c63082f5d552a56d301dfbb3819e9">00283</a>                                    std::ofstream&amp; out)<span class="keyword"> const</span>
+<a name="l00282"></a>00282    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a066c736bc6e61dfa9afec00d9387c0d2" title="Open a restart parameter file for writing.">FileMaster::openParamOFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext,
+<a name="l00283"></a><a class="code" href="classDdMd_1_1FileMaster.html#a066c736bc6e61dfa9afec00d9387c0d2">00283</a>                                    std::ofstream&amp; out)<span class="keyword"> const</span>
 <a name="l00284"></a>00284 <span class="keyword">   </span>{
 <a name="l00285"></a>00285       <span class="comment">// Construct filename = outputPrefix_ + name</span>
 <a name="l00286"></a>00286       std::string filename(rootPrefix_);
@@ -352,8 +352,8 @@
 <a name="l00301"></a>00301    <span class="comment">/*</span>
 <a name="l00302"></a>00302 <span class="comment">   * Open an input restart dump file.</span>
 <a name="l00303"></a>00303 <span class="comment">   */</span>
-<a name="l00304"></a>00304    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a6b79b8bfd999aa56caae49f787e13b03" title="Open an input restart dump file.">FileMaster::openRestartIFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext,
-<a name="l00305"></a><a class="code" href="classDdMd_1_1FileMaster.html#a6b79b8bfd999aa56caae49f787e13b03">00305</a>                                      std::ifstream&amp; in)<span class="keyword"> const</span>
+<a name="l00304"></a>00304    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a5577238f356bfc5ecc7e1307bc7661e8" title="Open an input restart dump file.">FileMaster::openRestartIFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext,
+<a name="l00305"></a><a class="code" href="classDdMd_1_1FileMaster.html#a5577238f356bfc5ecc7e1307bc7661e8">00305</a>                                      std::ifstream&amp; in)<span class="keyword"> const</span>
 <a name="l00306"></a>00306 <span class="keyword">   </span>{
 <a name="l00307"></a>00307       std::string filename(rootPrefix_);
 <a name="l00308"></a>00308       <span class="keywordflow">if</span> (hasDirectoryId_) {
@@ -373,8 +373,8 @@
 <a name="l00322"></a>00322    <span class="comment">/*</span>
 <a name="l00323"></a>00323 <span class="comment">   * Open a restart dump file for writing.</span>
 <a name="l00324"></a>00324 <span class="comment">   */</span>
-<a name="l00325"></a>00325    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#afe059f483bf8bc8c438e6b4ddf644f0d" title="Open a restart dump file for writing.">FileMaster::openRestartOFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext,
-<a name="l00326"></a><a class="code" href="classDdMd_1_1FileMaster.html#afe059f483bf8bc8c438e6b4ddf644f0d">00326</a>                                      std::ofstream&amp; out)<span class="keyword"> const</span>
+<a name="l00325"></a>00325    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1FileMaster.html#a16aaaa9bac874c8086dbaaa69119136b" title="Open a restart dump file for writing.">FileMaster::openRestartOFile</a>(<span class="keyword">const</span> std::string&amp; name, <span class="keyword">const</span> <span class="keywordtype">char</span>* ext,
+<a name="l00326"></a><a class="code" href="classDdMd_1_1FileMaster.html#a16aaaa9bac874c8086dbaaa69119136b">00326</a>                                      std::ofstream&amp; out)<span class="keyword"> const</span>
 <a name="l00327"></a>00327 <span class="keyword">   </span>{
 <a name="l00328"></a>00328       <span class="comment">// Construct filename = outputPrefix_ + name</span>
 <a name="l00329"></a>00329       std::string filename(rootPrefix_);
@@ -397,14 +397,14 @@
 <a name="l00346"></a>00346    <span class="comment">/*</span>
 <a name="l00347"></a>00347 <span class="comment">   * Will paramFile() return std::cin ?</span>
 <a name="l00348"></a>00348 <span class="comment">   */</span> 
-<a name="l00349"></a>00349    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1FileMaster.html#a2e3fb99f1299e7755ff8a0a350e58bd8" title="Is paramFile() set to return std::cin ?">FileMaster::isParamFileStdIn</a>()<span class="keyword"> const</span>
-<a name="l00350"></a><a class="code" href="classDdMd_1_1FileMaster.html#a2e3fb99f1299e7755ff8a0a350e58bd8">00350</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> ((!hasDirectoryId_) || isSetParamFileStdIn_); }
+<a name="l00349"></a>00349    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1FileMaster.html#a522ead156f41b7c6fcbbbb347223f95d" title="Is paramFile() set to return std::cin ?">FileMaster::isParamFileStdIn</a>()<span class="keyword"> const</span>
+<a name="l00350"></a><a class="code" href="classDdMd_1_1FileMaster.html#a522ead156f41b7c6fcbbbb347223f95d">00350</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> ((!hasDirectoryId_) || isSetParamFileStdIn_); }
 <a name="l00351"></a>00351 
 <a name="l00352"></a>00352 } 
 <a name="l00353"></a>00353 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

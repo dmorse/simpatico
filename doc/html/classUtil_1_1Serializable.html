@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Serializable Class Reference</title>
+<title>Simpatico: Util::Serializable Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,45 +50,45 @@
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Serializable Class Reference</h1>  </div>
+<h1>Util::Serializable Class Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Serializable" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Abstract class for serializable objects. </p>
-<p>This class defines an interface for serialization of objects. The <a class="el" href="classUtil_1_1Serializable.html#a1446ebe035881da21d5e6dec5bb25ac6" title="Save to an archive.">save()</a> method saves the internal state of an object to an archive, and the <a class="el" href="classUtil_1_1Serializable.html#aab042d56a0ca42d1fd89bd6d7bd27e40" title="Load from an archive.">load()</a> method loads the state from an archive.</p>
+<p>This class defines an interface for serialization of objects. The <a class="el" href="classUtil_1_1Serializable.html#a841b0c776895ed8eb0930d031e5c1f3f" title="Save to an archive.">save()</a> method saves the internal state of an object to an archive, and the <a class="el" href="classUtil_1_1Serializable.html#a327266f279a3993a448691a1c91bf53d" title="Load from an archive.">load()</a> method loads the state from an archive.</p>
 <p>The type of archive to be used is specified by the OArchiveType and IArchiveType typedefs. The two concrete classes that are referred to by these typedefs should be forward declared in this file, and the header files for these two classes must be included in the file <a class="el" href="Serializable__includes_8h_source.html">Serializable_includes.h</a>. The file <a class="el" href="Serializable__includes_8h_source.html">Serializable_includes.h</a> should be included in source files that implement that load and save methods for subclasses. </p>
 
 <p>Definition at line <a class="el" href="Serializable_8h_source.html#l00032">32</a> of file <a class="el" href="Serializable_8h_source.html">Serializable.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="Serializable_8h_source.html">Serializable.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Serializable:</div>
+Inheritance diagram for Util::Serializable:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classUtil_1_1Serializable.png" usemap="#Serializable_map" alt=""/>
-  <map id="Serializable_map" name="Serializable_map">
-<area href="classMcMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="0,56,203,80"/>
-<area href="classMcMd_1_1DiagnosticManager.html" alt="DiagnosticManager" shape="rect" coords="426,56,629,80"/>
-<area href="classMcMd_1_1McMove.html" alt="McMove" shape="rect" coords="852,56,1055,80"/>
-<area href="classMcMd_1_1McMoveManager.html" alt="McMoveManager" shape="rect" coords="1065,56,1268,80"/>
-<area href="classMcMd_1_1MdIntegrator.html" alt="MdIntegrator" shape="rect" coords="1278,56,1481,80"/>
-<area href="classMcMd_1_1System.html" alt="System" shape="rect" coords="1704,56,1907,80"/>
-<area href="classMcMd_1_1LogProgress.html" alt="LogProgress" shape="rect" coords="213,112,416,136"/>
-<area href="classMcMd_1_1McWriteRestart.html" alt="McWriteRestart" shape="rect" coords="213,168,416,192"/>
-<area href="classMcMd_1_1MdWriteRestart.html" alt="MdWriteRestart" shape="rect" coords="213,224,416,248"/>
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; SystemType &gt;" shape="rect" coords="213,280,416,304"/>
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; McSystem &gt;" shape="rect" coords="213,336,416,360"/>
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; MdSystem &gt;" shape="rect" coords="213,392,416,416"/>
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; System &gt;" shape="rect" coords="213,448,416,472"/>
-<area href="classMcMd_1_1McDiagnosticManager.html" alt="McDiagnosticManager" shape="rect" coords="639,112,842,136"/>
-<area href="classMcMd_1_1MdDiagnosticManager.html" alt="MdDiagnosticManager" shape="rect" coords="639,168,842,192"/>
-<area href="classMcMd_1_1SystemMove.html" alt="SystemMove" shape="rect" coords="852,112,1055,136"/>
-<area href="classMcMd_1_1NphIntegrator.html" alt="NphIntegrator" shape="rect" coords="1491,112,1694,136"/>
-<area href="classMcMd_1_1NveVvIntegrator.html" alt="NveVvIntegrator" shape="rect" coords="1491,168,1694,192"/>
-<area href="classMcMd_1_1NvtDpdVvIntegrator.html" alt="NvtDpdVvIntegrator" shape="rect" coords="1491,224,1694,248"/>
-<area href="classMcMd_1_1NvtNhIntegrator.html" alt="NvtNhIntegrator" shape="rect" coords="1491,280,1694,304"/>
-<area href="classMcMd_1_1McSystem.html" alt="McSystem" shape="rect" coords="1917,112,2120,136"/>
-<area href="classMcMd_1_1MdSystem.html" alt="MdSystem" shape="rect" coords="1917,168,2120,192"/>
+  <img src="classUtil_1_1Serializable.png" usemap="#Util::Serializable_map" alt=""/>
+  <map id="Util::Serializable_map" name="Util::Serializable_map">
+<area href="classMcMd_1_1Diagnostic.html" alt="McMd::Diagnostic" shape="rect" coords="0,56,245,80"/>
+<area href="classMcMd_1_1DiagnosticManager.html" alt="McMd::DiagnosticManager" shape="rect" coords="510,56,755,80"/>
+<area href="classMcMd_1_1McMove.html" alt="McMd::McMove" shape="rect" coords="1020,56,1265,80"/>
+<area href="classMcMd_1_1McMoveManager.html" alt="McMd::McMoveManager" shape="rect" coords="1275,56,1520,80"/>
+<area href="classMcMd_1_1MdIntegrator.html" alt="McMd::MdIntegrator" shape="rect" coords="1530,56,1775,80"/>
+<area href="classMcMd_1_1System.html" alt="McMd::System" shape="rect" coords="2040,56,2285,80"/>
+<area href="classMcMd_1_1LogProgress.html" alt="McMd::LogProgress" shape="rect" coords="255,112,500,136"/>
+<area href="classMcMd_1_1McWriteRestart.html" alt="McMd::McWriteRestart" shape="rect" coords="255,168,500,192"/>
+<area href="classMcMd_1_1MdWriteRestart.html" alt="McMd::MdWriteRestart" shape="rect" coords="255,224,500,248"/>
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; SystemType &gt;" shape="rect" coords="255,280,500,304"/>
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; McSystem &gt;" shape="rect" coords="255,336,500,360"/>
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; MdSystem &gt;" shape="rect" coords="255,392,500,416"/>
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; System &gt;" shape="rect" coords="255,448,500,472"/>
+<area href="classMcMd_1_1McDiagnosticManager.html" alt="McMd::McDiagnosticManager" shape="rect" coords="765,112,1010,136"/>
+<area href="classMcMd_1_1MdDiagnosticManager.html" alt="McMd::MdDiagnosticManager" shape="rect" coords="765,168,1010,192"/>
+<area href="classMcMd_1_1SystemMove.html" alt="McMd::SystemMove" shape="rect" coords="1020,112,1265,136"/>
+<area href="classMcMd_1_1NphIntegrator.html" alt="McMd::NphIntegrator" shape="rect" coords="1785,112,2030,136"/>
+<area href="classMcMd_1_1NveVvIntegrator.html" alt="McMd::NveVvIntegrator" shape="rect" coords="1785,168,2030,192"/>
+<area href="classMcMd_1_1NvtDpdVvIntegrator.html" alt="McMd::NvtDpdVvIntegrator" shape="rect" coords="1785,224,2030,248"/>
+<area href="classMcMd_1_1NvtNhIntegrator.html" alt="McMd::NvtNhIntegrator" shape="rect" coords="1785,280,2030,304"/>
+<area href="classMcMd_1_1McSystem.html" alt="McMd::McSystem" shape="rect" coords="2295,112,2540,136"/>
+<area href="classMcMd_1_1MdSystem.html" alt="McMd::MdSystem" shape="rect" coords="2295,168,2540,192"/>
 </map>
  </div></div>
 
@@ -96,26 +96,26 @@ Inheritance diagram for Serializable:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1BinaryFileOArchive.html">BinaryFileOArchive</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Serializable.html#a02234e629b6a58f3255ab2c533b47a90">OArchiveType</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of output archive used by save method.  <a href="#a02234e629b6a58f3255ab2c533b47a90"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1BinaryFileIArchive.html">BinaryFileIArchive</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Serializable.html#aeadabea81eb99f15c516925a033278e8">IArchiveType</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of input archive used by load method.  <a href="#aeadabea81eb99f15c516925a033278e8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1BinaryFileOArchive.html">BinaryFileOArchive</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Serializable.html#afed020f3490e936c764f562b51a316e9">OArchiveType</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of output archive used by save method.  <a href="#afed020f3490e936c764f562b51a316e9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1BinaryFileIArchive.html">BinaryFileIArchive</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Serializable.html#a6ce774987dd3e2ca2494019a6637a133">IArchiveType</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of input archive used by load method.  <a href="#a6ce774987dd3e2ca2494019a6637a133"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Serializable.html#ae4155cb5b2acccb99a936fe0ca51e7ab">~Serializable</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ae4155cb5b2acccb99a936fe0ca51e7ab"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Serializable.html#a1446ebe035881da21d5e6dec5bb25ac6">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">OArchiveType</a> &amp;ar)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save to an archive.  <a href="#a1446ebe035881da21d5e6dec5bb25ac6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Serializable.html#aab042d56a0ca42d1fd89bd6d7bd27e40">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">IArchiveType</a> &amp;ar)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load from an archive.  <a href="#aab042d56a0ca42d1fd89bd6d7bd27e40"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Serializable.html#a1399558d74e8318dea431157ab952908">~Serializable</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a1399558d74e8318dea431157ab952908"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Serializable.html#a841b0c776895ed8eb0930d031e5c1f3f">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">OArchiveType</a> &amp;ar)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save to an archive.  <a href="#a841b0c776895ed8eb0930d031e5c1f3f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Serializable.html#a327266f279a3993a448691a1c91bf53d">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">IArchiveType</a> &amp;ar)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load from an archive.  <a href="#a327266f279a3993a448691a1c91bf53d"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Typedef Documentation</h2>
-<a class="anchor" id="a02234e629b6a58f3255ab2c533b47a90"></a><!-- doxytag: member="Util::Serializable::OArchiveType" ref="a02234e629b6a58f3255ab2c533b47a90" args="" -->
+<a class="anchor" id="afed020f3490e936c764f562b51a316e9"></a><!-- doxytag: member="Util::Serializable::OArchiveType" ref="afed020f3490e936c764f562b51a316e9" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classUtil_1_1BinaryFileOArchive.html">BinaryFileOArchive</a> <a class="el" href="classUtil_1_1BinaryFileOArchive.html">OArchiveType</a></td>
+          <td class="memname">typedef <a class="el" href="classUtil_1_1BinaryFileOArchive.html">BinaryFileOArchive</a> <a class="el" href="classUtil_1_1BinaryFileOArchive.html">Util::Serializable::OArchiveType</a></td>
         </tr>
       </table>
 </div>
@@ -127,12 +127,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aeadabea81eb99f15c516925a033278e8"></a><!-- doxytag: member="Util::Serializable::IArchiveType" ref="aeadabea81eb99f15c516925a033278e8" args="" -->
+<a class="anchor" id="a6ce774987dd3e2ca2494019a6637a133"></a><!-- doxytag: member="Util::Serializable::IArchiveType" ref="a6ce774987dd3e2ca2494019a6637a133" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classUtil_1_1BinaryFileIArchive.html">BinaryFileIArchive</a> <a class="el" href="classUtil_1_1BinaryFileIArchive.html">IArchiveType</a></td>
+          <td class="memname">typedef <a class="el" href="classUtil_1_1BinaryFileIArchive.html">BinaryFileIArchive</a> <a class="el" href="classUtil_1_1BinaryFileIArchive.html">Util::Serializable::IArchiveType</a></td>
         </tr>
       </table>
 </div>
@@ -145,12 +145,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ae4155cb5b2acccb99a936fe0ca51e7ab"></a><!-- doxytag: member="Util::Serializable::~Serializable" ref="ae4155cb5b2acccb99a936fe0ca51e7ab" args="()" -->
+<a class="anchor" id="a1399558d74e8318dea431157ab952908"></a><!-- doxytag: member="Util::Serializable::~Serializable" ref="a1399558d74e8318dea431157ab952908" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual ~<a class="el" href="classUtil_1_1Serializable.html">Serializable</a> </td>
+          <td class="memname">virtual Util::Serializable::~Serializable </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, virtual]</code></td>
@@ -166,12 +166,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a1446ebe035881da21d5e6dec5bb25ac6"></a><!-- doxytag: member="Util::Serializable::save" ref="a1446ebe035881da21d5e6dec5bb25ac6" args="(OArchiveType &amp;ar)=0" -->
+<a class="anchor" id="a841b0c776895ed8eb0930d031e5c1f3f"></a><!-- doxytag: member="Util::Serializable::save" ref="a841b0c776895ed8eb0930d031e5c1f3f" args="(OArchiveType &amp;ar)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void save </td>
+          <td class="memname">virtual void Util::Serializable::save </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">OArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -189,16 +189,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1Diagnostic.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">Diagnostic</a>, <a class="el" href="classMcMd_1_1DiagnosticManager.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">DiagnosticManager</a>, <a class="el" href="classMcMd_1_1McEnergyAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">McEnergyAverage</a>, <a class="el" href="classMcMd_1_1McExternalEnergyAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">McExternalEnergyAverage</a>, <a class="el" href="classMcMd_1_1McPairEnergyAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">McPairEnergyAverage</a>, <a class="el" href="classMcMd_1_1McStressAutoCorr.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">McStressAutoCorr</a>, <a class="el" href="classMcMd_1_1MdKineticEnergyAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">MdKineticEnergyAverage</a>, <a class="el" href="classMcMd_1_1MdPairEnergyCoefficients.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">MdPairEnergyCoefficients</a>, <a class="el" href="classMcMd_1_1MdPotentialEnergyAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">MdPotentialEnergyAverage</a>, <a class="el" href="classMcMd_1_1AtomMSD.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">AtomMSD</a>, <a class="el" href="classMcMd_1_1BlockRadiusGyration.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">BlockRadiusGyration</a>, <a class="el" href="classMcMd_1_1BondLengthDist.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">BondLengthDist</a>, <a class="el" href="classMcMd_1_1BoundaryAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">BoundaryAverage</a>, <a class="el" href="classMcMd_1_1ComMSD.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">ComMSD</a>, <a class="el" href="classMcMd_1_1DumpConfig.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">DumpConfig</a>, <a class="el" href="classMcMd_1_1IntraPairAutoCorr.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">IntraPairAutoCorr</a>, <a class="el" href="classMcMd_1_1IntraStructureFactor.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">IntraStructureFactor</a>, <a class="el" href="classMcMd_1_1MigratingVanHove.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">MigratingVanHove</a>, <a class="el" href="classMcMd_1_1PressureAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">PressureAverage&lt; SystemType &gt;</a>, <a class="el" href="classMcMd_1_1RadiusGyration.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">RadiusGyration</a>, <a class="el" href="classMcMd_1_1RDF.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">RDF</a>, <a class="el" href="classMcMd_1_1RingRouseAutoCorr.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">RingRouseAutoCorr</a>, <a class="el" href="classMcMd_1_1StructureFactor.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">StructureFactor</a>, <a class="el" href="classMcMd_1_1StructureFactorGrid.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">StructureFactorGrid</a>, <a class="el" href="classMcMd_1_1VanHove.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">VanHove</a>, <a class="el" href="classMcMd_1_1McMove.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">McMove</a>, <a class="el" href="classMcMd_1_1McMoveManager.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">McMoveManager</a>, <a class="el" href="classMcMd_1_1MdIntegrator.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">MdIntegrator</a>, <a class="el" href="classMcMd_1_1NphIntegrator.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">NphIntegrator</a>, <a class="el" href="classMcMd_1_1NveVvIntegrator.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">NveVvIntegrator</a>, <a class="el" href="classMcMd_1_1NvtDpdVvIntegrator.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">NvtDpdVvIntegrator</a>, <a class="el" href="classMcMd_1_1NvtNhIntegrator.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">NvtNhIntegrator</a>, <a class="el" href="classMcMd_1_1System.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">System</a>, <a class="el" href="classMcMd_1_1PressureAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">PressureAverage&lt; MdSystem &gt;</a>, and <a class="el" href="classMcMd_1_1PressureAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">PressureAverage&lt; McSystem &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1Diagnostic.html#ac27203b7ee783c3cebc054c290e313ed">McMd::Diagnostic</a>, <a class="el" href="classMcMd_1_1DiagnosticManager.html#af5a6938704c36c54d8806a7bd0555662">McMd::DiagnosticManager</a>, <a class="el" href="classMcMd_1_1McEnergyAverage.html#a0851146e7097fed4b18fefc8b1af5e2e">McMd::McEnergyAverage</a>, <a class="el" href="classMcMd_1_1McExternalEnergyAverage.html#afca0e6053a0ed337191cd4d1524cebcd">McMd::McExternalEnergyAverage</a>, <a class="el" href="classMcMd_1_1McPairEnergyAverage.html#a5cae3965b4dcffd6ba760c26223d8868">McMd::McPairEnergyAverage</a>, <a class="el" href="classMcMd_1_1McStressAutoCorr.html#a48bf5f0ccc99ed30bc8e9706954a3f16">McMd::McStressAutoCorr</a>, <a class="el" href="classMcMd_1_1MdKineticEnergyAverage.html#a3f821ca0173d57953c070b06e58d417e">McMd::MdKineticEnergyAverage</a>, <a class="el" href="classMcMd_1_1MdPairEnergyCoefficients.html#ab07cc6762b25de1033135afd01e9e9cb">McMd::MdPairEnergyCoefficients</a>, <a class="el" href="classMcMd_1_1MdPotentialEnergyAverage.html#ac2490c23c14f8080f17af7e5e2da4270">McMd::MdPotentialEnergyAverage</a>, <a class="el" href="classMcMd_1_1AtomMSD.html#a69713ffca1d41af7188b57b2aa7fc6fa">McMd::AtomMSD</a>, <a class="el" href="classMcMd_1_1BlockRadiusGyration.html#a10cbdd1033f706fc36e5c51dabd58bdb">McMd::BlockRadiusGyration</a>, <a class="el" href="classMcMd_1_1BondLengthDist.html#a7fa92dfa21521801613c56c4002a3464">McMd::BondLengthDist</a>, <a class="el" href="classMcMd_1_1BoundaryAverage.html#a0676f3b07077dbf56158c4202ade3e55">McMd::BoundaryAverage</a>, <a class="el" href="classMcMd_1_1ComMSD.html#a45338ce76ac1396c20a691f4be928677">McMd::ComMSD</a>, <a class="el" href="classMcMd_1_1DumpConfig.html#a9ab1924e0a4bdf8c5bbca15506fa4f4d">McMd::DumpConfig</a>, <a class="el" href="classMcMd_1_1IntraPairAutoCorr.html#ad0d5d9ba61925576105dbcf4aab0fa62">McMd::IntraPairAutoCorr</a>, <a class="el" href="classMcMd_1_1IntraStructureFactor.html#a9805678413cb93298b132d560a0f877a">McMd::IntraStructureFactor</a>, <a class="el" href="classMcMd_1_1MigratingVanHove.html#a40e9aaa997d6f00be163d147139accef">McMd::MigratingVanHove</a>, <a class="el" href="classMcMd_1_1PressureAverage.html#a026dea8b0442c03e5b67ba720614817b">McMd::PressureAverage&lt; SystemType &gt;</a>, <a class="el" href="classMcMd_1_1RadiusGyration.html#ac1acbaf1b9e55ea65a2c08c7db73ded4">McMd::RadiusGyration</a>, <a class="el" href="classMcMd_1_1RDF.html#ad080a3a4b856bd4e30d8955cf1d38eed">McMd::RDF</a>, <a class="el" href="classMcMd_1_1RingRouseAutoCorr.html#a0e93a5a0e2e24f3a7559eb41933c524f">McMd::RingRouseAutoCorr</a>, <a class="el" href="classMcMd_1_1StructureFactor.html#a528ca82c5d4ee1199b4850ef26d00ffb">McMd::StructureFactor</a>, <a class="el" href="classMcMd_1_1StructureFactorGrid.html#a9ddfbb52d0a2469300670d0f7cb74683">McMd::StructureFactorGrid</a>, <a class="el" href="classMcMd_1_1VanHove.html#afc0fef4f15bc3e8fceef6b3769e9167f">McMd::VanHove</a>, <a class="el" href="classMcMd_1_1McMove.html#a12fa912071051ead3363df42ccd5e2cd">McMd::McMove</a>, <a class="el" href="classMcMd_1_1McMoveManager.html#a35f6c7d3cb3069386dddfff4478d11d8">McMd::McMoveManager</a>, <a class="el" href="classMcMd_1_1MdIntegrator.html#a6259ee8c0020e77a9face348ae98fb45">McMd::MdIntegrator</a>, <a class="el" href="classMcMd_1_1NphIntegrator.html#a183d0f9517d917af2dfaa5b6a4d6524c">McMd::NphIntegrator</a>, <a class="el" href="classMcMd_1_1NveVvIntegrator.html#a41a832d568b2bc2a3b3500d49713b0b0">McMd::NveVvIntegrator</a>, <a class="el" href="classMcMd_1_1NvtDpdVvIntegrator.html#a7d6154e7b8350e74de307c5c4e4710cb">McMd::NvtDpdVvIntegrator</a>, <a class="el" href="classMcMd_1_1NvtNhIntegrator.html#af087a572cc55cfc7d3a677e4fbe7dfcc">McMd::NvtNhIntegrator</a>, <a class="el" href="classMcMd_1_1System.html#a691d0060acc6ef176a75766aa75dc2dc">McMd::System</a>, <a class="el" href="classMcMd_1_1PressureAverage.html#a026dea8b0442c03e5b67ba720614817b">McMd::PressureAverage&lt; MdSystem &gt;</a>, and <a class="el" href="classMcMd_1_1PressureAverage.html#a026dea8b0442c03e5b67ba720614817b">McMd::PressureAverage&lt; McSystem &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aab042d56a0ca42d1fd89bd6d7bd27e40"></a><!-- doxytag: member="Util::Serializable::load" ref="aab042d56a0ca42d1fd89bd6d7bd27e40" args="(IArchiveType &amp;ar)=0" -->
+<a class="anchor" id="a327266f279a3993a448691a1c91bf53d"></a><!-- doxytag: member="Util::Serializable::load" ref="a327266f279a3993a448691a1c91bf53d" args="(IArchiveType &amp;ar)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void load </td>
+          <td class="memname">virtual void Util::Serializable::load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">IArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -216,7 +216,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1Diagnostic.html#aa3d71af4cc5dfb2be6be816a8f562416">Diagnostic</a>, <a class="el" href="classMcMd_1_1DiagnosticManager.html#aa3d71af4cc5dfb2be6be816a8f562416">DiagnosticManager</a>, <a class="el" href="classMcMd_1_1McEnergyAverage.html#aa3d71af4cc5dfb2be6be816a8f562416">McEnergyAverage</a>, <a class="el" href="classMcMd_1_1McExternalEnergyAverage.html#aa3d71af4cc5dfb2be6be816a8f562416">McExternalEnergyAverage</a>, <a class="el" href="classMcMd_1_1McPairEnergyAverage.html#aa3d71af4cc5dfb2be6be816a8f562416">McPairEnergyAverage</a>, <a class="el" href="classMcMd_1_1McStressAutoCorr.html#aa3d71af4cc5dfb2be6be816a8f562416">McStressAutoCorr</a>, <a class="el" href="classMcMd_1_1MdKineticEnergyAverage.html#aa3d71af4cc5dfb2be6be816a8f562416">MdKineticEnergyAverage</a>, <a class="el" href="classMcMd_1_1MdPairEnergyCoefficients.html#aa3d71af4cc5dfb2be6be816a8f562416">MdPairEnergyCoefficients</a>, <a class="el" href="classMcMd_1_1MdPotentialEnergyAverage.html#aa3d71af4cc5dfb2be6be816a8f562416">MdPotentialEnergyAverage</a>, <a class="el" href="classMcMd_1_1AtomMSD.html#aa3d71af4cc5dfb2be6be816a8f562416">AtomMSD</a>, <a class="el" href="classMcMd_1_1BlockRadiusGyration.html#aa3d71af4cc5dfb2be6be816a8f562416">BlockRadiusGyration</a>, <a class="el" href="classMcMd_1_1BondLengthDist.html#aa3d71af4cc5dfb2be6be816a8f562416">BondLengthDist</a>, <a class="el" href="classMcMd_1_1BoundaryAverage.html#aa3d71af4cc5dfb2be6be816a8f562416">BoundaryAverage</a>, <a class="el" href="classMcMd_1_1ComMSD.html#aa3d71af4cc5dfb2be6be816a8f562416">ComMSD</a>, <a class="el" href="classMcMd_1_1DumpConfig.html#aa3d71af4cc5dfb2be6be816a8f562416">DumpConfig</a>, <a class="el" href="classMcMd_1_1IntraPairAutoCorr.html#aa3d71af4cc5dfb2be6be816a8f562416">IntraPairAutoCorr</a>, <a class="el" href="classMcMd_1_1IntraStructureFactor.html#aa3d71af4cc5dfb2be6be816a8f562416">IntraStructureFactor</a>, <a class="el" href="classMcMd_1_1MigratingVanHove.html#aa3d71af4cc5dfb2be6be816a8f562416">MigratingVanHove</a>, <a class="el" href="classMcMd_1_1PressureAverage.html#aa3d71af4cc5dfb2be6be816a8f562416">PressureAverage&lt; SystemType &gt;</a>, <a class="el" href="classMcMd_1_1RadiusGyration.html#aa3d71af4cc5dfb2be6be816a8f562416">RadiusGyration</a>, <a class="el" href="classMcMd_1_1RDF.html#aa3d71af4cc5dfb2be6be816a8f562416">RDF</a>, <a class="el" href="classMcMd_1_1RingRouseAutoCorr.html#aa3d71af4cc5dfb2be6be816a8f562416">RingRouseAutoCorr</a>, <a class="el" href="classMcMd_1_1StructureFactor.html#aa3d71af4cc5dfb2be6be816a8f562416">StructureFactor</a>, <a class="el" href="classMcMd_1_1StructureFactorGrid.html#aa3d71af4cc5dfb2be6be816a8f562416">StructureFactorGrid</a>, <a class="el" href="classMcMd_1_1VanHove.html#aa3d71af4cc5dfb2be6be816a8f562416">VanHove</a>, <a class="el" href="classMcMd_1_1McMove.html#aa3d71af4cc5dfb2be6be816a8f562416">McMove</a>, <a class="el" href="classMcMd_1_1McMoveManager.html#aa3d71af4cc5dfb2be6be816a8f562416">McMoveManager</a>, <a class="el" href="classMcMd_1_1McSystem.html#aa3d71af4cc5dfb2be6be816a8f562416">McSystem</a>, <a class="el" href="classMcMd_1_1MdIntegrator.html#aa3d71af4cc5dfb2be6be816a8f562416">MdIntegrator</a>, <a class="el" href="classMcMd_1_1NphIntegrator.html#aa3d71af4cc5dfb2be6be816a8f562416">NphIntegrator</a>, <a class="el" href="classMcMd_1_1NveVvIntegrator.html#aa3d71af4cc5dfb2be6be816a8f562416">NveVvIntegrator</a>, <a class="el" href="classMcMd_1_1NvtDpdVvIntegrator.html#aa3d71af4cc5dfb2be6be816a8f562416">NvtDpdVvIntegrator</a>, <a class="el" href="classMcMd_1_1NvtNhIntegrator.html#aa3d71af4cc5dfb2be6be816a8f562416">NvtNhIntegrator</a>, <a class="el" href="classMcMd_1_1MdSystem.html#aa3d71af4cc5dfb2be6be816a8f562416">MdSystem</a>, <a class="el" href="classMcMd_1_1System.html#aa3d71af4cc5dfb2be6be816a8f562416">System</a>, <a class="el" href="classMcMd_1_1PressureAverage.html#aa3d71af4cc5dfb2be6be816a8f562416">PressureAverage&lt; MdSystem &gt;</a>, and <a class="el" href="classMcMd_1_1PressureAverage.html#aa3d71af4cc5dfb2be6be816a8f562416">PressureAverage&lt; McSystem &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1Diagnostic.html#afa44b6fb962ca0a8a979d0add2dc85b9">McMd::Diagnostic</a>, <a class="el" href="classMcMd_1_1DiagnosticManager.html#a3f60d366b67ff3d7620beea1cd2a3663">McMd::DiagnosticManager</a>, <a class="el" href="classMcMd_1_1McEnergyAverage.html#a25bd37322c01f3d663df5f50d008cd6d">McMd::McEnergyAverage</a>, <a class="el" href="classMcMd_1_1McExternalEnergyAverage.html#a449f70b56bf3a35588e7c0ec660dfb2b">McMd::McExternalEnergyAverage</a>, <a class="el" href="classMcMd_1_1McPairEnergyAverage.html#acc33cae7aedeefcf5501d47103d7f269">McMd::McPairEnergyAverage</a>, <a class="el" href="classMcMd_1_1McStressAutoCorr.html#a19ec3960b9215886792322d1341d9859">McMd::McStressAutoCorr</a>, <a class="el" href="classMcMd_1_1MdKineticEnergyAverage.html#adde37d03120309e5b086b2fca028ca40">McMd::MdKineticEnergyAverage</a>, <a class="el" href="classMcMd_1_1MdPairEnergyCoefficients.html#a0835cdc3dd4691ec0e5f64f03a7387b1">McMd::MdPairEnergyCoefficients</a>, <a class="el" href="classMcMd_1_1MdPotentialEnergyAverage.html#a82d86ee0278c5bf42ea3e583f8cd122b">McMd::MdPotentialEnergyAverage</a>, <a class="el" href="classMcMd_1_1AtomMSD.html#a3eb548f88a1b9247a83555efb7d5bfb5">McMd::AtomMSD</a>, <a class="el" href="classMcMd_1_1BlockRadiusGyration.html#aacb74fd15c8f41d8fb41d7e2d99b9609">McMd::BlockRadiusGyration</a>, <a class="el" href="classMcMd_1_1BondLengthDist.html#abf98924cfca3b834c6303d26841425cd">McMd::BondLengthDist</a>, <a class="el" href="classMcMd_1_1BoundaryAverage.html#a22b93aae74b6ac7947c1f1cffde17eb0">McMd::BoundaryAverage</a>, <a class="el" href="classMcMd_1_1ComMSD.html#abba811e8895714bbc9ed18ecc250686d">McMd::ComMSD</a>, <a class="el" href="classMcMd_1_1DumpConfig.html#a0849aad5d725d1c1b428816ca01b4b0f">McMd::DumpConfig</a>, <a class="el" href="classMcMd_1_1IntraPairAutoCorr.html#a6e4219a66d9daa4801a5bfa1d08c4523">McMd::IntraPairAutoCorr</a>, <a class="el" href="classMcMd_1_1IntraStructureFactor.html#a449072a422f8a292a76e124933af9ed4">McMd::IntraStructureFactor</a>, <a class="el" href="classMcMd_1_1MigratingVanHove.html#a018850ebf627e88883fb59dab5d5fa57">McMd::MigratingVanHove</a>, <a class="el" href="classMcMd_1_1PressureAverage.html#a242ee97a8f101bc2dfc0e6c7213eb841">McMd::PressureAverage&lt; SystemType &gt;</a>, <a class="el" href="classMcMd_1_1RadiusGyration.html#a82036c8dca11b9e3c5fd44a5a5030bba">McMd::RadiusGyration</a>, <a class="el" href="classMcMd_1_1RDF.html#a3ac30cf53d152d71a8510a6336a483a0">McMd::RDF</a>, <a class="el" href="classMcMd_1_1RingRouseAutoCorr.html#a13de43b6d7dc3db96e48b93c023e9ee1">McMd::RingRouseAutoCorr</a>, <a class="el" href="classMcMd_1_1StructureFactor.html#a3a015cd16aa404148218746a04e5da6c">McMd::StructureFactor</a>, <a class="el" href="classMcMd_1_1StructureFactorGrid.html#a472466fb79f52796822581ebcf98401b">McMd::StructureFactorGrid</a>, <a class="el" href="classMcMd_1_1VanHove.html#a009b90a4c3bf01f03e32431b1e3e5345">McMd::VanHove</a>, <a class="el" href="classMcMd_1_1McMove.html#a897ec6946bd343f4fe603e5a84cc8228">McMd::McMove</a>, <a class="el" href="classMcMd_1_1McMoveManager.html#a38b3deabf3a2cf480572c6eb0d55cc76">McMd::McMoveManager</a>, <a class="el" href="classMcMd_1_1McSystem.html#a1845f8ceb98e661b9dde6279ba949465">McMd::McSystem</a>, <a class="el" href="classMcMd_1_1MdIntegrator.html#a0ed070dd242d5cd9e36565ad16c9c6f5">McMd::MdIntegrator</a>, <a class="el" href="classMcMd_1_1NphIntegrator.html#a5cb53e40092a946cbc70d1233716bde9">McMd::NphIntegrator</a>, <a class="el" href="classMcMd_1_1NveVvIntegrator.html#afdba57646a404ab21322cbc1a5e6fd03">McMd::NveVvIntegrator</a>, <a class="el" href="classMcMd_1_1NvtDpdVvIntegrator.html#a7035ab6fa59b72a2f90907f362fcd7f1">McMd::NvtDpdVvIntegrator</a>, <a class="el" href="classMcMd_1_1NvtNhIntegrator.html#acafcc99b54e742fdb3ec71eac42a1f6d">McMd::NvtNhIntegrator</a>, <a class="el" href="classMcMd_1_1MdSystem.html#a538b81de2d6651b94578a933b3024eb4">McMd::MdSystem</a>, <a class="el" href="classMcMd_1_1System.html#ac52045ff67600ead96765b7909bfb982">McMd::System</a>, <a class="el" href="classMcMd_1_1PressureAverage.html#a242ee97a8f101bc2dfc0e6c7213eb841">McMd::PressureAverage&lt; MdSystem &gt;</a>, and <a class="el" href="classMcMd_1_1PressureAverage.html#a242ee97a8f101bc2dfc0e6c7213eb841">McMd::PressureAverage&lt; McSystem &gt;</a>.</p>
 
 </div>
 </div>
@@ -224,7 +224,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="Serializable_8h_source.html">Serializable.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:29 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

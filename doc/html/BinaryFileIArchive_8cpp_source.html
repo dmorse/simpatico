@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -69,22 +69,22 @@
 <a name="l00018"></a>00018    <span class="comment">/*</span>
 <a name="l00019"></a>00019 <span class="comment">   * Constructor.</span>
 <a name="l00020"></a>00020 <span class="comment">   */</span>
-<a name="l00021"></a>00021    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#ad5744db4d4de6dc14e0aab422d8a8200" title="Constructor.">BinaryFileIArchive::BinaryFileIArchive</a>()
-<a name="l00022"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#ad5744db4d4de6dc14e0aab422d8a8200">00022</a>     : istreamPtr_(0),
+<a name="l00021"></a>00021    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#a0edeb79d2de4f8b33ef369812708c4d2" title="Constructor.">BinaryFileIArchive::BinaryFileIArchive</a>()
+<a name="l00022"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#a0edeb79d2de4f8b33ef369812708c4d2">00022</a>     : istreamPtr_(0),
 <a name="l00023"></a>00023       version_(0)
 <a name="l00024"></a>00024    {}
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026    <span class="comment">/*</span>
 <a name="l00027"></a>00027 <span class="comment">   * Destructor.</span>
 <a name="l00028"></a>00028 <span class="comment">   */</span>
-<a name="l00029"></a>00029    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#aad448fa604cc720cafc038f7a61fca91" title="Destructor.">BinaryFileIArchive::~BinaryFileIArchive</a>()
-<a name="l00030"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#aad448fa604cc720cafc038f7a61fca91">00030</a>    {}  
+<a name="l00029"></a>00029    <a class="code" href="classUtil_1_1BinaryFileIArchive.html#a4bf663b84ea5eca5c572530e8ff5fd31" title="Destructor.">BinaryFileIArchive::~BinaryFileIArchive</a>()
+<a name="l00030"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#a4bf663b84ea5eca5c572530e8ff5fd31">00030</a>    {}  
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032    <span class="comment">/*</span>
 <a name="l00033"></a>00033 <span class="comment">   * Allocate a block of memory.</span>
 <a name="l00034"></a>00034 <span class="comment">   */</span>
-<a name="l00035"></a>00035    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1BinaryFileIArchive.html#a80d9642457add0224f7392daec89c0dd" title="Set the stream.">BinaryFileIArchive::setStream</a>(std::istream&amp; out)
-<a name="l00036"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#a80d9642457add0224f7392daec89c0dd">00036</a>    { 
+<a name="l00035"></a>00035    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1BinaryFileIArchive.html#aa22dad8ec3be3507cdc83e0ba295aaee" title="Set the stream.">BinaryFileIArchive::setStream</a>(std::istream&amp; out)
+<a name="l00036"></a><a class="code" href="classUtil_1_1BinaryFileIArchive.html#aa22dad8ec3be3507cdc83e0ba295aaee">00036</a>    { 
 <a name="l00037"></a>00037       istreamPtr_ = &amp;out;
 <a name="l00038"></a>00038    }
 <a name="l00039"></a>00039 
@@ -92,8 +92,8 @@
 <a name="l00041"></a>00041 <span class="comment">   * Load a std::string from BinaryFileIArchive.</span>
 <a name="l00042"></a>00042 <span class="comment">   */</span>
 <a name="l00043"></a>00043    <span class="keyword">template</span> &lt;&gt;
-<a name="l00044"></a>00044    <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">BinaryFileIArchive</a>&amp; ar, std::string&amp; data, 
-<a name="l00045"></a><a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9">00045</a>                   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00044"></a>00044    <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">BinaryFileIArchive</a>&amp; ar, std::string&amp; data, 
+<a name="l00045"></a><a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c">00045</a>                   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00046"></a>00046    {
 <a name="l00047"></a>00047       <span class="keyword">static</span> std::vector&lt;char&gt; charvec;
 <a name="l00048"></a>00048       <span class="keywordtype">size_t</span> size;
@@ -110,7 +110,7 @@
 <a name="l00059"></a>00059 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

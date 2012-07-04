@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -77,38 +77,38 @@
 <a name="l00047"></a>00047 
 <a name="l00048"></a>00048    <span class="keyword">public</span>:
 <a name="l00049"></a>00049 
-<a name="l00053"></a>00053       <a class="code" href="classUtil_1_1FArray.html#a66fd44e52afb108330d8ac1271621845" title="Constructor.">FArray</a>();
+<a name="l00053"></a>00053       <a class="code" href="classUtil_1_1FArray.html#ac06ca7838b2f0c837ee02f152192d073" title="Constructor.">FArray</a>();
 <a name="l00054"></a>00054 
-<a name="l00060"></a>00060       <a class="code" href="classUtil_1_1FArray.html#a66fd44e52afb108330d8ac1271621845" title="Constructor.">FArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a>&amp; other);
+<a name="l00060"></a>00060       <a class="code" href="classUtil_1_1FArray.html#ac06ca7838b2f0c837ee02f152192d073" title="Constructor.">FArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a>&amp; other);
 <a name="l00061"></a>00061    
-<a name="l00069"></a>00069       <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a>&amp; <a class="code" href="classUtil_1_1FArray.html#abda4118561757a83cf2c324b06f83804" title="Assignment, element by element.">operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a>&amp; other);
+<a name="l00069"></a>00069       <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a>&amp; <a class="code" href="classUtil_1_1FArray.html#aa577b8dd046ca7c23793740a00291922" title="Assignment, element by element.">operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a>&amp; other);
 <a name="l00070"></a>00070 
 <a name="l00071"></a>00071       <span class="comment">// Default destructor is okay.</span>
 <a name="l00072"></a>00072 
-<a name="l00076"></a>00076       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return number of elements in this FArray.">size</a>() <span class="keyword">const</span>;
+<a name="l00076"></a>00076       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#ac7300edceddfe5f11a2d4358005deb10" title="Return number of elements in this FArray.">size</a>() <span class="keyword">const</span>;
 <a name="l00077"></a>00077 
-<a name="l00081"></a>00081       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#a104736719cd4e5f21c25705c77064dde" title="Return number of elements in this FArray.">capacity</a>() <span class="keyword">const</span>;
+<a name="l00081"></a>00081       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#a729b04176f56944b10a7650ede3c4793" title="Return number of elements in this FArray.">capacity</a>() <span class="keyword">const</span>;
 <a name="l00082"></a>00082 
-<a name="l00088"></a>00088       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator);
+<a name="l00088"></a>00088       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#ae8e6d0df7a53d38644d52086cdb65125" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator);
 <a name="l00089"></a>00089 
-<a name="l00095"></a>00095       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator) <span class="keyword">const</span>;
+<a name="l00095"></a>00095       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#ae8e6d0df7a53d38644d52086cdb65125" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator) <span class="keyword">const</span>;
 <a name="l00096"></a>00096 
-<a name="l00103"></a>00103       Data&amp; <a class="code" href="classUtil_1_1FArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i);
+<a name="l00103"></a>00103       Data&amp; <a class="code" href="classUtil_1_1FArray.html#a9463deaba1551f9a4b9cc87925bd2dc8" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i);
 <a name="l00104"></a>00104 
-<a name="l00111"></a>00111       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;
+<a name="l00111"></a>00111       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FArray.html#a9463deaba1551f9a4b9cc87925bd2dc8" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;
 <a name="l00112"></a>00112 
-<a name="l00116"></a>00116       Data* <a class="code" href="classUtil_1_1FArray.html#a49de76f0008a14dde82feb573976075b" title="Return pointer to underlying C array.">cArray</a>();
+<a name="l00116"></a>00116       Data* <a class="code" href="classUtil_1_1FArray.html#a9a2fe9740c687f15365963f79df953ee" title="Return pointer to underlying C array.">cArray</a>();
 <a name="l00117"></a>00117 
-<a name="l00121"></a>00121       <span class="keyword">const</span> Data* <a class="code" href="classUtil_1_1FArray.html#a49de76f0008a14dde82feb573976075b" title="Return pointer to underlying C array.">cArray</a>() <span class="keyword">const</span>;
+<a name="l00121"></a>00121       <span class="keyword">const</span> Data* <a class="code" href="classUtil_1_1FArray.html#a9a2fe9740c687f15365963f79df953ee" title="Return pointer to underlying C array.">cArray</a>() <span class="keyword">const</span>;
 <a name="l00122"></a>00122 
 <a name="l00129"></a>00129       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00130"></a>00130       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#a6765e839ab267e4959384e35a4112451" title="Serialize a FArray to/from an Archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00130"></a>00130       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#ae2a4f603fb446eb7673229fcbe016c7f" title="Serialize a FArray to/from an Archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00131"></a>00131 
-<a name="l00135"></a>00135       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#ad70de0c77d9ebf1156173a9055f0383c" title="Return packed size in a MemoryArchive, in bytes.">packedSize</a>();
+<a name="l00135"></a>00135       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#a3f7e30d67eeae5358ae4a7f4c94322e8" title="Return packed size in a MemoryArchive, in bytes.">packedSize</a>();
 <a name="l00136"></a>00136 
 <a name="l00137"></a>00137 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00138"></a>00138 <span class="preprocessor"></span>
-<a name="l00141"></a>00141       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#a8170d98ea8b055e49ef256d15cfbc5af" title="Commit associated MPI DataType.">commitMpiType</a>();
+<a name="l00141"></a>00141       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#ae529424c6c27799916edd7c441cb3280" title="Commit associated MPI DataType.">commitMpiType</a>();
 <a name="l00142"></a>00142 <span class="preprocessor">      #endif</span>
 <a name="l00143"></a>00143 <span class="preprocessor"></span>
 <a name="l00144"></a>00144    <span class="keyword">private</span>:
@@ -121,7 +121,7 @@
 <a name="l00152"></a>00152 <span class="comment">   * Constructor.</span>
 <a name="l00153"></a>00153 <span class="comment">   */</span>
 <a name="l00154"></a>00154    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00155"></a><a class="code" href="classUtil_1_1FArray.html#a66fd44e52afb108330d8ac1271621845">00155</a>    <a class="code" href="classUtil_1_1FArray.html#a66fd44e52afb108330d8ac1271621845" title="Constructor.">FArray&lt;Data, Capacity&gt;::FArray</a>()
+<a name="l00155"></a><a class="code" href="classUtil_1_1FArray.html#ac06ca7838b2f0c837ee02f152192d073">00155</a>    <a class="code" href="classUtil_1_1FArray.html#ac06ca7838b2f0c837ee02f152192d073" title="Constructor.">FArray&lt;Data, Capacity&gt;::FArray</a>()
 <a name="l00156"></a>00156    {}
 <a name="l00157"></a>00157 
 <a name="l00158"></a>00158    <span class="comment">/*</span>
@@ -130,7 +130,7 @@
 <a name="l00161"></a>00161 <span class="comment">   *\param other the FArray to be copied.</span>
 <a name="l00162"></a>00162 <span class="comment">   */</span>
 <a name="l00163"></a>00163    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00164"></a><a class="code" href="classUtil_1_1FArray.html#aa45669cd3a1d7134177f7489049c7ab3">00164</a>    <a class="code" href="classUtil_1_1FArray.html#a66fd44e52afb108330d8ac1271621845" title="Constructor.">FArray&lt;Data, Capacity&gt;::FArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a>&amp; other) 
+<a name="l00164"></a><a class="code" href="classUtil_1_1FArray.html#a1b1d06bbb55851da5e84e9e2ff8ca958">00164</a>    <a class="code" href="classUtil_1_1FArray.html#ac06ca7838b2f0c837ee02f152192d073" title="Constructor.">FArray&lt;Data, Capacity&gt;::FArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a>&amp; other) 
 <a name="l00165"></a>00165    {
 <a name="l00166"></a>00166       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; Capacity; ++i) {
 <a name="l00167"></a>00167          data_[i] = other.data_[i];
@@ -146,7 +146,7 @@
 <a name="l00177"></a>00177 <span class="comment">   */</span>
 <a name="l00178"></a>00178    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
 <a name="l00179"></a>00179    <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a>&amp; 
-<a name="l00180"></a><a class="code" href="classUtil_1_1FArray.html#abda4118561757a83cf2c324b06f83804">00180</a>    <a class="code" href="classUtil_1_1FArray.html#abda4118561757a83cf2c324b06f83804" title="Assignment, element by element.">FArray&lt;Data, Capacity&gt;::operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a>&amp; other) 
+<a name="l00180"></a><a class="code" href="classUtil_1_1FArray.html#aa577b8dd046ca7c23793740a00291922">00180</a>    <a class="code" href="classUtil_1_1FArray.html#aa577b8dd046ca7c23793740a00291922" title="Assignment, element by element.">FArray&lt;Data, Capacity&gt;::operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a>&amp; other) 
 <a name="l00181"></a>00181    {
 <a name="l00182"></a>00182 
 <a name="l00183"></a>00183       <span class="comment">// Check for self assignment</span>
@@ -165,24 +165,24 @@
 <a name="l00196"></a>00196 <span class="comment">   * Return number of elements in this FArray.</span>
 <a name="l00197"></a>00197 <span class="comment">   */</span>
 <a name="l00198"></a>00198    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00199"></a><a class="code" href="classUtil_1_1FArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">00199</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return number of elements in this FArray.">FArray&lt;Data, Capacity&gt;::size</a>()<span class="keyword"> const</span>
+<a name="l00199"></a><a class="code" href="classUtil_1_1FArray.html#ac7300edceddfe5f11a2d4358005deb10">00199</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#ac7300edceddfe5f11a2d4358005deb10" title="Return number of elements in this FArray.">FArray&lt;Data, Capacity&gt;::size</a>()<span class="keyword"> const</span>
 <a name="l00200"></a>00200 <span class="keyword">   </span>{ <span class="keywordflow">return</span> Capacity; }
 <a name="l00201"></a>00201 
 <a name="l00202"></a>00202    <span class="comment">/*</span>
 <a name="l00203"></a>00203 <span class="comment">   * Return number of elements in this FArray.</span>
 <a name="l00204"></a>00204 <span class="comment">   */</span>
 <a name="l00205"></a>00205    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00206"></a><a class="code" href="classUtil_1_1FArray.html#a104736719cd4e5f21c25705c77064dde">00206</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#a104736719cd4e5f21c25705c77064dde" title="Return number of elements in this FArray.">FArray&lt;Data, Capacity&gt;::capacity</a>()<span class="keyword"> const</span>
+<a name="l00206"></a><a class="code" href="classUtil_1_1FArray.html#a729b04176f56944b10a7650ede3c4793">00206</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#a729b04176f56944b10a7650ede3c4793" title="Return number of elements in this FArray.">FArray&lt;Data, Capacity&gt;::capacity</a>()<span class="keyword"> const</span>
 <a name="l00207"></a>00207 <span class="keyword">   </span>{ <span class="keywordflow">return</span> Capacity; }
 <a name="l00208"></a>00208 
 <a name="l00209"></a>00209    <span class="comment">/*</span>
 <a name="l00210"></a>00210 <span class="comment">   * Set an ArrayIterator to the beginning of this Array.</span>
 <a name="l00211"></a>00211 <span class="comment">   */</span>
 <a name="l00212"></a>00212    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00213"></a><a class="code" href="classUtil_1_1FArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6">00213</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">FArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator)
+<a name="l00213"></a><a class="code" href="classUtil_1_1FArray.html#ae8e6d0df7a53d38644d52086cdb65125">00213</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#ae8e6d0df7a53d38644d52086cdb65125" title="Set an ArrayIterator to the beginning of this Array.">FArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator)
 <a name="l00214"></a>00214    {
-<a name="l00215"></a>00215       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#ac96801e7ef37aabe6156ae3ba508524b" title="Set the current pointer value.">setCurrent</a>(data_);
-<a name="l00216"></a>00216       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#a0e8ab752dbe9a6f922fb3d19018fda1d" title="Set the value of the end pointer.">setEnd</a>(data_ + Capacity);
+<a name="l00215"></a>00215       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#ac208690b94d1be77cad9c51eb1cfcdb8" title="Set the current pointer value.">setCurrent</a>(data_);
+<a name="l00216"></a>00216       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#a5527ef0f4bdae08eeacd11025b91a971" title="Set the value of the end pointer.">setEnd</a>(data_ + Capacity);
 <a name="l00217"></a>00217    }
 <a name="l00218"></a>00218 
 <a name="l00219"></a>00219    <span class="comment">/*</span>
@@ -190,17 +190,17 @@
 <a name="l00221"></a>00221 <span class="comment">   */</span>
 <a name="l00222"></a>00222    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
 <a name="l00223"></a>00223    <span class="keyword">inline</span> <span class="keywordtype">void</span> 
-<a name="l00224"></a><a class="code" href="classUtil_1_1FArray.html#aeafeff76c665316e581605a2ad765d5c">00224</a>    <a class="code" href="classUtil_1_1FArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">FArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator)<span class="keyword"> const</span>
+<a name="l00224"></a><a class="code" href="classUtil_1_1FArray.html#ab7409ea1c445705b93202e6bf24a5b0a">00224</a>    <a class="code" href="classUtil_1_1FArray.html#ae8e6d0df7a53d38644d52086cdb65125" title="Set an ArrayIterator to the beginning of this Array.">FArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator)<span class="keyword"> const</span>
 <a name="l00225"></a>00225 <span class="keyword">   </span>{
-<a name="l00226"></a>00226       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#ac96801e7ef37aabe6156ae3ba508524b" title="Set the current pointer value.">setCurrent</a>(data_);
-<a name="l00227"></a>00227       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#a0e8ab752dbe9a6f922fb3d19018fda1d" title="Set the value of the end pointer.">setEnd</a>(data_ + Capacity);
+<a name="l00226"></a>00226       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#a39735f67c57df14be6ce7f40e1f2646f" title="Set the current pointer value.">setCurrent</a>(data_);
+<a name="l00227"></a>00227       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#a1b06236f546d1046bb6e8e4a56d19d74" title="Set the value of the end pointer.">setEnd</a>(data_ + Capacity);
 <a name="l00228"></a>00228    }
 <a name="l00229"></a>00229 
 <a name="l00230"></a>00230    <span class="comment">/*</span>
 <a name="l00231"></a>00231 <span class="comment">   * Mimic C array subscripting.</span>
 <a name="l00232"></a>00232 <span class="comment">   */</span>
 <a name="l00233"></a>00233    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00234"></a><a class="code" href="classUtil_1_1FArray.html#a8cc8b5696ce4a17c06360e7f41f95096">00234</a>    <span class="keyword">inline</span> Data&amp; <a class="code" href="classUtil_1_1FArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">FArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i)
+<a name="l00234"></a><a class="code" href="classUtil_1_1FArray.html#a9463deaba1551f9a4b9cc87925bd2dc8">00234</a>    <span class="keyword">inline</span> Data&amp; <a class="code" href="classUtil_1_1FArray.html#a9463deaba1551f9a4b9cc87925bd2dc8" title="Mimic C array subscripting.">FArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i)
 <a name="l00235"></a>00235    {
 <a name="l00236"></a>00236       assert(i &lt; Capacity);
 <a name="l00237"></a>00237       assert(i &gt;= 0);
@@ -211,7 +211,7 @@
 <a name="l00242"></a>00242 <span class="comment">   * Mimic C array subscripting.</span>
 <a name="l00243"></a>00243 <span class="comment">   */</span>
 <a name="l00244"></a>00244    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00245"></a><a class="code" href="classUtil_1_1FArray.html#a6ec4b9cb529f024cd28e96290a4ca410">00245</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">FArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00245"></a><a class="code" href="classUtil_1_1FArray.html#a86ce5ffd30b3b22ee69f32438f2f6882">00245</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FArray.html#a9463deaba1551f9a4b9cc87925bd2dc8" title="Mimic C array subscripting.">FArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00246"></a>00246 <span class="keyword">   </span>{
 <a name="l00247"></a>00247       assert(i &lt; Capacity);
 <a name="l00248"></a>00248       assert(i &gt;= 0 );
@@ -222,14 +222,14 @@
 <a name="l00253"></a>00253 <span class="comment">   * Return pointer to underlying C array.</span>
 <a name="l00254"></a>00254 <span class="comment">   */</span>
 <a name="l00255"></a>00255    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00256"></a><a class="code" href="classUtil_1_1FArray.html#a49de76f0008a14dde82feb573976075b">00256</a>    <span class="keyword">inline</span> Data* <a class="code" href="classUtil_1_1FArray.html#a49de76f0008a14dde82feb573976075b" title="Return pointer to underlying C array.">FArray&lt;Data, Capacity&gt;::cArray</a>()
+<a name="l00256"></a><a class="code" href="classUtil_1_1FArray.html#a9a2fe9740c687f15365963f79df953ee">00256</a>    <span class="keyword">inline</span> Data* <a class="code" href="classUtil_1_1FArray.html#a9a2fe9740c687f15365963f79df953ee" title="Return pointer to underlying C array.">FArray&lt;Data, Capacity&gt;::cArray</a>()
 <a name="l00257"></a>00257    {  <span class="keywordflow">return</span> data_; }
 <a name="l00258"></a>00258 
 <a name="l00259"></a>00259    <span class="comment">/*</span>
 <a name="l00260"></a>00260 <span class="comment">   * Return pointer to const to underlying C array.</span>
 <a name="l00261"></a>00261 <span class="comment">   */</span>
 <a name="l00262"></a>00262    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00263"></a><a class="code" href="classUtil_1_1FArray.html#a99e78da852bf0c7f5605c0a590a96c7a">00263</a>    <span class="keyword">const</span> Data* <a class="code" href="classUtil_1_1FArray.html#a49de76f0008a14dde82feb573976075b" title="Return pointer to underlying C array.">FArray&lt;Data, Capacity&gt;::cArray</a>()<span class="keyword"> const</span>
+<a name="l00263"></a><a class="code" href="classUtil_1_1FArray.html#a64a57208a0543485b058f84eadbc7874">00263</a>    <span class="keyword">const</span> Data* <a class="code" href="classUtil_1_1FArray.html#a9a2fe9740c687f15365963f79df953ee" title="Return pointer to underlying C array.">FArray&lt;Data, Capacity&gt;::cArray</a>()<span class="keyword"> const</span>
 <a name="l00264"></a>00264 <span class="keyword">   </span>{  <span class="keywordflow">return</span> data_; }
 <a name="l00265"></a>00265 
 <a name="l00266"></a>00266    <span class="comment">/*</span>
@@ -237,7 +237,7 @@
 <a name="l00268"></a>00268 <span class="comment">   */</span>
 <a name="l00269"></a>00269    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
 <a name="l00270"></a>00270    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00271"></a><a class="code" href="classUtil_1_1FArray.html#a6765e839ab267e4959384e35a4112451">00271</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#a6765e839ab267e4959384e35a4112451" title="Serialize a FArray to/from an Archive.">FArray&lt;Data, Capacity&gt;::serialize</a>(Archive&amp; ar, 
+<a name="l00271"></a><a class="code" href="classUtil_1_1FArray.html#ae2a4f603fb446eb7673229fcbe016c7f">00271</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#ae2a4f603fb446eb7673229fcbe016c7f" title="Serialize a FArray to/from an Archive.">FArray&lt;Data, Capacity&gt;::serialize</a>(Archive&amp; ar, 
 <a name="l00272"></a>00272                                           <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00273"></a>00273    {
 <a name="l00274"></a>00274       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; Capacity; ++i) {
@@ -246,7 +246,7 @@
 <a name="l00277"></a>00277    }
 <a name="l00278"></a>00278 
 <a name="l00282"></a>00282    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00283"></a><a class="code" href="classUtil_1_1FArray.html#ad70de0c77d9ebf1156173a9055f0383c">00283</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#ad70de0c77d9ebf1156173a9055f0383c" title="Return packed size in a MemoryArchive, in bytes.">FArray&lt;Data, Capacity&gt;::packedSize</a>()
+<a name="l00283"></a><a class="code" href="classUtil_1_1FArray.html#a3f7e30d67eeae5358ae4a7f4c94322e8">00283</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FArray.html#a3f7e30d67eeae5358ae4a7f4c94322e8" title="Return packed size in a MemoryArchive, in bytes.">FArray&lt;Data, Capacity&gt;::packedSize</a>()
 <a name="l00284"></a>00284    {  <span class="keywordflow">return</span> Capacity*<span class="keyword">sizeof</span>(Data); }
 <a name="l00285"></a>00285 
 <a name="l00286"></a>00286 <span class="preprocessor">   #ifdef UTIL_MPI</span>
@@ -254,17 +254,17 @@
 <a name="l00288"></a>00288 <span class="comment">   * Commit associated MPI Datatype.</span>
 <a name="l00289"></a>00289 <span class="comment">   */</span>
 <a name="l00290"></a>00290    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00291"></a><a class="code" href="classUtil_1_1FArray.html#a8170d98ea8b055e49ef256d15cfbc5af">00291</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#a8170d98ea8b055e49ef256d15cfbc5af" title="Commit associated MPI DataType.">FArray&lt;Data, Capacity&gt;::commitMpiType</a>() 
+<a name="l00291"></a><a class="code" href="classUtil_1_1FArray.html#ae529424c6c27799916edd7c441cb3280">00291</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FArray.html#ae529424c6c27799916edd7c441cb3280" title="Commit associated MPI DataType.">FArray&lt;Data, Capacity&gt;::commitMpiType</a>() 
 <a name="l00292"></a>00292    {
 <a name="l00293"></a>00293       <span class="keywordflow">if</span> (!<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt; <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity &gt;</a> &gt;::hasType) {
 <a name="l00294"></a>00294          <a class="code" href="classUtil_1_1MpiStructBuilder.html" title="A MpiStructBuilder objects is used to create an MPI Struct datatype.">MpiStructBuilder</a>       builder;
 <a name="l00295"></a>00295          <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a> object;
 <a name="l00296"></a>00296    
-<a name="l00297"></a>00297          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a5882a267b18044ab1149b71aea7d6b6d" title="Set address of an class instance.">setBase</a>(&amp;<span class="keywordtype">object</span>);
+<a name="l00297"></a>00297          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a34f85f4a1e1c296ba324fe274ea22f24" title="Set address of an class instance.">setBase</a>(&amp;<span class="keywordtype">object</span>);
 <a name="l00298"></a>00298          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; Capacity; ++i) {
-<a name="l00299"></a>00299             builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#aa91ba3ec4fb3b4f5a469a400f0f5e16a" title="Add a new member variable to the type map.">addMember</a>(&amp;(<span class="keywordtype">object</span>.data_[i]), <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;Data&gt;::type</a>);
+<a name="l00299"></a>00299             builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;(<span class="keywordtype">object</span>.data_[i]), <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;Data&gt;::type</a>);
 <a name="l00300"></a>00300          }
-<a name="l00301"></a>00301          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0f12d9ca5f37ab23eae4d2ae7abb4e8f" title="Build and commit a user-defined MPI Struct datatype.">commit</a>(<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt; <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a> &gt;::type);
+<a name="l00301"></a>00301          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#ae95e12f80d3991fe0bd7848010924c25" title="Build and commit a user-defined MPI Struct datatype.">commit</a>(<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt; <a class="code" href="classUtil_1_1FArray.html" title="A fixed size array.">FArray&lt;Data, Capacity&gt;</a> &gt;::type);
 <a name="l00302"></a>00302          <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt; FArray&lt;Data, Capacity&gt;</a> &gt;::hasType = <span class="keyword">true</span>;
 <a name="l00303"></a>00303       }
 <a name="l00304"></a>00304    }
@@ -273,7 +273,7 @@
 <a name="l00307"></a>00307 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

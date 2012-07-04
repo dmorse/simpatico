@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -79,8 +79,8 @@
 <a name="l00027"></a>00027    <span class="comment">/*</span>
 <a name="l00028"></a>00028 <span class="comment">   * Constructor.</span>
 <a name="l00029"></a>00029 <span class="comment">   */</span>
-<a name="l00030"></a>00030    <a class="code" href="classMcMd_1_1AtomMSD.html#a079c7fde0685ea3e83ba57a80d507ebc" title="Constructor.">AtomMSD::AtomMSD</a>(System&amp; system) 
-<a name="l00031"></a><a class="code" href="classMcMd_1_1AtomMSD.html#a079c7fde0685ea3e83ba57a80d507ebc">00031</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
+<a name="l00030"></a>00030    <a class="code" href="classMcMd_1_1AtomMSD.html#a7116647ad6c742ccf49b118d09a1773d" title="Constructor.">AtomMSD::AtomMSD</a>(System&amp; system) 
+<a name="l00031"></a><a class="code" href="classMcMd_1_1AtomMSD.html#a7116647ad6c742ccf49b118d09a1773d">00031</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
 <a name="l00032"></a>00032       outputFile_(),
 <a name="l00033"></a>00033       accumulator_(),
 <a name="l00034"></a>00034       truePositions_(),
@@ -96,8 +96,8 @@
 <a name="l00044"></a>00044    <span class="comment">/*</span>
 <a name="l00045"></a>00045 <span class="comment">   * Read parameters from file, and allocate data array.</span>
 <a name="l00046"></a>00046 <span class="comment">   */</span>
-<a name="l00047"></a>00047    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file.">AtomMSD::readParam</a>(std::istream&amp; in) 
-<a name="l00048"></a><a class="code" href="classMcMd_1_1AtomMSD.html#ab5421d3c9175985c9acbf723e5392075">00048</a>    {
+<a name="l00047"></a>00047    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#ab63e47e0190a28d0a4193cb28bef4edd" title="Read parameters from file.">AtomMSD::readParam</a>(std::istream&amp; in) 
+<a name="l00048"></a><a class="code" href="classMcMd_1_1AtomMSD.html#ab63e47e0190a28d0a4193cb28bef4edd">00048</a>    {
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050       <span class="comment">// Read interval and parameters for AutoCorrArray</span>
 <a name="l00051"></a>00051       readInterval(in);
@@ -118,11 +118,11 @@
 <a name="l00066"></a>00066 
 <a name="l00067"></a>00067       <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>* speciesPtr = &amp;system().simulation().species(speciesId_);
 <a name="l00068"></a>00068 
-<a name="l00069"></a>00069       <span class="keywordflow">if</span> (atomId_ &gt;= speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>()) 
+<a name="l00069"></a>00069       <span class="keywordflow">if</span> (atomId_ &gt;= speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>()) 
 <a name="l00070"></a>00070          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;atomId &gt;= nAtom&quot;</span>);
 <a name="l00071"></a>00071 
 <a name="l00072"></a>00072       <span class="comment">// Maximum possible number of molecules of this species</span>
-<a name="l00073"></a>00073       <span class="keywordtype">int</span> speciesCapacity = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a104736719cd4e5f21c25705c77064dde" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00073"></a>00073       <span class="keywordtype">int</span> speciesCapacity = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00074"></a>00074 
 <a name="l00075"></a>00075       <span class="comment">// Allocate local arrays</span>
 <a name="l00076"></a>00076       truePositions_.allocate(speciesCapacity);
@@ -138,8 +138,8 @@
 <a name="l00086"></a>00086    <span class="comment">/*</span>
 <a name="l00087"></a>00087 <span class="comment">   * Initialize at beginning of simulation.</span>
 <a name="l00088"></a>00088 <span class="comment">   */</span>
-<a name="l00089"></a>00089    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#a4fc01d736fe50cf5b977f755b675f11d" title="Determine number of molecules and allocate memory.">AtomMSD::setup</a>() 
-<a name="l00090"></a><a class="code" href="classMcMd_1_1AtomMSD.html#a4fc01d736fe50cf5b977f755b675f11d">00090</a>    {
+<a name="l00089"></a>00089    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#a2d1021078d92653d263f010f631bf7ea" title="Determine number of molecules and allocate memory.">AtomMSD::setup</a>() 
+<a name="l00090"></a><a class="code" href="classMcMd_1_1AtomMSD.html#a2d1021078d92653d263f010f631bf7ea">00090</a>    {
 <a name="l00091"></a>00091       <span class="keywordflow">if</span> (!isInitialized_) {
 <a name="l00092"></a>00092          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: object is not initialized&quot;</span>);
 <a name="l00093"></a>00093       }
@@ -164,8 +164,8 @@
 <a name="l00112"></a>00112    <span class="comment">/*</span>
 <a name="l00113"></a>00113 <span class="comment">   * Evaluate end-to-end vectors of all chains, add to ensemble.</span>
 <a name="l00114"></a>00114 <span class="comment">   */</span>
-<a name="l00115"></a>00115    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Evaluate end-to-end vectors of all chains, add to ensemble.">AtomMSD::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00116"></a><a class="code" href="classMcMd_1_1AtomMSD.html#afc17577823a371a5ead4e51ebb8ec2ef">00116</a>    { 
+<a name="l00115"></a>00115    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#ae07e00cea4f8f27a7979445c1612ea7d" title="Evaluate end-to-end vectors of all chains, add to ensemble.">AtomMSD::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00116"></a><a class="code" href="classMcMd_1_1AtomMSD.html#ae07e00cea4f8f27a7979445c1612ea7d">00116</a>    { 
 <a name="l00117"></a>00117       <span class="keywordflow">if</span> (!isAtInterval(iStep)) <span class="keywordflow">return</span>;
 <a name="l00118"></a>00118 
 <a name="l00119"></a>00119       <span class="comment">// Confirm that nMolecule has remained constant, and nMolecule &gt; 0.</span>
@@ -192,7 +192,7 @@
 <a name="l00140"></a>00140          shifts_[i] += shift;
 <a name="l00141"></a>00141 
 <a name="l00142"></a>00142          <span class="comment">// Reconstruct true position</span>
-<a name="l00143"></a>00143          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00143"></a>00143          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00144"></a>00144             truePositions_[i][j] = r[j] + shifts_[i][j]*lengths[j];
 <a name="l00145"></a>00145          }
 <a name="l00146"></a>00146 
@@ -204,8 +204,8 @@
 <a name="l00152"></a>00152 
 <a name="l00153"></a>00153    }
 <a name="l00154"></a>00154 
-<a name="l00156"></a>00156    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results to file after simulation is completed.">AtomMSD::output</a>() 
-<a name="l00157"></a><a class="code" href="classMcMd_1_1AtomMSD.html#a7437b254e19e7e12fc2ec99945f4ecea">00157</a>    {  
+<a name="l00156"></a>00156    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#a51878ff2bc5f447065a3f3fb41a1db9e" title="Output results to file after simulation is completed.">AtomMSD::output</a>() 
+<a name="l00157"></a><a class="code" href="classMcMd_1_1AtomMSD.html#a51878ff2bc5f447065a3f3fb41a1db9e">00157</a>    {  
 <a name="l00158"></a>00158 
 <a name="l00159"></a>00159       <span class="comment">// Output parameters</span>
 <a name="l00160"></a>00160       fileMaster().openOutputFile(outputFileName(<span class="stringliteral">&quot;.prm&quot;</span>), outputFile_);
@@ -233,21 +233,21 @@
 <a name="l00182"></a>00182    <span class="comment">/*</span>
 <a name="l00183"></a>00183 <span class="comment">   * Save state to binary file archive.</span>
 <a name="l00184"></a>00184 <span class="comment">   */</span>
-<a name="l00185"></a>00185    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64" title="Save state to binary file archive.">AtomMSD::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
-<a name="l00186"></a><a class="code" href="classMcMd_1_1AtomMSD.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">00186</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00185"></a>00185    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#a69713ffca1d41af7188b57b2aa7fc6fa" title="Save state to binary file archive.">AtomMSD::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
+<a name="l00186"></a><a class="code" href="classMcMd_1_1AtomMSD.html#a69713ffca1d41af7188b57b2aa7fc6fa">00186</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00187"></a>00187 
 <a name="l00188"></a>00188    <span class="comment">/*</span>
 <a name="l00189"></a>00189 <span class="comment">   * Load state from a binary file archive.</span>
 <a name="l00190"></a>00190 <span class="comment">   */</span>
-<a name="l00191"></a>00191    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load state from a binary file archive.">AtomMSD::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
-<a name="l00192"></a><a class="code" href="classMcMd_1_1AtomMSD.html#aa3d71af4cc5dfb2be6be816a8f562416">00192</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00191"></a>00191    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AtomMSD.html#a3eb548f88a1b9247a83555efb7d5bfb5" title="Load state from a binary file archive.">AtomMSD::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00192"></a><a class="code" href="classMcMd_1_1AtomMSD.html#a3eb548f88a1b9247a83555efb7d5bfb5">00192</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00193"></a>00193 
 <a name="l00194"></a>00194 }
 <a name="l00195"></a>00195 
 <a name="l00196"></a>00196 <span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

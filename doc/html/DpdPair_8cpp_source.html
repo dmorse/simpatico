@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -70,8 +70,8 @@
 <a name="l00019"></a>00019    <span class="comment">/* </span>
 <a name="l00020"></a>00020 <span class="comment">   * Constructor.</span>
 <a name="l00021"></a>00021 <span class="comment">   */</span>
-<a name="l00022"></a>00022    <a class="code" href="classInter_1_1DpdPair.html#addc50ea4ca44073e08df985b53bec946" title="Constructor.">DpdPair::DpdPair</a>() 
-<a name="l00023"></a><a class="code" href="classInter_1_1DpdPair.html#addc50ea4ca44073e08df985b53bec946">00023</a>     : maxPairCutoff_(0.0),
+<a name="l00022"></a>00022    <a class="code" href="classInter_1_1DpdPair.html#ae058d92a3f8991105b58f166fe5f3fbd" title="Constructor.">DpdPair::DpdPair</a>() 
+<a name="l00023"></a><a class="code" href="classInter_1_1DpdPair.html#ae058d92a3f8991105b58f166fe5f3fbd">00023</a>     : maxPairCutoff_(0.0),
 <a name="l00024"></a>00024       nAtomType_(0),
 <a name="l00025"></a>00025       isInitialized_(false)
 <a name="l00026"></a>00026    {}
@@ -79,8 +79,8 @@
 <a name="l00028"></a>00028    <span class="comment">/* </span>
 <a name="l00029"></a>00029 <span class="comment">   * Copy constructor.</span>
 <a name="l00030"></a>00030 <span class="comment">   */</span>
-<a name="l00031"></a>00031    <a class="code" href="classInter_1_1DpdPair.html#addc50ea4ca44073e08df985b53bec946" title="Constructor.">DpdPair::DpdPair</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1DpdPair.html" title="The soft potential introduced in DPD simulations of Groot et al.">DpdPair</a>&amp; other)
-<a name="l00032"></a><a class="code" href="classInter_1_1DpdPair.html#aff75742fc1ecfcba2ffa2b37fb246d35">00032</a>     : maxPairCutoff_(other.maxPairCutoff_),
+<a name="l00031"></a>00031    <a class="code" href="classInter_1_1DpdPair.html#ae058d92a3f8991105b58f166fe5f3fbd" title="Constructor.">DpdPair::DpdPair</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1DpdPair.html" title="The soft potential introduced in DPD simulations of Groot et al.">DpdPair</a>&amp; other)
+<a name="l00032"></a><a class="code" href="classInter_1_1DpdPair.html#a166875a1abebd9503307045b31cde881">00032</a>     : maxPairCutoff_(other.maxPairCutoff_),
 <a name="l00033"></a>00033       nAtomType_(other.nAtomType_),
 <a name="l00034"></a>00034       isInitialized_(other.isInitialized_)
 <a name="l00035"></a>00035    {
@@ -99,8 +99,8 @@
 <a name="l00048"></a>00048    <span class="comment">/* </span>
 <a name="l00049"></a>00049 <span class="comment">   * Assignment operator.</span>
 <a name="l00050"></a>00050 <span class="comment">   */</span>
-<a name="l00051"></a>00051    <a class="code" href="classInter_1_1DpdPair.html" title="The soft potential introduced in DPD simulations of Groot et al.">DpdPair</a>&amp; <a class="code" href="classInter_1_1DpdPair.html#a11ae7546c296e379d9bebe80bdf8b7b6" title="Assignment.">DpdPair::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1DpdPair.html" title="The soft potential introduced in DPD simulations of Groot et al.">DpdPair</a>&amp; other)
-<a name="l00052"></a><a class="code" href="classInter_1_1DpdPair.html#a11ae7546c296e379d9bebe80bdf8b7b6">00052</a>    {
+<a name="l00051"></a>00051    <a class="code" href="classInter_1_1DpdPair.html" title="The soft potential introduced in DPD simulations of Groot et al.">DpdPair</a>&amp; <a class="code" href="classInter_1_1DpdPair.html#aeefbb80a303ace60f7b453522f4a943d" title="Assignment.">DpdPair::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1DpdPair.html" title="The soft potential introduced in DPD simulations of Groot et al.">DpdPair</a>&amp; other)
+<a name="l00052"></a><a class="code" href="classInter_1_1DpdPair.html#aeefbb80a303ace60f7b453522f4a943d">00052</a>    {
 <a name="l00053"></a>00053       maxPairCutoff_ = other.maxPairCutoff_;
 <a name="l00054"></a>00054       nAtomType_     = other.nAtomType_;
 <a name="l00055"></a>00055       isInitialized_ = other.isInitialized_;
@@ -120,8 +120,8 @@
 <a name="l00069"></a>00069    <span class="comment">/* </span>
 <a name="l00070"></a>00070 <span class="comment">   * Read potential parameters from file.</span>
 <a name="l00071"></a>00071 <span class="comment">   */</span>
-<a name="l00072"></a>00072    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1DpdPair.html#ab5421d3c9175985c9acbf723e5392075" title="Read epsilon and sigma, initialize other variables.">DpdPair::readParam</a>(std::istream &amp;in) 
-<a name="l00073"></a><a class="code" href="classInter_1_1DpdPair.html#ab5421d3c9175985c9acbf723e5392075">00073</a>    {
+<a name="l00072"></a>00072    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1DpdPair.html#ad70c6704df9d209e9166aa2b681e9a37" title="Read epsilon and sigma, initialize other variables.">DpdPair::readParam</a>(std::istream &amp;in) 
+<a name="l00073"></a><a class="code" href="classInter_1_1DpdPair.html#ad70c6704df9d209e9166aa2b681e9a37">00073</a>    {
 <a name="l00074"></a>00074       <span class="comment">// Preconditions</span>
 <a name="l00075"></a>00075       <span class="keywordflow">if</span> (nAtomType_ == 0) {
 <a name="l00076"></a>00076          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>( <span class="stringliteral">&quot;nAtomType must be set before readParam&quot;</span>);
@@ -155,8 +155,8 @@
 <a name="l00104"></a>00104    <span class="comment">/* </span>
 <a name="l00105"></a>00105 <span class="comment">   * Set nAtomType</span>
 <a name="l00106"></a>00106 <span class="comment">   */</span>
-<a name="l00107"></a>00107    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1DpdPair.html#a9549e24ee72625c94fd6ae7d61ceeee8" title="Set nAtomType value.">DpdPair::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType) 
-<a name="l00108"></a><a class="code" href="classInter_1_1DpdPair.html#a9549e24ee72625c94fd6ae7d61ceeee8">00108</a>    {  
+<a name="l00107"></a>00107    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1DpdPair.html#a7f49402b8dffe33f80a528b5b40c9dc2" title="Set nAtomType value.">DpdPair::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType) 
+<a name="l00108"></a><a class="code" href="classInter_1_1DpdPair.html#a7f49402b8dffe33f80a528b5b40c9dc2">00108</a>    {  
 <a name="l00109"></a>00109       <span class="keywordflow">if</span> (nAtomType &lt;= 0) {
 <a name="l00110"></a>00110          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtomType &lt;= 0&quot;</span>);
 <a name="l00111"></a>00111       }
@@ -169,8 +169,8 @@
 <a name="l00118"></a>00118    <span class="comment">/*</span>
 <a name="l00119"></a>00119 <span class="comment">   * Reset epsilon_[i][j] after initialization</span>
 <a name="l00120"></a>00120 <span class="comment">   */</span>
-<a name="l00121"></a>00121    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1DpdPair.html#a78afa63dd8620f66db0688bb490ccf96" title="Set LJ interaction energy for a specific pair of Atom types.">DpdPair::setEpsilon</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> epsilon)
-<a name="l00122"></a><a class="code" href="classInter_1_1DpdPair.html#a78afa63dd8620f66db0688bb490ccf96">00122</a>    {
+<a name="l00121"></a>00121    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1DpdPair.html#a01d84bbb5447567ea1f102eed6b8f155" title="Set LJ interaction energy for a specific pair of Atom types.">DpdPair::setEpsilon</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> epsilon)
+<a name="l00122"></a><a class="code" href="classInter_1_1DpdPair.html#a01d84bbb5447567ea1f102eed6b8f155">00122</a>    {
 <a name="l00123"></a>00123 
 <a name="l00124"></a>00124       <span class="comment">// Preconditions</span>
 <a name="l00125"></a>00125       <span class="keywordflow">if</span> (!isInitialized_) {
@@ -197,8 +197,8 @@
 <a name="l00146"></a>00146    <span class="comment">/*</span>
 <a name="l00147"></a>00147 <span class="comment">   * Reset sigma_[i][j] after initialization</span>
 <a name="l00148"></a>00148 <span class="comment">   */</span>
-<a name="l00149"></a>00149    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1DpdPair.html#ae001917d181455636476541cb5149e37" title="Get LJ range for a specific pair of Atom types.">DpdPair::setSigma</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> sigma)
-<a name="l00150"></a><a class="code" href="classInter_1_1DpdPair.html#ae001917d181455636476541cb5149e37">00150</a>    {
+<a name="l00149"></a>00149    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1DpdPair.html#a9ee0c043b466b53d72d9ecf8de49e0ab" title="Get LJ range for a specific pair of Atom types.">DpdPair::setSigma</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> sigma)
+<a name="l00150"></a><a class="code" href="classInter_1_1DpdPair.html#a9ee0c043b466b53d72d9ecf8de49e0ab">00150</a>    {
 <a name="l00151"></a>00151 
 <a name="l00152"></a>00152       <span class="comment">// Preconditions</span>
 <a name="l00153"></a>00153       <span class="keywordflow">if</span> (!isInitialized_) {
@@ -229,8 +229,8 @@
 <a name="l00178"></a>00178    <span class="comment">/* </span>
 <a name="l00179"></a>00179 <span class="comment">   * Get pair interaction strength.</span>
 <a name="l00180"></a>00180 <span class="comment">   */</span>
-<a name="l00181"></a>00181    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1DpdPair.html#a57f5db662d4017f2765d6c233b5ed5c2" title="Get LJ interaction energy for a specific pair of Atom types.">DpdPair::epsilon</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
-<a name="l00182"></a><a class="code" href="classInter_1_1DpdPair.html#a57f5db662d4017f2765d6c233b5ed5c2">00182</a> <span class="keyword">   </span>{ 
+<a name="l00181"></a>00181    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1DpdPair.html#aad7cd002a4c891bcae33cc8bfc16a156" title="Get LJ interaction energy for a specific pair of Atom types.">DpdPair::epsilon</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00182"></a><a class="code" href="classInter_1_1DpdPair.html#aad7cd002a4c891bcae33cc8bfc16a156">00182</a> <span class="keyword">   </span>{ 
 <a name="l00183"></a>00183       assert(i &gt;= 0 &amp;&amp; i &lt; nAtomType_); 
 <a name="l00184"></a>00184       assert(j &gt;= 0 &amp;&amp; j &lt; nAtomType_); 
 <a name="l00185"></a>00185       <span class="keywordflow">return</span> epsilon_[i][j]; 
@@ -239,8 +239,8 @@
 <a name="l00188"></a>00188    <span class="comment">/* </span>
 <a name="l00189"></a>00189 <span class="comment">   * Get pair interaction strength.</span>
 <a name="l00190"></a>00190 <span class="comment">   */</span>
-<a name="l00191"></a>00191    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1DpdPair.html#aac621c763f885981ed7fd54a3e4759b6" title="Get LJ range for a specific pair of Atom types.">DpdPair::sigma</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
-<a name="l00192"></a><a class="code" href="classInter_1_1DpdPair.html#aac621c763f885981ed7fd54a3e4759b6">00192</a> <span class="keyword">   </span>{
+<a name="l00191"></a>00191    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1DpdPair.html#a26842ea00b7af6c88700052da6fb1056" title="Get LJ range for a specific pair of Atom types.">DpdPair::sigma</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00192"></a><a class="code" href="classInter_1_1DpdPair.html#a26842ea00b7af6c88700052da6fb1056">00192</a> <span class="keyword">   </span>{
 <a name="l00193"></a>00193       assert(i &gt;= 0 &amp;&amp; i &lt; nAtomType_); 
 <a name="l00194"></a>00194       assert(j &gt;= 0 &amp;&amp; j &lt; nAtomType_); 
 <a name="l00195"></a>00195       <span class="keywordflow">return</span> sigma_[i][j]; 
@@ -249,20 +249,20 @@
 <a name="l00198"></a>00198    <span class="comment">/* </span>
 <a name="l00199"></a>00199 <span class="comment">   * Get maximum of pair cutoff distance, for all atom type pairs.</span>
 <a name="l00200"></a>00200 <span class="comment">   */</span>
-<a name="l00201"></a>00201    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1DpdPair.html#a30a3c4cfc7e46e5e8ac052556fd945f0" title="Get maximum of pair cutoff distance, for all atom type pairs.">DpdPair::maxPairCutoff</a>()<span class="keyword"> const</span>
-<a name="l00202"></a><a class="code" href="classInter_1_1DpdPair.html#a30a3c4cfc7e46e5e8ac052556fd945f0">00202</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> maxPairCutoff_; }
+<a name="l00201"></a>00201    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1DpdPair.html#a5a5cf8e773d479b72b0f43fd7b34dedf" title="Get maximum of pair cutoff distance, for all atom type pairs.">DpdPair::maxPairCutoff</a>()<span class="keyword"> const</span>
+<a name="l00202"></a><a class="code" href="classInter_1_1DpdPair.html#a5a5cf8e773d479b72b0f43fd7b34dedf">00202</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> maxPairCutoff_; }
 <a name="l00203"></a>00203 
 <a name="l00204"></a>00204    <span class="comment">/*</span>
 <a name="l00205"></a>00205 <span class="comment">   * Return name string &quot;DpdPair&quot; for this evaluator class.</span>
 <a name="l00206"></a>00206 <span class="comment">   */</span>
-<a name="l00207"></a>00207    std::string <a class="code" href="classInter_1_1DpdPair.html#a13c07285e858b2c232919fd57b635e1b" title="Return name string &amp;quot;DpdPair&amp;quot; for this evaluator class.">DpdPair::className</a>()<span class="keyword"> const</span>
-<a name="l00208"></a><a class="code" href="classInter_1_1DpdPair.html#a13c07285e858b2c232919fd57b635e1b">00208</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;DpdPair&quot;</span>); }
+<a name="l00207"></a>00207    std::string <a class="code" href="classInter_1_1DpdPair.html#a329e04ec1ee8abab3ccc6f5fc78e3e9d" title="Return name string &amp;quot;DpdPair&amp;quot; for this evaluator class.">DpdPair::className</a>()<span class="keyword"> const</span>
+<a name="l00208"></a><a class="code" href="classInter_1_1DpdPair.html#a329e04ec1ee8abab3ccc6f5fc78e3e9d">00208</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;DpdPair&quot;</span>); }
 <a name="l00209"></a>00209  
 <a name="l00210"></a>00210    <span class="comment">/*</span>
 <a name="l00211"></a>00211 <span class="comment">   * Set a potential energy parameter, identified by a string.</span>
 <a name="l00212"></a>00212 <span class="comment">   */</span>
-<a name="l00213"></a>00213    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1DpdPair.html#a1d5b9097db680b4eace98f69fc8dec1a" title="Modify a parameter, identified by a string.">DpdPair::set</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> value)
-<a name="l00214"></a><a class="code" href="classInter_1_1DpdPair.html#a1d5b9097db680b4eace98f69fc8dec1a">00214</a>    {
+<a name="l00213"></a>00213    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1DpdPair.html#acf89033996e9b0442dd8343c997e5ab9" title="Modify a parameter, identified by a string.">DpdPair::set</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> value)
+<a name="l00214"></a><a class="code" href="classInter_1_1DpdPair.html#acf89033996e9b0442dd8343c997e5ab9">00214</a>    {
 <a name="l00215"></a>00215       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;epsilon&quot;</span>) {
 <a name="l00216"></a>00216          epsilon_[i][j] = value;
 <a name="l00217"></a>00217          epsilon_[j][i] = value;
@@ -278,8 +278,8 @@
 <a name="l00227"></a>00227    <span class="comment">/*</span>
 <a name="l00228"></a>00228 <span class="comment">   * Get a parameter value, identified by a string.</span>
 <a name="l00229"></a>00229 <span class="comment">   */</span>
-<a name="l00230"></a>00230    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1DpdPair.html#ab633dae15c30d4918f3d8f937be076dc" title="Get a parameter value, identified by a string.">DpdPair::get</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
-<a name="l00231"></a><a class="code" href="classInter_1_1DpdPair.html#ab633dae15c30d4918f3d8f937be076dc">00231</a> <span class="keyword">   </span>{
+<a name="l00230"></a>00230    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1DpdPair.html#a764da98ea24c1bfeb2fae036aa4a7e57" title="Get a parameter value, identified by a string.">DpdPair::get</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00231"></a><a class="code" href="classInter_1_1DpdPair.html#a764da98ea24c1bfeb2fae036aa4a7e57">00231</a> <span class="keyword">   </span>{
 <a name="l00232"></a>00232       <span class="keywordtype">double</span> value;
 <a name="l00233"></a>00233       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;epsilon&quot;</span>) {
 <a name="l00234"></a>00234          value = epsilon_[i][j];
@@ -296,7 +296,7 @@
 <a name="l00245"></a>00245 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

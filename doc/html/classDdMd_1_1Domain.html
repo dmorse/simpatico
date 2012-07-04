@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Domain Class Reference</title>
+<title>Simpatico: DdMd::Domain Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Domain Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
+<h1>DdMd::Domain Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::Domain" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -59,13 +59,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="Domain_8h_source.html">Domain.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Domain:</div>
+Inheritance diagram for DdMd::Domain:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1Domain.png" usemap="#Domain_map" alt=""/>
-  <map id="Domain_map" name="Domain_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classDdMd_1_1Domain.png" usemap="#DdMd::Domain_map" alt=""/>
+  <map id="DdMd::Domain_map" name="DdMd::Domain_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,134,24"/>
 </map>
  </div></div>
 
@@ -73,54 +73,54 @@ Inheritance diagram for Domain:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a9f9601f2f55637f70394aa8eea61345a">Domain</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a9f9601f2f55637f70394aa8eea61345a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#aab7e32c77383bf3d384c5c1ab492cd2c">~Domain</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#aab7e32c77383bf3d384c5c1ab492cd2c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a01503b0246b17a31da48009e928bb0ae">setGridCommunicator</a> (MPI::Intracomm &amp;communicator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the grid communicator.  <a href="#a01503b0246b17a31da48009e928bb0ae"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#aae3d88e326e8e921368e6d8fc0fc992c">setBoundary</a> (Boundary &amp;boundary)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the associated Boundary object.  <a href="#aae3d88e326e8e921368e6d8fc0fc992c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters and initialize.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Grid.html">Grid</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#ae85ec1ce4bd74bc16569c104e711bbdc">grid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return processor Grid by const reference.  <a href="#ae85ec1ce4bd74bc16569c104e711bbdc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a6e65132d7af423d4840d20a640a0b6fe">gridCoordinate</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get coordinate of processor within grid in specified direction.  <a href="#a6e65132d7af423d4840d20a640a0b6fe"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a04a974547d18219a77c8fde84a625681">gridDimension</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get dimension of processor grid in specified direction.  <a href="#a04a974547d18219a77c8fde84a625681"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#ac0fb2aee619161f7e0bc2f7e9b55f495">gridIsPeriodic</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the grid periodic in the specified direction?  <a href="#ac0fb2aee619161f7e0bc2f7e9b55f495"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#afc074fe15cd49a2762dda457120572a4">gridRank</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get rank of this processor in the processor grid.  <a href="#afc074fe15cd49a2762dda457120572a4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a206cb2da7fb83e167ae108e7f3cc4573">isMaster</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this the master processor (gridRank == 0) ?  <a href="#a206cb2da7fb83e167ae108e7f3cc4573"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#ab5b645fcbb26d3dbb70a88e105cf058e">sourceRank</a> (int i, int j) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Rank of the processor from which to receive for transfer (i, j).  <a href="#ab5b645fcbb26d3dbb70a88e105cf058e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a96ed865a0c90c37c2490c30b2d5886b1">destRank</a> (int i, int j) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Rank of the processor to which to send for transfer (i, j).  <a href="#a96ed865a0c90c37c2490c30b2d5886b1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a15a4b4b8667a1603f532443d1869d0fd">shift</a> (int i, int j) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Shift to be applied to sent coordinates in transfer (i, j).  <a href="#a15a4b4b8667a1603f532443d1869d0fd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">MPI::Intracomm &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#aee20740c90cc24a06535e08022dfcb40">communicator</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return Cartesian communicator by reference.  <a href="#aee20740c90cc24a06535e08022dfcb40"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a4675463deb7d3a6dd84467169592bb0d">domainBound</a> (int i, int j) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get one boundary of the domain owned by this processor.  <a href="#a4675463deb7d3a6dd84467169592bb0d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a8ca4262e0d6c0910dbc17d64bb20978b">ownerRank</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;position) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return rank of the processor whose domain contains a position.  <a href="#a8ca4262e0d6c0910dbc17d64bb20978b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a9d904d45acddc99c4c16cec485f508b5">isInDomain</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;position) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is a position in the domain owned by this processor?  <a href="#a9d904d45acddc99c4c16cec485f508b5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a5d40f267dbc50e5e80dd71af752c3620">isInitialized</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has this <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a> been initialized by calling readParam?  <a href="#a5d40f267dbc50e5e80dd71af752c3620"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a32615f88a60f79ffa6ff0f13ea1b9f28">hasBoundary</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has an associated Boundary been set?  <a href="#a32615f88a60f79ffa6ff0f13ea1b9f28"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a3522a22257f51a97bf7f1d9574e0e6d9">Domain</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a3522a22257f51a97bf7f1d9574e0e6d9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a69bc77400dc3907ab86c2fa30d3b9ddc">~Domain</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a69bc77400dc3907ab86c2fa30d3b9ddc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#afae25e30429237f990640337290034b9">setGridCommunicator</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the grid communicator.  <a href="#afae25e30429237f990640337290034b9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#abfbf106d20e09f79d31337a691bd10d3">setBoundary</a> (Boundary &amp;boundary)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the associated Boundary object.  <a href="#abfbf106d20e09f79d31337a691bd10d3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#af56a9994c56816e4884179f9e81e653f">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters and initialize.  <a href="#af56a9994c56816e4884179f9e81e653f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Grid.html">Grid</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a890695ed2d3be89420649be7befe01e1">grid</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return processor Grid by const reference.  <a href="#a890695ed2d3be89420649be7befe01e1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a491610388d9f4ead22c62e132c55e271">gridCoordinate</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get coordinate of processor within grid in specified direction.  <a href="#a491610388d9f4ead22c62e132c55e271"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a6c9f4eb2018c33cf008957c711f0a5e9">gridDimension</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get dimension of processor grid in specified direction.  <a href="#a6c9f4eb2018c33cf008957c711f0a5e9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#ac1f88b3e0b9b3bf6a064b9c736496c07">gridIsPeriodic</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the grid periodic in the specified direction?  <a href="#ac1f88b3e0b9b3bf6a064b9c736496c07"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a46aef8d7cbc72226576a940d335114ba">gridRank</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get rank of this processor in the processor grid.  <a href="#a46aef8d7cbc72226576a940d335114ba"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb">isMaster</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this the master processor (gridRank == 0) ?  <a href="#aac3570d874af4b74634198100cb1c4bb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a24b5b11ad61459c17f2e43d2b0e283f4">sourceRank</a> (int i, int j) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Rank of the processor from which to receive for transfer (i, j).  <a href="#a24b5b11ad61459c17f2e43d2b0e283f4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a7656f6549a0881e89cd7e31791de9de5">destRank</a> (int i, int j) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Rank of the processor to which to send for transfer (i, j).  <a href="#a7656f6549a0881e89cd7e31791de9de5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a50ef6077bf25f06b7a24796602e592ed">shift</a> (int i, int j) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Shift to be applied to sent coordinates in transfer (i, j).  <a href="#a50ef6077bf25f06b7a24796602e592ed"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">MPI::Intracomm &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b">communicator</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return Cartesian communicator by reference.  <a href="#a49eecec2924f7a811747406c85fff62b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a66994bef6ae4556e23ece0153b64a60f">domainBound</a> (int i, int j) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get one boundary of the domain owned by this processor.  <a href="#a66994bef6ae4556e23ece0153b64a60f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a8eafcabbb648e796a942142624a941ab">ownerRank</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;position) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return rank of the processor whose domain contains a position.  <a href="#a8eafcabbb648e796a942142624a941ab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#acc14bdd6cdfb00fd801076efdf9b6bd5">isInDomain</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;position) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is a position in the domain owned by this processor?  <a href="#acc14bdd6cdfb00fd801076efdf9b6bd5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#a06fb7e618207f58603b5cda77fb4fc59">isInitialized</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has this <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a> been initialized by calling readParam?  <a href="#a06fb7e618207f58603b5cda77fb4fc59"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Domain.html#aaaed02d71cabab686b3097c56541e17b">hasBoundary</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has an associated Boundary been set?  <a href="#aaaed02d71cabab686b3097c56541e17b"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a9f9601f2f55637f70394aa8eea61345a"></a><!-- doxytag: member="DdMd::Domain::Domain" ref="a9f9601f2f55637f70394aa8eea61345a" args="()" -->
+<a class="anchor" id="a3522a22257f51a97bf7f1d9574e0e6d9"></a><!-- doxytag: member="DdMd::Domain::Domain" ref="a3522a22257f51a97bf7f1d9574e0e6d9" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> </td>
+          <td class="memname">DdMd::Domain::Domain </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -135,12 +135,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aab7e32c77383bf3d384c5c1ab492cd2c"></a><!-- doxytag: member="DdMd::Domain::~Domain" ref="aab7e32c77383bf3d384c5c1ab492cd2c" args="()" -->
+<a class="anchor" id="a69bc77400dc3907ab86c2fa30d3b9ddc"></a><!-- doxytag: member="DdMd::Domain::~Domain" ref="a69bc77400dc3907ab86c2fa30d3b9ddc" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1Domain.html">Domain</a> </td>
+          <td class="memname">DdMd::Domain::~Domain </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -156,12 +156,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a01503b0246b17a31da48009e928bb0ae"></a><!-- doxytag: member="DdMd::Domain::setGridCommunicator" ref="a01503b0246b17a31da48009e928bb0ae" args="(MPI::Intracomm &amp;communicator)" -->
+<a class="anchor" id="afae25e30429237f990640337290034b9"></a><!-- doxytag: member="DdMd::Domain::setGridCommunicator" ref="afae25e30429237f990640337290034b9" args="(MPI::Intracomm &amp;communicator)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setGridCommunicator </td>
+          <td class="memname">void DdMd::Domain::setGridCommunicator </td>
           <td>(</td>
           <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
           <td class="paramname"><em>communicator</em></td><td>)</td>
@@ -183,12 +183,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aae3d88e326e8e921368e6d8fc0fc992c"></a><!-- doxytag: member="DdMd::Domain::setBoundary" ref="aae3d88e326e8e921368e6d8fc0fc992c" args="(Boundary &amp;boundary)" -->
+<a class="anchor" id="abfbf106d20e09f79d31337a691bd10d3"></a><!-- doxytag: member="DdMd::Domain::setBoundary" ref="abfbf106d20e09f79d31337a691bd10d3" args="(Boundary &amp;boundary)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setBoundary </td>
+          <td class="memname">void DdMd::Domain::setBoundary </td>
           <td>(</td>
           <td class="paramtype">Boundary &amp;&#160;</td>
           <td class="paramname"><em>boundary</em></td><td>)</td>
@@ -210,12 +210,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="DdMd::Domain::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="af56a9994c56816e4884179f9e81e653f"></a><!-- doxytag: member="DdMd::Domain::readParam" ref="af56a9994c56816e4884179f9e81e653f" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void DdMd::Domain::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -233,20 +233,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="Domain_8cpp_source.html#l00071">71</a> of file <a class="el" href="Domain_8cpp_source.html">Domain.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="Domain_8h_source.html#l00335">Domain::hasBoundary()</a>, <a class="el" href="Grid_8cpp_source.html#l00083">Grid::isInGrid()</a>, <a class="el" href="Grid_8cpp_source.html#l00069">Grid::position()</a>, <a class="el" href="Grid_8cpp_source.html#l00054">Grid::rank()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00148">ParamComposite::readBegin()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00177">ParamComposite::readEnd()</a>, <a class="el" href="Grid_8cpp_source.html#l00037">Grid::setDimensions()</a>, <a class="el" href="Grid_8cpp_source.html#l00105">Grid::shift()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="Domain_8h_source.html#l00335">hasBoundary()</a>, <a class="el" href="Grid_8cpp_source.html#l00083">Util::Grid::isInGrid()</a>, <a class="el" href="Grid_8cpp_source.html#l00069">Util::Grid::position()</a>, <a class="el" href="Grid_8cpp_source.html#l00054">Util::Grid::rank()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00148">Util::ParamComposite::readBegin()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00177">Util::ParamComposite::readEnd()</a>, <a class="el" href="Grid_8cpp_source.html#l00037">Util::Grid::setDimensions()</a>, <a class="el" href="Grid_8cpp_source.html#l00105">Util::Grid::shift()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae85ec1ce4bd74bc16569c104e711bbdc"></a><!-- doxytag: member="DdMd::Domain::grid" ref="ae85ec1ce4bd74bc16569c104e711bbdc" args="() const " -->
+<a class="anchor" id="a890695ed2d3be89420649be7befe01e1"></a><!-- doxytag: member="DdMd::Domain::grid" ref="a890695ed2d3be89420649be7befe01e1" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classUtil_1_1Grid.html">Grid</a> &amp; grid </td>
+          <td class="memname">const <a class="el" href="classUtil_1_1Grid.html">Grid</a> &amp; DdMd::Domain::grid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -259,16 +259,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Domain_8h_source.html#l00248">248</a> of file <a class="el" href="Domain_8h_source.html">Domain.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6e65132d7af423d4840d20a640a0b6fe"></a><!-- doxytag: member="DdMd::Domain::gridCoordinate" ref="a6e65132d7af423d4840d20a640a0b6fe" args="(int i) const " -->
+<a class="anchor" id="a491610388d9f4ead22c62e132c55e271"></a><!-- doxytag: member="DdMd::Domain::gridCoordinate" ref="a491610388d9f4ead22c62e132c55e271" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int gridCoordinate </td>
+          <td class="memname">int DdMd::Domain::gridCoordinate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -290,12 +290,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a04a974547d18219a77c8fde84a625681"></a><!-- doxytag: member="DdMd::Domain::gridDimension" ref="a04a974547d18219a77c8fde84a625681" args="(int i) const " -->
+<a class="anchor" id="a6c9f4eb2018c33cf008957c711f0a5e9"></a><!-- doxytag: member="DdMd::Domain::gridDimension" ref="a6c9f4eb2018c33cf008957c711f0a5e9" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int gridDimension </td>
+          <td class="memname">int DdMd::Domain::gridDimension </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -318,12 +318,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac0fb2aee619161f7e0bc2f7e9b55f495"></a><!-- doxytag: member="DdMd::Domain::gridIsPeriodic" ref="ac0fb2aee619161f7e0bc2f7e9b55f495" args="(int i) const " -->
+<a class="anchor" id="ac1f88b3e0b9b3bf6a064b9c736496c07"></a><!-- doxytag: member="DdMd::Domain::gridIsPeriodic" ref="ac1f88b3e0b9b3bf6a064b9c736496c07" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool gridIsPeriodic </td>
+          <td class="memname">bool DdMd::Domain::gridIsPeriodic </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -346,12 +346,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afc074fe15cd49a2762dda457120572a4"></a><!-- doxytag: member="DdMd::Domain::gridRank" ref="afc074fe15cd49a2762dda457120572a4" args="() const " -->
+<a class="anchor" id="a46aef8d7cbc72226576a940d335114ba"></a><!-- doxytag: member="DdMd::Domain::gridRank" ref="a46aef8d7cbc72226576a940d335114ba" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int gridRank </td>
+          <td class="memname">int DdMd::Domain::gridRank </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -364,16 +364,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Domain_8h_source.html#l00284">284</a> of file <a class="el" href="Domain_8h_source.html">Domain.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a206cb2da7fb83e167ae108e7f3cc4573"></a><!-- doxytag: member="DdMd::Domain::isMaster" ref="a206cb2da7fb83e167ae108e7f3cc4573" args="() const " -->
+<a class="anchor" id="aac3570d874af4b74634198100cb1c4bb"></a><!-- doxytag: member="DdMd::Domain::isMaster" ref="aac3570d874af4b74634198100cb1c4bb" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isMaster </td>
+          <td class="memname">bool DdMd::Domain::isMaster </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -386,16 +386,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Domain_8h_source.html#l00293">293</a> of file <a class="el" href="Domain_8h_source.html">Domain.h</a>.</p>
 
-<p>Referenced by <a class="el" href="OutputEnergy_8cpp_source.html#l00057">OutputEnergy::sample()</a>.</p>
+<p>Referenced by <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab5b645fcbb26d3dbb70a88e105cf058e"></a><!-- doxytag: member="DdMd::Domain::sourceRank" ref="ab5b645fcbb26d3dbb70a88e105cf058e" args="(int i, int j) const " -->
+<a class="anchor" id="a24b5b11ad61459c17f2e43d2b0e283f4"></a><!-- doxytag: member="DdMd::Domain::sourceRank" ref="a24b5b11ad61459c17f2e43d2b0e283f4" args="(int i, int j) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int sourceRank </td>
+          <td class="memname">int DdMd::Domain::sourceRank </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em>, </td>
@@ -426,16 +426,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Domain_8h_source.html#l00302">302</a> of file <a class="el" href="Domain_8h_source.html">Domain.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a96ed865a0c90c37c2490c30b2d5886b1"></a><!-- doxytag: member="DdMd::Domain::destRank" ref="a96ed865a0c90c37c2490c30b2d5886b1" args="(int i, int j) const " -->
+<a class="anchor" id="a7656f6549a0881e89cd7e31791de9de5"></a><!-- doxytag: member="DdMd::Domain::destRank" ref="a7656f6549a0881e89cd7e31791de9de5" args="(int i, int j) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int destRank </td>
+          <td class="memname">int DdMd::Domain::destRank </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em>, </td>
@@ -466,16 +466,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Domain_8h_source.html#l00311">311</a> of file <a class="el" href="Domain_8h_source.html">Domain.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a15a4b4b8667a1603f532443d1869d0fd"></a><!-- doxytag: member="DdMd::Domain::shift" ref="a15a4b4b8667a1603f532443d1869d0fd" args="(int i, int j) const " -->
+<a class="anchor" id="a50ef6077bf25f06b7a24796602e592ed"></a><!-- doxytag: member="DdMd::Domain::shift" ref="a50ef6077bf25f06b7a24796602e592ed" args="(int i, int j) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int shift </td>
+          <td class="memname">int DdMd::Domain::shift </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em>, </td>
@@ -507,16 +507,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Domain_8h_source.html#l00320">320</a> of file <a class="el" href="Domain_8h_source.html">Domain.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aee20740c90cc24a06535e08022dfcb40"></a><!-- doxytag: member="DdMd::Domain::communicator" ref="aee20740c90cc24a06535e08022dfcb40" args="() const " -->
+<a class="anchor" id="a49eecec2924f7a811747406c85fff62b"></a><!-- doxytag: member="DdMd::Domain::communicator" ref="a49eecec2924f7a811747406c85fff62b" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">MPI::Intracomm &amp; communicator </td>
+          <td class="memname">MPI::Intracomm &amp; DdMd::Domain::communicator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -529,16 +529,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Domain_8h_source.html#l00237">237</a> of file <a class="el" href="Domain_8h_source.html">Domain.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>, <a class="el" href="Integrator_8cpp_source.html#l00047">Integrator::outputStatistics()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>, <a class="el" href="Integrator_8cpp_source.html#l00047">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4675463deb7d3a6dd84467169592bb0d"></a><!-- doxytag: member="DdMd::Domain::domainBound" ref="a4675463deb7d3a6dd84467169592bb0d" args="(int i, int j) const " -->
+<a class="anchor" id="a66994bef6ae4556e23ece0153b64a60f"></a><!-- doxytag: member="DdMd::Domain::domainBound" ref="a66994bef6ae4556e23ece0153b64a60f" args="(int i, int j) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double domainBound </td>
+          <td class="memname">double DdMd::Domain::domainBound </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em>, </td>
@@ -573,16 +573,16 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8ca4262e0d6c0910dbc17d64bb20978b"></a><!-- doxytag: member="DdMd::Domain::ownerRank" ref="a8ca4262e0d6c0910dbc17d64bb20978b" args="(const Vector &amp;position) const " -->
+<a class="anchor" id="a8eafcabbb648e796a942142624a941ab"></a><!-- doxytag: member="DdMd::Domain::ownerRank" ref="a8eafcabbb648e796a942142624a941ab" args="(const Vector &amp;position) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int ownerRank </td>
+          <td class="memname">int DdMd::Domain::ownerRank </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>position</em></td><td>)</td>
@@ -603,16 +603,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Domain_8cpp_source.html#l00178">178</a> of file <a class="el" href="Domain_8cpp_source.html">Domain.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="Grid_8cpp_source.html#l00054">Grid::rank()</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="Grid_8cpp_source.html#l00054">Util::Grid::rank()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9d904d45acddc99c4c16cec485f508b5"></a><!-- doxytag: member="DdMd::Domain::isInDomain" ref="a9d904d45acddc99c4c16cec485f508b5" args="(const Vector &amp;position) const " -->
+<a class="anchor" id="acc14bdd6cdfb00fd801076efdf9b6bd5"></a><!-- doxytag: member="DdMd::Domain::isInDomain" ref="acc14bdd6cdfb00fd801076efdf9b6bd5" args="(const Vector &amp;position) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isInDomain </td>
+          <td class="memname">bool DdMd::Domain::isInDomain </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>position</em></td><td>)</td>
@@ -637,12 +637,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5d40f267dbc50e5e80dd71af752c3620"></a><!-- doxytag: member="DdMd::Domain::isInitialized" ref="a5d40f267dbc50e5e80dd71af752c3620" args="() const " -->
+<a class="anchor" id="a06fb7e618207f58603b5cda77fb4fc59"></a><!-- doxytag: member="DdMd::Domain::isInitialized" ref="a06fb7e618207f58603b5cda77fb4fc59" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isInitialized </td>
+          <td class="memname">bool DdMd::Domain::isInitialized </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -657,12 +657,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a32615f88a60f79ffa6ff0f13ea1b9f28"></a><!-- doxytag: member="DdMd::Domain::hasBoundary" ref="a32615f88a60f79ffa6ff0f13ea1b9f28" args="() const " -->
+<a class="anchor" id="aaaed02d71cabab686b3097c56541e17b"></a><!-- doxytag: member="DdMd::Domain::hasBoundary" ref="aaaed02d71cabab686b3097c56541e17b" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool hasBoundary </td>
+          <td class="memname">bool DdMd::Domain::hasBoundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -675,7 +675,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Domain_8h_source.html#l00335">335</a> of file <a class="el" href="Domain_8h_source.html">Domain.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Domain_8cpp_source.html#l00071">Domain::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="Domain_8cpp_source.html#l00071">readParam()</a>.</p>
 
 </div>
 </div>
@@ -684,7 +684,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="Domain_8cpp_source.html">Domain.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

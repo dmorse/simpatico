@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: ArraySet&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::ArraySet&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>ArraySet&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Pointer__Array__Module.html">Pointer Arrays</a></div></h1>  </div>
+<h1>Util::ArraySet&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Pointer__Array__Module.html">Pointer Arrays</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::ArraySet" --><!-- doxytag: inherits="Util::PArray" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -57,20 +57,20 @@
  class Util::ArraySet&lt; Data &gt;</h3>
 
 <p>A container for pointers to a subset of elements of an associated array. </p>
-<p>An <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a> is a <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a> that stores pointers to a subset of the elements of an associated <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> container or bare C array. Pointers to the elements of this set are stored in a contiguous sequence, with indices in the range 0, ..., <a class="el" href="classUtil_1_1PArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size.">size()</a> - 1. The order in which these pointers are stored is mutable, and generally changes whenever an element is removed.</p>
-<p>The <a class="el" href="classUtil_1_1ArraySet.html#a079948f17008f2c6e2c97162c1f45c1e" title="Append an element to the set.">append()</a> method appends a pointer to a new element to the end of the sequence and increments the size. The <a class="el" href="classUtil_1_1ArraySet.html#af1d4696b31a60f108ef03c9fb230ba66" title="Remove an element from the set.">remove()</a> method removes a specified element, then moves the pointer of the last element to the space vacated by the removed element (unless the removed element was the last in the sequence), and decrements the size. The order in which the remaining elements of an <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a> are stored thus can change whenever an element is removed.</p>
+<p>An <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a> is a <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a> that stores pointers to a subset of the elements of an associated <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> container or bare C array. Pointers to the elements of this set are stored in a contiguous sequence, with indices in the range 0, ..., <a class="el" href="classUtil_1_1PArray.html#a94498ac5aa7b6398c381f5101fb64f38" title="Return logical size.">size()</a> - 1. The order in which these pointers are stored is mutable, and generally changes whenever an element is removed.</p>
+<p>The <a class="el" href="classUtil_1_1ArraySet.html#a369d0413775cfab246ed105a6a103735" title="Append an element to the set.">append()</a> method appends a pointer to a new element to the end of the sequence and increments the size. The <a class="el" href="classUtil_1_1ArraySet.html#a7c21a57396aa00fb4e2e755415d20a72" title="Remove an element from the set.">remove()</a> method removes a specified element, then moves the pointer of the last element to the space vacated by the removed element (unless the removed element was the last in the sequence), and decrements the size. The order in which the remaining elements of an <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a> are stored thus can change whenever an element is removed.</p>
 <p>An <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a> provides O(N) sequential access to all elements of a set, O(1) insertion and deletion, and O(1) access to a randomly chosen element. </p>
 
 <p>Definition at line <a class="el" href="ArraySet_8h_source.html#l00045">45</a> of file <a class="el" href="ArraySet_8h_source.html">ArraySet.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="ArraySet_8h_source.html">ArraySet.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for ArraySet&lt; Data &gt;:</div>
+Inheritance diagram for Util::ArraySet&lt; Data &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classUtil_1_1ArraySet.png" usemap="#ArraySet&lt; Data &gt;_map" alt=""/>
-  <map id="ArraySet&lt; Data &gt;_map" name="ArraySet&lt; Data &gt;_map">
-<area href="classUtil_1_1PArray.html" alt="PArray&lt; Data &gt;" shape="rect" coords="0,0,113,24"/>
+  <img src="classUtil_1_1ArraySet.png" usemap="#Util::ArraySet&lt; Data &gt;_map" alt=""/>
+  <map id="Util::ArraySet&lt; Data &gt;_map" name="Util::ArraySet&lt; Data &gt;_map">
+<area href="classUtil_1_1PArray.html" alt="Util::PArray&lt; Data &gt;" shape="rect" coords="0,0,136,24"/>
 </map>
  </div></div>
 
@@ -78,40 +78,42 @@ Inheritance diagram for ArraySet&lt; Data &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a2a0737cf0d566c0285be2d312956de2c">ArraySet</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a2a0737cf0d566c0285be2d312956de2c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#ad04449bec67b731a6fcdc36948019cac">~ArraySet</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ad04449bec67b731a6fcdc36948019cac"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a633aa00eb20ebaddaa6de9eadfd07081">allocate</a> (const Data *array, int capacity)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate with a C array and allocate required memory.  <a href="#a633aa00eb20ebaddaa6de9eadfd07081"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#aae4735ab886d41321fa15b7da820b944">allocate</a> (const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; Data &gt; &amp;array)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate with an <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> container and allocate required memory.  <a href="#aae4735ab886d41321fa15b7da820b944"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#ab518733b8c00197c369ebc1bbb900a09">ArraySet</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ab518733b8c00197c369ebc1bbb900a09"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a2bd362d1e0877b43c42dfbadf7195180">~ArraySet</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a2bd362d1e0877b43c42dfbadf7195180"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a5c12e86ed6a4c2051b32c348991779cc">allocate</a> (const Data *array, int capacity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate with a C array and allocate required memory.  <a href="#a5c12e86ed6a4c2051b32c348991779cc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a97280670f56e2d7d7b623d7b6879bd7f">allocate</a> (const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; Data &gt; &amp;array)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate with an <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> container and allocate required memory.  <a href="#a97280670f56e2d7d7b623d7b6879bd7f"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Mutators</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a079948f17008f2c6e2c97162c1f45c1e">append</a> (Data &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Append an element to the set.  <a href="#a079948f17008f2c6e2c97162c1f45c1e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#af1d4696b31a60f108ef03c9fb230ba66">remove</a> (const Data &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove an element from the set.  <a href="#af1d4696b31a60f108ef03c9fb230ba66"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a62312da960f11ad38c115903b8156d96">pop</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop the topmost from the set.  <a href="#a62312da960f11ad38c115903b8156d96"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#ac8bb3912a3ce86b15842e79d0b421204">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset to empty state.  <a href="#ac8bb3912a3ce86b15842e79d0b421204"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a369d0413775cfab246ed105a6a103735">append</a> (Data &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Append an element to the set.  <a href="#a369d0413775cfab246ed105a6a103735"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a7c21a57396aa00fb4e2e755415d20a72">remove</a> (const Data &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove an element from the set.  <a href="#a7c21a57396aa00fb4e2e755415d20a72"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#af43a53675807b89feaaa9c2f0baa116d">pop</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop the topmost from the set.  <a href="#af43a53675807b89feaaa9c2f0baa116d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#ad3af3cbc5fbdfa5fad49c042f2fadc37">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset to empty state.  <a href="#ad3af3cbc5fbdfa5fad49c042f2fadc37"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a883095d5e4830b50cc35f5fb2755f6e2">index</a> (const Data &amp;data) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current index of an element within the set, if any.  <a href="#a883095d5e4830b50cc35f5fb2755f6e2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a0bcdab3616db481dd211594529479f94">isAllocated</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a> is initialized, false otherwise.  <a href="#a0bcdab3616db481dd211594529479f94"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">isValid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a> is valid, or throw an exception.  <a href="#aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a4a4fecb6d7cd9d0b8eb6579eee183af8">dump</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the internal state of the <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a> to std::cout.  <a href="#a4a4fecb6d7cd9d0b8eb6579eee183af8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a7653d340f6ef7a20f678e58ab7fd3f07">index</a> (const Data &amp;data) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the current index of an element within the set, if any.  <a href="#a7653d340f6ef7a20f678e58ab7fd3f07"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a9a4e0d0f7af9b1290c9405d17ccfd68a">isAllocated</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a> is initialized, false otherwise.  <a href="#a9a4e0d0f7af9b1290c9405d17ccfd68a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a681d106ca3c4a19c6494ee1b54494b3a">isValid</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a> is valid, or throw an exception.  <a href="#a681d106ca3c4a19c6494ee1b54494b3a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArraySet.html#a29d735780afefc4dfb6e0cadf991b654">dump</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the internal state of the <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a> to std::cout.  <a href="#a29d735780afefc4dfb6e0cadf991b654"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a2a0737cf0d566c0285be2d312956de2c"></a><!-- doxytag: member="Util::ArraySet::ArraySet" ref="a2a0737cf0d566c0285be2d312956de2c" args="()" -->
+<a class="anchor" id="ab518733b8c00197c369ebc1bbb900a09"></a><!-- doxytag: member="Util::ArraySet::ArraySet" ref="ab518733b8c00197c369ebc1bbb900a09" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1ArraySet.html">ArraySet</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1ArraySet.html">ArraySet</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -126,12 +128,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad04449bec67b731a6fcdc36948019cac"></a><!-- doxytag: member="Util::ArraySet::~ArraySet" ref="ad04449bec67b731a6fcdc36948019cac" args="()" -->
+<a class="anchor" id="a2bd362d1e0877b43c42dfbadf7195180"></a><!-- doxytag: member="Util::ArraySet::~ArraySet" ref="a2bd362d1e0877b43c42dfbadf7195180" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1ArraySet.html">ArraySet</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::~<a class="el" href="classUtil_1_1ArraySet.html">ArraySet</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -147,12 +151,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a633aa00eb20ebaddaa6de9eadfd07081"></a><!-- doxytag: member="Util::ArraySet::allocate" ref="a633aa00eb20ebaddaa6de9eadfd07081" args="(const Data *array, int capacity)" -->
+<a class="anchor" id="a5c12e86ed6a4c2051b32c348991779cc"></a><!-- doxytag: member="Util::ArraySet::allocate" ref="a5c12e86ed6a4c2051b32c348991779cc" args="(const Data *array, int capacity)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::allocate </td>
           <td>(</td>
           <td class="paramtype">const Data *&#160;</td>
           <td class="paramname"><em>array</em>, </td>
@@ -189,12 +195,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aae4735ab886d41321fa15b7da820b944"></a><!-- doxytag: member="Util::ArraySet::allocate" ref="aae4735ab886d41321fa15b7da820b944" args="(const Array&lt; Data &gt; &amp;array)" -->
+<a class="anchor" id="a97280670f56e2d7d7b623d7b6879bd7f"></a><!-- doxytag: member="Util::ArraySet::allocate" ref="a97280670f56e2d7d7b623d7b6879bd7f" args="(const Array&lt; Data &gt; &amp;array)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::allocate </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>array</em></td><td>)</td>
@@ -215,16 +223,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ArraySet_8h_source.html#l00235">235</a> of file <a class="el" href="ArraySet_8h_source.html">ArraySet.h</a>.</p>
 
-<p>References <a class="el" href="Array_8h_source.html#l00146">Array&lt; Data &gt;::capacity()</a>.</p>
+<p>References <a class="el" href="Array_8h_source.html#l00146">Util::Array&lt; Data &gt;::capacity()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a079948f17008f2c6e2c97162c1f45c1e"></a><!-- doxytag: member="Util::ArraySet::append" ref="a079948f17008f2c6e2c97162c1f45c1e" args="(Data &amp;data)" -->
+<a class="anchor" id="a369d0413775cfab246ed105a6a103735"></a><!-- doxytag: member="Util::ArraySet::append" ref="a369d0413775cfab246ed105a6a103735" args="(Data &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void append </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::append </td>
           <td>(</td>
           <td class="paramtype">Data &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -249,12 +259,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af1d4696b31a60f108ef03c9fb230ba66"></a><!-- doxytag: member="Util::ArraySet::remove" ref="af1d4696b31a60f108ef03c9fb230ba66" args="(const Data &amp;data)" -->
+<a class="anchor" id="a7c21a57396aa00fb4e2e755415d20a72"></a><!-- doxytag: member="Util::ArraySet::remove" ref="a7c21a57396aa00fb4e2e755415d20a72" args="(const Data &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void remove </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::remove </td>
           <td>(</td>
           <td class="paramtype">const Data &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -280,12 +292,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a62312da960f11ad38c115903b8156d96"></a><!-- doxytag: member="Util::ArraySet::pop" ref="a62312da960f11ad38c115903b8156d96" args="()" -->
+<a class="anchor" id="af43a53675807b89feaaa9c2f0baa116d"></a><!-- doxytag: member="Util::ArraySet::pop" ref="af43a53675807b89feaaa9c2f0baa116d" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data &amp; pop </td>
+          <td class="memname">Data &amp; <a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::pop </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -303,12 +317,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac8bb3912a3ce86b15842e79d0b421204"></a><!-- doxytag: member="Util::ArraySet::clear" ref="ac8bb3912a3ce86b15842e79d0b421204" args="()" -->
+<a class="anchor" id="ad3af3cbc5fbdfa5fad49c042f2fadc37"></a><!-- doxytag: member="Util::ArraySet::clear" ref="ad3af3cbc5fbdfa5fad49c042f2fadc37" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void clear </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -323,12 +339,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a883095d5e4830b50cc35f5fb2755f6e2"></a><!-- doxytag: member="Util::ArraySet::index" ref="a883095d5e4830b50cc35f5fb2755f6e2" args="(const Data &amp;data) const " -->
+<a class="anchor" id="a7653d340f6ef7a20f678e58ab7fd3f07"></a><!-- doxytag: member="Util::ArraySet::index" ref="a7653d340f6ef7a20f678e58ab7fd3f07" args="(const Data &amp;data) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int index </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::index </td>
           <td>(</td>
           <td class="paramtype">const Data &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -340,7 +358,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the current index of an element within the set, if any. </p>
 <p>Return the current index of an element within the set, or return a negative value -1 if the element is not in the set.</p>
-<p>This method returns the current index of the pointer to object data within this <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a>, in the range 0 &lt; index &lt; <a class="el" href="classUtil_1_1PArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size.">size()</a> -1. The method returns -1 if data is an element of the associated array but is not in the <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a>.</p>
+<p>This method returns the current index of the pointer to object data within this <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a>, in the range 0 &lt; index &lt; <a class="el" href="classUtil_1_1PArray.html#a94498ac5aa7b6398c381f5101fb64f38" title="Return logical size.">size()</a> -1. The method returns -1 if data is an element of the associated array but is not in the <a class="el" href="classUtil_1_1ArraySet.html" title="A container for pointers to a subset of elements of an associated array.">ArraySet</a>.</p>
 <p>Throws an exception if data is not in the associated array.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -356,12 +374,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0bcdab3616db481dd211594529479f94"></a><!-- doxytag: member="Util::ArraySet::isAllocated" ref="a0bcdab3616db481dd211594529479f94" args="() const " -->
+<a class="anchor" id="a9a4e0d0f7af9b1290c9405d17ccfd68a"></a><!-- doxytag: member="Util::ArraySet::isAllocated" ref="a9a4e0d0f7af9b1290c9405d17ccfd68a" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool isAllocated </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::isAllocated </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -376,12 +396,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><!-- doxytag: member="Util::ArraySet::isValid" ref="aac1b70a2ed67ead038c4d3f5ac4d8a81" args="() const " -->
+<a class="anchor" id="a681d106ca3c4a19c6494ee1b54494b3a"></a><!-- doxytag: member="Util::ArraySet::isValid" ref="a681d106ca3c4a19c6494ee1b54494b3a" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::isValid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -398,12 +420,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4a4fecb6d7cd9d0b8eb6579eee183af8"></a><!-- doxytag: member="Util::ArraySet::dump" ref="a4a4fecb6d7cd9d0b8eb6579eee183af8" args="() const " -->
+<a class="anchor" id="a29d735780afefc4dfb6e0cadf991b654"></a><!-- doxytag: member="Util::ArraySet::dump" ref="a29d735780afefc4dfb6e0cadf991b654" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void dump </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1ArraySet.html">Util::ArraySet</a>&lt; Data &gt;::dump </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -420,7 +444,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="ArraySet_8h_source.html">ArraySet.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: ComMSD Class Reference</title>
+<title>Simpatico: McMd::ComMSD Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>ComMSD Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>McMd::ComMSD Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::ComMSD" --><!-- doxytag: inherits="SystemDiagnostic&lt; System &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -59,16 +59,16 @@
 </div>
 <p><code>#include &lt;<a class="el" href="ComMSD_8h_source.html">ComMSD.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for ComMSD:</div>
+Inheritance diagram for McMd::ComMSD:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1ComMSD.png" usemap="#ComMSD_map" alt=""/>
-  <map id="ComMSD_map" name="ComMSD_map">
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; System &gt;" shape="rect" coords="92,168,267,192"/>
-<area href="classMcMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="92,112,267,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,175,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="185,56,360,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,175,24"/>
+  <img src="classMcMd_1_1ComMSD.png" usemap="#McMd::ComMSD_map" alt=""/>
+  <map id="McMd::ComMSD_map" name="McMd::ComMSD_map">
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; System &gt;" shape="rect" coords="113,168,330,192"/>
+<area href="classMcMd_1_1Diagnostic.html" alt="McMd::Diagnostic" shape="rect" coords="113,112,330,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,217,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="227,56,444,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,217,24"/>
 </map>
  </div></div>
 
@@ -76,31 +76,31 @@ Inheritance diagram for ComMSD:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#a26a73d0db2ec26e8a09f927978c7f8cf">ComMSD</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a26a73d0db2ec26e8a09f927978c7f8cf"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine number of molecules and allocate memory.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#afc17577823a371a5ead4e51ebb8ec2ef">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate center of mass displacement of all chains and add to ensemble.  <a href="#afc17577823a371a5ead4e51ebb8ec2ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#a7437b254e19e7e12fc2ec99945f4ecea">output</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to file after simulation is completed.  <a href="#a7437b254e19e7e12fc2ec99945f4ecea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#aa3d71af4cc5dfb2be6be816a8f562416">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#aa3d71af4cc5dfb2be6be816a8f562416"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#adf74bfe2b726d87d0048999aef290e6c">ComMSD</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#adf74bfe2b726d87d0048999aef290e6c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#ad84a63304652af39c36382aac8eab467">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#ad84a63304652af39c36382aac8eab467"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#a45029b8dc736f8ca116a084a7a60f1e9">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine number of molecules and allocate memory.  <a href="#a45029b8dc736f8ca116a084a7a60f1e9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#a2950960e61df37a3111e4753be8bc99d">sample</a> (long iStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate center of mass displacement of all chains and add to ensemble.  <a href="#a2950960e61df37a3111e4753be8bc99d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#a16f7dba5302c98e15d65d6beb717c375">output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to file after simulation is completed.  <a href="#a16f7dba5302c98e15d65d6beb717c375"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#a45338ce76ac1396c20a691f4be928677">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#a45338ce76ac1396c20a691f4be928677"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#abba811e8895714bbc9ed18ecc250686d">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#abba811e8895714bbc9ed18ecc250686d"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ComMSD.html#a7e0e1dfffd6ee01aa38a27182c49bd85">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a7e0e1dfffd6ee01aa38a27182c49bd85"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a26a73d0db2ec26e8a09f927978c7f8cf"></a><!-- doxytag: member="McMd::ComMSD::ComMSD" ref="a26a73d0db2ec26e8a09f927978c7f8cf" args="(System &amp;system)" -->
+<a class="anchor" id="adf74bfe2b726d87d0048999aef290e6c"></a><!-- doxytag: member="McMd::ComMSD::ComMSD" ref="adf74bfe2b726d87d0048999aef290e6c" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1ComMSD.html">ComMSD</a> </td>
+          <td class="memname">McMd::ComMSD::ComMSD </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -123,12 +123,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::ComMSD::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ad84a63304652af39c36382aac8eab467"></a><!-- doxytag: member="McMd::ComMSD::readParam" ref="ad84a63304652af39c36382aac8eab467" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::ComMSD::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -146,7 +146,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="ComMSD_8cpp_source.html#l00048">48</a> of file <a class="el" href="ComMSD_8cpp_source.html">ComMSD.cpp</a>.</p>
 
@@ -154,12 +154,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::ComMSD::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a45029b8dc736f8ca116a084a7a60f1e9"></a><!-- doxytag: member="McMd::ComMSD::setup" ref="a45029b8dc736f8ca116a084a7a60f1e9" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void McMd::ComMSD::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -170,7 +170,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Determine number of molecules and allocate memory. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a93c5a174f073b2587a484999ca550829">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="ComMSD_8cpp_source.html#l00083">83</a> of file <a class="el" href="ComMSD_8cpp_source.html">ComMSD.cpp</a>.</p>
 
@@ -178,12 +178,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afc17577823a371a5ead4e51ebb8ec2ef"></a><!-- doxytag: member="McMd::ComMSD::sample" ref="afc17577823a371a5ead4e51ebb8ec2ef" args="(long iStep)" -->
+<a class="anchor" id="a2950960e61df37a3111e4753be8bc99d"></a><!-- doxytag: member="McMd::ComMSD::sample" ref="a2950960e61df37a3111e4753be8bc99d" args="(long iStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void McMd::ComMSD::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -201,7 +201,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f">Diagnostic</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#ae265d934fee552e1bd50ce37930ac63c">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="ComMSD_8cpp_source.html#l00112">112</a> of file <a class="el" href="ComMSD_8cpp_source.html">ComMSD.cpp</a>.</p>
 
@@ -209,12 +209,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7437b254e19e7e12fc2ec99945f4ecea"></a><!-- doxytag: member="McMd::ComMSD::output" ref="a7437b254e19e7e12fc2ec99945f4ecea" args="()" -->
+<a class="anchor" id="a16f7dba5302c98e15d65d6beb717c375"></a><!-- doxytag: member="McMd::ComMSD::output" ref="a16f7dba5302c98e15d65d6beb717c375" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void McMd::ComMSD::output </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -225,18 +225,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Output results to file after simulation is completed. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a209e4a470fcdeb3d5b87da3dd6960def">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac5481c8016af4c70d19d59905261c0bf">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="ComMSD_8cpp_source.html#l00158">158</a> of file <a class="el" href="ComMSD_8cpp_source.html">ComMSD.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><!-- doxytag: member="McMd::ComMSD::save" ref="a248dde9ccc0ef67e5d9cc5fd0bdc2b64" args="(Serializable::OArchiveType &amp;ar)" -->
+<a class="anchor" id="a45338ce76ac1396c20a691f4be928677"></a><!-- doxytag: member="McMd::ComMSD::save" ref="a45338ce76ac1396c20a691f4be928677" args="(Serializable::OArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void save </td>
+          <td class="memname">void McMd::ComMSD::save </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -254,18 +254,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac27203b7ee783c3cebc054c290e313ed">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="ComMSD_8cpp_source.html#l00205">205</a> of file <a class="el" href="ComMSD_8cpp_source.html">ComMSD.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa3d71af4cc5dfb2be6be816a8f562416"></a><!-- doxytag: member="McMd::ComMSD::load" ref="aa3d71af4cc5dfb2be6be816a8f562416" args="(Serializable::IArchiveType &amp;ar)" -->
+<a class="anchor" id="abba811e8895714bbc9ed18ecc250686d"></a><!-- doxytag: member="McMd::ComMSD::load" ref="abba811e8895714bbc9ed18ecc250686d" args="(Serializable::IArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void load </td>
+          <td class="memname">void McMd::ComMSD::load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -283,18 +283,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#aa3d71af4cc5dfb2be6be816a8f562416">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#afa44b6fb962ca0a8a979d0add2dc85b9">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="ComMSD_8cpp_source.html#l00211">211</a> of file <a class="el" href="ComMSD_8cpp_source.html">ComMSD.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="McMd::ComMSD::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="a7e0e1dfffd6ee01aa38a27182c49bd85"></a><!-- doxytag: member="McMd::ComMSD::serialize" ref="a7e0e1dfffd6ee01aa38a27182c49bd85" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void McMd::ComMSD::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -323,7 +325,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6765e839ab267e4959384e35a4112451">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6056717b367040d8605f67794a7e2ebc">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="ComMSD_8h_source.html#l00134">134</a> of file <a class="el" href="ComMSD_8h_source.html">ComMSD.h</a>.</p>
 
@@ -336,7 +338,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="ComMSD_8cpp_source.html">ComMSD.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:54 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:25 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

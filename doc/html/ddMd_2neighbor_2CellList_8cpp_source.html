@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -72,11 +72,11 @@
 <a name="l00021"></a>00021    <span class="comment">/*</span>
 <a name="l00022"></a>00022 <span class="comment">   * Constructor.</span>
 <a name="l00023"></a>00023 <span class="comment">   */</span>
-<a name="l00024"></a>00024    <a class="code" href="classDdMd_1_1CellList.html#a9a3af8501f8608e8d5fdecfbe0c85f8e" title="Constructor.">CellList::CellList</a>()
-<a name="l00025"></a><a class="code" href="classDdMd_1_1CellList.html#a9a3af8501f8608e8d5fdecfbe0c85f8e">00025</a>     : nAtom_(0),
+<a name="l00024"></a>00024    <a class="code" href="classDdMd_1_1CellList.html#a2aa58b0cd5493d2977245c77aeba3f1c" title="Constructor.">CellList::CellList</a>()
+<a name="l00025"></a><a class="code" href="classDdMd_1_1CellList.html#a2aa58b0cd5493d2977245c77aeba3f1c">00025</a>     : nAtom_(0),
 <a name="l00026"></a>00026       isBuilt_(false)
 <a name="l00027"></a>00027    {
-<a name="l00028"></a>00028       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00028"></a>00028       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00029"></a>00029          cellLengths_[i] = 0.0;
 <a name="l00030"></a>00030       }
 <a name="l00031"></a>00031    }
@@ -84,14 +84,14 @@
 <a name="l00033"></a>00033    <span class="comment">/*</span>
 <a name="l00034"></a>00034 <span class="comment">   * Destructor. </span>
 <a name="l00035"></a>00035 <span class="comment">   */</span>
-<a name="l00036"></a>00036    <a class="code" href="classDdMd_1_1CellList.html#ac5ddcb849045a381aa407e75d80c7f5f" title="Destructor.">CellList::~CellList</a>()
-<a name="l00037"></a><a class="code" href="classDdMd_1_1CellList.html#ac5ddcb849045a381aa407e75d80c7f5f">00037</a>    {}
+<a name="l00036"></a>00036    <a class="code" href="classDdMd_1_1CellList.html#ab139bfdac19c3328607cee4e242952c8" title="Destructor.">CellList::~CellList</a>()
+<a name="l00037"></a><a class="code" href="classDdMd_1_1CellList.html#ab139bfdac19c3328607cee4e242952c8">00037</a>    {}
 <a name="l00038"></a>00038 
 <a name="l00039"></a>00039    <span class="comment">/*</span>
 <a name="l00040"></a>00040 <span class="comment">   * Allocate memory for this CellList.</span>
 <a name="l00041"></a>00041 <span class="comment">   */</span>
-<a name="l00042"></a>00042    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1CellList.html#a97346dcf4a96ecbbc279eaaa12629371" title="Allocate memory for this CellList.">CellList::allocate</a>(<span class="keywordtype">int</span> atomCapacity, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; lower, 
-<a name="l00043"></a><a class="code" href="classDdMd_1_1CellList.html#a97346dcf4a96ecbbc279eaaa12629371">00043</a>                            <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; upper, <span class="keywordtype">double</span> cutoff)
+<a name="l00042"></a>00042    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1CellList.html#a3679f3de692b89c6a24d9a45d0f56744" title="Allocate memory for this CellList.">CellList::allocate</a>(<span class="keywordtype">int</span> atomCapacity, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; lower, 
+<a name="l00043"></a><a class="code" href="classDdMd_1_1CellList.html#a3679f3de692b89c6a24d9a45d0f56744">00043</a>                            <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; upper, <span class="keywordtype">double</span> cutoff)
 <a name="l00044"></a>00044    {
 <a name="l00045"></a>00045 
 <a name="l00046"></a>00046       <span class="comment">// Allocate arrays of tag and handle objects</span>
@@ -120,7 +120,7 @@
 <a name="l00069"></a>00069       upper_ = upper;
 <a name="l00070"></a>00070       lower_ = lower;
 <a name="l00071"></a>00071 
-<a name="l00072"></a>00072       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00072"></a>00072       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00073"></a>00073 
 <a name="l00074"></a>00074          lengths[i] = upper_[i] - lower_[i];
 <a name="l00075"></a>00075          assert(lengths[i] &gt; 0.0);
@@ -148,8 +148,8 @@
 <a name="l00097"></a>00097    <span class="comment">/*</span>
 <a name="l00098"></a>00098 <span class="comment">   * Construct grid of cells, build linked list and identify neighbors.</span>
 <a name="l00099"></a>00099 <span class="comment">   */</span>
-<a name="l00100"></a>00100    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1CellList.html#a9b8bff08d561156cd51152e8b396cf58" title="Make the cell grid.">CellList::makeGrid</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; lower, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; upper, <span class="keywordtype">double</span> cutoff)
-<a name="l00101"></a><a class="code" href="classDdMd_1_1CellList.html#a9b8bff08d561156cd51152e8b396cf58">00101</a>    {
+<a name="l00100"></a>00100    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1CellList.html#ac2c80627afd5dfbd01e4cb3181f207c5" title="Make the cell grid.">CellList::makeGrid</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; lower, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; upper, <span class="keywordtype">double</span> cutoff)
+<a name="l00101"></a><a class="code" href="classDdMd_1_1CellList.html#ac2c80627afd5dfbd01e4cb3181f207c5">00101</a>    {
 <a name="l00102"></a>00102 
 <a name="l00103"></a>00103       <span class="comment">// Calculate required grid dimensions</span>
 <a name="l00104"></a>00104       setGridDimensions(lower, upper, cutoff);
@@ -173,9 +173,9 @@
 <a name="l00122"></a>00122             <span class="keywordflow">for</span> (p[2] = 1; p[2] &lt; grid_.dimension(2) - 1; ++p[2]) {
 <a name="l00123"></a>00123                ic = grid_.rank(p);
 <a name="l00124"></a>00124                cellPtr = &amp;cells_[ic];
-<a name="l00125"></a>00125                cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a81f9004a737fb48eb950df6a693449e8" title="Mark as a ghost or local cell.">setIsGhostCell</a>(<span class="keyword">false</span>);
+<a name="l00125"></a>00125                cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a35bc15c3a87fec264bd2004d226b2e00" title="Mark as a ghost or local cell.">setIsGhostCell</a>(<span class="keyword">false</span>);
 <a name="l00126"></a>00126                <span class="keywordflow">if</span> (prevPtr) {
-<a name="l00127"></a>00127                   prevPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a22d28f1e9824dc64c2d2fac5b27e8b3c" title="Set the pointer to the next cell in the list.">setNextCell</a>(*cellPtr);
+<a name="l00127"></a>00127                   prevPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#ae88e3f3b3a83456f8c98b3946e626a48" title="Set the pointer to the next cell in the list.">setNextCell</a>(*cellPtr);
 <a name="l00128"></a>00128                } <span class="keywordflow">else</span> {
 <a name="l00129"></a>00129                   begin_ = cellPtr;
 <a name="l00130"></a>00130                }
@@ -183,11 +183,11 @@
 <a name="l00132"></a>00132             }
 <a name="l00133"></a>00133          }
 <a name="l00134"></a>00134       }
-<a name="l00135"></a>00135       cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a6a39db46b4f7323ec8c7d654c277a956" title="Set this to be the last cell in the list.">setLastCell</a>();
+<a name="l00135"></a>00135       cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a69fcf26981e4e0da65a30a6a96db2f3d" title="Set this to be the last cell in the list.">setLastCell</a>();
 <a name="l00136"></a>00136 
 <a name="l00137"></a>00137       <span class="comment">// Calculate range of displacements to neighbor cells</span>
 <a name="l00138"></a>00138       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> dmin, dmax;
-<a name="l00139"></a>00139       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00139"></a>00139       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00140"></a>00140          <span class="keywordflow">if</span> (grid_.dimension(i) &gt; 2) {
 <a name="l00141"></a>00141             dmin[i] = -1;
 <a name="l00142"></a>00142             dmax[i] =  1;
@@ -225,8 +225,8 @@
 <a name="l00174"></a>00174    <span class="comment">/*</span>
 <a name="l00175"></a>00175 <span class="comment">   * Resets all cells to empty state.</span>
 <a name="l00176"></a>00176 <span class="comment">   */</span>
-<a name="l00177"></a>00177    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1CellList.html#ac8bb3912a3ce86b15842e79d0b421204" title="Reset the cell list to its empty state (no Atoms).">CellList::clear</a>()
-<a name="l00178"></a><a class="code" href="classDdMd_1_1CellList.html#ac8bb3912a3ce86b15842e79d0b421204">00178</a>    {
+<a name="l00177"></a>00177    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1CellList.html#aae15fc4934318b9caad30c39d94f969f" title="Reset the cell list to its empty state (no Atoms).">CellList::clear</a>()
+<a name="l00178"></a><a class="code" href="classDdMd_1_1CellList.html#aae15fc4934318b9caad30c39d94f969f">00178</a>    {
 <a name="l00179"></a>00179       <span class="comment">// Clear all Cell objects</span>
 <a name="l00180"></a>00180       <span class="keywordflow">if</span> (grid_.size() &gt; 0) {
 <a name="l00181"></a>00181          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; grid_.size(); ++i) {
@@ -253,8 +253,8 @@
 <a name="l00202"></a>00202    <span class="comment">/*</span>
 <a name="l00203"></a>00203 <span class="comment">   * Initialize all cells and fill them with atoms.</span>
 <a name="l00204"></a>00204 <span class="comment">   */</span>
-<a name="l00205"></a>00205    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1CellList.html#a7740c7ab195c03ac140f1f75f633470f" title="Build the cell list.">CellList::build</a>()
-<a name="l00206"></a><a class="code" href="classDdMd_1_1CellList.html#a7740c7ab195c03ac140f1f75f633470f">00206</a>    {
+<a name="l00205"></a>00205    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3" title="Build the cell list.">CellList::build</a>()
+<a name="l00206"></a><a class="code" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3">00206</a>    {
 <a name="l00207"></a>00207       <span class="comment">// Initialize all cells, by associating each with a</span>
 <a name="l00208"></a>00208       <span class="comment">// block of the handles_ array.</span>
 <a name="l00209"></a>00209 
@@ -274,38 +274,38 @@
 <a name="l00223"></a>00223    <span class="comment">/*</span>
 <a name="l00224"></a>00224 <span class="comment">   * Get total number of atoms in this CellList.</span>
 <a name="l00225"></a>00225 <span class="comment">   */</span>
-<a name="l00226"></a>00226    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1CellList.html#ac91579bd63979a294891d330a5533838" title="Get total number of atoms (local and ghost) in this CellList.">CellList::nAtom</a>()<span class="keyword"> const</span>
-<a name="l00227"></a><a class="code" href="classDdMd_1_1CellList.html#ac91579bd63979a294891d330a5533838">00227</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> nAtom_; }
+<a name="l00226"></a>00226    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1CellList.html#a13b1d437f35cd3206d21c5201431a001" title="Get total number of atoms (local and ghost) in this CellList.">CellList::nAtom</a>()<span class="keyword"> const</span>
+<a name="l00227"></a><a class="code" href="classDdMd_1_1CellList.html#a13b1d437f35cd3206d21c5201431a001">00227</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> nAtom_; }
 <a name="l00228"></a>00228 
 <a name="l00229"></a>00229    <span class="comment">/*</span>
 <a name="l00230"></a>00230 <span class="comment">   * Get number of atoms that were rejected (not added to cells).</span>
 <a name="l00231"></a>00231 <span class="comment">   */</span>
-<a name="l00232"></a>00232    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1CellList.html#aef1c19a0c1e5442f7b9ee3bbd39d6413" title="Get number of atoms that were rejected (not placed in cells)">CellList::nReject</a>()<span class="keyword"> const</span>
-<a name="l00233"></a><a class="code" href="classDdMd_1_1CellList.html#aef1c19a0c1e5442f7b9ee3bbd39d6413">00233</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> nReject_; }
+<a name="l00232"></a>00232    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1CellList.html#a718c4aecf005cc6162d9109107a2f2cf" title="Get number of atoms that were rejected (not placed in cells)">CellList::nReject</a>()<span class="keyword"> const</span>
+<a name="l00233"></a><a class="code" href="classDdMd_1_1CellList.html#a718c4aecf005cc6162d9109107a2f2cf">00233</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> nReject_; }
 <a name="l00234"></a>00234 
 <a name="l00235"></a>00235    <span class="comment">/*</span>
 <a name="l00236"></a>00236 <span class="comment">   * Get the maximum number of atoms for which space is allocated.</span>
 <a name="l00237"></a>00237 <span class="comment">   */</span>
-<a name="l00238"></a>00238    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1CellList.html#a72fbb50e40dfdc5f3710e54aac41b97e" title="Maximum number of atoms for which space is allocated.">CellList::atomCapacity</a>()<span class="keyword"> const</span>
-<a name="l00239"></a><a class="code" href="classDdMd_1_1CellList.html#a72fbb50e40dfdc5f3710e54aac41b97e">00239</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> tags_.capacity(); }
+<a name="l00238"></a>00238    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1CellList.html#af0d5f2d4a532c158b1c864001b3577a9" title="Maximum number of atoms for which space is allocated.">CellList::atomCapacity</a>()<span class="keyword"> const</span>
+<a name="l00239"></a><a class="code" href="classDdMd_1_1CellList.html#af0d5f2d4a532c158b1c864001b3577a9">00239</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> tags_.capacity(); }
 <a name="l00240"></a>00240 
 <a name="l00241"></a>00241    <span class="comment">/*</span>
 <a name="l00242"></a>00242 <span class="comment">   * Get the number of cells for which space has been allocated.</span>
 <a name="l00243"></a>00243 <span class="comment">   */</span>
-<a name="l00244"></a>00244    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1CellList.html#ae1b737ba0b8a4b2fc8814035d132dc99" title="Number of cells for which space has been allocated.">CellList::cellCapacity</a>()<span class="keyword"> const</span>
-<a name="l00245"></a><a class="code" href="classDdMd_1_1CellList.html#ae1b737ba0b8a4b2fc8814035d132dc99">00245</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> cells_.capacity(); }
+<a name="l00244"></a>00244    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1CellList.html#a19f230b8ebbc08967c75f4e412a42506" title="Number of cells for which space has been allocated.">CellList::cellCapacity</a>()<span class="keyword"> const</span>
+<a name="l00245"></a><a class="code" href="classDdMd_1_1CellList.html#a19f230b8ebbc08967c75f4e412a42506">00245</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> cells_.capacity(); }
 <a name="l00246"></a>00246 
 <a name="l00247"></a>00247    <span class="comment">/*</span>
 <a name="l00248"></a>00248 <span class="comment">   * Is this CellList built (i.e., full of atoms)?</span>
 <a name="l00249"></a>00249 <span class="comment">   */</span>
-<a name="l00250"></a>00250    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1CellList.html#af10d7be2a4678e55f767b3149a03fd56" title="Has this CellList been built?">CellList::isBuilt</a>()<span class="keyword"> const</span>
-<a name="l00251"></a><a class="code" href="classDdMd_1_1CellList.html#af10d7be2a4678e55f767b3149a03fd56">00251</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> isBuilt_; }
+<a name="l00250"></a>00250    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1CellList.html#a2bcc850a306f1144025bf6896da3480f" title="Has this CellList been built?">CellList::isBuilt</a>()<span class="keyword"> const</span>
+<a name="l00251"></a><a class="code" href="classDdMd_1_1CellList.html#a2bcc850a306f1144025bf6896da3480f">00251</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> isBuilt_; }
 <a name="l00252"></a>00252 
 <a name="l00253"></a>00253    <span class="comment">/*</span>
 <a name="l00254"></a>00254 <span class="comment">   * Check validity of CellList, throw an Exception if an error is found.</span>
 <a name="l00255"></a>00255 <span class="comment">   */</span>
-<a name="l00256"></a>00256    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1CellList.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if valid, or throw Exception.">CellList::isValid</a>()<span class="keyword"> const</span>
-<a name="l00257"></a><a class="code" href="classDdMd_1_1CellList.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">00257</a> <span class="keyword">   </span>{
+<a name="l00256"></a>00256    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1CellList.html#a204507e1337d618d1c7519a8870ae000" title="Return true if valid, or throw Exception.">CellList::isValid</a>()<span class="keyword"> const</span>
+<a name="l00257"></a><a class="code" href="classDdMd_1_1CellList.html#a204507e1337d618d1c7519a8870ae000">00257</a> <span class="keyword">   </span>{
 <a name="l00258"></a>00258 
 <a name="l00259"></a>00259       <span class="keywordflow">if</span> (isAllocated()) {
 <a name="l00260"></a>00260          <span class="keywordflow">if</span> (tags_.capacity() &lt;= 0) {
@@ -329,16 +329,16 @@
 <a name="l00278"></a>00278          <span class="keywordtype">int</span>   nAtomSum = 0;
 <a name="l00279"></a>00279          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> icell = 0; icell &lt; grid_.size(); ++icell) {
 <a name="l00280"></a>00280             cellPtr = &amp;cells_[icell];
-<a name="l00281"></a>00281             nAtomCell = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#ac91579bd63979a294891d330a5533838" title="Number of atoms in cell.">nAtom</a>();
-<a name="l00282"></a>00282             <span class="keywordflow">if</span> (nAtomCell != cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a72fbb50e40dfdc5f3710e54aac41b97e" title="Capacity of array segment.">atomCapacity</a>()) {
+<a name="l00281"></a>00281             nAtomCell = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#ac5ba44f6436e965590f7abb08f117f18" title="Number of atoms in cell.">nAtom</a>();
+<a name="l00282"></a>00282             <span class="keywordflow">if</span> (nAtomCell != cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a3896ac5e2143503fa317c2e45168eff0" title="Capacity of array segment.">atomCapacity</a>()) {
 <a name="l00283"></a>00283                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Cell nAtom != atomCapacity&quot;</span>);
 <a name="l00284"></a>00284             }
 <a name="l00285"></a>00285             <span class="keywordflow">if</span> (nAtomCell &gt; 0) {
 <a name="l00286"></a>00286                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nAtomCell; ++i) {
-<a name="l00287"></a>00287                   atomPtr = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#adeb75a1511ead6bb578e0e35d163cf94" title="Return a pointer to atom i.">atomPtr</a>(i);
+<a name="l00287"></a>00287                   atomPtr = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#af9d7230404893f8aba828373ef4ee970" title="Return a pointer to atom i.">atomPtr</a>(i);
 <a name="l00288"></a>00288                   <span class="keywordflow">if</span> (atomPtr == 0)
 <a name="l00289"></a>00289                       <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Null Atom* in a Cell&quot;</span>);
-<a name="l00290"></a>00290                   <span class="keywordflow">if</span> (icell != cellIndexFromPosition(atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>())) {
+<a name="l00290"></a>00290                   <span class="keywordflow">if</span> (icell != cellIndexFromPosition(atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>())) {
 <a name="l00291"></a>00291                       <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent position&quot;</span>);
 <a name="l00292"></a>00292                   }
 <a name="l00293"></a>00293                }
@@ -369,7 +369,7 @@
 <a name="l00318"></a>00318 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

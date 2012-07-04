@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,7 +71,7 @@
 <a name="l00020"></a>00020    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt; <span class="keyword">class </span>Group;
 <a name="l00021"></a>00021 
 <a name="l00022"></a>00022    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00023"></a>00023    std::istream&amp; <a class="code" href="namespaceDdMd.html#a74181b023cf44a9612ac683897cd203d" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, Group&lt;N&gt; &amp;group);
+<a name="l00023"></a>00023    std::istream&amp; <a class="code" href="namespaceDdMd.html#ad617f8951e7f59b0ca691c28163ab63a" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, Group&lt;N&gt; &amp;group);
 <a name="l00024"></a>00024 
 <a name="l00025"></a>00025    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
 <a name="l00026"></a>00026    std::ostream&amp; operator&lt;&lt;(std::ostream&amp; out, const Group&lt;N&gt; &amp;group);
@@ -82,7 +82,7 @@
 <a name="l00045"></a>00045 
 <a name="l00046"></a>00046    <span class="keyword">public</span>: 
 <a name="l00047"></a>00047 
-<a name="l00051"></a><a class="code" href="classDdMd_1_1Group.html#a0b29b9393b4b6856ac75b759f4166c13">00051</a>       <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>()
+<a name="l00051"></a><a class="code" href="classDdMd_1_1Group.html#a919eb5adb9f8af90d0cc05a504cb8537">00051</a>       <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>()
 <a name="l00052"></a>00052        : typeId_(-1),
 <a name="l00053"></a>00053          id_(-1),
 <a name="l00054"></a>00054          nPtr_(0)
@@ -94,7 +94,7 @@
 <a name="l00060"></a>00060          plan_.clearFlags();
 <a name="l00061"></a>00061       }
 <a name="l00062"></a>00062             
-<a name="l00066"></a><a class="code" href="classDdMd_1_1Group.html#ac8bb3912a3ce86b15842e79d0b421204">00066</a>       <span class="keywordtype">void</span> clear()
+<a name="l00066"></a><a class="code" href="classDdMd_1_1Group.html#a89b5b9eeb8664b2ec583fd20933c8aea">00066</a>       <span class="keywordtype">void</span> clear()
 <a name="l00067"></a>00067       {
 <a name="l00068"></a>00068          typeId_ = -1;
 <a name="l00069"></a>00069          id_ = -1; 
@@ -106,16 +106,16 @@
 <a name="l00075"></a>00075          plan_.clearFlags();
 <a name="l00076"></a>00076       }
 <a name="l00077"></a>00077    
-<a name="l00083"></a><a class="code" href="classDdMd_1_1Group.html#a3d929477fef71d52c9c6df2ba2d50841">00083</a>       <span class="keywordtype">void</span> setId(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
+<a name="l00083"></a><a class="code" href="classDdMd_1_1Group.html#aa4dfd41c4396641a68d9127b30c6a408">00083</a>       <span class="keywordtype">void</span> setId(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
 <a name="l00084"></a>00084       {  id_ = id; }
 <a name="l00085"></a>00085    
-<a name="l00091"></a><a class="code" href="classDdMd_1_1Group.html#a46b30f8f417b160a678438259066f83e">00091</a>       <span class="keywordtype">void</span> setTypeId(<span class="keywordtype">int</span> typeId)
+<a name="l00091"></a><a class="code" href="classDdMd_1_1Group.html#a728bb1fcbe38d1c87ab05456ccf56ead">00091</a>       <span class="keywordtype">void</span> setTypeId(<span class="keywordtype">int</span> typeId)
 <a name="l00092"></a>00092       {  typeId_ = typeId; }
 <a name="l00093"></a>00093    
-<a name="l00100"></a><a class="code" href="classDdMd_1_1Group.html#a05b15e3b0826e8cd5dfca7421a75d600">00100</a>       <span class="keywordtype">void</span> setAtomId(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> atomId) 
+<a name="l00100"></a><a class="code" href="classDdMd_1_1Group.html#acd455a0313f09abf71a604a44fea01b8">00100</a>       <span class="keywordtype">void</span> setAtomId(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> atomId) 
 <a name="l00101"></a>00101       {  atomIds_[i] = atomId; }
 <a name="l00102"></a>00102     
-<a name="l00109"></a><a class="code" href="classDdMd_1_1Group.html#a03685615280ed5c30234b11ef9466afa">00109</a>       <span class="keywordtype">void</span> setAtomPtr(<span class="keywordtype">int</span> i, <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr)
+<a name="l00109"></a><a class="code" href="classDdMd_1_1Group.html#a329d95fd7ffe33758088247a21d119cc">00109</a>       <span class="keywordtype">void</span> setAtomPtr(<span class="keywordtype">int</span> i, <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr)
 <a name="l00110"></a>00110       {
 <a name="l00111"></a>00111          <span class="keywordflow">if</span> (atomPtr == 0) {
 <a name="l00112"></a>00112             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to set null pointer&quot;</span>);
@@ -126,7 +126,7 @@
 <a name="l00117"></a>00117          atomPtrs_[i] = atomPtr; 
 <a name="l00118"></a>00118       }
 <a name="l00119"></a>00119     
-<a name="l00125"></a><a class="code" href="classDdMd_1_1Group.html#af9e65ea9ae61af1474dfa6d46a9f69dd">00125</a>       <span class="keywordtype">void</span> clearAtomPtr(<span class="keywordtype">int</span> i)
+<a name="l00125"></a><a class="code" href="classDdMd_1_1Group.html#a71301af4bccfbd9ef2c61a7c2c868b26">00125</a>       <span class="keywordtype">void</span> clearAtomPtr(<span class="keywordtype">int</span> i)
 <a name="l00126"></a>00126       {
 <a name="l00127"></a>00127          <span class="keywordflow">if</span> (atomPtrs_[i] != 0) {
 <a name="l00128"></a>00128             --nPtr_;
@@ -134,27 +134,27 @@
 <a name="l00130"></a>00130          }
 <a name="l00131"></a>00131       }
 <a name="l00132"></a>00132   
-<a name="l00136"></a><a class="code" href="classDdMd_1_1Group.html#a2eb65fe220c7b222e031f66374012406">00136</a>       <a class="code" href="classDdMd_1_1Plan.html" title="Plan for communication pattern for exchanging atoms and communicating ghots.">Plan</a>&amp; plan()
+<a name="l00136"></a><a class="code" href="classDdMd_1_1Group.html#a6c30f0c4ae0b1ea132c338fec470de9a">00136</a>       <a class="code" href="classDdMd_1_1Plan.html" title="Plan for communication pattern for exchanging atoms and communicating ghots.">Plan</a>&amp; plan()
 <a name="l00137"></a>00137       {  <span class="keywordflow">return</span> plan_; }
 <a name="l00138"></a>00138 
 <a name="l00139"></a>00139       <span class="comment">// Accessors</span>
 <a name="l00140"></a>00140  
-<a name="l00144"></a><a class="code" href="classDdMd_1_1Group.html#ae0c063cfb2479f614be43b9d2f92ba63">00144</a>       <span class="keywordtype">int</span> id()<span class="keyword"> const</span>
+<a name="l00144"></a><a class="code" href="classDdMd_1_1Group.html#a28a7311f8dbf7b1de0461a34ec408452">00144</a>       <span class="keywordtype">int</span> id()<span class="keyword"> const</span>
 <a name="l00145"></a>00145 <span class="keyword">      </span>{  <span class="keywordflow">return</span> id_; }
 <a name="l00146"></a>00146    
-<a name="l00150"></a><a class="code" href="classDdMd_1_1Group.html#af68aca851173d8f261a70897bff349c9">00150</a>       <span class="keywordtype">int</span> typeId()<span class="keyword"> const</span>
+<a name="l00150"></a><a class="code" href="classDdMd_1_1Group.html#aab3d028c37ceced5abb21ab3bb124478">00150</a>       <span class="keywordtype">int</span> typeId()<span class="keyword"> const</span>
 <a name="l00151"></a>00151 <span class="keyword">      </span>{  <span class="keywordflow">return</span> typeId_; }
 <a name="l00152"></a>00152    
-<a name="l00158"></a><a class="code" href="classDdMd_1_1Group.html#ab366447c15a7669021df12ff0e090520">00158</a>       <span class="keywordtype">int</span> atomId(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00158"></a><a class="code" href="classDdMd_1_1Group.html#a949e11f2c2e90e04396e1a0b41ad3486">00158</a>       <span class="keywordtype">int</span> atomId(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00159"></a>00159 <span class="keyword">      </span>{  <span class="keywordflow">return</span> atomIds_[i]; }
 <a name="l00160"></a>00160     
-<a name="l00166"></a><a class="code" href="classDdMd_1_1Group.html#af01a1b9c55c9d25b8ff0f3a0e0990cd4">00166</a>       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00166"></a><a class="code" href="classDdMd_1_1Group.html#abdf22bd11dfe9e81528168e5745b81d2">00166</a>       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00167"></a>00167 <span class="keyword">      </span>{  <span class="keywordflow">return</span> atomPtrs_[i]; }
 <a name="l00168"></a>00168     
-<a name="l00172"></a><a class="code" href="classDdMd_1_1Group.html#add372fe590057ed275e1f5beb812947d">00172</a>       <span class="keywordtype">int</span> nPtr()<span class="keyword"> const </span>
+<a name="l00172"></a><a class="code" href="classDdMd_1_1Group.html#acd99909490ef15e665a9fa77864f48c2">00172</a>       <span class="keywordtype">int</span> nPtr()<span class="keyword"> const </span>
 <a name="l00173"></a>00173 <span class="keyword">      </span>{  <span class="keywordflow">return</span> nPtr_; }
 <a name="l00174"></a>00174    
-<a name="l00178"></a><a class="code" href="classDdMd_1_1Group.html#ac200ebea9cc4a3c405520cba770f1aff">00178</a>       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Plan.html" title="Plan for communication pattern for exchanging atoms and communicating ghots.">Plan</a>&amp; plan()<span class="keyword"> const</span>
+<a name="l00178"></a><a class="code" href="classDdMd_1_1Group.html#ac5403d447f2aff146857f87f71ccaa5a">00178</a>       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Plan.html" title="Plan for communication pattern for exchanging atoms and communicating ghots.">Plan</a>&amp; plan()<span class="keyword"> const</span>
 <a name="l00179"></a>00179 <span class="keyword">      </span>{  <span class="keywordflow">return</span> plan_; }
 <a name="l00180"></a>00180 
 <a name="l00181"></a>00181    <span class="keyword">private</span>:
@@ -182,7 +182,7 @@
 <a name="l00208"></a>00208    <span class="comment">// Friend operator declarations</span>
 <a name="l00209"></a>00209 
 <a name="l00219"></a>00219    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00220"></a>00220    std::istream&amp; <a class="code" href="namespaceDdMd.html#a74181b023cf44a9612ac683897cd203d" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, Group&lt;N&gt; &amp;group);
+<a name="l00220"></a>00220    std::istream&amp; <a class="code" href="namespaceDdMd.html#ad617f8951e7f59b0ca691c28163ab63a" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, Group&lt;N&gt; &amp;group);
 <a name="l00221"></a>00221 
 <a name="l00231"></a>00231    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
 <a name="l00232"></a>00232    std::ostream&amp; operator&lt;&lt;(std::ostream&amp; out, const Group&lt;N&gt; &amp;group);
@@ -193,7 +193,7 @@
 <a name="l00237"></a>00237 <span class="comment">   * Input a Goup&lt;N&gt; from an istream, without line breaks.</span>
 <a name="l00238"></a>00238 <span class="comment">   */</span>
 <a name="l00239"></a>00239    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00240"></a><a class="code" href="namespaceDdMd.html#a0023b1318f5c6939927e2095a0f72710">00240</a>    std::istream&amp; <a class="code" href="namespaceDdMd.html#a74181b023cf44a9612ac683897cd203d" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a> &amp;group)
+<a name="l00240"></a><a class="code" href="namespaceDdMd.html#a10bcea1bccbefe2809457cec9c8b5ee1">00240</a>    std::istream&amp; <a class="code" href="namespaceDdMd.html#ad617f8951e7f59b0ca691c28163ab63a" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a> &amp;group)
 <a name="l00241"></a>00241    {
 <a name="l00242"></a>00242       in &gt;&gt; group.id_;
 <a name="l00243"></a>00243       in &gt;&gt; group.typeId_;
@@ -207,7 +207,7 @@
 <a name="l00251"></a>00251 <span class="comment">   * Output a Group to an ostream, without line breaks.</span>
 <a name="l00252"></a>00252 <span class="comment">   */</span>
 <a name="l00253"></a>00253    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00254"></a><a class="code" href="namespaceDdMd.html#aa9b1c0d813f5585188bce47784a6170b">00254</a>    std::ostream&amp; operator&lt;&lt;(std::ostream&amp; out, const Group&lt;N&gt; &amp;group) 
+<a name="l00254"></a><a class="code" href="namespaceDdMd.html#a6ef7d648cb86f9c20f7423cfb8a8da00">00254</a>    std::ostream&amp; operator&lt;&lt;(std::ostream&amp; out, const Group&lt;N&gt; &amp;group) 
 <a name="l00255"></a>00255    {
 <a name="l00256"></a>00256       out.width(10);
 <a name="l00257"></a>00257       out &lt;&lt; group.id_;
@@ -224,7 +224,7 @@
 <a name="l00268"></a>00268 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

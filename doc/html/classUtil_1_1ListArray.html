@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: ListArray&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::ListArray&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>ListArray&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__List__Module.html">Linked List</a></div></h1>  </div>
+<h1>Util::ListArray&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__List__Module.html">Linked List</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::ListArray" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -67,36 +67,38 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a04bc69740635b458436606988699e12d">ListArray</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a04bc69740635b458436606988699e12d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a4fc324d314dfce98d978fa9a90ad051b">~ListArray</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a4fc324d314dfce98d978fa9a90ad051b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a58bc21d7c991965d20dd8c0f05c1acd9">allocate</a> (int capacity, int nList)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate arrays of <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> and <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a> objects.  <a href="#a58bc21d7c991965d20dd8c0f05c1acd9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#ab639d5a42fca80414b21a78fc0263922">nList</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of associated linked lists.  <a href="#ab639d5a42fca80414b21a78fc0263922"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a104736719cd4e5f21c25705c77064dde">capacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return allocated size of underlying array of nodes.  <a href="#a104736719cd4e5f21c25705c77064dde"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a242f267d142c426b383a2d65b84da3ff">operator[]</a> (int i)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return data for node element i.  <a href="#a242f267d142c426b383a2d65b84da3ff"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a17d471a53a97f98a7fbfa3768b0754c3">operator[]</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return const refereence to Data in <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> element number i.  <a href="#a17d471a53a97f98a7fbfa3768b0754c3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1List.html">List</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a05f74baf8bda8b6a87cc4d074d45a09c">list</a> (int i)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to a specific <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>.  <a href="#a05f74baf8bda8b6a87cc4d074d45a09c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1List.html">List</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#ae7eaa8cfdccd0eb4993ba119d56b76ae">list</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a const reference to a specific <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>.  <a href="#ae7eaa8cfdccd0eb4993ba119d56b76ae"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Node.html">Node</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a4771bd2ae0ecd0777adde98bb9004032">node</a> (int i)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to node number i.  <a href="#a4771bd2ae0ecd0777adde98bb9004032"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">isValid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the ListAray is valid, or throw an exception.  <a href="#aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a20d38a4076d6a04c3347fb53eb2d0006">ListArray</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a20d38a4076d6a04c3347fb53eb2d0006"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a9948be428d296da982a1bd2d4562b598">~ListArray</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a9948be428d296da982a1bd2d4562b598"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a93c26acd9ebe997d7f4444d30117e9dc">allocate</a> (int capacity, int nList)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate arrays of <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> and <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a> objects.  <a href="#a93c26acd9ebe997d7f4444d30117e9dc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a1155c865cd8502ab6f8f9ecf5912d2e9">nList</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of associated linked lists.  <a href="#a1155c865cd8502ab6f8f9ecf5912d2e9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a4e3a73b76e9836b8f03b675883c9cfbe">capacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return allocated size of underlying array of nodes.  <a href="#a4e3a73b76e9836b8f03b675883c9cfbe"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#aca3130f7a272ecd0927eac958517ddcd">operator[]</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return data for node element i.  <a href="#aca3130f7a272ecd0927eac958517ddcd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a611289b9c383affc904a30daf5686a91">operator[]</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return const refereence to Data in <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> element number i.  <a href="#a611289b9c383affc904a30daf5686a91"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1List.html">List</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a48ca662d8520cdb00dae13fc1f616e62">list</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to a specific <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>.  <a href="#a48ca662d8520cdb00dae13fc1f616e62"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1List.html">List</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a9e52f4165583afd564698c19c0a81312">list</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a const reference to a specific <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>.  <a href="#a9e52f4165583afd564698c19c0a81312"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Node.html">Node</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a2f63c3fe99c544c18d5c8158b8f4424d">node</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to node number i.  <a href="#a2f63c3fe99c544c18d5c8158b8f4424d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListArray.html#a3fb9e407c5b381192012359e79aed615">isValid</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the ListAray is valid, or throw an exception.  <a href="#a3fb9e407c5b381192012359e79aed615"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a04bc69740635b458436606988699e12d"></a><!-- doxytag: member="Util::ListArray::ListArray" ref="a04bc69740635b458436606988699e12d" args="()" -->
+<a class="anchor" id="a20d38a4076d6a04c3347fb53eb2d0006"></a><!-- doxytag: member="Util::ListArray::ListArray" ref="a20d38a4076d6a04c3347fb53eb2d0006" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1ListArray.html">ListArray</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ListArray.html">Util::ListArray</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1ListArray.html">ListArray</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -111,12 +113,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4fc324d314dfce98d978fa9a90ad051b"></a><!-- doxytag: member="Util::ListArray::~ListArray" ref="a4fc324d314dfce98d978fa9a90ad051b" args="()" -->
+<a class="anchor" id="a9948be428d296da982a1bd2d4562b598"></a><!-- doxytag: member="Util::ListArray::~ListArray" ref="a9948be428d296da982a1bd2d4562b598" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1ListArray.html">ListArray</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ListArray.html">Util::ListArray</a>&lt; Data &gt;::~<a class="el" href="classUtil_1_1ListArray.html">ListArray</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -133,12 +137,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a58bc21d7c991965d20dd8c0f05c1acd9"></a><!-- doxytag: member="Util::ListArray::allocate" ref="a58bc21d7c991965d20dd8c0f05c1acd9" args="(int capacity, int nList)" -->
+<a class="anchor" id="a93c26acd9ebe997d7f4444d30117e9dc"></a><!-- doxytag: member="Util::ListArray::allocate" ref="a93c26acd9ebe997d7f4444d30117e9dc" args="(int capacity, int nList)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1ListArray.html">Util::ListArray</a>&lt; Data &gt;::allocate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>capacity</em>, </td>
@@ -169,16 +175,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ListArray_8h_source.html#l00179">179</a> of file <a class="el" href="ListArray_8h_source.html">ListArray.h</a>.</p>
 
-<p>References <a class="el" href="List_8h_source.html#l00206">List&lt; Data &gt;::initialize()</a>.</p>
+<p>References <a class="el" href="List_8h_source.html#l00206">Util::List&lt; Data &gt;::initialize()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab639d5a42fca80414b21a78fc0263922"></a><!-- doxytag: member="Util::ListArray::nList" ref="ab639d5a42fca80414b21a78fc0263922" args="() const " -->
+<a class="anchor" id="a1155c865cd8502ab6f8f9ecf5912d2e9"></a><!-- doxytag: member="Util::ListArray::nList" ref="a1155c865cd8502ab6f8f9ecf5912d2e9" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int nList </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1ListArray.html">Util::ListArray</a>&lt; Data &gt;::nList </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -194,12 +202,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a104736719cd4e5f21c25705c77064dde"></a><!-- doxytag: member="Util::ListArray::capacity" ref="a104736719cd4e5f21c25705c77064dde" args="() const " -->
+<a class="anchor" id="a4e3a73b76e9836b8f03b675883c9cfbe"></a><!-- doxytag: member="Util::ListArray::capacity" ref="a4e3a73b76e9836b8f03b675883c9cfbe" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int capacity </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1ListArray.html">Util::ListArray</a>&lt; Data &gt;::capacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -215,12 +225,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a242f267d142c426b383a2d65b84da3ff"></a><!-- doxytag: member="Util::ListArray::operator[]" ref="a242f267d142c426b383a2d65b84da3ff" args="(int i)" -->
+<a class="anchor" id="aca3130f7a272ecd0927eac958517ddcd"></a><!-- doxytag: member="Util::ListArray::operator[]" ref="aca3130f7a272ecd0927eac958517ddcd" args="(int i)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data&amp; operator[] </td>
+          <td class="memname">Data&amp; <a class="el" href="classUtil_1_1ListArray.html">Util::ListArray</a>&lt; Data &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -243,12 +255,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a17d471a53a97f98a7fbfa3768b0754c3"></a><!-- doxytag: member="Util::ListArray::operator[]" ref="a17d471a53a97f98a7fbfa3768b0754c3" args="(int i) const " -->
+<a class="anchor" id="a611289b9c383affc904a30daf5686a91"></a><!-- doxytag: member="Util::ListArray::operator[]" ref="a611289b9c383affc904a30daf5686a91" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Data&amp; operator[] </td>
+          <td class="memname">const Data&amp; <a class="el" href="classUtil_1_1ListArray.html">Util::ListArray</a>&lt; Data &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -271,12 +285,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a05f74baf8bda8b6a87cc4d074d45a09c"></a><!-- doxytag: member="Util::ListArray::list" ref="a05f74baf8bda8b6a87cc4d074d45a09c" args="(int i)" -->
+<a class="anchor" id="a48ca662d8520cdb00dae13fc1f616e62"></a><!-- doxytag: member="Util::ListArray::list" ref="a48ca662d8520cdb00dae13fc1f616e62" args="(int i)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1List.html">List</a>&lt; Data &gt; &amp; list </td>
+          <td class="memname"><a class="el" href="classUtil_1_1List.html">List</a>&lt; Data &gt; &amp; <a class="el" href="classUtil_1_1ListArray.html">Util::ListArray</a>&lt; Data &gt;::list </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -299,12 +315,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae7eaa8cfdccd0eb4993ba119d56b76ae"></a><!-- doxytag: member="Util::ListArray::list" ref="ae7eaa8cfdccd0eb4993ba119d56b76ae" args="(int i) const " -->
+<a class="anchor" id="a9e52f4165583afd564698c19c0a81312"></a><!-- doxytag: member="Util::ListArray::list" ref="a9e52f4165583afd564698c19c0a81312" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classUtil_1_1List.html">List</a>&lt; Data &gt; &amp; list </td>
+          <td class="memname">const <a class="el" href="classUtil_1_1List.html">List</a>&lt; Data &gt; &amp; <a class="el" href="classUtil_1_1ListArray.html">Util::ListArray</a>&lt; Data &gt;::list </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -327,12 +345,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4771bd2ae0ecd0777adde98bb9004032"></a><!-- doxytag: member="Util::ListArray::node" ref="a4771bd2ae0ecd0777adde98bb9004032" args="(int i)" -->
+<a class="anchor" id="a2f63c3fe99c544c18d5c8158b8f4424d"></a><!-- doxytag: member="Util::ListArray::node" ref="a2f63c3fe99c544c18d5c8158b8f4424d" args="(int i)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Node.html">Node</a>&lt; Data &gt; &amp; node </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Node.html">Node</a>&lt; Data &gt; &amp; <a class="el" href="classUtil_1_1ListArray.html">Util::ListArray</a>&lt; Data &gt;::node </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -355,12 +375,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><!-- doxytag: member="Util::ListArray::isValid" ref="aac1b70a2ed67ead038c4d3f5ac4d8a81" args="() const " -->
+<a class="anchor" id="a3fb9e407c5b381192012359e79aed615"></a><!-- doxytag: member="Util::ListArray::isValid" ref="a3fb9e407c5b381192012359e79aed615" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1ListArray.html">Util::ListArray</a>&lt; Data &gt;::isValid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -381,7 +403,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="ListArray_8h_source.html">ListArray.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

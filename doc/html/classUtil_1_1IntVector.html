@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: IntVector Class Reference</title>
+<title>Simpatico: Util::IntVector Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#friends">Friends</a>  </div>
   <div class="headertitle">
-<h1>IntVector Class Reference<div class="ingroups"><a class="el" href="group__Space__Module.html">Space (Vector, Tensor)</a></div></h1>  </div>
+<h1>Util::IntVector Class Reference<div class="ingroups"><a class="el" href="group__Space__Module.html">Space (Vector, Tensor)</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::IntVector" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -58,7 +58,7 @@
 <p>The Cartesian elements of a <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> can be accessed using array notation: The elements of a three dimensional <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> v are v[0], v[1], and v[2]. The subscript operator [] returns elements as references, which can be used on either the left or right side of an assignment operator.</p>
 <p>The arithmetic assignment operators +=, -=, *=, and /= are overloaded. The operators += and -= represent increment or decrement by a vector, while *= and /= represent multiplication or division by an integer.</p>
 <p>All other unary and binary mathematical operations are implemented as methods. Operations that yield a scalar result, such as a dot product, are implemented as methods that return the resulting value. Operations that yield a <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>, such as vector addition, are implemented by methods that assign the result to the invoking vector, and return a reference to the invoking vector. For example, </p>
-<div class="fragment"><pre class="fragment">    <a class="code" href="classUtil_1_1IntVector.html#a3b5791460a8d60c4be3511ad3723bf7f" title="Default constructor.">IntVector</a> a, b, c;
+<div class="fragment"><pre class="fragment">    <a class="code" href="classUtil_1_1IntVector.html#ae8969e460a5003af8ce24ef139f5feb2" title="Default constructor.">IntVector</a> a, b, c;
     <span class="keywordtype">int</span> s;
 
     a[0] = 0.0
@@ -70,10 +70,10 @@
     b[2] = -1.5
   
     <span class="comment">// Set s = a.b</span>
-    s = <a class="code" href="classUtil_1_1IntVector.html#a99f7f7ecbf489ec20b4aaa5f71db2075" title="Return dot product of this vector and vector v.">dot</a>(a, b) 
+    s = <a class="code" href="classUtil_1_1IntVector.html#ad39c87dc9b895c5b123ccdeff3d6938b" title="Return dot product of this vector and vector v.">dot</a>(a, b) 
 
     <span class="comment">// Set c = a + b</span>
-    c.<a class="code" href="classUtil_1_1IntVector.html#ad5a580d057a2950b51d53cf9d8985e70" title="Add vectors v1 and v2.">add</a>(a, b)
+    c.<a class="code" href="classUtil_1_1IntVector.html#ab0ea43519fdf94d2801a161d0380af5a" title="Add vectors v1 and v2.">add</a>(a, b)
 
     <span class="comment">// Set a = a + b</span>
     a += b
@@ -91,53 +91,53 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#aa7047f1b388efbf27af45d48f1e5bda2">zero</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all elements of a 3D vector to zero.  <a href="#aa7047f1b388efbf27af45d48f1e5bda2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a8d5b91b905e4cbfabfd297826c034adc">zero</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all elements of a 3D vector to zero.  <a href="#a8d5b91b905e4cbfabfd297826c034adc"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a0a4b6fa345f22647cb93bbaaf5b26bf8">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a0a4b6fa345f22647cb93bbaaf5b26bf8"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a3b5791460a8d60c4be3511ad3723bf7f">IntVector</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a3b5791460a8d60c4be3511ad3723bf7f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a12e7f13693280b89c4457b413ceebb28">IntVector</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#a12e7f13693280b89c4457b413ceebb28"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a433b8e00c370c3ee3901cd4c2d36657b">IntVector</a> (int scalar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, initialize all elements to the same scalar.  <a href="#a433b8e00c370c3ee3901cd4c2d36657b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a3e0614df60ffa92c64b1dde6e83b899f">IntVector</a> (const int *v)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> from C int[3] array.  <a href="#a3e0614df60ffa92c64b1dde6e83b899f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#aa5101ec03daf2dad2cf94b2ef9172764">IntVector</a> (int x, int y, int z=0)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> from its coordinates.  <a href="#aa5101ec03daf2dad2cf94b2ef9172764"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#ae8969e460a5003af8ce24ef139f5feb2">IntVector</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ae8969e460a5003af8ce24ef139f5feb2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#ae646f87afc3bb68f523b521e15294e1d">IntVector</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#ae646f87afc3bb68f523b521e15294e1d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a74d5e27be93e4b521b02f3acb18d3502">IntVector</a> (int scalar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, initialize all elements to the same scalar.  <a href="#a74d5e27be93e4b521b02f3acb18d3502"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a811e69bd47cd8198b9d3d06c73836526">IntVector</a> (const int *v)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> from C int[3] array.  <a href="#a811e69bd47cd8198b9d3d06c73836526"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a9ebd65276663e18eeb950f9bc8777a17">IntVector</a> (int x, int y, int z=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> from its coordinates.  <a href="#a9ebd65276663e18eeb950f9bc8777a17"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Assignment</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a72715da3c944b366b765c319357d5197">operator=</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy assignment.  <a href="#a72715da3c944b366b765c319357d5197"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a41537e7ea26d428d2b77b78a0b2b5bcf">operator=</a> (const int *v)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment from C int[] array.  <a href="#a41537e7ea26d428d2b77b78a0b2b5bcf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a0f84bdddfada1e6b35ad83c6e2faaa18">operator=</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy assignment.  <a href="#a0f84bdddfada1e6b35ad83c6e2faaa18"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#aef38ee5215753bcc3d834a16aae1cccd">operator=</a> (const int *v)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment from C int[] array.  <a href="#aef38ee5215753bcc3d834a16aae1cccd"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Arithmetic Assignment</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#ab95b16c766f4ba197d20fe65ba96fcac">operator+=</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;dv)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add vector dv to this vector.  <a href="#ab95b16c766f4ba197d20fe65ba96fcac"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#ab7915724f41d04bb2393aa09d287b8d2">operator-=</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;dv)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtract vector dv from this vector.  <a href="#ab7915724f41d04bb2393aa09d287b8d2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#ae9de1a65a5301d7e38d105b403b17072">operator*=</a> (int s)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply this vector by scalar s.  <a href="#ae9de1a65a5301d7e38d105b403b17072"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#adc26e995342ebedf92f446756f7e409d">operator+=</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;dv)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add vector dv to this vector.  <a href="#adc26e995342ebedf92f446756f7e409d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#aa02ab6d8b0cb5d7e10ed7f27b9916e85">operator-=</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;dv)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtract vector dv from this vector.  <a href="#aa02ab6d8b0cb5d7e10ed7f27b9916e85"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a668f54ac23ce7089de7641d3b736fd85">operator*=</a> (int s)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply this vector by scalar s.  <a href="#a668f54ac23ce7089de7641d3b736fd85"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Array Subscript</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#aa905219b38e8defde36775c5818a690d">operator[]</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return one Cartesian element by value.  <a href="#aa905219b38e8defde36775c5818a690d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a03a647f57b5a406b7b317fd7ed2009a1">operator[]</a> (int i)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to one element of the vector.  <a href="#a03a647f57b5a406b7b317fd7ed2009a1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a3fe9829089462935c6f3eb5ad7119f1e">operator[]</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return one Cartesian element by value.  <a href="#a3fe9829089462935c6f3eb5ad7119f1e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#aa8cf9d93746723181bcc1138db6d7a2e">operator[]</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to one element of the vector.  <a href="#aa8cf9d93746723181bcc1138db6d7a2e"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Scalar valued functions</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a21f1c3cc208ded0409284d8b1be32843">square</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return square magnitude of this vector.  <a href="#a21f1c3cc208ded0409284d8b1be32843"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a99f7f7ecbf489ec20b4aaa5f71db2075">dot</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return dot product of this vector and vector v.  <a href="#a99f7f7ecbf489ec20b4aaa5f71db2075"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#abe13f62f57e4365fa16d57a05f3a7e09">square</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return square magnitude of this vector.  <a href="#abe13f62f57e4365fa16d57a05f3a7e09"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#ad39c87dc9b895c5b123ccdeff3d6938b">dot</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return dot product of this vector and vector v.  <a href="#ad39c87dc9b895c5b123ccdeff3d6938b"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">IntVector valued functions (result assigned to invoking object)</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#ad5a580d057a2950b51d53cf9d8985e70">add</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v1, const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v2)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add vectors v1 and v2.  <a href="#ad5a580d057a2950b51d53cf9d8985e70"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#afd5b0f27150d49fed5c2c49888dd7720">subtract</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v1, const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v2)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtract vector v2 from v1.  <a href="#afd5b0f27150d49fed5c2c49888dd7720"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a973d86c94666850bd02aa530e8abb758">multiply</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v, int s)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply a vector v by a scalar s.  <a href="#a973d86c94666850bd02aa530e8abb758"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#ae4c4dbdb55d295401b986ad1fa7003f4">cross</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v1, const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v2)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate cross product of vectors v1 and v2.  <a href="#ae4c4dbdb55d295401b986ad1fa7003f4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#ab0ea43519fdf94d2801a161d0380af5a">add</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v1, const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v2)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add vectors v1 and v2.  <a href="#ab0ea43519fdf94d2801a161d0380af5a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a29a7b0c81eb900441e7d07c3414f406d">subtract</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v1, const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v2)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtract vector v2 from v1.  <a href="#a29a7b0c81eb900441e7d07c3414f406d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#aeb5ce5cc9bb5e53c087ec0cd1b1c6987">multiply</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v, int s)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply a vector v by a scalar s.  <a href="#aeb5ce5cc9bb5e53c087ec0cd1b1c6987"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a39aaf21b14d1cabb6a384a79930c49fa">cross</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v1, const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v2)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate cross product of vectors v1 and v2.  <a href="#a39aaf21b14d1cabb6a384a79930c49fa"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a2f3bb66716c7c09cb361c9d2722767b8">operator==</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v1, const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;v2)</td></tr>
@@ -150,20 +150,20 @@ Friends</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">ostream inserter for a <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>.  <a href="#a3c5052a9b643b06c98fba8ab86ff07ae"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="member-group"></a>
 Static Members</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#aa72bd53493e7e274eb172827a67dcda0">Zero</a> = <a class="el" href="classUtil_1_1IntVector.html">IntVector</a>(0)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Zero <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>.  <a href="#aa72bd53493e7e274eb172827a67dcda0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a608e10d093425c9228f10ed3c4994598">initStatic</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize static <a class="el" href="classUtil_1_1IntVector.html#aa72bd53493e7e274eb172827a67dcda0" title="Zero IntVector.">IntVector::Zero</a>.  <a href="#a608e10d093425c9228f10ed3c4994598"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a8170d98ea8b055e49ef256d15cfbc5af">commitMpiType</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Commit MPI datatype <a class="el" href="classUtil_1_1MpiTraits_3_01IntVector_01_4.html#a94a4825c5b6a741265d65e260050cfce" title="MPI Datatype.">MpiTraits&lt;IntVector&gt;::type</a>.  <a href="#a8170d98ea8b055e49ef256d15cfbc5af"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a630b1b8dfac6ff52903518c438c03d1f">Zero</a> = <a class="el" href="classUtil_1_1IntVector.html">IntVector</a>(0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Zero <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>.  <a href="#a630b1b8dfac6ff52903518c438c03d1f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#a5e1cd025099a001b162c2a65303c9cac">initStatic</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize static <a class="el" href="classUtil_1_1IntVector.html#a630b1b8dfac6ff52903518c438c03d1f" title="Zero IntVector.">IntVector::Zero</a>.  <a href="#a5e1cd025099a001b162c2a65303c9cac"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1IntVector.html#ad54c107285d35edd9dc957b1f77324a1">commitMpiType</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Commit MPI datatype <a class="el" href="classUtil_1_1MpiTraits_3_01IntVector_01_4.html#ae0b652561be6625b03d360928dfe4839" title="MPI Datatype.">MpiTraits&lt;IntVector&gt;::type</a>.  <a href="#ad54c107285d35edd9dc957b1f77324a1"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a3b5791460a8d60c4be3511ad3723bf7f"></a><!-- doxytag: member="Util::IntVector::IntVector" ref="a3b5791460a8d60c4be3511ad3723bf7f" args="()" -->
+<a class="anchor" id="ae8969e460a5003af8ce24ef139f5feb2"></a><!-- doxytag: member="Util::IntVector::IntVector" ref="ae8969e460a5003af8ce24ef139f5feb2" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> </td>
+          <td class="memname">Util::IntVector::IntVector </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -178,12 +178,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a12e7f13693280b89c4457b413ceebb28"></a><!-- doxytag: member="Util::IntVector::IntVector" ref="a12e7f13693280b89c4457b413ceebb28" args="(const IntVector &amp;v)" -->
+<a class="anchor" id="ae646f87afc3bb68f523b521e15294e1d"></a><!-- doxytag: member="Util::IntVector::IntVector" ref="ae646f87afc3bb68f523b521e15294e1d" args="(const IntVector &amp;v)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> </td>
+          <td class="memname">Util::IntVector::IntVector </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
@@ -199,12 +199,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a433b8e00c370c3ee3901cd4c2d36657b"></a><!-- doxytag: member="Util::IntVector::IntVector" ref="a433b8e00c370c3ee3901cd4c2d36657b" args="(int scalar)" -->
+<a class="anchor" id="a74d5e27be93e4b521b02f3acb18d3502"></a><!-- doxytag: member="Util::IntVector::IntVector" ref="a74d5e27be93e4b521b02f3acb18d3502" args="(int scalar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> </td>
+          <td class="memname">Util::IntVector::IntVector </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>scalar</em></td><td>)</td>
@@ -226,12 +226,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3e0614df60ffa92c64b1dde6e83b899f"></a><!-- doxytag: member="Util::IntVector::IntVector" ref="a3e0614df60ffa92c64b1dde6e83b899f" args="(const int *v)" -->
+<a class="anchor" id="a811e69bd47cd8198b9d3d06c73836526"></a><!-- doxytag: member="Util::IntVector::IntVector" ref="a811e69bd47cd8198b9d3d06c73836526" args="(const int *v)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> </td>
+          <td class="memname">Util::IntVector::IntVector </td>
           <td>(</td>
           <td class="paramtype">const int *&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
@@ -253,12 +253,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa5101ec03daf2dad2cf94b2ef9172764"></a><!-- doxytag: member="Util::IntVector::IntVector" ref="aa5101ec03daf2dad2cf94b2ef9172764" args="(int x, int y, int z=0)" -->
+<a class="anchor" id="a9ebd65276663e18eeb950f9bc8777a17"></a><!-- doxytag: member="Util::IntVector::IntVector" ref="a9ebd65276663e18eeb950f9bc8777a17" args="(int x, int y, int z=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> </td>
+          <td class="memname">Util::IntVector::IntVector </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -299,12 +299,12 @@ Static Members</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="aa7047f1b388efbf27af45d48f1e5bda2"></a><!-- doxytag: member="Util::IntVector::zero" ref="aa7047f1b388efbf27af45d48f1e5bda2" args="()" -->
+<a class="anchor" id="a8d5b91b905e4cbfabfd297826c034adc"></a><!-- doxytag: member="Util::IntVector::zero" ref="a8d5b91b905e4cbfabfd297826c034adc" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; zero </td>
+          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; Util::IntVector::zero </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -317,16 +317,18 @@ Static Members</h2></td></tr>
 
 <p>Definition at line <a class="el" href="IntVector_8h_source.html#l00139">139</a> of file <a class="el" href="IntVector_8h_source.html">IntVector.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Atom_8cpp_source.html#l00048">Atom::allocate()</a>.</p>
+<p>Referenced by <a class="el" href="Atom_8cpp_source.html#l00048">McMd::Atom::allocate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="Util::IntVector::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="a0a4b6fa345f22647cb93bbaaf5b26bf8"></a><!-- doxytag: member="Util::IntVector::serialize" ref="a0a4b6fa345f22647cb93bbaaf5b26bf8" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void Util::IntVector::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -360,12 +362,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a72715da3c944b366b765c319357d5197"></a><!-- doxytag: member="Util::IntVector::operator=" ref="a72715da3c944b366b765c319357d5197" args="(const IntVector &amp;v)" -->
+<a class="anchor" id="a0f84bdddfada1e6b35ad83c6e2faaa18"></a><!-- doxytag: member="Util::IntVector::operator=" ref="a0f84bdddfada1e6b35ad83c6e2faaa18" args="(const IntVector &amp;v)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; operator= </td>
+          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; Util::IntVector::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
@@ -387,12 +389,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a41537e7ea26d428d2b77b78a0b2b5bcf"></a><!-- doxytag: member="Util::IntVector::operator=" ref="a41537e7ea26d428d2b77b78a0b2b5bcf" args="(const int *v)" -->
+<a class="anchor" id="aef38ee5215753bcc3d834a16aae1cccd"></a><!-- doxytag: member="Util::IntVector::operator=" ref="aef38ee5215753bcc3d834a16aae1cccd" args="(const int *v)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; operator= </td>
+          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; Util::IntVector::operator= </td>
           <td>(</td>
           <td class="paramtype">const int *&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
@@ -414,12 +416,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab95b16c766f4ba197d20fe65ba96fcac"></a><!-- doxytag: member="Util::IntVector::operator+=" ref="ab95b16c766f4ba197d20fe65ba96fcac" args="(const IntVector &amp;dv)" -->
+<a class="anchor" id="adc26e995342ebedf92f446756f7e409d"></a><!-- doxytag: member="Util::IntVector::operator+=" ref="adc26e995342ebedf92f446756f7e409d" args="(const IntVector &amp;dv)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void operator+= </td>
+          <td class="memname">void Util::IntVector::operator+= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td>
           <td class="paramname"><em>dv</em></td><td>)</td>
@@ -442,12 +444,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab7915724f41d04bb2393aa09d287b8d2"></a><!-- doxytag: member="Util::IntVector::operator&#45;=" ref="ab7915724f41d04bb2393aa09d287b8d2" args="(const IntVector &amp;dv)" -->
+<a class="anchor" id="aa02ab6d8b0cb5d7e10ed7f27b9916e85"></a><!-- doxytag: member="Util::IntVector::operator&#45;=" ref="aa02ab6d8b0cb5d7e10ed7f27b9916e85" args="(const IntVector &amp;dv)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void operator-= </td>
+          <td class="memname">void Util::IntVector::operator-= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td>
           <td class="paramname"><em>dv</em></td><td>)</td>
@@ -470,12 +472,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae9de1a65a5301d7e38d105b403b17072"></a><!-- doxytag: member="Util::IntVector::operator*=" ref="ae9de1a65a5301d7e38d105b403b17072" args="(int s)" -->
+<a class="anchor" id="a668f54ac23ce7089de7641d3b736fd85"></a><!-- doxytag: member="Util::IntVector::operator*=" ref="a668f54ac23ce7089de7641d3b736fd85" args="(int s)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void operator*= </td>
+          <td class="memname">void Util::IntVector::operator*= </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
@@ -498,12 +500,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa905219b38e8defde36775c5818a690d"></a><!-- doxytag: member="Util::IntVector::operator[]" ref="aa905219b38e8defde36775c5818a690d" args="(int i) const " -->
+<a class="anchor" id="a3fe9829089462935c6f3eb5ad7119f1e"></a><!-- doxytag: member="Util::IntVector::operator[]" ref="a3fe9829089462935c6f3eb5ad7119f1e" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const int&amp; operator[] </td>
+          <td class="memname">const int&amp; Util::IntVector::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -526,12 +528,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a03a647f57b5a406b7b317fd7ed2009a1"></a><!-- doxytag: member="Util::IntVector::operator[]" ref="a03a647f57b5a406b7b317fd7ed2009a1" args="(int i)" -->
+<a class="anchor" id="aa8cf9d93746723181bcc1138db6d7a2e"></a><!-- doxytag: member="Util::IntVector::operator[]" ref="aa8cf9d93746723181bcc1138db6d7a2e" args="(int i)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int&amp; operator[] </td>
+          <td class="memname">int&amp; Util::IntVector::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -554,12 +556,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a21f1c3cc208ded0409284d8b1be32843"></a><!-- doxytag: member="Util::IntVector::square" ref="a21f1c3cc208ded0409284d8b1be32843" args="() const " -->
+<a class="anchor" id="abe13f62f57e4365fa16d57a05f3a7e09"></a><!-- doxytag: member="Util::IntVector::square" ref="abe13f62f57e4365fa16d57a05f3a7e09" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int square </td>
+          <td class="memname">int Util::IntVector::square </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -575,12 +577,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a99f7f7ecbf489ec20b4aaa5f71db2075"></a><!-- doxytag: member="Util::IntVector::dot" ref="a99f7f7ecbf489ec20b4aaa5f71db2075" args="(const IntVector &amp;v) const " -->
+<a class="anchor" id="ad39c87dc9b895c5b123ccdeff3d6938b"></a><!-- doxytag: member="Util::IntVector::dot" ref="ad39c87dc9b895c5b123ccdeff3d6938b" args="(const IntVector &amp;v) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int dot </td>
+          <td class="memname">int Util::IntVector::dot </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td>
           <td class="paramname"><em>v</em></td><td>)</td>
@@ -603,12 +605,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad5a580d057a2950b51d53cf9d8985e70"></a><!-- doxytag: member="Util::IntVector::add" ref="ad5a580d057a2950b51d53cf9d8985e70" args="(const IntVector &amp;v1, const IntVector &amp;v2)" -->
+<a class="anchor" id="ab0ea43519fdf94d2801a161d0380af5a"></a><!-- doxytag: member="Util::IntVector::add" ref="ab0ea43519fdf94d2801a161d0380af5a" args="(const IntVector &amp;v1, const IntVector &amp;v2)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; add </td>
+          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; Util::IntVector::add </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td>
           <td class="paramname"><em>v1</em>, </td>
@@ -642,12 +644,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afd5b0f27150d49fed5c2c49888dd7720"></a><!-- doxytag: member="Util::IntVector::subtract" ref="afd5b0f27150d49fed5c2c49888dd7720" args="(const IntVector &amp;v1, const IntVector &amp;v2)" -->
+<a class="anchor" id="a29a7b0c81eb900441e7d07c3414f406d"></a><!-- doxytag: member="Util::IntVector::subtract" ref="a29a7b0c81eb900441e7d07c3414f406d" args="(const IntVector &amp;v1, const IntVector &amp;v2)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; subtract </td>
+          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; Util::IntVector::subtract </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td>
           <td class="paramname"><em>v1</em>, </td>
@@ -682,12 +684,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a973d86c94666850bd02aa530e8abb758"></a><!-- doxytag: member="Util::IntVector::multiply" ref="a973d86c94666850bd02aa530e8abb758" args="(const IntVector &amp;v, int s)" -->
+<a class="anchor" id="aeb5ce5cc9bb5e53c087ec0cd1b1c6987"></a><!-- doxytag: member="Util::IntVector::multiply" ref="aeb5ce5cc9bb5e53c087ec0cd1b1c6987" args="(const IntVector &amp;v, int s)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; multiply </td>
+          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; Util::IntVector::multiply </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td>
           <td class="paramname"><em>v</em>, </td>
@@ -722,12 +724,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae4c4dbdb55d295401b986ad1fa7003f4"></a><!-- doxytag: member="Util::IntVector::cross" ref="ae4c4dbdb55d295401b986ad1fa7003f4" args="(const IntVector &amp;v1, const IntVector &amp;v2)" -->
+<a class="anchor" id="a39aaf21b14d1cabb6a384a79930c49fa"></a><!-- doxytag: member="Util::IntVector::cross" ref="a39aaf21b14d1cabb6a384a79930c49fa" args="(const IntVector &amp;v1, const IntVector &amp;v2)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; cross </td>
+          <td class="memname"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&amp; Util::IntVector::cross </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td>
           <td class="paramname"><em>v1</em>, </td>
@@ -762,12 +764,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a608e10d093425c9228f10ed3c4994598"></a><!-- doxytag: member="Util::IntVector::initStatic" ref="a608e10d093425c9228f10ed3c4994598" args="()" -->
+<a class="anchor" id="a5e1cd025099a001b162c2a65303c9cac"></a><!-- doxytag: member="Util::IntVector::initStatic" ref="a5e1cd025099a001b162c2a65303c9cac" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void initStatic </td>
+          <td class="memname">void Util::IntVector::initStatic </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -776,7 +778,7 @@ Static Members</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Initialize static <a class="el" href="classUtil_1_1IntVector.html#aa72bd53493e7e274eb172827a67dcda0" title="Zero IntVector.">IntVector::Zero</a>. </p>
+<p>Initialize static <a class="el" href="classUtil_1_1IntVector.html#a630b1b8dfac6ff52903518c438c03d1f" title="Zero IntVector.">IntVector::Zero</a>. </p>
 
 <p>Definition at line <a class="el" href="IntVector_8cpp_source.html#l00117">117</a> of file <a class="el" href="IntVector_8cpp_source.html">IntVector.cpp</a>.</p>
 
@@ -784,12 +786,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8170d98ea8b055e49ef256d15cfbc5af"></a><!-- doxytag: member="Util::IntVector::commitMpiType" ref="a8170d98ea8b055e49ef256d15cfbc5af" args="()" -->
+<a class="anchor" id="ad54c107285d35edd9dc957b1f77324a1"></a><!-- doxytag: member="Util::IntVector::commitMpiType" ref="ad54c107285d35edd9dc957b1f77324a1" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void commitMpiType </td>
+          <td class="memname">void Util::IntVector::commitMpiType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -798,13 +800,13 @@ Static Members</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Commit MPI datatype <a class="el" href="classUtil_1_1MpiTraits_3_01IntVector_01_4.html#a94a4825c5b6a741265d65e260050cfce" title="MPI Datatype.">MpiTraits&lt;IntVector&gt;::type</a>. </p>
+<p>Commit MPI datatype <a class="el" href="classUtil_1_1MpiTraits_3_01IntVector_01_4.html#ae0b652561be6625b03d360928dfe4839" title="MPI Datatype.">MpiTraits&lt;IntVector&gt;::type</a>. </p>
 
 <p>Definition at line <a class="el" href="IntVector_8cpp_source.html#l00096">96</a> of file <a class="el" href="IntVector_8cpp_source.html">IntVector.cpp</a>.</p>
 
-<p>References <a class="el" href="MpiStructBuilder_8cpp_source.html#l00029">MpiStructBuilder::addMember()</a>, <a class="el" href="MpiStructBuilder_8cpp_source.html#l00042">MpiStructBuilder::commit()</a>, and <a class="el" href="MpiStructBuilder_8cpp_source.html#l00021">MpiStructBuilder::setBase()</a>.</p>
+<p>References <a class="el" href="MpiStructBuilder_8cpp_source.html#l00029">Util::MpiStructBuilder::addMember()</a>, <a class="el" href="MpiStructBuilder_8cpp_source.html#l00042">Util::MpiStructBuilder::commit()</a>, and <a class="el" href="MpiStructBuilder_8cpp_source.html#l00021">Util::MpiStructBuilder::setBase()</a>.</p>
 
-<p>Referenced by <a class="el" href="McMd__mpi_8cpp_source.html#l00050">McMd::commitMpiTypes()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00077">Simulation::Simulation()</a>.</p>
+<p>Referenced by <a class="el" href="McMd__mpi_8cpp_source.html#l00050">McMd::commitMpiTypes()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00077">DdMd::Simulation::Simulation()</a>.</p>
 
 </div>
 </div>
@@ -952,12 +954,12 @@ Static Members</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="aa72bd53493e7e274eb172827a67dcda0"></a><!-- doxytag: member="Util::IntVector::Zero" ref="aa72bd53493e7e274eb172827a67dcda0" args="" -->
+<a class="anchor" id="a630b1b8dfac6ff52903518c438c03d1f"></a><!-- doxytag: member="Util::IntVector::Zero" ref="a630b1b8dfac6ff52903518c438c03d1f" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">home david code simpatico src util space <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> cpp const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> <a class="el" href="classUtil_1_1IntVector.html#aa72bd53493e7e274eb172827a67dcda0">Zero</a> = <a class="el" href="classUtil_1_1IntVector.html">IntVector</a>(0)<code> [static]</code></td>
+          <td class="memname">home david code simpatico src util space <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> cpp const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> <a class="el" href="classUtil_1_1IntVector.html#a630b1b8dfac6ff52903518c438c03d1f">Util::IntVector::Zero</a> = <a class="el" href="classUtil_1_1IntVector.html">IntVector</a>(0)<code> [static]</code></td>
         </tr>
       </table>
 </div>
@@ -974,7 +976,7 @@ Static Members</h2></td></tr>
 <li><a class="el" href="IntVector_8cpp_source.html">IntVector.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:45:01 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:34 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

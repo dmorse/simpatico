@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Observer&lt; Event &gt; Class Template Reference</title>
+<title>Simpatico: Util::Observer&lt; Event &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Observer&lt; Event &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Util__Module.html">Utilities</a></div></h1>  </div>
+<h1>Util::Observer&lt; Event &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Util__Module.html">Utilities</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Observer" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -57,7 +57,7 @@
  class Util::Observer&lt; Event &gt;</h3>
 
 <p>Abstract class template for observer in the observer design pattern. </p>
-<p>An <a class="el" href="classUtil_1_1Observer.html" title="Abstract class template for observer in the observer design pattern.">Observer</a> is notified of an event by calling its update method. The template class parameter Event is the type of object that is passed to the <a class="el" href="classUtil_1_1Observer.html#a2fb24cdfcacddce11b3012042003a27b" title="Respond to news of an event.">update()</a> method as a message about an event. </p>
+<p>An <a class="el" href="classUtil_1_1Observer.html" title="Abstract class template for observer in the observer design pattern.">Observer</a> is notified of an event by calling its update method. The template class parameter Event is the type of object that is passed to the <a class="el" href="classUtil_1_1Observer.html#a518cb0d0b98052c436d4a52c61edc80b" title="Respond to news of an event.">update()</a> method as a message about an event. </p>
 
 <p>Definition at line <a class="el" href="Observer_8h_source.html#l00024">24</a> of file <a class="el" href="Observer_8h_source.html">Observer.h</a>.</p>
 </div>
@@ -67,18 +67,20 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Observer.html#a0cb58450d0039d83b21363773e589615">~Observer</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a0cb58450d0039d83b21363773e589615"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Observer.html#a2fb24cdfcacddce11b3012042003a27b">update</a> (const Event &amp;event)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Respond to news of an event.  <a href="#a2fb24cdfcacddce11b3012042003a27b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Observer.html#a223e504829d471e5f53bddacb65c51b3">~Observer</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a223e504829d471e5f53bddacb65c51b3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Observer.html#a518cb0d0b98052c436d4a52c61edc80b">update</a> (const Event &amp;event)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Respond to news of an event.  <a href="#a518cb0d0b98052c436d4a52c61edc80b"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a0cb58450d0039d83b21363773e589615"></a><!-- doxytag: member="Util::Observer::~Observer" ref="a0cb58450d0039d83b21363773e589615" args="()" -->
+<a class="anchor" id="a223e504829d471e5f53bddacb65c51b3"></a><!-- doxytag: member="Util::Observer::~Observer" ref="a223e504829d471e5f53bddacb65c51b3" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Event &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1Observer.html">Observer</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Observer.html">Util::Observer</a>&lt; Event &gt;::~<a class="el" href="classUtil_1_1Observer.html">Observer</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -94,12 +96,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a2fb24cdfcacddce11b3012042003a27b"></a><!-- doxytag: member="Util::Observer::update" ref="a2fb24cdfcacddce11b3012042003a27b" args="(const Event &amp;event)=0" -->
+<a class="anchor" id="a518cb0d0b98052c436d4a52c61edc80b"></a><!-- doxytag: member="Util::Observer::update" ref="a518cb0d0b98052c436d4a52c61edc80b" args="(const Event &amp;event)=0" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Event&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">virtual void update </td>
+          <td class="memname">virtual void <a class="el" href="classUtil_1_1Observer.html">Util::Observer</a>&lt; Event &gt;::update </td>
           <td>(</td>
           <td class="paramtype">const Event &amp;&#160;</td>
           <td class="paramname"><em>event</em></td><td>)</td>
@@ -123,7 +127,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="Observer_8h_source.html">Observer.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:45:01 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:34 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

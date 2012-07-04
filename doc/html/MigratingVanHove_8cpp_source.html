@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -59,7 +59,7 @@
 <a name="l00007"></a>00007 <span class="comment">/*</span>
 <a name="l00008"></a>00008 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00009"></a>00009 <span class="comment">*</span>
-<a name="l00010"></a>00010 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00010"></a>00010 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00011"></a>00011 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00012"></a>00012 <span class="comment">*/</span>
 <a name="l00013"></a>00013 
@@ -90,8 +90,8 @@
 <a name="l00038"></a>00038 
 <a name="l00039"></a>00039    <span class="keyword">using namespace </span>Util;
 <a name="l00040"></a>00040 
-<a name="l00042"></a>00042    <a class="code" href="classMcMd_1_1MigratingVanHove.html#a85e4cc3ab407d2049e0738b32e889c68" title="Constructor.">MigratingVanHove::MigratingVanHove</a>(System&amp; system) 
-<a name="l00043"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a85e4cc3ab407d2049e0738b32e889c68">00043</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
+<a name="l00042"></a>00042    <a class="code" href="classMcMd_1_1MigratingVanHove.html#a769b74ff623d9dda2d467eed6252f33b" title="Constructor.">MigratingVanHove::MigratingVanHove</a>(System&amp; system) 
+<a name="l00043"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a769b74ff623d9dda2d467eed6252f33b">00043</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
 <a name="l00044"></a>00044       communicatorPtr_(0),
 <a name="l00045"></a>00045       replicaMovePtr_(&amp;system.replicaMove()),
 <a name="l00046"></a>00046       isInitialized_(false)
@@ -100,11 +100,11 @@
 <a name="l00049"></a>00049    }
 <a name="l00050"></a>00050   
 <a name="l00051"></a>00051  
-<a name="l00052"></a>00052    <a class="code" href="classMcMd_1_1MigratingVanHove.html#a70628b3715ffd80343d701b5b52d5b14" title="Destructor.">MigratingVanHove::~MigratingVanHove</a>() 
-<a name="l00053"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a70628b3715ffd80343d701b5b52d5b14">00053</a>    {}
+<a name="l00052"></a>00052    <a class="code" href="classMcMd_1_1MigratingVanHove.html#a466c35b4b956c2b57f2fc3a029d2d916" title="Destructor.">MigratingVanHove::~MigratingVanHove</a>() 
+<a name="l00053"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a466c35b4b956c2b57f2fc3a029d2d916">00053</a>    {}
 <a name="l00054"></a>00054 
-<a name="l00056"></a>00056    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file.">MigratingVanHove::readParam</a>(std::istream&amp; in) 
-<a name="l00057"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#ab5421d3c9175985c9acbf723e5392075">00057</a>    {
+<a name="l00056"></a>00056    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#adfa04ae0e8835393421e6e6facddbd53" title="Read parameters from file.">MigratingVanHove::readParam</a>(std::istream&amp; in) 
+<a name="l00057"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#adfa04ae0e8835393421e6e6facddbd53">00057</a>    {
 <a name="l00058"></a>00058 
 <a name="l00059"></a>00059       <span class="comment">// Read interval and parameters for AutoCorrArray</span>
 <a name="l00060"></a>00060       readInterval(in);
@@ -132,8 +132,8 @@
 <a name="l00082"></a>00082    <span class="comment">/*</span>
 <a name="l00083"></a>00083 <span class="comment">   * Clear accumulators.</span>
 <a name="l00084"></a>00084 <span class="comment">   */</span>
-<a name="l00085"></a>00085    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#a4fc01d736fe50cf5b977f755b675f11d" title="Clear accumulators.">MigratingVanHove::setup</a>() 
-<a name="l00086"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a4fc01d736fe50cf5b977f755b675f11d">00086</a>    {
+<a name="l00085"></a>00085    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#af4def14e853dd086605efd0838b95c01" title="Clear accumulators.">MigratingVanHove::setup</a>() 
+<a name="l00086"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#af4def14e853dd086605efd0838b95c01">00086</a>    {
 <a name="l00087"></a>00087       replicaMovePtr_-&gt;registerObserver(*<span class="keyword">this</span>);
 <a name="l00088"></a>00088       assert (nBuffer_ &gt; 0);
 <a name="l00089"></a>00089       assert (nWave_ &gt; 0);
@@ -142,8 +142,8 @@
 <a name="l00092"></a>00092       }
 <a name="l00093"></a>00093    }
 <a name="l00094"></a>00094  
-<a name="l00096"></a>00096    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Add particle pairs to VanHove histogram.">MigratingVanHove::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00097"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#afc17577823a371a5ead4e51ebb8ec2ef">00097</a>    {
+<a name="l00096"></a>00096    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#a40d878c09d7fa33c8c4e71664d262562" title="Add particle pairs to VanHove histogram.">MigratingVanHove::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00097"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a40d878c09d7fa33c8c4e71664d262562">00097</a>    {
 <a name="l00098"></a>00098       <span class="keywordflow">if</span> (isAtInterval(iStep))  {
 <a name="l00099"></a>00099 
 <a name="l00100"></a>00100          <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  position;
@@ -163,17 +163,17 @@
 <a name="l00114"></a>00114          nSpecies = system().simulation().nSpecies();
 <a name="l00115"></a>00115          <span class="keywordflow">for</span> (iSpecies = 0; iSpecies &lt; nSpecies; ++iSpecies) {
 <a name="l00116"></a>00116             system().begin(iSpecies, molIter); 
-<a name="l00117"></a>00117             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00117"></a>00117             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
 <a name="l00118"></a>00118                molIter-&gt;begin(atomIter); 
-<a name="l00119"></a>00119                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00119"></a>00119                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00120"></a>00120                   position = atomIter-&gt;position();
 <a name="l00121"></a>00121                   coeff    = atomTypeCoeffs_[atomIter-&gt;typeId()];
 <a name="l00122"></a>00122  
 <a name="l00123"></a>00123         <span class="comment">// Loop over wavevectors</span>
 <a name="l00124"></a>00124                   <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
 <a name="l00125"></a>00125                
-<a name="l00126"></a>00126                      product = position.<a class="code" href="classUtil_1_1Vector.html#a5431123ac320a0ed069d9c7a30702c7b" title="Return dot product of this vector and vector v.">dot</a>(waveVectors_[i]);
-<a name="l00127"></a>00127                      expFactor = exp( product*<a class="code" href="classUtil_1_1Constants.html#ae5e782ecd9edaa713f754637e8fbe364" title="Square root of -1.">Constants::Im</a> );
+<a name="l00126"></a>00126                      product = position.<a class="code" href="classUtil_1_1Vector.html#aa1b64030ac95721bc39038c003240c09" title="Return dot product of this vector and vector v.">dot</a>(waveVectors_[i]);
+<a name="l00127"></a>00127                      expFactor = exp( product*<a class="code" href="classUtil_1_1Constants.html#af5e73d2cc0c0da9efe5cdb9c3b100d86" title="Square root of -1.">Constants::Im</a> );
 <a name="l00128"></a>00128                      fourierModes_[i] += (coeff*expFactor);
 <a name="l00129"></a>00129        
 <a name="l00130"></a>00130                   }
@@ -195,13 +195,13 @@
 <a name="l00149"></a>00149    <span class="keywordtype">void</span> MigratingVanHove::makeWaveVectors() 
 <a name="l00150"></a>00150    {
 <a name="l00151"></a>00151       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>    dWave;
-<a name="l00152"></a>00152       Boundary* boundaryPtr = &amp;system().boundary();
+<a name="l00152"></a>00152       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>* boundaryPtr = &amp;system().boundary();
 <a name="l00153"></a>00153       <span class="keywordtype">int</span>       i, j;
 <a name="l00154"></a>00154 
 <a name="l00155"></a>00155       <span class="comment">// Calculate wavevectors</span>
 <a name="l00156"></a>00156       <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
-<a name="l00157"></a>00157          waveVectors_[i] = <a class="code" href="classUtil_1_1Vector.html#a9295b4b42a83e7087e7eb10e4a65fa5d" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>;
-<a name="l00158"></a>00158          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00157"></a>00157          waveVectors_[i] = <a class="code" href="classUtil_1_1Vector.html#a2b7442f15bc3e08a496e3dc3c684525b" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>;
+<a name="l00158"></a>00158          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00159"></a>00159             dWave  = boundaryPtr-&gt;reciprocalBasisVector(j);
 <a name="l00160"></a>00160             dWave *= waveIntVectors_[i][j];
 <a name="l00161"></a>00161             waveVectors_[i] += dWave;
@@ -209,8 +209,8 @@
 <a name="l00163"></a>00163       }
 <a name="l00164"></a>00164    }
 <a name="l00165"></a>00165 
-<a name="l00166"></a>00166    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results to predefined output file.">MigratingVanHove::output</a>() 
-<a name="l00167"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a7437b254e19e7e12fc2ec99945f4ecea">00167</a>    {
+<a name="l00166"></a>00166    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#a95bc6f5c721947a8e712ee727d1ccf3b" title="Output results to predefined output file.">MigratingVanHove::output</a>() 
+<a name="l00167"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a95bc6f5c721947a8e712ee727d1ccf3b">00167</a>    {
 <a name="l00168"></a>00168       std::string suffix;
 <a name="l00169"></a>00169       <span class="keywordtype">int</span> i, j;
 <a name="l00170"></a>00170 
@@ -223,7 +223,7 @@
 <a name="l00177"></a>00177       fileMaster().openOutputFile(outputFileName(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
 <a name="l00178"></a>00178       <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
 <a name="l00179"></a>00179 
-<a name="l00180"></a>00180          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00180"></a>00180          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00181"></a>00181             outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(waveIntVectors_[i][j], 5);
 <a name="l00182"></a>00182          }
 <a name="l00183"></a>00183          outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[i].abs(), 20, 8);
@@ -237,8 +237,8 @@
 <a name="l00191"></a>00191 
 <a name="l00192"></a>00192    }
 <a name="l00193"></a>00193 
-<a name="l00194"></a>00194    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#ac4668fc64087c02c158017e9270b18fc" title="Send (and receive) VanHove information to (and from) partners.">MigratingVanHove::update</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Pair.html">sendRecvPair</a> &amp;partners)
-<a name="l00195"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#ac4668fc64087c02c158017e9270b18fc">00195</a>    {
+<a name="l00194"></a>00194    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#a3d3f54b3f4901c51fbabc23cd9a30b08" title="Send (and receive) VanHove information to (and from) partners.">MigratingVanHove::update</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Pair.html">sendRecvPair</a> &amp;partners)
+<a name="l00195"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a3d3f54b3f4901c51fbabc23cd9a30b08">00195</a>    {
 <a name="l00196"></a>00196       <span class="keywordtype">int</span> size;
 <a name="l00197"></a>00197       size = <a class="code" href="namespaceUtil.html#a1596889c931e9938e1fb11be7bbaecd9" title="Function template to compute memory size of one object.">memorySize</a>(accumulators_);
 <a name="l00198"></a>00198       size += <a class="code" href="namespaceUtil.html#a1596889c931e9938e1fb11be7bbaecd9" title="Function template to compute memory size of one object.">memorySize</a>(fourierModes_);
@@ -246,7 +246,7 @@
 <a name="l00200"></a>00200       size += <a class="code" href="namespaceUtil.html#a1596889c931e9938e1fb11be7bbaecd9" title="Function template to compute memory size of one object.">memorySize</a>(nSample_);
 <a name="l00201"></a>00201       
 <a name="l00202"></a>00202       <a class="code" href="classUtil_1_1MemoryOArchive.html" title="Save archive for packed heterogeneous binary data.">MemoryOArchive</a> sendCurrent;
-<a name="l00203"></a>00203       sendCurrent.<a class="code" href="classUtil_1_1MemoryOArchive.html#a831ffd04778c99ddab66d743c15b4adf" title="Allocate memory.">allocate</a>(size);
+<a name="l00203"></a>00203       sendCurrent.<a class="code" href="classUtil_1_1MemoryOArchive.html#a35a274c65ace40aa7082d4f779667282" title="Allocate memory.">allocate</a>(size);
 <a name="l00204"></a>00204       
 <a name="l00205"></a>00205       sendCurrent &lt;&lt; accumulators_;
 <a name="l00206"></a>00206       sendCurrent &lt;&lt; fourierModes_;
@@ -254,11 +254,11 @@
 <a name="l00208"></a>00208       sendCurrent &lt;&lt; nSample_;
 <a name="l00209"></a>00209       
 <a name="l00210"></a>00210       <a class="code" href="classUtil_1_1MemoryIArchive.html" title="Input archive for packed heterogeneous binary data.">MemoryIArchive</a> recvPartner;
-<a name="l00211"></a>00211       recvPartner.<a class="code" href="classUtil_1_1MemoryIArchive.html#a831ffd04778c99ddab66d743c15b4adf" title="Allocate memory block.">allocate</a>(size);
+<a name="l00211"></a>00211       recvPartner.<a class="code" href="classUtil_1_1MemoryIArchive.html#a4365cb5b4e996c26f1f1bf784693aaac" title="Allocate memory block.">allocate</a>(size);
 <a name="l00212"></a>00212 
 <a name="l00213"></a>00213       MPI::Request req;
-<a name="l00214"></a>00214       sendCurrent.<a class="code" href="classUtil_1_1MemoryOArchive.html#aa02dc5b6b9155ae600b8aa9cf47ead2c" title="Send packed data via MPI (non-blocking)">iSend</a>(*communicatorPtr_, req, partners[0]);
-<a name="l00215"></a>00215       recvPartner.<a class="code" href="classUtil_1_1MemoryIArchive.html#a5aebd514e8e7b3901baf9ed0e9624d03" title="Receive packed data via MPI.">recv</a>(*communicatorPtr_, partners[1]);
+<a name="l00214"></a>00214       sendCurrent.<a class="code" href="classUtil_1_1MemoryOArchive.html#a0c73ec0710fb406fd6d7ce7542ac9914" title="Send packed data via MPI (non-blocking)">iSend</a>(*communicatorPtr_, req, partners[0]);
+<a name="l00215"></a>00215       recvPartner.<a class="code" href="classUtil_1_1MemoryIArchive.html#a01542e31d8712cad4cf5e7c198656124" title="Receive packed data via MPI.">recv</a>(*communicatorPtr_, partners[1]);
 <a name="l00216"></a>00216       req.Wait();
 <a name="l00217"></a>00217       
 <a name="l00218"></a>00218       recvPartner &gt;&gt; accumulators_;
@@ -270,14 +270,14 @@
 <a name="l00224"></a>00224    <span class="comment">/*</span>
 <a name="l00225"></a>00225 <span class="comment">   * Save state to binary file archive.</span>
 <a name="l00226"></a>00226 <span class="comment">   */</span>
-<a name="l00227"></a>00227    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64" title="Save state to binary file archive.">MigratingVanHove::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
-<a name="l00228"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">00228</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00227"></a>00227    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#a40e9aaa997d6f00be163d147139accef" title="Save state to binary file archive.">MigratingVanHove::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
+<a name="l00228"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a40e9aaa997d6f00be163d147139accef">00228</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00229"></a>00229 
 <a name="l00230"></a>00230    <span class="comment">/*</span>
 <a name="l00231"></a>00231 <span class="comment">   * Load state from a binary file archive.</span>
 <a name="l00232"></a>00232 <span class="comment">   */</span>
-<a name="l00233"></a>00233    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load state from a binary file archive.">MigratingVanHove::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
-<a name="l00234"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#aa3d71af4cc5dfb2be6be816a8f562416">00234</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00233"></a>00233    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MigratingVanHove.html#a018850ebf627e88883fb59dab5d5fa57" title="Load state from a binary file archive.">MigratingVanHove::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00234"></a><a class="code" href="classMcMd_1_1MigratingVanHove.html#a018850ebf627e88883fb59dab5d5fa57">00234</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00235"></a>00235 
 <a name="l00236"></a>00236 
 <a name="l00237"></a>00237 }
@@ -287,7 +287,7 @@
 <a name="l00241"></a>00241 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -88,7 +88,7 @@
 <a name="l00048"></a>00048       ~<a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>();
 <a name="l00049"></a>00049 
 <a name="l00053"></a>00053       <span class="keywordtype">void</span> associate(<span class="keyword">const</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain, 
-<a name="l00054"></a>00054                      <span class="keyword">const</span> Boundary&amp; boundary, 
+<a name="l00054"></a>00054                      <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary, 
 <a name="l00055"></a>00055                      <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; atomStorage, 
 <a name="l00056"></a>00056                      <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;2&gt;</a>&amp; bondStorage, 
 <a name="l00057"></a>00057                      #ifdef INTER_ANGLE
@@ -109,10 +109,10 @@
 <a name="l00098"></a>00098 
 <a name="l00107"></a>00107       <span class="keywordtype">void</span> update();
 <a name="l00108"></a>00108 
-<a name="l00112"></a><a class="code" href="classDdMd_1_1Exchanger.html#abf07eeafcaa4b7d90986266c0e26b09b">00112</a>       <a class="code" href="classDdMd_1_1DdTimer.html" title="Class for measuring time intervals.">DdTimer</a>&amp; timer()
+<a name="l00112"></a><a class="code" href="classDdMd_1_1Exchanger.html#a54a80e2d6d77871fd15056ebb9e145dc">00112</a>       <a class="code" href="classDdMd_1_1DdTimer.html" title="Class for measuring time intervals.">DdTimer</a>&amp; timer()
 <a name="l00113"></a>00113       {  <span class="keywordflow">return</span> timer_; }
 <a name="l00114"></a>00114 
-<a name="l00118"></a><a class="code" href="classDdMd_1_1Exchanger.html#ab6e93eaf4296365fc161148257d0f7f3">00118</a>       <span class="keyword">enum</span> <a class="code" href="classDdMd_1_1Exchanger.html#ab6e93eaf4296365fc161148257d0f7f3" title="Enumeration of time stamp identifiers.">timeId</a> {START, ATOM_PLAN, INIT_GROUP_PLAN, CLEAR_GHOSTS,
+<a name="l00118"></a><a class="code" href="classDdMd_1_1Exchanger.html#a0cfcd11dc8793a81164a591ebf32eb9e">00118</a>       <span class="keyword">enum</span> <a class="code" href="classDdMd_1_1Exchanger.html#a0cfcd11dc8793a81164a591ebf32eb9e" title="Enumeration of time stamp identifiers.">timeId</a> {START, ATOM_PLAN, INIT_GROUP_PLAN, CLEAR_GHOSTS,
 <a name="l00119"></a>00119                    PACK_ATOMS, PACK_GROUPS, REMOVE_ATOMS, REMOVE_GROUPS,
 <a name="l00120"></a>00120                    SEND_RECV_ATOMS, UNPACK_ATOMS, UNPACK_GROUPS, 
 <a name="l00121"></a>00121                    FINISH_GROUP_PLAN, INIT_SEND_ARRAYS, PACK_GHOSTS, 
@@ -122,9 +122,9 @@
 <a name="l00125"></a>00125 
 <a name="l00126"></a>00126    <span class="keyword">private</span>:
 <a name="l00127"></a>00127 
-<a name="l00138"></a>00138       <a class="code" href="classUtil_1_1FMatrix.html" title="Fixed Size Matrix.">FMatrix&lt; APArray&lt;Atom&gt;</a>, <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>, 2&gt;  sendArray_;
+<a name="l00138"></a>00138       <a class="code" href="classUtil_1_1FMatrix.html" title="Fixed Size Matrix.">FMatrix&lt; APArray&lt;Atom&gt;</a>, <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>, 2&gt;  sendArray_;
 <a name="l00139"></a>00139 
-<a name="l00150"></a>00150       <a class="code" href="classUtil_1_1FMatrix.html" title="Fixed Size Matrix.">FMatrix&lt; APArray&lt;Atom&gt;</a>, <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>, 2&gt;  recvArray_;
+<a name="l00150"></a>00150       <a class="code" href="classUtil_1_1FMatrix.html" title="Fixed Size Matrix.">FMatrix&lt; APArray&lt;Atom&gt;</a>, <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>, 2&gt;  recvArray_;
 <a name="l00151"></a>00151 
 <a name="l00152"></a>00152 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00153"></a>00153 <span class="preprocessor"></span>
@@ -152,7 +152,7 @@
 <a name="l00191"></a>00191 
 <a name="l00193"></a>00193       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> multiProcessorDirection_;
 <a name="l00194"></a>00194 
-<a name="l00196"></a>00196       <span class="keyword">const</span> Boundary*  boundaryPtr_;
+<a name="l00196"></a>00196       <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>*  boundaryPtr_;
 <a name="l00197"></a>00197 
 <a name="l00199"></a>00199       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>*  domainPtr_;
 <a name="l00200"></a>00200 
@@ -212,7 +212,7 @@
 <a name="l00267"></a>00267 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

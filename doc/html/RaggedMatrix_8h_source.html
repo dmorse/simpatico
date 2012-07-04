@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -74,38 +74,38 @@
 <a name="l00033"></a>00033 
 <a name="l00034"></a>00034       <span class="comment">// Private copy constructor, to prohibit copy construction.</span>
 <a name="l00035"></a>00035 
-<a name="l00039"></a>00039       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#a4017c7bea44bed1f16e7b73eb8fee5c5" title="Destructor.">~RaggedMatrix</a>();
+<a name="l00039"></a>00039       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#ab5d6d0c5035ef413c00c9f5a46f5bf74" title="Destructor.">~RaggedMatrix</a>();
 <a name="l00040"></a>00040 
-<a name="l00046"></a>00046       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#a8af90ffcb84fd323e1b4b4fd1d8e1c0e" title="Get number of rows.">capacity1</a>();
+<a name="l00046"></a>00046       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#aaaffc093e16d4ee2c9fd7f53a7a2e5f2" title="Get number of rows.">capacity1</a>();
 <a name="l00047"></a>00047 
-<a name="l00054"></a>00054       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#a2f606f2b5f995d74e94bde34e7dc1b59" title="Get number of elements in row number i.">capacity2</a>(<span class="keywordtype">int</span> i);
+<a name="l00054"></a>00054       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#aab0e5ababbfdfb815fa1543fbcd202f0" title="Get number of elements in row number i.">capacity2</a>(<span class="keywordtype">int</span> i);
 <a name="l00055"></a>00055 
-<a name="l00063"></a>00063       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1RaggedMatrix.html#a80610b6a4636bd501203de70d870928b" title="Return element (i,j) of matrix by const reference.">operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) <span class="keyword">const</span>;
+<a name="l00063"></a>00063       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1RaggedMatrix.html#a2447f2946b147ae3cd275465679444ab" title="Return element (i,j) of matrix by const reference.">operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) <span class="keyword">const</span>;
 <a name="l00064"></a>00064 
-<a name="l00072"></a>00072       Data&amp; <a class="code" href="classUtil_1_1RaggedMatrix.html#a80610b6a4636bd501203de70d870928b" title="Return element (i,j) of matrix by const reference.">operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j);
+<a name="l00072"></a>00072       Data&amp; <a class="code" href="classUtil_1_1RaggedMatrix.html#a2447f2946b147ae3cd275465679444ab" title="Return element (i,j) of matrix by const reference.">operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j);
 <a name="l00073"></a>00073 
 <a name="l00074"></a>00074    <span class="keyword">protected</span>:
 <a name="l00075"></a>00075 
-<a name="l00077"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a51a8255a7ec647fc0e77a41589bd4a0e">00077</a>       Data*  <a class="code" href="classUtil_1_1RaggedMatrix.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to 1D C array of all elements.">data_</a>;
+<a name="l00077"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#af2229af07e06e9f96bb635ef9973dcee">00077</a>       Data*  <a class="code" href="classUtil_1_1RaggedMatrix.html#af2229af07e06e9f96bb635ef9973dcee" title="Pointer to 1D C array of all elements.">data_</a>;
 <a name="l00078"></a>00078 
-<a name="l00080"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#ac983622286a02be224620b54c49514fd">00080</a>       Data** <a class="code" href="classUtil_1_1RaggedMatrix.html#ac983622286a02be224620b54c49514fd" title="Array of pointer to rows.">rows_</a>;
+<a name="l00080"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a8ce54c378b94b80b259f485c9e891c57">00080</a>       Data** <a class="code" href="classUtil_1_1RaggedMatrix.html#a8ce54c378b94b80b259f485c9e891c57" title="Array of pointer to rows.">rows_</a>;
 <a name="l00081"></a>00081 
-<a name="l00083"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a536e5784f7c78b5bb7c13ab492cab4bc">00083</a>       <span class="keywordtype">int</span>*   <a class="code" href="classUtil_1_1RaggedMatrix.html#a536e5784f7c78b5bb7c13ab492cab4bc" title="Array containing number of elements in each row.">capacity2_</a>;
+<a name="l00083"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a68f184744aa3e2fd9f95534c936f5f7f">00083</a>       <span class="keywordtype">int</span>*   <a class="code" href="classUtil_1_1RaggedMatrix.html#a68f184744aa3e2fd9f95534c936f5f7f" title="Array containing number of elements in each row.">capacity2_</a>;
 <a name="l00084"></a>00084 
-<a name="l00086"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a8516d92163edd4be2775f79d99d12d61">00086</a>       <span class="keywordtype">int</span>    <a class="code" href="classUtil_1_1RaggedMatrix.html#a8516d92163edd4be2775f79d99d12d61" title="Number of rows (range of first index).">capacity1_</a>;
+<a name="l00086"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a532f33c6a0c5700ec76df69264527afa">00086</a>       <span class="keywordtype">int</span>    <a class="code" href="classUtil_1_1RaggedMatrix.html#a532f33c6a0c5700ec76df69264527afa" title="Number of rows (range of first index).">capacity1_</a>;
 <a name="l00087"></a>00087 
-<a name="l00093"></a>00093       <a class="code" href="classUtil_1_1RaggedMatrix.html#ac959e06463806441e32102bbea52b8ab" title="Default constructor.">RaggedMatrix</a>();
+<a name="l00093"></a>00093       <a class="code" href="classUtil_1_1RaggedMatrix.html#a8fbfb6aa200fcc4565d6842a3067138d" title="Default constructor.">RaggedMatrix</a>();
 <a name="l00094"></a>00094 
 <a name="l00095"></a>00095    <span class="keyword">private</span>:
 <a name="l00096"></a>00096 
-<a name="l00102"></a>00102       <a class="code" href="classUtil_1_1RaggedMatrix.html#ac959e06463806441e32102bbea52b8ab" title="Default constructor.">RaggedMatrix</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1RaggedMatrix.html" title="A 2D array in which different rows can have different lengths.">RaggedMatrix</a>&amp; other);
+<a name="l00102"></a>00102       <a class="code" href="classUtil_1_1RaggedMatrix.html#a8fbfb6aa200fcc4565d6842a3067138d" title="Default constructor.">RaggedMatrix</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1RaggedMatrix.html" title="A 2D array in which different rows can have different lengths.">RaggedMatrix</a>&amp; other);
 <a name="l00103"></a>00103 
 <a name="l00104"></a>00104    }; 
 <a name="l00105"></a>00105 
 <a name="l00106"></a>00106    <span class="comment">// Method definitions</span>
 <a name="l00107"></a>00107 
 <a name="l00111"></a>00111    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00112"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#ac959e06463806441e32102bbea52b8ab">00112</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#ac959e06463806441e32102bbea52b8ab" title="Default constructor.">RaggedMatrix&lt;Data&gt;::RaggedMatrix</a>()
+<a name="l00112"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a8fbfb6aa200fcc4565d6842a3067138d">00112</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#a8fbfb6aa200fcc4565d6842a3067138d" title="Default constructor.">RaggedMatrix&lt;Data&gt;::RaggedMatrix</a>()
 <a name="l00113"></a>00113     : data_(0),
 <a name="l00114"></a>00114       rows_(0),
 <a name="l00115"></a>00115       capacity2_(0),
@@ -116,28 +116,28 @@
 <a name="l00120"></a>00120 <span class="comment">   * Destructor.</span>
 <a name="l00121"></a>00121 <span class="comment">   */</span>
 <a name="l00122"></a>00122    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00123"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a4017c7bea44bed1f16e7b73eb8fee5c5">00123</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#a4017c7bea44bed1f16e7b73eb8fee5c5" title="Destructor.">RaggedMatrix&lt;Data&gt;::~RaggedMatrix</a>()
+<a name="l00123"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#ab5d6d0c5035ef413c00c9f5a46f5bf74">00123</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#ab5d6d0c5035ef413c00c9f5a46f5bf74" title="Destructor.">RaggedMatrix&lt;Data&gt;::~RaggedMatrix</a>()
 <a name="l00124"></a>00124    {}
 <a name="l00125"></a>00125 
 <a name="l00126"></a>00126    <span class="comment">/*</span>
 <a name="l00127"></a>00127 <span class="comment">   * Get number of rows.</span>
 <a name="l00128"></a>00128 <span class="comment">   */</span>
 <a name="l00129"></a>00129    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00130"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a8af90ffcb84fd323e1b4b4fd1d8e1c0e">00130</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#a8af90ffcb84fd323e1b4b4fd1d8e1c0e" title="Get number of rows.">RaggedMatrix&lt;Data&gt;::capacity1</a>()
+<a name="l00130"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#aaaffc093e16d4ee2c9fd7f53a7a2e5f2">00130</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#aaaffc093e16d4ee2c9fd7f53a7a2e5f2" title="Get number of rows.">RaggedMatrix&lt;Data&gt;::capacity1</a>()
 <a name="l00131"></a>00131    { <span class="keywordflow">return</span> capacity1_; }
 <a name="l00132"></a>00132 
 <a name="l00133"></a>00133    <span class="comment">/*</span>
 <a name="l00134"></a>00134 <span class="comment">   * Get number of columns in row i.</span>
 <a name="l00135"></a>00135 <span class="comment">   */</span>
 <a name="l00136"></a>00136    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00137"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a2f606f2b5f995d74e94bde34e7dc1b59">00137</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#a2f606f2b5f995d74e94bde34e7dc1b59" title="Get number of elements in row number i.">RaggedMatrix&lt;Data&gt;::capacity2</a>(<span class="keywordtype">int</span> i)
+<a name="l00137"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#aab0e5ababbfdfb815fa1543fbcd202f0">00137</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RaggedMatrix.html#aab0e5ababbfdfb815fa1543fbcd202f0" title="Get number of elements in row number i.">RaggedMatrix&lt;Data&gt;::capacity2</a>(<span class="keywordtype">int</span> i)
 <a name="l00138"></a>00138    { <span class="keywordflow">return</span> capacity2_[i]; }
 <a name="l00139"></a>00139 
 <a name="l00140"></a>00140    <span class="comment">/*</span>
 <a name="l00141"></a>00141 <span class="comment">   * Return element (i,j) of matrix by const reference.</span>
 <a name="l00142"></a>00142 <span class="comment">   */</span>
 <a name="l00143"></a>00143    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00144"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a80610b6a4636bd501203de70d870928b">00144</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1RaggedMatrix.html#a80610b6a4636bd501203de70d870928b" title="Return element (i,j) of matrix by const reference.">RaggedMatrix&lt;Data&gt;::operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00144"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a2447f2946b147ae3cd275465679444ab">00144</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1RaggedMatrix.html#a2447f2946b147ae3cd275465679444ab" title="Return element (i,j) of matrix by const reference.">RaggedMatrix&lt;Data&gt;::operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
 <a name="l00145"></a>00145 <span class="keyword">   </span>{
 <a name="l00146"></a>00146       assert(data_ != 0);
 <a name="l00147"></a>00147       assert(i &gt;= 0);
@@ -151,7 +151,7 @@
 <a name="l00155"></a>00155 <span class="comment">   * Return element (i,j) of matrix by reference.</span>
 <a name="l00156"></a>00156 <span class="comment">   */</span>
 <a name="l00157"></a>00157    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00158"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a198c95222f8642ab4ed814fc4cb94cf9">00158</a>    <span class="keyword">inline</span> Data&amp; <a class="code" href="classUtil_1_1RaggedMatrix.html#a80610b6a4636bd501203de70d870928b" title="Return element (i,j) of matrix by const reference.">RaggedMatrix&lt;Data&gt;::operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)
+<a name="l00158"></a><a class="code" href="classUtil_1_1RaggedMatrix.html#a5fddfe42f2b86b89b3fafe6bf32ec3f7">00158</a>    <span class="keyword">inline</span> Data&amp; <a class="code" href="classUtil_1_1RaggedMatrix.html#a2447f2946b147ae3cd275465679444ab" title="Return element (i,j) of matrix by const reference.">RaggedMatrix&lt;Data&gt;::operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)
 <a name="l00159"></a>00159    {
 <a name="l00160"></a>00160       assert(data_ != 0);
 <a name="l00161"></a>00161       assert(i &gt;= 0);
@@ -166,7 +166,7 @@
 <a name="l00170"></a>00170 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: VanHove Class Reference</title>
+<title>Simpatico: McMd::VanHove Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>VanHove Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>McMd::VanHove Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::VanHove" --><!-- doxytag: inherits="SystemDiagnostic&lt; System &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -65,9 +65,9 @@
 <p> over all atoms in the system, where <img class="formulaInl" alt="$ c_{a} $" src="form_26.png"/> is a user-specified coefficient for monomers of type a.</p>
 <p>The Van Hove class can calculate S(k,t) for a list of wavevectors. Each wavevector is specified as an IntVector containing integer Miller indices. These are the coefficients in an expansion of a reciprocal lattice wavevector in terms of recprocal lattice basis vectors.</p>
 <p>In a system with nAtomType = 2, with two monomer types 0 and 1, the parameter file input for calculating the autocorrelation of an order parameter <img class="formulaInl" alt="$ \psi = \rho_0 - \rho_1 $" src="form_27.png"/> for 5 wavevectors along the x axis in an orthorhombic unit cell might look like this:</p>
-<div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1VanHove.html#a029ca5d9df2c0b145fbca29dd5786c40" title="Constructor.">VanHove</a>{
-    <a class="code" href="classMcMd_1_1Diagnostic.html#afe5b7de87b935531edcd3d15fbd92166" title="Get interval value.">interval</a>                      1000
-    <a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>             <a class="code" href="classMcMd_1_1VanHove.html#a029ca5d9df2c0b145fbca29dd5786c40" title="Constructor.">VanHove</a>
+<div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1VanHove.html#a5fc8d5a8a01c4387d69f66705c0c1883" title="Constructor.">VanHove</a>{
+    <a class="code" href="classMcMd_1_1Diagnostic.html#ad399e6c8cf5acab10360278dc964b4f4" title="Get interval value.">interval</a>                      1000
+    <a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>             <a class="code" href="classMcMd_1_1VanHove.html#a5fc8d5a8a01c4387d69f66705c0c1883" title="Constructor.">VanHove</a>
     atomTypeCoeffs              1.0000      -1.0000
     nBuffer                        100
     nWave                            5
@@ -83,16 +83,16 @@
 </div>
 <p><code>#include &lt;<a class="el" href="VanHove_8h_source.html">VanHove.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for VanHove:</div>
+Inheritance diagram for McMd::VanHove:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1VanHove.png" usemap="#VanHove_map" alt=""/>
-  <map id="VanHove_map" name="VanHove_map">
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; System &gt;" shape="rect" coords="92,168,267,192"/>
-<area href="classMcMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="92,112,267,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,175,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="185,56,360,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,175,24"/>
+  <img src="classMcMd_1_1VanHove.png" usemap="#McMd::VanHove_map" alt=""/>
+  <map id="McMd::VanHove_map" name="McMd::VanHove_map">
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; System &gt;" shape="rect" coords="113,168,330,192"/>
+<area href="classMcMd_1_1Diagnostic.html" alt="McMd::Diagnostic" shape="rect" coords="113,112,330,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,217,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="227,56,444,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,217,24"/>
 </map>
  </div></div>
 
@@ -100,33 +100,33 @@ Inheritance diagram for VanHove:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a029ca5d9df2c0b145fbca29dd5786c40">VanHove</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a029ca5d9df2c0b145fbca29dd5786c40"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a13a185ead798845b22aa0ae4d1fd74b3">~VanHove</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a13a185ead798845b22aa0ae4d1fd74b3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear accumulators.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#afc17577823a371a5ead4e51ebb8ec2ef">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particle pairs to <a class="el" href="classMcMd_1_1VanHove.html" title="Evaluates the van Hove function S(k,t) for several k.">VanHove</a> histogram.  <a href="#afc17577823a371a5ead4e51ebb8ec2ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a7437b254e19e7e12fc2ec99945f4ecea">output</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to predefined output file.  <a href="#a7437b254e19e7e12fc2ec99945f4ecea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#aa3d71af4cc5dfb2be6be816a8f562416">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#aa3d71af4cc5dfb2be6be816a8f562416"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a5fc8d5a8a01c4387d69f66705c0c1883">VanHove</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a5fc8d5a8a01c4387d69f66705c0c1883"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a0e64c895c8d4793b705c0904a2681157">~VanHove</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a0e64c895c8d4793b705c0904a2681157"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a65c0e7313c3773bbaf73f8471e6d7727">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#a65c0e7313c3773bbaf73f8471e6d7727"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a6c8046215b166538672057ffa246fab3">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear accumulators.  <a href="#a6c8046215b166538672057ffa246fab3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a60d3df3f0c24633c5dc010192d6bcf25">sample</a> (long iStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particle pairs to <a class="el" href="classMcMd_1_1VanHove.html" title="Evaluates the van Hove function S(k,t) for several k.">VanHove</a> histogram.  <a href="#a60d3df3f0c24633c5dc010192d6bcf25"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#addf4611864effb9d603efbc31f2868c1">output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to predefined output file.  <a href="#addf4611864effb9d603efbc31f2868c1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#afc0fef4f15bc3e8fceef6b3769e9167f">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#afc0fef4f15bc3e8fceef6b3769e9167f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a009b90a4c3bf01f03e32431b1e3e5345">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#a009b90a4c3bf01f03e32431b1e3e5345"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1VanHove.html#a7fb556f67f8714326111814a0d62f9dc">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a7fb556f67f8714326111814a0d62f9dc"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a029ca5d9df2c0b145fbca29dd5786c40"></a><!-- doxytag: member="McMd::VanHove::VanHove" ref="a029ca5d9df2c0b145fbca29dd5786c40" args="(System &amp;system)" -->
+<a class="anchor" id="a5fc8d5a8a01c4387d69f66705c0c1883"></a><!-- doxytag: member="McMd::VanHove::VanHove" ref="a5fc8d5a8a01c4387d69f66705c0c1883" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1VanHove.html">VanHove</a> </td>
+          <td class="memname">McMd::VanHove::VanHove </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -148,12 +148,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a13a185ead798845b22aa0ae4d1fd74b3"></a><!-- doxytag: member="McMd::VanHove::~VanHove" ref="a13a185ead798845b22aa0ae4d1fd74b3" args="()" -->
+<a class="anchor" id="a0e64c895c8d4793b705c0904a2681157"></a><!-- doxytag: member="McMd::VanHove::~VanHove" ref="a0e64c895c8d4793b705c0904a2681157" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1VanHove.html">VanHove</a> </td>
+          <td class="memname">McMd::VanHove::~VanHove </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -169,12 +169,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::VanHove::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a65c0e7313c3773bbaf73f8471e6d7727"></a><!-- doxytag: member="McMd::VanHove::readParam" ref="a65c0e7313c3773bbaf73f8471e6d7727" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::VanHove::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -202,20 +202,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="VanHove_8cpp_source.html#l00040">40</a> of file <a class="el" href="VanHove_8cpp_source.html">VanHove.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00226">DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00638">Simulation::nAtomType()</a>, <a class="el" href="mcMd_2diagnostics_2Diagnostic_8cpp_source.html#l00047">Diagnostic::readInterval()</a>, <a class="el" href="mcMd_2diagnostics_2Diagnostic_8cpp_source.html#l00079">Diagnostic::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00844">System::simulation()</a>, and <a class="el" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c">SystemDiagnostic&lt; System &gt;::system()</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00226">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00638">McMd::Simulation::nAtomType()</a>, <a class="el" href="mcMd_2diagnostics_2Diagnostic_8cpp_source.html#l00047">McMd::Diagnostic::readInterval()</a>, <a class="el" href="mcMd_2diagnostics_2Diagnostic_8cpp_source.html#l00079">McMd::Diagnostic::readOutputFileName()</a>, <a class="el" href="System_8h_source.html#l00844">McMd::System::simulation()</a>, and <a class="el" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379">McMd::SystemDiagnostic&lt; System &gt;::system()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::VanHove::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a6c8046215b166538672057ffa246fab3"></a><!-- doxytag: member="McMd::VanHove::setup" ref="a6c8046215b166538672057ffa246fab3" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void McMd::VanHove::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -226,7 +226,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear accumulators. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a93c5a174f073b2587a484999ca550829">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="VanHove_8cpp_source.html#l00068">68</a> of file <a class="el" href="VanHove_8cpp_source.html">VanHove.cpp</a>.</p>
 
@@ -234,12 +234,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afc17577823a371a5ead4e51ebb8ec2ef"></a><!-- doxytag: member="McMd::VanHove::sample" ref="afc17577823a371a5ead4e51ebb8ec2ef" args="(long iStep)" -->
+<a class="anchor" id="a60d3df3f0c24633c5dc010192d6bcf25"></a><!-- doxytag: member="McMd::VanHove::sample" ref="a60d3df3f0c24633c5dc010192d6bcf25" args="(long iStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void McMd::VanHove::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -258,20 +258,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f">Diagnostic</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#ae265d934fee552e1bd50ce37930ac63c">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="VanHove_8cpp_source.html#l00081">81</a> of file <a class="el" href="VanHove_8cpp_source.html">VanHove.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l00936">System::begin()</a>, <a class="el" href="Vector_8h_source.html#l00604">Vector::dot()</a>, <a class="el" href="Constants_8h_source.html#l00039">Constants::Im</a>, <a class="el" href="mcMd_2diagnostics_2Diagnostic_8h_source.html#l00213">Diagnostic::isAtInterval()</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00084">ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00685">Simulation::nSpecies()</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="System_8h_source.html#l00844">System::simulation()</a>, and <a class="el" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c">SystemDiagnostic&lt; System &gt;::system()</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l00936">McMd::System::begin()</a>, <a class="el" href="Vector_8h_source.html#l00604">Util::Vector::dot()</a>, <a class="el" href="Constants_8h_source.html#l00039">Util::Constants::Im</a>, <a class="el" href="mcMd_2diagnostics_2Diagnostic_8h_source.html#l00213">McMd::Diagnostic::isAtInterval()</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00084">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00685">McMd::Simulation::nSpecies()</a>, <a class="el" href="product_8h_source.html#l00022">Util::product()</a>, <a class="el" href="System_8h_source.html#l00844">McMd::System::simulation()</a>, and <a class="el" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379">McMd::SystemDiagnostic&lt; System &gt;::system()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7437b254e19e7e12fc2ec99945f4ecea"></a><!-- doxytag: member="McMd::VanHove::output" ref="a7437b254e19e7e12fc2ec99945f4ecea" args="()" -->
+<a class="anchor" id="addf4611864effb9d603efbc31f2868c1"></a><!-- doxytag: member="McMd::VanHove::output" ref="addf4611864effb9d603efbc31f2868c1" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void McMd::VanHove::output </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -282,20 +282,20 @@ Public Member Functions</h2></td></tr>
 
 <p>Output results to predefined output file. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a209e4a470fcdeb3d5b87da3dd6960def">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac5481c8016af4c70d19d59905261c0bf">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="VanHove_8cpp_source.html#l00153">153</a> of file <a class="el" href="VanHove_8cpp_source.html">VanHove.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="mcMd_2diagnostics_2Diagnostic_8cpp_source.html#l00095">Diagnostic::fileMaster()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00220">FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2diagnostics_2Diagnostic_8h_source.html#l00219">Diagnostic::outputFileName()</a>, <a class="el" href="ioUtil_8cpp_source.html#l00056">Util::toString()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00077">ParamComposite::writeParam()</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="mcMd_2diagnostics_2Diagnostic_8cpp_source.html#l00095">McMd::Diagnostic::fileMaster()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00220">McMd::FileMaster::openOutputFile()</a>, <a class="el" href="mcMd_2diagnostics_2Diagnostic_8h_source.html#l00219">McMd::Diagnostic::outputFileName()</a>, <a class="el" href="ioUtil_8cpp_source.html#l00056">Util::toString()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00077">Util::ParamComposite::writeParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><!-- doxytag: member="McMd::VanHove::save" ref="a248dde9ccc0ef67e5d9cc5fd0bdc2b64" args="(Serializable::OArchiveType &amp;ar)" -->
+<a class="anchor" id="afc0fef4f15bc3e8fceef6b3769e9167f"></a><!-- doxytag: member="McMd::VanHove::save" ref="afc0fef4f15bc3e8fceef6b3769e9167f" args="(Serializable::OArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void save </td>
+          <td class="memname">void McMd::VanHove::save </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -313,18 +313,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac27203b7ee783c3cebc054c290e313ed">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="VanHove_8cpp_source.html#l00196">196</a> of file <a class="el" href="VanHove_8cpp_source.html">VanHove.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa3d71af4cc5dfb2be6be816a8f562416"></a><!-- doxytag: member="McMd::VanHove::load" ref="aa3d71af4cc5dfb2be6be816a8f562416" args="(Serializable::IArchiveType &amp;ar)" -->
+<a class="anchor" id="a009b90a4c3bf01f03e32431b1e3e5345"></a><!-- doxytag: member="McMd::VanHove::load" ref="a009b90a4c3bf01f03e32431b1e3e5345" args="(Serializable::IArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void load </td>
+          <td class="memname">void McMd::VanHove::load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -342,18 +342,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#aa3d71af4cc5dfb2be6be816a8f562416">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#afa44b6fb962ca0a8a979d0add2dc85b9">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="VanHove_8cpp_source.html#l00202">202</a> of file <a class="el" href="VanHove_8cpp_source.html">VanHove.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="McMd::VanHove::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="a7fb556f67f8714326111814a0d62f9dc"></a><!-- doxytag: member="McMd::VanHove::serialize" ref="a7fb556f67f8714326111814a0d62f9dc" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void McMd::VanHove::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -382,7 +384,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6765e839ab267e4959384e35a4112451">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6056717b367040d8605f67794a7e2ebc">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="VanHove_8h_source.html#l00193">193</a> of file <a class="el" href="VanHove_8h_source.html">VanHove.h</a>.</p>
 
@@ -395,7 +397,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="VanHove_8cpp_source.html">VanHove.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:54 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:26 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

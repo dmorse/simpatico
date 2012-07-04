@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: AtomCollector Class Reference</title>
+<title>Simpatico: DdMd::AtomCollector Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>AtomCollector Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
+<h1>DdMd::AtomCollector Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::AtomCollector" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -59,7 +59,7 @@
 <div class="fragment"><pre class="fragment">    AtomStorage storage;
     Domain domain;
     Buffer buffer;
-    <a class="code" href="classDdMd_1_1AtomCollector.html#a61e796f21537e52f9691c8b3241cfc5a" title="Constructor.">AtomCollector</a> collector;
+    <a class="code" href="classDdMd_1_1AtomCollector.html#adb7efe7b233b97ef81eaf8df32518116" title="Constructor.">AtomCollector</a> collector;
 
     <span class="comment">// Initialization</span>
     collector.associate(domain, storage, buffer);
@@ -81,13 +81,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="AtomCollector_8h_source.html">AtomCollector.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for AtomCollector:</div>
+Inheritance diagram for DdMd::AtomCollector:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1AtomCollector.png" usemap="#AtomCollector_map" alt=""/>
-  <map id="AtomCollector_map" name="AtomCollector_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classDdMd_1_1AtomCollector.png" usemap="#DdMd::AtomCollector_map" alt=""/>
+  <map id="DdMd::AtomCollector_map" name="DdMd::AtomCollector_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,134,24"/>
 </map>
  </div></div>
 
@@ -95,28 +95,28 @@ Inheritance diagram for AtomCollector:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#a61e796f21537e52f9691c8b3241cfc5a">AtomCollector</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a61e796f21537e52f9691c8b3241cfc5a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#a8dd0c89c62e4f358574f87acaaccdf55">~AtomCollector</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a8dd0c89c62e4f358574f87acaaccdf55"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#a04281a920ee07c0799306f8facd6e41a">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;storage, <a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize pointers to associated objects.  <a href="#a04281a920ee07c0799306f8facd6e41a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#aabf8875c45399fe650208eba24aa87bb">allocate</a> (int cacheSize)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate cache on master processor.  <a href="#aabf8875c45399fe650208eba24aa87bb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup master processor for receiving.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#aa0f373427e508fde8d4d5dd7e063cafa">nextPtr</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to the next available atom, or null.  <a href="#aa0f373427e508fde8d4d5dd7e063cafa"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#ae9399f5ec7881c5d18173def8068108e">send</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send all atoms to the master.  <a href="#ae9399f5ec7881c5d18173def8068108e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#adb7efe7b233b97ef81eaf8df32518116">AtomCollector</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#adb7efe7b233b97ef81eaf8df32518116"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#a78f527c9e3e9e2593705256751a251d3">~AtomCollector</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a78f527c9e3e9e2593705256751a251d3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#a8b72ea6dd07ec6f87ebddddba736bd64">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;storage, <a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize pointers to associated objects.  <a href="#a8b72ea6dd07ec6f87ebddddba736bd64"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#abf05e7d81e70cf3b32bec0fd10ba14c8">allocate</a> (int cacheSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate cache on master processor.  <a href="#abf05e7d81e70cf3b32bec0fd10ba14c8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#ac976436d0bc1e3ac7313e648572360d5">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup master processor for receiving.  <a href="#ac976436d0bc1e3ac7313e648572360d5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#a6166e17eb4bd211f908c9795150a6795">nextPtr</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to the next available atom, or null.  <a href="#a6166e17eb4bd211f908c9795150a6795"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AtomCollector.html#abd4afa0da2576dd023e2a09495edc113">send</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send all atoms to the master.  <a href="#abd4afa0da2576dd023e2a09495edc113"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a61e796f21537e52f9691c8b3241cfc5a"></a><!-- doxytag: member="DdMd::AtomCollector::AtomCollector" ref="a61e796f21537e52f9691c8b3241cfc5a" args="()" -->
+<a class="anchor" id="adb7efe7b233b97ef81eaf8df32518116"></a><!-- doxytag: member="DdMd::AtomCollector::AtomCollector" ref="adb7efe7b233b97ef81eaf8df32518116" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1AtomCollector.html">AtomCollector</a> </td>
+          <td class="memname">DdMd::AtomCollector::AtomCollector </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -131,12 +131,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8dd0c89c62e4f358574f87acaaccdf55"></a><!-- doxytag: member="DdMd::AtomCollector::~AtomCollector" ref="a8dd0c89c62e4f358574f87acaaccdf55" args="()" -->
+<a class="anchor" id="a78f527c9e3e9e2593705256751a251d3"></a><!-- doxytag: member="DdMd::AtomCollector::~AtomCollector" ref="a78f527c9e3e9e2593705256751a251d3" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1AtomCollector.html">AtomCollector</a> </td>
+          <td class="memname">DdMd::AtomCollector::~AtomCollector </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -152,12 +152,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a04281a920ee07c0799306f8facd6e41a"></a><!-- doxytag: member="DdMd::AtomCollector::associate" ref="a04281a920ee07c0799306f8facd6e41a" args="(Domain &amp;domain, AtomStorage &amp;storage, Buffer &amp;buffer)" -->
+<a class="anchor" id="a8b72ea6dd07ec6f87ebddddba736bd64"></a><!-- doxytag: member="DdMd::AtomCollector::associate" ref="a8b72ea6dd07ec6f87ebddddba736bd64" args="(Domain &amp;domain, AtomStorage &amp;storage, Buffer &amp;buffer)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void associate </td>
+          <td class="memname">void DdMd::AtomCollector::associate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td>
           <td class="paramname"><em>domain</em>, </td>
@@ -190,12 +190,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aabf8875c45399fe650208eba24aa87bb"></a><!-- doxytag: member="DdMd::AtomCollector::allocate" ref="aabf8875c45399fe650208eba24aa87bb" args="(int cacheSize)" -->
+<a class="anchor" id="abf05e7d81e70cf3b32bec0fd10ba14c8"></a><!-- doxytag: member="DdMd::AtomCollector::allocate" ref="abf05e7d81e70cf3b32bec0fd10ba14c8" args="(int cacheSize)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void DdMd::AtomCollector::allocate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>cacheSize</em></td><td>)</td>
@@ -212,12 +212,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="DdMd::AtomCollector::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="ac976436d0bc1e3ac7313e648572360d5"></a><!-- doxytag: member="DdMd::AtomCollector::setup" ref="ac976436d0bc1e3ac7313e648572360d5" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void DdMd::AtomCollector::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -233,16 +233,16 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMdConfigIo::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMd::DdMdConfigIo::writeConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa0f373427e508fde8d4d5dd7e063cafa"></a><!-- doxytag: member="DdMd::AtomCollector::nextPtr" ref="aa0f373427e508fde8d4d5dd7e063cafa" args="()" -->
+<a class="anchor" id="a6166e17eb4bd211f908c9795150a6795"></a><!-- doxytag: member="DdMd::AtomCollector::nextPtr" ref="a6166e17eb4bd211f908c9795150a6795" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> * nextPtr </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> * DdMd::AtomCollector::nextPtr </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -259,16 +259,16 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMdConfigIo::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMd::DdMdConfigIo::writeConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae9399f5ec7881c5d18173def8068108e"></a><!-- doxytag: member="DdMd::AtomCollector::send" ref="ae9399f5ec7881c5d18173def8068108e" args="()" -->
+<a class="anchor" id="abd4afa0da2576dd023e2a09495edc113"></a><!-- doxytag: member="DdMd::AtomCollector::send" ref="abd4afa0da2576dd023e2a09495edc113" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void send </td>
+          <td class="memname">void DdMd::AtomCollector::send </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -284,7 +284,7 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMdConfigIo::writeConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00230">DdMd::DdMdConfigIo::writeConfig()</a>.</p>
 
 </div>
 </div>
@@ -293,7 +293,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="AtomCollector_8cpp_source.html">AtomCollector.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

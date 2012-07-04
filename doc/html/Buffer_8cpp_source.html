@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -72,7 +72,7 @@
 <a name="l00021"></a>00021    <span class="comment">/*</span>
 <a name="l00022"></a>00022 <span class="comment">   * Constructor.</span>
 <a name="l00023"></a>00023 <span class="comment">   */</span>
-<a name="l00024"></a><a class="code" href="classDdMd_1_1Buffer.html#a47587d18a394fb4b9508c61e3d5f0260">00024</a>    <a class="code" href="classDdMd_1_1Buffer.html#a47587d18a394fb4b9508c61e3d5f0260" title="Constructor.">Buffer::Buffer</a>() 
+<a name="l00024"></a><a class="code" href="classDdMd_1_1Buffer.html#a693328635801b32550c8469ae9a7b55a">00024</a>    <a class="code" href="classDdMd_1_1Buffer.html#a693328635801b32550c8469ae9a7b55a" title="Constructor.">Buffer::Buffer</a>() 
 <a name="l00025"></a>00025     : Util::<a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>(),
 <a name="l00026"></a>00026       #ifdef UTIL_MPI
 <a name="l00027"></a>00027       sendBufferBegin_(0),
@@ -102,7 +102,7 @@
 <a name="l00051"></a>00051    <span class="comment">/*</span>
 <a name="l00052"></a>00052 <span class="comment">   * Allocate send and recv buffers.</span>
 <a name="l00053"></a>00053 <span class="comment">   */</span>
-<a name="l00054"></a><a class="code" href="classDdMd_1_1Buffer.html#a17470aa332dae9ceef089b7565f70673">00054</a>    <span class="keywordtype">void</span> Buffer::allocate(<span class="keywordtype">int</span> atomCapacity, <span class="keywordtype">int</span> ghostCapacity)
+<a name="l00054"></a><a class="code" href="classDdMd_1_1Buffer.html#a41a950b2b25f947f80470304ee33252b">00054</a>    <span class="keywordtype">void</span> Buffer::allocate(<span class="keywordtype">int</span> atomCapacity, <span class="keywordtype">int</span> ghostCapacity)
 <a name="l00055"></a>00055    {
 <a name="l00056"></a>00056       <span class="comment">//Preconditions</span>
 <a name="l00057"></a>00057       <span class="keywordflow">if</span> (atomCapacity &lt; 0) {
@@ -112,12 +112,12 @@
 <a name="l00061"></a>00061          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Negative ghostCapacity&quot;</span>);
 <a name="l00062"></a>00062       }
 <a name="l00063"></a>00063 
-<a name="l00064"></a>00064       atomCapacity_  = <a class="code" href="classDdMd_1_1Buffer.html#a72fbb50e40dfdc5f3710e54aac41b97e" title="Maximum number of atoms for which space is available.">atomCapacity</a>;
-<a name="l00065"></a>00065       ghostCapacity_ = <a class="code" href="classDdMd_1_1Buffer.html#a78ffa5d4e2411c8da8dc7b1c38bf0421" title="Maximum number of ghost atoms for which space is available.">ghostCapacity</a>;
+<a name="l00064"></a>00064       atomCapacity_  = <a class="code" href="classDdMd_1_1Buffer.html#a04bca4248033f113def2871112e033a6" title="Maximum number of atoms for which space is available.">atomCapacity</a>;
+<a name="l00065"></a>00065       ghostCapacity_ = <a class="code" href="classDdMd_1_1Buffer.html#aa09f2ab0c92f88343ecab5340037dc11" title="Maximum number of ghost atoms for which space is available.">ghostCapacity</a>;
 <a name="l00066"></a>00066 
 <a name="l00067"></a>00067 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00068"></a>00068 <span class="preprocessor"></span>      <span class="comment">// Do actual allocation</span>
-<a name="l00069"></a>00069       <a class="code" href="classDdMd_1_1Buffer.html#a17470aa332dae9ceef089b7565f70673" title="Allocate send and recv buffers.">allocate</a>();
+<a name="l00069"></a>00069       <a class="code" href="classDdMd_1_1Buffer.html#a41a950b2b25f947f80470304ee33252b" title="Allocate send and recv buffers.">allocate</a>();
 <a name="l00070"></a>00070 <span class="preprocessor">      #endif</span>
 <a name="l00071"></a>00071 <span class="preprocessor"></span>
 <a name="l00072"></a>00072       isInitialized_ = <span class="keyword">true</span>;
@@ -126,14 +126,14 @@
 <a name="l00075"></a>00075    <span class="comment">/*</span>
 <a name="l00076"></a>00076 <span class="comment">   * Read capacities, and allocate buffers.</span>
 <a name="l00077"></a>00077 <span class="comment">   */</span>
-<a name="l00078"></a><a class="code" href="classDdMd_1_1Buffer.html#ab5421d3c9175985c9acbf723e5392075">00078</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#ab5421d3c9175985c9acbf723e5392075" title="Read capacities and allocate buffers.">Buffer::readParam</a>(std::istream&amp; in)
+<a name="l00078"></a><a class="code" href="classDdMd_1_1Buffer.html#a5f1d36aee618277b5bb30f22aea57c93">00078</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a5f1d36aee618277b5bb30f22aea57c93" title="Read capacities and allocate buffers.">Buffer::readParam</a>(std::istream&amp; in)
 <a name="l00079"></a>00079    {
 <a name="l00080"></a>00080 
 <a name="l00081"></a>00081       <span class="comment">// Read parameters</span>
-<a name="l00082"></a>00082       <a class="code" href="classUtil_1_1ParamComposite.html#ae62d63b03a6f5cb70c0978082e455e03" title="Add and read a class label and opening bracket.">readBegin</a>(in, <span class="stringliteral">&quot;Buffer&quot;</span>);
+<a name="l00082"></a>00082       <a class="code" href="classUtil_1_1ParamComposite.html#af21bd2c40a05014df5f0ee85ed73d8f7" title="Add and read a class label and opening bracket.">readBegin</a>(in, <span class="stringliteral">&quot;Buffer&quot;</span>);
 <a name="l00083"></a>00083       read&lt;int&gt;(in, <span class="stringliteral">&quot;atomCapacity&quot;</span>,  atomCapacity_);
 <a name="l00084"></a>00084       read&lt;int&gt;(in, <span class="stringliteral">&quot;ghostCapacity&quot;</span>, ghostCapacity_);
-<a name="l00085"></a>00085       <a class="code" href="classUtil_1_1ParamComposite.html#a38c7f73d3a857afb146812da527b14f7" title="Add and read the closing bracket.">readEnd</a>(in);
+<a name="l00085"></a>00085       <a class="code" href="classUtil_1_1ParamComposite.html#ad688a41bbbd4d5c88d72c0edc7b1f55c" title="Add and read the closing bracket.">readEnd</a>(in);
 <a name="l00086"></a>00086 
 <a name="l00087"></a>00087       <span class="comment">//Preconditions</span>
 <a name="l00088"></a>00088       <span class="keywordflow">if</span> (atomCapacity_ &lt; 0) {
@@ -145,7 +145,7 @@
 <a name="l00094"></a>00094 
 <a name="l00095"></a>00095 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00096"></a>00096 <span class="preprocessor"></span>      <span class="comment">// Do actual allocation</span>
-<a name="l00097"></a>00097       <a class="code" href="classDdMd_1_1Buffer.html#a17470aa332dae9ceef089b7565f70673" title="Allocate send and recv buffers.">allocate</a>();
+<a name="l00097"></a>00097       <a class="code" href="classDdMd_1_1Buffer.html#a41a950b2b25f947f80470304ee33252b" title="Allocate send and recv buffers.">allocate</a>();
 <a name="l00098"></a>00098 <span class="preprocessor">      #endif</span>
 <a name="l00099"></a>00099 <span class="preprocessor"></span>
 <a name="l00100"></a>00100       isInitialized_ = <span class="keyword">true</span>;
@@ -154,19 +154,19 @@
 <a name="l00103"></a>00103    <span class="comment">/*</span>
 <a name="l00104"></a>00104 <span class="comment">   * Maximum number of atoms for which space is available.</span>
 <a name="l00105"></a>00105 <span class="comment">   */</span>
-<a name="l00106"></a><a class="code" href="classDdMd_1_1Buffer.html#a72fbb50e40dfdc5f3710e54aac41b97e">00106</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Buffer.html#a72fbb50e40dfdc5f3710e54aac41b97e" title="Maximum number of atoms for which space is available.">Buffer::atomCapacity</a>()<span class="keyword"> const</span>
+<a name="l00106"></a><a class="code" href="classDdMd_1_1Buffer.html#a04bca4248033f113def2871112e033a6">00106</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Buffer.html#a04bca4248033f113def2871112e033a6" title="Maximum number of atoms for which space is available.">Buffer::atomCapacity</a>()<span class="keyword"> const</span>
 <a name="l00107"></a>00107 <span class="keyword">   </span>{  <span class="keywordflow">return</span> atomCapacity_; }
 <a name="l00108"></a>00108 
 <a name="l00109"></a>00109    <span class="comment">/*</span>
 <a name="l00110"></a>00110 <span class="comment">   * Maximum number of ghost atoms for which space is available.</span>
 <a name="l00111"></a>00111 <span class="comment">   */</span>
-<a name="l00112"></a><a class="code" href="classDdMd_1_1Buffer.html#a78ffa5d4e2411c8da8dc7b1c38bf0421">00112</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Buffer.html#a78ffa5d4e2411c8da8dc7b1c38bf0421" title="Maximum number of ghost atoms for which space is available.">Buffer::ghostCapacity</a>()<span class="keyword"> const</span>
+<a name="l00112"></a><a class="code" href="classDdMd_1_1Buffer.html#aa09f2ab0c92f88343ecab5340037dc11">00112</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Buffer.html#aa09f2ab0c92f88343ecab5340037dc11" title="Maximum number of ghost atoms for which space is available.">Buffer::ghostCapacity</a>()<span class="keyword"> const</span>
 <a name="l00113"></a>00113 <span class="keyword">   </span>{  <span class="keywordflow">return</span> ghostCapacity_; }
 <a name="l00114"></a>00114 
 <a name="l00115"></a>00115    <span class="comment">/*</span>
 <a name="l00116"></a>00116 <span class="comment">   * Has this buffer been initialized?</span>
 <a name="l00117"></a>00117 <span class="comment">   */</span>
-<a name="l00118"></a><a class="code" href="classDdMd_1_1Buffer.html#a5d40f267dbc50e5e80dd71af752c3620">00118</a>    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Buffer.html#a5d40f267dbc50e5e80dd71af752c3620" title="Has this Buffer been initialized?">Buffer::isInitialized</a>()<span class="keyword"> const</span>
+<a name="l00118"></a><a class="code" href="classDdMd_1_1Buffer.html#a54d044f2ef58334549017b7070a36d22">00118</a>    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Buffer.html#a54d044f2ef58334549017b7070a36d22" title="Has this Buffer been initialized?">Buffer::isInitialized</a>()<span class="keyword"> const</span>
 <a name="l00119"></a>00119 <span class="keyword">   </span>{  <span class="keywordflow">return</span> isInitialized_; }
 <a name="l00120"></a>00120 
 <a name="l00121"></a>00121 <span class="preprocessor">   #ifdef UTIL_MPI</span>
@@ -187,7 +187,7 @@
 <a name="l00136"></a>00136       <span class="keywordflow">if</span> (ghostCapacity_ &lt;= 0) {
 <a name="l00137"></a>00137          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;ghostCapacity_ must be positive&quot;</span>);
 <a name="l00138"></a>00138       }
-<a name="l00139"></a>00139       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Buffer.html#a0bcdab3616db481dd211594529479f94" title="Has memory been allocated for this Buffer?">isAllocated</a>()) {
+<a name="l00139"></a>00139       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Buffer.html#a104a3a2f795db7106dbdcd2876afbc42" title="Has memory been allocated for this Buffer?">isAllocated</a>()) {
 <a name="l00140"></a>00140          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Buffer cannot be re-allocated&quot;</span>);
 <a name="l00141"></a>00141       }
 <a name="l00142"></a>00142 
@@ -226,7 +226,7 @@
 <a name="l00175"></a>00175    <span class="comment">/*</span>
 <a name="l00176"></a>00176 <span class="comment">   * Clear the send buffer prior to packing, and set the sendType.</span>
 <a name="l00177"></a>00177 <span class="comment">   */</span>
-<a name="l00178"></a><a class="code" href="classDdMd_1_1Buffer.html#ac46aa7fc31291893c7c0068baa7464a7">00178</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#ac46aa7fc31291893c7c0068baa7464a7" title="Clear the send buffer and sendType.">Buffer::clearSendBuffer</a>()
+<a name="l00178"></a><a class="code" href="classDdMd_1_1Buffer.html#a3e9c53dd43d416f2980ee1eb396316e1">00178</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a3e9c53dd43d416f2980ee1eb396316e1" title="Clear the send buffer and sendType.">Buffer::clearSendBuffer</a>()
 <a name="l00179"></a>00179    { 
 <a name="l00180"></a>00180       sendPtr_ = sendBufferBegin_;
 <a name="l00181"></a>00181       sendSize_ = 0;
@@ -237,7 +237,7 @@
 <a name="l00186"></a>00186    <span class="comment">/*</span>
 <a name="l00187"></a>00187 <span class="comment">   * Clear the send buffer prior to packing, and set the sendType.</span>
 <a name="l00188"></a>00188 <span class="comment">   */</span>
-<a name="l00189"></a><a class="code" href="classDdMd_1_1Buffer.html#a823b27b38e6019185893cedafd7b537b">00189</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a823b27b38e6019185893cedafd7b537b" title="Clear the send buffer prior to packing and set atomtype.">Buffer::beginSendBlock</a>(BlockDataType sendType, <span class="keywordtype">int</span> sendGroupSize)
+<a name="l00189"></a><a class="code" href="classDdMd_1_1Buffer.html#ab39ec5feb70943acda311aa9c52913db">00189</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#ab39ec5feb70943acda311aa9c52913db" title="Clear the send buffer prior to packing and set atomtype.">Buffer::beginSendBlock</a>(BlockDataType sendType, <span class="keywordtype">int</span> sendGroupSize)
 <a name="l00190"></a>00190    {
 <a name="l00191"></a>00191       <span class="keywordflow">if</span> (sendSize_ != 0) {
 <a name="l00192"></a>00192          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: previous send block not finalized&quot;</span>);
@@ -263,7 +263,7 @@
 <a name="l00212"></a>00212    <span class="comment">/*</span>
 <a name="l00213"></a>00213 <span class="comment">   * Finalize data block in buffer. Pack prefix data.</span>
 <a name="l00214"></a>00214 <span class="comment">   */</span>
-<a name="l00215"></a><a class="code" href="classDdMd_1_1Buffer.html#a652d1618085054a45a8c6fdbd41b963c">00215</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a652d1618085054a45a8c6fdbd41b963c" title="Finalize a block in the send buffer.">Buffer::endSendBlock</a>(<span class="keywordtype">bool</span> isComplete)
+<a name="l00215"></a><a class="code" href="classDdMd_1_1Buffer.html#ac625a812aee3b7fe37d17f9cdb8c86f1">00215</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#ac625a812aee3b7fe37d17f9cdb8c86f1" title="Finalize a block in the send buffer.">Buffer::endSendBlock</a>(<span class="keywordtype">bool</span> isComplete)
 <a name="l00216"></a>00216    {
 <a name="l00217"></a>00217       <span class="comment">// Add passport to the beginning of the block:</span>
 <a name="l00218"></a>00218       <span class="comment">// Pack sendSize_, sendType_ and isComplete.</span>
@@ -287,7 +287,7 @@
 <a name="l00236"></a>00236    <span class="comment">/*</span>
 <a name="l00237"></a>00237 <span class="comment">   * Begin receiving block. Extract prefix data. </span>
 <a name="l00238"></a>00238 <span class="comment">   */</span>
-<a name="l00239"></a><a class="code" href="classDdMd_1_1Buffer.html#a6e295b590fac4d50e62311d5ee6f5922">00239</a>    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Buffer.html#a6e295b590fac4d50e62311d5ee6f5922" title="Begin to receive a block from the recv buffer.">Buffer::beginRecvBlock</a>()
+<a name="l00239"></a><a class="code" href="classDdMd_1_1Buffer.html#a084adf34691be655ad90392f4749b667">00239</a>    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Buffer.html#a084adf34691be655ad90392f4749b667" title="Begin to receive a block from the recv buffer.">Buffer::beginRecvBlock</a>()
 <a name="l00240"></a>00240    {
 <a name="l00241"></a>00241       <span class="comment">// Precondition</span>
 <a name="l00242"></a>00242       <span class="keywordflow">if</span> (recvSize_ != 0) {
@@ -311,7 +311,7 @@
 <a name="l00260"></a>00260    <span class="comment">/*</span>
 <a name="l00261"></a>00261 <span class="comment">   * Pack a local Atom for exchange of ownership.</span>
 <a name="l00262"></a>00262 <span class="comment">   */</span>
-<a name="l00263"></a><a class="code" href="classDdMd_1_1Buffer.html#a96e2c60464229f0f405cfc73b8f144c0">00263</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a96e2c60464229f0f405cfc73b8f144c0" title="Pack an Atom for exchange of ownership.">Buffer::packAtom</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
+<a name="l00263"></a><a class="code" href="classDdMd_1_1Buffer.html#a625076cad43f862d88fe681d0e275466">00263</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a625076cad43f862d88fe681d0e275466" title="Pack an Atom for exchange of ownership.">Buffer::packAtom</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
 <a name="l00264"></a>00264    {
 <a name="l00265"></a>00265       <span class="keywordflow">if</span> (sendType_ != ATOM) {
 <a name="l00266"></a>00266          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Send type is not ATOM&quot;</span>);
@@ -320,15 +320,15 @@
 <a name="l00269"></a>00269          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to overpack send buffer&quot;</span>);
 <a name="l00270"></a>00270       }
 <a name="l00271"></a>00271 
-<a name="l00272"></a>00272       pack&lt;int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get unique global index.">id</a>());
-<a name="l00273"></a>00273       pack&lt;int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get atom type index.">typeId</a>());
-<a name="l00274"></a>00274       pack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>());
-<a name="l00275"></a>00275       pack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a0a918625496f209cee72908ba31867a2" title="Get velocity Vector by reference.">velocity</a>());
-<a name="l00276"></a>00276       pack&lt;unsigned int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a46ec03902fb8db0e8ab7c30bb2d363d3" title="Get communication plan by reference.">plan</a>().flags());
+<a name="l00272"></a>00272       pack&lt;int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">id</a>());
+<a name="l00273"></a>00273       pack&lt;int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a6cadb772421f5337885fcf2de3c8fc3c" title="Get atom type index.">typeId</a>());
+<a name="l00274"></a>00274       pack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>());
+<a name="l00275"></a>00275       pack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#ad553edac6d868c6ab2c1f967f8c1eeea" title="Get velocity Vector by reference.">velocity</a>());
+<a name="l00276"></a>00276       pack&lt;unsigned int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a66d188c40ec33739a45b3a0d23e771d2" title="Get communication plan by reference.">plan</a>().flags());
 <a name="l00277"></a>00277 
 <a name="l00278"></a>00278       <span class="comment">// Pack Mask</span>
-<a name="l00279"></a>00279       <a class="code" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &amp;quot;masked&amp;quot;.">Mask</a>&amp; mask = atom.<a class="code" href="classDdMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">mask</a>();
-<a name="l00280"></a>00280       <span class="keywordtype">int</span> size = mask.<a class="code" href="classDdMd_1_1Mask.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return the number of masked atoms.">size</a>();
+<a name="l00279"></a>00279       <a class="code" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &amp;quot;masked&amp;quot;.">Mask</a>&amp; mask = atom.<a class="code" href="classDdMd_1_1Atom.html#a8a468104f3541cdf012977f3de4f0e98" title="Get the associated Mask by reference.">mask</a>();
+<a name="l00280"></a>00280       <span class="keywordtype">int</span> size = mask.<a class="code" href="classDdMd_1_1Mask.html#a48c8c88539a59e00cba4cc0b674ecc4c" title="Return the number of masked atoms.">size</a>();
 <a name="l00281"></a>00281       pack&lt;int&gt;(size);
 <a name="l00282"></a>00282       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; size; ++j) {
 <a name="l00283"></a>00283          pack&lt;int&gt;(mask[j]);
@@ -341,7 +341,7 @@
 <a name="l00290"></a>00290    <span class="comment">/*</span>
 <a name="l00291"></a>00291 <span class="comment">   * Receive ownership of an Atom.</span>
 <a name="l00292"></a>00292 <span class="comment">   */</span>
-<a name="l00293"></a><a class="code" href="classDdMd_1_1Buffer.html#a4147ec1dd1065728eeb09b0174b66760">00293</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a4147ec1dd1065728eeb09b0174b66760" title="Receive ownership of an Atom.">Buffer::unpackAtom</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
+<a name="l00293"></a><a class="code" href="classDdMd_1_1Buffer.html#a7fed89d8782ba831b498072a5f130b25">00293</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a7fed89d8782ba831b498072a5f130b25" title="Receive ownership of an Atom.">Buffer::unpackAtom</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
 <a name="l00294"></a>00294    {
 <a name="l00295"></a>00295       <span class="keywordflow">if</span> (recvType_ != (<span class="keywordtype">int</span>)ATOM) {
 <a name="l00296"></a>00296          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Receive type is not ATOM&quot;</span>);
@@ -353,29 +353,29 @@
 <a name="l00302"></a>00302       <span class="keywordtype">int</span> i;
 <a name="l00303"></a>00303 
 <a name="l00304"></a>00304       unpack(i);
-<a name="l00305"></a>00305       atom.<a class="code" href="classDdMd_1_1Atom.html#af27d12f590d5654c5068497d58825b29" title="Set unique id for this Atom.">setId</a>(i);
+<a name="l00305"></a>00305       atom.<a class="code" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae" title="Set unique id for this Atom.">setId</a>(i);
 <a name="l00306"></a>00306 
 <a name="l00307"></a>00307       unpack(i);
-<a name="l00308"></a>00308       atom.<a class="code" href="classDdMd_1_1Atom.html#a4eda9bc9ef7228643fd3311552601523" title="Set the atom type index.">setTypeId</a>(i);
+<a name="l00308"></a>00308       atom.<a class="code" href="classDdMd_1_1Atom.html#a5dd225a3f99ad3c2963ee69d1c90a4af" title="Set the atom type index.">setTypeId</a>(i);
 <a name="l00309"></a>00309 
-<a name="l00310"></a>00310       unpack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>());
-<a name="l00311"></a>00311       unpack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a0a918625496f209cee72908ba31867a2" title="Get velocity Vector by reference.">velocity</a>());
+<a name="l00310"></a>00310       unpack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>());
+<a name="l00311"></a>00311       unpack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#ad553edac6d868c6ab2c1f967f8c1eeea" title="Get velocity Vector by reference.">velocity</a>());
 <a name="l00312"></a>00312 
 <a name="l00313"></a>00313       <span class="comment">// Unpack communication plan</span>
 <a name="l00314"></a>00314       <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ui;
 <a name="l00315"></a>00315       unpack(ui);
-<a name="l00316"></a>00316       atom.<a class="code" href="classDdMd_1_1Atom.html#a46ec03902fb8db0e8ab7c30bb2d363d3" title="Get communication plan by reference.">plan</a>().setFlags(ui);
+<a name="l00316"></a>00316       atom.<a class="code" href="classDdMd_1_1Atom.html#a66d188c40ec33739a45b3a0d23e771d2" title="Get communication plan by reference.">plan</a>().setFlags(ui);
 <a name="l00317"></a>00317 
 <a name="l00318"></a>00318       <span class="comment">// Unpack atom Mask</span>
-<a name="l00319"></a>00319       <a class="code" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &amp;quot;masked&amp;quot;.">Mask</a>&amp; mask = atom.<a class="code" href="classDdMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">mask</a>();
-<a name="l00320"></a>00320       mask.<a class="code" href="classDdMd_1_1Mask.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear the masked set (remove all atoms).">clear</a>();
+<a name="l00319"></a>00319       <a class="code" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &amp;quot;masked&amp;quot;.">Mask</a>&amp; mask = atom.<a class="code" href="classDdMd_1_1Atom.html#a8a468104f3541cdf012977f3de4f0e98" title="Get the associated Mask by reference.">mask</a>();
+<a name="l00320"></a>00320       mask.<a class="code" href="classDdMd_1_1Mask.html#aed6c42fb9d685317fcbf99c832c3064e" title="Clear the masked set (remove all atoms).">clear</a>();
 <a name="l00321"></a>00321       <span class="keywordtype">int</span> size;
 <a name="l00322"></a>00322       unpack(size);
 <a name="l00323"></a>00323       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; size; ++j) {
 <a name="l00324"></a>00324          unpack(i);
-<a name="l00325"></a>00325          mask.<a class="code" href="classDdMd_1_1Mask.html#a7c6cfb23f3e3ddb8093c318e7f042b36" title="Add an Atom to the masked set.">append</a>(i);
+<a name="l00325"></a>00325          mask.<a class="code" href="classDdMd_1_1Mask.html#a19dd062bf1ebe985153a7545e8e3c4bc" title="Add an Atom to the masked set.">append</a>(i);
 <a name="l00326"></a>00326       }
-<a name="l00327"></a>00327       assert(mask.<a class="code" href="classDdMd_1_1Mask.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return the number of masked atoms.">size</a>() == size);
+<a name="l00327"></a>00327       assert(mask.<a class="code" href="classDdMd_1_1Mask.html#a48c8c88539a59e00cba4cc0b674ecc4c" title="Return the number of masked atoms.">size</a>() == size);
 <a name="l00328"></a>00328 
 <a name="l00329"></a>00329       <span class="comment">// Decrement number of atoms in recv buffer by 1</span>
 <a name="l00330"></a>00330       recvSize_--;
@@ -392,14 +392,14 @@
 <a name="l00341"></a>00341       size += 2*<span class="keyword">sizeof</span>(<a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>); 
 <a name="l00342"></a>00342       size += <span class="keyword">sizeof</span>(<span class="keywordtype">unsigned</span> int);
 <a name="l00343"></a>00343       size += <span class="keyword">sizeof</span>(int);
-<a name="l00344"></a>00344       size += <a class="code" href="classDdMd_1_1Mask.html#a3167e45fe2904b41a89fcd63e873997d" title="Maximum number of masked atoms per target atom.">Mask::Capacity</a>*<span class="keyword">sizeof</span>(int); 
+<a name="l00344"></a>00344       size += <a class="code" href="classDdMd_1_1Mask.html#ac99555d703a71913a0cc0ea9cbf157e1" title="Maximum number of masked atoms per target atom.">Mask::Capacity</a>*<span class="keyword">sizeof</span>(int); 
 <a name="l00345"></a>00345       <span class="keywordflow">return</span> size;
 <a name="l00346"></a>00346    }
 <a name="l00347"></a>00347 
 <a name="l00348"></a>00348    <span class="comment">/*</span>
 <a name="l00349"></a>00349 <span class="comment">   * Pack data required for a ghost Atom for sending.</span>
 <a name="l00350"></a>00350 <span class="comment">   */</span>
-<a name="l00351"></a><a class="code" href="classDdMd_1_1Buffer.html#af4080f6cc1a5a85fb8593d107987096c">00351</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#af4080f6cc1a5a85fb8593d107987096c" title="Pack ghost Atom into send buffer.">Buffer::packGhost</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
+<a name="l00351"></a><a class="code" href="classDdMd_1_1Buffer.html#adee88b198e2830d5ccb9cbef01d04f86">00351</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#adee88b198e2830d5ccb9cbef01d04f86" title="Pack ghost Atom into send buffer.">Buffer::packGhost</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
 <a name="l00352"></a>00352    {
 <a name="l00353"></a>00353       <span class="comment">// Preconditions</span>
 <a name="l00354"></a>00354       <span class="keywordflow">if</span> (sendType_ != GHOST) {
@@ -410,10 +410,10 @@
 <a name="l00359"></a>00359       }
 <a name="l00360"></a>00360 
 <a name="l00361"></a>00361       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> pos;
-<a name="l00362"></a>00362       pack&lt;int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get unique global index.">id</a>());
-<a name="l00363"></a>00363       pack&lt;int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get atom type index.">typeId</a>());
-<a name="l00364"></a>00364       pack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>());
-<a name="l00365"></a>00365       pack&lt;unsigned int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a46ec03902fb8db0e8ab7c30bb2d363d3" title="Get communication plan by reference.">plan</a>().flags());
+<a name="l00362"></a>00362       pack&lt;int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">id</a>());
+<a name="l00363"></a>00363       pack&lt;int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a6cadb772421f5337885fcf2de3c8fc3c" title="Get atom type index.">typeId</a>());
+<a name="l00364"></a>00364       pack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>());
+<a name="l00365"></a>00365       pack&lt;unsigned int&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a66d188c40ec33739a45b3a0d23e771d2" title="Get communication plan by reference.">plan</a>().flags());
 <a name="l00366"></a>00366 
 <a name="l00367"></a>00367       <span class="comment">//Increment number of atoms in send buffer by 1</span>
 <a name="l00368"></a>00368       sendSize_++;
@@ -423,7 +423,7 @@
 <a name="l00372"></a>00372    <span class="comment">/*</span>
 <a name="l00373"></a>00373 <span class="comment">   * Unpack data required for a ghost Atom.</span>
 <a name="l00374"></a>00374 <span class="comment">   */</span>
-<a name="l00375"></a><a class="code" href="classDdMd_1_1Buffer.html#a64304e95ba9d12aa71274fa42ee39ffc">00375</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a64304e95ba9d12aa71274fa42ee39ffc" title="Unpack a ghost Atom from recv buffer.">Buffer::unpackGhost</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
+<a name="l00375"></a><a class="code" href="classDdMd_1_1Buffer.html#a9aee58c08b1d6fd228d563412f3feb52">00375</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a9aee58c08b1d6fd228d563412f3feb52" title="Unpack a ghost Atom from recv buffer.">Buffer::unpackGhost</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
 <a name="l00376"></a>00376    {
 <a name="l00377"></a>00377       <span class="keywordflow">if</span> (recvType_ != (<span class="keywordtype">int</span>)GHOST) {
 <a name="l00378"></a>00378          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Receive type is not GHOST&quot;</span>);
@@ -434,14 +434,14 @@
 <a name="l00383"></a>00383 
 <a name="l00384"></a>00384       <span class="keywordtype">int</span> i;
 <a name="l00385"></a>00385       unpack(i);
-<a name="l00386"></a>00386       atom.<a class="code" href="classDdMd_1_1Atom.html#af27d12f590d5654c5068497d58825b29" title="Set unique id for this Atom.">setId</a>(i);
+<a name="l00386"></a>00386       atom.<a class="code" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae" title="Set unique id for this Atom.">setId</a>(i);
 <a name="l00387"></a>00387       unpack(i);
-<a name="l00388"></a>00388       atom.<a class="code" href="classDdMd_1_1Atom.html#a4eda9bc9ef7228643fd3311552601523" title="Set the atom type index.">setTypeId</a>(i);
-<a name="l00389"></a>00389       unpack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>());
+<a name="l00388"></a>00388       atom.<a class="code" href="classDdMd_1_1Atom.html#a5dd225a3f99ad3c2963ee69d1c90a4af" title="Set the atom type index.">setTypeId</a>(i);
+<a name="l00389"></a>00389       unpack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>());
 <a name="l00390"></a>00390 
 <a name="l00391"></a>00391       <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ui;
 <a name="l00392"></a>00392       unpack(ui);
-<a name="l00393"></a>00393       atom.<a class="code" href="classDdMd_1_1Atom.html#a46ec03902fb8db0e8ab7c30bb2d363d3" title="Get communication plan by reference.">plan</a>().setFlags(ui);
+<a name="l00393"></a>00393       atom.<a class="code" href="classDdMd_1_1Atom.html#a66d188c40ec33739a45b3a0d23e771d2" title="Get communication plan by reference.">plan</a>().setFlags(ui);
 <a name="l00394"></a>00394       
 <a name="l00395"></a>00395       <span class="comment">//Decrement number of atoms in recv buffer to be unpacked by 1</span>
 <a name="l00396"></a>00396       recvSize_--;
@@ -468,7 +468,7 @@
 <a name="l00417"></a>00417    <span class="comment">/*</span>
 <a name="l00418"></a>00418 <span class="comment">   * Maximum number of Group&lt;N&gt; objects that can fit buffer.</span>
 <a name="l00419"></a>00419 <span class="comment">   */</span>
-<a name="l00420"></a><a class="code" href="classDdMd_1_1Buffer.html#a3039d677d1ce6c99c4283621ddbb5e41">00420</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Buffer.html#a3039d677d1ce6c99c4283621ddbb5e41" title="Maximum number of group&amp;lt;N&amp;gt; objects for which space is available.">Buffer::groupCapacity</a>(<span class="keywordtype">int</span> N)<span class="keyword"> const</span>
+<a name="l00420"></a><a class="code" href="classDdMd_1_1Buffer.html#a7c4266ed1b8ab541e7e8c6dd023aaf06">00420</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Buffer.html#a7c4266ed1b8ab541e7e8c6dd023aaf06" title="Maximum number of group&amp;lt;N&amp;gt; objects for which space is available.">Buffer::groupCapacity</a>(<span class="keywordtype">int</span> N)<span class="keyword"> const</span>
 <a name="l00421"></a>00421 <span class="keyword">   </span>{
 <a name="l00422"></a>00422       <span class="keywordflow">if</span> (dataCapacity_ &lt;= 0) {
 <a name="l00423"></a>00423          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Buffer not allocated&quot;</span>);
@@ -479,7 +479,7 @@
 <a name="l00428"></a>00428    <span class="comment">/*</span>
 <a name="l00429"></a>00429 <span class="comment">   * Pack data required to update a ghost atom.</span>
 <a name="l00430"></a>00430 <span class="comment">   */</span>
-<a name="l00431"></a><a class="code" href="classDdMd_1_1Buffer.html#ab5315f97146bee7235a298a07e519299">00431</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#ab5315f97146bee7235a298a07e519299" title="Pack update of ghost position Atom into send buffer.">Buffer::packUpdate</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
+<a name="l00431"></a><a class="code" href="classDdMd_1_1Buffer.html#a52fb647173b77cca09f99fceb35feab8">00431</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a52fb647173b77cca09f99fceb35feab8" title="Pack update of ghost position Atom into send buffer.">Buffer::packUpdate</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
 <a name="l00432"></a>00432    {
 <a name="l00433"></a>00433       <span class="comment">// Preconditions</span>
 <a name="l00434"></a>00434       <span class="keywordflow">if</span> (sendType_ != UPDATE) {
@@ -488,13 +488,13 @@
 <a name="l00437"></a>00437       <span class="keywordflow">if</span> (sendSize_ &gt;= ghostCapacity_) {
 <a name="l00438"></a>00438          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to overpack buffer: sendSize&gt; &gt;= ghostCapacity_&quot;</span>);
 <a name="l00439"></a>00439       }
-<a name="l00440"></a>00440       pack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>());
+<a name="l00440"></a>00440       pack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>());
 <a name="l00441"></a>00441 
 <a name="l00442"></a>00442       <span class="comment">//Increment number of atoms in send buffer by 1</span>
 <a name="l00443"></a>00443       sendSize_++;
 <a name="l00444"></a>00444    }
 <a name="l00445"></a>00445 
-<a name="l00449"></a><a class="code" href="classDdMd_1_1Buffer.html#a09285f7273ec1ec8a616e53e57528856">00449</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a09285f7273ec1ec8a616e53e57528856" title="Unpack updated position of ghost Atom from recv buffer.">Buffer::unpackUpdate</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
+<a name="l00449"></a><a class="code" href="classDdMd_1_1Buffer.html#a1e5a8474e18cf6b4e21ab08d4b302a79">00449</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a1e5a8474e18cf6b4e21ab08d4b302a79" title="Unpack updated position of ghost Atom from recv buffer.">Buffer::unpackUpdate</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&amp; atom)
 <a name="l00450"></a>00450    {
 <a name="l00451"></a>00451       <span class="keywordflow">if</span> (recvType_ != (<span class="keywordtype">int</span>)UPDATE) {
 <a name="l00452"></a>00452          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Receive type is not UPDATE&quot;</span>);
@@ -502,7 +502,7 @@
 <a name="l00454"></a>00454       <span class="keywordflow">if</span> (recvSize_ &lt;= 0) {
 <a name="l00455"></a>00455          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to unpack empty receive buffer&quot;</span>);
 <a name="l00456"></a>00456       }
-<a name="l00457"></a>00457       unpack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>());
+<a name="l00457"></a>00457       unpack&lt;Vector&gt;(atom.<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>());
 <a name="l00458"></a>00458       
 <a name="l00459"></a>00459       <span class="comment">//Decrement number of atoms in recv buffer to be unpacked by 1</span>
 <a name="l00460"></a>00460       recvSize_--;
@@ -511,7 +511,7 @@
 <a name="l00463"></a>00463    <span class="comment">/*</span>
 <a name="l00464"></a>00464 <span class="comment">   * Send and receive buffer.</span>
 <a name="l00465"></a>00465 <span class="comment">   */</span>
-<a name="l00466"></a><a class="code" href="classDdMd_1_1Buffer.html#a5776a46fe462f27585274ed89e2d04c8">00466</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a5776a46fe462f27585274ed89e2d04c8" title="Receive from processor send and send to processor recv.">Buffer::sendRecv</a>(MPI::Intracomm&amp; comm, <span class="keywordtype">int</span> source, <span class="keywordtype">int</span> dest)
+<a name="l00466"></a><a class="code" href="classDdMd_1_1Buffer.html#af1f502cd5965c10b8dc047283e16ea47">00466</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#af1f502cd5965c10b8dc047283e16ea47" title="Receive from processor send and send to processor recv.">Buffer::sendRecv</a>(MPI::Intracomm&amp; comm, <span class="keywordtype">int</span> source, <span class="keywordtype">int</span> dest)
 <a name="l00467"></a>00467    {
 <a name="l00468"></a>00468 
 <a name="l00469"></a>00469       MPI::Request request[2];
@@ -553,7 +553,7 @@
 <a name="l00505"></a>00505    <span class="comment">/*</span>
 <a name="l00506"></a>00506 <span class="comment">   * Send a buffer.</span>
 <a name="l00507"></a>00507 <span class="comment">   */</span>
-<a name="l00508"></a><a class="code" href="classDdMd_1_1Buffer.html#afb953aee65c5ae843b1f3fbf9a6c884f">00508</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#afb953aee65c5ae843b1f3fbf9a6c884f" title="Send a complete buffer.">Buffer::send</a>(MPI::Intracomm&amp; comm, <span class="keywordtype">int</span> dest)
+<a name="l00508"></a><a class="code" href="classDdMd_1_1Buffer.html#a0976d94ef4aa36d8dc8d42da2d0dea0f">00508</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a0976d94ef4aa36d8dc8d42da2d0dea0f" title="Send a complete buffer.">Buffer::send</a>(MPI::Intracomm&amp; comm, <span class="keywordtype">int</span> dest)
 <a name="l00509"></a>00509    {
 <a name="l00510"></a>00510       MPI::Request request;
 <a name="l00511"></a>00511       <span class="keywordtype">int</span>  sendBytes = 0;
@@ -576,7 +576,7 @@
 <a name="l00528"></a>00528    <span class="comment">/*</span>
 <a name="l00529"></a>00529 <span class="comment">   * Receive a buffer.</span>
 <a name="l00530"></a>00530 <span class="comment">   */</span>
-<a name="l00531"></a><a class="code" href="classDdMd_1_1Buffer.html#a5aebd514e8e7b3901baf9ed0e9624d03">00531</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a5aebd514e8e7b3901baf9ed0e9624d03" title="Receive a buffer.">Buffer::recv</a>(MPI::Intracomm&amp; comm, <span class="keywordtype">int</span> source)
+<a name="l00531"></a><a class="code" href="classDdMd_1_1Buffer.html#a1b0d1eb5202afbd87af64511e8ec1469">00531</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a1b0d1eb5202afbd87af64511e8ec1469" title="Receive a buffer.">Buffer::recv</a>(MPI::Intracomm&amp; comm, <span class="keywordtype">int</span> source)
 <a name="l00532"></a>00532    {
 <a name="l00533"></a>00533       MPI::Request request;
 <a name="l00534"></a>00534       <span class="keywordtype">int</span>  myRank     = comm.Get_rank();
@@ -601,7 +601,7 @@
 <a name="l00553"></a>00553    <span class="comment">/*</span>
 <a name="l00554"></a>00554 <span class="comment">   * Broadcast a buffer.</span>
 <a name="l00555"></a>00555 <span class="comment">   */</span>
-<a name="l00556"></a><a class="code" href="classDdMd_1_1Buffer.html#ac7aaea11605de70911a50f397bb72a62">00556</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#ac7aaea11605de70911a50f397bb72a62" title="Broadcast a buffer.">Buffer::bcast</a>(MPI::Intracomm&amp; comm, <span class="keywordtype">int</span> source)
+<a name="l00556"></a><a class="code" href="classDdMd_1_1Buffer.html#a784e3e1eb81dfce56ad921844d5be563">00556</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a784e3e1eb81dfce56ad921844d5be563" title="Broadcast a buffer.">Buffer::bcast</a>(MPI::Intracomm&amp; comm, <span class="keywordtype">int</span> source)
 <a name="l00557"></a>00557    {
 <a name="l00558"></a>00558       <span class="keywordtype">int</span> comm_size = comm.Get_size();
 <a name="l00559"></a>00559       <span class="keywordtype">int</span> myRank = comm.Get_rank();
@@ -628,19 +628,19 @@
 <a name="l00580"></a>00580    <span class="comment">/*</span>
 <a name="l00581"></a>00581 <span class="comment">   * Number of items currently in data send block. </span>
 <a name="l00582"></a>00582 <span class="comment">   */</span>
-<a name="l00583"></a><a class="code" href="classDdMd_1_1Buffer.html#a8de93c5bc1d655613bcd62102e214eca">00583</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Buffer.html#a8de93c5bc1d655613bcd62102e214eca" title="Number of items written to current send block.">Buffer::sendSize</a>()<span class="keyword"> const</span>
+<a name="l00583"></a><a class="code" href="classDdMd_1_1Buffer.html#ace96a3940dda7a0d2f2ad74d3303a21c">00583</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Buffer.html#ace96a3940dda7a0d2f2ad74d3303a21c" title="Number of items written to current send block.">Buffer::sendSize</a>()<span class="keyword"> const</span>
 <a name="l00584"></a>00584 <span class="keyword">   </span>{  <span class="keywordflow">return</span> sendSize_; }
 <a name="l00585"></a>00585 
 <a name="l00586"></a>00586    <span class="comment">/*</span>
 <a name="l00587"></a>00587 <span class="comment">   * Number of unread items currently in data receive block. </span>
 <a name="l00588"></a>00588 <span class="comment">   */</span>
-<a name="l00589"></a><a class="code" href="classDdMd_1_1Buffer.html#a51c1d1b25fa879240053d1eef232ea10">00589</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Buffer.html#a51c1d1b25fa879240053d1eef232ea10" title="Number of unread items in current recv block.">Buffer::recvSize</a>()<span class="keyword"> const</span>
+<a name="l00589"></a><a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19">00589</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items in current recv block.">Buffer::recvSize</a>()<span class="keyword"> const</span>
 <a name="l00590"></a>00590 <span class="keyword">   </span>{  <span class="keywordflow">return</span> recvSize_; }
 <a name="l00591"></a>00591 
 <a name="l00592"></a>00592    <span class="comment">/*</span>
 <a name="l00593"></a>00593 <span class="comment">   * Has this buffer been allocated?</span>
 <a name="l00594"></a>00594 <span class="comment">   */</span>
-<a name="l00595"></a><a class="code" href="classDdMd_1_1Buffer.html#a0bcdab3616db481dd211594529479f94">00595</a>    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Buffer.html#a0bcdab3616db481dd211594529479f94" title="Has memory been allocated for this Buffer?">Buffer::isAllocated</a>()<span class="keyword"> const</span>
+<a name="l00595"></a><a class="code" href="classDdMd_1_1Buffer.html#a104a3a2f795db7106dbdcd2876afbc42">00595</a>    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Buffer.html#a104a3a2f795db7106dbdcd2876afbc42" title="Has memory been allocated for this Buffer?">Buffer::isAllocated</a>()<span class="keyword"> const</span>
 <a name="l00596"></a>00596 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (bufferCapacity_ &gt; 0); }
 <a name="l00597"></a>00597 <span class="preprocessor">   #endif</span>
 <a name="l00598"></a>00598 <span class="preprocessor"></span>
@@ -648,7 +648,7 @@
 <a name="l00600"></a>00600 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

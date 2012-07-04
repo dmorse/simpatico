@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: GroupDistributor&lt; N &gt; Class Template Reference</title>
+<title>Simpatico: DdMd::GroupDistributor&lt; N &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>GroupDistributor&lt; N &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
+<h1>DdMd::GroupDistributor&lt; N &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::GroupDistributor" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -60,7 +60,7 @@
 <p>Class template for distributing Group&lt;N&gt; objects among processors. </p>
 <p>A <a class="el" href="classDdMd_1_1GroupDistributor.html" title="Class template for distributing Group&lt;N&gt; objects among processors.">GroupDistributor</a> is used to distribute items among processors during startup, when the master process must read a configuration file. The loops to distribute Groups (bonds, angles, or dihedrals) requires access to an <a class="el" href="classUtil_1_1DArray.html">DArray&lt;int&gt;</a> atomOwners[i] in which atomOwners[i] is the rank of the processor that owns atom i.</p>
 <p>Usage: </p>
-<div class="fragment"><pre class="fragment">    <a class="code" href="classDdMd_1_1GroupDistributor.html#a3e9809fba03baa837fb181ab4b062e94" title="Constructor.">GroupDistributor</a>  distributor;
+<div class="fragment"><pre class="fragment">    <a class="code" href="classDdMd_1_1GroupDistributor.html#aa7e74884c4f49aa8f39278cba347fa27" title="Constructor.">GroupDistributor</a>  distributor;
     GroupStorage&lt;N&gt;   groupStorage;
     DArray&lt;int&gt;       atomOwners;
     Group&lt;N&gt;*         ptr;
@@ -91,19 +91,19 @@
        distributor.receive(groupStorage);
 
     }
-</pre></div><p> The add(groupStorage) method can send items if required by memory limits, and the <a class="el" href="classDdMd_1_1GroupDistributor.html#ae9399f5ec7881c5d18173def8068108e" title="Send all atoms that have not be sent previously.">send()</a> method then sends all remaining groups. </p>
+</pre></div><p> The add(groupStorage) method can send items if required by memory limits, and the <a class="el" href="classDdMd_1_1GroupDistributor.html#a80a3ed6912ae0ed8c7a617787d8ba35c" title="Send all atoms that have not be sent previously.">send()</a> method then sends all remaining groups. </p>
 
 <p>Definition at line <a class="el" href="GroupDistributor_8h_source.html#l00077">77</a> of file <a class="el" href="GroupDistributor_8h_source.html">GroupDistributor.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="GroupDistributor_8h_source.html">GroupDistributor.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for GroupDistributor&lt; N &gt;:</div>
+Inheritance diagram for DdMd::GroupDistributor&lt; N &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1GroupDistributor.png" usemap="#GroupDistributor&lt; N &gt;_map" alt=""/>
-  <map id="GroupDistributor&lt; N &gt;_map" name="GroupDistributor&lt; N &gt;_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,138,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,138,24"/>
+  <img src="classDdMd_1_1GroupDistributor.png" usemap="#DdMd::GroupDistributor&lt; N &gt;_map" alt=""/>
+  <map id="DdMd::GroupDistributor&lt; N &gt;_map" name="DdMd::GroupDistributor&lt; N &gt;_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,178,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,178,24"/>
 </map>
  </div></div>
 
@@ -111,38 +111,40 @@ Inheritance diagram for GroupDistributor&lt; N &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a3e9809fba03baa837fb181ab4b062e94">GroupDistributor</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a3e9809fba03baa837fb181ab4b062e94"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a3cfc99284b3c1f22f358e5346fb920d1">~GroupDistributor</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a3cfc99284b3c1f22f358e5346fb920d1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a5afdbbc4bf47bbb5ef5b55786083694e">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;atomStorage, <a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a>&lt; N &gt; &amp;groupStorage, <a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pointers to <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>.  <a href="#a5afdbbc4bf47bbb5ef5b55786083694e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a> for sending.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a0436fc1075b5d76c6876c24a7c9de889">initialize</a> (int cacheCapacity=-1)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set cacheCapacity, allocate memory and initialize object.  <a href="#a0436fc1075b5d76c6876c24a7c9de889"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read cacheCapacity, allocate memory and initialize object.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a8471e0d31f0964a614a24305bae1e584">newPtr</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer an address available for a new Group&lt;N&gt;.  <a href="#a8471e0d31f0964a614a24305bae1e584"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a72f10c9e9a40d72ecf1205c43153b9ca">add</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a group to the cache for sending, send if necessary.  <a href="#a72f10c9e9a40d72ecf1205c43153b9ca"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#ae9399f5ec7881c5d18173def8068108e">send</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send all atoms that have not be sent previously.  <a href="#ae9399f5ec7881c5d18173def8068108e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a815cc316754eed11120036e04cd321d2">receive</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive all atoms sent by master processor.  <a href="#a815cc316754eed11120036e04cd321d2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#aa7e74884c4f49aa8f39278cba347fa27">GroupDistributor</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aa7e74884c4f49aa8f39278cba347fa27"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a299fff285241682dfecda91dff0cb0d9">~GroupDistributor</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a299fff285241682dfecda91dff0cb0d9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a2e1b95f47783fb943774f49db4185368">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;atomStorage, <a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a>&lt; N &gt; &amp;groupStorage, <a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set pointers to <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>.  <a href="#a2e1b95f47783fb943774f49db4185368"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a6cc0ca70e3d27faca3515f4cd3b40ba1">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a> for sending.  <a href="#a6cc0ca70e3d27faca3515f4cd3b40ba1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#ade1ea0924eebfe91f9b67eb81494f8fa">initialize</a> (int cacheCapacity=-1)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set cacheCapacity, allocate memory and initialize object.  <a href="#ade1ea0924eebfe91f9b67eb81494f8fa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a7f6058d2261c6486d3ea97fc31948bff">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read cacheCapacity, allocate memory and initialize object.  <a href="#a7f6058d2261c6486d3ea97fc31948bff"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a37fae7c1153d8d4f93c6acafec0527d4">newPtr</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer an address available for a new Group&lt;N&gt;.  <a href="#a37fae7c1153d8d4f93c6acafec0527d4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a1b72c07d2d0cab4f9664d499246bf5f9">add</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a group to the cache for sending, send if necessary.  <a href="#a1b72c07d2d0cab4f9664d499246bf5f9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a80a3ed6912ae0ed8c7a617787d8ba35c">send</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send all atoms that have not be sent previously.  <a href="#a80a3ed6912ae0ed8c7a617787d8ba35c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a393c6da8cc1fe7e1781080ec62b1c7bb">receive</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive all atoms sent by master processor.  <a href="#a393c6da8cc1fe7e1781080ec62b1c7bb"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#acaefe811b78a2fdc4a0dba0c4029c3ef">allocate</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory and initialize object.  <a href="#acaefe811b78a2fdc4a0dba0c4029c3ef"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupDistributor.html#a59b058e40e3205586cf2bdc9162e24ac">allocate</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory and initialize object.  <a href="#a59b058e40e3205586cf2bdc9162e24ac"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a3e9809fba03baa837fb181ab4b062e94"></a><!-- doxytag: member="DdMd::GroupDistributor::GroupDistributor" ref="a3e9809fba03baa837fb181ab4b062e94" args="()" -->
+<a class="anchor" id="aa7e74884c4f49aa8f39278cba347fa27"></a><!-- doxytag: member="DdMd::GroupDistributor::GroupDistributor" ref="aa7e74884c4f49aa8f39278cba347fa27" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1GroupDistributor.html">GroupDistributor</a> </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1GroupDistributor.html">DdMd::GroupDistributor</a>&lt; N &gt;::<a class="el" href="classDdMd_1_1GroupDistributor.html">GroupDistributor</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -157,12 +159,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3cfc99284b3c1f22f358e5346fb920d1"></a><!-- doxytag: member="DdMd::GroupDistributor::~GroupDistributor" ref="a3cfc99284b3c1f22f358e5346fb920d1" args="()" -->
+<a class="anchor" id="a299fff285241682dfecda91dff0cb0d9"></a><!-- doxytag: member="DdMd::GroupDistributor::~GroupDistributor" ref="a299fff285241682dfecda91dff0cb0d9" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1GroupDistributor.html">GroupDistributor</a> </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1GroupDistributor.html">DdMd::GroupDistributor</a>&lt; N &gt;::~<a class="el" href="classDdMd_1_1GroupDistributor.html">GroupDistributor</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -178,12 +182,14 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a5afdbbc4bf47bbb5ef5b55786083694e"></a><!-- doxytag: member="DdMd::GroupDistributor::associate" ref="a5afdbbc4bf47bbb5ef5b55786083694e" args="(Domain &amp;domain, AtomStorage &amp;atomStorage, GroupStorage&lt; N &gt; &amp;groupStorage, Buffer &amp;buffer)" -->
+<a class="anchor" id="a2e1b95f47783fb943774f49db4185368"></a><!-- doxytag: member="DdMd::GroupDistributor::associate" ref="a2e1b95f47783fb943774f49db4185368" args="(Domain &amp;domain, AtomStorage &amp;atomStorage, GroupStorage&lt; N &gt; &amp;groupStorage, Buffer &amp;buffer)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void associate </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupDistributor.html">DdMd::GroupDistributor</a>&lt; N &gt;::associate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td>
           <td class="paramname"><em>domain</em>, </td>
@@ -221,12 +227,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="DdMd::GroupDistributor::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a6cc0ca70e3d27faca3515f4cd3b40ba1"></a><!-- doxytag: member="DdMd::GroupDistributor::setup" ref="a6cc0ca70e3d27faca3515f4cd3b40ba1" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupDistributor.html">DdMd::GroupDistributor</a>&lt; N &gt;::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -241,12 +249,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0436fc1075b5d76c6876c24a7c9de889"></a><!-- doxytag: member="DdMd::GroupDistributor::initialize" ref="a0436fc1075b5d76c6876c24a7c9de889" args="(int cacheCapacity=&#45;1)" -->
+<a class="anchor" id="ade1ea0924eebfe91f9b67eb81494f8fa"></a><!-- doxytag: member="DdMd::GroupDistributor::initialize" ref="ade1ea0924eebfe91f9b67eb81494f8fa" args="(int cacheCapacity=&#45;1)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void initialize </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupDistributor.html">DdMd::GroupDistributor</a>&lt; N &gt;::initialize </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>cacheCapacity</em> = <code>-1</code></td><td>)</td>
@@ -269,12 +279,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="DdMd::GroupDistributor::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a7f6058d2261c6486d3ea97fc31948bff"></a><!-- doxytag: member="DdMd::GroupDistributor::readParam" ref="a7f6058d2261c6486d3ea97fc31948bff" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupDistributor.html">DdMd::GroupDistributor</a>&lt; N &gt;::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -294,18 +306,20 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="GroupDistributor_8tpp_source.html#l00081">81</a> of file <a class="el" href="GroupDistributor_8tpp_source.html">GroupDistributor.tpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8471e0d31f0964a614a24305bae1e584"></a><!-- doxytag: member="DdMd::GroupDistributor::newPtr" ref="a8471e0d31f0964a614a24305bae1e584" args="()" -->
+<a class="anchor" id="a37fae7c1153d8d4f93c6acafec0527d4"></a><!-- doxytag: member="DdMd::GroupDistributor::newPtr" ref="a37fae7c1153d8d4f93c6acafec0527d4" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * newPtr </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * <a class="el" href="classDdMd_1_1GroupDistributor.html">DdMd::GroupDistributor</a>&lt; N &gt;::newPtr </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -315,7 +329,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Returns pointer an address available for a new Group&lt;N&gt;. </p>
-<p>This method should be called only by the master processor. It returns the address within the internal cache for a new Group&lt;N&gt; object. Each call to <a class="el" href="classDdMd_1_1GroupDistributor.html#a8471e0d31f0964a614a24305bae1e584" title="Returns pointer an address available for a new Group&lt;N&gt;.">newPtr()</a> must be followed by a matching call to <a class="el" href="classDdMd_1_1GroupDistributor.html#a72f10c9e9a40d72ecf1205c43153b9ca" title="Add a group to the cache for sending, send if necessary.">add()</a>.</p>
+<p>This method should be called only by the master processor. It returns the address within the internal cache for a new Group&lt;N&gt; object. Each call to <a class="el" href="classDdMd_1_1GroupDistributor.html#a37fae7c1153d8d4f93c6acafec0527d4" title="Returns pointer an address available for a new Group&lt;N&gt;.">newPtr()</a> must be followed by a matching call to <a class="el" href="classDdMd_1_1GroupDistributor.html#a1b72c07d2d0cab4f9664d499246bf5f9" title="Add a group to the cache for sending, send if necessary.">add()</a>.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>address for a new Group&lt;N&gt; object. </dd></dl>
 
 <p>Definition at line <a class="el" href="GroupDistributor_8tpp_source.html#l00123">123</a> of file <a class="el" href="GroupDistributor_8tpp_source.html">GroupDistributor.tpp</a>.</p>
@@ -324,12 +338,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a72f10c9e9a40d72ecf1205c43153b9ca"></a><!-- doxytag: member="DdMd::GroupDistributor::add" ref="a72f10c9e9a40d72ecf1205c43153b9ca" args="()" -->
+<a class="anchor" id="a1b72c07d2d0cab4f9664d499246bf5f9"></a><!-- doxytag: member="DdMd::GroupDistributor::add" ref="a1b72c07d2d0cab4f9664d499246bf5f9" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void add </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupDistributor.html">DdMd::GroupDistributor</a>&lt; N &gt;::add </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -347,12 +363,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae9399f5ec7881c5d18173def8068108e"></a><!-- doxytag: member="DdMd::GroupDistributor::send" ref="ae9399f5ec7881c5d18173def8068108e" args="()" -->
+<a class="anchor" id="a80a3ed6912ae0ed8c7a617787d8ba35c"></a><!-- doxytag: member="DdMd::GroupDistributor::send" ref="a80a3ed6912ae0ed8c7a617787d8ba35c" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void send </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupDistributor.html">DdMd::GroupDistributor</a>&lt; N &gt;::send </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -370,12 +388,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a815cc316754eed11120036e04cd321d2"></a><!-- doxytag: member="DdMd::GroupDistributor::receive" ref="a815cc316754eed11120036e04cd321d2" args="()" -->
+<a class="anchor" id="a393c6da8cc1fe7e1781080ec62b1c7bb"></a><!-- doxytag: member="DdMd::GroupDistributor::receive" ref="a393c6da8cc1fe7e1781080ec62b1c7bb" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void receive </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupDistributor.html">DdMd::GroupDistributor</a>&lt; N &gt;::receive </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -393,12 +413,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acaefe811b78a2fdc4a0dba0c4029c3ef"></a><!-- doxytag: member="DdMd::GroupDistributor::allocate" ref="acaefe811b78a2fdc4a0dba0c4029c3ef" args="()" -->
+<a class="anchor" id="a59b058e40e3205586cf2bdc9162e24ac"></a><!-- doxytag: member="DdMd::GroupDistributor::allocate" ref="a59b058e40e3205586cf2bdc9162e24ac" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupDistributor.html">DdMd::GroupDistributor</a>&lt; N &gt;::allocate </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [protected]</code></td>
@@ -421,7 +443,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="GroupDistributor_8tpp_source.html">GroupDistributor.tpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

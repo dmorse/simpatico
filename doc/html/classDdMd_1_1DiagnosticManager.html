@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: DiagnosticManager Class Reference</title>
+<title>Simpatico: DdMd::DiagnosticManager Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>DiagnosticManager Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>DdMd::DiagnosticManager Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::DiagnosticManager" --><!-- doxytag: inherits="Manager&lt; Diagnostic &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -59,14 +59,14 @@
 </div>
 <p><code>#include &lt;<a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8h_source.html">DiagnosticManager.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for DiagnosticManager:</div>
+Inheritance diagram for DdMd::DiagnosticManager:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1DiagnosticManager.png" usemap="#DiagnosticManager_map" alt=""/>
-  <map id="DiagnosticManager_map" name="DiagnosticManager_map">
-<area href="classUtil_1_1Manager.html" alt="Manager&lt; Diagnostic &gt;" shape="rect" coords="0,112,146,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,146,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,146,24"/>
+  <img src="classDdMd_1_1DiagnosticManager.png" usemap="#DdMd::DiagnosticManager_map" alt=""/>
+  <map id="DdMd::DiagnosticManager_map" name="DdMd::DiagnosticManager_map">
+<area href="classUtil_1_1Manager.html" alt="Util::Manager&lt; Diagnostic &gt;" shape="rect" coords="0,112,169,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,169,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,169,24"/>
 </map>
  </div></div>
 
@@ -74,28 +74,28 @@ Inheritance diagram for DiagnosticManager:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#a0c4e808ef5f66217459ca1b801a0894c">DiagnosticManager</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a0c4e808ef5f66217459ca1b801a0894c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#a0bf2bee2a080fa7a1612f599eb30a498">~DiagnosticManager</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a0bf2bee2a080fa7a1612f599eb30a498"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameter file.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Call setup method of each <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#afc17577823a371a5ead4e51ebb8ec2ef">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Call sample method of each <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>.  <a href="#afc17577823a371a5ead4e51ebb8ec2ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#a7437b254e19e7e12fc2ec99945f4ecea">output</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Call output method of each diagnostic.  <a href="#a7437b254e19e7e12fc2ec99945f4ecea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1Diagnostic.html">Diagnostic</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#a7122261efa4c9ab4e4318821ae5da60d">newDefaultFactory</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to a new default factory.  <a href="#a7122261efa4c9ab4e4318821ae5da60d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#ac1a48450fd692eae0e4d222c213448af">DiagnosticManager</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac1a48450fd692eae0e4d222c213448af"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#a411ceb434233811baf07476f3b05393c">~DiagnosticManager</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a411ceb434233811baf07476f3b05393c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#a7a4555dd42c640e5c627d1e5967b0869">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameter file.  <a href="#a7a4555dd42c640e5c627d1e5967b0869"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#afb8f206e8d25691183d6d8a7a64d5793">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Call setup method of each <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>.  <a href="#afb8f206e8d25691183d6d8a7a64d5793"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#ac34147522286db7ac6b4eb90f7440479">sample</a> (long iStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Call sample method of each <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>.  <a href="#ac34147522286db7ac6b4eb90f7440479"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#a27dc4acdfc9aef05777ebe3011b2ab10">output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Call output method of each diagnostic.  <a href="#a27dc4acdfc9aef05777ebe3011b2ab10"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1Diagnostic.html">Diagnostic</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticManager.html#a8a0e83ef446d38fce224e105b5813a14">newDefaultFactory</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to a new default factory.  <a href="#a8a0e83ef446d38fce224e105b5813a14"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a0c4e808ef5f66217459ca1b801a0894c"></a><!-- doxytag: member="DdMd::DiagnosticManager::DiagnosticManager" ref="a0c4e808ef5f66217459ca1b801a0894c" args="(Simulation &amp;simulation)" -->
+<a class="anchor" id="ac1a48450fd692eae0e4d222c213448af"></a><!-- doxytag: member="DdMd::DiagnosticManager::DiagnosticManager" ref="ac1a48450fd692eae0e4d222c213448af" args="(Simulation &amp;simulation)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1DiagnosticManager.html">DiagnosticManager</a> </td>
+          <td class="memname">DdMd::DiagnosticManager::DiagnosticManager </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td>
           <td class="paramname"><em>simulation</em></td><td>)</td>
@@ -111,12 +111,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0bf2bee2a080fa7a1612f599eb30a498"></a><!-- doxytag: member="DdMd::DiagnosticManager::~DiagnosticManager" ref="a0bf2bee2a080fa7a1612f599eb30a498" args="()" -->
+<a class="anchor" id="a411ceb434233811baf07476f3b05393c"></a><!-- doxytag: member="DdMd::DiagnosticManager::~DiagnosticManager" ref="a411ceb434233811baf07476f3b05393c" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1DiagnosticManager.html">DiagnosticManager</a> </td>
+          <td class="memname">DdMd::DiagnosticManager::~DiagnosticManager </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -132,12 +132,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="DdMd::DiagnosticManager::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a7a4555dd42c640e5c627d1e5967b0869"></a><!-- doxytag: member="DdMd::DiagnosticManager::readParam" ref="a7a4555dd42c640e5c627d1e5967b0869" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void DdMd::DiagnosticManager::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -155,20 +155,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1Manager.html#ab5421d3c9175985c9acbf723e5392075">Manager&lt; Diagnostic &gt;</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1Manager.html#a115f9d62a9e538f20660683eb0eb3a10">Util::Manager&lt; Diagnostic &gt;</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00039">39</a> of file <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html">ddMd/diagnostics/DiagnosticManager.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00110">Diagnostic::baseInterval</a>, and <a class="el" href="Manager_8h_source.html#l00273">Manager&lt; Data &gt;::readParam()</a>.</p>
+<p>References <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00110">DdMd::Diagnostic::baseInterval</a>, and <a class="el" href="Manager_8h_source.html#l00273">Util::Manager&lt; Data &gt;::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="DdMd::DiagnosticManager::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="afb8f206e8d25691183d6d8a7a64d5793"></a><!-- doxytag: member="DdMd::DiagnosticManager::setup" ref="afb8f206e8d25691183d6d8a7a64d5793" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void DdMd::DiagnosticManager::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -182,16 +182,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00049">49</a> of file <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html">ddMd/diagnostics/DiagnosticManager.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afc17577823a371a5ead4e51ebb8ec2ef"></a><!-- doxytag: member="DdMd::DiagnosticManager::sample" ref="afc17577823a371a5ead4e51ebb8ec2ef" args="(long iStep)" -->
+<a class="anchor" id="ac34147522286db7ac6b4eb90f7440479"></a><!-- doxytag: member="DdMd::DiagnosticManager::sample" ref="ac34147522286db7ac6b4eb90f7440479" args="(long iStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void DdMd::DiagnosticManager::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -205,18 +205,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00059">59</a> of file <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html">ddMd/diagnostics/DiagnosticManager.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00110">Diagnostic::baseInterval</a>.</p>
+<p>References <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00110">DdMd::Diagnostic::baseInterval</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7437b254e19e7e12fc2ec99945f4ecea"></a><!-- doxytag: member="DdMd::DiagnosticManager::output" ref="a7437b254e19e7e12fc2ec99945f4ecea" args="()" -->
+<a class="anchor" id="a27dc4acdfc9aef05777ebe3011b2ab10"></a><!-- doxytag: member="DdMd::DiagnosticManager::output" ref="a27dc4acdfc9aef05777ebe3011b2ab10" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void DdMd::DiagnosticManager::output </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -231,12 +231,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7122261efa4c9ab4e4318821ae5da60d"></a><!-- doxytag: member="DdMd::DiagnosticManager::newDefaultFactory" ref="a7122261efa4c9ab4e4318821ae5da60d" args="() const " -->
+<a class="anchor" id="a8a0e83ef446d38fce224e105b5813a14"></a><!-- doxytag: member="DdMd::DiagnosticManager::newDefaultFactory" ref="a8a0e83ef446d38fce224e105b5813a14" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1Diagnostic.html">Diagnostic</a> &gt; * newDefaultFactory </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1Diagnostic.html">Diagnostic</a> &gt; * DdMd::DiagnosticManager::newDefaultFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [virtual]</code></td>
@@ -247,7 +247,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return pointer to a new default factory. </p>
 
-<p>Implements <a class="el" href="classUtil_1_1Manager.html#af85c20a6e39bafffb57b7d0de86a9237">Manager&lt; Diagnostic &gt;</a>.</p>
+<p>Implements <a class="el" href="classUtil_1_1Manager.html#a8c7e94ba2272856da68a31f8d5eb3b0c">Util::Manager&lt; Diagnostic &gt;</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00083">83</a> of file <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html">ddMd/diagnostics/DiagnosticManager.cpp</a>.</p>
 
@@ -258,7 +258,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html">ddMd/diagnostics/DiagnosticManager.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -69,22 +69,22 @@
 <a name="l00018"></a>00018    <span class="comment">/* </span>
 <a name="l00019"></a>00019 <span class="comment">   * Constructor.</span>
 <a name="l00020"></a>00020 <span class="comment">   */</span>
-<a name="l00021"></a>00021    <a class="code" href="classInter_1_1CosineDihedral.html#aaed8aaebc50e73d05d4755bd6a3816d0" title="Default constructor.">CosineDihedral::CosineDihedral</a>()
-<a name="l00022"></a><a class="code" href="classInter_1_1CosineDihedral.html#aaed8aaebc50e73d05d4755bd6a3816d0">00022</a>     : nDihedralType_(0)
+<a name="l00021"></a>00021    <a class="code" href="classInter_1_1CosineDihedral.html#a87414071cd4fcabda43964be7a444cd6" title="Default constructor.">CosineDihedral::CosineDihedral</a>()
+<a name="l00022"></a><a class="code" href="classInter_1_1CosineDihedral.html#a87414071cd4fcabda43964be7a444cd6">00022</a>     : nDihedralType_(0)
 <a name="l00023"></a>00023    { <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; MaxNDihedralType; ++i) kappa_[i] = 0.0; }
 <a name="l00024"></a>00024 
 <a name="l00025"></a>00025    <span class="comment">/* </span>
 <a name="l00026"></a>00026 <span class="comment">   * Copy constructor.</span>
 <a name="l00027"></a>00027 <span class="comment">   */</span>
-<a name="l00028"></a>00028    <a class="code" href="classInter_1_1CosineDihedral.html#aaed8aaebc50e73d05d4755bd6a3816d0" title="Default constructor.">CosineDihedral::CosineDihedral</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1CosineDihedral.html" title="A four-body dihedral potential.">CosineDihedral</a>&amp; other)
-<a name="l00029"></a><a class="code" href="classInter_1_1CosineDihedral.html#af5805893dd109eb6825e66460253d4ca">00029</a>     : nDihedralType_(other.nDihedralType_)
+<a name="l00028"></a>00028    <a class="code" href="classInter_1_1CosineDihedral.html#a87414071cd4fcabda43964be7a444cd6" title="Default constructor.">CosineDihedral::CosineDihedral</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1CosineDihedral.html" title="A four-body dihedral potential.">CosineDihedral</a>&amp; other)
+<a name="l00029"></a><a class="code" href="classInter_1_1CosineDihedral.html#a51abc2519b19c33f002b40ae3566e2d7">00029</a>     : nDihedralType_(other.nDihedralType_)
 <a name="l00030"></a>00030    { <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nDihedralType_; ++i) kappa_[i] = other.kappa_[i]; }
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032    <span class="comment">/* </span>
 <a name="l00033"></a>00033 <span class="comment">   * Assignment.</span>
 <a name="l00034"></a>00034 <span class="comment">   */</span>
-<a name="l00035"></a>00035    <a class="code" href="classInter_1_1CosineDihedral.html" title="A four-body dihedral potential.">CosineDihedral</a>&amp; <a class="code" href="classInter_1_1CosineDihedral.html#ac4f7b69d53ed977b95605bb88157947d" title="Assignment.">CosineDihedral::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1CosineDihedral.html" title="A four-body dihedral potential.">CosineDihedral</a>&amp; other)
-<a name="l00036"></a><a class="code" href="classInter_1_1CosineDihedral.html#ac4f7b69d53ed977b95605bb88157947d">00036</a>    {
+<a name="l00035"></a>00035    <a class="code" href="classInter_1_1CosineDihedral.html" title="A four-body dihedral potential.">CosineDihedral</a>&amp; <a class="code" href="classInter_1_1CosineDihedral.html#a3cdfbe9dad6359a0db173837d63e46c0" title="Assignment.">CosineDihedral::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1CosineDihedral.html" title="A four-body dihedral potential.">CosineDihedral</a>&amp; other)
+<a name="l00036"></a><a class="code" href="classInter_1_1CosineDihedral.html#a3cdfbe9dad6359a0db173837d63e46c0">00036</a>    {
 <a name="l00037"></a>00037       nDihedralType_ = other.nDihedralType_;
 <a name="l00038"></a>00038       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nDihedralType_; ++i) kappa_[i] = other.kappa_[i];
 <a name="l00039"></a>00039       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
@@ -93,8 +93,8 @@
 <a name="l00042"></a>00042    <span class="comment">/* </span>
 <a name="l00043"></a>00043 <span class="comment">   * Set the nDihedralType_ member.</span>
 <a name="l00044"></a>00044 <span class="comment">   */</span>
-<a name="l00045"></a>00045    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineDihedral.html#a919082b87f508fe8618a904e0da13fcc" title="Set the number of dihedral types.">CosineDihedral::setNDihedralType</a>(<span class="keywordtype">int</span> nDihedralType)
-<a name="l00046"></a><a class="code" href="classInter_1_1CosineDihedral.html#a919082b87f508fe8618a904e0da13fcc">00046</a>    {  
+<a name="l00045"></a>00045    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineDihedral.html#a9d59646ddc4ae08f3fd3788788d87e2c" title="Set the number of dihedral types.">CosineDihedral::setNDihedralType</a>(<span class="keywordtype">int</span> nDihedralType)
+<a name="l00046"></a><a class="code" href="classInter_1_1CosineDihedral.html#a9d59646ddc4ae08f3fd3788788d87e2c">00046</a>    {  
 <a name="l00047"></a>00047       <span class="keywordflow">if</span> (nDihedralType &gt; MaxNDihedralType) {
 <a name="l00048"></a>00048          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nDihedralType &gt; CosineDihedral::MaxNDihedralType&quot;</span>);
 <a name="l00049"></a>00049       }
@@ -104,8 +104,8 @@
 <a name="l00053"></a>00053    <span class="comment">/* </span>
 <a name="l00054"></a>00054 <span class="comment">   * Read bend interaction parameters kappa from file.</span>
 <a name="l00055"></a>00055 <span class="comment">   */</span>
-<a name="l00056"></a>00056    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineDihedral.html#ab5421d3c9175985c9acbf723e5392075" title="Read dihedral interaction parameters from input stream.">CosineDihedral::readParam</a>(std::istream &amp;in) 
-<a name="l00057"></a><a class="code" href="classInter_1_1CosineDihedral.html#ab5421d3c9175985c9acbf723e5392075">00057</a>    {
+<a name="l00056"></a>00056    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineDihedral.html#a8c1f2b23ccb4cb27cf2862ed19922714" title="Read dihedral interaction parameters from input stream.">CosineDihedral::readParam</a>(std::istream &amp;in) 
+<a name="l00057"></a><a class="code" href="classInter_1_1CosineDihedral.html#a8c1f2b23ccb4cb27cf2862ed19922714">00057</a>    {
 <a name="l00058"></a>00058       <span class="comment">// Preconditions</span>
 <a name="l00059"></a>00059       <span class="keywordflow">if</span> (nDihedralType_ &lt;= 0) {
 <a name="l00060"></a>00060          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nDihedralType must be set before readParam&quot;</span>);
@@ -120,8 +120,8 @@
 <a name="l00069"></a>00069    <span class="comment">/*</span>
 <a name="l00070"></a>00070 <span class="comment">   * Modify a parameter, identified by a string.</span>
 <a name="l00071"></a>00071 <span class="comment">   */</span>
-<a name="l00072"></a>00072    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineDihedral.html#a0ab8f6bbd2e18cfd4df7ced299fe82f0" title="Modify a parameter, identified by a string.">CosineDihedral::set</a>(std::string name, <span class="keywordtype">int</span> type, <span class="keywordtype">double</span> value)
-<a name="l00073"></a><a class="code" href="classInter_1_1CosineDihedral.html#a0ab8f6bbd2e18cfd4df7ced299fe82f0">00073</a>    {
+<a name="l00072"></a>00072    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineDihedral.html#a035ae84a34e00de95985931df5bc9bc9" title="Modify a parameter, identified by a string.">CosineDihedral::set</a>(std::string name, <span class="keywordtype">int</span> type, <span class="keywordtype">double</span> value)
+<a name="l00073"></a><a class="code" href="classInter_1_1CosineDihedral.html#a035ae84a34e00de95985931df5bc9bc9">00073</a>    {
 <a name="l00074"></a>00074       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;kappa&quot;</span>) {
 <a name="l00075"></a>00075          kappa_[type] = value;
 <a name="l00076"></a>00076       } <span class="keywordflow">else</span> {
@@ -132,8 +132,8 @@
 <a name="l00081"></a>00081    <span class="comment">/*</span>
 <a name="l00082"></a>00082 <span class="comment">   * Get a parameter value, identified by a string.</span>
 <a name="l00083"></a>00083 <span class="comment">   */</span>
-<a name="l00084"></a>00084    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1CosineDihedral.html#a29dcf205f23d3b29d6f3bb6755e01d80" title="Get a parameter value, identified by a string.">CosineDihedral::get</a>(std::string name, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
-<a name="l00085"></a><a class="code" href="classInter_1_1CosineDihedral.html#a29dcf205f23d3b29d6f3bb6755e01d80">00085</a> <span class="keyword">   </span>{
+<a name="l00084"></a>00084    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1CosineDihedral.html#a38849265960dc1223857a9827afc839d" title="Get a parameter value, identified by a string.">CosineDihedral::get</a>(std::string name, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
+<a name="l00085"></a><a class="code" href="classInter_1_1CosineDihedral.html#a38849265960dc1223857a9827afc839d">00085</a> <span class="keyword">   </span>{
 <a name="l00086"></a>00086       <span class="keywordtype">double</span> value = 0.0;
 <a name="l00087"></a>00087       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;kappa&quot;</span>) {
 <a name="l00088"></a>00088          value = kappa_[type];
@@ -146,14 +146,14 @@
 <a name="l00095"></a>00095    <span class="comment">/*</span>
 <a name="l00096"></a>00096 <span class="comment">   * Return name string &quot;CosineDihedral&quot; for this evaluator class.</span>
 <a name="l00097"></a>00097 <span class="comment">   */</span>
-<a name="l00098"></a>00098    std::string <a class="code" href="classInter_1_1CosineDihedral.html#a13c07285e858b2c232919fd57b635e1b" title="Return name string &amp;quot;CosineDihedral&amp;quot; for this evaluator class.">CosineDihedral::className</a>()<span class="keyword"> const</span>
-<a name="l00099"></a><a class="code" href="classInter_1_1CosineDihedral.html#a13c07285e858b2c232919fd57b635e1b">00099</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;CosineDihedral&quot;</span>); }
+<a name="l00098"></a>00098    std::string <a class="code" href="classInter_1_1CosineDihedral.html#abed451084cabac29c670d0d09c7aa7c1" title="Return name string &amp;quot;CosineDihedral&amp;quot; for this evaluator class.">CosineDihedral::className</a>()<span class="keyword"> const</span>
+<a name="l00099"></a><a class="code" href="classInter_1_1CosineDihedral.html#abed451084cabac29c670d0d09c7aa7c1">00099</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;CosineDihedral&quot;</span>); }
 <a name="l00100"></a>00100 
 <a name="l00101"></a>00101 } 
 <a name="l00102"></a>00102 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

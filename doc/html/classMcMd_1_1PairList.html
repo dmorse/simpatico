@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: PairList Class Reference</title>
+<title>Simpatico: McMd::PairList Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,28 +49,28 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>PairList Class Reference<div class="ingroups"><a class="el" href="group__McMd__Neighbor__Module.html">Nonbonded Neighbors</a></div></h1>  </div>
+<h1>McMd::PairList Class Reference<div class="ingroups"><a class="el" href="group__McMd__Neighbor__Module.html">Nonbonded Neighbors</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::PairList" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>A Verlet neighbor list. </p>
-<p>A <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> (or Verlet list) is a list of neighboring pairs of Atoms that are separated by a distance less than a specified cutoff. The cutoff for the Verlet list is the sum of a potential cutoff, which is passed as a parameter to <a class="el" href="classMcMd_1_1PairList.html#a1b8d1f90b2e2e33b6634397e2779014f" title="Allocate memory and initialize.">allocate()</a>, and a "skin", which is read by <a class="el" href="classMcMd_1_1PairList.html#ab5421d3c9175985c9acbf723e5392075" title="Read atomCapacity and pairCapacity (maximum numbers of atoms and pairs).">readParam()</a>.</p>
-<p>After a <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> is constructed, the <a class="el" href="classMcMd_1_1PairList.html#a1b8d1f90b2e2e33b6634397e2779014f" title="Allocate memory and initialize.">allocate()</a> method must be called to allocate memory for both the data structures required to store the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> and for a private <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> object that is used to construct the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>.</p>
-<p>To build or rebuild a <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>, after it has been allocated, one must invoke <a class="el" href="classMcMd_1_1PairList.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear the PairList and CellList.">clear()</a> to clear the private <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>, call <a class="el" href="classMcMd_1_1PairList.html#a2bd3c1a1c3ba81bb593203889d747f8a" title="Add an Atom to the CellList.">addAtom(Atom&amp;)</a> once for every atom in the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>, within a loop over atoms, and then call <a class="el" href="classMcMd_1_1PairList.html#a8660cc54257625a0d45fb0c914b0af57" title="Use a complete CellList to build a new PairList.">build()</a> to actually construct the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>. The <a class="el" href="classMcMd_1_1PairList.html#a2bd3c1a1c3ba81bb593203889d747f8a" title="Add an Atom to the CellList.">addAtom()</a> method adds an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> to an internal <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>, and then <a class="el" href="classMcMd_1_1PairList.html#a8660cc54257625a0d45fb0c914b0af57" title="Use a complete CellList to build a new PairList.">build()</a> uses the <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> to build a list of pairs. Atomic positions must not be changed during this process.</p>
+<p>A <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> (or Verlet list) is a list of neighboring pairs of Atoms that are separated by a distance less than a specified cutoff. The cutoff for the Verlet list is the sum of a potential cutoff, which is passed as a parameter to <a class="el" href="classMcMd_1_1PairList.html#aa6103aed6c2d94a32e4e93aa31fd26f8" title="Allocate memory and initialize.">allocate()</a>, and a "skin", which is read by <a class="el" href="classMcMd_1_1PairList.html#a1f47b2923c42807c0f1c8b3d7ed25700" title="Read atomCapacity and pairCapacity (maximum numbers of atoms and pairs).">readParam()</a>.</p>
+<p>After a <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> is constructed, the <a class="el" href="classMcMd_1_1PairList.html#aa6103aed6c2d94a32e4e93aa31fd26f8" title="Allocate memory and initialize.">allocate()</a> method must be called to allocate memory for both the data structures required to store the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> and for a private <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> object that is used to construct the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>.</p>
+<p>To build or rebuild a <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>, after it has been allocated, one must invoke <a class="el" href="classMcMd_1_1PairList.html#ac5cf084e4e2a822436b2b4d4af911c18" title="Clear the PairList and CellList.">clear()</a> to clear the private <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>, call <a class="el" href="classMcMd_1_1PairList.html#a5a0f725e971b3bca89cd5ed222091662" title="Add an Atom to the CellList.">addAtom(Atom&amp;)</a> once for every atom in the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>, within a loop over atoms, and then call <a class="el" href="classMcMd_1_1PairList.html#a8ad431e0128fdf1d9d8a04b637015185" title="Use a complete CellList to build a new PairList.">build()</a> to actually construct the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>. The <a class="el" href="classMcMd_1_1PairList.html#a5a0f725e971b3bca89cd5ed222091662" title="Add an Atom to the CellList.">addAtom()</a> method adds an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> to an internal <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>, and then <a class="el" href="classMcMd_1_1PairList.html#a8ad431e0128fdf1d9d8a04b637015185" title="Use a complete CellList to build a new PairList.">build()</a> uses the <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> to build a list of pairs. Atomic positions must not be changed during this process.</p>
 <p>A <a class="el" href="classMcMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a> object must be used to iterate over all of the pairs in a completed <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> (see documentation for <a class="el" href="classMcMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a> for usage).</p>
-<p>A completed <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> is guaranteed to remain valid as long as no <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> in the system has moved more than a distance skin/2 from its position when the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> was last built. The method <a class="el" href="classMcMd_1_1PairList.html#aae14faf749cac465d8adb7d4051bbf61" title="Returns true if PairList is current, false otherwise.">isCurrent()</a> determines if this criterion is satisfied, by comparing current atomic positions to positions that were stored when the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> was last built. In an MD simulation, <a class="el" href="classMcMd_1_1PairList.html#aae14faf749cac465d8adb7d4051bbf61" title="Returns true if PairList is current, false otherwise.">isCurrent()</a> should be called after every time step, and the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> should be rebuilt if its return value is false. </p>
+<p>A completed <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> is guaranteed to remain valid as long as no <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> in the system has moved more than a distance skin/2 from its position when the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> was last built. The method <a class="el" href="classMcMd_1_1PairList.html#a0387e6a41348c3c77f5bbf50926d711c" title="Returns true if PairList is current, false otherwise.">isCurrent()</a> determines if this criterion is satisfied, by comparing current atomic positions to positions that were stored when the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> was last built. In an MD simulation, <a class="el" href="classMcMd_1_1PairList.html#a0387e6a41348c3c77f5bbf50926d711c" title="Returns true if PairList is current, false otherwise.">isCurrent()</a> should be called after every time step, and the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> should be rebuilt if its return value is false. </p>
 
 <p>Definition at line <a class="el" href="mcMd_2neighbor_2PairList_8h_source.html#l00060">60</a> of file <a class="el" href="mcMd_2neighbor_2PairList_8h_source.html">mcMd/neighbor/PairList.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="mcMd_2neighbor_2PairList_8h_source.html">PairList.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for PairList:</div>
+Inheritance diagram for McMd::PairList:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1PairList.png" usemap="#PairList_map" alt=""/>
-  <map id="PairList_map" name="PairList_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classMcMd_1_1PairList.png" usemap="#McMd::PairList_map" alt=""/>
+  <map id="McMd::PairList_map" name="McMd::PairList_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,134,24"/>
 </map>
  </div></div>
 
@@ -78,53 +78,53 @@ Inheritance diagram for PairList:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a02c2b3e1687d7a0474693ac6ea10f2ea">PairList</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a02c2b3e1687d7a0474693ac6ea10f2ea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a5c95764dfef2020dc28d75e6f4687c2e">~PairList</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a5c95764dfef2020dc28d75e6f4687c2e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read atomCapacity and pairCapacity (maximum numbers of atoms and pairs).  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a88e4c9f435a9b3d3cadd460b383177a2">PairList</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a88e4c9f435a9b3d3cadd460b383177a2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#adb0e22dc2a0511d24e1e4fac420a83e8">~PairList</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#adb0e22dc2a0511d24e1e4fac420a83e8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a1f47b2923c42807c0f1c8b3d7ed25700">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read atomCapacity and pairCapacity (maximum numbers of atoms and pairs).  <a href="#a1f47b2923c42807c0f1c8b3d7ed25700"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Mutators</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a1b8d1f90b2e2e33b6634397e2779014f">allocate</a> (int atomIdEnd, const Boundary &amp;boundary, double potentialCutoff)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory and initialize.  <a href="#a1b8d1f90b2e2e33b6634397e2779014f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#adbab3389f486033372e8158e8466deb2">makeGrid</a> (const Boundary &amp;boundary)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the grid of cells for the internal <a class="el" href="classMcMd_1_1Cell.html" title="A set of Atoms in a small region.">Cell</a> List.  <a href="#adbab3389f486033372e8158e8466deb2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#ac8bb3912a3ce86b15842e79d0b421204">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> and <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>.  <a href="#ac8bb3912a3ce86b15842e79d0b421204"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a2bd3c1a1c3ba81bb593203889d747f8a">addAtom</a> (<a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> to the <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>.  <a href="#a2bd3c1a1c3ba81bb593203889d747f8a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a8660cc54257625a0d45fb0c914b0af57">build</a> (const Boundary &amp;boundary)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Use a complete <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> to build a new <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>.  <a href="#a8660cc54257625a0d45fb0c914b0af57"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a384894ea9d3bce2679601b80e7c7de82">begin</a> (<a class="el" href="classMcMd_1_1PairIterator.html">PairIterator</a> &amp;iterator) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a <a class="el" href="classMcMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a>.  <a href="#a384894ea9d3bce2679601b80e7c7de82"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#aa6103aed6c2d94a32e4e93aa31fd26f8">allocate</a> (int atomIdEnd, const Boundary &amp;boundary, double potentialCutoff)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory and initialize.  <a href="#aa6103aed6c2d94a32e4e93aa31fd26f8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a9013f497b7170a04187044e005268ae2">makeGrid</a> (const Boundary &amp;boundary)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the grid of cells for the internal <a class="el" href="classMcMd_1_1Cell.html" title="A set of Atoms in a small region.">Cell</a> List.  <a href="#a9013f497b7170a04187044e005268ae2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#ac5cf084e4e2a822436b2b4d4af911c18">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> and <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>.  <a href="#ac5cf084e4e2a822436b2b4d4af911c18"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a5a0f725e971b3bca89cd5ed222091662">addAtom</a> (<a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> to the <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>.  <a href="#a5a0f725e971b3bca89cd5ed222091662"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a8ad431e0128fdf1d9d8a04b637015185">build</a> (const Boundary &amp;boundary)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Use a complete <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> to build a new <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>.  <a href="#a8ad431e0128fdf1d9d8a04b637015185"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#ad5ab8e5f2fe5477069970311f629b612">begin</a> (<a class="el" href="classMcMd_1_1PairIterator.html">PairIterator</a> &amp;iterator) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a <a class="el" href="classMcMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a>.  <a href="#ad5ab8e5f2fe5477069970311f629b612"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors (miscellaneous)</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#ac91579bd63979a294891d330a5533838">nAtom</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of pairs currently in the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>.  <a href="#ac91579bd63979a294891d330a5533838"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a6b24a3df06b149a917c02db0c649264b">nPair</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of pairs currently in the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>.  <a href="#a6b24a3df06b149a917c02db0c649264b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a0bcdab3616db481dd211594529479f94">isAllocated</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has memory been allocated for this <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>?  <a href="#a0bcdab3616db481dd211594529479f94"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#aae14faf749cac465d8adb7d4051bbf61">isCurrent</a> (const Boundary &amp;boundary) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> is current, false otherwise.  <a href="#aae14faf749cac465d8adb7d4051bbf61"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">isValid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if valid, or throw Exception.  <a href="#aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#aaae89dd24674f5e754042c932014cd4f">nAtom</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of pairs currently in the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>.  <a href="#aaae89dd24674f5e754042c932014cd4f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a1c2836e7889502002190c46e72396863">nPair</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of pairs currently in the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>.  <a href="#a1c2836e7889502002190c46e72396863"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a526284c7da79c5cb4e4bb24afeeac030">isAllocated</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has memory been allocated for this <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>?  <a href="#a526284c7da79c5cb4e4bb24afeeac030"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a0387e6a41348c3c77f5bbf50926d711c">isCurrent</a> (const Boundary &amp;boundary) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> is current, false otherwise.  <a href="#a0387e6a41348c3c77f5bbf50926d711c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#aa9f68b3bf705ef00e4bc6d120d199238">isValid</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if valid, or throw Exception.  <a href="#aa9f68b3bf705ef00e4bc6d120d199238"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Statistics</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a3684f71ec521bde567c5e6b1bf097458">maxNAtom</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of atoms encountered thus far.  <a href="#a3684f71ec521bde567c5e6b1bf097458"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a984ef7969716eff3f6f051e88a7b77ed">maxNPair</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of pairs encountered thus far.  <a href="#a984ef7969716eff3f6f051e88a7b77ed"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a6e0b57608b761c1e4bb8be878a94519c">buildCounter</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of times the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> has been built thus far.  <a href="#a6e0b57608b761c1e4bb8be878a94519c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a3ec1931e5ea88671ed6be9885968b327">clearStatistics</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear statistical accumulators (maxNAtom, maxNPair, buildCounter).  <a href="#a3ec1931e5ea88671ed6be9885968b327"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#a3df1faee792553b9c879170093c01b05">maxNAtom</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of atoms encountered thus far.  <a href="#a3df1faee792553b9c879170093c01b05"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#ac9c0bf4b3d9fdd815662db3f0f0ef1f5">maxNPair</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of pairs encountered thus far.  <a href="#ac9c0bf4b3d9fdd815662db3f0f0ef1f5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#ad28eadd8168c321762707fdd5a1af666">buildCounter</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of times the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> has been built thus far.  <a href="#ad28eadd8168c321762707fdd5a1af666"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairList.html#aad97252e20afb6fafb081552943459d3">clearStatistics</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear statistical accumulators (maxNAtom, maxNPair, buildCounter).  <a href="#aad97252e20afb6fafb081552943459d3"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a02c2b3e1687d7a0474693ac6ea10f2ea"></a><!-- doxytag: member="McMd::PairList::PairList" ref="a02c2b3e1687d7a0474693ac6ea10f2ea" args="()" -->
+<a class="anchor" id="a88e4c9f435a9b3d3cadd460b383177a2"></a><!-- doxytag: member="McMd::PairList::PairList" ref="a88e4c9f435a9b3d3cadd460b383177a2" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1PairList.html">PairList</a> </td>
+          <td class="memname">McMd::PairList::PairList </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -139,12 +139,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5c95764dfef2020dc28d75e6f4687c2e"></a><!-- doxytag: member="McMd::PairList::~PairList" ref="a5c95764dfef2020dc28d75e6f4687c2e" args="()" -->
+<a class="anchor" id="adb0e22dc2a0511d24e1e4fac420a83e8"></a><!-- doxytag: member="McMd::PairList::~PairList" ref="adb0e22dc2a0511d24e1e4fac420a83e8" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1PairList.html">PairList</a> </td>
+          <td class="memname">McMd::PairList::~PairList </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -161,12 +161,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::PairList::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a1f47b2923c42807c0f1c8b3d7ed25700"></a><!-- doxytag: member="McMd::PairList::readParam" ref="a1f47b2923c42807c0f1c8b3d7ed25700" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::PairList::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -184,18 +184,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00054">54</a> of file <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html">mcMd/neighbor/PairList.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1b8d1f90b2e2e33b6634397e2779014f"></a><!-- doxytag: member="McMd::PairList::allocate" ref="a1b8d1f90b2e2e33b6634397e2779014f" args="(int atomIdEnd, const Boundary &amp;boundary, double potentialCutoff)" -->
+<a class="anchor" id="aa6103aed6c2d94a32e4e93aa31fd26f8"></a><!-- doxytag: member="McMd::PairList::allocate" ref="aa6103aed6c2d94a32e4e93aa31fd26f8" args="(int atomIdEnd, const Boundary &amp;boundary, double potentialCutoff)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void McMd::PairList::allocate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>atomIdEnd</em>, </td>
@@ -223,7 +223,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Allocate memory and initialize. </p>
 <p>Allocate all memory required by the <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a> and the <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>, and initialize the grid of <a class="el" href="classMcMd_1_1Cell.html" title="A set of Atoms in a small region.">Cell</a> objects.</p>
-<p>Precondition: <a class="el" href="classMcMd_1_1PairList.html#ab5421d3c9175985c9acbf723e5392075" title="Read atomCapacity and pairCapacity (maximum numbers of atoms and pairs).">readParam()</a> must be invoked before <a class="el" href="classMcMd_1_1PairList.html#a1b8d1f90b2e2e33b6634397e2779014f" title="Allocate memory and initialize.">allocate()</a>, so that values of atomCapacity, pairCapacity, skin are known. The <a class="el" href="classMcMd_1_1PairList.html#a1b8d1f90b2e2e33b6634397e2779014f" title="Allocate memory and initialize.">allocate()</a> method can only be called once.</p>
+<p>Precondition: <a class="el" href="classMcMd_1_1PairList.html#a1f47b2923c42807c0f1c8b3d7ed25700" title="Read atomCapacity and pairCapacity (maximum numbers of atoms and pairs).">readParam()</a> must be invoked before <a class="el" href="classMcMd_1_1PairList.html#aa6103aed6c2d94a32e4e93aa31fd26f8" title="Allocate memory and initialize.">allocate()</a>, so that values of atomCapacity, pairCapacity, skin are known. The <a class="el" href="classMcMd_1_1PairList.html#aa6103aed6c2d94a32e4e93aa31fd26f8" title="Allocate memory and initialize.">allocate()</a> method can only be called once.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">atomIdEnd</td><td>maximum allowed atom Id, plus 1 </td></tr>
@@ -239,12 +239,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adbab3389f486033372e8158e8466deb2"></a><!-- doxytag: member="McMd::PairList::makeGrid" ref="adbab3389f486033372e8158e8466deb2" args="(const Boundary &amp;boundary)" -->
+<a class="anchor" id="a9013f497b7170a04187044e005268ae2"></a><!-- doxytag: member="McMd::PairList::makeGrid" ref="a9013f497b7170a04187044e005268ae2" args="(const Boundary &amp;boundary)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void makeGrid </td>
+          <td class="memname">void McMd::PairList::makeGrid </td>
           <td>(</td>
           <td class="paramtype">const Boundary &amp;&#160;</td>
           <td class="paramname"><em>boundary</em></td><td>)</td>
@@ -261,12 +261,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac8bb3912a3ce86b15842e79d0b421204"></a><!-- doxytag: member="McMd::PairList::clear" ref="ac8bb3912a3ce86b15842e79d0b421204" args="()" -->
+<a class="anchor" id="ac5cf084e4e2a822436b2b4d4af911c18"></a><!-- doxytag: member="McMd::PairList::clear" ref="ac5cf084e4e2a822436b2b4d4af911c18" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void clear </td>
+          <td class="memname">void McMd::PairList::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -282,12 +282,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2bd3c1a1c3ba81bb593203889d747f8a"></a><!-- doxytag: member="McMd::PairList::addAtom" ref="a2bd3c1a1c3ba81bb593203889d747f8a" args="(Atom &amp;atom)" -->
+<a class="anchor" id="a5a0f725e971b3bca89cd5ed222091662"></a><!-- doxytag: member="McMd::PairList::addAtom" ref="a5a0f725e971b3bca89cd5ed222091662" args="(Atom &amp;atom)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void addAtom </td>
+          <td class="memname">void McMd::PairList::addAtom </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -298,7 +298,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Add an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> to the <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>. </p>
-<p>After the <a class="el" href="classMcMd_1_1PairList.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear the PairList and CellList.">clear()</a> method is invoked, every <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> in a <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> must be passed to this method sequentially, within a loop over Atoms. The <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> positions must not change within this loop.</p>
+<p>After the <a class="el" href="classMcMd_1_1PairList.html#ac5cf084e4e2a822436b2b4d4af911c18" title="Clear the PairList and CellList.">clear()</a> method is invoked, every <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> in a <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> must be passed to this method sequentially, within a loop over Atoms. The <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> positions must not change within this loop.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">atom</td><td><a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> to be added. </td></tr>
@@ -310,12 +310,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8660cc54257625a0d45fb0c914b0af57"></a><!-- doxytag: member="McMd::PairList::build" ref="a8660cc54257625a0d45fb0c914b0af57" args="(const Boundary &amp;boundary)" -->
+<a class="anchor" id="a8ad431e0128fdf1d9d8a04b637015185"></a><!-- doxytag: member="McMd::PairList::build" ref="a8ad431e0128fdf1d9d8a04b637015185" args="(const Boundary &amp;boundary)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void build </td>
+          <td class="memname">void McMd::PairList::build </td>
           <td>(</td>
           <td class="paramtype">const Boundary &amp;&#160;</td>
           <td class="paramname"><em>boundary</em></td><td>)</td>
@@ -341,16 +341,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00130">130</a> of file <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html">mcMd/neighbor/PairList.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">Atom::id()</a>, <a class="el" href="mcMd_2chemistry_2Mask_8h_source.html#l00082">Mask::isMasked()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00291">Atom::mask()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00267">Atom::position()</a>, <a class="el" href="FSArray_8h_source.html#l00207">FSArray&lt; Data, Capacity &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>, <a class="el" href="mcMd_2chemistry_2Mask_8h_source.html#l00082">McMd::Mask::isMasked()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00291">McMd::Atom::mask()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00267">McMd::Atom::position()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a384894ea9d3bce2679601b80e7c7de82"></a><!-- doxytag: member="McMd::PairList::begin" ref="a384894ea9d3bce2679601b80e7c7de82" args="(PairIterator &amp;iterator) const " -->
+<a class="anchor" id="ad5ab8e5f2fe5477069970311f629b612"></a><!-- doxytag: member="McMd::PairList::begin" ref="ad5ab8e5f2fe5477069970311f629b612" args="(PairIterator &amp;iterator) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void begin </td>
+          <td class="memname">void McMd::PairList::begin </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1PairIterator.html">PairIterator</a> &amp;&#160;</td>
           <td class="paramname"><em>iterator</em></td><td>)</td>
@@ -370,16 +370,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00252">252</a> of file <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html">mcMd/neighbor/PairList.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2neighbor_2PairIterator_8h_source.html#l00149">PairIterator::PairIterator()</a>, and <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">MdPairEnergyCoefficients::sample()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2neighbor_2PairIterator_8h_source.html#l00149">McMd::PairIterator::PairIterator()</a>, and <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">McMd::MdPairEnergyCoefficients::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac91579bd63979a294891d330a5533838"></a><!-- doxytag: member="McMd::PairList::nAtom" ref="ac91579bd63979a294891d330a5533838" args="() const " -->
+<a class="anchor" id="aaae89dd24674f5e754042c932014cd4f"></a><!-- doxytag: member="McMd::PairList::nAtom" ref="aaae89dd24674f5e754042c932014cd4f" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nAtom </td>
+          <td class="memname">int McMd::PairList::nAtom </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -394,12 +394,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6b24a3df06b149a917c02db0c649264b"></a><!-- doxytag: member="McMd::PairList::nPair" ref="a6b24a3df06b149a917c02db0c649264b" args="() const " -->
+<a class="anchor" id="a1c2836e7889502002190c46e72396863"></a><!-- doxytag: member="McMd::PairList::nPair" ref="a1c2836e7889502002190c46e72396863" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nPair </td>
+          <td class="memname">int McMd::PairList::nPair </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -414,12 +414,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0bcdab3616db481dd211594529479f94"></a><!-- doxytag: member="McMd::PairList::isAllocated" ref="a0bcdab3616db481dd211594529479f94" args="() const " -->
+<a class="anchor" id="a526284c7da79c5cb4e4bb24afeeac030"></a><!-- doxytag: member="McMd::PairList::isAllocated" ref="a526284c7da79c5cb4e4bb24afeeac030" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isAllocated </td>
+          <td class="memname">bool McMd::PairList::isAllocated </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -434,12 +434,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aae14faf749cac465d8adb7d4051bbf61"></a><!-- doxytag: member="McMd::PairList::isCurrent" ref="aae14faf749cac465d8adb7d4051bbf61" args="(const Boundary &amp;boundary) const " -->
+<a class="anchor" id="a0387e6a41348c3c77f5bbf50926d711c"></a><!-- doxytag: member="McMd::PairList::isCurrent" ref="a0387e6a41348c3c77f5bbf50926d711c" args="(const Boundary &amp;boundary) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isCurrent </td>
+          <td class="memname">bool McMd::PairList::isCurrent </td>
           <td>(</td>
           <td class="paramtype">const Boundary &amp;&#160;</td>
           <td class="paramname"><em>boundary</em></td><td>)</td>
@@ -463,12 +463,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><!-- doxytag: member="McMd::PairList::isValid" ref="aac1b70a2ed67ead038c4d3f5ac4d8a81" args="() const " -->
+<a class="anchor" id="aa9f68b3bf705ef00e4bc6d120d199238"></a><!-- doxytag: member="McMd::PairList::isValid" ref="aa9f68b3bf705ef00e4bc6d120d199238" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool McMd::PairList::isValid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -483,16 +483,16 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00705">MdSystem::isValid()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00705">McMd::MdSystem::isValid()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3684f71ec521bde567c5e6b1bf097458"></a><!-- doxytag: member="McMd::PairList::maxNAtom" ref="a3684f71ec521bde567c5e6b1bf097458" args="() const " -->
+<a class="anchor" id="a3df1faee792553b9c879170093c01b05"></a><!-- doxytag: member="McMd::PairList::maxNAtom" ref="a3df1faee792553b9c879170093c01b05" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int maxNAtom </td>
+          <td class="memname">int McMd::PairList::maxNAtom </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -505,16 +505,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2neighbor_2PairList_8h_source.html#l00355">355</a> of file <a class="el" href="mcMd_2neighbor_2PairList_8h_source.html">mcMd/neighbor/PairList.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00401">MdSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00401">McMd::MdSimulation::simulate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a984ef7969716eff3f6f051e88a7b77ed"></a><!-- doxytag: member="McMd::PairList::maxNPair" ref="a984ef7969716eff3f6f051e88a7b77ed" args="() const " -->
+<a class="anchor" id="ac9c0bf4b3d9fdd815662db3f0f0ef1f5"></a><!-- doxytag: member="McMd::PairList::maxNPair" ref="ac9c0bf4b3d9fdd815662db3f0f0ef1f5" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int maxNPair </td>
+          <td class="memname">int McMd::PairList::maxNPair </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -527,16 +527,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2neighbor_2PairList_8h_source.html#l00361">361</a> of file <a class="el" href="mcMd_2neighbor_2PairList_8h_source.html">mcMd/neighbor/PairList.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00401">MdSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00401">McMd::MdSimulation::simulate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6e0b57608b761c1e4bb8be878a94519c"></a><!-- doxytag: member="McMd::PairList::buildCounter" ref="a6e0b57608b761c1e4bb8be878a94519c" args="() const " -->
+<a class="anchor" id="ad28eadd8168c321762707fdd5a1af666"></a><!-- doxytag: member="McMd::PairList::buildCounter" ref="ad28eadd8168c321762707fdd5a1af666" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int buildCounter </td>
+          <td class="memname">int McMd::PairList::buildCounter </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -549,16 +549,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2neighbor_2PairList_8h_source.html#l00367">367</a> of file <a class="el" href="mcMd_2neighbor_2PairList_8h_source.html">mcMd/neighbor/PairList.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00401">MdSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00401">McMd::MdSimulation::simulate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3ec1931e5ea88671ed6be9885968b327"></a><!-- doxytag: member="McMd::PairList::clearStatistics" ref="a3ec1931e5ea88671ed6be9885968b327" args="()" -->
+<a class="anchor" id="aad97252e20afb6fafb081552943459d3"></a><!-- doxytag: member="McMd::PairList::clearStatistics" ref="aad97252e20afb6fafb081552943459d3" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void clearStatistics </td>
+          <td class="memname">void McMd::PairList::clearStatistics </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -578,7 +578,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html">mcMd/neighbor/PairList.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:56 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:27 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

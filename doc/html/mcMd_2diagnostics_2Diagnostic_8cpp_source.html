@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -70,16 +70,16 @@
 <a name="l00019"></a>00019    <span class="keyword">using namespace </span>Util;
 <a name="l00020"></a>00020 
 <a name="l00021"></a>00021    <span class="comment">// Define and initialize static variable</span>
-<a name="l00022"></a>00022    <span class="keywordtype">long</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a> = 1;
+<a name="l00022"></a>00022    <span class="keywordtype">long</span> <a class="code" href="classMcMd_1_1Diagnostic.html#aef06aaaf90f35aa625d668dd83cb4416" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a> = 1;
 <a name="l00023"></a>00023 
-<a name="l00024"></a>00024    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a608e10d093425c9228f10ed3c4994598" title="Define and initialize baseInterval.">Diagnostic::initStatic</a>()
-<a name="l00025"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a608e10d093425c9228f10ed3c4994598">00025</a>    {  <a class="code" href="classMcMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a> = 1; }
+<a name="l00024"></a>00024    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a2c1d50b78ccbb3faf76ea1b334d79355" title="Define and initialize baseInterval.">Diagnostic::initStatic</a>()
+<a name="l00025"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a2c1d50b78ccbb3faf76ea1b334d79355">00025</a>    {  <a class="code" href="classMcMd_1_1Diagnostic.html#aef06aaaf90f35aa625d668dd83cb4416" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a> = 1; }
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027    <span class="comment">/* </span>
 <a name="l00028"></a>00028 <span class="comment">   * Default constructor.</span>
 <a name="l00029"></a>00029 <span class="comment">   */</span>
-<a name="l00030"></a>00030    <a class="code" href="classMcMd_1_1Diagnostic.html#a8595cd4da640fd3ad1e304055e3d8629" title="Default constructor.">Diagnostic::Diagnostic</a>()
-<a name="l00031"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a8595cd4da640fd3ad1e304055e3d8629">00031</a>     : <a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>(),
+<a name="l00030"></a>00030    <a class="code" href="classMcMd_1_1Diagnostic.html#af565f2d9479511c90ea23ad6c08ec4ea" title="Default constructor.">Diagnostic::Diagnostic</a>()
+<a name="l00031"></a><a class="code" href="classMcMd_1_1Diagnostic.html#af565f2d9479511c90ea23ad6c08ec4ea">00031</a>     : <a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>(),
 <a name="l00032"></a>00032       outputFileName_(),
 <a name="l00033"></a>00033       fileMasterPtr_(0),
 <a name="l00034"></a>00034       interval_(1)
@@ -88,14 +88,14 @@
 <a name="l00037"></a>00037    <span class="comment">/* </span>
 <a name="l00038"></a>00038 <span class="comment">   * Destructor.</span>
 <a name="l00039"></a>00039 <span class="comment">   */</span>
-<a name="l00040"></a>00040    <a class="code" href="classMcMd_1_1Diagnostic.html#ac58cffc21ba7d2ae2904f92ad961ed79" title="Destructor.">Diagnostic::~Diagnostic</a>()
-<a name="l00041"></a><a class="code" href="classMcMd_1_1Diagnostic.html#ac58cffc21ba7d2ae2904f92ad961ed79">00041</a>    {}
+<a name="l00040"></a>00040    <a class="code" href="classMcMd_1_1Diagnostic.html#ae39eb8e53b59766a919a2d3c1082d74d" title="Destructor.">Diagnostic::~Diagnostic</a>()
+<a name="l00041"></a><a class="code" href="classMcMd_1_1Diagnostic.html#ae39eb8e53b59766a919a2d3c1082d74d">00041</a>    {}
 <a name="l00042"></a>00042    
 <a name="l00043"></a>00043    <span class="comment">/*</span>
 <a name="l00044"></a>00044 <span class="comment">   * Read the interval from parameter file, with error checking.</span>
 <a name="l00045"></a>00045 <span class="comment">   */</span>
-<a name="l00046"></a>00046    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a0d9d7b5fc89cf6f04d0119cfcc7ac942" title="Read parameter interval from file.">Diagnostic::readInterval</a>(std::istream &amp;in) 
-<a name="l00047"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a0d9d7b5fc89cf6f04d0119cfcc7ac942">00047</a>    {
+<a name="l00046"></a>00046    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#abda32f953247ab813bbad3aa336d56c0" title="Read parameter interval from file.">Diagnostic::readInterval</a>(std::istream &amp;in) 
+<a name="l00047"></a><a class="code" href="classMcMd_1_1Diagnostic.html#abda32f953247ab813bbad3aa336d56c0">00047</a>    {
 <a name="l00048"></a>00048    
 <a name="l00049"></a>00049       <span class="comment">// Check that baseInterval has a nonzero, positive value</span>
 <a name="l00050"></a>00050       <span class="keywordflow">if</span> (baseInterval == 0) {
@@ -126,24 +126,24 @@
 <a name="l00075"></a>00075    <span class="comment">/*</span>
 <a name="l00076"></a>00076 <span class="comment">   * Read output file name and open output file.</span>
 <a name="l00077"></a>00077 <span class="comment">   */</span>
-<a name="l00078"></a>00078    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a7fb5e9c0364a81f5a630d0f26acfb234" title="Read outputFileName from file.">Diagnostic::readOutputFileName</a>(std::istream &amp;in) 
-<a name="l00079"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a7fb5e9c0364a81f5a630d0f26acfb234">00079</a>    {  
+<a name="l00078"></a>00078    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a6cace7ea7c10f7a8a2a76dba8ed1122c" title="Read outputFileName from file.">Diagnostic::readOutputFileName</a>(std::istream &amp;in) 
+<a name="l00079"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a6cace7ea7c10f7a8a2a76dba8ed1122c">00079</a>    {  
 <a name="l00080"></a>00080       read&lt;std::string&gt;(in, <span class="stringliteral">&quot;outputFileName&quot;</span>, outputFileName_); 
 <a name="l00081"></a>00081    }
 <a name="l00082"></a>00082 
 <a name="l00083"></a>00083    <span class="comment">/*</span>
 <a name="l00084"></a>00084 <span class="comment">   * Set the FileMaster.</span>
 <a name="l00085"></a>00085 <span class="comment">   */</span>
-<a name="l00086"></a>00086    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#abd487f986c942ee4f27c089e3d3358d9" title="Set the FileMaster to use to open files.">Diagnostic::setFileMaster</a>(<a class="code" href="classMcMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; fileMaster)
-<a name="l00087"></a><a class="code" href="classMcMd_1_1Diagnostic.html#abd487f986c942ee4f27c089e3d3358d9">00087</a>    { 
+<a name="l00086"></a>00086    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a35cfe88bc5a4ccd1d23bbc86da9d87fa" title="Set the FileMaster to use to open files.">Diagnostic::setFileMaster</a>(<a class="code" href="classMcMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; fileMaster)
+<a name="l00087"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a35cfe88bc5a4ccd1d23bbc86da9d87fa">00087</a>    { 
 <a name="l00088"></a>00088       fileMasterPtr_ = &amp;fileMaster;
 <a name="l00089"></a>00089    }
 <a name="l00090"></a>00090 
 <a name="l00091"></a>00091    <span class="comment">/*</span>
 <a name="l00092"></a>00092 <span class="comment">   * Get the FileMaster by reference.</span>
 <a name="l00093"></a>00093 <span class="comment">   */</span>
-<a name="l00094"></a>00094    <a class="code" href="classMcMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">Diagnostic::fileMaster</a>()
-<a name="l00095"></a><a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272">00095</a>    {  
+<a name="l00094"></a>00094    <a class="code" href="classMcMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">Diagnostic::fileMaster</a>()
+<a name="l00095"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c">00095</a>    {  
 <a name="l00096"></a>00096       assert(fileMasterPtr_);
 <a name="l00097"></a>00097       <span class="keywordflow">return</span> (*fileMasterPtr_);
 <a name="l00098"></a>00098    }
@@ -151,8 +151,8 @@
 <a name="l00100"></a>00100    <span class="comment">/*</span>
 <a name="l00101"></a>00101 <span class="comment">   * Get the outputFileName string with an added suffix</span>
 <a name="l00102"></a>00102 <span class="comment">   */</span>
-<a name="l00103"></a>00103    std::string <a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">Diagnostic::outputFileName</a>(<span class="keyword">const</span> std::string&amp; suffix)<span class="keyword"> const</span>
-<a name="l00104"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a01462df4241b479e4f3fef8aa4e47fb4">00104</a> <span class="keyword">   </span>{
+<a name="l00103"></a>00103    std::string <a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">Diagnostic::outputFileName</a>(<span class="keyword">const</span> std::string&amp; suffix)<span class="keyword"> const</span>
+<a name="l00104"></a><a class="code" href="classMcMd_1_1Diagnostic.html#acfab0f4401a55294b7a7da04b7ec11f3">00104</a> <span class="keyword">   </span>{
 <a name="l00105"></a>00105       std::string filename = outputFileName_;
 <a name="l00106"></a>00106       filename += suffix;
 <a name="l00107"></a>00107       <span class="keywordflow">return</span> filename;
@@ -161,20 +161,20 @@
 <a name="l00110"></a>00110    <span class="comment">/*</span>
 <a name="l00111"></a>00111 <span class="comment">   * Save state to binary file archive.</span>
 <a name="l00112"></a>00112 <span class="comment">   */</span>
-<a name="l00113"></a>00113    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64" title="Save state to binary file archive.">Diagnostic::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
-<a name="l00114"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">00114</a>    {}
+<a name="l00113"></a>00113    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#ac27203b7ee783c3cebc054c290e313ed" title="Save state to binary file archive.">Diagnostic::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
+<a name="l00114"></a><a class="code" href="classMcMd_1_1Diagnostic.html#ac27203b7ee783c3cebc054c290e313ed">00114</a>    {}
 <a name="l00115"></a>00115 
 <a name="l00116"></a>00116    <span class="comment">/*</span>
 <a name="l00117"></a>00117 <span class="comment">   * Load state from a binary file archive.</span>
 <a name="l00118"></a>00118 <span class="comment">   */</span>
-<a name="l00119"></a>00119    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load state from a binary file archive.">Diagnostic::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
-<a name="l00120"></a><a class="code" href="classMcMd_1_1Diagnostic.html#aa3d71af4cc5dfb2be6be816a8f562416">00120</a>    {}
+<a name="l00119"></a>00119    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#afa44b6fb962ca0a8a979d0add2dc85b9" title="Load state from a binary file archive.">Diagnostic::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00120"></a><a class="code" href="classMcMd_1_1Diagnostic.html#afa44b6fb962ca0a8a979d0add2dc85b9">00120</a>    {}
 <a name="l00121"></a>00121 
 <a name="l00122"></a>00122 }
 <a name="l00123"></a>00123 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

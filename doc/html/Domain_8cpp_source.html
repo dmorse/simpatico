@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -70,7 +70,7 @@
 <a name="l00019"></a>00019    <span class="comment">/*</span>
 <a name="l00020"></a>00020 <span class="comment">   * Constructor.</span>
 <a name="l00021"></a>00021 <span class="comment">   */</span>
-<a name="l00022"></a><a class="code" href="classDdMd_1_1Domain.html#a9f9601f2f55637f70394aa8eea61345a">00022</a>    <a class="code" href="classDdMd_1_1Domain.html#a9f9601f2f55637f70394aa8eea61345a" title="Constructor.">Domain::Domain</a>()
+<a name="l00022"></a><a class="code" href="classDdMd_1_1Domain.html#a3522a22257f51a97bf7f1d9574e0e6d9">00022</a>    <a class="code" href="classDdMd_1_1Domain.html#a3522a22257f51a97bf7f1d9574e0e6d9" title="Constructor.">Domain::Domain</a>()
 <a name="l00023"></a>00023     : Util::<a class="code" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a>(),
 <a name="l00024"></a>00024       sourceRanks_(),
 <a name="l00025"></a>00025       destRanks_(),
@@ -89,7 +89,7 @@
 <a name="l00038"></a>00038    <span class="comment">/*</span>
 <a name="l00039"></a>00039 <span class="comment">   * Destructor.</span>
 <a name="l00040"></a>00040 <span class="comment">   */</span>
-<a name="l00041"></a><a class="code" href="classDdMd_1_1Domain.html#aab7e32c77383bf3d384c5c1ab492cd2c">00041</a>    <a class="code" href="classDdMd_1_1Domain.html#aab7e32c77383bf3d384c5c1ab492cd2c" title="Destructor.">Domain::~Domain</a>()
+<a name="l00041"></a><a class="code" href="classDdMd_1_1Domain.html#a69bc77400dc3907ab86c2fa30d3b9ddc">00041</a>    <a class="code" href="classDdMd_1_1Domain.html#a69bc77400dc3907ab86c2fa30d3b9ddc" title="Destructor.">Domain::~Domain</a>()
 <a name="l00042"></a>00042    {}
 <a name="l00043"></a>00043 
 <a name="l00044"></a>00044 <span class="preprocessor">   #if UTIL_MPI</span>
@@ -97,7 +97,7 @@
 <a name="l00046"></a>00046    <span class="comment">/*</span>
 <a name="l00047"></a>00047 <span class="comment">   * Set the grid intracommunicator.</span>
 <a name="l00048"></a>00048 <span class="comment">   */</span>
-<a name="l00049"></a><a class="code" href="classDdMd_1_1Domain.html#a01503b0246b17a31da48009e928bb0ae">00049</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Domain.html#a01503b0246b17a31da48009e928bb0ae" title="Set the grid communicator.">Domain::setGridCommunicator</a>(MPI::Intracomm&amp; intraCommunicator)
+<a name="l00049"></a><a class="code" href="classDdMd_1_1Domain.html#afae25e30429237f990640337290034b9">00049</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Domain.html#afae25e30429237f990640337290034b9" title="Set the grid communicator.">Domain::setGridCommunicator</a>(MPI::Intracomm&amp; intraCommunicator)
 <a name="l00050"></a>00050    {
 <a name="l00051"></a>00051       intracommPtr_ = &amp;intraCommunicator;
 <a name="l00052"></a>00052       gridRank_ = intracommPtr_-&gt;Get_rank();
@@ -113,13 +113,13 @@
 <a name="l00062"></a>00062    <span class="comment">/*</span>
 <a name="l00063"></a>00063 <span class="comment">   * Set the Boundary object.</span>
 <a name="l00064"></a>00064 <span class="comment">   */</span>
-<a name="l00065"></a><a class="code" href="classDdMd_1_1Domain.html#aae3d88e326e8e921368e6d8fc0fc992c">00065</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Domain.html#aae3d88e326e8e921368e6d8fc0fc992c" title="Set the associated Boundary object.">Domain::setBoundary</a>(Boundary&amp; boundary)
+<a name="l00065"></a><a class="code" href="classDdMd_1_1Domain.html#abfbf106d20e09f79d31337a691bd10d3">00065</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Domain.html#abfbf106d20e09f79d31337a691bd10d3" title="Set the associated Boundary object.">Domain::setBoundary</a>(<a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary)
 <a name="l00066"></a>00066    {  boundaryPtr_ = &amp;boundary; }
 <a name="l00067"></a>00067 
 <a name="l00068"></a>00068    <span class="comment">/*</span>
 <a name="l00069"></a>00069 <span class="comment">   * Read parameters and initialize.</span>
 <a name="l00070"></a>00070 <span class="comment">   */</span>
-<a name="l00071"></a><a class="code" href="classDdMd_1_1Domain.html#ab5421d3c9175985c9acbf723e5392075">00071</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Domain.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters and initialize.">Domain::readParam</a>(std::istream&amp; in)
+<a name="l00071"></a><a class="code" href="classDdMd_1_1Domain.html#af56a9994c56816e4884179f9e81e653f">00071</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Domain.html#af56a9994c56816e4884179f9e81e653f" title="Read parameters and initialize.">Domain::readParam</a>(std::istream&amp; in)
 <a name="l00072"></a>00072    {
 <a name="l00073"></a>00073 
 <a name="l00074"></a>00074 <span class="preprocessor">      #ifdef UTIL_MPI</span>
@@ -130,7 +130,7 @@
 <a name="l00079"></a>00079 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (gridRank_ &lt; 0) {
 <a name="l00080"></a>00080          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;grid rank not set before readParam&quot;</span>);
 <a name="l00081"></a>00081       }
-<a name="l00082"></a>00082       <span class="keywordflow">if</span> (!<a class="code" href="classDdMd_1_1Domain.html#a32615f88a60f79ffa6ff0f13ea1b9f28" title="Has an associated Boundary been set?">hasBoundary</a>()) {
+<a name="l00082"></a>00082       <span class="keywordflow">if</span> (!<a class="code" href="classDdMd_1_1Domain.html#aaaed02d71cabab686b3097c56541e17b" title="Has an associated Boundary been set?">hasBoundary</a>()) {
 <a name="l00083"></a>00083          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Boundary not set before readParam&quot;</span>);
 <a name="l00084"></a>00084       }
 <a name="l00085"></a>00085       <span class="keywordflow">if</span> (isInitialized_) {
@@ -138,13 +138,13 @@
 <a name="l00087"></a>00087       }
 <a name="l00088"></a>00088 
 <a name="l00089"></a>00089       <span class="comment">// Read parameter file </span>
-<a name="l00090"></a>00090       <a class="code" href="classUtil_1_1ParamComposite.html#ae62d63b03a6f5cb70c0978082e455e03" title="Add and read a class label and opening bracket.">readBegin</a>(in, <span class="stringliteral">&quot;Domain&quot;</span>);
+<a name="l00090"></a>00090       <a class="code" href="classUtil_1_1ParamComposite.html#af21bd2c40a05014df5f0ee85ed73d8f7" title="Add and read a class label and opening bracket.">readBegin</a>(in, <span class="stringliteral">&quot;Domain&quot;</span>);
 <a name="l00091"></a>00091       read&lt;IntVector&gt;(in, <span class="stringliteral">&quot;gridDimensions&quot;</span>, gridDimensions_);
-<a name="l00092"></a>00092       <a class="code" href="classUtil_1_1ParamComposite.html#a38c7f73d3a857afb146812da527b14f7" title="Add and read the closing bracket.">readEnd</a>(in);
+<a name="l00092"></a>00092       <a class="code" href="classUtil_1_1ParamComposite.html#ad688a41bbbd4d5c88d72c0edc7b1f55c" title="Add and read the closing bracket.">readEnd</a>(in);
 <a name="l00093"></a>00093 
 <a name="l00094"></a>00094       <span class="comment">// Validate gridDimensions</span>
 <a name="l00095"></a>00095       <span class="keywordtype">int</span> nproc = 1;
-<a name="l00096"></a>00096       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; i++) {
+<a name="l00096"></a>00096       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; i++) {
 <a name="l00097"></a>00097           <span class="keywordflow">if</span> (gridDimensions_[i] &lt;= 0) {
 <a name="l00098"></a>00098              <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Processor grid dimensions must be greater than 0&quot;</span>);
 <a name="l00099"></a>00099           }
@@ -159,21 +159,21 @@
 <a name="l00108"></a>00108       }
 <a name="l00109"></a>00109 
 <a name="l00110"></a>00110       <span class="comment">// Set grid dimensions</span>
-<a name="l00111"></a>00111       grid_.<a class="code" href="classUtil_1_1Grid.html#a31c9f5371d80c1afc5c480da0c690655" title="Set the grid dimensions in all directions.">setDimensions</a>(gridDimensions_);
+<a name="l00111"></a>00111       grid_.<a class="code" href="classUtil_1_1Grid.html#ad7dae1f5e841c9ccbd515922deeb17bb" title="Set the grid dimensions in all directions.">setDimensions</a>(gridDimensions_);
 <a name="l00112"></a>00112 
 <a name="l00113"></a>00113       <span class="comment">// Mark all directions as periodic.</span>
-<a name="l00114"></a>00114       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; i++) {
+<a name="l00114"></a>00114       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; i++) {
 <a name="l00115"></a>00115          gridIsPeriodic_[i] = <span class="keyword">true</span>;
 <a name="l00116"></a>00116       }
 <a name="l00117"></a>00117 
 <a name="l00118"></a>00118       <span class="comment">// Find grid coordinates for this processor</span>
-<a name="l00119"></a>00119       gridCoordinates_ = grid_.<a class="code" href="classUtil_1_1Grid.html#adaa6c575c24724c822ad8f20f43fe8a7" title="Get the position IntVector of a grid point with a specified rank.">position</a>(gridRank_);
+<a name="l00119"></a>00119       gridCoordinates_ = grid_.<a class="code" href="classUtil_1_1Grid.html#a1b5fd697f09031e1e0a0d8dea0eebaee" title="Get the position IntVector of a grid point with a specified rank.">position</a>(gridRank_);
 <a name="l00120"></a>00120 
 <a name="l00121"></a>00121       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> sourceCoordinates;
 <a name="l00122"></a>00122       <span class="keywordtype">int</span>       i, j, k, jp;
 <a name="l00123"></a>00123 
 <a name="l00124"></a>00124       <span class="comment">// Loop over Cartesian direction for send</span>
-<a name="l00125"></a>00125       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00125"></a>00125       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00126"></a>00126 
 <a name="l00127"></a>00127          <span class="comment">// Loop over increment sign (+1 or -1 grid coordinate i)</span>
 <a name="l00128"></a>00128          <span class="keywordflow">for</span> (j = 0; j &lt; 2; ++j) {
@@ -190,12 +190,12 @@
 <a name="l00139"></a>00139 
 <a name="l00140"></a>00140             <span class="comment">// Check for transfer past boundary</span>
 <a name="l00141"></a>00141             <span class="keywordflow">if</span> (gridIsPeriodic_[i] == <span class="keyword">true</span>) {
-<a name="l00142"></a>00142                shift_(i, j) = grid_.<a class="code" href="classUtil_1_1Grid.html#a9654cfb5629f94882161c0d35f4c5fc0" title="Shift a periodic coordinate into range.">shift</a>(sourceCoordinates[i], i);
-<a name="l00143"></a>00143                sourceRanks_(i, j) = grid_.<a class="code" href="classUtil_1_1Grid.html#a911a172515b52eacb8e9366954abe903" title="Get the rank of a grid point with specified position.">rank</a>(sourceCoordinates);
+<a name="l00142"></a>00142                shift_(i, j) = grid_.<a class="code" href="classUtil_1_1Grid.html#a75b4038d94e2885d6b95b74e646fe555" title="Shift a periodic coordinate into range.">shift</a>(sourceCoordinates[i], i);
+<a name="l00143"></a>00143                sourceRanks_(i, j) = grid_.<a class="code" href="classUtil_1_1Grid.html#a60277f47fd9f0a69a30d1df5e827867b" title="Get the rank of a grid point with specified position.">rank</a>(sourceCoordinates);
 <a name="l00144"></a>00144                destRanks_(i, jp)  = sourceRanks_(i, j);
 <a name="l00145"></a>00145             } <span class="keywordflow">else</span> {
 <a name="l00146"></a>00146                shift_(i, j)  = 0;
-<a name="l00147"></a>00147                <span class="keywordflow">if</span> (!grid_.<a class="code" href="classUtil_1_1Grid.html#a2b3186fb608ec2e24f8355eee8b50193" title="Is this coordinate in range?">isInGrid</a>(sourceCoordinates[i], i)) {
+<a name="l00147"></a>00147                <span class="keywordflow">if</span> (!grid_.<a class="code" href="classUtil_1_1Grid.html#ace4754dab0ba4a58a535320b8b47664b" title="Is this coordinate in range?">isInGrid</a>(sourceCoordinates[i], i)) {
 <a name="l00148"></a>00148                   destRanks_(i, j)    = -1;
 <a name="l00149"></a>00149                   sourceRanks_(i, jp) = -1;
 <a name="l00150"></a>00150                }
@@ -209,13 +209,13 @@
 <a name="l00158"></a>00158    <span class="comment">/*</span>
 <a name="l00159"></a>00159 <span class="comment">   * Return one of the boundaries of the domain owned by this processor.</span>
 <a name="l00160"></a>00160 <span class="comment">   */</span>
-<a name="l00161"></a><a class="code" href="classDdMd_1_1Domain.html#a4675463deb7d3a6dd84467169592bb0d">00161</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1Domain.html#a4675463deb7d3a6dd84467169592bb0d" title="Get one boundary of the domain owned by this processor.">Domain::domainBound</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00161"></a><a class="code" href="classDdMd_1_1Domain.html#a66994bef6ae4556e23ece0153b64a60f">00161</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1Domain.html#a66994bef6ae4556e23ece0153b64a60f" title="Get one boundary of the domain owned by this processor.">Domain::domainBound</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
 <a name="l00162"></a>00162 <span class="keyword">   </span>{
 <a name="l00163"></a>00163       <span class="comment">// Preconditions</span>
 <a name="l00164"></a>00164       assert(isInitialized_);
 <a name="l00165"></a>00165       assert(boundaryPtr_);
 <a name="l00166"></a>00166       assert(i &gt;= 0);
-<a name="l00167"></a>00167       assert(i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>);
+<a name="l00167"></a>00167       assert(i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>);
 <a name="l00168"></a>00168       assert(j &gt;= 0);
 <a name="l00169"></a>00169       assert(j &lt;= 1);
 <a name="l00170"></a>00170 
@@ -226,7 +226,7 @@
 <a name="l00175"></a>00175    <span class="comment">/*</span>
 <a name="l00176"></a>00176 <span class="comment">   * Return rank of processor whose domain contains a position Vector.</span>
 <a name="l00177"></a>00177 <span class="comment">   */</span>
-<a name="l00178"></a><a class="code" href="classDdMd_1_1Domain.html#a8ca4262e0d6c0910dbc17d64bb20978b">00178</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a8ca4262e0d6c0910dbc17d64bb20978b" title="Return rank of the processor whose domain contains a position.">Domain::ownerRank</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position)<span class="keyword"> const</span>
+<a name="l00178"></a><a class="code" href="classDdMd_1_1Domain.html#a8eafcabbb648e796a942142624a941ab">00178</a>    <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a8eafcabbb648e796a942142624a941ab" title="Return rank of the processor whose domain contains a position.">Domain::ownerRank</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position)<span class="keyword"> const</span>
 <a name="l00179"></a>00179 <span class="keyword">   </span>{
 <a name="l00180"></a>00180       <span class="comment">// Preconditions</span>
 <a name="l00181"></a>00181       assert(isInitialized_);
@@ -234,17 +234,17 @@
 <a name="l00183"></a>00183 
 <a name="l00184"></a>00184       <span class="keywordtype">double</span> dL;
 <a name="l00185"></a>00185       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> r;
-<a name="l00186"></a>00186       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00186"></a>00186       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00187"></a>00187          dL = boundaryPtr_-&gt;length(i) / double(gridDimensions_[i]);
 <a name="l00188"></a>00188          r[i] = int(position[i] / dL);
 <a name="l00189"></a>00189       }
-<a name="l00190"></a>00190       <span class="keywordflow">return</span> grid_.<a class="code" href="classUtil_1_1Grid.html#a911a172515b52eacb8e9366954abe903" title="Get the rank of a grid point with specified position.">rank</a>(r);
+<a name="l00190"></a>00190       <span class="keywordflow">return</span> grid_.<a class="code" href="classUtil_1_1Grid.html#a60277f47fd9f0a69a30d1df5e827867b" title="Get the rank of a grid point with specified position.">rank</a>(r);
 <a name="l00191"></a>00191    }
 <a name="l00192"></a>00192 
 <a name="l00193"></a>00193    <span class="comment">/*</span>
 <a name="l00194"></a>00194 <span class="comment">   * Does a Vector lie in the domain owned by this processor?</span>
 <a name="l00195"></a>00195 <span class="comment">   */</span>
-<a name="l00196"></a><a class="code" href="classDdMd_1_1Domain.html#a9d904d45acddc99c4c16cec485f508b5">00196</a>    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Domain.html#a9d904d45acddc99c4c16cec485f508b5" title="Is a position in the domain owned by this processor?">Domain::isInDomain</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position)<span class="keyword"> const</span>
+<a name="l00196"></a><a class="code" href="classDdMd_1_1Domain.html#acc14bdd6cdfb00fd801076efdf9b6bd5">00196</a>    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Domain.html#acc14bdd6cdfb00fd801076efdf9b6bd5" title="Is a position in the domain owned by this processor?">Domain::isInDomain</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position)<span class="keyword"> const</span>
 <a name="l00197"></a>00197 <span class="keyword">   </span>{
 <a name="l00198"></a>00198       <span class="comment">// Preconditions</span>
 <a name="l00199"></a>00199       assert(isInitialized_);
@@ -252,7 +252,7 @@
 <a name="l00201"></a>00201 
 <a name="l00202"></a>00202       <span class="keywordtype">double</span> dL;
 <a name="l00203"></a>00203       <span class="keywordtype">bool</span> isIn = <span class="keyword">true</span>;
-<a name="l00204"></a>00204       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {  
+<a name="l00204"></a>00204       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {  
 <a name="l00205"></a>00205          dL = boundaryPtr_-&gt;length(i) / double(gridDimensions_[i]);
 <a name="l00206"></a>00206          <span class="keywordflow">if</span> (position[i] &lt;   gridCoordinates_[i]*dL)      isIn = <span class="keyword">false</span>;
 <a name="l00207"></a>00207          <span class="keywordflow">if</span> (position[i] &gt;= (gridCoordinates_[i] + 1)*dL) isIn = <span class="keyword">false</span>;
@@ -264,7 +264,7 @@
 <a name="l00213"></a>00213 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

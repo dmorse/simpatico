@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -69,24 +69,24 @@
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028    <span class="keyword">public</span>:
 <a name="l00029"></a>00029 
-<a name="l00031"></a><a class="code" href="structUtil_1_1OrthoRegion.html#aeccd452e15923af0d3c336f2ec6dda4c">00031</a>       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> <a class="code" href="structUtil_1_1OrthoRegion.html#aeccd452e15923af0d3c336f2ec6dda4c" title="Minimum coordinates: Require r[i] &amp;gt;= minima_[i].">minima_</a>;
+<a name="l00031"></a><a class="code" href="structUtil_1_1OrthoRegion.html#aece7a5e154b5511a4b24d46c5c32ce21">00031</a>       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> <a class="code" href="structUtil_1_1OrthoRegion.html#aece7a5e154b5511a4b24d46c5c32ce21" title="Minimum coordinates: Require r[i] &amp;gt;= minima_[i].">minima_</a>;
 <a name="l00032"></a>00032 
-<a name="l00034"></a><a class="code" href="structUtil_1_1OrthoRegion.html#a4bd4a792a1fd265e889031d853405eb9">00034</a>       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> <a class="code" href="structUtil_1_1OrthoRegion.html#a4bd4a792a1fd265e889031d853405eb9" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>;
+<a name="l00034"></a><a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12">00034</a>       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>;
 <a name="l00035"></a>00035 
-<a name="l00037"></a><a class="code" href="structUtil_1_1OrthoRegion.html#ae6931ea42b68b8c0a236fb42933bdf0a">00037</a>       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> <a class="code" href="structUtil_1_1OrthoRegion.html#ae6931ea42b68b8c0a236fb42933bdf0a" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>;
+<a name="l00037"></a><a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7">00037</a>       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> <a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>;
 <a name="l00038"></a>00038 
-<a name="l00040"></a><a class="code" href="structUtil_1_1OrthoRegion.html#a89025366e0b524950c542f05a56e85c0">00040</a>       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> <a class="code" href="structUtil_1_1OrthoRegion.html#a89025366e0b524950c542f05a56e85c0" title="Half region lengths: halfLengths_[i] = 0.5*lengths_[i].">halfLengths_</a>;
+<a name="l00040"></a><a class="code" href="structUtil_1_1OrthoRegion.html#a6ca4d95186a47da01403d09931e5dbce">00040</a>       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> <a class="code" href="structUtil_1_1OrthoRegion.html#a6ca4d95186a47da01403d09931e5dbce" title="Half region lengths: halfLengths_[i] = 0.5*lengths_[i].">halfLengths_</a>;
 <a name="l00041"></a>00041 
-<a name="l00043"></a><a class="code" href="structUtil_1_1OrthoRegion.html#af3906d6f1c18d3c0bfac43f97db33273">00043</a>       <span class="keywordtype">double</span> <a class="code" href="structUtil_1_1OrthoRegion.html#af3906d6f1c18d3c0bfac43f97db33273" title="Volume: V = lengths_[0]*lengths_[1]*lengths_[2].">volume_</a>;
+<a name="l00043"></a><a class="code" href="structUtil_1_1OrthoRegion.html#af4cf08bd6f1205e80ad0614be9aab145">00043</a>       <span class="keywordtype">double</span> <a class="code" href="structUtil_1_1OrthoRegion.html#af4cf08bd6f1205e80ad0614be9aab145" title="Volume: V = lengths_[0]*lengths_[1]*lengths_[2].">volume_</a>;
 <a name="l00044"></a>00044 
-<a name="l00050"></a>00050       <a class="code" href="structUtil_1_1OrthoRegion.html#ab104a5b9b328d3581fcd52618a924e6b" title="Constructor.">OrthoRegion</a>();
+<a name="l00050"></a>00050       <a class="code" href="structUtil_1_1OrthoRegion.html#a1426149d56b53872e7741df3aeea81a6" title="Constructor.">OrthoRegion</a>();
 <a name="l00051"></a>00051 
-<a name="l00055"></a>00055       <span class="keywordtype">void</span> <a class="code" href="structUtil_1_1OrthoRegion.html#af0d2c2e1bd233fa4d8a425b862459926" title="Set lengths and volume to values consistent with minima and maxima.">resetRegion</a>();
+<a name="l00055"></a>00055       <span class="keywordtype">void</span> <a class="code" href="structUtil_1_1OrthoRegion.html#a44511ffbaf259eb59ad12044725a7082" title="Set lengths and volume to values consistent with minima and maxima.">resetRegion</a>();
 <a name="l00056"></a>00056 
-<a name="l00060"></a>00060       <span class="keywordtype">bool</span> <a class="code" href="structUtil_1_1OrthoRegion.html#afe93e17ac89cd97917811068ba2af214" title="Return true if valid, or throw Exception.">isValid</a>();
+<a name="l00060"></a>00060       <span class="keywordtype">bool</span> <a class="code" href="structUtil_1_1OrthoRegion.html#a1acf63226be63a7f9add19c8c782d509" title="Return true if valid, or throw Exception.">isValid</a>();
 <a name="l00061"></a>00061 
 <a name="l00068"></a>00068       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00069"></a>00069       <span class="keywordtype">void</span> <a class="code" href="structUtil_1_1OrthoRegion.html#a6765e839ab267e4959384e35a4112451" title="Serialize to/from an archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00069"></a>00069       <span class="keywordtype">void</span> <a class="code" href="structUtil_1_1OrthoRegion.html#a30db3609d8f06dec33edd1c468702d2a" title="Serialize to/from an archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00070"></a>00070 
 <a name="l00071"></a>00071    };
 <a name="l00072"></a>00072 
@@ -94,7 +94,7 @@
 <a name="l00074"></a>00074 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

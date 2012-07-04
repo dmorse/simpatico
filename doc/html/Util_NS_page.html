@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -61,13 +61,13 @@ Container Templates</h2>
 <p>See also: <a class="el" href="group__Container__Module.html">Container Module</a></p>
 <h2><a class="anchor" id="param_sec"></a>
 Parameter File IO</h2>
-<p>The src/util/containers directory contains a set of classes that are used to read and write parameter file blocks. Every class that needs to read data from the parameter file during initialization must be derived from the <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a> base class. This class defines a pure virtual method <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf" title="Read all parameters from an input stream.">ParamComposite::readParam()</a> method. Every subclass of <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a> must implement this method, which should read a parameter file block that contains the data required to initialize of that subclass. The <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a> class also provides a set of methods and method templates that are used to read and write individual parameters.</p>
+<p>The src/util/containers directory contains a set of classes that are used to read and write parameter file blocks. Every class that needs to read data from the parameter file during initialization must be derived from the <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a> base class. This class defines a pure virtual method <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724" title="Read all parameters from an input stream.">ParamComposite::readParam()</a> method. Every subclass of <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a> must implement this method, which should read a parameter file block that contains the data required to initialize of that subclass. The <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">ParamComposite</a> class also provides a set of methods and method templates that are used to read and write individual parameters.</p>
 <p>See also: <a class="el" href="param_page.html">Parameter Files</a></p>
 <p>See also: <a class="el" href="read_param_page.html">readParam() Methods</a></p>
 <p>See also: <a class="el" href="group__Param__Module.html">Parameter File IO Module</a></p>
 <h2><a class="anchor" id="boundary_sec"></a>
 Boundary</h2>
-<p>A Boundary object defines periodic boundary conditions for a simulation. A Boundary contains the dimensions of periodic simulation unit cell, and provides methods to calculate separation vectors and distances using the nearest image convention, and to shift a position <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> into the primary unit cell.</p>
+<p>A Util::Boundary object defines periodic boundary conditions for a simulation. A Boundary contains the dimensions of periodic simulation unit cell, and provides methods to calculate separation vectors and distances using the nearest image convention, and to shift a position <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> into the primary unit cell.</p>
 <p>In the current implementation, the name Boundary is a typedef for the class <a class="el" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">OrthorhombicBoundary</a>. The use of a typedef is intended to make it easier to later develop versions of the code with more general boundaries (e.g., non-orthogonal axes).</p>
 <h2><a class="anchor" id="ensemble_sec"></a>
 Statistical Ensembles</h2>
@@ -85,7 +85,7 @@ Random</h2>
 <a class="el" href="Inter_NS_page.html">Inter namespace</a> (Next)  </li>
 </ul>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

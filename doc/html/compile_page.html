@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -44,12 +44,18 @@
 <div class="textblock"><p>Simpatico is distributed only as source code, and must be compiled by the user. All source code is written in ANSI 1998 standard C++. It has been developed and tested using the gcc and intel compilers in a linux environment, and with the gcc compiler in Mac OS X. It should compile with any modern, standard compliant C++ compiler.</p>
 <p>The single-processor programs mcSim and mdSim have no external dependencies. The ddSim program requires a Message Passing Interface (MPI) library to run on multiple processors. An MPI library is also required to compile multiprocessor versions of mcSim and mdSim, for parallel replica exchange simulations.</p>
 <p>The build system uses unix makefiles, using gnu make (gmake), which is a standard component of in any unix-like environment (linux or Mac OS). We assume that the makefile system would also work using Cygwin on Windows operating system, but have never tried this.</p>
-<p>The source files for Simpatico may be obtained either by downloading a distribution from the program <a href="http://dmorse.github.com/simpatico/index.html">home page</a> or by cloning the public <a href="https://github.com/dmorse/simpatico">git repository</a>. Both the repository and the download page are hosted on github.</p>
-<p>If you download a compressed tar file from the download page, unzipping and extracting the tar file (gunzip tarball; tar -xvf tarball) will install the source files in a directory named dmorse-simpatico-commit/, where "commit" represents a hexadecimal identifier for the most recent commit in the git repository. We recommend that you immediately rename this directory simpatico/, which is the name of the corresponding directory in a git working tree. The rest of this documentation assumes that this root directory is named simpatico/.</p>
+<h2><a class="anchor" id="getcode_section"></a>
+Getting the Source Code</h2>
+<p>The source files for Simpatico may be obtained either by downloading a distribution from the program <a href="http://dmorse.github.com/simpatico/index.html">home page</a> or by using git to clone the public <a href="https://github.com/dmorse/simpatico">git repository</a>. Both the repository and the download page are hosted on github.</p>
+<p>To clone the repository, after installing git on your home machine, enter: </p>
+<div class="fragment"><pre class="fragment">&gt; git clone git:<span class="comment">//github.com/dmorse/simpatico.git</span>
+</pre></div><p> This should create a copy of the repository in a new subdirectory named simpatico.</p>
+<p>If you download a compressed tar file from the download page, extracting the tar file (tar -xvf tarball) will install the source files in a directory named dmorse-simpatico-id/, where "id" represents a hexadecimal identifier for the most recent commit in the git repository. We recommend that you rename this directory simpatico/, which is the name of the corresponding directory in a git working tree. The rest of this documentation assumes that this root directory is named simpatico/.</p>
 <p>All of the the header (*.h) and source (*.cpp) files for Simpatico are are in the src/ subdirectory. By default, executable files are installed in the bin/ subdirectory. Throughout this documentation, references to paths in this directory tree that do not start explicitly with "simpatico/" should be understood to be relative paths, relative to the simpatico/ root directory.</p>
+<p>The source code tree that is obtained by either method does not contain a copy of the html documentation. If desired, you may generate a local copy of the documentation with the <a href="http://www.doxygen.org">Doxygen</a> utility, by following instructions given <a class="el" href="compile_page.html#compile_doc_section">Documentation</a> here.</p>
 <h2><a class="anchor" id="configure_section"></a>
 Configuration</h2>
-<p>Before the first time you compile any of the programs, you must run a configure script from the root simpatico directory. You must:</p>
+<p>Before the first time you compile any of the programs, you must run a configure script from the root simpatico/ directory. You must:</p>
 <ul>
 <li>Change working directory (cd) to the simpatico/ root directory.</li>
 </ul>
@@ -84,11 +90,33 @@ Compiling ddSim</h2>
 <ul>
 <li>Enter "make ddMd".</li>
 </ul>
-<p>If successful, this procedure will create an executable named ddMd in the simpatico bin/ directory. To do so, it will recompile all of the code in the src/util/ and src/inter/ directories, and compile all of the code in the src/ddMd/ directory. As part of this process, it will create new MPI-enabled versions of the library containing objects from the src/util/ directory, named lib/libutil_m.a (in which the suffix "_m" stands for mph), and create a new library lib/libddMd.a for the classes in the ddMd/ directory.</p>
+<p>If successful, this procedure will create an executable named ddMd in the simpatico bin/ directory. To do so, it will recompile all of the code in the src/util/ and src/inter/ directories, and compile all of the code in the src/ddMd/ directory. As part of this process, it will create new MPI-enabled versions of the library containing objects from the src/util/ directory, named lib/libutil_m.a (in which the suffix "_m" stands for mpi), and create a new library lib/libddMd.a for the classes in the ddMd/ directory.</p>
 <p>The name of the parallel MD executable (ddSim by default) is defined by the variable DDSIM_EXE defined in src/ddMd/defines.mk. The executable is placed in the BIN_DIR directory. To remove all object files libraries and executable created by the "make ddMd' command, enter "make clean-ddMd".</p>
+<h2><a class="anchor" id="compile_multi_section"></a>
+Compiling mcSim and mdSim (multi-processor versions)</h2>
+<p>To compile multi-processor versions of mcSim and mdSim, select a compiler block that links to an MPI library, as for ddSim. Then:</p>
+<ul>
+<li>cd the src/ directory.</li>
+</ul>
+<ul>
+<li>Enter "make mcMd"</li>
+</ul>
+<p>This should re-compile all of the classes in the src/mcMd directory, and create an mpi-enabled library named lib/libutil_m.a. If you have not previously compiled ddMd, this should recompile all of the code in the src/util and src/inter directories, and create MPI-enabled versions of the libraries, which are also distinguished from the serial versions by the addition of a suffix _m.</p>
+<p>The multi-processor versions of mcSim and mdSim can be used:</p>
+<ul>
+<li>To run multiple completely independent simulations as an MPI job.</li>
+</ul>
+<ul>
+<li>To run multiple simulations with a sequence of parameter values from a single param file, using the perturbation theory feature.</li>
+</ul>
+<ul>
+<li>For replica exchange simulations.</li>
+</ul>
+<p>Free energy perturbation theory is discussed in more detail <a class="el" href="parallel_page.html">Multi-system simulations</a> here. It is an optional feature that can be enabled by defining MCMD_PERTURB flag in the file src/mcMd/defines.mk, as discussed <a class="el" href="preprocessor_page.html">Preprocessor macros</a> here.</p>
+<p>A multi-processor version of mcSim and mdSim with the free energy perturbation enabled is required for replica exchange simulations.</p>
 <h2><a class="anchor" id="compile_config_section"></a>
 Configuration Files</h2>
-<p>After the .configure script is run, the src/ directory and its subdirectories contains several makefile fragments, with names that end in *.mk, that users may need to edit in order to change compiler options or to enable or disable specific features of the code. These user configuration files are:</p>
+<p>After the .configure script is run, the src/ directory and its subdirectories contains several makefile fragments that users may need to edit in order to change compiler options or to enable or disable specific features of the code. These user configuration files are:</p>
 <ul>
 <li>src/compiler.mk</li>
 </ul>
@@ -104,14 +132,14 @@ Configuration Files</h2>
 <ul>
 <li>src/ddMd/defines.mk</li>
 </ul>
-<p>None of these user configuration files are in the git repository, or in the version of the code that is distributed as a tar archive. They are all instead created by the "./configure" script by making copies of default (repository) versions of each file. The name of the default version of each such file is the name of the user version plus a suffix "_r" (for repository). The default and user versions of each such file are located in the same directory. Thus, for example, the user file src/mcMd/defines.mk is created by the configure script by copying the default version src/mcMd/defines.mk_r. Only the user versions of these files are used by the build system. Because the user versions are not retained in the git repository, users may modify these files without effecting synchronization between a users git repository and the origin repository from which it was cloned.</p>
+<p>None of these files are in the git repository, or in the version of the code that is distributed as a tar archive. They are all instead created by the "./configure" script by making copies of default (repository) versions of each file. The name of the default version of each such file is the name of the user version plus a suffix "_r" (for repository). The default and user versions of each such file are located in the same directory. Thus, for example, the user file src/mcMd/defines.mk is created by the configure script by copying the default version src/mcMd/defines.mk_r. Only the user versions of these files are used by the build system. Because the user versions are not retained in the git repository, users may modify these files without effecting synchronization between a users git repository and the origin repository from which it was cloned.</p>
 <p>The file src/compiler.mk defines makefile variables that specify the choice of C++ compiler and compiler options (as discussed above). It defines variables ROOT_DIR, SRC_DIR, BIN_DIR, and LIB_DIR that represent the paths to the Simpatico root directory and source directory, and the directories in which executables and libraries should be installed. The default version of this file also contains a commented out definition of a variable MAKEDEP that (when uncommented) enables automatic dependency generation (see <a class="el" href="compile_page.html#dependency_doc_section">Dependency Generation</a>).</p>
-<p>The makefile fragments src/util/defines.mk, src/inter/defines.mk, mcMd/defines.mk, and ddMd/defines.mk can be used to define makefile variables that enable or disable optional features of the code at compile time. Each of these files contains one or more commented out definitions for makefile variables that, when defined, cause corresponding C++ preprocessor macros to be defined by the compiler. Each such makefile variable has the same name as an associated preprocessor variable that it enables. For example, uncommenting the line in src/util/defines.mk that defines the makefile variable "UTIL_DEBUG" causes the compiler to be passed a string "-DUTIL_DEBUG". This compiler option causes the C++ macro UTIL_DEBUG to be defined during preprocessing. All of the C++ preprocessor macros used in Simpatico are discussed in a page about <a class="el" href="preprocessor_page.html">Preprocessor macros</a>.</p>
+<p>The makefile fragments src/util/defines.mk, src/inter/defines.mk, mcMd/defines.mk, and ddMd/defines.mk can be used to define makefile variables that enable or disable optional features of the code at compile time. Each of these files contains one or more commented out definitions for makefile variables that, when uncommented, cause corresponding C++ macros to be defined during compilation, and thus enable or disable optional various features during compilation. All of these variables, and the features they control, are discussed in a page about <a class="el" href="preprocessor_page.html">Preprocessor macros</a>.</p>
 <p>The file src/mcMd/boundary/Boundary.h is also created by the configure script. This file defines a typedef Boundary that specifies what class should be used to represent periodic boundary conditions throughout the code. By default Boundary is defined to be a synonym for the class OrthorhombicBoundary, which represents a periodic orthorhombic simulation cell. For the moment, there is no reason for users to change this. The use of a typedef is intended to ease the later introduction of a non-orthogonal unit cell as a compile-time option.</p>
 <h2><a class="anchor" id="dependency_doc_section"></a>
 Dependency Generation</h2>
-<p>The Simpatico makefile system is set up to allow automatic generation and updating of files that list the dependencies of each source file. This feature is disabled by default, but may be enabled by following instructions given below. Automatic dependency generation is not needed in order compile the code. It is useful for developers who must make frequent changes to a few C++ header or source files, because it allows them to automatically recompile only those source files that are affected by each change. Unless this feature is enabled, however, the only safe way to recompile the code after changing any C++ file or configuration file is to do a clean rebuild, by entering "make clean-mcMd" or "make clean-ddMd" followed by "make mcMd" or "make ddMd" from the src/ directory.</p>
-<p>Automatic dependency generation uses a executable python script named makeDep in the bin/ directory. This script imports several python modules from the tools/python directory. The system uses the -MM option of the gnu g++ C++ compiler to do the actual analysis of dependencies, and uses a python scripts to edit the output produced by g++. To function, this system thus requires that:</p>
+<p>The Simpatico makefile system is set up to allow automatic generation and updating of files that list the dependencies of each source file. This feature is disabled by default, but may be enabled by following instructions given below. Automatic dependency generation is not needed in order compile the code. It is, however, very useful for developers who must make frequent changes to a few C++ header or source files, because it allows them to automatically recompile only those source files that are affected by each change. Unless this feature is enabled, the only safe way to recompile the code after changing any C++ file or configuration file is to do a clean rebuild, by entering "make clean-mcMd" or "make clean-ddMd" followed by "make mcMd" or "make ddMd" from the src/ directory.</p>
+<p>Automatic dependency generation uses a executable python script named makeDep in the bin/ directory. This script imports several python modules from the tools/python directory. The system uses the -MM option of the gnu g++ C++ compiler to do the actual analysis of dependencies, and uses a python scripts to edit the output produced by g++. To function, this set of scripts requires that:</p>
 <ul>
 <li>The g++ gnu C++ compiler executable (or a link to it with this name) must exist in a directory in the shell PATH variable.</li>
 </ul>
@@ -124,7 +152,7 @@ Dependency Generation</h2>
 <ul>
 <li>The makefile variable MAKEDEP must be defined in the file src/compiler.mk. (The definition is commented out by default).</li>
 </ul>
-<p>The gcc compiler and a python interpreter are installed by default on modern linux installations, and on Mac OS X with developer tools installed. To enable automatic dependency generation (after running the configure script) one must thus normally:</p>
+<p>The gcc compiler and a python interpreter are installed by default on modern linux installations, and on Mac OS X with developer and command line tools installed. To enable automatic dependency generation (after running the configure script) one must thus normally:</p>
 <ul>
 <li>Uncomment the line that defines the variable MAKEDEP in the file src/compiler.mk, and</li>
 </ul>
@@ -137,17 +165,19 @@ Dependency Generation</h2>
 <p>The dependency list for every *.o file contains the files src/compiler.mk and one or more of the defines.mk files, in addition to C++ source and header files. This is because these makefile fragments contain definitions of compiler options and C++ preprocessor macros that can effect the object code produced by compilation. Modifying any of these makefile fragments will thus force recompilation of a large number of C++ source files. Modifying src/compiler.mk or src/util/defines.mk forces recompilation of every source file in Simpatico. Modifying src/util/defines.mk force recompilation of all of the source files in src/inter, src/mcMd, and src/ddMd. Modifying src/mcMd/defines.mk forces recompilation of all files in src/mcMd. Modifying src/ddMd/defines.mk forces recompilation of all files in src/ddMd.</p>
 <h2><a class="anchor" id="compile_doc_section"></a>
 Documentation</h2>
-<p>The html documentation you are reading was generated using the dOxygen documentation utility. If dOxygen is installed on your machine, you can regenerate all of the html documentation by changing the working directory to the doc/ directory and entering <code> make doc </code> from there. This generates documentation for all of the code in the <a class="el" href="namespaceUtil.html" title="Utility classes for scientific computation.">Util</a> and McMD namespaces. The resulting html documentation is deposited in the doc/html directory.</p>
-<p>The text of the page you are reading now, along with the other pages of introductory material, are in the doc/dox directory. These are written in plain text, and so are readable with a text editor. Documentation for each C++ class is extracted from documentation blocks in the class header file.</p>
-<p>Entering 'make cleandoc' from the doc/ directory will remove all the html documentation from the doc/html directory. If you have a copy of Simpatico that contains html documentation, do NOT do this unless you are sure that you will be able to regenerate the documentation by running dOxygen. If you have the html documentation, and are not sure whether you can regenerate it, recursively copy (cp -R) the doc/html directory to another location before entering make cleandoc.</p>
+<p>The html documentation you are reading was generated using the <a href="http://www.doxygen.org">doxygen </a> documentation utility. If dOxygen is installed on your machine, you can regenerate all of the html documentation by changing the working directory to the doc/ directory and entering <code> &gt; make html &lt;/endcode&gt; The resulting html documentation is deposited in the doc/html/ directory. To read the documentation, open the file index.html in a browser to open the main page, or open any other html file and follow the link to the main page.</code></p>
+<p><code>The text of the page you are reading now, along with other web pages that are not extracted from the C++ header files, are in files in the doc/dox directory. These are written in plain text, and so can also be read with a text editor. Documentation for each C++ class is instead extracted from documentation blocks in the class header file.</code></p>
+<p><code>Entering 'make clean' from the doc/ directory will remove all the html documentation from the doc/html directory.</code></p>
+<p><code></p>
 <ul>
 <li>
 <a class="el" href="guide_page.html">User Guide</a> (Up)  </li>
 <li>
 <a class="el" href="usage_page.html">Usage</a> (Next)  </li>
 </ul>
+<p></code></p>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: LinkMaster Class Reference</title>
+<title>Simpatico: McMd::LinkMaster Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>LinkMaster Class Reference</h1>  </div>
+<h1>McMd::LinkMaster Class Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::LinkMaster" --><!-- doxytag: inherits="Util::ParamComposite,Notifier&lt; LinkAddEvent &gt;,Notifier&lt; LinkResetEvent &gt;,Notifier&lt; LinkRemoveEvent &gt;,Notifier&lt; ReSetAtomEvent &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -61,17 +61,17 @@
 </div>
 <p><code>#include &lt;<a class="el" href="LinkMaster_8h_source.html">LinkMaster.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for LinkMaster:</div>
+Inheritance diagram for McMd::LinkMaster:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1LinkMaster.png" usemap="#LinkMaster_map" alt=""/>
-  <map id="LinkMaster_map" name="LinkMaster_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,177,80"/>
-<area href="classUtil_1_1Notifier.html" alt="Notifier&lt; LinkAddEvent &gt;" shape="rect" coords="187,56,364,80"/>
-<area href="classUtil_1_1Notifier.html" alt="Notifier&lt; LinkResetEvent &gt;" shape="rect" coords="374,56,551,80"/>
-<area href="classUtil_1_1Notifier.html" alt="Notifier&lt; LinkRemoveEvent &gt;" shape="rect" coords="561,56,738,80"/>
-<area href="classUtil_1_1Notifier.html" alt="Notifier&lt; ReSetAtomEvent &gt;" shape="rect" coords="748,56,925,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,177,24"/>
+  <img src="classMcMd_1_1LinkMaster.png" usemap="#McMd::LinkMaster_map" alt=""/>
+  <map id="McMd::LinkMaster_map" name="McMd::LinkMaster_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,200,80"/>
+<area href="classUtil_1_1Notifier.html" alt="Util::Notifier&lt; LinkAddEvent &gt;" shape="rect" coords="210,56,410,80"/>
+<area href="classUtil_1_1Notifier.html" alt="Util::Notifier&lt; LinkResetEvent &gt;" shape="rect" coords="420,56,620,80"/>
+<area href="classUtil_1_1Notifier.html" alt="Util::Notifier&lt; LinkRemoveEvent &gt;" shape="rect" coords="630,56,830,80"/>
+<area href="classUtil_1_1Notifier.html" alt="Util::Notifier&lt; ReSetAtomEvent &gt;" shape="rect" coords="840,56,1040,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,200,24"/>
 </map>
  </div></div>
 
@@ -79,52 +79,52 @@ Inheritance diagram for LinkMaster:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt; <a class="el" href="classMcMd_1_1Link.html">Link</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#abd715d4ebbcc5dbedac0342d617d5f0b">LinkIterator</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator for set of active links.  <a href="#abd715d4ebbcc5dbedac0342d617d5f0b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstPArrayIterator</a>&lt; <a class="el" href="classMcMd_1_1Link.html">Link</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a7c701645f7098625b41fd63ba7334015">ConstLinkIterator</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Const iterator for set of active links.  <a href="#a7c701645f7098625b41fd63ba7334015"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; <a class="el" href="classMcMd_1_1Link.html">Link</a>, 400 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a245ae12ab2986ecbaf791e1eabda968f">AtomLinkSet</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A set of links involving a particular atom.  <a href="#a245ae12ab2986ecbaf791e1eabda968f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt; <a class="el" href="classMcMd_1_1Link.html">Link</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a94802732bc5c4aadd4ec1c91875ac3f5">LinkIterator</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator for set of active links.  <a href="#a94802732bc5c4aadd4ec1c91875ac3f5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstPArrayIterator</a>&lt; <a class="el" href="classMcMd_1_1Link.html">Link</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a861b1e848e634a8a820b85ac2ec675d5">ConstLinkIterator</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Const iterator for set of active links.  <a href="#a861b1e848e634a8a820b85ac2ec675d5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt; <a class="el" href="classMcMd_1_1Link.html">Link</a>, 400 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a79f3e45b2dd2c606e6114f09c1c03ed3">AtomLinkSet</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A set of links involving a particular atom.  <a href="#a79f3e45b2dd2c606e6114f09c1c03ed3"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#aee7e8bf4e63d8625966ee281622eb039">LinkMaster</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aee7e8bf4e63d8625966ee281622eb039"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read linkCapacity and allocate.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#ac818627ff5e13e79e7e7bcfccd7c6c48">addLink</a> (<a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom0, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom1, int typeId)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a link betwen two specific Atoms.  <a href="#ac818627ff5e13e79e7e7bcfccd7c6c48"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#abaea76b9780354ba3da3cc4d6e769543">removeLink</a> (int id)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>.  <a href="#abaea76b9780354ba3da3cc4d6e769543"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1SSet.html">AtomLinkSet</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#aa31769361f14f4de366b5adc5027c4f1">atomLinkSet</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a set of links associated with an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> by const reference.  <a href="#aa31769361f14f4de366b5adc5027c4f1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1SSet.html">AtomLinkSet</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#aab54bb683c5451be2527aa9efaf3ba77">atomLinkSet</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a set of links associated with an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#aab54bb683c5451be2527aa9efaf3ba77"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Link.html">Link</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a50c533aae65321f8d927872af06be7ff">link</a> (int id) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return an active link by an internal set index.  <a href="#a50c533aae65321f8d927872af06be7ff"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a4f85c4d6275b338c8231a660874ff742">reSetAtoms</a> (<a class="el" href="classMcMd_1_1Link.html">Link</a> &amp;link, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom0, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom1)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify the atoms attached to a link.  <a href="#a4f85c4d6275b338c8231a660874ff742"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a184e5625aa5503835d210ac6b7714896">reSetAtom</a> (<a class="el" href="classMcMd_1_1Link.html">Link</a> &amp;link, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom, int endId)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify one atom attached to a link.  <a href="#a184e5625aa5503835d210ac6b7714896"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a190823938dd61725899558d0650ddace">nLink</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of active Links.  <a href="#a190823938dd61725899558d0650ddace"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a0e0c2e18c1fac2614f20cdbc553aa0c4">begin</a> (<a class="el" href="classUtil_1_1PArrayIterator.html">LinkIterator</a> &amp;iterator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize iterator to beginning of list of active links.  <a href="#a0e0c2e18c1fac2614f20cdbc553aa0c4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a1e94ade77878d400adaac7c9123183c9">begin</a> (<a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstLinkIterator</a> &amp;iterator) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize iterator to beginning of list of active links.  <a href="#a1e94ade77878d400adaac7c9123183c9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Link.html">Link</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#aa5ed512553c5a557664824d0818c0f39">randomLink</a> (<a class="el" href="classUtil_1_1Random.html">Random</a> &amp;random)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a randomly chosen link by reference.  <a href="#aa5ed512553c5a557664824d0818c0f39"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">isValid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this <a class="el" href="classMcMd_1_1LinkMaster.html" title="Manages all Link objects in a System.">LinkMaster</a> is valid, or throw an Exception.  <a href="#aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#ac8bb3912a3ce86b15842e79d0b421204">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear <a class="el" href="classMcMd_1_1LinkMaster.html" title="Manages all Link objects in a System.">LinkMaster</a>.  <a href="#ac8bb3912a3ce86b15842e79d0b421204"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#aa0ddcc05096ae845fa88769a05dedf3a">LinkMaster</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aa0ddcc05096ae845fa88769a05dedf3a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a6d7bfb7557f5f55553f5f28eabcff003">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read linkCapacity and allocate.  <a href="#a6d7bfb7557f5f55553f5f28eabcff003"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a042a6537ef0e57306f9e312d07fcf453">addLink</a> (<a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom0, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom1, int typeId)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a link betwen two specific Atoms.  <a href="#a042a6537ef0e57306f9e312d07fcf453"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a8022436e664560a8b25df4f6d43f8753">removeLink</a> (int id)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>.  <a href="#a8022436e664560a8b25df4f6d43f8753"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1SSet.html">AtomLinkSet</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a9e07f2f2e3856b5207a6a462bdd11f66">atomLinkSet</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a set of links associated with an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> by const reference.  <a href="#a9e07f2f2e3856b5207a6a462bdd11f66"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1SSet.html">AtomLinkSet</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#ab89a56806a6e577fe85956ec5a912bac">atomLinkSet</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a set of links associated with an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#ab89a56806a6e577fe85956ec5a912bac"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Link.html">Link</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#acc53f29278190d5662f1956751f106e0">link</a> (int id) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return an active link by an internal set index.  <a href="#acc53f29278190d5662f1956751f106e0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a602433329c072a988595bfdc0dca8fe9">reSetAtoms</a> (<a class="el" href="classMcMd_1_1Link.html">Link</a> &amp;link, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom0, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom1)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify the atoms attached to a link.  <a href="#a602433329c072a988595bfdc0dca8fe9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a380c5eacace6543ee327ec3cbdebed08">reSetAtom</a> (<a class="el" href="classMcMd_1_1Link.html">Link</a> &amp;link, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom, int endId)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify one atom attached to a link.  <a href="#a380c5eacace6543ee327ec3cbdebed08"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a72530df0ae2f385c02932d518854e297">nLink</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of active Links.  <a href="#a72530df0ae2f385c02932d518854e297"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#ab765320f32451b9c24353a68bcabe0a1">begin</a> (<a class="el" href="classUtil_1_1PArrayIterator.html">LinkIterator</a> &amp;iterator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize iterator to beginning of list of active links.  <a href="#ab765320f32451b9c24353a68bcabe0a1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a41e97837f39ab6abd935d20f06569437">begin</a> (<a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstLinkIterator</a> &amp;iterator) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize iterator to beginning of list of active links.  <a href="#a41e97837f39ab6abd935d20f06569437"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Link.html">Link</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#aec00794d9942f9c7b63dc097771946d9">randomLink</a> (<a class="el" href="classUtil_1_1Random.html">Random</a> &amp;random)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a randomly chosen link by reference.  <a href="#aec00794d9942f9c7b63dc097771946d9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#a529c6e5ebeafa633106d39abeb7e8a84">isValid</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this <a class="el" href="classMcMd_1_1LinkMaster.html" title="Manages all Link objects in a System.">LinkMaster</a> is valid, or throw an Exception.  <a href="#a529c6e5ebeafa633106d39abeb7e8a84"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1LinkMaster.html#ade75a16154327c183a7d258ae06e3885">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear <a class="el" href="classMcMd_1_1LinkMaster.html" title="Manages all Link objects in a System.">LinkMaster</a>.  <a href="#ade75a16154327c183a7d258ae06e3885"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Typedef Documentation</h2>
-<a class="anchor" id="abd715d4ebbcc5dbedac0342d617d5f0b"></a><!-- doxytag: member="McMd::LinkMaster::LinkIterator" ref="abd715d4ebbcc5dbedac0342d617d5f0b" args="" -->
+<a class="anchor" id="a94802732bc5c4aadd4ec1c91875ac3f5"></a><!-- doxytag: member="McMd::LinkMaster::LinkIterator" ref="a94802732bc5c4aadd4ec1c91875ac3f5" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt;<a class="el" href="classMcMd_1_1Link.html">Link</a>&gt; <a class="el" href="classUtil_1_1PArrayIterator.html">LinkIterator</a></td>
+          <td class="memname">typedef <a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt;<a class="el" href="classMcMd_1_1Link.html">Link</a>&gt; <a class="el" href="classUtil_1_1PArrayIterator.html">McMd::LinkMaster::LinkIterator</a></td>
         </tr>
       </table>
 </div>
@@ -136,12 +136,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7c701645f7098625b41fd63ba7334015"></a><!-- doxytag: member="McMd::LinkMaster::ConstLinkIterator" ref="a7c701645f7098625b41fd63ba7334015" args="" -->
+<a class="anchor" id="a861b1e848e634a8a820b85ac2ec675d5"></a><!-- doxytag: member="McMd::LinkMaster::ConstLinkIterator" ref="a861b1e848e634a8a820b85ac2ec675d5" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstPArrayIterator</a>&lt;<a class="el" href="classMcMd_1_1Link.html">Link</a>&gt; <a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstLinkIterator</a></td>
+          <td class="memname">typedef <a class="el" href="classUtil_1_1ConstPArrayIterator.html">ConstPArrayIterator</a>&lt;<a class="el" href="classMcMd_1_1Link.html">Link</a>&gt; <a class="el" href="classUtil_1_1ConstPArrayIterator.html">McMd::LinkMaster::ConstLinkIterator</a></td>
         </tr>
       </table>
 </div>
@@ -153,12 +153,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a245ae12ab2986ecbaf791e1eabda968f"></a><!-- doxytag: member="McMd::LinkMaster::AtomLinkSet" ref="a245ae12ab2986ecbaf791e1eabda968f" args="" -->
+<a class="anchor" id="a79f3e45b2dd2c606e6114f09c1c03ed3"></a><!-- doxytag: member="McMd::LinkMaster::AtomLinkSet" ref="a79f3e45b2dd2c606e6114f09c1c03ed3" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt;<a class="el" href="classMcMd_1_1Link.html">Link</a>,400&gt; <a class="el" href="classUtil_1_1SSet.html">AtomLinkSet</a></td>
+          <td class="memname">typedef <a class="el" href="classUtil_1_1SSet.html">SSet</a>&lt;<a class="el" href="classMcMd_1_1Link.html">Link</a>,400&gt; <a class="el" href="classUtil_1_1SSet.html">McMd::LinkMaster::AtomLinkSet</a></td>
         </tr>
       </table>
 </div>
@@ -171,12 +171,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aee7e8bf4e63d8625966ee281622eb039"></a><!-- doxytag: member="McMd::LinkMaster::LinkMaster" ref="aee7e8bf4e63d8625966ee281622eb039" args="()" -->
+<a class="anchor" id="aa0ddcc05096ae845fa88769a05dedf3a"></a><!-- doxytag: member="McMd::LinkMaster::LinkMaster" ref="aa0ddcc05096ae845fa88769a05dedf3a" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1LinkMaster.html">LinkMaster</a> </td>
+          <td class="memname">McMd::LinkMaster::LinkMaster </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -192,12 +192,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::LinkMaster::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a6d7bfb7557f5f55553f5f28eabcff003"></a><!-- doxytag: member="McMd::LinkMaster::readParam" ref="a6d7bfb7557f5f55553f5f28eabcff003" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::LinkMaster::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -215,18 +215,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="LinkMaster_8cpp_source.html#l00033">33</a> of file <a class="el" href="LinkMaster_8cpp_source.html">LinkMaster.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac818627ff5e13e79e7e7bcfccd7c6c48"></a><!-- doxytag: member="McMd::LinkMaster::addLink" ref="ac818627ff5e13e79e7e7bcfccd7c6c48" args="(Atom &amp;atom0, Atom &amp;atom1, int typeId)" -->
+<a class="anchor" id="a042a6537ef0e57306f9e312d07fcf453"></a><!-- doxytag: member="McMd::LinkMaster::addLink" ref="a042a6537ef0e57306f9e312d07fcf453" args="(Atom &amp;atom0, Atom &amp;atom1, int typeId)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void addLink </td>
+          <td class="memname">void McMd::LinkMaster::addLink </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom0</em>, </td>
@@ -266,16 +266,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="LinkMaster_8cpp_source.html#l00046">46</a> of file <a class="el" href="LinkMaster_8cpp_source.html">LinkMaster.cpp</a>.</p>
 
-<p>References <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">Atom::id()</a>, <a class="el" href="Notifier_8h_source.html#l00098">Notifier&lt; Event &gt;::notifyObservers()</a>, <a class="el" href="Link_8h_source.html#l00201">Link::setIsActive()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>, <a class="el" href="Notifier_8h_source.html#l00098">Util::Notifier&lt; Event &gt;::notifyObservers()</a>, <a class="el" href="Link_8h_source.html#l00201">McMd::Link::setIsActive()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abaea76b9780354ba3da3cc4d6e769543"></a><!-- doxytag: member="McMd::LinkMaster::removeLink" ref="abaea76b9780354ba3da3cc4d6e769543" args="(int id)" -->
+<a class="anchor" id="a8022436e664560a8b25df4f6d43f8753"></a><!-- doxytag: member="McMd::LinkMaster::removeLink" ref="a8022436e664560a8b25df4f6d43f8753" args="(int id)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void removeLink </td>
+          <td class="memname">void McMd::LinkMaster::removeLink </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
@@ -296,16 +296,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="LinkMaster_8cpp_source.html#l00084">84</a> of file <a class="el" href="LinkMaster_8cpp_source.html">LinkMaster.cpp</a>.</p>
 
-<p>References <a class="el" href="Link_8h_source.html#l00159">Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">Link::atom1()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">Atom::id()</a>, <a class="el" href="Notifier_8h_source.html#l00098">Notifier&lt; Event &gt;::notifyObservers()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Link_8h_source.html#l00159">McMd::Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">McMd::Link::atom1()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>, <a class="el" href="Notifier_8h_source.html#l00098">Util::Notifier&lt; Event &gt;::notifyObservers()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa31769361f14f4de366b5adc5027c4f1"></a><!-- doxytag: member="McMd::LinkMaster::atomLinkSet" ref="aa31769361f14f4de366b5adc5027c4f1" args="(const Atom &amp;atom) const " -->
+<a class="anchor" id="a9e07f2f2e3856b5207a6a462bdd11f66"></a><!-- doxytag: member="McMd::LinkMaster::atomLinkSet" ref="a9e07f2f2e3856b5207a6a462bdd11f66" args="(const Atom &amp;atom) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classUtil_1_1SSet.html">LinkMaster::AtomLinkSet</a> &amp; atomLinkSet </td>
+          <td class="memname">const <a class="el" href="classUtil_1_1SSet.html">LinkMaster::AtomLinkSet</a> &amp; McMd::LinkMaster::atomLinkSet </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -325,16 +325,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="LinkMaster_8h_source.html#l00226">226</a> of file <a class="el" href="LinkMaster_8h_source.html">LinkMaster.h</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">Atom::id()</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aab54bb683c5451be2527aa9efaf3ba77"></a><!-- doxytag: member="McMd::LinkMaster::atomLinkSet" ref="aab54bb683c5451be2527aa9efaf3ba77" args="(const Atom &amp;atom)" -->
+<a class="anchor" id="ab89a56806a6e577fe85956ec5a912bac"></a><!-- doxytag: member="McMd::LinkMaster::atomLinkSet" ref="ab89a56806a6e577fe85956ec5a912bac" args="(const Atom &amp;atom)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1SSet.html">LinkMaster::AtomLinkSet</a> &amp; atomLinkSet </td>
+          <td class="memname"><a class="el" href="classUtil_1_1SSet.html">LinkMaster::AtomLinkSet</a> &amp; McMd::LinkMaster::atomLinkSet </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -354,16 +354,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="LinkMaster_8h_source.html#l00235">235</a> of file <a class="el" href="LinkMaster_8h_source.html">LinkMaster.h</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">Atom::id()</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a50c533aae65321f8d927872af06be7ff"></a><!-- doxytag: member="McMd::LinkMaster::link" ref="a50c533aae65321f8d927872af06be7ff" args="(int id) const " -->
+<a class="anchor" id="acc53f29278190d5662f1956751f106e0"></a><!-- doxytag: member="McMd::LinkMaster::link" ref="acc53f29278190d5662f1956751f106e0" args="(int id) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1Link.html">Link</a> &amp; link </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1Link.html">Link</a> &amp; McMd::LinkMaster::link </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
@@ -374,7 +374,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Return an active link by an internal set index. </p>
-<p>An "active" <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> object is one that is attached to two atoms. Pointers to all of the active <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> objects are maintained by an ArraySet &lt; <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> &gt; container. At any instant, this container assigns every active link an index in the range 0 &lt;= id &lt; nLink, where nLink is the total number of active links. The index associated with any <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> in the set can change, however, whenever another <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> is removed from the set by calling <a class="el" href="classMcMd_1_1LinkMaster.html#abaea76b9780354ba3da3cc4d6e769543" title="Remove a Link.">removeLink()</a> (not yet implemented).</p>
+<p>An "active" <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> object is one that is attached to two atoms. Pointers to all of the active <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> objects are maintained by an ArraySet &lt; <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> &gt; container. At any instant, this container assigns every active link an index in the range 0 &lt;= id &lt; nLink, where nLink is the total number of active links. The index associated with any <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> in the set can change, however, whenever another <a class="el" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a> is removed from the set by calling <a class="el" href="classMcMd_1_1LinkMaster.html#a8022436e664560a8b25df4f6d43f8753" title="Remove a Link.">removeLink()</a> (not yet implemented).</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>index in the range 0 &lt;= id &lt; nLink. </td></tr>
@@ -386,12 +386,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4f85c4d6275b338c8231a660874ff742"></a><!-- doxytag: member="McMd::LinkMaster::reSetAtoms" ref="a4f85c4d6275b338c8231a660874ff742" args="(Link &amp;link, Atom &amp;atom0, Atom &amp;atom1)" -->
+<a class="anchor" id="a602433329c072a988595bfdc0dca8fe9"></a><!-- doxytag: member="McMd::LinkMaster::reSetAtoms" ref="a602433329c072a988595bfdc0dca8fe9" args="(Link &amp;link, Atom &amp;atom0, Atom &amp;atom1)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void reSetAtoms </td>
+          <td class="memname">void McMd::LinkMaster::reSetAtoms </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1Link.html">Link</a> &amp;&#160;</td>
           <td class="paramname"><em>link</em>, </td>
@@ -421,16 +421,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="LinkMaster_8cpp_source.html#l00122">122</a> of file <a class="el" href="LinkMaster_8cpp_source.html">LinkMaster.cpp</a>.</p>
 
-<p>References <a class="el" href="Link_8h_source.html#l00159">Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">Link::atom1()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">Atom::id()</a>, <a class="el" href="Link_8h_source.html#l00195">Link::isActive()</a>, <a class="el" href="Notifier_8h_source.html#l00098">Notifier&lt; Event &gt;::notifyObservers()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Link_8h_source.html#l00159">McMd::Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">McMd::Link::atom1()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>, <a class="el" href="Link_8h_source.html#l00195">McMd::Link::isActive()</a>, <a class="el" href="Notifier_8h_source.html#l00098">Util::Notifier&lt; Event &gt;::notifyObservers()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a184e5625aa5503835d210ac6b7714896"></a><!-- doxytag: member="McMd::LinkMaster::reSetAtom" ref="a184e5625aa5503835d210ac6b7714896" args="(Link &amp;link, Atom &amp;atom, int endId)" -->
+<a class="anchor" id="a380c5eacace6543ee327ec3cbdebed08"></a><!-- doxytag: member="McMd::LinkMaster::reSetAtom" ref="a380c5eacace6543ee327ec3cbdebed08" args="(Link &amp;link, Atom &amp;atom, int endId)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void reSetAtom </td>
+          <td class="memname">void McMd::LinkMaster::reSetAtom </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1Link.html">Link</a> &amp;&#160;</td>
           <td class="paramname"><em>link</em>, </td>
@@ -460,16 +460,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="LinkMaster_8cpp_source.html#l00167">167</a> of file <a class="el" href="LinkMaster_8cpp_source.html">LinkMaster.cpp</a>.</p>
 
-<p>References <a class="el" href="Link_8h_source.html#l00159">Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">Link::atom1()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">Atom::id()</a>, <a class="el" href="Link_8h_source.html#l00195">Link::isActive()</a>, <a class="el" href="Notifier_8h_source.html#l00098">Notifier&lt; Event &gt;::notifyObservers()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Link_8h_source.html#l00159">McMd::Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">McMd::Link::atom1()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>, <a class="el" href="Link_8h_source.html#l00195">McMd::Link::isActive()</a>, <a class="el" href="Notifier_8h_source.html#l00098">Util::Notifier&lt; Event &gt;::notifyObservers()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a190823938dd61725899558d0650ddace"></a><!-- doxytag: member="McMd::LinkMaster::nLink" ref="a190823938dd61725899558d0650ddace" args="() const " -->
+<a class="anchor" id="a72530df0ae2f385c02932d518854e297"></a><!-- doxytag: member="McMd::LinkMaster::nLink" ref="a72530df0ae2f385c02932d518854e297" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nLink </td>
+          <td class="memname">int McMd::LinkMaster::nLink </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -484,12 +484,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0e0c2e18c1fac2614f20cdbc553aa0c4"></a><!-- doxytag: member="McMd::LinkMaster::begin" ref="a0e0c2e18c1fac2614f20cdbc553aa0c4" args="(LinkIterator &amp;iterator)" -->
+<a class="anchor" id="ab765320f32451b9c24353a68bcabe0a1"></a><!-- doxytag: member="McMd::LinkMaster::begin" ref="ab765320f32451b9c24353a68bcabe0a1" args="(LinkIterator &amp;iterator)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void begin </td>
+          <td class="memname">void McMd::LinkMaster::begin </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1PArrayIterator.html">LinkMaster::LinkIterator</a> &amp;&#160;</td>
           <td class="paramname"><em>iterator</em></td><td>)</td>
@@ -511,12 +511,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1e94ade77878d400adaac7c9123183c9"></a><!-- doxytag: member="McMd::LinkMaster::begin" ref="a1e94ade77878d400adaac7c9123183c9" args="(ConstLinkIterator &amp;iterator) const " -->
+<a class="anchor" id="a41e97837f39ab6abd935d20f06569437"></a><!-- doxytag: member="McMd::LinkMaster::begin" ref="a41e97837f39ab6abd935d20f06569437" args="(ConstLinkIterator &amp;iterator) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void begin </td>
+          <td class="memname">void McMd::LinkMaster::begin </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1ConstPArrayIterator.html">LinkMaster::ConstLinkIterator</a> &amp;&#160;</td>
           <td class="paramname"><em>iterator</em></td><td>)</td>
@@ -538,12 +538,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa5ed512553c5a557664824d0818c0f39"></a><!-- doxytag: member="McMd::LinkMaster::randomLink" ref="aa5ed512553c5a557664824d0818c0f39" args="(Random &amp;random)" -->
+<a class="anchor" id="aec00794d9942f9c7b63dc097771946d9"></a><!-- doxytag: member="McMd::LinkMaster::randomLink" ref="aec00794d9942f9c7b63dc097771946d9" args="(Random &amp;random)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1Link.html">Link</a> &amp; randomLink </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1Link.html">Link</a> &amp; McMd::LinkMaster::randomLink </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Random.html">Random</a> &amp;&#160;</td>
           <td class="paramname"><em>random</em></td><td>)</td>
@@ -563,16 +563,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="LinkMaster_8cpp_source.html#l00212">212</a> of file <a class="el" href="LinkMaster_8cpp_source.html">LinkMaster.cpp</a>.</p>
 
-<p>References <a class="el" href="Random_8h_source.html#l00210">Random::uniformInt()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Random_8h_source.html#l00210">Util::Random::uniformInt()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><!-- doxytag: member="McMd::LinkMaster::isValid" ref="aac1b70a2ed67ead038c4d3f5ac4d8a81" args="() const " -->
+<a class="anchor" id="a529c6e5ebeafa633106d39abeb7e8a84"></a><!-- doxytag: member="McMd::LinkMaster::isValid" ref="a529c6e5ebeafa633106d39abeb7e8a84" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool McMd::LinkMaster::isValid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -585,16 +585,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="LinkMaster_8cpp_source.html#l00252">252</a> of file <a class="el" href="LinkMaster_8cpp_source.html">LinkMaster.cpp</a>.</p>
 
-<p>References <a class="el" href="Link_8h_source.html#l00159">Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">Link::atom1()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">Atom::id()</a>, <a class="el" href="Link_8h_source.html#l00195">Link::isActive()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Link_8h_source.html#l00159">McMd::Link::atom0()</a>, <a class="el" href="Link_8h_source.html#l00171">McMd::Link::atom1()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>, <a class="el" href="Link_8h_source.html#l00195">McMd::Link::isActive()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac8bb3912a3ce86b15842e79d0b421204"></a><!-- doxytag: member="McMd::LinkMaster::clear" ref="ac8bb3912a3ce86b15842e79d0b421204" args="()" -->
+<a class="anchor" id="ade75a16154327c183a7d258ae06e3885"></a><!-- doxytag: member="McMd::LinkMaster::clear" ref="ade75a16154327c183a7d258ae06e3885" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void clear </td>
+          <td class="memname">void McMd::LinkMaster::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -615,7 +615,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="LinkMaster_8cpp_source.html">LinkMaster.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:55 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:26 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

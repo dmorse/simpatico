@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 <span class="preprocessor">#include &lt;util/param/ParamComposite.h&gt;</span>  <span class="comment">// base class</span>
@@ -236,7 +236,7 @@
 <a name="l00366"></a>00366 <span class="comment">   * Pack a Group.</span>
 <a name="l00367"></a>00367 <span class="comment">   */</span>
 <a name="l00368"></a>00368    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00369"></a><a class="code" href="classDdMd_1_1Buffer.html#a9fb04880fcd56865937d9479beadbb08">00369</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a9fb04880fcd56865937d9479beadbb08" title="Pack a Group for sending.">Buffer::packGroup</a>(<span class="keyword">const</span> <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a>&amp; group)
+<a name="l00369"></a><a class="code" href="classDdMd_1_1Buffer.html#acfc2bbf2ac8d1cd5374895369ac8a213">00369</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#acfc2bbf2ac8d1cd5374895369ac8a213" title="Pack a Group for sending.">Buffer::packGroup</a>(<span class="keyword">const</span> <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a>&amp; group)
 <a name="l00370"></a>00370    {
 <a name="l00371"></a>00371       <span class="comment">// Preconditions</span>
 <a name="l00372"></a>00372       <span class="keywordflow">if</span> (sendType_ != GROUP) {
@@ -245,12 +245,12 @@
 <a name="l00375"></a>00375       <span class="keywordflow">if</span> (sendGroupSize_ != N) {
 <a name="l00376"></a>00376          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Wrong sendGroupSize&quot;</span>);
 <a name="l00377"></a>00377       }
-<a name="l00378"></a>00378       pack&lt;int&gt;(group.<a class="code" href="classDdMd_1_1Group.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get the global id for this group.">id</a>());
-<a name="l00379"></a>00379       pack&lt;int&gt;(group.<a class="code" href="classDdMd_1_1Group.html#af68aca851173d8f261a70897bff349c9" title="Get the typeId for this group.">typeId</a>());
+<a name="l00378"></a>00378       pack&lt;int&gt;(group.<a class="code" href="classDdMd_1_1Group.html#a28a7311f8dbf7b1de0461a34ec408452" title="Get the global id for this group.">id</a>());
+<a name="l00379"></a>00379       pack&lt;int&gt;(group.<a class="code" href="classDdMd_1_1Group.html#aab3d028c37ceced5abb21ab3bb124478" title="Get the typeId for this group.">typeId</a>());
 <a name="l00380"></a>00380       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; N; ++j) {
-<a name="l00381"></a>00381          pack&lt;int&gt;(group.<a class="code" href="classDdMd_1_1Group.html#ab366447c15a7669021df12ff0e090520" title="Get the id for a specific atom in the Group.">atomId</a>(j));
+<a name="l00381"></a>00381          pack&lt;int&gt;(group.<a class="code" href="classDdMd_1_1Group.html#a949e11f2c2e90e04396e1a0b41ad3486" title="Get the id for a specific atom in the Group.">atomId</a>(j));
 <a name="l00382"></a>00382       }
-<a name="l00383"></a>00383       pack&lt;unsigned int&gt;(group.<a class="code" href="classDdMd_1_1Group.html#a2eb65fe220c7b222e031f66374012406" title="Get communication plan by reference.">plan</a>().flags());
+<a name="l00383"></a>00383       pack&lt;unsigned int&gt;(group.<a class="code" href="classDdMd_1_1Group.html#a6c30f0c4ae0b1ea132c338fec470de9a" title="Get communication plan by reference.">plan</a>().flags());
 <a name="l00384"></a>00384 
 <a name="l00385"></a>00385       <span class="comment">//Increment number of groups in send buffer by 1</span>
 <a name="l00386"></a>00386       ++sendSize_;
@@ -260,7 +260,7 @@
 <a name="l00390"></a>00390 <span class="comment">   * Unpack the next Group in the recieve buffer.</span>
 <a name="l00391"></a>00391 <span class="comment">   */</span>
 <a name="l00392"></a>00392    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00393"></a><a class="code" href="classDdMd_1_1Buffer.html#a27d7297711cf87159f4f1b08fcc1ac08">00393</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a27d7297711cf87159f4f1b08fcc1ac08" title="Receive the next Group in the recv buffer.">Buffer::unpackGroup</a>(<a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a>&amp; group)
+<a name="l00393"></a><a class="code" href="classDdMd_1_1Buffer.html#a4a1d4e153ace9946c297181018bb5d38">00393</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Buffer.html#a4a1d4e153ace9946c297181018bb5d38" title="Receive the next Group in the recv buffer.">Buffer::unpackGroup</a>(<a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a>&amp; group)
 <a name="l00394"></a>00394    {
 <a name="l00395"></a>00395       <span class="comment">// Preconditions</span>
 <a name="l00396"></a>00396       <span class="keywordflow">if</span> (recvType_ != GROUP) {
@@ -271,19 +271,19 @@
 <a name="l00401"></a>00401       }
 <a name="l00402"></a>00402       <span class="keywordtype">int</span> i;
 <a name="l00403"></a>00403       unpack(i);
-<a name="l00404"></a>00404       group.<a class="code" href="classDdMd_1_1Group.html#a3d929477fef71d52c9c6df2ba2d50841" title="Set the global id for this group.">setId</a>(i);
+<a name="l00404"></a>00404       group.<a class="code" href="classDdMd_1_1Group.html#aa4dfd41c4396641a68d9127b30c6a408" title="Set the global id for this group.">setId</a>(i);
 <a name="l00405"></a>00405       unpack(i);
-<a name="l00406"></a>00406       group.<a class="code" href="classDdMd_1_1Group.html#a46b30f8f417b160a678438259066f83e" title="Set the group type id for this group.">setTypeId</a>(i);
+<a name="l00406"></a>00406       group.<a class="code" href="classDdMd_1_1Group.html#a728bb1fcbe38d1c87ab05456ccf56ead" title="Set the group type id for this group.">setTypeId</a>(i);
 <a name="l00407"></a>00407       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; N; ++j) {
 <a name="l00408"></a>00408          unpack(i);
-<a name="l00409"></a>00409          group.<a class="code" href="classDdMd_1_1Group.html#a05b15e3b0826e8cd5dfca7421a75d600" title="Set the id for a specific atom.">setAtomId</a>(j, i);
-<a name="l00410"></a>00410          group.<a class="code" href="classDdMd_1_1Group.html#af9e65ea9ae61af1474dfa6d46a9f69dd" title="Clear the pointer to a specific atom.">clearAtomPtr</a>(j);
+<a name="l00409"></a>00409          group.<a class="code" href="classDdMd_1_1Group.html#acd455a0313f09abf71a604a44fea01b8" title="Set the id for a specific atom.">setAtomId</a>(j, i);
+<a name="l00410"></a>00410          group.<a class="code" href="classDdMd_1_1Group.html#a71301af4bccfbd9ef2c61a7c2c868b26" title="Clear the pointer to a specific atom.">clearAtomPtr</a>(j);
 <a name="l00411"></a>00411       }
 <a name="l00412"></a>00412 
 <a name="l00413"></a>00413       <span class="comment">// Unpack communication plan</span>
 <a name="l00414"></a>00414       <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> ui;
 <a name="l00415"></a>00415       unpack(ui);
-<a name="l00416"></a>00416       group.<a class="code" href="classDdMd_1_1Group.html#a2eb65fe220c7b222e031f66374012406" title="Get communication plan by reference.">plan</a>().setFlags(ui);
+<a name="l00416"></a>00416       group.<a class="code" href="classDdMd_1_1Group.html#a6c30f0c4ae0b1ea132c338fec470de9a" title="Get communication plan by reference.">plan</a>().setFlags(ui);
 <a name="l00417"></a>00417 
 <a name="l00418"></a>00418       <span class="comment">// Decrement number of groups in recv buffer by 1</span>
 <a name="l00419"></a>00419       recvSize_--;
@@ -294,7 +294,7 @@
 <a name="l00424"></a>00424 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -76,39 +76,39 @@
 <a name="l00033"></a>00033    
 <a name="l00034"></a>00034    <span class="keyword">public</span>: 
 <a name="l00035"></a>00035    
-<a name="l00039"></a>00039       <a class="code" href="classUtil_1_1RingBuffer.html#a7200e1f25f4e48028eeabff204ab0367" title="Contructor.">RingBuffer</a>();
+<a name="l00039"></a>00039       <a class="code" href="classUtil_1_1RingBuffer.html#ae431b5509a9d1d9192d4ad3eab460dba" title="Contructor.">RingBuffer</a>();
 <a name="l00040"></a>00040    
-<a name="l00046"></a>00046       <a class="code" href="classUtil_1_1RingBuffer.html#a7200e1f25f4e48028eeabff204ab0367" title="Contructor.">RingBuffer</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer&lt;Data&gt;</a>&amp; other);
+<a name="l00046"></a>00046       <a class="code" href="classUtil_1_1RingBuffer.html#ae431b5509a9d1d9192d4ad3eab460dba" title="Contructor.">RingBuffer</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer&lt;Data&gt;</a>&amp; other);
 <a name="l00047"></a>00047    
-<a name="l00053"></a>00053       <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a>&amp; <a class="code" href="classUtil_1_1RingBuffer.html#a7fd0ea35eda492d2f2d861f5c55688db" title="Assignment.">operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer&lt;Data&gt;</a>&amp; other);
+<a name="l00053"></a>00053       <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a>&amp; <a class="code" href="classUtil_1_1RingBuffer.html#a9a2356694c4693b5f471ced92491f772" title="Assignment.">operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer&lt;Data&gt;</a>&amp; other);
 <a name="l00054"></a>00054    
-<a name="l00058"></a>00058       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1RingBuffer.html#a0fff6182d30d785358c6a3ef7db0931f" title="Destructor.">~RingBuffer</a>();
+<a name="l00058"></a>00058       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1RingBuffer.html#adccc3b30adfe5c635ce0aa69523aa5b5" title="Destructor.">~RingBuffer</a>();
 <a name="l00059"></a>00059    
-<a name="l00068"></a>00068       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate a new empty buffer.">allocate</a>(<span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#a104736719cd4e5f21c25705c77064dde" title="Return the capacity of the buffer.">capacity</a>);
+<a name="l00068"></a>00068       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a5d2154b83c345552bfb88af818728cb7" title="Allocate a new empty buffer.">allocate</a>(<span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#ac41383b9a2d8d5cc6a6a99e665671bba" title="Return the capacity of the buffer.">capacity</a>);
 <a name="l00069"></a>00069 
-<a name="l00073"></a>00073       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#ac8bb3912a3ce86b15842e79d0b421204" title="Set previously allocated buffer to empty state.">clear</a>();
+<a name="l00073"></a>00073       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a66780b4c571f0cc9e714a9c3985d38f1" title="Set previously allocated buffer to empty state.">clear</a>();
 <a name="l00074"></a>00074   
-<a name="l00080"></a>00080       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a4607dc03e074edd1288df3409c94323a" title="Add a new value to the buffer.">append</a>(Data value);
+<a name="l00080"></a>00080       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a27adabe777ccfd54d310ba81ccc32483" title="Add a new value to the buffer.">append</a>(Data value);
 <a name="l00081"></a>00081    
-<a name="l00085"></a>00085       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return number of values currently in the buffer.">size</a>() <span class="keyword">const</span>;
+<a name="l00085"></a>00085       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#a239c039ef8b64ac893c6d52c79a19fbf" title="Return number of values currently in the buffer.">size</a>() <span class="keyword">const</span>;
 <a name="l00086"></a>00086   
-<a name="l00090"></a>00090       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#a104736719cd4e5f21c25705c77064dde" title="Return the capacity of the buffer.">capacity</a>() <span class="keyword">const</span>;
+<a name="l00090"></a>00090       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#ac41383b9a2d8d5cc6a6a99e665671bba" title="Return the capacity of the buffer.">capacity</a>() <span class="keyword">const</span>;
 <a name="l00091"></a>00091   
-<a name="l00095"></a>00095       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1RingBuffer.html#a0bcdab3616db481dd211594529479f94" title="Return true if the RingBuffer has been allocated, false otherwise.">isAllocated</a>() <span class="keyword">const</span>;
+<a name="l00095"></a>00095       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1RingBuffer.html#a026b0c3ad0b408f01eaf1ea062453ff1" title="Return true if the RingBuffer has been allocated, false otherwise.">isAllocated</a>() <span class="keyword">const</span>;
 <a name="l00096"></a>00096    
-<a name="l00100"></a>00100       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1RingBuffer.html#a3e70330939fdfc4dbc2f60c1a660584d" title="Return true if the RingBuffer has been allocated, false otherwise.">isFull</a>();
+<a name="l00100"></a>00100       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1RingBuffer.html#a45c78e57250d8bdb92d8c026065228bb" title="Return true if the RingBuffer has been allocated, false otherwise.">isFull</a>();
 <a name="l00101"></a>00101    
-<a name="l00107"></a>00107       Data <a class="code" href="classUtil_1_1RingBuffer.html#a9259477125ef843f57d1b8e7a400e8df" title="Retrieve a previous value, a specified number of time steps ago.">operator [] </a>(<span class="keywordtype">int</span> offset) <span class="keyword">const</span>;
+<a name="l00107"></a>00107       Data <a class="code" href="classUtil_1_1RingBuffer.html#ac04478fb0b2c7639588ecaff686edb78" title="Retrieve a previous value, a specified number of time steps ago.">operator [] </a>(<span class="keywordtype">int</span> offset) <span class="keyword">const</span>;
 <a name="l00108"></a>00108   
-<a name="l00117"></a>00117       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a7ee7184119080658dbd9a6e629e6e90b" title="Pack this RingBuffer into a block of memory.">pack</a>(<span class="keywordtype">char</span>* &amp;current, <span class="keywordtype">char</span>* end) <span class="keyword">const</span>;
+<a name="l00117"></a>00117       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#acd7b2ae9dd5853a5424093713a7fc860" title="Pack this RingBuffer into a block of memory.">pack</a>(<span class="keywordtype">char</span>* &amp;current, <span class="keywordtype">char</span>* end) <span class="keyword">const</span>;
 <a name="l00118"></a>00118 
-<a name="l00127"></a>00127       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a7243335e2851a09c967fa7743a0fcd1f" title="Unpack this RingBuffer from a block of memory.">unpack</a>(<span class="keywordtype">char</span>*&amp; current, <span class="keywordtype">char</span>* end);
+<a name="l00127"></a>00127       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a55f72fa0be93f992e02b5b1c146e6807" title="Unpack this RingBuffer from a block of memory.">unpack</a>(<span class="keywordtype">char</span>*&amp; current, <span class="keywordtype">char</span>* end);
 <a name="l00128"></a>00128 
-<a name="l00134"></a>00134       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a7ee7184119080658dbd9a6e629e6e90b" title="Pack this RingBuffer into a block of memory.">pack</a>(<a class="code" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a>&amp; buffer) <span class="keyword">const</span>;
+<a name="l00134"></a>00134       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#acd7b2ae9dd5853a5424093713a7fc860" title="Pack this RingBuffer into a block of memory.">pack</a>(<a class="code" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a>&amp; buffer) <span class="keyword">const</span>;
 <a name="l00135"></a>00135 
-<a name="l00141"></a>00141       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a7243335e2851a09c967fa7743a0fcd1f" title="Unpack this RingBuffer from a block of memory.">unpack</a>(<a class="code" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a>&amp; buffer);
+<a name="l00141"></a>00141       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a55f72fa0be93f992e02b5b1c146e6807" title="Unpack this RingBuffer from a block of memory.">unpack</a>(<a class="code" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a>&amp; buffer);
 <a name="l00142"></a>00142 
-<a name="l00148"></a>00148       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#a8fdb9a0413b176e1a0191d8adda9b34b" title="Return packed size of this RingBuffer.">packedSize</a>() <span class="keyword">const</span>;
+<a name="l00148"></a>00148       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#a35c3dca921b54c354ee548cc0241d8a8" title="Return packed size of this RingBuffer.">packedSize</a>() <span class="keyword">const</span>;
 <a name="l00149"></a>00149 
 <a name="l00150"></a>00150       <span class="comment">/*</span>
 <a name="l00151"></a>00151 <span class="comment">      * Serialize a RingBuffer to/from an Archive.</span>
@@ -132,7 +132,7 @@
 <a name="l00169"></a>00169 <span class="comment">   * Default contructor</span>
 <a name="l00170"></a>00170 <span class="comment">   */</span>
 <a name="l00171"></a>00171    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00172"></a><a class="code" href="classUtil_1_1RingBuffer.html#a7200e1f25f4e48028eeabff204ab0367">00172</a>    <a class="code" href="classUtil_1_1RingBuffer.html#a7200e1f25f4e48028eeabff204ab0367" title="Contructor.">RingBuffer&lt;Data&gt;::RingBuffer</a>()
+<a name="l00172"></a><a class="code" href="classUtil_1_1RingBuffer.html#ae431b5509a9d1d9192d4ad3eab460dba">00172</a>    <a class="code" href="classUtil_1_1RingBuffer.html#ae431b5509a9d1d9192d4ad3eab460dba" title="Contructor.">RingBuffer&lt;Data&gt;::RingBuffer</a>()
 <a name="l00173"></a>00173     : data_(0),
 <a name="l00174"></a>00174       capacity_(0),
 <a name="l00175"></a>00175       size_(0),
@@ -147,7 +147,7 @@
 <a name="l00184"></a>00184 <span class="comment">   *\param other the RingBuffer to be copied.</span>
 <a name="l00185"></a>00185 <span class="comment">   */</span>
 <a name="l00186"></a>00186    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00187"></a><a class="code" href="classUtil_1_1RingBuffer.html#adc32dd78ee78755810d971adef91413e">00187</a>    <a class="code" href="classUtil_1_1RingBuffer.html#a7200e1f25f4e48028eeabff204ab0367" title="Contructor.">RingBuffer&lt;Data&gt;::RingBuffer</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer&lt;Data&gt;</a>&amp; other) 
+<a name="l00187"></a><a class="code" href="classUtil_1_1RingBuffer.html#a8fe6bff556df81b1b7d11d9155ec616a">00187</a>    <a class="code" href="classUtil_1_1RingBuffer.html#ae431b5509a9d1d9192d4ad3eab460dba" title="Contructor.">RingBuffer&lt;Data&gt;::RingBuffer</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer&lt;Data&gt;</a>&amp; other) 
 <a name="l00188"></a>00188     : data_(0),
 <a name="l00189"></a>00189       capacity_(0),
 <a name="l00190"></a>00190       size_(0),
@@ -174,13 +174,13 @@
 <a name="l00211"></a>00211 <span class="comment">   */</span>
 <a name="l00212"></a>00212    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
 <a name="l00213"></a>00213    <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer&lt;Data&gt;</a>&amp; 
-<a name="l00214"></a><a class="code" href="classUtil_1_1RingBuffer.html#a7fd0ea35eda492d2f2d861f5c55688db">00214</a>    <a class="code" href="classUtil_1_1RingBuffer.html#a7fd0ea35eda492d2f2d861f5c55688db" title="Assignment.">RingBuffer&lt;Data&gt;::operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer&lt;Data&gt;</a>&amp; other) 
+<a name="l00214"></a><a class="code" href="classUtil_1_1RingBuffer.html#a9a2356694c4693b5f471ced92491f772">00214</a>    <a class="code" href="classUtil_1_1RingBuffer.html#a9a2356694c4693b5f471ced92491f772" title="Assignment.">RingBuffer&lt;Data&gt;::operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer&lt;Data&gt;</a>&amp; other) 
 <a name="l00215"></a>00215    {
 <a name="l00216"></a>00216 
 <a name="l00217"></a>00217       <span class="comment">// Check for self assignment</span>
 <a name="l00218"></a>00218       <span class="keywordflow">if</span> (<span class="keyword">this</span> == &amp;other) <span class="keywordflow">return</span> *<span class="keyword">this</span>;
 <a name="l00219"></a>00219 
-<a name="l00220"></a>00220       <span class="keywordflow">if</span> (other.<a class="code" href="classUtil_1_1RingBuffer.html#a0bcdab3616db481dd211594529479f94" title="Return true if the RingBuffer has been allocated, false otherwise.">isAllocated</a>()) {
+<a name="l00220"></a>00220       <span class="keywordflow">if</span> (other.<a class="code" href="classUtil_1_1RingBuffer.html#a026b0c3ad0b408f01eaf1ea062453ff1" title="Return true if the RingBuffer has been allocated, false otherwise.">isAllocated</a>()) {
 <a name="l00221"></a>00221 
 <a name="l00222"></a>00222          assert(other.capacity_ &gt; 0);
 <a name="l00223"></a>00223 
@@ -210,7 +210,7 @@
 <a name="l00247"></a>00247    }
 <a name="l00248"></a>00248 
 <a name="l00250"></a>00250    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00251"></a><a class="code" href="classUtil_1_1RingBuffer.html#a0fff6182d30d785358c6a3ef7db0931f">00251</a>    <a class="code" href="classUtil_1_1RingBuffer.html#a0fff6182d30d785358c6a3ef7db0931f" title="Destructor.">RingBuffer&lt;Data&gt;::~RingBuffer</a>()
+<a name="l00251"></a><a class="code" href="classUtil_1_1RingBuffer.html#adccc3b30adfe5c635ce0aa69523aa5b5">00251</a>    <a class="code" href="classUtil_1_1RingBuffer.html#adccc3b30adfe5c635ce0aa69523aa5b5" title="Destructor.">RingBuffer&lt;Data&gt;::~RingBuffer</a>()
 <a name="l00252"></a>00252    {
 <a name="l00253"></a>00253       <span class="keywordflow">if</span> (data_) {
 <a name="l00254"></a>00254          <span class="keyword">delete</span> [] data_;
@@ -218,7 +218,7 @@
 <a name="l00256"></a>00256    }
 <a name="l00257"></a>00257 
 <a name="l00259"></a>00259    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00260"></a><a class="code" href="classUtil_1_1RingBuffer.html#a1be38a6eb2f04de4d9457d506f948321">00260</a>    <span class="keywordtype">void</span>  <a class="code" href="classUtil_1_1RingBuffer.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate a new empty buffer.">RingBuffer&lt;Data&gt;::allocate</a>(<span class="keywordtype">int</span> capacity) 
+<a name="l00260"></a><a class="code" href="classUtil_1_1RingBuffer.html#a5d2154b83c345552bfb88af818728cb7">00260</a>    <span class="keywordtype">void</span>  <a class="code" href="classUtil_1_1RingBuffer.html#a5d2154b83c345552bfb88af818728cb7" title="Allocate a new empty buffer.">RingBuffer&lt;Data&gt;::allocate</a>(<span class="keywordtype">int</span> capacity) 
 <a name="l00261"></a>00261    {
 <a name="l00262"></a>00262       <span class="keywordflow">if</span> (data_ == 0) {
 <a name="l00263"></a>00263          data_     = <span class="keyword">new</span> Data[capacity];
@@ -234,7 +234,7 @@
 <a name="l00273"></a>00273 <span class="comment">   * Set buffer to empty state, by resetting counters.</span>
 <a name="l00274"></a>00274 <span class="comment">   */</span>
 <a name="l00275"></a>00275    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00276"></a><a class="code" href="classUtil_1_1RingBuffer.html#ac8bb3912a3ce86b15842e79d0b421204">00276</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#ac8bb3912a3ce86b15842e79d0b421204" title="Set previously allocated buffer to empty state.">RingBuffer&lt;Data&gt;::clear</a>()
+<a name="l00276"></a><a class="code" href="classUtil_1_1RingBuffer.html#a66780b4c571f0cc9e714a9c3985d38f1">00276</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a66780b4c571f0cc9e714a9c3985d38f1" title="Set previously allocated buffer to empty state.">RingBuffer&lt;Data&gt;::clear</a>()
 <a name="l00277"></a>00277    {
 <a name="l00278"></a>00278       last_  = capacity_ - 1; 
 <a name="l00279"></a>00279       size_  = 0;        
@@ -244,7 +244,7 @@
 <a name="l00283"></a>00283 <span class="comment">   * Append a new value to the end of the buffer</span>
 <a name="l00284"></a>00284 <span class="comment">   */</span>
 <a name="l00285"></a>00285    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00286"></a><a class="code" href="classUtil_1_1RingBuffer.html#a4607dc03e074edd1288df3409c94323a">00286</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a4607dc03e074edd1288df3409c94323a" title="Add a new value to the buffer.">RingBuffer&lt;Data&gt;::append</a>(Data data) 
+<a name="l00286"></a><a class="code" href="classUtil_1_1RingBuffer.html#a27adabe777ccfd54d310ba81ccc32483">00286</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a27adabe777ccfd54d310ba81ccc32483" title="Add a new value to the buffer.">RingBuffer&lt;Data&gt;::append</a>(Data data) 
 <a name="l00287"></a>00287    {
 <a name="l00288"></a>00288       assert(last_ &lt; capacity_);
 <a name="l00289"></a>00289       ++last_;
@@ -264,35 +264,35 @@
 <a name="l00303"></a>00303 <span class="comment">   * Return number of values in buffer.</span>
 <a name="l00304"></a>00304 <span class="comment">   */</span>
 <a name="l00305"></a>00305    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00306"></a><a class="code" href="classUtil_1_1RingBuffer.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">00306</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return number of values currently in the buffer.">RingBuffer&lt;Data&gt;::size</a>()<span class="keyword"> const</span>
+<a name="l00306"></a><a class="code" href="classUtil_1_1RingBuffer.html#a239c039ef8b64ac893c6d52c79a19fbf">00306</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#a239c039ef8b64ac893c6d52c79a19fbf" title="Return number of values currently in the buffer.">RingBuffer&lt;Data&gt;::size</a>()<span class="keyword"> const</span>
 <a name="l00307"></a>00307 <span class="keyword">   </span>{ <span class="keywordflow">return</span> size_; }
 <a name="l00308"></a>00308   
 <a name="l00309"></a>00309    <span class="comment">/*</span>
 <a name="l00310"></a>00310 <span class="comment">   * Return the capacity of the buffer.</span>
 <a name="l00311"></a>00311 <span class="comment">   */</span>
 <a name="l00312"></a>00312    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00313"></a><a class="code" href="classUtil_1_1RingBuffer.html#a104736719cd4e5f21c25705c77064dde">00313</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#a104736719cd4e5f21c25705c77064dde" title="Return the capacity of the buffer.">RingBuffer&lt;Data&gt;::capacity</a>()<span class="keyword"> const</span>
+<a name="l00313"></a><a class="code" href="classUtil_1_1RingBuffer.html#ac41383b9a2d8d5cc6a6a99e665671bba">00313</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#ac41383b9a2d8d5cc6a6a99e665671bba" title="Return the capacity of the buffer.">RingBuffer&lt;Data&gt;::capacity</a>()<span class="keyword"> const</span>
 <a name="l00314"></a>00314 <span class="keyword">   </span>{ <span class="keywordflow">return</span> capacity_; }
 <a name="l00315"></a>00315  
 <a name="l00316"></a>00316    <span class="comment">/* </span>
 <a name="l00317"></a>00317 <span class="comment">   * Return true if the RingBuffer has been allocated, false otherwise.</span>
 <a name="l00318"></a>00318 <span class="comment">   */</span>
 <a name="l00319"></a>00319    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00320"></a><a class="code" href="classUtil_1_1RingBuffer.html#a0bcdab3616db481dd211594529479f94">00320</a>    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1RingBuffer.html#a0bcdab3616db481dd211594529479f94" title="Return true if the RingBuffer has been allocated, false otherwise.">RingBuffer&lt;Data&gt;::isAllocated</a>()<span class="keyword"> const</span>
+<a name="l00320"></a><a class="code" href="classUtil_1_1RingBuffer.html#a026b0c3ad0b408f01eaf1ea062453ff1">00320</a>    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1RingBuffer.html#a026b0c3ad0b408f01eaf1ea062453ff1" title="Return true if the RingBuffer has been allocated, false otherwise.">RingBuffer&lt;Data&gt;::isAllocated</a>()<span class="keyword"> const</span>
 <a name="l00321"></a>00321 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (data_ != 0); }
 <a name="l00322"></a>00322   
 <a name="l00323"></a>00323    <span class="comment">/* </span>
 <a name="l00324"></a>00324 <span class="comment">   * Return true if the RingBuffer is full.</span>
 <a name="l00325"></a>00325 <span class="comment">   */</span>
 <a name="l00326"></a>00326    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00327"></a><a class="code" href="classUtil_1_1RingBuffer.html#a3e70330939fdfc4dbc2f60c1a660584d">00327</a>    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1RingBuffer.html#a3e70330939fdfc4dbc2f60c1a660584d" title="Return true if the RingBuffer has been allocated, false otherwise.">RingBuffer&lt;Data&gt;::isFull</a>()
+<a name="l00327"></a><a class="code" href="classUtil_1_1RingBuffer.html#a45c78e57250d8bdb92d8c026065228bb">00327</a>    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1RingBuffer.html#a45c78e57250d8bdb92d8c026065228bb" title="Return true if the RingBuffer has been allocated, false otherwise.">RingBuffer&lt;Data&gt;::isFull</a>()
 <a name="l00328"></a>00328    {  <span class="keywordflow">return</span> (size_ == capacity_); }
 <a name="l00329"></a>00329   
 <a name="l00330"></a>00330    <span class="comment">/*</span>
 <a name="l00331"></a>00331 <span class="comment">   * Retrive a previous value, index backwards from 0 (current)</span>
 <a name="l00332"></a>00332 <span class="comment">   */</span>
 <a name="l00333"></a>00333    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00334"></a><a class="code" href="classUtil_1_1RingBuffer.html#a9259477125ef843f57d1b8e7a400e8df">00334</a>    Data <a class="code" href="classUtil_1_1RingBuffer.html#a9259477125ef843f57d1b8e7a400e8df" title="Retrieve a previous value, a specified number of time steps ago.">RingBuffer&lt;Data&gt;::operator [] </a>(<span class="keywordtype">int</span> offset)<span class="keyword"> const</span>
+<a name="l00334"></a><a class="code" href="classUtil_1_1RingBuffer.html#ac04478fb0b2c7639588ecaff686edb78">00334</a>    Data <a class="code" href="classUtil_1_1RingBuffer.html#ac04478fb0b2c7639588ecaff686edb78" title="Retrieve a previous value, a specified number of time steps ago.">RingBuffer&lt;Data&gt;::operator [] </a>(<span class="keywordtype">int</span> offset)<span class="keyword"> const</span>
 <a name="l00335"></a>00335 <span class="keyword">   </span>{
 <a name="l00336"></a>00336       <span class="keywordflow">if</span> ( offset &gt;= size_ )  {
 <a name="l00337"></a>00337          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;offset &gt;= size_&quot;</span>);
@@ -309,7 +309,7 @@
 <a name="l00348"></a>00348 <span class="comment">   * Pack this RingBuffer into a block of memory.</span>
 <a name="l00349"></a>00349 <span class="comment">   */</span>
 <a name="l00350"></a>00350    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00351"></a><a class="code" href="classUtil_1_1RingBuffer.html#a7ee7184119080658dbd9a6e629e6e90b">00351</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a7ee7184119080658dbd9a6e629e6e90b" title="Pack this RingBuffer into a block of memory.">RingBuffer&lt;Data&gt;::pack</a>(<span class="keywordtype">char</span>*&amp; current, <span class="keywordtype">char</span>* end)<span class="keyword"> const</span>
+<a name="l00351"></a><a class="code" href="classUtil_1_1RingBuffer.html#acd7b2ae9dd5853a5424093713a7fc860">00351</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#acd7b2ae9dd5853a5424093713a7fc860" title="Pack this RingBuffer into a block of memory.">RingBuffer&lt;Data&gt;::pack</a>(<span class="keywordtype">char</span>*&amp; current, <span class="keywordtype">char</span>* end)<span class="keyword"> const</span>
 <a name="l00352"></a>00352 <span class="keyword">   </span>{
 <a name="l00353"></a>00353       <span class="keywordflow">if</span> (current + packedSize() &gt; end) {
 <a name="l00354"></a>00354          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempted write past end of send buffer&quot;</span>);
@@ -335,7 +335,7 @@
 <a name="l00374"></a>00374 <span class="comment">   * Unpack a RingBuffer from a block of memory.</span>
 <a name="l00375"></a>00375 <span class="comment">   */</span>
 <a name="l00376"></a>00376    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00377"></a><a class="code" href="classUtil_1_1RingBuffer.html#a7243335e2851a09c967fa7743a0fcd1f">00377</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a7243335e2851a09c967fa7743a0fcd1f" title="Unpack this RingBuffer from a block of memory.">RingBuffer&lt;Data&gt;::unpack</a>(<span class="keywordtype">char</span>*&amp; current, <span class="keywordtype">char</span>* end)
+<a name="l00377"></a><a class="code" href="classUtil_1_1RingBuffer.html#a55f72fa0be93f992e02b5b1c146e6807">00377</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a55f72fa0be93f992e02b5b1c146e6807" title="Unpack this RingBuffer from a block of memory.">RingBuffer&lt;Data&gt;::unpack</a>(<span class="keywordtype">char</span>*&amp; current, <span class="keywordtype">char</span>* end)
 <a name="l00378"></a>00378    {
 <a name="l00379"></a>00379       <span class="keywordflow">if</span> (current + packedSize() &gt; end) {
 <a name="l00380"></a>00380          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempted read past end of recv buffer&quot;</span>);
@@ -367,32 +367,32 @@
 <a name="l00406"></a>00406 <span class="comment">   * Pack this RingBuffer into a PackedData object.</span>
 <a name="l00407"></a>00407 <span class="comment">   */</span>
 <a name="l00408"></a>00408    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00409"></a><a class="code" href="classUtil_1_1RingBuffer.html#a840f36c6b59da4fbd0e85491fee6f78d">00409</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a7ee7184119080658dbd9a6e629e6e90b" title="Pack this RingBuffer into a block of memory.">RingBuffer&lt;Data&gt;::pack</a>(<a class="code" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a>&amp; buffer)<span class="keyword"> const </span>
+<a name="l00409"></a><a class="code" href="classUtil_1_1RingBuffer.html#a6ecd99fc4708a0745d993c5d023f4cab">00409</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#acd7b2ae9dd5853a5424093713a7fc860" title="Pack this RingBuffer into a block of memory.">RingBuffer&lt;Data&gt;::pack</a>(<a class="code" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a>&amp; buffer)<span class="keyword"> const </span>
 <a name="l00410"></a>00410 <span class="keyword">   </span>{
-<a name="l00411"></a>00411       buffer.<a class="code" href="classUtil_1_1PackedData.html#a9852f699017c6bcefd6232278de423e5" title="Pack one object.">pack</a>(capacity_);
-<a name="l00412"></a>00412       buffer.<a class="code" href="classUtil_1_1PackedData.html#a9852f699017c6bcefd6232278de423e5" title="Pack one object.">pack</a>(size_);
-<a name="l00413"></a>00413       buffer.<a class="code" href="classUtil_1_1PackedData.html#a9852f699017c6bcefd6232278de423e5" title="Pack one object.">pack</a>(last_);
-<a name="l00414"></a>00414       buffer.<a class="code" href="classUtil_1_1PackedData.html#a9852f699017c6bcefd6232278de423e5" title="Pack one object.">pack</a>(data_, capacity_);
+<a name="l00411"></a>00411       buffer.<a class="code" href="classUtil_1_1PackedData.html#a329675158ff58e9c91db855c261e6ea5" title="Pack one object.">pack</a>(capacity_);
+<a name="l00412"></a>00412       buffer.<a class="code" href="classUtil_1_1PackedData.html#a329675158ff58e9c91db855c261e6ea5" title="Pack one object.">pack</a>(size_);
+<a name="l00413"></a>00413       buffer.<a class="code" href="classUtil_1_1PackedData.html#a329675158ff58e9c91db855c261e6ea5" title="Pack one object.">pack</a>(last_);
+<a name="l00414"></a>00414       buffer.<a class="code" href="classUtil_1_1PackedData.html#a329675158ff58e9c91db855c261e6ea5" title="Pack one object.">pack</a>(data_, capacity_);
 <a name="l00415"></a>00415    }
 <a name="l00416"></a>00416 
 <a name="l00417"></a>00417    <span class="comment">/*</span>
 <a name="l00418"></a>00418 <span class="comment">   * Unpack this RingBuffer from a PackedData object.</span>
 <a name="l00419"></a>00419 <span class="comment">   */</span>
 <a name="l00420"></a>00420    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00421"></a><a class="code" href="classUtil_1_1RingBuffer.html#a7b707d4f2e28793ea629cfc43ee4cc55">00421</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a7243335e2851a09c967fa7743a0fcd1f" title="Unpack this RingBuffer from a block of memory.">RingBuffer&lt;Data&gt;::unpack</a>(<a class="code" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a>&amp; buffer)
+<a name="l00421"></a><a class="code" href="classUtil_1_1RingBuffer.html#a64c563f2b3b5ef321faa6b82aa7c1fdb">00421</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1RingBuffer.html#a55f72fa0be93f992e02b5b1c146e6807" title="Unpack this RingBuffer from a block of memory.">RingBuffer&lt;Data&gt;::unpack</a>(<a class="code" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a>&amp; buffer)
 <a name="l00422"></a>00422    {
 <a name="l00423"></a>00423       <span class="keywordtype">int</span> capacity;
-<a name="l00424"></a>00424       buffer.<a class="code" href="classUtil_1_1PackedData.html#ad90834a7650756a10b86c42747610caa" title="Unpack one object.">unpack</a>(capacity);
+<a name="l00424"></a>00424       buffer.<a class="code" href="classUtil_1_1PackedData.html#afb687196dd428796c87abd4da7ca14f2" title="Unpack one object.">unpack</a>(capacity);
 <a name="l00425"></a>00425       <span class="keywordflow">if</span> (capacity_ != capacity) {
 <a name="l00426"></a>00426          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent RingBuffer capacities&quot;</span>);
 <a name="l00427"></a>00427       } 
-<a name="l00428"></a>00428       buffer.<a class="code" href="classUtil_1_1PackedData.html#ad90834a7650756a10b86c42747610caa" title="Unpack one object.">unpack</a>(size_);
-<a name="l00429"></a>00429       buffer.<a class="code" href="classUtil_1_1PackedData.html#ad90834a7650756a10b86c42747610caa" title="Unpack one object.">unpack</a>(last_);
-<a name="l00430"></a>00430       buffer.<a class="code" href="classUtil_1_1PackedData.html#ad90834a7650756a10b86c42747610caa" title="Unpack one object.">unpack</a>(data_, capacity_);
+<a name="l00428"></a>00428       buffer.<a class="code" href="classUtil_1_1PackedData.html#afb687196dd428796c87abd4da7ca14f2" title="Unpack one object.">unpack</a>(size_);
+<a name="l00429"></a>00429       buffer.<a class="code" href="classUtil_1_1PackedData.html#afb687196dd428796c87abd4da7ca14f2" title="Unpack one object.">unpack</a>(last_);
+<a name="l00430"></a>00430       buffer.<a class="code" href="classUtil_1_1PackedData.html#afb687196dd428796c87abd4da7ca14f2" title="Unpack one object.">unpack</a>(data_, capacity_);
 <a name="l00431"></a>00431    }
 <a name="l00432"></a>00432 
 <a name="l00433"></a>00433    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00434"></a><a class="code" href="classUtil_1_1RingBuffer.html#a8fdb9a0413b176e1a0191d8adda9b34b">00434</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#a8fdb9a0413b176e1a0191d8adda9b34b" title="Return packed size of this RingBuffer.">RingBuffer&lt;Data&gt;::packedSize</a>()<span class="keyword"> const</span>
+<a name="l00434"></a><a class="code" href="classUtil_1_1RingBuffer.html#a35c3dca921b54c354ee548cc0241d8a8">00434</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1RingBuffer.html#a35c3dca921b54c354ee548cc0241d8a8" title="Return packed size of this RingBuffer.">RingBuffer&lt;Data&gt;::packedSize</a>()<span class="keyword"> const</span>
 <a name="l00435"></a>00435 <span class="keyword">   </span>{
 <a name="l00436"></a>00436       <span class="keywordtype">int</span> size;
 <a name="l00437"></a>00437       size = capacity_*<span class="keyword">sizeof</span>(Data) + 3*<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>);
@@ -435,7 +435,7 @@
 <a name="l00474"></a>00474 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

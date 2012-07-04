@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -77,21 +77,21 @@
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032    <span class="keyword">public</span>:
 <a name="l00033"></a>00033 
-<a name="l00035"></a>00035       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#a4d747a9b4295cf970b8419be38895395" title="Returns true;.">is_saving</a>();
+<a name="l00035"></a>00035       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#a83d183047a48983a5fcd6840f8c1c3d1" title="Returns true;.">is_saving</a>();
 <a name="l00036"></a>00036 
-<a name="l00038"></a>00038       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#a2e995566478c0136ff53e6e2441f16d5" title="Returns false;.">is_loading</a>();
+<a name="l00038"></a>00038       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#aa3d84dddeb183144947f0c0ff9670326" title="Returns false;.">is_loading</a>();
 <a name="l00039"></a>00039 
-<a name="l00043"></a>00043       <a class="code" href="classUtil_1_1TextFileIArchive.html#a577fd1383c119d16a09accea160828ce" title="Constructor.">TextFileIArchive</a>();
+<a name="l00043"></a>00043       <a class="code" href="classUtil_1_1TextFileIArchive.html#adeab46d2d8fd49149154bf62a9716019" title="Constructor.">TextFileIArchive</a>();
 <a name="l00044"></a>00044 
-<a name="l00048"></a>00048       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#ae03a0aee616174efbe01ba8c409c42a8" title="Destructor.">~TextFileIArchive</a>();
+<a name="l00048"></a>00048       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#aaea859506b78b280b0e6091b55c6446a" title="Destructor.">~TextFileIArchive</a>();
 <a name="l00049"></a>00049 
-<a name="l00055"></a>00055       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#a80d9642457add0224f7392daec89c0dd" title="Set the stream.">setStream</a>(std::istream&amp; out);
+<a name="l00055"></a>00055       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#af366a9f0a749d00ebf753391c5b225ac" title="Set the stream.">setStream</a>(std::istream&amp; out);
 <a name="l00056"></a>00056 
 <a name="l00060"></a>00060       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00061"></a>00061       <a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; <a class="code" href="classUtil_1_1TextFileIArchive.html#ac806ededf850859dde98d2435d153d06" title="Write one object.">operator &amp; </a>(T&amp; data);
+<a name="l00061"></a>00061       <a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; <a class="code" href="classUtil_1_1TextFileIArchive.html#a8c8e8860a2c660aced88b51ce9a6aaa0" title="Write one object.">operator &amp; </a>(T&amp; data);
 <a name="l00062"></a>00062 
 <a name="l00066"></a>00066       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00067"></a>00067       <a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; <a class="code" href="classUtil_1_1TextFileIArchive.html#a85dd22431ef0b958830423865e205ede" title="Write one object.">operator &gt;&gt; </a>(T&amp; data);
+<a name="l00067"></a>00067       <a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; <a class="code" href="classUtil_1_1TextFileIArchive.html#a062723bd50ee5552ad1afc4ad5c6b920" title="Write one object.">operator &gt;&gt; </a>(T&amp; data);
 <a name="l00068"></a>00068 
 <a name="l00069"></a>00069       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; 
 <a name="l00070"></a>00070       <span class="keywordtype">void</span> unpack(T&amp; data);
@@ -109,10 +109,10 @@
 <a name="l00084"></a>00084 
 <a name="l00085"></a>00085    <span class="comment">// Inline methods</span>
 <a name="l00086"></a>00086 
-<a name="l00087"></a><a class="code" href="classUtil_1_1TextFileIArchive.html#a4d747a9b4295cf970b8419be38895395">00087</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#a4d747a9b4295cf970b8419be38895395" title="Returns true;.">TextFileIArchive::is_saving</a>()
+<a name="l00087"></a><a class="code" href="classUtil_1_1TextFileIArchive.html#a83d183047a48983a5fcd6840f8c1c3d1">00087</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#a83d183047a48983a5fcd6840f8c1c3d1" title="Returns true;.">TextFileIArchive::is_saving</a>()
 <a name="l00088"></a>00088    {  <span class="keywordflow">return</span> <span class="keyword">false</span>; }
 <a name="l00089"></a>00089 
-<a name="l00090"></a><a class="code" href="classUtil_1_1TextFileIArchive.html#a2e995566478c0136ff53e6e2441f16d5">00090</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#a2e995566478c0136ff53e6e2441f16d5" title="Returns false;.">TextFileIArchive::is_loading</a>()
+<a name="l00090"></a><a class="code" href="classUtil_1_1TextFileIArchive.html#aa3d84dddeb183144947f0c0ff9670326">00090</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1TextFileIArchive.html#aa3d84dddeb183144947f0c0ff9670326" title="Returns false;.">TextFileIArchive::is_loading</a>()
 <a name="l00091"></a>00091    {  <span class="keywordflow">return</span> <span class="keyword">true</span>; }
 <a name="l00092"></a>00092 
 <a name="l00093"></a>00093    <span class="comment">// Inline non-static methods</span>
@@ -121,9 +121,9 @@
 <a name="l00096"></a>00096 <span class="comment">   * Write one object.</span>
 <a name="l00097"></a>00097 <span class="comment">   */</span>
 <a name="l00098"></a>00098    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00099"></a><a class="code" href="classUtil_1_1TextFileIArchive.html#ac806ededf850859dde98d2435d153d06">00099</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; <a class="code" href="classUtil_1_1TextFileIArchive.html#ac806ededf850859dde98d2435d153d06" title="Write one object.">TextFileIArchive::operator &amp; </a>(T&amp; data)
+<a name="l00099"></a><a class="code" href="classUtil_1_1TextFileIArchive.html#a8c8e8860a2c660aced88b51ce9a6aaa0">00099</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; <a class="code" href="classUtil_1_1TextFileIArchive.html#a8c8e8860a2c660aced88b51ce9a6aaa0" title="Write one object.">TextFileIArchive::operator &amp; </a>(T&amp; data)
 <a name="l00100"></a>00100    {   
-<a name="l00101"></a>00101       <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(*<span class="keyword">this</span>, data, version_); 
+<a name="l00101"></a>00101       <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(*<span class="keyword">this</span>, data, version_); 
 <a name="l00102"></a>00102       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
 <a name="l00103"></a>00103    }
 <a name="l00104"></a>00104 
@@ -131,9 +131,9 @@
 <a name="l00106"></a>00106 <span class="comment">   * Write one object.</span>
 <a name="l00107"></a>00107 <span class="comment">   */</span>
 <a name="l00108"></a>00108    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00109"></a><a class="code" href="classUtil_1_1TextFileIArchive.html#a85dd22431ef0b958830423865e205ede">00109</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; <a class="code" href="classUtil_1_1TextFileIArchive.html#a85dd22431ef0b958830423865e205ede" title="Write one object.">TextFileIArchive::operator &gt;&gt; </a>(T&amp; data)
+<a name="l00109"></a><a class="code" href="classUtil_1_1TextFileIArchive.html#a062723bd50ee5552ad1afc4ad5c6b920">00109</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; <a class="code" href="classUtil_1_1TextFileIArchive.html#a062723bd50ee5552ad1afc4ad5c6b920" title="Write one object.">TextFileIArchive::operator &gt;&gt; </a>(T&amp; data)
 <a name="l00110"></a>00110    {   
-<a name="l00111"></a>00111       <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(*<span class="keyword">this</span>, data, version_); 
+<a name="l00111"></a>00111       <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(*<span class="keyword">this</span>, data, version_); 
 <a name="l00112"></a>00112       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
 <a name="l00113"></a>00113    }
 <a name="l00114"></a>00114 
@@ -176,42 +176,42 @@
 <a name="l00151"></a>00151    <span class="comment">// Explicit serialize functions for primitive types</span>
 <a name="l00152"></a>00152 
 <a name="l00156"></a>00156    <span class="keyword">template</span> &lt;&gt;
-<a name="l00157"></a><a class="code" href="namespaceUtil.html#a593d95da7cf7acc2a2bf40e9bb137b6f">00157</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">bool</span>&amp; data, 
+<a name="l00157"></a><a class="code" href="namespaceUtil.html#a593d95da7cf7acc2a2bf40e9bb137b6f">00157</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">bool</span>&amp; data, 
 <a name="l00158"></a>00158                          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00159"></a>00159    {  ar.unpack(data); }
 <a name="l00160"></a>00160 
 <a name="l00164"></a>00164    <span class="keyword">template</span> &lt;&gt;
-<a name="l00165"></a><a class="code" href="namespaceUtil.html#ae321879da159fb1bd2cada12759f5ba5">00165</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">char</span>&amp; data, 
+<a name="l00165"></a><a class="code" href="namespaceUtil.html#ae321879da159fb1bd2cada12759f5ba5">00165</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">char</span>&amp; data, 
 <a name="l00166"></a>00166                          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00167"></a>00167    {  ar.unpack(data); }
 <a name="l00168"></a>00168 
 <a name="l00172"></a>00172    <span class="keyword">template</span> &lt;&gt;
-<a name="l00173"></a><a class="code" href="namespaceUtil.html#aff85d3452d22489b0a4190ec9108f45a">00173</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>&amp; data, 
+<a name="l00173"></a><a class="code" href="namespaceUtil.html#aff85d3452d22489b0a4190ec9108f45a">00173</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>&amp; data, 
 <a name="l00174"></a>00174                          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00175"></a>00175    {  ar.unpack(data); }
 <a name="l00176"></a>00176 
 <a name="l00180"></a>00180    <span class="keyword">template</span> &lt;&gt;
-<a name="l00181"></a><a class="code" href="namespaceUtil.html#a708c38e78a14c17af961582818cc2485">00181</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">int</span>&amp; data, 
+<a name="l00181"></a><a class="code" href="namespaceUtil.html#a708c38e78a14c17af961582818cc2485">00181</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">int</span>&amp; data, 
 <a name="l00182"></a>00182                          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00183"></a>00183    {  ar.unpack(data); }
 <a name="l00184"></a>00184 
 <a name="l00188"></a>00188    <span class="keyword">template</span> &lt;&gt;
-<a name="l00189"></a><a class="code" href="namespaceUtil.html#af19359998a0f4eb64a6a860942c47e73">00189</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>&amp; data,  
+<a name="l00189"></a><a class="code" href="namespaceUtil.html#af19359998a0f4eb64a6a860942c47e73">00189</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>&amp; data,  
 <a name="l00190"></a>00190                          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00191"></a>00191    {  ar.unpack(data); }
 <a name="l00192"></a>00192 
 <a name="l00196"></a>00196    <span class="keyword">template</span> &lt;&gt;
-<a name="l00197"></a><a class="code" href="namespaceUtil.html#af7380bc328cce8d82e631a473053189e">00197</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">long</span>&amp; data,  
+<a name="l00197"></a><a class="code" href="namespaceUtil.html#af7380bc328cce8d82e631a473053189e">00197</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">long</span>&amp; data,  
 <a name="l00198"></a>00198                          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00199"></a>00199    {  ar.unpack(data); }
 <a name="l00200"></a>00200 
 <a name="l00204"></a>00204    <span class="keyword">template</span> &lt;&gt;
-<a name="l00205"></a><a class="code" href="namespaceUtil.html#afc2fec2b18345a9c00871757f87ffc31">00205</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">float</span>&amp; data, 
+<a name="l00205"></a><a class="code" href="namespaceUtil.html#afc2fec2b18345a9c00871757f87ffc31">00205</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">float</span>&amp; data, 
 <a name="l00206"></a>00206                          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00207"></a>00207    {  ar.unpack(data); }
 <a name="l00208"></a>00208 
 <a name="l00212"></a>00212    <span class="keyword">template</span> &lt;&gt;
-<a name="l00213"></a><a class="code" href="namespaceUtil.html#a4c111b2d323ed4027448af6478c49f0f">00213</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">double</span>&amp; data, 
+<a name="l00213"></a><a class="code" href="namespaceUtil.html#a4c111b2d323ed4027448af6478c49f0f">00213</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <span class="keywordtype">double</span>&amp; data, 
 <a name="l00214"></a>00214                          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00215"></a>00215    {  ar.unpack(data); }
 <a name="l00216"></a>00216 
@@ -219,29 +219,29 @@
 <a name="l00218"></a>00218 
 <a name="l00222"></a>00222    <span class="keyword">template</span> &lt;&gt;
 <a name="l00223"></a>00223    <span class="keyword">inline</span> 
-<a name="l00224"></a><a class="code" href="namespaceUtil.html#aa2ecb093881b9388384a3168554598e2">00224</a>    <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, std::complex&lt;float&gt;&amp; data, 
+<a name="l00224"></a><a class="code" href="namespaceUtil.html#aa2ecb093881b9388384a3168554598e2">00224</a>    <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, std::complex&lt;float&gt;&amp; data, 
 <a name="l00225"></a>00225                   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00226"></a>00226    {  ar.unpack(data); }
 <a name="l00227"></a>00227 
 <a name="l00231"></a>00231    <span class="keyword">template</span> &lt;&gt;
 <a name="l00232"></a>00232    <span class="keyword">inline</span> 
-<a name="l00233"></a><a class="code" href="namespaceUtil.html#a2ea4cb6d70c57f7dbb4d7f3f7a224805">00233</a>    <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, std::complex&lt;double&gt;&amp; data, 
+<a name="l00233"></a><a class="code" href="namespaceUtil.html#a2ea4cb6d70c57f7dbb4d7f3f7a224805">00233</a>    <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, std::complex&lt;double&gt;&amp; data, 
 <a name="l00234"></a>00234                   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00235"></a>00235    {  ar.unpack(data); }
 <a name="l00236"></a>00236 
 <a name="l00240"></a>00240    <span class="keyword">template</span> &lt;&gt;
-<a name="l00241"></a>00241    <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(TextFileIArchive&amp; ar, std::string&amp; data, 
+<a name="l00241"></a>00241    <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(TextFileIArchive&amp; ar, std::string&amp; data, 
 <a name="l00242"></a>00242                   <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00243"></a>00243 
 <a name="l00244"></a>00244    <span class="comment">// Explicit serialize functions for namespace Util</span>
 <a name="l00245"></a>00245 
 <a name="l00249"></a>00249    <span class="keyword">template</span> &lt;&gt;
-<a name="l00250"></a><a class="code" href="namespaceUtil.html#a1810a28d475731602e9ae578f776e778">00250</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; data, 
+<a name="l00250"></a><a class="code" href="namespaceUtil.html#a1810a28d475731602e9ae578f776e778">00250</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; data, 
 <a name="l00251"></a>00251                          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00252"></a>00252    {  ar.unpack(data); } 
 <a name="l00253"></a>00253 
 <a name="l00257"></a>00257    <span class="keyword">template</span> &lt;&gt;
-<a name="l00258"></a><a class="code" href="namespaceUtil.html#a75d8116b51fe87639ac06913c8cba19d">00258</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; data, 
+<a name="l00258"></a><a class="code" href="namespaceUtil.html#a75d8116b51fe87639ac06913c8cba19d">00258</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(<a class="code" href="classUtil_1_1TextFileIArchive.html" title="Saving archive for binary istream.">TextFileIArchive</a>&amp; ar, <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; data, 
 <a name="l00259"></a>00259                          <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00260"></a>00260    {  ar.unpack(data); }
 <a name="l00261"></a>00261 
@@ -249,7 +249,7 @@
 <a name="l00263"></a>00263 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -184,7 +184,7 @@
 <a name="l00212"></a>00212 <span class="comment">   * Constructor.</span>
 <a name="l00213"></a>00213 <span class="comment">   */</span>
 <a name="l00214"></a>00214    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00215"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a4cd362f6354dd5e64a09589a8e874a1a">00215</a>    <a class="code" href="classDdMd_1_1BondPotentialImpl.html" title="Implementation template for a BondPotential.">BondPotentialImpl&lt;Interaction&gt;::BondPotentialImpl</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation)
+<a name="l00215"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#ab15e05eb13eb60fde8cd08bac9ed5f01">00215</a>    <a class="code" href="classDdMd_1_1BondPotentialImpl.html" title="Implementation template for a BondPotential.">BondPotentialImpl&lt;Interaction&gt;::BondPotentialImpl</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation)
 <a name="l00216"></a>00216     : <a class="code" href="classDdMd_1_1BondPotential.html" title="An BondPotential calculates bond forces and energies for a parent Simulation.">BondPotential</a>(simulation),
 <a name="l00217"></a>00217       interactionPtr_(0)
 <a name="l00218"></a>00218    {  interactionPtr_ = <span class="keyword">new</span> Interaction(); }
@@ -193,7 +193,7 @@
 <a name="l00221"></a>00221 <span class="comment">   * Default constructor.</span>
 <a name="l00222"></a>00222 <span class="comment">   */</span>
 <a name="l00223"></a>00223    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00224"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a9488fd4a54cf85620cc261cfd4e23356">00224</a>    <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a9488fd4a54cf85620cc261cfd4e23356" title="Default constructor.">BondPotentialImpl&lt;Interaction&gt;::BondPotentialImpl</a>()
+<a name="l00224"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a874f5478473163db8f5666d3f0fa02f8">00224</a>    <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a874f5478473163db8f5666d3f0fa02f8" title="Default constructor.">BondPotentialImpl&lt;Interaction&gt;::BondPotentialImpl</a>()
 <a name="l00225"></a>00225     : <a class="code" href="classDdMd_1_1BondPotential.html" title="An BondPotential calculates bond forces and energies for a parent Simulation.">BondPotential</a>(),
 <a name="l00226"></a>00226       interactionPtr_(0)
 <a name="l00227"></a>00227    {  interactionPtr_ = <span class="keyword">new</span> Interaction(); }
@@ -202,7 +202,7 @@
 <a name="l00230"></a>00230 <span class="comment">   * Destructor. </span>
 <a name="l00231"></a>00231 <span class="comment">   */</span>
 <a name="l00232"></a>00232    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00233"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a9ec29b4c94206ed5f1ababd62c698d26">00233</a>    <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a9ec29b4c94206ed5f1ababd62c698d26" title="Destructor.">BondPotentialImpl&lt;Interaction&gt;::~BondPotentialImpl</a>() 
+<a name="l00233"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#ac9b587daa276e816c992a932d54bde5a">00233</a>    <a class="code" href="classDdMd_1_1BondPotentialImpl.html#ac9b587daa276e816c992a932d54bde5a" title="Destructor.">BondPotentialImpl&lt;Interaction&gt;::~BondPotentialImpl</a>() 
 <a name="l00234"></a>00234    {
 <a name="l00235"></a>00235       <span class="keywordflow">if</span> (interactionPtr_) {
 <a name="l00236"></a>00236          <span class="keyword">delete</span> interactionPtr_;
@@ -214,14 +214,14 @@
 <a name="l00242"></a>00242 <span class="comment">   * Set the maximum number of atom types.</span>
 <a name="l00243"></a>00243 <span class="comment">   */</span>
 <a name="l00244"></a>00244    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00245"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#ad0ca6e88e78321ac893482d9ae329f53">00245</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#ad0ca6e88e78321ac893482d9ae329f53" title="Set the maximum number of atom types.">BondPotentialImpl&lt;Interaction&gt;::setNBondType</a>(<span class="keywordtype">int</span> nBondType)
+<a name="l00245"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a47f418a2bbc0a42d65eb87f62d13fa77">00245</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a47f418a2bbc0a42d65eb87f62d13fa77" title="Set the maximum number of atom types.">BondPotentialImpl&lt;Interaction&gt;::setNBondType</a>(<span class="keywordtype">int</span> nBondType)
 <a name="l00246"></a>00246    {  interaction().setNBondType(nBondType); }
 <a name="l00247"></a>00247 
 <a name="l00248"></a>00248    <span class="comment">/*</span>
 <a name="l00249"></a>00249 <span class="comment">   * Read bond interaction parameters.</span>
 <a name="l00250"></a>00250 <span class="comment">   */</span>
 <a name="l00251"></a>00251    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00252"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#ab5421d3c9175985c9acbf723e5392075">00252</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#ab5421d3c9175985c9acbf723e5392075" title="Read potential energy parameters.">BondPotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream&amp; in)
+<a name="l00252"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a28717dc9589261b35355a83f15a0b1ba">00252</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a28717dc9589261b35355a83f15a0b1ba" title="Read potential energy parameters.">BondPotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream&amp; in)
 <a name="l00253"></a>00253    {
 <a name="l00254"></a>00254       readBegin(in,<span class="stringliteral">&quot;BondPotential&quot;</span>);
 <a name="l00255"></a>00255       <span class="keywordtype">bool</span> nextIndent = <span class="keyword">false</span>;
@@ -233,7 +233,7 @@
 <a name="l00261"></a>00261 <span class="comment">   * Return bond energy for a single pair.</span>
 <a name="l00262"></a>00262 <span class="comment">   */</span>
 <a name="l00263"></a>00263    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00264"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#ab121ce240d3f9675b0fa4b43b16eecb5">00264</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521" title="Get the total bond energy, computed previously by computeEnergy().">BondPotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> bondTypeId)<span class="keyword"> </span>
+<a name="l00264"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a8e2afd7e5c48d25f59e218fb5e3137ac">00264</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a44210bfc09187e55acc581ed02620baa" title="Get the total bond energy, computed previously by computeEnergy().">BondPotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> bondTypeId)<span class="keyword"> </span>
 <a name="l00265"></a>00265 <span class="keyword">      const</span>
 <a name="l00266"></a>00266 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().energy(rsq, bondTypeId); }
 <a name="l00267"></a>00267 
@@ -241,7 +241,7 @@
 <a name="l00269"></a>00269 <span class="comment">   * Return force / separation for a single bonded pair.</span>
 <a name="l00270"></a>00270 <span class="comment">   */</span>
 <a name="l00271"></a>00271    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00272"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#aa9fb0a26dc50b37f6e7b3445027c8704">00272</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#aa9fb0a26dc50b37f6e7b3445027c8704" title="Return force / separation for a single pair.">BondPotentialImpl&lt;Interaction&gt;::forceOverR</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> bondTypeId)<span class="keyword"></span>
+<a name="l00272"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a400a7f71b48d36b36e694fb60014ef7c">00272</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a400a7f71b48d36b36e694fb60014ef7c" title="Return force / separation for a single pair.">BondPotentialImpl&lt;Interaction&gt;::forceOverR</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> bondTypeId)<span class="keyword"></span>
 <a name="l00273"></a>00273 <span class="keyword">      const</span>
 <a name="l00274"></a>00274 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().forceOverR(rsq, bondTypeId); }
 <a name="l00275"></a>00275 
@@ -249,8 +249,8 @@
 <a name="l00277"></a>00277 <span class="comment">   * Return random bond length.</span>
 <a name="l00278"></a>00278 <span class="comment">   */</span>
 <a name="l00279"></a>00279    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt; <span class="keywordtype">double</span> 
-<a name="l00280"></a>00280    <a class="code" href="classDdMd_1_1BondPotentialImpl.html#ac260a7c29a0c5d6c09ccfb82788efeaf" title="Return force / separation for a single pair.">BondPotentialImpl&lt;Interaction&gt;::</a>
-<a name="l00281"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#ac260a7c29a0c5d6c09ccfb82788efeaf">00281</a> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#ac260a7c29a0c5d6c09ccfb82788efeaf" title="Return force / separation for a single pair.">      randomBondLength</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>* random, <span class="keywordtype">double</span> beta, <span class="keywordtype">int</span> bondTypeId)<span class="keyword"> const</span>
+<a name="l00280"></a>00280    <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a7cf83d8fc42f1f94fc268dfb1bac8b5d" title="Return force / separation for a single pair.">BondPotentialImpl&lt;Interaction&gt;::</a>
+<a name="l00281"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a7cf83d8fc42f1f94fc268dfb1bac8b5d">00281</a> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a7cf83d8fc42f1f94fc268dfb1bac8b5d" title="Return force / separation for a single pair.">      randomBondLength</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>* random, <span class="keywordtype">double</span> beta, <span class="keywordtype">int</span> bondTypeId)<span class="keyword"> const</span>
 <a name="l00282"></a>00282 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().randomBondLength(random, beta, bondTypeId); }
 <a name="l00283"></a>00283 
 <a name="l00284"></a>00284 <span class="preprocessor">   #if 0</span>
@@ -263,25 +263,25 @@
 <a name="l00291"></a>00291 <span class="preprocessor">   #endif</span>
 <a name="l00292"></a>00292 <span class="preprocessor"></span>
 <a name="l00296"></a>00296    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00297"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0">00297</a>    <span class="keyword">inline</span> Interaction&amp; <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a7c088e3beaea91f544fa2929b1cb13bf" title="Return bond interaction by const reference.">BondPotentialImpl&lt;Interaction&gt;::interaction</a>()
+<a name="l00297"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a76171b8e953d68df1005d7d6570abdf9">00297</a>    <span class="keyword">inline</span> Interaction&amp; <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a636a377f4b72fb203902f2ed2e66fc10" title="Return bond interaction by const reference.">BondPotentialImpl&lt;Interaction&gt;::interaction</a>()
 <a name="l00298"></a>00298    {  <span class="keywordflow">return</span> *interactionPtr_; }
 <a name="l00299"></a>00299 
 <a name="l00303"></a>00303    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00304"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a7c088e3beaea91f544fa2929b1cb13bf">00304</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Interaction&amp; <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a7c088e3beaea91f544fa2929b1cb13bf" title="Return bond interaction by const reference.">BondPotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
+<a name="l00304"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a636a377f4b72fb203902f2ed2e66fc10">00304</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Interaction&amp; <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a636a377f4b72fb203902f2ed2e66fc10" title="Return bond interaction by const reference.">BondPotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
 <a name="l00305"></a>00305 <span class="keyword">   </span>{  <span class="keywordflow">return</span> *interactionPtr_; }
 <a name="l00306"></a>00306 
 <a name="l00307"></a>00307    <span class="comment">/*</span>
 <a name="l00308"></a>00308 <span class="comment">   * Increment atomic forces, without calculating energy.</span>
 <a name="l00309"></a>00309 <span class="comment">   */</span>
 <a name="l00310"></a>00310    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00311"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d">00311</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Add the bond forces for all atoms.">BondPotentialImpl&lt;Interaction&gt;::addForces</a>()
+<a name="l00311"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a63ce11a9ed6ee868cf4e869325390ca9">00311</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a63ce11a9ed6ee868cf4e869325390ca9" title="Add the bond forces for all atoms.">BondPotentialImpl&lt;Interaction&gt;::addForces</a>()
 <a name="l00312"></a>00312    {  addForces(<span class="keyword">true</span>, <span class="keyword">false</span>);  }
 <a name="l00313"></a>00313 
 <a name="l00314"></a>00314    <span class="comment">/*</span>
 <a name="l00315"></a>00315 <span class="comment">   * Increment atomic forces and compute pair energy for this processor.</span>
 <a name="l00316"></a>00316 <span class="comment">   */</span>
 <a name="l00317"></a>00317    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00318"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#ab2d51f7c0ec14e310c3e19047bc5e8e0">00318</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Add the bond forces for all atoms.">BondPotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">double</span>&amp; energy)
+<a name="l00318"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#ac806efca2762ade5e4953e34b64133d3">00318</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a63ce11a9ed6ee868cf4e869325390ca9" title="Add the bond forces for all atoms.">BondPotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">double</span>&amp; energy)
 <a name="l00319"></a>00319    {  energy = addForces(<span class="keyword">true</span>, <span class="keyword">true</span>);  }
 <a name="l00320"></a>00320 
 <a name="l00321"></a>00321    <span class="comment">/*</span>
@@ -290,9 +290,9 @@
 <a name="l00324"></a>00324    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
 <a name="l00325"></a>00325 <span class="preprocessor">   #ifdef UTIL_MPI</span>
 <a name="l00326"></a>00326 <span class="preprocessor"></span>   <span class="keywordtype">void</span> 
-<a name="l00327"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a75c8fc396bfb65c3d317943f64666d08">00327</a>    <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a75c8fc396bfb65c3d317943f64666d08" title="Compute the total bond energy for all processors.">BondPotentialImpl&lt;Interaction&gt;::computeEnergy</a>(MPI::Intracomm&amp; communicator)
+<a name="l00327"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a6a6d0d2226a61f413f7e912d968dca65">00327</a>    <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a6a6d0d2226a61f413f7e912d968dca65" title="Compute the total bond energy for all processors.">BondPotentialImpl&lt;Interaction&gt;::computeEnergy</a>(MPI::Intracomm&amp; communicator)
 <a name="l00328"></a>00328    <span class="preprocessor">#else</span>
-<a name="l00329"></a>00329 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a75c8fc396bfb65c3d317943f64666d08" title="Compute the total bond energy for all processors.">BondPotentialImpl&lt;Interaction&gt;::computeEnergy</a>()
+<a name="l00329"></a>00329 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a6a6d0d2226a61f413f7e912d968dca65" title="Compute the total bond energy for all processors.">BondPotentialImpl&lt;Interaction&gt;::computeEnergy</a>()
 <a name="l00330"></a>00330    <span class="preprocessor">#endif</span>
 <a name="l00331"></a>00331 <span class="preprocessor"></span>   { 
 <a name="l00332"></a>00332       <span class="keywordtype">double</span> localEnergy = 0; 
@@ -309,14 +309,14 @@
 <a name="l00343"></a>00343 <span class="comment">   * Return total pair energy from all processors.</span>
 <a name="l00344"></a>00344 <span class="comment">   */</span>
 <a name="l00345"></a>00345    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00346"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521">00346</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521" title="Get the total bond energy, computed previously by computeEnergy().">BondPotentialImpl&lt;Interaction&gt;::energy</a>()
+<a name="l00346"></a><a class="code" href="classDdMd_1_1BondPotentialImpl.html#a44210bfc09187e55acc581ed02620baa">00346</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a44210bfc09187e55acc581ed02620baa" title="Get the total bond energy, computed previously by computeEnergy().">BondPotentialImpl&lt;Interaction&gt;::energy</a>()
 <a name="l00347"></a>00347    {  <span class="keywordflow">return</span> energy_; } 
 <a name="l00348"></a>00348 
 <a name="l00349"></a>00349    <span class="comment">/*</span>
 <a name="l00350"></a>00350 <span class="comment">   * Increment atomic forces and/or pair energy (private).</span>
 <a name="l00351"></a>00351 <span class="comment">   */</span>
 <a name="l00352"></a>00352    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt; <span class="keywordtype">double</span> 
-<a name="l00353"></a>00353    <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Add the bond forces for all atoms.">BondPotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">bool</span> needForce, <span class="keywordtype">bool</span> needEnergy)
+<a name="l00353"></a>00353    <a class="code" href="classDdMd_1_1BondPotentialImpl.html#a63ce11a9ed6ee868cf4e869325390ca9" title="Add the bond forces for all atoms.">BondPotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">bool</span> needForce, <span class="keywordtype">bool</span> needEnergy)
 <a name="l00354"></a>00354    {
 <a name="l00355"></a>00355       <span class="comment">// Preconditions</span>
 <a name="l00356"></a>00356       <span class="comment">//if (!storagePtr_-&gt;isInitialized()) {</span>
@@ -327,22 +327,22 @@
 <a name="l00361"></a>00361       <span class="keywordtype">double</span> rsq;
 <a name="l00362"></a>00362       <span class="keywordtype">double</span> bondEnergy;
 <a name="l00363"></a>00363       <span class="keywordtype">double</span> energy = 0.0;
-<a name="l00364"></a>00364       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group&amp;lt;N&amp;gt; objects owned by this processor.">GroupIterator&lt;2&gt;</a> iter;
+<a name="l00364"></a>00364       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group &amp;lt; N &amp;gt; objects owned by a GroupStorage&amp;lt; N &amp;gt;.">GroupIterator&lt;2&gt;</a> iter;
 <a name="l00365"></a>00365       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atom0Ptr;
 <a name="l00366"></a>00366       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atom1Ptr;
 <a name="l00367"></a>00367       <span class="keywordtype">int</span> type;
 <a name="l00368"></a>00368       <span class="keywordtype">int</span> isLocal0, isLocal1;
 <a name="l00369"></a>00369 
 <a name="l00370"></a>00370       storagePtr_-&gt;begin(iter);
-<a name="l00371"></a>00371       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
+<a name="l00371"></a>00371       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
 <a name="l00372"></a>00372          type = iter-&gt;typeId();
 <a name="l00373"></a>00373          atom0Ptr = iter-&gt;atomPtr(0);
 <a name="l00374"></a>00374          atom1Ptr = iter-&gt;atomPtr(1);
-<a name="l00375"></a>00375          isLocal0 = !(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a26877e4c250e1af8697836f7aadae1e8" title="Is this atom a ghost?">isGhost</a>());
-<a name="l00376"></a>00376          isLocal1 = !(atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a26877e4c250e1af8697836f7aadae1e8" title="Is this atom a ghost?">isGhost</a>());
+<a name="l00375"></a>00375          isLocal0 = !(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
+<a name="l00376"></a>00376          isLocal1 = !(atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
 <a name="l00377"></a>00377          <span class="comment">// Set f = r0 - r1, minimum image separation between atoms</span>
-<a name="l00378"></a>00378          rsq = boundaryPtr_-&gt;distanceSq(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>(), 
-<a name="l00379"></a>00379                                         atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>(), f);
+<a name="l00378"></a>00378          rsq = boundaryPtr_-&gt;distanceSq(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), 
+<a name="l00379"></a>00379                                         atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), f);
 <a name="l00380"></a>00380          <span class="keywordflow">if</span> (needEnergy) {
 <a name="l00381"></a>00381             bondEnergy = interactionPtr_-&gt;energy(rsq, type);
 <a name="l00382"></a>00382             <span class="keywordflow">if</span> (isLocal0 &amp;&amp; isLocal1) {
@@ -355,10 +355,10 @@
 <a name="l00389"></a>00389             <span class="comment">// Set force = (r0-r1)*(forceOverR)</span>
 <a name="l00390"></a>00390             f *= interactionPtr_-&gt;forceOverR(rsq, type);
 <a name="l00391"></a>00391             <span class="keywordflow">if</span> (isLocal0) {
-<a name="l00392"></a>00392                atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get force Vector by reference.">force</a>() += f;
+<a name="l00392"></a>00392                atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() += f;
 <a name="l00393"></a>00393             }
 <a name="l00394"></a>00394             <span class="keywordflow">if</span> (isLocal1) {
-<a name="l00395"></a>00395                atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get force Vector by reference.">force</a>() -= f;
+<a name="l00395"></a>00395                atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() -= f;
 <a name="l00396"></a>00396             }
 <a name="l00397"></a>00397          }
 <a name="l00398"></a>00398       }
@@ -425,7 +425,7 @@
 <a name="l00459"></a>00459 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

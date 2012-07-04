@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: PairPotential Class Reference</title>
+<title>Simpatico: DdMd::PairPotential Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -51,7 +51,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>PairPotential Class Reference</h1>  </div>
+<h1>DdMd::PairPotential Class Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::PairPotential" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -62,14 +62,14 @@
 </div>
 <p><code>#include &lt;<a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">PairPotential.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for PairPotential:</div>
+Inheritance diagram for DdMd::PairPotential:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1PairPotential.png" usemap="#PairPotential_map" alt=""/>
-  <map id="PairPotential_map" name="PairPotential_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,188,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,188,24"/>
-<area href="classDdMd_1_1PairPotentialImpl.html" alt="PairPotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,168,188,192"/>
+  <img src="classDdMd_1_1PairPotential.png" usemap="#DdMd::PairPotential_map" alt=""/>
+  <map id="DdMd::PairPotential_map" name="DdMd::PairPotential_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,228,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,228,24"/>
+<area href="classDdMd_1_1PairPotentialImpl.html" alt="DdMd::PairPotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,168,228,192"/>
 </map>
  </div></div>
 
@@ -77,74 +77,74 @@ Inheritance diagram for PairPotential:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#ad4c1ea253fbb59e66f66071f082e5610">TimeId</a> </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a144f4813b0acfba472fa1be728bf5a24">TimeId</a> </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><p>Enumeration of time stamp identifiers. </p>
- <a href="classDdMd_1_1PairPotential.html#ad4c1ea253fbb59e66f66071f082e5610">More...</a><br/></td></tr>
+ <a href="classDdMd_1_1PairPotential.html#a144f4813b0acfba472fa1be728bf5a24">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#adf1ab1d84bdbd37029e6169c05398671">PairPotential</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor (for unit testing).  <a href="#adf1ab1d84bdbd37029e6169c05398671"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a9cbfff23a5470df94004f410d1e16d54">PairPotential</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a9cbfff23a5470df94004f410d1e16d54"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a6ba7bbf71f983bd216ae7d369882f75a">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, Boundary &amp;boundary, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;storage)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate with related objects.  <a href="#a6ba7bbf71f983bd216ae7d369882f75a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a787cda0073366b3ffb656a925b71e032">~PairPotential</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a787cda0073366b3ffb656a925b71e032"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a5be5629f8cbb482ff60ad5360de3da54">initialize</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper, double skin, int pairCapacity)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set parameters and allocate memory.  <a href="#a5be5629f8cbb482ff60ad5360de3da54"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#aed74cb5a32c832c53919b89531ca9871">skin</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of the pair list skin.  <a href="#aed74cb5a32c832c53919b89531ca9871"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a6fde2dcf9945edc8dd11da5673ff152b">cutoff</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of the pair list cutoff (maxPairCutoff + skin).  <a href="#a6fde2dcf9945edc8dd11da5673ff152b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1DdTimer.html">DdTimer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a0178669649969a4ee1f236cd20b53f13">timer</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return internal timer by reference.  <a href="#a0178669649969a4ee1f236cd20b53f13"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#adca5dc6393736b237ce926c52c9acff8">PairPotential</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor (for unit testing).  <a href="#adca5dc6393736b237ce926c52c9acff8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#ade1e8d8a45611bf0623cea453b620a85">PairPotential</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ade1e8d8a45611bf0623cea453b620a85"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a8bc85f16129cfb7dca61fda2145af92a">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, Boundary &amp;boundary, <a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;storage)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate with related objects.  <a href="#a8bc85f16129cfb7dca61fda2145af92a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#ae66c7a7e874ddc2b882f2b1f4155b31e">~PairPotential</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ae66c7a7e874ddc2b882f2b1f4155b31e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a42485ad74dc979662c8568771dc5f3a2">initialize</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper, double skin, int pairCapacity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set parameters and allocate memory.  <a href="#a42485ad74dc979662c8568771dc5f3a2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#aaeb3d40968c943469f58c54f27d2eeca">skin</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of the pair list skin.  <a href="#aaeb3d40968c943469f58c54f27d2eeca"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#ade0fa4d3710665f2b7825413c9e72f46">cutoff</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of the pair list cutoff (maxPairCutoff + skin).  <a href="#ade0fa4d3710665f2b7825413c9e72f46"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1DdTimer.html">DdTimer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a2b47b504ef548716b780df8e3395840c">timer</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return internal timer by reference.  <a href="#a2b47b504ef548716b780df8e3395840c"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Interaction interface</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a95e561f4695d6a047cfea04d04479765">setNAtomType</a> (int nAtomType)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum number of atom types.  <a href="#a95e561f4695d6a047cfea04d04479765"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a180348fce7f1059a0ad043110433d1c7">energy</a> (double rsq, int iAtomType, int jAtomType) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pair energy for a single pair.  <a href="#a180348fce7f1059a0ad043110433d1c7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a6b16da69d384b4951c926c0ec7ab7073">forceOverR</a> (double rsq, int iAtomType, int jAtomType) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return force / separation for a single pair.  <a href="#a6b16da69d384b4951c926c0ec7ab7073"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a3765733830acc59bea4f07866a4ebb38">maxPairCutoff</a> () const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum cutoff.  <a href="#a3765733830acc59bea4f07866a4ebb38"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#ae355aef85b464e790c9e22b1364dabee">interactionClassName</a> () const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pair interaction class name (e.g., "LJPair").  <a href="#ae355aef85b464e790c9e22b1364dabee"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a0df5d6195d10bbcba48f89db827829d2">setNAtomType</a> (int nAtomType)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum number of atom types.  <a href="#a0df5d6195d10bbcba48f89db827829d2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#ad4ed75974a9e3157fa8645b4afbb76c7">energy</a> (double rsq, int iAtomType, int jAtomType) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pair energy for a single pair.  <a href="#ad4ed75974a9e3157fa8645b4afbb76c7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a679dfdb17945ef9ccfa8be9ff4a65ee6">forceOverR</a> (double rsq, int iAtomType, int jAtomType) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return force / separation for a single pair.  <a href="#a679dfdb17945ef9ccfa8be9ff4a65ee6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#ac39c9346bb1e8274760a95c4c5c45753">maxPairCutoff</a> () const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum cutoff.  <a href="#ac39c9346bb1e8274760a95c4c5c45753"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a4f5d3e589103d432697d34065cd5417b">interactionClassName</a> () const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pair interaction class name (e.g., "LJPair").  <a href="#a4f5d3e589103d432697d34065cd5417b"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Total Energy, Force and Stress</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a482f59b9d69effb8f105406d697a658e">addForces</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add pair forces to atom forces.  <a href="#a482f59b9d69effb8f105406d697a658e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a63b405f5a147796eecb97834621b53f1">computeEnergy</a> (MPI::Intracomm &amp;communicator)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total pair potential on this processor.  <a href="#a63b405f5a147796eecb97834621b53f1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a7785da22485c8b780033cb2f315a311f">energy</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total pair potential.  <a href="#a7785da22485c8b780033cb2f315a311f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#acddbd92d63e3d1ab85e2aa9a56b1ecce">addForces</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add pair forces to atom forces.  <a href="#acddbd92d63e3d1ab85e2aa9a56b1ecce"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a57b10c7d3388a4723427eefd72497893">computeEnergy</a> (MPI::Intracomm &amp;communicator)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total pair potential on this processor.  <a href="#a57b10c7d3388a4723427eefd72497893"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a09b3a18ea3596663a14493ccbc5fc82c">energy</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total pair potential.  <a href="#a09b3a18ea3596663a14493ccbc5fc82c"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Pair and Cell Lists.</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a10f57499fc65e64db75d61711dda56fd">findNeighbors</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the cell and pair lists.  <a href="#a10f57499fc65e64db75d61711dda56fd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a0b8dcf2199d26c0edc08146f873b8afc">findNeighbors</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the cell and pair lists.  <a href="#a0b8dcf2199d26c0edc08146f873b8afc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1CellList.html">CellList</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#ad07743f22f31aca4c950738ea4e4f060">cellList</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> by reference.  <a href="#ad07743f22f31aca4c950738ea4e4f060"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1PairList.html">PairList</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a0e575b210a0ea491c7b409c8caa545ff">pairList</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> by reference.  <a href="#a0e575b210a0ea491c7b409c8caa545ff"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#ad88c1c7501f0222ce4a28cfd4deba7b7">findNeighbors</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the cell and pair lists.  <a href="#ad88c1c7501f0222ce4a28cfd4deba7b7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a99e4c788cdd85dabb9a858ef04bdc579">findNeighbors</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the cell and pair lists.  <a href="#a99e4c788cdd85dabb9a858ef04bdc579"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1CellList.html">CellList</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#af136b8f62f84b93dcb5182d6bf362ffd">cellList</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> by reference.  <a href="#af136b8f62f84b93dcb5182d6bf362ffd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1PairList.html">PairList</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a496389960031558f2d848ff0df1721dd">pairList</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> by reference.  <a href="#a496389960031558f2d848ff0df1721dd"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#afadb6ec66809fc49319fd733bbff83d8">readPairListParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters and allocate memory for <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>.  <a href="#afadb6ec66809fc49319fd733bbff83d8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a5daa73910cfb398e1ba647b4821d18ba">boundary</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> by const reference.  <a href="#a5daa73910cfb398e1ba647b4821d18ba"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a64ddaf9dd004b6c301f8f23e8995b6d1">domain</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> by const reference.  <a href="#a64ddaf9dd004b6c301f8f23e8995b6d1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a8ac7346f5778c47da49efe1b7b352f1e">storage</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> by reference.  <a href="#a8ac7346f5778c47da49efe1b7b352f1e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#ac32adedbad4a8366722725de6dac044c">stamp</a> (unsigned int timeId)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stamp timer with int/enum TimeId.  <a href="#ac32adedbad4a8366722725de6dac044c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#ae9a4aecfd74073cea742585c60b155f9">readPairListParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters and allocate memory for <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>.  <a href="#ae9a4aecfd74073cea742585c60b155f9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a1b5ab415000e7c262e611cb25d355a13">boundary</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> by const reference.  <a href="#a1b5ab415000e7c262e611cb25d355a13"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#aa0f5c4632d3db1f9fa0aab12abba34d7">domain</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> by const reference.  <a href="#aa0f5c4632d3db1f9fa0aab12abba34d7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#afba961c8ddf4699908e0c23d883204a9">storage</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> by reference.  <a href="#afba961c8ddf4699908e0c23d883204a9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotential.html#a33e39f0267dc4d4b964cbfa80bef5fb3">stamp</a> (unsigned int timeId)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stamp timer with int/enum TimeId.  <a href="#a33e39f0267dc4d4b964cbfa80bef5fb3"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Enumeration Documentation</h2>
-<a class="anchor" id="ad4c1ea253fbb59e66f66071f082e5610"></a><!-- doxytag: member="DdMd::PairPotential::TimeId" ref="ad4c1ea253fbb59e66f66071f082e5610" args="" -->
+<a class="anchor" id="a144f4813b0acfba472fa1be728bf5a24"></a><!-- doxytag: member="DdMd::PairPotential::TimeId" ref="a144f4813b0acfba472fa1be728bf5a24" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="classDdMd_1_1PairPotential.html#ad4c1ea253fbb59e66f66071f082e5610">TimeId</a></td>
+          <td class="memname">enum <a class="el" href="classDdMd_1_1PairPotential.html#a144f4813b0acfba472fa1be728bf5a24">DdMd::PairPotential::TimeId</a></td>
         </tr>
       </table>
 </div>
@@ -157,12 +157,12 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="adf1ab1d84bdbd37029e6169c05398671"></a><!-- doxytag: member="DdMd::PairPotential::PairPotential" ref="adf1ab1d84bdbd37029e6169c05398671" args="()" -->
+<a class="anchor" id="adca5dc6393736b237ce926c52c9acff8"></a><!-- doxytag: member="DdMd::PairPotential::PairPotential" ref="adca5dc6393736b237ce926c52c9acff8" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> </td>
+          <td class="memname">DdMd::PairPotential::PairPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -177,12 +177,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9cbfff23a5470df94004f410d1e16d54"></a><!-- doxytag: member="DdMd::PairPotential::PairPotential" ref="a9cbfff23a5470df94004f410d1e16d54" args="(Simulation &amp;simulation)" -->
+<a class="anchor" id="ade1e8d8a45611bf0623cea453b620a85"></a><!-- doxytag: member="DdMd::PairPotential::PairPotential" ref="ade1e8d8a45611bf0623cea453b620a85" args="(Simulation &amp;simulation)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> </td>
+          <td class="memname">DdMd::PairPotential::PairPotential </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td>
           <td class="paramname"><em>simulation</em></td><td>)</td>
@@ -198,12 +198,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a787cda0073366b3ffb656a925b71e032"></a><!-- doxytag: member="DdMd::PairPotential::~PairPotential" ref="a787cda0073366b3ffb656a925b71e032" args="()" -->
+<a class="anchor" id="ae66c7a7e874ddc2b882f2b1f4155b31e"></a><!-- doxytag: member="DdMd::PairPotential::~PairPotential" ref="ae66c7a7e874ddc2b882f2b1f4155b31e" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> </td>
+          <td class="memname">DdMd::PairPotential::~PairPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -219,12 +219,12 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a6ba7bbf71f983bd216ae7d369882f75a"></a><!-- doxytag: member="DdMd::PairPotential::associate" ref="a6ba7bbf71f983bd216ae7d369882f75a" args="(Domain &amp;domain, Boundary &amp;boundary, AtomStorage &amp;storage)" -->
+<a class="anchor" id="a8bc85f16129cfb7dca61fda2145af92a"></a><!-- doxytag: member="DdMd::PairPotential::associate" ref="a8bc85f16129cfb7dca61fda2145af92a" args="(Domain &amp;domain, Boundary &amp;boundary, AtomStorage &amp;storage)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void associate </td>
+          <td class="memname">void DdMd::PairPotential::associate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td>
           <td class="paramname"><em>domain</em>, </td>
@@ -265,12 +265,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5be5629f8cbb482ff60ad5360de3da54"></a><!-- doxytag: member="DdMd::PairPotential::initialize" ref="a5be5629f8cbb482ff60ad5360de3da54" args="(const Vector &amp;lower, const Vector &amp;upper, double skin, int pairCapacity)" -->
+<a class="anchor" id="a42485ad74dc979662c8568771dc5f3a2"></a><!-- doxytag: member="DdMd::PairPotential::initialize" ref="a42485ad74dc979662c8568771dc5f3a2" args="(const Vector &amp;lower, const Vector &amp;upper, double skin, int pairCapacity)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void initialize </td>
+          <td class="memname">void DdMd::PairPotential::initialize </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>lower</em>, </td>
@@ -303,7 +303,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Set parameters and allocate memory. </p>
-<p>Required if this was created with default constructor <a class="el" href="classDdMd_1_1PairPotential.html#adf1ab1d84bdbd37029e6169c05398671" title="Default constructor (for unit testing).">PairPotential()</a>. The associate method must be called before setParam. This method sets the skin and cutoff length parameters, and allocates the internal <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> and a <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>. The <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> allocates memory for the number of cells required for the specified upper and lower coordinate bounds, with the specified cutoff.</p>
+<p>Required if this was created with default constructor <a class="el" href="classDdMd_1_1PairPotential.html#adca5dc6393736b237ce926c52c9acff8" title="Default constructor (for unit testing).">PairPotential()</a>. The associate method must be called before setParam. This method sets the skin and cutoff length parameters, and allocates the internal <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> and a <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>. The <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> allocates memory for the number of cells required for the specified upper and lower coordinate bounds, with the specified cutoff.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">lower</td><td>lower dimension of the largest expected domain </td></tr>
@@ -318,12 +318,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a95e561f4695d6a047cfea04d04479765"></a><!-- doxytag: member="DdMd::PairPotential::setNAtomType" ref="a95e561f4695d6a047cfea04d04479765" args="(int nAtomType)=0" -->
+<a class="anchor" id="a0df5d6195d10bbcba48f89db827829d2"></a><!-- doxytag: member="DdMd::PairPotential::setNAtomType" ref="a0df5d6195d10bbcba48f89db827829d2" args="(int nAtomType)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void setNAtomType </td>
+          <td class="memname">virtual void DdMd::PairPotential::setNAtomType </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>nAtomType</em></td><td>)</td>
@@ -335,16 +335,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Set the maximum number of atom types. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a9549e24ee72625c94fd6ae7d61ceeee8">PairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a177033328cfaca12b876c8fd93d1bd93">DdMd::PairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a180348fce7f1059a0ad043110433d1c7"></a><!-- doxytag: member="DdMd::PairPotential::energy" ref="a180348fce7f1059a0ad043110433d1c7" args="(double rsq, int iAtomType, int jAtomType) const =0" -->
+<a class="anchor" id="ad4ed75974a9e3157fa8645b4afbb76c7"></a><!-- doxytag: member="DdMd::PairPotential::energy" ref="ad4ed75974a9e3157fa8645b4afbb76c7" args="(double rsq, int iAtomType, int jAtomType) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double energy </td>
+          <td class="memname">virtual double DdMd::PairPotential::energy </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rsq</em>, </td>
@@ -381,16 +381,16 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>energy of pair </dd></dl>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a44f33af381e78359603f4ee400834589">PairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a4f0f004fa5a318cab37d06c576e3ee43">DdMd::PairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6b16da69d384b4951c926c0ec7ab7073"></a><!-- doxytag: member="DdMd::PairPotential::forceOverR" ref="a6b16da69d384b4951c926c0ec7ab7073" args="(double rsq, int iAtomType, int jAtomType) const =0" -->
+<a class="anchor" id="a679dfdb17945ef9ccfa8be9ff4a65ee6"></a><!-- doxytag: member="DdMd::PairPotential::forceOverR" ref="a679dfdb17945ef9ccfa8be9ff4a65ee6" args="(double rsq, int iAtomType, int jAtomType) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double forceOverR </td>
+          <td class="memname">virtual double DdMd::PairPotential::forceOverR </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rsq</em>, </td>
@@ -427,16 +427,16 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>repulsive force (&lt; 0 if attractive) over distance </dd></dl>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a5867b0e7d3850c4e246165435267744a">PairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a691f1cc066c3e3d23e2a65e48f8f2562">DdMd::PairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3765733830acc59bea4f07866a4ebb38"></a><!-- doxytag: member="DdMd::PairPotential::maxPairCutoff" ref="a3765733830acc59bea4f07866a4ebb38" args="() const =0" -->
+<a class="anchor" id="ac39c9346bb1e8274760a95c4c5c45753"></a><!-- doxytag: member="DdMd::PairPotential::maxPairCutoff" ref="ac39c9346bb1e8274760a95c4c5c45753" args="() const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double maxPairCutoff </td>
+          <td class="memname">virtual double DdMd::PairPotential::maxPairCutoff </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [pure virtual]</code></td>
@@ -447,16 +447,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return maximum cutoff. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a30a3c4cfc7e46e5e8ac052556fd945f0">PairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a76646e22089db0c8729942c7999959c0">DdMd::PairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae355aef85b464e790c9e22b1364dabee"></a><!-- doxytag: member="DdMd::PairPotential::interactionClassName" ref="ae355aef85b464e790c9e22b1364dabee" args="() const =0" -->
+<a class="anchor" id="a4f5d3e589103d432697d34065cd5417b"></a><!-- doxytag: member="DdMd::PairPotential::interactionClassName" ref="a4f5d3e589103d432697d34065cd5417b" args="() const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::string interactionClassName </td>
+          <td class="memname">virtual std::string DdMd::PairPotential::interactionClassName </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [pure virtual]</code></td>
@@ -467,16 +467,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return pair interaction class name (e.g., "LJPair"). </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#af02a7265da2c0156eeb829fea1be4747">PairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#acd2bd6a1fa5eed8300a554e26d0bd051">DdMd::PairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a482f59b9d69effb8f105406d697a658e"></a><!-- doxytag: member="DdMd::PairPotential::addForces" ref="a482f59b9d69effb8f105406d697a658e" args="()=0" -->
+<a class="anchor" id="acddbd92d63e3d1ab85e2aa9a56b1ecce"></a><!-- doxytag: member="DdMd::PairPotential::addForces" ref="acddbd92d63e3d1ab85e2aa9a56b1ecce" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void addForces </td>
+          <td class="memname">virtual void DdMd::PairPotential::addForces </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [pure virtual]</code></td>
@@ -487,16 +487,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Add pair forces to atom forces. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d">PairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a4e748f0f5186ef6add79bc8ba31dc6d4">DdMd::PairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a63b405f5a147796eecb97834621b53f1"></a><!-- doxytag: member="DdMd::PairPotential::computeEnergy" ref="a63b405f5a147796eecb97834621b53f1" args="(MPI::Intracomm &amp;communicator)=0" -->
+<a class="anchor" id="a57b10c7d3388a4723427eefd72497893"></a><!-- doxytag: member="DdMd::PairPotential::computeEnergy" ref="a57b10c7d3388a4723427eefd72497893" args="(MPI::Intracomm &amp;communicator)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void computeEnergy </td>
+          <td class="memname">virtual void DdMd::PairPotential::computeEnergy </td>
           <td>(</td>
           <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
           <td class="paramname"><em>communicator</em></td><td>)</td>
@@ -508,16 +508,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Calculate total pair potential on this processor. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a75c8fc396bfb65c3d317943f64666d08">PairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#aa1d2270153baddea8e4a9b77b57bd3b0">DdMd::PairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7785da22485c8b780033cb2f315a311f"></a><!-- doxytag: member="DdMd::PairPotential::energy" ref="a7785da22485c8b780033cb2f315a311f" args="()=0" -->
+<a class="anchor" id="a09b3a18ea3596663a14493ccbc5fc82c"></a><!-- doxytag: member="DdMd::PairPotential::energy" ref="a09b3a18ea3596663a14493ccbc5fc82c" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double energy </td>
+          <td class="memname">virtual double DdMd::PairPotential::energy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [pure virtual]</code></td>
@@ -528,16 +528,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Calculate total pair potential. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521">PairPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1PairPotentialImpl.html#a3e65fd8e7f01df967db3d3be628be478">DdMd::PairPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a10f57499fc65e64db75d61711dda56fd"></a><!-- doxytag: member="DdMd::PairPotential::findNeighbors" ref="a10f57499fc65e64db75d61711dda56fd" args="()" -->
+<a class="anchor" id="ad88c1c7501f0222ce4a28cfd4deba7b7"></a><!-- doxytag: member="DdMd::PairPotential::findNeighbors" ref="ad88c1c7501f0222ce4a28cfd4deba7b7" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void findNeighbors </td>
+          <td class="memname">void DdMd::PairPotential::findNeighbors </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -547,22 +547,22 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Build the cell and pair lists. </p>
-<p>Use with objects created with <a class="el" href="classDdMd_1_1PairPotential.html#a9cbfff23a5470df94004f410d1e16d54" title="Constructor.">PairPotential(Simulation&amp;)</a>. Makes a <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> grid for the region defined by the associated <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>. </p>
+<p>Use with objects created with <a class="el" href="classDdMd_1_1PairPotential.html#ade1e8d8a45611bf0623cea453b620a85" title="Constructor.">PairPotential(Simulation&amp;)</a>. Makes a <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> grid for the region defined by the associated <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>. </p>
 
 <p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00143">143</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">NveIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0b8dcf2199d26c0edc08146f873b8afc"></a><!-- doxytag: member="DdMd::PairPotential::findNeighbors" ref="a0b8dcf2199d26c0edc08146f873b8afc" args="(const Vector &amp;lower, const Vector &amp;upper)" -->
+<a class="anchor" id="a99e4c788cdd85dabb9a858ef04bdc579"></a><!-- doxytag: member="DdMd::PairPotential::findNeighbors" ref="a99e4c788cdd85dabb9a858ef04bdc579" args="(const Vector &amp;lower, const Vector &amp;upper)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void findNeighbors </td>
+          <td class="memname">void DdMd::PairPotential::findNeighbors </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>lower</em>, </td>
@@ -593,16 +593,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairPotential_8cpp_source.html#l00110">110</a> of file <a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a>.</p>
 
-<p>References <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
+<p>References <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad07743f22f31aca4c950738ea4e4f060"></a><!-- doxytag: member="DdMd::PairPotential::cellList" ref="ad07743f22f31aca4c950738ea4e4f060" args="()" -->
+<a class="anchor" id="af136b8f62f84b93dcb5182d6bf362ffd"></a><!-- doxytag: member="DdMd::PairPotential::cellList" ref="af136b8f62f84b93dcb5182d6bf362ffd" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1CellList.html">CellList</a> &amp; cellList </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1CellList.html">CellList</a> &amp; DdMd::PairPotential::cellList </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -617,12 +617,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0e575b210a0ea491c7b409c8caa545ff"></a><!-- doxytag: member="DdMd::PairPotential::pairList" ref="a0e575b210a0ea491c7b409c8caa545ff" args="()" -->
+<a class="anchor" id="a496389960031558f2d848ff0df1721dd"></a><!-- doxytag: member="DdMd::PairPotential::pairList" ref="a496389960031558f2d848ff0df1721dd" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1PairList.html">PairList</a> &amp; pairList </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1PairList.html">PairList</a> &amp; DdMd::PairPotential::pairList </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -635,16 +635,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00292">292</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">Integrator::outputStatistics()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">DdMd::Integrator::outputStatistics()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aed74cb5a32c832c53919b89531ca9871"></a><!-- doxytag: member="DdMd::PairPotential::skin" ref="aed74cb5a32c832c53919b89531ca9871" args="() const " -->
+<a class="anchor" id="aaeb3d40968c943469f58c54f27d2eeca"></a><!-- doxytag: member="DdMd::PairPotential::skin" ref="aaeb3d40968c943469f58c54f27d2eeca" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double skin </td>
+          <td class="memname">double DdMd::PairPotential::skin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -659,12 +659,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6fde2dcf9945edc8dd11da5673ff152b"></a><!-- doxytag: member="DdMd::PairPotential::cutoff" ref="a6fde2dcf9945edc8dd11da5673ff152b" args="() const " -->
+<a class="anchor" id="ade0fa4d3710665f2b7825413c9e72f46"></a><!-- doxytag: member="DdMd::PairPotential::cutoff" ref="ade0fa4d3710665f2b7825413c9e72f46" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double cutoff </td>
+          <td class="memname">double DdMd::PairPotential::cutoff </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -679,12 +679,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0178669649969a4ee1f236cd20b53f13"></a><!-- doxytag: member="DdMd::PairPotential::timer" ref="a0178669649969a4ee1f236cd20b53f13" args="()" -->
+<a class="anchor" id="a2b47b504ef548716b780df8e3395840c"></a><!-- doxytag: member="DdMd::PairPotential::timer" ref="a2b47b504ef548716b780df8e3395840c" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1DdTimer.html">DdTimer</a> &amp; timer </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1DdTimer.html">DdTimer</a> &amp; DdMd::PairPotential::timer </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -697,16 +697,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00310">310</a> of file <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html">ddMd/potentials/pair/PairPotential.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">Integrator::outputStatistics()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">DdMd::Integrator::outputStatistics()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afadb6ec66809fc49319fd733bbff83d8"></a><!-- doxytag: member="DdMd::PairPotential::readPairListParam" ref="afadb6ec66809fc49319fd733bbff83d8" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ae9a4aecfd74073cea742585c60b155f9"></a><!-- doxytag: member="DdMd::PairPotential::readPairListParam" ref="ae9a4aecfd74073cea742585c60b155f9" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readPairListParam </td>
+          <td class="memname">void DdMd::PairPotential::readPairListParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -717,7 +717,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Read parameters and allocate memory for <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>. </p>
-<p>Use iff this object was instantiated with <a class="el" href="classDdMd_1_1PairPotential.html#a9cbfff23a5470df94004f410d1e16d54" title="Constructor.">PairPotential(Simulation&amp;)</a>.</p>
+<p>Use iff this object was instantiated with <a class="el" href="classDdMd_1_1PairPotential.html#ade1e8d8a45611bf0623cea453b620a85" title="Constructor.">PairPotential(Simulation&amp;)</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">in</td><td>input parameter stream. </td></tr>
@@ -731,12 +731,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5daa73910cfb398e1ba647b4821d18ba"></a><!-- doxytag: member="DdMd::PairPotential::boundary" ref="a5daa73910cfb398e1ba647b4821d18ba" args="()" -->
+<a class="anchor" id="a1b5ab415000e7c262e611cb25d355a13"></a><!-- doxytag: member="DdMd::PairPotential::boundary" ref="a1b5ab415000e7c262e611cb25d355a13" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Boundary &amp; boundary </td>
+          <td class="memname">Boundary &amp; DdMd::PairPotential::boundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -751,12 +751,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a64ddaf9dd004b6c301f8f23e8995b6d1"></a><!-- doxytag: member="DdMd::PairPotential::domain" ref="a64ddaf9dd004b6c301f8f23e8995b6d1" args="()" -->
+<a class="anchor" id="aa0f5c4632d3db1f9fa0aab12abba34d7"></a><!-- doxytag: member="DdMd::PairPotential::domain" ref="aa0f5c4632d3db1f9fa0aab12abba34d7" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp; domain </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp; DdMd::PairPotential::domain </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -771,12 +771,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8ac7346f5778c47da49efe1b7b352f1e"></a><!-- doxytag: member="DdMd::PairPotential::storage" ref="a8ac7346f5778c47da49efe1b7b352f1e" args="()" -->
+<a class="anchor" id="afba961c8ddf4699908e0c23d883204a9"></a><!-- doxytag: member="DdMd::PairPotential::storage" ref="afba961c8ddf4699908e0c23d883204a9" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp; storage </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp; DdMd::PairPotential::storage </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -791,12 +791,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac32adedbad4a8366722725de6dac044c"></a><!-- doxytag: member="DdMd::PairPotential::stamp" ref="ac32adedbad4a8366722725de6dac044c" args="(unsigned int timeId)" -->
+<a class="anchor" id="a33e39f0267dc4d4b964cbfa80bef5fb3"></a><!-- doxytag: member="DdMd::PairPotential::stamp" ref="a33e39f0267dc4d4b964cbfa80bef5fb3" args="(unsigned int timeId)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void stamp </td>
+          <td class="memname">void DdMd::PairPotential::stamp </td>
           <td>(</td>
           <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>timeId</em></td><td>)</td>
@@ -817,7 +817,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="PairPotential_8cpp_source.html">PairPotential.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

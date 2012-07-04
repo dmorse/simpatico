@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: RDF Class Reference</title>
+<title>Simpatico: McMd::RDF Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>RDF Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>McMd::RDF Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::RDF" --><!-- doxytag: inherits="SystemDiagnostic&lt; System &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -61,16 +61,16 @@
 </div>
 <p><code>#include &lt;<a class="el" href="RDF_8h_source.html">RDF.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for RDF:</div>
+Inheritance diagram for McMd::RDF:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1RDF.png" usemap="#RDF_map" alt=""/>
-  <map id="RDF_map" name="RDF_map">
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; System &gt;" shape="rect" coords="92,168,267,192"/>
-<area href="classMcMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="92,112,267,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,175,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="185,56,360,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,175,24"/>
+  <img src="classMcMd_1_1RDF.png" usemap="#McMd::RDF_map" alt=""/>
+  <map id="McMd::RDF_map" name="McMd::RDF_map">
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; System &gt;" shape="rect" coords="113,168,330,192"/>
+<area href="classMcMd_1_1Diagnostic.html" alt="McMd::Diagnostic" shape="rect" coords="113,112,330,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,217,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="227,56,444,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,217,24"/>
 </map>
  </div></div>
 
@@ -78,31 +78,31 @@ Inheritance diagram for RDF:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#a4c558ea4600d52312f6bda7740eb0da6">RDF</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a4c558ea4600d52312f6bda7740eb0da6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup before a simulation (clear accumulator).  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#afc17577823a371a5ead4e51ebb8ec2ef">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particle pairs to <a class="el" href="classMcMd_1_1RDF.html" title="RDF evaluates the atomic radial distribution function.">RDF</a> histogram.  <a href="#afc17577823a371a5ead4e51ebb8ec2ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#a7437b254e19e7e12fc2ec99945f4ecea">output</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to output file.  <a href="#a7437b254e19e7e12fc2ec99945f4ecea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#aa3d71af4cc5dfb2be6be816a8f562416">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#aa3d71af4cc5dfb2be6be816a8f562416"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#a20e0ca4dc985ce360071e1f17260412f">RDF</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a20e0ca4dc985ce360071e1f17260412f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#ac04b4814a571c96316c112977ff3c93e">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#ac04b4814a571c96316c112977ff3c93e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#ab5d18ef0103bfcf52126a9e1c605da44">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup before a simulation (clear accumulator).  <a href="#ab5d18ef0103bfcf52126a9e1c605da44"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#a278a11ef277d3af2f9ac7d50b270396b">sample</a> (long iStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particle pairs to <a class="el" href="classMcMd_1_1RDF.html" title="RDF evaluates the atomic radial distribution function.">RDF</a> histogram.  <a href="#a278a11ef277d3af2f9ac7d50b270396b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#a9943581468654ec81f6ca41c3922155b">output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to output file.  <a href="#a9943581468654ec81f6ca41c3922155b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#ad080a3a4b856bd4e30d8955cf1d38eed">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#ad080a3a4b856bd4e30d8955cf1d38eed"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#a3ac30cf53d152d71a8510a6336a483a0">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#a3ac30cf53d152d71a8510a6336a483a0"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RDF.html#a2437f29aa3a0d52c28ca5fd3db506ffb">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a2437f29aa3a0d52c28ca5fd3db506ffb"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a4c558ea4600d52312f6bda7740eb0da6"></a><!-- doxytag: member="McMd::RDF::RDF" ref="a4c558ea4600d52312f6bda7740eb0da6" args="(System &amp;system)" -->
+<a class="anchor" id="a20e0ca4dc985ce360071e1f17260412f"></a><!-- doxytag: member="McMd::RDF::RDF" ref="a20e0ca4dc985ce360071e1f17260412f" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1RDF.html">RDF</a> </td>
+          <td class="memname">McMd::RDF::RDF </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -125,12 +125,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::RDF::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ac04b4814a571c96316c112977ff3c93e"></a><!-- doxytag: member="McMd::RDF::readParam" ref="ac04b4814a571c96316c112977ff3c93e" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::RDF::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -149,18 +149,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="RDF_8cpp_source.html#l00035">35</a> of file <a class="el" href="RDF_8cpp_source.html">RDF.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::RDF::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="ab5d18ef0103bfcf52126a9e1c605da44"></a><!-- doxytag: member="McMd::RDF::setup" ref="ab5d18ef0103bfcf52126a9e1c605da44" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void McMd::RDF::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -172,7 +172,7 @@ Public Member Functions</h2></td></tr>
 <p>Setup before a simulation (clear accumulator). </p>
 <p>Add particle pairs to <a class="el" href="classMcMd_1_1RDF.html" title="RDF evaluates the atomic radial distribution function.">RDF</a> histogram. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a93c5a174f073b2587a484999ca550829">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RDF_8cpp_source.html#l00052">52</a> of file <a class="el" href="RDF_8cpp_source.html">RDF.cpp</a>.</p>
 
@@ -180,12 +180,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afc17577823a371a5ead4e51ebb8ec2ef"></a><!-- doxytag: member="McMd::RDF::sample" ref="afc17577823a371a5ead4e51ebb8ec2ef" args="(long iStep)" -->
+<a class="anchor" id="a278a11ef277d3af2f9ac7d50b270396b"></a><!-- doxytag: member="McMd::RDF::sample" ref="a278a11ef277d3af2f9ac7d50b270396b" args="(long iStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void McMd::RDF::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -203,20 +203,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f">Diagnostic</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#ae265d934fee552e1bd50ce37930ac63c">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RDF_8cpp_source.html#l00061">61</a> of file <a class="el" href="RDF_8cpp_source.html">RDF.cpp</a>.</p>
 
-<p>References <a class="el" href="ConstArrayIterator_8h_source.html#l00084">ConstArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">ConstPArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
+<p>References <a class="el" href="Boundary_8h_source.html#l00022">Util::Boundary</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00084">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7437b254e19e7e12fc2ec99945f4ecea"></a><!-- doxytag: member="McMd::RDF::output" ref="a7437b254e19e7e12fc2ec99945f4ecea" args="()" -->
+<a class="anchor" id="a9943581468654ec81f6ca41c3922155b"></a><!-- doxytag: member="McMd::RDF::output" ref="a9943581468654ec81f6ca41c3922155b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void McMd::RDF::output </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -228,18 +228,18 @@ Public Member Functions</h2></td></tr>
 <p>Output results to output file. </p>
 <p>Output results to file after simulation is completed. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a209e4a470fcdeb3d5b87da3dd6960def">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac5481c8016af4c70d19d59905261c0bf">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RDF_8cpp_source.html#l00136">136</a> of file <a class="el" href="RDF_8cpp_source.html">RDF.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><!-- doxytag: member="McMd::RDF::save" ref="a248dde9ccc0ef67e5d9cc5fd0bdc2b64" args="(Serializable::OArchiveType &amp;ar)" -->
+<a class="anchor" id="ad080a3a4b856bd4e30d8955cf1d38eed"></a><!-- doxytag: member="McMd::RDF::save" ref="ad080a3a4b856bd4e30d8955cf1d38eed" args="(Serializable::OArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void save </td>
+          <td class="memname">void McMd::RDF::save </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -257,18 +257,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac27203b7ee783c3cebc054c290e313ed">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RDF_8cpp_source.html#l00159">159</a> of file <a class="el" href="RDF_8cpp_source.html">RDF.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa3d71af4cc5dfb2be6be816a8f562416"></a><!-- doxytag: member="McMd::RDF::load" ref="aa3d71af4cc5dfb2be6be816a8f562416" args="(Serializable::IArchiveType &amp;ar)" -->
+<a class="anchor" id="a3ac30cf53d152d71a8510a6336a483a0"></a><!-- doxytag: member="McMd::RDF::load" ref="a3ac30cf53d152d71a8510a6336a483a0" args="(Serializable::IArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void load </td>
+          <td class="memname">void McMd::RDF::load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -286,18 +286,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#aa3d71af4cc5dfb2be6be816a8f562416">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#afa44b6fb962ca0a8a979d0add2dc85b9">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RDF_8cpp_source.html#l00165">165</a> of file <a class="el" href="RDF_8cpp_source.html">RDF.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="McMd::RDF::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="a2437f29aa3a0d52c28ca5fd3db506ffb"></a><!-- doxytag: member="McMd::RDF::serialize" ref="a2437f29aa3a0d52c28ca5fd3db506ffb" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void McMd::RDF::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -326,7 +328,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6765e839ab267e4959384e35a4112451">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6056717b367040d8605f67794a7e2ebc">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RDF_8h_source.html#l00129">129</a> of file <a class="el" href="RDF_8h_source.html">RDF.h</a>.</p>
 
@@ -339,7 +341,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="RDF_8cpp_source.html">RDF.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:54 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:25 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

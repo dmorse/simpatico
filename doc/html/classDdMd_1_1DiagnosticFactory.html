@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: DiagnosticFactory Class Reference</title>
+<title>Simpatico: DdMd::DiagnosticFactory Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>DiagnosticFactory Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>DdMd::DiagnosticFactory Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::DiagnosticFactory" --><!-- doxytag: inherits="Factory&lt; Diagnostic &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -60,12 +60,12 @@
 </div>
 <p><code>#include &lt;<a class="el" href="DiagnosticFactory_8h_source.html">DiagnosticFactory.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for DiagnosticFactory:</div>
+Inheritance diagram for DdMd::DiagnosticFactory:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1DiagnosticFactory.png" usemap="#DiagnosticFactory_map" alt=""/>
-  <map id="DiagnosticFactory_map" name="DiagnosticFactory_map">
-<area href="classUtil_1_1Factory.html" alt="Factory&lt; Diagnostic &gt;" shape="rect" coords="0,0,139,24"/>
+  <img src="classDdMd_1_1DiagnosticFactory.png" usemap="#DdMd::DiagnosticFactory_map" alt=""/>
+  <map id="DdMd::DiagnosticFactory_map" name="DdMd::DiagnosticFactory_map">
+<area href="classUtil_1_1Factory.html" alt="Util::Factory&lt; Diagnostic &gt;" shape="rect" coords="0,0,162,24"/>
 </map>
  </div></div>
 
@@ -73,22 +73,22 @@ Inheritance diagram for DiagnosticFactory:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticFactory.html#a69ebd7d2e2a01793d2226072e81a8259">DiagnosticFactory</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a69ebd7d2e2a01793d2226072e81a8259"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classDdMd_1_1Diagnostic.html">Diagnostic</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticFactory.html#aaf3b2cfb35ea281e6db85b4e0f7f432d">factory</a> (const std::string &amp;className) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to a new <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a> object.  <a href="#aaf3b2cfb35ea281e6db85b4e0f7f432d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticFactory.html#a734c5f5b875a5cc762f2408dff4e30df">DiagnosticFactory</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a734c5f5b875a5cc762f2408dff4e30df"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classDdMd_1_1Diagnostic.html">Diagnostic</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticFactory.html#ae9e0f0b9b24be2c44f9c2a4b4ebda353">factory</a> (const std::string &amp;className) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to a new <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a> object.  <a href="#ae9e0f0b9b24be2c44f9c2a4b4ebda353"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticFactory.html#a98a65da06928e23044c25735f8ee29ef">simulation</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>.  <a href="#a98a65da06928e23044c25735f8ee29ef"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DiagnosticFactory.html#a69e9e8b5813cb50ec2bc5e2441aa53f6">simulation</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return reference to parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>.  <a href="#a69e9e8b5813cb50ec2bc5e2441aa53f6"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a69ebd7d2e2a01793d2226072e81a8259"></a><!-- doxytag: member="DdMd::DiagnosticFactory::DiagnosticFactory" ref="a69ebd7d2e2a01793d2226072e81a8259" args="(Simulation &amp;simulation)" -->
+<a class="anchor" id="a734c5f5b875a5cc762f2408dff4e30df"></a><!-- doxytag: member="DdMd::DiagnosticFactory::DiagnosticFactory" ref="a734c5f5b875a5cc762f2408dff4e30df" args="(Simulation &amp;simulation)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1DiagnosticFactory.html">DiagnosticFactory</a> </td>
+          <td class="memname">DdMd::DiagnosticFactory::DiagnosticFactory </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td>
           <td class="paramname"><em>simulation</em></td><td>)</td>
@@ -111,12 +111,12 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="aaf3b2cfb35ea281e6db85b4e0f7f432d"></a><!-- doxytag: member="DdMd::DiagnosticFactory::factory" ref="aaf3b2cfb35ea281e6db85b4e0f7f432d" args="(const std::string &amp;className) const " -->
+<a class="anchor" id="ae9e0f0b9b24be2c44f9c2a4b4ebda353"></a><!-- doxytag: member="DdMd::DiagnosticFactory::factory" ref="ae9e0f0b9b24be2c44f9c2a4b4ebda353" args="(const std::string &amp;className) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Diagnostic.html">Diagnostic</a> * factory </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Diagnostic.html">Diagnostic</a> * DdMd::DiagnosticFactory::factory </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>className</em></td><td>)</td>
@@ -135,20 +135,20 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>base class pointer to a new instance of className. </dd></dl>
 
-<p>Implements <a class="el" href="classUtil_1_1Factory.html#ac8bffc34c2d8fa6973fd13f878983808">Factory&lt; Diagnostic &gt;</a>.</p>
+<p>Implements <a class="el" href="classUtil_1_1Factory.html#a75ae49003fb0b92da58e370ceae64153">Util::Factory&lt; Diagnostic &gt;</a>.</p>
 
 <p>Definition at line <a class="el" href="DiagnosticFactory_8cpp_source.html#l00037">37</a> of file <a class="el" href="DiagnosticFactory_8cpp_source.html">DiagnosticFactory.cpp</a>.</p>
 
-<p>References <a class="el" href="DiagnosticFactory_8h_source.html#l00052">DiagnosticFactory::simulation()</a>.</p>
+<p>References <a class="el" href="DiagnosticFactory_8h_source.html#l00052">simulation()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a98a65da06928e23044c25735f8ee29ef"></a><!-- doxytag: member="DdMd::DiagnosticFactory::simulation" ref="a98a65da06928e23044c25735f8ee29ef" args="() const " -->
+<a class="anchor" id="a69e9e8b5813cb50ec2bc5e2441aa53f6"></a><!-- doxytag: member="DdMd::DiagnosticFactory::simulation" ref="a69e9e8b5813cb50ec2bc5e2441aa53f6" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a>&amp; simulation </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a>&amp; DdMd::DiagnosticFactory::simulation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline, protected]</code></td>
@@ -161,7 +161,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="DiagnosticFactory_8h_source.html#l00052">52</a> of file <a class="el" href="DiagnosticFactory_8h_source.html">DiagnosticFactory.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DiagnosticFactory_8cpp_source.html#l00037">DiagnosticFactory::factory()</a>.</p>
+<p>Referenced by <a class="el" href="DiagnosticFactory_8cpp_source.html#l00037">factory()</a>.</p>
 
 </div>
 </div>
@@ -170,7 +170,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="DiagnosticFactory_8cpp_source.html">DiagnosticFactory.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

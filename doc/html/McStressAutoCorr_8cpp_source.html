@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -75,7 +75,7 @@
 <a name="l00023"></a>00023    <span class="comment">/*</span>
 <a name="l00024"></a>00024 <span class="comment">   * Constructor.</span>
 <a name="l00025"></a>00025 <span class="comment">   */</span>
-<a name="l00026"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#a037b2b8309ddee89accb361be1be5f26">00026</a>    <a class="code" href="classMcMd_1_1McStressAutoCorr.html#a037b2b8309ddee89accb361be1be5f26" title="Constructor.">McStressAutoCorr::McStressAutoCorr</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system) 
+<a name="l00026"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#af7fd91d96afe3f4875febc4bb4d3234b">00026</a>    <a class="code" href="classMcMd_1_1McStressAutoCorr.html#af7fd91d96afe3f4875febc4bb4d3234b" title="Constructor.">McStressAutoCorr::McStressAutoCorr</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system) 
 <a name="l00027"></a>00027     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&gt;(system),
 <a name="l00028"></a>00028       outputFile_(),
 <a name="l00029"></a>00029       accumulator_(),
@@ -86,12 +86,12 @@
 <a name="l00034"></a>00034    <span class="comment">/*</span>
 <a name="l00035"></a>00035 <span class="comment">   * Read parameters from file, and allocate data array.</span>
 <a name="l00036"></a>00036 <span class="comment">   */</span>
-<a name="l00037"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#ab5421d3c9175985c9acbf723e5392075">00037</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file.">McStressAutoCorr::readParam</a>(std::istream&amp; in) 
+<a name="l00037"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#a836c73f6409ec95a773b5c8c7cc8a1b1">00037</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#a836c73f6409ec95a773b5c8c7cc8a1b1" title="Read parameters from file.">McStressAutoCorr::readParam</a>(std::istream&amp; in) 
 <a name="l00038"></a>00038    {
 <a name="l00039"></a>00039 
 <a name="l00040"></a>00040       <span class="comment">// Read interval and parameters for AutoCorrArray</span>
-<a name="l00041"></a>00041       <a class="code" href="classMcMd_1_1Diagnostic.html#a0d9d7b5fc89cf6f04d0119cfcc7ac942" title="Read parameter interval from file.">readInterval</a>(in);
-<a name="l00042"></a>00042       <a class="code" href="classMcMd_1_1Diagnostic.html#a7fb5e9c0364a81f5a630d0f26acfb234" title="Read outputFileName from file.">readOutputFileName</a>(in);
+<a name="l00041"></a>00041       <a class="code" href="classMcMd_1_1Diagnostic.html#abda32f953247ab813bbad3aa336d56c0" title="Read parameter interval from file.">readInterval</a>(in);
+<a name="l00042"></a>00042       <a class="code" href="classMcMd_1_1Diagnostic.html#a6cace7ea7c10f7a8a2a76dba8ed1122c" title="Read outputFileName from file.">readOutputFileName</a>(in);
 <a name="l00043"></a>00043       read&lt;int&gt;(in, <span class="stringliteral">&quot;capacity&quot;</span>, capacity_);
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045       <span class="comment">// Validate input</span>
@@ -99,7 +99,7 @@
 <a name="l00047"></a>00047          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Negative capacity&quot;</span>);
 <a name="l00048"></a>00048 
 <a name="l00049"></a>00049       <span class="comment">// Allocate memory for the AutoCorrArray accumulator object</span>
-<a name="l00050"></a>00050       accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#a08be97800ea312966708a14bbaacfd76" title="Set buffer capacity, allocate memory and initialize.">setParam</a>(capacity_);
+<a name="l00050"></a>00050       accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#a40ec3ef43be2ecc331e2d1e1cc38f029" title="Set buffer capacity, allocate memory and initialize.">setParam</a>(capacity_);
 <a name="l00051"></a>00051 
 <a name="l00052"></a>00052       isInitialized_ = <span class="keyword">true</span>;
 <a name="l00053"></a>00053    }
@@ -108,43 +108,43 @@
 <a name="l00056"></a>00056    <span class="comment">/*</span>
 <a name="l00057"></a>00057 <span class="comment">   * Set actual number of molecules and clear accumulator.</span>
 <a name="l00058"></a>00058 <span class="comment">   */</span>
-<a name="l00059"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#a4fc01d736fe50cf5b977f755b675f11d">00059</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#a4fc01d736fe50cf5b977f755b675f11d" title="Set number of molecules and clear accumulator.">McStressAutoCorr::setup</a>()
+<a name="l00059"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#a67c7292a80504b11c1a409934b6165a6">00059</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#a67c7292a80504b11c1a409934b6165a6" title="Set number of molecules and clear accumulator.">McStressAutoCorr::setup</a>()
 <a name="l00060"></a>00060    {
-<a name="l00061"></a>00061       accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#ac8bb3912a3ce86b15842e79d0b421204" title="Reset to empty state.">clear</a>();
+<a name="l00061"></a>00061       accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#a3508f52cefa629324915e4a2b0bfb34a" title="Reset to empty state.">clear</a>();
 <a name="l00062"></a>00062    }
 <a name="l00063"></a>00063 
 <a name="l00064"></a>00064    <span class="comment">/*</span>
 <a name="l00065"></a>00065 <span class="comment">   * Evaluate shear stress autocorrelation function.</span>
 <a name="l00066"></a>00066 <span class="comment">   */</span>
-<a name="l00067"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#afc17577823a371a5ead4e51ebb8ec2ef">00067</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Evaluate separation vector for all chains, add to ensemble.">McStressAutoCorr::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00067"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#aff401934363adaef7787fe114e9f40d8">00067</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#aff401934363adaef7787fe114e9f40d8" title="Evaluate separation vector for all chains, add to ensemble.">McStressAutoCorr::sample</a>(<span class="keywordtype">long</span> iStep) 
 <a name="l00068"></a>00068    { 
-<a name="l00069"></a>00069       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Diagnostic.html#a56d6fc996d1e17d408288f86b6d9b4e7" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
+<a name="l00069"></a>00069       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Diagnostic.html#a6f9a95c770f5afc1a1efc65df7b9bea2" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
 <a name="l00070"></a>00070          <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> stress;
-<a name="l00071"></a>00071          <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aba85acb24fb51b2cb552ea840a5cbc8e" title="Compute total pressure (T=double), xyz pressures (T=Vector) or stress (T=Tensor).">computeStress</a>(stress);
-<a name="l00072"></a>00072          <span class="keywordtype">double</span> pressure = stress.<a class="code" href="classUtil_1_1Tensor.html#a8bb842348e5c75a1f359d97fc9bce207" title="Return trace this tensor.">trace</a>()/double(<a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>);
-<a name="l00073"></a>00073          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00071"></a>00071          <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#a10c99179a06c42eb8b8041efd54eb19c" title="Compute total pressure (T=double), xyz pressures (T=Vector) or stress (T=Tensor).">computeStress</a>(stress);
+<a name="l00072"></a>00072          <span class="keywordtype">double</span> pressure = stress.<a class="code" href="classUtil_1_1Tensor.html#a37fea5e6d7bda01b52050c9df048c5cd" title="Return trace this tensor.">trace</a>()/double(<a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>);
+<a name="l00073"></a>00073          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00074"></a>00074             stress(i, i) -= pressure;
 <a name="l00075"></a>00075          }
-<a name="l00076"></a>00076          stress.<a class="code" href="classUtil_1_1Tensor.html#ab1c4f34169e28a9f063bad98e122eb72" title="Compute symmetric part of a tensor.">symmetrize</a>();
-<a name="l00077"></a>00077          <span class="keywordtype">double</span> volume = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary by reference.">boundary</a>().volume();
+<a name="l00076"></a>00076          stress.<a class="code" href="classUtil_1_1Tensor.html#a1a34bb71f1b728afb8f28e84c8eb5466" title="Compute symmetric part of a tensor.">symmetrize</a>();
+<a name="l00077"></a>00077          <span class="keywordtype">double</span> volume = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#ace1b2b95dc094767d218e1dcf520b5ca" title="Get the Boundary by reference.">boundary</a>().volume();
 <a name="l00078"></a>00078          stress *= sqrt(volume);
-<a name="l00079"></a>00079          accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#a2e5a9038ceb78c9f25abe44dad0be122" title="Sample a value.">sample</a>(stress);
+<a name="l00079"></a>00079          accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#a3192f37e28ba8202d08d3c157a34836d" title="Sample a value.">sample</a>(stress);
 <a name="l00080"></a>00080       } 
 <a name="l00081"></a>00081    }
 <a name="l00082"></a>00082 
 <a name="l00083"></a>00083    <span class="comment">/*</span>
 <a name="l00084"></a>00084 <span class="comment">   * Output results to file after simulation is completed.</span>
 <a name="l00085"></a>00085 <span class="comment">   */</span>
-<a name="l00086"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#a7437b254e19e7e12fc2ec99945f4ecea">00086</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results after simulation is completed.">McStressAutoCorr::output</a>() 
+<a name="l00086"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#ae760b3a32cab5cc3209e0377a912cb3a">00086</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#ae760b3a32cab5cc3209e0377a912cb3a" title="Output results after simulation is completed.">McStressAutoCorr::output</a>() 
 <a name="l00087"></a>00087    {  
 <a name="l00088"></a>00088       <span class="comment">// Echo parameters to log file</span>
-<a name="l00089"></a>00089       <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>(), outputFile_);
-<a name="l00090"></a>00090       <a class="code" href="classUtil_1_1ParamComposite.html#a3919e7db0ce53e1ead2be4016d4d09ac" title="Write all parameters to an output stream.">writeParam</a>(outputFile_); 
+<a name="l00089"></a>00089       <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>(), outputFile_);
+<a name="l00090"></a>00090       <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">writeParam</a>(outputFile_); 
 <a name="l00091"></a>00091       outputFile_ &lt;&lt; std::endl;
-<a name="l00092"></a>00092       outputFile_ &lt;&lt; <span class="stringliteral">&quot;bufferCapacity  &quot;</span> &lt;&lt; accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#a57118c8a6ff3a32ffbdf852295a9bdaa" title="Return capacity of history buffer.">bufferCapacity</a>() &lt;&lt; std::endl;
-<a name="l00093"></a>00093       outputFile_ &lt;&lt; <span class="stringliteral">&quot;nSample         &quot;</span> &lt;&lt; accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#a5271d3c821039a770825e80c05132fd5" title="Return number of values sampled thus far.">nSample</a>() &lt;&lt; std::endl;
+<a name="l00092"></a>00092       outputFile_ &lt;&lt; <span class="stringliteral">&quot;bufferCapacity  &quot;</span> &lt;&lt; accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#a3f1f8e0ee0c3aa07c6d0c4053c6c3b89" title="Return capacity of history buffer.">bufferCapacity</a>() &lt;&lt; std::endl;
+<a name="l00093"></a>00093       outputFile_ &lt;&lt; <span class="stringliteral">&quot;nSample         &quot;</span> &lt;&lt; accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#aeb08c0462a870e334a7ef5435b607eb7" title="Return number of values sampled thus far.">nSample</a>() &lt;&lt; std::endl;
 <a name="l00094"></a>00094       outputFile_ &lt;&lt; std::endl;
-<a name="l00095"></a>00095       outputFile_ &lt;&lt; <span class="stringliteral">&quot;average   &quot;</span> &lt;&lt; accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#adcc93ec2fd4f07e9d9f239514e7fccd6" title="Return average of all sampled values.">average</a>() &lt;&lt; std::endl;
+<a name="l00095"></a>00095       outputFile_ &lt;&lt; <span class="stringliteral">&quot;average   &quot;</span> &lt;&lt; accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#a7d418738dc3ff503cd7320e20983ad01" title="Return average of all sampled values.">average</a>() &lt;&lt; std::endl;
 <a name="l00096"></a>00096       outputFile_ &lt;&lt; std::endl;
 <a name="l00097"></a>00097       outputFile_ &lt;&lt; <span class="stringliteral">&quot;Format of *.dat file&quot;</span> &lt;&lt; std::endl;
 <a name="l00098"></a>00098       outputFile_ &lt;&lt; <span class="stringliteral">&quot;[int time in samples]  [double autocorrelation function]&quot;</span> 
@@ -153,21 +153,21 @@
 <a name="l00101"></a>00101       outputFile_.close();
 <a name="l00102"></a>00102 
 <a name="l00103"></a>00103       <span class="comment">// Write autocorrelation function to data file</span>
-<a name="l00104"></a>00104       <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
-<a name="l00105"></a>00105       accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#a012e48b5ec7769b2e5614bd6b3a62488" title="Output the autocorrelation function.">output</a>(outputFile_); 
+<a name="l00104"></a>00104       <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
+<a name="l00105"></a>00105       accumulator_.<a class="code" href="classUtil_1_1AutoCorr.html#a8a9d792a79e0dd4eefcd379960807b78" title="Output the autocorrelation function.">output</a>(outputFile_); 
 <a name="l00106"></a>00106       outputFile_.close();
 <a name="l00107"></a>00107    }
 <a name="l00108"></a>00108 
 <a name="l00109"></a>00109    <span class="comment">/*</span>
 <a name="l00110"></a>00110 <span class="comment">   * Save state to binary file archive.</span>
 <a name="l00111"></a>00111 <span class="comment">   */</span>
-<a name="l00112"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">00112</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64" title="Save state to binary file archive.">McStressAutoCorr::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
+<a name="l00112"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#a48bf5f0ccc99ed30bc8e9706954a3f16">00112</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#a48bf5f0ccc99ed30bc8e9706954a3f16" title="Save state to binary file archive.">McStressAutoCorr::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
 <a name="l00113"></a>00113    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00114"></a>00114 
 <a name="l00115"></a>00115    <span class="comment">/*</span>
 <a name="l00116"></a>00116 <span class="comment">   * Load state from a binary file archive.</span>
 <a name="l00117"></a>00117 <span class="comment">   */</span>
-<a name="l00118"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#aa3d71af4cc5dfb2be6be816a8f562416">00118</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load state from a binary file archive.">McStressAutoCorr::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00118"></a><a class="code" href="classMcMd_1_1McStressAutoCorr.html#a19ec3960b9215886792322d1341d9859">00118</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McStressAutoCorr.html#a19ec3960b9215886792322d1341d9859" title="Load state from a binary file archive.">McStressAutoCorr::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
 <a name="l00119"></a>00119    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00120"></a>00120 
 <a name="l00121"></a>00121 }
@@ -175,7 +175,7 @@
 <a name="l00123"></a>00123 <span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

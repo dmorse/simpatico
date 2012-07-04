@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00005"></a>00005 <span class="comment">/*</span>
 <a name="l00006"></a>00006 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00007"></a>00007 <span class="comment">*</span>
-<a name="l00008"></a>00008 <span class="comment">* Copyright 2010, Veronica Chappa and David Morse (morse@cems.umn.edu)</span>
+<a name="l00008"></a>00008 <span class="comment">* Copyright 2010 - 2012, Veronica Chappa and David Morse (morse012@umn.edu)</span>
 <a name="l00009"></a>00009 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00010"></a>00010 <span class="comment">*/</span>
 <a name="l00011"></a>00011 
@@ -90,11 +90,11 @@
 <a name="l00045"></a>00045 
 <a name="l00046"></a>00046    <span class="keyword">public</span>:
 <a name="l00047"></a>00047 
-<a name="l00049"></a><a class="code" href="classMcMd_1_1LinkMaster.html#abd715d4ebbcc5dbedac0342d617d5f0b">00049</a>       <span class="keyword">typedef</span> <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator&lt;Link&gt;</a>      <a class="code" href="classMcMd_1_1LinkMaster.html#abd715d4ebbcc5dbedac0342d617d5f0b" title="Iterator for set of active links.">LinkIterator</a>;
+<a name="l00049"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a94802732bc5c4aadd4ec1c91875ac3f5">00049</a>       <span class="keyword">typedef</span> <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator&lt;Link&gt;</a>      <a class="code" href="classMcMd_1_1LinkMaster.html#a94802732bc5c4aadd4ec1c91875ac3f5" title="Iterator for set of active links.">LinkIterator</a>;
 <a name="l00050"></a>00050 
-<a name="l00052"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a7c701645f7098625b41fd63ba7334015">00052</a>       <span class="keyword">typedef</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator&lt;Link&gt;</a> <a class="code" href="classMcMd_1_1LinkMaster.html#a7c701645f7098625b41fd63ba7334015" title="Const iterator for set of active links.">ConstLinkIterator</a>;
+<a name="l00052"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a861b1e848e634a8a820b85ac2ec675d5">00052</a>       <span class="keyword">typedef</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator&lt;Link&gt;</a> <a class="code" href="classMcMd_1_1LinkMaster.html#a861b1e848e634a8a820b85ac2ec675d5" title="Const iterator for set of active links.">ConstLinkIterator</a>;
 <a name="l00053"></a>00053 
-<a name="l00057"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a245ae12ab2986ecbaf791e1eabda968f">00057</a>       <span class="keyword">typedef</span> <a class="code" href="classUtil_1_1SSet.html" title="Statically allocated array of pointers to an unordered set.">SSet&lt;Link,400&gt;</a> <a class="code" href="classMcMd_1_1LinkMaster.html#a245ae12ab2986ecbaf791e1eabda968f" title="A set of links involving a particular atom.">AtomLinkSet</a>;
+<a name="l00057"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a79f3e45b2dd2c606e6114f09c1c03ed3">00057</a>       <span class="keyword">typedef</span> <a class="code" href="classUtil_1_1SSet.html" title="Statically allocated array of pointers to an unordered set.">SSet&lt;Link,400&gt;</a> <a class="code" href="classMcMd_1_1LinkMaster.html#a79f3e45b2dd2c606e6114f09c1c03ed3" title="A set of links involving a particular atom.">AtomLinkSet</a>;
 <a name="l00058"></a>00058 
 <a name="l00062"></a>00062       <a class="code" href="classMcMd_1_1LinkMaster.html" title="Manages all Link objects in a System.">LinkMaster</a>();
 <a name="l00063"></a>00063 
@@ -153,39 +153,39 @@
 <a name="l00223"></a>00223 <span class="comment">   * Get the set of Links associated with an Atom by constant reference.</span>
 <a name="l00224"></a>00224 <span class="comment">   */</span> 
 <a name="l00225"></a>00225    <span class="keyword">inline</span> 
-<a name="l00226"></a><a class="code" href="classMcMd_1_1LinkMaster.html#aa31769361f14f4de366b5adc5027c4f1">00226</a>    <span class="keyword">const</span> <a class="code" href="classUtil_1_1SSet.html" title="Statically allocated array of pointers to an unordered set.">LinkMaster::AtomLinkSet</a>&amp; <a class="code" href="classMcMd_1_1LinkMaster.html#aa31769361f14f4de366b5adc5027c4f1" title="Return a set of links associated with an Atom by const reference.">LinkMaster::atomLinkSet</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)<span class="keyword"> const  </span>
+<a name="l00226"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a9e07f2f2e3856b5207a6a462bdd11f66">00226</a>    <span class="keyword">const</span> <a class="code" href="classUtil_1_1SSet.html" title="Statically allocated array of pointers to an unordered set.">LinkMaster::AtomLinkSet</a>&amp; <a class="code" href="classMcMd_1_1LinkMaster.html#a9e07f2f2e3856b5207a6a462bdd11f66" title="Return a set of links associated with an Atom by const reference.">LinkMaster::atomLinkSet</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)<span class="keyword"> const  </span>
 <a name="l00227"></a>00227 <span class="keyword">   </span>{  
-<a name="l00228"></a>00228       <span class="keywordflow">return</span> (atomLinkSets_[atom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>()]); 
+<a name="l00228"></a>00228       <span class="keywordflow">return</span> (atomLinkSets_[atom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>()]); 
 <a name="l00229"></a>00229    }
 <a name="l00230"></a>00230 
 <a name="l00231"></a>00231    <span class="comment">/*</span>
 <a name="l00232"></a>00232 <span class="comment">   * Get the set of Links associated with an Atom.</span>
 <a name="l00233"></a>00233 <span class="comment">   */</span> 
 <a name="l00234"></a>00234    <span class="keyword">inline</span> 
-<a name="l00235"></a><a class="code" href="classMcMd_1_1LinkMaster.html#aab54bb683c5451be2527aa9efaf3ba77">00235</a>    <a class="code" href="classUtil_1_1SSet.html" title="Statically allocated array of pointers to an unordered set.">LinkMaster::AtomLinkSet</a>&amp; <a class="code" href="classMcMd_1_1LinkMaster.html#aa31769361f14f4de366b5adc5027c4f1" title="Return a set of links associated with an Atom by const reference.">LinkMaster::atomLinkSet</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)
+<a name="l00235"></a><a class="code" href="classMcMd_1_1LinkMaster.html#ab89a56806a6e577fe85956ec5a912bac">00235</a>    <a class="code" href="classUtil_1_1SSet.html" title="Statically allocated array of pointers to an unordered set.">LinkMaster::AtomLinkSet</a>&amp; <a class="code" href="classMcMd_1_1LinkMaster.html#a9e07f2f2e3856b5207a6a462bdd11f66" title="Return a set of links associated with an Atom by const reference.">LinkMaster::atomLinkSet</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)
 <a name="l00236"></a>00236    {  
-<a name="l00237"></a>00237       <span class="keywordflow">return</span> (atomLinkSets_[atom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>()]); 
+<a name="l00237"></a>00237       <span class="keywordflow">return</span> (atomLinkSets_[atom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>()]); 
 <a name="l00238"></a>00238    }
 <a name="l00239"></a>00239 
 <a name="l00240"></a>00240    <span class="comment">/*</span>
 <a name="l00241"></a>00241 <span class="comment">   * Initialize iterator to beginning of list of active links.</span>
 <a name="l00242"></a>00242 <span class="comment">   */</span>
-<a name="l00243"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a0e0c2e18c1fac2614f20cdbc553aa0c4">00243</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a0e0c2e18c1fac2614f20cdbc553aa0c4" title="Initialize iterator to beginning of list of active links.">LinkMaster::begin</a>(<a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">LinkMaster::LinkIterator</a>&amp; iterator)
+<a name="l00243"></a><a class="code" href="classMcMd_1_1LinkMaster.html#ab765320f32451b9c24353a68bcabe0a1">00243</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#ab765320f32451b9c24353a68bcabe0a1" title="Initialize iterator to beginning of list of active links.">LinkMaster::begin</a>(<a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">LinkMaster::LinkIterator</a>&amp; iterator)
 <a name="l00244"></a>00244    {   linkSet_.begin(iterator); }
 <a name="l00245"></a>00245 
-<a name="l00249"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a1e94ade77878d400adaac7c9123183c9">00249</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a0e0c2e18c1fac2614f20cdbc553aa0c4" title="Initialize iterator to beginning of list of active links.">LinkMaster::begin</a>(<a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">LinkMaster::ConstLinkIterator</a>&amp; iterator)<span class="keyword"> const</span>
+<a name="l00249"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a41e97837f39ab6abd935d20f06569437">00249</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#ab765320f32451b9c24353a68bcabe0a1" title="Initialize iterator to beginning of list of active links.">LinkMaster::begin</a>(<a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">LinkMaster::ConstLinkIterator</a>&amp; iterator)<span class="keyword"> const</span>
 <a name="l00250"></a>00250 <span class="keyword">   </span>{   linkSet_.begin(iterator); }
 <a name="l00251"></a>00251 
 <a name="l00252"></a>00252    <span class="comment">/*</span>
 <a name="l00253"></a>00253 <span class="comment">   * Get an active Link by index.</span>
 <a name="l00254"></a>00254 <span class="comment">   */</span> 
-<a name="l00255"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a50c533aae65321f8d927872af06be7ff">00255</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>&amp; <a class="code" href="classMcMd_1_1LinkMaster.html#a50c533aae65321f8d927872af06be7ff" title="Return an active link by an internal set index.">LinkMaster::link</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)<span class="keyword"> const</span>
+<a name="l00255"></a><a class="code" href="classMcMd_1_1LinkMaster.html#acc53f29278190d5662f1956751f106e0">00255</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>&amp; <a class="code" href="classMcMd_1_1LinkMaster.html#acc53f29278190d5662f1956751f106e0" title="Return an active link by an internal set index.">LinkMaster::link</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)<span class="keyword"> const</span>
 <a name="l00256"></a>00256 <span class="keyword">   </span>{  <span class="keywordflow">return</span> linkSet_[id]; }
 <a name="l00257"></a>00257 
 <a name="l00258"></a>00258    <span class="comment">/*</span>
 <a name="l00259"></a>00259 <span class="comment">   * Get number of active Links.</span>
 <a name="l00260"></a>00260 <span class="comment">   */</span> 
-<a name="l00261"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a190823938dd61725899558d0650ddace">00261</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a190823938dd61725899558d0650ddace" title="Get the total number of active Links.">LinkMaster::nLink</a>()<span class="keyword"> const</span>
+<a name="l00261"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a72530df0ae2f385c02932d518854e297">00261</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a72530df0ae2f385c02932d518854e297" title="Get the total number of active Links.">LinkMaster::nLink</a>()<span class="keyword"> const</span>
 <a name="l00262"></a>00262 <span class="keyword">   </span>{  <span class="keywordflow">return</span> linkSet_.size(); }
 <a name="l00263"></a>00263 
 <a name="l00264"></a>00264 } 
@@ -193,7 +193,7 @@
 <a name="l00266"></a>00266 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

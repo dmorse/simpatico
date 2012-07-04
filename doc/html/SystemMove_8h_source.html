@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -83,7 +83,7 @@
 <a name="l00045"></a>00045 
 <a name="l00047"></a>00047       <a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system();
 <a name="l00048"></a>00048 
-<a name="l00050"></a>00050       Boundary&amp; boundary();
+<a name="l00050"></a>00050       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary();
 <a name="l00051"></a>00051 
 <a name="l00053"></a>00053       <a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>&amp; energyEnsemble();
 <a name="l00054"></a>00054 
@@ -93,7 +93,7 @@
 <a name="l00064"></a>00064  
 <a name="l00066"></a>00066       <a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>       *systemPtr_;
 <a name="l00067"></a>00067 
-<a name="l00069"></a>00069       Boundary       *boundaryPtr_;
+<a name="l00069"></a>00069       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>       *boundaryPtr_;
 <a name="l00070"></a>00070 
 <a name="l00072"></a>00072       <a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>* isothermalPtr_;
 <a name="l00073"></a>00073  
@@ -103,28 +103,28 @@
 <a name="l00077"></a>00077    <span class="comment">// Inline methods</span>
 <a name="l00078"></a>00078 
 <a name="l00079"></a>00079    <span class="comment">// Get parent McSystem.</span>
-<a name="l00080"></a><a class="code" href="classMcMd_1_1SystemMove.html#a332d034adbe18b9e8dc187ada84b5b29">00080</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; <a class="code" href="classMcMd_1_1SystemMove.html#a332d034adbe18b9e8dc187ada84b5b29" title="Get parent McSystem.">SystemMove::system</a>()
+<a name="l00080"></a><a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4">00080</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; <a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">SystemMove::system</a>()
 <a name="l00081"></a>00081    { <span class="keywordflow">return</span> *systemPtr_; }
 <a name="l00082"></a>00082 
 <a name="l00083"></a>00083    <span class="comment">// Get Boundary object of parent McSystem.</span>
-<a name="l00084"></a><a class="code" href="classMcMd_1_1SystemMove.html#a5daa73910cfb398e1ba647b4821d18ba">00084</a>    <span class="keyword">inline</span> Boundary&amp; <a class="code" href="classMcMd_1_1SystemMove.html#a5daa73910cfb398e1ba647b4821d18ba" title="Get Boundary object of parent McSystem.">SystemMove::boundary</a>()
+<a name="l00084"></a><a class="code" href="classMcMd_1_1SystemMove.html#a9cdab74e6e6c35f76fa3a44b84e165c6">00084</a>    <span class="keyword">inline</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; <a class="code" href="classMcMd_1_1SystemMove.html#a9cdab74e6e6c35f76fa3a44b84e165c6" title="Get Boundary object of parent McSystem.">SystemMove::boundary</a>()
 <a name="l00085"></a>00085    { <span class="keywordflow">return</span> *boundaryPtr_; }
 <a name="l00086"></a>00086 
 <a name="l00087"></a>00087    <span class="comment">// Get EnergyEnsemble object of parent McSystem.</span>
-<a name="l00088"></a><a class="code" href="classMcMd_1_1SystemMove.html#aac5b843385b6224e664f16e8cc70e4dc">00088</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>&amp; <a class="code" href="classMcMd_1_1SystemMove.html#aac5b843385b6224e664f16e8cc70e4dc" title="Get EnergyEnsemble object of parent McSystem.">SystemMove::energyEnsemble</a>()
+<a name="l00088"></a><a class="code" href="classMcMd_1_1SystemMove.html#ad817b7a09d57b7b096b6a6f73e22c1a4">00088</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>&amp; <a class="code" href="classMcMd_1_1SystemMove.html#ad817b7a09d57b7b096b6a6f73e22c1a4" title="Get EnergyEnsemble object of parent McSystem.">SystemMove::energyEnsemble</a>()
 <a name="l00089"></a>00089    { <span class="keywordflow">return</span> *isothermalPtr_; }
 <a name="l00090"></a>00090 
 <a name="l00091"></a>00091    <span class="comment">/*</span>
 <a name="l00092"></a>00092 <span class="comment">   * Boltzmann weight associated with an energy</span>
 <a name="l00093"></a>00093 <span class="comment">   */</span>
-<a name="l00094"></a><a class="code" href="classMcMd_1_1SystemMove.html#af51b7f731b782e6e9e37d9536c1c00b9">00094</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1SystemMove.html#af51b7f731b782e6e9e37d9536c1c00b9" title="Boltzmann weight associated with an energy difference.">SystemMove::boltzmann</a>(<span class="keywordtype">double</span> energy)
+<a name="l00094"></a><a class="code" href="classMcMd_1_1SystemMove.html#ab3e350078e9b4c77048315280fd77c12">00094</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1SystemMove.html#ab3e350078e9b4c77048315280fd77c12" title="Boltzmann weight associated with an energy difference.">SystemMove::boltzmann</a>(<span class="keywordtype">double</span> energy)
 <a name="l00095"></a>00095    {  <span class="keywordflow">return</span> exp(-isothermalPtr_-&gt;beta()*energy); }
 <a name="l00096"></a>00096    
 <a name="l00097"></a>00097 }
 <a name="l00098"></a>00098 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: GroupCollector&lt; N &gt; Class Template Reference</title>
+<title>Simpatico: DdMd::GroupCollector&lt; N &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>GroupCollector&lt; N &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
+<h1>DdMd::GroupCollector&lt; N &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::GroupCollector" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -62,7 +62,7 @@
 <div class="fragment"><pre class="fragment">    GroupStorage&lt;N&gt; storage;
     Domain domain;
     Buffer buffer;
-    <a class="code" href="classDdMd_1_1GroupCollector.html#af2bd8dc65621c24adc32c2a2867d051c" title="Constructor.">GroupCollector</a> collector;
+    <a class="code" href="classDdMd_1_1GroupCollector.html#a2e533a44ecd28fdd0483f0d05da155d7" title="Constructor.">GroupCollector</a> collector;
 
     <span class="comment">// Initialization</span>
     collector.associate(domain, storage, buffer);
@@ -84,13 +84,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="GroupCollector_8h_source.html">GroupCollector.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for GroupCollector&lt; N &gt;:</div>
+Inheritance diagram for DdMd::GroupCollector&lt; N &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1GroupCollector.png" usemap="#GroupCollector&lt; N &gt;_map" alt=""/>
-  <map id="GroupCollector&lt; N &gt;_map" name="GroupCollector&lt; N &gt;_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,131,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,131,24"/>
+  <img src="classDdMd_1_1GroupCollector.png" usemap="#DdMd::GroupCollector&lt; N &gt;_map" alt=""/>
+  <map id="DdMd::GroupCollector&lt; N &gt;_map" name="DdMd::GroupCollector&lt; N &gt;_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,171,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,171,24"/>
 </map>
  </div></div>
 
@@ -98,28 +98,30 @@ Inheritance diagram for GroupCollector&lt; N &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#af2bd8dc65621c24adc32c2a2867d051c">GroupCollector</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#af2bd8dc65621c24adc32c2a2867d051c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#ae4920d51f6cdabaa30b8418e68136886">~GroupCollector</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ae4920d51f6cdabaa30b8418e68136886"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#a75bdcad7ace640c7e5cb6e8507377d27">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, <a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a>&lt; N &gt; &amp;storage, <a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize pointers to associated objects.  <a href="#a75bdcad7ace640c7e5cb6e8507377d27"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#aabf8875c45399fe650208eba24aa87bb">allocate</a> (int cacheSize)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate cache on master processor.  <a href="#aabf8875c45399fe650208eba24aa87bb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup master processor for receiving.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#a41d65bb1699b0f78e2165e5b9b043fe8">nextPtr</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to the next available atom, or null.  <a href="#a41d65bb1699b0f78e2165e5b9b043fe8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#ae9399f5ec7881c5d18173def8068108e">send</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send all groups to the master.  <a href="#ae9399f5ec7881c5d18173def8068108e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#a2e533a44ecd28fdd0483f0d05da155d7">GroupCollector</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a2e533a44ecd28fdd0483f0d05da155d7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#ae99db35462f48b0d8534cc8afe3c479e">~GroupCollector</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ae99db35462f48b0d8534cc8afe3c479e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#ab120de03adb6b6f7a293fe47660bf46a">associate</a> (<a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;domain, <a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a>&lt; N &gt; &amp;storage, <a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> &amp;buffer)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize pointers to associated objects.  <a href="#ab120de03adb6b6f7a293fe47660bf46a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#aa4236dfea495d649490a3b233a98c0a4">allocate</a> (int cacheSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate cache on master processor.  <a href="#aa4236dfea495d649490a3b233a98c0a4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#a47ca243d3c65bfaa03dcd8ec5db2fb06">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup master processor for receiving.  <a href="#a47ca243d3c65bfaa03dcd8ec5db2fb06"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#a7300cc70bc0f36294edea8dd73f88f3d">nextPtr</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to the next available atom, or null.  <a href="#a7300cc70bc0f36294edea8dd73f88f3d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupCollector.html#a71255c8180f10e0a455ca9f108907de3">send</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send all groups to the master.  <a href="#a71255c8180f10e0a455ca9f108907de3"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="af2bd8dc65621c24adc32c2a2867d051c"></a><!-- doxytag: member="DdMd::GroupCollector::GroupCollector" ref="af2bd8dc65621c24adc32c2a2867d051c" args="()" -->
+<a class="anchor" id="a2e533a44ecd28fdd0483f0d05da155d7"></a><!-- doxytag: member="DdMd::GroupCollector::GroupCollector" ref="a2e533a44ecd28fdd0483f0d05da155d7" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1GroupCollector.html">GroupCollector</a> </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1GroupCollector.html">DdMd::GroupCollector</a>&lt; N &gt;::<a class="el" href="classDdMd_1_1GroupCollector.html">GroupCollector</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -134,12 +136,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae4920d51f6cdabaa30b8418e68136886"></a><!-- doxytag: member="DdMd::GroupCollector::~GroupCollector" ref="ae4920d51f6cdabaa30b8418e68136886" args="()" -->
+<a class="anchor" id="ae99db35462f48b0d8534cc8afe3c479e"></a><!-- doxytag: member="DdMd::GroupCollector::~GroupCollector" ref="ae99db35462f48b0d8534cc8afe3c479e" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1GroupCollector.html">GroupCollector</a> </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1GroupCollector.html">DdMd::GroupCollector</a>&lt; N &gt;::~<a class="el" href="classDdMd_1_1GroupCollector.html">GroupCollector</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -155,12 +159,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a75bdcad7ace640c7e5cb6e8507377d27"></a><!-- doxytag: member="DdMd::GroupCollector::associate" ref="a75bdcad7ace640c7e5cb6e8507377d27" args="(Domain &amp;domain, GroupStorage&lt; N &gt; &amp;storage, Buffer &amp;buffer)" -->
+<a class="anchor" id="ab120de03adb6b6f7a293fe47660bf46a"></a><!-- doxytag: member="DdMd::GroupCollector::associate" ref="ab120de03adb6b6f7a293fe47660bf46a" args="(Domain &amp;domain, GroupStorage&lt; N &gt; &amp;storage, Buffer &amp;buffer)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void associate </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupCollector.html">DdMd::GroupCollector</a>&lt; N &gt;::associate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td>
           <td class="paramname"><em>domain</em>, </td>
@@ -193,12 +199,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aabf8875c45399fe650208eba24aa87bb"></a><!-- doxytag: member="DdMd::GroupCollector::allocate" ref="aabf8875c45399fe650208eba24aa87bb" args="(int cacheSize)" -->
+<a class="anchor" id="aa4236dfea495d649490a3b233a98c0a4"></a><!-- doxytag: member="DdMd::GroupCollector::allocate" ref="aa4236dfea495d649490a3b233a98c0a4" args="(int cacheSize)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupCollector.html">DdMd::GroupCollector</a>&lt; N &gt;::allocate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>cacheSize</em></td><td>)</td>
@@ -217,12 +225,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="DdMd::GroupCollector::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a47ca243d3c65bfaa03dcd8ec5db2fb06"></a><!-- doxytag: member="DdMd::GroupCollector::setup" ref="a47ca243d3c65bfaa03dcd8ec5db2fb06" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupCollector.html">DdMd::GroupCollector</a>&lt; N &gt;::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -240,12 +250,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a41d65bb1699b0f78e2165e5b9b043fe8"></a><!-- doxytag: member="DdMd::GroupCollector::nextPtr" ref="a41d65bb1699b0f78e2165e5b9b043fe8" args="()" -->
+<a class="anchor" id="a7300cc70bc0f36294edea8dd73f88f3d"></a><!-- doxytag: member="DdMd::GroupCollector::nextPtr" ref="a7300cc70bc0f36294edea8dd73f88f3d" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * nextPtr </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * <a class="el" href="classDdMd_1_1GroupCollector.html">DdMd::GroupCollector</a>&lt; N &gt;::nextPtr </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -260,16 +272,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="GroupCollector_8tpp_source.html#l00106">106</a> of file <a class="el" href="GroupCollector_8tpp_source.html">GroupCollector.tpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00166">Group&lt; N &gt;::atomPtr()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">Atom::isGhost()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00166">DdMd::Group&lt; N &gt;::atomPtr()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae9399f5ec7881c5d18173def8068108e"></a><!-- doxytag: member="DdMd::GroupCollector::send" ref="ae9399f5ec7881c5d18173def8068108e" args="()" -->
+<a class="anchor" id="a71255c8180f10e0a455ca9f108907de3"></a><!-- doxytag: member="DdMd::GroupCollector::send" ref="a71255c8180f10e0a455ca9f108907de3" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void send </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupCollector.html">DdMd::GroupCollector</a>&lt; N &gt;::send </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -283,7 +297,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="GroupCollector_8tpp_source.html#l00205">205</a> of file <a class="el" href="GroupCollector_8tpp_source.html">GroupCollector.tpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">Atom::isGhost()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -292,7 +306,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="GroupCollector_8tpp_source.html">GroupCollector.tpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

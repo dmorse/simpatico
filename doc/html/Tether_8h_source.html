@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -120,7 +120,7 @@
 <a name="l00148"></a>00148    <span class="comment">/*</span>
 <a name="l00149"></a>00149 <span class="comment">   * Constructor.</span>
 <a name="l00150"></a>00150 <span class="comment">   */</span>
-<a name="l00151"></a><a class="code" href="classMcMd_1_1Tether.html#a8e1476021ae1a5c02fc1e5f8e24ba2ec">00151</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Tether.html#a8e1476021ae1a5c02fc1e5f8e24ba2ec" title="Constructor.">Tether::Tether</a>()
+<a name="l00151"></a><a class="code" href="classMcMd_1_1Tether.html#a5630465361cd501bcb17d382ca1f3485">00151</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Tether.html#a5630465361cd501bcb17d382ca1f3485" title="Constructor.">Tether::Tether</a>()
 <a name="l00152"></a>00152     : anchor_(),
 <a name="l00153"></a>00153       atomPtr_(0),
 <a name="l00154"></a>00154       partnerPtr_(0),
@@ -131,13 +131,13 @@
 <a name="l00159"></a>00159 <span class="comment">   * Get anchor position by reference.</span>
 <a name="l00160"></a>00160 <span class="comment">   */</span>
 <a name="l00161"></a>00161    <span class="keyword">inline</span> <span class="keywordtype">void</span> Tether::setAnchor(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; anchor) 
-<a name="l00162"></a>00162    {  anchor_ = <a class="code" href="classMcMd_1_1Tether.html#aaf8cafd906530994db9c82816a3663f2" title="Get anchor position Vector by reference.">anchor</a>; }
+<a name="l00162"></a>00162    {  anchor_ = <a class="code" href="classMcMd_1_1Tether.html#a5f7ae7f8db41c1c0019b16d661a58ffa" title="Get anchor position Vector by reference.">anchor</a>; }
 <a name="l00163"></a>00163 
 <a name="l00164"></a>00164    <span class="comment">/*</span>
 <a name="l00165"></a>00165 <span class="comment">   * Associate this Tether with an Atom.</span>
 <a name="l00166"></a>00166 <span class="comment">   */</span>
 <a name="l00167"></a>00167    <span class="keyword">inline</span> <span class="keywordtype">void</span> Tether::setAtom(Atom&amp; atom)
-<a name="l00168"></a>00168    {  atomPtr_ = &amp;<a class="code" href="classMcMd_1_1Tether.html#ab77355ce6db0825e593a8d1736eb4645" title="Get the tethered Atom by reference.">atom</a>; }
+<a name="l00168"></a>00168    {  atomPtr_ = &amp;<a class="code" href="classMcMd_1_1Tether.html#a60100964eb3c31a6c02208f6120bdb21" title="Get the tethered Atom by reference.">atom</a>; }
 <a name="l00169"></a>00169 
 <a name="l00170"></a>00170    <span class="comment">/*</span>
 <a name="l00171"></a>00171 <span class="comment">   * Nullify pointer to Atom.</span>
@@ -149,13 +149,13 @@
 <a name="l00177"></a>00177 <span class="comment">   * Set Tether type index.</span>
 <a name="l00178"></a>00178 <span class="comment">   */</span>
 <a name="l00179"></a>00179    <span class="keyword">inline</span> <span class="keywordtype">void</span> Tether::setTypeId(<span class="keywordtype">int</span> typeId)
-<a name="l00180"></a>00180    {  typeId_ = <a class="code" href="classMcMd_1_1Tether.html#af68aca851173d8f261a70897bff349c9" title="Get the tether type id.">typeId</a>; }
+<a name="l00180"></a>00180    {  typeId_ = <a class="code" href="classMcMd_1_1Tether.html#a2ea1e713703eeede748c5cc3decbc4a1" title="Get the tether type id.">typeId</a>; }
 <a name="l00181"></a>00181 
 <a name="l00182"></a>00182    <span class="comment">/*</span>
 <a name="l00183"></a>00183 <span class="comment">   * Associate this Tether with a partner Tether.</span>
 <a name="l00184"></a>00184 <span class="comment">   */</span>
 <a name="l00185"></a>00185    <span class="keyword">inline</span> <span class="keywordtype">void</span> Tether::setPartner(Tether&amp; partner)
-<a name="l00186"></a>00186    {  partnerPtr_         = &amp;<a class="code" href="classMcMd_1_1Tether.html#a2df28f0c855f9c9f2556ea1c7d9921b7" title="Get the partner (if any) by reference.">partner</a>; }
+<a name="l00186"></a>00186    {  partnerPtr_         = &amp;<a class="code" href="classMcMd_1_1Tether.html#a0e89b10ff34102103cc6e8f6df23a256" title="Get the partner (if any) by reference.">partner</a>; }
 <a name="l00187"></a>00187 
 <a name="l00188"></a>00188    <span class="comment">/*</span>
 <a name="l00189"></a>00189 <span class="comment">   * Nullify pointer to Partner.</span>
@@ -166,37 +166,37 @@
 <a name="l00194"></a>00194    <span class="comment">/*</span>
 <a name="l00195"></a>00195 <span class="comment">   * Get anchor position by reference.</span>
 <a name="l00196"></a>00196 <span class="comment">   */</span>
-<a name="l00197"></a><a class="code" href="classMcMd_1_1Tether.html#aaf8cafd906530994db9c82816a3663f2">00197</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classMcMd_1_1Tether.html#aaf8cafd906530994db9c82816a3663f2" title="Get anchor position Vector by reference.">Tether::anchor</a>()<span class="keyword"> const</span>
+<a name="l00197"></a><a class="code" href="classMcMd_1_1Tether.html#a5f7ae7f8db41c1c0019b16d661a58ffa">00197</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classMcMd_1_1Tether.html#a5f7ae7f8db41c1c0019b16d661a58ffa" title="Get anchor position Vector by reference.">Tether::anchor</a>()<span class="keyword"> const</span>
 <a name="l00198"></a>00198 <span class="keyword">   </span>{  <span class="keywordflow">return</span> anchor_; }
 <a name="l00199"></a>00199 
 <a name="l00200"></a>00200    <span class="comment">/*</span>
 <a name="l00201"></a>00201 <span class="comment">   * Get associated Atom by reference.</span>
 <a name="l00202"></a>00202 <span class="comment">   */</span>
-<a name="l00203"></a><a class="code" href="classMcMd_1_1Tether.html#ab77355ce6db0825e593a8d1736eb4645">00203</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; <a class="code" href="classMcMd_1_1Tether.html#ab77355ce6db0825e593a8d1736eb4645" title="Get the tethered Atom by reference.">Tether::atom</a>()<span class="keyword"> const</span>
+<a name="l00203"></a><a class="code" href="classMcMd_1_1Tether.html#a60100964eb3c31a6c02208f6120bdb21">00203</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; <a class="code" href="classMcMd_1_1Tether.html#a60100964eb3c31a6c02208f6120bdb21" title="Get the tethered Atom by reference.">Tether::atom</a>()<span class="keyword"> const</span>
 <a name="l00204"></a>00204 <span class="keyword">   </span>{  <span class="keywordflow">return</span> *atomPtr_; }
 <a name="l00205"></a>00205 
 <a name="l00206"></a>00206    <span class="comment">/*</span>
 <a name="l00207"></a>00207 <span class="comment">   * Get type id.</span>
 <a name="l00208"></a>00208 <span class="comment">   */</span>
-<a name="l00209"></a><a class="code" href="classMcMd_1_1Tether.html#af68aca851173d8f261a70897bff349c9">00209</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Tether.html#af68aca851173d8f261a70897bff349c9" title="Get the tether type id.">Tether::typeId</a>()<span class="keyword"> const</span>
+<a name="l00209"></a><a class="code" href="classMcMd_1_1Tether.html#a2ea1e713703eeede748c5cc3decbc4a1">00209</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Tether.html#a2ea1e713703eeede748c5cc3decbc4a1" title="Get the tether type id.">Tether::typeId</a>()<span class="keyword"> const</span>
 <a name="l00210"></a>00210 <span class="keyword">   </span>{  <span class="keywordflow">return</span> typeId_; }
 <a name="l00211"></a>00211 
 <a name="l00212"></a>00212    <span class="comment">/*</span>
 <a name="l00213"></a>00213 <span class="comment">   * Get partner Tether by reference.</span>
 <a name="l00214"></a>00214 <span class="comment">   */</span>
-<a name="l00215"></a><a class="code" href="classMcMd_1_1Tether.html#a2df28f0c855f9c9f2556ea1c7d9921b7">00215</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; <a class="code" href="classMcMd_1_1Tether.html#a2df28f0c855f9c9f2556ea1c7d9921b7" title="Get the partner (if any) by reference.">Tether::partner</a>()<span class="keyword"> const</span>
+<a name="l00215"></a><a class="code" href="classMcMd_1_1Tether.html#a0e89b10ff34102103cc6e8f6df23a256">00215</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; <a class="code" href="classMcMd_1_1Tether.html#a0e89b10ff34102103cc6e8f6df23a256" title="Get the partner (if any) by reference.">Tether::partner</a>()<span class="keyword"> const</span>
 <a name="l00216"></a>00216 <span class="keyword">   </span>{  <span class="keywordflow">return</span> *partnerPtr_; }
 <a name="l00217"></a>00217 
 <a name="l00218"></a>00218    <span class="comment">/*</span>
 <a name="l00219"></a>00219 <span class="comment">   * Return true if this Tether is associated with an Atom.</span>
 <a name="l00220"></a>00220 <span class="comment">   */</span>
-<a name="l00221"></a><a class="code" href="classMcMd_1_1Tether.html#aa3d0cf1d61b62b37020e034c5de0c479">00221</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Tether.html#aa3d0cf1d61b62b37020e034c5de0c479" title="Is this Tether associated with Atom?">Tether::hasAtom</a>()<span class="keyword"> const</span>
+<a name="l00221"></a><a class="code" href="classMcMd_1_1Tether.html#ad9d4074d9d13f1677cce0a1c3df7eef1">00221</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Tether.html#ad9d4074d9d13f1677cce0a1c3df7eef1" title="Is this Tether associated with Atom?">Tether::hasAtom</a>()<span class="keyword"> const</span>
 <a name="l00222"></a>00222 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (atomPtr_ != 0); }
 <a name="l00223"></a>00223 
 <a name="l00224"></a>00224    <span class="comment">/*</span>
 <a name="l00225"></a>00225 <span class="comment">   * Return true if this Tether has a partner.</span>
 <a name="l00226"></a>00226 <span class="comment">   */</span>
-<a name="l00227"></a><a class="code" href="classMcMd_1_1Tether.html#a57859d02a9629a442af1574a7c253baa">00227</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Tether.html#a57859d02a9629a442af1574a7c253baa" title="Is Tether associated with a partner Tether?">Tether::hasPartner</a>()<span class="keyword"> const</span>
+<a name="l00227"></a><a class="code" href="classMcMd_1_1Tether.html#a9bf44353aab9269c8ab05ee6b5216681">00227</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Tether.html#a9bf44353aab9269c8ab05ee6b5216681" title="Is Tether associated with a partner Tether?">Tether::hasPartner</a>()<span class="keyword"> const</span>
 <a name="l00228"></a>00228 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (partnerPtr_ != 0); }
 <a name="l00229"></a>00229 
 <a name="l00230"></a>00230 
@@ -204,7 +204,7 @@
 <a name="l00232"></a>00232 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -58,7 +58,7 @@
 <a name="l00007"></a>00007 <span class="comment">/*</span>
 <a name="l00008"></a>00008 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00009"></a>00009 <span class="comment">*</span>
-<a name="l00010"></a>00010 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00010"></a>00010 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00011"></a>00011 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00012"></a>00012 <span class="comment">*/</span>
 <a name="l00013"></a>00013 
@@ -89,8 +89,8 @@
 <a name="l00038"></a>00038    <span class="comment">/*</span>
 <a name="l00039"></a>00039 <span class="comment">   * Constructor.</span>
 <a name="l00040"></a>00040 <span class="comment">   */</span>
-<a name="l00041"></a>00041    <a class="code" href="classMcMd_1_1ReplicaMove.html#a369d52010f498b478c132bf308bd8294" title="Constructor.">ReplicaMove::ReplicaMove</a>(System&amp; system) :
-<a name="l00042"></a><a class="code" href="classMcMd_1_1ReplicaMove.html#a369d52010f498b478c132bf308bd8294">00042</a>       systemPtr_(&amp;system),
+<a name="l00041"></a>00041    <a class="code" href="classMcMd_1_1ReplicaMove.html#af01ffed71cc8066d70b6af69132eddfa" title="Constructor.">ReplicaMove::ReplicaMove</a>(System&amp; system) :
+<a name="l00042"></a><a class="code" href="classMcMd_1_1ReplicaMove.html#af01ffed71cc8066d70b6af69132eddfa">00042</a>       systemPtr_(&amp;system),
 <a name="l00043"></a>00043       communicatorPtr_(0),
 <a name="l00044"></a>00044       myId_(-1),
 <a name="l00045"></a>00045       nProcs_(0),
@@ -133,8 +133,8 @@
 <a name="l00082"></a>00082    <span class="comment">/*</span>
 <a name="l00083"></a>00083 <span class="comment">   * Destructor.</span>
 <a name="l00084"></a>00084 <span class="comment">   */</span>
-<a name="l00085"></a>00085    <a class="code" href="classMcMd_1_1ReplicaMove.html#a165bb284bc8b5322feff8eeafc80523a" title="Destructor.">ReplicaMove::~ReplicaMove</a>()
-<a name="l00086"></a><a class="code" href="classMcMd_1_1ReplicaMove.html#a165bb284bc8b5322feff8eeafc80523a">00086</a>    {
+<a name="l00085"></a>00085    <a class="code" href="classMcMd_1_1ReplicaMove.html#ac7b12d5aeb1fcf6d5ded324a816d154d" title="Destructor.">ReplicaMove::~ReplicaMove</a>()
+<a name="l00086"></a><a class="code" href="classMcMd_1_1ReplicaMove.html#ac7b12d5aeb1fcf6d5ded324a816d154d">00086</a>    {
 <a name="l00087"></a>00087       <span class="keywordflow">if</span> (ptPositionPtr_) <span class="keyword">delete</span> [] ptPositionPtr_;
 <a name="l00088"></a>00088       <span class="keywordflow">if</span> (myPositionPtr_) <span class="keyword">delete</span> [] myPositionPtr_;
 <a name="l00089"></a>00089    }
@@ -142,8 +142,8 @@
 <a name="l00091"></a>00091    <span class="comment">/*</span>
 <a name="l00092"></a>00092 <span class="comment">   * Read attempting interval.</span>
 <a name="l00093"></a>00093 <span class="comment">   */</span>
-<a name="l00094"></a>00094    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ReplicaMove.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters.">ReplicaMove::readParam</a>(std::istream&amp; in)
-<a name="l00095"></a><a class="code" href="classMcMd_1_1ReplicaMove.html#ab5421d3c9175985c9acbf723e5392075">00095</a>    {
+<a name="l00094"></a>00094    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ReplicaMove.html#abe246fa0378db9226661134adda3b30e" title="Read parameters.">ReplicaMove::readParam</a>(std::istream&amp; in)
+<a name="l00095"></a><a class="code" href="classMcMd_1_1ReplicaMove.html#abe246fa0378db9226661134adda3b30e">00095</a>    {
 <a name="l00096"></a>00096       readBegin(in,<span class="stringliteral">&quot;ReplicaMove&quot;</span>);
 <a name="l00097"></a>00097       read&lt;long&gt;(in, <span class="stringliteral">&quot;interval&quot;</span>, interval_);
 <a name="l00098"></a>00098       <span class="keywordflow">if</span> (interval_ &lt;= 0) {
@@ -165,8 +165,8 @@
 <a name="l00114"></a>00114    <span class="comment">/*</span>
 <a name="l00115"></a>00115 <span class="comment">   * Perform replica exchange move.</span>
 <a name="l00116"></a>00116 <span class="comment">   */</span>
-<a name="l00117"></a>00117    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1ReplicaMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635" title="Attempt, and accept or reject a replica exchange move.">ReplicaMove::move</a>()
-<a name="l00118"></a><a class="code" href="classMcMd_1_1ReplicaMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635">00118</a>    {
+<a name="l00117"></a>00117    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1ReplicaMove.html#ad968452b731c73ed0176b12b0bb34022" title="Attempt, and accept or reject a replica exchange move.">ReplicaMove::move</a>()
+<a name="l00118"></a><a class="code" href="classMcMd_1_1ReplicaMove.html#ad968452b731c73ed0176b12b0bb34022">00118</a>    {
 <a name="l00119"></a>00119       MPI::Request request[4];
 <a name="l00120"></a>00120       MPI::Status  status;
 <a name="l00121"></a>00121       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">System::MoleculeIterator</a> molIter;
@@ -175,13 +175,13 @@
 <a name="l00124"></a>00124       <span class="keywordtype">int</span> recvPt, sendPt;
 <a name="l00125"></a>00125   
 <a name="l00126"></a>00126       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;int&gt;</a> permutation;
-<a name="l00127"></a>00127       permutation.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nProcs_);
+<a name="l00127"></a>00127       permutation.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nProcs_);
 <a name="l00128"></a>00128 
 <a name="l00129"></a>00129       <span class="comment">// Gather all derivatives of the perturbation Hamiltonians and parameters on processor with rank 0</span>
 <a name="l00130"></a>00130       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;double&gt;</a> myDerivatives;
-<a name="l00131"></a>00131       myDerivatives.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nParameters_);
+<a name="l00131"></a>00131       myDerivatives.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nParameters_);
 <a name="l00132"></a>00132       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;double&gt;</a> myParameters;
-<a name="l00133"></a>00133       myParameters.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nParameters_);
+<a name="l00133"></a>00133       myParameters.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nParameters_);
 <a name="l00134"></a>00134 
 <a name="l00135"></a>00135       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt; nParameters_; i++) {
 <a name="l00136"></a>00136          myDerivatives[i] = system().perturbation().derivative(i);
@@ -196,29 +196,29 @@
 <a name="l00145"></a>00145       <span class="keywordflow">if</span> (myId_ != 0) {
 <a name="l00146"></a>00146 
 <a name="l00147"></a>00147          <a class="code" href="classUtil_1_1MemoryOArchive.html" title="Save archive for packed heterogeneous binary data.">MemoryOArchive</a> sendCurrent;
-<a name="l00148"></a>00148          sendCurrent.<a class="code" href="classUtil_1_1MemoryOArchive.html#a831ffd04778c99ddab66d743c15b4adf" title="Allocate memory.">allocate</a>(size);
+<a name="l00148"></a>00148          sendCurrent.<a class="code" href="classUtil_1_1MemoryOArchive.html#a35a274c65ace40aa7082d4f779667282" title="Allocate memory.">allocate</a>(size);
 <a name="l00149"></a>00149 
 <a name="l00150"></a>00150          sendCurrent &lt;&lt; myDerivatives;
 <a name="l00151"></a>00151          sendCurrent &lt;&lt; myParameters;
 <a name="l00152"></a>00152 
-<a name="l00153"></a>00153          sendCurrent.<a class="code" href="classUtil_1_1MemoryOArchive.html#afb953aee65c5ae843b1f3fbf9a6c884f" title="Send packed data via MPI.">send</a>(*communicatorPtr_, 0);
+<a name="l00153"></a>00153          sendCurrent.<a class="code" href="classUtil_1_1MemoryOArchive.html#adffaaaeb29d85d44becb9d9e56c9877f" title="Send packed data via MPI.">send</a>(*communicatorPtr_, 0);
 <a name="l00154"></a>00154       } <span class="keywordflow">else</span> {
 <a name="l00155"></a>00155          <a class="code" href="classUtil_1_1DArray.html" title="Dynamically allocatable Array class template.">DArray&lt; DArray&lt;double&gt;</a> &gt; allDerivatives;
 <a name="l00156"></a>00156          <a class="code" href="classUtil_1_1DArray.html" title="Dynamically allocatable Array class template.">DArray&lt; DArray&lt;double&gt;</a> &gt; allParameters;
-<a name="l00157"></a>00157          allDerivatives.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nProcs_);
-<a name="l00158"></a>00158          allParameters.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nProcs_);
+<a name="l00157"></a>00157          allDerivatives.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nProcs_);
+<a name="l00158"></a>00158          allParameters.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nProcs_);
 <a name="l00159"></a>00159    
-<a name="l00160"></a>00160          allDerivatives[0].<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nParameters_);
+<a name="l00160"></a>00160          allDerivatives[0].<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nParameters_);
 <a name="l00161"></a>00161          allDerivatives[0] = myDerivatives;
-<a name="l00162"></a>00162          allParameters[0].<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nParameters_);
+<a name="l00162"></a>00162          allParameters[0].<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nParameters_);
 <a name="l00163"></a>00163          allParameters[0] = myParameters;
 <a name="l00164"></a>00164 
 <a name="l00165"></a>00165          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i&lt;nProcs_; i++) {
 <a name="l00166"></a>00166             <a class="code" href="classUtil_1_1MemoryIArchive.html" title="Input archive for packed heterogeneous binary data.">MemoryIArchive</a> recvPartner;
-<a name="l00167"></a>00167             recvPartner.<a class="code" href="classUtil_1_1MemoryIArchive.html#a831ffd04778c99ddab66d743c15b4adf" title="Allocate memory block.">allocate</a>(size);
-<a name="l00168"></a>00168             recvPartner.<a class="code" href="classUtil_1_1MemoryIArchive.html#a5aebd514e8e7b3901baf9ed0e9624d03" title="Receive packed data via MPI.">recv</a>(*communicatorPtr_, i);
-<a name="l00169"></a>00169             allDerivatives[i].<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nParameters_);
-<a name="l00170"></a>00170             allParameters[i].<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nParameters_);
+<a name="l00167"></a>00167             recvPartner.<a class="code" href="classUtil_1_1MemoryIArchive.html#a4365cb5b4e996c26f1f1bf784693aaac" title="Allocate memory block.">allocate</a>(size);
+<a name="l00168"></a>00168             recvPartner.<a class="code" href="classUtil_1_1MemoryIArchive.html#a01542e31d8712cad4cf5e7c198656124" title="Receive packed data via MPI.">recv</a>(*communicatorPtr_, i);
+<a name="l00169"></a>00169             allDerivatives[i].<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nParameters_);
+<a name="l00170"></a>00170             allParameters[i].<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nParameters_);
 <a name="l00171"></a>00171             recvPartner &gt;&gt; allDerivatives[i];
 <a name="l00172"></a>00172             recvPartner &gt;&gt; allParameters[i];
 <a name="l00173"></a>00173          }
@@ -309,8 +309,8 @@
 <a name="l00258"></a>00258       <span class="comment">// Pack atomic positions and types.</span>
 <a name="l00259"></a>00259       iA = 0;
 <a name="l00260"></a>00260       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; system().simulation().nSpecies(); ++iSpec){
-<a name="l00261"></a>00261          <span class="keywordflow">for</span> (system().begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter){
-<a name="l00262"></a>00262             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00261"></a>00261          <span class="keywordflow">for</span> (system().begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter){
+<a name="l00262"></a>00262             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00263"></a>00263                myPositionPtr_[iA] = atomIter-&gt;position();
 <a name="l00264"></a>00264                iA++;
 <a name="l00265"></a>00265             }
@@ -331,8 +331,8 @@
 <a name="l00280"></a>00280       <span class="comment">// Adopt the new atomic positions.</span>
 <a name="l00281"></a>00281       iA = 0;
 <a name="l00282"></a>00282       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; system().simulation().nSpecies(); ++iSpec){
-<a name="l00283"></a>00283          <span class="keywordflow">for</span> (system().begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter){
-<a name="l00284"></a>00284             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter){
+<a name="l00283"></a>00283          <span class="keywordflow">for</span> (system().begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter){
+<a name="l00284"></a>00284             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter){
 <a name="l00285"></a>00285                atomIter-&gt;position() = ptPositionPtr_[iA];
 <a name="l00286"></a>00286                ++iA;
 <a name="l00287"></a>00287             }
@@ -344,7 +344,7 @@
 <a name="l00293"></a>00293       <a class="code" href="classUtil_1_1Pair.html">sendRecvPair</a> partners;
 <a name="l00294"></a>00294       partners[0] = sendPt;
 <a name="l00295"></a>00295       partners[1] = recvPt;
-<a name="l00296"></a>00296       <a class="code" href="classUtil_1_1Notifier.html#ae5bd92cde9fe9871521a787b9d7f1b37" title="Notify the list of observers about an Event.">Notifier&lt;sendRecvPair&gt;::notifyObservers</a>(partners);
+<a name="l00296"></a>00296       <a class="code" href="classUtil_1_1Notifier.html#a789c7fe0ee38d5f6d5c675c4ded96c8c" title="Notify the list of observers about an Event.">Notifier&lt;sendRecvPair&gt;::notifyObservers</a>(partners);
 <a name="l00297"></a>00297 
 <a name="l00298"></a>00298 
 <a name="l00299"></a>00299       <span class="comment">// log information about exchange partner to file</span>
@@ -360,7 +360,7 @@
 <a name="l00309"></a>00309 <span class="preprocessor"></span><span class="preprocessor">#endif // ifdef MCMD_PERTURB</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

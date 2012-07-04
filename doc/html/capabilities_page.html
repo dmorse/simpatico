@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -53,8 +53,8 @@ Potential Energy</h2>
 <ul>
 <li>external one-body potentials</li>
 </ul>
-<p>Several different types of potential energy function are provided for the nonbonded pair interaction and for each type of covalent interactions. Others are easily added. To simplify integration of MC and MD simulations, all programs are currently restricted to models with differentiation potentials (i.e., not hard spheres), with no explicit constraints on bond lengths or bond angles. The default version of the program currently includes only non-bonded pair interactions and two-body covalent bond interactions. Other types of interactions can be enabled when the program is compiled by defining corresponding makefile variables.</p>
-<p>Source code for classes that represent potential energy functions, which we refer to as "interactions", are all in the src/inter directory, and are all defined in the "Inter" C++ namespace. The same set of such classes is used by the mcSim, mdSim, and ddSim programs.</p>
+<p>Several different choices of potential energy function are provided for the nonbonded pair interaction and for each type of covalent interactions. Others are easily added. To simplify integration of MC and MD simulations, all programs are currently restricted to models with differentiation potentials (i.e., not hard spheres), with no explicit constraints on bond lengths or bond angles. The default version of the program currently includes only non-bonded pair interactions and two-body covalent bond interactions. Other types of interactions can be enabled when the program is compiled by setting appropriate flags.</p>
+<p>Source code for classes that represent particular potential energy functions, which we refer to as "interactions", are all in the src/inter directory, and are all defined in the "Inter" C++ namespace. The same set of such interaction classes is available in the mcSim, mdSim, and ddSim programs.</p>
 <p>Long-range electrostatic potentials have not yet been implemented in any of the programs. This is the most important missing feature required to make the package suitable for atomistic models.</p>
 <h2><a class="anchor" id="features_algorithms_sec"></a>
 Simulation Algorithms</h2>
@@ -123,20 +123,20 @@ Auto-correlation functions for vector separations of atom pairs.  </li>
 <li>
 Intermediate scattering (van Hove) function S(k, t) .  </li>
 </ul>
-<p>All mcSim and mdSim data analysis classes can be used either on-the-fly, during a simulation, or for post-processing of a trajectory file or a sequence of configuration dump files. Postprocessing is done by the the mcSim and mdSim programs, by invoking a command that replaces the main the mcSim or mdSim simulation program, using a command that replaces the main simulation loop by a loop that reads a sequence of configurations from file.</p>
-<p>Thus far, very few data analyis and data output classes have been written for use with ddSim. MD trajectories from ddSim simulations can instead by post-processed by using mcSim or msSim as analysis tools.</p>
+<p>All mcSim and mdSim data analysis classes can be used either on-the-fly, during a simulation, or for post-processing of a trajectory file or a sequence of configuration dump files. Postprocessing is done by the the mcSim and mdSim programs, by invoking a command that replaces the main simulation loop by a loop that reads a sequence of configurations from file.</p>
+<p>Thus far, very few data analyis or data output classes have been written for use on-the-fly with ddSim. MD trajectories from ddSim simulations can instead by post-processed by using mcSim or msSim as analysis tools.</p>
 <p>Simpatico currently provides a very convenient tool for running and analyzing simulations of coarse-grained models of polymer liquids. It is not yet suitable for use with atomistic models, because of the absence of an electrostatic potential, and the absence of MC conformation sampling algorithms designed specifically for use with stiff angle potentials.</p>
 <p>Navigation: </p>
 <ul>
 <li>
-<a class="el" href="about_page.html">About Simpatico</a> (Next)  </li>
+<a class="el" href="goals_page.html">Goals</a> (Next)  </li>
 <li>
-<a class="el" href="index.html">Simpatico - Simulation Package for Polymer and Molecular Liquids</a> (Up)  </li>
+<a class="el" href="about_page.html">About</a> (Up)  </li>
 <li>
 <a class="el" href="contributors_page.html">Contributors</a> (Next)  </li>
 </ul>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

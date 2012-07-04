@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -79,31 +79,31 @@
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028    <span class="keyword">using namespace </span>Util;
 <a name="l00029"></a>00029 
-<a name="l00031"></a><a class="code" href="classMcMd_1_1VanHove.html#a029ca5d9df2c0b145fbca29dd5786c40">00031</a>    <a class="code" href="classMcMd_1_1VanHove.html#a029ca5d9df2c0b145fbca29dd5786c40" title="Constructor.">VanHove::VanHove</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system) 
+<a name="l00031"></a><a class="code" href="classMcMd_1_1VanHove.html#a5fc8d5a8a01c4387d69f66705c0c1883">00031</a>    <a class="code" href="classMcMd_1_1VanHove.html#a5fc8d5a8a01c4387d69f66705c0c1883" title="Constructor.">VanHove::VanHove</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system) 
 <a name="l00032"></a>00032     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
 <a name="l00033"></a>00033       isInitialized_(false)
 <a name="l00034"></a>00034    {}
 <a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="classMcMd_1_1VanHove.html#a13a185ead798845b22aa0ae4d1fd74b3">00036</a>    <a class="code" href="classMcMd_1_1VanHove.html#a13a185ead798845b22aa0ae4d1fd74b3" title="Destructor.">VanHove::~VanHove</a>() 
+<a name="l00036"></a><a class="code" href="classMcMd_1_1VanHove.html#a0e64c895c8d4793b705c0904a2681157">00036</a>    <a class="code" href="classMcMd_1_1VanHove.html#a0e64c895c8d4793b705c0904a2681157" title="Destructor.">VanHove::~VanHove</a>() 
 <a name="l00037"></a>00037    {}
 <a name="l00038"></a>00038 
-<a name="l00040"></a><a class="code" href="classMcMd_1_1VanHove.html#ab5421d3c9175985c9acbf723e5392075">00040</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file.">VanHove::readParam</a>(std::istream&amp; in) 
+<a name="l00040"></a><a class="code" href="classMcMd_1_1VanHove.html#a65c0e7313c3773bbaf73f8471e6d7727">00040</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#a65c0e7313c3773bbaf73f8471e6d7727" title="Read parameters from file.">VanHove::readParam</a>(std::istream&amp; in) 
 <a name="l00041"></a>00041    {
 <a name="l00042"></a>00042 
 <a name="l00043"></a>00043       <span class="comment">// Read interval and parameters for AutoCorrArray</span>
-<a name="l00044"></a>00044       <a class="code" href="classMcMd_1_1Diagnostic.html#a0d9d7b5fc89cf6f04d0119cfcc7ac942" title="Read parameter interval from file.">readInterval</a>(in);
-<a name="l00045"></a>00045       <a class="code" href="classMcMd_1_1Diagnostic.html#a7fb5e9c0364a81f5a630d0f26acfb234" title="Read outputFileName from file.">readOutputFileName</a>(in);
+<a name="l00044"></a>00044       <a class="code" href="classMcMd_1_1Diagnostic.html#abda32f953247ab813bbad3aa336d56c0" title="Read parameter interval from file.">readInterval</a>(in);
+<a name="l00045"></a>00045       <a class="code" href="classMcMd_1_1Diagnostic.html#a6cace7ea7c10f7a8a2a76dba8ed1122c" title="Read outputFileName from file.">readOutputFileName</a>(in);
 <a name="l00046"></a>00046 
-<a name="l00047"></a>00047       nAtomType_ = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a75990126a7bab14aff4a94db42b29f61" title="Get the number of atom types.">nAtomType</a>();
-<a name="l00048"></a>00048       atomTypeCoeffs_.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nAtomType_);
+<a name="l00047"></a>00047       nAtomType_ = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a54f547a8259478908be74fff6e76ba70" title="Get the number of atom types.">nAtomType</a>();
+<a name="l00048"></a>00048       atomTypeCoeffs_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtomType_);
 <a name="l00049"></a>00049       readDArray&lt;double&gt;(in, <span class="stringliteral">&quot;atomTypeCoeffs&quot;</span>, atomTypeCoeffs_, nAtomType_);
 <a name="l00050"></a>00050 
 <a name="l00051"></a>00051       read&lt;int&gt;(in, <span class="stringliteral">&quot;nBuffer&quot;</span>, nBuffer_);
 <a name="l00052"></a>00052       read&lt;int&gt;(in, <span class="stringliteral">&quot;nWave&quot;</span>, nWave_);
-<a name="l00053"></a>00053       waveIntVectors_.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nWave_);
-<a name="l00054"></a>00054       waveVectors_.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nWave_);
-<a name="l00055"></a>00055       fourierModes_.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nWave_);
-<a name="l00056"></a>00056       accumulators_.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nWave_);
+<a name="l00053"></a>00053       waveIntVectors_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nWave_);
+<a name="l00054"></a>00054       waveVectors_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nWave_);
+<a name="l00055"></a>00055       fourierModes_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nWave_);
+<a name="l00056"></a>00056       accumulators_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nWave_);
 <a name="l00057"></a>00057       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nWave_; ++i) {
 <a name="l00058"></a>00058          accumulators_[i].setParam(nBuffer_);
 <a name="l00059"></a>00059       }
@@ -115,7 +115,7 @@
 <a name="l00065"></a>00065    <span class="comment">/*</span>
 <a name="l00066"></a>00066 <span class="comment">   * Clear accumulators.</span>
 <a name="l00067"></a>00067 <span class="comment">   */</span>
-<a name="l00068"></a><a class="code" href="classMcMd_1_1VanHove.html#a4fc01d736fe50cf5b977f755b675f11d">00068</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#a4fc01d736fe50cf5b977f755b675f11d" title="Clear accumulators.">VanHove::setup</a>() 
+<a name="l00068"></a><a class="code" href="classMcMd_1_1VanHove.html#a6c8046215b166538672057ffa246fab3">00068</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#a6c8046215b166538672057ffa246fab3" title="Clear accumulators.">VanHove::setup</a>() 
 <a name="l00069"></a>00069    {
 <a name="l00070"></a>00070       <span class="keywordflow">if</span> (!isInitialized_) {
 <a name="l00071"></a>00071          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: Object not initialized&quot;</span>);
@@ -127,9 +127,9 @@
 <a name="l00077"></a>00077       }
 <a name="l00078"></a>00078    }
 <a name="l00079"></a>00079  
-<a name="l00081"></a><a class="code" href="classMcMd_1_1VanHove.html#afc17577823a371a5ead4e51ebb8ec2ef">00081</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Add particle pairs to VanHove histogram.">VanHove::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00081"></a><a class="code" href="classMcMd_1_1VanHove.html#a60d3df3f0c24633c5dc010192d6bcf25">00081</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#a60d3df3f0c24633c5dc010192d6bcf25" title="Add particle pairs to VanHove histogram.">VanHove::sample</a>(<span class="keywordtype">long</span> iStep) 
 <a name="l00082"></a>00082    {
-<a name="l00083"></a>00083       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Diagnostic.html#a56d6fc996d1e17d408288f86b6d9b4e7" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
+<a name="l00083"></a>00083       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Diagnostic.html#a6f9a95c770f5afc1a1efc65df7b9bea2" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
 <a name="l00084"></a>00084 
 <a name="l00085"></a>00085          <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  position;
 <a name="l00086"></a>00086          std::complex&lt;double&gt;  expFactor;
@@ -146,20 +146,20 @@
 <a name="l00097"></a>00097          }
 <a name="l00098"></a>00098  
 <a name="l00099"></a>00099          <span class="comment">// Loop over all atoms to calculate Fourier modes</span>
-<a name="l00100"></a>00100          nSpecies = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>();
+<a name="l00100"></a>00100          nSpecies = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>();
 <a name="l00101"></a>00101          <span class="keywordflow">for</span> (iSpecies = 0; iSpecies &lt; nSpecies; ++iSpecies) {
-<a name="l00102"></a>00102             <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpecies, molIter); 
-<a name="l00103"></a>00103             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00102"></a>00102             <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpecies, molIter); 
+<a name="l00103"></a>00103             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
 <a name="l00104"></a>00104                molIter-&gt;begin(atomIter); 
-<a name="l00105"></a>00105                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00105"></a>00105                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00106"></a>00106                   position = atomIter-&gt;position();
 <a name="l00107"></a>00107                   coeff    = atomTypeCoeffs_[atomIter-&gt;typeId()];
 <a name="l00108"></a>00108  
 <a name="l00109"></a>00109         <span class="comment">// Loop over wavevectors</span>
 <a name="l00110"></a>00110                   <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
 <a name="l00111"></a>00111                
-<a name="l00112"></a>00112                      product = position.<a class="code" href="classUtil_1_1Vector.html#a5431123ac320a0ed069d9c7a30702c7b" title="Return dot product of this vector and vector v.">dot</a>(waveVectors_[i]);
-<a name="l00113"></a>00113                      expFactor = exp( product*<a class="code" href="classUtil_1_1Constants.html#ae5e782ecd9edaa713f754637e8fbe364" title="Square root of -1.">Constants::Im</a> );
+<a name="l00112"></a>00112                      product = position.<a class="code" href="classUtil_1_1Vector.html#aa1b64030ac95721bc39038c003240c09" title="Return dot product of this vector and vector v.">dot</a>(waveVectors_[i]);
+<a name="l00113"></a>00113                      expFactor = exp( product*<a class="code" href="classUtil_1_1Constants.html#af5e73d2cc0c0da9efe5cdb9c3b100d86" title="Square root of -1.">Constants::Im</a> );
 <a name="l00114"></a>00114                      fourierModes_[i] += (coeff*expFactor);
 <a name="l00115"></a>00115        
 <a name="l00116"></a>00116                   }
@@ -170,7 +170,7 @@
 <a name="l00121"></a>00121          }
 <a name="l00122"></a>00122 
 <a name="l00123"></a>00123          <span class="comment">// Add Fourier modes to autocorrelation accumulators</span>
-<a name="l00124"></a>00124          <span class="keywordtype">double</span> sqrtV = sqrt(<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().boundary().volume());
+<a name="l00124"></a>00124          <span class="keywordtype">double</span> sqrtV = sqrt(<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().boundary().volume());
 <a name="l00125"></a>00125          <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
 <a name="l00126"></a>00126             accumulators_[i].sample(fourierModes_[i]/sqrtV);
 <a name="l00127"></a>00127          }
@@ -182,13 +182,13 @@
 <a name="l00136"></a>00136    <span class="keywordtype">void</span> VanHove::makeWaveVectors() 
 <a name="l00137"></a>00137    {
 <a name="l00138"></a>00138       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>    dWave;
-<a name="l00139"></a>00139       Boundary* boundaryPtr = &amp;<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary by reference.">boundary</a>();
+<a name="l00139"></a>00139       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>* boundaryPtr = &amp;<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#ace1b2b95dc094767d218e1dcf520b5ca" title="Get the Boundary by reference.">boundary</a>();
 <a name="l00140"></a>00140       <span class="keywordtype">int</span>       i, j;
 <a name="l00141"></a>00141 
 <a name="l00142"></a>00142       <span class="comment">// Calculate wavevectors</span>
 <a name="l00143"></a>00143       <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
-<a name="l00144"></a>00144          waveVectors_[i] = <a class="code" href="classUtil_1_1Vector.html#a9295b4b42a83e7087e7eb10e4a65fa5d" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>;
-<a name="l00145"></a>00145          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00144"></a>00144          waveVectors_[i] = <a class="code" href="classUtil_1_1Vector.html#a2b7442f15bc3e08a496e3dc3c684525b" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>;
+<a name="l00145"></a>00145          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00146"></a>00146             dWave  = boundaryPtr-&gt;reciprocalBasisVector(j);
 <a name="l00147"></a>00147             dWave *= waveIntVectors_[i][j];
 <a name="l00148"></a>00148             waveVectors_[i] += dWave;
@@ -196,32 +196,32 @@
 <a name="l00150"></a>00150       }
 <a name="l00151"></a>00151    }
 <a name="l00152"></a>00152 
-<a name="l00153"></a><a class="code" href="classMcMd_1_1VanHove.html#a7437b254e19e7e12fc2ec99945f4ecea">00153</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results to predefined output file.">VanHove::output</a>() 
+<a name="l00153"></a><a class="code" href="classMcMd_1_1VanHove.html#addf4611864effb9d603efbc31f2868c1">00153</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#addf4611864effb9d603efbc31f2868c1" title="Output results to predefined output file.">VanHove::output</a>() 
 <a name="l00154"></a>00154    {
 <a name="l00155"></a>00155       std::string suffix;
 <a name="l00156"></a>00156       <span class="keywordtype">int</span> i, j;
 <a name="l00157"></a>00157 
 <a name="l00158"></a>00158       <span class="comment">// Echo parameters to a log file</span>
-<a name="l00159"></a>00159       <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), outputFile_);
-<a name="l00160"></a>00160       <a class="code" href="classUtil_1_1ParamComposite.html#a3919e7db0ce53e1ead2be4016d4d09ac" title="Write all parameters to an output stream.">writeParam</a>(outputFile_);
+<a name="l00159"></a>00159       <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), outputFile_);
+<a name="l00160"></a>00160       <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">writeParam</a>(outputFile_);
 <a name="l00161"></a>00161       outputFile_.close();
 <a name="l00162"></a>00162 
 <a name="l00163"></a>00163       <span class="comment">// Output autocorrelation functions to file</span>
-<a name="l00164"></a>00164       <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
+<a name="l00164"></a>00164       <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
 <a name="l00165"></a>00165       <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
 <a name="l00166"></a>00166 
 <a name="l00167"></a>00167 <span class="preprocessor">         #if 0</span>
 <a name="l00168"></a>00168 <span class="preprocessor"></span>         <span class="comment">// Construct file suffix for this structure factor</span>
 <a name="l00169"></a>00169          suffix = std::string(<span class="stringliteral">&quot;_&quot;</span>);
-<a name="l00170"></a>00170          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
-<a name="l00171"></a>00171             suffix += <a class="code" href="namespaceUtil.html#a48ded7fea065b110a5bf453d3c30826f" title="Return string representation of an integer.">toString</a>(waveIntVectors_[i][j]);
+<a name="l00170"></a>00170          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00171"></a>00171             suffix += <a class="code" href="namespaceUtil.html#a69d6f862289b96b4b0c0591357c8823e" title="Return string representation of an integer.">toString</a>(waveIntVectors_[i][j]);
 <a name="l00172"></a>00172          }
 <a name="l00173"></a>00173          suffix += std::string(<span class="stringliteral">&quot;.dat&quot;</span>);
 <a name="l00174"></a>00174          outputFile_ &lt;&lt; suffix &lt;&lt; std::endl;
 <a name="l00175"></a>00175          <span class="comment">//fileMaster().openOutputFile(outputFileName(suffix), outputFile_);</span>
 <a name="l00176"></a>00176 <span class="preprocessor">         #endif</span>
 <a name="l00177"></a>00177 <span class="preprocessor"></span>
-<a name="l00178"></a>00178          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00178"></a>00178          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00179"></a>00179             outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(waveIntVectors_[i][j], 5);
 <a name="l00180"></a>00180          }
 <a name="l00181"></a>00181          outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[i].abs(), 20, 8);
@@ -239,19 +239,19 @@
 <a name="l00193"></a>00193    <span class="comment">/*</span>
 <a name="l00194"></a>00194 <span class="comment">   * Save state to binary file archive.</span>
 <a name="l00195"></a>00195 <span class="comment">   */</span>
-<a name="l00196"></a><a class="code" href="classMcMd_1_1VanHove.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">00196</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64" title="Save state to binary file archive.">VanHove::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
+<a name="l00196"></a><a class="code" href="classMcMd_1_1VanHove.html#afc0fef4f15bc3e8fceef6b3769e9167f">00196</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#afc0fef4f15bc3e8fceef6b3769e9167f" title="Save state to binary file archive.">VanHove::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
 <a name="l00197"></a>00197    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00198"></a>00198 
 <a name="l00199"></a>00199    <span class="comment">/*</span>
 <a name="l00200"></a>00200 <span class="comment">   * Load state from a binary file archive.</span>
 <a name="l00201"></a>00201 <span class="comment">   */</span>
-<a name="l00202"></a><a class="code" href="classMcMd_1_1VanHove.html#aa3d71af4cc5dfb2be6be816a8f562416">00202</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load state from a binary file archive.">VanHove::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00202"></a><a class="code" href="classMcMd_1_1VanHove.html#a009b90a4c3bf01f03e32431b1e3e5345">00202</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1VanHove.html#a009b90a4c3bf01f03e32431b1e3e5345" title="Load state from a binary file archive.">VanHove::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
 <a name="l00203"></a>00203    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00204"></a>00204 }
 <a name="l00205"></a>00205 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

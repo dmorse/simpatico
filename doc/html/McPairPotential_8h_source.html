@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -57,7 +57,7 @@
 <a name="l00005"></a>00005 <span class="comment">/*</span>
 <a name="l00006"></a>00006 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00007"></a>00007 <span class="comment">*</span>
-<a name="l00008"></a>00008 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00008"></a>00008 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00009"></a>00009 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00010"></a>00010 <span class="comment">*/</span>
 <a name="l00011"></a>00011 
@@ -109,39 +109,39 @@
 <a name="l00128"></a>00128 
 <a name="l00129"></a>00129    <span class="keyword">protected</span>:
 <a name="l00130"></a>00130 
-<a name="l00132"></a><a class="code" href="classMcMd_1_1McPairPotential.html#a54e2a5970ac228667d51af1a34a38168">00132</a>       <span class="keyword">mutable</span> <a class="code" href="classUtil_1_1FSArray.html">CellList::NeighborArray</a> <a class="code" href="classMcMd_1_1McPairPotential.html#a54e2a5970ac228667d51af1a34a38168" title="Array to hold neighbors returned by a CellList.">neighbors_</a>;
+<a name="l00132"></a><a class="code" href="classMcMd_1_1McPairPotential.html#ac4139ddf87cd317d6cae6f6d21e1936c">00132</a>       <span class="keyword">mutable</span> <a class="code" href="classUtil_1_1FSArray.html">CellList::NeighborArray</a> <a class="code" href="classMcMd_1_1McPairPotential.html#ac4139ddf87cd317d6cae6f6d21e1936c" title="Array to hold neighbors returned by a CellList.">neighbors_</a>;
 <a name="l00133"></a>00133 
-<a name="l00135"></a><a class="code" href="classMcMd_1_1McPairPotential.html#a7374c74a57500c39efa5b3a96835b433">00135</a>       <a class="code" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>  <a class="code" href="classMcMd_1_1McPairPotential.html#a7374c74a57500c39efa5b3a96835b433" title="Cell list for atom positions.">cellList_</a>;
+<a name="l00135"></a><a class="code" href="classMcMd_1_1McPairPotential.html#afb5d1007b97e7bf179d958a3c8e2b0e8">00135</a>       <a class="code" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>  <a class="code" href="classMcMd_1_1McPairPotential.html#afb5d1007b97e7bf179d958a3c8e2b0e8" title="Cell list for atom positions.">cellList_</a>;
 <a name="l00136"></a>00136 
 <a name="l00138"></a>00138       <span class="comment">// RArray&lt;Atom&gt; atoms_;</span>
 <a name="l00139"></a>00139 
-<a name="l00141"></a><a class="code" href="classMcMd_1_1McPairPotential.html#a796772c42c5aeda503a9e1f0243711f0">00141</a>       Boundary <a class="code" href="classMcMd_1_1McPairPotential.html#a796772c42c5aeda503a9e1f0243711f0" title="Alias for global atoms_ DArray of parent simulation.">maxBoundary_</a>;
+<a name="l00141"></a><a class="code" href="classMcMd_1_1McPairPotential.html#a4cb957ac52888cb13d62d78744562d78">00141</a>       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> <a class="code" href="classMcMd_1_1McPairPotential.html#a4cb957ac52888cb13d62d78744562d78" title="Alias for global atoms_ DArray of parent simulation.">maxBoundary_</a>;
 <a name="l00142"></a>00142 
 <a name="l00143"></a>00143    };
 <a name="l00144"></a>00144 
 <a name="l00145"></a>00145    <span class="comment">// Inline functions</span>
 <a name="l00146"></a>00146   
 <a name="l00147"></a>00147    <span class="comment">// Add an atom to CellList.</span>
-<a name="l00148"></a><a class="code" href="classMcMd_1_1McPairPotential.html#a2bd3c1a1c3ba81bb593203889d747f8a">00148</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairPotential.html#a2bd3c1a1c3ba81bb593203889d747f8a" title="Add an Atom to the CellList.">McPairPotential::addAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
+<a name="l00148"></a><a class="code" href="classMcMd_1_1McPairPotential.html#a5f9a8544557c959ef8e5b459642307d5">00148</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairPotential.html#a5f9a8544557c959ef8e5b459642307d5" title="Add an Atom to the CellList.">McPairPotential::addAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
 <a name="l00149"></a>00149    {  cellList_.addAtom(atom); }
 <a name="l00150"></a>00150 
 <a name="l00151"></a>00151    <span class="comment">// Delete an atom from the CellList.</span>
-<a name="l00152"></a><a class="code" href="classMcMd_1_1McPairPotential.html#a996c9a03f48f50325ddc703f3d5ee77d">00152</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairPotential.html#a996c9a03f48f50325ddc703f3d5ee77d" title="Remove an Atom from the CellList.">McPairPotential::deleteAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
+<a name="l00152"></a><a class="code" href="classMcMd_1_1McPairPotential.html#a6ea9564f65bfd560438f1b4f462059b5">00152</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairPotential.html#a6ea9564f65bfd560438f1b4f462059b5" title="Remove an Atom from the CellList.">McPairPotential::deleteAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
 <a name="l00153"></a>00153    {  cellList_.deleteAtom(atom); }
 <a name="l00154"></a>00154 
 <a name="l00155"></a>00155    <span class="comment">// Update the cell list to reflect a new Atom position.</span>
-<a name="l00156"></a><a class="code" href="classMcMd_1_1McPairPotential.html#a63604a1607bd782656cd0b946a78aa96">00156</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairPotential.html#a63604a1607bd782656cd0b946a78aa96" title="Update the cell list to reflect a new position.">McPairPotential::updateAtomCell</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
-<a name="l00157"></a>00157    {  cellList_.updateAtomCell(atom, atom.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>()); }
+<a name="l00156"></a><a class="code" href="classMcMd_1_1McPairPotential.html#aae8faaaf8d960ba12823c6421d03835e">00156</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairPotential.html#aae8faaaf8d960ba12823c6421d03835e" title="Update the cell list to reflect a new position.">McPairPotential::updateAtomCell</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
+<a name="l00157"></a>00157    {  cellList_.updateAtomCell(atom, atom.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>()); }
 <a name="l00158"></a>00158 
 <a name="l00159"></a>00159    <span class="comment">// Move atom to a new position.</span>
-<a name="l00160"></a><a class="code" href="classMcMd_1_1McPairPotential.html#ab8e4f11fee8b7f0f588800d92cee0b34">00160</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairPotential.html#ab8e4f11fee8b7f0f588800d92cee0b34" title="Move an Atom position, and update the CellList.">McPairPotential::moveAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;position)
+<a name="l00160"></a><a class="code" href="classMcMd_1_1McPairPotential.html#aaac9410ab3d1dae3e3e4125bea374df4">00160</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairPotential.html#aaac9410ab3d1dae3e3e4125bea374df4" title="Move an Atom position, and update the CellList.">McPairPotential::moveAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;position)
 <a name="l00161"></a>00161    {
-<a name="l00162"></a>00162       atom.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = position;
+<a name="l00162"></a>00162       atom.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = position;
 <a name="l00163"></a>00163       cellList_.updateAtomCell(atom, position);
 <a name="l00164"></a>00164    }
 <a name="l00165"></a>00165 
 <a name="l00166"></a>00166    <span class="comment">// Get the cellList by const reference.</span>
-<a name="l00167"></a><a class="code" href="classMcMd_1_1McPairPotential.html#a3ea7f59ef0e5a9f2c4ee3d61b3b5a1bd">00167</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>&amp; <a class="code" href="classMcMd_1_1McPairPotential.html#a3ea7f59ef0e5a9f2c4ee3d61b3b5a1bd" title="Get the cellList by const reference.">McPairPotential::cellList</a>()<span class="keyword"> const</span>
+<a name="l00167"></a><a class="code" href="classMcMd_1_1McPairPotential.html#a6fad89d8b802fb7ad37c1bce9d1bfd5d">00167</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>&amp; <a class="code" href="classMcMd_1_1McPairPotential.html#a6fad89d8b802fb7ad37c1bce9d1bfd5d" title="Get the cellList by const reference.">McPairPotential::cellList</a>()<span class="keyword"> const</span>
 <a name="l00168"></a>00168 <span class="keyword">   </span>{ <span class="keywordflow">return</span> cellList_; }
 <a name="l00169"></a>00169 
 <a name="l00170"></a>00170 } 
@@ -149,7 +149,7 @@
 <a name="l00172"></a>00172 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

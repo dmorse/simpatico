@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -93,8 +93,8 @@
 <a name="l00042"></a>00042    <span class="comment">/*</span>
 <a name="l00043"></a>00043 <span class="comment">   * Constructor.</span>
 <a name="l00044"></a>00044 <span class="comment">   */</span>
-<a name="l00045"></a>00045    <a class="code" href="classDdMd_1_1ConfigIo.html#a5fc23d19298cda65d2cbdaf29af60ee8" title="Default constructor.">ConfigIo::ConfigIo</a>()
-<a name="l00046"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a5fc23d19298cda65d2cbdaf29af60ee8">00046</a>     : domainPtr_(0),
+<a name="l00045"></a>00045    <a class="code" href="classDdMd_1_1ConfigIo.html#a3faa07354c6fcdbf932605d87d598662" title="Default constructor.">ConfigIo::ConfigIo</a>()
+<a name="l00046"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a3faa07354c6fcdbf932605d87d598662">00046</a>     : domainPtr_(0),
 <a name="l00047"></a>00047       boundaryPtr_(0),
 <a name="l00048"></a>00048       atomStoragePtr_(0),
 <a name="l00049"></a>00049       bondStoragePtr_(0),
@@ -117,8 +117,8 @@
 <a name="l00066"></a>00066    <span class="comment">/*</span>
 <a name="l00067"></a>00067 <span class="comment">   * Constructor.</span>
 <a name="l00068"></a>00068 <span class="comment">   */</span>
-<a name="l00069"></a>00069    <a class="code" href="classDdMd_1_1ConfigIo.html#a5fc23d19298cda65d2cbdaf29af60ee8" title="Default constructor.">ConfigIo::ConfigIo</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation)
-<a name="l00070"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a1e0db8c600da8145d2bf69563fa245ba">00070</a>     : domainPtr_(0),
+<a name="l00069"></a>00069    <a class="code" href="classDdMd_1_1ConfigIo.html#a3faa07354c6fcdbf932605d87d598662" title="Default constructor.">ConfigIo::ConfigIo</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation)
+<a name="l00070"></a><a class="code" href="classDdMd_1_1ConfigIo.html#aa65db2b9c8dafa37607e359ba3f152f5">00070</a>     : domainPtr_(0),
 <a name="l00071"></a>00071       boundaryPtr_(0),
 <a name="l00072"></a>00072       atomStoragePtr_(0),
 <a name="l00073"></a>00073       bondStoragePtr_(0),
@@ -137,25 +137,25 @@
 <a name="l00086"></a>00086       , dihedralCacheCapacity_(0)
 <a name="l00087"></a>00087       #endif
 <a name="l00088"></a>00088    {
-<a name="l00089"></a>00089       associate(simulation.<a class="code" href="classDdMd_1_1Simulation.html#a64ddaf9dd004b6c301f8f23e8995b6d1" title="Get the Domain by reference.">domain</a>(),
-<a name="l00090"></a>00090                 simulation.<a class="code" href="classDdMd_1_1Simulation.html#a5daa73910cfb398e1ba647b4821d18ba" title="Get the Boundary by reference.">boundary</a>(),
-<a name="l00091"></a>00091                 simulation.<a class="code" href="classDdMd_1_1Simulation.html#aa34b0aab4d37e8b42704954d57b5c126" title="Get the AtomStorage by reference.">atomStorage</a>(),
-<a name="l00092"></a>00092                 simulation.<a class="code" href="classDdMd_1_1Simulation.html#ac0ff8b7a630972e48ad29b007ae770de" title="Get the BondStorage by reference.">bondStorage</a>(),
+<a name="l00089"></a>00089       associate(simulation.<a class="code" href="classDdMd_1_1Simulation.html#a4bcb8e6e1482b6e825e54d71e93b9e6c" title="Get the Domain by reference.">domain</a>(),
+<a name="l00090"></a>00090                 simulation.<a class="code" href="classDdMd_1_1Simulation.html#a976114ff90d628068ccaa7b62be9ed08" title="Get the Boundary by reference.">boundary</a>(),
+<a name="l00091"></a>00091                 simulation.<a class="code" href="classDdMd_1_1Simulation.html#a08b21df742e75449aa5d57a7c9fc9b5c" title="Get the AtomStorage by reference.">atomStorage</a>(),
+<a name="l00092"></a>00092                 simulation.<a class="code" href="classDdMd_1_1Simulation.html#a843e0d761026f9a766486a2a26039815" title="Get the BondStorage by reference.">bondStorage</a>(),
 <a name="l00093"></a>00093 <span class="preprocessor">                #ifdef INTER_ANGLE</span>
 <a name="l00094"></a>00094 <span class="preprocessor"></span>                simulation.angleStorage(),
 <a name="l00095"></a>00095 <span class="preprocessor">                #endif</span>
 <a name="l00096"></a>00096 <span class="preprocessor"></span><span class="preprocessor">                #ifdef INTER_DIHEDRAL</span>
 <a name="l00097"></a>00097 <span class="preprocessor"></span>                simulation.dihedralStorage(),
 <a name="l00098"></a>00098 <span class="preprocessor">                #endif</span>
-<a name="l00099"></a>00099 <span class="preprocessor"></span>                simulation.<a class="code" href="classDdMd_1_1Simulation.html#ad6f298ccec40b581e758eec243021929" title="Get the Buffer by reference.">buffer</a>()
+<a name="l00099"></a>00099 <span class="preprocessor"></span>                simulation.<a class="code" href="classDdMd_1_1Simulation.html#a6c78802f0ee142f772aa7dd86679d4db" title="Get the Buffer by reference.">buffer</a>()
 <a name="l00100"></a>00100                );
 <a name="l00101"></a>00101    }
 <a name="l00102"></a>00102 
 <a name="l00103"></a>00103    <span class="comment">/*</span>
 <a name="l00104"></a>00104 <span class="comment">   * Associate with required domain, boundary, storage, and buffer objects.</span>
 <a name="l00105"></a>00105 <span class="comment">   */</span>
-<a name="l00106"></a>00106    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#ad25bfa92e599efa4705f10d1c537dec2" title="Associate with related objects.">ConfigIo::associate</a>(<a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain, Boundary&amp; boundary,
-<a name="l00107"></a><a class="code" href="classDdMd_1_1ConfigIo.html#ad25bfa92e599efa4705f10d1c537dec2">00107</a>                             <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; atomStorage,
+<a name="l00106"></a>00106    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#a36fdd33b4d149bc67aaf1ac3fede6a8f" title="Associate with related objects.">ConfigIo::associate</a>(<a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain, <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary,
+<a name="l00107"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a36fdd33b4d149bc67aaf1ac3fede6a8f">00107</a>                             <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; atomStorage,
 <a name="l00108"></a>00108                             <a class="code" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a>&amp; bondStorage,
 <a name="l00109"></a>00109                             #ifdef INTER_ANGLE
 <a name="l00110"></a>00110                             <a class="code" href="classDdMd_1_1AngleStorage.html" title="Container for angles objects.">AngleStorage</a>&amp; angleStorage,
@@ -196,8 +196,8 @@
 <a name="l00145"></a>00145    <span class="comment">/*</span>
 <a name="l00146"></a>00146 <span class="comment">   * Read cache size and allocate memory.</span>
 <a name="l00147"></a>00147 <span class="comment">   */</span>
-<a name="l00148"></a>00148    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#ab5421d3c9175985c9acbf723e5392075" title="Read cache size and allocate memory.">ConfigIo::readParam</a>(std::istream&amp; in)
-<a name="l00149"></a><a class="code" href="classDdMd_1_1ConfigIo.html#ab5421d3c9175985c9acbf723e5392075">00149</a>    {
+<a name="l00148"></a>00148    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#a9f85afd769fcbbb91825adb79dd6fec7" title="Read cache size and allocate memory.">ConfigIo::readParam</a>(std::istream&amp; in)
+<a name="l00149"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a9f85afd769fcbbb91825adb79dd6fec7">00149</a>    {
 <a name="l00150"></a>00150       readBegin(in, <span class="stringliteral">&quot;ConfigIo&quot;</span>);
 <a name="l00151"></a>00151       read&lt;int&gt;(in, <span class="stringliteral">&quot;atomCacheCapacity&quot;</span>, atomCacheCapacity_);
 <a name="l00152"></a>00152       atomDistributor_.initialize(atomCacheCapacity_);
@@ -221,8 +221,8 @@
 <a name="l00170"></a>00170    <span class="comment">/*</span>
 <a name="l00171"></a>00171 <span class="comment">   * Set parameters and allocate memory.</span>
 <a name="l00172"></a>00172 <span class="comment">   */</span>
-<a name="l00173"></a>00173    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#add9aa36be3771b2b9b0a16032c6dd58e" title="Read cache size and allocate memory.">ConfigIo::initialize</a>(<span class="keywordtype">int</span> atomCacheCapacity, <span class="keywordtype">int</span> bondCacheCapacity
-<a name="l00174"></a><a class="code" href="classDdMd_1_1ConfigIo.html#add9aa36be3771b2b9b0a16032c6dd58e">00174</a>                              #ifdef INTER_ANGLE
+<a name="l00173"></a>00173    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#adbb0944d2f7ca26893da0439fd227f7d" title="Read cache size and allocate memory.">ConfigIo::initialize</a>(<span class="keywordtype">int</span> atomCacheCapacity, <span class="keywordtype">int</span> bondCacheCapacity
+<a name="l00174"></a><a class="code" href="classDdMd_1_1ConfigIo.html#adbb0944d2f7ca26893da0439fd227f7d">00174</a>                              #ifdef INTER_ANGLE
 <a name="l00175"></a>00175                              , <span class="keywordtype">int</span> angleCacheCapacity
 <a name="l00176"></a>00176                              #endif
 <a name="l00177"></a>00177                              #ifdef INTER_DIHEDRAL
@@ -263,20 +263,20 @@
 <a name="l00212"></a>00212          file &gt;&gt; <a class="code" href="classUtil_1_1Label.html" title="A label string in a file format.">Label</a>(nGroupLabel) &gt;&gt; nGroup;
 <a name="l00213"></a>00213          <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a>* groupPtr;
 <a name="l00214"></a>00214          <span class="keywordtype">int</span> i, j, k;
-<a name="l00215"></a>00215          distributor.<a class="code" href="classDdMd_1_1GroupDistributor.html#a4fc01d736fe50cf5b977f755b675f11d" title="Initialize Buffer for sending.">setup</a>();
+<a name="l00215"></a>00215          distributor.<a class="code" href="classDdMd_1_1GroupDistributor.html#a6cc0ca70e3d27faca3515f4cd3b40ba1" title="Initialize Buffer for sending.">setup</a>();
 <a name="l00216"></a>00216          <span class="keywordflow">for</span> (i = 0; i &lt; nGroup; ++i) {
-<a name="l00217"></a>00217             groupPtr = distributor.<a class="code" href="classDdMd_1_1GroupDistributor.html#a8471e0d31f0964a614a24305bae1e584" title="Returns pointer an address available for a new Group&amp;lt;N&amp;gt;.">newPtr</a>();
+<a name="l00217"></a>00217             groupPtr = distributor.<a class="code" href="classDdMd_1_1GroupDistributor.html#a37fae7c1153d8d4f93c6acafec0527d4" title="Returns pointer an address available for a new Group&amp;lt;N&amp;gt;.">newPtr</a>();
 <a name="l00218"></a>00218             file &gt;&gt; *groupPtr;
 <a name="l00219"></a>00219             <span class="keywordflow">for</span> (j = 0; j &lt; 2; ++j) {
-<a name="l00220"></a>00220                k = groupPtr-&gt;<a class="code" href="classDdMd_1_1Group.html#ab366447c15a7669021df12ff0e090520" title="Get the id for a specific atom in the Group.">atomId</a>(j);
+<a name="l00220"></a>00220                k = groupPtr-&gt;<a class="code" href="classDdMd_1_1Group.html#a949e11f2c2e90e04396e1a0b41ad3486" title="Get the id for a specific atom in the Group.">atomId</a>(j);
 <a name="l00221"></a>00221             }
-<a name="l00222"></a>00222             distributor.<a class="code" href="classDdMd_1_1GroupDistributor.html#a72f10c9e9a40d72ecf1205c43153b9ca" title="Add a group to the cache for sending, send if necessary.">add</a>();
+<a name="l00222"></a>00222             distributor.<a class="code" href="classDdMd_1_1GroupDistributor.html#a1b72c07d2d0cab4f9664d499246bf5f9" title="Add a group to the cache for sending, send if necessary.">add</a>();
 <a name="l00223"></a>00223          }
 <a name="l00224"></a>00224          <span class="comment">// Send any groups not sent previously.</span>
-<a name="l00225"></a>00225          distributor.<a class="code" href="classDdMd_1_1GroupDistributor.html#ae9399f5ec7881c5d18173def8068108e" title="Send all atoms that have not be sent previously.">send</a>();
+<a name="l00225"></a>00225          distributor.<a class="code" href="classDdMd_1_1GroupDistributor.html#a80a3ed6912ae0ed8c7a617787d8ba35c" title="Send all atoms that have not be sent previously.">send</a>();
 <a name="l00226"></a>00226       } <span class="keywordflow">else</span> { <span class="comment">// If I am not the master processor</span>
 <a name="l00227"></a>00227          <span class="comment">// Receive all groups into BondStorage</span>
-<a name="l00228"></a>00228          distributor.<a class="code" href="classDdMd_1_1GroupDistributor.html#a815cc316754eed11120036e04cd321d2" title="Receive all atoms sent by master processor.">receive</a>();
+<a name="l00228"></a>00228          distributor.<a class="code" href="classDdMd_1_1GroupDistributor.html#a393c6da8cc1fe7e1781080ec62b1c7bb" title="Receive all atoms sent by master processor.">receive</a>();
 <a name="l00229"></a>00229       }
 <a name="l00230"></a>00230       <span class="keywordflow">return</span> nGroup;
 <a name="l00231"></a>00231    }
@@ -284,8 +284,8 @@
 <a name="l00233"></a>00233    <span class="comment">/*</span>
 <a name="l00234"></a>00234 <span class="comment">   * Read a configuration file.</span>
 <a name="l00235"></a>00235 <span class="comment">   */</span>
-<a name="l00236"></a>00236    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#aa7daff48dfb96ede37b960254bf1f4a2" title="Read configuration file.">ConfigIo::readConfig</a>(std::istream&amp; file, <a class="code" href="group__DdMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> maskPolicy)
-<a name="l00237"></a><a class="code" href="classDdMd_1_1ConfigIo.html#aa7daff48dfb96ede37b960254bf1f4a2">00237</a>    {
+<a name="l00236"></a>00236    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#a025c2daa1291a3ec0071f36968c1eaad" title="Read configuration file.">ConfigIo::readConfig</a>(std::istream&amp; file, <a class="code" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> maskPolicy)
+<a name="l00237"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a025c2daa1291a3ec0071f36968c1eaad">00237</a>    {
 <a name="l00238"></a>00238 
 <a name="l00239"></a>00239       <span class="comment">// Read and broadcast boundary</span>
 <a name="l00240"></a>00240       <span class="keywordflow">if</span> (domain().isMaster()) {  
@@ -327,10 +327,10 @@
 <a name="l00276"></a>00276             <span class="keywordflow">if</span> (id &lt; 0 || id &gt;= totalAtomCapacity) {
 <a name="l00277"></a>00277                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atom id&quot;</span>);
 <a name="l00278"></a>00278             }
-<a name="l00279"></a>00279             atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#af27d12f590d5654c5068497d58825b29" title="Set unique id for this Atom.">setId</a>(<span class="keywordtype">id</span>);
-<a name="l00280"></a>00280             atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a4eda9bc9ef7228643fd3311552601523" title="Set the atom type index.">setTypeId</a>(typeId);
-<a name="l00281"></a>00281             file &gt;&gt; atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>();
-<a name="l00282"></a>00282             file &gt;&gt; atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a0a918625496f209cee72908ba31867a2" title="Get velocity Vector by reference.">velocity</a>();
+<a name="l00279"></a>00279             atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae" title="Set unique id for this Atom.">setId</a>(<span class="keywordtype">id</span>);
+<a name="l00280"></a>00280             atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a5dd225a3f99ad3c2963ee69d1c90a4af" title="Set the atom type index.">setTypeId</a>(typeId);
+<a name="l00281"></a>00281             file &gt;&gt; atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>();
+<a name="l00282"></a>00282             file &gt;&gt; atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ad553edac6d868c6ab2c1f967f8c1eeea" title="Get velocity Vector by reference.">velocity</a>();
 <a name="l00283"></a>00283 
 <a name="l00284"></a>00284             <span class="comment">// Add atom to list for sending.</span>
 <a name="l00285"></a>00285             rank = atomDistributor().addAtom();
@@ -401,20 +401,20 @@
 <a name="l00350"></a>00350    {
 <a name="l00351"></a>00351       <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a>* groupPtr;
 <a name="l00352"></a>00352       <span class="keywordtype">int</span>       nGroup;
-<a name="l00353"></a>00353       storage.<a class="code" href="classDdMd_1_1GroupStorage.html#a7f7642aaa5f071e12ad230093559e13b" title="Compute and store the number of distinct groups on all processors.">computeNTotal</a>(domain().communicator());
-<a name="l00354"></a>00354       nGroup = storage.<a class="code" href="classDdMd_1_1GroupStorage.html#a502aae408ac5875ceb770f780ba954eb" title="Return total number of distinct groups on all processors.">nTotal</a>();
+<a name="l00353"></a>00353       storage.<a class="code" href="classDdMd_1_1GroupStorage.html#a6b83c531665594d3a40328aaef57d4d4" title="Compute and store the number of distinct groups on all processors.">computeNTotal</a>(domain().communicator());
+<a name="l00354"></a>00354       nGroup = storage.<a class="code" href="classDdMd_1_1GroupStorage.html#a7772dc78cc8ae60c2c8cf9632a436891" title="Return total number of distinct groups on all processors.">nTotal</a>();
 <a name="l00355"></a>00355       <span class="keywordflow">if</span> (domain().isMaster()) {  
 <a name="l00356"></a>00356          file &lt;&lt; std::endl;
 <a name="l00357"></a>00357          file &lt;&lt; sectionLabel &lt;&lt; std::endl;
 <a name="l00358"></a>00358          file &lt;&lt; nGroupLabel &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(nGroup, 10) &lt;&lt; std::endl;
-<a name="l00359"></a>00359          collector.<a class="code" href="classDdMd_1_1GroupCollector.html#a4fc01d736fe50cf5b977f755b675f11d" title="Setup master processor for receiving.">setup</a>();
-<a name="l00360"></a>00360          groupPtr = collector.<a class="code" href="classDdMd_1_1GroupCollector.html#a41d65bb1699b0f78e2165e5b9b043fe8" title="Return a pointer to the next available atom, or null.">nextPtr</a>();
+<a name="l00359"></a>00359          collector.<a class="code" href="classDdMd_1_1GroupCollector.html#a47ca243d3c65bfaa03dcd8ec5db2fb06" title="Setup master processor for receiving.">setup</a>();
+<a name="l00360"></a>00360          groupPtr = collector.<a class="code" href="classDdMd_1_1GroupCollector.html#a7300cc70bc0f36294edea8dd73f88f3d" title="Return a pointer to the next available atom, or null.">nextPtr</a>();
 <a name="l00361"></a>00361          <span class="keywordflow">while</span> (groupPtr) {
 <a name="l00362"></a>00362             file &lt;&lt; *groupPtr &lt;&lt; std::endl;
-<a name="l00363"></a>00363             groupPtr = collector.<a class="code" href="classDdMd_1_1GroupCollector.html#a41d65bb1699b0f78e2165e5b9b043fe8" title="Return a pointer to the next available atom, or null.">nextPtr</a>();
+<a name="l00363"></a>00363             groupPtr = collector.<a class="code" href="classDdMd_1_1GroupCollector.html#a7300cc70bc0f36294edea8dd73f88f3d" title="Return a pointer to the next available atom, or null.">nextPtr</a>();
 <a name="l00364"></a>00364          }
 <a name="l00365"></a>00365       } <span class="keywordflow">else</span> { 
-<a name="l00366"></a>00366          collector.<a class="code" href="classDdMd_1_1GroupCollector.html#ae9399f5ec7881c5d18173def8068108e" title="Send all groups to the master.">send</a>();
+<a name="l00366"></a>00366          collector.<a class="code" href="classDdMd_1_1GroupCollector.html#a71255c8180f10e0a455ca9f108907de3" title="Send all groups to the master.">send</a>();
 <a name="l00367"></a>00367       }
 <a name="l00368"></a>00368       <span class="keywordflow">return</span> nGroup;
 <a name="l00369"></a>00369    }
@@ -422,8 +422,8 @@
 <a name="l00371"></a>00371    <span class="comment">/* </span>
 <a name="l00372"></a>00372 <span class="comment">   * Write the configuration file.</span>
 <a name="l00373"></a>00373 <span class="comment">   */</span>
-<a name="l00374"></a>00374    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#abe00fbfb36b9498ec7da0b99554c815a" title="Write configuration file.">ConfigIo::writeConfig</a>(std::ostream&amp; file)
-<a name="l00375"></a><a class="code" href="classDdMd_1_1ConfigIo.html#abe00fbfb36b9498ec7da0b99554c815a">00375</a>    {
+<a name="l00374"></a>00374    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#a4e0634a8251592e6cbc1299b8c433979" title="Write configuration file.">ConfigIo::writeConfig</a>(std::ostream&amp; file)
+<a name="l00375"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a4e0634a8251592e6cbc1299b8c433979">00375</a>    {
 <a name="l00376"></a>00376 
 <a name="l00377"></a>00377       <span class="comment">// Write Boundary dimensions</span>
 <a name="l00378"></a>00378       <span class="keywordflow">if</span> (domain().isMaster()) {
@@ -440,12 +440,12 @@
 <a name="l00389"></a>00389          atomCollector_.setup();
 <a name="l00390"></a>00390          <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr = atomCollector_.nextPtr();
 <a name="l00391"></a>00391          <span class="keywordflow">while</span> (atomPtr) {
-<a name="l00392"></a>00392             file &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get unique global index.">id</a>(), 10) &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get atom type index.">typeId</a>(), 6)
-<a name="l00393"></a>00393                  &lt;&lt; atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>() &lt;&lt; std::endl
-<a name="l00394"></a>00394                  &lt;&lt; <span class="stringliteral">&quot;                &quot;</span> &lt;&lt; atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a0a918625496f209cee72908ba31867a2" title="Get velocity Vector by reference.">velocity</a>();
+<a name="l00392"></a>00392             file &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">id</a>(), 10) &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a6cadb772421f5337885fcf2de3c8fc3c" title="Get atom type index.">typeId</a>(), 6)
+<a name="l00393"></a>00393                  &lt;&lt; atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>() &lt;&lt; std::endl
+<a name="l00394"></a>00394                  &lt;&lt; <span class="stringliteral">&quot;                &quot;</span> &lt;&lt; atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ad553edac6d868c6ab2c1f967f8c1eeea" title="Get velocity Vector by reference.">velocity</a>();
 <a name="l00395"></a>00395 <span class="preprocessor">            #if 0</span>
-<a name="l00396"></a>00396 <span class="preprocessor"></span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j &lt; atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classDdMd_1_1Mask.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return the number of masked atoms.">size</a>(); ++j) {
-<a name="l00397"></a>00397                file &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">mask</a>()[j], 8);
+<a name="l00396"></a>00396 <span class="preprocessor"></span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j=0; j &lt; atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8a468104f3541cdf012977f3de4f0e98" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classDdMd_1_1Mask.html#a48c8c88539a59e00cba4cc0b674ecc4c" title="Return the number of masked atoms.">size</a>(); ++j) {
+<a name="l00397"></a>00397                file &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8a468104f3541cdf012977f3de4f0e98" title="Get the associated Mask by reference.">mask</a>()[j], 8);
 <a name="l00398"></a>00398             }
 <a name="l00399"></a>00399 <span class="preprocessor">            #endif</span>
 <a name="l00400"></a>00400 <span class="preprocessor"></span>            file &lt;&lt; std::endl;
@@ -472,30 +472,30 @@
 <a name="l00421"></a>00421 <span class="preprocessor"></span>
 <a name="l00422"></a>00422    }
 <a name="l00423"></a>00423  
-<a name="l00424"></a>00424    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#ad145b4d58646be27fd728356390c9b1c" title="Set masks on all atoms.">ConfigIo::setAtomMasks</a>() 
-<a name="l00425"></a><a class="code" href="classDdMd_1_1ConfigIo.html#ad145b4d58646be27fd728356390c9b1c">00425</a>    {
+<a name="l00424"></a>00424    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ConfigIo.html#a80e1df26bbd0f714e39a83df37d08b8e" title="Set masks on all atoms.">ConfigIo::setAtomMasks</a>() 
+<a name="l00425"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a80e1df26bbd0f714e39a83df37d08b8e">00425</a>    {
 <a name="l00426"></a>00426 
 <a name="l00427"></a>00427       <a class="code" href="classDdMd_1_1AtomIterator.html" title="Iterator for all atoms owned by an AtomStorage.">AtomIterator</a>     atomIter;
 <a name="l00428"></a>00428       atomStorage().begin(atomIter);
-<a name="l00429"></a>00429       <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter) {
+<a name="l00429"></a>00429       <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter) {
 <a name="l00430"></a>00430          atomIter-&gt;mask().clear();
 <a name="l00431"></a>00431       }
 <a name="l00432"></a>00432   
 <a name="l00433"></a>00433       <span class="keywordtype">int</span>   atomId0, atomId1; 
 <a name="l00434"></a>00434       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr0;
 <a name="l00435"></a>00435       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr1;
-<a name="l00436"></a>00436       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group&amp;lt;N&amp;gt; objects owned by this processor.">GroupIterator&lt;2&gt;</a> bondIter;
+<a name="l00436"></a>00436       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group &amp;lt; N &amp;gt; objects owned by a GroupStorage&amp;lt; N &amp;gt;.">GroupIterator&lt;2&gt;</a> bondIter;
 <a name="l00437"></a>00437       bondStorage().begin(bondIter);
-<a name="l00438"></a>00438       <span class="keywordflow">for</span> ( ; bondIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++bondIter) {
+<a name="l00438"></a>00438       <span class="keywordflow">for</span> ( ; bondIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++bondIter) {
 <a name="l00439"></a>00439          atomId0  = bondIter-&gt;atomId(0);
 <a name="l00440"></a>00440          atomId1  = bondIter-&gt;atomId(1);
 <a name="l00441"></a>00441          atomPtr0 = atomStorage().find(atomId0);
 <a name="l00442"></a>00442          atomPtr1 = atomStorage().find(atomId1);
 <a name="l00443"></a>00443          <span class="keywordflow">if</span> (atomPtr0) {
-<a name="l00444"></a>00444             atomPtr0-&gt;<a class="code" href="classDdMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classDdMd_1_1Mask.html#a7c6cfb23f3e3ddb8093c318e7f042b36" title="Add an Atom to the masked set.">append</a>(atomId1);
+<a name="l00444"></a>00444             atomPtr0-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8a468104f3541cdf012977f3de4f0e98" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classDdMd_1_1Mask.html#a19dd062bf1ebe985153a7545e8e3c4bc" title="Add an Atom to the masked set.">append</a>(atomId1);
 <a name="l00445"></a>00445          }
 <a name="l00446"></a>00446          <span class="keywordflow">if</span> (atomPtr1) {
-<a name="l00447"></a>00447             atomPtr1-&gt;<a class="code" href="classDdMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classDdMd_1_1Mask.html#a7c6cfb23f3e3ddb8093c318e7f042b36" title="Add an Atom to the masked set.">append</a>(atomId0);
+<a name="l00447"></a>00447             atomPtr1-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8a468104f3541cdf012977f3de4f0e98" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classDdMd_1_1Mask.html#a19dd062bf1ebe985153a7545e8e3c4bc" title="Add an Atom to the masked set.">append</a>(atomId0);
 <a name="l00448"></a>00448          }
 <a name="l00449"></a>00449       }
 <a name="l00450"></a>00450    }
@@ -504,7 +504,7 @@
 <a name="l00453"></a>00453 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

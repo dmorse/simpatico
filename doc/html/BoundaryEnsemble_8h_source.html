@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -73,26 +73,26 @@
 <a name="l00032"></a>00032 
 <a name="l00033"></a>00033    <span class="keyword">public</span>:
 <a name="l00034"></a>00034 
-<a name="l00038"></a><a class="code" href="classUtil_1_1BoundaryEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7">00038</a>       <span class="keyword">enum</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7" title="Enumeration of the allowed types of BoundaryEnsemble.">Type</a>{UNKNOWN, RIGID, ISOBARIC};
+<a name="l00038"></a><a class="code" href="classUtil_1_1BoundaryEnsemble.html#a5c9757f6c8cff333c53833ceaaab7d78">00038</a>       <span class="keyword">enum</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a5c9757f6c8cff333c53833ceaaab7d78" title="Enumeration of the allowed types of BoundaryEnsemble.">Type</a>{UNKNOWN, RIGID, ISOBARIC};
 <a name="l00039"></a>00039 
-<a name="l00043"></a>00043       <a class="code" href="classUtil_1_1BoundaryEnsemble.html#acb44d7db9a248eff48a4af1f3656349b" title="Constructor.">BoundaryEnsemble</a>(<a class="code" href="classUtil_1_1BoundaryEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7" title="Enumeration of the allowed types of BoundaryEnsemble.">Type</a> type = UNKNOWN);
+<a name="l00043"></a>00043       <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a2234aa7b15f43688001ac4fdb18c791f" title="Constructor.">BoundaryEnsemble</a>(<a class="code" href="classUtil_1_1BoundaryEnsemble.html#a5c9757f6c8cff333c53833ceaaab7d78" title="Enumeration of the allowed types of BoundaryEnsemble.">Type</a> type = UNKNOWN);
 <a name="l00044"></a>00044 
-<a name="l00048"></a>00048       <span class="keywordtype">void</span>  <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a134309847fde4b95fb59ecf43ec931c9" title="Set the pressure.">setPressure</a>(<span class="keywordtype">double</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#aca1591c0c9cc0a60c906abbb0e8794a9" title="Get the pressure.">pressure</a>);
+<a name="l00048"></a>00048       <span class="keywordtype">void</span>  <a class="code" href="classUtil_1_1BoundaryEnsemble.html#aa4f569a68df12e5ddb5c746546833bc6" title="Set the pressure.">setPressure</a>(<span class="keywordtype">double</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a43e3630726837f73d9393d2dcff0eac4" title="Get the pressure.">pressure</a>);
 <a name="l00049"></a>00049 
-<a name="l00056"></a>00056       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#ab5421d3c9175985c9acbf723e5392075" title="Read the type and (if necessary) pressure from file.">readParam</a>(std::istream&amp; in);
+<a name="l00056"></a>00056       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a8c6b19a93ecbdc86887be7f93342d524" title="Read the type and (if necessary) pressure from file.">readParam</a>(std::istream&amp; in);
 <a name="l00057"></a>00057 
 <a name="l00059"></a>00059 
 <a name="l00060"></a>00060       
-<a name="l00064"></a>00064       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#aa745e28d09d7780afa931d0a962ad59e" title="Is this an Rigid ensemble?">isRigid</a>() <span class="keyword">const</span>;
+<a name="l00064"></a>00064       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a2d685f36bb89a7eed2dd5dc899447eb1" title="Is this an Rigid ensemble?">isRigid</a>() <span class="keyword">const</span>;
 <a name="l00065"></a>00065 
-<a name="l00069"></a>00069       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a91bbc5c577fc19ed8d73ec370e3404e2" title="Is this an Isobaric ensemble?">isIsobaric</a>() <span class="keyword">const</span>;
+<a name="l00069"></a>00069       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a074a3bc387250609c0f98e070b4430b7" title="Is this an Isobaric ensemble?">isIsobaric</a>() <span class="keyword">const</span>;
 <a name="l00070"></a>00070 
-<a name="l00074"></a>00074       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#aca1591c0c9cc0a60c906abbb0e8794a9" title="Get the pressure.">pressure</a>() <span class="keyword">const</span>;
+<a name="l00074"></a>00074       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a43e3630726837f73d9393d2dcff0eac4" title="Get the pressure.">pressure</a>() <span class="keyword">const</span>;
 <a name="l00075"></a>00075 
 <a name="l00077"></a>00077       
 <a name="l00078"></a>00078 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00079"></a>00079 <span class="preprocessor"></span>
-<a name="l00083"></a>00083       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a8170d98ea8b055e49ef256d15cfbc5af" title="Commit associated MPI DataType.">commitMpiType</a>();
+<a name="l00083"></a>00083       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a3dbb856c6196910d06177ba75bb99e10" title="Commit associated MPI DataType.">commitMpiType</a>();
 <a name="l00084"></a>00084 
 <a name="l00085"></a>00085 <span class="preprocessor">      #endif</span>
 <a name="l00086"></a>00086 <span class="preprocessor"></span>
@@ -100,25 +100,25 @@
 <a name="l00088"></a>00088 
 <a name="l00090"></a>00090       <span class="keywordtype">double</span> pressure_;
 <a name="l00091"></a>00091 
-<a name="l00093"></a>00093       <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7" title="Enumeration of the allowed types of BoundaryEnsemble.">Type</a>   type_;
+<a name="l00093"></a>00093       <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a5c9757f6c8cff333c53833ceaaab7d78" title="Enumeration of the allowed types of BoundaryEnsemble.">Type</a>   type_;
 <a name="l00094"></a>00094 
 <a name="l00095"></a>00095    };
 <a name="l00096"></a>00096 
-<a name="l00104"></a>00104    std::istream&amp; <a class="code" href="namespaceUtil.html#a993c7220c84aadae4eb1085cef083e74" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7" title="Enumeration of the allowed types of BoundaryEnsemble.">BoundaryEnsemble::Type</a> &amp;type);
+<a name="l00104"></a>00104    std::istream&amp; <a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a5c9757f6c8cff333c53833ceaaab7d78" title="Enumeration of the allowed types of BoundaryEnsemble.">BoundaryEnsemble::Type</a> &amp;type);
 <a name="l00105"></a>00105 
-<a name="l00113"></a>00113    std::ostream&amp; <a class="code" href="namespaceUtil.html#a7a94bc3185d3be0028eacd3076edb6d3" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7" title="Enumeration of the allowed types of BoundaryEnsemble.">BoundaryEnsemble::Type</a> &amp;type);
+<a name="l00113"></a>00113    std::ostream&amp; <a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a5c9757f6c8cff333c53833ceaaab7d78" title="Enumeration of the allowed types of BoundaryEnsemble.">BoundaryEnsemble::Type</a> &amp;type);
 <a name="l00114"></a>00114 
 <a name="l00115"></a>00115    <span class="comment">// Inline methods</span>
 <a name="l00116"></a>00116  
-<a name="l00120"></a><a class="code" href="classUtil_1_1BoundaryEnsemble.html#aca1591c0c9cc0a60c906abbb0e8794a9">00120</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#aca1591c0c9cc0a60c906abbb0e8794a9" title="Get the pressure.">BoundaryEnsemble::pressure</a>()<span class="keyword"> const</span>
+<a name="l00120"></a><a class="code" href="classUtil_1_1BoundaryEnsemble.html#a43e3630726837f73d9393d2dcff0eac4">00120</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a43e3630726837f73d9393d2dcff0eac4" title="Get the pressure.">BoundaryEnsemble::pressure</a>()<span class="keyword"> const</span>
 <a name="l00121"></a>00121 <span class="keyword">   </span>{  <span class="keywordflow">return</span> pressure_; }
 <a name="l00122"></a>00122 
 <a name="l00123"></a>00123    <span class="comment">// Return true if this is an rigid ensemble.</span>
-<a name="l00124"></a><a class="code" href="classUtil_1_1BoundaryEnsemble.html#aa745e28d09d7780afa931d0a962ad59e">00124</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#aa745e28d09d7780afa931d0a962ad59e" title="Is this an Rigid ensemble?">BoundaryEnsemble::isRigid</a>()<span class="keyword"> const</span>
+<a name="l00124"></a><a class="code" href="classUtil_1_1BoundaryEnsemble.html#a2d685f36bb89a7eed2dd5dc899447eb1">00124</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a2d685f36bb89a7eed2dd5dc899447eb1" title="Is this an Rigid ensemble?">BoundaryEnsemble::isRigid</a>()<span class="keyword"> const</span>
 <a name="l00125"></a>00125 <span class="keyword">   </span>{ <span class="keywordflow">return</span> (type_ == RIGID); }
 <a name="l00126"></a>00126  
 <a name="l00127"></a>00127    <span class="comment">// Return true if this is an isobaric Ensemble.</span>
-<a name="l00128"></a><a class="code" href="classUtil_1_1BoundaryEnsemble.html#a91bbc5c577fc19ed8d73ec370e3404e2">00128</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a91bbc5c577fc19ed8d73ec370e3404e2" title="Is this an Isobaric ensemble?">BoundaryEnsemble::isIsobaric</a>()<span class="keyword"> const</span>
+<a name="l00128"></a><a class="code" href="classUtil_1_1BoundaryEnsemble.html#a074a3bc387250609c0f98e070b4430b7">00128</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html#a074a3bc387250609c0f98e070b4430b7" title="Is this an Isobaric ensemble?">BoundaryEnsemble::isIsobaric</a>()<span class="keyword"> const</span>
 <a name="l00129"></a>00129 <span class="keyword">   </span>{ <span class="keywordflow">return</span> (type_ == ISOBARIC); }
 <a name="l00130"></a>00130  
 <a name="l00131"></a>00131 <span class="preprocessor">   #ifdef UTIL_MPI</span>
@@ -127,16 +127,16 @@
 <a name="l00136"></a><a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_01_4.html">00136</a>    <span class="keyword">class </span><a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt;<a class="code" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size.">BoundaryEnsemble</a>&gt;
 <a name="l00137"></a>00137    {  
 <a name="l00138"></a>00138    <span class="keyword">public</span>:  
-<a name="l00139"></a><a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_01_4.html#a94a4825c5b6a741265d65e260050cfce">00139</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_01_4.html#a94a4825c5b6a741265d65e260050cfce" title="MPI Datatype.">type</a>;      
-<a name="l00140"></a><a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a">00140</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a" title="Is the MPI type initialized?">hasType</a>;            
+<a name="l00139"></a><a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_01_4.html#a9f1bc21e679d64bc1186a8064cd83a35">00139</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_01_4.html#a9f1bc21e679d64bc1186a8064cd83a35" title="MPI Datatype.">type</a>;      
+<a name="l00140"></a><a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_01_4.html#ad0250e53561d64ee1cac5821b8da2e0c">00140</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_01_4.html#ad0250e53561d64ee1cac5821b8da2e0c" title="Is the MPI type initialized?">hasType</a>;            
 <a name="l00141"></a>00141    };
 <a name="l00142"></a>00142 
 <a name="l00146"></a>00146    <span class="keyword">template</span> &lt;&gt;
 <a name="l00147"></a><a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_1_1Type_01_4.html">00147</a>    <span class="keyword">class </span><a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt;<a class="code" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size.">BoundaryEnsemble</a>::Type&gt;
 <a name="l00148"></a>00148    {  
 <a name="l00149"></a>00149    <span class="keyword">public</span>:  
-<a name="l00150"></a><a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_1_1Type_01_4.html#a94a4825c5b6a741265d65e260050cfce">00150</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_1_1Type_01_4.html#a94a4825c5b6a741265d65e260050cfce" title="MPI Datatype.">type</a>;      
-<a name="l00151"></a><a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_1_1Type_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a">00151</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_1_1Type_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a" title="Is the MPI type initialized?">hasType</a>;            
+<a name="l00150"></a><a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_1_1Type_01_4.html#a2a359bc2a82c170d1dfa0bc234e0236d">00150</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_1_1Type_01_4.html#a2a359bc2a82c170d1dfa0bc234e0236d" title="MPI Datatype.">type</a>;      
+<a name="l00151"></a><a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_1_1Type_01_4.html#a309c8ef6498025168b838a8f33cadb07">00151</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01BoundaryEnsemble_1_1Type_01_4.html#a309c8ef6498025168b838a8f33cadb07" title="Is the MPI type initialized?">hasType</a>;            
 <a name="l00152"></a>00152    };
 <a name="l00153"></a>00153 <span class="preprocessor">   #endif</span>
 <a name="l00154"></a>00154 <span class="preprocessor"></span>
@@ -144,7 +144,7 @@
 <a name="l00156"></a>00156 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

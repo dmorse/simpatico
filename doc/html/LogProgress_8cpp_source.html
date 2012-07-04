@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,16 +71,16 @@
 <a name="l00019"></a>00019    <span class="comment">/*</span>
 <a name="l00020"></a>00020 <span class="comment">   * Read interval.</span>
 <a name="l00021"></a>00021 <span class="comment">   */</span>
-<a name="l00022"></a>00022    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LogProgress.html#ab5421d3c9175985c9acbf723e5392075" title="Read interval.">LogProgress::readParam</a>(std::istream&amp; in) 
-<a name="l00023"></a><a class="code" href="classMcMd_1_1LogProgress.html#ab5421d3c9175985c9acbf723e5392075">00023</a>    {  readInterval(in); }
+<a name="l00022"></a>00022    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LogProgress.html#ab18c9de2be77d8990d904f484c5e3592" title="Read interval.">LogProgress::readParam</a>(std::istream&amp; in) 
+<a name="l00023"></a><a class="code" href="classMcMd_1_1LogProgress.html#ab18c9de2be77d8990d904f484c5e3592">00023</a>    {  readInterval(in); }
 <a name="l00024"></a>00024 
 <a name="l00025"></a>00025    <span class="comment">/*</span>
 <a name="l00026"></a>00026 <span class="comment">   * Dump configuration to file</span>
 <a name="l00027"></a>00027 <span class="comment">   */</span>
-<a name="l00028"></a>00028    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LogProgress.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Write iStep to Log file.">LogProgress::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00029"></a><a class="code" href="classMcMd_1_1LogProgress.html#afc17577823a371a5ead4e51ebb8ec2ef">00029</a>    {
+<a name="l00028"></a>00028    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LogProgress.html#a10dd625f8db63f5ddf7f9b63d100ee62" title="Write iStep to Log file.">LogProgress::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00029"></a><a class="code" href="classMcMd_1_1LogProgress.html#a10dd625f8db63f5ddf7f9b63d100ee62">00029</a>    {
 <a name="l00030"></a>00030       <span class="keywordflow">if</span> (isAtInterval(iStep))  {
-<a name="l00031"></a>00031          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;iStep = &quot;</span> &lt;&lt; iStep &lt;&lt; std::endl;
+<a name="l00031"></a>00031          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;iStep = &quot;</span> &lt;&lt; iStep &lt;&lt; std::endl;
 <a name="l00032"></a>00032       }
 <a name="l00033"></a>00033    }
 <a name="l00034"></a>00034   
@@ -88,7 +88,7 @@
 <a name="l00036"></a>00036 <span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

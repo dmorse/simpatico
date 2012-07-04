@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -69,46 +69,46 @@
 <a name="l00018"></a>00018 <span class="comment">   *</span>
 <a name="l00019"></a>00019 <span class="comment">   * The data_ and capacity_ are nullified in Array&lt;Atom&gt; constructor.</span>
 <a name="l00020"></a>00020 <span class="comment">   */</span>
-<a name="l00021"></a>00021    <a class="code" href="classDdMd_1_1AtomArray.html#a593cee27079b1ac4d8f8e355fb97cef3" title="Constructor.">AtomArray::AtomArray</a>() 
-<a name="l00022"></a><a class="code" href="classDdMd_1_1AtomArray.html#a593cee27079b1ac4d8f8e355fb97cef3">00022</a>     : <a class="code" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>&lt;<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&gt;()
+<a name="l00021"></a>00021    <a class="code" href="classDdMd_1_1AtomArray.html#ae7147e4179c7f4c5427f8563e7bd3ea1" title="Constructor.">AtomArray::AtomArray</a>() 
+<a name="l00022"></a><a class="code" href="classDdMd_1_1AtomArray.html#ae7147e4179c7f4c5427f8563e7bd3ea1">00022</a>     : <a class="code" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>&lt;<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>&gt;()
 <a name="l00023"></a>00023    {}
 <a name="l00024"></a>00024 
 <a name="l00025"></a>00025    <span class="comment">/*</span>
 <a name="l00026"></a>00026 <span class="comment">   * Destructor.</span>
 <a name="l00027"></a>00027 <span class="comment">   */</span>
-<a name="l00028"></a>00028    <a class="code" href="classDdMd_1_1AtomArray.html#a5491971be37c9f36f90a4a95777df100" title="Destructor.">AtomArray::~AtomArray</a>()
-<a name="l00029"></a><a class="code" href="classDdMd_1_1AtomArray.html#a5491971be37c9f36f90a4a95777df100">00029</a>    {
-<a name="l00030"></a>00030       <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1Array.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to array of Data elements.">data_</a>) {
-<a name="l00031"></a>00031          <span class="keyword">delete</span> [] <a class="code" href="classUtil_1_1Array.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to array of Data elements.">data_</a>;
+<a name="l00028"></a>00028    <a class="code" href="classDdMd_1_1AtomArray.html#a68a87a18a9c22e1583e7eb983b3bdf46" title="Destructor.">AtomArray::~AtomArray</a>()
+<a name="l00029"></a><a class="code" href="classDdMd_1_1AtomArray.html#a68a87a18a9c22e1583e7eb983b3bdf46">00029</a>    {
+<a name="l00030"></a>00030       <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1Array.html#a3e7b24fc0708bb01cfd053bc15d2fcad" title="Pointer to array of Data elements.">data_</a>) {
+<a name="l00031"></a>00031          <span class="keyword">delete</span> [] <a class="code" href="classUtil_1_1Array.html#a3e7b24fc0708bb01cfd053bc15d2fcad" title="Pointer to array of Data elements.">data_</a>;
 <a name="l00032"></a>00032       }
 <a name="l00033"></a>00033    }
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035    <span class="comment">/*</span>
 <a name="l00036"></a>00036 <span class="comment">   * Allocate the underlying C array.</span>
 <a name="l00037"></a>00037 <span class="comment">   */</span>
-<a name="l00038"></a>00038    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate memory on the heap.">AtomArray::allocate</a>(<span class="keywordtype">int</span> capacity) 
-<a name="l00039"></a><a class="code" href="classDdMd_1_1AtomArray.html#a1be38a6eb2f04de4d9457d506f948321">00039</a>    {
-<a name="l00040"></a>00040       <span class="keywordflow">if</span> (!(<a class="code" href="classUtil_1_1Array.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to array of Data elements.">data_</a> == 0)) {
+<a name="l00038"></a>00038    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomArray.html#af30babdd2ba8ccc40e95b727be18c28f" title="Allocate memory on the heap.">AtomArray::allocate</a>(<span class="keywordtype">int</span> capacity) 
+<a name="l00039"></a><a class="code" href="classDdMd_1_1AtomArray.html#af30babdd2ba8ccc40e95b727be18c28f">00039</a>    {
+<a name="l00040"></a>00040       <span class="keywordflow">if</span> (!(<a class="code" href="classUtil_1_1Array.html#a3e7b24fc0708bb01cfd053bc15d2fcad" title="Pointer to array of Data elements.">data_</a> == 0)) {
 <a name="l00041"></a>00041          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Cannot re-allocate an AtomArray&quot;</span>);
 <a name="l00042"></a>00042       }
 <a name="l00043"></a>00043       <span class="keywordflow">if</span> (capacity &lt;= 0) {
 <a name="l00044"></a>00044          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Cannot allocate with capacity &lt;= 0&quot;</span>);
 <a name="l00045"></a>00045       }
-<a name="l00046"></a>00046       <a class="code" href="classUtil_1_1Array.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to array of Data elements.">data_</a>     = <span class="keyword">new</span> <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>[<a class="code" href="classUtil_1_1Array.html#a104736719cd4e5f21c25705c77064dde" title="Return allocated size.">capacity</a>];
-<a name="l00047"></a>00047       <a class="code" href="classUtil_1_1Array.html#a9e2616fdebc24bf4bfa139964780d6dd" title="Allocated size of data_ array.">capacity_</a> = <a class="code" href="classUtil_1_1Array.html#a104736719cd4e5f21c25705c77064dde" title="Return allocated size.">capacity</a>;
+<a name="l00046"></a>00046       <a class="code" href="classUtil_1_1Array.html#a3e7b24fc0708bb01cfd053bc15d2fcad" title="Pointer to array of Data elements.">data_</a>     = <span class="keyword">new</span> <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>[<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>];
+<a name="l00047"></a>00047       <a class="code" href="classUtil_1_1Array.html#af41ed573abecee2abb3745a26128c9a8" title="Allocated size of data_ array.">capacity_</a> = <a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>;
 <a name="l00048"></a>00048    }
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050    <span class="comment">/*</span>
 <a name="l00051"></a>00051 <span class="comment">   * Return true if this is already allocated, false otherwise.</span>
 <a name="l00052"></a>00052 <span class="comment">   */</span>
-<a name="l00053"></a>00053    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1AtomArray.html#a0bcdab3616db481dd211594529479f94" title="Return true if this is already allocated, false otherwise.">AtomArray::isAllocated</a>()<span class="keyword"> const </span>
-<a name="l00054"></a><a class="code" href="classDdMd_1_1AtomArray.html#a0bcdab3616db481dd211594529479f94">00054</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> !(<a class="code" href="classUtil_1_1Array.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to array of Data elements.">data_</a> == 0); }
+<a name="l00053"></a>00053    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1AtomArray.html#a313c7f75aec7eae76d78630e4bcefd11" title="Return true if this is already allocated, false otherwise.">AtomArray::isAllocated</a>()<span class="keyword"> const </span>
+<a name="l00054"></a><a class="code" href="classDdMd_1_1AtomArray.html#a313c7f75aec7eae76d78630e4bcefd11">00054</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> !(<a class="code" href="classUtil_1_1Array.html#a3e7b24fc0708bb01cfd053bc15d2fcad" title="Pointer to array of Data elements.">data_</a> == 0); }
 <a name="l00055"></a>00055 
 <a name="l00056"></a>00056 }
 <a name="l00057"></a>00057 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -77,7 +77,7 @@
 <a name="l00026"></a>00026 <span class="comment">   * Serialize a System configuration to / from an archive.</span>
 <a name="l00027"></a>00027 <span class="comment">   */</span>
 <a name="l00028"></a>00028    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00029"></a><a class="code" href="classMcMd_1_1System.html#a6765e839ab267e4959384e35a4112451">00029</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1System.html#a6765e839ab267e4959384e35a4112451" title="Serialize the System to/from an archive.">System::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00029"></a><a class="code" href="classMcMd_1_1System.html#a9449b07ada6a1ae010a55238fc3603b2">00029</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1System.html#a9449b07ada6a1ae010a55238fc3603b2" title="Serialize the System to/from an archive.">System::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00030"></a>00030    {
 <a name="l00031"></a>00031       ar &amp; boundary();
 <a name="l00032"></a>00032 
@@ -96,9 +96,9 @@
 <a name="l00045"></a>00045             ar &amp; nMoleculeOut;
 <a name="l00046"></a>00046             speciesPtr = &amp;simulation().species(iSpecies);
 <a name="l00047"></a>00047             begin(iSpecies, molIter); 
-<a name="l00048"></a>00048             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00048"></a>00048             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
 <a name="l00049"></a>00049                molIter-&gt;begin(atomIter); 
-<a name="l00050"></a>00050                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00050"></a>00050                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00051"></a>00051 <span class="preprocessor">                  #ifdef MCMD_SHIFT</span>
 <a name="l00052"></a>00052 <span class="preprocessor"></span>                  boundary().shift(atomIter-&gt;position(), atomIter-&gt;shift());
 <a name="l00053"></a>00053                   ar &amp; atomIter-&gt;shift();
@@ -127,13 +127,13 @@
 <a name="l00076"></a>00076             }
 <a name="l00077"></a>00077             ar &amp; nMoleculeIn;
 <a name="l00078"></a>00078             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iMol = 0; iMol &lt; nMoleculeIn; ++iMol) {
-<a name="l00079"></a>00079                molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5c347060621ccff81193a1674ae34891" title="Get the reservoir for this Species by reference.">reservoir</a>().pop());
+<a name="l00079"></a>00079                molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().pop());
 <a name="l00080"></a>00080                addMolecule(*molPtr);
 <a name="l00081"></a>00081                <span class="keywordflow">if</span> (molPtr != &amp;molecule(iSpecies, iMol)) {
 <a name="l00082"></a>00082                   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Molecule index error&quot;</span>);
 <a name="l00083"></a>00083                }
-<a name="l00084"></a>00084                molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ade5ca539682da662dd30b2628d4d21c7" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); 
-<a name="l00085"></a>00085                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00084"></a>00084                molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a593e8b56859b59dc753ff342a8063022" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); 
+<a name="l00085"></a>00085                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00086"></a>00086                   ar &amp; atomIter-&gt;position();
 <a name="l00087"></a>00087                   ar &amp; atomIter-&gt;velocity();
 <a name="l00088"></a>00088 <span class="preprocessor">                  #ifdef MCMD_SHIFT</span>
@@ -153,7 +153,7 @@
 <a name="l00102"></a>00102 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

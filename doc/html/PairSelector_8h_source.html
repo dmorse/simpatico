@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -66,29 +66,29 @@
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035    <span class="keyword">public</span>:
 <a name="l00036"></a>00036 
-<a name="l00045"></a><a class="code" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b">00045</a>       <span class="keyword">enum</span> <a class="code" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b" title="Type of atom pair, based on identity of parent molecules.">PairType</a>{INTRA, INTER, ALL};
+<a name="l00045"></a><a class="code" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5">00045</a>       <span class="keyword">enum</span> <a class="code" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5" title="Type of atom pair, based on identity of parent molecules.">PairType</a>{INTRA, INTER, ALL};
 <a name="l00046"></a>00046 
-<a name="l00050"></a>00050       <a class="code" href="classMcMd_1_1PairSelector.html#a392a2aae9148463758f6998ed003460f" title="Constructor.">PairSelector</a>();
+<a name="l00050"></a>00050       <a class="code" href="classMcMd_1_1PairSelector.html#a13b4b971f672bf01248ac80ac2b45421" title="Constructor.">PairSelector</a>();
 <a name="l00051"></a>00051 
-<a name="l00057"></a>00057       <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairSelector.html#a51cfb5f2cf3fab34adf5bbb4572de964" title="Set policy to avoid double counting (true) or to not avoid (false).">setAvoidDoubleCounting</a>(<span class="keywordtype">bool</span> avoidDoubleCounting);
+<a name="l00057"></a>00057       <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairSelector.html#a030a96ab10f6a05692cb8c67c6271ea7" title="Set policy to avoid double counting (true) or to not avoid (false).">setAvoidDoubleCounting</a>(<span class="keywordtype">bool</span> avoidDoubleCounting);
 <a name="l00058"></a>00058 
-<a name="l00065"></a>00065       <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1PairSelector.html#a88ee0603acc20a4d0b580a6cbe3da0e0" title="Return true if pair of atoms matches the selector policy.">match</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom1, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom2) <span class="keyword">const</span>;
+<a name="l00065"></a>00065       <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1PairSelector.html#a90551e9cbe25da5f65ad26d8e3bc7235" title="Return true if pair of atoms matches the selector policy.">match</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom1, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom2) <span class="keyword">const</span>;
 <a name="l00066"></a>00066 
-<a name="l00070"></a>00070       <a class="code" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b" title="Type of atom pair, based on identity of parent molecules.">PairType</a> <a class="code" href="classMcMd_1_1PairSelector.html#a05dfaddef8cfe7ec46e187610509fb3a" title="Return value of pair type.">pairType</a>() <span class="keyword">const</span>;
+<a name="l00070"></a>00070       <a class="code" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5" title="Type of atom pair, based on identity of parent molecules.">PairType</a> <a class="code" href="classMcMd_1_1PairSelector.html#a634f9da57511b63c13130bcb66e13692" title="Return value of pair type.">pairType</a>() <span class="keyword">const</span>;
 <a name="l00071"></a>00071 
-<a name="l00075"></a>00075       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairSelector.html#ae54e84a2eab31e55bb96e66494e0cbd1" title="Return value of type Id for atom 1 (-1 means accept all types).">atom1TypeId</a>() <span class="keyword">const</span>;
+<a name="l00075"></a>00075       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairSelector.html#a6825c13c82a40aa23cda38799f09cb36" title="Return value of type Id for atom 1 (-1 means accept all types).">atom1TypeId</a>() <span class="keyword">const</span>;
 <a name="l00076"></a>00076 
-<a name="l00080"></a>00080       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairSelector.html#a3e4ec7b3c37ecc11f41a347b781c6f57" title="Return value of type Id for atom 2 (-1 means accept all types).">atom2TypeId</a>() <span class="keyword">const</span>;
+<a name="l00080"></a>00080       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairSelector.html#a3118fd399a159e0f8b0f1b624b1660ff" title="Return value of type Id for atom 2 (-1 means accept all types).">atom2TypeId</a>() <span class="keyword">const</span>;
 <a name="l00081"></a>00081 
 <a name="l00082"></a>00082 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00083"></a>00083 <span class="preprocessor"></span>
-<a name="l00087"></a>00087       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairSelector.html#a8170d98ea8b055e49ef256d15cfbc5af" title="Commit associated MPI DataType.">commitMpiType</a>();
+<a name="l00087"></a>00087       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairSelector.html#aeb91534c9ab4b00a387e873a35de0707" title="Commit associated MPI DataType.">commitMpiType</a>();
 <a name="l00088"></a>00088 
 <a name="l00089"></a>00089 <span class="preprocessor">      #endif</span>
 <a name="l00090"></a>00090 <span class="preprocessor"></span>
 <a name="l00091"></a>00091    <span class="keyword">private</span>:
 <a name="l00092"></a>00092 
-<a name="l00094"></a>00094       <a class="code" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b" title="Type of atom pair, based on identity of parent molecules.">PairType</a> pairType_;
+<a name="l00094"></a>00094       <a class="code" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5" title="Type of atom pair, based on identity of parent molecules.">PairType</a> pairType_;
 <a name="l00095"></a>00095 
 <a name="l00097"></a>00097       <span class="keywordtype">int</span>      atom1TypeId_;
 <a name="l00098"></a>00098 
@@ -106,30 +106,30 @@
 <a name="l00112"></a>00112    <span class="comment">/*</span>
 <a name="l00113"></a>00113 <span class="comment">   * Return value of pair type.</span>
 <a name="l00114"></a>00114 <span class="comment">   */</span>
-<a name="l00115"></a><a class="code" href="classMcMd_1_1PairSelector.html#a05dfaddef8cfe7ec46e187610509fb3a">00115</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b" title="Type of atom pair, based on identity of parent molecules.">PairSelector::PairType</a> <a class="code" href="classMcMd_1_1PairSelector.html#a05dfaddef8cfe7ec46e187610509fb3a" title="Return value of pair type.">PairSelector::pairType</a>()<span class="keyword"> const</span>
+<a name="l00115"></a><a class="code" href="classMcMd_1_1PairSelector.html#a634f9da57511b63c13130bcb66e13692">00115</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5" title="Type of atom pair, based on identity of parent molecules.">PairSelector::PairType</a> <a class="code" href="classMcMd_1_1PairSelector.html#a634f9da57511b63c13130bcb66e13692" title="Return value of pair type.">PairSelector::pairType</a>()<span class="keyword"> const</span>
 <a name="l00116"></a>00116 <span class="keyword">   </span>{  <span class="keywordflow">return</span> pairType_; }
 <a name="l00117"></a>00117 
 <a name="l00118"></a>00118    <span class="comment">/*</span>
 <a name="l00119"></a>00119 <span class="comment">   * Return value of type Id for atom 1 (-1 means accept all types).</span>
 <a name="l00120"></a>00120 <span class="comment">   */</span>
-<a name="l00121"></a><a class="code" href="classMcMd_1_1PairSelector.html#ae54e84a2eab31e55bb96e66494e0cbd1">00121</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairSelector.html#ae54e84a2eab31e55bb96e66494e0cbd1" title="Return value of type Id for atom 1 (-1 means accept all types).">PairSelector::atom1TypeId</a>()<span class="keyword"> const</span>
+<a name="l00121"></a><a class="code" href="classMcMd_1_1PairSelector.html#a6825c13c82a40aa23cda38799f09cb36">00121</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairSelector.html#a6825c13c82a40aa23cda38799f09cb36" title="Return value of type Id for atom 1 (-1 means accept all types).">PairSelector::atom1TypeId</a>()<span class="keyword"> const</span>
 <a name="l00122"></a>00122 <span class="keyword">   </span>{  <span class="keywordflow">return</span> atom1TypeId_; }
 <a name="l00123"></a>00123 
 <a name="l00124"></a>00124    <span class="comment">/*</span>
 <a name="l00125"></a>00125 <span class="comment">   * Return value of type Id for atom 2 (-1 means accept all types).</span>
 <a name="l00126"></a>00126 <span class="comment">   */</span>
-<a name="l00127"></a><a class="code" href="classMcMd_1_1PairSelector.html#a3e4ec7b3c37ecc11f41a347b781c6f57">00127</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairSelector.html#a3e4ec7b3c37ecc11f41a347b781c6f57" title="Return value of type Id for atom 2 (-1 means accept all types).">PairSelector::atom2TypeId</a>()<span class="keyword"> const</span>
+<a name="l00127"></a><a class="code" href="classMcMd_1_1PairSelector.html#a3118fd399a159e0f8b0f1b624b1660ff">00127</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairSelector.html#a3118fd399a159e0f8b0f1b624b1660ff" title="Return value of type Id for atom 2 (-1 means accept all types).">PairSelector::atom2TypeId</a>()<span class="keyword"> const</span>
 <a name="l00128"></a>00128 <span class="keyword">   </span>{  <span class="keywordflow">return</span> atom2TypeId_; }
 <a name="l00129"></a>00129 
 <a name="l00130"></a>00130    <span class="comment">// Iostream operator declarations</span>
 <a name="l00131"></a>00131 
-<a name="l00141"></a>00141    std::istream&amp; <a class="code" href="namespaceMcMd.html#a74181b023cf44a9612ac683897cd203d" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classMcMd_1_1PairSelector.html" title="Selection rule for pairs of Atoms.">PairSelector</a>&amp; selector);
+<a name="l00141"></a>00141    std::istream&amp; <a class="code" href="namespaceMcMd.html#ab3ee02adda6eba075cd5464bd179c747" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classMcMd_1_1PairSelector.html" title="Selection rule for pairs of Atoms.">PairSelector</a>&amp; selector);
 <a name="l00142"></a>00142 
-<a name="l00152"></a>00152    std::ostream&amp; <a class="code" href="namespaceMcMd.html#a1dabcc9af06e19085b4abbdd1babb8e5" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1PairSelector.html" title="Selection rule for pairs of Atoms.">PairSelector</a>&amp; selector);
+<a name="l00152"></a>00152    std::ostream&amp; <a class="code" href="namespaceMcMd.html#a9edb092360785f73beae9606f0b1f68f" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1PairSelector.html" title="Selection rule for pairs of Atoms.">PairSelector</a>&amp; selector);
 <a name="l00153"></a>00153 
-<a name="l00161"></a>00161    std::istream&amp; <a class="code" href="namespaceMcMd.html#a74181b023cf44a9612ac683897cd203d" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b" title="Type of atom pair, based on identity of parent molecules.">PairSelector::PairType</a>&amp; type);
+<a name="l00161"></a>00161    std::istream&amp; <a class="code" href="namespaceMcMd.html#ab3ee02adda6eba075cd5464bd179c747" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5" title="Type of atom pair, based on identity of parent molecules.">PairSelector::PairType</a>&amp; type);
 <a name="l00162"></a>00162 
-<a name="l00170"></a>00170    std::ostream&amp; <a class="code" href="namespaceMcMd.html#a1dabcc9af06e19085b4abbdd1babb8e5" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b" title="Type of atom pair, based on identity of parent molecules.">PairSelector::PairType</a>&amp; type);
+<a name="l00170"></a>00170    std::ostream&amp; <a class="code" href="namespaceMcMd.html#a9edb092360785f73beae9606f0b1f68f" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5" title="Type of atom pair, based on identity of parent molecules.">PairSelector::PairType</a>&amp; type);
 <a name="l00171"></a>00171 
 <a name="l00172"></a>00172 } 
 <a name="l00173"></a>00173 
@@ -142,16 +142,16 @@
 <a name="l00183"></a><a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_01_4.html">00183</a>    <span class="keyword">class </span><a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt; McMd::PairSelector&gt;
 <a name="l00184"></a>00184    {  
 <a name="l00185"></a>00185    <span class="keyword">public</span>:  
-<a name="l00186"></a><a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_01_4.html#a94a4825c5b6a741265d65e260050cfce">00186</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_01_4.html#a94a4825c5b6a741265d65e260050cfce" title="MPI Datatype.">type</a>;     
-<a name="l00187"></a><a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a">00187</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a" title="Is the MPI type initialized?">hasType</a>;           
+<a name="l00186"></a><a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_01_4.html#a88bcd74e2c3603555f8f46f91827ca9d">00186</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_01_4.html#a88bcd74e2c3603555f8f46f91827ca9d" title="MPI Datatype.">type</a>;     
+<a name="l00187"></a><a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_01_4.html#ae9f9d9d3307fd051b3ccea190b9f2cd5">00187</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_01_4.html#ae9f9d9d3307fd051b3ccea190b9f2cd5" title="Is the MPI type initialized?">hasType</a>;           
 <a name="l00188"></a>00188    };
 <a name="l00189"></a>00189 
 <a name="l00193"></a>00193    <span class="keyword">template</span> &lt;&gt;
 <a name="l00194"></a><a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_1_1PairType_01_4.html">00194</a>    <span class="keyword">class </span><a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt; McMd::PairSelector::PairType&gt;
 <a name="l00195"></a>00195    {  
 <a name="l00196"></a>00196    <span class="keyword">public</span>:  
-<a name="l00197"></a><a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_1_1PairType_01_4.html#a94a4825c5b6a741265d65e260050cfce">00197</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_1_1PairType_01_4.html#a94a4825c5b6a741265d65e260050cfce" title="MPI Datatype.">type</a>;     
-<a name="l00198"></a><a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_1_1PairType_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a">00198</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_1_1PairType_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a" title="Is the MPI type initialized?">hasType</a>;           
+<a name="l00197"></a><a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_1_1PairType_01_4.html#a9789d4913b438c6c0d04689bb232862e">00197</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_1_1PairType_01_4.html#a9789d4913b438c6c0d04689bb232862e" title="MPI Datatype.">type</a>;     
+<a name="l00198"></a><a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_1_1PairType_01_4.html#a3ea8ba4d1a815976dd709bf4688c9fd3">00198</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1PairSelector_1_1PairType_01_4.html#a3ea8ba4d1a815976dd709bf4688c9fd3" title="Is the MPI type initialized?">hasType</a>;           
 <a name="l00199"></a>00199    };
 <a name="l00200"></a>00200 
 <a name="l00201"></a>00201 }
@@ -160,7 +160,7 @@
 <a name="l00204"></a>00204 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

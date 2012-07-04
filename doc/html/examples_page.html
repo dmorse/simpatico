@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -41,19 +41,26 @@
 <h1>Examples </h1>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="io_Examples"></a>
-Examples</h2>
-<p>A set of examples are provided with Simpatico in the examples/ directory. Examining and running these examples is the easiest way to start becoming familiar with the program.</p>
+<div class="textblock"><p>A set of examples are provided with Simpatico in the examples/ directory. Examining and running these examples is the easiest way to start becoming familiar with the program.</p>
+<h2><a class="anchor" id="examples_subdirectories_sec"></a>
+Directory Tree</h2>
 <p>The subdirectories of the examples/ directory each contain examples that are designed to work with different versions of Simpatico, in which different features of the code are enabled or disabled by preprocessor macros. The file examples/README explains which features must be enabled or disabled at compile time run the examples in each subdirectory.</p>
-<p>The examples in the flexible/ subdirectory are designed to work with the default version of the code, which contains only nonbonded pair and covalent bond potentials, but no angle, dihedral or external potentials. Each subdirectory of examples/flexible contains subdirectories with examples of both MC and MD simulations for different types of system. These examples all involve either atomic liquids or simple bead-spring models of polymer liquids, such as homopolymer liquid, a diblock copolymer liquid, or a polymer blend. Examples with more than one chain length are provided for some types of system, using the notation (for example) L32/ to denote a system containing chains of 32 beads. Subdirectories containing examples for mcSim, mdSim and ddSim are labelled mc/, md/ and dd/, respectively.</p>
-<p>In each of the examples for the single-processor versions of mcSim and mdSim, the parameter file is named "param" and the command file is named "commands". Some directories contain different parameter files named "param.nve" and "param.nvt" for simulations of the same system in different ensembles. In all such examples, the input configuration file is in a subdirectory "in/" of the main directory for the example, and is named in/config. In all such examples, we have set inputPrefix == "in/" and outputPrefix == "out/" in the <a class="el" href="classMcMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> block of parameter file(s). All output files are thus written to a subdirectory "out/". The directory structure for each such examples is thus: </p>
+<p>The examples in the bond/ subdirectory are designed to work with the default version of the code, which contains only nonbonded pair and covalent bond potentials, but no angle, dihedral or external potentials. Each subdirectory of examples/bond contains subdirectories with examples of both MC and MD simulations for different types of system. These examples all involve either atomic liquids or simple bead-spring models of polymer liquids, such as homopolymer liquid, a diblock copolymer liquid, or a polymer blend. Examples with more than one chain length are provided for some types of system, using the notation (for example) L32/ to denote a system containing chains of 32 beads.</p>
+<p>Subdirectories containing examples for mcSim, mdSim and ddSim are labelled mc/, md/ and dd/, respectively.</p>
+<h2><a class="anchor" id="examples_layout_sec"></a>
+Example Layout</h2>
+<p>The input files for each example are in a separate directory. In each of the examples for the single-processor versions of mcSim and mdSim, the parameter file is named "param" and the command file is named "commands". Some directories contain different parameter files named "param.nve" and "param.nvt" for simulations of the same system in different ensembles.</p>
+<p>In all such examples, the input configuration file is in a subdirectory "in/" of the main directory for the example, and is named in/config. In all such examples, we have set inputPrefix == "in/" and outputPrefix == "out/" in the <a class="el" href="classMcMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> block of parameter file(s). All output files are thus written to a subdirectory "out/". The directory structure for each such examples is thus: </p>
 <div class="fragment"><pre class="fragment">    param
     commands
     in/
        config
     out/
        (output files)
-</pre></div><p> To run a MC example simulation on a single processor, one must cd to the main directory for the example (the directory that contains the param and command files) and issue the command </p>
+</pre></div><p> Most of the files that are created in the out/ directory are created by diagnostics that are declared in the parameter file.</p>
+<h2><a class="anchor" id="examples_usage_sec"></a>
+Usage</h2>
+<p>To run a MC example simulation on a single processor, one must cd to the main directory for the example (the directory that contains the param and command files) and issue the command </p>
 <div class="fragment"><pre class="fragment">    &gt; mcSim &lt; param
 </pre></div><p> to send the log output to the screen, or </p>
 <div class="fragment"><pre class="fragment">    &gt; mcSim &lt; param &gt; log &amp;
@@ -68,7 +75,7 @@ Examples</h2>
 <a class="el" href="analysis_page.html">Data Analysis</a> (Next)  </li>
 </ul>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

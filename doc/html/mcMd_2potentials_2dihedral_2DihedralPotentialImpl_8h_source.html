@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -101,10 +101,10 @@
 <a name="l00099"></a>00099       <span class="keywordtype">void</span> force(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R2, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R3,
 <a name="l00100"></a>00100                  <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F1, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F2, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F3, <span class="keywordtype">int</span> type) <span class="keyword">const</span>;
 <a name="l00101"></a>00101 
-<a name="l00109"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a0ab8f6bbd2e18cfd4df7ced299fe82f0">00109</a>       <span class="keywordtype">void</span> <span class="keyword">set</span>(std::string name, <span class="keywordtype">int</span> type, <span class="keywordtype">double</span> value)
+<a name="l00109"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a7059aa943c5db5055d63d633b5776e5f">00109</a>       <span class="keywordtype">void</span> <span class="keyword">set</span>(std::string name, <span class="keywordtype">int</span> type, <span class="keywordtype">double</span> value)
 <a name="l00110"></a>00110       {   interactionPtr_-&gt;set(name, type, value); }
 <a name="l00111"></a>00111 
-<a name="l00119"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a29dcf205f23d3b29d6f3bb6755e01d80">00119</a>       <span class="keywordtype">double</span> <span class="keyword">get</span>(std::string name, <span class="keywordtype">int</span> type) <span class="keyword">const</span>
+<a name="l00119"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ae4da3082a46b3cdb86d57ef537dcdaef">00119</a>       <span class="keywordtype">double</span> <span class="keyword">get</span>(std::string name, <span class="keywordtype">int</span> type) <span class="keyword">const</span>
 <a name="l00120"></a>00120       {   <span class="keywordflow">return</span> interactionPtr_-&gt;get(name, type); }
 <a name="l00121"></a>00121 
 <a name="l00125"></a>00125       <span class="keyword">virtual</span> std::string interactionClassName() <span class="keyword">const</span>;
@@ -164,7 +164,7 @@
 <a name="l00214"></a>00214 <span class="comment">   * Default constructor.</span>
 <a name="l00215"></a>00215 <span class="comment">   */</span>
 <a name="l00216"></a>00216    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00217"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#acf81a81a3cc88ea4f23beef5d6365f68">00217</a>    <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html" title="Implementation template for an DihedralPotential.">DihedralPotentialImpl&lt;Interaction&gt;::DihedralPotentialImpl</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)
+<a name="l00217"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ac4bcee748d813bbf5656374a8093d859">00217</a>    <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html" title="Implementation template for an DihedralPotential.">DihedralPotentialImpl&lt;Interaction&gt;::DihedralPotentialImpl</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)
 <a name="l00218"></a>00218     : <a class="code" href="classMcMd_1_1DihedralPotential.html" title="Interface for a Dihedral Potential.">DihedralPotential</a>(),
 <a name="l00219"></a>00219       <a class="code" href="classMcMd_1_1SubSystem.html" title="A SubSystem is a partial copy of a System that has:">SubSystem</a>(system),
 <a name="l00220"></a>00220       interactionPtr_(0),
@@ -175,7 +175,7 @@
 <a name="l00225"></a>00225 <span class="comment">   * Constructor, copy from DihedralPotentialImpl&lt;Interaction&gt;.</span>
 <a name="l00226"></a>00226 <span class="comment">   */</span>
 <a name="l00227"></a>00227    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00228"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a3e8081b88530c3f5269f00356df09ff3">00228</a>    <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#acf81a81a3cc88ea4f23beef5d6365f68" title="Constructor.">DihedralPotentialImpl&lt;Interaction&gt;::DihedralPotentialImpl</a>(
+<a name="l00228"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ad73b3e2f8b8ed29dd65b9d3bb994da15">00228</a>    <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ac4bcee748d813bbf5656374a8093d859" title="Constructor.">DihedralPotentialImpl&lt;Interaction&gt;::DihedralPotentialImpl</a>(
 <a name="l00229"></a>00229                          <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html" title="Implementation template for an DihedralPotential.">DihedralPotentialImpl&lt;Interaction&gt;</a>&amp; other)
 <a name="l00230"></a>00230     : <a class="code" href="classMcMd_1_1DihedralPotential.html" title="Interface for a Dihedral Potential.">DihedralPotential</a>(),
 <a name="l00231"></a>00231       <a class="code" href="classMcMd_1_1SubSystem.html" title="A SubSystem is a partial copy of a System that has:">SubSystem</a>(other.system()),
@@ -187,14 +187,14 @@
 <a name="l00237"></a>00237 <span class="comment">   * Destructor. </span>
 <a name="l00238"></a>00238 <span class="comment">   */</span>
 <a name="l00239"></a>00239    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00240"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a9508e95017ec3954bad9c6221fc912b4">00240</a>    <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a9508e95017ec3954bad9c6221fc912b4" title="Destructor.">DihedralPotentialImpl&lt;Interaction&gt;::~DihedralPotentialImpl</a>() 
+<a name="l00240"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#acec68d379b84e56a1f99622e8f4d98be">00240</a>    <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#acec68d379b84e56a1f99622e8f4d98be" title="Destructor.">DihedralPotentialImpl&lt;Interaction&gt;::~DihedralPotentialImpl</a>() 
 <a name="l00241"></a>00241    {}
 <a name="l00242"></a>00242 
 <a name="l00243"></a>00243    <span class="comment">/* </span>
 <a name="l00244"></a>00244 <span class="comment">   * Read parameters from file.</span>
 <a name="l00245"></a>00245 <span class="comment">   */</span>
 <a name="l00246"></a>00246    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00247"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ab5421d3c9175985c9acbf723e5392075">00247</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ab5421d3c9175985c9acbf723e5392075" title="Read dihedral potential parameters.">DihedralPotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream &amp;in) 
+<a name="l00247"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ae3622d56327b6d6de1d19ded178372ac">00247</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ae3622d56327b6d6de1d19ded178372ac" title="Read dihedral potential parameters.">DihedralPotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream &amp;in) 
 <a name="l00248"></a>00248    {
 <a name="l00249"></a>00249       <span class="keywordflow">if</span> (!isCopy_) {
 <a name="l00250"></a>00250          readBegin(in, <span class="stringliteral">&quot;DihedralPotential&quot;</span>);
@@ -209,16 +209,16 @@
 <a name="l00259"></a>00259 <span class="comment">   * Return energy for a single dihedral.</span>
 <a name="l00260"></a>00260 <span class="comment">   */</span>
 <a name="l00261"></a>00261    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00262"></a>00262    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a7d8a7d1d94db857f9b53e50c675f216b" title="Compute and return total dihedral potential energy of this System.">DihedralPotentialImpl&lt;Interaction&gt;::</a>
-<a name="l00263"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a1272793e0152fbae3eb163fbb28c187f">00263</a> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a7d8a7d1d94db857f9b53e50c675f216b" title="Compute and return total dihedral potential energy of this System.">      energy</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R2, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R3, <span class="keywordtype">int</span> typeId)<span class="keyword"> const</span>
+<a name="l00262"></a>00262    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af4f95516867b62f91f5d740081512f84" title="Compute and return total dihedral potential energy of this System.">DihedralPotentialImpl&lt;Interaction&gt;::</a>
+<a name="l00263"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ac5977e95530c1dcce6d20a4c920f7eda">00263</a> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af4f95516867b62f91f5d740081512f84" title="Compute and return total dihedral potential energy of this System.">      energy</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R2, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R3, <span class="keywordtype">int</span> typeId)<span class="keyword"> const</span>
 <a name="l00264"></a>00264 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().energy(R1, R2, R3, typeId); }
 <a name="l00265"></a>00265 
 <a name="l00266"></a>00266    <span class="comment">/*</span>
 <a name="l00267"></a>00267 <span class="comment">   * Return forces for a single dihedral.</span>
 <a name="l00268"></a>00268 <span class="comment">   */</span>
 <a name="l00269"></a>00269    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00270"></a>00270    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af089ab1f624b1f86225336566f3ed3c4" title="Returns derivatives of energy with respect to bond vectors forming the dihedral group.">DihedralPotentialImpl&lt;Interaction&gt;::</a>
-<a name="l00271"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af089ab1f624b1f86225336566f3ed3c4">00271</a> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af089ab1f624b1f86225336566f3ed3c4" title="Returns derivatives of energy with respect to bond vectors forming the dihedral group.">      force</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R2, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R3,
+<a name="l00270"></a>00270    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#aaa389763b614342e2a784c7a29164eab" title="Returns derivatives of energy with respect to bond vectors forming the dihedral group.">DihedralPotentialImpl&lt;Interaction&gt;::</a>
+<a name="l00271"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#aaa389763b614342e2a784c7a29164eab">00271</a> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#aaa389763b614342e2a784c7a29164eab" title="Returns derivatives of energy with respect to bond vectors forming the dihedral group.">      force</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R2, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R3,
 <a name="l00272"></a>00272             <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F1, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F2, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F3, <span class="keywordtype">int</span> typeId)<span class="keyword"> const</span>
 <a name="l00273"></a>00273 <span class="keyword">   </span>{  interaction().force(R1, R2, R3, F1, F2, F3, typeId); }
 <a name="l00274"></a>00274 
@@ -226,7 +226,7 @@
 <a name="l00276"></a>00276 <span class="comment">   * Return dihedral energy for one Atom.</span>
 <a name="l00277"></a>00277 <span class="comment">   */</span>
 <a name="l00278"></a>00278    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00279"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a4851d6fa60c176b9369effbb1da0e7bd">00279</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a4851d6fa60c176b9369effbb1da0e7bd" title="Compute and return the dihedral energy for one Atom.">DihedralPotentialImpl&lt;Interaction&gt;::atomEnergy</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)<span class="keyword"> </span>
+<a name="l00279"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af9771b2f86c11bbbe2ff80db3af291c0">00279</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af9771b2f86c11bbbe2ff80db3af291c0" title="Compute and return the dihedral energy for one Atom.">DihedralPotentialImpl&lt;Interaction&gt;::atomEnergy</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)<span class="keyword"> </span>
 <a name="l00280"></a>00280 <span class="keyword">   const</span>
 <a name="l00281"></a>00281 <span class="keyword">   </span>{
 <a name="l00282"></a>00282       Species::AtomDihedralArray dihedrals;
@@ -237,17 +237,17 @@
 <a name="l00287"></a>00287       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr3; <span class="comment">// R[3] - R[2]</span>
 <a name="l00288"></a>00288       <span class="keywordtype">double</span> energy = 0.0;
 <a name="l00289"></a>00289 
-<a name="l00290"></a>00290       atom.<a class="code" href="classMcMd_1_1Atom.html#ae73230f53be08f7eb347b5201d903bb4" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#a140d8e2d6c3504522858415289c49e05" title="Get the molecular Species by reference.">species</a>().getAtomDihedrals(atom, dihedrals);
+<a name="l00290"></a>00290       atom.<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>().getAtomDihedrals(atom, dihedrals);
 <a name="l00291"></a>00291       <span class="keywordflow">for</span> (iDihedral = 0; iDihedral &lt; dihedrals.size(); ++iDihedral) {
 <a name="l00292"></a>00292          dihedralPtr = dihedrals[iDihedral];
-<a name="l00293"></a>00293          boundary().distanceSq(dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e" title="Get a specific Atom in the Group.">atom</a>(1).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00294"></a>00294                                dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e" title="Get a specific Atom in the Group.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr1);
-<a name="l00295"></a>00295          boundary().distanceSq(dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e" title="Get a specific Atom in the Group.">atom</a>(2).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00296"></a>00296                                dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e" title="Get a specific Atom in the Group.">atom</a>(1).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr2);
-<a name="l00297"></a>00297          boundary().distanceSq(dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e" title="Get a specific Atom in the Group.">atom</a>(3).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00298"></a>00298                                dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e" title="Get a specific Atom in the Group.">atom</a>(2).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr3);
+<a name="l00293"></a>00293          boundary().distanceSq(dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00294"></a>00294                                dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr1);
+<a name="l00295"></a>00295          boundary().distanceSq(dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(2).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00296"></a>00296                                dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr2);
+<a name="l00297"></a>00297          boundary().distanceSq(dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(3).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00298"></a>00298                                dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(2).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr3);
 <a name="l00299"></a>00299          energy += interaction().energy(dr1, dr2, dr3,
-<a name="l00300"></a>00300                                              dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#af68aca851173d8f261a70897bff349c9" title="Get the typeId for this covalent group.">typeId</a>());
+<a name="l00300"></a>00300                                              dihedralPtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>());
 <a name="l00301"></a>00301       }
 <a name="l00302"></a>00302       <span class="keywordflow">return</span> energy;
 <a name="l00303"></a>00303    }
@@ -256,7 +256,7 @@
 <a name="l00306"></a>00306 <span class="comment">   * Compute total dihedral energy for a System.</span>
 <a name="l00307"></a>00307 <span class="comment">   */</span>
 <a name="l00308"></a>00308    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00309"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a7d8a7d1d94db857f9b53e50c675f216b">00309</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a7d8a7d1d94db857f9b53e50c675f216b" title="Compute and return total dihedral potential energy of this System.">DihedralPotentialImpl&lt;Interaction&gt;::energy</a>()<span class="keyword"> const</span>
+<a name="l00309"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af4f95516867b62f91f5d740081512f84">00309</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af4f95516867b62f91f5d740081512f84" title="Compute and return total dihedral potential energy of this System.">DihedralPotentialImpl&lt;Interaction&gt;::energy</a>()<span class="keyword"> const</span>
 <a name="l00310"></a>00310 <span class="keyword">   </span>{
 <a name="l00311"></a>00311       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr1; <span class="comment">// R[1] - R[0]</span>
 <a name="l00312"></a>00312       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr2; <span class="comment">// R[2] - R[1]</span>
@@ -267,7 +267,7 @@
 <a name="l00317"></a>00317 
 <a name="l00318"></a>00318       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
 <a name="l00319"></a>00319          <span class="keywordflow">if</span> (simulation().species(iSpec).nDihedral() &gt; 0) {
-<a name="l00320"></a>00320             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00320"></a>00320             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
 <a name="l00321"></a>00321                molIter-&gt;begin(dihedralIter); 
 <a name="l00322"></a>00322                <span class="keywordflow">for</span> ( ; dihedralIter.notEnd(); ++dihedralIter){
 <a name="l00323"></a>00323                   boundary().distanceSq(dihedralIter-&gt;atom(1).position(),
@@ -290,7 +290,7 @@
 <a name="l00340"></a>00340 <span class="comment">   * Add dihedral forces to atomic forces.</span>
 <a name="l00341"></a>00341 <span class="comment">   */</span>
 <a name="l00342"></a>00342    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00343"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d">00343</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Add dihedral forces to all atomic forces.">DihedralPotentialImpl&lt;Interaction&gt;::addForces</a>() 
+<a name="l00343"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a2e9ab30357db541713639498cac06a80">00343</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a2e9ab30357db541713639498cac06a80" title="Add dihedral forces to all atomic forces.">DihedralPotentialImpl&lt;Interaction&gt;::addForces</a>() 
 <a name="l00344"></a>00344    {
 <a name="l00345"></a>00345       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr1, dr2, dr3, force1, force2, force3;
 <a name="l00346"></a>00346       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> *atom0Ptr, *atom1Ptr, *atom2Ptr, *atom3Ptr;
@@ -300,7 +300,7 @@
 <a name="l00350"></a>00350       Molecule::DihedralIterator dihedralIter;
 <a name="l00351"></a>00351       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
 <a name="l00352"></a>00352          <span class="keywordflow">if</span> (simulation().species(iSpec).nDihedral() &gt; 0) {
-<a name="l00353"></a>00353             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00353"></a>00353             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
 <a name="l00354"></a>00354                molIter-&gt;begin(dihedralIter); 
 <a name="l00355"></a>00355                <span class="keywordflow">for</span> ( ; dihedralIter.notEnd(); ++dihedralIter) {
 <a name="l00356"></a>00356 
@@ -309,21 +309,21 @@
 <a name="l00359"></a>00359                   atom2Ptr = &amp;(dihedralIter-&gt;atom(2));
 <a name="l00360"></a>00360                   atom3Ptr = &amp;(dihedralIter-&gt;atom(3));
 <a name="l00361"></a>00361 
-<a name="l00362"></a>00362                   boundary().distanceSq(atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00363"></a>00363                                         atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr1);
-<a name="l00364"></a>00364                   boundary().distanceSq(atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00365"></a>00365                                         atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr2);
-<a name="l00366"></a>00366                   boundary().distanceSq(atom3Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00367"></a>00367                                         atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr3);
-<a name="l00368"></a>00368                   interaction().<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>(dr1, dr2, dr3,
+<a name="l00362"></a>00362                   boundary().distanceSq(atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00363"></a>00363                                         atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr1);
+<a name="l00364"></a>00364                   boundary().distanceSq(atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00365"></a>00365                                         atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr2);
+<a name="l00366"></a>00366                   boundary().distanceSq(atom3Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00367"></a>00367                                         atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr3);
+<a name="l00368"></a>00368                   interaction().<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>(dr1, dr2, dr3,
 <a name="l00369"></a>00369                      force1, force2, force3, dihedralIter-&gt;typeId());
 <a name="l00370"></a>00370 
-<a name="l00371"></a>00371                   atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() += force1;
-<a name="l00372"></a>00372                   atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() -= force1;
-<a name="l00373"></a>00373                   atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() += force2;
-<a name="l00374"></a>00374                   atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() -= force2;
-<a name="l00375"></a>00375                   atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() += force3;
-<a name="l00376"></a>00376                   atom3Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() -= force3;
+<a name="l00371"></a>00371                   atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() += force1;
+<a name="l00372"></a>00372                   atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() -= force1;
+<a name="l00373"></a>00373                   atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() += force2;
+<a name="l00374"></a>00374                   atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() -= force2;
+<a name="l00375"></a>00375                   atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() += force3;
+<a name="l00376"></a>00376                   atom3Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() -= force3;
 <a name="l00377"></a>00377                }
 <a name="l00378"></a>00378             }
 <a name="l00379"></a>00379          }
@@ -346,7 +346,7 @@
 <a name="l00396"></a>00396       Molecule::ConstDihedralIterator dihedralIter;
 <a name="l00397"></a>00397       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec = 0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
 <a name="l00398"></a>00398          <span class="keywordflow">if</span> (simulation().species(iSpec).nDihedral() &gt; 0) {
-<a name="l00399"></a>00399             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00399"></a>00399             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
 <a name="l00400"></a>00400                molIter-&gt;begin(dihedralIter);
 <a name="l00401"></a>00401                <span class="keywordflow">for</span> ( ; dihedralIter.notEnd(); ++dihedralIter){
 <a name="l00402"></a>00402 
@@ -375,39 +375,39 @@
 <a name="l00425"></a>00425       normalizeStress(stress);
 <a name="l00426"></a>00426    }
 <a name="l00427"></a>00427    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00428"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d">00428</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d" title="Compute total dihedral pressure.">DihedralPotentialImpl&lt;Interaction&gt;::computeStress</a>(<span class="keywordtype">double</span>&amp; stress)<span class="keyword"> const</span>
+<a name="l00428"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ac224cbf30d388263cea3c6649146c632">00428</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ac224cbf30d388263cea3c6649146c632" title="Compute total dihedral pressure.">DihedralPotentialImpl&lt;Interaction&gt;::computeStress</a>(<span class="keywordtype">double</span>&amp; stress)<span class="keyword"> const</span>
 <a name="l00429"></a>00429 <span class="keyword">   </span>{  computeStressImpl(stress); }
 <a name="l00430"></a>00430 
 <a name="l00431"></a>00431    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00432"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a664e9e28ebd82ef0744a495912c8131c">00432</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d" title="Compute total dihedral pressure.">DihedralPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Util::Vector</a>&amp; stress)<span class="keyword"> </span>
+<a name="l00432"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a09e767913adf41bb75562091316bec9d">00432</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ac224cbf30d388263cea3c6649146c632" title="Compute total dihedral pressure.">DihedralPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Util::Vector</a>&amp; stress)<span class="keyword"> </span>
 <a name="l00433"></a>00433 <span class="keyword">        const</span>
 <a name="l00434"></a>00434 <span class="keyword">   </span>{  computeStressImpl(stress); }
 <a name="l00435"></a>00435 
 <a name="l00436"></a>00436    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00437"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a7179cc96d78bbce80d68170bdfdab3fb">00437</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d" title="Compute total dihedral pressure.">DihedralPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Util::Tensor</a>&amp; stress)<span class="keyword"> </span>
+<a name="l00437"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a7cdf899db4576adff559983697d5fda9">00437</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#ac224cbf30d388263cea3c6649146c632" title="Compute total dihedral pressure.">DihedralPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Util::Tensor</a>&amp; stress)<span class="keyword"> </span>
 <a name="l00438"></a>00438 <span class="keyword">        const</span>
 <a name="l00439"></a>00439 <span class="keyword">   </span>{  computeStressImpl(stress); }
 <a name="l00440"></a>00440 
 <a name="l00441"></a>00441    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00442"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0">00442</a>    <span class="keyword">inline</span> Interaction&amp; <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0" title="Return dihedral potential interaction by reference.">DihedralPotentialImpl&lt;Interaction&gt;::interaction</a>()
+<a name="l00442"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a08f1f06398af751fb06844084e2ccd91">00442</a>    <span class="keyword">inline</span> Interaction&amp; <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a08f1f06398af751fb06844084e2ccd91" title="Return dihedral potential interaction by reference.">DihedralPotentialImpl&lt;Interaction&gt;::interaction</a>()
 <a name="l00443"></a>00443    { <span class="keywordflow">return</span> *interactionPtr_; }
 <a name="l00444"></a>00444 
 <a name="l00445"></a>00445    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00446"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a7c088e3beaea91f544fa2929b1cb13bf">00446</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Interaction&amp; <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0" title="Return dihedral potential interaction by reference.">DihedralPotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
+<a name="l00446"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af1f5874fb907f0dad1fa65f1a54fb28e">00446</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Interaction&amp; <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a08f1f06398af751fb06844084e2ccd91" title="Return dihedral potential interaction by reference.">DihedralPotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
 <a name="l00447"></a>00447 <span class="keyword">   </span>{ <span class="keywordflow">return</span> *interactionPtr_; }
 <a name="l00448"></a>00448 
 <a name="l00449"></a>00449    <span class="comment">/*</span>
 <a name="l00450"></a>00450 <span class="comment">   * Return dihedral potential interaction class name.</span>
 <a name="l00451"></a>00451 <span class="comment">   */</span>
 <a name="l00452"></a>00452    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00453"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af02a7265da2c0156eeb829fea1be4747">00453</a>    std::string <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#af02a7265da2c0156eeb829fea1be4747" title="Return pair interaction class name (e.g., &amp;quot;CosineDihedral&amp;quot;).">DihedralPotentialImpl&lt;Interaction&gt;::interactionClassName</a>()<span class="keyword"> const</span>
+<a name="l00453"></a><a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a4d9211c4593974c5b699ae3a594b4c92">00453</a>    std::string <a class="code" href="classMcMd_1_1DihedralPotentialImpl.html#a4d9211c4593974c5b699ae3a594b4c92" title="Return pair interaction class name (e.g., &amp;quot;CosineDihedral&amp;quot;).">DihedralPotentialImpl&lt;Interaction&gt;::interactionClassName</a>()<span class="keyword"> const</span>
 <a name="l00454"></a>00454 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().className(); }
 <a name="l00455"></a>00455 
 <a name="l00456"></a>00456 }
 <a name="l00457"></a>00457 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

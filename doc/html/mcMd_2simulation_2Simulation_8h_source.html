@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -197,7 +197,7 @@
 <a name="l00288"></a>00288       <span class="keywordtype">int</span> dihedralCapacity() <span class="keyword">const</span>;
 <a name="l00289"></a>00289 <span class="preprocessor">      #endif</span>
 <a name="l00290"></a>00290 <span class="preprocessor"></span>
-<a name="l00294"></a>00294       <a class="code" href="group__McMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> maskedPairPolicy() <span class="keyword">const</span>;
+<a name="l00294"></a>00294       <a class="code" href="group__McMd__Chemistry__Module.html#ga43203d681ebb2c62d748de0516d59a82" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> maskedPairPolicy() <span class="keyword">const</span>;
 <a name="l00295"></a>00295 
 <a name="l00301"></a>00301       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>&amp; species(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;
 <a name="l00302"></a>00302 
@@ -213,9 +213,9 @@
 <a name="l00323"></a>00323 
 <a name="l00324"></a>00324    <span class="keyword">protected</span>:
 <a name="l00325"></a>00325 
-<a name="l00332"></a><a class="code" href="classMcMd_1_1Simulation.html#a85ca36ac77635278e3e76e03f7725901">00332</a>       <span class="keywordtype">int</span>  <a class="code" href="classMcMd_1_1Simulation.html#a85ca36ac77635278e3e76e03f7725901" title="Number of Systems of interacting molecules (&amp;gt; 1 in Gibbs ensemble).">nSystem_</a>;
+<a name="l00332"></a><a class="code" href="classMcMd_1_1Simulation.html#a626bd72080b6fab8726c82c5701cc20d">00332</a>       <span class="keywordtype">int</span>  <a class="code" href="classMcMd_1_1Simulation.html#a626bd72080b6fab8726c82c5701cc20d" title="Number of Systems of interacting molecules (&amp;gt; 1 in Gibbs ensemble).">nSystem_</a>;
 <a name="l00333"></a>00333 
-<a name="l00337"></a><a class="code" href="classMcMd_1_1Simulation.html#aceec8996e76f6f60627c59050a24d284">00337</a>       <span class="keywordtype">int</span>  <a class="code" href="classMcMd_1_1Simulation.html#aceec8996e76f6f60627c59050a24d284" title="Step index for main MC or MD loop.">iStep_</a>;
+<a name="l00337"></a><a class="code" href="classMcMd_1_1Simulation.html#a6224826bc0aa97739ed951acb2f2cf70">00337</a>       <span class="keywordtype">int</span>  <a class="code" href="classMcMd_1_1Simulation.html#a6224826bc0aa97739ed951acb2f2cf70" title="Step index for main MC or MD loop.">iStep_</a>;
 <a name="l00338"></a>00338 
 <a name="l00347"></a>00347       <span class="keywordtype">void</span> setDiagnosticManager(<a class="code" href="classMcMd_1_1DiagnosticManager.html" title="Manager for a list of Diagnostic objects.">DiagnosticManager</a>* ptr);
 <a name="l00348"></a>00348 
@@ -331,7 +331,7 @@
 <a name="l00581"></a>00581       <span class="keywordtype">int</span>  dihedralCapacity_;
 <a name="l00582"></a>00582 <span class="preprocessor">      #endif</span>
 <a name="l00583"></a>00583 <span class="preprocessor"></span>
-<a name="l00592"></a>00592       <a class="code" href="group__McMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a>  maskedPairPolicy_;
+<a name="l00592"></a>00592       <a class="code" href="group__McMd__Chemistry__Module.html#ga43203d681ebb2c62d748de0516d59a82" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a>  maskedPairPolicy_;
 <a name="l00593"></a>00593 
 <a name="l00595"></a>00595 
 <a name="l00599"></a>00599       <span class="keywordtype">void</span> initialize();
@@ -355,10 +355,10 @@
 <a name="l00635"></a>00635 
 <a name="l00636"></a>00636    <span class="comment">// public inline accessor methods</span>
 <a name="l00637"></a>00637 
-<a name="l00638"></a><a class="code" href="classMcMd_1_1Simulation.html#a75990126a7bab14aff4a94db42b29f61">00638</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a75990126a7bab14aff4a94db42b29f61" title="Get the number of atom types.">Simulation::nAtomType</a>()<span class="keyword"> const</span>
+<a name="l00638"></a><a class="code" href="classMcMd_1_1Simulation.html#a54f547a8259478908be74fff6e76ba70">00638</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a54f547a8259478908be74fff6e76ba70" title="Get the number of atom types.">Simulation::nAtomType</a>()<span class="keyword"> const</span>
 <a name="l00639"></a>00639 <span class="keyword">   </span>{  <span class="keywordflow">return</span> nAtomType_; }
 <a name="l00640"></a>00640 
-<a name="l00641"></a><a class="code" href="classMcMd_1_1Simulation.html#ac966770612b5d4235333b3b8c683645c">00641</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#ac966770612b5d4235333b3b8c683645c" title="Get the number of bond types.">Simulation::nBondType</a>()<span class="keyword"> const</span>
+<a name="l00641"></a><a class="code" href="classMcMd_1_1Simulation.html#a0b5203494fb8b9fbd429909bec54c440">00641</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a0b5203494fb8b9fbd429909bec54c440" title="Get the number of bond types.">Simulation::nBondType</a>()<span class="keyword"> const</span>
 <a name="l00642"></a>00642 <span class="keyword">   </span>{  <span class="keywordflow">return</span> nBondType_; }
 <a name="l00643"></a>00643 
 <a name="l00644"></a>00644 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
@@ -372,12 +372,12 @@
 <a name="l00652"></a>00652 <span class="preprocessor">   #endif</span>
 <a name="l00653"></a>00653 <span class="preprocessor"></span>
 <a name="l00654"></a>00654 <span class="preprocessor">   #ifdef MCMD_LINK</span>
-<a name="l00655"></a><a class="code" href="classMcMd_1_1Simulation.html#a806afd743cf5e4255002d1fd00e93de4">00655</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a806afd743cf5e4255002d1fd00e93de4" title="Get the number of link types.">Simulation::nLinkType</a>()<span class="keyword"> const</span>
+<a name="l00655"></a><a class="code" href="classMcMd_1_1Simulation.html#af044562a4427a42d14b27923528c6237">00655</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#af044562a4427a42d14b27923528c6237" title="Get the number of link types.">Simulation::nLinkType</a>()<span class="keyword"> const</span>
 <a name="l00656"></a>00656 <span class="keyword">   </span>{  <span class="keywordflow">return</span> nLinkType_; }
 <a name="l00657"></a>00657 <span class="preprocessor">   #endif</span>
 <a name="l00658"></a>00658 <span class="preprocessor"></span>
 <a name="l00659"></a>00659 <span class="preprocessor">   #ifdef INTER_EXTERNAL</span>
-<a name="l00660"></a><a class="code" href="classMcMd_1_1Simulation.html#aa2e7d2c497037affac9422cc7dcdae54">00660</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#aa2e7d2c497037affac9422cc7dcdae54" title="Does an external potential exist?">Simulation::hasExternal</a>()<span class="keyword"> const</span>
+<a name="l00660"></a><a class="code" href="classMcMd_1_1Simulation.html#a84b380cfe058e530a597b1040b77611c">00660</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a84b380cfe058e530a597b1040b77611c" title="Does an external potential exist?">Simulation::hasExternal</a>()<span class="keyword"> const</span>
 <a name="l00661"></a>00661 <span class="keyword">   </span>{  <span class="keywordflow">return</span> hasExternal_; }
 <a name="l00662"></a>00662 <span class="preprocessor">   #endif</span>
 <a name="l00663"></a>00663 <span class="preprocessor"></span>
@@ -386,16 +386,16 @@
 <a name="l00666"></a>00666 <span class="keyword">   </span>{  <span class="keywordflow">return</span> hasTether_; }
 <a name="l00667"></a>00667 <span class="preprocessor">   #endif</span>
 <a name="l00668"></a>00668 <span class="preprocessor"></span>
-<a name="l00669"></a><a class="code" href="classMcMd_1_1Simulation.html#ac88c5b310f109b56ce8adb7709cc2041">00669</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#ac88c5b310f109b56ce8adb7709cc2041" title="Get the number of Systems in this Simulation.">Simulation::nSystem</a>()<span class="keyword"> const</span>
+<a name="l00669"></a><a class="code" href="classMcMd_1_1Simulation.html#abb1c2a77d5b43b2e0602a2aea5094f14">00669</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#abb1c2a77d5b43b2e0602a2aea5094f14" title="Get the number of Systems in this Simulation.">Simulation::nSystem</a>()<span class="keyword"> const</span>
 <a name="l00670"></a>00670 <span class="keyword">   </span>{  <span class="keywordflow">return</span> nSystem_; }
 <a name="l00671"></a>00671 
-<a name="l00672"></a><a class="code" href="classMcMd_1_1Simulation.html#a77af863148f460dbf692ed4b9525343c">00672</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a77af863148f460dbf692ed4b9525343c" title="Get the total number of Molecules allocated.">Simulation::moleculeCapacity</a>()<span class="keyword"> const</span>
+<a name="l00672"></a><a class="code" href="classMcMd_1_1Simulation.html#ad74b4e97f31f46a54ae26397802b4c1a">00672</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#ad74b4e97f31f46a54ae26397802b4c1a" title="Get the total number of Molecules allocated.">Simulation::moleculeCapacity</a>()<span class="keyword"> const</span>
 <a name="l00673"></a>00673 <span class="keyword">   </span>{  <span class="keywordflow">return</span> moleculeCapacity_; }
 <a name="l00674"></a>00674 
-<a name="l00675"></a><a class="code" href="classMcMd_1_1Simulation.html#a72fbb50e40dfdc5f3710e54aac41b97e">00675</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a72fbb50e40dfdc5f3710e54aac41b97e" title="Get the total number of Atoms allocated.">Simulation::atomCapacity</a>()<span class="keyword"> const</span>
+<a name="l00675"></a><a class="code" href="classMcMd_1_1Simulation.html#a026daa03685c6af5d7defc5d4e724a65">00675</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a026daa03685c6af5d7defc5d4e724a65" title="Get the total number of Atoms allocated.">Simulation::atomCapacity</a>()<span class="keyword"> const</span>
 <a name="l00676"></a>00676 <span class="keyword">   </span>{  <span class="keywordflow">return</span> atomCapacity_; }
 <a name="l00677"></a>00677 
-<a name="l00678"></a><a class="code" href="classMcMd_1_1Simulation.html#a877d1d1ed89aff16fa8de36f5037f862">00678</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a877d1d1ed89aff16fa8de36f5037f862" title="Get the total number of Bonds allocated.">Simulation::bondCapacity</a>()<span class="keyword"> const</span>
+<a name="l00678"></a><a class="code" href="classMcMd_1_1Simulation.html#ad05128e769a5ab9eb43175c4552652ac">00678</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#ad05128e769a5ab9eb43175c4552652ac" title="Get the total number of Bonds allocated.">Simulation::bondCapacity</a>()<span class="keyword"> const</span>
 <a name="l00679"></a>00679 <span class="keyword">   </span>{  <span class="keywordflow">return</span> bondCapacity_; }
 <a name="l00680"></a>00680 
 <a name="l00681"></a>00681 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
@@ -408,19 +408,19 @@
 <a name="l00688"></a>00688 <span class="keyword">   </span>{  <span class="keywordflow">return</span> dihedralCapacity_; }
 <a name="l00689"></a>00689 <span class="preprocessor">   #endif</span>
 <a name="l00690"></a>00690 <span class="preprocessor"></span>
-<a name="l00691"></a><a class="code" href="classMcMd_1_1Simulation.html#ac2760568e710bf2ed84a05ea91345c61">00691</a>    <span class="keyword">inline</span> <a class="code" href="group__McMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> <a class="code" href="classMcMd_1_1Simulation.html#ac2760568e710bf2ed84a05ea91345c61" title="Return the value of the mask policy (MaskNone or MaskBonded).">Simulation::maskedPairPolicy</a>()<span class="keyword"> const</span>
+<a name="l00691"></a><a class="code" href="classMcMd_1_1Simulation.html#a4020cfcb13649eecef9c9bfdb3b4eba2">00691</a>    <span class="keyword">inline</span> <a class="code" href="group__McMd__Chemistry__Module.html#ga43203d681ebb2c62d748de0516d59a82" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> <a class="code" href="classMcMd_1_1Simulation.html#a4020cfcb13649eecef9c9bfdb3b4eba2" title="Return the value of the mask policy (MaskNone or MaskBonded).">Simulation::maskedPairPolicy</a>()<span class="keyword"> const</span>
 <a name="l00692"></a>00692 <span class="keyword">   </span>{  <span class="keywordflow">return</span> maskedPairPolicy_; }
 <a name="l00693"></a>00693 
-<a name="l00694"></a><a class="code" href="classMcMd_1_1Simulation.html#a3e9d2379455b7dc1bc206383917cd3b0">00694</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; <a class="code" href="classMcMd_1_1Simulation.html#a3e9d2379455b7dc1bc206383917cd3b0" title="Get the random number generator by reference.">Simulation::random</a>()
+<a name="l00694"></a><a class="code" href="classMcMd_1_1Simulation.html#afe4a8354b0ecaf6daf94ea9b8343b26b">00694</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; <a class="code" href="classMcMd_1_1Simulation.html#afe4a8354b0ecaf6daf94ea9b8343b26b" title="Get the random number generator by reference.">Simulation::random</a>()
 <a name="l00695"></a>00695    {  <span class="keywordflow">return</span> random_; }
 <a name="l00696"></a>00696 
 <a name="l00697"></a>00697 <span class="preprocessor">   #ifndef MCMD_NOATOMTYPES</span>
-<a name="l00698"></a><a class="code" href="classMcMd_1_1Simulation.html#ab6bbaf9cb8f4d80bee8bc097fe081b2f">00698</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classMcMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a>&amp; <a class="code" href="classMcMd_1_1Simulation.html#ab6bbaf9cb8f4d80bee8bc097fe081b2f" title="Get an AtomType object by const reference.">Simulation::atomType</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00698"></a><a class="code" href="classMcMd_1_1Simulation.html#aaa66eab8cfb22ac117f93cd076cfe3f4">00698</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classMcMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a>&amp; <a class="code" href="classMcMd_1_1Simulation.html#aaa66eab8cfb22ac117f93cd076cfe3f4" title="Get an AtomType object by const reference.">Simulation::atomType</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00699"></a>00699 <span class="keyword">   </span>{  <span class="keywordflow">return</span> atomTypes_[i]; }
 <a name="l00700"></a>00700 <span class="preprocessor">   #endif</span>
 <a name="l00701"></a>00701 <span class="preprocessor"></span>
 <a name="l00702"></a>00702 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00703"></a><a class="code" href="classMcMd_1_1Simulation.html#adcf7e1eb8b25abb3ba87f4dccbbd5393">00703</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> MPI::Intracomm&amp; <a class="code" href="classMcMd_1_1Simulation.html#adcf7e1eb8b25abb3ba87f4dccbbd5393" title="Get the MPI communicator by reference.">Simulation::communicator</a>()
+<a name="l00703"></a><a class="code" href="classMcMd_1_1Simulation.html#a54af1504986b5ff773b5eae26c35eb90">00703</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> MPI::Intracomm&amp; <a class="code" href="classMcMd_1_1Simulation.html#a54af1504986b5ff773b5eae26c35eb90" title="Get the MPI communicator by reference.">Simulation::communicator</a>()
 <a name="l00704"></a>00704    {
 <a name="l00705"></a>00705       assert(communicatorPtr_);  
 <a name="l00706"></a>00706       <span class="keywordflow">return</span> *communicatorPtr_; 
@@ -429,26 +429,26 @@
 <a name="l00709"></a>00709 <span class="preprocessor"></span>
 <a name="l00710"></a>00710    <span class="comment">// Protected inline methods</span>
 <a name="l00711"></a>00711    
-<a name="l00712"></a><a class="code" href="classMcMd_1_1Simulation.html#aab4571631d952de626f3a08388c45272">00712</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; <a class="code" href="classMcMd_1_1Simulation.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster object.">Simulation::fileMaster</a>()
+<a name="l00712"></a><a class="code" href="classMcMd_1_1Simulation.html#a1d59234d00553f1dcae37158165d2a0f">00712</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; <a class="code" href="classMcMd_1_1Simulation.html#a1d59234d00553f1dcae37158165d2a0f" title="Get the FileMaster object.">Simulation::fileMaster</a>()
 <a name="l00713"></a>00713    {  <span class="keywordflow">return</span> fileMaster_; }
 <a name="l00714"></a>00714 
-<a name="l00715"></a><a class="code" href="classMcMd_1_1Simulation.html#af0f274068a7819be415808bfb584638c">00715</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Simulation.html#af0f274068a7819be415808bfb584638c" title="Set the associated DiagnosticManager.">Simulation::setDiagnosticManager</a>(<a class="code" href="classMcMd_1_1DiagnosticManager.html" title="Manager for a list of Diagnostic objects.">DiagnosticManager</a>* ptr)
+<a name="l00715"></a><a class="code" href="classMcMd_1_1Simulation.html#a2e8d589574c62df700506f6a841e6f11">00715</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Simulation.html#a2e8d589574c62df700506f6a841e6f11" title="Set the associated DiagnosticManager.">Simulation::setDiagnosticManager</a>(<a class="code" href="classMcMd_1_1DiagnosticManager.html" title="Manager for a list of Diagnostic objects.">DiagnosticManager</a>* ptr)
 <a name="l00716"></a>00716    {  diagnosticManagerPtr_ = ptr; }
 <a name="l00717"></a>00717 
-<a name="l00718"></a><a class="code" href="classMcMd_1_1Simulation.html#a405063196da9838550fc44d066c3b7bc">00718</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1DiagnosticManager.html" title="Manager for a list of Diagnostic objects.">DiagnosticManager</a>&amp; <a class="code" href="classMcMd_1_1Simulation.html#a405063196da9838550fc44d066c3b7bc" title="Get the associated DiagnosticManager by reference.">Simulation::diagnosticManager</a>()
+<a name="l00718"></a><a class="code" href="classMcMd_1_1Simulation.html#a1926d0b717de4acac2fb51a65b47927e">00718</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1DiagnosticManager.html" title="Manager for a list of Diagnostic objects.">DiagnosticManager</a>&amp; <a class="code" href="classMcMd_1_1Simulation.html#a1926d0b717de4acac2fb51a65b47927e" title="Get the associated DiagnosticManager by reference.">Simulation::diagnosticManager</a>()
 <a name="l00719"></a>00719    {  
 <a name="l00720"></a>00720       assert(diagnosticManagerPtr_);
 <a name="l00721"></a>00721       <span class="keywordflow">return</span> *diagnosticManagerPtr_; 
 <a name="l00722"></a>00722    }
 <a name="l00723"></a>00723 
-<a name="l00724"></a><a class="code" href="classMcMd_1_1Simulation.html#a0adf013efaeb89253e8ffca6c01e70a5">00724</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a0adf013efaeb89253e8ffca6c01e70a5" title="Get value of step index for main MC or MD loop.">Simulation::iStep</a>()<span class="keyword"> const</span>
+<a name="l00724"></a><a class="code" href="classMcMd_1_1Simulation.html#a2f8790fe8102db2dce5a67f1dbda80c5">00724</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Simulation.html#a2f8790fe8102db2dce5a67f1dbda80c5" title="Get value of step index for main MC or MD loop.">Simulation::iStep</a>()<span class="keyword"> const</span>
 <a name="l00725"></a>00725 <span class="keyword">   </span>{ <span class="keywordflow">return</span> iStep_; }
 <a name="l00726"></a>00726 
 <a name="l00727"></a>00727 }
 <a name="l00728"></a>00728 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

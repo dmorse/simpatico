@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -81,7 +81,7 @@
 <a name="l00029"></a>00029    <span class="comment">/* </span>
 <a name="l00030"></a>00030 <span class="comment">   * Constructor</span>
 <a name="l00031"></a>00031 <span class="comment">   */</span>
-<a name="l00032"></a><a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a242f490b2e9b1c7e2d70aea9dd0147db">00032</a>    <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a242f490b2e9b1c7e2d70aea9dd0147db" title="Constructor.">RingTetraRebridgeMove::RingTetraRebridgeMove</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system) : 
+<a name="l00032"></a><a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9b2e104593ae43f71a416daa49671680">00032</a>    <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9b2e104593ae43f71a416daa49671680" title="Constructor.">RingTetraRebridgeMove::RingTetraRebridgeMove</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system) : 
 <a name="l00033"></a>00033       <a class="code" href="classMcMd_1_1GroupRebridgeBase.html" title="Base class for rebridging a group of atoms forming a tetrahedron.">GroupRebridgeBase</a>(system),
 <a name="l00034"></a>00034       speciesId_(-1),
 <a name="l00035"></a>00035       nAtom_(0),
@@ -92,22 +92,22 @@
 <a name="l00040"></a>00040    <span class="comment">/* </span>
 <a name="l00041"></a>00041 <span class="comment">   * Read parameters speciesId, and bridgeLength_</span>
 <a name="l00042"></a>00042 <span class="comment">   */</span>
-<a name="l00043"></a><a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ab5421d3c9175985c9acbf723e5392075">00043</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ab5421d3c9175985c9acbf723e5392075" title="Read species to which displacement is applied.">RingTetraRebridgeMove::readParam</a>(std::istream&amp; in) 
+<a name="l00043"></a><a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a1358ac5925690e319c9500c150c234e2">00043</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a1358ac5925690e319c9500c150c234e2" title="Read species to which displacement is applied.">RingTetraRebridgeMove::readParam</a>(std::istream&amp; in) 
 <a name="l00044"></a>00044    {
 <a name="l00045"></a>00045       <span class="comment">// Read parameters</span>
-<a name="l00046"></a>00046       <a class="code" href="classMcMd_1_1McMove.html#a1d72f9c62c1717b5438dadcf12986bc4" title="Read the probability from file.">readProbability</a>(in);
-<a name="l00047"></a>00047       read&lt;int&gt;(in, <span class="stringliteral">&quot;speciesId&quot;</span>, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a2c37b9c96a64ee8e27abaf3d43542b79" title="Integer index for molecular species.">speciesId_</a>);
-<a name="l00048"></a>00048       read&lt;double&gt;(in, <span class="stringliteral">&quot;upperBridge&quot;</span>, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a471cb2ee123a293d92410e66370c055d" title="Upper bounds for trial length of a bridge.">upperBridge_</a>);
-<a name="l00049"></a>00049       read&lt;double&gt;(in, <span class="stringliteral">&quot;lowerBridge&quot;</span>, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a4c86b34b5958834a7871c278828485ae" title="Lower bounds for trial length of a bridge.">lowerBridge_</a>);
+<a name="l00046"></a>00046       <a class="code" href="classMcMd_1_1McMove.html#ae8ba388e2900251a42294e72ea394488" title="Read the probability from file.">readProbability</a>(in);
+<a name="l00047"></a>00047       read&lt;int&gt;(in, <span class="stringliteral">&quot;speciesId&quot;</span>, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a2d72b0dff77ea85ccd6f77fd58ebc277" title="Integer index for molecular species.">speciesId_</a>);
+<a name="l00048"></a>00048       read&lt;double&gt;(in, <span class="stringliteral">&quot;upperBridge&quot;</span>, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#aef7181242253267cf1fd352286320351" title="Upper bounds for trial length of a bridge.">upperBridge_</a>);
+<a name="l00049"></a>00049       read&lt;double&gt;(in, <span class="stringliteral">&quot;lowerBridge&quot;</span>, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9f9c54edc824a30773d36c6f8e0fe61e" title="Lower bounds for trial length of a bridge.">lowerBridge_</a>);
 <a name="l00050"></a>00050 
 <a name="l00051"></a>00051       <span class="comment">// Use dynamic_cast to check that the Species is actually a Linear species</span>
 <a name="l00052"></a>00052       <a class="code" href="classMcMd_1_1Ring.html" title="A Species of ring polymers (abstract).">Ring</a>* ringPtr;
-<a name="l00053"></a>00053       ringPtr = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classMcMd_1_1Ring.html" title="A Species of ring polymers (abstract).">Ring</a>*<span class="keyword">&gt;</span>(&amp;(<a class="code" href="classMcMd_1_1McMove.html#a9c48d9c8c09632e9489efe52722a7937" title="Get parent Simulation object.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#aa235ed92aee83e7119b594bd4ea2a49a" title="Get a specific Species by reference.">species</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a2c37b9c96a64ee8e27abaf3d43542b79" title="Integer index for molecular species.">speciesId_</a>)));
+<a name="l00053"></a>00053       ringPtr = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classMcMd_1_1Ring.html" title="A Species of ring polymers (abstract).">Ring</a>*<span class="keyword">&gt;</span>(&amp;(<a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a2d72b0dff77ea85ccd6f77fd58ebc277" title="Integer index for molecular species.">speciesId_</a>)));
 <a name="l00054"></a>00054 
 <a name="l00055"></a>00055       <span class="comment">// Allocate Vector array storing atom positions.</span>
-<a name="l00056"></a>00056       <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a> = <a class="code" href="classMcMd_1_1SystemMove.html#a332d034adbe18b9e8dc187ada84b5b29" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#aa235ed92aee83e7119b594bd4ea2a49a" title="Get a specific Species by reference.">species</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a2c37b9c96a64ee8e27abaf3d43542b79" title="Integer index for molecular species.">speciesId_</a>).<a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>();
-<a name="l00057"></a>00057       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a> &lt; 4) <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtom &lt; 4 for tetra rebridge move.&quot;</span>);
-<a name="l00058"></a>00058       <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9fc257dcf08bf9ec3392b710ecf77651" title="Arrays of atom positions of the correct molecule shape.">R_</a>.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>); 
+<a name="l00056"></a>00056       <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a> = <a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a2d72b0dff77ea85ccd6f77fd58ebc277" title="Integer index for molecular species.">speciesId_</a>).<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00057"></a>00057       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a> &lt; 4) <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtom &lt; 4 for tetra rebridge move.&quot;</span>);
+<a name="l00058"></a>00058       <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a6ed294b50ddaa11e390b7ce72905568f" title="Arrays of atom positions of the correct molecule shape.">R_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a>); 
 <a name="l00059"></a>00059 
 <a name="l00060"></a>00060    }
 <a name="l00061"></a>00061 
@@ -122,7 +122,7 @@
 <a name="l00070"></a>00070 <span class="comment">   *       the distance criterion exist;</span>
 <a name="l00071"></a>00071 <span class="comment">   *</span>
 <a name="l00072"></a>00072 <span class="comment">   */</span>
-<a name="l00073"></a><a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635">00073</a>    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635" title="Generate and accept or reject configuration bias move.">RingTetraRebridgeMove::move</a>() 
+<a name="l00073"></a><a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ae607777be585776da9dbe0600f842e04">00073</a>    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ae607777be585776da9dbe0600f842e04" title="Generate and accept or reject configuration bias move.">RingTetraRebridgeMove::move</a>() 
 <a name="l00074"></a>00074    {
 <a name="l00075"></a>00075       <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> *molPtr;    <span class="comment">// pointer to the rebridging molecule</span>
 <a name="l00076"></a>00076       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>     *aPtr, *bPtr, *cPtr, *dPtr; <span class="comment">// atom pointers</span>
@@ -134,41 +134,41 @@
 <a name="l00082"></a>00082       <span class="keywordtype">double</span>   energy;
 <a name="l00083"></a>00083       <span class="keywordtype">bool</span>     found, accept;
 <a name="l00084"></a>00084 
-<a name="l00085"></a>00085       <a class="code" href="classMcMd_1_1McMove.html#ada69d42f117a892c07b6d3340181d5b0" title="Increment the number of attempted moves.">incrementNAttempt</a>();
+<a name="l00085"></a>00085       <a class="code" href="classMcMd_1_1McMove.html#a5d90f9f9b40e1b8abf2d76109ca060a0" title="Increment the number of attempted moves.">incrementNAttempt</a>();
 <a name="l00086"></a>00086 
 <a name="l00087"></a>00087       <span class="comment">// Randomly pick up a molecule.</span>
-<a name="l00088"></a>00088       molPtr = &amp;(<a class="code" href="classMcMd_1_1SystemMove.html#a332d034adbe18b9e8dc187ada84b5b29" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1System.html#a9e99d6097de211df530b5859c2b034b1" title="Get a random Molecule of a specified species in this System.">randomMolecule</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a2c37b9c96a64ee8e27abaf3d43542b79" title="Integer index for molecular species.">speciesId_</a>));
+<a name="l00088"></a>00088       molPtr = &amp;(<a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1System.html#a04b9247341002c8d40f2133ed9136468" title="Get a random Molecule of a specified species in this System.">randomMolecule</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a2d72b0dff77ea85ccd6f77fd58ebc277" title="Integer index for molecular species.">speciesId_</a>));
 <a name="l00089"></a>00089 
 <a name="l00090"></a>00090       <span class="comment">// Randomly choose the a atom in the tetra-group.</span>
-<a name="l00091"></a>00091       ia = <a class="code" href="classMcMd_1_1McMove.html#a3e9d2379455b7dc1bc206383917cd3b0" title="Get Random number generator of parent Simulation.">random</a>().<a class="code" href="classUtil_1_1Random.html#aa2342a71482b4b3e020773bd2ac15640" title="Return random long int x uniformly distributed in range1 &amp;lt;= x &amp;lt; range2.">uniformInt</a>(0, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00091"></a>00091       ia = <a class="code" href="classMcMd_1_1McMove.html#a8e27f330daa6bbc314b8f81ca0f9decb" title="Get Random number generator of parent Simulation.">random</a>().<a class="code" href="classUtil_1_1Random.html#a2a7f4c20d13a3ea0bc532c224aecc40e" title="Return random long int x uniformly distributed in range1 &amp;lt;= x &amp;lt; range2.">uniformInt</a>(0, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a>);
 <a name="l00092"></a>00092 
 <a name="l00093"></a>00093       <span class="comment">// Search the rebriding sites.</span>
-<a name="l00094"></a>00094       found = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a4feb77d8d5b12be7a998dac9df59ba76" title="Scan potential rebridging sites.">scanBridge</a>(molPtr, ia, ic);
+<a name="l00094"></a>00094       found = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a5b3f870bece0d2a76dd791a4c48e0443" title="Scan potential rebridging sites.">scanBridge</a>(molPtr, ia, ic);
 <a name="l00095"></a>00095       <span class="keywordflow">if</span> (!found) <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00096"></a>00096 
-<a name="l00097"></a>00097       ib = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#aba61b64ab5e7a98d3edc3278b50c7dda" title="Shift Atom index along a Ring.">modId</a>(ia+1, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
-<a name="l00098"></a>00098       <span class="keywordtype">id</span> = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#aba61b64ab5e7a98d3edc3278b50c7dda" title="Shift Atom index along a Ring.">modId</a>(ic+1, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00097"></a>00097       ib = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a0f5ec0313064f9cd4cb7d7ea13821ea2" title="Shift Atom index along a Ring.">modId</a>(ia+1, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00098"></a>00098       <span class="keywordtype">id</span> = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a0f5ec0313064f9cd4cb7d7ea13821ea2" title="Shift Atom index along a Ring.">modId</a>(ic+1, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a>);
 <a name="l00099"></a>00099 
 <a name="l00100"></a>00100       <span class="comment">// Calcuate the energy change.</span>
-<a name="l00101"></a>00101       aPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(ia));
-<a name="l00102"></a>00102       bPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(ib));
-<a name="l00103"></a>00103       cPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(ic));
-<a name="l00104"></a>00104       dPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(<span class="keywordtype">id</span>));
+<a name="l00101"></a>00101       aPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(ia));
+<a name="l00102"></a>00102       bPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(ib));
+<a name="l00103"></a>00103       cPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(ic));
+<a name="l00104"></a>00104       dPtr = &amp;(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(<span class="keywordtype">id</span>));
 <a name="l00105"></a>00105 
-<a name="l00106"></a>00106       bondType = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a1dee63eefb65e4b66b6d643c4a093fc9" title="Get a specific Bond in this Molecule by reference.">bond</a>(ia).<a class="code" href="classMcMd_1_1Group.html#af68aca851173d8f261a70897bff349c9" title="Get the typeId for this covalent group.">typeId</a>();
-<a name="l00107"></a>00107       <a class="code" href="classMcMd_1_1GroupRebridgeBase.html#ae432252e86f4d376c612ebab24eecf7c" title="Calculate the energy cost for rebriding a tetra group.">tetraEnergy</a>(aPtr, bPtr, cPtr, dPtr, bondType, energy);
+<a name="l00106"></a>00106       bondType = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(ia).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00107"></a>00107       <a class="code" href="classMcMd_1_1GroupRebridgeBase.html#af1567f224e73ef319826e3e8fff80a36" title="Calculate the energy cost for rebriding a tetra group.">tetraEnergy</a>(aPtr, bPtr, cPtr, dPtr, bondType, energy);
 <a name="l00108"></a>00108 
 <a name="l00109"></a>00109       <span class="comment">// Decide whether to accept or reject.</span>
-<a name="l00110"></a>00110       accept = <a class="code" href="classMcMd_1_1McMove.html#a3e9d2379455b7dc1bc206383917cd3b0" title="Get Random number generator of parent Simulation.">random</a>().<a class="code" href="classUtil_1_1Random.html#a504cd93e6c07ec80fe2a90c0afe2d5db" title="Metropolis algorithm for whether to accept a MC move.">metropolis</a>(<a class="code" href="classMcMd_1_1SystemMove.html#af51b7f731b782e6e9e37d9536c1c00b9" title="Boltzmann weight associated with an energy difference.">boltzmann</a>(energy));
+<a name="l00110"></a>00110       accept = <a class="code" href="classMcMd_1_1McMove.html#a8e27f330daa6bbc314b8f81ca0f9decb" title="Get Random number generator of parent Simulation.">random</a>().<a class="code" href="classUtil_1_1Random.html#aca8c04b92484ed95768827d6ad411e40" title="Metropolis algorithm for whether to accept a MC move.">metropolis</a>(<a class="code" href="classMcMd_1_1SystemMove.html#ab3e350078e9b4c77048315280fd77c12" title="Boltzmann weight associated with an energy difference.">boltzmann</a>(energy));
 <a name="l00111"></a>00111 
 <a name="l00112"></a>00112       <span class="keywordflow">if</span> (accept) {
 <a name="l00113"></a>00113 
 <a name="l00114"></a>00114          <span class="comment">// Find the shorter half loop.</span>
 <a name="l00115"></a>00115          ibc = ic - ib; 
-<a name="l00116"></a>00116          <span class="keywordflow">if</span> (ibc &lt; 0) ibc += <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>;
+<a name="l00116"></a>00116          <span class="keywordflow">if</span> (ibc &lt; 0) ibc += <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a>;
 <a name="l00117"></a>00117 
 <a name="l00118"></a>00118          ida = ia - id; 
-<a name="l00119"></a>00119          <span class="keywordflow">if</span> (ida &lt; 0) ida += <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>;
+<a name="l00119"></a>00119          <span class="keywordflow">if</span> (ida &lt; 0) ida += <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a>;
 <a name="l00120"></a>00120 
 <a name="l00121"></a>00121          <span class="keywordflow">if</span> (ibc &lt;= ida) {
 <a name="l00122"></a>00122             lPtr = bPtr;
@@ -193,25 +193,25 @@
 <a name="l00141"></a>00141          <span class="comment">// Swap positions.</span>
 <a name="l00142"></a>00142          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; nSwap; ++j) {
 <a name="l00143"></a>00143             <span class="comment">// moving pointer close to the atom with higher index </span>
-<a name="l00144"></a>00144             hTmp = hPtr + <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#aba61b64ab5e7a98d3edc3278b50c7dda" title="Shift Atom index along a Ring.">modId</a>(iHigh - j, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>) - iHigh;
+<a name="l00144"></a>00144             hTmp = hPtr + <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a0f5ec0313064f9cd4cb7d7ea13821ea2" title="Shift Atom index along a Ring.">modId</a>(iHigh - j, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a>) - iHigh;
 <a name="l00145"></a>00145 
 <a name="l00146"></a>00146             <span class="comment">// moving pointer close to the atom with lower index</span>
-<a name="l00147"></a>00147             lTmp = lPtr + <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#aba61b64ab5e7a98d3edc3278b50c7dda" title="Shift Atom index along a Ring.">modId</a>(iLow + j, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>) - iLow;
+<a name="l00147"></a>00147             lTmp = lPtr + <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a0f5ec0313064f9cd4cb7d7ea13821ea2" title="Shift Atom index along a Ring.">modId</a>(iLow + j, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a>) - iLow;
 <a name="l00148"></a>00148 
-<a name="l00149"></a>00149             swapV = lTmp-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00149"></a>00149             swapV = lTmp-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00150"></a>00150 
 <a name="l00151"></a>00151             <span class="comment">//system().moveAtom(*lTmp, hTmp-&gt;position());</span>
-<a name="l00152"></a>00152             lTmp-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = hTmp-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00153"></a>00153             <a class="code" href="classMcMd_1_1SystemMove.html#a332d034adbe18b9e8dc187ada84b5b29" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#a95732dcabe9f491e9bb9636dc9d194ec" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#a63604a1607bd782656cd0b946a78aa96" title="Update the cell list to reflect a new position.">updateAtomCell</a>(*lTmp);
+<a name="l00152"></a>00152             lTmp-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = hTmp-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00153"></a>00153             <a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#aae8faaaf8d960ba12823c6421d03835e" title="Update the cell list to reflect a new position.">updateAtomCell</a>(*lTmp);
 <a name="l00154"></a>00154 
 <a name="l00155"></a>00155             <span class="comment">//system().moveAtom(*hTmp, swapV);</span>
-<a name="l00156"></a>00156             hTmp-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = swapV;
-<a name="l00157"></a>00157             <a class="code" href="classMcMd_1_1SystemMove.html#a332d034adbe18b9e8dc187ada84b5b29" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#a95732dcabe9f491e9bb9636dc9d194ec" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#a63604a1607bd782656cd0b946a78aa96" title="Update the cell list to reflect a new position.">updateAtomCell</a>(*hTmp);
+<a name="l00156"></a>00156             hTmp-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = swapV;
+<a name="l00157"></a>00157             <a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#aae8faaaf8d960ba12823c6421d03835e" title="Update the cell list to reflect a new position.">updateAtomCell</a>(*hTmp);
 <a name="l00158"></a>00158 
 <a name="l00159"></a>00159          }
 <a name="l00160"></a>00160 
 <a name="l00161"></a>00161          <span class="comment">// Increment counter for accepted moves of this class.</span>
-<a name="l00162"></a>00162          <a class="code" href="classMcMd_1_1McMove.html#ad556f23278900a30224e054b8bb03d22" title="Increment the number of accepted moves.">incrementNAccept</a>();
+<a name="l00162"></a>00162          <a class="code" href="classMcMd_1_1McMove.html#a858b694f6e1cae8276e9c3a24ae38c18" title="Increment the number of accepted moves.">incrementNAccept</a>();
 <a name="l00163"></a>00163 
 <a name="l00164"></a>00164       }
 <a name="l00165"></a>00165 
@@ -221,8 +221,8 @@
 <a name="l00169"></a>00169    <span class="comment">/*</span>
 <a name="l00170"></a>00170 <span class="comment">   * Scan the valid rebridging sits.</span>
 <a name="l00171"></a>00171 <span class="comment">   */</span>
-<a name="l00172"></a>00172    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a4feb77d8d5b12be7a998dac9df59ba76" title="Scan potential rebridging sites.">RingTetraRebridgeMove::</a>
-<a name="l00173"></a><a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a4feb77d8d5b12be7a998dac9df59ba76">00173</a> <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a4feb77d8d5b12be7a998dac9df59ba76" title="Scan potential rebridging sites.">   scanBridge</a>(<a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>* molPtr, <span class="keywordtype">int</span> ia, <span class="keywordtype">int</span> &amp;ic)
+<a name="l00172"></a>00172    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a5b3f870bece0d2a76dd791a4c48e0443" title="Scan potential rebridging sites.">RingTetraRebridgeMove::</a>
+<a name="l00173"></a><a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a5b3f870bece0d2a76dd791a4c48e0443">00173</a> <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a5b3f870bece0d2a76dd791a4c48e0443" title="Scan potential rebridging sites.">   scanBridge</a>(<a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>* molPtr, <span class="keywordtype">int</span> ia, <span class="keywordtype">int</span> &amp;ic)
 <a name="l00174"></a>00174    {
 <a name="l00175"></a>00175       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>    r1, r2, dR;
 <a name="l00176"></a>00176       <span class="keywordtype">int</span>       ib, id, i;
@@ -232,48 +232,48 @@
 <a name="l00180"></a>00180 
 <a name="l00181"></a>00181       <span class="comment">// Preparation.</span>
 <a name="l00182"></a>00182       found = <span class="keyword">false</span>;
-<a name="l00183"></a>00183       maxSq = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a471cb2ee123a293d92410e66370c055d" title="Upper bounds for trial length of a bridge.">upperBridge_</a> * <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a471cb2ee123a293d92410e66370c055d" title="Upper bounds for trial length of a bridge.">upperBridge_</a>;
-<a name="l00184"></a>00184       minSq = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a4c86b34b5958834a7871c278828485ae" title="Lower bounds for trial length of a bridge.">lowerBridge_</a> * <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a4c86b34b5958834a7871c278828485ae" title="Lower bounds for trial length of a bridge.">lowerBridge_</a>;
+<a name="l00183"></a>00183       maxSq = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#aef7181242253267cf1fd352286320351" title="Upper bounds for trial length of a bridge.">upperBridge_</a> * <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#aef7181242253267cf1fd352286320351" title="Upper bounds for trial length of a bridge.">upperBridge_</a>;
+<a name="l00184"></a>00184       minSq = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9f9c54edc824a30773d36c6f8e0fe61e" title="Lower bounds for trial length of a bridge.">lowerBridge_</a> * <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9f9c54edc824a30773d36c6f8e0fe61e" title="Lower bounds for trial length of a bridge.">lowerBridge_</a>;
 <a name="l00185"></a>00185 
 <a name="l00186"></a>00186       <span class="comment">// b Atom id.</span>
-<a name="l00187"></a>00187       ib = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#aba61b64ab5e7a98d3edc3278b50c7dda" title="Shift Atom index along a Ring.">modId</a>(ia+1, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
-<a name="l00188"></a>00188       r1 = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(ia).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00189"></a>00189       r2 = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(ib).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00187"></a>00187       ib = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a0f5ec0313064f9cd4cb7d7ea13821ea2" title="Shift Atom index along a Ring.">modId</a>(ia+1, <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00188"></a>00188       r1 = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(ia).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00189"></a>00189       r2 = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(ib).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00190"></a>00190 
 <a name="l00191"></a>00191       <span class="comment">// Check the ab bond.</span>
-<a name="l00192"></a>00192       lenSq = <a class="code" href="classMcMd_1_1SystemMove.html#a5daa73910cfb398e1ba647b4821d18ba" title="Get Boundary object of parent McSystem.">boundary</a>().distanceSq(r1, r2);
+<a name="l00192"></a>00192       lenSq = <a class="code" href="classMcMd_1_1SystemMove.html#a9cdab74e6e6c35f76fa3a44b84e165c6" title="Get Boundary object of parent McSystem.">boundary</a>().distanceSq(r1, r2);
 <a name="l00193"></a>00193       <span class="keywordflow">if</span> (lenSq &gt;= maxSq || lenSq &lt;= minSq) {
 <a name="l00194"></a>00194          ic = -1;       <span class="comment">// invalid value</span>
 <a name="l00195"></a>00195          <span class="keywordflow">return</span> found;
 <a name="l00196"></a>00196       }
 <a name="l00197"></a>00197 
 <a name="l00198"></a>00198       <span class="comment">// Retrace the non-periodic molecule shape.</span>
-<a name="l00199"></a>00199       <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9fc257dcf08bf9ec3392b710ecf77651" title="Arrays of atom positions of the correct molecule shape.">R_</a>[0] = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00200"></a>00200       <span class="keywordflow">for</span> (i = 1; i &lt; <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>; ++i) {
-<a name="l00201"></a>00201          r1 = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(i-1).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00202"></a>00202          r2 = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00203"></a>00203          <a class="code" href="classMcMd_1_1SystemMove.html#a332d034adbe18b9e8dc187ada84b5b29" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1System.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary by reference.">boundary</a>().distanceSq(r2, r1, dR);
-<a name="l00204"></a>00204          <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9fc257dcf08bf9ec3392b710ecf77651" title="Arrays of atom positions of the correct molecule shape.">R_</a>[i].add(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9fc257dcf08bf9ec3392b710ecf77651" title="Arrays of atom positions of the correct molecule shape.">R_</a>[i-1], dR);
+<a name="l00199"></a>00199       <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a6ed294b50ddaa11e390b7ce72905568f" title="Arrays of atom positions of the correct molecule shape.">R_</a>[0] = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00200"></a>00200       <span class="keywordflow">for</span> (i = 1; i &lt; <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#ad8ccd6bb910a744e9f157925c96bc722" title="Number of atoms per molecule.">nAtom_</a>; ++i) {
+<a name="l00201"></a>00201          r1 = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(i-1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00202"></a>00202          r2 = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00203"></a>00203          <a class="code" href="classMcMd_1_1SystemMove.html#a55257aed199e4ccee10e179802828bf4" title="Get parent McSystem.">system</a>().<a class="code" href="classMcMd_1_1System.html#ace1b2b95dc094767d218e1dcf520b5ca" title="Get the Boundary by reference.">boundary</a>().distanceSq(r2, r1, dR);
+<a name="l00204"></a>00204          <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a6ed294b50ddaa11e390b7ce72905568f" title="Arrays of atom positions of the correct molecule shape.">R_</a>[i].add(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a6ed294b50ddaa11e390b7ce72905568f" title="Arrays of atom positions of the correct molecule shape.">R_</a>[i-1], dR);
 <a name="l00205"></a>00205       }
 <a name="l00206"></a>00206 
 <a name="l00207"></a>00207       <span class="comment">// Loop over all monomers to find the proper rebridging sites.</span>
 <a name="l00208"></a>00208       nGroup = 0;
 <a name="l00209"></a>00209       idList = <span class="keyword">new</span> <span class="keywordtype">int</span>[nAtom_ - 3];
 <a name="l00210"></a>00210       <span class="keywordflow">for</span> (i = 1; i &lt; nAtom_ - 2; ++i) {
-<a name="l00211"></a>00211          ic = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#aba61b64ab5e7a98d3edc3278b50c7dda" title="Shift Atom index along a Ring.">modId</a>(ib+i,nAtom_);
-<a name="l00212"></a>00212          <span class="keywordtype">id</span> = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#aba61b64ab5e7a98d3edc3278b50c7dda" title="Shift Atom index along a Ring.">modId</a>(ic+1,nAtom_);
+<a name="l00211"></a>00211          ic = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a0f5ec0313064f9cd4cb7d7ea13821ea2" title="Shift Atom index along a Ring.">modId</a>(ib+i,nAtom_);
+<a name="l00212"></a>00212          <span class="keywordtype">id</span> = <a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a0f5ec0313064f9cd4cb7d7ea13821ea2" title="Shift Atom index along a Ring.">modId</a>(ic+1,nAtom_);
 <a name="l00213"></a>00213 
 <a name="l00214"></a>00214          <span class="comment">// Distance test.</span>
-<a name="l00215"></a>00215          dR.<a class="code" href="classUtil_1_1Vector.html#a1d7c5b73ae56a7ad991a6c54517698c2" title="Subtract vector v2 from v1.">subtract</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9fc257dcf08bf9ec3392b710ecf77651" title="Arrays of atom positions of the correct molecule shape.">R_</a>[ia],<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9fc257dcf08bf9ec3392b710ecf77651" title="Arrays of atom positions of the correct molecule shape.">R_</a>[ic]);
-<a name="l00216"></a>00216          lenSq = dR.<a class="code" href="classUtil_1_1Vector.html#ac8e155d7aa8c019159787bd6ac797559" title="Return square magnitude of this vector.">square</a>();
+<a name="l00215"></a>00215          dR.<a class="code" href="classUtil_1_1Vector.html#a7e6de9bb77beddc412ab6055957656cc" title="Subtract vector v2 from v1.">subtract</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a6ed294b50ddaa11e390b7ce72905568f" title="Arrays of atom positions of the correct molecule shape.">R_</a>[ia],<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a6ed294b50ddaa11e390b7ce72905568f" title="Arrays of atom positions of the correct molecule shape.">R_</a>[ic]);
+<a name="l00216"></a>00216          lenSq = dR.<a class="code" href="classUtil_1_1Vector.html#ad3c4e4b143f8c8e45b3fe189af6437cb" title="Return square magnitude of this vector.">square</a>();
 <a name="l00217"></a>00217          <span class="keywordflow">if</span> (lenSq &gt; minSq &amp;&amp; lenSq &lt; maxSq) {
 <a name="l00218"></a>00218 
-<a name="l00219"></a>00219          dR.<a class="code" href="classUtil_1_1Vector.html#a1d7c5b73ae56a7ad991a6c54517698c2" title="Subtract vector v2 from v1.">subtract</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9fc257dcf08bf9ec3392b710ecf77651" title="Arrays of atom positions of the correct molecule shape.">R_</a>[<span class="keywordtype">id</span>],<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9fc257dcf08bf9ec3392b710ecf77651" title="Arrays of atom positions of the correct molecule shape.">R_</a>[ic]);
-<a name="l00220"></a>00220          lenSq = dR.<a class="code" href="classUtil_1_1Vector.html#ac8e155d7aa8c019159787bd6ac797559" title="Return square magnitude of this vector.">square</a>();
+<a name="l00219"></a>00219          dR.<a class="code" href="classUtil_1_1Vector.html#a7e6de9bb77beddc412ab6055957656cc" title="Subtract vector v2 from v1.">subtract</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a6ed294b50ddaa11e390b7ce72905568f" title="Arrays of atom positions of the correct molecule shape.">R_</a>[<span class="keywordtype">id</span>],<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a6ed294b50ddaa11e390b7ce72905568f" title="Arrays of atom positions of the correct molecule shape.">R_</a>[ic]);
+<a name="l00220"></a>00220          lenSq = dR.<a class="code" href="classUtil_1_1Vector.html#ad3c4e4b143f8c8e45b3fe189af6437cb" title="Return square magnitude of this vector.">square</a>();
 <a name="l00221"></a>00221          <span class="keywordflow">if</span> (lenSq &gt; minSq &amp;&amp; lenSq &lt; maxSq) {
 <a name="l00222"></a>00222 
-<a name="l00223"></a>00223          dR.<a class="code" href="classUtil_1_1Vector.html#a1d7c5b73ae56a7ad991a6c54517698c2" title="Subtract vector v2 from v1.">subtract</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9fc257dcf08bf9ec3392b710ecf77651" title="Arrays of atom positions of the correct molecule shape.">R_</a>[<span class="keywordtype">id</span>],<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a9fc257dcf08bf9ec3392b710ecf77651" title="Arrays of atom positions of the correct molecule shape.">R_</a>[ib]);
-<a name="l00224"></a>00224          lenSq = dR.<a class="code" href="classUtil_1_1Vector.html#ac8e155d7aa8c019159787bd6ac797559" title="Return square magnitude of this vector.">square</a>();
+<a name="l00223"></a>00223          dR.<a class="code" href="classUtil_1_1Vector.html#a7e6de9bb77beddc412ab6055957656cc" title="Subtract vector v2 from v1.">subtract</a>(<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a6ed294b50ddaa11e390b7ce72905568f" title="Arrays of atom positions of the correct molecule shape.">R_</a>[<span class="keywordtype">id</span>],<a class="code" href="classMcMd_1_1RingTetraRebridgeMove.html#a6ed294b50ddaa11e390b7ce72905568f" title="Arrays of atom positions of the correct molecule shape.">R_</a>[ib]);
+<a name="l00224"></a>00224          lenSq = dR.<a class="code" href="classUtil_1_1Vector.html#ad3c4e4b143f8c8e45b3fe189af6437cb" title="Return square magnitude of this vector.">square</a>();
 <a name="l00225"></a>00225          <span class="keywordflow">if</span> (lenSq &gt; minSq &amp;&amp; lenSq &lt; maxSq) {
 <a name="l00226"></a>00226 
 <a name="l00227"></a>00227             idList[nGroup] = ic; 
@@ -287,7 +287,7 @@
 <a name="l00235"></a>00235 
 <a name="l00236"></a>00236       <span class="keywordflow">if</span> (nGroup &gt; 0) {
 <a name="l00237"></a>00237          found = <span class="keyword">true</span>;
-<a name="l00238"></a>00238          ic = idList[<a class="code" href="classMcMd_1_1McMove.html#a3e9d2379455b7dc1bc206383917cd3b0" title="Get Random number generator of parent Simulation.">random</a>().<a class="code" href="classUtil_1_1Random.html#aa2342a71482b4b3e020773bd2ac15640" title="Return random long int x uniformly distributed in range1 &amp;lt;= x &amp;lt; range2.">uniformInt</a>(0,nGroup)];
+<a name="l00238"></a>00238          ic = idList[<a class="code" href="classMcMd_1_1McMove.html#a8e27f330daa6bbc314b8f81ca0f9decb" title="Get Random number generator of parent Simulation.">random</a>().<a class="code" href="classUtil_1_1Random.html#a2a7f4c20d13a3ea0bc532c224aecc40e" title="Return random long int x uniformly distributed in range1 &amp;lt;= x &amp;lt; range2.">uniformInt</a>(0,nGroup)];
 <a name="l00239"></a>00239       } <span class="keywordflow">else</span> {
 <a name="l00240"></a>00240          found = <span class="keyword">false</span>;
 <a name="l00241"></a>00241          ic = -1;         <span class="comment">// Invalid value.</span>
@@ -302,7 +302,7 @@
 <a name="l00250"></a>00250 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

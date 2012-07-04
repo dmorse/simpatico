@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: ConfigIo Class Reference</title>
+<title>Simpatico: McMd::ConfigIo Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,30 +50,30 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>ConfigIo Class Reference<div class="ingroups"><a class="el" href="group__McMd__ConfigIo__Module.html">Configuration File IO</a></div></h1>  </div>
+<h1>McMd::ConfigIo Class Reference<div class="ingroups"><a class="el" href="group__McMd__ConfigIo__Module.html">Configuration File IO</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::ConfigIo" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> configuration file reader and writer. </p>
 <p>A <a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a> object is used by a <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> to read and write the configuration file for the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>. The configuration file contains the Boundary dimensions, the number of molecules of each <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>, and the atomic positions for every <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> in that <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.</p>
-<p>The <a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a> class defines default implementations of the virtual <a class="el" href="classMcMd_1_1ConfigIo.html#a55adf3dd63058644cf03bb81e3454383" title="Read configuration (particle positions) from file.">read()</a> and <a class="el" href="classMcMd_1_1ConfigIo.html#a222d6dec64f6da906b205837be0077cd" title="Write configuration (particle positions) to file.">write()</a> methods. These define the default config file format for Simpatico. Other formats may be read and written by using an instance of a subclass of <a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>, for which the overridden <a class="el" href="classMcMd_1_1ConfigIo.html#a55adf3dd63058644cf03bb81e3454383" title="Read configuration (particle positions) from file.">read()</a> and <a class="el" href="classMcMd_1_1ConfigIo.html#a222d6dec64f6da906b205837be0077cd" title="Write configuration (particle positions) to file.">write()</a> methods must define the desired file format.</p>
-<p>A <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> holds a pointer to a <a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>, which may be set by the <a class="el" href="classMcMd_1_1System.html#ad05e4313ced6e3e8b84e6de6a9c796c7" title="Create a new configuration file reader/writer.">System::setConfigIo()</a> method. By default, if no <a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a> is set explicitly, the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> will create and use an instance of <a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a> when needed. </p>
+<p>The <a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a> class defines default implementations of the virtual <a class="el" href="classMcMd_1_1ConfigIo.html#ab9c732ce238078432a29fd6878068c23" title="Read configuration (particle positions) from file.">read()</a> and <a class="el" href="classMcMd_1_1ConfigIo.html#ae785af21f8a28abd4c63c8e5f4655db9" title="Write configuration (particle positions) to file.">write()</a> methods. These define the default config file format for Simpatico. Other formats may be read and written by using an instance of a subclass of <a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>, for which the overridden <a class="el" href="classMcMd_1_1ConfigIo.html#ab9c732ce238078432a29fd6878068c23" title="Read configuration (particle positions) from file.">read()</a> and <a class="el" href="classMcMd_1_1ConfigIo.html#ae785af21f8a28abd4c63c8e5f4655db9" title="Write configuration (particle positions) to file.">write()</a> methods must define the desired file format.</p>
+<p>A <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> holds a pointer to a <a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>, which may be set by the <a class="el" href="classMcMd_1_1System.html#a979ab115eb3647b8e0ee15c7416c2410" title="Create a new configuration file reader/writer.">System::setConfigIo()</a> method. By default, if no <a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a> is set explicitly, the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> will create and use an instance of <a class="el" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a> when needed. </p>
 
 <p>Definition at line <a class="el" href="mcMd_2configIos_2ConfigIo_8h_source.html#l00045">45</a> of file <a class="el" href="mcMd_2configIos_2ConfigIo_8h_source.html">mcMd/configIos/ConfigIo.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="mcMd_2configIos_2ConfigIo_8h_source.html">ConfigIo.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for ConfigIo:</div>
+Inheritance diagram for McMd::ConfigIo:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1ConfigIo.png" usemap="#ConfigIo_map" alt=""/>
-  <map id="ConfigIo_map" name="ConfigIo_map">
-<area href="classMcMd_1_1DdMdConfigIo.html" alt="DdMdConfigIo" shape="rect" coords="0,56,104,80"/>
-<area href="classMcMd_1_1LammpsConfigIo.html" alt="LammpsConfigIo" shape="rect" coords="114,56,218,80"/>
-<area href="classMcMd_1_1McMdConfigIo.html" alt="McMdConfigIo" shape="rect" coords="228,56,332,80"/>
-<area href="classMcMd_1_1PmcConfigIo.html" alt="PmcConfigIo" shape="rect" coords="342,56,446,80"/>
-<area href="classMcMd_1_1McConfigIo.html" alt="McConfigIo" shape="rect" coords="171,112,275,136"/>
-<area href="classMcMd_1_1MdConfigIo.html" alt="MdConfigIo" shape="rect" coords="285,112,389,136"/>
+  <img src="classMcMd_1_1ConfigIo.png" usemap="#McMd::ConfigIo_map" alt=""/>
+  <map id="McMd::ConfigIo_map" name="McMd::ConfigIo_map">
+<area href="classMcMd_1_1DdMdConfigIo.html" alt="McMd::DdMdConfigIo" shape="rect" coords="0,56,146,80"/>
+<area href="classMcMd_1_1LammpsConfigIo.html" alt="McMd::LammpsConfigIo" shape="rect" coords="156,56,302,80"/>
+<area href="classMcMd_1_1McMdConfigIo.html" alt="McMd::McMdConfigIo" shape="rect" coords="312,56,458,80"/>
+<area href="classMcMd_1_1PmcConfigIo.html" alt="McMd::PmcConfigIo" shape="rect" coords="468,56,614,80"/>
+<area href="classMcMd_1_1McConfigIo.html" alt="McMd::McConfigIo" shape="rect" coords="234,112,380,136"/>
+<area href="classMcMd_1_1MdConfigIo.html" alt="McMd::MdConfigIo" shape="rect" coords="390,112,536,136"/>
 </map>
  </div></div>
 
@@ -81,30 +81,30 @@ Inheritance diagram for ConfigIo:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#a7704f0b25cdc9a8ea879caa8c406daae">ConfigIo</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a7704f0b25cdc9a8ea879caa8c406daae"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#a4fc791bf4a90e301a9d45db786b258bd">~ConfigIo</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a4fc791bf4a90e301a9d45db786b258bd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#a55adf3dd63058644cf03bb81e3454383">read</a> (std::istream &amp;in)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read configuration (particle positions) from file.  <a href="#a55adf3dd63058644cf03bb81e3454383"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#a222d6dec64f6da906b205837be0077cd">write</a> (std::ostream &amp;out)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write configuration (particle positions) to file.  <a href="#a222d6dec64f6da906b205837be0077cd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#a0bd781d53ea9d4767655ac2b44cd5ab2">ConfigIo</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a0bd781d53ea9d4767655ac2b44cd5ab2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#adb231b854ed7afc34f6aed38cd11aec4">~ConfigIo</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#adb231b854ed7afc34f6aed38cd11aec4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#ab9c732ce238078432a29fd6878068c23">read</a> (std::istream &amp;in)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read configuration (particle positions) from file.  <a href="#ab9c732ce238078432a29fd6878068c23"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#ae785af21f8a28abd4c63c8e5f4655db9">write</a> (std::ostream &amp;out)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write configuration (particle positions) to file.  <a href="#ae785af21f8a28abd4c63c8e5f4655db9"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#a4a3af9eda1fe22f46d6209a7d29aa020">system</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the parent <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.  <a href="#a4a3af9eda1fe22f46d6209a7d29aa020"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9">simulation</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the parent <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>.  <a href="#ae705530f1911ce586ce525c58dbe24e9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#a81f23e720d23ad05f41e966ca5d76553">boundary</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Boundary.  <a href="#a81f23e720d23ad05f41e966ca5d76553"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#a3f20f914433938f289522c221751c5aa">system</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the parent <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.  <a href="#a3f20f914433938f289522c221751c5aa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8">simulation</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the parent <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>.  <a href="#a2dba6a4e4d905af80bb8f5d782c3bfb8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1ConfigIo.html#ab7939cdcfe6174017d8f6689a70230e6">boundary</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Boundary.  <a href="#ab7939cdcfe6174017d8f6689a70230e6"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a7704f0b25cdc9a8ea879caa8c406daae"></a><!-- doxytag: member="McMd::ConfigIo::ConfigIo" ref="a7704f0b25cdc9a8ea879caa8c406daae" args="(System &amp;system)" -->
+<a class="anchor" id="a0bd781d53ea9d4767655ac2b44cd5ab2"></a><!-- doxytag: member="McMd::ConfigIo::ConfigIo" ref="a0bd781d53ea9d4767655ac2b44cd5ab2" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1ConfigIo.html">ConfigIo</a> </td>
+          <td class="memname">McMd::ConfigIo::ConfigIo </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -120,12 +120,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4fc791bf4a90e301a9d45db786b258bd"></a><!-- doxytag: member="McMd::ConfigIo::~ConfigIo" ref="a4fc791bf4a90e301a9d45db786b258bd" args="()" -->
+<a class="anchor" id="adb231b854ed7afc34f6aed38cd11aec4"></a><!-- doxytag: member="McMd::ConfigIo::~ConfigIo" ref="adb231b854ed7afc34f6aed38cd11aec4" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1ConfigIo.html">ConfigIo</a> </td>
+          <td class="memname">McMd::ConfigIo::~ConfigIo </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -141,12 +141,12 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a55adf3dd63058644cf03bb81e3454383"></a><!-- doxytag: member="McMd::ConfigIo::read" ref="a55adf3dd63058644cf03bb81e3454383" args="(std::istream &amp;in)=0" -->
+<a class="anchor" id="ab9c732ce238078432a29fd6878068c23"></a><!-- doxytag: member="McMd::ConfigIo::read" ref="ab9c732ce238078432a29fd6878068c23" args="(std::istream &amp;in)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void read </td>
+          <td class="memname">virtual void McMd::ConfigIo::read </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -164,16 +164,16 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1DdMdConfigIo.html#a8b985440832ee211c81e433c3038f640">DdMdConfigIo</a>, <a class="el" href="classMcMd_1_1LammpsConfigIo.html#a8b985440832ee211c81e433c3038f640">LammpsConfigIo</a>, <a class="el" href="classMcMd_1_1McMdConfigIo.html#a8b985440832ee211c81e433c3038f640">McMdConfigIo</a>, and <a class="el" href="classMcMd_1_1PmcConfigIo.html#a8b985440832ee211c81e433c3038f640">PmcConfigIo</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1DdMdConfigIo.html#a3f1ba3d52dcd1b9f32c5e11cce831c6d">McMd::DdMdConfigIo</a>, <a class="el" href="classMcMd_1_1LammpsConfigIo.html#a2bd48e73d26aff306bfe1d1d94c661a5">McMd::LammpsConfigIo</a>, <a class="el" href="classMcMd_1_1McMdConfigIo.html#aad98b04b05d3a406681ea06c67599b9a">McMd::McMdConfigIo</a>, and <a class="el" href="classMcMd_1_1PmcConfigIo.html#adf7c76777d68171d03b64a543e5edf3c">McMd::PmcConfigIo</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a222d6dec64f6da906b205837be0077cd"></a><!-- doxytag: member="McMd::ConfigIo::write" ref="a222d6dec64f6da906b205837be0077cd" args="(std::ostream &amp;out)=0" -->
+<a class="anchor" id="ae785af21f8a28abd4c63c8e5f4655db9"></a><!-- doxytag: member="McMd::ConfigIo::write" ref="ae785af21f8a28abd4c63c8e5f4655db9" args="(std::ostream &amp;out)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void write </td>
+          <td class="memname">virtual void McMd::ConfigIo::write </td>
           <td>(</td>
           <td class="paramtype">std::ostream &amp;&#160;</td>
           <td class="paramname"><em>out</em></td><td>)</td>
@@ -191,16 +191,16 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1DdMdConfigIo.html#a4d3e77f085209778908a6869118d385e">DdMdConfigIo</a>, <a class="el" href="classMcMd_1_1LammpsConfigIo.html#a4d3e77f085209778908a6869118d385e">LammpsConfigIo</a>, <a class="el" href="classMcMd_1_1McMdConfigIo.html#a4d3e77f085209778908a6869118d385e">McMdConfigIo</a>, and <a class="el" href="classMcMd_1_1PmcConfigIo.html#a4d3e77f085209778908a6869118d385e">PmcConfigIo</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1DdMdConfigIo.html#ad0166af7f2e483897b412881ce442ed1">McMd::DdMdConfigIo</a>, <a class="el" href="classMcMd_1_1LammpsConfigIo.html#a40ff6721c3cc30f736b02a37db887d24">McMd::LammpsConfigIo</a>, <a class="el" href="classMcMd_1_1McMdConfigIo.html#a0218e3279e4a4aae8273dea2f40ecf90">McMd::McMdConfigIo</a>, and <a class="el" href="classMcMd_1_1PmcConfigIo.html#ae6a1eec3f89dfc352ce501287bca2c6f">McMd::PmcConfigIo</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4a3af9eda1fe22f46d6209a7d29aa020"></a><!-- doxytag: member="McMd::ConfigIo::system" ref="a4a3af9eda1fe22f46d6209a7d29aa020" args="() const " -->
+<a class="anchor" id="a3f20f914433938f289522c221751c5aa"></a><!-- doxytag: member="McMd::ConfigIo::system" ref="a3f20f914433938f289522c221751c5aa" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1System.html">System</a> &amp; system </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1System.html">System</a> &amp; McMd::ConfigIo::system </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline, protected]</code></td>
@@ -213,16 +213,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2configIos_2ConfigIo_8h_source.html#l00100">100</a> of file <a class="el" href="mcMd_2configIos_2ConfigIo_8h_source.html">mcMd/configIos/ConfigIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">DdMdConfigIo::read()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">LammpsConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">DdMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">McMd::LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">McMd::DdMdConfigIo::read()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">McMd::LammpsConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">McMd::DdMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae705530f1911ce586ce525c58dbe24e9"></a><!-- doxytag: member="McMd::ConfigIo::simulation" ref="ae705530f1911ce586ce525c58dbe24e9" args="() const " -->
+<a class="anchor" id="a2dba6a4e4d905af80bb8f5d782c3bfb8"></a><!-- doxytag: member="McMd::ConfigIo::simulation" ref="a2dba6a4e4d905af80bb8f5d782c3bfb8" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1Simulation.html">Simulation</a> &amp; simulation </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1Simulation.html">Simulation</a> &amp; McMd::ConfigIo::simulation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline, protected]</code></td>
@@ -235,16 +235,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2configIos_2ConfigIo_8h_source.html#l00109">109</a> of file <a class="el" href="mcMd_2configIos_2ConfigIo_8h_source.html">mcMd/configIos/ConfigIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">DdMdConfigIo::read()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">LammpsConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">DdMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">McMd::LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">McMd::DdMdConfigIo::read()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">McMd::LammpsConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">McMd::DdMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a81f23e720d23ad05f41e966ca5d76553"></a><!-- doxytag: member="McMd::ConfigIo::boundary" ref="a81f23e720d23ad05f41e966ca5d76553" args="() const " -->
+<a class="anchor" id="ab7939cdcfe6174017d8f6689a70230e6"></a><!-- doxytag: member="McMd::ConfigIo::boundary" ref="ab7939cdcfe6174017d8f6689a70230e6" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Boundary &amp; boundary </td>
+          <td class="memname">Boundary &amp; McMd::ConfigIo::boundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline, protected]</code></td>
@@ -257,7 +257,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2configIos_2ConfigIo_8h_source.html#l00118">118</a> of file <a class="el" href="mcMd_2configIos_2ConfigIo_8h_source.html">mcMd/configIos/ConfigIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">LammpsConfigIo::read()</a>, <a class="el" href="MdConfigIo_8cpp_source.html#l00037">MdConfigIo::readAtom()</a>, <a class="el" href="McConfigIo_8cpp_source.html#l00035">McConfigIo::readAtom()</a>, and <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">LammpsConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">McMd::LammpsConfigIo::read()</a>, <a class="el" href="MdConfigIo_8cpp_source.html#l00037">McMd::MdConfigIo::readAtom()</a>, <a class="el" href="McConfigIo_8cpp_source.html#l00035">McMd::McConfigIo::readAtom()</a>, and <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">McMd::LammpsConfigIo::write()</a>.</p>
 
 </div>
 </div>
@@ -266,7 +266,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="mcMd_2configIos_2ConfigIo_8cpp_source.html">mcMd/configIos/ConfigIo.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:52 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -216,7 +216,7 @@
 <a name="l00310"></a>00310       <a class="code" href="classDdMd_1_1DihedralStorage.html" title="Container for dihedral objects.">DihedralStorage</a>&amp; dihedralStorage();
 <a name="l00311"></a>00311 <span class="preprocessor">      #endif</span>
 <a name="l00312"></a>00312 <span class="preprocessor"></span>   
-<a name="l00316"></a>00316       Boundary&amp; boundary();
+<a name="l00316"></a>00316       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary();
 <a name="l00317"></a>00317    
 <a name="l00321"></a>00321       <a class="code" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a>&amp; pairPotential();
 <a name="l00322"></a>00322    
@@ -276,7 +276,7 @@
 <a name="l00418"></a>00418 <span class="preprocessor"></span>
 <a name="l00422"></a>00422       <a class="code" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a>&amp; atomType(<span class="keywordtype">int</span> i);
 <a name="l00423"></a>00423 
-<a name="l00427"></a>00427       <a class="code" href="group__DdMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> maskedPairPolicy() <span class="keyword">const</span>;
+<a name="l00427"></a>00427       <a class="code" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> maskedPairPolicy() <span class="keyword">const</span>;
 <a name="l00428"></a>00428 
 <a name="l00430"></a>00430 
 <a name="l00434"></a>00434       <span class="keywordtype">bool</span> isValid();
@@ -312,7 +312,7 @@
 <a name="l00486"></a>00486       <a class="code" href="classDdMd_1_1DihedralStorage.html" title="Container for dihedral objects.">DihedralStorage</a>  dihedralStorage_;
 <a name="l00487"></a>00487 <span class="preprocessor">      #endif</span>
 <a name="l00488"></a>00488 <span class="preprocessor"></span>
-<a name="l00490"></a>00490       Boundary      boundary_;
+<a name="l00490"></a>00490       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>      boundary_;
 <a name="l00491"></a>00491 
 <a name="l00493"></a>00493       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;AtomType&gt;</a> atomTypes_;
 <a name="l00494"></a>00494 
@@ -324,7 +324,7 @@
 <a name="l00503"></a>00503 
 <a name="l00505"></a>00505       <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>        random_;
 <a name="l00506"></a>00506 
-<a name="l00508"></a>00508       Boundary      maxBoundary_;
+<a name="l00508"></a>00508       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>      maxBoundary_;
 <a name="l00509"></a>00509 
 <a name="l00510"></a>00510       <span class="comment">// Value of total kinetic energy, for all processors.</span>
 <a name="l00511"></a>00511       <span class="keywordtype">double</span>  kineticEnergy_;
@@ -427,7 +427,7 @@
 <a name="l00622"></a>00622       <span class="keywordtype">bool</span> hasExternal_;
 <a name="l00623"></a>00623 <span class="preprocessor">      #endif</span>
 <a name="l00624"></a>00624 <span class="preprocessor"></span>
-<a name="l00633"></a>00633       <a class="code" href="group__DdMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a>  maskedPairPolicy_;
+<a name="l00633"></a>00633       <a class="code" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a>  maskedPairPolicy_;
 <a name="l00634"></a>00634 
 <a name="l00635"></a>00635    <span class="comment">// friends:</span>
 <a name="l00636"></a>00636 
@@ -437,16 +437,16 @@
 <a name="l00640"></a>00640 
 <a name="l00641"></a>00641    <span class="comment">// Inline method definitions</span>
 <a name="l00642"></a>00642 
-<a name="l00643"></a><a class="code" href="classDdMd_1_1Simulation.html#a5daa73910cfb398e1ba647b4821d18ba">00643</a>    <span class="keyword">inline</span> Boundary&amp; <a class="code" href="classDdMd_1_1Simulation.html#a5daa73910cfb398e1ba647b4821d18ba" title="Get the Boundary by reference.">Simulation::boundary</a>()
+<a name="l00643"></a><a class="code" href="classDdMd_1_1Simulation.html#a976114ff90d628068ccaa7b62be9ed08">00643</a>    <span class="keyword">inline</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a976114ff90d628068ccaa7b62be9ed08" title="Get the Boundary by reference.">Simulation::boundary</a>()
 <a name="l00644"></a>00644    { <span class="keywordflow">return</span> boundary_; }
 <a name="l00645"></a>00645 
-<a name="l00646"></a><a class="code" href="classDdMd_1_1Simulation.html#a64ddaf9dd004b6c301f8f23e8995b6d1">00646</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a64ddaf9dd004b6c301f8f23e8995b6d1" title="Get the Domain by reference.">Simulation::domain</a>()
+<a name="l00646"></a><a class="code" href="classDdMd_1_1Simulation.html#a4bcb8e6e1482b6e825e54d71e93b9e6c">00646</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a4bcb8e6e1482b6e825e54d71e93b9e6c" title="Get the Domain by reference.">Simulation::domain</a>()
 <a name="l00647"></a>00647    { <span class="keywordflow">return</span> domain_; }
 <a name="l00648"></a>00648 
-<a name="l00649"></a><a class="code" href="classDdMd_1_1Simulation.html#aa34b0aab4d37e8b42704954d57b5c126">00649</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#aa34b0aab4d37e8b42704954d57b5c126" title="Get the AtomStorage by reference.">Simulation::atomStorage</a>()
+<a name="l00649"></a><a class="code" href="classDdMd_1_1Simulation.html#a08b21df742e75449aa5d57a7c9fc9b5c">00649</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a08b21df742e75449aa5d57a7c9fc9b5c" title="Get the AtomStorage by reference.">Simulation::atomStorage</a>()
 <a name="l00650"></a>00650    { <span class="keywordflow">return</span> atomStorage_; }
 <a name="l00651"></a>00651 
-<a name="l00652"></a><a class="code" href="classDdMd_1_1Simulation.html#ac0ff8b7a630972e48ad29b007ae770de">00652</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#ac0ff8b7a630972e48ad29b007ae770de" title="Get the BondStorage by reference.">Simulation::bondStorage</a>()
+<a name="l00652"></a><a class="code" href="classDdMd_1_1Simulation.html#a843e0d761026f9a766486a2a26039815">00652</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a843e0d761026f9a766486a2a26039815" title="Get the BondStorage by reference.">Simulation::bondStorage</a>()
 <a name="l00653"></a>00653    { <span class="keywordflow">return</span> bondStorage_; }
 <a name="l00654"></a>00654 
 <a name="l00655"></a>00655 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
@@ -459,19 +459,19 @@
 <a name="l00662"></a>00662    { <span class="keywordflow">return</span> dihedralStorage_; }
 <a name="l00663"></a>00663 <span class="preprocessor">   #endif</span>
 <a name="l00664"></a>00664 <span class="preprocessor"></span>
-<a name="l00665"></a><a class="code" href="classDdMd_1_1Simulation.html#a5c68cd5c85b83899f832b1fa250ea299">00665</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a5c68cd5c85b83899f832b1fa250ea299" title="Get the Exchanger by reference.">Simulation::exchanger</a>()
+<a name="l00665"></a><a class="code" href="classDdMd_1_1Simulation.html#a87a973845278e6f7a94cdec00c81166b">00665</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a87a973845278e6f7a94cdec00c81166b" title="Get the Exchanger by reference.">Simulation::exchanger</a>()
 <a name="l00666"></a>00666    { <span class="keywordflow">return</span> exchanger_; }
 <a name="l00667"></a>00667 
-<a name="l00668"></a><a class="code" href="classDdMd_1_1Simulation.html#ad6f298ccec40b581e758eec243021929">00668</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#ad6f298ccec40b581e758eec243021929" title="Get the Buffer by reference.">Simulation::buffer</a>()
+<a name="l00668"></a><a class="code" href="classDdMd_1_1Simulation.html#a6c78802f0ee142f772aa7dd86679d4db">00668</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a6c78802f0ee142f772aa7dd86679d4db" title="Get the Buffer by reference.">Simulation::buffer</a>()
 <a name="l00669"></a>00669    { <span class="keywordflow">return</span> buffer_; }
 <a name="l00670"></a>00670 
-<a name="l00671"></a><a class="code" href="classDdMd_1_1Simulation.html#a441a47ecbdc730455562537c533d08f5">00671</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a441a47ecbdc730455562537c533d08f5" title="Get the PairPotential by reference.">Simulation::pairPotential</a>()
+<a name="l00671"></a><a class="code" href="classDdMd_1_1Simulation.html#a1b4296f896768dd20000a2d9fc4d1ad6">00671</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a1b4296f896768dd20000a2d9fc4d1ad6" title="Get the PairPotential by reference.">Simulation::pairPotential</a>()
 <a name="l00672"></a>00672    { 
 <a name="l00673"></a>00673       assert(pairPotentialPtr_); 
 <a name="l00674"></a>00674       <span class="keywordflow">return</span> *pairPotentialPtr_; 
 <a name="l00675"></a>00675    }
 <a name="l00676"></a>00676 
-<a name="l00677"></a><a class="code" href="classDdMd_1_1Simulation.html#af743badbda187883a98ee4e0ec923381">00677</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1BondPotential.html" title="An BondPotential calculates bond forces and energies for a parent Simulation.">BondPotential</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#af743badbda187883a98ee4e0ec923381" title="Get the PairPotential by reference.">Simulation::bondPotential</a>()
+<a name="l00677"></a><a class="code" href="classDdMd_1_1Simulation.html#ab32f9cba063db6d24f7e694067486a7d">00677</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1BondPotential.html" title="An BondPotential calculates bond forces and energies for a parent Simulation.">BondPotential</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#ab32f9cba063db6d24f7e694067486a7d" title="Get the PairPotential by reference.">Simulation::bondPotential</a>()
 <a name="l00678"></a>00678    { 
 <a name="l00679"></a>00679       assert(bondPotentialPtr_); 
 <a name="l00680"></a>00680       <span class="keywordflow">return</span> *bondPotentialPtr_; 
@@ -500,7 +500,7 @@
 <a name="l00703"></a>00703 <span class="preprocessor"></span>   <span class="comment">/*</span>
 <a name="l00704"></a>00704 <span class="comment">   * Get the ExternalPotential by reference.</span>
 <a name="l00705"></a>00705 <span class="comment">   */</span>
-<a name="l00706"></a><a class="code" href="classDdMd_1_1Simulation.html#a0099c1558bb236318dea07f388df7495">00706</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a0099c1558bb236318dea07f388df7495" title="Get the ExternalPotential by reference.">Simulation::externalPotential</a>()
+<a name="l00706"></a><a class="code" href="classDdMd_1_1Simulation.html#aca6c5c7aa885faac51ad1a1075a261ef">00706</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#aca6c5c7aa885faac51ad1a1075a261ef" title="Get the ExternalPotential by reference.">Simulation::externalPotential</a>()
 <a name="l00707"></a>00707    { 
 <a name="l00708"></a>00708       assert(externalPotentialPtr_); 
 <a name="l00709"></a>00709       <span class="keywordflow">return</span> *externalPotentialPtr_; 
@@ -510,19 +510,19 @@
 <a name="l00713"></a>00713    <span class="comment">/*</span>
 <a name="l00714"></a>00714 <span class="comment">   * Get the Integrator by reference.</span>
 <a name="l00715"></a>00715 <span class="comment">   */</span>
-<a name="l00716"></a><a class="code" href="classDdMd_1_1Simulation.html#add786e8bf81a1ce15721ddec114563b0">00716</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Integrator.html" title="An Integrator numerically integrates the equations of motion.">Integrator</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#add786e8bf81a1ce15721ddec114563b0" title="Get the Integrator by reference.">Simulation::integrator</a>()
+<a name="l00716"></a><a class="code" href="classDdMd_1_1Simulation.html#abdeb3c3c35c89fa92383442b09dd4ffe">00716</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Integrator.html" title="An Integrator numerically integrates the equations of motion.">Integrator</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#abdeb3c3c35c89fa92383442b09dd4ffe" title="Get the Integrator by reference.">Simulation::integrator</a>()
 <a name="l00717"></a>00717    {
 <a name="l00718"></a>00718       assert(integratorPtr_); 
 <a name="l00719"></a>00719       <span class="keywordflow">return</span> *integratorPtr_; 
 <a name="l00720"></a>00720    }
 <a name="l00721"></a>00721 
-<a name="l00722"></a><a class="code" href="classDdMd_1_1Simulation.html#a3e9d2379455b7dc1bc206383917cd3b0">00722</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a3e9d2379455b7dc1bc206383917cd3b0" title="Get the Random number generator by reference.">Simulation::random</a>()
+<a name="l00722"></a><a class="code" href="classDdMd_1_1Simulation.html#a9adda821e4551b7b0291903a2ec99e50">00722</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a9adda821e4551b7b0291903a2ec99e50" title="Get the Random number generator by reference.">Simulation::random</a>()
 <a name="l00723"></a>00723    { <span class="keywordflow">return</span> random_; }
 <a name="l00724"></a>00724 
 <a name="l00725"></a>00725    <span class="comment">/*</span>
 <a name="l00726"></a>00726 <span class="comment">   * Get the EnergyEnsemble by reference.</span>
 <a name="l00727"></a>00727 <span class="comment">   */</span>
-<a name="l00728"></a><a class="code" href="classDdMd_1_1Simulation.html#aac5b843385b6224e664f16e8cc70e4dc">00728</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#aac5b843385b6224e664f16e8cc70e4dc" title="Get the EnergyEnsemble by reference.">Simulation::energyEnsemble</a>()
+<a name="l00728"></a><a class="code" href="classDdMd_1_1Simulation.html#a4f0645169fdd0f0a6f0f2ae83feca18b">00728</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a4f0645169fdd0f0a6f0f2ae83feca18b" title="Get the EnergyEnsemble by reference.">Simulation::energyEnsemble</a>()
 <a name="l00729"></a>00729    {
 <a name="l00730"></a>00730       assert(energyEnsemblePtr_);
 <a name="l00731"></a>00731       <span class="keywordflow">return</span> *energyEnsemblePtr_;
@@ -531,7 +531,7 @@
 <a name="l00734"></a>00734    <span class="comment">/*</span>
 <a name="l00735"></a>00735 <span class="comment">   * Get the BoundaryEnsemble by reference.</span>
 <a name="l00736"></a>00736 <span class="comment">   */</span>
-<a name="l00737"></a><a class="code" href="classDdMd_1_1Simulation.html#a4c72b5c96b0544814ab613998a3385d8">00737</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size.">BoundaryEnsemble</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a4c72b5c96b0544814ab613998a3385d8" title="Get the BoundaryEnsemble by reference.">Simulation::boundaryEnsemble</a>()
+<a name="l00737"></a><a class="code" href="classDdMd_1_1Simulation.html#aa5ff1ea348825e3624f6ec7dcb7c4c20">00737</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size.">BoundaryEnsemble</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#aa5ff1ea348825e3624f6ec7dcb7c4c20" title="Get the BoundaryEnsemble by reference.">Simulation::boundaryEnsemble</a>()
 <a name="l00738"></a>00738    {
 <a name="l00739"></a>00739       assert(boundaryEnsemblePtr_);
 <a name="l00740"></a>00740       <span class="keywordflow">return</span> *boundaryEnsemblePtr_;
@@ -540,7 +540,7 @@
 <a name="l00743"></a>00743    <span class="comment">/*</span>
 <a name="l00744"></a>00744 <span class="comment">   * Get the FileMaster by reference.</span>
 <a name="l00745"></a>00745 <span class="comment">   */</span>
-<a name="l00746"></a><a class="code" href="classDdMd_1_1Simulation.html#aab4571631d952de626f3a08388c45272">00746</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#aab4571631d952de626f3a08388c45272" title="Get the associated FileMaster by reference.">Simulation::fileMaster</a>()
+<a name="l00746"></a><a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a">00746</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#af5d7a044aaf35ef9fb74e79ce640ab3a" title="Get the associated FileMaster by reference.">Simulation::fileMaster</a>()
 <a name="l00747"></a>00747    {
 <a name="l00748"></a>00748       assert(fileMasterPtr_);
 <a name="l00749"></a>00749       <span class="keywordflow">return</span> *fileMasterPtr_;
@@ -549,7 +549,7 @@
 <a name="l00752"></a>00752    <span class="comment">/*</span>
 <a name="l00753"></a>00753 <span class="comment">   * Get the DiagnosticManager by reference.</span>
 <a name="l00754"></a>00754 <span class="comment">   */</span>
-<a name="l00755"></a><a class="code" href="classDdMd_1_1Simulation.html#a405063196da9838550fc44d066c3b7bc">00755</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1DiagnosticManager.html" title="Manager for a list of Diagnostic objects.">DiagnosticManager</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a405063196da9838550fc44d066c3b7bc" title="Return associated DiagnosticManager by reference.">Simulation::diagnosticManager</a>()
+<a name="l00755"></a><a class="code" href="classDdMd_1_1Simulation.html#a97078a43b926eba8fc79735d89adaa36">00755</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1DiagnosticManager.html" title="Manager for a list of Diagnostic objects.">DiagnosticManager</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a97078a43b926eba8fc79735d89adaa36" title="Return associated DiagnosticManager by reference.">Simulation::diagnosticManager</a>()
 <a name="l00756"></a>00756    {
 <a name="l00757"></a>00757       assert(diagnosticManagerPtr_);
 <a name="l00758"></a>00758       <span class="keywordflow">return</span> *diagnosticManagerPtr_;
@@ -558,13 +558,13 @@
 <a name="l00761"></a>00761    <span class="comment">/*</span>
 <a name="l00762"></a>00762 <span class="comment">   * Get maximum number of atom types.</span>
 <a name="l00763"></a>00763 <span class="comment">   */</span>
-<a name="l00764"></a><a class="code" href="classDdMd_1_1Simulation.html#a41e7e39e41db8f55dfec1873ed574ba1">00764</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Simulation.html#a41e7e39e41db8f55dfec1873ed574ba1" title="Get maximum number of atom types.">Simulation::nAtomType</a>()
+<a name="l00764"></a><a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69">00764</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69" title="Get maximum number of atom types.">Simulation::nAtomType</a>()
 <a name="l00765"></a>00765    {   <span class="keywordflow">return</span> nAtomType_; }
 <a name="l00766"></a>00766 
 <a name="l00767"></a>00767    <span class="comment">/*</span>
 <a name="l00768"></a>00768 <span class="comment">   * Get maximum number of bond types.</span>
 <a name="l00769"></a>00769 <span class="comment">   */</span>
-<a name="l00770"></a><a class="code" href="classDdMd_1_1Simulation.html#a35e189729c1865f7f2bf7d68788f0749">00770</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Simulation.html#a35e189729c1865f7f2bf7d68788f0749" title="Get maximum number of bond types.">Simulation::nBondType</a>()
+<a name="l00770"></a><a class="code" href="classDdMd_1_1Simulation.html#aa6f40dc5a680c3e8e0b38fc88608f039">00770</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Simulation.html#aa6f40dc5a680c3e8e0b38fc88608f039" title="Get maximum number of bond types.">Simulation::nBondType</a>()
 <a name="l00771"></a>00771    {  <span class="keywordflow">return</span> nBondType_; }
 <a name="l00772"></a>00772 
 <a name="l00773"></a>00773 <span class="preprocessor">   #if INTER_ANGLE</span>
@@ -587,24 +587,24 @@
 <a name="l00790"></a>00790 <span class="preprocessor"></span>   <span class="comment">/*</span>
 <a name="l00791"></a>00791 <span class="comment">   * Does this simulation have an external potential?</span>
 <a name="l00792"></a>00792 <span class="comment">   */</span>
-<a name="l00793"></a><a class="code" href="classDdMd_1_1Simulation.html#a6a005309fb2192d3204bfc71735dbcf3">00793</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Simulation.html#a6a005309fb2192d3204bfc71735dbcf3" title="Does this simulation have an external potential?">Simulation::hasExternal</a>()
+<a name="l00793"></a><a class="code" href="classDdMd_1_1Simulation.html#a87ad9927ead6d83f230d8635cf165609">00793</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Simulation.html#a87ad9927ead6d83f230d8635cf165609" title="Does this simulation have an external potential?">Simulation::hasExternal</a>()
 <a name="l00794"></a>00794    {  <span class="keywordflow">return</span> hasExternal_; }
 <a name="l00795"></a>00795 <span class="preprocessor">   #endif</span>
 <a name="l00796"></a>00796 <span class="preprocessor"></span>
 <a name="l00797"></a>00797    <span class="comment">/*</span>
 <a name="l00798"></a>00798 <span class="comment">   * Get an AtomType descriptor by reference.</span>
 <a name="l00799"></a>00799 <span class="comment">   */</span>
-<a name="l00800"></a><a class="code" href="classDdMd_1_1Simulation.html#a60cb488f03a605d0214c1adbae33ffcb">00800</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a60cb488f03a605d0214c1adbae33ffcb" title="Get an AtomType descriptor by reference.">Simulation::atomType</a>(<span class="keywordtype">int</span> i)
+<a name="l00800"></a><a class="code" href="classDdMd_1_1Simulation.html#adb69f41e67ea48facaaeed0a94c7d218">00800</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#adb69f41e67ea48facaaeed0a94c7d218" title="Get an AtomType descriptor by reference.">Simulation::atomType</a>(<span class="keywordtype">int</span> i)
 <a name="l00801"></a>00801    {  <span class="keywordflow">return</span> atomTypes_[i]; }
 <a name="l00802"></a>00802 
-<a name="l00803"></a><a class="code" href="classDdMd_1_1Simulation.html#ac2760568e710bf2ed84a05ea91345c61">00803</a>    <span class="keyword">inline</span> <a class="code" href="group__DdMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> <a class="code" href="classDdMd_1_1Simulation.html#ac2760568e710bf2ed84a05ea91345c61" title="Return the value of the mask policy (MaskNone or MaskBonded).">Simulation::maskedPairPolicy</a>()<span class="keyword"> const</span>
+<a name="l00803"></a><a class="code" href="classDdMd_1_1Simulation.html#a3d42913c5edc53adbe6e200b7f5a9e1f">00803</a>    <span class="keyword">inline</span> <a class="code" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> <a class="code" href="classDdMd_1_1Simulation.html#a3d42913c5edc53adbe6e200b7f5a9e1f" title="Return the value of the mask policy (MaskNone or MaskBonded).">Simulation::maskedPairPolicy</a>()<span class="keyword"> const</span>
 <a name="l00804"></a>00804 <span class="keyword">   </span>{  <span class="keywordflow">return</span> maskedPairPolicy_; }
 <a name="l00805"></a>00805 
 <a name="l00806"></a>00806 }
 <a name="l00807"></a>00807 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

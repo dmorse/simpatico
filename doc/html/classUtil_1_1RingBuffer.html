@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: RingBuffer&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::RingBuffer&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>RingBuffer&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Array__Module.html">Object Arrays</a></div></h1>  </div>
+<h1>Util::RingBuffer&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Array__Module.html">Object Arrays</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::RingBuffer" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -67,48 +67,50 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a7200e1f25f4e48028eeabff204ab0367">RingBuffer</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Contructor.  <a href="#a7200e1f25f4e48028eeabff204ab0367"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#adc32dd78ee78755810d971adef91413e">RingBuffer</a> (const <a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a>&lt; Data &gt; &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy contructor.  <a href="#adc32dd78ee78755810d971adef91413e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a7fd0ea35eda492d2f2d861f5c55688db">operator=</a> (const <a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a>&lt; Data &gt; &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment.  <a href="#a7fd0ea35eda492d2f2d861f5c55688db"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a0fff6182d30d785358c6a3ef7db0931f">~RingBuffer</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a0fff6182d30d785358c6a3ef7db0931f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a1be38a6eb2f04de4d9457d506f948321">allocate</a> (int capacity)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a new empty buffer.  <a href="#a1be38a6eb2f04de4d9457d506f948321"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#ac8bb3912a3ce86b15842e79d0b421204">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set previously allocated buffer to empty state.  <a href="#ac8bb3912a3ce86b15842e79d0b421204"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a4607dc03e074edd1288df3409c94323a">append</a> (Data value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new value to the buffer.  <a href="#a4607dc03e074edd1288df3409c94323a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">size</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of values currently in the buffer.  <a href="#ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a104736719cd4e5f21c25705c77064dde">capacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the capacity of the buffer.  <a href="#a104736719cd4e5f21c25705c77064dde"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a0bcdab3616db481dd211594529479f94">isAllocated</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> has been allocated, false otherwise.  <a href="#a0bcdab3616db481dd211594529479f94"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a3e70330939fdfc4dbc2f60c1a660584d">isFull</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> has been allocated, false otherwise.  <a href="#a3e70330939fdfc4dbc2f60c1a660584d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a9259477125ef843f57d1b8e7a400e8df">operator[]</a> (int offset) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a previous value, a specified number of time steps ago.  <a href="#a9259477125ef843f57d1b8e7a400e8df"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a7ee7184119080658dbd9a6e629e6e90b">pack</a> (char *&amp;current, char *end) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack this <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> into a block of memory.  <a href="#a7ee7184119080658dbd9a6e629e6e90b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a7243335e2851a09c967fa7743a0fcd1f">unpack</a> (char *&amp;current, char *end)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack this <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> from a block of memory.  <a href="#a7243335e2851a09c967fa7743a0fcd1f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a840f36c6b59da4fbd0e85491fee6f78d">pack</a> (<a class="el" href="classUtil_1_1PackedData.html">PackedData</a> &amp;buffer) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack this <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> into a <a class="el" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a> object.  <a href="#a840f36c6b59da4fbd0e85491fee6f78d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a7b707d4f2e28793ea629cfc43ee4cc55">unpack</a> (<a class="el" href="classUtil_1_1PackedData.html">PackedData</a> &amp;buffer)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack this <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> from a <a class="el" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a> object.  <a href="#a7b707d4f2e28793ea629cfc43ee4cc55"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a8fdb9a0413b176e1a0191d8adda9b34b">packedSize</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return packed size of this <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a>.  <a href="#a8fdb9a0413b176e1a0191d8adda9b34b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#ae431b5509a9d1d9192d4ad3eab460dba">RingBuffer</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Contructor.  <a href="#ae431b5509a9d1d9192d4ad3eab460dba"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a8fe6bff556df81b1b7d11d9155ec616a">RingBuffer</a> (const <a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a>&lt; Data &gt; &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy contructor.  <a href="#a8fe6bff556df81b1b7d11d9155ec616a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a9a2356694c4693b5f471ced92491f772">operator=</a> (const <a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a>&lt; Data &gt; &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment.  <a href="#a9a2356694c4693b5f471ced92491f772"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#adccc3b30adfe5c635ce0aa69523aa5b5">~RingBuffer</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#adccc3b30adfe5c635ce0aa69523aa5b5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a5d2154b83c345552bfb88af818728cb7">allocate</a> (int capacity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a new empty buffer.  <a href="#a5d2154b83c345552bfb88af818728cb7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a66780b4c571f0cc9e714a9c3985d38f1">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set previously allocated buffer to empty state.  <a href="#a66780b4c571f0cc9e714a9c3985d38f1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a27adabe777ccfd54d310ba81ccc32483">append</a> (Data value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new value to the buffer.  <a href="#a27adabe777ccfd54d310ba81ccc32483"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a239c039ef8b64ac893c6d52c79a19fbf">size</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of values currently in the buffer.  <a href="#a239c039ef8b64ac893c6d52c79a19fbf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#ac41383b9a2d8d5cc6a6a99e665671bba">capacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the capacity of the buffer.  <a href="#ac41383b9a2d8d5cc6a6a99e665671bba"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a026b0c3ad0b408f01eaf1ea062453ff1">isAllocated</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> has been allocated, false otherwise.  <a href="#a026b0c3ad0b408f01eaf1ea062453ff1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a45c78e57250d8bdb92d8c026065228bb">isFull</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> has been allocated, false otherwise.  <a href="#a45c78e57250d8bdb92d8c026065228bb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#ac04478fb0b2c7639588ecaff686edb78">operator[]</a> (int offset) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a previous value, a specified number of time steps ago.  <a href="#ac04478fb0b2c7639588ecaff686edb78"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#acd7b2ae9dd5853a5424093713a7fc860">pack</a> (char *&amp;current, char *end) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack this <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> into a block of memory.  <a href="#acd7b2ae9dd5853a5424093713a7fc860"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a55f72fa0be93f992e02b5b1c146e6807">unpack</a> (char *&amp;current, char *end)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack this <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> from a block of memory.  <a href="#a55f72fa0be93f992e02b5b1c146e6807"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a6ecd99fc4708a0745d993c5d023f4cab">pack</a> (<a class="el" href="classUtil_1_1PackedData.html">PackedData</a> &amp;buffer) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack this <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> into a <a class="el" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a> object.  <a href="#a6ecd99fc4708a0745d993c5d023f4cab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a64c563f2b3b5ef321faa6b82aa7c1fdb">unpack</a> (<a class="el" href="classUtil_1_1PackedData.html">PackedData</a> &amp;buffer)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack this <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a> from a <a class="el" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a> object.  <a href="#a64c563f2b3b5ef321faa6b82aa7c1fdb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RingBuffer.html#a35c3dca921b54c354ee548cc0241d8a8">packedSize</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return packed size of this <a class="el" href="classUtil_1_1RingBuffer.html" title="Class for storing history of previous values in an array.">RingBuffer</a>.  <a href="#a35c3dca921b54c354ee548cc0241d8a8"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a7200e1f25f4e48028eeabff204ab0367"></a><!-- doxytag: member="Util::RingBuffer::RingBuffer" ref="a7200e1f25f4e48028eeabff204ab0367" args="()" -->
+<a class="anchor" id="ae431b5509a9d1d9192d4ad3eab460dba"></a><!-- doxytag: member="Util::RingBuffer::RingBuffer" ref="ae431b5509a9d1d9192d4ad3eab460dba" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -123,12 +125,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adc32dd78ee78755810d971adef91413e"></a><!-- doxytag: member="Util::RingBuffer::RingBuffer" ref="adc32dd78ee78755810d971adef91413e" args="(const RingBuffer&lt; Data &gt; &amp;other)" -->
+<a class="anchor" id="a8fe6bff556df81b1b7d11d9155ec616a"></a><!-- doxytag: member="Util::RingBuffer::RingBuffer" ref="a8fe6bff556df81b1b7d11d9155ec616a" args="(const RingBuffer&lt; Data &gt; &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a> </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -150,12 +154,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0fff6182d30d785358c6a3ef7db0931f"></a><!-- doxytag: member="Util::RingBuffer::~RingBuffer" ref="a0fff6182d30d785358c6a3ef7db0931f" args="()" -->
+<a class="anchor" id="adccc3b30adfe5c635ce0aa69523aa5b5"></a><!-- doxytag: member="Util::RingBuffer::~RingBuffer" ref="adccc3b30adfe5c635ce0aa69523aa5b5" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::~<a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -171,12 +177,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a7fd0ea35eda492d2f2d861f5c55688db"></a><!-- doxytag: member="Util::RingBuffer::operator=" ref="a7fd0ea35eda492d2f2d861f5c55688db" args="(const RingBuffer&lt; Data &gt; &amp;other)" -->
+<a class="anchor" id="a9a2356694c4693b5f471ced92491f772"></a><!-- doxytag: member="Util::RingBuffer::operator=" ref="a9a2356694c4693b5f471ced92491f772" args="(const RingBuffer&lt; Data &gt; &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a>&lt; Data &gt; &amp; operator= </td>
+          <td class="memname"><a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a>&lt; Data &gt; &amp; <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1RingBuffer.html">RingBuffer</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -196,16 +204,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="RingBuffer_8h_source.html#l00214">214</a> of file <a class="el" href="RingBuffer_8h_source.html">RingBuffer.h</a>.</p>
 
-<p>References <a class="el" href="RingBuffer_8h_source.html#l00320">RingBuffer&lt; Data &gt;::isAllocated()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="RingBuffer_8h_source.html#l00320">Util::RingBuffer&lt; Data &gt;::isAllocated()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1be38a6eb2f04de4d9457d506f948321"></a><!-- doxytag: member="Util::RingBuffer::allocate" ref="a1be38a6eb2f04de4d9457d506f948321" args="(int capacity)" -->
+<a class="anchor" id="a5d2154b83c345552bfb88af818728cb7"></a><!-- doxytag: member="Util::RingBuffer::allocate" ref="a5d2154b83c345552bfb88af818728cb7" args="(int capacity)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::allocate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>capacity</em></td><td>)</td>
@@ -231,12 +241,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac8bb3912a3ce86b15842e79d0b421204"></a><!-- doxytag: member="Util::RingBuffer::clear" ref="ac8bb3912a3ce86b15842e79d0b421204" args="()" -->
+<a class="anchor" id="a66780b4c571f0cc9e714a9c3985d38f1"></a><!-- doxytag: member="Util::RingBuffer::clear" ref="a66780b4c571f0cc9e714a9c3985d38f1" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void clear </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -251,12 +263,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4607dc03e074edd1288df3409c94323a"></a><!-- doxytag: member="Util::RingBuffer::append" ref="a4607dc03e074edd1288df3409c94323a" args="(Data value)" -->
+<a class="anchor" id="a27adabe777ccfd54d310ba81ccc32483"></a><!-- doxytag: member="Util::RingBuffer::append" ref="a27adabe777ccfd54d310ba81ccc32483" args="(Data value)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void append </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::append </td>
           <td>(</td>
           <td class="paramtype">Data&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -278,12 +292,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><!-- doxytag: member="Util::RingBuffer::size" ref="ab8e4e3e2a7bf18888b71bdf9dda0770b" args="() const " -->
+<a class="anchor" id="a239c039ef8b64ac893c6d52c79a19fbf"></a><!-- doxytag: member="Util::RingBuffer::size" ref="a239c039ef8b64ac893c6d52c79a19fbf" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int size </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -298,12 +314,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a104736719cd4e5f21c25705c77064dde"></a><!-- doxytag: member="Util::RingBuffer::capacity" ref="a104736719cd4e5f21c25705c77064dde" args="() const " -->
+<a class="anchor" id="ac41383b9a2d8d5cc6a6a99e665671bba"></a><!-- doxytag: member="Util::RingBuffer::capacity" ref="ac41383b9a2d8d5cc6a6a99e665671bba" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int capacity </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::capacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -318,12 +336,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0bcdab3616db481dd211594529479f94"></a><!-- doxytag: member="Util::RingBuffer::isAllocated" ref="a0bcdab3616db481dd211594529479f94" args="() const " -->
+<a class="anchor" id="a026b0c3ad0b408f01eaf1ea062453ff1"></a><!-- doxytag: member="Util::RingBuffer::isAllocated" ref="a026b0c3ad0b408f01eaf1ea062453ff1" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool isAllocated </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::isAllocated </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -336,16 +356,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="RingBuffer_8h_source.html#l00320">320</a> of file <a class="el" href="RingBuffer_8h_source.html">RingBuffer.h</a>.</p>
 
-<p>Referenced by <a class="el" href="RingBuffer_8h_source.html#l00214">RingBuffer&lt; Data &gt;::operator=()</a>.</p>
+<p>Referenced by <a class="el" href="RingBuffer_8h_source.html#l00214">Util::RingBuffer&lt; Data &gt;::operator=()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3e70330939fdfc4dbc2f60c1a660584d"></a><!-- doxytag: member="Util::RingBuffer::isFull" ref="a3e70330939fdfc4dbc2f60c1a660584d" args="()" -->
+<a class="anchor" id="a45c78e57250d8bdb92d8c026065228bb"></a><!-- doxytag: member="Util::RingBuffer::isFull" ref="a45c78e57250d8bdb92d8c026065228bb" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool isFull </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::isFull </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -360,12 +382,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9259477125ef843f57d1b8e7a400e8df"></a><!-- doxytag: member="Util::RingBuffer::operator[]" ref="a9259477125ef843f57d1b8e7a400e8df" args="(int offset) const " -->
+<a class="anchor" id="ac04478fb0b2c7639588ecaff686edb78"></a><!-- doxytag: member="Util::RingBuffer::operator[]" ref="ac04478fb0b2c7639588ecaff686edb78" args="(int offset) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data operator[] </td>
+          <td class="memname">Data <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>offset</em></td><td>)</td>
@@ -389,12 +413,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7ee7184119080658dbd9a6e629e6e90b"></a><!-- doxytag: member="Util::RingBuffer::pack" ref="a7ee7184119080658dbd9a6e629e6e90b" args="(char *&amp;current, char *end) const " -->
+<a class="anchor" id="acd7b2ae9dd5853a5424093713a7fc860"></a><!-- doxytag: member="Util::RingBuffer::pack" ref="acd7b2ae9dd5853a5424093713a7fc860" args="(char *&amp;current, char *end) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void pack </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::pack </td>
           <td>(</td>
           <td class="paramtype">char *&amp;&#160;</td>
           <td class="paramname"><em>current</em>, </td>
@@ -430,12 +456,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7243335e2851a09c967fa7743a0fcd1f"></a><!-- doxytag: member="Util::RingBuffer::unpack" ref="a7243335e2851a09c967fa7743a0fcd1f" args="(char *&amp;current, char *end)" -->
+<a class="anchor" id="a55f72fa0be93f992e02b5b1c146e6807"></a><!-- doxytag: member="Util::RingBuffer::unpack" ref="a55f72fa0be93f992e02b5b1c146e6807" args="(char *&amp;current, char *end)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void unpack </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::unpack </td>
           <td>(</td>
           <td class="paramtype">char *&amp;&#160;</td>
           <td class="paramname"><em>current</em>, </td>
@@ -471,12 +499,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a840f36c6b59da4fbd0e85491fee6f78d"></a><!-- doxytag: member="Util::RingBuffer::pack" ref="a840f36c6b59da4fbd0e85491fee6f78d" args="(PackedData &amp;buffer) const " -->
+<a class="anchor" id="a6ecd99fc4708a0745d993c5d023f4cab"></a><!-- doxytag: member="Util::RingBuffer::pack" ref="a6ecd99fc4708a0745d993c5d023f4cab" args="(PackedData &amp;buffer) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void pack </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::pack </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1PackedData.html">PackedData</a> &amp;&#160;</td>
           <td class="paramname"><em>buffer</em></td><td>)</td>
@@ -496,16 +526,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="RingBuffer_8h_source.html#l00409">409</a> of file <a class="el" href="RingBuffer_8h_source.html">RingBuffer.h</a>.</p>
 
-<p>References <a class="el" href="PackedData_8h_source.html#l00279">PackedData::pack()</a>.</p>
+<p>References <a class="el" href="PackedData_8h_source.html#l00279">Util::PackedData::pack()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7b707d4f2e28793ea629cfc43ee4cc55"></a><!-- doxytag: member="Util::RingBuffer::unpack" ref="a7b707d4f2e28793ea629cfc43ee4cc55" args="(PackedData &amp;buffer)" -->
+<a class="anchor" id="a64c563f2b3b5ef321faa6b82aa7c1fdb"></a><!-- doxytag: member="Util::RingBuffer::unpack" ref="a64c563f2b3b5ef321faa6b82aa7c1fdb" args="(PackedData &amp;buffer)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void unpack </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::unpack </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1PackedData.html">PackedData</a> &amp;&#160;</td>
           <td class="paramname"><em>buffer</em></td><td>)</td>
@@ -525,16 +557,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="RingBuffer_8h_source.html#l00421">421</a> of file <a class="el" href="RingBuffer_8h_source.html">RingBuffer.h</a>.</p>
 
-<p>References <a class="el" href="PackedData_8h_source.html#l00317">PackedData::unpack()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="PackedData_8h_source.html#l00317">Util::PackedData::unpack()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8fdb9a0413b176e1a0191d8adda9b34b"></a><!-- doxytag: member="Util::RingBuffer::packedSize" ref="a8fdb9a0413b176e1a0191d8adda9b34b" args="() const " -->
+<a class="anchor" id="a35c3dca921b54c354ee548cc0241d8a8"></a><!-- doxytag: member="Util::RingBuffer::packedSize" ref="a35c3dca921b54c354ee548cc0241d8a8" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int packedSize </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1RingBuffer.html">Util::RingBuffer</a>&lt; Data &gt;::packedSize </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -554,7 +588,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="RingBuffer_8h_source.html">RingBuffer.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

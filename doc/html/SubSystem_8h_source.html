@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -93,7 +93,7 @@
 <a name="l00066"></a>00066 
 <a name="l00068"></a>00068 
 <a name="l00069"></a>00069 
-<a name="l00071"></a>00071       Boundary&amp; boundary() <span class="keyword">const</span>;
+<a name="l00071"></a>00071       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary() <span class="keyword">const</span>;
 <a name="l00072"></a>00072 
 <a name="l00074"></a>00074       <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; simulation() <span class="keyword">const</span>;
 <a name="l00075"></a>00075 
@@ -149,7 +149,7 @@
 <a name="l00155"></a>00155 
 <a name="l00162"></a>00162       <a class="code" href="classUtil_1_1DArray.html">DArray&lt; System::MoleculeSet &gt;</a>* moleculeSetsPtr_;
 <a name="l00163"></a>00163 
-<a name="l00165"></a>00165       Boundary*   boundaryPtr_;
+<a name="l00165"></a>00165       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>*   boundaryPtr_;
 <a name="l00166"></a>00166 
 <a name="l00167"></a>00167       <span class="comment">// Does a bond potential exist?</span>
 <a name="l00168"></a>00168       <span class="keywordtype">bool</span> hasBonds_;
@@ -186,7 +186,7 @@
 <a name="l00199"></a>00199    <span class="comment">/*</span>
 <a name="l00200"></a>00200 <span class="comment">   * Get the parent Simulation by reference.</span>
 <a name="l00201"></a>00201 <span class="comment">   */</span>
-<a name="l00202"></a><a class="code" href="classMcMd_1_1SubSystem.html#ae705530f1911ce586ce525c58dbe24e9">00202</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; <a class="code" href="classMcMd_1_1SubSystem.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">SubSystem::simulation</a>()<span class="keyword"> const</span>
+<a name="l00202"></a><a class="code" href="classMcMd_1_1SubSystem.html#a3c1f202fd05dc1a764d088a3b4a92baf">00202</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; <a class="code" href="classMcMd_1_1SubSystem.html#a3c1f202fd05dc1a764d088a3b4a92baf" title="Get the parent Simulation by reference.">SubSystem::simulation</a>()<span class="keyword"> const</span>
 <a name="l00203"></a>00203 <span class="keyword">   </span>{
 <a name="l00204"></a>00204       assert(simulationPtr_);
 <a name="l00205"></a>00205       <span class="keywordflow">return</span> *simulationPtr_;
@@ -195,7 +195,7 @@
 <a name="l00208"></a>00208    <span class="comment">/*</span>
 <a name="l00209"></a>00209 <span class="comment">   * Get the parent System by reference.</span>
 <a name="l00210"></a>00210 <span class="comment">   */</span>
-<a name="l00211"></a><a class="code" href="classMcMd_1_1SubSystem.html#a4a3af9eda1fe22f46d6209a7d29aa020">00211</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; <a class="code" href="classMcMd_1_1SubSystem.html#a4a3af9eda1fe22f46d6209a7d29aa020" title="Get the parent System by reference.">SubSystem::system</a>()<span class="keyword"> const</span>
+<a name="l00211"></a><a class="code" href="classMcMd_1_1SubSystem.html#a8829a1dd26da68214c3319015a2c242e">00211</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; <a class="code" href="classMcMd_1_1SubSystem.html#a8829a1dd26da68214c3319015a2c242e" title="Get the parent System by reference.">SubSystem::system</a>()<span class="keyword"> const</span>
 <a name="l00212"></a>00212 <span class="keyword">   </span>{
 <a name="l00213"></a>00213       assert(systemPtr_);
 <a name="l00214"></a>00214       <span class="keywordflow">return</span> *systemPtr_;
@@ -204,7 +204,7 @@
 <a name="l00217"></a>00217    <span class="comment">/*</span>
 <a name="l00218"></a>00218 <span class="comment">   * Get the Boundary by reference.</span>
 <a name="l00219"></a>00219 <span class="comment">   */</span>
-<a name="l00220"></a><a class="code" href="classMcMd_1_1SubSystem.html#a81f23e720d23ad05f41e966ca5d76553">00220</a>    <span class="keyword">inline</span> Boundary&amp; <a class="code" href="classMcMd_1_1SubSystem.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary by reference.">SubSystem::boundary</a>()<span class="keyword"> const</span>
+<a name="l00220"></a><a class="code" href="classMcMd_1_1SubSystem.html#a102d96ae35bd762d7d6db041cfa5d635">00220</a>    <span class="keyword">inline</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; <a class="code" href="classMcMd_1_1SubSystem.html#a102d96ae35bd762d7d6db041cfa5d635" title="Get the Boundary by reference.">SubSystem::boundary</a>()<span class="keyword"> const</span>
 <a name="l00221"></a>00221 <span class="keyword">   </span>{
 <a name="l00222"></a>00222       assert(boundaryPtr_);
 <a name="l00223"></a>00223       <span class="keywordflow">return</span> *boundaryPtr_;
@@ -213,7 +213,7 @@
 <a name="l00226"></a>00226    <span class="comment">/*</span>
 <a name="l00227"></a>00227 <span class="comment">   * Get the number of molecules of a specific Species in this SubSystem.</span>
 <a name="l00228"></a>00228 <span class="comment">   */</span>
-<a name="l00229"></a><a class="code" href="classMcMd_1_1SubSystem.html#afeb11722e2573abb727e2267538df604">00229</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1SubSystem.html#afeb11722e2573abb727e2267538df604" title="Get the number of molecules of one Species in this SubSystem.">SubSystem::nMolecule</a>(<span class="keywordtype">int</span> speciesId)<span class="keyword"> const</span>
+<a name="l00229"></a><a class="code" href="classMcMd_1_1SubSystem.html#ac1a33268fa7f273eba9d234852bae9b5">00229</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1SubSystem.html#ac1a33268fa7f273eba9d234852bae9b5" title="Get the number of molecules of one Species in this SubSystem.">SubSystem::nMolecule</a>(<span class="keywordtype">int</span> speciesId)<span class="keyword"> const</span>
 <a name="l00230"></a>00230 <span class="keyword">   </span>{
 <a name="l00231"></a>00231       assert(moleculeSetsPtr_);
 <a name="l00232"></a>00232       <span class="keywordflow">return</span> (*moleculeSetsPtr_)[speciesId].size();
@@ -223,7 +223,7 @@
 <a name="l00236"></a>00236 <span class="comment">   * Initialize a System::MoleculeIterator for molecules of one Species.</span>
 <a name="l00237"></a>00237 <span class="comment">   */</span>
 <a name="l00238"></a>00238    <span class="keyword">inline</span> <span class="keywordtype">void</span>
-<a name="l00239"></a><a class="code" href="classMcMd_1_1SubSystem.html#afa8403fe0b9b6ddce8fbfcaaa59fb839">00239</a>    <a class="code" href="classMcMd_1_1SubSystem.html#afa8403fe0b9b6ddce8fbfcaaa59fb839" title="Initialize an iterator for molecules of one species in this SubSystem.">SubSystem::begin</a>(<span class="keywordtype">int</span> speciesId, <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">System::MoleculeIterator</a>&amp; iterator)
+<a name="l00239"></a><a class="code" href="classMcMd_1_1SubSystem.html#ab6db1c815a7f397f5159f85dfb16aa2c">00239</a>    <a class="code" href="classMcMd_1_1SubSystem.html#ab6db1c815a7f397f5159f85dfb16aa2c" title="Initialize an iterator for molecules of one species in this SubSystem.">SubSystem::begin</a>(<span class="keywordtype">int</span> speciesId, <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">System::MoleculeIterator</a>&amp; iterator)
 <a name="l00240"></a>00240    {
 <a name="l00241"></a>00241       assert(moleculeSetsPtr_);
 <a name="l00242"></a>00242       (*moleculeSetsPtr_)[speciesId].begin(iterator);
@@ -233,7 +233,7 @@
 <a name="l00246"></a>00246 <span class="comment">   * Initialize a System::ConstMoleculeIterator for molecules of one Species.</span>
 <a name="l00247"></a>00247 <span class="comment">   */</span>
 <a name="l00248"></a>00248    <span class="keyword">inline</span> <span class="keywordtype">void</span>
-<a name="l00249"></a><a class="code" href="classMcMd_1_1SubSystem.html#abcfa13b084f62a2fa5b2ae56956e5e64">00249</a>    <a class="code" href="classMcMd_1_1SubSystem.html#afa8403fe0b9b6ddce8fbfcaaa59fb839" title="Initialize an iterator for molecules of one species in this SubSystem.">SubSystem::begin</a>(<span class="keywordtype">int</span> speciesId, <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">System::ConstMoleculeIterator</a>&amp; iterator)<span class="keyword"> const</span>
+<a name="l00249"></a><a class="code" href="classMcMd_1_1SubSystem.html#a830ce50575e4a34052c47569500eadf0">00249</a>    <a class="code" href="classMcMd_1_1SubSystem.html#ab6db1c815a7f397f5159f85dfb16aa2c" title="Initialize an iterator for molecules of one species in this SubSystem.">SubSystem::begin</a>(<span class="keywordtype">int</span> speciesId, <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">System::ConstMoleculeIterator</a>&amp; iterator)<span class="keyword"> const</span>
 <a name="l00250"></a>00250 <span class="keyword">   </span>{
 <a name="l00251"></a>00251       assert(moleculeSetsPtr_);
 <a name="l00252"></a>00252       (*moleculeSetsPtr_)[speciesId].begin(iterator);
@@ -242,7 +242,7 @@
 <a name="l00255"></a>00255    <span class="comment">/*</span>
 <a name="l00256"></a>00256 <span class="comment">   * Does a bond potential exist?</span>
 <a name="l00257"></a>00257 <span class="comment">   */</span>
-<a name="l00258"></a><a class="code" href="classMcMd_1_1SubSystem.html#a46d118c41f4cc42b5692a789c988d064">00258</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1SubSystem.html#a46d118c41f4cc42b5692a789c988d064" title="Does a bond potential exist?">SubSystem::hasBonds</a>()<span class="keyword"> const</span>
+<a name="l00258"></a><a class="code" href="classMcMd_1_1SubSystem.html#a1593d5e027ed0ffc2b7e8cd843cdfd71">00258</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1SubSystem.html#a1593d5e027ed0ffc2b7e8cd843cdfd71" title="Does a bond potential exist?">SubSystem::hasBonds</a>()<span class="keyword"> const</span>
 <a name="l00259"></a>00259 <span class="keyword">   </span>{  <span class="keywordflow">return</span> hasBonds_; }
 <a name="l00260"></a>00260 
 <a name="l00261"></a>00261 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
@@ -261,13 +261,13 @@
 <a name="l00274"></a>00274 <span class="preprocessor"></span>
 <a name="l00275"></a>00275 <span class="preprocessor">   #ifdef MCMD_LINK</span>
 <a name="l00276"></a>00276 <span class="preprocessor"></span>
-<a name="l00277"></a><a class="code" href="classMcMd_1_1SubSystem.html#a7de51dd03873cccf0da1e8d62440cac9">00277</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1SubSystem.html#a7de51dd03873cccf0da1e8d62440cac9" title="Does a link potential exist?">SubSystem::hasLinks</a>()<span class="keyword"> const</span>
+<a name="l00277"></a><a class="code" href="classMcMd_1_1SubSystem.html#a3998b67ff184e3df3d786748af1fe203">00277</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1SubSystem.html#a3998b67ff184e3df3d786748af1fe203" title="Does a link potential exist?">SubSystem::hasLinks</a>()<span class="keyword"> const</span>
 <a name="l00278"></a>00278 <span class="keyword">   </span>{ <span class="keywordflow">return</span> hasLinks_; }
 <a name="l00279"></a>00279 <span class="preprocessor">   #endif</span>
 <a name="l00280"></a>00280 <span class="preprocessor"></span>
 <a name="l00281"></a>00281 <span class="preprocessor">   #ifdef INTER_EXTERNAL</span>
 <a name="l00282"></a>00282 <span class="preprocessor"></span>
-<a name="l00283"></a><a class="code" href="classMcMd_1_1SubSystem.html#a5228545a20019a9fc79c520ee7e97048">00283</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1SubSystem.html#a5228545a20019a9fc79c520ee7e97048" title="Does an external potential exist?">SubSystem::hasExternal</a>()<span class="keyword"> const</span>
+<a name="l00283"></a><a class="code" href="classMcMd_1_1SubSystem.html#a4aff2fe7087f190a2c174e548e15ace5">00283</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1SubSystem.html#a4aff2fe7087f190a2c174e548e15ace5" title="Does an external potential exist?">SubSystem::hasExternal</a>()<span class="keyword"> const</span>
 <a name="l00284"></a>00284 <span class="keyword">   </span>{ <span class="keywordflow">return</span> hasExternal_; }
 <a name="l00285"></a>00285 <span class="preprocessor">   #endif</span>
 <a name="l00286"></a>00286 <span class="preprocessor"></span>
@@ -282,7 +282,7 @@
 <a name="l00295"></a>00295 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

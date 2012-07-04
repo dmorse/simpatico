@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Buffer Class Reference</title>
+<title>Simpatico: DdMd::Buffer Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Buffer Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
+<h1>DdMd::Buffer Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Communicate__Module.html">MPI Communication</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::Buffer" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -59,13 +59,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="Buffer_8h_source.html">Buffer.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Buffer:</div>
+Inheritance diagram for DdMd::Buffer:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1Buffer.png" usemap="#Buffer_map" alt=""/>
-  <map id="Buffer_map" name="Buffer_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classDdMd_1_1Buffer.png" usemap="#DdMd::Buffer_map" alt=""/>
+  <map id="DdMd::Buffer_map" name="DdMd::Buffer_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,134,24"/>
 </map>
  </div></div>
 
@@ -73,68 +73,68 @@ Inheritance diagram for Buffer:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a47587d18a394fb4b9508c61e3d5f0260">Buffer</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a47587d18a394fb4b9508c61e3d5f0260"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read capacities and allocate buffers.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a17470aa332dae9ceef089b7565f70673">allocate</a> (int atomCapacity, int ghostCapacity)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate send and recv buffers.  <a href="#a17470aa332dae9ceef089b7565f70673"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#ac46aa7fc31291893c7c0068baa7464a7">clearSendBuffer</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the send buffer and sendType.  <a href="#ac46aa7fc31291893c7c0068baa7464a7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a823b27b38e6019185893cedafd7b537b">beginSendBlock</a> (BlockDataType sendType, int sendGroupSize=0)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the send buffer prior to packing and set atomtype.  <a href="#a823b27b38e6019185893cedafd7b537b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a652d1618085054a45a8c6fdbd41b963c">endSendBlock</a> (bool isComplete=true)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize a block in the send buffer.  <a href="#a652d1618085054a45a8c6fdbd41b963c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a6e295b590fac4d50e62311d5ee6f5922">beginRecvBlock</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Begin to receive a block from the recv buffer.  <a href="#a6e295b590fac4d50e62311d5ee6f5922"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a5776a46fe462f27585274ed89e2d04c8">sendRecv</a> (MPI::Intracomm &amp;comm, int source, int dest)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive from processor send and send to processor recv.  <a href="#a5776a46fe462f27585274ed89e2d04c8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#afb953aee65c5ae843b1f3fbf9a6c884f">send</a> (MPI::Intracomm &amp;comm, int dest)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a complete buffer.  <a href="#afb953aee65c5ae843b1f3fbf9a6c884f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a5aebd514e8e7b3901baf9ed0e9624d03">recv</a> (MPI::Intracomm &amp;comm, int source)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a buffer.  <a href="#a5aebd514e8e7b3901baf9ed0e9624d03"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#ac7aaea11605de70911a50f397bb72a62">bcast</a> (MPI::Intracomm &amp;comm, int source)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcast a buffer.  <a href="#ac7aaea11605de70911a50f397bb72a62"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a96e2c60464229f0f405cfc73b8f144c0">packAtom</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> for exchange of ownership.  <a href="#a96e2c60464229f0f405cfc73b8f144c0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a4147ec1dd1065728eeb09b0174b66760">unpackAtom</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive ownership of an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>.  <a href="#a4147ec1dd1065728eeb09b0174b66760"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#af4080f6cc1a5a85fb8593d107987096c">packGhost</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> into send buffer.  <a href="#af4080f6cc1a5a85fb8593d107987096c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a64304e95ba9d12aa71274fa42ee39ffc">unpackGhost</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack a ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> from recv buffer.  <a href="#a64304e95ba9d12aa71274fa42ee39ffc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#ab5315f97146bee7235a298a07e519299">packUpdate</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack update of ghost position <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> into send buffer.  <a href="#ab5315f97146bee7235a298a07e519299"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a09285f7273ec1ec8a616e53e57528856">unpackUpdate</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack updated position of ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> from recv buffer.  <a href="#a09285f7273ec1ec8a616e53e57528856"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a693328635801b32550c8469ae9a7b55a">Buffer</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a693328635801b32550c8469ae9a7b55a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a5f1d36aee618277b5bb30f22aea57c93">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read capacities and allocate buffers.  <a href="#a5f1d36aee618277b5bb30f22aea57c93"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a41a950b2b25f947f80470304ee33252b">allocate</a> (int atomCapacity, int ghostCapacity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate send and recv buffers.  <a href="#a41a950b2b25f947f80470304ee33252b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a3e9c53dd43d416f2980ee1eb396316e1">clearSendBuffer</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the send buffer and sendType.  <a href="#a3e9c53dd43d416f2980ee1eb396316e1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#ab39ec5feb70943acda311aa9c52913db">beginSendBlock</a> (BlockDataType sendType, int sendGroupSize=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the send buffer prior to packing and set atomtype.  <a href="#ab39ec5feb70943acda311aa9c52913db"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#ac625a812aee3b7fe37d17f9cdb8c86f1">endSendBlock</a> (bool isComplete=true)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalize a block in the send buffer.  <a href="#ac625a812aee3b7fe37d17f9cdb8c86f1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a084adf34691be655ad90392f4749b667">beginRecvBlock</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Begin to receive a block from the recv buffer.  <a href="#a084adf34691be655ad90392f4749b667"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#af1f502cd5965c10b8dc047283e16ea47">sendRecv</a> (MPI::Intracomm &amp;comm, int source, int dest)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive from processor send and send to processor recv.  <a href="#af1f502cd5965c10b8dc047283e16ea47"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a0976d94ef4aa36d8dc8d42da2d0dea0f">send</a> (MPI::Intracomm &amp;comm, int dest)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a complete buffer.  <a href="#a0976d94ef4aa36d8dc8d42da2d0dea0f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a1b0d1eb5202afbd87af64511e8ec1469">recv</a> (MPI::Intracomm &amp;comm, int source)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive a buffer.  <a href="#a1b0d1eb5202afbd87af64511e8ec1469"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a784e3e1eb81dfce56ad921844d5be563">bcast</a> (MPI::Intracomm &amp;comm, int source)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Broadcast a buffer.  <a href="#a784e3e1eb81dfce56ad921844d5be563"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a625076cad43f862d88fe681d0e275466">packAtom</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> for exchange of ownership.  <a href="#a625076cad43f862d88fe681d0e275466"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a7fed89d8782ba831b498072a5f130b25">unpackAtom</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive ownership of an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>.  <a href="#a7fed89d8782ba831b498072a5f130b25"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#adee88b198e2830d5ccb9cbef01d04f86">packGhost</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> into send buffer.  <a href="#adee88b198e2830d5ccb9cbef01d04f86"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a9aee58c08b1d6fd228d563412f3feb52">unpackGhost</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack a ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> from recv buffer.  <a href="#a9aee58c08b1d6fd228d563412f3feb52"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a52fb647173b77cca09f99fceb35feab8">packUpdate</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack update of ghost position <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> into send buffer.  <a href="#a52fb647173b77cca09f99fceb35feab8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a1e5a8474e18cf6b4e21ab08d4b302a79">unpackUpdate</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack updated position of ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> from recv buffer.  <a href="#a1e5a8474e18cf6b4e21ab08d4b302a79"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;int N&gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a9fb04880fcd56865937d9479beadbb08">packGroup</a> (const <a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; &amp;group)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack a <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> for sending.  <a href="#a9fb04880fcd56865937d9479beadbb08"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#acfc2bbf2ac8d1cd5374895369ac8a213">packGroup</a> (const <a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; &amp;group)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack a <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> for sending.  <a href="#acfc2bbf2ac8d1cd5374895369ac8a213"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;int N&gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a27d7297711cf87159f4f1b08fcc1ac08">unpackGroup</a> (<a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; &amp;group)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive the next <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> in the recv buffer.  <a href="#a27d7297711cf87159f4f1b08fcc1ac08"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a8de93c5bc1d655613bcd62102e214eca">sendSize</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of items written to current send block.  <a href="#a8de93c5bc1d655613bcd62102e214eca"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a51c1d1b25fa879240053d1eef232ea10">recvSize</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of unread items in current recv block.  <a href="#a51c1d1b25fa879240053d1eef232ea10"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a0bcdab3616db481dd211594529479f94">isAllocated</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has memory been allocated for this <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a>?  <a href="#a0bcdab3616db481dd211594529479f94"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a5d40f267dbc50e5e80dd71af752c3620">isInitialized</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has this <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a> been initialized?  <a href="#a5d40f267dbc50e5e80dd71af752c3620"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a72fbb50e40dfdc5f3710e54aac41b97e">atomCapacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of atoms for which space is available.  <a href="#a72fbb50e40dfdc5f3710e54aac41b97e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a78ffa5d4e2411c8da8dc7b1c38bf0421">ghostCapacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of ghost atoms for which space is available.  <a href="#a78ffa5d4e2411c8da8dc7b1c38bf0421"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a3039d677d1ce6c99c4283621ddbb5e41">groupCapacity</a> (int N) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of group&lt;N&gt; objects for which space is available.  <a href="#a3039d677d1ce6c99c4283621ddbb5e41"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a4a1d4e153ace9946c297181018bb5d38">unpackGroup</a> (<a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; &amp;group)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive the next <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> in the recv buffer.  <a href="#a4a1d4e153ace9946c297181018bb5d38"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#ace96a3940dda7a0d2f2ad74d3303a21c">sendSize</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of items written to current send block.  <a href="#ace96a3940dda7a0d2f2ad74d3303a21c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19">recvSize</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of unread items in current recv block.  <a href="#a91592a099587fb7a088ebacbd1424f19"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a104a3a2f795db7106dbdcd2876afbc42">isAllocated</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has memory been allocated for this <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a>?  <a href="#a104a3a2f795db7106dbdcd2876afbc42"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a54d044f2ef58334549017b7070a36d22">isInitialized</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has this <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a> been initialized?  <a href="#a54d044f2ef58334549017b7070a36d22"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a04bca4248033f113def2871112e033a6">atomCapacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of atoms for which space is available.  <a href="#a04bca4248033f113def2871112e033a6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#aa09f2ab0c92f88343ecab5340037dc11">ghostCapacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of ghost atoms for which space is available.  <a href="#aa09f2ab0c92f88343ecab5340037dc11"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Buffer.html#a7c4266ed1b8ab541e7e8c6dd023aaf06">groupCapacity</a> (int N) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of group&lt;N&gt; objects for which space is available.  <a href="#a7c4266ed1b8ab541e7e8c6dd023aaf06"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a47587d18a394fb4b9508c61e3d5f0260"></a><!-- doxytag: member="DdMd::Buffer::Buffer" ref="a47587d18a394fb4b9508c61e3d5f0260" args="()" -->
+<a class="anchor" id="a693328635801b32550c8469ae9a7b55a"></a><!-- doxytag: member="DdMd::Buffer::Buffer" ref="a693328635801b32550c8469ae9a7b55a" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Buffer.html">Buffer</a> </td>
+          <td class="memname">DdMd::Buffer::Buffer </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -150,12 +150,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="DdMd::Buffer::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a5f1d36aee618277b5bb30f22aea57c93"></a><!-- doxytag: member="DdMd::Buffer::readParam" ref="a5f1d36aee618277b5bb30f22aea57c93" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void DdMd::Buffer::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -168,20 +168,20 @@ Public Member Functions</h2></td></tr>
 <p>Read capacities and allocate buffers. </p>
 <p>Read parameters atomCapacity and ghostCapacity (see allocate) and allocate buffers. </p>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00078">78</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>References <a class="el" href="Buffer_8cpp_source.html#l00054">Buffer::allocate()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00148">ParamComposite::readBegin()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00177">ParamComposite::readEnd()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Buffer_8cpp_source.html#l00054">allocate()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00148">Util::ParamComposite::readBegin()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00177">Util::ParamComposite::readEnd()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a17470aa332dae9ceef089b7565f70673"></a><!-- doxytag: member="DdMd::Buffer::allocate" ref="a17470aa332dae9ceef089b7565f70673" args="(int atomCapacity, int ghostCapacity)" -->
+<a class="anchor" id="a41a950b2b25f947f80470304ee33252b"></a><!-- doxytag: member="DdMd::Buffer::allocate" ref="a41a950b2b25f947f80470304ee33252b" args="(int atomCapacity, int ghostCapacity)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void DdMd::Buffer::allocate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>atomCapacity</em>, </td>
@@ -213,18 +213,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00054">54</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>References <a class="el" href="Buffer_8cpp_source.html#l00054">Buffer::allocate()</a>, <a class="el" href="Buffer_8cpp_source.html#l00106">Buffer::atomCapacity()</a>, <a class="el" href="Buffer_8cpp_source.html#l00112">Buffer::ghostCapacity()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Buffer_8cpp_source.html#l00054">allocate()</a>, <a class="el" href="Buffer_8cpp_source.html#l00106">atomCapacity()</a>, <a class="el" href="Buffer_8cpp_source.html#l00112">ghostCapacity()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Buffer_8cpp_source.html#l00054">Buffer::allocate()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00078">Buffer::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="Buffer_8cpp_source.html#l00054">allocate()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00078">readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac46aa7fc31291893c7c0068baa7464a7"></a><!-- doxytag: member="DdMd::Buffer::clearSendBuffer" ref="ac46aa7fc31291893c7c0068baa7464a7" args="()" -->
+<a class="anchor" id="a3e9c53dd43d416f2980ee1eb396316e1"></a><!-- doxytag: member="DdMd::Buffer::clearSendBuffer" ref="a3e9c53dd43d416f2980ee1eb396316e1" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void clearSendBuffer </td>
+          <td class="memname">void DdMd::Buffer::clearSendBuffer </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -237,16 +237,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00178">178</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a823b27b38e6019185893cedafd7b537b"></a><!-- doxytag: member="DdMd::Buffer::beginSendBlock" ref="a823b27b38e6019185893cedafd7b537b" args="(BlockDataType sendType, int sendGroupSize=0)" -->
+<a class="anchor" id="ab39ec5feb70943acda311aa9c52913db"></a><!-- doxytag: member="DdMd::Buffer::beginSendBlock" ref="ab39ec5feb70943acda311aa9c52913db" args="(BlockDataType sendType, int sendGroupSize=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void beginSendBlock </td>
+          <td class="memname">void DdMd::Buffer::beginSendBlock </td>
           <td>(</td>
           <td class="paramtype">BlockDataType&#160;</td>
           <td class="paramname"><em>sendType</em>, </td>
@@ -267,22 +267,22 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Clear the send buffer prior to packing and set atomtype. </p>
-<p>Sets <a class="el" href="classDdMd_1_1Buffer.html#a8de93c5bc1d655613bcd62102e214eca" title="Number of items written to current send block.">sendSize()</a> to zero, the send pointer to the beginning of the send buffer, and sendType to the type of data to be sent. If sendType = <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>, also set sendGroupSize. </p>
+<p>Sets <a class="el" href="classDdMd_1_1Buffer.html#ace96a3940dda7a0d2f2ad74d3303a21c" title="Number of items written to current send block.">sendSize()</a> to zero, the send pointer to the beginning of the send buffer, and sendType to the type of data to be sent. If sendType = <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>, also set sendGroupSize. </p>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00189">189</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a652d1618085054a45a8c6fdbd41b963c"></a><!-- doxytag: member="DdMd::Buffer::endSendBlock" ref="a652d1618085054a45a8c6fdbd41b963c" args="(bool isComplete=true)" -->
+<a class="anchor" id="ac625a812aee3b7fe37d17f9cdb8c86f1"></a><!-- doxytag: member="DdMd::Buffer::endSendBlock" ref="ac625a812aee3b7fe37d17f9cdb8c86f1" args="(bool isComplete=true)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void endSendBlock </td>
+          <td class="memname">void DdMd::Buffer::endSendBlock </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>isComplete</em> = <code>true</code></td><td>)</td>
@@ -302,16 +302,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00215">215</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6e295b590fac4d50e62311d5ee6f5922"></a><!-- doxytag: member="DdMd::Buffer::beginRecvBlock" ref="a6e295b590fac4d50e62311d5ee6f5922" args="()" -->
+<a class="anchor" id="a084adf34691be655ad90392f4749b667"></a><!-- doxytag: member="DdMd::Buffer::beginRecvBlock" ref="a084adf34691be655ad90392f4749b667" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool beginRecvBlock </td>
+          <td class="memname">bool DdMd::Buffer::beginRecvBlock </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -327,16 +327,16 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5776a46fe462f27585274ed89e2d04c8"></a><!-- doxytag: member="DdMd::Buffer::sendRecv" ref="a5776a46fe462f27585274ed89e2d04c8" args="(MPI::Intracomm &amp;comm, int source, int dest)" -->
+<a class="anchor" id="af1f502cd5965c10b8dc047283e16ea47"></a><!-- doxytag: member="DdMd::Buffer::sendRecv" ref="af1f502cd5965c10b8dc047283e16ea47" args="(MPI::Intracomm &amp;comm, int source, int dest)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sendRecv </td>
+          <td class="memname">void DdMd::Buffer::sendRecv </td>
           <td>(</td>
           <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
           <td class="paramname"><em>comm</em>, </td>
@@ -363,8 +363,8 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Receive from processor send and send to processor recv. </p>
-<p>After transmission, clears the send buffer for reuse, by calling clearSend(), and sets the receive buffer for unpacking, by setting <a class="el" href="classDdMd_1_1Buffer.html#a51c1d1b25fa879240053d1eef232ea10" title="Number of unread items in current recv block.">recvSize()</a> to the total number of atoms recieved and setting the receive pointer to first atom to be unpacked.</p>
-<p>Throws an Exception if atomType() == NONE or <a class="el" href="classDdMd_1_1Buffer.html#a8de93c5bc1d655613bcd62102e214eca" title="Number of items written to current send block.">sendSize()</a> == 0.</p>
+<p>After transmission, clears the send buffer for reuse, by calling clearSend(), and sets the receive buffer for unpacking, by setting <a class="el" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items in current recv block.">recvSize()</a> to the total number of atoms recieved and setting the receive pointer to first atom to be unpacked.</p>
+<p>Throws an Exception if atomType() == NONE or <a class="el" href="classDdMd_1_1Buffer.html#ace96a3940dda7a0d2f2ad74d3303a21c" title="Number of items written to current send block.">sendSize()</a> == 0.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">comm</td><td>MPI communicator object </td></tr>
@@ -378,16 +378,16 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afb953aee65c5ae843b1f3fbf9a6c884f"></a><!-- doxytag: member="DdMd::Buffer::send" ref="afb953aee65c5ae843b1f3fbf9a6c884f" args="(MPI::Intracomm &amp;comm, int dest)" -->
+<a class="anchor" id="a0976d94ef4aa36d8dc8d42da2d0dea0f"></a><!-- doxytag: member="DdMd::Buffer::send" ref="a0976d94ef4aa36d8dc8d42da2d0dea0f" args="(MPI::Intracomm &amp;comm, int dest)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void send </td>
+          <td class="memname">void DdMd::Buffer::send </td>
           <td>(</td>
           <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
           <td class="paramname"><em>comm</em>, </td>
@@ -423,12 +423,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5aebd514e8e7b3901baf9ed0e9624d03"></a><!-- doxytag: member="DdMd::Buffer::recv" ref="a5aebd514e8e7b3901baf9ed0e9624d03" args="(MPI::Intracomm &amp;comm, int source)" -->
+<a class="anchor" id="a1b0d1eb5202afbd87af64511e8ec1469"></a><!-- doxytag: member="DdMd::Buffer::recv" ref="a1b0d1eb5202afbd87af64511e8ec1469" args="(MPI::Intracomm &amp;comm, int source)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void recv </td>
+          <td class="memname">void DdMd::Buffer::recv </td>
           <td>(</td>
           <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
           <td class="paramname"><em>comm</em>, </td>
@@ -463,12 +463,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac7aaea11605de70911a50f397bb72a62"></a><!-- doxytag: member="DdMd::Buffer::bcast" ref="ac7aaea11605de70911a50f397bb72a62" args="(MPI::Intracomm &amp;comm, int source)" -->
+<a class="anchor" id="a784e3e1eb81dfce56ad921844d5be563"></a><!-- doxytag: member="DdMd::Buffer::bcast" ref="a784e3e1eb81dfce56ad921844d5be563" args="(MPI::Intracomm &amp;comm, int source)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void bcast </td>
+          <td class="memname">void DdMd::Buffer::bcast </td>
           <td>(</td>
           <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
           <td class="paramname"><em>comm</em>, </td>
@@ -503,12 +503,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a96e2c60464229f0f405cfc73b8f144c0"></a><!-- doxytag: member="DdMd::Buffer::packAtom" ref="a96e2c60464229f0f405cfc73b8f144c0" args="(Atom &amp;atom)" -->
+<a class="anchor" id="a625076cad43f862d88fe681d0e275466"></a><!-- doxytag: member="DdMd::Buffer::packAtom" ref="a625076cad43f862d88fe681d0e275466" args="(Atom &amp;atom)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void packAtom </td>
+          <td class="memname">void DdMd::Buffer::packAtom </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -519,7 +519,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Pack an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> for exchange of ownership. </p>
-<p>Appends an atom to the send buffer, and increments <a class="el" href="classDdMd_1_1Buffer.html#a8de93c5bc1d655613bcd62102e214eca" title="Number of items written to current send block.">sendSize()</a>.</p>
+<p>Appends an atom to the send buffer, and increments <a class="el" href="classDdMd_1_1Buffer.html#ace96a3940dda7a0d2f2ad74d3303a21c" title="Number of items written to current send block.">sendSize()</a>.</p>
 <p>Throws an Exception if sendType != ATOM.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -530,18 +530,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00263">263</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00205">Atom::id()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">Atom::mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00099">Mask::size()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00209">Atom::typeId()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00225">Atom::velocity()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00205">DdMd::Atom::id()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">DdMd::Atom::mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">DdMd::Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00099">DdMd::Mask::size()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00209">DdMd::Atom::typeId()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00225">DdMd::Atom::velocity()</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4147ec1dd1065728eeb09b0174b66760"></a><!-- doxytag: member="DdMd::Buffer::unpackAtom" ref="a4147ec1dd1065728eeb09b0174b66760" args="(Atom &amp;atom)" -->
+<a class="anchor" id="a7fed89d8782ba831b498072a5f130b25"></a><!-- doxytag: member="DdMd::Buffer::unpackAtom" ref="a7fed89d8782ba831b498072a5f130b25" args="(Atom &amp;atom)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void unpackAtom </td>
+          <td class="memname">void DdMd::Buffer::unpackAtom </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -552,7 +552,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Receive ownership of an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>. </p>
-<p>Unpacks an atom from recv buffer into atom, and decrements <a class="el" href="classDdMd_1_1Buffer.html#a51c1d1b25fa879240053d1eef232ea10" title="Number of unread items in current recv block.">recvSize()</a>.</p>
+<p>Unpacks an atom from recv buffer into atom, and decrements <a class="el" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items in current recv block.">recvSize()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">atom</td><td><a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> object into which data is received. </td></tr>
@@ -562,18 +562,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00293">293</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00045">Mask::append()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00034">Mask::clear()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">Atom::mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00193">Atom::setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00197">Atom::setTypeId()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00099">Mask::size()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00225">Atom::velocity()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00045">DdMd::Mask::append()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8cpp_source.html#l00034">DdMd::Mask::clear()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">DdMd::Atom::mask()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">DdMd::Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00193">DdMd::Atom::setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00197">DdMd::Atom::setTypeId()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00099">DdMd::Mask::size()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00225">DdMd::Atom::velocity()</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af4080f6cc1a5a85fb8593d107987096c"></a><!-- doxytag: member="DdMd::Buffer::packGhost" ref="af4080f6cc1a5a85fb8593d107987096c" args="(Atom &amp;atom)" -->
+<a class="anchor" id="adee88b198e2830d5ccb9cbef01d04f86"></a><!-- doxytag: member="DdMd::Buffer::packGhost" ref="adee88b198e2830d5ccb9cbef01d04f86" args="(Atom &amp;atom)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void packGhost </td>
+          <td class="memname">void DdMd::Buffer::packGhost </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -584,7 +584,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Pack ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> into send buffer. </p>
-<p>Copies required data into send buffer, and increments <a class="el" href="classDdMd_1_1Buffer.html#a8de93c5bc1d655613bcd62102e214eca" title="Number of items written to current send block.">sendSize()</a>.</p>
+<p>Copies required data into send buffer, and increments <a class="el" href="classDdMd_1_1Buffer.html#ace96a3940dda7a0d2f2ad74d3303a21c" title="Number of items written to current send block.">sendSize()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">atom</td><td>ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> to be sent. </td></tr>
@@ -594,16 +594,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00351">351</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00205">Atom::id()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00209">Atom::typeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00205">DdMd::Atom::id()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">DdMd::Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00209">DdMd::Atom::typeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a64304e95ba9d12aa71274fa42ee39ffc"></a><!-- doxytag: member="DdMd::Buffer::unpackGhost" ref="a64304e95ba9d12aa71274fa42ee39ffc" args="(Atom &amp;atom)" -->
+<a class="anchor" id="a9aee58c08b1d6fd228d563412f3feb52"></a><!-- doxytag: member="DdMd::Buffer::unpackGhost" ref="a9aee58c08b1d6fd228d563412f3feb52" args="(Atom &amp;atom)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void unpackGhost </td>
+          <td class="memname">void DdMd::Buffer::unpackGhost </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -614,7 +614,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Unpack a ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> from recv buffer. </p>
-<p>Unpacks required data from recv buffer into atom, decrements <a class="el" href="classDdMd_1_1Buffer.html#a51c1d1b25fa879240053d1eef232ea10" title="Number of unread items in current recv block.">recvSize()</a>.</p>
+<p>Unpacks required data from recv buffer into atom, decrements <a class="el" href="classDdMd_1_1Buffer.html#a91592a099587fb7a088ebacbd1424f19" title="Number of unread items in current recv block.">recvSize()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">atom</td><td>ghost <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> object. </td></tr>
@@ -624,16 +624,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00375">375</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00193">Atom::setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00197">Atom::setTypeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">DdMd::Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00193">DdMd::Atom::setId()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00197">DdMd::Atom::setTypeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab5315f97146bee7235a298a07e519299"></a><!-- doxytag: member="DdMd::Buffer::packUpdate" ref="ab5315f97146bee7235a298a07e519299" args="(Atom &amp;atom)" -->
+<a class="anchor" id="a52fb647173b77cca09f99fceb35feab8"></a><!-- doxytag: member="DdMd::Buffer::packUpdate" ref="a52fb647173b77cca09f99fceb35feab8" args="(Atom &amp;atom)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void packUpdate </td>
+          <td class="memname">void DdMd::Buffer::packUpdate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -653,18 +653,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00431">431</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a09285f7273ec1ec8a616e53e57528856"></a><!-- doxytag: member="DdMd::Buffer::unpackUpdate" ref="a09285f7273ec1ec8a616e53e57528856" args="(Atom &amp;atom)" -->
+<a class="anchor" id="a1e5a8474e18cf6b4e21ab08d4b302a79"></a><!-- doxytag: member="DdMd::Buffer::unpackUpdate" ref="a1e5a8474e18cf6b4e21ab08d4b302a79" args="(Atom &amp;atom)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void unpackUpdate </td>
+          <td class="memname">void DdMd::Buffer::unpackUpdate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -685,18 +685,20 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00449">449</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9fb04880fcd56865937d9479beadbb08"></a><!-- doxytag: member="DdMd::Buffer::packGroup" ref="a9fb04880fcd56865937d9479beadbb08" args="(const Group&lt; N &gt; &amp;group)" -->
+<a class="anchor" id="acfc2bbf2ac8d1cd5374895369ac8a213"></a><!-- doxytag: member="DdMd::Buffer::packGroup" ref="acfc2bbf2ac8d1cd5374895369ac8a213" args="(const Group&lt; N &gt; &amp;group)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void packGroup </td>
+          <td class="memname">void DdMd::Buffer::packGroup </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; &amp;&#160;</td>
           <td class="paramname"><em>group</em></td><td>)</td>
@@ -716,16 +718,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8h_source.html#l00369">369</a> of file <a class="el" href="Buffer_8h_source.html">Buffer.h</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00158">Group&lt; N &gt;::atomId()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00144">Group&lt; N &gt;::id()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00136">Group&lt; N &gt;::plan()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00150">Group&lt; N &gt;::typeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00158">DdMd::Group&lt; N &gt;::atomId()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00144">DdMd::Group&lt; N &gt;::id()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00136">DdMd::Group&lt; N &gt;::plan()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00150">DdMd::Group&lt; N &gt;::typeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a27d7297711cf87159f4f1b08fcc1ac08"></a><!-- doxytag: member="DdMd::Buffer::unpackGroup" ref="a27d7297711cf87159f4f1b08fcc1ac08" args="(Group&lt; N &gt; &amp;group)" -->
+<a class="anchor" id="a4a1d4e153ace9946c297181018bb5d38"></a><!-- doxytag: member="DdMd::Buffer::unpackGroup" ref="a4a1d4e153ace9946c297181018bb5d38" args="(Group&lt; N &gt; &amp;group)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void unpackGroup </td>
+          <td class="memname">void DdMd::Buffer::unpackGroup </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; &amp;&#160;</td>
           <td class="paramname"><em>group</em></td><td>)</td>
@@ -745,16 +749,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8h_source.html#l00393">393</a> of file <a class="el" href="Buffer_8h_source.html">Buffer.h</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00125">Group&lt; N &gt;::clearAtomPtr()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00136">Group&lt; N &gt;::plan()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00100">Group&lt; N &gt;::setAtomId()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00083">Group&lt; N &gt;::setId()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00091">Group&lt; N &gt;::setTypeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00125">DdMd::Group&lt; N &gt;::clearAtomPtr()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00136">DdMd::Group&lt; N &gt;::plan()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00100">DdMd::Group&lt; N &gt;::setAtomId()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00083">DdMd::Group&lt; N &gt;::setId()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00091">DdMd::Group&lt; N &gt;::setTypeId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8de93c5bc1d655613bcd62102e214eca"></a><!-- doxytag: member="DdMd::Buffer::sendSize" ref="a8de93c5bc1d655613bcd62102e214eca" args="() const " -->
+<a class="anchor" id="ace96a3940dda7a0d2f2ad74d3303a21c"></a><!-- doxytag: member="DdMd::Buffer::sendSize" ref="ace96a3940dda7a0d2f2ad74d3303a21c" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int sendSize </td>
+          <td class="memname">int DdMd::Buffer::sendSize </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -769,12 +773,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a51c1d1b25fa879240053d1eef232ea10"></a><!-- doxytag: member="DdMd::Buffer::recvSize" ref="a51c1d1b25fa879240053d1eef232ea10" args="() const " -->
+<a class="anchor" id="a91592a099587fb7a088ebacbd1424f19"></a><!-- doxytag: member="DdMd::Buffer::recvSize" ref="a91592a099587fb7a088ebacbd1424f19" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int recvSize </td>
+          <td class="memname">int DdMd::Buffer::recvSize </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -787,16 +791,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00589">589</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0bcdab3616db481dd211594529479f94"></a><!-- doxytag: member="DdMd::Buffer::isAllocated" ref="a0bcdab3616db481dd211594529479f94" args="() const " -->
+<a class="anchor" id="a104a3a2f795db7106dbdcd2876afbc42"></a><!-- doxytag: member="DdMd::Buffer::isAllocated" ref="a104a3a2f795db7106dbdcd2876afbc42" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isAllocated </td>
+          <td class="memname">bool DdMd::Buffer::isAllocated </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -811,12 +815,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5d40f267dbc50e5e80dd71af752c3620"></a><!-- doxytag: member="DdMd::Buffer::isInitialized" ref="a5d40f267dbc50e5e80dd71af752c3620" args="() const " -->
+<a class="anchor" id="a54d044f2ef58334549017b7070a36d22"></a><!-- doxytag: member="DdMd::Buffer::isInitialized" ref="a54d044f2ef58334549017b7070a36d22" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isInitialized </td>
+          <td class="memname">bool DdMd::Buffer::isInitialized </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -829,16 +833,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00118">118</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00103">Exchanger::allocate()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00103">DdMd::Exchanger::allocate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a72fbb50e40dfdc5f3710e54aac41b97e"></a><!-- doxytag: member="DdMd::Buffer::atomCapacity" ref="a72fbb50e40dfdc5f3710e54aac41b97e" args="() const " -->
+<a class="anchor" id="a04bca4248033f113def2871112e033a6"></a><!-- doxytag: member="DdMd::Buffer::atomCapacity" ref="a04bca4248033f113def2871112e033a6" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atomCapacity </td>
+          <td class="memname">int DdMd::Buffer::atomCapacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -851,16 +855,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00106">106</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Buffer_8cpp_source.html#l00054">Buffer::allocate()</a>.</p>
+<p>Referenced by <a class="el" href="Buffer_8cpp_source.html#l00054">allocate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a78ffa5d4e2411c8da8dc7b1c38bf0421"></a><!-- doxytag: member="DdMd::Buffer::ghostCapacity" ref="a78ffa5d4e2411c8da8dc7b1c38bf0421" args="() const " -->
+<a class="anchor" id="aa09f2ab0c92f88343ecab5340037dc11"></a><!-- doxytag: member="DdMd::Buffer::ghostCapacity" ref="aa09f2ab0c92f88343ecab5340037dc11" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int ghostCapacity </td>
+          <td class="memname">int DdMd::Buffer::ghostCapacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -873,16 +877,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Buffer_8cpp_source.html#l00112">112</a> of file <a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00103">Exchanger::allocate()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00054">Buffer::allocate()</a>.</p>
+<p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00103">DdMd::Exchanger::allocate()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00054">allocate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3039d677d1ce6c99c4283621ddbb5e41"></a><!-- doxytag: member="DdMd::Buffer::groupCapacity" ref="a3039d677d1ce6c99c4283621ddbb5e41" args="(int N) const " -->
+<a class="anchor" id="a7c4266ed1b8ab541e7e8c6dd023aaf06"></a><!-- doxytag: member="DdMd::Buffer::groupCapacity" ref="a7c4266ed1b8ab541e7e8c6dd023aaf06" args="(int N) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int groupCapacity </td>
+          <td class="memname">int DdMd::Buffer::groupCapacity </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>N</em></td><td>)</td>
@@ -905,7 +909,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="Buffer_8cpp_source.html">Buffer.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

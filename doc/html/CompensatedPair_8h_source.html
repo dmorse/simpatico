@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -130,7 +130,7 @@
 <a name="l00173"></a>00173 <span class="comment">   * Constructor.</span>
 <a name="l00174"></a>00174 <span class="comment">   */</span>
 <a name="l00175"></a>00175    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BarePair, <span class="keyword">class</span> LinkPotential&gt;
-<a name="l00176"></a><a class="code" href="classInter_1_1CompensatedPair.html#a00a03410bb006f206797e6ff23d61393">00176</a>    <a class="code" href="classInter_1_1CompensatedPair.html" title="Compensated pair potential for transient gel.">CompensatedPair&lt;BarePair, LinkPotential&gt;::CompensatedPair</a>() 
+<a name="l00176"></a><a class="code" href="classInter_1_1CompensatedPair.html#a334f4fd6b701044cfbfd6039acd6f0b1">00176</a>    <a class="code" href="classInter_1_1CompensatedPair.html" title="Compensated pair potential for transient gel.">CompensatedPair&lt;BarePair, LinkPotential&gt;::CompensatedPair</a>() 
 <a name="l00177"></a>00177     : maxPairCutoff_(0.0),
 <a name="l00178"></a>00178       temp_(0.0),
 <a name="l00179"></a>00179       mu_(0.0),
@@ -149,7 +149,7 @@
 <a name="l00192"></a>00192 <span class="comment">   * Copy constructor.</span>
 <a name="l00193"></a>00193 <span class="comment">   */</span>   
 <a name="l00194"></a>00194    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BarePair, <span class="keyword">class</span> LinkPotential&gt;
-<a name="l00195"></a>00195    <a class="code" href="classInter_1_1CompensatedPair.html#a00a03410bb006f206797e6ff23d61393" title="Constructor.">CompensatedPair&lt;BarePair, LinkPotential&gt;::CompensatedPair</a>(BarePair barePot) 
+<a name="l00195"></a>00195    <a class="code" href="classInter_1_1CompensatedPair.html#a334f4fd6b701044cfbfd6039acd6f0b1" title="Constructor.">CompensatedPair&lt;BarePair, LinkPotential&gt;::CompensatedPair</a>(BarePair barePot) 
 <a name="l00196"></a>00196     : maxPairCutoff_(0.0),
 <a name="l00197"></a>00197       pair_(barePot),
 <a name="l00198"></a>00198       temp_(0.0),
@@ -162,7 +162,7 @@
 <a name="l00205"></a>00205 <span class="comment">   * Read potential parameters from file.</span>
 <a name="l00206"></a>00206 <span class="comment">   */</span>  
 <a name="l00207"></a>00207    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BarePair, <span class="keyword">class</span> LinkPotential&gt;
-<a name="l00208"></a><a class="code" href="classInter_1_1CompensatedPair.html#ab5421d3c9175985c9acbf723e5392075">00208</a>    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CompensatedPair.html#ab5421d3c9175985c9acbf723e5392075" title="Read epsilon and sigma, initialize other variables.">CompensatedPair&lt;BarePair, LinkPotential&gt;::readParam</a>(std::istream &amp;in)
+<a name="l00208"></a><a class="code" href="classInter_1_1CompensatedPair.html#a507153aa4b5eae3c32a96e60b3e76cf8">00208</a>    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CompensatedPair.html#a507153aa4b5eae3c32a96e60b3e76cf8" title="Read epsilon and sigma, initialize other variables.">CompensatedPair&lt;BarePair, LinkPotential&gt;::readParam</a>(std::istream &amp;in)
 <a name="l00209"></a>00209    {
 <a name="l00210"></a>00210       <span class="comment">//readBegin(in, &quot;CompensatedPair&quot;);</span>
 <a name="l00211"></a>00211 
@@ -174,23 +174,23 @@
 <a name="l00217"></a>00217       <span class="comment">//label = pair_.className();</span>
 <a name="l00218"></a>00218       <span class="comment">//label += &quot;{&quot;;</span>
 <a name="l00219"></a>00219       beginPtr = &amp;addBegin(pair_.className().c_str());
-<a name="l00220"></a>00220       beginPtr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
-<a name="l00221"></a>00221       beginPtr-&gt;<a class="code" href="classUtil_1_1Begin.html#ab5421d3c9175985c9acbf723e5392075" title="Read a comment.">readParam</a>(in);
+<a name="l00220"></a>00220       beginPtr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
+<a name="l00221"></a>00221       beginPtr-&gt;<a class="code" href="classUtil_1_1Begin.html#a346ec866e4f12597c51f153ca203fc31" title="Read a comment.">readParam</a>(in);
 <a name="l00222"></a>00222       readParamComposite(in, pair_);
 <a name="l00223"></a>00223       endPtr = &amp;addEnd();
-<a name="l00224"></a>00224       endPtr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
-<a name="l00225"></a>00225       endPtr-&gt;<a class="code" href="classUtil_1_1End.html#ab5421d3c9175985c9acbf723e5392075" title="Read the closing bracket.">readParam</a>(in);
+<a name="l00224"></a>00224       endPtr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
+<a name="l00225"></a>00225       endPtr-&gt;<a class="code" href="classUtil_1_1End.html#aee1e9af21f8bb3e71af5c26fa3d6d081" title="Read the closing bracket.">readParam</a>(in);
 <a name="l00226"></a>00226 
 <a name="l00227"></a>00227       <span class="comment">// Read bare link potential</span>
 <a name="l00228"></a>00228       <span class="comment">//label = link_.className();</span>
 <a name="l00229"></a>00229       <span class="comment">//label += &quot;{&quot;;</span>
 <a name="l00230"></a>00230       beginPtr = &amp;addBegin(link_.className().c_str());
-<a name="l00231"></a>00231       beginPtr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
-<a name="l00232"></a>00232       beginPtr-&gt;<a class="code" href="classUtil_1_1Begin.html#ab5421d3c9175985c9acbf723e5392075" title="Read a comment.">readParam</a>(in);
+<a name="l00231"></a>00231       beginPtr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
+<a name="l00232"></a>00232       beginPtr-&gt;<a class="code" href="classUtil_1_1Begin.html#a346ec866e4f12597c51f153ca203fc31" title="Read a comment.">readParam</a>(in);
 <a name="l00233"></a>00233       readParamComposite(in, link_);
 <a name="l00234"></a>00234       endPtr = &amp;addEnd();
-<a name="l00235"></a>00235       endPtr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
-<a name="l00236"></a>00236       endPtr-&gt;<a class="code" href="classUtil_1_1End.html#ab5421d3c9175985c9acbf723e5392075" title="Read the closing bracket.">readParam</a>(in);
+<a name="l00235"></a>00235       endPtr-&gt;<a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">setIndent</a>(*<span class="keyword">this</span>);
+<a name="l00236"></a>00236       endPtr-&gt;<a class="code" href="classUtil_1_1End.html#aee1e9af21f8bb3e71af5c26fa3d6d081" title="Read the closing bracket.">readParam</a>(in);
 <a name="l00237"></a>00237 
 <a name="l00238"></a>00238       read&lt;double&gt;(in, <span class="stringliteral">&quot;maxLinkLength&quot;</span>, maxLinkLength_); 
 <a name="l00239"></a>00239       read&lt;double&gt;(in, <span class="stringliteral">&quot;temperature&quot;</span>, temp_);
@@ -212,7 +212,7 @@
 <a name="l00255"></a>00255 <span class="comment">   * Set nAtomType</span>
 <a name="l00256"></a>00256 <span class="comment">   */</span>
 <a name="l00257"></a>00257    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BarePair, <span class="keyword">class</span> LinkPotential&gt;   
-<a name="l00258"></a><a class="code" href="classInter_1_1CompensatedPair.html#a9549e24ee72625c94fd6ae7d61ceeee8">00258</a>    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CompensatedPair.html#a9549e24ee72625c94fd6ae7d61ceeee8" title="Set nAtomType value.">CompensatedPair&lt;BarePair, LinkPotential&gt;::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType) 
+<a name="l00258"></a><a class="code" href="classInter_1_1CompensatedPair.html#a9ee7ddf4c6febfaa8fca46a35195f8aa">00258</a>    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CompensatedPair.html#a9ee7ddf4c6febfaa8fca46a35195f8aa" title="Set nAtomType value.">CompensatedPair&lt;BarePair, LinkPotential&gt;::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType) 
 <a name="l00259"></a>00259    {  
 <a name="l00260"></a>00260       pair_.setNAtomType(nAtomType);
 <a name="l00261"></a>00261       link_.setNBondType(1);
@@ -222,7 +222,7 @@
 <a name="l00265"></a>00265 <span class="comment">   * SetEpsilon</span>
 <a name="l00266"></a>00266 <span class="comment">   */</span>
 <a name="l00267"></a>00267    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BarePair, <span class="keyword">class</span> LinkPotential&gt;   
-<a name="l00268"></a><a class="code" href="classInter_1_1CompensatedPair.html#a78afa63dd8620f66db0688bb490ccf96">00268</a>    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CompensatedPair.html#a78afa63dd8620f66db0688bb490ccf96" title="Set LJ interaction energy for a specific pair of Atom types.">CompensatedPair&lt;BarePair, LinkPotential&gt;::setEpsilon</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> epsilon) 
+<a name="l00268"></a><a class="code" href="classInter_1_1CompensatedPair.html#af504970889a3446370426913dbcbf698">00268</a>    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CompensatedPair.html#af504970889a3446370426913dbcbf698" title="Set LJ interaction energy for a specific pair of Atom types.">CompensatedPair&lt;BarePair, LinkPotential&gt;::setEpsilon</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> epsilon) 
 <a name="l00269"></a>00269    {  pair_.setEpsilon(i, j, epsilon); }   
 <a name="l00270"></a>00270 
 <a name="l00271"></a>00271 
@@ -230,7 +230,7 @@
 <a name="l00273"></a>00273 <span class="comment">   * Get maximum of pair cutoff distance, for all atom type pairs.</span>
 <a name="l00274"></a>00274 <span class="comment">   */</span>
 <a name="l00275"></a>00275    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BarePair, <span class="keyword">class</span> LinkPotential&gt;  
-<a name="l00276"></a><a class="code" href="classInter_1_1CompensatedPair.html#a30a3c4cfc7e46e5e8ac052556fd945f0">00276</a>    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1CompensatedPair.html#a30a3c4cfc7e46e5e8ac052556fd945f0" title="Get maximum of pair cutoff distance, for all atom type pairs.">CompensatedPair&lt;BarePair, LinkPotential&gt;::maxPairCutoff</a>()<span class="keyword"> const</span>
+<a name="l00276"></a><a class="code" href="classInter_1_1CompensatedPair.html#adae40cd314a5f8142c904b1a70fcd7f7">00276</a>    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1CompensatedPair.html#adae40cd314a5f8142c904b1a70fcd7f7" title="Get maximum of pair cutoff distance, for all atom type pairs.">CompensatedPair&lt;BarePair, LinkPotential&gt;::maxPairCutoff</a>()<span class="keyword"> const</span>
 <a name="l00277"></a>00277 <span class="keyword">   </span>{ <span class="keywordflow">return</span> maxPairCutoff_; }
 <a name="l00278"></a>00278 
 <a name="l00279"></a>00279 
@@ -238,7 +238,7 @@
 <a name="l00281"></a>00281 <span class="comment">   * Calculate interaction energy for a pair, as function of squared distance.</span>
 <a name="l00282"></a>00282 <span class="comment">   */</span>
 <a name="l00283"></a>00283    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BarePair, <span class="keyword">class</span> LinkPotential&gt;
-<a name="l00284"></a><a class="code" href="classInter_1_1CompensatedPair.html#af9b606369ee42f57deff4b9290d6859b">00284</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1CompensatedPair.html#af9b606369ee42f57deff4b9290d6859b" title="Returns interaction energy for a single pair of particles.">CompensatedPair&lt;BarePair, LinkPotential&gt;::energy</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const </span>
+<a name="l00284"></a><a class="code" href="classInter_1_1CompensatedPair.html#a85e4080072e967b8b3809da2d779991b">00284</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1CompensatedPair.html#a85e4080072e967b8b3809da2d779991b" title="Returns interaction energy for a single pair of particles.">CompensatedPair&lt;BarePair, LinkPotential&gt;::energy</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const </span>
 <a name="l00285"></a>00285 <span class="keyword">   </span>{
 <a name="l00286"></a>00286         <span class="keywordtype">double</span> total = pair_.energy(rsq, i, j);
 <a name="l00287"></a>00287         <span class="keywordflow">if</span> (rsq &lt; maxLinkLengthSq_) {
@@ -253,7 +253,7 @@
 <a name="l00296"></a>00296 <span class="comment">   */</span>
 <a name="l00297"></a>00297    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BarePair, <span class="keyword">class</span> LinkPotential&gt;
 <a name="l00298"></a>00298    <span class="keyword">inline</span> <span class="keywordtype">double</span> 
-<a name="l00299"></a><a class="code" href="classInter_1_1CompensatedPair.html#a086672ab75f824a9e108e103de93828e">00299</a>    <a class="code" href="classInter_1_1CompensatedPair.html#a086672ab75f824a9e108e103de93828e" title="Returns ratio of scalar pair interaction force to pair separation.">CompensatedPair&lt;BarePair, LinkPotential&gt;::forceOverR</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00299"></a><a class="code" href="classInter_1_1CompensatedPair.html#a5f8ef74851ecf6ab41a362c14092150f">00299</a>    <a class="code" href="classInter_1_1CompensatedPair.html#a5f8ef74851ecf6ab41a362c14092150f" title="Returns ratio of scalar pair interaction force to pair separation.">CompensatedPair&lt;BarePair, LinkPotential&gt;::forceOverR</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
 <a name="l00300"></a>00300 <span class="keyword">   </span>{
 <a name="l00301"></a>00301         <span class="keywordtype">double</span> total = pair_.forceOverR(rsq, i, j);
 <a name="l00302"></a>00302         <span class="keywordflow">if</span> (rsq &lt; maxLinkLengthSq_) {
@@ -266,8 +266,8 @@
 <a name="l00309"></a>00309 <span class="comment">   * Modify a parameter, identified by a string.</span>
 <a name="l00310"></a>00310 <span class="comment">   */</span>
 <a name="l00311"></a>00311    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BarePair, <span class="keyword">class</span> LinkPotential&gt;
-<a name="l00312"></a>00312    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CompensatedPair.html#a1d5b9097db680b4eace98f69fc8dec1a" title="Modify a parameter, identified by a string.">CompensatedPair&lt;BarePair, LinkPotential&gt;</a>
-<a name="l00313"></a><a class="code" href="classInter_1_1CompensatedPair.html#a1d5b9097db680b4eace98f69fc8dec1a">00313</a> <a class="code" href="classInter_1_1CompensatedPair.html#a1d5b9097db680b4eace98f69fc8dec1a" title="Modify a parameter, identified by a string.">        ::set</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> value)
+<a name="l00312"></a>00312    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CompensatedPair.html#a642c618c8d24d94d3416a95c3ba8de7e" title="Modify a parameter, identified by a string.">CompensatedPair&lt;BarePair, LinkPotential&gt;</a>
+<a name="l00313"></a><a class="code" href="classInter_1_1CompensatedPair.html#a642c618c8d24d94d3416a95c3ba8de7e">00313</a> <a class="code" href="classInter_1_1CompensatedPair.html#a642c618c8d24d94d3416a95c3ba8de7e" title="Modify a parameter, identified by a string.">        ::set</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> value)
 <a name="l00314"></a>00314    {
 <a name="l00315"></a>00315       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;epsilon&quot;</span>) {
 <a name="l00316"></a>00316          pair_.setEpsilon(i, j, value);
@@ -280,8 +280,8 @@
 <a name="l00323"></a>00323 <span class="comment">   * Get a parameter value, identified by a string.</span>
 <a name="l00324"></a>00324 <span class="comment">   */</span>
 <a name="l00325"></a>00325    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BarePair, <span class="keyword">class</span> LinkPotential&gt;
-<a name="l00326"></a>00326    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1CompensatedPair.html#ab633dae15c30d4918f3d8f937be076dc" title="Get a parameter value, identified by a string.">CompensatedPair&lt;BarePair, LinkPotential&gt;</a>
-<a name="l00327"></a><a class="code" href="classInter_1_1CompensatedPair.html#ab633dae15c30d4918f3d8f937be076dc">00327</a> <a class="code" href="classInter_1_1CompensatedPair.html#ab633dae15c30d4918f3d8f937be076dc" title="Get a parameter value, identified by a string.">          ::get</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00326"></a>00326    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1CompensatedPair.html#a3c791ea914270ae9ff21d09e9c841be5" title="Get a parameter value, identified by a string.">CompensatedPair&lt;BarePair, LinkPotential&gt;</a>
+<a name="l00327"></a><a class="code" href="classInter_1_1CompensatedPair.html#a3c791ea914270ae9ff21d09e9c841be5">00327</a> <a class="code" href="classInter_1_1CompensatedPair.html#a3c791ea914270ae9ff21d09e9c841be5" title="Get a parameter value, identified by a string.">          ::get</a>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
 <a name="l00328"></a>00328 <span class="keyword">   </span>{
 <a name="l00329"></a>00329       <span class="keywordtype">double</span> value;
 <a name="l00330"></a>00330       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;epsilon&quot;</span>) {
@@ -296,14 +296,14 @@
 <a name="l00339"></a>00339 <span class="comment">   * Return the class name.</span>
 <a name="l00340"></a>00340 <span class="comment">   */</span>
 <a name="l00341"></a>00341    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BarePair, <span class="keyword">class</span> LinkPotential&gt;
-<a name="l00342"></a><a class="code" href="classInter_1_1CompensatedPair.html#a13c07285e858b2c232919fd57b635e1b">00342</a>    std::string <a class="code" href="classInter_1_1CompensatedPair.html#a13c07285e858b2c232919fd57b635e1b" title="Return name of instantiated class.">CompensatedPair&lt;BarePair, LinkPotential&gt;::className</a>()<span class="keyword"> const</span>
+<a name="l00342"></a><a class="code" href="classInter_1_1CompensatedPair.html#ad86dc00161020ba4ab52d14bd68e9c21">00342</a>    std::string <a class="code" href="classInter_1_1CompensatedPair.html#ad86dc00161020ba4ab52d14bd68e9c21" title="Return name of instantiated class.">CompensatedPair&lt;BarePair, LinkPotential&gt;::className</a>()<span class="keyword"> const</span>
 <a name="l00343"></a>00343 <span class="keyword">   </span>{  <span class="keywordflow">return</span> className_; }
 <a name="l00344"></a>00344 
 <a name="l00345"></a>00345 }
 <a name="l00346"></a>00346 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Bool Class Reference</title>
+<title>Simpatico: Util::Bool Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,14 +49,14 @@
   <div class="summary">
 <a href="#friends">Friends</a>  </div>
   <div class="headertitle">
-<h1>Bool Class Reference<div class="ingroups"><a class="el" href="group__Format__Module.html">Output Format</a></div></h1>  </div>
+<h1>Util::Bool Class Reference<div class="ingroups"><a class="el" href="group__Format__Module.html">Output Format</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Bool" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Wrapper for an bool value, for formatted ostream output. </p>
-<p>An <a class="el" href="classUtil_1_1Bool.html" title="Wrapper for an bool value, for formatted ostream output.">Bool</a> object has a bool value, and a minimum output field width. The &lt;&lt; operator for a <a class="el" href="classUtil_1_1Bool.html" title="Wrapper for an bool value, for formatted ostream output.">Bool</a> uses the specified width. The value and width may both be specified as parameters to a constructor. If the width is not specified as a constructor parameter, it is set within the constructor to the default <a class="el" href="classUtil_1_1Format.html#a6174575d1d0c312a822272e46655c935" title="Return the default output field width.">Format::defaultWidth()</a>.</p>
+<p>An <a class="el" href="classUtil_1_1Bool.html" title="Wrapper for an bool value, for formatted ostream output.">Bool</a> object has a bool value, and a minimum output field width. The &lt;&lt; operator for a <a class="el" href="classUtil_1_1Bool.html" title="Wrapper for an bool value, for formatted ostream output.">Bool</a> uses the specified width. The value and width may both be specified as parameters to a constructor. If the width is not specified as a constructor parameter, it is set within the constructor to the default <a class="el" href="classUtil_1_1Format.html#ac6cf6620e160c66757429bec0fb4dd23" title="Return the default output field width.">Format::defaultWidth()</a>.</p>
 <p>An <a class="el" href="classUtil_1_1Bool.html" title="Wrapper for an bool value, for formatted ostream output.">Bool</a> object may be passed to an ostream as a temporary object. For example, the expression: </p>
-<div class="fragment"><pre class="fragment">    std::cout &lt;&lt; <a class="code" href="classUtil_1_1Bool.html#aaac4d115d64f95feac3e72793e8bc7c5" title="Default constructor.">Bool</a>(<span class="keyword">true</span>) &lt;&lt; <a class="code" href="classUtil_1_1Bool.html#aaac4d115d64f95feac3e72793e8bc7c5" title="Default constructor.">Bool</a>(<span class="keyword">false</span>, 10) &lt;&lt; std::endl;
+<div class="fragment"><pre class="fragment">    std::cout &lt;&lt; <a class="code" href="classUtil_1_1Bool.html#ac84f5b988db321d610df40b1f43e7534" title="Default constructor.">Bool</a>(<span class="keyword">true</span>) &lt;&lt; <a class="code" href="classUtil_1_1Bool.html#ac84f5b988db321d610df40b1f43e7534" title="Default constructor.">Bool</a>(<span class="keyword">false</span>, 10) &lt;&lt; std::endl;
 </pre></div><p> outputs the value true using the default width, followed by the false value in a field of minimum width 10. </p>
 
 <p>Definition at line <a class="el" href="Bool_8h_source.html#l00035">35</a> of file <a class="el" href="Bool_8h_source.html">Bool.h</a>.</p>
@@ -68,21 +68,21 @@
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Bool.html#aaac4d115d64f95feac3e72793e8bc7c5">Bool</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#aaac4d115d64f95feac3e72793e8bc7c5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Bool.html#a2e3de9231a1de18577712222375f1e00">Bool</a> (bool value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value only.  <a href="#a2e3de9231a1de18577712222375f1e00"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Bool.html#a7f0522b503817a9cce99084bc88421e3">Bool</a> (bool value, int width)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value and width.  <a href="#a7f0522b503817a9cce99084bc88421e3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Bool.html#ac84f5b988db321d610df40b1f43e7534">Bool</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ac84f5b988db321d610df40b1f43e7534"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Bool.html#a8b7bbd9365e8d53ed82355cb8a7e4ce6">Bool</a> (bool value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value only.  <a href="#a8b7bbd9365e8d53ed82355cb8a7e4ce6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Bool.html#a351204692c1738f6a4710da6d33c1216">Bool</a> (bool value, int width)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value and width.  <a href="#a351204692c1738f6a4710da6d33c1216"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Setters</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae803b3348fa7076308d852bbdeea0d74"></a><!-- doxytag: member="Util::Bool::setValue" ref="ae803b3348fa7076308d852bbdeea0d74" args="(bool value)" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45036118d51bfd5133e927c2aa2b37c4"></a><!-- doxytag: member="Util::Bool::setValue" ref="a45036118d51bfd5133e927c2aa2b37c4" args="(bool value)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setValue</b> (bool value)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b4c8bccc530aa0a9b0139e04913af32"></a><!-- doxytag: member="Util::Bool::setWidth" ref="a8b4c8bccc530aa0a9b0139e04913af32" args="(int width)" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad8aaf84a133e29ef6fd1742ab24457e9"></a><!-- doxytag: member="Util::Bool::setWidth" ref="ad8aaf84a133e29ef6fd1742ab24457e9" args="(int width)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setWidth</b> (int width)</td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a48eec45adc8a956870efcfaf947320b3"></a><!-- doxytag: member="Util::Bool::value" ref="a48eec45adc8a956870efcfaf947320b3" args="()" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acdea734515f53663cffb88b5f9e93d39"></a><!-- doxytag: member="Util::Bool::value" ref="acdea734515f53663cffb88b5f9e93d39" args="()" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>value</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3eeed61a3424d2f907c8a1e420fddf6d"></a><!-- doxytag: member="Util::Bool::width" ref="a3eeed61a3424d2f907c8a1e420fddf6d" args="()" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4c8a4dffbc66637fb858bc9b4b493372"></a><!-- doxytag: member="Util::Bool::width" ref="a4c8a4dffbc66637fb858bc9b4b493372" args="()" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>width</b> ()</td></tr>
 <tr><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
@@ -92,12 +92,12 @@ Friends</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output stream inserter for an <a class="el" href="classUtil_1_1Bool.html" title="Wrapper for an bool value, for formatted ostream output.">Bool</a> object.  <a href="#ab67bd5300be0ede3737458cf31821b4f"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aaac4d115d64f95feac3e72793e8bc7c5"></a><!-- doxytag: member="Util::Bool::Bool" ref="aaac4d115d64f95feac3e72793e8bc7c5" args="()" -->
+<a class="anchor" id="ac84f5b988db321d610df40b1f43e7534"></a><!-- doxytag: member="Util::Bool::Bool" ref="ac84f5b988db321d610df40b1f43e7534" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">home david code simpatico src util format <a class="el" href="classUtil_1_1Bool.html">Bool</a> cpp home david code simpatico src util format <a class="el" href="classUtil_1_1Bool.html">Bool</a> cpp <a class="el" href="classUtil_1_1Bool.html">Bool</a> </td>
+          <td class="memname">home david code simpatico src util format <a class="el" href="classUtil_1_1Bool.html">Bool</a> cpp home david code simpatico src util format <a class="el" href="classUtil_1_1Bool.html">Bool</a> cpp Util::Bool::Bool </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -112,12 +112,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2e3de9231a1de18577712222375f1e00"></a><!-- doxytag: member="Util::Bool::Bool" ref="a2e3de9231a1de18577712222375f1e00" args="(bool value)" -->
+<a class="anchor" id="a8b7bbd9365e8d53ed82355cb8a7e4ce6"></a><!-- doxytag: member="Util::Bool::Bool" ref="a8b7bbd9365e8d53ed82355cb8a7e4ce6" args="(bool value)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Bool.html">Bool</a> </td>
+          <td class="memname">Util::Bool::Bool </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -133,12 +133,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7f0522b503817a9cce99084bc88421e3"></a><!-- doxytag: member="Util::Bool::Bool" ref="a7f0522b503817a9cce99084bc88421e3" args="(bool value, int width)" -->
+<a class="anchor" id="a351204692c1738f6a4710da6d33c1216"></a><!-- doxytag: member="Util::Bool::Bool" ref="a351204692c1738f6a4710da6d33c1216" args="(bool value, int width)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Bool.html">Bool</a> </td>
+          <td class="memname">Util::Bool::Bool </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>value</em>, </td>
@@ -248,7 +248,7 @@ Friends</h2></td></tr>
 <li><a class="el" href="Bool_8cpp_source.html">Bool.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

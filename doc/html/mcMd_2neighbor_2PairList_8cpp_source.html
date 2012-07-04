@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -73,8 +73,8 @@
 <a name="l00022"></a>00022    <span class="comment">/*</span>
 <a name="l00023"></a>00023 <span class="comment">   * Default constructor.</span>
 <a name="l00024"></a>00024 <span class="comment">   */</span>
-<a name="l00025"></a>00025    <a class="code" href="classMcMd_1_1PairList.html#a02c2b3e1687d7a0474693ac6ea10f2ea" title="Default constructor.">PairList::PairList</a>()
-<a name="l00026"></a><a class="code" href="classMcMd_1_1PairList.html#a02c2b3e1687d7a0474693ac6ea10f2ea">00026</a>     :
+<a name="l00025"></a>00025    <a class="code" href="classMcMd_1_1PairList.html#a88e4c9f435a9b3d3cadd460b383177a2" title="Default constructor.">PairList::PairList</a>()
+<a name="l00026"></a><a class="code" href="classMcMd_1_1PairList.html#a88e4c9f435a9b3d3cadd460b383177a2">00026</a>     :
 <a name="l00027"></a>00027       atom1Ptrs_(),
 <a name="l00028"></a>00028       atom2Ptrs_(),
 <a name="l00029"></a>00029       first_(),
@@ -95,14 +95,14 @@
 <a name="l00044"></a>00044    <span class="comment">/*</span>
 <a name="l00045"></a>00045 <span class="comment">   * Destructor.</span>
 <a name="l00046"></a>00046 <span class="comment">   */</span>
-<a name="l00047"></a>00047    <a class="code" href="classMcMd_1_1PairList.html#a5c95764dfef2020dc28d75e6f4687c2e" title="Destructor.">PairList::~PairList</a>() 
-<a name="l00048"></a><a class="code" href="classMcMd_1_1PairList.html#a5c95764dfef2020dc28d75e6f4687c2e">00048</a>    {}
+<a name="l00047"></a>00047    <a class="code" href="classMcMd_1_1PairList.html#adb0e22dc2a0511d24e1e4fac420a83e8" title="Destructor.">PairList::~PairList</a>() 
+<a name="l00048"></a><a class="code" href="classMcMd_1_1PairList.html#adb0e22dc2a0511d24e1e4fac420a83e8">00048</a>    {}
 <a name="l00049"></a>00049    
 <a name="l00050"></a>00050    <span class="comment">/*</span>
 <a name="l00051"></a>00051 <span class="comment">   * Read atomCapacity and pairCapacity from file.</span>
 <a name="l00052"></a>00052 <span class="comment">   */</span>
-<a name="l00053"></a>00053    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#ab5421d3c9175985c9acbf723e5392075" title="Read atomCapacity and pairCapacity (maximum numbers of atoms and pairs).">PairList::readParam</a>(std::istream&amp; in) 
-<a name="l00054"></a><a class="code" href="classMcMd_1_1PairList.html#ab5421d3c9175985c9acbf723e5392075">00054</a>    {
+<a name="l00053"></a>00053    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#a1f47b2923c42807c0f1c8b3d7ed25700" title="Read atomCapacity and pairCapacity (maximum numbers of atoms and pairs).">PairList::readParam</a>(std::istream&amp; in) 
+<a name="l00054"></a><a class="code" href="classMcMd_1_1PairList.html#a1f47b2923c42807c0f1c8b3d7ed25700">00054</a>    {
 <a name="l00055"></a>00055       readBegin(in, <span class="stringliteral">&quot;PairList&quot;</span>);
 <a name="l00056"></a>00056       read&lt;int&gt;(in, <span class="stringliteral">&quot;atomCapacity&quot;</span>, atomCapacity_);
 <a name="l00057"></a>00057       read&lt;int&gt;(in, <span class="stringliteral">&quot;pairCapacity&quot;</span>, pairCapacity_);
@@ -113,8 +113,8 @@
 <a name="l00062"></a>00062    <span class="comment">/*</span>
 <a name="l00063"></a>00063 <span class="comment">   * Allocate CellList and PairList arrays, initialize to empty state.</span>
 <a name="l00064"></a>00064 <span class="comment">   */</span>
-<a name="l00065"></a>00065    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#a1b8d1f90b2e2e33b6634397e2779014f" title="Allocate memory and initialize.">PairList::allocate</a>(<span class="keywordtype">int</span> atomIdEnd, <span class="keyword">const</span> Boundary&amp; boundary, 
-<a name="l00066"></a><a class="code" href="classMcMd_1_1PairList.html#a1b8d1f90b2e2e33b6634397e2779014f">00066</a>                                           <span class="keywordtype">double</span> potentialCutoff)
+<a name="l00065"></a>00065    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#aa6103aed6c2d94a32e4e93aa31fd26f8" title="Allocate memory and initialize.">PairList::allocate</a>(<span class="keywordtype">int</span> atomIdEnd, <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary, 
+<a name="l00066"></a><a class="code" href="classMcMd_1_1PairList.html#aa6103aed6c2d94a32e4e93aa31fd26f8">00066</a>                                           <span class="keywordtype">double</span> potentialCutoff)
 <a name="l00067"></a>00067    {
 <a name="l00068"></a>00068       <span class="keywordtype">int</span> i;
 <a name="l00069"></a>00069 
@@ -158,14 +158,14 @@
 <a name="l00107"></a>00107    <span class="comment">/*</span>
 <a name="l00108"></a>00108 <span class="comment">   * Make the grid of cells for the internal CellList.</span>
 <a name="l00109"></a>00109 <span class="comment">   */</span>
-<a name="l00110"></a>00110    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#adbab3389f486033372e8158e8466deb2" title="Make the grid of cells for the internal Cell List.">PairList::makeGrid</a>(<span class="keyword">const</span> Boundary&amp; boundary)
-<a name="l00111"></a><a class="code" href="classMcMd_1_1PairList.html#adbab3389f486033372e8158e8466deb2">00111</a>    {  cellList_.makeGrid(boundary, cutoff_); }
+<a name="l00110"></a>00110    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#a9013f497b7170a04187044e005268ae2" title="Make the grid of cells for the internal Cell List.">PairList::makeGrid</a>(<span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary)
+<a name="l00111"></a><a class="code" href="classMcMd_1_1PairList.html#a9013f497b7170a04187044e005268ae2">00111</a>    {  cellList_.makeGrid(boundary, cutoff_); }
 <a name="l00112"></a>00112  
 <a name="l00113"></a>00113    <span class="comment">/*</span>
 <a name="l00114"></a>00114 <span class="comment">   * Clear the CellList and PairList.</span>
 <a name="l00115"></a>00115 <span class="comment">   */</span>
-<a name="l00116"></a>00116    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear the PairList and CellList.">PairList::clear</a>()
-<a name="l00117"></a><a class="code" href="classMcMd_1_1PairList.html#ac8bb3912a3ce86b15842e79d0b421204">00117</a>    { 
+<a name="l00116"></a>00116    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#ac5cf084e4e2a822436b2b4d4af911c18" title="Clear the PairList and CellList.">PairList::clear</a>()
+<a name="l00117"></a><a class="code" href="classMcMd_1_1PairList.html#ac5cf084e4e2a822436b2b4d4af911c18">00117</a>    { 
 <a name="l00118"></a>00118       cellList_.clear(); 
 <a name="l00119"></a>00119       nAtom1_   = 0; 
 <a name="l00120"></a>00120       nAtom2_   = 0; 
@@ -177,8 +177,8 @@
 <a name="l00126"></a>00126    <span class="comment">/*</span>
 <a name="l00127"></a>00127 <span class="comment">   * Build the PairList, i.e., populate it with atom pairs.</span>
 <a name="l00128"></a>00128 <span class="comment">   */</span>
-<a name="l00129"></a>00129    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#a8660cc54257625a0d45fb0c914b0af57" title="Use a complete CellList to build a new PairList.">PairList::build</a>(<span class="keyword">const</span> Boundary&amp; boundary)
-<a name="l00130"></a><a class="code" href="classMcMd_1_1PairList.html#a8660cc54257625a0d45fb0c914b0af57">00130</a>    {
+<a name="l00129"></a>00129    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#a8ad431e0128fdf1d9d8a04b637015185" title="Use a complete CellList to build a new PairList.">PairList::build</a>(<span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary)
+<a name="l00130"></a><a class="code" href="classMcMd_1_1PairList.html#a8ad431e0128fdf1d9d8a04b637015185">00130</a>    {
 <a name="l00131"></a>00131       <a class="code" href="classUtil_1_1FSArray.html">CellList::NeighborArray</a> cellNeighbor;
 <a name="l00132"></a>00132       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  iPos, jPos;
 <a name="l00133"></a>00133       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>   *iAtomPtr, *jAtomPtr;
@@ -208,13 +208,13 @@
 <a name="l00157"></a>00157          <span class="comment">// Elements 0,..., nCellAtom - 1 contain Ids for atoms in cell ic.</span>
 <a name="l00158"></a>00158          <span class="comment">// Elements nCellAtom,..., nCellNeighbor-1 are from neighboring cells.</span>
 <a name="l00159"></a>00159          cellList_.getCellNeighbors(ic, cellNeighbor, nCellAtom);
-<a name="l00160"></a>00160          nCellNeighbor = cellNeighbor.<a class="code" href="classUtil_1_1FSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">size</a>();
+<a name="l00160"></a>00160          nCellNeighbor = cellNeighbor.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
 <a name="l00161"></a>00161       
 <a name="l00162"></a>00162          <span class="comment">// Loop over atoms in cell ic</span>
 <a name="l00163"></a>00163          <span class="keywordflow">for</span> (ip = 0; ip &lt; nCellAtom; ++ip) {
 <a name="l00164"></a>00164             iAtomPtr = cellNeighbor[ip]; 
-<a name="l00165"></a>00165             iPos     = iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00166"></a>00166             iAtomId  = iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00165"></a>00165             iPos     = iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00166"></a>00166             iAtomId  = iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00167"></a>00167             ++nAtom_;
 <a name="l00168"></a>00168             <span class="keywordflow">if</span> (nAtom_ &gt; atomCapacity_) {
 <a name="l00169"></a>00169                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Overflow: nAtom_ &gt; atomCapacity_ in PairList&quot;</span>);
@@ -226,14 +226,14 @@
 <a name="l00175"></a>00175             <span class="comment">// Loop over atoms in all neighboring cells, including cell ic.</span>
 <a name="l00176"></a>00176             <span class="keywordflow">for</span> (jp = 0; jp &lt; nCellNeighbor; ++jp) {
 <a name="l00177"></a>00177                jAtomPtr = cellNeighbor[jp]; 
-<a name="l00178"></a>00178                jPos     = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00179"></a>00179                jAtomId  = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00178"></a>00178                jPos     = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00179"></a>00179                jAtomId  = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00180"></a>00180         
 <a name="l00181"></a>00181                <span class="comment">// Avoid double counting: only count pairs with jAtomId &gt; iAtomId</span>
 <a name="l00182"></a>00182                <span class="keywordflow">if</span> ( jAtomId &gt; iAtomId ) {
 <a name="l00183"></a>00183      
 <a name="l00184"></a>00184                   <span class="comment">// Exclude bonded pairs</span>
-<a name="l00185"></a>00185                   <span class="keywordflow">if</span> (!iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classMcMd_1_1Mask.html#a250dbffb1fa61c07f232c26648f0ec2d" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(*jAtomPtr))  {
+<a name="l00185"></a>00185                   <span class="keywordflow">if</span> (!iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af02003b1de6abffcf7ae7cd2187ff22c" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classMcMd_1_1Mask.html#aa2b748da6579dc033f5da1db08988f5b" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(*jAtomPtr))  {
 <a name="l00186"></a>00186    
 <a name="l00187"></a>00187                      <span class="comment">// Calculate distance between atoms i and j</span>
 <a name="l00188"></a>00188                      dRSq = boundary.distanceSq(iPos, jPos);
@@ -299,8 +299,8 @@
 <a name="l00248"></a>00248    <span class="comment">/*</span>
 <a name="l00249"></a>00249 <span class="comment">   * Initialize a pair iterator.</span>
 <a name="l00250"></a>00250 <span class="comment">   */</span>
-<a name="l00251"></a>00251    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#a384894ea9d3bce2679601b80e7c7de82" title="Initialize a PairIterator.">PairList::begin</a>(<a class="code" href="classMcMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a>&amp; iterator)<span class="keyword"> const</span>
-<a name="l00252"></a><a class="code" href="classMcMd_1_1PairList.html#a384894ea9d3bce2679601b80e7c7de82">00252</a> <span class="keyword">   </span>{
+<a name="l00251"></a>00251    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#ad5ab8e5f2fe5477069970311f629b612" title="Initialize a PairIterator.">PairList::begin</a>(<a class="code" href="classMcMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a>&amp; iterator)<span class="keyword"> const</span>
+<a name="l00252"></a><a class="code" href="classMcMd_1_1PairList.html#ad5ab8e5f2fe5477069970311f629b612">00252</a> <span class="keyword">   </span>{
 <a name="l00253"></a>00253       iterator.atom1Ptrs_ = &amp;atom1Ptrs_[0];
 <a name="l00254"></a>00254       iterator.atom2Ptrs_ = &amp;atom2Ptrs_[0];
 <a name="l00255"></a>00255       iterator.first_     = &amp;first_[0];
@@ -315,8 +315,8 @@
 <a name="l00264"></a>00264 <span class="comment">   * Return false if any atom has moved a distance greater than skin/2,</span>
 <a name="l00265"></a>00265 <span class="comment">   * or if the PairList has never been built. Return true otherwise.</span>
 <a name="l00266"></a>00266 <span class="comment">   */</span>
-<a name="l00267"></a>00267    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1PairList.html#aae14faf749cac465d8adb7d4051bbf61" title="Returns true if PairList is current, false otherwise.">PairList::isCurrent</a>(<span class="keyword">const</span> Boundary&amp; boundary)<span class="keyword"> const</span>
-<a name="l00268"></a><a class="code" href="classMcMd_1_1PairList.html#aae14faf749cac465d8adb7d4051bbf61">00268</a> <span class="keyword">   </span>{
+<a name="l00267"></a>00267    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1PairList.html#a0387e6a41348c3c77f5bbf50926d711c" title="Returns true if PairList is current, false otherwise.">PairList::isCurrent</a>(<span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary)<span class="keyword"> const</span>
+<a name="l00268"></a><a class="code" href="classMcMd_1_1PairList.html#a0387e6a41348c3c77f5bbf50926d711c">00268</a> <span class="keyword">   </span>{
 <a name="l00269"></a>00269       <span class="comment">// Precondition</span>
 <a name="l00270"></a>00270       assert(isAllocated());
 <a name="l00271"></a>00271  
@@ -352,8 +352,8 @@
 <a name="l00301"></a>00301    <span class="comment">/*</span>
 <a name="l00302"></a>00302 <span class="comment">   * Clear all statistics.</span>
 <a name="l00303"></a>00303 <span class="comment">   */</span>
-<a name="l00304"></a>00304    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#a3ec1931e5ea88671ed6be9885968b327" title="Clear statistical accumulators (maxNAtom, maxNPair, buildCounter).">PairList::clearStatistics</a>()
-<a name="l00305"></a><a class="code" href="classMcMd_1_1PairList.html#a3ec1931e5ea88671ed6be9885968b327">00305</a>    {
+<a name="l00304"></a>00304    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#aad97252e20afb6fafb081552943459d3" title="Clear statistical accumulators (maxNAtom, maxNPair, buildCounter).">PairList::clearStatistics</a>()
+<a name="l00305"></a><a class="code" href="classMcMd_1_1PairList.html#aad97252e20afb6fafb081552943459d3">00305</a>    {
 <a name="l00306"></a>00306       maxNAtom_     = 0;
 <a name="l00307"></a>00307       maxNAtom2_    = 0;
 <a name="l00308"></a>00308       buildCounter_ = 0;
@@ -363,8 +363,8 @@
 <a name="l00312"></a>00312    <span class="comment">/*</span>
 <a name="l00313"></a>00313 <span class="comment">   * Return true if valid, or throw Exception.</span>
 <a name="l00314"></a>00314 <span class="comment">   */</span>
-<a name="l00315"></a>00315    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1PairList.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if valid, or throw Exception.">PairList::isValid</a>()<span class="keyword"> const</span>
-<a name="l00316"></a><a class="code" href="classMcMd_1_1PairList.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">00316</a> <span class="keyword">   </span>{
+<a name="l00315"></a>00315    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1PairList.html#aa9f68b3bf705ef00e4bc6d120d199238" title="Return true if valid, or throw Exception.">PairList::isValid</a>()<span class="keyword"> const</span>
+<a name="l00316"></a><a class="code" href="classMcMd_1_1PairList.html#aa9f68b3bf705ef00e4bc6d120d199238">00316</a> <span class="keyword">   </span>{
 <a name="l00317"></a>00317       <span class="keywordflow">if</span> (isAllocated()) {
 <a name="l00318"></a>00318 
 <a name="l00319"></a>00319          <span class="comment">// Check for null pointers to allocated arrays</span>
@@ -402,7 +402,7 @@
 <a name="l00351"></a>00351 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

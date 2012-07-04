@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -72,17 +72,17 @@
 <a name="l00026"></a>00026    
 <a name="l00027"></a>00027    <span class="keyword">public</span>:
 <a name="l00028"></a>00028    
-<a name="l00030"></a>00030       <a class="code" href="classUtil_1_1CArrayParam.html#ace17acdb7e116ae991d57ab9c31445dc" title="Constructor.">CArrayParam</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classUtil_1_1Parameter.html#aced367aa08f91f41382c80d41fad7cac" title="Return label string.">label</a>, Type *value, <span class="keywordtype">int</span> n=0);
+<a name="l00030"></a>00030       <a class="code" href="classUtil_1_1CArrayParam.html#a5f1b31bda93c54012acfe59a0266cabb" title="Constructor.">CArrayParam</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classUtil_1_1Parameter.html#af669796f0670a41a17fb7695b0036000" title="Return label string.">label</a>, Type *value, <span class="keywordtype">int</span> n=0);
 <a name="l00031"></a>00031  
-<a name="l00037"></a>00037       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1CArrayParam.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameter from stream.">readParam</a>(std::istream &amp;in);
+<a name="l00037"></a>00037       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1CArrayParam.html#a3a0eb1d46433c17176d1a47050ff8a36" title="Read parameter from stream.">readParam</a>(std::istream &amp;in);
 <a name="l00038"></a>00038  
-<a name="l00044"></a>00044       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1CArrayParam.html#a3919e7db0ce53e1ead2be4016d4d09ac" title="Write parameter to stream.">writeParam</a>(std::ostream &amp;out);
+<a name="l00044"></a>00044       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1CArrayParam.html#ae632242e2fd3dd5ab357e80c71e58296" title="Write parameter to stream.">writeParam</a>(std::ostream &amp;out);
 <a name="l00045"></a>00045  
 <a name="l00046"></a>00046    <span class="keyword">protected</span>:
 <a name="l00047"></a>00047    
-<a name="l00049"></a><a class="code" href="classUtil_1_1CArrayParam.html#ab482f887e587571bc507d216f4cf1dd4">00049</a>       Type* <a class="code" href="classUtil_1_1CArrayParam.html#ab482f887e587571bc507d216f4cf1dd4" title="Pointer to value.">value_</a>;
+<a name="l00049"></a><a class="code" href="classUtil_1_1CArrayParam.html#a0f327af8f5458d8a98ccdb8e2ce7adcb">00049</a>       Type* <a class="code" href="classUtil_1_1CArrayParam.html#a0f327af8f5458d8a98ccdb8e2ce7adcb" title="Pointer to value.">value_</a>;
 <a name="l00050"></a>00050    
-<a name="l00052"></a><a class="code" href="classUtil_1_1CArrayParam.html#ae68b32adf588e61ef5472f52a16098d3">00052</a>       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1CArrayParam.html#ae68b32adf588e61ef5472f52a16098d3" title="Array dimension.">n_</a>;    
+<a name="l00052"></a><a class="code" href="classUtil_1_1CArrayParam.html#a6dcb03017e8bc998176aeeef85314fa1">00052</a>       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1CArrayParam.html#a6dcb03017e8bc998176aeeef85314fa1" title="Array dimension.">n_</a>;    
 <a name="l00053"></a>00053    
 <a name="l00054"></a>00054    };
 <a name="l00055"></a>00055 
@@ -90,7 +90,7 @@
 <a name="l00057"></a>00057 <span class="comment">   * CArrayParam&lt;Type&gt; constructor.</span>
 <a name="l00058"></a>00058 <span class="comment">   */</span>
 <a name="l00059"></a>00059    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Type&gt;
-<a name="l00060"></a><a class="code" href="classUtil_1_1CArrayParam.html#ace17acdb7e116ae991d57ab9c31445dc">00060</a>    <a class="code" href="classUtil_1_1CArrayParam.html#ace17acdb7e116ae991d57ab9c31445dc" title="Constructor.">CArrayParam&lt;Type&gt;::CArrayParam</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type* value, <span class="keywordtype">int</span> n)
+<a name="l00060"></a><a class="code" href="classUtil_1_1CArrayParam.html#a5f1b31bda93c54012acfe59a0266cabb">00060</a>    <a class="code" href="classUtil_1_1CArrayParam.html#a5f1b31bda93c54012acfe59a0266cabb" title="Constructor.">CArrayParam&lt;Type&gt;::CArrayParam</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, Type* value, <span class="keywordtype">int</span> n)
 <a name="l00061"></a>00061     : <a class="code" href="classUtil_1_1Parameter.html" title="A single variable in a parameter file.">Parameter</a>(label),
 <a name="l00062"></a>00062       value_(value),
 <a name="l00063"></a>00063       n_(n)
@@ -100,7 +100,7 @@
 <a name="l00067"></a>00067 <span class="comment">   * Read a C array parameter.</span>
 <a name="l00068"></a>00068 <span class="comment">   */</span>
 <a name="l00069"></a>00069    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Type&gt;
-<a name="l00070"></a><a class="code" href="classUtil_1_1CArrayParam.html#ab5421d3c9175985c9acbf723e5392075">00070</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1CArrayParam.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameter from stream.">CArrayParam&lt;Type&gt;::readParam</a>(std::istream &amp;in)
+<a name="l00070"></a><a class="code" href="classUtil_1_1CArrayParam.html#a3a0eb1d46433c17176d1a47050ff8a36">00070</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1CArrayParam.html#a3a0eb1d46433c17176d1a47050ff8a36" title="Read parameter from stream.">CArrayParam&lt;Type&gt;::readParam</a>(std::istream &amp;in)
 <a name="l00071"></a>00071    {
 <a name="l00072"></a>00072       <span class="keywordflow">if</span> (isParamIoProcessor()) {
 <a name="l00073"></a>00073          in &gt;&gt; label_;
@@ -108,8 +108,8 @@
 <a name="l00075"></a>00075          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; n_; ++i) {
 <a name="l00076"></a>00076             in &gt;&gt; value_[i];
 <a name="l00077"></a>00077          }
-<a name="l00078"></a>00078          <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#a24de2d9d8a57a07e1dd6fdc84779699c" title="Get echo parameter.">ParamComponent::echo</a>()) {
-<a name="l00079"></a>00079             writeParam(<a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>());
+<a name="l00078"></a>00078          <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2" title="Get echo parameter.">ParamComponent::echo</a>()) {
+<a name="l00079"></a>00079             writeParam(<a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>());
 <a name="l00080"></a>00080          }
 <a name="l00081"></a>00081       }
 <a name="l00082"></a>00082 <span class="preprocessor">      #ifdef UTIL_MPI</span>
@@ -122,7 +122,7 @@
 <a name="l00089"></a>00089 <span class="comment">   * Write a C array</span>
 <a name="l00090"></a>00090 <span class="comment">   */</span>
 <a name="l00091"></a>00091    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Type&gt;
-<a name="l00092"></a><a class="code" href="classUtil_1_1CArrayParam.html#a3919e7db0ce53e1ead2be4016d4d09ac">00092</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1CArrayParam.html#a3919e7db0ce53e1ead2be4016d4d09ac" title="Write parameter to stream.">CArrayParam&lt;Type&gt;::writeParam</a>(std::ostream &amp;out) 
+<a name="l00092"></a><a class="code" href="classUtil_1_1CArrayParam.html#ae632242e2fd3dd5ab357e80c71e58296">00092</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1CArrayParam.html#ae632242e2fd3dd5ab357e80c71e58296" title="Write parameter to stream.">CArrayParam&lt;Type&gt;::writeParam</a>(std::ostream &amp;out) 
 <a name="l00093"></a>00093    {
 <a name="l00094"></a>00094 
 <a name="l00095"></a>00095 <span class="preprocessor">      #if 0</span>
@@ -133,8 +133,8 @@
 <a name="l00100"></a>00100       <span class="comment">// Output values</span>
 <a name="l00101"></a>00101       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; n_; ++i) {
 <a name="l00102"></a>00102          out.setf(std::ios::scientific);
-<a name="l00103"></a>00103          out.width(<a class="code" href="classUtil_1_1Parameter.html#a108dc03480fe2b122394ec55016bd42c" title="Width of data field for a scalar variable (numerical or string).">Parameter::Width</a>);
-<a name="l00104"></a>00104          out.precision(<a class="code" href="classUtil_1_1Parameter.html#a54f4f0d327a1ddbc574dc9bf5a44a66c" title="Precision for io of floating point data field.">Parameter::Precision</a>);
+<a name="l00103"></a>00103          out.width(<a class="code" href="classUtil_1_1Parameter.html#af4db8fd5ca850496e8e599bae93aa2f2" title="Width of data field for a scalar variable (numerical or string).">Parameter::Width</a>);
+<a name="l00104"></a>00104          out.precision(<a class="code" href="classUtil_1_1Parameter.html#a5cd638eb2b87aef9ab7c755c6993d721" title="Precision for io of floating point data field.">Parameter::Precision</a>);
 <a name="l00105"></a>00105          out &lt;&lt; value_[i];
 <a name="l00106"></a>00106       }
 <a name="l00107"></a>00107       out &lt;&lt; std::endl;
@@ -148,8 +148,8 @@
 <a name="l00115"></a>00115             out &lt;&lt; indent() &lt;&lt; space;
 <a name="l00116"></a>00116          }
 <a name="l00117"></a>00117          out &lt;&lt; std::right &lt;&lt; std::scientific 
-<a name="l00118"></a>00118              &lt;&lt; std::setprecision(<a class="code" href="classUtil_1_1Parameter.html#a54f4f0d327a1ddbc574dc9bf5a44a66c" title="Precision for io of floating point data field.">Parameter::Precision</a>) 
-<a name="l00119"></a>00119              &lt;&lt; std::setw(<a class="code" href="classUtil_1_1Parameter.html#a108dc03480fe2b122394ec55016bd42c" title="Width of data field for a scalar variable (numerical or string).">Parameter::Width</a>)
+<a name="l00118"></a>00118              &lt;&lt; std::setprecision(<a class="code" href="classUtil_1_1Parameter.html#a5cd638eb2b87aef9ab7c755c6993d721" title="Precision for io of floating point data field.">Parameter::Precision</a>) 
+<a name="l00119"></a>00119              &lt;&lt; std::setw(<a class="code" href="classUtil_1_1Parameter.html#af4db8fd5ca850496e8e599bae93aa2f2" title="Width of data field for a scalar variable (numerical or string).">Parameter::Width</a>)
 <a name="l00120"></a>00120              &lt;&lt; value_[i] 
 <a name="l00121"></a>00121              &lt;&lt; std::endl;
 <a name="l00122"></a>00122       }
@@ -160,7 +160,7 @@
 <a name="l00127"></a>00127 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: WriteConfig Class Reference</title>
+<title>Simpatico: DdMd::WriteConfig Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,25 +49,25 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>WriteConfig Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>DdMd::WriteConfig Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::WriteConfig" --><!-- doxytag: inherits="DdMd::Diagnostic" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Periodically dump simulation configuration to a new file. </p>
-<p>This class uses the <a class="el" href="classDdMd_1_1Simulation.html#a08dbe976cc87f72e3a1ca9775b0d494d" title="Write configuration file.">Simulation::writeConfig()</a> method to write the entire simulation configuration periodically, at interval read from file. Names of configuration dump files are constructed by concatenating the <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> outputPrefix, a dumpPrefix, the literal string "config.", and an integer that is incremented after each dump. The dump prefix is a string that is read by the <a class="el" href="classUtil_1_1ParamComposite.html#a725f62ddba13ef45cb42e597d4d8b402" title="Add a new Param &lt; Type &gt; object, and read its value.">read()</a> method of this class. For example, if Simulation::outputPrefix is "out/" and dumpPrefix is "dump/", the configurations will be written to files "out/dump/config.0", "out/dump/config.1", etc. </p>
+<p>This class uses the <a class="el" href="classDdMd_1_1Simulation.html#afda8eea88c0e81663b145a47d1d90588" title="Write configuration file.">Simulation::writeConfig()</a> method to write the entire simulation configuration periodically, at interval read from file. Names of configuration dump files are constructed by concatenating the <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> outputPrefix, a dumpPrefix, the literal string "config.", and an integer that is incremented after each dump. The dump prefix is a string that is read by the <a class="el" href="classUtil_1_1ParamComposite.html#ae6aa7ef9cfde8f96bec1bb34eecf451d" title="Add a new Param &lt; Type &gt; object, and read its value.">read()</a> method of this class. For example, if Simulation::outputPrefix is "out/" and dumpPrefix is "dump/", the configurations will be written to files "out/dump/config.0", "out/dump/config.1", etc. </p>
 
 <p>Definition at line <a class="el" href="WriteConfig_8h_source.html#l00034">34</a> of file <a class="el" href="WriteConfig_8h_source.html">WriteConfig.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="WriteConfig_8h_source.html">WriteConfig.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for WriteConfig:</div>
+Inheritance diagram for DdMd::WriteConfig:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1WriteConfig.png" usemap="#WriteConfig_map" alt=""/>
-  <map id="WriteConfig_map" name="WriteConfig_map">
-<area href="classDdMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="0,112,111,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classDdMd_1_1WriteConfig.png" usemap="#DdMd::WriteConfig_map" alt=""/>
+  <map id="DdMd::WriteConfig_map" name="DdMd::WriteConfig_map">
+<area href="classDdMd_1_1Diagnostic.html" alt="DdMd::Diagnostic" shape="rect" coords="0,112,134,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,134,24"/>
 </map>
  </div></div>
 
@@ -75,24 +75,24 @@ Inheritance diagram for WriteConfig:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1WriteConfig.html#aeb03703d9a7953c2ac64c9f82dc3bebe">WriteConfig</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aeb03703d9a7953c2ac64c9f82dc3bebe"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1WriteConfig.html#ad16d5b3f9b6f9da8bf9a49837e0ff803">~WriteConfig</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ad16d5b3f9b6f9da8bf9a49837e0ff803"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1WriteConfig.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read dumpPrefix and interval.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1WriteConfig.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear nSample counter.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1WriteConfig.html#afc17577823a371a5ead4e51ebb8ec2ef">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump configuration to file.  <a href="#afc17577823a371a5ead4e51ebb8ec2ef"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1WriteConfig.html#a99a8b8a6881727fdb667623baffdd940">WriteConfig</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a99a8b8a6881727fdb667623baffdd940"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1WriteConfig.html#a120b5e4e69089fc66c002055d69ba1e7">~WriteConfig</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a120b5e4e69089fc66c002055d69ba1e7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1WriteConfig.html#ad2e714ae2d4d0a40cf09d570b955aaeb">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read dumpPrefix and interval.  <a href="#ad2e714ae2d4d0a40cf09d570b955aaeb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1WriteConfig.html#a64ba2fdf68821fd4014d7078db6755fc">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear nSample counter.  <a href="#a64ba2fdf68821fd4014d7078db6755fc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1WriteConfig.html#a5f7f5f1bb387e76ba9c6b5b1f857d38d">sample</a> (long iStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump configuration to file.  <a href="#a5f7f5f1bb387e76ba9c6b5b1f857d38d"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aeb03703d9a7953c2ac64c9f82dc3bebe"></a><!-- doxytag: member="DdMd::WriteConfig::WriteConfig" ref="aeb03703d9a7953c2ac64c9f82dc3bebe" args="(Simulation &amp;simulation)" -->
+<a class="anchor" id="a99a8b8a6881727fdb667623baffdd940"></a><!-- doxytag: member="DdMd::WriteConfig::WriteConfig" ref="a99a8b8a6881727fdb667623baffdd940" args="(Simulation &amp;simulation)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1WriteConfig.html">WriteConfig</a> </td>
+          <td class="memname">DdMd::WriteConfig::WriteConfig </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td>
           <td class="paramname"><em>simulation</em></td><td>)</td>
@@ -114,12 +114,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad16d5b3f9b6f9da8bf9a49837e0ff803"></a><!-- doxytag: member="DdMd::WriteConfig::~WriteConfig" ref="ad16d5b3f9b6f9da8bf9a49837e0ff803" args="()" -->
+<a class="anchor" id="a120b5e4e69089fc66c002055d69ba1e7"></a><!-- doxytag: member="DdMd::WriteConfig::~WriteConfig" ref="a120b5e4e69089fc66c002055d69ba1e7" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual ~<a class="el" href="classDdMd_1_1WriteConfig.html">WriteConfig</a> </td>
+          <td class="memname">virtual DdMd::WriteConfig::~WriteConfig </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, virtual]</code></td>
@@ -135,12 +135,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="DdMd::WriteConfig::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ad2e714ae2d4d0a40cf09d570b955aaeb"></a><!-- doxytag: member="DdMd::WriteConfig::readParam" ref="ad2e714ae2d4d0a40cf09d570b955aaeb" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void DdMd::WriteConfig::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -158,20 +158,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="WriteConfig_8cpp_source.html#l00034">34</a> of file <a class="el" href="WriteConfig_8cpp_source.html">WriteConfig.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html#l00046">Diagnostic::readInterval()</a>, and <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html#l00078">Diagnostic::readOutputFileName()</a>.</p>
+<p>References <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html#l00046">DdMd::Diagnostic::readInterval()</a>, and <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html#l00078">DdMd::Diagnostic::readOutputFileName()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="DdMd::WriteConfig::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a64ba2fdf68821fd4014d7078db6755fc"></a><!-- doxytag: member="DdMd::WriteConfig::setup" ref="a64ba2fdf68821fd4014d7078db6755fc" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void DdMd::WriteConfig::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -182,18 +182,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear nSample counter. </p>
 
-<p>Reimplemented from <a class="el" href="classDdMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classDdMd_1_1Diagnostic.html#a25c1dd06e100ef655057d0c131998d58">DdMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="WriteConfig_8cpp_source.html#l00044">44</a> of file <a class="el" href="WriteConfig_8cpp_source.html">WriteConfig.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afc17577823a371a5ead4e51ebb8ec2ef"></a><!-- doxytag: member="DdMd::WriteConfig::sample" ref="afc17577823a371a5ead4e51ebb8ec2ef" args="(long iStep)" -->
+<a class="anchor" id="a5f7f5f1bb387e76ba9c6b5b1f857d38d"></a><!-- doxytag: member="DdMd::WriteConfig::sample" ref="a5f7f5f1bb387e76ba9c6b5b1f857d38d" args="(long iStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void DdMd::WriteConfig::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -211,11 +211,11 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classDdMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f">Diagnostic</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Diagnostic.html#a3d023149d52be82a82d898b141886330">DdMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="WriteConfig_8cpp_source.html#l00050">50</a> of file <a class="el" href="WriteConfig_8cpp_source.html">WriteConfig.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00176">Diagnostic::isAtInterval()</a>, <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00182">Diagnostic::outputFileName()</a>, <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00188">Diagnostic::simulation()</a>, <a class="el" href="ioUtil_8cpp_source.html#l00056">Util::toString()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00775">Simulation::writeConfig()</a>.</p>
+<p>References <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00176">DdMd::Diagnostic::isAtInterval()</a>, <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00182">DdMd::Diagnostic::outputFileName()</a>, <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00188">DdMd::Diagnostic::simulation()</a>, <a class="el" href="ioUtil_8cpp_source.html#l00056">Util::toString()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00775">DdMd::Simulation::writeConfig()</a>.</p>
 
 </div>
 </div>
@@ -224,7 +224,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="WriteConfig_8cpp_source.html">WriteConfig.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

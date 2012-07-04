@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Int Class Reference</title>
+<title>Simpatico: Util::Int Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,14 +49,14 @@
   <div class="summary">
 <a href="#friends">Friends</a>  </div>
   <div class="headertitle">
-<h1>Int Class Reference<div class="ingroups"><a class="el" href="group__Format__Module.html">Output Format</a></div></h1>  </div>
+<h1>Util::Int Class Reference<div class="ingroups"><a class="el" href="group__Format__Module.html">Output Format</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Int" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Wrapper for an int, for formatted ostream output. </p>
-<p>An <a class="el" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a> object has a int numerical value, and a minimum output field width. The &lt;&lt; operator for an <a class="el" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a> uses the specified width. The numerical value and width may both be specified as parameters to a constructor. If the width is not specified as a constructor parameter, it is set within the constructor to a default value equal to <a class="el" href="classUtil_1_1Format.html#a6174575d1d0c312a822272e46655c935" title="Return the default output field width.">Format::defaultWidth()</a>.</p>
+<p>An <a class="el" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a> object has a int numerical value, and a minimum output field width. The &lt;&lt; operator for an <a class="el" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a> uses the specified width. The numerical value and width may both be specified as parameters to a constructor. If the width is not specified as a constructor parameter, it is set within the constructor to a default value equal to <a class="el" href="classUtil_1_1Format.html#ac6cf6620e160c66757429bec0fb4dd23" title="Return the default output field width.">Format::defaultWidth()</a>.</p>
 <p>An <a class="el" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a> object may be passed to an ostream as a temporary object. For example, the expression: </p>
-<div class="fragment"><pre class="fragment">    std::cout &lt;&lt; <a class="code" href="classUtil_1_1Int.html#ac0e597df5c406857d651d4ff02c9b5f6" title="Default constructor.">Int</a>(13) &lt;&lt; <a class="code" href="classUtil_1_1Int.html#ac0e597df5c406857d651d4ff02c9b5f6" title="Default constructor.">Int</a>(25, 10) &lt;&lt; std::endl;
+<div class="fragment"><pre class="fragment">    std::cout &lt;&lt; <a class="code" href="classUtil_1_1Int.html#a210274cb9e8c26dc08c683a303058a67" title="Default constructor.">Int</a>(13) &lt;&lt; <a class="code" href="classUtil_1_1Int.html#a210274cb9e8c26dc08c683a303058a67" title="Default constructor.">Int</a>(25, 10) &lt;&lt; std::endl;
 </pre></div><p> outputs the number 13 using the default width, followed by the number 25 in a field of minimum width 10. </p>
 
 <p>Definition at line <a class="el" href="Int_8h_source.html#l00036">36</a> of file <a class="el" href="Int_8h_source.html">Int.h</a>.</p>
@@ -68,22 +68,22 @@
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#ac0e597df5c406857d651d4ff02c9b5f6">Int</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ac0e597df5c406857d651d4ff02c9b5f6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#afdbe68d085f4e015c40c2c708f1c7426">Int</a> (int value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value only.  <a href="#afdbe68d085f4e015c40c2c708f1c7426"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#a0b8db6b3b86a851c826fe7e6b652c828">Int</a> (int value, int width)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value and width.  <a href="#a0b8db6b3b86a851c826fe7e6b652c828"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#a210274cb9e8c26dc08c683a303058a67">Int</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a210274cb9e8c26dc08c683a303058a67"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#a92470f1480965b8b574a4673b9a0813b">Int</a> (int value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value only.  <a href="#a92470f1480965b8b574a4673b9a0813b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#a5ff8b33acfd92d5b53eaca5005a7a777">Int</a> (int value, int width)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value and width.  <a href="#a5ff8b33acfd92d5b53eaca5005a7a777"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Setters</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#a23d79e21b8ed72e19278ca31d47b8c87">setValue</a> (int value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the integer value.  <a href="#a23d79e21b8ed72e19278ca31d47b8c87"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#a8b4c8bccc530aa0a9b0139e04913af32">setWidth</a> (int width)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the output field width.  <a href="#a8b4c8bccc530aa0a9b0139e04913af32"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#ac30b52294f76a6e01c2ef055569c918b">setValue</a> (int value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the integer value.  <a href="#ac30b52294f76a6e01c2ef055569c918b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#a7c8763a64c5e9c8c46ae05b2d97fba2c">setWidth</a> (int width)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the output field width.  <a href="#a7c8763a64c5e9c8c46ae05b2d97fba2c"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#a7ecb839199ee379f9371723072e4148a">value</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the integer value.  <a href="#a7ecb839199ee379f9371723072e4148a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#a3eeed61a3424d2f907c8a1e420fddf6d">width</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the minimum field width.  <a href="#a3eeed61a3424d2f907c8a1e420fddf6d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#a7b535b25e70bf105fd38d28b31a7c830">value</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the integer value.  <a href="#a7b535b25e70bf105fd38d28b31a7c830"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#af8d7886f28020cacde093657f9978b4b">width</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the minimum field width.  <a href="#af8d7886f28020cacde093657f9978b4b"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Int.html#a9270b420c345367295553f9e40f2c471">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="classUtil_1_1Int.html">Int</a> &amp;object)</td></tr>
@@ -92,12 +92,12 @@ Friends</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output stream inserter for an <a class="el" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a> object.  <a href="#affe48f3d725906553c7b1808b7c4c121"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ac0e597df5c406857d651d4ff02c9b5f6"></a><!-- doxytag: member="Util::Int::Int" ref="ac0e597df5c406857d651d4ff02c9b5f6" args="()" -->
+<a class="anchor" id="a210274cb9e8c26dc08c683a303058a67"></a><!-- doxytag: member="Util::Int::Int" ref="a210274cb9e8c26dc08c683a303058a67" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">home david code simpatico src util format <a class="el" href="classUtil_1_1Int.html">Int</a> cpp <a class="el" href="classUtil_1_1Int.html">Int</a> </td>
+          <td class="memname">home david code simpatico src util format <a class="el" href="classUtil_1_1Int.html">Int</a> cpp Util::Int::Int </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -112,12 +112,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afdbe68d085f4e015c40c2c708f1c7426"></a><!-- doxytag: member="Util::Int::Int" ref="afdbe68d085f4e015c40c2c708f1c7426" args="(int value)" -->
+<a class="anchor" id="a92470f1480965b8b574a4673b9a0813b"></a><!-- doxytag: member="Util::Int::Int" ref="a92470f1480965b8b574a4673b9a0813b" args="(int value)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Int.html">Int</a> </td>
+          <td class="memname">Util::Int::Int </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -133,12 +133,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0b8db6b3b86a851c826fe7e6b652c828"></a><!-- doxytag: member="Util::Int::Int" ref="a0b8db6b3b86a851c826fe7e6b652c828" args="(int value, int width)" -->
+<a class="anchor" id="a5ff8b33acfd92d5b53eaca5005a7a777"></a><!-- doxytag: member="Util::Int::Int" ref="a5ff8b33acfd92d5b53eaca5005a7a777" args="(int value, int width)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Int.html">Int</a> </td>
+          <td class="memname">Util::Int::Int </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>value</em>, </td>
@@ -165,12 +165,12 @@ Friends</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a23d79e21b8ed72e19278ca31d47b8c87"></a><!-- doxytag: member="Util::Int::setValue" ref="a23d79e21b8ed72e19278ca31d47b8c87" args="(int value)" -->
+<a class="anchor" id="ac30b52294f76a6e01c2ef055569c918b"></a><!-- doxytag: member="Util::Int::setValue" ref="ac30b52294f76a6e01c2ef055569c918b" args="(int value)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setValue </td>
+          <td class="memname">void Util::Int::setValue </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -190,16 +190,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Int_8cpp_source.html#l00047">47</a> of file <a class="el" href="Int_8cpp_source.html">Int.cpp</a>.</p>
 
-<p>References <a class="el" href="Int_8cpp_source.html#l00059">Int::value()</a>.</p>
+<p>References <a class="el" href="Int_8cpp_source.html#l00059">value()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8b4c8bccc530aa0a9b0139e04913af32"></a><!-- doxytag: member="Util::Int::setWidth" ref="a8b4c8bccc530aa0a9b0139e04913af32" args="(int width)" -->
+<a class="anchor" id="a7c8763a64c5e9c8c46ae05b2d97fba2c"></a><!-- doxytag: member="Util::Int::setWidth" ref="a7c8763a64c5e9c8c46ae05b2d97fba2c" args="(int width)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setWidth </td>
+          <td class="memname">void Util::Int::setWidth </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>width</em></td><td>)</td>
@@ -219,16 +219,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Int_8cpp_source.html#l00053">53</a> of file <a class="el" href="Int_8cpp_source.html">Int.cpp</a>.</p>
 
-<p>References <a class="el" href="Int_8cpp_source.html#l00065">Int::width()</a>.</p>
+<p>References <a class="el" href="Int_8cpp_source.html#l00065">width()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7ecb839199ee379f9371723072e4148a"></a><!-- doxytag: member="Util::Int::value" ref="a7ecb839199ee379f9371723072e4148a" args="()" -->
+<a class="anchor" id="a7b535b25e70bf105fd38d28b31a7c830"></a><!-- doxytag: member="Util::Int::value" ref="a7b535b25e70bf105fd38d28b31a7c830" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int value </td>
+          <td class="memname">int Util::Int::value </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -241,16 +241,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Int_8cpp_source.html#l00059">59</a> of file <a class="el" href="Int_8cpp_source.html">Int.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Int_8cpp_source.html#l00047">Int::setValue()</a>.</p>
+<p>Referenced by <a class="el" href="Int_8cpp_source.html#l00047">setValue()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3eeed61a3424d2f907c8a1e420fddf6d"></a><!-- doxytag: member="Util::Int::width" ref="a3eeed61a3424d2f907c8a1e420fddf6d" args="()" -->
+<a class="anchor" id="af8d7886f28020cacde093657f9978b4b"></a><!-- doxytag: member="Util::Int::width" ref="af8d7886f28020cacde093657f9978b4b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int width </td>
+          <td class="memname">int Util::Int::width </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -263,7 +263,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Int_8cpp_source.html#l00065">65</a> of file <a class="el" href="Int_8cpp_source.html">Int.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Int_8cpp_source.html#l00053">Int::setWidth()</a>.</p>
+<p>Referenced by <a class="el" href="Int_8cpp_source.html#l00053">setWidth()</a>.</p>
 
 </div>
 </div>
@@ -351,7 +351,7 @@ Friends</h2></td></tr>
 <li><a class="el" href="Int_8cpp_source.html">Int.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

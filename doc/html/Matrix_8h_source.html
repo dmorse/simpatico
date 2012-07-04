@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -74,29 +74,29 @@
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037       <span class="comment">// Private copy constructor, to prohibit copy construction.</span>
 <a name="l00038"></a>00038 
-<a name="l00042"></a>00042       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1Matrix.html#a2249c859d9c3503ec00d3a20fe963842" title="Destructor.">~Matrix</a>();
+<a name="l00042"></a>00042       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1Matrix.html#a7d92f340e4123a6a45ae8d77c74244a3" title="Destructor.">~Matrix</a>();
 <a name="l00043"></a>00043 
-<a name="l00049"></a>00049       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#a8af90ffcb84fd323e1b4b4fd1d8e1c0e" title="Get number of rows.">capacity1</a>();
+<a name="l00049"></a>00049       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#aa31b8adc30ead7439b013099bd3e41d3" title="Get number of rows.">capacity1</a>();
 <a name="l00050"></a>00050 
-<a name="l00056"></a>00056       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#aaa4b76a6c4fb66aa293ccc2bc95d7572" title="Get number of columns.">capacity2</a>();
+<a name="l00056"></a>00056       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#a6e861f39f260a80f787d202b533acab8" title="Get number of columns.">capacity2</a>();
 <a name="l00057"></a>00057 
-<a name="l00064"></a>00064       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1Matrix.html#a80610b6a4636bd501203de70d870928b" title="Return element (i,j) of matrix by const reference.">operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) <span class="keyword">const</span>;
+<a name="l00064"></a>00064       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1Matrix.html#ae68dd131c89546d09c2c31c20f26ab10" title="Return element (i,j) of matrix by const reference.">operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) <span class="keyword">const</span>;
 <a name="l00065"></a>00065 
-<a name="l00072"></a>00072       Data&amp; <a class="code" href="classUtil_1_1Matrix.html#a80610b6a4636bd501203de70d870928b" title="Return element (i,j) of matrix by const reference.">operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j);
+<a name="l00072"></a>00072       Data&amp; <a class="code" href="classUtil_1_1Matrix.html#ae68dd131c89546d09c2c31c20f26ab10" title="Return element (i,j) of matrix by const reference.">operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j);
 <a name="l00073"></a>00073 
 <a name="l00074"></a>00074    <span class="keyword">protected</span>:
 <a name="l00075"></a>00075 
-<a name="l00077"></a><a class="code" href="classUtil_1_1Matrix.html#a51a8255a7ec647fc0e77a41589bd4a0e">00077</a>       Data*  <a class="code" href="classUtil_1_1Matrix.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to 1D C array of all elements.">data_</a>;
+<a name="l00077"></a><a class="code" href="classUtil_1_1Matrix.html#a58613069a43b06ca55b00760e9f2a025">00077</a>       Data*  <a class="code" href="classUtil_1_1Matrix.html#a58613069a43b06ca55b00760e9f2a025" title="Pointer to 1D C array of all elements.">data_</a>;
 <a name="l00078"></a>00078 
-<a name="l00080"></a><a class="code" href="classUtil_1_1Matrix.html#a8516d92163edd4be2775f79d99d12d61">00080</a>       <span class="keywordtype">int</span>    <a class="code" href="classUtil_1_1Matrix.html#a8516d92163edd4be2775f79d99d12d61" title="Number of rows (range of first index).">capacity1_</a>;
+<a name="l00080"></a><a class="code" href="classUtil_1_1Matrix.html#ab2aa000328441c9173452ebed40a52b9">00080</a>       <span class="keywordtype">int</span>    <a class="code" href="classUtil_1_1Matrix.html#ab2aa000328441c9173452ebed40a52b9" title="Number of rows (range of first index).">capacity1_</a>;
 <a name="l00081"></a>00081 
-<a name="l00083"></a><a class="code" href="classUtil_1_1Matrix.html#afa5d17aa9fcb57c5b0b970a26b233b36">00083</a>       <span class="keywordtype">int</span>    <a class="code" href="classUtil_1_1Matrix.html#afa5d17aa9fcb57c5b0b970a26b233b36" title="Number of columns (range of first index).">capacity2_</a>;
+<a name="l00083"></a><a class="code" href="classUtil_1_1Matrix.html#a6c524474706b1819f6f20f245c5bbf85">00083</a>       <span class="keywordtype">int</span>    <a class="code" href="classUtil_1_1Matrix.html#a6c524474706b1819f6f20f245c5bbf85" title="Number of columns (range of first index).">capacity2_</a>;
 <a name="l00084"></a>00084 
-<a name="l00090"></a>00090       <a class="code" href="classUtil_1_1Matrix.html#a3aede62f513da27e6f61ae7a972b4f96" title="Default constructor.">Matrix</a>();
+<a name="l00090"></a>00090       <a class="code" href="classUtil_1_1Matrix.html#ab405e09dfdf9c17a7ca3ba09dc80d9a0" title="Default constructor.">Matrix</a>();
 <a name="l00091"></a>00091 
 <a name="l00092"></a>00092    <span class="keyword">private</span>:
 <a name="l00093"></a>00093 
-<a name="l00097"></a>00097       <a class="code" href="classUtil_1_1Matrix.html#a3aede62f513da27e6f61ae7a972b4f96" title="Default constructor.">Matrix</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Matrix.html" title="Two-dimensional array container template (abstract).">Matrix&lt;Data&gt;</a>&amp; other);
+<a name="l00097"></a>00097       <a class="code" href="classUtil_1_1Matrix.html#ab405e09dfdf9c17a7ca3ba09dc80d9a0" title="Default constructor.">Matrix</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Matrix.html" title="Two-dimensional array container template (abstract).">Matrix&lt;Data&gt;</a>&amp; other);
 <a name="l00098"></a>00098 
 <a name="l00102"></a>00102       <a class="code" href="classUtil_1_1Matrix.html" title="Two-dimensional array container template (abstract).">Matrix&lt;Data&gt;</a>&amp; operator = (<span class="keyword">const</span> <a class="code" href="classUtil_1_1Matrix.html" title="Two-dimensional array container template (abstract).">Matrix&lt;Data&gt;</a>&amp; other);
 <a name="l00103"></a>00103 
@@ -105,7 +105,7 @@
 <a name="l00106"></a>00106    <span class="comment">// Method definitions</span>
 <a name="l00107"></a>00107 
 <a name="l00111"></a>00111    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00112"></a><a class="code" href="classUtil_1_1Matrix.html#a3aede62f513da27e6f61ae7a972b4f96">00112</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Matrix.html#a3aede62f513da27e6f61ae7a972b4f96" title="Default constructor.">Matrix&lt;Data&gt;::Matrix</a>()
+<a name="l00112"></a><a class="code" href="classUtil_1_1Matrix.html#ab405e09dfdf9c17a7ca3ba09dc80d9a0">00112</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Matrix.html#ab405e09dfdf9c17a7ca3ba09dc80d9a0" title="Default constructor.">Matrix&lt;Data&gt;::Matrix</a>()
 <a name="l00113"></a>00113     : data_(0),
 <a name="l00114"></a>00114       capacity1_(0),
 <a name="l00115"></a>00115       capacity2_(0)
@@ -115,28 +115,28 @@
 <a name="l00119"></a>00119 <span class="comment">   * Destructor.</span>
 <a name="l00120"></a>00120 <span class="comment">   */</span>
 <a name="l00121"></a>00121    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00122"></a><a class="code" href="classUtil_1_1Matrix.html#a2249c859d9c3503ec00d3a20fe963842">00122</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Matrix.html#a2249c859d9c3503ec00d3a20fe963842" title="Destructor.">Matrix&lt;Data&gt;::~Matrix</a>()
+<a name="l00122"></a><a class="code" href="classUtil_1_1Matrix.html#a7d92f340e4123a6a45ae8d77c74244a3">00122</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Matrix.html#a7d92f340e4123a6a45ae8d77c74244a3" title="Destructor.">Matrix&lt;Data&gt;::~Matrix</a>()
 <a name="l00123"></a>00123    {}
 <a name="l00124"></a>00124 
 <a name="l00125"></a>00125    <span class="comment">/*</span>
 <a name="l00126"></a>00126 <span class="comment">   * Get number of rows.</span>
 <a name="l00127"></a>00127 <span class="comment">   */</span>
 <a name="l00128"></a>00128    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00129"></a><a class="code" href="classUtil_1_1Matrix.html#a8af90ffcb84fd323e1b4b4fd1d8e1c0e">00129</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#a8af90ffcb84fd323e1b4b4fd1d8e1c0e" title="Get number of rows.">Matrix&lt;Data&gt;::capacity1</a>()
+<a name="l00129"></a><a class="code" href="classUtil_1_1Matrix.html#aa31b8adc30ead7439b013099bd3e41d3">00129</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#aa31b8adc30ead7439b013099bd3e41d3" title="Get number of rows.">Matrix&lt;Data&gt;::capacity1</a>()
 <a name="l00130"></a>00130    { <span class="keywordflow">return</span> capacity1_; }
 <a name="l00131"></a>00131 
 <a name="l00132"></a>00132    <span class="comment">/*</span>
 <a name="l00133"></a>00133 <span class="comment">   * Get number of columns.</span>
 <a name="l00134"></a>00134 <span class="comment">   */</span>
 <a name="l00135"></a>00135    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00136"></a><a class="code" href="classUtil_1_1Matrix.html#aaa4b76a6c4fb66aa293ccc2bc95d7572">00136</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#aaa4b76a6c4fb66aa293ccc2bc95d7572" title="Get number of columns.">Matrix&lt;Data&gt;::capacity2</a>()
+<a name="l00136"></a><a class="code" href="classUtil_1_1Matrix.html#a6e861f39f260a80f787d202b533acab8">00136</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#a6e861f39f260a80f787d202b533acab8" title="Get number of columns.">Matrix&lt;Data&gt;::capacity2</a>()
 <a name="l00137"></a>00137    { <span class="keywordflow">return</span> capacity2_; }
 <a name="l00138"></a>00138 
 <a name="l00139"></a>00139    <span class="comment">/*</span>
 <a name="l00140"></a>00140 <span class="comment">   * Return element (i,j) of matrix by const reference.</span>
 <a name="l00141"></a>00141 <span class="comment">   */</span>
 <a name="l00142"></a>00142    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00143"></a><a class="code" href="classUtil_1_1Matrix.html#a80610b6a4636bd501203de70d870928b">00143</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1Matrix.html#a80610b6a4636bd501203de70d870928b" title="Return element (i,j) of matrix by const reference.">Matrix&lt;Data&gt;::operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00143"></a><a class="code" href="classUtil_1_1Matrix.html#ae68dd131c89546d09c2c31c20f26ab10">00143</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1Matrix.html#ae68dd131c89546d09c2c31c20f26ab10" title="Return element (i,j) of matrix by const reference.">Matrix&lt;Data&gt;::operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
 <a name="l00144"></a>00144 <span class="keyword">   </span>{
 <a name="l00145"></a>00145       assert(data_ != 0);
 <a name="l00146"></a>00146       assert(i &gt;= 0);
@@ -150,7 +150,7 @@
 <a name="l00154"></a>00154 <span class="comment">   * Return element (i,j) of matrix by reference.</span>
 <a name="l00155"></a>00155 <span class="comment">   */</span>
 <a name="l00156"></a>00156    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00157"></a><a class="code" href="classUtil_1_1Matrix.html#a198c95222f8642ab4ed814fc4cb94cf9">00157</a>    <span class="keyword">inline</span> Data&amp; <a class="code" href="classUtil_1_1Matrix.html#a80610b6a4636bd501203de70d870928b" title="Return element (i,j) of matrix by const reference.">Matrix&lt;Data&gt;::operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)
+<a name="l00157"></a><a class="code" href="classUtil_1_1Matrix.html#a07e47001d8275fb7ad593bd195ba3906">00157</a>    <span class="keyword">inline</span> Data&amp; <a class="code" href="classUtil_1_1Matrix.html#ae68dd131c89546d09c2c31c20f26ab10" title="Return element (i,j) of matrix by const reference.">Matrix&lt;Data&gt;::operator() </a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)
 <a name="l00158"></a>00158    {
 <a name="l00159"></a>00159       assert(data_ != 0);
 <a name="l00160"></a>00160       assert(i &gt;= 0);
@@ -165,7 +165,7 @@
 <a name="l00169"></a>00169 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

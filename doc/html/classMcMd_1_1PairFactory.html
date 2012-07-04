@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: PairFactory Class Reference</title>
+<title>Simpatico: McMd::PairFactory Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,12 +50,12 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>PairFactory Class Reference<div class="ingroups"><a class="el" href="group__McMd__Pair__Module.html">Pair Potentials</a></div></h1>  </div>
+<h1>McMd::PairFactory Class Reference<div class="ingroups"><a class="el" href="group__McMd__Pair__Module.html">Pair Potentials</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::PairFactory" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Factory for subclasses <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a> or <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>. </p>
-<p>This class is not derived from the Factory template because it provides a different interface, with separate <a class="el" href="classMcMd_1_1PairFactory.html#a0e383f6cf0f74c4a36001e6e77e6c5f4" title="Return a pointer to a new McPairPotential, if possible.">mcFactory()</a> and <a class="el" href="classMcMd_1_1PairFactory.html#ad36bb3513ffcf359a17fce37c129039e" title="Return a pointer to a new McPairPotential, if possible.">mdFactory()</a> methods to create <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a> and <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a> objects. Unlike a standard Factory, it also does not provide a readObject method, and so does not require a param communicator. </p>
+<p>This class is not derived from the Factory template because it provides a different interface, with separate <a class="el" href="classMcMd_1_1PairFactory.html#a067e60f3c80f7d89558ac8ae074cf610" title="Return a pointer to a new McPairPotential, if possible.">mcFactory()</a> and <a class="el" href="classMcMd_1_1PairFactory.html#a47dcf0997316eaf3629994527e376502" title="Return a pointer to a new McPairPotential, if possible.">mdFactory()</a> methods to create <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a> and <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a> objects. Unlike a standard Factory, it also does not provide a readObject method, and so does not require a param communicator. </p>
 
 <p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html#l00033">33</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8h_source.html">mcMd/potentials/pair/PairFactory.h</a>.</p>
 </div>
@@ -65,34 +65,34 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a5ec92a85d5cbb3ba9422b4b457b784ee">PairFactory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a5ec92a85d5cbb3ba9422b4b457b784ee"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#aef5c61bf75318e5377c6a98a2c97f780">~PairFactory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#aef5c61bf75318e5377c6a98a2c97f780"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a9c24a40e306f6ab5b2bcc227df5a8839">addSubfactory</a> (<a class="el" href="classMcMd_1_1PairFactory.html">PairFactory</a> &amp;subfactory)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new subfactory to the list.  <a href="#a9c24a40e306f6ab5b2bcc227df5a8839"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a0e383f6cf0f74c4a36001e6e77e6c5f4">mcFactory</a> (const std::string &amp;subclass, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;system) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to a new <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>, if possible.  <a href="#a0e383f6cf0f74c4a36001e6e77e6c5f4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#ad36bb3513ffcf359a17fce37c129039e">mdFactory</a> (const std::string &amp;subclass, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;system) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to a new <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>, if possible.  <a href="#ad36bb3513ffcf359a17fce37c129039e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a9abc9bca1c3bfda695dde86366ec15b1">mdFactory</a> (<a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> &amp;potential) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a> from a <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>.  <a href="#a9abc9bca1c3bfda695dde86366ec15b1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#ae75783aff2e40a1f25ec99cf3b43a035">PairFactory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ae75783aff2e40a1f25ec99cf3b43a035"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a458fc0caeeef32908baf1a05545d38d5">~PairFactory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a458fc0caeeef32908baf1a05545d38d5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#ad611dff148e216167f8808bb76aed5a2">addSubfactory</a> (<a class="el" href="classMcMd_1_1PairFactory.html">PairFactory</a> &amp;subfactory)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new subfactory to the list.  <a href="#ad611dff148e216167f8808bb76aed5a2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a067e60f3c80f7d89558ac8ae074cf610">mcFactory</a> (const std::string &amp;subclass, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;system) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to a new <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>, if possible.  <a href="#a067e60f3c80f7d89558ac8ae074cf610"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a47dcf0997316eaf3629994527e376502">mdFactory</a> (const std::string &amp;subclass, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;system) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to a new <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>, if possible.  <a href="#a47dcf0997316eaf3629994527e376502"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a5a7fb16ea46436c77155ab755eafcedc">mdFactory</a> (<a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> &amp;potential) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a> from a <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>.  <a href="#a5a7fb16ea46436c77155ab755eafcedc"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a2bfbcfc2c2b3013624aab1a3a2673474">tryMcSubfactories</a> (const std::string &amp;className, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;system) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search subfactories for match to <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a> subclass name.  <a href="#a2bfbcfc2c2b3013624aab1a3a2673474"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a1b6884a94080ceee4eed9225dbf245d4">tryMdSubfactories</a> (const std::string &amp;className, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;system) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search subfactories for match to <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a> subclass name.  <a href="#a1b6884a94080ceee4eed9225dbf245d4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a25d2d639b8c2453d8a871a86d1b7d6d5">tryMdSubfactories</a> (<a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> &amp;potential) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search through subfactories for match for an mc potential.  <a href="#a25d2d639b8c2453d8a871a86d1b7d6d5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a3249c8091f493168e0dc74eb8e9c7255">tryMcSubfactories</a> (const std::string &amp;className, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;system) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search subfactories for match to <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a> subclass name.  <a href="#a3249c8091f493168e0dc74eb8e9c7255"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a8da2e0655e7541552944e9caf0fab8d9">tryMdSubfactories</a> (const std::string &amp;className, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;system) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search subfactories for match to <a class="el" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a> subclass name.  <a href="#a8da2e0655e7541552944e9caf0fab8d9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairFactory.html#a3f9d0f25c07ad89da311f77fa5dfc00d">tryMdSubfactories</a> (<a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> &amp;potential) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search through subfactories for match for an mc potential.  <a href="#a3f9d0f25c07ad89da311f77fa5dfc00d"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a5ec92a85d5cbb3ba9422b4b457b784ee"></a><!-- doxytag: member="McMd::PairFactory::PairFactory" ref="a5ec92a85d5cbb3ba9422b4b457b784ee" args="()" -->
+<a class="anchor" id="ae75783aff2e40a1f25ec99cf3b43a035"></a><!-- doxytag: member="McMd::PairFactory::PairFactory" ref="ae75783aff2e40a1f25ec99cf3b43a035" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1PairFactory.html">PairFactory</a> </td>
+          <td class="memname">McMd::PairFactory::PairFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -108,12 +108,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aef5c61bf75318e5377c6a98a2c97f780"></a><!-- doxytag: member="McMd::PairFactory::~PairFactory" ref="aef5c61bf75318e5377c6a98a2c97f780" args="()" -->
+<a class="anchor" id="a458fc0caeeef32908baf1a05545d38d5"></a><!-- doxytag: member="McMd::PairFactory::~PairFactory" ref="a458fc0caeeef32908baf1a05545d38d5" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual ~<a class="el" href="classMcMd_1_1PairFactory.html">PairFactory</a> </td>
+          <td class="memname">virtual McMd::PairFactory::~PairFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, virtual]</code></td>
@@ -129,12 +129,12 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a9c24a40e306f6ab5b2bcc227df5a8839"></a><!-- doxytag: member="McMd::PairFactory::addSubfactory" ref="a9c24a40e306f6ab5b2bcc227df5a8839" args="(PairFactory &amp;subfactory)" -->
+<a class="anchor" id="ad611dff148e216167f8808bb76aed5a2"></a><!-- doxytag: member="McMd::PairFactory::addSubfactory" ref="ad611dff148e216167f8808bb76aed5a2" args="(PairFactory &amp;subfactory)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void addSubfactory </td>
+          <td class="memname">void McMd::PairFactory::addSubfactory </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1PairFactory.html">PairFactory</a> &amp;&#160;</td>
           <td class="paramname"><em>subfactory</em></td><td>)</td>
@@ -157,12 +157,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0e383f6cf0f74c4a36001e6e77e6c5f4"></a><!-- doxytag: member="McMd::PairFactory::mcFactory" ref="a0e383f6cf0f74c4a36001e6e77e6c5f4" args="(const std::string &amp;subclass, System &amp;system) const " -->
+<a class="anchor" id="a067e60f3c80f7d89558ac8ae074cf610"></a><!-- doxytag: member="McMd::PairFactory::mcFactory" ref="a067e60f3c80f7d89558ac8ae074cf610" args="(const std::string &amp;subclass, System &amp;system) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> * mcFactory </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> * McMd::PairFactory::mcFactory </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>subclass</em>, </td>
@@ -195,12 +195,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad36bb3513ffcf359a17fce37c129039e"></a><!-- doxytag: member="McMd::PairFactory::mdFactory" ref="ad36bb3513ffcf359a17fce37c129039e" args="(const std::string &amp;subclass, System &amp;system) const " -->
+<a class="anchor" id="a47dcf0997316eaf3629994527e376502"></a><!-- doxytag: member="McMd::PairFactory::mdFactory" ref="a47dcf0997316eaf3629994527e376502" args="(const std::string &amp;subclass, System &amp;system) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> * mdFactory </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> * McMd::PairFactory::mdFactory </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>subclass</em>, </td>
@@ -231,16 +231,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00075">75</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00092">MdSystem::MdSystem()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00199">MdSystem::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00092">McMd::MdSystem::MdSystem()</a>, and <a class="el" href="MdSystem_8cpp_source.html#l00199">McMd::MdSystem::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9abc9bca1c3bfda695dde86366ec15b1"></a><!-- doxytag: member="McMd::PairFactory::mdFactory" ref="a9abc9bca1c3bfda695dde86366ec15b1" args="(McPairPotential &amp;potential) const " -->
+<a class="anchor" id="a5a7fb16ea46436c77155ab755eafcedc"></a><!-- doxytag: member="McMd::PairFactory::mdFactory" ref="a5a7fb16ea46436c77155ab755eafcedc" args="(McPairPotential &amp;potential) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> * mdFactory </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> * McMd::PairFactory::mdFactory </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> &amp;&#160;</td>
           <td class="paramname"><em>potential</em></td><td>)</td>
@@ -260,16 +260,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html#l00099">99</a> of file <a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a>.</p>
 
-<p>References <a class="el" href="classMcMd_1_1PairPotential.html#ae355aef85b464e790c9e22b1364dabee">PairPotential::interactionClassName()</a>.</p>
+<p>References <a class="el" href="classMcMd_1_1PairPotential.html#ab41ce7b4f7f1e421a44295c0dbb357d5">McMd::PairPotential::interactionClassName()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2bfbcfc2c2b3013624aab1a3a2673474"></a><!-- doxytag: member="McMd::PairFactory::tryMcSubfactories" ref="a2bfbcfc2c2b3013624aab1a3a2673474" args="(const std::string &amp;className, System &amp;system) const " -->
+<a class="anchor" id="a3249c8091f493168e0dc74eb8e9c7255"></a><!-- doxytag: member="McMd::PairFactory::tryMcSubfactories" ref="a3249c8091f493168e0dc74eb8e9c7255" args="(const std::string &amp;className, System &amp;system) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> * tryMcSubfactories </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> * McMd::PairFactory::tryMcSubfactories </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>className</em>, </td>
@@ -303,12 +303,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1b6884a94080ceee4eed9225dbf245d4"></a><!-- doxytag: member="McMd::PairFactory::tryMdSubfactories" ref="a1b6884a94080ceee4eed9225dbf245d4" args="(const std::string &amp;className, System &amp;system) const " -->
+<a class="anchor" id="a8da2e0655e7541552944e9caf0fab8d9"></a><!-- doxytag: member="McMd::PairFactory::tryMdSubfactories" ref="a8da2e0655e7541552944e9caf0fab8d9" args="(const std::string &amp;className, System &amp;system) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> * tryMdSubfactories </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> * McMd::PairFactory::tryMdSubfactories </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>className</em>, </td>
@@ -342,12 +342,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a25d2d639b8c2453d8a871a86d1b7d6d5"></a><!-- doxytag: member="McMd::PairFactory::tryMdSubfactories" ref="a25d2d639b8c2453d8a871a86d1b7d6d5" args="(McPairPotential &amp;potential) const " -->
+<a class="anchor" id="a3f9d0f25c07ad89da311f77fa5dfc00d"></a><!-- doxytag: member="McMd::PairFactory::tryMdSubfactories" ref="a3f9d0f25c07ad89da311f77fa5dfc00d" args="(McPairPotential &amp;potential) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> * tryMdSubfactories </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1MdPairPotential.html">MdPairPotential</a> * McMd::PairFactory::tryMdSubfactories </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> &amp;&#160;</td>
           <td class="paramname"><em>potential</em></td><td>)</td>
@@ -375,7 +375,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="mcMd_2potentials_2pair_2PairFactory_8cpp_source.html">mcMd/potentials/pair/PairFactory.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:57 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:28 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

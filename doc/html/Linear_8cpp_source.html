@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -76,7 +76,7 @@
 <a name="l00025"></a>00025    <span class="comment">/*</span>
 <a name="l00026"></a>00026 <span class="comment">   * Constructor.</span>
 <a name="l00027"></a>00027 <span class="comment">   */</span>
-<a name="l00028"></a><a class="code" href="classMcMd_1_1Linear.html#a74718d0ddfb023a44f6178db18c6bd4a">00028</a>    <a class="code" href="classMcMd_1_1Linear.html#a74718d0ddfb023a44f6178db18c6bd4a" title="Constructor.">Linear::Linear</a>() 
+<a name="l00028"></a><a class="code" href="classMcMd_1_1Linear.html#a4538ac8b263f06ad7b73a222d5d8db2f">00028</a>    <a class="code" href="classMcMd_1_1Linear.html#a4538ac8b263f06ad7b73a222d5d8db2f" title="Constructor.">Linear::Linear</a>() 
 <a name="l00029"></a>00029    : <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>(),
 <a name="l00030"></a>00030      #ifdef INTER_ANGLE
 <a name="l00031"></a>00031      hasAngles_(0),
@@ -90,33 +90,33 @@
 <a name="l00039"></a>00039    <span class="comment">/*</span>
 <a name="l00040"></a>00040 <span class="comment">   * Destructor.</span>
 <a name="l00041"></a>00041 <span class="comment">   */</span>
-<a name="l00042"></a><a class="code" href="classMcMd_1_1Linear.html#afebe774542751dcac31f1ebc6c84480b">00042</a>    <a class="code" href="classMcMd_1_1Linear.html#afebe774542751dcac31f1ebc6c84480b" title="Destructor.">Linear::~Linear</a>() 
+<a name="l00042"></a><a class="code" href="classMcMd_1_1Linear.html#add2976684873a58fbc8d8637bcbc4f4f">00042</a>    <a class="code" href="classMcMd_1_1Linear.html#add2976684873a58fbc8d8637bcbc4f4f" title="Destructor.">Linear::~Linear</a>() 
 <a name="l00043"></a>00043    {}
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045    <span class="comment">/*</span>
 <a name="l00046"></a>00046 <span class="comment">   * Build the chemical structure of a flexible chain molecule.</span>
 <a name="l00047"></a>00047 <span class="comment">   */</span>
-<a name="l00048"></a><a class="code" href="classMcMd_1_1Linear.html#a24afe58d5d90a1545252b4454791b2de">00048</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Linear.html#a24afe58d5d90a1545252b4454791b2de" title="Build the chemical structure for a linear molecule.">Linear::buildLinear</a>() 
+<a name="l00048"></a><a class="code" href="classMcMd_1_1Linear.html#a4d4f9f09d6cac89de3cbc7ae17459e93">00048</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Linear.html#a4d4f9f09d6cac89de3cbc7ae17459e93" title="Build the chemical structure for a linear molecule.">Linear::buildLinear</a>() 
 <a name="l00049"></a>00049    {
 <a name="l00050"></a>00050 
 <a name="l00051"></a>00051       <span class="comment">// Preconditions</span>
-<a name="l00052"></a>00052       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>() &lt; 2) {
+<a name="l00052"></a>00052       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>() &lt; 2) {
 <a name="l00053"></a>00053          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtom &lt; 2&quot;</span>);
 <a name="l00054"></a>00054       }
-<a name="l00055"></a>00055       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a03a7ae70b3c47d3439a3459d072ad300" title="Get number of bonds per molecule for this Species.">nBond</a>() != <a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 1) {
+<a name="l00055"></a>00055       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>() != <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 1) {
 <a name="l00056"></a>00056          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nBond != nAtom - 1&quot;</span>);
 <a name="l00057"></a>00057       }
 <a name="l00058"></a>00058 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
 <a name="l00059"></a>00059 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (hasAngles_) {
-<a name="l00060"></a>00060          <span class="keywordflow">if</span> (nAngle() != <a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 2) {
+<a name="l00060"></a>00060          <span class="keywordflow">if</span> (nAngle() != <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 2) {
 <a name="l00061"></a>00061             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAngle != nAtom - 2&quot;</span>);
 <a name="l00062"></a>00062          }
 <a name="l00063"></a>00063       }
 <a name="l00064"></a>00064 <span class="preprocessor">      #endif</span>
 <a name="l00065"></a>00065 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
 <a name="l00066"></a>00066 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (hasDihedrals_) {
-<a name="l00067"></a>00067          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>() &gt; 3) {
-<a name="l00068"></a>00068             <span class="keywordflow">if</span> (nDihedral() != <a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 3) {
+<a name="l00067"></a>00067          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>() &gt; 3) {
+<a name="l00068"></a>00068             <span class="keywordflow">if</span> (nDihedral() != <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>() - 3) {
 <a name="l00069"></a>00069                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nDihedral != nAtom - 3&quot;</span>);
 <a name="l00070"></a>00070             }
 <a name="l00071"></a>00071          } <span class="keywordflow">else</span> {
@@ -129,16 +129,16 @@
 <a name="l00078"></a>00078 <span class="preprocessor"></span>
 <a name="l00079"></a>00079       <span class="keywordtype">int</span> i; 
 <a name="l00080"></a>00080 
-<a name="l00081"></a>00081       <a class="code" href="classMcMd_1_1Species.html#acaefe811b78a2fdc4a0dba0c4029c3ef" title="Allocate chemical structure arrays.">allocate</a>();
+<a name="l00081"></a>00081       <a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca" title="Allocate chemical structure arrays.">allocate</a>();
 <a name="l00082"></a>00082 
 <a name="l00083"></a>00083       <span class="comment">// Set Atom Type Ids</span>
-<a name="l00084"></a>00084       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>(); ++i) {
-<a name="l00085"></a>00085          <a class="code" href="classMcMd_1_1Species.html#afd63c7961866e4362658f5ee9a894d87" title="Set the type for one atom in a generic molecule of this Species.">setAtomType</a>(i, <a class="code" href="classMcMd_1_1Linear.html#ad59cdf78b1ccaade2eab18b9140c63e9" title="Return the atom type id for a specific atom.">calculateAtomTypeId</a>(i));
+<a name="l00084"></a>00084       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>(); ++i) {
+<a name="l00085"></a>00085          <a class="code" href="classMcMd_1_1Species.html#a5244d3eab99baf79b4b270f3abd168a6" title="Set the type for one atom in a generic molecule of this Species.">setAtomType</a>(i, <a class="code" href="classMcMd_1_1Linear.html#aaccc5851cbb002d34d583fbed031ecd7" title="Return the atom type id for a specific atom.">calculateAtomTypeId</a>(i));
 <a name="l00086"></a>00086       }
 <a name="l00087"></a>00087 
 <a name="l00088"></a>00088       <span class="comment">// Build Bonds</span>
-<a name="l00089"></a>00089       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a03a7ae70b3c47d3439a3459d072ad300" title="Get number of bonds per molecule for this Species.">nBond</a>(); ++i) {
-<a name="l00090"></a>00090          <a class="code" href="classMcMd_1_1Species.html#a05616ad5c8d4a6ee45eee1015fd46517" title="Add a bond to the chemical structure of a generic molecule.">makeBond</a>(i, i, i+1, <a class="code" href="classMcMd_1_1Linear.html#a0fd677ed32c5aa5a01e02c75e557138b" title="Return the bond type id for a specific bond.">calculateBondTypeId</a>(i));
+<a name="l00089"></a>00089       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>(); ++i) {
+<a name="l00090"></a>00090          <a class="code" href="classMcMd_1_1Species.html#a2d72cd7d93ac802ce5f567e4a41eb152" title="Add a bond to the chemical structure of a generic molecule.">makeBond</a>(i, i, i+1, <a class="code" href="classMcMd_1_1Linear.html#a56e42940d79548e590e528873f08e0a8" title="Return the bond type id for a specific bond.">calculateBondTypeId</a>(i));
 <a name="l00091"></a>00091       }
 <a name="l00092"></a>00092 
 <a name="l00093"></a>00093 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
@@ -163,11 +163,11 @@
 <a name="l00112"></a>00112 
 <a name="l00116"></a>00116    <span class="keywordtype">bool</span> Linear::tryPlaceAtom(<a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule, <span class="keywordtype">int</span> atomId,
 <a name="l00117"></a>00117       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;double&gt;</a> exclusionRadius, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system, <a class="code" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> &amp;cellList,
-<a name="l00118"></a>00118       <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a> *bondPotentialPtr, <span class="keyword">const</span> Boundary &amp;boundary)
+<a name="l00118"></a>00118       <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a> *bondPotentialPtr, <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary)
 <a name="l00119"></a>00119    {
-<a name="l00120"></a>00120       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; lastAtom = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(atomId);
-<a name="l00121"></a>00121       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; thisAtom = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(++atomId);
-<a name="l00122"></a>00122       <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; random = system.<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a3e9d2379455b7dc1bc206383917cd3b0" title="Get the random number generator by reference.">random</a>();
+<a name="l00120"></a>00120       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; lastAtom = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(atomId);
+<a name="l00121"></a>00121       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; thisAtom = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(++atomId);
+<a name="l00122"></a>00122       <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; random = system.<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afe4a8354b0ecaf6daf94ea9b8343b26b" title="Get the random number generator by reference.">random</a>();
 <a name="l00123"></a>00123 
 <a name="l00124"></a>00124       <span class="keywordtype">bool</span> hasBeenPlaced = <span class="keyword">false</span>;
 <a name="l00125"></a>00125 
@@ -176,41 +176,41 @@
 <a name="l00128"></a>00128          <span class="comment">// draw a random bond vector</span>
 <a name="l00129"></a>00129          <span class="keywordtype">int</span> beta = 1;
 <a name="l00130"></a>00130          <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> v;
-<a name="l00131"></a>00131          random.<a class="code" href="classUtil_1_1Random.html#a4425ee9934eff1b81f712cefca9e1fcb" title="Generate unit vector with uniform probability over the unit sphere.">unitVector</a>(v);
-<a name="l00132"></a>00132          v *= bondPotentialPtr-&gt;<a class="code" href="classMcMd_1_1BondPotential.html#ae18e627d658ba877fb640a7ed37e88cd" title="Return bond length chosen from equilibrium distribution.">randomBondLength</a>(&amp;random, beta,
-<a name="l00133"></a>00133             <a class="code" href="classMcMd_1_1Linear.html#a0fd677ed32c5aa5a01e02c75e557138b" title="Return the bond type id for a specific bond.">calculateBondTypeId</a>(lastAtom.<a class="code" href="classMcMd_1_1Atom.html#a43ee7a458e69d065f6c9fd6e7e5c5e09" title="Get local index for this Atom within the parent molecule;.">indexInMolecule</a>()));
+<a name="l00131"></a>00131          random.<a class="code" href="classUtil_1_1Random.html#a790b5d37cebb4f9d5bf711eba68d0948" title="Generate unit vector with uniform probability over the unit sphere.">unitVector</a>(v);
+<a name="l00132"></a>00132          v *= bondPotentialPtr-&gt;<a class="code" href="classMcMd_1_1BondPotential.html#a20b4bee11fd05ddf5fd16f55521f92f2" title="Return bond length chosen from equilibrium distribution.">randomBondLength</a>(&amp;random, beta,
+<a name="l00133"></a>00133             <a class="code" href="classMcMd_1_1Linear.html#a56e42940d79548e590e528873f08e0a8" title="Return the bond type id for a specific bond.">calculateBondTypeId</a>(lastAtom.<a class="code" href="classMcMd_1_1Atom.html#ad051dc3ce9d5a8535f03936e021a8e9c" title="Get local index for this Atom within the parent molecule;.">indexInMolecule</a>()));
 <a name="l00134"></a>00134 
 <a name="l00135"></a>00135          <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> newPos;
-<a name="l00136"></a>00136          newPos = lastAtom.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00136"></a>00136          newPos = lastAtom.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00137"></a>00137          newPos += v;
 <a name="l00138"></a>00138          <span class="comment">// shift into simulation cell</span>
 <a name="l00139"></a>00139          boundary.shift(newPos);
 <a name="l00140"></a>00140 
 <a name="l00141"></a>00141          <span class="comment">// check if the atom can be placed at the new position</span>
 <a name="l00142"></a>00142          <a class="code" href="classUtil_1_1FSArray.html">CellList::NeighborArray</a> neighbors;
-<a name="l00143"></a>00143          cellList.<a class="code" href="classMcMd_1_1CellList.html#ad010d819637e43b16d618e032cd2cd02" title="Fill a NeighborArray with pointers to atoms near a specified position.">getNeighbors</a>(newPos, neighbors);
-<a name="l00144"></a>00144          <span class="keywordtype">int</span> nNeighbor = neighbors.<a class="code" href="classUtil_1_1FSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">size</a>();
+<a name="l00143"></a>00143          cellList.<a class="code" href="classMcMd_1_1CellList.html#a5170b4abd47e6070d447408b2e0e8b5d" title="Fill a NeighborArray with pointers to atoms near a specified position.">getNeighbors</a>(newPos, neighbors);
+<a name="l00144"></a>00144          <span class="keywordtype">int</span> nNeighbor = neighbors.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
 <a name="l00145"></a>00145          <span class="keywordtype">bool</span> canBePlaced = <span class="keyword">true</span>;
 <a name="l00146"></a>00146          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; nNeighbor; ++j) {
 <a name="l00147"></a>00147             <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> *jAtomPtr = neighbors[j];
 <a name="l00148"></a>00148          
 <a name="l00149"></a>00149             <span class="keywordtype">double</span> r = sqrt(boundary.distanceSq(
-<a name="l00150"></a>00150                jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), newPos));
-<a name="l00151"></a>00151             <span class="keywordflow">if</span> (r &lt; (exclusionRadius[thisAtom.<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>()] +
-<a name="l00152"></a>00152                exclusionRadius[jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>()])) {
+<a name="l00150"></a>00150                jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), newPos));
+<a name="l00151"></a>00151             <span class="keywordflow">if</span> (r &lt; (exclusionRadius[thisAtom.<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>()] +
+<a name="l00152"></a>00152                exclusionRadius[jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>()])) {
 <a name="l00153"></a>00153                canBePlaced = <span class="keyword">false</span>;
 <a name="l00154"></a>00154                <span class="keywordflow">break</span>;
 <a name="l00155"></a>00155             }
 <a name="l00156"></a>00156          } 
 <a name="l00157"></a>00157          <span class="keywordflow">if</span> (canBePlaced) {
 <a name="l00158"></a>00158             <span class="comment">// place the particle</span>
-<a name="l00159"></a>00159             thisAtom.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = newPos;
+<a name="l00159"></a>00159             thisAtom.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = newPos;
 <a name="l00160"></a>00160 
 <a name="l00161"></a>00161             <span class="comment">// add to cell list</span>
-<a name="l00162"></a>00162             cellList.<a class="code" href="classMcMd_1_1CellList.html#a2bd3c1a1c3ba81bb593203889d747f8a" title="Add a Atom to the appropriate cell, based on its position.">addAtom</a>(thisAtom);
+<a name="l00162"></a>00162             cellList.<a class="code" href="classMcMd_1_1CellList.html#a2c1742bd324dd3ab05663dcb8ef2c382" title="Add a Atom to the appropriate cell, based on its position.">addAtom</a>(thisAtom);
 <a name="l00163"></a>00163 
 <a name="l00164"></a>00164             <span class="comment">// are we add the end of the chain?</span>
-<a name="l00165"></a>00165             <span class="keywordflow">if</span> (atomId == molecule.<a class="code" href="classMcMd_1_1Molecule.html#ac91579bd63979a294891d330a5533838" title="Get the number of Atoms in this Molecule.">nAtom</a>()-1) 
+<a name="l00165"></a>00165             <span class="keywordflow">if</span> (atomId == molecule.<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>()-1) 
 <a name="l00166"></a>00166               <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00167"></a>00167             
 <a name="l00168"></a>00168             <span class="comment">// recursion step</span>
@@ -218,7 +218,7 @@
 <a name="l00170"></a>00170                cellList, bondPotentialPtr, boundary) ) {
 <a name="l00171"></a>00171                <span class="comment">// If the next monomer cannot be inserted, delete this monomer</span>
 <a name="l00172"></a>00172                <span class="comment">// again</span>
-<a name="l00173"></a>00173                cellList.<a class="code" href="classMcMd_1_1CellList.html#a996c9a03f48f50325ddc703f3d5ee77d" title="Delete a Atom object from its cell.">deleteAtom</a>(thisAtom);
+<a name="l00173"></a>00173                cellList.<a class="code" href="classMcMd_1_1CellList.html#a07fd0c30018abf719bbf810818b7c1ff" title="Delete a Atom object from its cell.">deleteAtom</a>(thisAtom);
 <a name="l00174"></a>00174             } <span class="keywordflow">else</span> {
 <a name="l00175"></a>00175                hasBeenPlaced = <span class="keyword">true</span>;
 <a name="l00176"></a>00176                <span class="keywordflow">break</span>;
@@ -229,16 +229,16 @@
 <a name="l00181"></a>00181       <span class="keywordflow">return</span> hasBeenPlaced;
 <a name="l00182"></a>00182    }
 <a name="l00183"></a>00183 
-<a name="l00187"></a><a class="code" href="classMcMd_1_1Linear.html#a90f27faa15c854aa1b94dc391ac7ee1d">00187</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Linear.html#a90f27faa15c854aa1b94dc391ac7ee1d" title="Generate random molecules.">Linear::generateMolecules</a>(<span class="keywordtype">int</span> nMolecule, 
+<a name="l00187"></a><a class="code" href="classMcMd_1_1Linear.html#ae9190ad60c8a5c58ede0165aed0ada84">00187</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Linear.html#ae9190ad60c8a5c58ede0165aed0ada84" title="Generate random molecules.">Linear::generateMolecules</a>(<span class="keywordtype">int</span> nMolecule, 
 <a name="l00188"></a>00188       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;double&gt;</a> exclusionRadius, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system,
-<a name="l00189"></a>00189       <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a> *bondPotentialPtr, <span class="keyword">const</span> Boundary &amp;boundary)
+<a name="l00189"></a>00189       <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a> *bondPotentialPtr, <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary)
 <a name="l00190"></a>00190    {
 <a name="l00191"></a>00191       <span class="keywordtype">int</span> iMol;
 <a name="l00192"></a>00192 
 <a name="l00193"></a>00193       <span class="comment">// Set up a cell list with twice the maxium exclusion radius as the</span>
 <a name="l00194"></a>00194       <span class="comment">// cell size</span>
 <a name="l00195"></a>00195       <span class="keywordtype">double</span> maxExclusionRadius = 0.0;
-<a name="l00196"></a>00196       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iType = 0; iType &lt; system.<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a75990126a7bab14aff4a94db42b29f61" title="Get the number of atom types.">nAtomType</a>(); iType++) {
+<a name="l00196"></a>00196       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iType = 0; iType &lt; system.<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a54f547a8259478908be74fff6e76ba70" title="Get the number of atom types.">nAtomType</a>(); iType++) {
 <a name="l00197"></a>00197          <span class="keywordflow">if</span> (exclusionRadius[iType] &gt; maxExclusionRadius)
 <a name="l00198"></a>00198             maxExclusionRadius = exclusionRadius[iType];
 <a name="l00199"></a>00199       }
@@ -246,44 +246,44 @@
 <a name="l00201"></a>00201       <span class="comment">// the minimum cell size is twice the maxExclusionRadius,</span>
 <a name="l00202"></a>00202       <span class="comment">// but to save memory, we take 2 times that value </span>
 <a name="l00203"></a>00203       <a class="code" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> cellList;
-<a name="l00204"></a>00204       cellList.<a class="code" href="classMcMd_1_1CellList.html#a4d5514b0baa043189134396aacc4fd94" title="Allocate memory for this CellList.">allocate</a>(system.<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a72fbb50e40dfdc5f3710e54aac41b97e" title="Get the total number of Atoms allocated.">atomCapacity</a>(),
+<a name="l00204"></a>00204       cellList.<a class="code" href="classMcMd_1_1CellList.html#a9bea78c1d93f2102ae793c3a377ff9f5" title="Allocate memory for this CellList.">allocate</a>(system.<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a026daa03685c6af5d7defc5d4e724a65" title="Get the total number of Atoms allocated.">atomCapacity</a>(),
 <a name="l00205"></a>00205          boundary, 2.0*2.0*maxExclusionRadius);
 <a name="l00206"></a>00206 
-<a name="l00207"></a>00207       <span class="keywordflow">if</span> (nMolecule &gt; <a class="code" href="classMcMd_1_1Species.html#a104736719cd4e5f21c25705c77064dde" title="Get total number of Molecule objects allocated for this Species.">capacity</a>())
+<a name="l00207"></a>00207       <span class="keywordflow">if</span> (nMolecule &gt; <a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>())
 <a name="l00208"></a>00208          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nMolecule &gt; Species.capacity()!&quot;</span>); 
 <a name="l00209"></a>00209 
 <a name="l00210"></a>00210       <span class="keywordflow">for</span> (iMol = 0; iMol &lt; nMolecule; ++iMol) {
 <a name="l00211"></a>00211          <span class="comment">// Add a new molecule to the system</span>
-<a name="l00212"></a>00212          <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> &amp;newMolecule= <a class="code" href="classMcMd_1_1Species.html#a5c347060621ccff81193a1674ae34891" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a62312da960f11ad38c115903b8156d96" title="Pop an element off the stack.">pop</a>();
-<a name="l00213"></a>00213          system.<a class="code" href="classMcMd_1_1System.html#a939f190986aed5350c92022b59cab7b4" title="Add a Molecule to this System.">addMolecule</a>(newMolecule);
+<a name="l00212"></a>00212          <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> &amp;newMolecule= <a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().<a class="code" href="classUtil_1_1ArrayStack.html#a0465b9e61f008e56b8e6a83c13c3598a" title="Pop an element off the stack.">pop</a>();
+<a name="l00213"></a>00213          system.<a class="code" href="classMcMd_1_1System.html#a5311d7245d55b3efa0848ed040b053b3" title="Add a Molecule to this System.">addMolecule</a>(newMolecule);
 <a name="l00214"></a>00214 
 <a name="l00215"></a>00215          <span class="comment">// Try placing atoms</span>
 <a name="l00216"></a>00216          <span class="keywordtype">bool</span> moleculeHasBeenPlaced = <span class="keyword">false</span>;
 <a name="l00217"></a>00217          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iAttempt = 0; iAttempt&lt; maxPlacementAttempts_; iAttempt++) {
 <a name="l00218"></a>00218             <span class="comment">// Place first atom</span>
 <a name="l00219"></a>00219             <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> pos;
-<a name="l00220"></a>00220             boundary.randomPosition(system.<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a3e9d2379455b7dc1bc206383917cd3b0" title="Get the random number generator by reference.">random</a>(),pos);
-<a name="l00221"></a>00221             <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;thisAtom = newMolecule.<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(0);
+<a name="l00220"></a>00220             boundary.randomPosition(system.<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afe4a8354b0ecaf6daf94ea9b8343b26b" title="Get the random number generator by reference.">random</a>(),pos);
+<a name="l00221"></a>00221             <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;thisAtom = newMolecule.<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(0);
 <a name="l00222"></a>00222  
 <a name="l00223"></a>00223             <span class="comment">// check if the first atom can be placed at the new position</span>
 <a name="l00224"></a>00224             <a class="code" href="classUtil_1_1FSArray.html">CellList::NeighborArray</a> neighbors;
-<a name="l00225"></a>00225             cellList.<a class="code" href="classMcMd_1_1CellList.html#ad010d819637e43b16d618e032cd2cd02" title="Fill a NeighborArray with pointers to atoms near a specified position.">getNeighbors</a>(pos, neighbors);
-<a name="l00226"></a>00226             <span class="keywordtype">int</span> nNeighbor = neighbors.<a class="code" href="classUtil_1_1FSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">size</a>();
+<a name="l00225"></a>00225             cellList.<a class="code" href="classMcMd_1_1CellList.html#a5170b4abd47e6070d447408b2e0e8b5d" title="Fill a NeighborArray with pointers to atoms near a specified position.">getNeighbors</a>(pos, neighbors);
+<a name="l00226"></a>00226             <span class="keywordtype">int</span> nNeighbor = neighbors.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
 <a name="l00227"></a>00227             <span class="keywordtype">bool</span> canBePlaced = <span class="keyword">true</span>;
 <a name="l00228"></a>00228             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; nNeighbor; ++j) {
 <a name="l00229"></a>00229                <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> *jAtomPtr = neighbors[j];
 <a name="l00230"></a>00230          
 <a name="l00231"></a>00231                <span class="keywordtype">double</span> r = sqrt(boundary.distanceSq(
-<a name="l00232"></a>00232                   jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), pos));
-<a name="l00233"></a>00233                <span class="keywordflow">if</span> (r &lt; (exclusionRadius[thisAtom.<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>()] +
-<a name="l00234"></a>00234                   exclusionRadius[jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>()])) {
+<a name="l00232"></a>00232                   jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), pos));
+<a name="l00233"></a>00233                <span class="keywordflow">if</span> (r &lt; (exclusionRadius[thisAtom.<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>()] +
+<a name="l00234"></a>00234                   exclusionRadius[jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>()])) {
 <a name="l00235"></a>00235                   canBePlaced = <span class="keyword">false</span>;
 <a name="l00236"></a>00236                   <span class="keywordflow">break</span>;
 <a name="l00237"></a>00237                }
 <a name="l00238"></a>00238             } 
 <a name="l00239"></a>00239             <span class="keywordflow">if</span> (canBePlaced)  {
-<a name="l00240"></a>00240                thisAtom.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = pos;
-<a name="l00241"></a>00241                cellList.<a class="code" href="classMcMd_1_1CellList.html#a2bd3c1a1c3ba81bb593203889d747f8a" title="Add a Atom to the appropriate cell, based on its position.">addAtom</a>(thisAtom);
+<a name="l00240"></a>00240                thisAtom.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = pos;
+<a name="l00241"></a>00241                cellList.<a class="code" href="classMcMd_1_1CellList.html#a2c1742bd324dd3ab05663dcb8ef2c382" title="Add a Atom to the appropriate cell, based on its position.">addAtom</a>(thisAtom);
 <a name="l00242"></a>00242 
 <a name="l00243"></a>00243                <span class="comment">// Try to recursively place other atoms</span>
 <a name="l00244"></a>00244                <span class="keywordflow">if</span> (tryPlaceAtom(newMolecule, 0, exclusionRadius, system,
@@ -291,18 +291,18 @@
 <a name="l00246"></a>00246                   moleculeHasBeenPlaced = <span class="keyword">true</span>;
 <a name="l00247"></a>00247                   <span class="keywordflow">break</span>;
 <a name="l00248"></a>00248               } <span class="keywordflow">else</span> {
-<a name="l00249"></a>00249                  cellList.<a class="code" href="classMcMd_1_1CellList.html#a996c9a03f48f50325ddc703f3d5ee77d" title="Delete a Atom object from its cell.">deleteAtom</a>(thisAtom); 
+<a name="l00249"></a>00249                  cellList.<a class="code" href="classMcMd_1_1CellList.html#a07fd0c30018abf719bbf810818b7c1ff" title="Delete a Atom object from its cell.">deleteAtom</a>(thisAtom); 
 <a name="l00250"></a>00250               }
 <a name="l00251"></a>00251             }
 <a name="l00252"></a>00252          }
 <a name="l00253"></a>00253          <span class="keywordflow">if</span> (! moleculeHasBeenPlaced) {
 <a name="l00254"></a>00254            std::ostringstream oss;
-<a name="l00255"></a>00255            oss &lt;&lt;  <span class="stringliteral">&quot;Failed to place molecule &quot;</span> &lt;&lt; newMolecule.<a class="code" href="classMcMd_1_1Molecule.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get the index for this Molecule (unique in species).">id</a>();
+<a name="l00255"></a>00255            oss &lt;&lt;  <span class="stringliteral">&quot;Failed to place molecule &quot;</span> &lt;&lt; newMolecule.<a class="code" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">id</a>();
 <a name="l00256"></a>00256            <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(oss.str().c_str());
 <a name="l00257"></a>00257          }
 <a name="l00258"></a>00258 
 <a name="l00259"></a>00259          <span class="comment">// Finally, update the system Boundary</span>
-<a name="l00260"></a>00260          system.<a class="code" href="classMcMd_1_1System.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary by reference.">boundary</a>().setLengths(boundary.lengths());
+<a name="l00260"></a>00260          system.<a class="code" href="classMcMd_1_1System.html#ace1b2b95dc094767d218e1dcf520b5ca" title="Get the Boundary by reference.">boundary</a>().setLengths(boundary.lengths());
 <a name="l00261"></a>00261       }
 <a name="l00262"></a>00262 
 <a name="l00263"></a>00263 <span class="comment">/***</span>
@@ -335,7 +335,7 @@
 <a name="l00290"></a>00290 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

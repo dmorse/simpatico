@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -57,7 +57,7 @@
 <a name="l00005"></a>00005 <span class="comment">/*</span>
 <a name="l00006"></a>00006 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00007"></a>00007 <span class="comment">*</span>
-<a name="l00008"></a>00008 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00008"></a>00008 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00009"></a>00009 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00010"></a>00010 <span class="comment">*/</span>
 <a name="l00011"></a>00011 
@@ -100,10 +100,10 @@
 <a name="l00088"></a>00088 
 <a name="l00092"></a>00092       <span class="keyword">virtual</span> <span class="keywordtype">double</span> maxPairCutoff() <span class="keyword">const</span>;
 <a name="l00093"></a>00093 
-<a name="l00102"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a1d5b9097db680b4eace98f69fc8dec1a">00102</a>       <span class="keywordtype">void</span> <span class="keyword">set</span>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> value)
+<a name="l00102"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a23a1ddabcde4bdb9b67066be0dcb721c">00102</a>       <span class="keywordtype">void</span> <span class="keyword">set</span>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <span class="keywordtype">double</span> value)
 <a name="l00103"></a>00103       {  interactionPtr_-&gt;set(name, i, j, value); }
 <a name="l00104"></a>00104 
-<a name="l00112"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#ab633dae15c30d4918f3d8f937be076dc">00112</a>       <span class="keywordtype">double</span> <span class="keyword">get</span>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) <span class="keyword">const</span>
+<a name="l00112"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a787dd534d592924e6a9ee28f5d64f411">00112</a>       <span class="keywordtype">double</span> <span class="keyword">get</span>(std::string name, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) <span class="keyword">const</span>
 <a name="l00113"></a>00113       {  <span class="keywordflow">return</span> interactionPtr_-&gt;get(name, i, j); }
 <a name="l00114"></a>00114 
 <a name="l00118"></a>00118       <span class="keyword">virtual</span> std::string interactionClassName() <span class="keyword">const</span>;
@@ -158,7 +158,7 @@
 <a name="l00195"></a>00195 <span class="comment">   * Default constructor.</span>
 <a name="l00196"></a>00196 <span class="comment">   */</span>
 <a name="l00197"></a>00197    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00198"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a7e66fba08313eb1dd9e36358649c5f48">00198</a>    <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html" title="Implementation template for an MdPairPotential.">MdPairPotentialImpl&lt;Interaction&gt;::MdPairPotentialImpl</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)
+<a name="l00198"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a818e8d6509d8312731d18ad33f3bd7fe">00198</a>    <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html" title="Implementation template for an MdPairPotential.">MdPairPotentialImpl&lt;Interaction&gt;::MdPairPotentialImpl</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)
 <a name="l00199"></a>00199     : <a class="code" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a>(system),
 <a name="l00200"></a>00200       interactionPtr_(0),
 <a name="l00201"></a>00201       isCopy_(false)
@@ -168,7 +168,7 @@
 <a name="l00205"></a>00205 <span class="comment">   * Constructor, copy from McPairPotentialImpl&lt;Interaction&gt;.</span>
 <a name="l00206"></a>00206 <span class="comment">   */</span>
 <a name="l00207"></a>00207    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00208"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a339f15214f6861797048e2cbfbb24c68">00208</a>    <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a7e66fba08313eb1dd9e36358649c5f48" title="Constructor.">MdPairPotentialImpl&lt;Interaction&gt;::MdPairPotentialImpl</a>(
+<a name="l00208"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a0a1328d609a32cccf2b9911ffd6c35ed">00208</a>    <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a818e8d6509d8312731d18ad33f3bd7fe" title="Constructor.">MdPairPotentialImpl&lt;Interaction&gt;::MdPairPotentialImpl</a>(
 <a name="l00209"></a>00209                          <a class="code" href="classMcMd_1_1McPairPotentialImpl.html" title="Implementation template for an McPairPotential.">McPairPotentialImpl&lt;Interaction&gt;</a>&amp; other)
 <a name="l00210"></a>00210     : <a class="code" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a>(other.system()),
 <a name="l00211"></a>00211       interactionPtr_(&amp;other.interaction()),
@@ -179,7 +179,7 @@
 <a name="l00216"></a>00216 <span class="comment">   * Destructor. </span>
 <a name="l00217"></a>00217 <span class="comment">   */</span>
 <a name="l00218"></a>00218    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00219"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a9c65df116b74a2a1188d9d9b3f3a3c90">00219</a>    <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a9c65df116b74a2a1188d9d9b3f3a3c90" title="Destructor.">MdPairPotentialImpl&lt;Interaction&gt;::~MdPairPotentialImpl</a>() 
+<a name="l00219"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a9f612e2f8e5a6f2853afa816fecb0976">00219</a>    <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a9f612e2f8e5a6f2853afa816fecb0976" title="Destructor.">MdPairPotentialImpl&lt;Interaction&gt;::~MdPairPotentialImpl</a>() 
 <a name="l00220"></a>00220    {
 <a name="l00221"></a>00221       <span class="keywordflow">if</span> (interactionPtr_ &amp;&amp; !isCopy_) {
 <a name="l00222"></a>00222          <span class="keyword">delete</span> interactionPtr_;
@@ -188,7 +188,7 @@
 <a name="l00225"></a>00225    }
 <a name="l00226"></a>00226 
 <a name="l00227"></a>00227    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00228"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#ab5421d3c9175985c9acbf723e5392075">00228</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#ab5421d3c9175985c9acbf723e5392075" title="Read pair potential interaction and pair list blocks.">MdPairPotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream&amp; in)
+<a name="l00228"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#ab6a4c1bea70170aa498dd5c02f03e09c">00228</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#ab6a4c1bea70170aa498dd5c02f03e09c" title="Read pair potential interaction and pair list blocks.">MdPairPotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream&amp; in)
 <a name="l00229"></a>00229    {
 <a name="l00230"></a>00230       readBegin(in, <span class="stringliteral">&quot;MdPairPotential&quot;</span>);
 <a name="l00231"></a>00231 
@@ -215,7 +215,7 @@
 <a name="l00252"></a>00252 <span class="comment">   * Return pair energy for a single pair.</span>
 <a name="l00253"></a>00253 <span class="comment">   */</span>
 <a name="l00254"></a>00254    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt; <span class="keywordtype">double</span> 
-<a name="l00255"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a44f33af381e78359603f4ee400834589">00255</a>    <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521" title="Calculate the total nonBonded pair energy for this System.">MdPairPotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keywordtype">double</span> rsq, 
+<a name="l00255"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#af6ac73ba8a709cb131bafac42df742ab">00255</a>    <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a1bec16b69126f45b4d0c25822d5b4808" title="Calculate the total nonBonded pair energy for this System.">MdPairPotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keywordtype">double</span> rsq, 
 <a name="l00256"></a>00256                                         <span class="keywordtype">int</span> iAtomType, <span class="keywordtype">int</span> jAtomType)<span class="keyword"> const</span>
 <a name="l00257"></a>00257 <span class="keyword">   </span>{ <span class="keywordflow">return</span> interaction().energy(rsq, iAtomType, jAtomType); }
 <a name="l00258"></a>00258 
@@ -223,7 +223,7 @@
 <a name="l00260"></a>00260 <span class="comment">   * Return force / separation for a single pair.</span>
 <a name="l00261"></a>00261 <span class="comment">   */</span>
 <a name="l00262"></a>00262    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt; <span class="keywordtype">double</span> 
-<a name="l00263"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a5867b0e7d3850c4e246165435267744a">00263</a>    <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a5867b0e7d3850c4e246165435267744a" title="Return force / separation for a single pair.">MdPairPotentialImpl&lt;Interaction&gt;::forceOverR</a>(<span class="keywordtype">double</span> rsq, 
+<a name="l00263"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#add3cdfb0f7aef6343e1fec05c225ad31">00263</a>    <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#add3cdfb0f7aef6343e1fec05c225ad31" title="Return force / separation for a single pair.">MdPairPotentialImpl&lt;Interaction&gt;::forceOverR</a>(<span class="keywordtype">double</span> rsq, 
 <a name="l00264"></a>00264                                         <span class="keywordtype">int</span> iAtomType, <span class="keywordtype">int</span> jAtomType)<span class="keyword"> const</span>
 <a name="l00265"></a>00265 <span class="keyword">   </span>{ <span class="keywordflow">return</span> interaction().forceOverR(rsq, iAtomType, jAtomType); }
 <a name="l00266"></a>00266 
@@ -231,21 +231,21 @@
 <a name="l00268"></a>00268 <span class="comment">   * Return maximum cutoff.</span>
 <a name="l00269"></a>00269 <span class="comment">   */</span>
 <a name="l00270"></a>00270    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00271"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a30a3c4cfc7e46e5e8ac052556fd945f0">00271</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a30a3c4cfc7e46e5e8ac052556fd945f0" title="Return maximum cutoff.">MdPairPotentialImpl&lt;Interaction&gt;::maxPairCutoff</a>()<span class="keyword"> const</span>
+<a name="l00271"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#aa05df0b0c5e0f91260edd8b633131b9d">00271</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#aa05df0b0c5e0f91260edd8b633131b9d" title="Return maximum cutoff.">MdPairPotentialImpl&lt;Interaction&gt;::maxPairCutoff</a>()<span class="keyword"> const</span>
 <a name="l00272"></a>00272 <span class="keyword">   </span>{ <span class="keywordflow">return</span> interaction().maxPairCutoff(); }
 <a name="l00273"></a>00273 
 <a name="l00274"></a>00274    <span class="comment">/*</span>
 <a name="l00275"></a>00275 <span class="comment">   * Return pair interaction class name.</span>
 <a name="l00276"></a>00276 <span class="comment">   */</span>
 <a name="l00277"></a>00277    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00278"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#af02a7265da2c0156eeb829fea1be4747">00278</a>    std::string <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#af02a7265da2c0156eeb829fea1be4747" title="Return pair interaction class name (e.g., &amp;quot;LJPair&amp;quot;).">MdPairPotentialImpl&lt;Interaction&gt;::interactionClassName</a>()<span class="keyword"> const</span>
+<a name="l00278"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#aab51ca9deb3bef8ca52287c5c600c817">00278</a>    std::string <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#aab51ca9deb3bef8ca52287c5c600c817" title="Return pair interaction class name (e.g., &amp;quot;LJPair&amp;quot;).">MdPairPotentialImpl&lt;Interaction&gt;::interactionClassName</a>()<span class="keyword"> const</span>
 <a name="l00279"></a>00279 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().className(); }
 <a name="l00280"></a>00280 
 <a name="l00281"></a>00281    <span class="comment">/* </span>
 <a name="l00282"></a>00282 <span class="comment">   * Return nonBonded Pair interaction energy</span>
 <a name="l00283"></a>00283 <span class="comment">   */</span>
 <a name="l00284"></a>00284    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00285"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521">00285</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521" title="Calculate the total nonBonded pair energy for this System.">MdPairPotentialImpl&lt;Interaction&gt;::energy</a>()
+<a name="l00285"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a1bec16b69126f45b4d0c25822d5b4808">00285</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a1bec16b69126f45b4d0c25822d5b4808" title="Calculate the total nonBonded pair energy for this System.">MdPairPotentialImpl&lt;Interaction&gt;::energy</a>()
 <a name="l00286"></a>00286    {
 <a name="l00287"></a>00287 
 <a name="l00288"></a>00288       <span class="comment">// Update PairList if necessary</span>
@@ -259,12 +259,12 @@
 <a name="l00296"></a>00296       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> *atom1Ptr;
 <a name="l00297"></a>00297       <span class="keywordtype">double</span> rsq;
 <a name="l00298"></a>00298       <span class="keywordtype">double</span> energy=0;
-<a name="l00299"></a>00299       <span class="keywordflow">for</span> (pairList_.begin(iter); iter.<a class="code" href="classMcMd_1_1PairIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Return true if not at end of PairList.">notEnd</a>(); ++iter) {
-<a name="l00300"></a>00300          iter.<a class="code" href="classMcMd_1_1PairIterator.html#ac835f74b5a55a62d48a3ff17f9e818f4" title="Get pointers for current pair of Atoms.">getPair</a>(atom0Ptr, atom1Ptr);
+<a name="l00299"></a>00299       <span class="keywordflow">for</span> (pairList_.begin(iter); iter.<a class="code" href="classMcMd_1_1PairIterator.html#a2e8f0a1c15f393bf41a3291b412a48fb" title="Return true if not at end of PairList.">notEnd</a>(); ++iter) {
+<a name="l00300"></a>00300          iter.<a class="code" href="classMcMd_1_1PairIterator.html#a9e32868da3b5b47305269f8f5d60529a" title="Get pointers for current pair of Atoms.">getPair</a>(atom0Ptr, atom1Ptr);
 <a name="l00301"></a>00301          rsq = boundary().
-<a name="l00302"></a>00302                distanceSq(atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>());
+<a name="l00302"></a>00302                distanceSq(atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>());
 <a name="l00303"></a>00303          energy += interaction().
-<a name="l00304"></a>00304                    energy(rsq, atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>());
+<a name="l00304"></a>00304                    energy(rsq, atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>());
 <a name="l00305"></a>00305       }
 <a name="l00306"></a>00306 
 <a name="l00307"></a>00307       <span class="keywordflow">return</span> energy;
@@ -274,7 +274,7 @@
 <a name="l00311"></a>00311 <span class="comment">   * Add nonBonded pair forces to atomic forces.</span>
 <a name="l00312"></a>00312 <span class="comment">   */</span>
 <a name="l00313"></a>00313    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00314"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d">00314</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Calculate non-bonded pair forces for all atoms in this System.">MdPairPotentialImpl&lt;Interaction&gt;::addForces</a>()
+<a name="l00314"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a03f4f89ed62a5488900cb1815fa1d8ab">00314</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a03f4f89ed62a5488900cb1815fa1d8ab" title="Calculate non-bonded pair forces for all atoms in this System.">MdPairPotentialImpl&lt;Interaction&gt;::addForces</a>()
 <a name="l00315"></a>00315    {
 <a name="l00316"></a>00316       <span class="comment">// Update PairList if necessary</span>
 <a name="l00317"></a>00317       <span class="keywordflow">if</span> (!isPairListCurrent()) {
@@ -287,14 +287,14 @@
 <a name="l00324"></a>00324       <span class="keywordtype">double</span>       rsq;
 <a name="l00325"></a>00325       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>        *atom0Ptr;
 <a name="l00326"></a>00326       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>        *atom1Ptr;
-<a name="l00327"></a>00327       <span class="keywordflow">for</span> (pairList_.begin(iter); iter.<a class="code" href="classMcMd_1_1PairIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Return true if not at end of PairList.">notEnd</a>(); ++iter) {
-<a name="l00328"></a>00328          iter.<a class="code" href="classMcMd_1_1PairIterator.html#ac835f74b5a55a62d48a3ff17f9e818f4" title="Get pointers for current pair of Atoms.">getPair</a>(atom0Ptr, atom1Ptr);
+<a name="l00327"></a>00327       <span class="keywordflow">for</span> (pairList_.begin(iter); iter.<a class="code" href="classMcMd_1_1PairIterator.html#a2e8f0a1c15f393bf41a3291b412a48fb" title="Return true if not at end of PairList.">notEnd</a>(); ++iter) {
+<a name="l00328"></a>00328          iter.<a class="code" href="classMcMd_1_1PairIterator.html#a9e32868da3b5b47305269f8f5d60529a" title="Get pointers for current pair of Atoms.">getPair</a>(atom0Ptr, atom1Ptr);
 <a name="l00329"></a>00329          rsq = boundary().
-<a name="l00330"></a>00330                distanceSq(atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), force);
+<a name="l00330"></a>00330                distanceSq(atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), force);
 <a name="l00331"></a>00331          force *= interaction().
-<a name="l00332"></a>00332                   forceOverR(rsq, atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>());
-<a name="l00333"></a>00333          atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() += force;
-<a name="l00334"></a>00334          atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() -= force;
+<a name="l00332"></a>00332                   forceOverR(rsq, atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>());
+<a name="l00333"></a>00333          atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() += force;
+<a name="l00334"></a>00334          atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() -= force;
 <a name="l00335"></a>00335       }
 <a name="l00336"></a>00336    } 
 <a name="l00337"></a>00337 
@@ -316,13 +316,13 @@
 <a name="l00353"></a>00353       <a class="code" href="namespaceUtil.html#a892d1362ecc1ff6a8b9f47deeb688c1b" title="Set a float variable to zero.">setToZero</a>(stress);
 <a name="l00354"></a>00354 
 <a name="l00355"></a>00355       <span class="comment">// Loop over nonbonded neighbor pairs</span>
-<a name="l00356"></a>00356       <span class="keywordflow">for</span> (pairList_.begin(iter); iter.<a class="code" href="classMcMd_1_1PairIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Return true if not at end of PairList.">notEnd</a>(); ++iter) {
-<a name="l00357"></a>00357          iter.<a class="code" href="classMcMd_1_1PairIterator.html#ac835f74b5a55a62d48a3ff17f9e818f4" title="Get pointers for current pair of Atoms.">getPair</a>(atom0Ptr, atom1Ptr);
+<a name="l00356"></a>00356       <span class="keywordflow">for</span> (pairList_.begin(iter); iter.<a class="code" href="classMcMd_1_1PairIterator.html#a2e8f0a1c15f393bf41a3291b412a48fb" title="Return true if not at end of PairList.">notEnd</a>(); ++iter) {
+<a name="l00357"></a>00357          iter.<a class="code" href="classMcMd_1_1PairIterator.html#a9e32868da3b5b47305269f8f5d60529a" title="Get pointers for current pair of Atoms.">getPair</a>(atom0Ptr, atom1Ptr);
 <a name="l00358"></a>00358          rsq = boundary().
-<a name="l00359"></a>00359                distanceSq(atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr);
+<a name="l00359"></a>00359                distanceSq(atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr);
 <a name="l00360"></a>00360          force  = dr;
 <a name="l00361"></a>00361          force *= interaction().
-<a name="l00362"></a>00362                   forceOverR(rsq, atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>());
+<a name="l00362"></a>00362                   forceOverR(rsq, atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>(), atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>());
 <a name="l00363"></a>00363          incrementPairStress(force, dr, stress);
 <a name="l00364"></a>00364       }
 <a name="l00365"></a>00365 
@@ -333,17 +333,17 @@
 <a name="l00370"></a>00370    }
 <a name="l00371"></a>00371 
 <a name="l00372"></a>00372    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00373"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d">00373</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d" title="Compute total nonbonded pressure.">MdPairPotentialImpl&lt;Interaction&gt;::computeStress</a>(<span class="keywordtype">double</span>&amp; stress)<span class="keyword"> </span>
+<a name="l00373"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#ae6cd1f004e6dac320cc796c1bcfe3e87">00373</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#ae6cd1f004e6dac320cc796c1bcfe3e87" title="Compute total nonbonded pressure.">MdPairPotentialImpl&lt;Interaction&gt;::computeStress</a>(<span class="keywordtype">double</span>&amp; stress)<span class="keyword"> </span>
 <a name="l00374"></a>00374 <span class="keyword">        const</span>
 <a name="l00375"></a>00375 <span class="keyword">   </span>{  computeStressImpl(stress); }
 <a name="l00376"></a>00376 
 <a name="l00377"></a>00377    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00378"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a664e9e28ebd82ef0744a495912c8131c">00378</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d" title="Compute total nonbonded pressure.">MdPairPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Util::Vector</a>&amp; stress)<span class="keyword"></span>
+<a name="l00378"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#af09a0439db065c93bf71e75f0fdc175b">00378</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#ae6cd1f004e6dac320cc796c1bcfe3e87" title="Compute total nonbonded pressure.">MdPairPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Util::Vector</a>&amp; stress)<span class="keyword"></span>
 <a name="l00379"></a>00379 <span class="keyword">        const</span>
 <a name="l00380"></a>00380 <span class="keyword">   </span>{  computeStressImpl(stress); }
 <a name="l00381"></a>00381 
 <a name="l00382"></a>00382    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00383"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a7179cc96d78bbce80d68170bdfdab3fb">00383</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d" title="Compute total nonbonded pressure.">MdPairPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Util::Tensor</a>&amp; stress)<span class="keyword"></span>
+<a name="l00383"></a><a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#a25cb0dd69e076be9f234a8596b8c170b">00383</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdPairPotentialImpl.html#ae6cd1f004e6dac320cc796c1bcfe3e87" title="Compute total nonbonded pressure.">MdPairPotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Util::Tensor</a>&amp; stress)<span class="keyword"></span>
 <a name="l00384"></a>00384 <span class="keyword">        const</span>
 <a name="l00385"></a>00385 <span class="keyword">   </span>{  computeStressImpl(stress); }
 <a name="l00386"></a>00386 
@@ -352,7 +352,7 @@
 <a name="l00389"></a>00389 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,30 +71,30 @@
 <a name="l00020"></a>00020 {
 <a name="l00021"></a>00021 
 <a name="l00022"></a>00022    <span class="comment">// Explicit specialization for double</span>
-<a name="l00023"></a>00023    <span class="keyword">template</span> &lt;&gt; <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#aa4d129d95cdf12d6ba5b7eb1969d626a" title="Explicit specialization of write for double data.">write</a>(std::ostream&amp; out, <span class="keywordtype">double</span> data)
-<a name="l00024"></a><a class="code" href="namespaceUtil.html#aa4d129d95cdf12d6ba5b7eb1969d626a">00024</a>    { out &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(data); }
+<a name="l00023"></a>00023    <span class="keyword">template</span> &lt;&gt; <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af0997c7257e2ef413f70fdd3e9eeaa4f" title="Explicit specialization of write for double data.">write</a>(std::ostream&amp; out, <span class="keywordtype">double</span> data)
+<a name="l00024"></a><a class="code" href="namespaceUtil.html#af0997c7257e2ef413f70fdd3e9eeaa4f">00024</a>    { out &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(data); }
 <a name="l00025"></a>00025    
 <a name="l00026"></a>00026    <span class="comment">// Explicit specialization for double</span>
-<a name="l00027"></a>00027    <span class="keyword">template</span> &lt;&gt; <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#aa4d129d95cdf12d6ba5b7eb1969d626a" title="Explicit specialization of write for double data.">write</a>(std::ostream&amp; out, std::complex&lt;double&gt; data)
-<a name="l00028"></a><a class="code" href="namespaceUtil.html#a411ac45cc4c1354314e6cf796c3e07cb">00028</a>    { out &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(data.real()) &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(data.imag()); }
+<a name="l00027"></a>00027    <span class="keyword">template</span> &lt;&gt; <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af0997c7257e2ef413f70fdd3e9eeaa4f" title="Explicit specialization of write for double data.">write</a>(std::ostream&amp; out, std::complex&lt;double&gt; data)
+<a name="l00028"></a><a class="code" href="namespaceUtil.html#a139a0772644087a98fa228fdae81a840">00028</a>    { out &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(data.real()) &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(data.imag()); }
 <a name="l00029"></a>00029 
 <a name="l00030"></a>00030    <span class="comment">// Explicit specialization for int</span>
-<a name="l00031"></a>00031    <span class="keyword">template</span> &lt;&gt; <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#aa4d129d95cdf12d6ba5b7eb1969d626a" title="Explicit specialization of write for double data.">write</a>(std::ostream&amp; out, <span class="keywordtype">int</span> data)
-<a name="l00032"></a><a class="code" href="namespaceUtil.html#a06ecc0d1d759e49b5042f57398a3b4f5">00032</a>    { out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(data); }
+<a name="l00031"></a>00031    <span class="keyword">template</span> &lt;&gt; <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af0997c7257e2ef413f70fdd3e9eeaa4f" title="Explicit specialization of write for double data.">write</a>(std::ostream&amp; out, <span class="keywordtype">int</span> data)
+<a name="l00032"></a><a class="code" href="namespaceUtil.html#a9fb853e9a3c7b34c4d49c1d0073b9677">00032</a>    { out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(data); }
 <a name="l00033"></a>00033    
 <a name="l00034"></a>00034    <span class="comment">// Explicit specialization for long</span>
-<a name="l00035"></a>00035    <span class="keyword">template</span> &lt;&gt; <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#aa4d129d95cdf12d6ba5b7eb1969d626a" title="Explicit specialization of write for double data.">write</a>(std::ostream&amp; out, <span class="keywordtype">long</span> data)
-<a name="l00036"></a><a class="code" href="namespaceUtil.html#ad959a555ca6f53bdb2540ac135a28208">00036</a>    { out &lt;&lt; <a class="code" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a>(data); }
+<a name="l00035"></a>00035    <span class="keyword">template</span> &lt;&gt; <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af0997c7257e2ef413f70fdd3e9eeaa4f" title="Explicit specialization of write for double data.">write</a>(std::ostream&amp; out, <span class="keywordtype">long</span> data)
+<a name="l00036"></a><a class="code" href="namespaceUtil.html#aec427d094edcc5e196dadc3c2ad7f703">00036</a>    { out &lt;&lt; <a class="code" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a>(data); }
 <a name="l00037"></a>00037    
 <a name="l00038"></a>00038    <span class="comment">// Explicit specialization for bool</span>
-<a name="l00039"></a>00039    <span class="keyword">template</span> &lt;&gt; <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#aa4d129d95cdf12d6ba5b7eb1969d626a" title="Explicit specialization of write for double data.">write</a>(std::ostream&amp; out, <span class="keywordtype">bool</span> data)
-<a name="l00040"></a><a class="code" href="namespaceUtil.html#a9df0a9d12b4e8af41a1ee30c40cd2028">00040</a>    { out &lt;&lt; <a class="code" href="classUtil_1_1Bool.html" title="Wrapper for an bool value, for formatted ostream output.">Bool</a>(data); }
+<a name="l00039"></a>00039    <span class="keyword">template</span> &lt;&gt; <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af0997c7257e2ef413f70fdd3e9eeaa4f" title="Explicit specialization of write for double data.">write</a>(std::ostream&amp; out, <span class="keywordtype">bool</span> data)
+<a name="l00040"></a><a class="code" href="namespaceUtil.html#a0cec119d50f7a0bcb46d7d01103bc625">00040</a>    { out &lt;&lt; <a class="code" href="classUtil_1_1Bool.html" title="Wrapper for an bool value, for formatted ostream output.">Bool</a>(data); }
 <a name="l00041"></a>00041 
 <a name="l00042"></a>00042 }
 <a name="l00043"></a>00043 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

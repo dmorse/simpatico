@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: StructureFactorP Class Reference</title>
+<title>Simpatico: McMd::StructureFactorP Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -51,7 +51,7 @@
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<h1>StructureFactorP Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>McMd::StructureFactorP Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::StructureFactorP" --><!-- doxytag: inherits="SystemDiagnostic&lt; System &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -69,9 +69,9 @@
 <p>If a &lt; 0, then <img class="formulaInl" alt="$ \rho_a(k) $" src="form_14.png"/> is given by a sum over all atoms, of all types. By convention, we use a= -1 to indicate this.</p>
 <p>This class can evaluate multiple types of structures factors, corresponding to different choices for the type pair ab, for multiple wavevectors. The input format thus requires the user to specify one or more atom typeId pairs, and one or more wavevectors. Each wavevector is specified as an IntVector containing integer Miller indices. These are the coeficients in an expansion of a reciprocal lattice wavevector in terms of recprocal lattice basis vectors for the periodic unit cell.</p>
 <p>In a system with nAtomType = 2, with two monomer types 0 and 1, the parameter file input for calculating the total, 00 and 01 correlation functions for 5 wavevectors along the x axis in an orthorhombic unit cell might look like this:</p>
-<div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1StructureFactorP.html#ac22d19925e9848bcec64f80dc72fb654" title="Constructor.">StructureFactorP</a>{
-    <a class="code" href="classMcMd_1_1Diagnostic.html#afe5b7de87b935531edcd3d15fbd92166" title="Get interval value.">interval</a>                     1000
-    <a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>     <a class="code" href="classMcMd_1_1StructureFactorP.html#ac22d19925e9848bcec64f80dc72fb654" title="Constructor.">StructureFactorP</a>
+<div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1StructureFactorP.html#a6152ac41996b0d037f83c53c0f6c90d3" title="Constructor.">StructureFactorP</a>{
+    <a class="code" href="classMcMd_1_1Diagnostic.html#ad399e6c8cf5acab10360278dc964b4f4" title="Get interval value.">interval</a>                     1000
+    <a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>     <a class="code" href="classMcMd_1_1StructureFactorP.html#a6152ac41996b0d037f83c53c0f6c90d3" title="Constructor.">StructureFactorP</a>
     nAtomTypeIdPair                  3
     atomTypeIdPairs          -1     -1
                               0      0
@@ -89,17 +89,17 @@
 </div>
 <p><code>#include &lt;<a class="el" href="StructureFactorP_8h_source.html">StructureFactorP.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for StructureFactorP:</div>
+Inheritance diagram for McMd::StructureFactorP:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1StructureFactorP.png" usemap="#StructureFactorP_map" alt=""/>
-  <map id="StructureFactorP_map" name="StructureFactorP_map">
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; System &gt;" shape="rect" coords="92,168,267,192"/>
-<area href="classMcMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="92,112,267,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,175,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="185,56,360,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,175,24"/>
-<area href="classMcMd_1_1StructureFactorPGrid.html" alt="StructureFactorPGrid" shape="rect" coords="92,280,267,304"/>
+  <img src="classMcMd_1_1StructureFactorP.png" usemap="#McMd::StructureFactorP_map" alt=""/>
+  <map id="McMd::StructureFactorP_map" name="McMd::StructureFactorP_map">
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; System &gt;" shape="rect" coords="113,168,330,192"/>
+<area href="classMcMd_1_1Diagnostic.html" alt="McMd::Diagnostic" shape="rect" coords="113,112,330,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,217,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="227,56,444,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,217,24"/>
+<area href="classMcMd_1_1StructureFactorPGrid.html" alt="McMd::StructureFactorPGrid" shape="rect" coords="113,280,330,304"/>
 </map>
  </div></div>
 
@@ -107,57 +107,57 @@ Inheritance diagram for StructureFactorP:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#ac22d19925e9848bcec64f80dc72fb654">StructureFactorP</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac22d19925e9848bcec64f80dc72fb654"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a315d504c1502ec0e7af827e57f5e8b93">~StructureFactorP</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a315d504c1502ec0e7af827e57f5e8b93"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear accumulators.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#afc17577823a371a5ead4e51ebb8ec2ef">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particle pairs to <a class="el" href="classMcMd_1_1StructureFactorP.html" title="StructureFactorP evaluates partial structure factors in Fourier space.">StructureFactorP</a> histogram.  <a href="#afc17577823a371a5ead4e51ebb8ec2ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a7437b254e19e7e12fc2ec99945f4ecea">output</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to predefined output file.  <a href="#a7437b254e19e7e12fc2ec99945f4ecea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a6152ac41996b0d037f83c53c0f6c90d3">StructureFactorP</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6152ac41996b0d037f83c53c0f6c90d3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#aa60876011cc043a4e10cf0e1c302b214">~StructureFactorP</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#aa60876011cc043a4e10cf0e1c302b214"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a86b2bb414ae7f99f3e1a0917592dac31">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#a86b2bb414ae7f99f3e1a0917592dac31"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a35842451b8907b8c1dd55831fe057609">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear accumulators.  <a href="#a35842451b8907b8c1dd55831fe057609"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#add7bcf8fb58f533a4a89a6ab937419ba">sample</a> (long iStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particle pairs to <a class="el" href="classMcMd_1_1StructureFactorP.html" title="StructureFactorP evaluates partial structure factors in Fourier space.">StructureFactorP</a> histogram.  <a href="#add7bcf8fb58f533a4a89a6ab937419ba"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#ae73786ea8e2f4063740c0a9dbd7264f4">output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to predefined output file.  <a href="#ae73786ea8e2f4063740c0a9dbd7264f4"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a093dd7a82f170540fa28a58b61c95a38">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a093dd7a82f170540fa28a58b61c95a38"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#ac8f153070ac13cd33c3ff5c00cf3ef4a">makeWaveVectors</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update wavevectors.  <a href="#ac8f153070ac13cd33c3ff5c00cf3ef4a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a07f8d96e58ad47bed49d15a70e325e9f">makeWaveVectors</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update wavevectors.  <a href="#a07f8d96e58ad47bed49d15a70e325e9f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::ofstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a405a931ed1680bb5a3da7c89e5b2dd06">outputFile_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output file stream.  <a href="#a405a931ed1680bb5a3da7c89e5b2dd06"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a071ab9e6b8fdeeda77f4623230df8df9">structureFactors_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure factor accumulators.  <a href="#a071ab9e6b8fdeeda77f4623230df8df9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; std::complex&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#ab4a595439c5b8d1be081c8f623aa54ef">fourierModes_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Fourier modes. First index is wavevector, second is atom type.  <a href="#ab4a595439c5b8d1be081c8f623aa54ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a7fd280018781fba38c437290fdf968c7">waveIntVectors_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of miller index IntVectors for wavevectors.  <a href="#a7fd280018781fba38c437290fdf968c7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1Vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#adba77ea9ca32e7d0e0b8f8d904f361fc">waveVectors_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of wave vectors.  <a href="#adba77ea9ca32e7d0e0b8f8d904f361fc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1Pair.html">Pair</a>&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a9b498af9e8109ad650423b57e6ad5e6f">atomTypeIdPairs_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of atom type indices (-1 indicates a sum of all types)  <a href="#a9b498af9e8109ad650423b57e6ad5e6f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a29df5d42c9507011a82361258a632f0f">nWave_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of wavevectors.  <a href="#a29df5d42c9507011a82361258a632f0f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a76af617fb75a20fc3d611fdd13025ea4">nAtomTypeIdPair_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of selected atom type pairs.  <a href="#a76af617fb75a20fc3d611fdd13025ea4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#ac50cf6ede880aad2a811578ab9b34b4d">nSample_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of samples thus far.  <a href="#ac50cf6ede880aad2a811578ab9b34b4d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a47e8e463ee625fa1bc77c9e1534b26cf">nAtomType_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of atom types, copied from <a class="el" href="classMcMd_1_1Simulation.html#a75990126a7bab14aff4a94db42b29f61" title="Get the number of atom types.">Simulation::nAtomType()</a>.  <a href="#a47e8e463ee625fa1bc77c9e1534b26cf"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a48d9764bd8f58673da1d598b37581d8c">isInitialized_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has readParam been called?  <a href="#a48d9764bd8f58673da1d598b37581d8c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::ofstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#ad93a7bb81c8d74d1d33b7158f0dbddc6">outputFile_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output file stream.  <a href="#ad93a7bb81c8d74d1d33b7158f0dbddc6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a548c32576c4b3c307f98aba4237cdc35">structureFactors_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure factor accumulators.  <a href="#a548c32576c4b3c307f98aba4237cdc35"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; std::complex&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a1a38c1b8775c844a825f1521cceaccf1">fourierModes_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Fourier modes. First index is wavevector, second is atom type.  <a href="#a1a38c1b8775c844a825f1521cceaccf1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a354f775aeb7961cd96cbae2900ade76a">waveIntVectors_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of miller index IntVectors for wavevectors.  <a href="#a354f775aeb7961cd96cbae2900ade76a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1Vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#ae24386f0369584435fbd3d5f5a1115c5">waveVectors_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of wave vectors.  <a href="#ae24386f0369584435fbd3d5f5a1115c5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1Pair.html">Pair</a>&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a129bb85708b9cedc83e6683c6c860ae2">atomTypeIdPairs_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of atom type indices (-1 indicates a sum of all types)  <a href="#a129bb85708b9cedc83e6683c6c860ae2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a7b65a77b6e4075f7260003309d4c89da">nWave_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of wavevectors.  <a href="#a7b65a77b6e4075f7260003309d4c89da"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a4848320eeabc4641102c560cacccff2a">nAtomTypeIdPair_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of selected atom type pairs.  <a href="#a4848320eeabc4641102c560cacccff2a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#ae7a7e73ff084f0c8d0c8e342f8165c08">nSample_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of samples thus far.  <a href="#ae7a7e73ff084f0c8d0c8e342f8165c08"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a57385e9d2508a753a8d308650f61452b">nAtomType_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of atom types, copied from <a class="el" href="classMcMd_1_1Simulation.html#a54f547a8259478908be74fff6e76ba70" title="Get the number of atom types.">Simulation::nAtomType()</a>.  <a href="#a57385e9d2508a753a8d308650f61452b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorP.html#a1c223712ddc8be269dc76377ef435665">isInitialized_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has readParam been called?  <a href="#a1c223712ddc8be269dc76377ef435665"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ac22d19925e9848bcec64f80dc72fb654"></a><!-- doxytag: member="McMd::StructureFactorP::StructureFactorP" ref="ac22d19925e9848bcec64f80dc72fb654" args="(System &amp;system)" -->
+<a class="anchor" id="a6152ac41996b0d037f83c53c0f6c90d3"></a><!-- doxytag: member="McMd::StructureFactorP::StructureFactorP" ref="a6152ac41996b0d037f83c53c0f6c90d3" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1StructureFactorP.html">StructureFactorP</a> </td>
+          <td class="memname">McMd::StructureFactorP::StructureFactorP </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -179,12 +179,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a315d504c1502ec0e7af827e57f5e8b93"></a><!-- doxytag: member="McMd::StructureFactorP::~StructureFactorP" ref="a315d504c1502ec0e7af827e57f5e8b93" args="()" -->
+<a class="anchor" id="aa60876011cc043a4e10cf0e1c302b214"></a><!-- doxytag: member="McMd::StructureFactorP::~StructureFactorP" ref="aa60876011cc043a4e10cf0e1c302b214" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1StructureFactorP.html">StructureFactorP</a> </td>
+          <td class="memname">McMd::StructureFactorP::~StructureFactorP </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -200,12 +200,12 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::StructureFactorP::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a86b2bb414ae7f99f3e1a0917592dac31"></a><!-- doxytag: member="McMd::StructureFactorP::readParam" ref="a86b2bb414ae7f99f3e1a0917592dac31" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::StructureFactorP::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -233,20 +233,20 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorPGrid.html#ab5421d3c9175985c9acbf723e5392075">StructureFactorPGrid</a>.</p>
+<p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorPGrid.html#adf796554a6bd53321fbe18ae1709f006">McMd::StructureFactorPGrid</a>.</p>
 
 <p>Definition at line <a class="el" href="StructureFactorP_8cpp_source.html#l00039">39</a> of file <a class="el" href="StructureFactorP_8cpp_source.html">StructureFactorP.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::StructureFactorP::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a35842451b8907b8c1dd55831fe057609"></a><!-- doxytag: member="McMd::StructureFactorP::setup" ref="a35842451b8907b8c1dd55831fe057609" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void McMd::StructureFactorP::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -257,9 +257,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Clear accumulators. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a93c5a174f073b2587a484999ca550829">McMd::Diagnostic</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorPGrid.html#a4fc01d736fe50cf5b977f755b675f11d">StructureFactorPGrid</a>.</p>
+<p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorPGrid.html#a18798591c2e296f20f64a323f2e9b73f">McMd::StructureFactorPGrid</a>.</p>
 
 <p>Definition at line <a class="el" href="StructureFactorP_8cpp_source.html#l00068">68</a> of file <a class="el" href="StructureFactorP_8cpp_source.html">StructureFactorP.cpp</a>.</p>
 
@@ -267,12 +267,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afc17577823a371a5ead4e51ebb8ec2ef"></a><!-- doxytag: member="McMd::StructureFactorP::sample" ref="afc17577823a371a5ead4e51ebb8ec2ef" args="(long iStep)" -->
+<a class="anchor" id="add7bcf8fb58f533a4a89a6ab937419ba"></a><!-- doxytag: member="McMd::StructureFactorP::sample" ref="add7bcf8fb58f533a4a89a6ab937419ba" args="(long iStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void McMd::StructureFactorP::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -291,20 +291,20 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f">Diagnostic</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#ae265d934fee552e1bd50ce37930ac63c">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="StructureFactorP_8cpp_source.html#l00088">88</a> of file <a class="el" href="StructureFactorP_8cpp_source.html">StructureFactorP.cpp</a>.</p>
 
-<p>References <a class="el" href="Vector_8h_source.html#l00604">Vector::dot()</a>, <a class="el" href="Constants_8h_source.html#l00039">Constants::Im</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00084">ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="product_8h_source.html#l00022">Util::product()</a>.</p>
+<p>References <a class="el" href="Vector_8h_source.html#l00604">Util::Vector::dot()</a>, <a class="el" href="Constants_8h_source.html#l00039">Util::Constants::Im</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00084">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="product_8h_source.html#l00022">Util::product()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7437b254e19e7e12fc2ec99945f4ecea"></a><!-- doxytag: member="McMd::StructureFactorP::output" ref="a7437b254e19e7e12fc2ec99945f4ecea" args="()" -->
+<a class="anchor" id="ae73786ea8e2f4063740c0a9dbd7264f4"></a><!-- doxytag: member="McMd::StructureFactorP::output" ref="ae73786ea8e2f4063740c0a9dbd7264f4" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void McMd::StructureFactorP::output </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -315,9 +315,9 @@ Protected Attributes</h2></td></tr>
 
 <p>Output results to predefined output file. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a209e4a470fcdeb3d5b87da3dd6960def">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac5481c8016af4c70d19d59905261c0bf">McMd::Diagnostic</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorPGrid.html#a7437b254e19e7e12fc2ec99945f4ecea">StructureFactorPGrid</a>.</p>
+<p>Reimplemented in <a class="el" href="classMcMd_1_1StructureFactorPGrid.html#a607f2f21919e6b0a3d85397c7dbc5059">McMd::StructureFactorPGrid</a>.</p>
 
 <p>Definition at line <a class="el" href="StructureFactorP_8cpp_source.html#l00179">179</a> of file <a class="el" href="StructureFactorP_8cpp_source.html">StructureFactorP.cpp</a>.</p>
 
@@ -325,12 +325,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="McMd::StructureFactorP::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="a093dd7a82f170540fa28a58b61c95a38"></a><!-- doxytag: member="McMd::StructureFactorP::serialize" ref="a093dd7a82f170540fa28a58b61c95a38" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void McMd::StructureFactorP::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -359,7 +361,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6765e839ab267e4959384e35a4112451">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6056717b367040d8605f67794a7e2ebc">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="StructureFactorP_8h_source.html#l00197">197</a> of file <a class="el" href="StructureFactorP_8h_source.html">StructureFactorP.h</a>.</p>
 
@@ -367,12 +369,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac8f153070ac13cd33c3ff5c00cf3ef4a"></a><!-- doxytag: member="McMd::StructureFactorP::makeWaveVectors" ref="ac8f153070ac13cd33c3ff5c00cf3ef4a" args="()" -->
+<a class="anchor" id="a07f8d96e58ad47bed49d15a70e325e9f"></a><!-- doxytag: member="McMd::StructureFactorP::makeWaveVectors" ref="a07f8d96e58ad47bed49d15a70e325e9f" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void makeWaveVectors </td>
+          <td class="memname">void McMd::StructureFactorP::makeWaveVectors </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [protected]</code></td>
@@ -386,17 +388,17 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="StructureFactorP_8cpp_source.html#l00161">161</a> of file <a class="el" href="StructureFactorP_8cpp_source.html">StructureFactorP.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="Vector_8h_source.html#l00349">Vector::Zero</a>.</p>
+<p>References <a class="el" href="Boundary_8h_source.html#l00022">Util::Boundary</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="Vector_8h_source.html#l00349">Util::Vector::Zero</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a405a931ed1680bb5a3da7c89e5b2dd06"></a><!-- doxytag: member="McMd::StructureFactorP::outputFile_" ref="a405a931ed1680bb5a3da7c89e5b2dd06" args="" -->
+<a class="anchor" id="ad93a7bb81c8d74d1d33b7158f0dbddc6"></a><!-- doxytag: member="McMd::StructureFactorP::outputFile_" ref="ad93a7bb81c8d74d1d33b7158f0dbddc6" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::ofstream <a class="el" href="classMcMd_1_1StructureFactorP.html#a405a931ed1680bb5a3da7c89e5b2dd06">outputFile_</a><code> [protected]</code></td>
+          <td class="memname">std::ofstream <a class="el" href="classMcMd_1_1StructureFactorP.html#ad93a7bb81c8d74d1d33b7158f0dbddc6">McMd::StructureFactorP::outputFile_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -408,12 +410,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a071ab9e6b8fdeeda77f4623230df8df9"></a><!-- doxytag: member="McMd::StructureFactorP::structureFactors_" ref="a071ab9e6b8fdeeda77f4623230df8df9" args="" -->
+<a class="anchor" id="a548c32576c4b3c307f98aba4237cdc35"></a><!-- doxytag: member="McMd::StructureFactorP::structureFactors_" ref="a548c32576c4b3c307f98aba4237cdc35" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt;double&gt; <a class="el" href="classMcMd_1_1StructureFactorP.html#a071ab9e6b8fdeeda77f4623230df8df9">structureFactors_</a><code> [protected]</code></td>
+          <td class="memname"><a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt;double&gt; <a class="el" href="classMcMd_1_1StructureFactorP.html#a548c32576c4b3c307f98aba4237cdc35">McMd::StructureFactorP::structureFactors_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -426,12 +428,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab4a595439c5b8d1be081c8f623aa54ef"></a><!-- doxytag: member="McMd::StructureFactorP::fourierModes_" ref="ab4a595439c5b8d1be081c8f623aa54ef" args="" -->
+<a class="anchor" id="a1a38c1b8775c844a825f1521cceaccf1"></a><!-- doxytag: member="McMd::StructureFactorP::fourierModes_" ref="a1a38c1b8775c844a825f1521cceaccf1" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; std::complex&lt;double&gt; &gt; <a class="el" href="classMcMd_1_1StructureFactorP.html#ab4a595439c5b8d1be081c8f623aa54ef">fourierModes_</a><code> [protected]</code></td>
+          <td class="memname"><a class="el" href="classUtil_1_1DMatrix.html">DMatrix</a>&lt; std::complex&lt;double&gt; &gt; <a class="el" href="classMcMd_1_1StructureFactorP.html#a1a38c1b8775c844a825f1521cceaccf1">McMd::StructureFactorP::fourierModes_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -443,12 +445,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7fd280018781fba38c437290fdf968c7"></a><!-- doxytag: member="McMd::StructureFactorP::waveIntVectors_" ref="a7fd280018781fba38c437290fdf968c7" args="" -->
+<a class="anchor" id="a354f775aeb7961cd96cbae2900ade76a"></a><!-- doxytag: member="McMd::StructureFactorP::waveIntVectors_" ref="a354f775aeb7961cd96cbae2900ade76a" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&gt; <a class="el" href="classMcMd_1_1StructureFactorP.html#a7fd280018781fba38c437290fdf968c7">waveIntVectors_</a><code> [protected]</code></td>
+          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&gt; <a class="el" href="classMcMd_1_1StructureFactorP.html#a354f775aeb7961cd96cbae2900ade76a">McMd::StructureFactorP::waveIntVectors_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -460,12 +462,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adba77ea9ca32e7d0e0b8f8d904f361fc"></a><!-- doxytag: member="McMd::StructureFactorP::waveVectors_" ref="adba77ea9ca32e7d0e0b8f8d904f361fc" args="" -->
+<a class="anchor" id="ae24386f0369584435fbd3d5f5a1115c5"></a><!-- doxytag: member="McMd::StructureFactorP::waveVectors_" ref="ae24386f0369584435fbd3d5f5a1115c5" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classUtil_1_1Vector.html">Vector</a>&gt; <a class="el" href="classMcMd_1_1StructureFactorP.html#adba77ea9ca32e7d0e0b8f8d904f361fc">waveVectors_</a><code> [protected]</code></td>
+          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classUtil_1_1Vector.html">Vector</a>&gt; <a class="el" href="classMcMd_1_1StructureFactorP.html#ae24386f0369584435fbd3d5f5a1115c5">McMd::StructureFactorP::waveVectors_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -477,12 +479,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9b498af9e8109ad650423b57e6ad5e6f"></a><!-- doxytag: member="McMd::StructureFactorP::atomTypeIdPairs_" ref="a9b498af9e8109ad650423b57e6ad5e6f" args="" -->
+<a class="anchor" id="a129bb85708b9cedc83e6683c6c860ae2"></a><!-- doxytag: member="McMd::StructureFactorP::atomTypeIdPairs_" ref="a129bb85708b9cedc83e6683c6c860ae2" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1Pair.html">Pair</a>&lt;int&gt; &gt; <a class="el" href="classMcMd_1_1StructureFactorP.html#a9b498af9e8109ad650423b57e6ad5e6f">atomTypeIdPairs_</a><code> [protected]</code></td>
+          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1Pair.html">Pair</a>&lt;int&gt; &gt; <a class="el" href="classMcMd_1_1StructureFactorP.html#a129bb85708b9cedc83e6683c6c860ae2">McMd::StructureFactorP::atomTypeIdPairs_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -494,12 +496,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a29df5d42c9507011a82361258a632f0f"></a><!-- doxytag: member="McMd::StructureFactorP::nWave_" ref="a29df5d42c9507011a82361258a632f0f" args="" -->
+<a class="anchor" id="a7b65a77b6e4075f7260003309d4c89da"></a><!-- doxytag: member="McMd::StructureFactorP::nWave_" ref="a7b65a77b6e4075f7260003309d4c89da" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classMcMd_1_1StructureFactorP.html#a29df5d42c9507011a82361258a632f0f">nWave_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classMcMd_1_1StructureFactorP.html#a7b65a77b6e4075f7260003309d4c89da">McMd::StructureFactorP::nWave_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -511,12 +513,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a76af617fb75a20fc3d611fdd13025ea4"></a><!-- doxytag: member="McMd::StructureFactorP::nAtomTypeIdPair_" ref="a76af617fb75a20fc3d611fdd13025ea4" args="" -->
+<a class="anchor" id="a4848320eeabc4641102c560cacccff2a"></a><!-- doxytag: member="McMd::StructureFactorP::nAtomTypeIdPair_" ref="a4848320eeabc4641102c560cacccff2a" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classMcMd_1_1StructureFactorP.html#a76af617fb75a20fc3d611fdd13025ea4">nAtomTypeIdPair_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classMcMd_1_1StructureFactorP.html#a4848320eeabc4641102c560cacccff2a">McMd::StructureFactorP::nAtomTypeIdPair_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -528,12 +530,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac50cf6ede880aad2a811578ab9b34b4d"></a><!-- doxytag: member="McMd::StructureFactorP::nSample_" ref="ac50cf6ede880aad2a811578ab9b34b4d" args="" -->
+<a class="anchor" id="ae7a7e73ff084f0c8d0c8e342f8165c08"></a><!-- doxytag: member="McMd::StructureFactorP::nSample_" ref="ae7a7e73ff084f0c8d0c8e342f8165c08" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classMcMd_1_1StructureFactorP.html#ac50cf6ede880aad2a811578ab9b34b4d">nSample_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classMcMd_1_1StructureFactorP.html#ae7a7e73ff084f0c8d0c8e342f8165c08">McMd::StructureFactorP::nSample_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -545,29 +547,29 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a47e8e463ee625fa1bc77c9e1534b26cf"></a><!-- doxytag: member="McMd::StructureFactorP::nAtomType_" ref="a47e8e463ee625fa1bc77c9e1534b26cf" args="" -->
+<a class="anchor" id="a57385e9d2508a753a8d308650f61452b"></a><!-- doxytag: member="McMd::StructureFactorP::nAtomType_" ref="a57385e9d2508a753a8d308650f61452b" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classMcMd_1_1StructureFactorP.html#a47e8e463ee625fa1bc77c9e1534b26cf">nAtomType_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classMcMd_1_1StructureFactorP.html#a57385e9d2508a753a8d308650f61452b">McMd::StructureFactorP::nAtomType_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Number of atom types, copied from <a class="el" href="classMcMd_1_1Simulation.html#a75990126a7bab14aff4a94db42b29f61" title="Get the number of atom types.">Simulation::nAtomType()</a>. </p>
+<p>Number of atom types, copied from <a class="el" href="classMcMd_1_1Simulation.html#a54f547a8259478908be74fff6e76ba70" title="Get the number of atom types.">Simulation::nAtomType()</a>. </p>
 
 <p>Definition at line <a class="el" href="StructureFactorP_8h_source.html#l00181">181</a> of file <a class="el" href="StructureFactorP_8h_source.html">StructureFactorP.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a48d9764bd8f58673da1d598b37581d8c"></a><!-- doxytag: member="McMd::StructureFactorP::isInitialized_" ref="a48d9764bd8f58673da1d598b37581d8c" args="" -->
+<a class="anchor" id="a1c223712ddc8be269dc76377ef435665"></a><!-- doxytag: member="McMd::StructureFactorP::isInitialized_" ref="a1c223712ddc8be269dc76377ef435665" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classMcMd_1_1StructureFactorP.html#a48d9764bd8f58673da1d598b37581d8c">isInitialized_</a><code> [protected]</code></td>
+          <td class="memname">bool <a class="el" href="classMcMd_1_1StructureFactorP.html#a1c223712ddc8be269dc76377ef435665">McMd::StructureFactorP::isInitialized_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -584,7 +586,7 @@ Protected Attributes</h2></td></tr>
 <li><a class="el" href="StructureFactorP_8cpp_source.html">StructureFactorP.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:54 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:26 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

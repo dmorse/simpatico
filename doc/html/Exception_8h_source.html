@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -70,20 +70,20 @@
 <a name="l00026"></a>00026    
 <a name="l00027"></a>00027    <span class="keyword">public</span>:
 <a name="l00028"></a>00028    
-<a name="l00047"></a>00047       <a class="code" href="classUtil_1_1Exception.html#a6ed7478f3752c56e5ed54c7c5e29850d" title="Constructor.">Exception</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *function, <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classUtil_1_1Exception.html#a7aaa5d91ea4a343e7c2b1fe56fc5e857" title="Return the error message.">message</a>, 
+<a name="l00047"></a>00047       <a class="code" href="classUtil_1_1Exception.html#ac958ce03ffe988eef0e595a01d1e7825" title="Constructor.">Exception</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *function, <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classUtil_1_1Exception.html#a4d443a56802cc9dabff7c3fa2443fd1c" title="Return the error message.">message</a>, 
 <a name="l00048"></a>00048                 <span class="keyword">const</span> <span class="keywordtype">char</span> *file, <span class="keywordtype">int</span> line, <span class="keywordtype">int</span> echo = 1);
 <a name="l00049"></a>00049    
-<a name="l00058"></a>00058       <a class="code" href="classUtil_1_1Exception.html#a6ed7478f3752c56e5ed54c7c5e29850d" title="Constructor.">Exception</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *message, <span class="keyword">const</span> <span class="keywordtype">char</span> *file, <span class="keywordtype">int</span> line, <span class="keywordtype">int</span> echo = 1);
+<a name="l00058"></a>00058       <a class="code" href="classUtil_1_1Exception.html#ac958ce03ffe988eef0e595a01d1e7825" title="Constructor.">Exception</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *message, <span class="keyword">const</span> <span class="keywordtype">char</span> *file, <span class="keywordtype">int</span> line, <span class="keywordtype">int</span> echo = 1);
 <a name="l00059"></a>00059 
-<a name="l00063"></a>00063       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1Exception.html#ac484faa15fc3891ae27c84ebe49baf22" title="Destructor.">~Exception</a>();
+<a name="l00063"></a>00063       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1Exception.html#adfe27071f026e0377dba9cda866ee96b" title="Destructor.">~Exception</a>();
 <a name="l00064"></a>00064 
-<a name="l00070"></a>00070       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Exception.html#a4d3e77f085209778908a6869118d385e" title="Write error message to output stream.">write</a>(std::ostream &amp;out);
+<a name="l00070"></a>00070       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Exception.html#a5c23a11b300603bf2b0796118848eac5" title="Write error message to output stream.">write</a>(std::ostream &amp;out);
 <a name="l00071"></a>00071    
-<a name="l00075"></a>00075       std::string&amp; <a class="code" href="classUtil_1_1Exception.html#a7aaa5d91ea4a343e7c2b1fe56fc5e857" title="Return the error message.">message</a>();
+<a name="l00075"></a>00075       std::string&amp; <a class="code" href="classUtil_1_1Exception.html#a4d443a56802cc9dabff7c3fa2443fd1c" title="Return the error message.">message</a>();
 <a name="l00076"></a>00076    
 <a name="l00077"></a>00077    <span class="keyword">protected</span>:
 <a name="l00078"></a>00078   
-<a name="l00080"></a><a class="code" href="classUtil_1_1Exception.html#a4136f421e413f118b2b0da52e128ba5b">00080</a>       std::string <a class="code" href="classUtil_1_1Exception.html#a4136f421e413f118b2b0da52e128ba5b" title="Error message string.">message_</a>; 
+<a name="l00080"></a><a class="code" href="classUtil_1_1Exception.html#ad8c7eecfafafc64d68fc161c8a7a3691">00080</a>       std::string <a class="code" href="classUtil_1_1Exception.html#ad8c7eecfafafc64d68fc161c8a7a3691" title="Error message string.">message_</a>; 
 <a name="l00081"></a>00081    
 <a name="l00082"></a>00082    };
 <a name="l00083"></a>00083 
@@ -91,7 +91,7 @@
 <a name="l00085"></a>00085 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

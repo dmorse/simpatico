@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: CompositeBond&lt; BareBond, BarePair &gt; Class Template Reference</title>
+<title>Simpatico: Inter::CompositeBond&lt; BareBond, BarePair &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>CompositeBond&lt; BareBond, BarePair &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Inter__Bond__Module.html">Bond Interactions</a></div></h1>  </div>
+<h1>Inter::CompositeBond&lt; BareBond, BarePair &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Inter__Bond__Module.html">Bond Interactions</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Inter::CompositeBond" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -63,13 +63,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="CompositeBond_8h_source.html">CompositeBond.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for CompositeBond&lt; BareBond, BarePair &gt;:</div>
+Inheritance diagram for Inter::CompositeBond&lt; BareBond, BarePair &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classInter_1_1CompositeBond.png" usemap="#CompositeBond&lt; BareBond, BarePair &gt;_map" alt=""/>
-  <map id="CompositeBond&lt; BareBond, BarePair &gt;_map" name="CompositeBond&lt; BareBond, BarePair &gt;_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,238,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,238,24"/>
+  <img src="classInter_1_1CompositeBond.png" usemap="#Inter::CompositeBond&lt; BareBond, BarePair &gt;_map" alt=""/>
+  <map id="Inter::CompositeBond&lt; BareBond, BarePair &gt;_map" name="Inter::CompositeBond&lt; BareBond, BarePair &gt;_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,269,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,269,24"/>
 </map>
  </div></div>
 
@@ -77,32 +77,34 @@ Inheritance diagram for CompositeBond&lt; BareBond, BarePair &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a1b032d922e960ae4f4442bc56c2232b6">CompositeBond</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a1b032d922e960ae4f4442bc56c2232b6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a8220bdfee50a757b7397b97e2dd37f75">setNBondType</a> (int nBondType)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set nAtomType value.  <a href="#a8220bdfee50a757b7397b97e2dd37f75"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read epsilon and sigma, initialize other variables.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a0ab8f6bbd2e18cfd4df7ced299fe82f0">set</a> (std::string name, int type, double value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify a parameter, identified by a string.  <a href="#a0ab8f6bbd2e18cfd4df7ced299fe82f0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a4567471ccec84b1aab85d434d07fde37">energy</a> (double rsq, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns interaction energy for a single pair of particles.  <a href="#a4567471ccec84b1aab85d434d07fde37"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#aa9fb0a26dc50b37f6e7b3445027c8704">forceOverR</a> (double rsq, int bondTypeId) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ratio of bond force to atom separation.  <a href="#aa9fb0a26dc50b37f6e7b3445027c8704"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a6c614f13ee21022eb3dc6d0adfba6c3c">randomBondLength</a> (<a class="el" href="classUtil_1_1Random.html">Random</a> *randomPtr, double beta, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Throws exception if called.  <a href="#a6c614f13ee21022eb3dc6d0adfba6c3c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a29dcf205f23d3b29d6f3bb6755e01d80">get</a> (std::string name, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a parameter value, identified by a string.  <a href="#a29dcf205f23d3b29d6f3bb6755e01d80"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a13c07285e858b2c232919fd57b635e1b">className</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name of instantiated class, with no spaces.  <a href="#a13c07285e858b2c232919fd57b635e1b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a33f296f08a2ad906855cd890b64603a3">CompositeBond</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a33f296f08a2ad906855cd890b64603a3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#ae82e773fc685879ecc45a99d7444d0ed">setNBondType</a> (int nBondType)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set nAtomType value.  <a href="#ae82e773fc685879ecc45a99d7444d0ed"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a390a50d1c7b22fd5e5141aea8c085051">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read epsilon and sigma, initialize other variables.  <a href="#a390a50d1c7b22fd5e5141aea8c085051"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a7582e81d378a766dbd234d213d5ec4eb">set</a> (std::string name, int type, double value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify a parameter, identified by a string.  <a href="#a7582e81d378a766dbd234d213d5ec4eb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#ab98a2af57db5ab5a978e8e17607637de">energy</a> (double rsq, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns interaction energy for a single pair of particles.  <a href="#ab98a2af57db5ab5a978e8e17607637de"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a2c707217979f4f8d32e9f5a5a7164814">forceOverR</a> (double rsq, int bondTypeId) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns ratio of bond force to atom separation.  <a href="#a2c707217979f4f8d32e9f5a5a7164814"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#af7f17816d2af85f6cbe07030f4b62c43">randomBondLength</a> (<a class="el" href="classUtil_1_1Random.html">Random</a> *randomPtr, double beta, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Throws exception if called.  <a href="#af7f17816d2af85f6cbe07030f4b62c43"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#ae09427557379793791b76212f64e8ef9">get</a> (std::string name, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a parameter value, identified by a string.  <a href="#ae09427557379793791b76212f64e8ef9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1CompositeBond.html#a8e55f6b723e395271a8762836bb399f8">className</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name of instantiated class, with no spaces.  <a href="#a8e55f6b723e395271a8762836bb399f8"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a1b032d922e960ae4f4442bc56c2232b6"></a><!-- doxytag: member="Inter::CompositeBond::CompositeBond" ref="a1b032d922e960ae4f4442bc56c2232b6" args="()" -->
+<a class="anchor" id="a33f296f08a2ad906855cd890b64603a3"></a><!-- doxytag: member="Inter::CompositeBond::CompositeBond" ref="a33f296f08a2ad906855cd890b64603a3" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BareBond , class BarePair &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classInter_1_1CompositeBond.html">CompositeBond</a> </td>
+          <td class="memname"><a class="el" href="classInter_1_1CompositeBond.html">Inter::CompositeBond</a>&lt; BareBond, BarePair &gt;::<a class="el" href="classInter_1_1CompositeBond.html">CompositeBond</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -118,12 +120,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a8220bdfee50a757b7397b97e2dd37f75"></a><!-- doxytag: member="Inter::CompositeBond::setNBondType" ref="a8220bdfee50a757b7397b97e2dd37f75" args="(int nBondType)" -->
+<a class="anchor" id="ae82e773fc685879ecc45a99d7444d0ed"></a><!-- doxytag: member="Inter::CompositeBond::setNBondType" ref="ae82e773fc685879ecc45a99d7444d0ed" args="(int nBondType)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BareBond , class BarePair &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setNBondType </td>
+          <td class="memname">void <a class="el" href="classInter_1_1CompositeBond.html">Inter::CompositeBond</a>&lt; BareBond, BarePair &gt;::setNBondType </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>nBondType</em></td><td>)</td>
@@ -145,12 +149,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="Inter::CompositeBond::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a390a50d1c7b22fd5e5141aea8c085051"></a><!-- doxytag: member="Inter::CompositeBond::readParam" ref="a390a50d1c7b22fd5e5141aea8c085051" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BareBond , class BarePair &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void <a class="el" href="classInter_1_1CompositeBond.html">Inter::CompositeBond</a>&lt; BareBond, BarePair &gt;::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -169,20 +175,22 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="CompositeBond_8h_source.html#l00172">172</a> of file <a class="el" href="CompositeBond_8h_source.html">CompositeBond.h</a>.</p>
 
-<p>References <a class="el" href="End_8cpp_source.html#l00033">End::readParam()</a>, <a class="el" href="Begin_8cpp_source.html#l00028">Begin::readParam()</a>, and <a class="el" href="ParamComponent_8cpp_source.html#l00052">ParamComponent::setIndent()</a>.</p>
+<p>References <a class="el" href="End_8cpp_source.html#l00033">Util::End::readParam()</a>, <a class="el" href="Begin_8cpp_source.html#l00028">Util::Begin::readParam()</a>, and <a class="el" href="ParamComponent_8cpp_source.html#l00052">Util::ParamComponent::setIndent()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0ab8f6bbd2e18cfd4df7ced299fe82f0"></a><!-- doxytag: member="Inter::CompositeBond::set" ref="a0ab8f6bbd2e18cfd4df7ced299fe82f0" args="(std::string name, int type, double value)" -->
+<a class="anchor" id="a7582e81d378a766dbd234d213d5ec4eb"></a><!-- doxytag: member="Inter::CompositeBond::set" ref="a7582e81d378a766dbd234d213d5ec4eb" args="(std::string name, int type, double value)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BareBond , class BarePair &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void set </td>
+          <td class="memname">void <a class="el" href="classInter_1_1CompositeBond.html">Inter::CompositeBond</a>&lt; BareBond, BarePair &gt;::set </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -224,12 +232,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4567471ccec84b1aab85d434d07fde37"></a><!-- doxytag: member="Inter::CompositeBond::energy" ref="a4567471ccec84b1aab85d434d07fde37" args="(double rsq, int type) const " -->
+<a class="anchor" id="ab98a2af57db5ab5a978e8e17607637de"></a><!-- doxytag: member="Inter::CompositeBond::energy" ref="ab98a2af57db5ab5a978e8e17607637de" args="(double rsq, int type) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BareBond , class BarePair &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double energy </td>
+          <td class="memname">double <a class="el" href="classInter_1_1CompositeBond.html">Inter::CompositeBond</a>&lt; BareBond, BarePair &gt;::energy </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rsq</em>, </td>
@@ -263,12 +273,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa9fb0a26dc50b37f6e7b3445027c8704"></a><!-- doxytag: member="Inter::CompositeBond::forceOverR" ref="aa9fb0a26dc50b37f6e7b3445027c8704" args="(double rsq, int bondTypeId) const " -->
+<a class="anchor" id="a2c707217979f4f8d32e9f5a5a7164814"></a><!-- doxytag: member="Inter::CompositeBond::forceOverR" ref="a2c707217979f4f8d32e9f5a5a7164814" args="(double rsq, int bondTypeId) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BareBond , class BarePair &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double forceOverR </td>
+          <td class="memname">double <a class="el" href="classInter_1_1CompositeBond.html">Inter::CompositeBond</a>&lt; BareBond, BarePair &gt;::forceOverR </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rsq</em>, </td>
@@ -303,12 +315,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6c614f13ee21022eb3dc6d0adfba6c3c"></a><!-- doxytag: member="Inter::CompositeBond::randomBondLength" ref="a6c614f13ee21022eb3dc6d0adfba6c3c" args="(Random *randomPtr, double beta, int type) const " -->
+<a class="anchor" id="af7f17816d2af85f6cbe07030f4b62c43"></a><!-- doxytag: member="Inter::CompositeBond::randomBondLength" ref="af7f17816d2af85f6cbe07030f4b62c43" args="(Random *randomPtr, double beta, int type) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BareBond , class BarePair &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double randomBondLength </td>
+          <td class="memname">double <a class="el" href="classInter_1_1CompositeBond.html">Inter::CompositeBond</a>&lt; BareBond, BarePair &gt;::randomBondLength </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Random.html">Random</a> *&#160;</td>
           <td class="paramname"><em>randomPtr</em>, </td>
@@ -350,12 +364,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a29dcf205f23d3b29d6f3bb6755e01d80"></a><!-- doxytag: member="Inter::CompositeBond::get" ref="a29dcf205f23d3b29d6f3bb6755e01d80" args="(std::string name, int type) const " -->
+<a class="anchor" id="ae09427557379793791b76212f64e8ef9"></a><!-- doxytag: member="Inter::CompositeBond::get" ref="ae09427557379793791b76212f64e8ef9" args="(std::string name, int type) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BareBond , class BarePair &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double get </td>
+          <td class="memname">double <a class="el" href="classInter_1_1CompositeBond.html">Inter::CompositeBond</a>&lt; BareBond, BarePair &gt;::get </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -391,12 +407,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a13c07285e858b2c232919fd57b635e1b"></a><!-- doxytag: member="Inter::CompositeBond::className" ref="a13c07285e858b2c232919fd57b635e1b" args="() const " -->
+<a class="anchor" id="a8e55f6b723e395271a8762836bb399f8"></a><!-- doxytag: member="Inter::CompositeBond::className" ref="a8e55f6b723e395271a8762836bb399f8" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class BareBond , class BarePair &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::string className </td>
+          <td class="memname">std::string <a class="el" href="classInter_1_1CompositeBond.html">Inter::CompositeBond</a>&lt; BareBond, BarePair &gt;::className </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -415,7 +433,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="CompositeBond_8h_source.html">CompositeBond.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

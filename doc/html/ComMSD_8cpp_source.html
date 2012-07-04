@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -79,8 +79,8 @@
 <a name="l00027"></a>00027    <span class="comment">/*</span>
 <a name="l00028"></a>00028 <span class="comment">   * Constructor.</span>
 <a name="l00029"></a>00029 <span class="comment">   */</span>
-<a name="l00030"></a>00030    <a class="code" href="classMcMd_1_1ComMSD.html#a26a73d0db2ec26e8a09f927978c7f8cf" title="Constructor.">ComMSD::ComMSD</a>(System&amp; system) 
-<a name="l00031"></a><a class="code" href="classMcMd_1_1ComMSD.html#a26a73d0db2ec26e8a09f927978c7f8cf">00031</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
+<a name="l00030"></a>00030    <a class="code" href="classMcMd_1_1ComMSD.html#adf74bfe2b726d87d0048999aef290e6c" title="Constructor.">ComMSD::ComMSD</a>(System&amp; system) 
+<a name="l00031"></a><a class="code" href="classMcMd_1_1ComMSD.html#adf74bfe2b726d87d0048999aef290e6c">00031</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
 <a name="l00032"></a>00032       outputFile_(),
 <a name="l00033"></a>00033       accumulator_(),
 <a name="l00034"></a>00034       truePositions_(),
@@ -96,8 +96,8 @@
 <a name="l00044"></a>00044    <span class="comment">/*</span>
 <a name="l00045"></a>00045 <span class="comment">   * Read parameters from file, and allocate data array.</span>
 <a name="l00046"></a>00046 <span class="comment">   */</span>
-<a name="l00047"></a>00047    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file.">ComMSD::readParam</a>(std::istream&amp; in) 
-<a name="l00048"></a><a class="code" href="classMcMd_1_1ComMSD.html#ab5421d3c9175985c9acbf723e5392075">00048</a>    {
+<a name="l00047"></a>00047    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#ad84a63304652af39c36382aac8eab467" title="Read parameters from file.">ComMSD::readParam</a>(std::istream&amp; in) 
+<a name="l00048"></a><a class="code" href="classMcMd_1_1ComMSD.html#ad84a63304652af39c36382aac8eab467">00048</a>    {
 <a name="l00049"></a>00049       <span class="comment">// Read interval and parameters for AutoCorrArray</span>
 <a name="l00050"></a>00050       readInterval(in);
 <a name="l00051"></a>00051       readOutputFileName(in);
@@ -131,8 +131,8 @@
 <a name="l00079"></a>00079    <span class="comment">/*</span>
 <a name="l00080"></a>00080 <span class="comment">   * Set number of molecules and initialize state.</span>
 <a name="l00081"></a>00081 <span class="comment">   */</span>
-<a name="l00082"></a>00082    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#a4fc01d736fe50cf5b977f755b675f11d" title="Determine number of molecules and allocate memory.">ComMSD::setup</a>() 
-<a name="l00083"></a><a class="code" href="classMcMd_1_1ComMSD.html#a4fc01d736fe50cf5b977f755b675f11d">00083</a>    {
+<a name="l00082"></a>00082    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#a45029b8dc736f8ca116a084a7a60f1e9" title="Determine number of molecules and allocate memory.">ComMSD::setup</a>() 
+<a name="l00083"></a><a class="code" href="classMcMd_1_1ComMSD.html#a45029b8dc736f8ca116a084a7a60f1e9">00083</a>    {
 <a name="l00084"></a>00084 
 <a name="l00085"></a>00085       <span class="comment">// Precondition: Confirm that readParam was called</span>
 <a name="l00086"></a>00086       <span class="keywordflow">if</span> (!isInitialized_)
@@ -160,8 +160,8 @@
 <a name="l00108"></a>00108    <span class="comment">/*</span>
 <a name="l00109"></a>00109 <span class="comment">   * Evaluate end-to-end vectors of all chains, add to ensemble.</span>
 <a name="l00110"></a>00110 <span class="comment">   */</span>
-<a name="l00111"></a>00111    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Evaluate center of mass displacement of all chains and add to ensemble.">ComMSD::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00112"></a><a class="code" href="classMcMd_1_1ComMSD.html#afc17577823a371a5ead4e51ebb8ec2ef">00112</a>    { 
+<a name="l00111"></a>00111    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#a2950960e61df37a3111e4753be8bc99d" title="Evaluate center of mass displacement of all chains and add to ensemble.">ComMSD::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00112"></a><a class="code" href="classMcMd_1_1ComMSD.html#a2950960e61df37a3111e4753be8bc99d">00112</a>    { 
 <a name="l00113"></a>00113       <span class="keywordflow">if</span> (!isAtInterval(iStep)) <span class="keywordflow">return</span>;
 <a name="l00114"></a>00114 
 <a name="l00115"></a>00115       <span class="comment">// Confirm that nMolecule has remained constant, and nMolecule &gt; 0.</span>
@@ -194,7 +194,7 @@
 <a name="l00142"></a>00142          moleculeCom(i, r);
 <a name="l00143"></a>00143 
 <a name="l00144"></a>00144          <span class="comment">// Reconstruct true position</span>
-<a name="l00145"></a>00145          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00145"></a>00145          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00146"></a>00146             truePositions_[i][j] = r[j] + double(shifts_[i][j])*lengths[j];
 <a name="l00147"></a>00147          }
 <a name="l00148"></a>00148  
@@ -206,8 +206,8 @@
 <a name="l00154"></a>00154    <span class="comment">/*</span>
 <a name="l00155"></a>00155 <span class="comment">   * Output results to file after simulation is completed.</span>
 <a name="l00156"></a>00156 <span class="comment">   */</span>
-<a name="l00157"></a>00157    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results to file after simulation is completed.">ComMSD::output</a>() 
-<a name="l00158"></a><a class="code" href="classMcMd_1_1ComMSD.html#a7437b254e19e7e12fc2ec99945f4ecea">00158</a>    {  
+<a name="l00157"></a>00157    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#a16f7dba5302c98e15d65d6beb717c375" title="Output results to file after simulation is completed.">ComMSD::output</a>() 
+<a name="l00158"></a><a class="code" href="classMcMd_1_1ComMSD.html#a16f7dba5302c98e15d65d6beb717c375">00158</a>    {  
 <a name="l00159"></a>00159 
 <a name="l00160"></a>00160       <span class="comment">// Echo parameter to diagnostic log file</span>
 <a name="l00161"></a>00161       fileMaster().openOutputFile(outputFileName(<span class="stringliteral">&quot;.prm&quot;</span>), outputFile_);
@@ -253,19 +253,19 @@
 <a name="l00201"></a>00201    <span class="comment">/*</span>
 <a name="l00202"></a>00202 <span class="comment">   * Save state to binary file archive.</span>
 <a name="l00203"></a>00203 <span class="comment">   */</span>
-<a name="l00204"></a>00204    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64" title="Save state to binary file archive.">ComMSD::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
-<a name="l00205"></a><a class="code" href="classMcMd_1_1ComMSD.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">00205</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00204"></a>00204    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#a45338ce76ac1396c20a691f4be928677" title="Save state to binary file archive.">ComMSD::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
+<a name="l00205"></a><a class="code" href="classMcMd_1_1ComMSD.html#a45338ce76ac1396c20a691f4be928677">00205</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00206"></a>00206 
 <a name="l00207"></a>00207    <span class="comment">/*</span>
 <a name="l00208"></a>00208 <span class="comment">   * Load state from a binary file archive.</span>
 <a name="l00209"></a>00209 <span class="comment">   */</span>
-<a name="l00210"></a>00210    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load state from a binary file archive.">ComMSD::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
-<a name="l00211"></a><a class="code" href="classMcMd_1_1ComMSD.html#aa3d71af4cc5dfb2be6be816a8f562416">00211</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00210"></a>00210    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1ComMSD.html#abba811e8895714bbc9ed18ecc250686d" title="Load state from a binary file archive.">ComMSD::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00211"></a><a class="code" href="classMcMd_1_1ComMSD.html#abba811e8895714bbc9ed18ecc250686d">00211</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00212"></a>00212 }
 <a name="l00213"></a>00213 <span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

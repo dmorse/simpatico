@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Group&lt; NAtom &gt; Class Template Reference</title>
+<title>Simpatico: McMd::Group&lt; NAtom &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Group&lt; NAtom &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__McMd__Chemistry__Module.html">Chemical Structure</a></div></h1>  </div>
+<h1>McMd::Group&lt; NAtom &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__McMd__Chemistry__Module.html">Chemical Structure</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::Group" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -68,30 +68,32 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#a0b29b9393b4b6856ac75b759f4166c13">Group</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a0b29b9393b4b6856ac75b759f4166c13"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e">atom</a> (int i)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a specific <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> in the <a class="el" href="classMcMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>.  <a href="#a7b228f53cb819d400d0fb2d5eb24e49e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#aafa00e733c60e36b9452b03de3f0a3d8">atom</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a const reference to a specific <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> in the <a class="el" href="classMcMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>.  <a href="#aafa00e733c60e36b9452b03de3f0a3d8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#af68aca851173d8f261a70897bff349c9">typeId</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the typeId for this covalent group.  <a href="#af68aca851173d8f261a70897bff349c9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#a22761609071413dcce0632885c820e87">isActive</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this group active?  <a href="#a22761609071413dcce0632885c820e87"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#a0831dd7093e7a3adb470955ebe023b5d">setAtom</a> (int i, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an atom to the group.  <a href="#a0831dd7093e7a3adb470955ebe023b5d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#a46b30f8f417b160a678438259066f83e">setTypeId</a> (int typeId)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the group type id for this group.  <a href="#a46b30f8f417b160a678438259066f83e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#aaba3086ff72f894fcafd8b74014592bd">setIsActive</a> (bool isActive)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Activate or deactivate the group.  <a href="#aaba3086ff72f894fcafd8b74014592bd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#ad2a0441b8bee7fb4f4146677eb52fde9">Group</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ad2a0441b8bee7fb4f4146677eb52fde9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a">atom</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a specific <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> in the <a class="el" href="classMcMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>.  <a href="#a9efa869a34f0714f8827f053612d740a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#a5b08a74a47851570b89e97a4dae30585">atom</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a const reference to a specific <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> in the <a class="el" href="classMcMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>.  <a href="#a5b08a74a47851570b89e97a4dae30585"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878">typeId</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the typeId for this covalent group.  <a href="#a2dcc6ca0d497143307ebf5ab679f8878"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#a6014d18d9b4f391266d6418fdb10a273">isActive</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this group active?  <a href="#a6014d18d9b4f391266d6418fdb10a273"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#a32c3af46877925ec5fda097cc8bc79bb">setAtom</a> (int i, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an atom to the group.  <a href="#a32c3af46877925ec5fda097cc8bc79bb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#a846a8c879777dea0e3754ff99e2adf67">setTypeId</a> (int typeId)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the group type id for this group.  <a href="#a846a8c879777dea0e3754ff99e2adf67"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Group.html#ae0fd53f7b39ea110699ec5a3fce4cf28">setIsActive</a> (bool isActive)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Activate or deactivate the group.  <a href="#ae0fd53f7b39ea110699ec5a3fce4cf28"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a0b29b9393b4b6856ac75b759f4166c13"></a><!-- doxytag: member="McMd::Group::Group" ref="a0b29b9393b4b6856ac75b759f4166c13" args="()" -->
+<a class="anchor" id="ad2a0441b8bee7fb4f4146677eb52fde9"></a><!-- doxytag: member="McMd::Group::Group" ref="ad2a0441b8bee7fb4f4146677eb52fde9" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int NAtom&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1Group.html">Group</a> </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1Group.html">McMd::Group</a>&lt; NAtom &gt;::<a class="el" href="classMcMd_1_1Group.html">Group</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -107,12 +109,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a7b228f53cb819d400d0fb2d5eb24e49e"></a><!-- doxytag: member="McMd::Group::atom" ref="a7b228f53cb819d400d0fb2d5eb24e49e" args="(int i)" -->
+<a class="anchor" id="a9efa869a34f0714f8827f053612d740a"></a><!-- doxytag: member="McMd::Group::atom" ref="a9efa869a34f0714f8827f053612d740a" args="(int i)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int NAtom&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1Atom.html">Atom</a>&amp; atom </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1Atom.html">Atom</a>&amp; <a class="el" href="classMcMd_1_1Group.html">McMd::Group</a>&lt; NAtom &gt;::atom </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -132,16 +136,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2chemistry_2Group_8h_source.html#l00058">58</a> of file <a class="el" href="mcMd_2chemistry_2Group_8h_source.html">mcMd/chemistry/Group.h</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbEndBase_8cpp_source.html#l00185">CfbEndBase::addEndAtom()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00279">DihedralPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00271">BondPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00270">AnglePotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00058">CfbEndBase::deleteEndAtom()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">Simulation::isValid()</a>, and <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00049">GroupRebridgeBase::tetraEnergy()</a>.</p>
+<p>Referenced by <a class="el" href="CfbEndBase_8cpp_source.html#l00185">McMd::CfbEndBase::addEndAtom()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00279">McMd::DihedralPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00271">McMd::BondPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00270">McMd::AnglePotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00058">McMd::CfbEndBase::deleteEndAtom()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">McMd::Simulation::isValid()</a>, and <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00049">McMd::GroupRebridgeBase::tetraEnergy()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aafa00e733c60e36b9452b03de3f0a3d8"></a><!-- doxytag: member="McMd::Group::atom" ref="aafa00e733c60e36b9452b03de3f0a3d8" args="(int i) const " -->
+<a class="anchor" id="a5b08a74a47851570b89e97a4dae30585"></a><!-- doxytag: member="McMd::Group::atom" ref="a5b08a74a47851570b89e97a4dae30585" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int NAtom&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a>&amp; atom </td>
+          <td class="memname">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a>&amp; <a class="el" href="classMcMd_1_1Group.html">McMd::Group</a>&lt; NAtom &gt;::atom </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -163,12 +169,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af68aca851173d8f261a70897bff349c9"></a><!-- doxytag: member="McMd::Group::typeId" ref="af68aca851173d8f261a70897bff349c9" args="() const " -->
+<a class="anchor" id="a2dcc6ca0d497143307ebf5ab679f8878"></a><!-- doxytag: member="McMd::Group::typeId" ref="a2dcc6ca0d497143307ebf5ab679f8878" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int NAtom&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int typeId </td>
+          <td class="memname">int <a class="el" href="classMcMd_1_1Group.html">McMd::Group</a>&lt; NAtom &gt;::typeId </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -181,16 +189,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2chemistry_2Group_8h_source.html#l00072">72</a> of file <a class="el" href="mcMd_2chemistry_2Group_8h_source.html">mcMd/chemistry/Group.h</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbEndBase_8cpp_source.html#l00185">CfbEndBase::addEndAtom()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00279">DihedralPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00271">BondPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00270">AnglePotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00058">CfbEndBase::deleteEndAtom()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">Simulation::isValid()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00073">RingTetraRebridgeMove::move()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00066">RingOctaRebridgeMove::move()</a>, <a class="el" href="CfbRingRebridgeMove_8cpp_source.html#l00080">CfbRingRebridgeMove::move()</a>, <a class="el" href="CfbRebridgeMove_8cpp_source.html#l00076">CfbRebridgeMove::move()</a>, <a class="el" href="CfbHomoReptationMove_8cpp_source.html#l00067">CfbHomoReptationMove::move()</a>, <a class="el" href="CfbEndMove_8cpp_source.html#l00066">CfbEndMove::move()</a>, and <a class="el" href="CfbDoubleRebridgeMove_8cpp_source.html#l00080">CfbDoubleRebridgeMove::move()</a>.</p>
+<p>Referenced by <a class="el" href="CfbEndBase_8cpp_source.html#l00185">McMd::CfbEndBase::addEndAtom()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00279">McMd::DihedralPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00271">McMd::BondPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00270">McMd::AnglePotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00058">McMd::CfbEndBase::deleteEndAtom()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">McMd::Simulation::isValid()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00073">McMd::RingTetraRebridgeMove::move()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00066">McMd::RingOctaRebridgeMove::move()</a>, <a class="el" href="CfbRingRebridgeMove_8cpp_source.html#l00080">McMd::CfbRingRebridgeMove::move()</a>, <a class="el" href="CfbRebridgeMove_8cpp_source.html#l00076">McMd::CfbRebridgeMove::move()</a>, <a class="el" href="CfbHomoReptationMove_8cpp_source.html#l00067">McMd::CfbHomoReptationMove::move()</a>, <a class="el" href="CfbEndMove_8cpp_source.html#l00066">McMd::CfbEndMove::move()</a>, and <a class="el" href="CfbDoubleRebridgeMove_8cpp_source.html#l00080">McMd::CfbDoubleRebridgeMove::move()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a22761609071413dcce0632885c820e87"></a><!-- doxytag: member="McMd::Group::isActive" ref="a22761609071413dcce0632885c820e87" args="() const " -->
+<a class="anchor" id="a6014d18d9b4f391266d6418fdb10a273"></a><!-- doxytag: member="McMd::Group::isActive" ref="a6014d18d9b4f391266d6418fdb10a273" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int NAtom&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool isActive </td>
+          <td class="memname">bool <a class="el" href="classMcMd_1_1Group.html">McMd::Group</a>&lt; NAtom &gt;::isActive </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -206,12 +216,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0831dd7093e7a3adb470955ebe023b5d"></a><!-- doxytag: member="McMd::Group::setAtom" ref="a0831dd7093e7a3adb470955ebe023b5d" args="(int i, Atom &amp;atom)" -->
+<a class="anchor" id="a32c3af46877925ec5fda097cc8bc79bb"></a><!-- doxytag: member="McMd::Group::setAtom" ref="a32c3af46877925ec5fda097cc8bc79bb" args="(int i, Atom &amp;atom)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int NAtom&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setAtom </td>
+          <td class="memname">void <a class="el" href="classMcMd_1_1Group.html">McMd::Group</a>&lt; NAtom &gt;::setAtom </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em>, </td>
@@ -244,12 +256,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a46b30f8f417b160a678438259066f83e"></a><!-- doxytag: member="McMd::Group::setTypeId" ref="a46b30f8f417b160a678438259066f83e" args="(int typeId)" -->
+<a class="anchor" id="a846a8c879777dea0e3754ff99e2adf67"></a><!-- doxytag: member="McMd::Group::setTypeId" ref="a846a8c879777dea0e3754ff99e2adf67" args="(int typeId)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int NAtom&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setTypeId </td>
+          <td class="memname">void <a class="el" href="classMcMd_1_1Group.html">McMd::Group</a>&lt; NAtom &gt;::setTypeId </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>typeId</em></td><td>)</td>
@@ -271,12 +285,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aaba3086ff72f894fcafd8b74014592bd"></a><!-- doxytag: member="McMd::Group::setIsActive" ref="aaba3086ff72f894fcafd8b74014592bd" args="(bool isActive)" -->
+<a class="anchor" id="ae0fd53f7b39ea110699ec5a3fce4cf28"></a><!-- doxytag: member="McMd::Group::setIsActive" ref="ae0fd53f7b39ea110699ec5a3fce4cf28" args="(bool isActive)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int NAtom&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setIsActive </td>
+          <td class="memname">void <a class="el" href="classMcMd_1_1Group.html">McMd::Group</a>&lt; NAtom &gt;::setIsActive </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>isActive</em></td><td>)</td>
@@ -302,7 +318,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="mcMd_2chemistry_2Group_8h_source.html">mcMd/chemistry/Group.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:52 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -73,16 +73,16 @@
 <a name="l00021"></a>00021 
 <a name="l00022"></a>00022    <span class="keyword">using namespace </span>Util;
 <a name="l00023"></a>00023 
-<a name="l00025"></a>00025    <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#add443713a9ef044f6507b9911b835284" title="Constructor.">StructureFactorPGrid::StructureFactorPGrid</a>(System&amp; system) 
-<a name="l00026"></a><a class="code" href="classMcMd_1_1StructureFactorPGrid.html#add443713a9ef044f6507b9911b835284">00026</a>     : <a class="code" href="classMcMd_1_1StructureFactorP.html" title="StructureFactorP evaluates partial structure factors in Fourier space.">StructureFactorP</a>(system),
+<a name="l00025"></a>00025    <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#ac66daf9f9099b449a18e8f1d050b5cf6" title="Constructor.">StructureFactorPGrid::StructureFactorPGrid</a>(System&amp; system) 
+<a name="l00026"></a><a class="code" href="classMcMd_1_1StructureFactorPGrid.html#ac66daf9f9099b449a18e8f1d050b5cf6">00026</a>     : <a class="code" href="classMcMd_1_1StructureFactorP.html" title="StructureFactorP evaluates partial structure factors in Fourier space.">StructureFactorP</a>(system),
 <a name="l00027"></a>00027       hMax_(0),
 <a name="l00028"></a>00028       nStar_(0),
 <a name="l00029"></a>00029       lattice_(Triclinic),
 <a name="l00030"></a>00030       isInitialized_(false)
 <a name="l00031"></a>00031    {}
 <a name="l00032"></a>00032 
-<a name="l00034"></a>00034    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file.">StructureFactorPGrid::readParam</a>(std::istream&amp; in) 
-<a name="l00035"></a><a class="code" href="classMcMd_1_1StructureFactorPGrid.html#ab5421d3c9175985c9acbf723e5392075">00035</a>    {
+<a name="l00034"></a>00034    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#adf796554a6bd53321fbe18ae1709f006" title="Read parameters from file.">StructureFactorPGrid::readParam</a>(std::istream&amp; in) 
+<a name="l00035"></a><a class="code" href="classMcMd_1_1StructureFactorPGrid.html#adf796554a6bd53321fbe18ae1709f006">00035</a>    {
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037       nAtomType_ = system().simulation().nAtomType();
 <a name="l00038"></a>00038 
@@ -117,22 +117,22 @@
 <a name="l00067"></a>00067          <a class="code" href="classUtil_1_1PointGroup.html" title="Group of crystal symmetries with no translations.">PointGroup</a> group;
 <a name="l00068"></a>00068          <a class="code" href="classUtil_1_1PointSymmetry.html" title="A PointSymmetry represents a crystallographic point group symmetry.">PointSymmetry</a> a, b, c;
 <a name="l00069"></a>00069 
-<a name="l00070"></a>00070          a.<a class="code" href="classUtil_1_1PointSymmetry.html#ac44cee1ab8ac6deb9ac45b2b9d6a866f" title="Return an element of the matrix by reference.">R</a>(0,1) =  1;
-<a name="l00071"></a>00071          a.<a class="code" href="classUtil_1_1PointSymmetry.html#ac44cee1ab8ac6deb9ac45b2b9d6a866f" title="Return an element of the matrix by reference.">R</a>(1,0) =  1;
-<a name="l00072"></a>00072          a.<a class="code" href="classUtil_1_1PointSymmetry.html#ac44cee1ab8ac6deb9ac45b2b9d6a866f" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
+<a name="l00070"></a>00070          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,1) =  1;
+<a name="l00071"></a>00071          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,0) =  1;
+<a name="l00072"></a>00072          a.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
 <a name="l00073"></a>00073    
-<a name="l00074"></a>00074          b.<a class="code" href="classUtil_1_1PointSymmetry.html#ac44cee1ab8ac6deb9ac45b2b9d6a866f" title="Return an element of the matrix by reference.">R</a>(0,0) = -1;
-<a name="l00075"></a>00075          b.<a class="code" href="classUtil_1_1PointSymmetry.html#ac44cee1ab8ac6deb9ac45b2b9d6a866f" title="Return an element of the matrix by reference.">R</a>(1,1) =  1;
-<a name="l00076"></a>00076          b.<a class="code" href="classUtil_1_1PointSymmetry.html#ac44cee1ab8ac6deb9ac45b2b9d6a866f" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
+<a name="l00074"></a>00074          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,0) = -1;
+<a name="l00075"></a>00075          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,1) =  1;
+<a name="l00076"></a>00076          b.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,2) =  1;
 <a name="l00077"></a>00077    
-<a name="l00078"></a>00078          c.<a class="code" href="classUtil_1_1PointSymmetry.html#ac44cee1ab8ac6deb9ac45b2b9d6a866f" title="Return an element of the matrix by reference.">R</a>(0,1) =  1;
-<a name="l00079"></a>00079          c.<a class="code" href="classUtil_1_1PointSymmetry.html#ac44cee1ab8ac6deb9ac45b2b9d6a866f" title="Return an element of the matrix by reference.">R</a>(1,2) =  1;
-<a name="l00080"></a>00080          c.<a class="code" href="classUtil_1_1PointSymmetry.html#ac44cee1ab8ac6deb9ac45b2b9d6a866f" title="Return an element of the matrix by reference.">R</a>(2,0) =  1;
+<a name="l00078"></a>00078          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(0,1) =  1;
+<a name="l00079"></a>00079          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(1,2) =  1;
+<a name="l00080"></a>00080          c.<a class="code" href="classUtil_1_1PointSymmetry.html#a8e9471117a1a0d17899f98be5d9274dc" title="Return an element of the matrix by reference.">R</a>(2,0) =  1;
 <a name="l00081"></a>00081    
-<a name="l00082"></a>00082          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a86914fceffea65b4ebfcede1a56d5fbf" title="Add a new element to the group.">add</a>(c);
-<a name="l00083"></a>00083          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a86914fceffea65b4ebfcede1a56d5fbf" title="Add a new element to the group.">add</a>(b);
-<a name="l00084"></a>00084          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a86914fceffea65b4ebfcede1a56d5fbf" title="Add a new element to the group.">add</a>(a);
-<a name="l00085"></a>00085          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a3cf4f9b2309c8cee5c99a4e153fd63e2" title="Generate a complete group from the current elements.">makeCompleteGroup</a>();
+<a name="l00082"></a>00082          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(c);
+<a name="l00083"></a>00083          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(b);
+<a name="l00084"></a>00084          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a4c71c4734b4fd629297f4916b33e2f97" title="Add a new element to the group.">add</a>(a);
+<a name="l00085"></a>00085          group.<a class="code" href="classUtil_1_1SymmetryGroup.html#a7130dde3c90984d24bb2d0886101f20f" title="Generate a complete group from the current elements.">makeCompleteGroup</a>();
 <a name="l00086"></a>00086    
 <a name="l00087"></a>00087          <span class="comment">// Create grid of wavevectors</span>
 <a name="l00088"></a>00088          <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;IntVector, 48&gt;</a> star;
@@ -145,9 +145,9 @@
 <a name="l00095"></a>00095                <span class="keywordflow">for</span> (l = 0; l &lt;= k; ++l) {
 <a name="l00096"></a>00096                   g[2] = l;
 <a name="l00097"></a>00097                   starIds_[i] = j;
-<a name="l00098"></a>00098                   group.<a class="code" href="classUtil_1_1PointGroup.html#ad1162ba473af0a6f90a0118820eeb295" title="Generate a set of reciprocal vectors that are related by symmetry.">makeStar</a>(g, star);
-<a name="l00099"></a>00099                   starSizes_[i] = star.<a class="code" href="classUtil_1_1FSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">size</a>();
-<a name="l00100"></a>00100                   <span class="keywordflow">for</span> (m = 0; m &lt; star.<a class="code" href="classUtil_1_1FSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">size</a>(); ++m) {
+<a name="l00098"></a>00098                   group.<a class="code" href="classUtil_1_1PointGroup.html#acbf787fd55ab2dce6f5d2fbaf28c5e3f" title="Generate a set of reciprocal vectors that are related by symmetry.">makeStar</a>(g, star);
+<a name="l00099"></a>00099                   starSizes_[i] = star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
+<a name="l00100"></a>00100                   <span class="keywordflow">for</span> (m = 0; m &lt; star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>(); ++m) {
 <a name="l00101"></a>00101                      waveIntVectors_[j] = star[m];
 <a name="l00102"></a>00102                      ++j;
 <a name="l00103"></a>00103                   }
@@ -173,11 +173,11 @@
 <a name="l00123"></a>00123       this-&gt;isInitialized_ = <span class="keyword">true</span>;
 <a name="l00124"></a>00124    }
 <a name="l00125"></a>00125 
-<a name="l00126"></a>00126    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#a4fc01d736fe50cf5b977f755b675f11d" title="Set up before a simulation.">StructureFactorPGrid::setup</a>() 
-<a name="l00127"></a><a class="code" href="classMcMd_1_1StructureFactorPGrid.html#a4fc01d736fe50cf5b977f755b675f11d">00127</a>    {}
+<a name="l00126"></a>00126    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#a18798591c2e296f20f64a323f2e9b73f" title="Set up before a simulation.">StructureFactorPGrid::setup</a>() 
+<a name="l00127"></a><a class="code" href="classMcMd_1_1StructureFactorPGrid.html#a18798591c2e296f20f64a323f2e9b73f">00127</a>    {}
 <a name="l00128"></a>00128 
-<a name="l00129"></a>00129    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output structure factors, averaged over stars.">StructureFactorPGrid::output</a>() 
-<a name="l00130"></a><a class="code" href="classMcMd_1_1StructureFactorPGrid.html#a7437b254e19e7e12fc2ec99945f4ecea">00130</a>    {
+<a name="l00129"></a>00129    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#a607f2f21919e6b0a3d85397c7dbc5059" title="Output structure factors, averaged over stars.">StructureFactorPGrid::output</a>() 
+<a name="l00130"></a><a class="code" href="classMcMd_1_1StructureFactorPGrid.html#a607f2f21919e6b0a3d85397c7dbc5059">00130</a>    {
 <a name="l00131"></a>00131       <span class="keywordtype">double</span>  value, average, size;
 <a name="l00132"></a>00132       <span class="keywordtype">int</span>     i, j, k, m, n;
 <a name="l00133"></a>00133 
@@ -197,7 +197,7 @@
 <a name="l00147"></a>00147 <span class="preprocessor"></span>         <span class="comment">// Output individual waves in star</span>
 <a name="l00148"></a>00148          k = starIds_[i];
 <a name="l00149"></a>00149          <span class="keywordflow">for</span> (m = 0; m &lt; size; ++m) {
-<a name="l00150"></a>00150             <span class="keywordflow">for</span> (n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++n) {
+<a name="l00150"></a>00150             <span class="keywordflow">for</span> (n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++n) {
 <a name="l00151"></a>00151                outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(waveIntVectors_[k][n], 5);
 <a name="l00152"></a>00152             }
 <a name="l00153"></a>00153             outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[k].abs(), 20, 8);
@@ -212,7 +212,7 @@
 <a name="l00162"></a>00162 <span class="preprocessor">         #endif</span>
 <a name="l00163"></a>00163 <span class="preprocessor"></span>
 <a name="l00164"></a>00164          k = starIds_[i];
-<a name="l00165"></a>00165          <span class="keywordflow">for</span> (n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++n) {
+<a name="l00165"></a>00165          <span class="keywordflow">for</span> (n = 0; n &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++n) {
 <a name="l00166"></a>00166             outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(waveIntVectors_[k][n], 5);
 <a name="l00167"></a>00167          }
 <a name="l00168"></a>00168          outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[k].abs(), 20, 8);
@@ -246,7 +246,7 @@
 <a name="l00196"></a>00196             <span class="keywordflow">if</span> (typeId &lt; 0) {
 <a name="l00197"></a>00197                suffix += std::string(<span class="stringliteral">&quot;A&quot;</span>);
 <a name="l00198"></a>00198             } <span class="keywordflow">else</span> {
-<a name="l00199"></a>00199                suffix += <a class="code" href="namespaceUtil.html#a48ded7fea065b110a5bf453d3c30826f" title="Return string representation of an integer.">toString</a>(typeId);
+<a name="l00199"></a>00199                suffix += <a class="code" href="namespaceUtil.html#a69d6f862289b96b4b0c0591357c8823e" title="Return string representation of an integer.">toString</a>(typeId);
 <a name="l00200"></a>00200             }
 <a name="l00201"></a>00201          }
 <a name="l00202"></a>00202          suffix += std::string(<span class="stringliteral">&quot;.dat&quot;</span>);
@@ -267,7 +267,7 @@
 <a name="l00217"></a>00217 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

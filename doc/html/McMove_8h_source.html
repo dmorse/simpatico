@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -134,13 +134,13 @@
 <a name="l00168"></a>00168    <span class="comment">/*</span>
 <a name="l00169"></a>00169 <span class="comment">   * Return number of moves that have been attempted.</span>
 <a name="l00170"></a>00170 <span class="comment">   */</span>
-<a name="l00171"></a><a class="code" href="classMcMd_1_1McMove.html#a5f4a135fd2f4bce1401a7e0b74fadd6e">00171</a>    <span class="keyword">inline</span> <span class="keywordtype">long</span> <a class="code" href="classMcMd_1_1McMove.html#a5f4a135fd2f4bce1401a7e0b74fadd6e" title="Return number of moves that have been attempted.">McMove::nAttempt</a>()<span class="keyword"> const</span>
+<a name="l00171"></a><a class="code" href="classMcMd_1_1McMove.html#ad7d063dfe9afb07f2be7f0c043223359">00171</a>    <span class="keyword">inline</span> <span class="keywordtype">long</span> <a class="code" href="classMcMd_1_1McMove.html#ad7d063dfe9afb07f2be7f0c043223359" title="Return number of moves that have been attempted.">McMove::nAttempt</a>()<span class="keyword"> const</span>
 <a name="l00172"></a>00172 <span class="keyword">   </span>{  <span class="keywordflow">return</span> nAttempt_; }
 <a name="l00173"></a>00173 
 <a name="l00174"></a>00174    <span class="comment">/*</span>
 <a name="l00175"></a>00175 <span class="comment">   * Return number of moves that have been accepted.</span>
 <a name="l00176"></a>00176 <span class="comment">   */</span>
-<a name="l00177"></a><a class="code" href="classMcMd_1_1McMove.html#a7bc88e66536aec9193a8e3c2df2f9bd2">00177</a>    <span class="keyword">inline</span> <span class="keywordtype">long</span> <a class="code" href="classMcMd_1_1McMove.html#a7bc88e66536aec9193a8e3c2df2f9bd2" title="Return number of moves that have been accepted.">McMove::nAccept</a>()<span class="keyword"> const</span>
+<a name="l00177"></a><a class="code" href="classMcMd_1_1McMove.html#a24655bb49427d06b593cb4c2d3f28c5e">00177</a>    <span class="keyword">inline</span> <span class="keywordtype">long</span> <a class="code" href="classMcMd_1_1McMove.html#a24655bb49427d06b593cb4c2d3f28c5e" title="Return number of moves that have been accepted.">McMove::nAccept</a>()<span class="keyword"> const</span>
 <a name="l00178"></a>00178 <span class="keyword">   </span>{  <span class="keywordflow">return</span> nAccept_; }
 <a name="l00179"></a>00179 
 <a name="l00180"></a>00180    <span class="comment">// Protected inline methods</span>
@@ -148,44 +148,44 @@
 <a name="l00182"></a>00182    <span class="comment">/*</span>
 <a name="l00183"></a>00183 <span class="comment">   * Increment the number of attempted moves.</span>
 <a name="l00184"></a>00184 <span class="comment">   */</span>
-<a name="l00185"></a><a class="code" href="classMcMd_1_1McMove.html#ada69d42f117a892c07b6d3340181d5b0">00185</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McMove.html#ada69d42f117a892c07b6d3340181d5b0" title="Increment the number of attempted moves.">McMove::incrementNAttempt</a>()
+<a name="l00185"></a><a class="code" href="classMcMd_1_1McMove.html#a5d90f9f9b40e1b8abf2d76109ca060a0">00185</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McMove.html#a5d90f9f9b40e1b8abf2d76109ca060a0" title="Increment the number of attempted moves.">McMove::incrementNAttempt</a>()
 <a name="l00186"></a>00186    {  ++nAttempt_; }
 <a name="l00187"></a>00187 
 <a name="l00188"></a>00188    <span class="comment">/*</span>
 <a name="l00189"></a>00189 <span class="comment">   * Increment the number of accepted moves.</span>
 <a name="l00190"></a>00190 <span class="comment">   */</span>
-<a name="l00191"></a><a class="code" href="classMcMd_1_1McMove.html#ad556f23278900a30224e054b8bb03d22">00191</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McMove.html#ad556f23278900a30224e054b8bb03d22" title="Increment the number of accepted moves.">McMove::incrementNAccept</a>()
+<a name="l00191"></a><a class="code" href="classMcMd_1_1McMove.html#a858b694f6e1cae8276e9c3a24ae38c18">00191</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McMove.html#a858b694f6e1cae8276e9c3a24ae38c18" title="Increment the number of accepted moves.">McMove::incrementNAccept</a>()
 <a name="l00192"></a>00192    {  ++nAccept_; }
 <a name="l00193"></a>00193 
 <a name="l00194"></a>00194    <span class="comment">/*</span>
 <a name="l00195"></a>00195 <span class="comment">   * Get parent Simulation object.</span>
 <a name="l00196"></a>00196 <span class="comment">   */</span>
-<a name="l00197"></a><a class="code" href="classMcMd_1_1McMove.html#a9c48d9c8c09632e9489efe52722a7937">00197</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; <a class="code" href="classMcMd_1_1McMove.html#a9c48d9c8c09632e9489efe52722a7937" title="Get parent Simulation object.">McMove::simulation</a>()
+<a name="l00197"></a><a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7">00197</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; <a class="code" href="classMcMd_1_1McMove.html#a21ca3ec3fd8a2f9083fdd87a6358feb7" title="Get parent Simulation object.">McMove::simulation</a>()
 <a name="l00198"></a>00198    {  <span class="keywordflow">return</span> *simulationPtr_; }
 <a name="l00199"></a>00199 
 <a name="l00200"></a>00200    <span class="comment">/*</span>
 <a name="l00201"></a>00201 <span class="comment">   * Get Random number generator.</span>
 <a name="l00202"></a>00202 <span class="comment">   */</span>
-<a name="l00203"></a><a class="code" href="classMcMd_1_1McMove.html#a3e9d2379455b7dc1bc206383917cd3b0">00203</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; <a class="code" href="classMcMd_1_1McMove.html#a3e9d2379455b7dc1bc206383917cd3b0" title="Get Random number generator of parent Simulation.">McMove::random</a>()
+<a name="l00203"></a><a class="code" href="classMcMd_1_1McMove.html#a8e27f330daa6bbc314b8f81ca0f9decb">00203</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; <a class="code" href="classMcMd_1_1McMove.html#a8e27f330daa6bbc314b8f81ca0f9decb" title="Get Random number generator of parent Simulation.">McMove::random</a>()
 <a name="l00204"></a>00204    {  <span class="keywordflow">return</span> *randomPtr_; }
 <a name="l00205"></a>00205 
 <a name="l00206"></a>00206    <span class="comment">/*</span>
 <a name="l00207"></a>00207 <span class="comment">   * Get the probability.</span>
 <a name="l00208"></a>00208 <span class="comment">   */</span>
-<a name="l00209"></a><a class="code" href="classMcMd_1_1McMove.html#a64e156b7ac3a7a0ba85c2483546c16e0">00209</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McMove.html#a64e156b7ac3a7a0ba85c2483546c16e0" title="Return probability for this McMove.">McMove::probability</a>()<span class="keyword"> const</span>
+<a name="l00209"></a><a class="code" href="classMcMd_1_1McMove.html#a7bfd7fde17eaf90c079225fc791fbf72">00209</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McMove.html#a7bfd7fde17eaf90c079225fc791fbf72" title="Return probability for this McMove.">McMove::probability</a>()<span class="keyword"> const</span>
 <a name="l00210"></a>00210 <span class="keyword">   </span>{  <span class="keywordflow">return</span> probability_; }
 <a name="l00211"></a>00211 
 <a name="l00212"></a>00212    <span class="comment">/*</span>
 <a name="l00213"></a>00213 <span class="comment">   * Set the probability.</span>
 <a name="l00214"></a>00214 <span class="comment">   */</span>
-<a name="l00215"></a><a class="code" href="classMcMd_1_1McMove.html#aa952ef6a8bf7bab67ca1c0685f385550">00215</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McMove.html#aa952ef6a8bf7bab67ca1c0685f385550" title="Set the probability for this McMove.">McMove::setProbability</a>(<span class="keywordtype">double</span> probability)
+<a name="l00215"></a><a class="code" href="classMcMd_1_1McMove.html#ab263772cb64760069ebf6ba09e8d5e9e">00215</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McMove.html#ab263772cb64760069ebf6ba09e8d5e9e" title="Set the probability for this McMove.">McMove::setProbability</a>(<span class="keywordtype">double</span> probability)
 <a name="l00216"></a>00216    {  probability_ = probability; }
 <a name="l00217"></a>00217 
 <a name="l00218"></a>00218 }
 <a name="l00219"></a>00219 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -156,7 +156,7 @@
 <a name="l00166"></a>00166    <span class="comment">// Inline methods</span>
 <a name="l00167"></a>00167 
 <a name="l00168"></a>00168    <span class="comment">// Constructor.</span>
-<a name="l00169"></a><a class="code" href="classDdMd_1_1Atom.html#a1793e5490b3a24571afcf0529b44c92a">00169</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Atom.html#a1793e5490b3a24571afcf0529b44c92a" title="Constructor.">Atom::Atom</a>() :
+<a name="l00169"></a><a class="code" href="classDdMd_1_1Atom.html#a7b856674453dc20fb5a3357f8ff9752c">00169</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Atom.html#a7b856674453dc20fb5a3357f8ff9752c" title="Constructor.">Atom::Atom</a>() :
 <a name="l00170"></a>00170      position_(0.0),
 <a name="l00171"></a>00171      typeId_(-1),
 <a name="l00172"></a>00172      isGhost_(0),
@@ -167,84 +167,84 @@
 <a name="l00177"></a>00177      plan_()
 <a name="l00178"></a>00178    {}
 <a name="l00179"></a>00179 
-<a name="l00183"></a><a class="code" href="classDdMd_1_1Atom.html#ac8bb3912a3ce86b15842e79d0b421204">00183</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Atom.html#ac8bb3912a3ce86b15842e79d0b421204" title="Reset integer members to initial null values.">Atom::clear</a>()
+<a name="l00183"></a><a class="code" href="classDdMd_1_1Atom.html#a16099c037037d8879f1d8a4357e84719">00183</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Atom.html#a16099c037037d8879f1d8a4357e84719" title="Reset integer members to initial null values.">Atom::clear</a>()
 <a name="l00184"></a>00184    {
 <a name="l00185"></a>00185       typeId_ = -1;
 <a name="l00186"></a>00186       id_ = -1;
 <a name="l00187"></a>00187       isGhost_ = 0;
-<a name="l00188"></a>00188       mask_.<a class="code" href="classDdMd_1_1Mask.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear the masked set (remove all atoms).">clear</a>();
+<a name="l00188"></a>00188       mask_.<a class="code" href="classDdMd_1_1Mask.html#aed6c42fb9d685317fcbf99c832c3064e" title="Clear the masked set (remove all atoms).">clear</a>();
 <a name="l00189"></a>00189       plan_.setFlags(0);
 <a name="l00190"></a>00190    }
 <a name="l00191"></a>00191 
 <a name="l00192"></a>00192    <span class="comment">// Set unique global index for Atom.</span>
-<a name="l00193"></a><a class="code" href="classDdMd_1_1Atom.html#af27d12f590d5654c5068497d58825b29">00193</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Atom.html#af27d12f590d5654c5068497d58825b29" title="Set unique id for this Atom.">Atom::setId</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>) 
-<a name="l00194"></a>00194    {  id_ = <a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get unique global index.">id</a>; }
+<a name="l00193"></a><a class="code" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae">00193</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae" title="Set unique id for this Atom.">Atom::setId</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>) 
+<a name="l00194"></a>00194    {  id_ = <a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">id</a>; }
 <a name="l00195"></a>00195 
 <a name="l00196"></a>00196    <span class="comment">// Set type Id for Atom.</span>
-<a name="l00197"></a><a class="code" href="classDdMd_1_1Atom.html#a4eda9bc9ef7228643fd3311552601523">00197</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Atom.html#a4eda9bc9ef7228643fd3311552601523" title="Set the atom type index.">Atom::setTypeId</a>(<span class="keywordtype">int</span> typeId) 
-<a name="l00198"></a>00198    {  typeId_ = <a class="code" href="classDdMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get atom type index.">typeId</a>; }
+<a name="l00197"></a><a class="code" href="classDdMd_1_1Atom.html#a5dd225a3f99ad3c2963ee69d1c90a4af">00197</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Atom.html#a5dd225a3f99ad3c2963ee69d1c90a4af" title="Set the atom type index.">Atom::setTypeId</a>(<span class="keywordtype">int</span> typeId) 
+<a name="l00198"></a>00198    {  typeId_ = <a class="code" href="classDdMd_1_1Atom.html#a6cadb772421f5337885fcf2de3c8fc3c" title="Get atom type index.">typeId</a>; }
 <a name="l00199"></a>00199 
 <a name="l00200"></a>00200    <span class="comment">// Set type Id for Atom.</span>
-<a name="l00201"></a><a class="code" href="classDdMd_1_1Atom.html#ae3477c3fac769559f4c8780c657a0998">00201</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Atom.html#ae3477c3fac769559f4c8780c657a0998" title="Mark as ghost or local atom.">Atom::setIsGhost</a>(<span class="keywordtype">bool</span> isGhost) 
+<a name="l00201"></a><a class="code" href="classDdMd_1_1Atom.html#a8dd0a66c21f1475111f5049e9f386604">00201</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Atom.html#a8dd0a66c21f1475111f5049e9f386604" title="Mark as ghost or local atom.">Atom::setIsGhost</a>(<span class="keywordtype">bool</span> isGhost) 
 <a name="l00202"></a>00202    {  isGhost_ = isGhost ? 1 : 0; }
 <a name="l00203"></a>00203 
 <a name="l00204"></a>00204    <span class="comment">// Get global id for Atom.</span>
-<a name="l00205"></a><a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63">00205</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span>  <a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get unique global index.">Atom::id</a>()<span class="keyword"> const</span>
+<a name="l00205"></a><a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8">00205</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span>  <a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">Atom::id</a>()<span class="keyword"> const</span>
 <a name="l00206"></a>00206 <span class="keyword">   </span>{  <span class="keywordflow">return</span> id_; }
 <a name="l00207"></a>00207 
 <a name="l00208"></a>00208    <span class="comment">// Get type Id.</span>
-<a name="l00209"></a><a class="code" href="classDdMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9">00209</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get atom type index.">Atom::typeId</a>()<span class="keyword"> const</span>
+<a name="l00209"></a><a class="code" href="classDdMd_1_1Atom.html#a6cadb772421f5337885fcf2de3c8fc3c">00209</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Atom.html#a6cadb772421f5337885fcf2de3c8fc3c" title="Get atom type index.">Atom::typeId</a>()<span class="keyword"> const</span>
 <a name="l00210"></a>00210 <span class="keyword">   </span>{  <span class="keywordflow">return</span> typeId_; }
 <a name="l00211"></a>00211 
 <a name="l00212"></a>00212    <span class="comment">// Is this a ghost atom?</span>
-<a name="l00213"></a><a class="code" href="classDdMd_1_1Atom.html#a26877e4c250e1af8697836f7aadae1e8">00213</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Atom.html#a26877e4c250e1af8697836f7aadae1e8" title="Is this atom a ghost?">Atom::isGhost</a>()<span class="keyword"> const</span>
+<a name="l00213"></a><a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf">00213</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">Atom::isGhost</a>()<span class="keyword"> const</span>
 <a name="l00214"></a>00214 <span class="keyword">   </span>{  <span class="keywordflow">return</span> bool(isGhost_); }
 <a name="l00215"></a>00215 
 <a name="l00216"></a>00216    <span class="comment">// Get reference to communication plan.</span>
-<a name="l00217"></a><a class="code" href="classDdMd_1_1Atom.html#a46ec03902fb8db0e8ab7c30bb2d363d3">00217</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Plan.html" title="Plan for communication pattern for exchanging atoms and communicating ghots.">Plan</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a46ec03902fb8db0e8ab7c30bb2d363d3" title="Get communication plan by reference.">Atom::plan</a>()
+<a name="l00217"></a><a class="code" href="classDdMd_1_1Atom.html#a66d188c40ec33739a45b3a0d23e771d2">00217</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Plan.html" title="Plan for communication pattern for exchanging atoms and communicating ghots.">Plan</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a66d188c40ec33739a45b3a0d23e771d2" title="Get communication plan by reference.">Atom::plan</a>()
 <a name="l00218"></a>00218    {  <span class="keywordflow">return</span> plan_; }
 <a name="l00219"></a>00219 
 <a name="l00220"></a>00220    <span class="comment">// Get reference to position.</span>
-<a name="l00221"></a><a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d">00221</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">Atom::position</a>()
+<a name="l00221"></a><a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34">00221</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">Atom::position</a>()
 <a name="l00222"></a>00222    {  <span class="keywordflow">return</span> position_; }
 <a name="l00223"></a>00223 
 <a name="l00224"></a>00224    <span class="comment">// Get reference to velocity.</span>
-<a name="l00225"></a><a class="code" href="classDdMd_1_1Atom.html#a0a918625496f209cee72908ba31867a2">00225</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a0a918625496f209cee72908ba31867a2" title="Get velocity Vector by reference.">Atom::velocity</a>()
+<a name="l00225"></a><a class="code" href="classDdMd_1_1Atom.html#ad553edac6d868c6ab2c1f967f8c1eeea">00225</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#ad553edac6d868c6ab2c1f967f8c1eeea" title="Get velocity Vector by reference.">Atom::velocity</a>()
 <a name="l00226"></a>00226    {  <span class="keywordflow">return</span> velocity_; }
 <a name="l00227"></a>00227 
 <a name="l00228"></a>00228    <span class="comment">// Get reference to force.</span>
-<a name="l00229"></a><a class="code" href="classDdMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088">00229</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get force Vector by reference.">Atom::force</a>()
+<a name="l00229"></a><a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce">00229</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">Atom::force</a>()
 <a name="l00230"></a>00230    {  <span class="keywordflow">return</span> force_; }
 <a name="l00231"></a>00231 
 <a name="l00232"></a>00232    <span class="comment">// Get const reference to position.</span>
-<a name="l00233"></a><a class="code" href="classDdMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523">00233</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">Atom::position</a>()<span class="keyword"> const</span>
+<a name="l00233"></a><a class="code" href="classDdMd_1_1Atom.html#aae428e70afbba99dd2081eb5fd273756">00233</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">Atom::position</a>()<span class="keyword"> const</span>
 <a name="l00234"></a>00234 <span class="keyword">   </span>{  <span class="keywordflow">return</span> position_; }
 <a name="l00235"></a>00235 
 <a name="l00236"></a>00236    <span class="comment">// Get const reference to velocity.</span>
-<a name="l00237"></a><a class="code" href="classDdMd_1_1Atom.html#a0fa47a53a63bd26c1e5714c66ff11f5a">00237</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a0a918625496f209cee72908ba31867a2" title="Get velocity Vector by reference.">Atom::velocity</a>()<span class="keyword"> const</span>
+<a name="l00237"></a><a class="code" href="classDdMd_1_1Atom.html#aa445696647f84416a28cdf00f6efe351">00237</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#ad553edac6d868c6ab2c1f967f8c1eeea" title="Get velocity Vector by reference.">Atom::velocity</a>()<span class="keyword"> const</span>
 <a name="l00238"></a>00238 <span class="keyword">   </span>{  <span class="keywordflow">return</span> velocity_; }
 <a name="l00239"></a>00239 
 <a name="l00240"></a>00240    <span class="comment">// Get const reference to force.</span>
-<a name="l00241"></a><a class="code" href="classDdMd_1_1Atom.html#a9420be3b47ba1ca6bcd8b5ef5cff24a3">00241</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get force Vector by reference.">Atom::force</a>()<span class="keyword"> const</span>
+<a name="l00241"></a><a class="code" href="classDdMd_1_1Atom.html#a26e0dbc44f9511d4d1540f74c0215d83">00241</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">Atom::force</a>()<span class="keyword"> const</span>
 <a name="l00242"></a>00242 <span class="keyword">   </span>{  <span class="keywordflow">return</span> force_; }
 <a name="l00243"></a>00243 
 <a name="l00244"></a>00244    <span class="comment">// Get const reference to communication plan.</span>
-<a name="l00245"></a><a class="code" href="classDdMd_1_1Atom.html#a2d941707bc2d9aae80c23b1cfcdf35f0">00245</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Plan.html" title="Plan for communication pattern for exchanging atoms and communicating ghots.">Plan</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a46ec03902fb8db0e8ab7c30bb2d363d3" title="Get communication plan by reference.">Atom::plan</a>()<span class="keyword"> const</span>
+<a name="l00245"></a><a class="code" href="classDdMd_1_1Atom.html#a6d9d6e1c4763b87a9da79794841f1bbc">00245</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Plan.html" title="Plan for communication pattern for exchanging atoms and communicating ghots.">Plan</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a66d188c40ec33739a45b3a0d23e771d2" title="Get communication plan by reference.">Atom::plan</a>()<span class="keyword"> const</span>
 <a name="l00246"></a>00246 <span class="keyword">   </span>{  <span class="keywordflow">return</span> plan_; }
 <a name="l00247"></a>00247 
 <a name="l00248"></a>00248    <span class="comment">// Get the associated mask.</span>
-<a name="l00249"></a><a class="code" href="classDdMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a">00249</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &amp;quot;masked&amp;quot;.">Mask</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">Atom::mask</a>() 
+<a name="l00249"></a><a class="code" href="classDdMd_1_1Atom.html#a8a468104f3541cdf012977f3de4f0e98">00249</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &amp;quot;masked&amp;quot;.">Mask</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a8a468104f3541cdf012977f3de4f0e98" title="Get the associated Mask by reference.">Atom::mask</a>() 
 <a name="l00250"></a>00250    {  <span class="keywordflow">return</span> mask_; }
 <a name="l00251"></a>00251 
 <a name="l00252"></a>00252    <span class="comment">// Get a const reference to the mask.</span>
-<a name="l00253"></a><a class="code" href="classDdMd_1_1Atom.html#a70b1f3f124853db67bb7c7013b160e7c">00253</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &amp;quot;masked&amp;quot;.">Mask</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">Atom::mask</a>()<span class="keyword"> const</span>
+<a name="l00253"></a><a class="code" href="classDdMd_1_1Atom.html#a70028ccac83394b0b8bf5da5eaf91e95">00253</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &amp;quot;masked&amp;quot;.">Mask</a>&amp; <a class="code" href="classDdMd_1_1Atom.html#a8a468104f3541cdf012977f3de4f0e98" title="Get the associated Mask by reference.">Atom::mask</a>()<span class="keyword"> const</span>
 <a name="l00254"></a>00254 <span class="keyword">   </span>{  <span class="keywordflow">return</span> mask_; }
 <a name="l00255"></a>00255 
 <a name="l00256"></a>00256 }
 <a name="l00257"></a>00257 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

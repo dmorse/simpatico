@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -67,13 +67,13 @@ Main Program</h2>
    <a class="code" href="classMcMd_1_1McSimulation.html" title="A Monte-Carlo simulation of one McSystem.">McMd::McSimulation</a> simulation;
   
    \\ Process command line options
-   simulation.<a class="code" href="classMcMd_1_1McSimulation.html#a4384bd78719fb12cae61a83d02b5ec66" title="Process command line options.">setOptions</a>(argc, argv);
+   simulation.<a class="code" href="classMcMd_1_1McSimulation.html#a913a54f9d2f6ee42dbd6aad6ebeac486" title="Process command line options.">setOptions</a>(argc, argv);
   
    \\ Read the parameter file from standard input
-   simulation.<a class="code" href="classMcMd_1_1McSimulation.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from a specific stream.">readParam</a>();
+   simulation.<a class="code" href="classMcMd_1_1McSimulation.html#ada2e9f506b67f1d0d6aba05c9280ee7e" title="Read parameters from a specific stream.">readParam</a>();
   
    \\ Read the command file.
-   simulation.<a class="code" href="classMcMd_1_1McSimulation.html#a83198f30cc6ba7b1872f85d67c2fa287" title="Read and execute commands from a specific input stream.">readCommands</a>();
+   simulation.<a class="code" href="classMcMd_1_1McSimulation.html#ac743d5ae517c8da8f087e573635d11da" title="Read and execute commands from a specific input stream.">readCommands</a>();
   
 }
 </pre></div><p> The first line within the program creates an object named simulation that is an instance of the class <a class="el" href="classMcMd_1_1McSimulation.html" title="A Monte-Carlo simulation of one McSystem.">McSimulation</a> in namespace <a class="el" href="namespaceMcMd.html" title="Classes for Monte Carlo (MC) and molecular dynamics (MC) simulation.">McMd</a>. An <a class="el" href="classMcMd_1_1McSimulation.html" title="A Monte-Carlo simulation of one McSystem.">McSimulation</a> object represents a complete Monte Carlo simulation.</p>
@@ -117,7 +117,7 @@ Command Line Options</h2>
 </ul>
 <p>The -e echo option causes each parameter in the parameter file to be echoed to standard output immediately after it is read. This is very useful for locating errors in the parameter <a href="file:">file:</a> The first parameter that is not echoed to standard output is usually the one that is causing trouble.</p>
 <p>The -r (restart) option takes a required parameter "filename". This is the base name of three input files required to restart a simulation, which have filename suffixes *.prm, *.rst, and *.cmd. This option is discussed in more detail <a class="el" href="restart_page.html">here</a>.</p>
-<p>The -p (perturbation) option enables the definition of a free energy perturbation, for use with thermodynamic integration and replica exchange algorithms. This is generally only useful when used with a version of mcSim or mdSim that is compiled for use on multiple processors. This option is discussed in more detail <a class="el" href="perturb_page.html">here</a>.</p>
+<p>The -p (perturbation) option enables the definition of a free energy perturbation, for use with thermodynamic integration and replica exchange algorithms. This is generally only useful when used with a version of mcSim or mdSim that is compiled for use on multiple processors. This option is discussed in more detail <a class="el" href="parallel_page.html">here</a>.</p>
 <p>The only valid option for the ddSim parallel program is the "-e" (echo) option, which has the same effect in all programs.</p>
 <ul>
 <li>
@@ -130,7 +130,7 @@ Command Line Options</h2>
 </li>
 </ul>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

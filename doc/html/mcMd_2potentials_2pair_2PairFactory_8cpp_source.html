@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -57,7 +57,7 @@
 <a name="l00005"></a>00005 <span class="comment">/*</span>
 <a name="l00006"></a>00006 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00007"></a>00007 <span class="comment">*</span>
-<a name="l00008"></a>00008 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00008"></a>00008 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00009"></a>00009 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00010"></a>00010 <span class="comment">*/</span>
 <a name="l00011"></a>00011 
@@ -84,20 +84,20 @@
 <a name="l00032"></a>00032    <span class="keyword">using namespace </span>Util;
 <a name="l00033"></a>00033    <span class="keyword">using namespace </span>Inter;
 <a name="l00034"></a>00034 
-<a name="l00038"></a><a class="code" href="classMcMd_1_1PairFactory.html#a5ec92a85d5cbb3ba9422b4b457b784ee">00038</a>    <a class="code" href="classMcMd_1_1PairFactory.html#a5ec92a85d5cbb3ba9422b4b457b784ee" title="Constructor.">PairFactory::PairFactory</a>()
+<a name="l00038"></a><a class="code" href="classMcMd_1_1PairFactory.html#ae75783aff2e40a1f25ec99cf3b43a035">00038</a>    <a class="code" href="classMcMd_1_1PairFactory.html#ae75783aff2e40a1f25ec99cf3b43a035" title="Constructor.">PairFactory::PairFactory</a>()
 <a name="l00039"></a>00039    {}
 <a name="l00040"></a>00040 
 <a name="l00041"></a>00041    <span class="comment">/*</span>
 <a name="l00042"></a>00042 <span class="comment">   * Add a subfactory to the list of children, and set communicator (if any).</span>
 <a name="l00043"></a>00043 <span class="comment">   */</span>
-<a name="l00044"></a><a class="code" href="classMcMd_1_1PairFactory.html#a9c24a40e306f6ab5b2bcc227df5a8839">00044</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairFactory.html#a9c24a40e306f6ab5b2bcc227df5a8839" title="Add a new subfactory to the list.">PairFactory::addSubfactory</a>(<a class="code" href="classMcMd_1_1PairFactory.html" title="Factory for subclasses MdPairPotential or McPairPotential.">PairFactory</a>&amp; subfactory)
+<a name="l00044"></a><a class="code" href="classMcMd_1_1PairFactory.html#ad611dff148e216167f8808bb76aed5a2">00044</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairFactory.html#ad611dff148e216167f8808bb76aed5a2" title="Add a new subfactory to the list.">PairFactory::addSubfactory</a>(<a class="code" href="classMcMd_1_1PairFactory.html" title="Factory for subclasses MdPairPotential or McPairPotential.">PairFactory</a>&amp; subfactory)
 <a name="l00045"></a>00045    {  subfactories_.push_back(&amp;subfactory); }
 <a name="l00046"></a>00046 
 <a name="l00047"></a>00047    <span class="comment">/*</span>
 <a name="l00048"></a>00048 <span class="comment">   * Return a pointer to a new McPairInteration, if possible.</span>
 <a name="l00049"></a>00049 <span class="comment">   */</span>
 <a name="l00050"></a>00050    <a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>* 
-<a name="l00051"></a><a class="code" href="classMcMd_1_1PairFactory.html#a0e383f6cf0f74c4a36001e6e77e6c5f4">00051</a>    <a class="code" href="classMcMd_1_1PairFactory.html#a0e383f6cf0f74c4a36001e6e77e6c5f4" title="Return a pointer to a new McPairPotential, if possible.">PairFactory::mcFactory</a>(<span class="keyword">const</span> std::string&amp; name, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)<span class="keyword"> const</span>
+<a name="l00051"></a><a class="code" href="classMcMd_1_1PairFactory.html#a067e60f3c80f7d89558ac8ae074cf610">00051</a>    <a class="code" href="classMcMd_1_1PairFactory.html#a067e60f3c80f7d89558ac8ae074cf610" title="Return a pointer to a new McPairPotential, if possible.">PairFactory::mcFactory</a>(<span class="keyword">const</span> std::string&amp; name, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)<span class="keyword"> const</span>
 <a name="l00052"></a>00052 <span class="keyword">   </span>{
 <a name="l00053"></a>00053       <a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>* ptr = 0;
 <a name="l00054"></a>00054 
@@ -121,7 +121,7 @@
 <a name="l00072"></a>00072 <span class="comment">   * Return a pointer to a new MdPairPotential, if possible.</span>
 <a name="l00073"></a>00073 <span class="comment">   */</span>
 <a name="l00074"></a>00074    <a class="code" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a>* 
-<a name="l00075"></a><a class="code" href="classMcMd_1_1PairFactory.html#ad36bb3513ffcf359a17fce37c129039e">00075</a>    <a class="code" href="classMcMd_1_1PairFactory.html#ad36bb3513ffcf359a17fce37c129039e" title="Return a pointer to a new McPairPotential, if possible.">PairFactory::mdFactory</a>(<span class="keyword">const</span> std::string&amp; name, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)<span class="keyword"> const</span>
+<a name="l00075"></a><a class="code" href="classMcMd_1_1PairFactory.html#a47dcf0997316eaf3629994527e376502">00075</a>    <a class="code" href="classMcMd_1_1PairFactory.html#a47dcf0997316eaf3629994527e376502" title="Return a pointer to a new McPairPotential, if possible.">PairFactory::mdFactory</a>(<span class="keyword">const</span> std::string&amp; name, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)<span class="keyword"> const</span>
 <a name="l00076"></a>00076 <span class="keyword">   </span>{
 <a name="l00077"></a>00077       <a class="code" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a>* ptr = 0;
 <a name="l00078"></a>00078 
@@ -145,9 +145,9 @@
 <a name="l00096"></a>00096 <span class="comment">   * Convert an McPairPotential to a MdPairPotential, if possible.</span>
 <a name="l00097"></a>00097 <span class="comment">   */</span>
 <a name="l00098"></a>00098    <a class="code" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a>* 
-<a name="l00099"></a><a class="code" href="classMcMd_1_1PairFactory.html#a9abc9bca1c3bfda695dde86366ec15b1">00099</a>    <a class="code" href="classMcMd_1_1PairFactory.html#ad36bb3513ffcf359a17fce37c129039e" title="Return a pointer to a new McPairPotential, if possible.">PairFactory::mdFactory</a>(<a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>&amp; potential)<span class="keyword"> const</span>
+<a name="l00099"></a><a class="code" href="classMcMd_1_1PairFactory.html#a5a7fb16ea46436c77155ab755eafcedc">00099</a>    <a class="code" href="classMcMd_1_1PairFactory.html#a47dcf0997316eaf3629994527e376502" title="Return a pointer to a new McPairPotential, if possible.">PairFactory::mdFactory</a>(<a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>&amp; potential)<span class="keyword"> const</span>
 <a name="l00100"></a>00100 <span class="keyword">   </span>{
-<a name="l00101"></a>00101       std::string name = potential.<a class="code" href="classMcMd_1_1PairPotential.html#ae355aef85b464e790c9e22b1364dabee" title="Return name of pair interaction class (e.g., &amp;quot;LJPair&amp;quot;).">interactionClassName</a>();
+<a name="l00101"></a>00101       std::string name = potential.<a class="code" href="classMcMd_1_1PairPotential.html#ab41ce7b4f7f1e421a44295c0dbb357d5" title="Return name of pair interaction class (e.g., &amp;quot;LJPair&amp;quot;).">interactionClassName</a>();
 <a name="l00102"></a>00102       <a class="code" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a>* ptr = 0;
 <a name="l00103"></a>00103 
 <a name="l00104"></a>00104       <span class="comment">// Try subfactories first</span>
@@ -176,7 +176,7 @@
 <a name="l00127"></a>00127 <span class="comment">   * Try all subfactories in sequence searching for a match.</span>
 <a name="l00128"></a>00128 <span class="comment">   */</span>
 <a name="l00129"></a>00129    <a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>* 
-<a name="l00130"></a><a class="code" href="classMcMd_1_1PairFactory.html#a2bfbcfc2c2b3013624aab1a3a2673474">00130</a>    <a class="code" href="classMcMd_1_1PairFactory.html#a2bfbcfc2c2b3013624aab1a3a2673474" title="Search subfactories for match to McPairPotential subclass name.">PairFactory::tryMcSubfactories</a>(<span class="keyword">const</span> std::string&amp; className, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)<span class="keyword"> const</span>
+<a name="l00130"></a><a class="code" href="classMcMd_1_1PairFactory.html#a3249c8091f493168e0dc74eb8e9c7255">00130</a>    <a class="code" href="classMcMd_1_1PairFactory.html#a3249c8091f493168e0dc74eb8e9c7255" title="Search subfactories for match to McPairPotential subclass name.">PairFactory::tryMcSubfactories</a>(<span class="keyword">const</span> std::string&amp; className, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)<span class="keyword"> const</span>
 <a name="l00131"></a>00131 <span class="keyword">   </span>{
 <a name="l00132"></a>00132       <a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>* typePtr = 0;
 <a name="l00133"></a>00133       <span class="keywordtype">int</span> n = subfactories_.size();
@@ -190,7 +190,7 @@
 <a name="l00141"></a>00141 <span class="comment">   * Try all subfactories in sequence searching for a match.</span>
 <a name="l00142"></a>00142 <span class="comment">   */</span>
 <a name="l00143"></a>00143    <a class="code" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a>* 
-<a name="l00144"></a><a class="code" href="classMcMd_1_1PairFactory.html#a1b6884a94080ceee4eed9225dbf245d4">00144</a>    <a class="code" href="classMcMd_1_1PairFactory.html#a1b6884a94080ceee4eed9225dbf245d4" title="Search subfactories for match to MdPairPotential subclass name.">PairFactory::tryMdSubfactories</a>(<span class="keyword">const</span> std::string&amp; className, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)<span class="keyword"> const</span>
+<a name="l00144"></a><a class="code" href="classMcMd_1_1PairFactory.html#a8da2e0655e7541552944e9caf0fab8d9">00144</a>    <a class="code" href="classMcMd_1_1PairFactory.html#a8da2e0655e7541552944e9caf0fab8d9" title="Search subfactories for match to MdPairPotential subclass name.">PairFactory::tryMdSubfactories</a>(<span class="keyword">const</span> std::string&amp; className, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)<span class="keyword"> const</span>
 <a name="l00145"></a>00145 <span class="keyword">   </span>{
 <a name="l00146"></a>00146       <a class="code" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a>* typePtr = 0;
 <a name="l00147"></a>00147       <span class="keywordtype">int</span> n = subfactories_.size();
@@ -203,7 +203,7 @@
 <a name="l00154"></a>00154    <span class="comment">/*</span>
 <a name="l00155"></a>00155 <span class="comment">   * Try all subfactories in sequence searching for a match.</span>
 <a name="l00156"></a>00156 <span class="comment">   */</span>
-<a name="l00157"></a><a class="code" href="classMcMd_1_1PairFactory.html#a25d2d639b8c2453d8a871a86d1b7d6d5">00157</a>    <a class="code" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a>* <a class="code" href="classMcMd_1_1PairFactory.html#a1b6884a94080ceee4eed9225dbf245d4" title="Search subfactories for match to MdPairPotential subclass name.">PairFactory::tryMdSubfactories</a>(<a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>&amp; potential)<span class="keyword"> const</span>
+<a name="l00157"></a><a class="code" href="classMcMd_1_1PairFactory.html#a3f9d0f25c07ad89da311f77fa5dfc00d">00157</a>    <a class="code" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a>* <a class="code" href="classMcMd_1_1PairFactory.html#a8da2e0655e7541552944e9caf0fab8d9" title="Search subfactories for match to MdPairPotential subclass name.">PairFactory::tryMdSubfactories</a>(<a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>&amp; potential)<span class="keyword"> const</span>
 <a name="l00158"></a>00158 <span class="keyword">   </span>{
 <a name="l00159"></a>00159       <a class="code" href="classMcMd_1_1MdPairPotential.html" title="An PairPotential for MD simulation.">MdPairPotential</a>* typePtr = 0;
 <a name="l00160"></a>00160       <span class="keywordtype">int</span> n = subfactories_.size();
@@ -218,7 +218,7 @@
 <a name="l00169"></a>00169 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

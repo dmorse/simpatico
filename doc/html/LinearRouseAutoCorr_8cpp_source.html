@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -78,8 +78,8 @@
 <a name="l00026"></a>00026    <span class="comment">/*</span>
 <a name="l00027"></a>00027 <span class="comment">   * Constructor.</span>
 <a name="l00028"></a>00028 <span class="comment">   */</span>
-<a name="l00029"></a>00029    <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#aa290d7fb886bb28ae7cb4c6760170f8f" title="Constructor.">LinearRouseAutoCorr::LinearRouseAutoCorr</a>(System&amp; system) 
-<a name="l00030"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#aa290d7fb886bb28ae7cb4c6760170f8f">00030</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
+<a name="l00029"></a>00029    <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a06e2f1772e6a5a9f7e325e7afb70f163" title="Constructor.">LinearRouseAutoCorr::LinearRouseAutoCorr</a>(System&amp; system) 
+<a name="l00030"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a06e2f1772e6a5a9f7e325e7afb70f163">00030</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
 <a name="l00031"></a>00031       outputFile_(),
 <a name="l00032"></a>00032       accumulator_(),
 <a name="l00033"></a>00033       data_(),
@@ -95,14 +95,14 @@
 <a name="l00043"></a>00043    <span class="comment">/*</span>
 <a name="l00044"></a>00044 <span class="comment">   * Destructor.</span>
 <a name="l00045"></a>00045 <span class="comment">   */</span>
-<a name="l00046"></a>00046    <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#aa3abbbace3ce6af09d04c856b025f572" title="Destructor.">LinearRouseAutoCorr::~LinearRouseAutoCorr</a>() 
-<a name="l00047"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#aa3abbbace3ce6af09d04c856b025f572">00047</a>    {}
+<a name="l00046"></a>00046    <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a0ec546d90f5fcf19ee29ccd2cd534638" title="Destructor.">LinearRouseAutoCorr::~LinearRouseAutoCorr</a>() 
+<a name="l00047"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a0ec546d90f5fcf19ee29ccd2cd534638">00047</a>    {}
 <a name="l00048"></a>00048 
 <a name="l00049"></a>00049    <span class="comment">/*</span>
 <a name="l00050"></a>00050 <span class="comment">   * Read parameters from file.</span>
 <a name="l00051"></a>00051 <span class="comment">   */</span>
-<a name="l00052"></a>00052    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file.">LinearRouseAutoCorr::readParam</a>(std::istream&amp; in) 
-<a name="l00053"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#ab5421d3c9175985c9acbf723e5392075">00053</a>    {
+<a name="l00052"></a>00052    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a0d1bd3afeca544a6d4bb45941b48bdcc" title="Read parameters from file.">LinearRouseAutoCorr::readParam</a>(std::istream&amp; in) 
+<a name="l00053"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a0d1bd3afeca544a6d4bb45941b48bdcc">00053</a>    {
 <a name="l00054"></a>00054 
 <a name="l00055"></a>00055       <span class="comment">// Read interval and parameters for AutoCorrArray</span>
 <a name="l00056"></a>00056       readInterval(in);
@@ -139,8 +139,8 @@
 <a name="l00087"></a>00087    <span class="comment">/*</span>
 <a name="l00088"></a>00088 <span class="comment">   * Evaluate end-to-end vectors of all chains, add to ensemble.</span>
 <a name="l00089"></a>00089 <span class="comment">   */</span>
-<a name="l00090"></a>00090    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a4fc01d736fe50cf5b977f755b675f11d" title="Set number of molecules, initialize eigenvector, and clear accumulator.">LinearRouseAutoCorr::setup</a>() 
-<a name="l00091"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a4fc01d736fe50cf5b977f755b675f11d">00091</a>    { 
+<a name="l00090"></a>00090    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#ad3ebee64d35fcb70dad14075492794be" title="Set number of molecules, initialize eigenvector, and clear accumulator.">LinearRouseAutoCorr::setup</a>() 
+<a name="l00091"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#ad3ebee64d35fcb70dad14075492794be">00091</a>    { 
 <a name="l00092"></a>00092 
 <a name="l00093"></a>00093       <span class="keywordflow">if</span> (!isInitialized_) {
 <a name="l00094"></a>00094          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Object is not intitialized&quot;</span>);
@@ -171,8 +171,8 @@
 <a name="l00119"></a>00119    <span class="comment">/*</span>
 <a name="l00120"></a>00120 <span class="comment">   * Evaluate end-to-end vectors of all chains, add to ensemble.</span>
 <a name="l00121"></a>00121 <span class="comment">   */</span>
-<a name="l00122"></a>00122    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Evaluate end-to-end vectors of all chains, add to ensemble.">LinearRouseAutoCorr::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00123"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#afc17577823a371a5ead4e51ebb8ec2ef">00123</a>    { 
+<a name="l00122"></a>00122    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a7ae4a6d5f7dd6b9c8760da0af6f6b875" title="Evaluate end-to-end vectors of all chains, add to ensemble.">LinearRouseAutoCorr::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00123"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a7ae4a6d5f7dd6b9c8760da0af6f6b875">00123</a>    { 
 <a name="l00124"></a>00124       <span class="keywordflow">if</span> (isAtInterval(iStep))  {
 <a name="l00125"></a>00125 
 <a name="l00126"></a>00126          <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>* moleculePtr;
@@ -189,15 +189,15 @@
 <a name="l00137"></a>00137             moleculePtr = &amp;(system().molecule(speciesId_, i));
 <a name="l00138"></a>00138 
 <a name="l00139"></a>00139             <span class="comment">// Retrace non-periodic shape and calculate coefficients</span>
-<a name="l00140"></a>00140             atomPos = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00141"></a>00141             dR.<a class="code" href="classUtil_1_1Vector.html#a93125fcca5b3af76a88698903291bcbd" title="Multiply a vector v by a scalar s.">multiply</a>(atomPos, projector_[0]);
+<a name="l00140"></a>00140             atomPos = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00141"></a>00141             dR.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomPos, projector_[0]);
 <a name="l00142"></a>00142             data_[i] = dR;
 <a name="l00143"></a>00143             <span class="keywordflow">for</span> (j = 1; j &lt; nAtom_; j++) {
-<a name="l00144"></a>00144                r1 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(j-1).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00145"></a>00145                r2 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(j).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00144"></a>00144                r1 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(j-1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00145"></a>00145                r2 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(j).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00146"></a>00146                system().boundary().distanceSq(r2, r1, dR);
 <a name="l00147"></a>00147                atomPos += dR;
-<a name="l00148"></a>00148                dR.<a class="code" href="classUtil_1_1Vector.html#a93125fcca5b3af76a88698903291bcbd" title="Multiply a vector v by a scalar s.">multiply</a>(atomPos, projector_[j]);
+<a name="l00148"></a>00148                dR.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomPos, projector_[j]);
 <a name="l00149"></a>00149                data_[i] += dR;
 <a name="l00150"></a>00150             }
 <a name="l00151"></a>00151          }
@@ -208,8 +208,8 @@
 <a name="l00156"></a>00156 
 <a name="l00157"></a>00157    }
 <a name="l00158"></a>00158 
-<a name="l00160"></a>00160    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results after simulation is completed.">LinearRouseAutoCorr::output</a>() 
-<a name="l00161"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a7437b254e19e7e12fc2ec99945f4ecea">00161</a>    {  
+<a name="l00160"></a>00160    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a489df33cf49eb58158b02a2e616660c3" title="Output results after simulation is completed.">LinearRouseAutoCorr::output</a>() 
+<a name="l00161"></a><a class="code" href="classMcMd_1_1LinearRouseAutoCorr.html#a489df33cf49eb58158b02a2e616660c3">00161</a>    {  
 <a name="l00162"></a>00162 
 <a name="l00163"></a>00163       <span class="comment">// Echo parameter to diagnostic log file</span>
 <a name="l00164"></a>00164       fileMaster().openOutputFile(outputFileName(), outputFile_);
@@ -229,7 +229,7 @@
 <a name="l00178"></a>00178 <span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

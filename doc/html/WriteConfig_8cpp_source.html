@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -73,7 +73,7 @@
 <a name="l00022"></a>00022    <span class="comment">/*</span>
 <a name="l00023"></a>00023 <span class="comment">   * Constructor.</span>
 <a name="l00024"></a>00024 <span class="comment">   */</span>
-<a name="l00025"></a><a class="code" href="classDdMd_1_1WriteConfig.html#aeb03703d9a7953c2ac64c9f82dc3bebe">00025</a>    <a class="code" href="classDdMd_1_1WriteConfig.html#aeb03703d9a7953c2ac64c9f82dc3bebe" title="Constructor.">WriteConfig::WriteConfig</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation) 
+<a name="l00025"></a><a class="code" href="classDdMd_1_1WriteConfig.html#a99a8b8a6881727fdb667623baffdd940">00025</a>    <a class="code" href="classDdMd_1_1WriteConfig.html#a99a8b8a6881727fdb667623baffdd940" title="Constructor.">WriteConfig::WriteConfig</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation) 
 <a name="l00026"></a>00026     : <a class="code" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>(simulation),
 <a name="l00027"></a>00027       nSample_(0),
 <a name="l00028"></a>00028       isInitialized_(false)
@@ -82,34 +82,34 @@
 <a name="l00031"></a>00031    <span class="comment">/*</span>
 <a name="l00032"></a>00032 <span class="comment">   * Read interval and outputFileName. </span>
 <a name="l00033"></a>00033 <span class="comment">   */</span>
-<a name="l00034"></a><a class="code" href="classDdMd_1_1WriteConfig.html#ab5421d3c9175985c9acbf723e5392075">00034</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1WriteConfig.html#ab5421d3c9175985c9acbf723e5392075" title="Read dumpPrefix and interval.">WriteConfig::readParam</a>(std::istream&amp; in) 
+<a name="l00034"></a><a class="code" href="classDdMd_1_1WriteConfig.html#ad2e714ae2d4d0a40cf09d570b955aaeb">00034</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1WriteConfig.html#ad2e714ae2d4d0a40cf09d570b955aaeb" title="Read dumpPrefix and interval.">WriteConfig::readParam</a>(std::istream&amp; in) 
 <a name="l00035"></a>00035    {
-<a name="l00036"></a>00036       <a class="code" href="classDdMd_1_1Diagnostic.html#a0d9d7b5fc89cf6f04d0119cfcc7ac942" title="Read parameter interval from file.">readInterval</a>(in);
-<a name="l00037"></a>00037       <a class="code" href="classDdMd_1_1Diagnostic.html#a7fb5e9c0364a81f5a630d0f26acfb234" title="Read outputFileName from file.">readOutputFileName</a>(in);
+<a name="l00036"></a>00036       <a class="code" href="classDdMd_1_1Diagnostic.html#a80988373c60f61c54c26b1292dedd986" title="Read parameter interval from file.">readInterval</a>(in);
+<a name="l00037"></a>00037       <a class="code" href="classDdMd_1_1Diagnostic.html#a34fbe6c31787d2f8c893b422cf920947" title="Read outputFileName from file.">readOutputFileName</a>(in);
 <a name="l00038"></a>00038       isInitialized_ = <span class="keyword">true</span>;
 <a name="l00039"></a>00039    }
 <a name="l00040"></a>00040 
 <a name="l00041"></a>00041    <span class="comment">/*</span>
 <a name="l00042"></a>00042 <span class="comment">   * Read interval and outputFileName. </span>
 <a name="l00043"></a>00043 <span class="comment">   */</span>
-<a name="l00044"></a><a class="code" href="classDdMd_1_1WriteConfig.html#a4fc01d736fe50cf5b977f755b675f11d">00044</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1WriteConfig.html#a4fc01d736fe50cf5b977f755b675f11d" title="Clear nSample counter.">WriteConfig::setup</a>() 
+<a name="l00044"></a><a class="code" href="classDdMd_1_1WriteConfig.html#a64ba2fdf68821fd4014d7078db6755fc">00044</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1WriteConfig.html#a64ba2fdf68821fd4014d7078db6755fc" title="Clear nSample counter.">WriteConfig::setup</a>() 
 <a name="l00045"></a>00045    {  nSample_ = 0; }
 <a name="l00046"></a>00046 
 <a name="l00047"></a>00047    <span class="comment">/*</span>
 <a name="l00048"></a>00048 <span class="comment">   * Dump configuration to file</span>
 <a name="l00049"></a>00049 <span class="comment">   */</span>
-<a name="l00050"></a><a class="code" href="classDdMd_1_1WriteConfig.html#afc17577823a371a5ead4e51ebb8ec2ef">00050</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1WriteConfig.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Dump configuration to file.">WriteConfig::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00050"></a><a class="code" href="classDdMd_1_1WriteConfig.html#a5f7f5f1bb387e76ba9c6b5b1f857d38d">00050</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1WriteConfig.html#a5f7f5f1bb387e76ba9c6b5b1f857d38d" title="Dump configuration to file.">WriteConfig::sample</a>(<span class="keywordtype">long</span> iStep) 
 <a name="l00051"></a>00051    {
-<a name="l00052"></a>00052       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Diagnostic.html#a56d6fc996d1e17d408288f86b6d9b4e7" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
+<a name="l00052"></a>00052       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Diagnostic.html#a6c1854a908b373a5deab2e686b988ae4" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep))  {
 <a name="l00053"></a>00053 
 <a name="l00054"></a>00054          <span class="comment">// Construct new fileName: outputFileName + toString(nSample)</span>
 <a name="l00055"></a>00055          std::string filename;
-<a name="l00056"></a>00056          filename  = <a class="code" href="classDdMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>();
-<a name="l00057"></a>00057          filename += <a class="code" href="namespaceUtil.html#a48ded7fea065b110a5bf453d3c30826f" title="Return string representation of an integer.">toString</a>(nSample_);
+<a name="l00056"></a>00056          filename  = <a class="code" href="classDdMd_1_1Diagnostic.html#ac532ee2db0f9fe2c9cb9ce35fe77a809" title="Return outputFileName string.">outputFileName</a>();
+<a name="l00057"></a>00057          filename += <a class="code" href="namespaceUtil.html#a69d6f862289b96b4b0c0591357c8823e" title="Return string representation of an integer.">toString</a>(nSample_);
 <a name="l00058"></a>00058 
 <a name="l00059"></a>00059          <span class="comment">// Open output file, write data, and close file</span>
 <a name="l00060"></a>00060          <span class="comment">//simulation().fileMaster().openOutputFile(filename, outputFile_);</span>
-<a name="l00061"></a>00061          <a class="code" href="classDdMd_1_1Diagnostic.html#a9c48d9c8c09632e9489efe52722a7937" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a08dbe976cc87f72e3a1ca9775b0d494d" title="Write configuration file.">writeConfig</a>(filename);
+<a name="l00061"></a>00061          <a class="code" href="classDdMd_1_1Diagnostic.html#af18bdfad174c975c0216764ef7887116" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#afda8eea88c0e81663b145a47d1d90588" title="Write configuration file.">writeConfig</a>(filename);
 <a name="l00062"></a>00062          <span class="comment">//outputFile_.close();</span>
 <a name="l00063"></a>00063          ++nSample_;
 <a name="l00064"></a>00064 
@@ -120,7 +120,7 @@
 <a name="l00069"></a>00069 <span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

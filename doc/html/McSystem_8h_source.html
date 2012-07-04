@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -236,20 +236,20 @@
 <a name="l00294"></a>00294 <span class="preprocessor"></span>   <span class="comment">/*</span>
 <a name="l00295"></a>00295 <span class="comment">   * Return the McPairPotential by reference.</span>
 <a name="l00296"></a>00296 <span class="comment">   */</span>
-<a name="l00297"></a><a class="code" href="classMcMd_1_1McSystem.html#a95732dcabe9f491e9bb9636dc9d194ec">00297</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>&amp; <a class="code" href="classMcMd_1_1McSystem.html#a95732dcabe9f491e9bb9636dc9d194ec" title="Return the McPairPotential by reference.">McSystem::pairPotential</a>()<span class="keyword"> const</span>
+<a name="l00297"></a><a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12">00297</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>&amp; <a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">McSystem::pairPotential</a>()<span class="keyword"> const</span>
 <a name="l00298"></a>00298 <span class="keyword">   </span>{  <span class="keywordflow">return</span> *pairPotentialPtr_; }
 <a name="l00299"></a>00299 <span class="preprocessor">   #endif</span>
 <a name="l00300"></a>00300 <span class="preprocessor"></span>
 <a name="l00301"></a>00301    <span class="comment">/*</span>
 <a name="l00302"></a>00302 <span class="comment">   * Does a bond potential exist?</span>
 <a name="l00303"></a>00303 <span class="comment">   */</span>
-<a name="l00304"></a><a class="code" href="classMcMd_1_1McSystem.html#a99605c893b3efd2a1129a25afe19de46">00304</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1McSystem.html#a99605c893b3efd2a1129a25afe19de46" title="Does a bond potential exist?.">McSystem::hasBondPotential</a>()<span class="keyword"> const</span>
+<a name="l00304"></a><a class="code" href="classMcMd_1_1McSystem.html#af53d46e025334360c2824fcd14dbabda">00304</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1McSystem.html#af53d46e025334360c2824fcd14dbabda" title="Does a bond potential exist?.">McSystem::hasBondPotential</a>()<span class="keyword"> const</span>
 <a name="l00305"></a>00305 <span class="keyword">   </span>{  <span class="keywordflow">return</span> bool(bondPotentialPtr_); }
 <a name="l00306"></a>00306 
 <a name="l00307"></a>00307    <span class="comment">/*</span>
 <a name="l00308"></a>00308 <span class="comment">   * Return the BondPotential by const reference.</span>
 <a name="l00309"></a>00309 <span class="comment">   */</span>
-<a name="l00310"></a><a class="code" href="classMcMd_1_1McSystem.html#a6ded80b5664672f56a62f8bf8295d641">00310</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a>&amp; <a class="code" href="classMcMd_1_1McSystem.html#a6ded80b5664672f56a62f8bf8295d641" title="Return the BondPotential by reference.">McSystem::bondPotential</a>()<span class="keyword"> const</span>
+<a name="l00310"></a><a class="code" href="classMcMd_1_1McSystem.html#aed9c37cc7b5ad23cdb6f7648e17a74b7">00310</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a>&amp; <a class="code" href="classMcMd_1_1McSystem.html#aed9c37cc7b5ad23cdb6f7648e17a74b7" title="Return the BondPotential by reference.">McSystem::bondPotential</a>()<span class="keyword"> const</span>
 <a name="l00311"></a>00311 <span class="keyword">   </span>{  <span class="keywordflow">return</span> *bondPotentialPtr_; }
 <a name="l00312"></a>00312 
 <a name="l00313"></a>00313 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
@@ -284,13 +284,13 @@
 <a name="l00342"></a>00342 <span class="preprocessor"></span>   <span class="comment">/*</span>
 <a name="l00343"></a>00343 <span class="comment">   * Does a link potential exist?</span>
 <a name="l00344"></a>00344 <span class="comment">   */</span>
-<a name="l00345"></a><a class="code" href="classMcMd_1_1McSystem.html#ad94cba44b90992a12934ae2be6dcc707">00345</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1McSystem.html#ad94cba44b90992a12934ae2be6dcc707" title="Does a link potential exist?.">McSystem::hasLinkPotential</a>()<span class="keyword"> const</span>
+<a name="l00345"></a><a class="code" href="classMcMd_1_1McSystem.html#a83f2add55298ddbee90ec459c9d9a406">00345</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1McSystem.html#a83f2add55298ddbee90ec459c9d9a406" title="Does a link potential exist?.">McSystem::hasLinkPotential</a>()<span class="keyword"> const</span>
 <a name="l00346"></a>00346 <span class="keyword">   </span>{  <span class="keywordflow">return</span> bool(linkPotentialPtr_); }
 <a name="l00347"></a>00347 
 <a name="l00348"></a>00348    <span class="comment">/*</span>
 <a name="l00349"></a>00349 <span class="comment">   * Return link potential by reference.</span>
 <a name="l00350"></a>00350 <span class="comment">   */</span>
-<a name="l00351"></a><a class="code" href="classMcMd_1_1McSystem.html#afd6f92eb30537c2f70a260a067176dea">00351</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a>&amp; <a class="code" href="classMcMd_1_1McSystem.html#afd6f92eb30537c2f70a260a067176dea" title="Return the McLinkPotential by reference.">McSystem::linkPotential</a>()<span class="keyword"> const</span>
+<a name="l00351"></a><a class="code" href="classMcMd_1_1McSystem.html#a8247c62e71ebc13e4b146cdeb6ab0189">00351</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a>&amp; <a class="code" href="classMcMd_1_1McSystem.html#a8247c62e71ebc13e4b146cdeb6ab0189" title="Return the McLinkPotential by reference.">McSystem::linkPotential</a>()<span class="keyword"> const</span>
 <a name="l00352"></a>00352 <span class="keyword">   </span>{  <span class="keywordflow">return</span> *linkPotentialPtr_; }
 <a name="l00353"></a>00353 <span class="preprocessor">   #endif</span>
 <a name="l00354"></a>00354 <span class="preprocessor"></span>
@@ -298,13 +298,13 @@
 <a name="l00356"></a>00356 <span class="preprocessor"></span>   <span class="comment">/*</span>
 <a name="l00357"></a>00357 <span class="comment">   * Does an external potential exist?</span>
 <a name="l00358"></a>00358 <span class="comment">   */</span>
-<a name="l00359"></a><a class="code" href="classMcMd_1_1McSystem.html#a2e1624ef024a3ecfc4567949279eb7f9">00359</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1McSystem.html#a2e1624ef024a3ecfc4567949279eb7f9" title="Does an external potential exist?.">McSystem::hasExternalPotential</a>()<span class="keyword"> const</span>
+<a name="l00359"></a><a class="code" href="classMcMd_1_1McSystem.html#a776439171922d9e5757f4fb97128f04b">00359</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1McSystem.html#a776439171922d9e5757f4fb97128f04b" title="Does an external potential exist?.">McSystem::hasExternalPotential</a>()<span class="keyword"> const</span>
 <a name="l00360"></a>00360 <span class="keyword">   </span>{  <span class="keywordflow">return</span> bool(externalPotentialPtr_); }
 <a name="l00361"></a>00361 
 <a name="l00362"></a>00362    <span class="comment">/*</span>
 <a name="l00363"></a>00363 <span class="comment">   * Return external potential by reference.</span>
 <a name="l00364"></a>00364 <span class="comment">   */</span>
-<a name="l00365"></a><a class="code" href="classMcMd_1_1McSystem.html#aa307441c683f245a3554e28c2e9ef9f5">00365</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class.">ExternalPotential</a>&amp; <a class="code" href="classMcMd_1_1McSystem.html#aa307441c683f245a3554e28c2e9ef9f5" title="Return ExternalPotential by reference.">McSystem::externalPotential</a>()<span class="keyword"> const</span>
+<a name="l00365"></a><a class="code" href="classMcMd_1_1McSystem.html#a0952ff38daa10a3fe294302a16a9ece1">00365</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class.">ExternalPotential</a>&amp; <a class="code" href="classMcMd_1_1McSystem.html#a0952ff38daa10a3fe294302a16a9ece1" title="Return ExternalPotential by reference.">McSystem::externalPotential</a>()<span class="keyword"> const</span>
 <a name="l00366"></a>00366 <span class="keyword">   </span>{  <span class="keywordflow">return</span> *externalPotentialPtr_; }
 <a name="l00367"></a>00367 <span class="preprocessor">   #endif</span>
 <a name="l00368"></a>00368 <span class="preprocessor"></span>
@@ -320,7 +320,7 @@
 <a name="l00378"></a>00378 <span class="preprocessor"></span>   <span class="comment">/*</span>
 <a name="l00379"></a>00379 <span class="comment">   * Set the pair potential</span>
 <a name="l00380"></a>00380 <span class="comment">   */</span>
-<a name="l00381"></a><a class="code" href="classMcMd_1_1McSystem.html#ac7d25c1a931ec680bef425fef79a0744">00381</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McSystem.html#ac7d25c1a931ec680bef425fef79a0744" title="Set the PairPotential.">McSystem::setPairPotential</a>(<a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>* pairPotentialPtr)
+<a name="l00381"></a><a class="code" href="classMcMd_1_1McSystem.html#acf0a554696289bbb1a1661b08f5c2b98">00381</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McSystem.html#acf0a554696289bbb1a1661b08f5c2b98" title="Set the PairPotential.">McSystem::setPairPotential</a>(<a class="code" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a>* pairPotentialPtr)
 <a name="l00382"></a>00382    {  pairPotentialPtr_ = pairPotentialPtr; }
 <a name="l00383"></a>00383 <span class="preprocessor">   #endif</span>
 <a name="l00384"></a>00384 <span class="preprocessor"></span>
@@ -328,7 +328,7 @@
 <a name="l00386"></a>00386 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

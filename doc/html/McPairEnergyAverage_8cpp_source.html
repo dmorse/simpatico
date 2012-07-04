@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -57,7 +57,7 @@
 <a name="l00005"></a>00005 <span class="comment">/*</span>
 <a name="l00006"></a>00006 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00007"></a>00007 <span class="comment">*</span>
-<a name="l00008"></a>00008 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00008"></a>00008 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00009"></a>00009 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00010"></a>00010 <span class="comment">*/</span>
 <a name="l00011"></a>00011 
@@ -80,33 +80,33 @@
 <a name="l00028"></a>00028    <span class="comment">/* </span>
 <a name="l00029"></a>00029 <span class="comment">   * Constructor.</span>
 <a name="l00030"></a>00030 <span class="comment">   */</span>
-<a name="l00031"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#ac848b08e78d1fe2568e0f72a3261085b">00031</a>    <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#ac848b08e78d1fe2568e0f72a3261085b" title="Constructor.">McPairEnergyAverage::McPairEnergyAverage</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system)
+<a name="l00031"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#af029be97604e5e2fc3a07f303ecfe88c">00031</a>    <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#af029be97604e5e2fc3a07f303ecfe88c" title="Constructor.">McPairEnergyAverage::McPairEnergyAverage</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system)
 <a name="l00032"></a>00032     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&gt;(system),
 <a name="l00033"></a>00033       outputFile_(),
 <a name="l00034"></a>00034       accumulator_(),
 <a name="l00035"></a>00035       nSamplePerBlock_(1),
 <a name="l00036"></a>00036       isInitialized_(false)
 <a name="l00037"></a>00037    {
-<a name="l00038"></a>00038       selector_.<a class="code" href="classMcMd_1_1PairSelector.html#a51cfb5f2cf3fab34adf5bbb4572de964" title="Set policy to avoid double counting (true) or to not avoid (false).">setAvoidDoubleCounting</a>(<span class="keyword">true</span>); 
+<a name="l00038"></a>00038       selector_.<a class="code" href="classMcMd_1_1PairSelector.html#a030a96ab10f6a05692cb8c67c6271ea7" title="Set policy to avoid double counting (true) or to not avoid (false).">setAvoidDoubleCounting</a>(<span class="keyword">true</span>); 
 <a name="l00039"></a>00039    }
 <a name="l00040"></a>00040 
 <a name="l00041"></a>00041 
 <a name="l00042"></a>00042    <span class="comment">/*</span>
 <a name="l00043"></a>00043 <span class="comment">   * Read parameters and initialize.</span>
 <a name="l00044"></a>00044 <span class="comment">   */</span>
-<a name="l00045"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#ab5421d3c9175985c9acbf723e5392075">00045</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters and initialize.">McPairEnergyAverage::readParam</a>(std::istream&amp; in)
+<a name="l00045"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a8284d2c1a942a4adc39d732d69bc85a2">00045</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a8284d2c1a942a4adc39d732d69bc85a2" title="Read parameters and initialize.">McPairEnergyAverage::readParam</a>(std::istream&amp; in)
 <a name="l00046"></a>00046    {
 <a name="l00047"></a>00047 
-<a name="l00048"></a>00048       <a class="code" href="classMcMd_1_1Diagnostic.html#a0d9d7b5fc89cf6f04d0119cfcc7ac942" title="Read parameter interval from file.">readInterval</a>(in);
-<a name="l00049"></a>00049       <a class="code" href="classMcMd_1_1Diagnostic.html#a7fb5e9c0364a81f5a630d0f26acfb234" title="Read outputFileName from file.">readOutputFileName</a>(in);
+<a name="l00048"></a>00048       <a class="code" href="classMcMd_1_1Diagnostic.html#abda32f953247ab813bbad3aa336d56c0" title="Read parameter interval from file.">readInterval</a>(in);
+<a name="l00049"></a>00049       <a class="code" href="classMcMd_1_1Diagnostic.html#a6cace7ea7c10f7a8a2a76dba8ed1122c" title="Read outputFileName from file.">readOutputFileName</a>(in);
 <a name="l00050"></a>00050       read&lt;int&gt;(in,<span class="stringliteral">&quot;nSamplePerBlock&quot;</span>, nSamplePerBlock_);
 <a name="l00051"></a>00051       read&lt;PairSelector&gt;(in,<span class="stringliteral">&quot;selector&quot;</span>, selector_);
 <a name="l00052"></a>00052 
-<a name="l00053"></a>00053       accumulator_.<a class="code" href="classUtil_1_1Average.html#ab7bbb9824f0f48033a2de3bed435fc70" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
+<a name="l00053"></a>00053       accumulator_.<a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(nSamplePerBlock_);
 <a name="l00054"></a>00054 
 <a name="l00055"></a>00055       <span class="comment">// If nSamplePerBlock != 0, open an output file for block averages.</span>
 <a name="l00056"></a>00056       <span class="keywordflow">if</span> (nSamplePerBlock_) {
-<a name="l00057"></a>00057          <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
+<a name="l00057"></a>00057          <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
 <a name="l00058"></a>00058       }
 <a name="l00059"></a>00059 
 <a name="l00060"></a>00060       isInitialized_ = <span class="keyword">true</span>;
@@ -115,16 +115,16 @@
 <a name="l00063"></a>00063    <span class="comment">/*</span>
 <a name="l00064"></a>00064 <span class="comment">   * Clear accumulator.</span>
 <a name="l00065"></a>00065 <span class="comment">   */</span>
-<a name="l00066"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a4fc01d736fe50cf5b977f755b675f11d">00066</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a4fc01d736fe50cf5b977f755b675f11d" title="Clear accumulator.">McPairEnergyAverage::setup</a>() 
-<a name="l00067"></a>00067    {  accumulator_.<a class="code" href="classUtil_1_1Average.html#ac8bb3912a3ce86b15842e79d0b421204" title="Initialize accumulators to zero initial state.">clear</a>(); }
+<a name="l00066"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a880b97026ee097f875fc218c360ac388">00066</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a880b97026ee097f875fc218c360ac388" title="Clear accumulator.">McPairEnergyAverage::setup</a>() 
+<a name="l00067"></a>00067    {  accumulator_.<a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>(); }
 <a name="l00068"></a>00068  
 <a name="l00069"></a>00069    <span class="comment">/*</span>
 <a name="l00070"></a>00070 <span class="comment">   * Evaluate energy per particle, and add to ensemble. </span>
 <a name="l00071"></a>00071 <span class="comment">   */</span>
-<a name="l00072"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#afc17577823a371a5ead4e51ebb8ec2ef">00072</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Calculate, analyze and/or output a physical quantity.">McPairEnergyAverage::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00072"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a43afcaf7cd96a1eea8cdc4cf4351674a">00072</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a43afcaf7cd96a1eea8cdc4cf4351674a" title="Calculate, analyze and/or output a physical quantity.">McPairEnergyAverage::sample</a>(<span class="keywordtype">long</span> iStep) 
 <a name="l00073"></a>00073    {
 <a name="l00074"></a>00074 
-<a name="l00075"></a>00075       <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1Diagnostic.html#a56d6fc996d1e17d408288f86b6d9b4e7" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep)) <span class="keywordflow">return</span>;
+<a name="l00075"></a>00075       <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1Diagnostic.html#a6f9a95c770f5afc1a1efc65df7b9bea2" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep)) <span class="keywordflow">return</span>;
 <a name="l00076"></a>00076 
 <a name="l00077"></a>00077       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>  *iAtomPtr, *jAtomPtr;
 <a name="l00078"></a>00078       <span class="keywordtype">int</span>    nNeighbor, nInCell;
@@ -134,34 +134,34 @@
 <a name="l00082"></a>00082 
 <a name="l00083"></a>00083       <span class="comment">// Loop over cells</span>
 <a name="l00084"></a>00084       energy = 0.0;
-<a name="l00085"></a>00085       nc = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#a95732dcabe9f491e9bb9636dc9d194ec" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#a3ea7f59ef0e5a9f2c4ee3d61b3b5a1bd" title="Get the cellList by const reference.">cellList</a>().<a class="code" href="classMcMd_1_1CellList.html#aac64babdd690054a1dbd263e9a6d98de" title="Get total number of cells in this CellList.">totCells</a>();
+<a name="l00085"></a>00085       nc = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#a6fad89d8b802fb7ad37c1bce9d1bfd5d" title="Get the cellList by const reference.">cellList</a>().<a class="code" href="classMcMd_1_1CellList.html#afc404fadea4c7ea9587cd7a3ad15dc1c" title="Get total number of cells in this CellList.">totCells</a>();
 <a name="l00086"></a>00086       <span class="keywordflow">for</span> (ic = 0; ic &lt; nc; ++ic) {
 <a name="l00087"></a>00087 
 <a name="l00088"></a>00088          <span class="comment">// Get array of neighbors_</span>
-<a name="l00089"></a>00089          <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#a95732dcabe9f491e9bb9636dc9d194ec" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#a3ea7f59ef0e5a9f2c4ee3d61b3b5a1bd" title="Get the cellList by const reference.">cellList</a>().<a class="code" href="classMcMd_1_1CellList.html#a9f9e67c6c19de1d89b64770cbd46350f" title="Fill an array with pointers to atoms in a cell and neighboring cells.">getCellNeighbors</a>(ic, neighbors_, nInCell);
-<a name="l00090"></a>00090          nNeighbor = neighbors_.<a class="code" href="classUtil_1_1FSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">size</a>();
+<a name="l00089"></a>00089          <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1McPairPotential.html#a6fad89d8b802fb7ad37c1bce9d1bfd5d" title="Get the cellList by const reference.">cellList</a>().<a class="code" href="classMcMd_1_1CellList.html#af17127e060f6a75699d92d55b5d89ad2" title="Fill an array with pointers to atoms in a cell and neighboring cells.">getCellNeighbors</a>(ic, neighbors_, nInCell);
+<a name="l00090"></a>00090          nNeighbor = neighbors_.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
 <a name="l00091"></a>00091   
 <a name="l00092"></a>00092          <span class="comment">// Loop over primary atoms in this cell</span>
 <a name="l00093"></a>00093          <span class="keywordflow">for</span> (i = 0; i &lt; nInCell; ++i) {
 <a name="l00094"></a>00094             iAtomPtr = neighbors_[i];
-<a name="l00095"></a>00095             iId      = iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
-<a name="l00096"></a>00096             iType    = iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>();
+<a name="l00095"></a>00095             iId      = iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00096"></a>00096             iType    = iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>();
 <a name="l00097"></a>00097           
 <a name="l00098"></a>00098             <span class="comment">// Loop over secondary atoms in this and neighboring cells</span>
 <a name="l00099"></a>00099             <span class="keywordflow">for</span> (j = 0; j &lt; nNeighbor; ++j) {
 <a name="l00100"></a>00100                jAtomPtr = neighbors_[j];
-<a name="l00101"></a>00101                jId      = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
-<a name="l00102"></a>00102                jType    = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>();
+<a name="l00101"></a>00101                jId      = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00102"></a>00102                jType    = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>();
 <a name="l00103"></a>00103      
-<a name="l00104"></a>00104                <span class="keywordflow">if</span> (selector_.<a class="code" href="classMcMd_1_1PairSelector.html#a88ee0603acc20a4d0b580a6cbe3da0e0" title="Return true if pair of atoms matches the selector policy.">match</a>(*iAtomPtr, *jAtomPtr)) {
+<a name="l00104"></a>00104                <span class="keywordflow">if</span> (selector_.<a class="code" href="classMcMd_1_1PairSelector.html#a90551e9cbe25da5f65ad26d8e3bc7235" title="Return true if pair of atoms matches the selector policy.">match</a>(*iAtomPtr, *jAtomPtr)) {
 <a name="l00105"></a>00105 
 <a name="l00106"></a>00106                   <span class="comment">// Exclude masked pairs</span>
-<a name="l00107"></a>00107                   <span class="keywordflow">if</span> (!iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classMcMd_1_1Mask.html#a250dbffb1fa61c07f232c26648f0ec2d" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(*jAtomPtr)) {
+<a name="l00107"></a>00107                   <span class="keywordflow">if</span> (!iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af02003b1de6abffcf7ae7cd2187ff22c" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classMcMd_1_1Mask.html#aa2b748da6579dc033f5da1db08988f5b" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(*jAtomPtr)) {
 <a name="l00108"></a>00108 
-<a name="l00109"></a>00109                      rsq = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary by reference.">boundary</a>().
-<a name="l00110"></a>00110                            distanceSq(iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>());
-<a name="l00111"></a>00111                      energy += <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#a95732dcabe9f491e9bb9636dc9d194ec" title="Return the McPairPotential by reference.">pairPotential</a>().
-<a name="l00112"></a>00112                                energy(rsq, iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>(), jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>());
+<a name="l00109"></a>00109                      rsq = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1System.html#ace1b2b95dc094767d218e1dcf520b5ca" title="Get the Boundary by reference.">boundary</a>().
+<a name="l00110"></a>00110                            distanceSq(iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>());
+<a name="l00111"></a>00111                      energy += <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().
+<a name="l00112"></a>00112                                energy(rsq, iAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>(), jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>());
 <a name="l00113"></a>00113 
 <a name="l00114"></a>00114                   }
 <a name="l00115"></a>00115 
@@ -173,26 +173,26 @@
 <a name="l00121"></a>00121 
 <a name="l00122"></a>00122       } <span class="comment">// cells</span>
 <a name="l00123"></a>00123 
-<a name="l00124"></a>00124       accumulator_.<a class="code" href="classUtil_1_1Average.html#ad996b3f89b7ae529fe991f75b2db0616" title="Add a sampled value to the ensemble, and output block averages.">sample</a>(energy, outputFile_);
+<a name="l00124"></a>00124       accumulator_.<a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block averages.">sample</a>(energy, outputFile_);
 <a name="l00125"></a>00125 
 <a name="l00126"></a>00126    }
 <a name="l00127"></a>00127 
 <a name="l00128"></a>00128    <span class="comment">/*</span>
 <a name="l00129"></a>00129 <span class="comment">   * Output results to file after simulation is completed.</span>
 <a name="l00130"></a>00130 <span class="comment">   */</span>
-<a name="l00131"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a7437b254e19e7e12fc2ec99945f4ecea">00131</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results at end of simulation.">McPairEnergyAverage::output</a>() 
+<a name="l00131"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#abc5631bec5698dac860b435c4b62d129">00131</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#abc5631bec5698dac860b435c4b62d129" title="Output results at end of simulation.">McPairEnergyAverage::output</a>() 
 <a name="l00132"></a>00132    { 
 <a name="l00133"></a>00133       <span class="comment">// If outputFile_ was used to write block averages, close it.</span>
-<a name="l00134"></a>00134       <span class="keywordflow">if</span> (accumulator_.<a class="code" href="classUtil_1_1Average.html#a6f58754b6c74f76a35e309a6dec00657" title="Get nSamplePerBlock.">nSamplePerBlock</a>()) {
+<a name="l00134"></a>00134       <span class="keywordflow">if</span> (accumulator_.<a class="code" href="classUtil_1_1Average.html#a4fe42669fbf31981f9dc0a54aab70d9f" title="Get nSamplePerBlock.">nSamplePerBlock</a>()) {
 <a name="l00135"></a>00135          outputFile_.close();
 <a name="l00136"></a>00136       }
 <a name="l00137"></a>00137 
-<a name="l00138"></a>00138       <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), outputFile_);
-<a name="l00139"></a>00139       <a class="code" href="classUtil_1_1ParamComposite.html#a3919e7db0ce53e1ead2be4016d4d09ac" title="Write all parameters to an output stream.">writeParam</a>(outputFile_); 
+<a name="l00138"></a>00138       <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), outputFile_);
+<a name="l00139"></a>00139       <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">writeParam</a>(outputFile_); 
 <a name="l00140"></a>00140       outputFile_.close();
 <a name="l00141"></a>00141 
-<a name="l00142"></a>00142       <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.ave&quot;</span>), outputFile_);
-<a name="l00143"></a>00143       accumulator_.<a class="code" href="classUtil_1_1Average.html#a012e48b5ec7769b2e5614bd6b3a62488" title="Output final statistical properties to file.">output</a>(outputFile_); 
+<a name="l00142"></a>00142       <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.ave&quot;</span>), outputFile_);
+<a name="l00143"></a>00143       accumulator_.<a class="code" href="classUtil_1_1Average.html#a08634c8f7a1c8791a77168b70f6884e4" title="Output final statistical properties to file.">output</a>(outputFile_); 
 <a name="l00144"></a>00144       outputFile_.close();
 <a name="l00145"></a>00145 
 <a name="l00146"></a>00146    }
@@ -200,13 +200,13 @@
 <a name="l00148"></a>00148    <span class="comment">/*</span>
 <a name="l00149"></a>00149 <span class="comment">   * Save state to binary file archive.</span>
 <a name="l00150"></a>00150 <span class="comment">   */</span>
-<a name="l00151"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">00151</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64" title="Save state to binary file archive.">McPairEnergyAverage::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
+<a name="l00151"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a5cae3965b4dcffd6ba760c26223d8868">00151</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#a5cae3965b4dcffd6ba760c26223d8868" title="Save state to binary file archive.">McPairEnergyAverage::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
 <a name="l00152"></a>00152    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00153"></a>00153 
 <a name="l00154"></a>00154    <span class="comment">/*</span>
 <a name="l00155"></a>00155 <span class="comment">   * Load state from a binary file archive.</span>
 <a name="l00156"></a>00156 <span class="comment">   */</span>
-<a name="l00157"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#aa3d71af4cc5dfb2be6be816a8f562416">00157</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load state from a binary file archive.">McPairEnergyAverage::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00157"></a><a class="code" href="classMcMd_1_1McPairEnergyAverage.html#acc33cae7aedeefcf5501d47103d7f269">00157</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairEnergyAverage.html#acc33cae7aedeefcf5501d47103d7f269" title="Load state from a binary file archive.">McPairEnergyAverage::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
 <a name="l00158"></a>00158    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00159"></a>00159 
 <a name="l00160"></a>00160 }
@@ -214,7 +214,7 @@
 <a name="l00162"></a>00162 <span class="preprocessor"></span><span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

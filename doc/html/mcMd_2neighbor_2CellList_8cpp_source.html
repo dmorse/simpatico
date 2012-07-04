@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,9 +71,9 @@
 <a name="l00020"></a>00020    <span class="comment">/*</span>
 <a name="l00021"></a>00021 <span class="comment">   * Constructor.</span>
 <a name="l00022"></a>00022 <span class="comment">   */</span>
-<a name="l00023"></a>00023    <a class="code" href="classMcMd_1_1CellList.html#a9a3af8501f8608e8d5fdecfbe0c85f8e" title="Constructor.">CellList::CellList</a>()
-<a name="l00024"></a><a class="code" href="classMcMd_1_1CellList.html#a9a3af8501f8608e8d5fdecfbe0c85f8e">00024</a>    {
-<a name="l00025"></a>00025       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00023"></a>00023    <a class="code" href="classMcMd_1_1CellList.html#a8f32072d452f344f4df1723b1724019b" title="Constructor.">CellList::CellList</a>()
+<a name="l00024"></a><a class="code" href="classMcMd_1_1CellList.html#a8f32072d452f344f4df1723b1724019b">00024</a>    {
+<a name="l00025"></a>00025       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00026"></a>00026          cellWidth_[i] = 0.0;
 <a name="l00027"></a>00027          numCells_[i]  = 0;
 <a name="l00028"></a>00028          minCells_[i]  = 0;
@@ -88,14 +88,14 @@
 <a name="l00037"></a>00037    <span class="comment">/*</span>
 <a name="l00038"></a>00038 <span class="comment">   * Destructor. </span>
 <a name="l00039"></a>00039 <span class="comment">   */</span>
-<a name="l00040"></a>00040    <a class="code" href="classMcMd_1_1CellList.html#ac5ddcb849045a381aa407e75d80c7f5f" title="Destructor.">CellList::~CellList</a>()
-<a name="l00041"></a><a class="code" href="classMcMd_1_1CellList.html#ac5ddcb849045a381aa407e75d80c7f5f">00041</a>    {}
+<a name="l00040"></a>00040    <a class="code" href="classMcMd_1_1CellList.html#aaa776b07f06636c3e3b9fd9f27f511be" title="Destructor.">CellList::~CellList</a>()
+<a name="l00041"></a><a class="code" href="classMcMd_1_1CellList.html#aaa776b07f06636c3e3b9fd9f27f511be">00041</a>    {}
 <a name="l00042"></a>00042 
 <a name="l00043"></a>00043    <span class="comment">/*</span>
 <a name="l00044"></a>00044 <span class="comment">   * Resets all Cell and CellTag objects to empty state.</span>
 <a name="l00045"></a>00045 <span class="comment">   */</span>
-<a name="l00046"></a>00046    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CellList.html#ac8bb3912a3ce86b15842e79d0b421204" title="Sets all Cell objects to empty state (no Atoms).">CellList::clear</a>()
-<a name="l00047"></a><a class="code" href="classMcMd_1_1CellList.html#ac8bb3912a3ce86b15842e79d0b421204">00047</a>    {
+<a name="l00046"></a>00046    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CellList.html#a3377b5bae7ae8c760bddc2e87dc00d81" title="Sets all Cell objects to empty state (no Atoms).">CellList::clear</a>()
+<a name="l00047"></a><a class="code" href="classMcMd_1_1CellList.html#a3377b5bae7ae8c760bddc2e87dc00d81">00047</a>    {
 <a name="l00048"></a>00048       <span class="keywordtype">int</span> i;
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050       <span class="comment">// Clear all Cell objects</span>
@@ -118,7 +118,7 @@
 <a name="l00067"></a>00067 <span class="comment">   * Set number of cells and width for one axis (x,y, or z)</span>
 <a name="l00068"></a>00068 <span class="comment">   */</span>
 <a name="l00069"></a>00069    <span class="keywordtype">void</span> 
-<a name="l00070"></a>00070    CellList::setCellsAxis(<span class="keyword">const</span> Boundary &amp;boundary, <span class="keywordtype">int</span> axis, <span class="keywordtype">double</span> cutoff)
+<a name="l00070"></a>00070    CellList::setCellsAxis(<span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary, <span class="keywordtype">int</span> axis, <span class="keywordtype">double</span> cutoff)
 <a name="l00071"></a>00071    {
 <a name="l00072"></a>00072       lengths_ = boundary.lengths();
 <a name="l00073"></a>00073       numCells_[axis] = (int)(lengths_[axis]/cutoff);
@@ -146,8 +146,8 @@
 <a name="l00095"></a>00095 <span class="comment">   * Allocate cells_ and cellTags_ arrays.</span>
 <a name="l00096"></a>00096 <span class="comment">   */</span>
 <a name="l00097"></a>00097    <span class="keywordtype">void</span> 
-<a name="l00098"></a>00098    <a class="code" href="classMcMd_1_1CellList.html#a4d5514b0baa043189134396aacc4fd94" title="Allocate memory for this CellList.">CellList::allocate</a>(
-<a name="l00099"></a><a class="code" href="classMcMd_1_1CellList.html#a4d5514b0baa043189134396aacc4fd94">00099</a>              <span class="keywordtype">int</span> atomCapacity, <span class="keyword">const</span> Boundary &amp;boundary, <span class="keywordtype">double</span> cutoff)
+<a name="l00098"></a>00098    <a class="code" href="classMcMd_1_1CellList.html#a9bea78c1d93f2102ae793c3a377ff9f5" title="Allocate memory for this CellList.">CellList::allocate</a>(
+<a name="l00099"></a><a class="code" href="classMcMd_1_1CellList.html#a9bea78c1d93f2102ae793c3a377ff9f5">00099</a>              <span class="keywordtype">int</span> atomCapacity, <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary, <span class="keywordtype">double</span> cutoff)
 <a name="l00100"></a>00100    {
 <a name="l00101"></a>00101 
 <a name="l00102"></a>00102       <span class="comment">// Precondition on parameters</span>
@@ -167,8 +167,8 @@
 <a name="l00116"></a>00116    <span class="comment">/*</span>
 <a name="l00117"></a>00117 <span class="comment">   * Create a grid of cells.</span>
 <a name="l00118"></a>00118 <span class="comment">   */</span>
-<a name="l00119"></a>00119    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CellList.html#a9780c594a1d5c2261644d0fecaadbb03" title="Initialize grid geometry.">CellList::makeGrid</a>(<span class="keyword">const</span> Boundary &amp;boundary, <span class="keywordtype">double</span> cutoff)
-<a name="l00120"></a><a class="code" href="classMcMd_1_1CellList.html#a9780c594a1d5c2261644d0fecaadbb03">00120</a>    {
+<a name="l00119"></a>00119    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CellList.html#ae363f136446850f4920b2d2083b4bf46" title="Initialize grid geometry.">CellList::makeGrid</a>(<span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary, <span class="keywordtype">double</span> cutoff)
+<a name="l00120"></a><a class="code" href="classMcMd_1_1CellList.html#ae363f136446850f4920b2d2083b4bf46">00120</a>    {
 <a name="l00121"></a>00121       setCellsAxis(boundary, 0, cutoff);
 <a name="l00122"></a>00122       setCellsAxis(boundary, 1, cutoff);
 <a name="l00123"></a>00123       setCellsAxis(boundary, 2, cutoff);
@@ -195,8 +195,8 @@
 <a name="l00144"></a>00144 <span class="comment">   * Fill an array with Ids of atoms in cell ic and all neighboring cells.</span>
 <a name="l00145"></a>00145 <span class="comment">   */</span>
 <a name="l00146"></a>00146    <span class="keywordtype">void</span> 
-<a name="l00147"></a>00147    <a class="code" href="classMcMd_1_1CellList.html#a9f9e67c6c19de1d89b64770cbd46350f" title="Fill an array with pointers to atoms in a cell and neighboring cells.">CellList::getCellNeighbors</a>(<span class="keywordtype">int</span> ic, NeighborArray &amp;neighbors, <span class="keywordtype">int</span> &amp;nInCell)<span class="keyword"></span>
-<a name="l00148"></a><a class="code" href="classMcMd_1_1CellList.html#a9f9e67c6c19de1d89b64770cbd46350f">00148</a> <span class="keyword">   const</span>
+<a name="l00147"></a>00147    <a class="code" href="classMcMd_1_1CellList.html#af17127e060f6a75699d92d55b5d89ad2" title="Fill an array with pointers to atoms in a cell and neighboring cells.">CellList::getCellNeighbors</a>(<span class="keywordtype">int</span> ic, NeighborArray &amp;neighbors, <span class="keywordtype">int</span> &amp;nInCell)<span class="keyword"></span>
+<a name="l00148"></a><a class="code" href="classMcMd_1_1CellList.html#af17127e060f6a75699d92d55b5d89ad2">00148</a> <span class="keyword">   const</span>
 <a name="l00149"></a>00149 <span class="keyword">   </span>{
 <a name="l00150"></a>00150       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Cell.html" title="A set of Atoms in a small region.">Cell</a> *cellPtr;
 <a name="l00151"></a>00151       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> *atomPtr;
@@ -215,8 +215,8 @@
 <a name="l00164"></a>00164       <span class="comment">// Loop over atoms in cell ic.</span>
 <a name="l00165"></a>00165       <span class="comment">// By convention, these appear first in the list.</span>
 <a name="l00166"></a>00166       cellPtr = &amp;(cells_[ic]);
-<a name="l00167"></a>00167       <span class="keywordflow">for</span> (jp=0; jp &lt; cellPtr-&gt;<a class="code" href="classMcMd_1_1Cell.html#ad85b146834b8b0fb468d2ebf08b56b01" title="Get index of first clear element of atoms_.">firstClearPos</a>(); ++jp) {
-<a name="l00168"></a>00168          atomPtr = cellPtr-&gt;<a class="code" href="classMcMd_1_1Cell.html#a42c8c49f7af3b5bb8c5b2c5e81faf814" title="Get a pointer to Atom (may be null).">atomPtr</a>(jp);
+<a name="l00167"></a>00167       <span class="keywordflow">for</span> (jp=0; jp &lt; cellPtr-&gt;<a class="code" href="classMcMd_1_1Cell.html#a583b349e368e79098e4a227f5543cd43" title="Get index of first clear element of atoms_.">firstClearPos</a>(); ++jp) {
+<a name="l00168"></a>00168          atomPtr = cellPtr-&gt;<a class="code" href="classMcMd_1_1Cell.html#a973e7d1c86822af87e4c987a86ef6ff9" title="Get a pointer to Atom (may be null).">atomPtr</a>(jp);
 <a name="l00169"></a>00169          <span class="keywordflow">if</span> (atomPtr != 0) {
 <a name="l00170"></a>00170             neighbors.append(atomPtr);
 <a name="l00171"></a>00171             ++nInCell;
@@ -244,8 +244,8 @@
 <a name="l00193"></a>00193 
 <a name="l00194"></a>00194                   <span class="comment">// Loop over atoms in neighboring cell jc</span>
 <a name="l00195"></a>00195                   cellPtr = &amp;cells_[jc];
-<a name="l00196"></a>00196                   <span class="keywordflow">for</span> (jp=0; jp &lt; cellPtr-&gt;<a class="code" href="classMcMd_1_1Cell.html#ad85b146834b8b0fb468d2ebf08b56b01" title="Get index of first clear element of atoms_.">firstClearPos</a>(); ++jp) {
-<a name="l00197"></a>00197                      atomPtr  = cellPtr-&gt;<a class="code" href="classMcMd_1_1Cell.html#a42c8c49f7af3b5bb8c5b2c5e81faf814" title="Get a pointer to Atom (may be null).">atomPtr</a>(jp);
+<a name="l00196"></a>00196                   <span class="keywordflow">for</span> (jp=0; jp &lt; cellPtr-&gt;<a class="code" href="classMcMd_1_1Cell.html#a583b349e368e79098e4a227f5543cd43" title="Get index of first clear element of atoms_.">firstClearPos</a>(); ++jp) {
+<a name="l00197"></a>00197                      atomPtr  = cellPtr-&gt;<a class="code" href="classMcMd_1_1Cell.html#a973e7d1c86822af87e4c987a86ef6ff9" title="Get a pointer to Atom (may be null).">atomPtr</a>(jp);
 <a name="l00198"></a>00198                      <span class="keywordflow">if</span> (atomPtr != 0) {
 <a name="l00199"></a>00199                         neighbors.append(atomPtr);
 <a name="l00200"></a>00200                      }
@@ -264,8 +264,8 @@
 <a name="l00213"></a>00213    <span class="comment">/*</span>
 <a name="l00214"></a>00214 <span class="comment">   * Get total number of atoms in this CellList.</span>
 <a name="l00215"></a>00215 <span class="comment">   */</span>
-<a name="l00216"></a>00216    <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1CellList.html#ac91579bd63979a294891d330a5533838" title="Get total number of atoms in this CellList.">CellList::nAtom</a>()<span class="keyword"> const</span>
-<a name="l00217"></a><a class="code" href="classMcMd_1_1CellList.html#ac91579bd63979a294891d330a5533838">00217</a> <span class="keyword">   </span>{
+<a name="l00216"></a>00216    <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1CellList.html#ad7d0c6c58497d971a6d0c226283364d9" title="Get total number of atoms in this CellList.">CellList::nAtom</a>()<span class="keyword"> const</span>
+<a name="l00217"></a><a class="code" href="classMcMd_1_1CellList.html#ad7d0c6c58497d971a6d0c226283364d9">00217</a> <span class="keyword">   </span>{
 <a name="l00218"></a>00218       <span class="keywordtype">int</span> nAtomSum = 0;
 <a name="l00219"></a>00219       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> icell = 0; icell &lt; totCells_; ++icell) {
 <a name="l00220"></a>00220          nAtomSum += cells_[icell].nAtomCell();
@@ -279,8 +279,8 @@
 <a name="l00228"></a>00228 <span class="comment">   * This method checks consistency of the CellList and Atom data structures.</span>
 <a name="l00229"></a>00229 <span class="comment">   * Calls Cell::isValid internally for each cell. </span>
 <a name="l00230"></a>00230 <span class="comment">   */</span>
-<a name="l00231"></a>00231    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1CellList.html#a4399c799a1da7c84d4067e3bcdd13bbc" title="Return true if valid, or throw Exception.">CellList::isValid</a>(<span class="keywordtype">int</span> nAtom)<span class="keyword"> const</span>
-<a name="l00232"></a><a class="code" href="classMcMd_1_1CellList.html#a4399c799a1da7c84d4067e3bcdd13bbc">00232</a> <span class="keyword">   </span>{
+<a name="l00231"></a>00231    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1CellList.html#a0da7a05fca30435effd0e1d7755c5997" title="Return true if valid, or throw Exception.">CellList::isValid</a>(<span class="keywordtype">int</span> nAtom)<span class="keyword"> const</span>
+<a name="l00232"></a><a class="code" href="classMcMd_1_1CellList.html#a0da7a05fca30435effd0e1d7755c5997">00232</a> <span class="keyword">   </span>{
 <a name="l00233"></a>00233 
 <a name="l00234"></a>00234       <span class="comment">// Call Cell::isValid for each Cell. Let any Exceptions bubble up.</span>
 <a name="l00235"></a>00235       <span class="keywordtype">int</span> nAtomSum = 0;
@@ -303,7 +303,7 @@
 <a name="l00252"></a>00252 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

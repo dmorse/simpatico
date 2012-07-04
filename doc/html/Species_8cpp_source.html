@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -79,7 +79,7 @@
 <a name="l00028"></a>00028    <span class="comment">/*</span>
 <a name="l00029"></a>00029 <span class="comment">   * Default constructor.</span>
 <a name="l00030"></a>00030 <span class="comment">   */</span>
-<a name="l00031"></a><a class="code" href="classMcMd_1_1Species.html#a6a928824e5f9bc4ec3ab0f4a3d0ce304">00031</a>    <a class="code" href="classMcMd_1_1Species.html#a6a928824e5f9bc4ec3ab0f4a3d0ce304" title="Constructor.">Species::Species</a>()
+<a name="l00031"></a><a class="code" href="classMcMd_1_1Species.html#a9847904f278fea947c4c142004985ff5">00031</a>    <a class="code" href="classMcMd_1_1Species.html#a9847904f278fea947c4c142004985ff5" title="Constructor.">Species::Species</a>()
 <a name="l00032"></a>00032     : nAtom_(0),
 <a name="l00033"></a>00033       nBond_(0),
 <a name="l00034"></a>00034       #ifdef INTER_ANGLE
@@ -97,34 +97,34 @@
 <a name="l00046"></a>00046    <span class="comment">/*</span>
 <a name="l00047"></a>00047 <span class="comment">   * Destructor.</span>
 <a name="l00048"></a>00048 <span class="comment">   */</span>
-<a name="l00049"></a><a class="code" href="classMcMd_1_1Species.html#a9e5f173230f8401877ddfd442e9cd5d9">00049</a>    <a class="code" href="classMcMd_1_1Species.html#a9e5f173230f8401877ddfd442e9cd5d9" title="Destructor.">Species::~Species</a>()
+<a name="l00049"></a><a class="code" href="classMcMd_1_1Species.html#abbf2c77c5b2e71ab753293da41313dd8">00049</a>    <a class="code" href="classMcMd_1_1Species.html#abbf2c77c5b2e71ab753293da41313dd8" title="Destructor.">Species::~Species</a>()
 <a name="l00050"></a>00050    {}
 <a name="l00051"></a>00051 
 <a name="l00052"></a>00052    <span class="comment">/*</span>
 <a name="l00053"></a>00053 <span class="comment">   * Read parameters for species.</span>
 <a name="l00054"></a>00054 <span class="comment">   */</span>
-<a name="l00055"></a><a class="code" href="classMcMd_1_1Species.html#ab5421d3c9175985c9acbf723e5392075">00055</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters and allocate molecules for this species.">Species::readParam</a>(std::istream &amp;in)
+<a name="l00055"></a><a class="code" href="classMcMd_1_1Species.html#a4c14a30bca031f7eab854239384ece23">00055</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a4c14a30bca031f7eab854239384ece23" title="Read parameters and allocate molecules for this species.">Species::readParam</a>(std::istream &amp;in)
 <a name="l00056"></a>00056    {
 <a name="l00057"></a>00057 
 <a name="l00058"></a>00058       read&lt;int&gt;(in, <span class="stringliteral">&quot;moleculeCapacity&quot;</span>, moleculeCapacity_);
 <a name="l00059"></a>00059 
-<a name="l00060"></a>00060       reservoir_.<a class="code" href="classUtil_1_1ArrayStack.html#a1be38a6eb2f04de4d9457d506f948321" title="Initialize and allocate required memory.">allocate</a>(moleculeCapacity_);
+<a name="l00060"></a>00060       reservoir_.<a class="code" href="classUtil_1_1ArrayStack.html#af0c55e24d3ccb45ed50711bc15468d7f" title="Initialize and allocate required memory.">allocate</a>(moleculeCapacity_);
 <a name="l00061"></a>00061 
 <a name="l00062"></a>00062       <span class="comment">// Define chemical structure, after reading any parameters.</span>
-<a name="l00063"></a>00063       <a class="code" href="classMcMd_1_1Species.html#a02e9577ec42da7be4d2ed79a13f654e3" title="Define chemical structure for this Species.">readSpeciesParam</a>(in);
+<a name="l00063"></a>00063       <a class="code" href="classMcMd_1_1Species.html#ae0689a4a0707f09bde431b4c8cb26369" title="Define chemical structure for this Species.">readSpeciesParam</a>(in);
 <a name="l00064"></a>00064 
 <a name="l00065"></a>00065       <span class="comment">// Check validity, throw exception if not valid</span>
-<a name="l00066"></a>00066       <a class="code" href="classMcMd_1_1Species.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if Species is valid, or throw an Exception.">isValid</a>();
+<a name="l00066"></a>00066       <a class="code" href="classMcMd_1_1Species.html#a733a73f803ada53575fe62a4aa882d05" title="Return true if Species is valid, or throw an Exception.">isValid</a>();
 <a name="l00067"></a>00067 
 <a name="l00068"></a>00068    }
 <a name="l00069"></a>00069 
 <a name="l00070"></a>00070    <span class="comment">/*</span>
 <a name="l00071"></a>00071 <span class="comment">   * Define molecular structure (default implementation).</span>
 <a name="l00072"></a>00072 <span class="comment">   */</span>
-<a name="l00073"></a><a class="code" href="classMcMd_1_1Species.html#a02e9577ec42da7be4d2ed79a13f654e3">00073</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a02e9577ec42da7be4d2ed79a13f654e3" title="Define chemical structure for this Species.">Species::readSpeciesParam</a>(std::istream &amp;in)
+<a name="l00073"></a><a class="code" href="classMcMd_1_1Species.html#ae0689a4a0707f09bde431b4c8cb26369">00073</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#ae0689a4a0707f09bde431b4c8cb26369" title="Define chemical structure for this Species.">Species::readSpeciesParam</a>(std::istream &amp;in)
 <a name="l00074"></a>00074    {
-<a name="l00075"></a>00075       read&lt;int&gt;(in, <span class="stringliteral">&quot;nAtom&quot;</span>, <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
-<a name="l00076"></a>00076       read&lt;int&gt;(in, <span class="stringliteral">&quot;nBond&quot;</span>, <a class="code" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b" title="Number of bonds per molecule.">nBond_</a>);
+<a name="l00075"></a>00075       read&lt;int&gt;(in, <span class="stringliteral">&quot;nAtom&quot;</span>, <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00076"></a>00076       read&lt;int&gt;(in, <span class="stringliteral">&quot;nBond&quot;</span>, <a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a>);
 <a name="l00077"></a>00077 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
 <a name="l00078"></a>00078 <span class="preprocessor"></span>      read&lt;int&gt;(in, <span class="stringliteral">&quot;nAngle&quot;</span>, nAngle_);
 <a name="l00079"></a>00079 <span class="preprocessor">      #endif</span>
@@ -132,20 +132,20 @@
 <a name="l00081"></a>00081 <span class="preprocessor"></span>      read&lt;int&gt;(in, <span class="stringliteral">&quot;nDihedral&quot;</span>, nDihedral_);
 <a name="l00082"></a>00082 <span class="preprocessor">      #endif</span>
 <a name="l00083"></a>00083 <span class="preprocessor"></span>
-<a name="l00084"></a>00084       <a class="code" href="classMcMd_1_1Species.html#acaefe811b78a2fdc4a0dba0c4029c3ef" title="Allocate chemical structure arrays.">allocate</a>();
+<a name="l00084"></a>00084       <a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca" title="Allocate chemical structure arrays.">allocate</a>();
 <a name="l00085"></a>00085 
-<a name="l00086"></a>00086       readDArray&lt;int&gt;(in, <span class="stringliteral">&quot;atomTypeIds&quot;</span>, <a class="code" href="classMcMd_1_1Species.html#af8ff275d100b53dff741c6905ab02405" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>, <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00086"></a>00086       readDArray&lt;int&gt;(in, <span class="stringliteral">&quot;atomTypeIds&quot;</span>, <a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>, <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
 <a name="l00087"></a>00087 
-<a name="l00088"></a>00088       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b" title="Number of bonds per molecule.">nBond_</a> &gt; 0) {
+<a name="l00088"></a>00088       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a> &gt; 0) {
 <a name="l00089"></a>00089 
-<a name="l00090"></a>00090          readDArray&lt;SpeciesBond&gt;(in, <span class="stringliteral">&quot;speciesBonds&quot;</span>, <a class="code" href="classMcMd_1_1Species.html#a55e355a25550b1fcb5d51efa3956018b" title="Array of SpeciesBonds for all bonds, indexed by local bond id.">speciesBonds_</a>, 
-<a name="l00091"></a>00091                                  <a class="code" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b" title="Number of bonds per molecule.">nBond_</a>);
+<a name="l00090"></a>00090          readDArray&lt;SpeciesBond&gt;(in, <span class="stringliteral">&quot;speciesBonds&quot;</span>, <a class="code" href="classMcMd_1_1Species.html#ab4f546965b9d1bcaa917b0b5fcb4a3fc" title="Array of SpeciesBonds for all bonds, indexed by local bond id.">speciesBonds_</a>, 
+<a name="l00091"></a>00091                                  <a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a>);
 <a name="l00092"></a>00092 
 <a name="l00093"></a>00093          <span class="comment">// Make atomBondIdArrays</span>
 <a name="l00094"></a>00094          <span class="keywordtype">int</span> bondId, atomId1, atomId2;
-<a name="l00095"></a>00095          <span class="keywordflow">for</span> (bondId = 0; bondId &lt; <a class="code" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b" title="Number of bonds per molecule.">nBond_</a>; ++bondId) {
-<a name="l00096"></a>00096             atomId1 = <a class="code" href="classMcMd_1_1Species.html#afcc3ac548c6b552e035426ef3108a380" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#ab366447c15a7669021df12ff0e090520" title="Get the local id for a specific Atom.">atomId</a>(0);
-<a name="l00097"></a>00097             atomId2 = <a class="code" href="classMcMd_1_1Species.html#afcc3ac548c6b552e035426ef3108a380" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#ab366447c15a7669021df12ff0e090520" title="Get the local id for a specific Atom.">atomId</a>(1);
+<a name="l00095"></a>00095          <span class="keywordflow">for</span> (bondId = 0; bondId &lt; <a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a>; ++bondId) {
+<a name="l00096"></a>00096             atomId1 = <a class="code" href="classMcMd_1_1Species.html#a411088bd3d19359017145a54a968a80b" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a8fd4f4ffed6bba736ac923637f14c49d" title="Get the local id for a specific Atom.">atomId</a>(0);
+<a name="l00097"></a>00097             atomId2 = <a class="code" href="classMcMd_1_1Species.html#a411088bd3d19359017145a54a968a80b" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a8fd4f4ffed6bba736ac923637f14c49d" title="Get the local id for a specific Atom.">atomId</a>(1);
 <a name="l00098"></a>00098             atomBondIdArrays_[atomId1].append(bondId);
 <a name="l00099"></a>00099             atomBondIdArrays_[atomId2].append(bondId);
 <a name="l00100"></a>00100          }
@@ -201,23 +201,23 @@
 <a name="l00150"></a>00150    <span class="comment">/*</span>
 <a name="l00151"></a>00151 <span class="comment">   * Get an array of pointers to Bonds that contain an Atom.</span>
 <a name="l00152"></a>00152 <span class="comment">   */</span>
-<a name="l00153"></a><a class="code" href="classMcMd_1_1Species.html#a8d5610c3c568c1f4509a836b8a54f736">00153</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a8d5610c3c568c1f4509a836b8a54f736" title="Get array of pointers to Bonds that contain an Atom.">Species::getAtomBonds</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom, <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">AtomBondArray</a>&amp; bonds)<span class="keyword"> const</span>
+<a name="l00153"></a><a class="code" href="classMcMd_1_1Species.html#a49506e13656db7da5bf2e9824720a263">00153</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a49506e13656db7da5bf2e9824720a263" title="Get array of pointers to Bonds that contain an Atom.">Species::getAtomBonds</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom, <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">AtomBondArray</a>&amp; bonds)<span class="keyword"> const</span>
 <a name="l00154"></a>00154 <span class="keyword">   </span>{
-<a name="l00155"></a>00155       bonds.<a class="code" href="classUtil_1_1FSArray.html#ac8bb3912a3ce86b15842e79d0b421204" title="Set logical size to zero.">clear</a>();
+<a name="l00155"></a>00155       bonds.<a class="code" href="classUtil_1_1FSArray.html#aa5da5b07a40d627d37e0dac7e8e39207" title="Set logical size to zero.">clear</a>();
 <a name="l00156"></a>00156 
-<a name="l00157"></a>00157       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b" title="Number of bonds per molecule.">nBond_</a> &gt; 0) {
+<a name="l00157"></a>00157       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a> &gt; 0) {
 <a name="l00158"></a>00158 
-<a name="l00159"></a>00159          <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule = atom.<a class="code" href="classMcMd_1_1Atom.html#ae73230f53be08f7eb347b5201d903bb4" title="Get the parent Molecule by reference.">molecule</a>();
-<a name="l00160"></a>00160          assert(<span class="keyword">this</span> == &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#a140d8e2d6c3504522858415289c49e05" title="Get the molecular Species by reference.">species</a>());
+<a name="l00159"></a>00159          <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule = atom.<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>();
+<a name="l00160"></a>00160          assert(<span class="keyword">this</span> == &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>());
 <a name="l00161"></a>00161 
 <a name="l00162"></a>00162          <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Group.html" title="A group of covalently interacting atoms.">Bond</a>* bondPtr; 
-<a name="l00163"></a>00163          <span class="keywordtype">int</span> atomId, bondId, <a class="code" href="classMcMd_1_1Species.html#a03a7ae70b3c47d3439a3459d072ad300" title="Get number of bonds per molecule for this Species.">nBond</a>;
+<a name="l00163"></a>00163          <span class="keywordtype">int</span> atomId, bondId, <a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>;
 <a name="l00164"></a>00164    
-<a name="l00165"></a>00165          atomId  = int( &amp;atom - &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(0) );
-<a name="l00166"></a>00166          bondPtr = &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#a1dee63eefb65e4b66b6d643c4a093fc9" title="Get a specific Bond in this Molecule by reference.">bond</a>(0);  <span class="comment">// pointer to first Bond in molecule</span>
+<a name="l00165"></a>00165          atomId  = int( &amp;atom - &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(0) );
+<a name="l00166"></a>00166          bondPtr = &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(0);  <span class="comment">// pointer to first Bond in molecule</span>
 <a name="l00167"></a>00167          nBond   = atomBondIdArrays_[atomId].size();
-<a name="l00168"></a>00168          <span class="keywordflow">for</span> (bondId = 0; bondId &lt; <a class="code" href="classMcMd_1_1Species.html#a03a7ae70b3c47d3439a3459d072ad300" title="Get number of bonds per molecule for this Species.">nBond</a>; ++bondId) {
-<a name="l00169"></a>00169             bonds.<a class="code" href="classUtil_1_1FSArray.html#a578e50675e1ec828c5a5a92737ad4cf7" title="Append data to the end of the array.">append</a>(bondPtr + atomBondIdArrays_[atomId][bondId]);
+<a name="l00168"></a>00168          <span class="keywordflow">for</span> (bondId = 0; bondId &lt; <a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>; ++bondId) {
+<a name="l00169"></a>00169             bonds.<a class="code" href="classUtil_1_1FSArray.html#a74ef93eabdb54ff1453a3252019984bc" title="Append data to the end of the array.">append</a>(bondPtr + atomBondIdArrays_[atomId][bondId]);
 <a name="l00170"></a>00170          }
 <a name="l00171"></a>00171       }
 <a name="l00172"></a>00172 
@@ -232,13 +232,13 @@
 <a name="l00181"></a>00181       angles.clear();
 <a name="l00182"></a>00182 
 <a name="l00183"></a>00183       <span class="keywordflow">if</span> (nAngle_ &gt; 0) {
-<a name="l00184"></a>00184          <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule = atom.<a class="code" href="classMcMd_1_1Atom.html#ae73230f53be08f7eb347b5201d903bb4" title="Get the parent Molecule by reference.">molecule</a>();
-<a name="l00185"></a>00185          assert(<span class="keyword">this</span> == &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#a140d8e2d6c3504522858415289c49e05" title="Get the molecular Species by reference.">species</a>());
+<a name="l00184"></a>00184          <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule = atom.<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>();
+<a name="l00185"></a>00185          assert(<span class="keyword">this</span> == &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>());
 <a name="l00186"></a>00186 
 <a name="l00187"></a>00187          <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Group.html" title="A group of covalently interacting atoms.">Angle</a>* anglePtr; 
 <a name="l00188"></a>00188          <span class="keywordtype">int</span> atomId, angleId, nAngle;
 <a name="l00189"></a>00189    
-<a name="l00190"></a>00190          atomId   = int( &amp;atom - &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(0) );
+<a name="l00190"></a>00190          atomId   = int( &amp;atom - &amp;molecule.<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(0) );
 <a name="l00191"></a>00191          anglePtr = &amp;molecule.angle(0);  <span class="comment">// pointer to first Angle in molecule</span>
 <a name="l00192"></a>00192          nAngle   = atomAngleIdArrays_[atomId].size();
 <a name="l00193"></a>00193          <span class="keywordflow">for</span> (angleId = 0; angleId &lt; nAngle; ++angleId) {
@@ -262,7 +262,7 @@
 <a name="l00211"></a>00211          <span class="keyword">const</span> Molecule&amp; molecule = atom.molecule();
 <a name="l00212"></a>00212          assert(<span class="keyword">this</span> == &amp;molecule.species());
 <a name="l00213"></a>00213 
-<a name="l00214"></a>00214          <span class="keyword">const</span> <a class="code" href="group__McMd__Chemistry__Module.html#ga627564b04dfe4dd682635490d5b343ac" title="Group of the 4 Atoms in a dihedral interaction.">Dihedral</a>* dihedralPtr; 
+<a name="l00214"></a>00214          <span class="keyword">const</span> <a class="code" href="group__McMd__Chemistry__Module.html#ga73b2bc8826b6c07911c3246f13ec22b3" title="Group of the 4 Atoms in a dihedral interaction.">Dihedral</a>* dihedralPtr; 
 <a name="l00215"></a>00215          <span class="keywordtype">int</span> atomId, dihedralId, nDihedral;
 <a name="l00216"></a>00216    
 <a name="l00217"></a>00217          atomId   = int( &amp;atom - &amp;molecule.atom(0) );
@@ -280,79 +280,79 @@
 <a name="l00229"></a>00229    <span class="comment">/*</span>
 <a name="l00230"></a>00230 <span class="comment">   * Set value of integer id for this species.</span>
 <a name="l00231"></a>00231 <span class="comment">   */</span>
-<a name="l00232"></a><a class="code" href="classMcMd_1_1Species.html#a3d929477fef71d52c9c6df2ba2d50841">00232</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a3d929477fef71d52c9c6df2ba2d50841" title="Set integer id for this Species.">Species::setId</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
+<a name="l00232"></a><a class="code" href="classMcMd_1_1Species.html#a3d884d6e1819e8ef1d3b98f7ad6ae7bd">00232</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a3d884d6e1819e8ef1d3b98f7ad6ae7bd" title="Set integer id for this Species.">Species::setId</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
 <a name="l00233"></a>00233    { 
 <a name="l00234"></a>00234       <span class="comment">// Preconditions</span>
 <a name="l00235"></a>00235       <span class="keywordflow">if</span> (<span class="keywordtype">id</span> &lt; 0)   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Negative species id&quot;</span>);
 <a name="l00236"></a>00236       <span class="keywordflow">if</span> (id_ &gt;= 0) <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Species id was set previously&quot;</span>);
 <a name="l00237"></a>00237 
-<a name="l00238"></a>00238       id_ = <a class="code" href="classMcMd_1_1Species.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get integer id of this Species.">id</a>; 
+<a name="l00238"></a>00238       id_ = <a class="code" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61" title="Get integer id of this Species.">id</a>; 
 <a name="l00239"></a>00239    }
 <a name="l00240"></a>00240 
 <a name="l00241"></a>00241    <span class="comment">/*</span>
 <a name="l00242"></a>00242 <span class="comment">   * Set a pointer to an associated SpeciesMutator object.</span>
 <a name="l00243"></a>00243 <span class="comment">   */</span>
-<a name="l00244"></a><a class="code" href="classMcMd_1_1Species.html#abf8ed352e21a51378425854fed701cc0">00244</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#abf8ed352e21a51378425854fed701cc0" title="Set a pointer to an associated SpeciesMutator for a mutable species.">Species::setMutatorPtr</a>(<a class="code" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a>* mutatorPtr)
+<a name="l00244"></a><a class="code" href="classMcMd_1_1Species.html#aafebfcbd4a71bb8bcb7486836a6cf510">00244</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#aafebfcbd4a71bb8bcb7486836a6cf510" title="Set a pointer to an associated SpeciesMutator for a mutable species.">Species::setMutatorPtr</a>(<a class="code" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a>* mutatorPtr)
 <a name="l00245"></a>00245    {  mutatorPtr_ = mutatorPtr; }
 <a name="l00246"></a>00246 
 <a name="l00247"></a>00247    <span class="comment">/*</span>
 <a name="l00248"></a>00248 <span class="comment">   * Allocate memory for arrays that describe chemical structure.</span>
 <a name="l00249"></a>00249 <span class="comment">   */</span>
-<a name="l00250"></a><a class="code" href="classMcMd_1_1Species.html#acaefe811b78a2fdc4a0dba0c4029c3ef">00250</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#acaefe811b78a2fdc4a0dba0c4029c3ef" title="Allocate chemical structure arrays.">Species::allocate</a>() 
+<a name="l00250"></a><a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca">00250</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca" title="Allocate chemical structure arrays.">Species::allocate</a>() 
 <a name="l00251"></a>00251    {
-<a name="l00252"></a>00252       assert(<a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a> &gt;  0);
-<a name="l00253"></a>00253       assert(<a class="code" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b" title="Number of bonds per molecule.">nBond_</a> &gt;= 0);
+<a name="l00252"></a>00252       assert(<a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a> &gt;  0);
+<a name="l00253"></a>00253       assert(<a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a> &gt;= 0);
 <a name="l00254"></a>00254 
-<a name="l00255"></a>00255       <a class="code" href="classMcMd_1_1Species.html#af8ff275d100b53dff741c6905ab02405" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
-<a name="l00256"></a>00256       atomBondIdArrays_.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
-<a name="l00257"></a>00257       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b" title="Number of bonds per molecule.">nBond_</a> &gt; 0) {
-<a name="l00258"></a>00258          <a class="code" href="classMcMd_1_1Species.html#a55e355a25550b1fcb5d51efa3956018b" title="Array of SpeciesBonds for all bonds, indexed by local bond id.">speciesBonds_</a>.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b" title="Number of bonds per molecule.">nBond_</a>);
+<a name="l00255"></a>00255       <a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00256"></a>00256       atomBondIdArrays_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00257"></a>00257       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a> &gt; 0) {
+<a name="l00258"></a>00258          <a class="code" href="classMcMd_1_1Species.html#ab4f546965b9d1bcaa917b0b5fcb4a3fc" title="Array of SpeciesBonds for all bonds, indexed by local bond id.">speciesBonds_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a>);
 <a name="l00259"></a>00259       } 
 <a name="l00260"></a>00260 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
-<a name="l00261"></a>00261 <span class="preprocessor"></span>      atomAngleIdArrays_.allocate(<a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00261"></a>00261 <span class="preprocessor"></span>      atomAngleIdArrays_.allocate(<a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
 <a name="l00262"></a>00262       <span class="keywordflow">if</span> (nAngle_ &gt; 0) {
 <a name="l00263"></a>00263          speciesAngles_.allocate(nAngle_);
 <a name="l00264"></a>00264       } 
 <a name="l00265"></a>00265 <span class="preprocessor">      #endif</span>
 <a name="l00266"></a>00266 <span class="preprocessor"></span>
 <a name="l00267"></a>00267 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
-<a name="l00268"></a>00268 <span class="preprocessor"></span>      atomDihedralIdArrays_.allocate(<a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00268"></a>00268 <span class="preprocessor"></span>      atomDihedralIdArrays_.allocate(<a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
 <a name="l00269"></a>00269       <span class="keywordflow">if</span> (nDihedral_ &gt; 0) {
 <a name="l00270"></a>00270          speciesDihedrals_.allocate(nDihedral_);
 <a name="l00271"></a>00271       } 
 <a name="l00272"></a>00272 <span class="preprocessor">      #endif</span>
 <a name="l00273"></a>00273 <span class="preprocessor"></span>
 <a name="l00274"></a>00274       <span class="comment">// Initialize atom type Ids to null/invalid values</span>
-<a name="l00275"></a>00275       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>; ++i) {
-<a name="l00276"></a>00276          <a class="code" href="classMcMd_1_1Species.html#af8ff275d100b53dff741c6905ab02405" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[i] = -1;
+<a name="l00275"></a>00275       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>; ++i) {
+<a name="l00276"></a>00276          <a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[i] = -1;
 <a name="l00277"></a>00277       }
 <a name="l00278"></a>00278    }
 <a name="l00279"></a>00279 
 <a name="l00280"></a>00280    <span class="comment">/*</span>
 <a name="l00281"></a>00281 <span class="comment">   * Set the atom type for one atom</span>
 <a name="l00282"></a>00282 <span class="comment">   */</span>
-<a name="l00283"></a><a class="code" href="classMcMd_1_1Species.html#afd63c7961866e4362658f5ee9a894d87">00283</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#afd63c7961866e4362658f5ee9a894d87" title="Set the type for one atom in a generic molecule of this Species.">Species::setAtomType</a>(<span class="keywordtype">int</span> atomId, <span class="keywordtype">int</span> atomType)
+<a name="l00283"></a><a class="code" href="classMcMd_1_1Species.html#a5244d3eab99baf79b4b270f3abd168a6">00283</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a5244d3eab99baf79b4b270f3abd168a6" title="Set the type for one atom in a generic molecule of this Species.">Species::setAtomType</a>(<span class="keywordtype">int</span> atomId, <span class="keywordtype">int</span> atomType)
 <a name="l00284"></a>00284    {  
-<a name="l00285"></a>00285       <a class="code" href="classMcMd_1_1Species.html#af8ff275d100b53dff741c6905ab02405" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[atomId] = atomType;
+<a name="l00285"></a>00285       <a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[atomId] = atomType;
 <a name="l00286"></a>00286    }
 <a name="l00287"></a>00287 
 <a name="l00288"></a>00288    <span class="comment">/*</span>
 <a name="l00289"></a>00289 <span class="comment">   * Add a bond to the species chemical structure.</span>
 <a name="l00290"></a>00290 <span class="comment">   */</span>
-<a name="l00291"></a><a class="code" href="classMcMd_1_1Species.html#a05616ad5c8d4a6ee45eee1015fd46517">00291</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a05616ad5c8d4a6ee45eee1015fd46517" title="Add a bond to the chemical structure of a generic molecule.">Species::makeBond</a>(<span class="keywordtype">int</span> bondId, <span class="keywordtype">int</span> atomId1, <span class="keywordtype">int</span> atomId2, <span class="keywordtype">int</span> bondType)
+<a name="l00291"></a><a class="code" href="classMcMd_1_1Species.html#a2d72cd7d93ac802ce5f567e4a41eb152">00291</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a2d72cd7d93ac802ce5f567e4a41eb152" title="Add a bond to the chemical structure of a generic molecule.">Species::makeBond</a>(<span class="keywordtype">int</span> bondId, <span class="keywordtype">int</span> atomId1, <span class="keywordtype">int</span> atomId2, <span class="keywordtype">int</span> bondType)
 <a name="l00292"></a>00292    {
 <a name="l00293"></a>00293       <span class="comment">// Preconditions</span>
 <a name="l00294"></a>00294       assert(bondId  &gt;= 0);
 <a name="l00295"></a>00295       assert(atomId1 &gt;= 0);
 <a name="l00296"></a>00296       assert(atomId2 &gt;= 0);
-<a name="l00297"></a>00297       assert(bondId  &lt; <a class="code" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b" title="Number of bonds per molecule.">nBond_</a>);
-<a name="l00298"></a>00298       assert(atomId1 &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
-<a name="l00299"></a>00299       assert(atomId2 &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00297"></a>00297       assert(bondId  &lt; <a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a>);
+<a name="l00298"></a>00298       assert(atomId1 &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00299"></a>00299       assert(atomId2 &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
 <a name="l00300"></a>00300 
 <a name="l00301"></a>00301       <span class="comment">// Create a SpeciesGroup&lt;2&gt; object for this bond</span>
-<a name="l00302"></a>00302       <a class="code" href="classMcMd_1_1Species.html#a55e355a25550b1fcb5d51efa3956018b" title="Array of SpeciesBonds for all bonds, indexed by local bond id.">speciesBonds_</a>[bondId].setAtomId(0, atomId1);
-<a name="l00303"></a>00303       <a class="code" href="classMcMd_1_1Species.html#a55e355a25550b1fcb5d51efa3956018b" title="Array of SpeciesBonds for all bonds, indexed by local bond id.">speciesBonds_</a>[bondId].setAtomId(1, atomId2); 
-<a name="l00304"></a>00304       <a class="code" href="classMcMd_1_1Species.html#a55e355a25550b1fcb5d51efa3956018b" title="Array of SpeciesBonds for all bonds, indexed by local bond id.">speciesBonds_</a>[bondId].setTypeId(bondType); 
+<a name="l00302"></a>00302       <a class="code" href="classMcMd_1_1Species.html#ab4f546965b9d1bcaa917b0b5fcb4a3fc" title="Array of SpeciesBonds for all bonds, indexed by local bond id.">speciesBonds_</a>[bondId].setAtomId(0, atomId1);
+<a name="l00303"></a>00303       <a class="code" href="classMcMd_1_1Species.html#ab4f546965b9d1bcaa917b0b5fcb4a3fc" title="Array of SpeciesBonds for all bonds, indexed by local bond id.">speciesBonds_</a>[bondId].setAtomId(1, atomId2); 
+<a name="l00304"></a>00304       <a class="code" href="classMcMd_1_1Species.html#ab4f546965b9d1bcaa917b0b5fcb4a3fc" title="Array of SpeciesBonds for all bonds, indexed by local bond id.">speciesBonds_</a>[bondId].setTypeId(bondType); 
 <a name="l00305"></a>00305 
 <a name="l00306"></a>00306       <span class="comment">// Add bond Id to AtomBondIdArray objects for both atoms</span>
 <a name="l00307"></a>00307       atomBondIdArrays_[atomId1].append(bondId);
@@ -373,9 +373,9 @@
 <a name="l00322"></a>00322       assert(atomId2 &gt;= 0);
 <a name="l00323"></a>00323       assert(atomId3 &gt;= 0);
 <a name="l00324"></a>00324       assert(angleId &lt; nAngle_);
-<a name="l00325"></a>00325       assert(atomId1 &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
-<a name="l00326"></a>00326       assert(atomId2 &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
-<a name="l00327"></a>00327       assert(atomId3 &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00325"></a>00325       assert(atomId1 &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00326"></a>00326       assert(atomId2 &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00327"></a>00327       assert(atomId3 &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
 <a name="l00328"></a>00328 
 <a name="l00329"></a>00329       <span class="comment">// Create a SpeciesGroup&lt;3&gt; object for this angle.</span>
 <a name="l00330"></a>00330       speciesAngles_[angleId].setAtomId(0, atomId1);
@@ -404,10 +404,10 @@
 <a name="l00353"></a>00353       assert(atomId3 &gt;= 0);
 <a name="l00354"></a>00354       assert(atomId4 &gt;= 0);
 <a name="l00355"></a>00355       assert(dihedralId &lt; nDihedral_);
-<a name="l00356"></a>00356       assert(atomId1 &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
-<a name="l00357"></a>00357       assert(atomId2 &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
-<a name="l00358"></a>00358       assert(atomId3 &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
-<a name="l00359"></a>00359       assert(atomId4 &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00356"></a>00356       assert(atomId1 &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00357"></a>00357       assert(atomId2 &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00358"></a>00358       assert(atomId3 &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
+<a name="l00359"></a>00359       assert(atomId4 &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>);
 <a name="l00360"></a>00360 
 <a name="l00361"></a>00361       <span class="comment">// Create a SpeciesGroup&lt;4&gt; object for this angle.</span>
 <a name="l00362"></a>00362       speciesDihedrals_[dihedralId].setAtomId(0, atomId1);
@@ -427,21 +427,21 @@
 <a name="l00376"></a>00376    <span class="comment">/*</span>
 <a name="l00377"></a>00377 <span class="comment">   * Check validity of Species. Return true if valid, or throw an Exception.</span>
 <a name="l00378"></a>00378 <span class="comment">   */</span>
-<a name="l00379"></a><a class="code" href="classMcMd_1_1Species.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">00379</a>    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Species.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if Species is valid, or throw an Exception.">Species::isValid</a>()<span class="keyword"> const</span>
+<a name="l00379"></a><a class="code" href="classMcMd_1_1Species.html#a733a73f803ada53575fe62a4aa882d05">00379</a>    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Species.html#a733a73f803ada53575fe62a4aa882d05" title="Return true if Species is valid, or throw an Exception.">Species::isValid</a>()<span class="keyword"> const</span>
 <a name="l00380"></a>00380 <span class="keyword">   </span>{
 <a name="l00381"></a>00381 
-<a name="l00382"></a>00382       <span class="keywordflow">if</span> (reservoir_.<a class="code" href="classUtil_1_1ArrayStack.html#a0bcdab3616db481dd211594529479f94" title="Return true only if the ArrayStack has been allocated.">isAllocated</a>()) {
+<a name="l00382"></a>00382       <span class="keywordflow">if</span> (reservoir_.<a class="code" href="classUtil_1_1ArrayStack.html#a59d958f6115e7cde79e1b8f62a23d380" title="Return true only if the ArrayStack has been allocated.">isAllocated</a>()) {
 <a name="l00383"></a>00383  
 <a name="l00384"></a>00384          <span class="comment">// Check validity of reservoir (throws exception if invalid)</span>
-<a name="l00385"></a>00385          reservoir_.<a class="code" href="classUtil_1_1ArrayStack.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if the ArrayStack is valid, or throw an exception.">isValid</a>();
+<a name="l00385"></a>00385          reservoir_.<a class="code" href="classUtil_1_1ArrayStack.html#ab59b658baa3692800dd37c8ad700e974" title="Return true if the ArrayStack is valid, or throw an exception.">isValid</a>();
 <a name="l00386"></a>00386 
 <a name="l00387"></a>00387          <span class="comment">// Check atomTypeIds array</span>
-<a name="l00388"></a>00388          <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1Species.html#af8ff275d100b53dff741c6905ab02405" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>.<a class="code" href="classUtil_1_1DArray.html#a0bcdab3616db481dd211594529479f94" title="Return true if the DArray has been allocated, false otherwise.">isAllocated</a>()) {
+<a name="l00388"></a>00388          <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>.<a class="code" href="classUtil_1_1DArray.html#aeb0113979dae6ca97b368033728ae6bf" title="Return true if the DArray has been allocated, false otherwise.">isAllocated</a>()) {
 <a name="l00389"></a>00389             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomTypeIds_ not allocated&quot;</span>);
 <a name="l00390"></a>00390          }
-<a name="l00391"></a>00391          <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1Species.html#ad687aabba553d1c66bfc253ec7e5bd05" title="Is this a mutable Species?">isMutable</a>()) {
-<a name="l00392"></a>00392             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>; ++i) {
-<a name="l00393"></a>00393                <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#af8ff275d100b53dff741c6905ab02405" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[i] &lt; 0) {
+<a name="l00391"></a>00391          <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1Species.html#a196a2b822968ba57d14a09bb0833a5b4" title="Is this a mutable Species?">isMutable</a>()) {
+<a name="l00392"></a>00392             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>; ++i) {
+<a name="l00393"></a>00393                <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272" title="Array of atom type Ids, indexed by local atom id.">atomTypeIds_</a>[i] &lt; 0) {
 <a name="l00394"></a>00394                   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Negative AtomTypeIds_ in non-mutable Species&quot;</span>);
 <a name="l00395"></a>00395                }
 <a name="l00396"></a>00396             }
@@ -450,16 +450,16 @@
 <a name="l00399"></a>00399          <span class="comment">// Loop over all bonds (if any) in speciesBonds_ array</span>
 <a name="l00400"></a>00400          <span class="keywordtype">int</span>  atomId, bondId, atomId0, atomId1, j;
 <a name="l00401"></a>00401          <span class="keywordtype">bool</span> hasBond;
-<a name="l00402"></a>00402          <span class="keywordflow">for</span> (bondId = 0; bondId &lt; <a class="code" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b" title="Number of bonds per molecule.">nBond_</a>; ++bondId) {
+<a name="l00402"></a>00402          <span class="keywordflow">for</span> (bondId = 0; bondId &lt; <a class="code" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37" title="Number of bonds per molecule.">nBond_</a>; ++bondId) {
 <a name="l00403"></a>00403 
-<a name="l00404"></a>00404             atomId0 = <a class="code" href="classMcMd_1_1Species.html#afcc3ac548c6b552e035426ef3108a380" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#ab366447c15a7669021df12ff0e090520" title="Get the local id for a specific Atom.">atomId</a>(0);
-<a name="l00405"></a>00405             atomId1 = <a class="code" href="classMcMd_1_1Species.html#afcc3ac548c6b552e035426ef3108a380" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#ab366447c15a7669021df12ff0e090520" title="Get the local id for a specific Atom.">atomId</a>(1);
+<a name="l00404"></a>00404             atomId0 = <a class="code" href="classMcMd_1_1Species.html#a411088bd3d19359017145a54a968a80b" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a8fd4f4ffed6bba736ac923637f14c49d" title="Get the local id for a specific Atom.">atomId</a>(0);
+<a name="l00405"></a>00405             atomId1 = <a class="code" href="classMcMd_1_1Species.html#a411088bd3d19359017145a54a968a80b" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a8fd4f4ffed6bba736ac923637f14c49d" title="Get the local id for a specific Atom.">atomId</a>(1);
 <a name="l00406"></a>00406    
 <a name="l00407"></a>00407             <span class="comment">// Check that atomIds are in valid range and unequal</span>
-<a name="l00408"></a>00408             <span class="keywordflow">if</span> (atomId0 &lt; 0 || atomId0 &gt;= <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>) {
+<a name="l00408"></a>00408             <span class="keywordflow">if</span> (atomId0 &lt; 0 || atomId0 &gt;= <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>) {
 <a name="l00409"></a>00409                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atomId0 in speciesBonds_&quot;</span>);
 <a name="l00410"></a>00410             }
-<a name="l00411"></a>00411             <span class="keywordflow">if</span> (atomId1 &lt; 0 || atomId1 &gt;= <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>) {
+<a name="l00411"></a>00411             <span class="keywordflow">if</span> (atomId1 &lt; 0 || atomId1 &gt;= <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>) {
 <a name="l00412"></a>00412                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atomId1 in speciesBonds_&quot;</span>);
 <a name="l00413"></a>00413             }
 <a name="l00414"></a>00414             <span class="keywordflow">if</span> (atomId0 == atomId1) {
@@ -494,15 +494,15 @@
 <a name="l00443"></a>00443 
 <a name="l00444"></a>00444          <span class="comment">// Loop over atomBondIdArrays for all atoms</span>
 <a name="l00445"></a>00445          <span class="keywordtype">int</span> bondCounter = 0;
-<a name="l00446"></a>00446          <span class="keywordflow">for</span> (atomId = 0; atomId &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>; ++atomId) {
+<a name="l00446"></a>00446          <span class="keywordflow">for</span> (atomId = 0; atomId &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>; ++atomId) {
 <a name="l00447"></a>00447             <span class="keywordflow">for</span> (j = 0; j &lt; atomBondIdArrays_[atomId].size(); ++j) {
 <a name="l00448"></a>00448                bondId = atomBondIdArrays_[atomId][j];
 <a name="l00449"></a>00449 
 <a name="l00450"></a>00450                <span class="keywordflow">if</span> (bondId &lt; 0 || bondId &gt;= nBond_) 
 <a name="l00451"></a>00451                   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Bond index out of range&quot;</span>);
 <a name="l00452"></a>00452 
-<a name="l00453"></a>00453                atomId0 = <a class="code" href="classMcMd_1_1Species.html#afcc3ac548c6b552e035426ef3108a380" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#ab366447c15a7669021df12ff0e090520" title="Get the local id for a specific Atom.">atomId</a>(0);
-<a name="l00454"></a>00454                atomId1 = <a class="code" href="classMcMd_1_1Species.html#afcc3ac548c6b552e035426ef3108a380" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#ab366447c15a7669021df12ff0e090520" title="Get the local id for a specific Atom.">atomId</a>(1);
+<a name="l00453"></a>00453                atomId0 = <a class="code" href="classMcMd_1_1Species.html#a411088bd3d19359017145a54a968a80b" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a8fd4f4ffed6bba736ac923637f14c49d" title="Get the local id for a specific Atom.">atomId</a>(0);
+<a name="l00454"></a>00454                atomId1 = <a class="code" href="classMcMd_1_1Species.html#a411088bd3d19359017145a54a968a80b" title="Get a specific SpeciesBond object, by local bond index.">speciesBond</a>(bondId).<a class="code" href="classMcMd_1_1SpeciesGroup.html#a8fd4f4ffed6bba736ac923637f14c49d" title="Get the local id for a specific Atom.">atomId</a>(1);
 <a name="l00455"></a>00455                <span class="keywordflow">if</span> (atomId != atomId0 &amp;&amp; atomId != atomId1) 
 <a name="l00456"></a>00456                   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistency in atomBondId and bond&quot;</span>);
 <a name="l00457"></a>00457                ++bondCounter;
@@ -514,11 +514,11 @@
 <a name="l00463"></a>00463 
 <a name="l00464"></a>00464 <span class="preprocessor">         #ifdef INTER_ANGLE</span>
 <a name="l00465"></a>00465 <span class="preprocessor"></span>         <span class="comment">// Loop over all angles (if any) in speciesAngles_ array</span>
-<a name="l00466"></a>00466          <span class="keywordtype">int</span>  angleId, <a class="code" href="classMcMd_1_1Species.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get integer id of this Species.">id</a>, id2, atomId2(-1);
+<a name="l00466"></a>00466          <span class="keywordtype">int</span>  angleId, <a class="code" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61" title="Get integer id of this Species.">id</a>, id2, atomId2(-1);
 <a name="l00467"></a>00467          <span class="keywordtype">bool</span> hasAngle;
 <a name="l00468"></a>00468          <span class="keywordflow">for</span> (angleId = 0; angleId &lt; nAngle_; ++angleId) {
 <a name="l00469"></a>00469 
-<a name="l00470"></a>00470             <span class="keywordflow">for</span> (<span class="keywordtype">id</span> = 0; <span class="keywordtype">id</span> &lt; 3; ++<a class="code" href="classMcMd_1_1Species.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get integer id of this Species.">id</a>) {
+<a name="l00470"></a>00470             <span class="keywordflow">for</span> (<span class="keywordtype">id</span> = 0; <span class="keywordtype">id</span> &lt; 3; ++<a class="code" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61" title="Get integer id of this Species.">id</a>) {
 <a name="l00471"></a>00471                atomId = speciesAngle(angleId).atomId(<span class="keywordtype">id</span>);
 <a name="l00472"></a>00472 
 <a name="l00473"></a>00473                <span class="comment">// Check that atomIds are in valid range and unequal</span>
@@ -550,14 +550,14 @@
 <a name="l00499"></a>00499          <span class="comment">// Loop over atomAngleIdArrays for all atoms</span>
 <a name="l00500"></a>00500          <span class="keywordtype">int</span> angleCounter = 0;
 <a name="l00501"></a>00501          <span class="keywordtype">bool</span> hasAtom;
-<a name="l00502"></a>00502          <span class="keywordflow">for</span> (atomId = 0; atomId &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>; ++atomId) {
+<a name="l00502"></a>00502          <span class="keywordflow">for</span> (atomId = 0; atomId &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>; ++atomId) {
 <a name="l00503"></a>00503             <span class="keywordflow">for</span> (j = 0; j &lt; atomAngleIdArrays_[atomId].size(); ++j) {
 <a name="l00504"></a>00504                angleId = atomAngleIdArrays_[atomId][j];
 <a name="l00505"></a>00505                <span class="keywordflow">if</span> (angleId &lt; 0 || angleId &gt;= nAngle_) 
 <a name="l00506"></a>00506                   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Angle index out of range&quot;</span>);
 <a name="l00507"></a>00507 
 <a name="l00508"></a>00508                hasAtom = <span class="keyword">false</span>;
-<a name="l00509"></a>00509                <span class="keywordflow">for</span> (<span class="keywordtype">id</span> = 0; <span class="keywordtype">id</span> &lt; 3; ++<a class="code" href="classMcMd_1_1Species.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get integer id of this Species.">id</a>) {
+<a name="l00509"></a>00509                <span class="keywordflow">for</span> (<span class="keywordtype">id</span> = 0; <span class="keywordtype">id</span> &lt; 3; ++<a class="code" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61" title="Get integer id of this Species.">id</a>) {
 <a name="l00510"></a>00510                   atomId2 = speciesAngle(angleId).atomId(<span class="keywordtype">id</span>);
 <a name="l00511"></a>00511                   <span class="keywordflow">if</span> (atomId2 == atomId) {
 <a name="l00512"></a>00512                      hasAtom = <span class="keyword">true</span>;
@@ -613,7 +613,7 @@
 <a name="l00562"></a>00562          <span class="comment">// Loop over atomDihedralIdArrays for all atoms.</span>
 <a name="l00563"></a>00563          <span class="keywordtype">int</span> dihedralCounter = 0;
 <a name="l00564"></a>00564          <span class="keywordtype">bool</span> tHasAtom;
-<a name="l00565"></a>00565          <span class="keywordflow">for</span> (tAtomId = 0; tAtomId &lt; <a class="code" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f" title="Number of atoms per molecule.">nAtom_</a>; ++tAtomId) {
+<a name="l00565"></a>00565          <span class="keywordflow">for</span> (tAtomId = 0; tAtomId &lt; <a class="code" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c" title="Number of atoms per molecule.">nAtom_</a>; ++tAtomId) {
 <a name="l00566"></a>00566             <span class="keywordflow">for</span> (j = 0; j &lt; atomDihedralIdArrays_[tAtomId].size(); ++j) {
 <a name="l00567"></a>00567                dihedralId = atomDihedralIdArrays_[tAtomId][j];
 <a name="l00568"></a>00568                <span class="keywordflow">if</span> (dihedralId &lt; 0 || dihedralId &gt;= nDihedral_) 
@@ -648,16 +648,16 @@
 <a name="l00597"></a>00597       <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00598"></a>00598    }
 <a name="l00599"></a>00599 
-<a name="l00604"></a><a class="code" href="classMcMd_1_1Species.html#a90f27faa15c854aa1b94dc391ac7ee1d">00604</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a90f27faa15c854aa1b94dc391ac7ee1d" title="Generate random molecules.">Species::generateMolecules</a>(<span class="keywordtype">int</span> nMolecule,
+<a name="l00604"></a><a class="code" href="classMcMd_1_1Species.html#a7856fdf81aaba0eea72498deffb38664">00604</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Species.html#a7856fdf81aaba0eea72498deffb38664" title="Generate random molecules.">Species::generateMolecules</a>(<span class="keywordtype">int</span> nMolecule,
 <a name="l00605"></a>00605       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;double&gt;</a> exclusionRadius, <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> &amp;system,
-<a name="l00606"></a>00606       <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a> *bondPotentialPtr, <span class="keyword">const</span> Boundary&amp; boundary) {
+<a name="l00606"></a>00606       <a class="code" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a> *bondPotentialPtr, <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary) {
 <a name="l00607"></a>00607       <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;generateMolecules() not implemented.&quot;</span>);
 <a name="l00608"></a>00608    }
 <a name="l00609"></a>00609 } 
 <a name="l00610"></a>00610 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

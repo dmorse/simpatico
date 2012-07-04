@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -92,21 +92,21 @@
 <a name="l00081"></a>00081 
 <a name="l00082"></a>00082    <span class="keyword">protected</span>:
 <a name="l00083"></a>00083 
-<a name="l00085"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a405a931ed1680bb5a3da7c89e5b2dd06">00085</a>       std::ofstream <a class="code" href="classMcMd_1_1CompositionProfile.html#a405a931ed1680bb5a3da7c89e5b2dd06" title="Output file stream.">outputFile_</a>;
+<a name="l00085"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a24a19b55c04ad96a3e68a1636107b4f3">00085</a>       std::ofstream <a class="code" href="classMcMd_1_1CompositionProfile.html#a24a19b55c04ad96a3e68a1636107b4f3" title="Output file stream.">outputFile_</a>;
 <a name="l00086"></a>00086 
-<a name="l00088"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a984125e9a46d95224cb35d1f0863b58d">00088</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Distribution&gt;</a> <a class="code" href="classMcMd_1_1CompositionProfile.html#a984125e9a46d95224cb35d1f0863b58d" title="Distribution statistical accumulators.">accumulators_</a>;
+<a name="l00088"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a76a77f3e26770cc60253852f3011066f">00088</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Distribution&gt;</a> <a class="code" href="classMcMd_1_1CompositionProfile.html#a76a77f3e26770cc60253852f3011066f" title="Distribution statistical accumulators.">accumulators_</a>;
 <a name="l00089"></a>00089       
-<a name="l00091"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a30198769c14250e5694c1ca8a67ab91d">00091</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;IntVector&gt;</a> <a class="code" href="classMcMd_1_1CompositionProfile.html#a30198769c14250e5694c1ca8a67ab91d" title="Array of Miller index vectors for directions.">intVectors_</a>;
+<a name="l00091"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#ac3c5cf2db26295579c6533d658b950f2">00091</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;IntVector&gt;</a> <a class="code" href="classMcMd_1_1CompositionProfile.html#ac3c5cf2db26295579c6533d658b950f2" title="Array of Miller index vectors for directions.">intVectors_</a>;
 <a name="l00092"></a>00092 
-<a name="l00094"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#adba77ea9ca32e7d0e0b8f8d904f361fc">00094</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Vector&gt;</a> <a class="code" href="classMcMd_1_1CompositionProfile.html#adba77ea9ca32e7d0e0b8f8d904f361fc" title="Array of direction vectors.">waveVectors_</a>;
+<a name="l00094"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a4fa5fa97cc5688392497e1d523c37ed8">00094</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Vector&gt;</a> <a class="code" href="classMcMd_1_1CompositionProfile.html#a4fa5fa97cc5688392497e1d523c37ed8" title="Array of direction vectors.">waveVectors_</a>;
 <a name="l00095"></a>00095 
-<a name="l00097"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a978aa58fe105d2cc1e6ffb54ef6fbc8a">00097</a>       <span class="keywordtype">int</span>  <a class="code" href="classMcMd_1_1CompositionProfile.html#a978aa58fe105d2cc1e6ffb54ef6fbc8a" title="Number of directions.">nDirection_</a>;
+<a name="l00097"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a6a4409624228999f8336f44b8ff1e4c0">00097</a>       <span class="keywordtype">int</span>  <a class="code" href="classMcMd_1_1CompositionProfile.html#a6a4409624228999f8336f44b8ff1e4c0" title="Number of directions.">nDirection_</a>;
 <a name="l00098"></a>00098 
-<a name="l00100"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#ac50cf6ede880aad2a811578ab9b34b4d">00100</a>       <span class="keywordtype">int</span>  <a class="code" href="classMcMd_1_1CompositionProfile.html#ac50cf6ede880aad2a811578ab9b34b4d" title="Number of samples thus far.">nSample_</a>;
+<a name="l00100"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a5bb15de3e144ca36b0da407b08c933ec">00100</a>       <span class="keywordtype">int</span>  <a class="code" href="classMcMd_1_1CompositionProfile.html#a5bb15de3e144ca36b0da407b08c933ec" title="Number of samples thus far.">nSample_</a>;
 <a name="l00101"></a>00101 
-<a name="l00103"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a47e8e463ee625fa1bc77c9e1534b26cf">00103</a>       <span class="keywordtype">int</span>  <a class="code" href="classMcMd_1_1CompositionProfile.html#a47e8e463ee625fa1bc77c9e1534b26cf" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>;
+<a name="l00103"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a8a9a765aceb2727daf40aabda7bf47fe">00103</a>       <span class="keywordtype">int</span>  <a class="code" href="classMcMd_1_1CompositionProfile.html#a8a9a765aceb2727daf40aabda7bf47fe" title="Number of atom types, copied from Simulation::nAtomType().">nAtomType_</a>;
 <a name="l00104"></a>00104 
-<a name="l00106"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a48d9764bd8f58673da1d598b37581d8c">00106</a>       <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#a48d9764bd8f58673da1d598b37581d8c" title="Has readParam been called?">isInitialized_</a>;
+<a name="l00106"></a><a class="code" href="classMcMd_1_1CompositionProfile.html#a6a2785a3e1bfdc48b63cec9588c79ce9">00106</a>       <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1CompositionProfile.html#a6a2785a3e1bfdc48b63cec9588c79ce9" title="Has readParam been called?">isInitialized_</a>;
 <a name="l00107"></a>00107 
 <a name="l00111"></a>00111       <span class="keywordtype">void</span> makeWaveVectors();
 <a name="l00112"></a>00112 
@@ -117,7 +117,7 @@
 <a name="l00117"></a>00117 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: CompositionProfile Class Reference</title>
+<title>Simpatico: McMd::CompositionProfile Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -51,7 +51,7 @@
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<h1>CompositionProfile Class Reference</h1>  </div>
+<h1>McMd::CompositionProfile Class Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::CompositionProfile" --><!-- doxytag: inherits="SystemDiagnostic&lt; System &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -63,16 +63,16 @@
 </div>
 <p><code>#include &lt;<a class="el" href="CompositionProfile_8h_source.html">CompositionProfile.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for CompositionProfile:</div>
+Inheritance diagram for McMd::CompositionProfile:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1CompositionProfile.png" usemap="#CompositionProfile_map" alt=""/>
-  <map id="CompositionProfile_map" name="CompositionProfile_map">
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; System &gt;" shape="rect" coords="92,168,267,192"/>
-<area href="classMcMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="92,112,267,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,175,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="185,56,360,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,175,24"/>
+  <img src="classMcMd_1_1CompositionProfile.png" usemap="#McMd::CompositionProfile_map" alt=""/>
+  <map id="McMd::CompositionProfile_map" name="McMd::CompositionProfile_map">
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; System &gt;" shape="rect" coords="113,168,330,192"/>
+<area href="classMcMd_1_1Diagnostic.html" alt="McMd::Diagnostic" shape="rect" coords="113,112,330,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,217,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="227,56,444,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,217,24"/>
 </map>
  </div></div>
 
@@ -80,48 +80,48 @@ Inheritance diagram for CompositionProfile:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a101e8e3c6774ab7dba0e52e526d4c4a5">CompositionProfile</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a101e8e3c6774ab7dba0e52e526d4c4a5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a2e144293c380504d94b2a11709617a0f">~CompositionProfile</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a2e144293c380504d94b2a11709617a0f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear accumulators.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#afc17577823a371a5ead4e51ebb8ec2ef">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particle positions to histogram.  <a href="#afc17577823a371a5ead4e51ebb8ec2ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a7437b254e19e7e12fc2ec99945f4ecea">output</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to predefined output file.  <a href="#a7437b254e19e7e12fc2ec99945f4ecea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#acf591a9a05d0be8ad1be7e7c4ae0b12a">CompositionProfile</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#acf591a9a05d0be8ad1be7e7c4ae0b12a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a47a233af939092e502188111fc17b055">~CompositionProfile</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a47a233af939092e502188111fc17b055"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a518cbcf46ab7e9ff6c2de83355ae08da">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#a518cbcf46ab7e9ff6c2de83355ae08da"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#ad37184940b19e05e5a606c85aa706f11">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear accumulators.  <a href="#ad37184940b19e05e5a606c85aa706f11"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a3ff92ac3f112232ca65bc933eb59fe5d">sample</a> (long iStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particle positions to histogram.  <a href="#a3ff92ac3f112232ca65bc933eb59fe5d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#ab19ea36df65ad91ed93c8982bdb3add0">output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to predefined output file.  <a href="#ab19ea36df65ad91ed93c8982bdb3add0"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#ac8f153070ac13cd33c3ff5c00cf3ef4a">makeWaveVectors</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update wavevectors.  <a href="#ac8f153070ac13cd33c3ff5c00cf3ef4a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a0ba3289b9623394a2b8b7d7d3b8904d8">makeWaveVectors</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update wavevectors.  <a href="#a0ba3289b9623394a2b8b7d7d3b8904d8"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::ofstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a405a931ed1680bb5a3da7c89e5b2dd06">outputFile_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output file stream.  <a href="#a405a931ed1680bb5a3da7c89e5b2dd06"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1Distribution.html">Distribution</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a984125e9a46d95224cb35d1f0863b58d">accumulators_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Distribution statistical accumulators.  <a href="#a984125e9a46d95224cb35d1f0863b58d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a30198769c14250e5694c1ca8a67ab91d">intVectors_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of Miller index vectors for directions.  <a href="#a30198769c14250e5694c1ca8a67ab91d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1Vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#adba77ea9ca32e7d0e0b8f8d904f361fc">waveVectors_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of direction vectors.  <a href="#adba77ea9ca32e7d0e0b8f8d904f361fc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a978aa58fe105d2cc1e6ffb54ef6fbc8a">nDirection_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of directions.  <a href="#a978aa58fe105d2cc1e6ffb54ef6fbc8a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#ac50cf6ede880aad2a811578ab9b34b4d">nSample_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of samples thus far.  <a href="#ac50cf6ede880aad2a811578ab9b34b4d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a47e8e463ee625fa1bc77c9e1534b26cf">nAtomType_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of atom types, copied from <a class="el" href="classMcMd_1_1Simulation.html#a75990126a7bab14aff4a94db42b29f61" title="Get the number of atom types.">Simulation::nAtomType()</a>.  <a href="#a47e8e463ee625fa1bc77c9e1534b26cf"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a48d9764bd8f58673da1d598b37581d8c">isInitialized_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has readParam been called?  <a href="#a48d9764bd8f58673da1d598b37581d8c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::ofstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a24a19b55c04ad96a3e68a1636107b4f3">outputFile_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output file stream.  <a href="#a24a19b55c04ad96a3e68a1636107b4f3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1Distribution.html">Distribution</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a76a77f3e26770cc60253852f3011066f">accumulators_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Distribution statistical accumulators.  <a href="#a76a77f3e26770cc60253852f3011066f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#ac3c5cf2db26295579c6533d658b950f2">intVectors_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of Miller index vectors for directions.  <a href="#ac3c5cf2db26295579c6533d658b950f2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classUtil_1_1Vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a4fa5fa97cc5688392497e1d523c37ed8">waveVectors_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of direction vectors.  <a href="#a4fa5fa97cc5688392497e1d523c37ed8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a6a4409624228999f8336f44b8ff1e4c0">nDirection_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of directions.  <a href="#a6a4409624228999f8336f44b8ff1e4c0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a5bb15de3e144ca36b0da407b08c933ec">nSample_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of samples thus far.  <a href="#a5bb15de3e144ca36b0da407b08c933ec"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a8a9a765aceb2727daf40aabda7bf47fe">nAtomType_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of atom types, copied from <a class="el" href="classMcMd_1_1Simulation.html#a54f547a8259478908be74fff6e76ba70" title="Get the number of atom types.">Simulation::nAtomType()</a>.  <a href="#a8a9a765aceb2727daf40aabda7bf47fe"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CompositionProfile.html#a6a2785a3e1bfdc48b63cec9588c79ce9">isInitialized_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has readParam been called?  <a href="#a6a2785a3e1bfdc48b63cec9588c79ce9"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a101e8e3c6774ab7dba0e52e526d4c4a5"></a><!-- doxytag: member="McMd::CompositionProfile::CompositionProfile" ref="a101e8e3c6774ab7dba0e52e526d4c4a5" args="(System &amp;system)" -->
+<a class="anchor" id="acf591a9a05d0be8ad1be7e7c4ae0b12a"></a><!-- doxytag: member="McMd::CompositionProfile::CompositionProfile" ref="acf591a9a05d0be8ad1be7e7c4ae0b12a" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1CompositionProfile.html">CompositionProfile</a> </td>
+          <td class="memname">McMd::CompositionProfile::CompositionProfile </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -143,12 +143,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2e144293c380504d94b2a11709617a0f"></a><!-- doxytag: member="McMd::CompositionProfile::~CompositionProfile" ref="a2e144293c380504d94b2a11709617a0f" args="()" -->
+<a class="anchor" id="a47a233af939092e502188111fc17b055"></a><!-- doxytag: member="McMd::CompositionProfile::~CompositionProfile" ref="a47a233af939092e502188111fc17b055" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1CompositionProfile.html">CompositionProfile</a> </td>
+          <td class="memname">McMd::CompositionProfile::~CompositionProfile </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -164,12 +164,12 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::CompositionProfile::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a518cbcf46ab7e9ff6c2de83355ae08da"></a><!-- doxytag: member="McMd::CompositionProfile::readParam" ref="a518cbcf46ab7e9ff6c2de83355ae08da" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::CompositionProfile::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -195,18 +195,18 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="CompositionProfile_8cpp_source.html#l00038">38</a> of file <a class="el" href="CompositionProfile_8cpp_source.html">CompositionProfile.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::CompositionProfile::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="ad37184940b19e05e5a606c85aa706f11"></a><!-- doxytag: member="McMd::CompositionProfile::setup" ref="ad37184940b19e05e5a606c85aa706f11" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void McMd::CompositionProfile::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -217,18 +217,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Clear accumulators. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a93c5a174f073b2587a484999ca550829">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="CompositionProfile_8cpp_source.html#l00062">62</a> of file <a class="el" href="CompositionProfile_8cpp_source.html">CompositionProfile.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afc17577823a371a5ead4e51ebb8ec2ef"></a><!-- doxytag: member="McMd::CompositionProfile::sample" ref="afc17577823a371a5ead4e51ebb8ec2ef" args="(long iStep)" -->
+<a class="anchor" id="a3ff92ac3f112232ca65bc933eb59fe5d"></a><!-- doxytag: member="McMd::CompositionProfile::sample" ref="a3ff92ac3f112232ca65bc933eb59fe5d" args="(long iStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void McMd::CompositionProfile::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -246,20 +246,20 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f">Diagnostic</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#ae265d934fee552e1bd50ce37930ac63c">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="CompositionProfile_8cpp_source.html#l00091">91</a> of file <a class="el" href="CompositionProfile_8cpp_source.html">CompositionProfile.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="Vector_8h_source.html#l00604">Vector::dot()</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00084">ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="product_8h_source.html#l00022">Util::product()</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="Vector_8h_source.html#l00604">Util::Vector::dot()</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00084">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="product_8h_source.html#l00022">Util::product()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7437b254e19e7e12fc2ec99945f4ecea"></a><!-- doxytag: member="McMd::CompositionProfile::output" ref="a7437b254e19e7e12fc2ec99945f4ecea" args="()" -->
+<a class="anchor" id="ab19ea36df65ad91ed93c8982bdb3add0"></a><!-- doxytag: member="McMd::CompositionProfile::output" ref="ab19ea36df65ad91ed93c8982bdb3add0" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void McMd::CompositionProfile::output </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -270,7 +270,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Output results to predefined output file. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a209e4a470fcdeb3d5b87da3dd6960def">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac5481c8016af4c70d19d59905261c0bf">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="CompositionProfile_8cpp_source.html#l00159">159</a> of file <a class="el" href="CompositionProfile_8cpp_source.html">CompositionProfile.cpp</a>.</p>
 
@@ -278,12 +278,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac8f153070ac13cd33c3ff5c00cf3ef4a"></a><!-- doxytag: member="McMd::CompositionProfile::makeWaveVectors" ref="ac8f153070ac13cd33c3ff5c00cf3ef4a" args="()" -->
+<a class="anchor" id="a0ba3289b9623394a2b8b7d7d3b8904d8"></a><!-- doxytag: member="McMd::CompositionProfile::makeWaveVectors" ref="a0ba3289b9623394a2b8b7d7d3b8904d8" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void makeWaveVectors </td>
+          <td class="memname">void McMd::CompositionProfile::makeWaveVectors </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [protected]</code></td>
@@ -297,17 +297,17 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="CompositionProfile_8cpp_source.html#l00141">141</a> of file <a class="el" href="CompositionProfile_8cpp_source.html">CompositionProfile.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="Vector_8h_source.html#l00349">Vector::Zero</a>.</p>
+<p>References <a class="el" href="Boundary_8h_source.html#l00022">Util::Boundary</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="Vector_8h_source.html#l00349">Util::Vector::Zero</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a405a931ed1680bb5a3da7c89e5b2dd06"></a><!-- doxytag: member="McMd::CompositionProfile::outputFile_" ref="a405a931ed1680bb5a3da7c89e5b2dd06" args="" -->
+<a class="anchor" id="a24a19b55c04ad96a3e68a1636107b4f3"></a><!-- doxytag: member="McMd::CompositionProfile::outputFile_" ref="a24a19b55c04ad96a3e68a1636107b4f3" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::ofstream <a class="el" href="classMcMd_1_1CompositionProfile.html#a405a931ed1680bb5a3da7c89e5b2dd06">outputFile_</a><code> [protected]</code></td>
+          <td class="memname">std::ofstream <a class="el" href="classMcMd_1_1CompositionProfile.html#a24a19b55c04ad96a3e68a1636107b4f3">McMd::CompositionProfile::outputFile_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -319,12 +319,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a984125e9a46d95224cb35d1f0863b58d"></a><!-- doxytag: member="McMd::CompositionProfile::accumulators_" ref="a984125e9a46d95224cb35d1f0863b58d" args="" -->
+<a class="anchor" id="a76a77f3e26770cc60253852f3011066f"></a><!-- doxytag: member="McMd::CompositionProfile::accumulators_" ref="a76a77f3e26770cc60253852f3011066f" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classUtil_1_1Distribution.html">Distribution</a>&gt; <a class="el" href="classMcMd_1_1CompositionProfile.html#a984125e9a46d95224cb35d1f0863b58d">accumulators_</a><code> [protected]</code></td>
+          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classUtil_1_1Distribution.html">Distribution</a>&gt; <a class="el" href="classMcMd_1_1CompositionProfile.html#a76a77f3e26770cc60253852f3011066f">McMd::CompositionProfile::accumulators_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -336,12 +336,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a30198769c14250e5694c1ca8a67ab91d"></a><!-- doxytag: member="McMd::CompositionProfile::intVectors_" ref="a30198769c14250e5694c1ca8a67ab91d" args="" -->
+<a class="anchor" id="ac3c5cf2db26295579c6533d658b950f2"></a><!-- doxytag: member="McMd::CompositionProfile::intVectors_" ref="ac3c5cf2db26295579c6533d658b950f2" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&gt; <a class="el" href="classMcMd_1_1CompositionProfile.html#a30198769c14250e5694c1ca8a67ab91d">intVectors_</a><code> [protected]</code></td>
+          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classUtil_1_1IntVector.html">IntVector</a>&gt; <a class="el" href="classMcMd_1_1CompositionProfile.html#ac3c5cf2db26295579c6533d658b950f2">McMd::CompositionProfile::intVectors_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -353,12 +353,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adba77ea9ca32e7d0e0b8f8d904f361fc"></a><!-- doxytag: member="McMd::CompositionProfile::waveVectors_" ref="adba77ea9ca32e7d0e0b8f8d904f361fc" args="" -->
+<a class="anchor" id="a4fa5fa97cc5688392497e1d523c37ed8"></a><!-- doxytag: member="McMd::CompositionProfile::waveVectors_" ref="a4fa5fa97cc5688392497e1d523c37ed8" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classUtil_1_1Vector.html">Vector</a>&gt; <a class="el" href="classMcMd_1_1CompositionProfile.html#adba77ea9ca32e7d0e0b8f8d904f361fc">waveVectors_</a><code> [protected]</code></td>
+          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classUtil_1_1Vector.html">Vector</a>&gt; <a class="el" href="classMcMd_1_1CompositionProfile.html#a4fa5fa97cc5688392497e1d523c37ed8">McMd::CompositionProfile::waveVectors_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -370,12 +370,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a978aa58fe105d2cc1e6ffb54ef6fbc8a"></a><!-- doxytag: member="McMd::CompositionProfile::nDirection_" ref="a978aa58fe105d2cc1e6ffb54ef6fbc8a" args="" -->
+<a class="anchor" id="a6a4409624228999f8336f44b8ff1e4c0"></a><!-- doxytag: member="McMd::CompositionProfile::nDirection_" ref="a6a4409624228999f8336f44b8ff1e4c0" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classMcMd_1_1CompositionProfile.html#a978aa58fe105d2cc1e6ffb54ef6fbc8a">nDirection_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classMcMd_1_1CompositionProfile.html#a6a4409624228999f8336f44b8ff1e4c0">McMd::CompositionProfile::nDirection_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -387,12 +387,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac50cf6ede880aad2a811578ab9b34b4d"></a><!-- doxytag: member="McMd::CompositionProfile::nSample_" ref="ac50cf6ede880aad2a811578ab9b34b4d" args="" -->
+<a class="anchor" id="a5bb15de3e144ca36b0da407b08c933ec"></a><!-- doxytag: member="McMd::CompositionProfile::nSample_" ref="a5bb15de3e144ca36b0da407b08c933ec" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classMcMd_1_1CompositionProfile.html#ac50cf6ede880aad2a811578ab9b34b4d">nSample_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classMcMd_1_1CompositionProfile.html#a5bb15de3e144ca36b0da407b08c933ec">McMd::CompositionProfile::nSample_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -404,29 +404,29 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a47e8e463ee625fa1bc77c9e1534b26cf"></a><!-- doxytag: member="McMd::CompositionProfile::nAtomType_" ref="a47e8e463ee625fa1bc77c9e1534b26cf" args="" -->
+<a class="anchor" id="a8a9a765aceb2727daf40aabda7bf47fe"></a><!-- doxytag: member="McMd::CompositionProfile::nAtomType_" ref="a8a9a765aceb2727daf40aabda7bf47fe" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classMcMd_1_1CompositionProfile.html#a47e8e463ee625fa1bc77c9e1534b26cf">nAtomType_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classMcMd_1_1CompositionProfile.html#a8a9a765aceb2727daf40aabda7bf47fe">McMd::CompositionProfile::nAtomType_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Number of atom types, copied from <a class="el" href="classMcMd_1_1Simulation.html#a75990126a7bab14aff4a94db42b29f61" title="Get the number of atom types.">Simulation::nAtomType()</a>. </p>
+<p>Number of atom types, copied from <a class="el" href="classMcMd_1_1Simulation.html#a54f547a8259478908be74fff6e76ba70" title="Get the number of atom types.">Simulation::nAtomType()</a>. </p>
 
 <p>Definition at line <a class="el" href="CompositionProfile_8h_source.html#l00103">103</a> of file <a class="el" href="CompositionProfile_8h_source.html">CompositionProfile.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a48d9764bd8f58673da1d598b37581d8c"></a><!-- doxytag: member="McMd::CompositionProfile::isInitialized_" ref="a48d9764bd8f58673da1d598b37581d8c" args="" -->
+<a class="anchor" id="a6a2785a3e1bfdc48b63cec9588c79ce9"></a><!-- doxytag: member="McMd::CompositionProfile::isInitialized_" ref="a6a2785a3e1bfdc48b63cec9588c79ce9" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classMcMd_1_1CompositionProfile.html#a48d9764bd8f58673da1d598b37581d8c">isInitialized_</a><code> [protected]</code></td>
+          <td class="memname">bool <a class="el" href="classMcMd_1_1CompositionProfile.html#a6a2785a3e1bfdc48b63cec9588c79ce9">McMd::CompositionProfile::isInitialized_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -443,7 +443,7 @@ Protected Attributes</h2></td></tr>
 <li><a class="el" href="CompositionProfile_8cpp_source.html">CompositionProfile.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:54 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:25 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

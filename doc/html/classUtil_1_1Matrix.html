@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Matrix&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::Matrix&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -51,7 +51,7 @@
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<h1>Matrix&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Matrix__Module.html">Matrix Containers</a></div></h1>  </div>
+<h1>Util::Matrix&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Matrix__Module.html">Matrix Containers</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Matrix" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -67,13 +67,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="Matrix_8h_source.html">Matrix.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Matrix&lt; Data &gt;:</div>
+Inheritance diagram for Util::Matrix&lt; Data &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classUtil_1_1Matrix.png" usemap="#Matrix&lt; Data &gt;_map" alt=""/>
-  <map id="Matrix&lt; Data &gt;_map" name="Matrix&lt; Data &gt;_map">
-<area href="classUtil_1_1DMatrix.html" alt="DMatrix&lt; Data &gt;" shape="rect" coords="0,56,143,80"/>
-<area href="classUtil_1_1FMatrix.html" alt="FMatrix&lt; Data, M, N &gt;" shape="rect" coords="153,56,296,80"/>
+  <img src="classUtil_1_1Matrix.png" usemap="#Util::Matrix&lt; Data &gt;_map" alt=""/>
+  <map id="Util::Matrix&lt; Data &gt;_map" name="Util::Matrix&lt; Data &gt;_map">
+<area href="classUtil_1_1DMatrix.html" alt="Util::DMatrix&lt; Data &gt;" shape="rect" coords="0,56,166,80"/>
+<area href="classUtil_1_1FMatrix.html" alt="Util::FMatrix&lt; Data, M, N &gt;" shape="rect" coords="176,56,342,80"/>
 </map>
  </div></div>
 
@@ -81,36 +81,38 @@ Inheritance diagram for Matrix&lt; Data &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a2249c859d9c3503ec00d3a20fe963842">~Matrix</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a2249c859d9c3503ec00d3a20fe963842"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a8af90ffcb84fd323e1b4b4fd1d8e1c0e">capacity1</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of rows.  <a href="#a8af90ffcb84fd323e1b4b4fd1d8e1c0e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#aaa4b76a6c4fb66aa293ccc2bc95d7572">capacity2</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of columns.  <a href="#aaa4b76a6c4fb66aa293ccc2bc95d7572"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a80610b6a4636bd501203de70d870928b">operator()</a> (int i, int j) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return element (i,j) of matrix by const reference.  <a href="#a80610b6a4636bd501203de70d870928b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a198c95222f8642ab4ed814fc4cb94cf9">operator()</a> (int i, int j)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return element (i,j) of matrix by reference.  <a href="#a198c95222f8642ab4ed814fc4cb94cf9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a7d92f340e4123a6a45ae8d77c74244a3">~Matrix</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a7d92f340e4123a6a45ae8d77c74244a3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#aa31b8adc30ead7439b013099bd3e41d3">capacity1</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of rows.  <a href="#aa31b8adc30ead7439b013099bd3e41d3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a6e861f39f260a80f787d202b533acab8">capacity2</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of columns.  <a href="#a6e861f39f260a80f787d202b533acab8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#ae68dd131c89546d09c2c31c20f26ab10">operator()</a> (int i, int j) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return element (i,j) of matrix by const reference.  <a href="#ae68dd131c89546d09c2c31c20f26ab10"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a07e47001d8275fb7ad593bd195ba3906">operator()</a> (int i, int j)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return element (i,j) of matrix by reference.  <a href="#a07e47001d8275fb7ad593bd195ba3906"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a3aede62f513da27e6f61ae7a972b4f96">Matrix</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a3aede62f513da27e6f61ae7a972b4f96"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#ab405e09dfdf9c17a7ca3ba09dc80d9a0">Matrix</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ab405e09dfdf9c17a7ca3ba09dc80d9a0"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a51a8255a7ec647fc0e77a41589bd4a0e">data_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to 1D C array of all elements.  <a href="#a51a8255a7ec647fc0e77a41589bd4a0e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a8516d92163edd4be2775f79d99d12d61">capacity1_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of rows (range of first index).  <a href="#a8516d92163edd4be2775f79d99d12d61"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#afa5d17aa9fcb57c5b0b970a26b233b36">capacity2_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of columns (range of first index).  <a href="#afa5d17aa9fcb57c5b0b970a26b233b36"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a58613069a43b06ca55b00760e9f2a025">data_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to 1D C array of all elements.  <a href="#a58613069a43b06ca55b00760e9f2a025"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#ab2aa000328441c9173452ebed40a52b9">capacity1_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of rows (range of first index).  <a href="#ab2aa000328441c9173452ebed40a52b9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Matrix.html#a6c524474706b1819f6f20f245c5bbf85">capacity2_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of columns (range of first index).  <a href="#a6c524474706b1819f6f20f245c5bbf85"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a2249c859d9c3503ec00d3a20fe963842"></a><!-- doxytag: member="Util::Matrix::~Matrix" ref="a2249c859d9c3503ec00d3a20fe963842" args="()" -->
+<a class="anchor" id="a7d92f340e4123a6a45ae8d77c74244a3"></a><!-- doxytag: member="Util::Matrix::~Matrix" ref="a7d92f340e4123a6a45ae8d77c74244a3" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1Matrix.html">Matrix</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Matrix.html">Util::Matrix</a>&lt; Data &gt;::~<a class="el" href="classUtil_1_1Matrix.html">Matrix</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, virtual]</code></td>
@@ -125,12 +127,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3aede62f513da27e6f61ae7a972b4f96"></a><!-- doxytag: member="Util::Matrix::Matrix" ref="a3aede62f513da27e6f61ae7a972b4f96" args="()" -->
+<a class="anchor" id="ab405e09dfdf9c17a7ca3ba09dc80d9a0"></a><!-- doxytag: member="Util::Matrix::Matrix" ref="ab405e09dfdf9c17a7ca3ba09dc80d9a0" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Matrix.html">Matrix</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Matrix.html">Util::Matrix</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1Matrix.html">Matrix</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -148,12 +152,14 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a8af90ffcb84fd323e1b4b4fd1d8e1c0e"></a><!-- doxytag: member="Util::Matrix::capacity1" ref="a8af90ffcb84fd323e1b4b4fd1d8e1c0e" args="()" -->
+<a class="anchor" id="aa31b8adc30ead7439b013099bd3e41d3"></a><!-- doxytag: member="Util::Matrix::capacity1" ref="aa31b8adc30ead7439b013099bd3e41d3" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int capacity1 </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1Matrix.html">Util::Matrix</a>&lt; Data &gt;::capacity1 </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -169,12 +175,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aaa4b76a6c4fb66aa293ccc2bc95d7572"></a><!-- doxytag: member="Util::Matrix::capacity2" ref="aaa4b76a6c4fb66aa293ccc2bc95d7572" args="()" -->
+<a class="anchor" id="a6e861f39f260a80f787d202b533acab8"></a><!-- doxytag: member="Util::Matrix::capacity2" ref="a6e861f39f260a80f787d202b533acab8" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int capacity2 </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1Matrix.html">Util::Matrix</a>&lt; Data &gt;::capacity2 </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -190,12 +198,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a80610b6a4636bd501203de70d870928b"></a><!-- doxytag: member="Util::Matrix::operator()" ref="a80610b6a4636bd501203de70d870928b" args="(int i, int j) const " -->
+<a class="anchor" id="ae68dd131c89546d09c2c31c20f26ab10"></a><!-- doxytag: member="Util::Matrix::operator()" ref="ae68dd131c89546d09c2c31c20f26ab10" args="(int i, int j) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Data &amp; operator() </td>
+          <td class="memname">const Data &amp; <a class="el" href="classUtil_1_1Matrix.html">Util::Matrix</a>&lt; Data &gt;::operator() </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em>, </td>
@@ -228,12 +238,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a198c95222f8642ab4ed814fc4cb94cf9"></a><!-- doxytag: member="Util::Matrix::operator()" ref="a198c95222f8642ab4ed814fc4cb94cf9" args="(int i, int j)" -->
+<a class="anchor" id="a07e47001d8275fb7ad593bd195ba3906"></a><!-- doxytag: member="Util::Matrix::operator()" ref="a07e47001d8275fb7ad593bd195ba3906" args="(int i, int j)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data &amp; operator() </td>
+          <td class="memname">Data &amp; <a class="el" href="classUtil_1_1Matrix.html">Util::Matrix</a>&lt; Data &gt;::operator() </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em>, </td>
@@ -267,12 +279,14 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a51a8255a7ec647fc0e77a41589bd4a0e"></a><!-- doxytag: member="Util::Matrix::data_" ref="a51a8255a7ec647fc0e77a41589bd4a0e" args="" -->
+<a class="anchor" id="a58613069a43b06ca55b00760e9f2a025"></a><!-- doxytag: member="Util::Matrix::data_" ref="a58613069a43b06ca55b00760e9f2a025" args="" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data* <a class="el" href="classUtil_1_1Matrix.html#a51a8255a7ec647fc0e77a41589bd4a0e">data_</a><code> [protected]</code></td>
+          <td class="memname">Data* <a class="el" href="classUtil_1_1Matrix.html">Util::Matrix</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1Matrix.html#a58613069a43b06ca55b00760e9f2a025">data_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -282,16 +296,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Matrix_8h_source.html#l00077">77</a> of file <a class="el" href="Matrix_8h_source.html">Matrix.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DMatrix_8h_source.html#l00094">DMatrix&lt; Data &gt;::DMatrix()</a>, <a class="el" href="FMatrix_8h_source.html#l00077">FMatrix&lt; Data, M, N &gt;::FMatrix()</a>, and <a class="el" href="DMatrix_8h_source.html#l00115">DMatrix&lt; Data &gt;::operator=()</a>.</p>
+<p>Referenced by <a class="el" href="DMatrix_8h_source.html#l00094">Util::DMatrix&lt; Data &gt;::DMatrix()</a>, <a class="el" href="FMatrix_8h_source.html#l00077">Util::FMatrix&lt; Data, M, N &gt;::FMatrix()</a>, and <a class="el" href="DMatrix_8h_source.html#l00115">Util::DMatrix&lt; Data &gt;::operator=()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8516d92163edd4be2775f79d99d12d61"></a><!-- doxytag: member="Util::Matrix::capacity1_" ref="a8516d92163edd4be2775f79d99d12d61" args="" -->
+<a class="anchor" id="ab2aa000328441c9173452ebed40a52b9"></a><!-- doxytag: member="Util::Matrix::capacity1_" ref="ab2aa000328441c9173452ebed40a52b9" args="" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classUtil_1_1Matrix.html#a8516d92163edd4be2775f79d99d12d61">capacity1_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classUtil_1_1Matrix.html">Util::Matrix</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1Matrix.html#ab2aa000328441c9173452ebed40a52b9">capacity1_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -301,16 +317,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Matrix_8h_source.html#l00080">80</a> of file <a class="el" href="Matrix_8h_source.html">Matrix.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DMatrix_8h_source.html#l00094">DMatrix&lt; Data &gt;::DMatrix()</a>, <a class="el" href="FMatrix_8h_source.html#l00077">FMatrix&lt; Data, M, N &gt;::FMatrix()</a>, and <a class="el" href="DMatrix_8h_source.html#l00115">DMatrix&lt; Data &gt;::operator=()</a>.</p>
+<p>Referenced by <a class="el" href="DMatrix_8h_source.html#l00094">Util::DMatrix&lt; Data &gt;::DMatrix()</a>, <a class="el" href="FMatrix_8h_source.html#l00077">Util::FMatrix&lt; Data, M, N &gt;::FMatrix()</a>, and <a class="el" href="DMatrix_8h_source.html#l00115">Util::DMatrix&lt; Data &gt;::operator=()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afa5d17aa9fcb57c5b0b970a26b233b36"></a><!-- doxytag: member="Util::Matrix::capacity2_" ref="afa5d17aa9fcb57c5b0b970a26b233b36" args="" -->
+<a class="anchor" id="a6c524474706b1819f6f20f245c5bbf85"></a><!-- doxytag: member="Util::Matrix::capacity2_" ref="a6c524474706b1819f6f20f245c5bbf85" args="" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classUtil_1_1Matrix.html#afa5d17aa9fcb57c5b0b970a26b233b36">capacity2_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classUtil_1_1Matrix.html">Util::Matrix</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1Matrix.html#a6c524474706b1819f6f20f245c5bbf85">capacity2_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -320,7 +338,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Matrix_8h_source.html#l00083">83</a> of file <a class="el" href="Matrix_8h_source.html">Matrix.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DMatrix_8h_source.html#l00094">DMatrix&lt; Data &gt;::DMatrix()</a>, <a class="el" href="FMatrix_8h_source.html#l00077">FMatrix&lt; Data, M, N &gt;::FMatrix()</a>, and <a class="el" href="DMatrix_8h_source.html#l00115">DMatrix&lt; Data &gt;::operator=()</a>.</p>
+<p>Referenced by <a class="el" href="DMatrix_8h_source.html#l00094">Util::DMatrix&lt; Data &gt;::DMatrix()</a>, <a class="el" href="FMatrix_8h_source.html#l00077">Util::FMatrix&lt; Data, M, N &gt;::FMatrix()</a>, and <a class="el" href="DMatrix_8h_source.html#l00115">Util::DMatrix&lt; Data &gt;::operator=()</a>.</p>
 
 </div>
 </div>
@@ -328,7 +346,7 @@ Protected Attributes</h2></td></tr>
 <li><a class="el" href="Matrix_8h_source.html">Matrix.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: PairSelector Class Reference</title>
+<title>Simpatico: McMd::PairSelector Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -52,7 +52,7 @@
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#friends">Friends</a>  </div>
   <div class="headertitle">
-<h1>PairSelector Class Reference</h1>  </div>
+<h1>McMd::PairSelector Class Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::PairSelector" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -61,7 +61,7 @@
 <p>A <a class="el" href="classMcMd_1_1PairSelector.html" title="Selection rule for pairs of Atoms.">PairSelector</a> has a pair type and two atom type indices.</p>
 <p>The pair type is a PairType enum, which can be INTRA, INTER, or ALL.</p>
 <p>The atom types ids are integers. A non-negative integer indicates an atom type id. A negative integer indicates that all types are accepted.</p>
-<p>The bool <a class="el" href="classMcMd_1_1PairSelector.html#a88ee0603acc20a4d0b580a6cbe3da0e0" title="Return true if pair of atoms matches the selector policy.">match()</a> method returns true if a pair satisfies the rule, or false otherwise. </p>
+<p>The bool <a class="el" href="classMcMd_1_1PairSelector.html#a90551e9cbe25da5f65ad26d8e3bc7235" title="Return true if pair of atoms matches the selector policy.">match()</a> method returns true if a pair satisfies the rule, or false otherwise. </p>
 
 <p>Definition at line <a class="el" href="PairSelector_8h_source.html#l00032">32</a> of file <a class="el" href="PairSelector_8h_source.html">PairSelector.h</a>.</p>
 </div>
@@ -71,27 +71,27 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b">PairType</a> </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5">PairType</a> </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><p>Type of atom pair, based on identity of parent molecules. </p>
- <a href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b">More...</a><br/></td></tr>
+ <a href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a392a2aae9148463758f6998ed003460f">PairSelector</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a392a2aae9148463758f6998ed003460f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a51cfb5f2cf3fab34adf5bbb4572de964">setAvoidDoubleCounting</a> (bool avoidDoubleCounting)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set policy to avoid double counting (true) or to not avoid (false).  <a href="#a51cfb5f2cf3fab34adf5bbb4572de964"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a88ee0603acc20a4d0b580a6cbe3da0e0">match</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom1, const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom2) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if pair of atoms matches the selector policy.  <a href="#a88ee0603acc20a4d0b580a6cbe3da0e0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b">PairType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a05dfaddef8cfe7ec46e187610509fb3a">pairType</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return value of pair type.  <a href="#a05dfaddef8cfe7ec46e187610509fb3a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#ae54e84a2eab31e55bb96e66494e0cbd1">atom1TypeId</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return value of type Id for atom 1 (-1 means accept all types).  <a href="#ae54e84a2eab31e55bb96e66494e0cbd1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a3e4ec7b3c37ecc11f41a347b781c6f57">atom2TypeId</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return value of type Id for atom 2 (-1 means accept all types).  <a href="#a3e4ec7b3c37ecc11f41a347b781c6f57"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a13b4b971f672bf01248ac80ac2b45421">PairSelector</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a13b4b971f672bf01248ac80ac2b45421"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a030a96ab10f6a05692cb8c67c6271ea7">setAvoidDoubleCounting</a> (bool avoidDoubleCounting)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set policy to avoid double counting (true) or to not avoid (false).  <a href="#a030a96ab10f6a05692cb8c67c6271ea7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a90551e9cbe25da5f65ad26d8e3bc7235">match</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom1, const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom2) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if pair of atoms matches the selector policy.  <a href="#a90551e9cbe25da5f65ad26d8e3bc7235"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5">PairType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a634f9da57511b63c13130bcb66e13692">pairType</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return value of pair type.  <a href="#a634f9da57511b63c13130bcb66e13692"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a6825c13c82a40aa23cda38799f09cb36">atom1TypeId</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return value of type Id for atom 1 (-1 means accept all types).  <a href="#a6825c13c82a40aa23cda38799f09cb36"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a3118fd399a159e0f8b0f1b624b1660ff">atom2TypeId</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return value of type Id for atom 2 (-1 means accept all types).  <a href="#a3118fd399a159e0f8b0f1b624b1660ff"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a8170d98ea8b055e49ef256d15cfbc5af">commitMpiType</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Commit associated MPI DataType.  <a href="#a8170d98ea8b055e49ef256d15cfbc5af"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#aeb91534c9ab4b00a387e873a35de0707">commitMpiType</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Commit associated MPI DataType.  <a href="#aeb91534c9ab4b00a387e873a35de0707"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairSelector.html#a932787c3500b7a03e237541e091d7dd6">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="classMcMd_1_1PairSelector.html">PairSelector</a> &amp;selector)</td></tr>
@@ -100,12 +100,12 @@ Friends</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">ostream inserter (&lt;&lt;) for a <a class="el" href="classMcMd_1_1PairSelector.html" title="Selection rule for pairs of Atoms.">PairSelector</a> object.  <a href="#a72970646de6f6e654d6a30666bd3f2b6"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Enumeration Documentation</h2>
-<a class="anchor" id="a7029cb6b0f6d685ca8d36b9e45b3562b"></a><!-- doxytag: member="McMd::PairSelector::PairType" ref="a7029cb6b0f6d685ca8d36b9e45b3562b" args="" -->
+<a class="anchor" id="a5748e10047013f815e7ed719e10169a5"></a><!-- doxytag: member="McMd::PairSelector::PairType" ref="a5748e10047013f815e7ed719e10169a5" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b">PairType</a></td>
+          <td class="memname">enum <a class="el" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5">McMd::PairSelector::PairType</a></td>
         </tr>
       </table>
 </div>
@@ -124,12 +124,12 @@ Friends</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a392a2aae9148463758f6998ed003460f"></a><!-- doxytag: member="McMd::PairSelector::PairSelector" ref="a392a2aae9148463758f6998ed003460f" args="()" -->
+<a class="anchor" id="a13b4b971f672bf01248ac80ac2b45421"></a><!-- doxytag: member="McMd::PairSelector::PairSelector" ref="a13b4b971f672bf01248ac80ac2b45421" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1PairSelector.html">PairSelector</a> </td>
+          <td class="memname">McMd::PairSelector::PairSelector </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -145,12 +145,12 @@ Friends</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a51cfb5f2cf3fab34adf5bbb4572de964"></a><!-- doxytag: member="McMd::PairSelector::setAvoidDoubleCounting" ref="a51cfb5f2cf3fab34adf5bbb4572de964" args="(bool avoidDoubleCounting)" -->
+<a class="anchor" id="a030a96ab10f6a05692cb8c67c6271ea7"></a><!-- doxytag: member="McMd::PairSelector::setAvoidDoubleCounting" ref="a030a96ab10f6a05692cb8c67c6271ea7" args="(bool avoidDoubleCounting)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setAvoidDoubleCounting </td>
+          <td class="memname">void McMd::PairSelector::setAvoidDoubleCounting </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>avoidDoubleCounting</em></td><td>)</td>
@@ -170,16 +170,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairSelector_8cpp_source.html#l00027">27</a> of file <a class="el" href="PairSelector_8cpp_source.html">PairSelector.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00031">McPairEnergyAverage::McPairEnergyAverage()</a>.</p>
+<p>Referenced by <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00031">McMd::McPairEnergyAverage::McPairEnergyAverage()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a88ee0603acc20a4d0b580a6cbe3da0e0"></a><!-- doxytag: member="McMd::PairSelector::match" ref="a88ee0603acc20a4d0b580a6cbe3da0e0" args="(const Atom &amp;atom1, const Atom &amp;atom2) const " -->
+<a class="anchor" id="a90551e9cbe25da5f65ad26d8e3bc7235"></a><!-- doxytag: member="McMd::PairSelector::match" ref="a90551e9cbe25da5f65ad26d8e3bc7235" args="(const Atom &amp;atom1, const Atom &amp;atom2) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool match </td>
+          <td class="memname">bool McMd::PairSelector::match </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom1</em>, </td>
@@ -211,18 +211,18 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairSelector_8cpp_source.html#l00033">33</a> of file <a class="el" href="PairSelector_8cpp_source.html">PairSelector.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">Atom::id()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00299">Atom::molecule()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00263">Atom::typeId()</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00299">McMd::Atom::molecule()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00263">McMd::Atom::typeId()</a>.</p>
 
-<p>Referenced by <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">MdPairEnergyCoefficients::sample()</a>, and <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McPairEnergyAverage::sample()</a>.</p>
+<p>Referenced by <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">McMd::MdPairEnergyCoefficients::sample()</a>, and <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McMd::McPairEnergyAverage::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a05dfaddef8cfe7ec46e187610509fb3a"></a><!-- doxytag: member="McMd::PairSelector::pairType" ref="a05dfaddef8cfe7ec46e187610509fb3a" args="() const " -->
+<a class="anchor" id="a634f9da57511b63c13130bcb66e13692"></a><!-- doxytag: member="McMd::PairSelector::pairType" ref="a634f9da57511b63c13130bcb66e13692" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b">PairSelector::PairType</a> pairType </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5">PairSelector::PairType</a> McMd::PairSelector::pairType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -237,12 +237,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae54e84a2eab31e55bb96e66494e0cbd1"></a><!-- doxytag: member="McMd::PairSelector::atom1TypeId" ref="ae54e84a2eab31e55bb96e66494e0cbd1" args="() const " -->
+<a class="anchor" id="a6825c13c82a40aa23cda38799f09cb36"></a><!-- doxytag: member="McMd::PairSelector::atom1TypeId" ref="a6825c13c82a40aa23cda38799f09cb36" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atom1TypeId </td>
+          <td class="memname">int McMd::PairSelector::atom1TypeId </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -257,12 +257,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3e4ec7b3c37ecc11f41a347b781c6f57"></a><!-- doxytag: member="McMd::PairSelector::atom2TypeId" ref="a3e4ec7b3c37ecc11f41a347b781c6f57" args="() const " -->
+<a class="anchor" id="a3118fd399a159e0f8b0f1b624b1660ff"></a><!-- doxytag: member="McMd::PairSelector::atom2TypeId" ref="a3118fd399a159e0f8b0f1b624b1660ff" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atom2TypeId </td>
+          <td class="memname">int McMd::PairSelector::atom2TypeId </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -277,12 +277,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8170d98ea8b055e49ef256d15cfbc5af"></a><!-- doxytag: member="McMd::PairSelector::commitMpiType" ref="a8170d98ea8b055e49ef256d15cfbc5af" args="()" -->
+<a class="anchor" id="aeb91534c9ab4b00a387e873a35de0707"></a><!-- doxytag: member="McMd::PairSelector::commitMpiType" ref="aeb91534c9ab4b00a387e873a35de0707" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void commitMpiType </td>
+          <td class="memname">void McMd::PairSelector::commitMpiType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -295,7 +295,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PairSelector_8cpp_source.html#l00165">165</a> of file <a class="el" href="PairSelector_8cpp_source.html">PairSelector.cpp</a>.</p>
 
-<p>References <a class="el" href="MpiStructBuilder_8cpp_source.html#l00029">MpiStructBuilder::addMember()</a>, <a class="el" href="MpiStructBuilder_8cpp_source.html#l00042">MpiStructBuilder::commit()</a>, and <a class="el" href="MpiStructBuilder_8cpp_source.html#l00021">MpiStructBuilder::setBase()</a>.</p>
+<p>References <a class="el" href="MpiStructBuilder_8cpp_source.html#l00029">Util::MpiStructBuilder::addMember()</a>, <a class="el" href="MpiStructBuilder_8cpp_source.html#l00042">Util::MpiStructBuilder::commit()</a>, and <a class="el" href="MpiStructBuilder_8cpp_source.html#l00021">Util::MpiStructBuilder::setBase()</a>.</p>
 
 <p>Referenced by <a class="el" href="McMd__mpi_8cpp_source.html#l00050">McMd::commitMpiTypes()</a>.</p>
 
@@ -387,7 +387,7 @@ Friends</h2></td></tr>
 <li><a class="el" href="PairSelector_8cpp_source.html">PairSelector.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:55 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:26 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

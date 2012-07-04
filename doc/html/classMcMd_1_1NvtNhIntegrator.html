@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: NvtNhIntegrator Class Reference</title>
+<title>Simpatico: McMd::NvtNhIntegrator Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,27 +49,27 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>NvtNhIntegrator Class Reference<div class="ingroups"><a class="el" href="group__McMd__MdIntegrator__Module.html">Molecular Dynamics Integrators</a></div></h1>  </div>
+<h1>McMd::NvtNhIntegrator Class Reference<div class="ingroups"><a class="el" href="group__McMd__MdIntegrator__Module.html">Molecular Dynamics Integrators</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::NvtNhIntegrator" --><!-- doxytag: inherits="McMd::MdIntegrator" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>A Nose-Hoover NVT molecular dynamics integrator. </p>
-<p>The <a class="el" href="classMcMd_1_1NvtNhIntegrator.html#ac6bf1a12c5c98ddec5b65e07fe74cabe" title="Take a complete NVT MD integration step.">step()</a> method implements a reversible velocity-verlet MD NVT integrator step for the Nose-Hoover equations, as described by Winkler, Kraus, and Reineker, J. Chem. Phys. 102, 9018 (1995).</p>
+<p>The <a class="el" href="classMcMd_1_1NvtNhIntegrator.html#a7fd59faf113b6539d42312b05376adb4" title="Take a complete NVT MD integration step.">step()</a> method implements a reversible velocity-verlet MD NVT integrator step for the Nose-Hoover equations, as described by Winkler, Kraus, and Reineker, J. Chem. Phys. 102, 9018 (1995).</p>
 <p>Variables names imitate the notation used in the book by D. Frenkel and B. Smit, "Understanding Molecular Simulation," Academic Press, 1996. Chapter 6 (Eqs. 6.1.24 - 6.1.27). </p>
 
 <p>Definition at line <a class="el" href="NvtNhIntegrator_8h_source.html#l00035">35</a> of file <a class="el" href="NvtNhIntegrator_8h_source.html">NvtNhIntegrator.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="NvtNhIntegrator_8h_source.html">NvtNhIntegrator.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for NvtNhIntegrator:</div>
+Inheritance diagram for McMd::NvtNhIntegrator:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1NvtNhIntegrator.png" usemap="#NvtNhIntegrator_map" alt=""/>
-  <map id="NvtNhIntegrator_map" name="NvtNhIntegrator_map">
-<area href="classMcMd_1_1MdIntegrator.html" alt="MdIntegrator" shape="rect" coords="60,112,171,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="121,56,232,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classMcMd_1_1NvtNhIntegrator.png" usemap="#McMd::NvtNhIntegrator_map" alt=""/>
+  <map id="McMd::NvtNhIntegrator_map" name="McMd::NvtNhIntegrator_map">
+<area href="classMcMd_1_1MdIntegrator.html" alt="McMd::MdIntegrator" shape="rect" coords="76,112,219,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,143,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="153,56,296,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,143,24"/>
 </map>
  </div></div>
 
@@ -77,28 +77,28 @@ Inheritance diagram for NvtNhIntegrator:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#ad2368453c0953fb6f053c01dd1358d47">NvtNhIntegrator</a> (<a class="el" href="classMcMd_1_1MdSystem.html">MdSystem</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ad2368453c0953fb6f053c01dd1358d47"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#ad95842c52fdbbf90a0227f894ea6b8e3">~NvtNhIntegrator</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ad95842c52fdbbf90a0227f894ea6b8e3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file and initialize.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup auxiliary parameters of integrator, just before main loop.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#ac6bf1a12c5c98ddec5b65e07fe74cabe">step</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a complete NVT MD integration step.  <a href="#ac6bf1a12c5c98ddec5b65e07fe74cabe"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the internal state to an archive.  <a href="#a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#aa3d71af4cc5dfb2be6be816a8f562416">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the internal state to an archive.  <a href="#aa3d71af4cc5dfb2be6be816a8f562416"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#a3f1415ef5b5cdeec5e59899b34878c67">NvtNhIntegrator</a> (<a class="el" href="classMcMd_1_1MdSystem.html">MdSystem</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a3f1415ef5b5cdeec5e59899b34878c67"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#a5f0059e33cd885834fdcdcc67aa7f3ea">~NvtNhIntegrator</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a5f0059e33cd885834fdcdcc67aa7f3ea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#a067b8223814cbdab5151eb65b4955197">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file and initialize.  <a href="#a067b8223814cbdab5151eb65b4955197"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#a2aa2c41c2d545a842beda2355f62f943">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup auxiliary parameters of integrator, just before main loop.  <a href="#a2aa2c41c2d545a842beda2355f62f943"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#a7fd59faf113b6539d42312b05376adb4">step</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a complete NVT MD integration step.  <a href="#a7fd59faf113b6539d42312b05376adb4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#af087a572cc55cfc7d3a677e4fbe7dfcc">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the internal state to an archive.  <a href="#af087a572cc55cfc7d3a677e4fbe7dfcc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html#acafcc99b54e742fdb3ec71eac42a1f6d">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the internal state to an archive.  <a href="#acafcc99b54e742fdb3ec71eac42a1f6d"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ad2368453c0953fb6f053c01dd1358d47"></a><!-- doxytag: member="McMd::NvtNhIntegrator::NvtNhIntegrator" ref="ad2368453c0953fb6f053c01dd1358d47" args="(MdSystem &amp;system)" -->
+<a class="anchor" id="a3f1415ef5b5cdeec5e59899b34878c67"></a><!-- doxytag: member="McMd::NvtNhIntegrator::NvtNhIntegrator" ref="a3f1415ef5b5cdeec5e59899b34878c67" args="(MdSystem &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1NvtNhIntegrator.html">NvtNhIntegrator</a> </td>
+          <td class="memname">McMd::NvtNhIntegrator::NvtNhIntegrator </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1MdSystem.html">MdSystem</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -112,16 +112,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00030">30</a> of file <a class="el" href="NvtNhIntegrator_8cpp_source.html">NvtNhIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l00884">System::energyEnsemble()</a>, <a class="el" href="EnergyEnsemble_8h_source.html#l00137">EnergyEnsemble::isIsothermal()</a>, <a class="el" href="EnergyEnsemble_8h_source.html#l00123">EnergyEnsemble::temperature()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l00884">McMd::System::energyEnsemble()</a>, <a class="el" href="EnergyEnsemble_8h_source.html#l00137">Util::EnergyEnsemble::isIsothermal()</a>, <a class="el" href="EnergyEnsemble_8h_source.html#l00123">Util::EnergyEnsemble::temperature()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad95842c52fdbbf90a0227f894ea6b8e3"></a><!-- doxytag: member="McMd::NvtNhIntegrator::~NvtNhIntegrator" ref="ad95842c52fdbbf90a0227f894ea6b8e3" args="()" -->
+<a class="anchor" id="a5f0059e33cd885834fdcdcc67aa7f3ea"></a><!-- doxytag: member="McMd::NvtNhIntegrator::~NvtNhIntegrator" ref="a5f0059e33cd885834fdcdcc67aa7f3ea" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1NvtNhIntegrator.html">NvtNhIntegrator</a> </td>
+          <td class="memname">McMd::NvtNhIntegrator::~NvtNhIntegrator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -137,12 +137,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::NvtNhIntegrator::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a067b8223814cbdab5151eb65b4955197"></a><!-- doxytag: member="McMd::NvtNhIntegrator::readParam" ref="a067b8223814cbdab5151eb65b4955197" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::NvtNhIntegrator::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -160,20 +160,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00063">63</a> of file <a class="el" href="NvtNhIntegrator_8cpp_source.html">NvtNhIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00226">DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">MdIntegrator::dt_</a>, <a class="el" href="DArray_8h_source.html#l00258">DArray&lt; Data &gt;::isAllocated()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00638">Simulation::nAtomType()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00119">MdIntegrator::simulation()</a>, and <a class="el" href="EnergyEnsemble_8h_source.html#l00123">EnergyEnsemble::temperature()</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00226">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">McMd::MdIntegrator::dt_</a>, <a class="el" href="DArray_8h_source.html#l00258">Util::DArray&lt; Data &gt;::isAllocated()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00638">McMd::Simulation::nAtomType()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00119">McMd::MdIntegrator::simulation()</a>, and <a class="el" href="EnergyEnsemble_8h_source.html#l00123">Util::EnergyEnsemble::temperature()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::NvtNhIntegrator::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a2aa2c41c2d545a842beda2355f62f943"></a><!-- doxytag: member="McMd::NvtNhIntegrator::setup" ref="a2aa2c41c2d545a842beda2355f62f943" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void McMd::NvtNhIntegrator::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -183,22 +183,22 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Setup auxiliary parameters of integrator, just before main loop. </p>
-<p>This method must be called before the beginning of an MD loop to initialize private variables used by <a class="el" href="classMcMd_1_1NvtNhIntegrator.html#ac6bf1a12c5c98ddec5b65e07fe74cabe" title="Take a complete NVT MD integration step.">step()</a> method. </p>
+<p>This method must be called before the beginning of an MD loop to initialize private variables used by <a class="el" href="classMcMd_1_1NvtNhIntegrator.html#a7fd59faf113b6539d42312b05376adb4" title="Take a complete NVT MD integration step.">step()</a> method. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#a43128fa8695ca9394ba69cd759d04b99">MdIntegrator</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#a5637182496a25c43cf69909309f76a37">McMd::MdIntegrator</a>.</p>
 
 <p>Definition at line <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00080">80</a> of file <a class="el" href="NvtNhIntegrator_8cpp_source.html">NvtNhIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00698">Simulation::atomType()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">MdIntegrator::dt_</a>, <a class="el" href="MdSystem_8cpp_source.html#l00546">MdSystem::kineticEnergy()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00110">AtomType::mass()</a>, <a class="el" href="System_8cpp_source.html#l00726">System::nAtom()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00638">Simulation::nAtomType()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00119">MdIntegrator::simulation()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00113">MdIntegrator::system()</a>, and <a class="el" href="EnergyEnsemble_8h_source.html#l00123">EnergyEnsemble::temperature()</a>.</p>
+<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00698">McMd::Simulation::atomType()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">McMd::MdIntegrator::dt_</a>, <a class="el" href="MdSystem_8cpp_source.html#l00546">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00110">McMd::AtomType::mass()</a>, <a class="el" href="System_8cpp_source.html#l00726">McMd::System::nAtom()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00638">McMd::Simulation::nAtomType()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00119">McMd::MdIntegrator::simulation()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00113">McMd::MdIntegrator::system()</a>, and <a class="el" href="EnergyEnsemble_8h_source.html#l00123">Util::EnergyEnsemble::temperature()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac6bf1a12c5c98ddec5b65e07fe74cabe"></a><!-- doxytag: member="McMd::NvtNhIntegrator::step" ref="ac6bf1a12c5c98ddec5b65e07fe74cabe" args="()" -->
+<a class="anchor" id="a7fd59faf113b6539d42312b05376adb4"></a><!-- doxytag: member="McMd::NvtNhIntegrator::step" ref="a7fd59faf113b6539d42312b05376adb4" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void step </td>
+          <td class="memname">void McMd::NvtNhIntegrator::step </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -209,20 +209,20 @@ Public Member Functions</h2></td></tr>
 
 <p>Take a complete NVT MD integration step. </p>
 
-<p>Implements <a class="el" href="classMcMd_1_1MdIntegrator.html#aa6f73ac7d5899119d156a0b3a27fba31">MdIntegrator</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1MdIntegrator.html#a2622fe6c9fd3e0141a679660cb99d2a6">McMd::MdIntegrator</a>.</p>
 
 <p>Definition at line <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00105">105</a> of file <a class="el" href="NvtNhIntegrator_8cpp_source.html">NvtNhIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8h_source.html#l00936">System::begin()</a>, <a class="el" href="MdPairPotential_8cpp_source.html#l00044">MdPairPotential::buildPairList()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00467">MdSystem::calculateForces()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">MdIntegrator::dt_</a>, <a class="el" href="MdSystem_8cpp_source.html#l00546">MdSystem::kineticEnergy()</a>, <a class="el" href="Vector_8h_source.html#l00658">Vector::multiply()</a>, <a class="el" href="System_8cpp_source.html#l00726">System::nAtom()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00685">Simulation::nSpecies()</a>, <a class="el" href="MdSystem_8h_source.html#l00390">MdSystem::pairPotential()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00119">MdIntegrator::simulation()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00113">MdIntegrator::system()</a>, and <a class="el" href="EnergyEnsemble_8h_source.html#l00123">EnergyEnsemble::temperature()</a>.</p>
+<p>References <a class="el" href="System_8h_source.html#l00936">McMd::System::begin()</a>, <a class="el" href="MdPairPotential_8cpp_source.html#l00044">McMd::MdPairPotential::buildPairList()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00467">McMd::MdSystem::calculateForces()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">McMd::MdIntegrator::dt_</a>, <a class="el" href="MdSystem_8cpp_source.html#l00546">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="Vector_8h_source.html#l00658">Util::Vector::multiply()</a>, <a class="el" href="System_8cpp_source.html#l00726">McMd::System::nAtom()</a>, <a class="el" href="ArrayIterator_8h_source.html#l00083">Util::ArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00685">McMd::Simulation::nSpecies()</a>, <a class="el" href="MdSystem_8h_source.html#l00390">McMd::MdSystem::pairPotential()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00119">McMd::MdIntegrator::simulation()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00113">McMd::MdIntegrator::system()</a>, and <a class="el" href="EnergyEnsemble_8h_source.html#l00123">Util::EnergyEnsemble::temperature()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><!-- doxytag: member="McMd::NvtNhIntegrator::save" ref="a248dde9ccc0ef67e5d9cc5fd0bdc2b64" args="(Serializable::OArchiveType &amp;ar)" -->
+<a class="anchor" id="af087a572cc55cfc7d3a677e4fbe7dfcc"></a><!-- doxytag: member="McMd::NvtNhIntegrator::save" ref="af087a572cc55cfc7d3a677e4fbe7dfcc" args="(Serializable::OArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void save </td>
+          <td class="memname">void McMd::NvtNhIntegrator::save </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -240,20 +240,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">MdIntegrator</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#a6259ee8c0020e77a9face348ae98fb45">McMd::MdIntegrator</a>.</p>
 
 <p>Definition at line <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00182">182</a> of file <a class="el" href="NvtNhIntegrator_8cpp_source.html">NvtNhIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="MdIntegrator_8h_source.html#l00087">MdIntegrator::dt_</a>.</p>
+<p>References <a class="el" href="MdIntegrator_8h_source.html#l00087">McMd::MdIntegrator::dt_</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa3d71af4cc5dfb2be6be816a8f562416"></a><!-- doxytag: member="McMd::NvtNhIntegrator::load" ref="aa3d71af4cc5dfb2be6be816a8f562416" args="(Serializable::IArchiveType &amp;ar)" -->
+<a class="anchor" id="acafcc99b54e742fdb3ec71eac42a1f6d"></a><!-- doxytag: member="McMd::NvtNhIntegrator::load" ref="acafcc99b54e742fdb3ec71eac42a1f6d" args="(Serializable::IArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void load </td>
+          <td class="memname">void McMd::NvtNhIntegrator::load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -271,11 +271,11 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#aa3d71af4cc5dfb2be6be816a8f562416">MdIntegrator</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#a0ed070dd242d5cd9e36565ad16c9c6f5">McMd::MdIntegrator</a>.</p>
 
 <p>Definition at line <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00197">197</a> of file <a class="el" href="NvtNhIntegrator_8cpp_source.html">NvtNhIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="MdIntegrator_8h_source.html#l00087">MdIntegrator::dt_</a>.</p>
+<p>References <a class="el" href="MdIntegrator_8h_source.html#l00087">McMd::MdIntegrator::dt_</a>.</p>
 
 </div>
 </div>
@@ -284,7 +284,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="NvtNhIntegrator_8cpp_source.html">NvtNhIntegrator.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:56 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:27 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

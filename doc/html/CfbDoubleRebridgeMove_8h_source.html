@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -85,15 +85,15 @@
 <a name="l00047"></a>00047    
 <a name="l00048"></a>00048    <span class="keyword">protected</span>:
 <a name="l00049"></a>00049    
-<a name="l00051"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#aa219cbd95a8d53d278fbc766fabea27a">00051</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Vector&gt;</a> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#aa219cbd95a8d53d278fbc766fabea27a" title="Array of old positions of temporarily deleted atoms (iMol).">iOldPos_</a>;
+<a name="l00051"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a6787d22d3b2f03ec4f3bfc8b55950fe8">00051</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Vector&gt;</a> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a6787d22d3b2f03ec4f3bfc8b55950fe8" title="Array of old positions of temporarily deleted atoms (iMol).">iOldPos_</a>;
 <a name="l00052"></a>00052 
-<a name="l00054"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#ab6090b66d64fa8e0a8a1a7a60a65e412">00054</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Vector&gt;</a> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#ab6090b66d64fa8e0a8a1a7a60a65e412" title="Array of old positions of temporarily deleted atoms (jMol).">jOldPos_</a>;
+<a name="l00054"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#aa4fe01007eb7359cd934c2d565936460">00054</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;Vector&gt;</a> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#aa4fe01007eb7359cd934c2d565936460" title="Array of old positions of temporarily deleted atoms (jMol).">jOldPos_</a>;
 <a name="l00055"></a>00055     
-<a name="l00057"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a2c37b9c96a64ee8e27abaf3d43542b79">00057</a>       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a2c37b9c96a64ee8e27abaf3d43542b79" title="Integer index for molecular species.">speciesId_</a>;
+<a name="l00057"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a1e1dbda6b017b3f8be61d92af97d09dd">00057</a>       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a1e1dbda6b017b3f8be61d92af97d09dd" title="Integer index for molecular species.">speciesId_</a>;
 <a name="l00058"></a>00058    
-<a name="l00060"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a1c322f928aeb46d3c5ab0537bcf03995">00060</a>       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a1c322f928aeb46d3c5ab0537bcf03995" title="Number of particles at end to attempt to regrow.">nRegrow_</a>;
+<a name="l00060"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#ae938c1f43bf9d0fe4a0d4592f3ea1b07">00060</a>       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#ae938c1f43bf9d0fe4a0d4592f3ea1b07" title="Number of particles at end to attempt to regrow.">nRegrow_</a>;
 <a name="l00061"></a>00061 
-<a name="l00063"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a4936044407feda0c89f3cb06ccb247d5">00063</a>       <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a4936044407feda0c89f3cb06ccb247d5" title="upper bound for trial lenght of a bridge.">bridgeLength_</a>;
+<a name="l00063"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a044a9c382d13709436ac277aa5c9150c">00063</a>       <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a044a9c382d13709436ac277aa5c9150c" title="upper bound for trial lenght of a bridge.">bridgeLength_</a>;
 <a name="l00064"></a>00064 
 <a name="l00065"></a>00065    <span class="keyword">private</span>:
 <a name="l00066"></a>00066 
@@ -109,7 +109,7 @@
 <a name="l00078"></a>00078 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

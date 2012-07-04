@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -92,15 +92,15 @@
 <a name="l00088"></a>00088 
 <a name="l00089"></a>00089 
 <a name="l00104"></a>00104       <span class="keywordtype">void</span> 
-<a name="l00105"></a>00105       allocate(<span class="keywordtype">int</span> atomIdEnd, <span class="keyword">const</span> Boundary &amp;boundary, <span class="keywordtype">double</span> potentialCutoff);
+<a name="l00105"></a>00105       allocate(<span class="keywordtype">int</span> atomIdEnd, <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary, <span class="keywordtype">double</span> potentialCutoff);
 <a name="l00106"></a>00106   
-<a name="l00112"></a>00112       <span class="keywordtype">void</span> makeGrid(<span class="keyword">const</span> Boundary &amp;boundary);
+<a name="l00112"></a>00112       <span class="keywordtype">void</span> makeGrid(<span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary);
 <a name="l00113"></a>00113 
 <a name="l00119"></a>00119       <span class="keywordtype">void</span> clear();
 <a name="l00120"></a>00120 
 <a name="l00130"></a>00130       <span class="keywordtype">void</span> addAtom(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom);
 <a name="l00131"></a>00131 
-<a name="l00142"></a>00142       <span class="keywordtype">void</span> build(<span class="keyword">const</span> Boundary&amp; boundary);
+<a name="l00142"></a>00142       <span class="keywordtype">void</span> build(<span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary);
 <a name="l00143"></a>00143 
 <a name="l00149"></a>00149       <span class="keywordtype">void</span> begin(<a class="code" href="classMcMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a> &amp;iterator) <span class="keyword">const</span>;
 <a name="l00150"></a>00150  
@@ -113,7 +113,7 @@
 <a name="l00164"></a>00164 
 <a name="l00168"></a>00168       <span class="keywordtype">bool</span> isAllocated() <span class="keyword">const</span>;
 <a name="l00169"></a>00169    
-<a name="l00183"></a>00183       <span class="keywordtype">bool</span> isCurrent(<span class="keyword">const</span> Boundary &amp;boundary) <span class="keyword">const</span>;
+<a name="l00183"></a>00183       <span class="keywordtype">bool</span> isCurrent(<span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary) <span class="keyword">const</span>;
 <a name="l00184"></a>00184 
 <a name="l00186"></a>00186       <span class="keywordtype">bool</span> isValid() <span class="keyword">const</span>;
 <a name="l00187"></a>00187   
@@ -235,50 +235,50 @@
 <a name="l00334"></a>00334    <span class="comment">/*</span>
 <a name="l00335"></a>00335 <span class="comment">   * Add an Atom to the CellList.</span>
 <a name="l00336"></a>00336 <span class="comment">   */</span> 
-<a name="l00337"></a><a class="code" href="classMcMd_1_1PairList.html#a2bd3c1a1c3ba81bb593203889d747f8a">00337</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#a2bd3c1a1c3ba81bb593203889d747f8a" title="Add an Atom to the CellList.">PairList::addAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
+<a name="l00337"></a><a class="code" href="classMcMd_1_1PairList.html#a5a0f725e971b3bca89cd5ed222091662">00337</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairList.html#a5a0f725e971b3bca89cd5ed222091662" title="Add an Atom to the CellList.">PairList::addAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
 <a name="l00338"></a>00338    { cellList_.addAtom(atom); }
 <a name="l00339"></a>00339 
 <a name="l00340"></a>00340    <span class="comment">/*</span>
 <a name="l00341"></a>00341 <span class="comment">   * Get the current number of atoms in the pairlist.</span>
 <a name="l00342"></a>00342 <span class="comment">   */</span> 
-<a name="l00343"></a><a class="code" href="classMcMd_1_1PairList.html#ac91579bd63979a294891d330a5533838">00343</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairList.html#ac91579bd63979a294891d330a5533838" title="Get the number of pairs currently in the PairList.">PairList::nAtom</a>()<span class="keyword"> const</span>
+<a name="l00343"></a><a class="code" href="classMcMd_1_1PairList.html#aaae89dd24674f5e754042c932014cd4f">00343</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairList.html#aaae89dd24674f5e754042c932014cd4f" title="Get the number of pairs currently in the PairList.">PairList::nAtom</a>()<span class="keyword"> const</span>
 <a name="l00344"></a>00344 <span class="keyword">   </span>{ <span class="keywordflow">return</span> nAtom_; }
 <a name="l00345"></a>00345 
 <a name="l00346"></a>00346    <span class="comment">/*</span>
 <a name="l00347"></a>00347 <span class="comment">   * Get the current number of pairs.</span>
 <a name="l00348"></a>00348 <span class="comment">   */</span> 
-<a name="l00349"></a><a class="code" href="classMcMd_1_1PairList.html#a6b24a3df06b149a917c02db0c649264b">00349</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairList.html#a6b24a3df06b149a917c02db0c649264b" title="Get the number of pairs currently in the PairList.">PairList::nPair</a>()<span class="keyword"> const</span>
+<a name="l00349"></a><a class="code" href="classMcMd_1_1PairList.html#a1c2836e7889502002190c46e72396863">00349</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairList.html#a1c2836e7889502002190c46e72396863" title="Get the number of pairs currently in the PairList.">PairList::nPair</a>()<span class="keyword"> const</span>
 <a name="l00350"></a>00350 <span class="keyword">   </span>{ <span class="keywordflow">return</span> nAtom2_; }
 <a name="l00351"></a>00351 
 <a name="l00352"></a>00352    <span class="comment">/*</span>
 <a name="l00353"></a>00353 <span class="comment">   * Get the maximum value of aAtom() since instantiation.</span>
 <a name="l00354"></a>00354 <span class="comment">   */</span> 
-<a name="l00355"></a><a class="code" href="classMcMd_1_1PairList.html#a3684f71ec521bde567c5e6b1bf097458">00355</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairList.html#a3684f71ec521bde567c5e6b1bf097458" title="Get the maximum number of atoms encountered thus far.">PairList::maxNAtom</a>()<span class="keyword"> const</span>
+<a name="l00355"></a><a class="code" href="classMcMd_1_1PairList.html#a3df1faee792553b9c879170093c01b05">00355</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairList.html#a3df1faee792553b9c879170093c01b05" title="Get the maximum number of atoms encountered thus far.">PairList::maxNAtom</a>()<span class="keyword"> const</span>
 <a name="l00356"></a>00356 <span class="keyword">   </span>{ <span class="keywordflow">return</span> maxNAtom_; }
 <a name="l00357"></a>00357 
 <a name="l00358"></a>00358    <span class="comment">/*</span>
 <a name="l00359"></a>00359 <span class="comment">   * Get the maximum value of nPair() since instantiation.</span>
 <a name="l00360"></a>00360 <span class="comment">   */</span> 
-<a name="l00361"></a><a class="code" href="classMcMd_1_1PairList.html#a984ef7969716eff3f6f051e88a7b77ed">00361</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairList.html#a984ef7969716eff3f6f051e88a7b77ed" title="Get the maximum number of pairs encountered thus far.">PairList::maxNPair</a>()<span class="keyword"> const</span>
+<a name="l00361"></a><a class="code" href="classMcMd_1_1PairList.html#ac9c0bf4b3d9fdd815662db3f0f0ef1f5">00361</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairList.html#ac9c0bf4b3d9fdd815662db3f0f0ef1f5" title="Get the maximum number of pairs encountered thus far.">PairList::maxNPair</a>()<span class="keyword"> const</span>
 <a name="l00362"></a>00362 <span class="keyword">   </span>{ <span class="keywordflow">return</span> maxNAtom2_; }
 <a name="l00363"></a>00363 
 <a name="l00364"></a>00364    <span class="comment">/*</span>
 <a name="l00365"></a>00365 <span class="comment">   * Get the number of times this PairList has been built.</span>
 <a name="l00366"></a>00366 <span class="comment">   */</span> 
-<a name="l00367"></a><a class="code" href="classMcMd_1_1PairList.html#a6e0b57608b761c1e4bb8be878a94519c">00367</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairList.html#a6e0b57608b761c1e4bb8be878a94519c" title="Return number of times the PairList has been built thus far.">PairList::buildCounter</a>()<span class="keyword"> const</span>
+<a name="l00367"></a><a class="code" href="classMcMd_1_1PairList.html#ad28eadd8168c321762707fdd5a1af666">00367</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1PairList.html#ad28eadd8168c321762707fdd5a1af666" title="Return number of times the PairList has been built thus far.">PairList::buildCounter</a>()<span class="keyword"> const</span>
 <a name="l00368"></a>00368 <span class="keyword">   </span>{ <span class="keywordflow">return</span> buildCounter_; }
 <a name="l00369"></a>00369 
 <a name="l00370"></a>00370    <span class="comment">/*</span>
 <a name="l00371"></a>00371 <span class="comment">   * Has memory been allocated for this PairList?</span>
 <a name="l00372"></a>00372 <span class="comment">   */</span> 
-<a name="l00373"></a><a class="code" href="classMcMd_1_1PairList.html#a0bcdab3616db481dd211594529479f94">00373</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1PairList.html#a0bcdab3616db481dd211594529479f94" title="Has memory been allocated for this PairList?">PairList::isAllocated</a>()<span class="keyword"> const</span>
+<a name="l00373"></a><a class="code" href="classMcMd_1_1PairList.html#a526284c7da79c5cb4e4bb24afeeac030">00373</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1PairList.html#a526284c7da79c5cb4e4bb24afeeac030" title="Has memory been allocated for this PairList?">PairList::isAllocated</a>()<span class="keyword"> const</span>
 <a name="l00374"></a>00374 <span class="keyword">   </span>{ <span class="keywordflow">return</span> cellList_.isAllocated(); }
 <a name="l00375"></a>00375 
 <a name="l00376"></a>00376 } 
 <a name="l00377"></a>00377 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

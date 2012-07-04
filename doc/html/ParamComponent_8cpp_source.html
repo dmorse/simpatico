@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,37 +71,37 @@
 <a name="l00020"></a>00020 <span class="comment">   *</span>
 <a name="l00021"></a>00021 <span class="comment">   * Note: Default constructor for _indent string creates an empty string.</span>
 <a name="l00022"></a>00022 <span class="comment">   */</span>
-<a name="l00023"></a>00023    <a class="code" href="classUtil_1_1ParamComponent.html#a137a1f03cac2d2f2b85e2ae4e62f8b5c" title="Constructor.">ParamComponent::ParamComponent</a>() 
-<a name="l00024"></a><a class="code" href="classUtil_1_1ParamComponent.html#a137a1f03cac2d2f2b85e2ae4e62f8b5c">00024</a>     : indent_(),
+<a name="l00023"></a>00023    <a class="code" href="classUtil_1_1ParamComponent.html#a6f859f325ca7d36747d28c9677fe0bfc" title="Constructor.">ParamComponent::ParamComponent</a>() 
+<a name="l00024"></a><a class="code" href="classUtil_1_1ParamComponent.html#a6f859f325ca7d36747d28c9677fe0bfc">00024</a>     : indent_(),
 <a name="l00025"></a>00025       io_()
 <a name="l00026"></a>00026    {}
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028    <span class="comment">/*</span>
 <a name="l00029"></a>00029 <span class="comment">   * Copy constructor.</span>
 <a name="l00030"></a>00030 <span class="comment">   */</span>
-<a name="l00031"></a>00031    <a class="code" href="classUtil_1_1ParamComponent.html#a137a1f03cac2d2f2b85e2ae4e62f8b5c" title="Constructor.">ParamComponent::ParamComponent</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file.">ParamComponent</a>&amp; other) 
-<a name="l00032"></a><a class="code" href="classUtil_1_1ParamComponent.html#a796f194e312860ffa8a4977c51397b2e">00032</a>     : indent_(other.indent_),
+<a name="l00031"></a>00031    <a class="code" href="classUtil_1_1ParamComponent.html#a6f859f325ca7d36747d28c9677fe0bfc" title="Constructor.">ParamComponent::ParamComponent</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file.">ParamComponent</a>&amp; other) 
+<a name="l00032"></a><a class="code" href="classUtil_1_1ParamComponent.html#ae979e22ecef3a94c0e826224b3761df9">00032</a>     : indent_(other.indent_),
 <a name="l00033"></a>00033       io_()
 <a name="l00034"></a>00034    {}
 <a name="l00035"></a>00035 
 <a name="l00036"></a>00036    <span class="comment">/*</span>
 <a name="l00037"></a>00037 <span class="comment">   * Destructor.</span>
 <a name="l00038"></a>00038 <span class="comment">   */</span>
-<a name="l00039"></a>00039    <a class="code" href="classUtil_1_1ParamComponent.html#ace69555a4f2c711e40d075c3bfe93c2c" title="Destructor.">ParamComponent::~ParamComponent</a>() 
-<a name="l00040"></a><a class="code" href="classUtil_1_1ParamComponent.html#ace69555a4f2c711e40d075c3bfe93c2c">00040</a>    {} 
+<a name="l00039"></a>00039    <a class="code" href="classUtil_1_1ParamComponent.html#a4714eb00e44cdca1f1efc019bea99492" title="Destructor.">ParamComponent::~ParamComponent</a>() 
+<a name="l00040"></a><a class="code" href="classUtil_1_1ParamComponent.html#a4714eb00e44cdca1f1efc019bea99492">00040</a>    {} 
 <a name="l00041"></a>00041 
 <a name="l00042"></a>00042    <span class="comment">/*</span>
 <a name="l00043"></a>00043 <span class="comment">   * Return indent string for this object (string of spaces).</span>
 <a name="l00044"></a>00044 <span class="comment">   */</span>
-<a name="l00045"></a>00045    std::string <a class="code" href="classUtil_1_1ParamComponent.html#ad95e57f3fab64c095f8098ab3b376efa" title="Return indent string for this object (string of spaces).">ParamComponent::indent</a>()<span class="keyword"> const</span>
-<a name="l00046"></a><a class="code" href="classUtil_1_1ParamComponent.html#ad95e57f3fab64c095f8098ab3b376efa">00046</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> indent_; }
+<a name="l00045"></a>00045    std::string <a class="code" href="classUtil_1_1ParamComponent.html#aba73fd906e0df1da6fb2f6db3ecba3c7" title="Return indent string for this object (string of spaces).">ParamComponent::indent</a>()<span class="keyword"> const</span>
+<a name="l00046"></a><a class="code" href="classUtil_1_1ParamComponent.html#aba73fd906e0df1da6fb2f6db3ecba3c7">00046</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> indent_; }
 <a name="l00047"></a>00047 
 <a name="l00048"></a>00048    <span class="comment">/*</span>
 <a name="l00049"></a>00049 <span class="comment">   * Set indent level to be one higher than that of parent.</span>
 <a name="l00050"></a>00050 <span class="comment">   */</span>
-<a name="l00051"></a>00051    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">ParamComponent::setIndent</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file.">ParamComponent</a>&amp; parent, <span class="keywordtype">bool</span> next)
-<a name="l00052"></a><a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f">00052</a>    { 
-<a name="l00053"></a>00053       indent_ = parent.<a class="code" href="classUtil_1_1ParamComponent.html#ad95e57f3fab64c095f8098ab3b376efa" title="Return indent string for this object (string of spaces).">indent</a>();
+<a name="l00051"></a>00051    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">ParamComponent::setIndent</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file.">ParamComponent</a>&amp; parent, <span class="keywordtype">bool</span> next)
+<a name="l00052"></a><a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191">00052</a>    { 
+<a name="l00053"></a>00053       indent_ = parent.<a class="code" href="classUtil_1_1ParamComponent.html#aba73fd906e0df1da6fb2f6db3ecba3c7" title="Return indent string for this object (string of spaces).">indent</a>();
 <a name="l00054"></a>00054       <span class="keywordflow">if</span> (next) {
 <a name="l00055"></a>00055          std::string space(<span class="stringliteral">&quot;  &quot;</span>);
 <a name="l00056"></a>00056          indent_ += space; 
@@ -109,15 +109,15 @@
 <a name="l00058"></a>00058    }
 <a name="l00059"></a>00059 
 <a name="l00060"></a>00060 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00061"></a>00061 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#acebbb541ac87f56979a5b03a8604887a" title="Set an MPI communicator for parameter IO.">ParamComponent::setParamCommunicator</a>(MPI::Intracomm&amp; communicator)
-<a name="l00062"></a><a class="code" href="classUtil_1_1ParamComponent.html#acebbb541ac87f56979a5b03a8604887a">00062</a>    {
+<a name="l00061"></a>00061 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37" title="Set an MPI communicator for parameter IO.">ParamComponent::setParamCommunicator</a>(MPI::Intracomm&amp; communicator)
+<a name="l00062"></a><a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37">00062</a>    {
 <a name="l00063"></a>00063       <span class="comment">// Precondition</span>
-<a name="l00064"></a>00064       <span class="keywordflow">if</span> (io_.<a class="code" href="classUtil_1_1MpiFileIo.html#a96a9247e9bcf7da4a655e71ddd316f34" title="Does this object have a communicator?">hasCommunicator</a>()) {
-<a name="l00065"></a>00065          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Resetting param communicator in a ParamComponent&quot;</span>
+<a name="l00064"></a>00064       <span class="keywordflow">if</span> (io_.<a class="code" href="classUtil_1_1MpiFileIo.html#ab308bde6f007cb3f8687072597359f88" title="Does this object have a communicator?">hasCommunicator</a>()) {
+<a name="l00065"></a>00065          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Resetting param communicator in a ParamComponent&quot;</span>
 <a name="l00066"></a>00066                      &lt;&lt; std::endl;
 <a name="l00067"></a>00067          <span class="comment">//UTIL_THROW(&quot;Attempt to reset param communicator in a ParamComponent&quot;);</span>
 <a name="l00068"></a>00068       }
-<a name="l00069"></a>00069       io_.<a class="code" href="classUtil_1_1MpiFileIo.html#af1dea0de6bef2b140e2caed3cf7e946d" title="Set the communicator.">setCommunicator</a>(communicator); 
+<a name="l00069"></a>00069       io_.<a class="code" href="classUtil_1_1MpiFileIo.html#a5074e0e6891950e93b2dc14840df0f0b" title="Set the communicator.">setCommunicator</a>(communicator); 
 <a name="l00070"></a>00070    }
 <a name="l00071"></a>00071 <span class="preprocessor">   #endif</span>
 <a name="l00072"></a>00072 <span class="preprocessor"></span>
@@ -126,14 +126,14 @@
 <a name="l00075"></a>00075    <span class="comment">/*</span>
 <a name="l00076"></a>00076 <span class="comment">   * Set echo to true (default) or false.</span>
 <a name="l00077"></a>00077 <span class="comment">   */</span>
-<a name="l00078"></a>00078    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#aa6a79147fc967b562e62963e96d22b4a" title="Set echo parameter to true enable echoing, or false to disable.">ParamComponent::setEcho</a>(<span class="keywordtype">bool</span> echo)
-<a name="l00079"></a><a class="code" href="classUtil_1_1ParamComponent.html#aa6a79147fc967b562e62963e96d22b4a">00079</a>    {  echo_ = <a class="code" href="classUtil_1_1ParamComponent.html#a24de2d9d8a57a07e1dd6fdc84779699c" title="Get echo parameter.">echo</a>; }
+<a name="l00078"></a>00078    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#add72ad7add98e0b90979ee2638c7468d" title="Set echo parameter to true enable echoing, or false to disable.">ParamComponent::setEcho</a>(<span class="keywordtype">bool</span> echo)
+<a name="l00079"></a><a class="code" href="classUtil_1_1ParamComponent.html#add72ad7add98e0b90979ee2638c7468d">00079</a>    {  echo_ = <a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2" title="Get echo parameter.">echo</a>; }
 <a name="l00080"></a>00080 
 <a name="l00081"></a>00081    <span class="comment">/*</span>
 <a name="l00082"></a>00082 <span class="comment">   * Get value of echo. true = echoing is on, false = off.</span>
 <a name="l00083"></a>00083 <span class="comment">   */</span>
-<a name="l00084"></a>00084    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#a24de2d9d8a57a07e1dd6fdc84779699c" title="Get echo parameter.">ParamComponent::echo</a>()
-<a name="l00085"></a><a class="code" href="classUtil_1_1ParamComponent.html#a24de2d9d8a57a07e1dd6fdc84779699c">00085</a>    {  <span class="keywordflow">return</span> echo_; }
+<a name="l00084"></a>00084    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2" title="Get echo parameter.">ParamComponent::echo</a>()
+<a name="l00085"></a><a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2">00085</a>    {  <span class="keywordflow">return</span> echo_; }
 <a name="l00086"></a>00086 
 <a name="l00087"></a>00087    <span class="comment">/*</span>
 <a name="l00088"></a>00088 <span class="comment">   * This static method exists to guarantee initialization of a static </span>
@@ -141,8 +141,8 @@
 <a name="l00090"></a>00090 <span class="comment">   * in the program to guarantee that the contents of this file will </span>
 <a name="l00091"></a>00091 <span class="comment">   * be linked, rather than optimized away. It may only be called once.</span>
 <a name="l00092"></a>00092 <span class="comment">   */</span>
-<a name="l00093"></a>00093    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a608e10d093425c9228f10ed3c4994598" title="Initialize static echo member to false.">ParamComponent::initStatic</a>()
-<a name="l00094"></a><a class="code" href="classUtil_1_1ParamComponent.html#a608e10d093425c9228f10ed3c4994598">00094</a>    {  
+<a name="l00093"></a>00093    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a5350c0432130f7feba8392f5b3a75cb4" title="Initialize static echo member to false.">ParamComponent::initStatic</a>()
+<a name="l00094"></a><a class="code" href="classUtil_1_1ParamComponent.html#a5350c0432130f7feba8392f5b3a75cb4">00094</a>    {  
 <a name="l00095"></a>00095       <span class="comment">// This function can only be called once.</span>
 <a name="l00096"></a>00096       <span class="keyword">static</span> <span class="keywordtype">int</span> nCall = 0;
 <a name="l00097"></a>00097       <span class="keywordflow">if</span> (nCall == 0) {
@@ -155,7 +155,7 @@
 <a name="l00104"></a>00104 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

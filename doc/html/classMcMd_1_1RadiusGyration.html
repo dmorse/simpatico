@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: RadiusGyration Class Reference</title>
+<title>Simpatico: McMd::RadiusGyration Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>RadiusGyration Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>McMd::RadiusGyration Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::RadiusGyration" --><!-- doxytag: inherits="SystemDiagnostic&lt; System &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -65,16 +65,16 @@
 </div>
 <p><code>#include &lt;<a class="el" href="RadiusGyration_8h_source.html">RadiusGyration.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for RadiusGyration:</div>
+Inheritance diagram for McMd::RadiusGyration:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1RadiusGyration.png" usemap="#RadiusGyration_map" alt=""/>
-  <map id="RadiusGyration_map" name="RadiusGyration_map">
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; System &gt;" shape="rect" coords="92,168,267,192"/>
-<area href="classMcMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="92,112,267,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,175,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="185,56,360,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,175,24"/>
+  <img src="classMcMd_1_1RadiusGyration.png" usemap="#McMd::RadiusGyration_map" alt=""/>
+  <map id="McMd::RadiusGyration_map" name="McMd::RadiusGyration_map">
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; System &gt;" shape="rect" coords="113,168,330,192"/>
+<area href="classMcMd_1_1Diagnostic.html" alt="McMd::Diagnostic" shape="rect" coords="113,112,330,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,217,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="227,56,444,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,217,24"/>
 </map>
  </div></div>
 
@@ -82,31 +82,31 @@ Inheritance diagram for RadiusGyration:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#a6945c580e602cbf8e3f421e49e2f54d0">RadiusGyration</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6945c580e602cbf8e3f421e49e2f54d0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file, and allocate data array.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear accumulator.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#afc17577823a371a5ead4e51ebb8ec2ef">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate squared radii of gyration for all molecules, add to ensemble.  <a href="#afc17577823a371a5ead4e51ebb8ec2ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#a7437b254e19e7e12fc2ec99945f4ecea">output</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results at end of simulation.  <a href="#a7437b254e19e7e12fc2ec99945f4ecea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#aa3d71af4cc5dfb2be6be816a8f562416">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#aa3d71af4cc5dfb2be6be816a8f562416"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#ab04cb582806ce73ee88a5da87b019fa2">RadiusGyration</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ab04cb582806ce73ee88a5da87b019fa2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#ab87d95394b2621e79447351dc84a48af">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file, and allocate data array.  <a href="#ab87d95394b2621e79447351dc84a48af"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#a66adc56b5b192799e15613cf9b6c0f82">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear accumulator.  <a href="#a66adc56b5b192799e15613cf9b6c0f82"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#a026ea3946c90d85ce740199a0e349c49">sample</a> (long iStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate squared radii of gyration for all molecules, add to ensemble.  <a href="#a026ea3946c90d85ce740199a0e349c49"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#a1eacd877d8ee0530142e3bea976f4036">output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results at end of simulation.  <a href="#a1eacd877d8ee0530142e3bea976f4036"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#ac1acbaf1b9e55ea65a2c08c7db73ded4">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#ac1acbaf1b9e55ea65a2c08c7db73ded4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#a82036c8dca11b9e3c5fd44a5a5030bba">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#a82036c8dca11b9e3c5fd44a5a5030bba"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1RadiusGyration.html#a1865517aabd2fbaf6225dbb4af31d3a7">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a1865517aabd2fbaf6225dbb4af31d3a7"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a6945c580e602cbf8e3f421e49e2f54d0"></a><!-- doxytag: member="McMd::RadiusGyration::RadiusGyration" ref="a6945c580e602cbf8e3f421e49e2f54d0" args="(System &amp;system)" -->
+<a class="anchor" id="ab04cb582806ce73ee88a5da87b019fa2"></a><!-- doxytag: member="McMd::RadiusGyration::RadiusGyration" ref="ab04cb582806ce73ee88a5da87b019fa2" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1RadiusGyration.html">RadiusGyration</a> </td>
+          <td class="memname">McMd::RadiusGyration::RadiusGyration </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -129,12 +129,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::RadiusGyration::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ab87d95394b2621e79447351dc84a48af"></a><!-- doxytag: member="McMd::RadiusGyration::readParam" ref="ab87d95394b2621e79447351dc84a48af" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::RadiusGyration::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -160,7 +160,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="RadiusGyration_8cpp_source.html#l00033">33</a> of file <a class="el" href="RadiusGyration_8cpp_source.html">RadiusGyration.cpp</a>.</p>
 
@@ -168,12 +168,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::RadiusGyration::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a66adc56b5b192799e15613cf9b6c0f82"></a><!-- doxytag: member="McMd::RadiusGyration::setup" ref="a66adc56b5b192799e15613cf9b6c0f82" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void McMd::RadiusGyration::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -184,7 +184,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear accumulator. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a93c5a174f073b2587a484999ca550829">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RadiusGyration_8cpp_source.html#l00069">69</a> of file <a class="el" href="RadiusGyration_8cpp_source.html">RadiusGyration.cpp</a>.</p>
 
@@ -192,12 +192,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afc17577823a371a5ead4e51ebb8ec2ef"></a><!-- doxytag: member="McMd::RadiusGyration::sample" ref="afc17577823a371a5ead4e51ebb8ec2ef" args="(long iStep)" -->
+<a class="anchor" id="a026ea3946c90d85ce740199a0e349c49"></a><!-- doxytag: member="McMd::RadiusGyration::sample" ref="a026ea3946c90d85ce740199a0e349c49" args="(long iStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void McMd::RadiusGyration::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -216,20 +216,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f">Diagnostic</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#ae265d934fee552e1bd50ce37930ac63c">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RadiusGyration_8cpp_source.html#l00078">78</a> of file <a class="el" href="RadiusGyration_8cpp_source.html">RadiusGyration.cpp</a>.</p>
 
-<p>References <a class="el" href="Molecule_8h_source.html#l00471">Molecule::atom()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00267">Atom::position()</a>, <a class="el" href="Vector_8h_source.html#l00588">Vector::square()</a>, and <a class="el" href="Vector_8h_source.html#l00644">Vector::subtract()</a>.</p>
+<p>References <a class="el" href="Molecule_8h_source.html#l00471">McMd::Molecule::atom()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00267">McMd::Atom::position()</a>, <a class="el" href="Vector_8h_source.html#l00588">Util::Vector::square()</a>, and <a class="el" href="Vector_8h_source.html#l00644">Util::Vector::subtract()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7437b254e19e7e12fc2ec99945f4ecea"></a><!-- doxytag: member="McMd::RadiusGyration::output" ref="a7437b254e19e7e12fc2ec99945f4ecea" args="()" -->
+<a class="anchor" id="a1eacd877d8ee0530142e3bea976f4036"></a><!-- doxytag: member="McMd::RadiusGyration::output" ref="a1eacd877d8ee0530142e3bea976f4036" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void McMd::RadiusGyration::output </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -240,20 +240,20 @@ Public Member Functions</h2></td></tr>
 
 <p>Output results at end of simulation. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a209e4a470fcdeb3d5b87da3dd6960def">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac5481c8016af4c70d19d59905261c0bf">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RadiusGyration_8cpp_source.html#l00123">123</a> of file <a class="el" href="RadiusGyration_8cpp_source.html">RadiusGyration.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00077">ParamComposite::writeParam()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00077">Util::ParamComposite::writeParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><!-- doxytag: member="McMd::RadiusGyration::save" ref="a248dde9ccc0ef67e5d9cc5fd0bdc2b64" args="(Serializable::OArchiveType &amp;ar)" -->
+<a class="anchor" id="ac1acbaf1b9e55ea65a2c08c7db73ded4"></a><!-- doxytag: member="McMd::RadiusGyration::save" ref="ac1acbaf1b9e55ea65a2c08c7db73ded4" args="(Serializable::OArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void save </td>
+          <td class="memname">void McMd::RadiusGyration::save </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -271,18 +271,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac27203b7ee783c3cebc054c290e313ed">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RadiusGyration_8cpp_source.html#l00144">144</a> of file <a class="el" href="RadiusGyration_8cpp_source.html">RadiusGyration.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa3d71af4cc5dfb2be6be816a8f562416"></a><!-- doxytag: member="McMd::RadiusGyration::load" ref="aa3d71af4cc5dfb2be6be816a8f562416" args="(Serializable::IArchiveType &amp;ar)" -->
+<a class="anchor" id="a82036c8dca11b9e3c5fd44a5a5030bba"></a><!-- doxytag: member="McMd::RadiusGyration::load" ref="a82036c8dca11b9e3c5fd44a5a5030bba" args="(Serializable::IArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void load </td>
+          <td class="memname">void McMd::RadiusGyration::load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -300,18 +300,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#aa3d71af4cc5dfb2be6be816a8f562416">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#afa44b6fb962ca0a8a979d0add2dc85b9">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RadiusGyration_8cpp_source.html#l00150">150</a> of file <a class="el" href="RadiusGyration_8cpp_source.html">RadiusGyration.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="McMd::RadiusGyration::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="a1865517aabd2fbaf6225dbb4af31d3a7"></a><!-- doxytag: member="McMd::RadiusGyration::serialize" ref="a1865517aabd2fbaf6225dbb4af31d3a7" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void McMd::RadiusGyration::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -340,7 +342,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6765e839ab267e4959384e35a4112451">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6056717b367040d8605f67794a7e2ebc">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="RadiusGyration_8h_source.html#l00151">151</a> of file <a class="el" href="RadiusGyration_8h_source.html">RadiusGyration.h</a>.</p>
 
@@ -353,7 +355,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="RadiusGyration_8cpp_source.html">RadiusGyration.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:54 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:25 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

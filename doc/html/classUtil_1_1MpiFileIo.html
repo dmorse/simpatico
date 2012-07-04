@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: MpiFileIo Class Reference</title>
+<title>Simpatico: Util::MpiFileIo Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,12 +49,12 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>MpiFileIo Class Reference</h1>  </div>
+<h1>Util::MpiFileIo Class Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::MpiFileIo" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Identifies whether this processor may do file I/O. </p>
-<p>The return value of <a class="el" href="classUtil_1_1MpiFileIo.html#af44e324ef239057c834cf781fa528e5d" title="Can this processor do file I/O ?">isIoProcessor()</a> indicates whether this processor can read and write to file. If the the class is compiled with UTIL_MPI not defined, then <a class="el" href="classUtil_1_1MpiFileIo.html#af44e324ef239057c834cf781fa528e5d" title="Can this processor do file I/O ?">isIoProcessor()</a> always returns true. If the class is compiled with UTIL_MPI defined, then this method returns true if either: (1) A communicator has been set * and this processor has rank 0 within that communicator, or (2) No communicator has been set.</p>
+<p>The return value of <a class="el" href="classUtil_1_1MpiFileIo.html#ae81b1c15aeb5287fef1955db77db883f" title="Can this processor do file I/O ?">isIoProcessor()</a> indicates whether this processor can read and write to file. If the the class is compiled with UTIL_MPI not defined, then <a class="el" href="classUtil_1_1MpiFileIo.html#ae81b1c15aeb5287fef1955db77db883f" title="Can this processor do file I/O ?">isIoProcessor()</a> always returns true. If the class is compiled with UTIL_MPI defined, then this method returns true if either: (1) A communicator has been set * and this processor has rank 0 within that communicator, or (2) No communicator has been set.</p>
 <p>When compiled with UTIL_MPI defined, an <a class="el" href="classUtil_1_1MpiFileIo.html" title="Identifies whether this processor may do file I/O.">MpiFileIo</a> object has a pointer to an MPI communiciator, and provides methods to set and unset (nullify) the associated communicator. </p>
 
 <p>Definition at line <a class="el" href="MpiFileIo_8h_source.html#l00033">33</a> of file <a class="el" href="MpiFileIo_8h_source.html">MpiFileIo.h</a>.</p>
@@ -65,28 +65,28 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#a4f3b84d987a367941266ddac00ea15a0">MpiFileIo</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a4f3b84d987a367941266ddac00ea15a0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#aa0dbc66dc147b5c6f4da568571142b49">MpiFileIo</a> (const <a class="el" href="classUtil_1_1MpiFileIo.html">MpiFileIo</a> &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#aa0dbc66dc147b5c6f4da568571142b49"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#af44e324ef239057c834cf781fa528e5d">isIoProcessor</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Can this processor do file I/O ?  <a href="#af44e324ef239057c834cf781fa528e5d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#af1dea0de6bef2b140e2caed3cf7e946d">setCommunicator</a> (MPI::Intracomm &amp;communicator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the communicator.  <a href="#af1dea0de6bef2b140e2caed3cf7e946d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#a45659c7aed66216ffa33f6eb9e8322be">clearCommunicator</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear (nullify) the communicator.  <a href="#a45659c7aed66216ffa33f6eb9e8322be"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#a96a9247e9bcf7da4a655e71ddd316f34">hasCommunicator</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does this object have a communicator?  <a href="#a96a9247e9bcf7da4a655e71ddd316f34"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">MPI::Intracomm &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#aee20740c90cc24a06535e08022dfcb40">communicator</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the communicator.  <a href="#aee20740c90cc24a06535e08022dfcb40"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#a73533e94b4b9741b85d096bfa1ed5148">MpiFileIo</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a73533e94b4b9741b85d096bfa1ed5148"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#a01b0ce2abff83abd2bff03d7ef757bdb">MpiFileIo</a> (const <a class="el" href="classUtil_1_1MpiFileIo.html">MpiFileIo</a> &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#a01b0ce2abff83abd2bff03d7ef757bdb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#ae81b1c15aeb5287fef1955db77db883f">isIoProcessor</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Can this processor do file I/O ?  <a href="#ae81b1c15aeb5287fef1955db77db883f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#a5074e0e6891950e93b2dc14840df0f0b">setCommunicator</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the communicator.  <a href="#a5074e0e6891950e93b2dc14840df0f0b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#afa004979e5f91e9cf07252b5a26e2d3f">clearCommunicator</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear (nullify) the communicator.  <a href="#afa004979e5f91e9cf07252b5a26e2d3f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#ab308bde6f007cb3f8687072597359f88">hasCommunicator</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does this object have a communicator?  <a href="#ab308bde6f007cb3f8687072597359f88"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">MPI::Intracomm &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiFileIo.html#ae1395a123bff23b4996e03c8d12bf16e">communicator</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the communicator.  <a href="#ae1395a123bff23b4996e03c8d12bf16e"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a4f3b84d987a367941266ddac00ea15a0"></a><!-- doxytag: member="Util::MpiFileIo::MpiFileIo" ref="a4f3b84d987a367941266ddac00ea15a0" args="()" -->
+<a class="anchor" id="a73533e94b4b9741b85d096bfa1ed5148"></a><!-- doxytag: member="Util::MpiFileIo::MpiFileIo" ref="a73533e94b4b9741b85d096bfa1ed5148" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">home david code simpatico src util mpi <a class="el" href="classUtil_1_1MpiFileIo.html">MpiFileIo</a> cpp <a class="el" href="classUtil_1_1MpiFileIo.html">MpiFileIo</a> </td>
+          <td class="memname">home david code simpatico src util mpi <a class="el" href="classUtil_1_1MpiFileIo.html">MpiFileIo</a> cpp Util::MpiFileIo::MpiFileIo </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -101,12 +101,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa0dbc66dc147b5c6f4da568571142b49"></a><!-- doxytag: member="Util::MpiFileIo::MpiFileIo" ref="aa0dbc66dc147b5c6f4da568571142b49" args="(const MpiFileIo &amp;other)" -->
+<a class="anchor" id="a01b0ce2abff83abd2bff03d7ef757bdb"></a><!-- doxytag: member="Util::MpiFileIo::MpiFileIo" ref="a01b0ce2abff83abd2bff03d7ef757bdb" args="(const MpiFileIo &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1MpiFileIo.html">MpiFileIo</a> </td>
+          <td class="memname">Util::MpiFileIo::MpiFileIo </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1MpiFileIo.html">MpiFileIo</a> &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -123,12 +123,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="af44e324ef239057c834cf781fa528e5d"></a><!-- doxytag: member="Util::MpiFileIo::isIoProcessor" ref="af44e324ef239057c834cf781fa528e5d" args="() const " -->
+<a class="anchor" id="ae81b1c15aeb5287fef1955db77db883f"></a><!-- doxytag: member="Util::MpiFileIo::isIoProcessor" ref="ae81b1c15aeb5287fef1955db77db883f" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isIoProcessor </td>
+          <td class="memname">bool Util::MpiFileIo::isIoProcessor </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -141,16 +141,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="MpiFileIo_8h_source.html#l00092">92</a> of file <a class="el" href="MpiFileIo_8h_source.html">MpiFileIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ParamComponent_8h_source.html#l00132">ParamComponent::isParamIoProcessor()</a>.</p>
+<p>Referenced by <a class="el" href="ParamComponent_8h_source.html#l00132">Util::ParamComponent::isParamIoProcessor()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af1dea0de6bef2b140e2caed3cf7e946d"></a><!-- doxytag: member="Util::MpiFileIo::setCommunicator" ref="af1dea0de6bef2b140e2caed3cf7e946d" args="(MPI::Intracomm &amp;communicator)" -->
+<a class="anchor" id="a5074e0e6891950e93b2dc14840df0f0b"></a><!-- doxytag: member="Util::MpiFileIo::setCommunicator" ref="a5074e0e6891950e93b2dc14840df0f0b" args="(MPI::Intracomm &amp;communicator)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setCommunicator </td>
+          <td class="memname">void Util::MpiFileIo::setCommunicator </td>
           <td>(</td>
           <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
           <td class="paramname"><em>communicator</em></td><td>)</td>
@@ -164,18 +164,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="MpiFileIo_8cpp_source.html#l00041">41</a> of file <a class="el" href="MpiFileIo_8cpp_source.html">MpiFileIo.cpp</a>.</p>
 
-<p>References <a class="el" href="MpiFileIo_8h_source.html#l00103">MpiFileIo::communicator()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="MpiFileIo_8h_source.html#l00103">communicator()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ParamComponent_8cpp_source.html#l00062">ParamComponent::setParamCommunicator()</a>.</p>
+<p>Referenced by <a class="el" href="ParamComponent_8cpp_source.html#l00062">Util::ParamComponent::setParamCommunicator()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a45659c7aed66216ffa33f6eb9e8322be"></a><!-- doxytag: member="Util::MpiFileIo::clearCommunicator" ref="a45659c7aed66216ffa33f6eb9e8322be" args="()" -->
+<a class="anchor" id="afa004979e5f91e9cf07252b5a26e2d3f"></a><!-- doxytag: member="Util::MpiFileIo::clearCommunicator" ref="afa004979e5f91e9cf07252b5a26e2d3f" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void clearCommunicator </td>
+          <td class="memname">void Util::MpiFileIo::clearCommunicator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -190,12 +190,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a96a9247e9bcf7da4a655e71ddd316f34"></a><!-- doxytag: member="Util::MpiFileIo::hasCommunicator" ref="a96a9247e9bcf7da4a655e71ddd316f34" args="() const " -->
+<a class="anchor" id="ab308bde6f007cb3f8687072597359f88"></a><!-- doxytag: member="Util::MpiFileIo::hasCommunicator" ref="ab308bde6f007cb3f8687072597359f88" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool hasCommunicator </td>
+          <td class="memname">bool Util::MpiFileIo::hasCommunicator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -208,16 +208,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="MpiFileIo_8h_source.html#l00097">97</a> of file <a class="el" href="MpiFileIo_8h_source.html">MpiFileIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ParamComponent_8h_source.html#l00139">ParamComponent::hasParamCommunicator()</a>, and <a class="el" href="ParamComponent_8cpp_source.html#l00062">ParamComponent::setParamCommunicator()</a>.</p>
+<p>Referenced by <a class="el" href="ParamComponent_8h_source.html#l00139">Util::ParamComponent::hasParamCommunicator()</a>, and <a class="el" href="ParamComponent_8cpp_source.html#l00062">Util::ParamComponent::setParamCommunicator()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aee20740c90cc24a06535e08022dfcb40"></a><!-- doxytag: member="Util::MpiFileIo::communicator" ref="aee20740c90cc24a06535e08022dfcb40" args="() const " -->
+<a class="anchor" id="ae1395a123bff23b4996e03c8d12bf16e"></a><!-- doxytag: member="Util::MpiFileIo::communicator" ref="ae1395a123bff23b4996e03c8d12bf16e" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">MPI::Intracomm &amp; communicator </td>
+          <td class="memname">MPI::Intracomm &amp; Util::MpiFileIo::communicator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -230,7 +230,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="MpiFileIo_8h_source.html#l00103">103</a> of file <a class="el" href="MpiFileIo_8h_source.html">MpiFileIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ParamComponent_8h_source.html#l00145">ParamComponent::paramCommunicator()</a>, and <a class="el" href="MpiFileIo_8cpp_source.html#l00041">MpiFileIo::setCommunicator()</a>.</p>
+<p>Referenced by <a class="el" href="ParamComponent_8h_source.html#l00145">Util::ParamComponent::paramCommunicator()</a>, and <a class="el" href="MpiFileIo_8cpp_source.html#l00041">setCommunicator()</a>.</p>
 
 </div>
 </div>
@@ -239,7 +239,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="MpiFileIo_8cpp_source.html">MpiFileIo.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

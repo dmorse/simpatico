@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Diagnostic Class Reference</title>
+<title>Simpatico: DdMd::Diagnostic Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -52,28 +52,28 @@
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Diagnostic Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>DdMd::Diagnostic Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::Diagnostic" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Abstract base for periodic output and/or analysis actions. </p>
-<p>The periodic action associated with a <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a> can involve sampling of a physical property and adding it to statistical accumulator, outputting it to file, or both. This periodic action must be implemented by the pure virtual <a class="el" href="classDdMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f" title="Calculate, analyze and/or output a physical quantity.">sample()</a> method.</p>
-<p>The <a class="el" href="classDdMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f" title="Calculate, analyze and/or output a physical quantity.">sample()</a> method should take the desired action only when the simulation step index is an integer multiple of the associated interval parameter. The interval must be a positive integer that is a multiple of the static member <a class="el" href="classDdMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a>.</p>
-<p>The virtual <a class="el" href="classDdMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f" title="Calculate, analyze and/or output a physical quantity.">sample()</a> method does not take any parameters. A <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a> must thus access its parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> and/or <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> via a pointer, which is usually initialized in its subclass constructor. </p>
+<p>The periodic action associated with a <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a> can involve sampling of a physical property and adding it to statistical accumulator, outputting it to file, or both. This periodic action must be implemented by the pure virtual <a class="el" href="classDdMd_1_1Diagnostic.html#a3d023149d52be82a82d898b141886330" title="Calculate, analyze and/or output a physical quantity.">sample()</a> method.</p>
+<p>The <a class="el" href="classDdMd_1_1Diagnostic.html#a3d023149d52be82a82d898b141886330" title="Calculate, analyze and/or output a physical quantity.">sample()</a> method should take the desired action only when the simulation step index is an integer multiple of the associated interval parameter. The interval must be a positive integer that is a multiple of the static member <a class="el" href="classDdMd_1_1Diagnostic.html#ac195806b4a4f8c59b6f0664eef51e58f" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a>.</p>
+<p>The virtual <a class="el" href="classDdMd_1_1Diagnostic.html#a3d023149d52be82a82d898b141886330" title="Calculate, analyze and/or output a physical quantity.">sample()</a> method does not take any parameters. A <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a> must thus access its parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> and/or <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> via a pointer, which is usually initialized in its subclass constructor. </p>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00043">43</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">Diagnostic.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Diagnostic:</div>
+Inheritance diagram for DdMd::Diagnostic:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1Diagnostic.png" usemap="#Diagnostic_map" alt=""/>
-  <map id="Diagnostic_map" name="Diagnostic_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="60,56,171,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="60,0,171,24"/>
-<area href="classDdMd_1_1OutputEnergy.html" alt="OutputEnergy" shape="rect" coords="0,168,111,192"/>
-<area href="classDdMd_1_1WriteConfig.html" alt="WriteConfig" shape="rect" coords="121,168,232,192"/>
+  <img src="classDdMd_1_1Diagnostic.png" usemap="#DdMd::Diagnostic_map" alt=""/>
+  <map id="DdMd::Diagnostic_map" name="DdMd::Diagnostic_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="72,56,206,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="72,0,206,24"/>
+<area href="classDdMd_1_1OutputEnergy.html" alt="DdMd::OutputEnergy" shape="rect" coords="0,168,134,192"/>
+<area href="classDdMd_1_1WriteConfig.html" alt="DdMd::WriteConfig" shape="rect" coords="144,168,278,192"/>
 </map>
  </div></div>
 
@@ -81,48 +81,48 @@ Inheritance diagram for Diagnostic:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a445a0376a02077383475117c689c8db0">Diagnostic</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a445a0376a02077383475117c689c8db0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#ac58cffc21ba7d2ae2904f92ad961ed79">~Diagnostic</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ac58cffc21ba7d2ae2904f92ad961ed79"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup before simulation.  <a href="#a43128fa8695ca9394ba69cd759d04b99"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f">sample</a> (long iStep)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate, analyze and/or output a physical quantity.  <a href="#a539b7a077aea825f7195929db1a5944f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a209e4a470fcdeb3d5b87da3dd6960def">output</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output any results at the end of the simulation.  <a href="#a209e4a470fcdeb3d5b87da3dd6960def"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#afe5b7de87b935531edcd3d15fbd92166">interval</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get interval value.  <a href="#afe5b7de87b935531edcd3d15fbd92166"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a56d6fc996d1e17d408288f86b6d9b4e7">isAtInterval</a> (long counter) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true iff counter is a multiple of the interval.  <a href="#a56d6fc996d1e17d408288f86b6d9b4e7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#ac7ff068bbc8da1fc65fe12e4bb72f3d8">Diagnostic</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ac7ff068bbc8da1fc65fe12e4bb72f3d8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#abf3a296ffd140d02d6c701a147042571">~Diagnostic</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#abf3a296ffd140d02d6c701a147042571"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a25c1dd06e100ef655057d0c131998d58">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup before simulation.  <a href="#a25c1dd06e100ef655057d0c131998d58"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a3d023149d52be82a82d898b141886330">sample</a> (long iStep)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate, analyze and/or output a physical quantity.  <a href="#a3d023149d52be82a82d898b141886330"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a46ea7eb4b928570f8db51a1c02df642b">output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output any results at the end of the simulation.  <a href="#a46ea7eb4b928570f8db51a1c02df642b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#ac2a7c41be042e0624fa027961b8d6342">interval</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get interval value.  <a href="#ac2a7c41be042e0624fa027961b8d6342"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a6c1854a908b373a5deab2e686b988ae4">isAtInterval</a> (long counter) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true iff counter is a multiple of the interval.  <a href="#a6c1854a908b373a5deab2e686b988ae4"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a608e10d093425c9228f10ed3c4994598">initStatic</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Define and initialize baseInterval.  <a href="#a608e10d093425c9228f10ed3c4994598"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a4226254693ad234511ef01dfcb954929">initStatic</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Define and initialize baseInterval.  <a href="#a4226254693ad234511ef01dfcb954929"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5">baseInterval</a> = 1</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The interval for a <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a> must be a multiple of baseInterval.  <a href="#a124343c75def66517309bad572d5adc5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#ac195806b4a4f8c59b6f0664eef51e58f">baseInterval</a> = 1</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The interval for a <a class="el" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a> must be a multiple of baseInterval.  <a href="#ac195806b4a4f8c59b6f0664eef51e58f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a0d9d7b5fc89cf6f04d0119cfcc7ac942">readInterval</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameter interval from file.  <a href="#a0d9d7b5fc89cf6f04d0119cfcc7ac942"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a7fb5e9c0364a81f5a630d0f26acfb234">readOutputFileName</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read outputFileName from file.  <a href="#a7fb5e9c0364a81f5a630d0f26acfb234"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a9c48d9c8c09632e9489efe52722a7937">simulation</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> by reference.  <a href="#a9c48d9c8c09632e9489efe52722a7937"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5">outputFileName</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return outputFileName string.  <a href="#aa2f9962afe9282aa2cb84a50068c9be5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a01462df4241b479e4f3fef8aa4e47fb4">outputFileName</a> (const std::string &amp;suffix) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return outputFileName string with added suffix.  <a href="#a01462df4241b479e4f3fef8aa4e47fb4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a80988373c60f61c54c26b1292dedd986">readInterval</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameter interval from file.  <a href="#a80988373c60f61c54c26b1292dedd986"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a34fbe6c31787d2f8c893b422cf920947">readOutputFileName</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read outputFileName from file.  <a href="#a34fbe6c31787d2f8c893b422cf920947"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#af18bdfad174c975c0216764ef7887116">simulation</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> by reference.  <a href="#af18bdfad174c975c0216764ef7887116"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#ac532ee2db0f9fe2c9cb9ce35fe77a809">outputFileName</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return outputFileName string.  <a href="#ac532ee2db0f9fe2c9cb9ce35fe77a809"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Diagnostic.html#a5618ecadf0e21aaff287812ad036afea">outputFileName</a> (const std::string &amp;suffix) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return outputFileName string with added suffix.  <a href="#a5618ecadf0e21aaff287812ad036afea"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a445a0376a02077383475117c689c8db0"></a><!-- doxytag: member="DdMd::Diagnostic::Diagnostic" ref="a445a0376a02077383475117c689c8db0" args="(Simulation &amp;simulation)" -->
+<a class="anchor" id="ac7ff068bbc8da1fc65fe12e4bb72f3d8"></a><!-- doxytag: member="DdMd::Diagnostic::Diagnostic" ref="ac7ff068bbc8da1fc65fe12e4bb72f3d8" args="(Simulation &amp;simulation)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Diagnostic.html">Diagnostic</a> </td>
+          <td class="memname">DdMd::Diagnostic::Diagnostic </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td>
           <td class="paramname"><em>simulation</em></td><td>)</td>
@@ -138,12 +138,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac58cffc21ba7d2ae2904f92ad961ed79"></a><!-- doxytag: member="DdMd::Diagnostic::~Diagnostic" ref="ac58cffc21ba7d2ae2904f92ad961ed79" args="()" -->
+<a class="anchor" id="abf3a296ffd140d02d6c701a147042571"></a><!-- doxytag: member="DdMd::Diagnostic::~Diagnostic" ref="abf3a296ffd140d02d6c701a147042571" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1Diagnostic.html">Diagnostic</a> </td>
+          <td class="memname">DdMd::Diagnostic::~Diagnostic </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -159,12 +159,12 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a43128fa8695ca9394ba69cd759d04b99"></a><!-- doxytag: member="DdMd::Diagnostic::setup" ref="a43128fa8695ca9394ba69cd759d04b99" args="()" -->
+<a class="anchor" id="a25c1dd06e100ef655057d0c131998d58"></a><!-- doxytag: member="DdMd::Diagnostic::setup" ref="a25c1dd06e100ef655057d0c131998d58" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void setup </td>
+          <td class="memname">virtual void DdMd::Diagnostic::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, virtual]</code></td>
@@ -177,18 +177,18 @@ Protected Member Functions</h2></td></tr>
 <p>This method must be called just before the beginning of the main simulation loop, after an initial configuration is known. It may be used to complete any initialization that cannot be completed in the readParam method, because knowledge of the configuration is needed.</p>
 <p>The default implementation is an empty function. </p>
 
-<p>Reimplemented in <a class="el" href="classDdMd_1_1OutputEnergy.html#a4fc01d736fe50cf5b977f755b675f11d">OutputEnergy</a>, and <a class="el" href="classDdMd_1_1WriteConfig.html#a4fc01d736fe50cf5b977f755b675f11d">WriteConfig</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1OutputEnergy.html#a5ec9f90a2d26c02a7df67397769bb6a5">DdMd::OutputEnergy</a>, and <a class="el" href="classDdMd_1_1WriteConfig.html#a64ba2fdf68821fd4014d7078db6755fc">DdMd::WriteConfig</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00071">71</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a539b7a077aea825f7195929db1a5944f"></a><!-- doxytag: member="DdMd::Diagnostic::sample" ref="a539b7a077aea825f7195929db1a5944f" args="(long iStep)=0" -->
+<a class="anchor" id="a3d023149d52be82a82d898b141886330"></a><!-- doxytag: member="DdMd::Diagnostic::sample" ref="a3d023149d52be82a82d898b141886330" args="(long iStep)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void sample </td>
+          <td class="memname">virtual void DdMd::Diagnostic::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -207,16 +207,16 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1OutputEnergy.html#afc17577823a371a5ead4e51ebb8ec2ef">OutputEnergy</a>, and <a class="el" href="classDdMd_1_1WriteConfig.html#afc17577823a371a5ead4e51ebb8ec2ef">WriteConfig</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1OutputEnergy.html#a43c1381a67594ea0f6a370fb1ab99631">DdMd::OutputEnergy</a>, and <a class="el" href="classDdMd_1_1WriteConfig.html#a5f7f5f1bb387e76ba9c6b5b1f857d38d">DdMd::WriteConfig</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a209e4a470fcdeb3d5b87da3dd6960def"></a><!-- doxytag: member="DdMd::Diagnostic::output" ref="a209e4a470fcdeb3d5b87da3dd6960def" args="()" -->
+<a class="anchor" id="a46ea7eb4b928570f8db51a1c02df642b"></a><!-- doxytag: member="DdMd::Diagnostic::output" ref="a46ea7eb4b928570f8db51a1c02df642b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void output </td>
+          <td class="memname">virtual void DdMd::Diagnostic::output </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, virtual]</code></td>
@@ -232,12 +232,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afe5b7de87b935531edcd3d15fbd92166"></a><!-- doxytag: member="DdMd::Diagnostic::interval" ref="afe5b7de87b935531edcd3d15fbd92166" args="() const " -->
+<a class="anchor" id="ac2a7c41be042e0624fa027961b8d6342"></a><!-- doxytag: member="DdMd::Diagnostic::interval" ref="ac2a7c41be042e0624fa027961b8d6342" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int interval </td>
+          <td class="memname">int DdMd::Diagnostic::interval </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -252,12 +252,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a56d6fc996d1e17d408288f86b6d9b4e7"></a><!-- doxytag: member="DdMd::Diagnostic::isAtInterval" ref="a56d6fc996d1e17d408288f86b6d9b4e7" args="(long counter) const " -->
+<a class="anchor" id="a6c1854a908b373a5deab2e686b988ae4"></a><!-- doxytag: member="DdMd::Diagnostic::isAtInterval" ref="a6c1854a908b373a5deab2e686b988ae4" args="(long counter) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isAtInterval </td>
+          <td class="memname">bool DdMd::Diagnostic::isAtInterval </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>counter</em></td><td>)</td>
@@ -277,16 +277,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00176">176</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 
-<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">WriteConfig::sample()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00057">OutputEnergy::sample()</a>.</p>
+<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">DdMd::WriteConfig::sample()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a608e10d093425c9228f10ed3c4994598"></a><!-- doxytag: member="DdMd::Diagnostic::initStatic" ref="a608e10d093425c9228f10ed3c4994598" args="()" -->
+<a class="anchor" id="a4226254693ad234511ef01dfcb954929"></a><!-- doxytag: member="DdMd::Diagnostic::initStatic" ref="a4226254693ad234511ef01dfcb954929" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void initStatic </td>
+          <td class="memname">void DdMd::Diagnostic::initStatic </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -297,20 +297,20 @@ Protected Member Functions</h2></td></tr>
 
 <p>Define and initialize baseInterval. </p>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComponent.html#a608e10d093425c9228f10ed3c4994598">ParamComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComponent.html#a5350c0432130f7feba8392f5b3a75cb4">Util::ParamComponent</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html#l00024">24</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html">ddMd/diagnostics/Diagnostic.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00110">Diagnostic::baseInterval</a>.</p>
+<p>References <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00110">baseInterval</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0d9d7b5fc89cf6f04d0119cfcc7ac942"></a><!-- doxytag: member="DdMd::Diagnostic::readInterval" ref="a0d9d7b5fc89cf6f04d0119cfcc7ac942" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a80988373c60f61c54c26b1292dedd986"></a><!-- doxytag: member="DdMd::Diagnostic::readInterval" ref="a80988373c60f61c54c26b1292dedd986" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readInterval </td>
+          <td class="memname">void DdMd::Diagnostic::readInterval </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -321,7 +321,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Read parameter interval from file. </p>
-<p>This function throws an exception if the value of interval is not a multiple of <a class="el" href="classDdMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a>, or if baseInterval has not been set to a nonzero positive value.</p>
+<p>This function throws an exception if the value of interval is not a multiple of <a class="el" href="classDdMd_1_1Diagnostic.html#ac195806b4a4f8c59b6f0664eef51e58f" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a>, or if baseInterval has not been set to a nonzero positive value.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">in</td><td>input parameter file stream. </td></tr>
@@ -333,16 +333,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00034">WriteConfig::readParam()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00036">OutputEnergy::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00034">DdMd::WriteConfig::readParam()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00036">DdMd::OutputEnergy::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7fb5e9c0364a81f5a630d0f26acfb234"></a><!-- doxytag: member="DdMd::Diagnostic::readOutputFileName" ref="a7fb5e9c0364a81f5a630d0f26acfb234" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a34fbe6c31787d2f8c893b422cf920947"></a><!-- doxytag: member="DdMd::Diagnostic::readOutputFileName" ref="a34fbe6c31787d2f8c893b422cf920947" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readOutputFileName </td>
+          <td class="memname">void DdMd::Diagnostic::readOutputFileName </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -362,16 +362,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html#l00078">78</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html">ddMd/diagnostics/Diagnostic.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00034">WriteConfig::readParam()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00036">OutputEnergy::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00034">DdMd::WriteConfig::readParam()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00036">DdMd::OutputEnergy::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9c48d9c8c09632e9489efe52722a7937"></a><!-- doxytag: member="DdMd::Diagnostic::simulation" ref="a9c48d9c8c09632e9489efe52722a7937" args="()" -->
+<a class="anchor" id="af18bdfad174c975c0216764ef7887116"></a><!-- doxytag: member="DdMd::Diagnostic::simulation" ref="af18bdfad174c975c0216764ef7887116" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp; simulation </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp; DdMd::Diagnostic::simulation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -384,16 +384,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00188">188</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 
-<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">WriteConfig::sample()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00057">OutputEnergy::sample()</a>.</p>
+<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">DdMd::WriteConfig::sample()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa2f9962afe9282aa2cb84a50068c9be5"></a><!-- doxytag: member="DdMd::Diagnostic::outputFileName" ref="aa2f9962afe9282aa2cb84a50068c9be5" args="() const " -->
+<a class="anchor" id="ac532ee2db0f9fe2c9cb9ce35fe77a809"></a><!-- doxytag: member="DdMd::Diagnostic::outputFileName" ref="ac532ee2db0f9fe2c9cb9ce35fe77a809" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string &amp; outputFileName </td>
+          <td class="memname">const std::string &amp; DdMd::Diagnostic::outputFileName </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline, protected]</code></td>
@@ -406,16 +406,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00182">182</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 
-<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">WriteConfig::sample()</a>.</p>
+<p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">DdMd::WriteConfig::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a01462df4241b479e4f3fef8aa4e47fb4"></a><!-- doxytag: member="DdMd::Diagnostic::outputFileName" ref="a01462df4241b479e4f3fef8aa4e47fb4" args="(const std::string &amp;suffix) const " -->
+<a class="anchor" id="a5618ecadf0e21aaff287812ad036afea"></a><!-- doxytag: member="DdMd::Diagnostic::outputFileName" ref="a5618ecadf0e21aaff287812ad036afea" args="(const std::string &amp;suffix) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string outputFileName </td>
+          <td class="memname">std::string DdMd::Diagnostic::outputFileName </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>suffix</em></td><td>)</td>
@@ -432,12 +432,12 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a124343c75def66517309bad572d5adc5"></a><!-- doxytag: member="DdMd::Diagnostic::baseInterval" ref="a124343c75def66517309bad572d5adc5" args="" -->
+<a class="anchor" id="ac195806b4a4f8c59b6f0664eef51e58f"></a><!-- doxytag: member="DdMd::Diagnostic::baseInterval" ref="ac195806b4a4f8c59b6f0664eef51e58f" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long <a class="el" href="classDdMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5">baseInterval</a> = 1<code> [static]</code></td>
+          <td class="memname">long <a class="el" href="classDdMd_1_1Diagnostic.html#ac195806b4a4f8c59b6f0664eef51e58f">DdMd::Diagnostic::baseInterval</a> = 1<code> [static]</code></td>
         </tr>
       </table>
 </div>
@@ -447,7 +447,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00110">110</a> of file <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html">ddMd/diagnostics/Diagnostic.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html#l00024">Diagnostic::initStatic()</a>, <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00039">DiagnosticManager::readParam()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>, and <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00059">DiagnosticManager::sample()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html#l00024">initStatic()</a>, <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00039">DdMd::DiagnosticManager::readParam()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, and <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00059">DdMd::DiagnosticManager::sample()</a>.</p>
 
 </div>
 </div>
@@ -456,7 +456,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="ddMd_2diagnostics_2Diagnostic_8cpp_source.html">ddMd/diagnostics/Diagnostic.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

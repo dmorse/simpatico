@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: McSimulation Class Reference</title>
+<title>Simpatico: McMd::McSimulation Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>McSimulation Class Reference<div class="ingroups"><a class="el" href="group__McMd__Simulation__Module.html">Simulations</a></div></h1>  </div>
+<h1>McMd::McSimulation Class Reference<div class="ingroups"><a class="el" href="group__McMd__Simulation__Module.html">Simulations</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::McSimulation" --><!-- doxytag: inherits="McMd::Simulation" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -60,14 +60,14 @@
 </div>
 <p><code>#include &lt;<a class="el" href="McSimulation_8h_source.html">McSimulation.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for McSimulation:</div>
+Inheritance diagram for McMd::McSimulation:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1McSimulation.png" usemap="#McSimulation_map" alt=""/>
-  <map id="McSimulation_map" name="McSimulation_map">
-<area href="classMcMd_1_1Simulation.html" alt="Simulation" shape="rect" coords="0,112,111,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classMcMd_1_1McSimulation.png" usemap="#McMd::McSimulation_map" alt=""/>
+  <map id="McMd::McSimulation_map" name="McMd::McSimulation_map">
+<area href="classMcMd_1_1Simulation.html" alt="McMd::Simulation" shape="rect" coords="0,112,134,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,134,24"/>
 </map>
  </div></div>
 
@@ -75,53 +75,53 @@ Inheritance diagram for McSimulation:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a95718feb05f15770f5118e58a953c43f">McSimulation</a> (MPI::Intracomm &amp;communicator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a95718feb05f15770f5118e58a953c43f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a1bf2e59f760c1071e0e25ad398671ef5">McSimulation</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a1bf2e59f760c1071e0e25ad398671ef5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a5be5e995d26a2e16abd3fb6a5ec8f536">~McSimulation</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a5be5e995d26a2e16abd3fb6a5ec8f536"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a4384bd78719fb12cae61a83d02b5ec66">setOptions</a> (int argc, char **argv)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Process command line options.  <a href="#a4384bd78719fb12cae61a83d02b5ec66"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from a specific stream.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a1cff0131081c71e2e4c458e0ec0f19cc">readParam</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from the default parameter stream.  <a href="#a1cff0131081c71e2e4c458e0ec0f19cc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a83198f30cc6ba7b1872f85d67c2fa287">readCommands</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read and execute commands from a specific input stream.  <a href="#a83198f30cc6ba7b1872f85d67c2fa287"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#ab2474de57ea9de1def29ca73c9d66686">readCommands</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read and execute commands from the default parameter file.  <a href="#ab2474de57ea9de1def29ca73c9d66686"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a28b048ba7ba764c5b412358b32e4dc64">simulate</a> (int endStep, bool isContinuation=false)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Run an MC simulation of specified length.  <a href="#a28b048ba7ba764c5b412358b32e4dc64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#acd5b8abadc11c6d1ecf63e7b74ee61ac">analyze</a> (int min, int max, std::string dumpPrefix)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read and analyze a sequence of configuration files.  <a href="#acd5b8abadc11c6d1ecf63e7b74ee61ac"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a0a43b8fc0e818d0c2f3ffa8ee53ebfe4">writeRestart</a> (const std::string &amp;filename)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write restart files.  <a href="#a0a43b8fc0e818d0c2f3ffa8ee53ebfe4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a6540366722a50fdb1b3ff0fe85756447">readRestart</a> (const std::string &amp;filename)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read restart files.  <a href="#a6540366722a50fdb1b3ff0fe85756447"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a7358377b704304e4e6b43eb8c29595e6">McSimulation</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a7358377b704304e4e6b43eb8c29595e6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a24d7f35f910b2f02b741dd5a2b00e857">McSimulation</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a24d7f35f910b2f02b741dd5a2b00e857"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#ae05fce2d6214b92d82016517f8837f52">~McSimulation</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ae05fce2d6214b92d82016517f8837f52"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a913a54f9d2f6ee42dbd6aad6ebeac486">setOptions</a> (int argc, char **argv)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Process command line options.  <a href="#a913a54f9d2f6ee42dbd6aad6ebeac486"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#ada2e9f506b67f1d0d6aba05c9280ee7e">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from a specific stream.  <a href="#ada2e9f506b67f1d0d6aba05c9280ee7e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a68589aa58b154b1739f99e8ed443a268">readParam</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from the default parameter stream.  <a href="#a68589aa58b154b1739f99e8ed443a268"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#ac743d5ae517c8da8f087e573635d11da">readCommands</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read and execute commands from a specific input stream.  <a href="#ac743d5ae517c8da8f087e573635d11da"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#af811f6271285d12093eb61afba1fa9d9">readCommands</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read and execute commands from the default parameter file.  <a href="#af811f6271285d12093eb61afba1fa9d9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a9be264238d4dab98a6243206062e3229">simulate</a> (int endStep, bool isContinuation=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Run an MC simulation of specified length.  <a href="#a9be264238d4dab98a6243206062e3229"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#af34f8218325224c2c14db230aaa49589">analyze</a> (int min, int max, std::string dumpPrefix)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read and analyze a sequence of configuration files.  <a href="#af34f8218325224c2c14db230aaa49589"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a13da33d7ea6adee1c029992a3cedb9e7">writeRestart</a> (const std::string &amp;filename)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write restart files.  <a href="#a13da33d7ea6adee1c029992a3cedb9e7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a06dd23ef35bc61fe9b77378a20420f12">readRestart</a> (const std::string &amp;filename)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read restart files.  <a href="#a06dd23ef35bc61fe9b77378a20420f12"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a51303abd6493843217aadf296486941f">serialize</a> (Archive &amp;ar, unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a51303abd6493843217aadf296486941f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a332d034adbe18b9e8dc187ada84b5b29">system</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a> by reference.  <a href="#a332d034adbe18b9e8dc187ada84b5b29"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#aeb745afd02b0f0ecd6b47397e5fc5927">system</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a> by const refererence.  <a href="#aeb745afd02b0f0ecd6b47397e5fc5927"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1McMove.html">McMove</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#ae28a4eb199587995f34740c65a869cf8">mcMoveFactory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classMcMd_1_1McMove.html" title="McMove is an abstract base class for Monte Carlo moves.">McMove</a> factory by reference.  <a href="#ae28a4eb199587995f34740c65a869cf8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">isValid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if valid, or throw an Exception.  <a href="#aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a7ba4e23de474ba06fa45ca80157fc3cd">serialize</a> (Archive &amp;ar, unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a7ba4e23de474ba06fa45ca80157fc3cd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a5660a84f876baadc941c26786d8b16b4">system</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a> by reference.  <a href="#a5660a84f876baadc941c26786d8b16b4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a357c4f10cde4d73667703eca6ea453d0">system</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a> by const refererence.  <a href="#a357c4f10cde4d73667703eca6ea453d0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1McMove.html">McMove</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a1e77cead3141ff5bfaa00a5fb38b06c1">mcMoveFactory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classMcMd_1_1McMove.html" title="McMove is an abstract base class for Monte Carlo moves.">McMove</a> factory by reference.  <a href="#a1e77cead3141ff5bfaa00a5fb38b06c1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#aa5d11923cf6ca22923eef02e5ce79c8b">isValid</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if valid, or throw an Exception.  <a href="#aa5d11923cf6ca22923eef02e5ce79c8b"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1McMoveManager.html">McMoveManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#a011337f3914761184d82d072c07359e6">mcMoveManager</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classMcMd_1_1McMoveManager.html" title="Manager for a set of McMove objects.">McMoveManager</a> by reference.  <a href="#a011337f3914761184d82d072c07359e6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1McMoveManager.html">McMoveManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSimulation.html#ad896cf0290f903dd3a02afb7543fffd2">mcMoveManager</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classMcMd_1_1McMoveManager.html" title="Manager for a set of McMove objects.">McMoveManager</a> by reference.  <a href="#ad896cf0290f903dd3a02afb7543fffd2"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a95718feb05f15770f5118e58a953c43f"></a><!-- doxytag: member="McMd::McSimulation::McSimulation" ref="a95718feb05f15770f5118e58a953c43f" args="(MPI::Intracomm &amp;communicator)" -->
+<a class="anchor" id="a7358377b704304e4e6b43eb8c29595e6"></a><!-- doxytag: member="McMd::McSimulation::McSimulation" ref="a7358377b704304e4e6b43eb8c29595e6" args="(MPI::Intracomm &amp;communicator)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1McSimulation.html">McSimulation</a> </td>
+          <td class="memname">McMd::McSimulation::McSimulation </td>
           <td>(</td>
           <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
           <td class="paramname"><em>communicator</em></td><td>)</td>
@@ -135,16 +135,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00060">60</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">Simulation::fileMaster()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00715">Simulation::setDiagnosticManager()</a>, <a class="el" href="System_8cpp_source.html#l00490">System::setFileMaster()</a>, <a class="el" href="System_8cpp_source.html#l00471">System::setId()</a>, <a class="el" href="System_8cpp_source.html#l00481">System::setSimulation()</a>, and <a class="el" href="McSimulation_8h_source.html#l00223">McSimulation::system()</a>.</p>
+<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">McMd::Simulation::fileMaster()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00715">McMd::Simulation::setDiagnosticManager()</a>, <a class="el" href="System_8cpp_source.html#l00490">McMd::System::setFileMaster()</a>, <a class="el" href="System_8cpp_source.html#l00471">McMd::System::setId()</a>, <a class="el" href="System_8cpp_source.html#l00481">McMd::System::setSimulation()</a>, and <a class="el" href="McSimulation_8h_source.html#l00223">system()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1bf2e59f760c1071e0e25ad398671ef5"></a><!-- doxytag: member="McMd::McSimulation::McSimulation" ref="a1bf2e59f760c1071e0e25ad398671ef5" args="()" -->
+<a class="anchor" id="a24d7f35f910b2f02b741dd5a2b00e857"></a><!-- doxytag: member="McMd::McSimulation::McSimulation" ref="a24d7f35f910b2f02b741dd5a2b00e857" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1McSimulation.html">McSimulation</a> </td>
+          <td class="memname">McMd::McSimulation::McSimulation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -157,16 +157,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00086">86</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">Simulation::fileMaster()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00715">Simulation::setDiagnosticManager()</a>, <a class="el" href="System_8cpp_source.html#l00490">System::setFileMaster()</a>, <a class="el" href="System_8cpp_source.html#l00471">System::setId()</a>, <a class="el" href="System_8cpp_source.html#l00481">System::setSimulation()</a>, and <a class="el" href="McSimulation_8h_source.html#l00223">McSimulation::system()</a>.</p>
+<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">McMd::Simulation::fileMaster()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00715">McMd::Simulation::setDiagnosticManager()</a>, <a class="el" href="System_8cpp_source.html#l00490">McMd::System::setFileMaster()</a>, <a class="el" href="System_8cpp_source.html#l00471">McMd::System::setId()</a>, <a class="el" href="System_8cpp_source.html#l00481">McMd::System::setSimulation()</a>, and <a class="el" href="McSimulation_8h_source.html#l00223">system()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5be5e995d26a2e16abd3fb6a5ec8f536"></a><!-- doxytag: member="McMd::McSimulation::~McSimulation" ref="a5be5e995d26a2e16abd3fb6a5ec8f536" args="()" -->
+<a class="anchor" id="ae05fce2d6214b92d82016517f8837f52"></a><!-- doxytag: member="McMd::McSimulation::~McSimulation" ref="ae05fce2d6214b92d82016517f8837f52" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1McSimulation.html">McSimulation</a> </td>
+          <td class="memname">McMd::McSimulation::~McSimulation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -182,12 +182,12 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a4384bd78719fb12cae61a83d02b5ec66"></a><!-- doxytag: member="McMd::McSimulation::setOptions" ref="a4384bd78719fb12cae61a83d02b5ec66" args="(int argc, char **argv)" -->
+<a class="anchor" id="a913a54f9d2f6ee42dbd6aad6ebeac486"></a><!-- doxytag: member="McMd::McSimulation::setOptions" ref="a913a54f9d2f6ee42dbd6aad6ebeac486" args="(int argc, char **argv)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setOptions </td>
+          <td class="memname">void McMd::McSimulation::setOptions </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>argc</em>, </td>
@@ -223,16 +223,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00120">120</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00642">McSimulation::readRestart()</a>, <a class="el" href="ParamComponent_8cpp_source.html#l00079">ParamComponent::setEcho()</a>, <a class="el" href="System_8cpp_source.html#l00557">System::setExpectPerturbation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00170">Simulation::setParamCommunicator()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">McSimulation::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00642">readRestart()</a>, <a class="el" href="ParamComponent_8cpp_source.html#l00079">Util::ParamComponent::setEcho()</a>, <a class="el" href="System_8cpp_source.html#l00557">McMd::System::setExpectPerturbation()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00170">McMd::Simulation::setParamCommunicator()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::McSimulation::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ada2e9f506b67f1d0d6aba05c9280ee7e"></a><!-- doxytag: member="McMd::McSimulation::readParam" ref="ada2e9f506b67f1d0d6aba05c9280ee7e" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::McSimulation::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -250,20 +250,20 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Simulation.html#ab5421d3c9175985c9acbf723e5392075">Simulation</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Simulation.html#ac4c728d86768de8f28e70067869ce768">McMd::Simulation</a>.</p>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00182">182</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00718">Simulation::diagnosticManager()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00686">McSimulation::isValid()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00148">ParamComposite::readBegin()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00177">ParamComposite::readEnd()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00219">McSimulation::readParam()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00120">ParamComposite::readParamComposite()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">McSimulation::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00718">McMd::Simulation::diagnosticManager()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00686">isValid()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00148">Util::ParamComposite::readBegin()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00177">Util::ParamComposite::readEnd()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00219">readParam()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00120">Util::ParamComposite::readParamComposite()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1cff0131081c71e2e4c458e0ec0f19cc"></a><!-- doxytag: member="McMd::McSimulation::readParam" ref="a1cff0131081c71e2e4c458e0ec0f19cc" args="()" -->
+<a class="anchor" id="a68589aa58b154b1739f99e8ed443a268"></a><!-- doxytag: member="McMd::McSimulation::readParam" ref="a68589aa58b154b1739f99e8ed443a268" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::McSimulation::readParam </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -277,18 +277,18 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00219">219</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">Simulation::fileMaster()</a>.</p>
+<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">McMd::Simulation::fileMaster()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00182">McSimulation::readParam()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00642">McSimulation::readRestart()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00182">readParam()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00642">readRestart()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a83198f30cc6ba7b1872f85d67c2fa287"></a><!-- doxytag: member="McMd::McSimulation::readCommands" ref="a83198f30cc6ba7b1872f85d67c2fa287" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ac743d5ae517c8da8f087e573635d11da"></a><!-- doxytag: member="McMd::McSimulation::readCommands" ref="ac743d5ae517c8da8f087e573635d11da" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readCommands </td>
+          <td class="memname">void McMd::McSimulation::readCommands </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -308,16 +308,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00225">225</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00226">DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00558">McSimulation::analyze()</a>, <a class="el" href="McSystem_8h_source.html#l00310">McSystem::bondPotential()</a>, <a class="el" href="McPairPotential_8cpp_source.html#l00045">McPairPotential::buildCellList()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00703">Simulation::communicator()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">Simulation::fileMaster()</a>, <a class="el" href="Species_8cpp_source.html#l00604">Species::generateMolecules()</a>, <a class="el" href="ioUtil_8cpp_source.html#l00067">Util::getNextLine()</a>, <a class="el" href="ParamComponent_8h_source.html#l00139">ParamComponent::hasParamCommunicator()</a>, <a class="el" href="ParamComponent_8h_source.html#l00132">ParamComponent::isParamIoProcessor()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00337">Simulation::iStep_</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00638">Simulation::nAtomType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00685">Simulation::nSpecies()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00195">FileMaster::openInputFile()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00220">FileMaster::openOutputFile()</a>, <a class="el" href="McSystem_8h_source.html#l00297">McSystem::pairPotential()</a>, <a class="el" href="McSystem_8cpp_source.html#l00216">McSystem::readConfig()</a>, <a class="el" href="classMcMd_1_1BondPotential.html#a12ec809d1f6d45bb55dcd6fc7fa8e2a6">BondPotential::set()</a>, <a class="el" href="classMcMd_1_1PairPotential.html#a0942c43283be26f1d40df82aa466a646">PairPotential::set()</a>, <a class="el" href="System_8cpp_source.html#l00518">System::setConfigIo()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00430">McSimulation::simulate()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00691">Simulation::species()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">McSimulation::system()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, <a class="el" href="System_8cpp_source.html#l00444">System::writeConfig()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00077">ParamComposite::writeParam()</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00226">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00558">analyze()</a>, <a class="el" href="McSystem_8h_source.html#l00310">McMd::McSystem::bondPotential()</a>, <a class="el" href="Boundary_8h_source.html#l00022">Util::Boundary</a>, <a class="el" href="McPairPotential_8cpp_source.html#l00045">McMd::McPairPotential::buildCellList()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00703">McMd::Simulation::communicator()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">McMd::Simulation::fileMaster()</a>, <a class="el" href="Species_8cpp_source.html#l00604">McMd::Species::generateMolecules()</a>, <a class="el" href="ioUtil_8cpp_source.html#l00067">Util::getNextLine()</a>, <a class="el" href="ParamComponent_8h_source.html#l00139">Util::ParamComponent::hasParamCommunicator()</a>, <a class="el" href="ParamComponent_8h_source.html#l00132">Util::ParamComponent::isParamIoProcessor()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00337">McMd::Simulation::iStep_</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00638">McMd::Simulation::nAtomType()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00685">McMd::Simulation::nSpecies()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00195">McMd::FileMaster::openInputFile()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00220">McMd::FileMaster::openOutputFile()</a>, <a class="el" href="McSystem_8h_source.html#l00297">McMd::McSystem::pairPotential()</a>, <a class="el" href="McSystem_8cpp_source.html#l00216">McMd::McSystem::readConfig()</a>, <a class="el" href="classMcMd_1_1BondPotential.html#ab9356c3b8a3410dd6f458937ed5bd567">McMd::BondPotential::set()</a>, <a class="el" href="classMcMd_1_1PairPotential.html#acfeca4f7227669083fdce6c5788c7fae">McMd::PairPotential::set()</a>, <a class="el" href="System_8cpp_source.html#l00518">McMd::System::setConfigIo()</a>, <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00066">Util::OrthorhombicBoundary::setCubicLengths()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00430">simulate()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00691">McMd::Simulation::species()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">system()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, <a class="el" href="System_8cpp_source.html#l00444">McMd::System::writeConfig()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00077">Util::ParamComposite::writeParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab2474de57ea9de1def29ca73c9d66686"></a><!-- doxytag: member="McMd::McSimulation::readCommands" ref="ab2474de57ea9de1def29ca73c9d66686" args="()" -->
+<a class="anchor" id="af811f6271285d12093eb61afba1fa9d9"></a><!-- doxytag: member="McMd::McSimulation::readCommands" ref="af811f6271285d12093eb61afba1fa9d9" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readCommands </td>
+          <td class="memname">void McMd::McSimulation::readCommands </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -331,16 +331,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00424">424</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">Simulation::fileMaster()</a>.</p>
+<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">McMd::Simulation::fileMaster()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a28b048ba7ba764c5b412358b32e4dc64"></a><!-- doxytag: member="McMd::McSimulation::simulate" ref="a28b048ba7ba764c5b412358b32e4dc64" args="(int endStep, bool isContinuation=false)" -->
+<a class="anchor" id="a9be264238d4dab98a6243206062e3229"></a><!-- doxytag: member="McMd::McSimulation::simulate" ref="a9be264238d4dab98a6243206062e3229" args="(int endStep, bool isContinuation=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void simulate </td>
+          <td class="memname">void McMd::McSimulation::simulate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>endStep</em>, </td>
@@ -373,18 +373,18 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00430">430</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2diagnostics_2Diagnostic_8h_source.html#l00140">Diagnostic::baseInterval</a>, <a class="el" href="McPairPotential_8cpp_source.html#l00045">McPairPotential::buildCellList()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00107">McMoveManager::chooseMove()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00718">Simulation::diagnosticManager()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00337">Simulation::iStep_</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00118">ReplicaMove::move()</a>, <a class="el" href="McMove_8cpp_source.html#l00061">McMove::move()</a>, <a class="el" href="ReplicaMove_8h_source.html#l00199">ReplicaMove::nAccept()</a>, <a class="el" href="ReplicaMove_8h_source.html#l00193">ReplicaMove::nAttempt()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00117">McMoveManager::output()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00071">DiagnosticManager::output()</a>, <a class="el" href="McSystem_8h_source.html#l00297">McSystem::pairPotential()</a>, <a class="el" href="System_8h_source.html#l00985">System::replicaMove()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00059">DiagnosticManager::sample()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00097">McMoveManager::setup()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00049">DiagnosticManager::setup()</a>, <a class="el" href="Timer_8h_source.html#l00078">Timer::start()</a>, <a class="el" href="Timer_8h_source.html#l00089">Timer::stop()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">McSimulation::system()</a>, <a class="el" href="Timer_8h_source.html#l00110">Timer::time()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="mcMd_2diagnostics_2Diagnostic_8h_source.html#l00140">McMd::Diagnostic::baseInterval</a>, <a class="el" href="McPairPotential_8cpp_source.html#l00045">McMd::McPairPotential::buildCellList()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00107">McMd::McMoveManager::chooseMove()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00718">McMd::Simulation::diagnosticManager()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00337">McMd::Simulation::iStep_</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00118">McMd::ReplicaMove::move()</a>, <a class="el" href="McMove_8cpp_source.html#l00061">McMd::McMove::move()</a>, <a class="el" href="ReplicaMove_8h_source.html#l00199">McMd::ReplicaMove::nAccept()</a>, <a class="el" href="ReplicaMove_8h_source.html#l00193">McMd::ReplicaMove::nAttempt()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00117">McMd::McMoveManager::output()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00071">McMd::DiagnosticManager::output()</a>, <a class="el" href="McSystem_8h_source.html#l00297">McMd::McSystem::pairPotential()</a>, <a class="el" href="System_8h_source.html#l00985">McMd::System::replicaMove()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00059">McMd::DiagnosticManager::sample()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00097">McMd::McMoveManager::setup()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00049">McMd::DiagnosticManager::setup()</a>, <a class="el" href="Timer_8h_source.html#l00078">Util::Timer::start()</a>, <a class="el" href="Timer_8h_source.html#l00089">Util::Timer::stop()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">system()</a>, <a class="el" href="Timer_8h_source.html#l00110">Util::Timer::time()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00225">McSimulation::readCommands()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00225">readCommands()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="acd5b8abadc11c6d1ecf63e7b74ee61ac"></a><!-- doxytag: member="McMd::McSimulation::analyze" ref="acd5b8abadc11c6d1ecf63e7b74ee61ac" args="(int min, int max, std::string dumpPrefix)" -->
+<a class="anchor" id="af34f8218325224c2c14db230aaa49589"></a><!-- doxytag: member="McMd::McSimulation::analyze" ref="af34f8218325224c2c14db230aaa49589" args="(int min, int max, std::string dumpPrefix)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void analyze </td>
+          <td class="memname">void McMd::McSimulation::analyze </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>min</em>, </td>
@@ -426,18 +426,18 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00558">558</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="McPairPotential_8cpp_source.html#l00045">McPairPotential::buildCellList()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00718">Simulation::diagnosticManager()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">Simulation::fileMaster()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00337">Simulation::iStep_</a>, <a class="el" href="McSimulation_8cpp_source.html#l00686">McSimulation::isValid()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00195">FileMaster::openInputFile()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00071">DiagnosticManager::output()</a>, <a class="el" href="McSystem_8h_source.html#l00297">McSystem::pairPotential()</a>, <a class="el" href="McSystem_8cpp_source.html#l00216">McSystem::readConfig()</a>, <a class="el" href="System_8cpp_source.html#l00674">System::removeAllMolecules()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00059">DiagnosticManager::sample()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00049">DiagnosticManager::setup()</a>, <a class="el" href="Timer_8h_source.html#l00078">Timer::start()</a>, <a class="el" href="Timer_8h_source.html#l00089">Timer::stop()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">McSimulation::system()</a>, <a class="el" href="Timer_8h_source.html#l00110">Timer::time()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="McPairPotential_8cpp_source.html#l00045">McMd::McPairPotential::buildCellList()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00718">McMd::Simulation::diagnosticManager()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">McMd::Simulation::fileMaster()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00337">McMd::Simulation::iStep_</a>, <a class="el" href="McSimulation_8cpp_source.html#l00686">isValid()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00195">McMd::FileMaster::openInputFile()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00071">McMd::DiagnosticManager::output()</a>, <a class="el" href="McSystem_8h_source.html#l00297">McMd::McSystem::pairPotential()</a>, <a class="el" href="McSystem_8cpp_source.html#l00216">McMd::McSystem::readConfig()</a>, <a class="el" href="System_8cpp_source.html#l00674">McMd::System::removeAllMolecules()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00059">McMd::DiagnosticManager::sample()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00049">McMd::DiagnosticManager::setup()</a>, <a class="el" href="Timer_8h_source.html#l00078">Util::Timer::start()</a>, <a class="el" href="Timer_8h_source.html#l00089">Util::Timer::stop()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">system()</a>, <a class="el" href="Timer_8h_source.html#l00110">Util::Timer::time()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00225">McSimulation::readCommands()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00225">readCommands()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0a43b8fc0e818d0c2f3ffa8ee53ebfe4"></a><!-- doxytag: member="McMd::McSimulation::writeRestart" ref="a0a43b8fc0e818d0c2f3ffa8ee53ebfe4" args="(const std::string &amp;filename)" -->
+<a class="anchor" id="a13da33d7ea6adee1c029992a3cedb9e7"></a><!-- doxytag: member="McMd::McSimulation::writeRestart" ref="a13da33d7ea6adee1c029992a3cedb9e7" args="(const std::string &amp;filename)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void writeRestart </td>
+          <td class="memname">void McMd::McSimulation::writeRestart </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>filename</em></td><td>)</td>
@@ -451,18 +451,18 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00624">624</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">Simulation::fileMaster()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00337">Simulation::iStep_</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00267">FileMaster::openParamOFile()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00310">FileMaster::openRestartOFile()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00694">Simulation::random()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00081">DiagnosticManager::save()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00127">McMoveManager::save()</a>, <a class="el" href="BinaryFileOArchive_8cpp_source.html#l00034">BinaryFileOArchive::setStream()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">McSimulation::system()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00077">ParamComposite::writeParam()</a>.</p>
+<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">McMd::Simulation::fileMaster()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00337">McMd::Simulation::iStep_</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00267">McMd::FileMaster::openParamOFile()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00310">McMd::FileMaster::openRestartOFile()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00694">McMd::Simulation::random()</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00081">McMd::DiagnosticManager::save()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00127">McMd::McMoveManager::save()</a>, <a class="el" href="BinaryFileOArchive_8cpp_source.html#l00034">Util::BinaryFileOArchive::setStream()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">system()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00077">Util::ParamComposite::writeParam()</a>.</p>
 
-<p>Referenced by <a class="el" href="McWriteRestart_8cpp_source.html#l00044">McWriteRestart::sample()</a>.</p>
+<p>Referenced by <a class="el" href="McWriteRestart_8cpp_source.html#l00044">McMd::McWriteRestart::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6540366722a50fdb1b3ff0fe85756447"></a><!-- doxytag: member="McMd::McSimulation::readRestart" ref="a6540366722a50fdb1b3ff0fe85756447" args="(const std::string &amp;filename)" -->
+<a class="anchor" id="a06dd23ef35bc61fe9b77378a20420f12"></a><!-- doxytag: member="McMd::McSimulation::readRestart" ref="a06dd23ef35bc61fe9b77378a20420f12" args="(const std::string &amp;filename)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readRestart </td>
+          <td class="memname">void McMd::McSimulation::readRestart </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>filename</em></td><td>)</td>
@@ -476,18 +476,20 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00642">642</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">Simulation::fileMaster()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00337">Simulation::iStep_</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00091">DiagnosticManager::load()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00137">McMoveManager::load()</a>, <a class="el" href="McSystem_8cpp_source.html#l00227">McSystem::load()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00245">FileMaster::openParamIFile()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00289">FileMaster::openRestartIFile()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00694">Simulation::random()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00219">McSimulation::readParam()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00101">FileMaster::setCommandFileName()</a>, <a class="el" href="BinaryFileIArchive_8cpp_source.html#l00036">BinaryFileIArchive::setStream()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">McSimulation::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00712">McMd::Simulation::fileMaster()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00337">McMd::Simulation::iStep_</a>, <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00091">McMd::DiagnosticManager::load()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00137">McMd::McMoveManager::load()</a>, <a class="el" href="McSystem_8cpp_source.html#l00227">McMd::McSystem::load()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00245">McMd::FileMaster::openParamIFile()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00289">McMd::FileMaster::openRestartIFile()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00694">McMd::Simulation::random()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00219">readParam()</a>, <a class="el" href="mcMd_2util_2FileMaster_8cpp_source.html#l00101">McMd::FileMaster::setCommandFileName()</a>, <a class="el" href="BinaryFileIArchive_8cpp_source.html#l00036">Util::BinaryFileIArchive::setStream()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00120">McSimulation::setOptions()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00120">setOptions()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a51303abd6493843217aadf296486941f"></a><!-- doxytag: member="McMd::McSimulation::serialize" ref="a51303abd6493843217aadf296486941f" args="(Archive &amp;ar, unsigned int version)" -->
+<a class="anchor" id="a7ba4e23de474ba06fa45ca80157fc3cd"></a><!-- doxytag: member="McMd::McSimulation::serialize" ref="a7ba4e23de474ba06fa45ca80157fc3cd" args="(Archive &amp;ar, unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void McMd::McSimulation::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -516,16 +518,16 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComponent.html#a6765e839ab267e4959384e35a4112451">ParamComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComponent.html#a43f7dd33894b4ad67245162146042e6e">Util::ParamComponent</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a332d034adbe18b9e8dc187ada84b5b29"></a><!-- doxytag: member="McMd::McSimulation::system" ref="a332d034adbe18b9e8dc187ada84b5b29" args="()" -->
+<a class="anchor" id="a5660a84f876baadc941c26786d8b16b4"></a><!-- doxytag: member="McMd::McSimulation::system" ref="a5660a84f876baadc941c26786d8b16b4" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp; system </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp; McMd::McSimulation::system </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -538,16 +540,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8h_source.html#l00223">223</a> of file <a class="el" href="McSimulation_8h_source.html">McSimulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McSimulation::analyze()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00686">McSimulation::isValid()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00060">McSimulation::McSimulation()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00225">McSimulation::readCommands()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00182">McSimulation::readParam()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00642">McSimulation::readRestart()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00120">McSimulation::setOptions()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00430">McSimulation::simulate()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00624">McSimulation::writeRestart()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">analyze()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00686">isValid()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00060">McSimulation()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00225">readCommands()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00182">readParam()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00642">readRestart()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00120">setOptions()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00430">simulate()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00624">writeRestart()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aeb745afd02b0f0ecd6b47397e5fc5927"></a><!-- doxytag: member="McMd::McSimulation::system" ref="aeb745afd02b0f0ecd6b47397e5fc5927" args="() const " -->
+<a class="anchor" id="a357c4f10cde4d73667703eca6ea453d0"></a><!-- doxytag: member="McMd::McSimulation::system" ref="a357c4f10cde4d73667703eca6ea453d0" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp; system </td>
+          <td class="memname">const <a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> &amp; McMd::McSimulation::system </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -562,12 +564,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae28a4eb199587995f34740c65a869cf8"></a><!-- doxytag: member="McMd::McSimulation::mcMoveFactory" ref="ae28a4eb199587995f34740c65a869cf8" args="()" -->
+<a class="anchor" id="a1e77cead3141ff5bfaa00a5fb38b06c1"></a><!-- doxytag: member="McMd::McSimulation::mcMoveFactory" ref="a1e77cead3141ff5bfaa00a5fb38b06c1" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1McMove.html">McMove</a> &gt; &amp; mcMoveFactory </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1McMove.html">McMove</a> &gt; &amp; McMd::McSimulation::mcMoveFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -580,16 +582,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00680">680</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="Manager_8h_source.html#l00228">Manager&lt; Data &gt;::factory()</a>.</p>
+<p>References <a class="el" href="Manager_8h_source.html#l00228">Util::Manager&lt; Data &gt;::factory()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><!-- doxytag: member="McMd::McSimulation::isValid" ref="aac1b70a2ed67ead038c4d3f5ac4d8a81" args="() const " -->
+<a class="anchor" id="aa5d11923cf6ca22923eef02e5ce79c8b"></a><!-- doxytag: member="McMd::McSimulation::isValid" ref="aa5d11923cf6ca22923eef02e5ce79c8b" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool McMd::McSimulation::isValid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [virtual]</code></td>
@@ -600,22 +602,22 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return true if valid, or throw an Exception. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Simulation.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">Simulation</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Simulation.html#a9b402514f7762c269d27228d81592c5b">McMd::Simulation</a>.</p>
 
 <p>Definition at line <a class="el" href="McSimulation_8cpp_source.html#l00686">686</a> of file <a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a>.</p>
 
-<p>References <a class="el" href="McSystem_8cpp_source.html#l00450">McSystem::isValid()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">McSimulation::system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="McSystem_8cpp_source.html#l00450">McMd::McSystem::isValid()</a>, <a class="el" href="McSimulation_8h_source.html#l00223">system()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McSimulation::analyze()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00182">McSimulation::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">analyze()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00182">readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a011337f3914761184d82d072c07359e6"></a><!-- doxytag: member="McMd::McSimulation::mcMoveManager" ref="a011337f3914761184d82d072c07359e6" args="()" -->
+<a class="anchor" id="ad896cf0290f903dd3a02afb7543fffd2"></a><!-- doxytag: member="McMd::McSimulation::mcMoveManager" ref="ad896cf0290f903dd3a02afb7543fffd2" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1McMoveManager.html">McMoveManager</a> &amp; mcMoveManager </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1McMoveManager.html">McMoveManager</a> &amp; McMd::McSimulation::mcMoveManager </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -635,7 +637,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="McSimulation_8cpp_source.html">McSimulation.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:55 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:27 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

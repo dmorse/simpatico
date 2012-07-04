@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -80,7 +80,7 @@
 <a name="l00029"></a>00029 
 <a name="l00030"></a>00030    <span class="comment">// Static functions</span>
 <a name="l00031"></a>00031    
-<a name="l00032"></a><a class="code" href="classMcMd_1_1Atom.html#a608e10d093425c9228f10ed3c4994598">00032</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Atom.html#a608e10d093425c9228f10ed3c4994598" title="Method to guarantee initialization of static data.">Atom::initStatic</a>()
+<a name="l00032"></a><a class="code" href="classMcMd_1_1Atom.html#a113013bd1a361f57657688b4602cb813">00032</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Atom.html#a113013bd1a361f57657688b4602cb813" title="Method to guarantee initialization of static data.">Atom::initStatic</a>()
 <a name="l00033"></a>00033    {
 <a name="l00034"></a>00034       atoms_        = 0;
 <a name="l00035"></a>00035       masks_        = 0;
@@ -96,7 +96,7 @@
 <a name="l00045"></a>00045    <span class="comment">/* </span>
 <a name="l00046"></a>00046 <span class="comment">   * Allocate a static array of Atom objects.</span>
 <a name="l00047"></a>00047 <span class="comment">   */</span>
-<a name="l00048"></a><a class="code" href="classMcMd_1_1Atom.html#a756c62af477064d88c170751f9bea836">00048</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Atom.html#a756c62af477064d88c170751f9bea836" title="Allocate a static array of Atom objects.">Atom::allocate</a>(<span class="keywordtype">int</span> capacity, <a class="code" href="classUtil_1_1RArray.html">RArray&lt;Atom&gt;</a>&amp; atoms)
+<a name="l00048"></a><a class="code" href="classMcMd_1_1Atom.html#a2d2175ba5b0934a509650253a8254dab">00048</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Atom.html#a2d2175ba5b0934a509650253a8254dab" title="Allocate a static array of Atom objects.">Atom::allocate</a>(<span class="keywordtype">int</span> capacity, <a class="code" href="classUtil_1_1RArray.html">RArray&lt;Atom&gt;</a>&amp; atoms)
 <a name="l00049"></a>00049    {  
 <a name="l00050"></a>00050       <span class="keywordflow">if</span> (capacity == 0) <span class="keywordflow">return</span>;
 <a name="l00051"></a>00051 
@@ -117,22 +117,22 @@
 <a name="l00066"></a>00066          atoms_[i].id_ = i;
 <a name="l00067"></a>00067          moleculePtrs_[i] = 0;
 <a name="l00068"></a>00068       }
-<a name="l00069"></a>00069       atoms.<a class="code" href="classUtil_1_1RArray.html#a6225510426182f2bb452819a57aa54ed" title="Associate this RArray with an existing Array object.">associate</a>(atoms_, capacity_);
+<a name="l00069"></a>00069       atoms.<a class="code" href="classUtil_1_1RArray.html#a5ce7d0c2e141487a265591cc8e6d00dc" title="Associate this RArray with an existing Array object.">associate</a>(atoms_, capacity_);
 <a name="l00070"></a>00070 
 <a name="l00071"></a>00071       forces_ = <span class="keyword">new</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>[capacity_];
 <a name="l00072"></a>00072       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; capacity_; ++i) {
-<a name="l00073"></a>00073          forces_[i].<a class="code" href="classUtil_1_1Vector.html#ad9d471a74fb7cd01b0c3ab87309cfbef" title="Set all elements of a 3D vector to zero.">zero</a>();
+<a name="l00073"></a>00073          forces_[i].<a class="code" href="classUtil_1_1Vector.html#ad3c344d3bd1142b3afadaed0dc3c1f4d" title="Set all elements of a 3D vector to zero.">zero</a>();
 <a name="l00074"></a>00074       }
 <a name="l00075"></a>00075 
 <a name="l00076"></a>00076       velocities_ = <span class="keyword">new</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>[capacity_];
 <a name="l00077"></a>00077       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; capacity_; ++i) {
-<a name="l00078"></a>00078          velocities_[i].<a class="code" href="classUtil_1_1Vector.html#ad9d471a74fb7cd01b0c3ab87309cfbef" title="Set all elements of a 3D vector to zero.">zero</a>();
+<a name="l00078"></a>00078          velocities_[i].<a class="code" href="classUtil_1_1Vector.html#ad3c344d3bd1142b3afadaed0dc3c1f4d" title="Set all elements of a 3D vector to zero.">zero</a>();
 <a name="l00079"></a>00079       }
 <a name="l00080"></a>00080 
 <a name="l00081"></a>00081 <span class="preprocessor">      #ifdef MCMD_SHIFT</span>
 <a name="l00082"></a>00082 <span class="preprocessor"></span>      shifts_ = <span class="keyword">new</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>[capacity_];
 <a name="l00083"></a>00083       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; capacity_; ++i) {
-<a name="l00084"></a>00084          shifts_[i].<a class="code" href="classUtil_1_1IntVector.html#aa7047f1b388efbf27af45d48f1e5bda2" title="Set all elements of a 3D vector to zero.">zero</a>();
+<a name="l00084"></a>00084          shifts_[i].<a class="code" href="classUtil_1_1IntVector.html#a8d5b91b905e4cbfabfd297826c034adc" title="Set all elements of a 3D vector to zero.">zero</a>();
 <a name="l00085"></a>00085       }
 <a name="l00086"></a>00086 <span class="preprocessor">      #endif</span>
 <a name="l00087"></a>00087 <span class="preprocessor"></span>
@@ -141,7 +141,7 @@
 <a name="l00090"></a>00090    <span class="comment">/* </span>
 <a name="l00091"></a>00091 <span class="comment">   * Deallocate all atoms.</span>
 <a name="l00092"></a>00092 <span class="comment">   */</span>
-<a name="l00093"></a><a class="code" href="classMcMd_1_1Atom.html#a2d68be4fd20ffdd7f7a9b51579eacc2f">00093</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Atom.html#a2d68be4fd20ffdd7f7a9b51579eacc2f" title="Delete all static arrays.">Atom::deallocate</a>()
+<a name="l00093"></a><a class="code" href="classMcMd_1_1Atom.html#a3cd7efed48bafe66f5669ac55b5069f5">00093</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Atom.html#a3cd7efed48bafe66f5669ac55b5069f5" title="Delete all static arrays.">Atom::deallocate</a>()
 <a name="l00094"></a>00094    {  
 <a name="l00095"></a>00095       <span class="keywordflow">if</span> (atoms_) {
 <a name="l00096"></a>00096          <span class="keyword">delete</span> [] atoms_;
@@ -175,16 +175,16 @@
 <a name="l00124"></a>00124    {}
 <a name="l00125"></a>00125 
 <a name="l00126"></a>00126    <span class="comment">// Set pointer to parent molecule.</span>
-<a name="l00127"></a><a class="code" href="classMcMd_1_1Atom.html#ab791642f7bf0efcb7a74358c78cd194e">00127</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Atom.html#ab791642f7bf0efcb7a74358c78cd194e" title="Set the molecule.">Atom::setMolecule</a>(<a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> &amp;molecule)
+<a name="l00127"></a><a class="code" href="classMcMd_1_1Atom.html#a46c89a6db1c10304d1d0cdf5c7e28cf9">00127</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Atom.html#a46c89a6db1c10304d1d0cdf5c7e28cf9" title="Set the molecule.">Atom::setMolecule</a>(<a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> &amp;molecule)
 <a name="l00128"></a>00128    { 
-<a name="l00129"></a>00129       moleculePtrs_[id_] = &amp;<a class="code" href="classMcMd_1_1Atom.html#ae73230f53be08f7eb347b5201d903bb4" title="Get the parent Molecule by reference.">molecule</a>; 
+<a name="l00129"></a>00129       moleculePtrs_[id_] = &amp;<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>; 
 <a name="l00130"></a>00130    }
 <a name="l00131"></a>00131 
 <a name="l00132"></a>00132 } 
 <a name="l00133"></a>00133 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Timer Class Reference</title>
+<title>Simpatico: Util::Timer Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,12 +49,12 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Timer Class Reference<div class="ingroups"><a class="el" href="group__Util__Module.html">Utilities</a></div></h1>  </div>
+<h1>Util::Timer Class Reference<div class="ingroups"><a class="el" href="group__Util__Module.html">Utilities</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Timer" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Wall clock timer. </p>
-<p>A <a class="el" href="classUtil_1_1Timer.html" title="Wall clock timer.">Timer</a> keeps track of the time elapsed during one or more interval. Each interval begins when <a class="el" href="classUtil_1_1Timer.html#a60de64d75454385b23995437f1d72669" title="Start the clock.">start()</a> is called and ends when <a class="el" href="classUtil_1_1Timer.html#a8c528baf37154d347366083f0f816846" title="Stop the clock, increment time.">stop()</a> is called. If <a class="el" href="classUtil_1_1Timer.html#a60de64d75454385b23995437f1d72669" title="Start the clock.">start()</a> and <a class="el" href="classUtil_1_1Timer.html#a8c528baf37154d347366083f0f816846" title="Stop the clock, increment time.">stop()</a> are invoked repeatedly, the timer accumulates the time elapses in multiple intervals. The accumulated time is returned by the <a class="el" href="classUtil_1_1Timer.html#a3baa422b73a65205ed2776fe0d948231" title="Get the accumulated time, in seconds.">time()</a> method, and can be reset to zero by the <a class="el" href="classUtil_1_1Timer.html#ac8bb3912a3ce86b15842e79d0b421204" title="Set accumulated time to zero.">clear()</a> method. </p>
+<p>A <a class="el" href="classUtil_1_1Timer.html" title="Wall clock timer.">Timer</a> keeps track of the time elapsed during one or more interval. Each interval begins when <a class="el" href="classUtil_1_1Timer.html#a764719f9d15f7f600cd321642b327b2b" title="Start the clock.">start()</a> is called and ends when <a class="el" href="classUtil_1_1Timer.html#a462dc6312e69bbf03e169fff832bd562" title="Stop the clock, increment time.">stop()</a> is called. If <a class="el" href="classUtil_1_1Timer.html#a764719f9d15f7f600cd321642b327b2b" title="Start the clock.">start()</a> and <a class="el" href="classUtil_1_1Timer.html#a462dc6312e69bbf03e169fff832bd562" title="Stop the clock, increment time.">stop()</a> are invoked repeatedly, the timer accumulates the time elapses in multiple intervals. The accumulated time is returned by the <a class="el" href="classUtil_1_1Timer.html#ac411a514744abf68efc18532388c8b0b" title="Get the accumulated time, in seconds.">time()</a> method, and can be reset to zero by the <a class="el" href="classUtil_1_1Timer.html#a7759ffbb6a675d82f67edcdf1646685c" title="Set accumulated time to zero.">clear()</a> method. </p>
 
 <p>Definition at line <a class="el" href="Timer_8h_source.html#l00030">30</a> of file <a class="el" href="Timer_8h_source.html">Timer.h</a>.</p>
 </div>
@@ -64,26 +64,26 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#a6a8bc5014802d569f6d01c4f36121a81">Timer</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6a8bc5014802d569f6d01c4f36121a81"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#a60de64d75454385b23995437f1d72669">start</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the clock.  <a href="#a60de64d75454385b23995437f1d72669"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#a8c528baf37154d347366083f0f816846">stop</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the clock, increment time.  <a href="#a8c528baf37154d347366083f0f816846"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#ac8bb3912a3ce86b15842e79d0b421204">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set accumulated time to zero.  <a href="#ac8bb3912a3ce86b15842e79d0b421204"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#a3baa422b73a65205ed2776fe0d948231">time</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the accumulated time, in seconds.  <a href="#a3baa422b73a65205ed2776fe0d948231"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#a40e5881f9c001c5cc38554084751adbc">isRunning</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the timer running?  <a href="#a40e5881f9c001c5cc38554084751adbc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#a4114512a4b5efd15a9e42b0f5d11bd24">Timer</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a4114512a4b5efd15a9e42b0f5d11bd24"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#a764719f9d15f7f600cd321642b327b2b">start</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the clock.  <a href="#a764719f9d15f7f600cd321642b327b2b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#a462dc6312e69bbf03e169fff832bd562">stop</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop the clock, increment time.  <a href="#a462dc6312e69bbf03e169fff832bd562"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#a7759ffbb6a675d82f67edcdf1646685c">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set accumulated time to zero.  <a href="#a7759ffbb6a675d82f67edcdf1646685c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#ac411a514744abf68efc18532388c8b0b">time</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the accumulated time, in seconds.  <a href="#ac411a514744abf68efc18532388c8b0b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Timer.html#a3eabd9ebdf0b162158b4b603cbd2ce3e">isRunning</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the timer running?  <a href="#a3eabd9ebdf0b162158b4b603cbd2ce3e"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a6a8bc5014802d569f6d01c4f36121a81"></a><!-- doxytag: member="Util::Timer::Timer" ref="a6a8bc5014802d569f6d01c4f36121a81" args="()" -->
+<a class="anchor" id="a4114512a4b5efd15a9e42b0f5d11bd24"></a><!-- doxytag: member="Util::Timer::Timer" ref="a4114512a4b5efd15a9e42b0f5d11bd24" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Timer.html">Timer</a> </td>
+          <td class="memname">Util::Timer::Timer </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -99,12 +99,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a60de64d75454385b23995437f1d72669"></a><!-- doxytag: member="Util::Timer::start" ref="a60de64d75454385b23995437f1d72669" args="()" -->
+<a class="anchor" id="a764719f9d15f7f600cd321642b327b2b"></a><!-- doxytag: member="Util::Timer::start" ref="a764719f9d15f7f600cd321642b327b2b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void start </td>
+          <td class="memname">void Util::Timer::start </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -119,16 +119,16 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00497">MdSimulation::analyzeDumps()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00565">MdSimulation::analyzeTrajectory()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00401">MdSimulation::simulate()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00430">McSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McMd::McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00497">McMd::MdSimulation::analyzeDumps()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00565">McMd::MdSimulation::analyzeTrajectory()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00401">McMd::MdSimulation::simulate()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00430">McMd::McSimulation::simulate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8c528baf37154d347366083f0f816846"></a><!-- doxytag: member="Util::Timer::stop" ref="a8c528baf37154d347366083f0f816846" args="()" -->
+<a class="anchor" id="a462dc6312e69bbf03e169fff832bd562"></a><!-- doxytag: member="Util::Timer::stop" ref="a462dc6312e69bbf03e169fff832bd562" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void stop </td>
+          <td class="memname">void Util::Timer::stop </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -143,16 +143,16 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00497">MdSimulation::analyzeDumps()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00565">MdSimulation::analyzeTrajectory()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00401">MdSimulation::simulate()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00430">McSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McMd::McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00497">McMd::MdSimulation::analyzeDumps()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00565">McMd::MdSimulation::analyzeTrajectory()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00401">McMd::MdSimulation::simulate()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00430">McMd::McSimulation::simulate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac8bb3912a3ce86b15842e79d0b421204"></a><!-- doxytag: member="Util::Timer::clear" ref="ac8bb3912a3ce86b15842e79d0b421204" args="()" -->
+<a class="anchor" id="a7759ffbb6a675d82f67edcdf1646685c"></a><!-- doxytag: member="Util::Timer::clear" ref="a7759ffbb6a675d82f67edcdf1646685c" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void clear </td>
+          <td class="memname">void Util::Timer::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -167,12 +167,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3baa422b73a65205ed2776fe0d948231"></a><!-- doxytag: member="Util::Timer::time" ref="a3baa422b73a65205ed2776fe0d948231" args="()" -->
+<a class="anchor" id="ac411a514744abf68efc18532388c8b0b"></a><!-- doxytag: member="Util::Timer::time" ref="ac411a514744abf68efc18532388c8b0b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double time </td>
+          <td class="memname">double Util::Timer::time </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -185,16 +185,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Timer_8h_source.html#l00110">110</a> of file <a class="el" href="Timer_8h_source.html">Timer.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00497">MdSimulation::analyzeDumps()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00565">MdSimulation::analyzeTrajectory()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00401">MdSimulation::simulate()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00430">McSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McMd::McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00497">McMd::MdSimulation::analyzeDumps()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00565">McMd::MdSimulation::analyzeTrajectory()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00401">McMd::MdSimulation::simulate()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00430">McMd::McSimulation::simulate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a40e5881f9c001c5cc38554084751adbc"></a><!-- doxytag: member="Util::Timer::isRunning" ref="a40e5881f9c001c5cc38554084751adbc" args="()" -->
+<a class="anchor" id="a3eabd9ebdf0b162158b4b603cbd2ce3e"></a><!-- doxytag: member="Util::Timer::isRunning" ref="a3eabd9ebdf0b162158b4b603cbd2ce3e" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isRunning </td>
+          <td class="memname">bool Util::Timer::isRunning </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -213,7 +213,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="Timer_8h_source.html">Timer.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:45:01 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:34 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

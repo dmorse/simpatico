@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -67,7 +67,7 @@
 <a name="l00021"></a>00021    <span class="keyword">public</span>:
 <a name="l00022"></a>00022 
 <a name="l00029"></a>00029       <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00030"></a>00030       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PointGroup.html#ad1162ba473af0a6f90a0118820eeb295" title="Generate a set of reciprocal vectors that are related by symmetry.">makeStar</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; root, <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;IntVector, N&gt;</a>&amp; star);
+<a name="l00030"></a>00030       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PointGroup.html#acbf787fd55ab2dce6f5d2fbaf28c5e3f" title="Generate a set of reciprocal vectors that are related by symmetry.">makeStar</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; root, <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;IntVector, N&gt;</a>&amp; star);
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032    <span class="comment">// friends:</span>
 <a name="l00033"></a>00033 
@@ -76,33 +76,33 @@
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037    };
 <a name="l00038"></a>00038 
-<a name="l00042"></a>00042    std::ostream&amp; <a class="code" href="namespaceUtil.html#a7a94bc3185d3be0028eacd3076edb6d3" title="ostream inserter for an OrthorhombicBoundary.">operator &lt;&lt; </a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1PointGroup.html" title="Group of crystal symmetries with no translations.">PointGroup</a>&amp; A);
+<a name="l00042"></a>00042    std::ostream&amp; <a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d" title="ostream inserter for an OrthorhombicBoundary.">operator &lt;&lt; </a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1PointGroup.html" title="Group of crystal symmetries with no translations.">PointGroup</a>&amp; A);
 <a name="l00043"></a>00043 
 <a name="l00044"></a>00044    <span class="comment">// Template function definition</span>
 <a name="l00045"></a>00045 
 <a name="l00046"></a>00046    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00047"></a><a class="code" href="classUtil_1_1PointGroup.html#ad1162ba473af0a6f90a0118820eeb295">00047</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PointGroup.html#ad1162ba473af0a6f90a0118820eeb295" title="Generate a set of reciprocal vectors that are related by symmetry.">PointGroup::makeStar</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; root, <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;IntVector, N&gt;</a>&amp; star)
+<a name="l00047"></a><a class="code" href="classUtil_1_1PointGroup.html#acbf787fd55ab2dce6f5d2fbaf28c5e3f">00047</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PointGroup.html#acbf787fd55ab2dce6f5d2fbaf28c5e3f" title="Generate a set of reciprocal vectors that are related by symmetry.">PointGroup::makeStar</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>&amp; root, <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;IntVector, N&gt;</a>&amp; star)
 <a name="l00048"></a>00048    {
 <a name="l00049"></a>00049       <span class="comment">// Precondition</span>
-<a name="l00050"></a>00050       <span class="keywordflow">if</span> (star.<a class="code" href="classUtil_1_1FSArray.html#a104736719cd4e5f21c25705c77064dde" title="Return physical capacity of array.">capacity</a>() &lt; <a class="code" href="classUtil_1_1SymmetryGroup.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return number of elements in group.">size</a>()) {
+<a name="l00050"></a>00050       <span class="keywordflow">if</span> (star.<a class="code" href="classUtil_1_1FSArray.html#a5c041a3b35512f82f2428659369801fa" title="Return physical capacity of array.">capacity</a>() &lt; <a class="code" href="classUtil_1_1SymmetryGroup.html#a715613decb8f5ce477562764146d1dd8" title="Return number of elements in group.">size</a>()) {
 <a name="l00051"></a>00051          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Star array capacity is less than order of group&quot;</span>);
 <a name="l00052"></a>00052       }
 <a name="l00053"></a>00053 
 <a name="l00054"></a>00054       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> vector;
 <a name="l00055"></a>00055       <span class="keywordtype">int</span>       i, j;
 <a name="l00056"></a>00056       <span class="keywordtype">bool</span>      found;
-<a name="l00057"></a>00057       star.<a class="code" href="classUtil_1_1FSArray.html#ac8bb3912a3ce86b15842e79d0b421204" title="Set logical size to zero.">clear</a>();
-<a name="l00058"></a>00058       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classUtil_1_1SymmetryGroup.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return number of elements in group.">size</a>(); ++i) {
+<a name="l00057"></a>00057       star.<a class="code" href="classUtil_1_1FSArray.html#aa5da5b07a40d627d37e0dac7e8e39207" title="Set logical size to zero.">clear</a>();
+<a name="l00058"></a>00058       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="classUtil_1_1SymmetryGroup.html#a715613decb8f5ce477562764146d1dd8" title="Return number of elements in group.">size</a>(); ++i) {
 <a name="l00059"></a>00059          vector = root*(*this)[i];
 <a name="l00060"></a>00060          found = <span class="keyword">false</span>;
-<a name="l00061"></a>00061          <span class="keywordflow">for</span> (j = 0; j &lt; star.<a class="code" href="classUtil_1_1FSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">size</a>(); ++j) {
+<a name="l00061"></a>00061          <span class="keywordflow">for</span> (j = 0; j &lt; star.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>(); ++j) {
 <a name="l00062"></a>00062             <span class="keywordflow">if</span> (vector == star[j]) {
 <a name="l00063"></a>00063                found = <span class="keyword">true</span>;
 <a name="l00064"></a>00064                <span class="keywordflow">break</span>;
 <a name="l00065"></a>00065             }
 <a name="l00066"></a>00066          }
 <a name="l00067"></a>00067          <span class="keywordflow">if</span> (!found) {
-<a name="l00068"></a>00068             star.<a class="code" href="classUtil_1_1FSArray.html#a578e50675e1ec828c5a5a92737ad4cf7" title="Append data to the end of the array.">append</a>(vector);
+<a name="l00068"></a>00068             star.<a class="code" href="classUtil_1_1FSArray.html#a74ef93eabdb54ff1453a3252019984bc" title="Append data to the end of the array.">append</a>(vector);
 <a name="l00069"></a>00069          }
 <a name="l00070"></a>00070       }
 <a name="l00071"></a>00071    
@@ -112,7 +112,7 @@
 <a name="l00075"></a>00075 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

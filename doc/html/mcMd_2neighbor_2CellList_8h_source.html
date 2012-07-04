@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -83,9 +83,9 @@
 <a name="l00058"></a>00058 
 <a name="l00059"></a>00059       <span class="comment">// Static members</span>
 <a name="l00060"></a>00060 
-<a name="l00067"></a><a class="code" href="classMcMd_1_1CellList.html#acd2a83d9eb80a2906f633156d60f90d1">00067</a>       <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> MaxNeighbor = 27*<a class="code" href="classMcMd_1_1Cell.html#add04409374e0cdbb2d8fbadc2b88aa30" title="Maximum number of atoms per cell.">Cell::MaxAtomCell</a>;
+<a name="l00067"></a><a class="code" href="classMcMd_1_1CellList.html#aba50a3a17d2657e5f157265e61f91796">00067</a>       <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> MaxNeighbor = 27*<a class="code" href="classMcMd_1_1Cell.html#a7cc8c945fc6918e225cc8d6d2d2c0843" title="Maximum number of atoms per cell.">Cell::MaxAtomCell</a>;
 <a name="l00068"></a>00068 
-<a name="l00074"></a><a class="code" href="group__McMd__Neighbor__Module.html#ga2dfbb77a6b672d5fb5b478066c58f74e">00074</a>       <span class="keyword">typedef</span> <a class="code" href="classUtil_1_1FSArray.html">FSArray&lt;Atom*, MaxNeighbor&gt;</a> <a class="code" href="group__McMd__Neighbor__Module.html#ga2dfbb77a6b672d5fb5b478066c58f74e" title="Static array for holding neighbors in a cell list.">NeighborArray</a>;
+<a name="l00074"></a><a class="code" href="group__McMd__Neighbor__Module.html#gaeec12b1b2a97eacfd8e4dad3131d8ca2">00074</a>       <span class="keyword">typedef</span> <a class="code" href="classUtil_1_1FSArray.html">FSArray&lt;Atom*, MaxNeighbor&gt;</a> <a class="code" href="group__McMd__Neighbor__Module.html#gaeec12b1b2a97eacfd8e4dad3131d8ca2" title="Static array for holding neighbors in a cell list.">NeighborArray</a>;
 <a name="l00075"></a>00075 
 <a name="l00076"></a>00076       <span class="comment">// public methods</span>
 <a name="l00077"></a>00077 
@@ -93,9 +93,9 @@
 <a name="l00082"></a>00082 
 <a name="l00088"></a>00088       <span class="keyword">virtual</span> ~<a class="code" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>();
 <a name="l00089"></a>00089 
-<a name="l00110"></a>00110       <span class="keywordtype">void</span> allocate(<span class="keywordtype">int</span> atomCapacity, <span class="keyword">const</span> Boundary &amp;boundary, <span class="keywordtype">double</span> cutoff);
+<a name="l00110"></a>00110       <span class="keywordtype">void</span> allocate(<span class="keywordtype">int</span> atomCapacity, <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary, <span class="keywordtype">double</span> cutoff);
 <a name="l00111"></a>00111 
-<a name="l00124"></a>00124       <span class="keywordtype">void</span> makeGrid (<span class="keyword">const</span> Boundary &amp;boundary, <span class="keywordtype">double</span> cutoff);
+<a name="l00124"></a>00124       <span class="keywordtype">void</span> makeGrid (<span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary, <span class="keywordtype">double</span> cutoff);
 <a name="l00125"></a>00125 
 <a name="l00129"></a>00129       <span class="keywordtype">void</span> clear();
 <a name="l00130"></a>00130 
@@ -137,7 +137,7 @@
 <a name="l00244"></a>00244       <span class="keywordtype">int</span>    YZCells_;      
 <a name="l00245"></a>00245       <span class="keywordtype">int</span>    totCells_;     
 <a name="l00246"></a>00246 
-<a name="l00258"></a>00258       <span class="keywordtype">void</span> setCellsAxis(<span class="keyword">const</span> Boundary &amp;boundary, <span class="keywordtype">int</span> axis, <span class="keywordtype">double</span> cutoff);
+<a name="l00258"></a>00258       <span class="keywordtype">void</span> setCellsAxis(<span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary, <span class="keywordtype">int</span> axis, <span class="keywordtype">double</span> cutoff);
 <a name="l00259"></a>00259 
 <a name="l00269"></a>00269       <span class="keywordtype">int</span> shiftCellCoordAxis(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> x) <span class="keyword">const</span>;
 <a name="l00270"></a>00270 
@@ -161,13 +161,13 @@
 <a name="l00302"></a>00302    <span class="comment">/*</span>
 <a name="l00303"></a>00303 <span class="comment">   * Get total number of cells in this CellList.</span>
 <a name="l00304"></a>00304 <span class="comment">   */</span>
-<a name="l00305"></a><a class="code" href="classMcMd_1_1CellList.html#aac64babdd690054a1dbd263e9a6d98de">00305</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1CellList.html#aac64babdd690054a1dbd263e9a6d98de" title="Get total number of cells in this CellList.">CellList::totCells</a>()<span class="keyword"> const</span>
+<a name="l00305"></a><a class="code" href="classMcMd_1_1CellList.html#afc404fadea4c7ea9587cd7a3ad15dc1c">00305</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1CellList.html#afc404fadea4c7ea9587cd7a3ad15dc1c" title="Get total number of cells in this CellList.">CellList::totCells</a>()<span class="keyword"> const</span>
 <a name="l00306"></a>00306 <span class="keyword">   </span>{ <span class="keywordflow">return</span> totCells_; }
 <a name="l00307"></a>00307 
 <a name="l00308"></a>00308    <span class="comment">/*</span>
 <a name="l00309"></a>00309 <span class="comment">   *  Return index of the cell that contains the position array pos = {x, y, z}.</span>
 <a name="l00310"></a>00310 <span class="comment">   */</span>
-<a name="l00311"></a><a class="code" href="classMcMd_1_1CellList.html#a8f06309cacf301150ce54e9c1da870db">00311</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1CellList.html#a8f06309cacf301150ce54e9c1da870db" title="Return index of the cell that contains the position pos = (x,y,z).">CellList::cellIndexFromPosition</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;pos)<span class="keyword"> const</span>
+<a name="l00311"></a><a class="code" href="classMcMd_1_1CellList.html#a362efc492b788debcbad2e11d0a782a6">00311</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1CellList.html#a362efc492b788debcbad2e11d0a782a6" title="Return index of the cell that contains the position pos = (x,y,z).">CellList::cellIndexFromPosition</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;pos)<span class="keyword"> const</span>
 <a name="l00312"></a>00312 <span class="keyword">   </span>{
 <a name="l00313"></a>00313       <span class="keywordtype">int</span> cx, cy, cz;
 <a name="l00314"></a>00314       cx = int(pos[0]/cellWidth_[0]);
@@ -197,22 +197,22 @@
 <a name="l00338"></a>00338    <span class="comment">/*</span>
 <a name="l00339"></a>00339 <span class="comment">   * Remove an Atom object from its Cell.</span>
 <a name="l00340"></a>00340 <span class="comment">   */</span>
-<a name="l00341"></a><a class="code" href="classMcMd_1_1CellList.html#a996c9a03f48f50325ddc703f3d5ee77d">00341</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CellList.html#a996c9a03f48f50325ddc703f3d5ee77d" title="Delete a Atom object from its cell.">CellList::deleteAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
+<a name="l00341"></a><a class="code" href="classMcMd_1_1CellList.html#a07fd0c30018abf719bbf810818b7c1ff">00341</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CellList.html#a07fd0c30018abf719bbf810818b7c1ff" title="Delete a Atom object from its cell.">CellList::deleteAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
 <a name="l00342"></a>00342    {
-<a name="l00343"></a>00343       <span class="keywordtype">int</span> atomId   = atom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00343"></a>00343       <span class="keywordtype">int</span> atomId   = atom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00344"></a>00344       assert(isValidAtomId(atomId));
 <a name="l00345"></a>00345       <a class="code" href="classMcMd_1_1CellTag.html" title="Location of the pointer to a particular Atom in a CellList.">CellTag</a>&amp; cellTag = cellTags_[atomId];
-<a name="l00346"></a>00346       cells_[cellTag.<a class="code" href="classMcMd_1_1CellTag.html#a56e03f67e0db44ed6ecd58e54f005f86" title="Cell index of Cell containing associated Atom.">cellId</a>].deleteAtom(cellTag);
+<a name="l00346"></a>00346       cells_[cellTag.<a class="code" href="classMcMd_1_1CellTag.html#aa2e8980f3c665c86fca15d75613a6857" title="Cell index of Cell containing associated Atom.">cellId</a>].deleteAtom(cellTag);
 <a name="l00347"></a>00347    }
 <a name="l00348"></a>00348 
 <a name="l00349"></a>00349    <span class="comment">/*</span>
 <a name="l00350"></a>00350 <span class="comment">   * Add a Atom to the appropriate cell, based on its position.</span>
 <a name="l00351"></a>00351 <span class="comment">   */</span>
-<a name="l00352"></a><a class="code" href="classMcMd_1_1CellList.html#a2bd3c1a1c3ba81bb593203889d747f8a">00352</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CellList.html#a2bd3c1a1c3ba81bb593203889d747f8a" title="Add a Atom to the appropriate cell, based on its position.">CellList::addAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
+<a name="l00352"></a><a class="code" href="classMcMd_1_1CellList.html#a2c1742bd324dd3ab05663dcb8ef2c382">00352</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CellList.html#a2c1742bd324dd3ab05663dcb8ef2c382" title="Add a Atom to the appropriate cell, based on its position.">CellList::addAtom</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
 <a name="l00353"></a>00353    {
-<a name="l00354"></a>00354       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> position = atom.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00354"></a>00354       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> position = atom.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00355"></a>00355       <span class="keywordtype">int</span>    cellId   = cellIndexFromPosition(position);
-<a name="l00356"></a>00356       <span class="keywordtype">int</span>    atomId   = atom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00356"></a>00356       <span class="keywordtype">int</span>    atomId   = atom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00357"></a>00357       assert(isValidAtomId(atomId));
 <a name="l00358"></a>00358       cells_[cellId].addAtom(cellTags_[atomId], atom, cellId);
 <a name="l00359"></a>00359    }
@@ -220,12 +220,12 @@
 <a name="l00361"></a>00361    <span class="comment">/*</span>
 <a name="l00362"></a>00362 <span class="comment">   * Update CellList to reflect new atom position</span>
 <a name="l00363"></a>00363 <span class="comment">   */</span>
-<a name="l00364"></a><a class="code" href="classMcMd_1_1CellList.html#a57541aff425f7c1637ff136bdc009873">00364</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CellList.html#a57541aff425f7c1637ff136bdc009873" title="Update CellList to reflect a new atom position.">CellList::updateAtomCell</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;pos)
+<a name="l00364"></a><a class="code" href="classMcMd_1_1CellList.html#ac3abb595512ba9d50047860fc2375f96">00364</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CellList.html#ac3abb595512ba9d50047860fc2375f96" title="Update CellList to reflect a new atom position.">CellList::updateAtomCell</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;pos)
 <a name="l00365"></a>00365    {
-<a name="l00366"></a>00366       <span class="keywordtype">int</span> atomId = atom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00366"></a>00366       <span class="keywordtype">int</span> atomId = atom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00367"></a>00367       assert(isValidAtomId(atomId));
 <a name="l00368"></a>00368       <a class="code" href="classMcMd_1_1CellTag.html" title="Location of the pointer to a particular Atom in a CellList.">CellTag</a>&amp; cellTag = cellTags_[atomId];
-<a name="l00369"></a>00369       <span class="keywordtype">int</span>      oldCell = cellTag.<a class="code" href="classMcMd_1_1CellTag.html#a56e03f67e0db44ed6ecd58e54f005f86" title="Cell index of Cell containing associated Atom.">cellId</a>;
+<a name="l00369"></a>00369       <span class="keywordtype">int</span>      oldCell = cellTag.<a class="code" href="classMcMd_1_1CellTag.html#aa2e8980f3c665c86fca15d75613a6857" title="Cell index of Cell containing associated Atom.">cellId</a>;
 <a name="l00370"></a>00370       <span class="keywordtype">int</span>      newCell = cellIndexFromPosition(pos);
 <a name="l00371"></a>00371       <span class="keywordflow">if</span> (oldCell != newCell) {
 <a name="l00372"></a>00372          cells_[oldCell].deleteAtom(cellTag);
@@ -237,7 +237,7 @@
 <a name="l00378"></a>00378 <span class="comment">   * Fill an array with Ids of atoms that are near a specified position.</span>
 <a name="l00379"></a>00379 <span class="comment">   */</span>
 <a name="l00380"></a>00380    <span class="keyword">inline</span> <span class="keywordtype">void</span>
-<a name="l00381"></a><a class="code" href="classMcMd_1_1CellList.html#ad010d819637e43b16d618e032cd2cd02">00381</a>    <a class="code" href="classMcMd_1_1CellList.html#ad010d819637e43b16d618e032cd2cd02" title="Fill a NeighborArray with pointers to atoms near a specified position.">CellList::getNeighbors</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;pos, <a class="code" href="classUtil_1_1FSArray.html">NeighborArray</a> &amp;neighbors)<span class="keyword"> const</span>
+<a name="l00381"></a><a class="code" href="classMcMd_1_1CellList.html#a5170b4abd47e6070d447408b2e0e8b5d">00381</a>    <a class="code" href="classMcMd_1_1CellList.html#a5170b4abd47e6070d447408b2e0e8b5d" title="Fill a NeighborArray with pointers to atoms near a specified position.">CellList::getNeighbors</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;pos, <a class="code" href="classUtil_1_1FSArray.html">NeighborArray</a> &amp;neighbors)<span class="keyword"> const</span>
 <a name="l00382"></a>00382 <span class="keyword">   </span>{
 <a name="l00383"></a>00383       <span class="keywordtype">int</span> nInCell;
 <a name="l00384"></a>00384       <span class="keywordtype">int</span> ic = cellIndexFromPosition(pos);
@@ -277,14 +277,14 @@
 <a name="l00418"></a>00418       cz = i - cy*numCells_[2];
 <a name="l00419"></a>00419    }
 <a name="l00420"></a>00420 
-<a name="l00421"></a><a class="code" href="classMcMd_1_1CellList.html#a0bcdab3616db481dd211594529479f94">00421</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1CellList.html#a0bcdab3616db481dd211594529479f94" title="Has memory been allocated for this CellList?">CellList::isAllocated</a>()<span class="keyword"> const</span>
+<a name="l00421"></a><a class="code" href="classMcMd_1_1CellList.html#a92cddc1af277e7b371fb068426596249">00421</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1CellList.html#a92cddc1af277e7b371fb068426596249" title="Has memory been allocated for this CellList?">CellList::isAllocated</a>()<span class="keyword"> const</span>
 <a name="l00422"></a>00422 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (cells_.capacity() &gt; 0); }
 <a name="l00423"></a>00423 
 <a name="l00424"></a>00424 } 
 <a name="l00425"></a>00425 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

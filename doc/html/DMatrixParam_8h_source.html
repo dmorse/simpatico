@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -79,19 +79,19 @@
 <a name="l00033"></a>00033       
 <a name="l00034"></a>00034    <span class="keyword">public</span>:
 <a name="l00035"></a>00035   
-<a name="l00050"></a>00050       <a class="code" href="classUtil_1_1DMatrixParam.html#aeed83c0abc7723087b8ab4851c7f20a6" title="Constructor.">DMatrixParam</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classUtil_1_1Parameter.html#aced367aa08f91f41382c80d41fad7cac" title="Return label string.">label</a>, <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>&amp; matrix, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n);
+<a name="l00050"></a>00050       <a class="code" href="classUtil_1_1DMatrixParam.html#a632821e63f0c7027b7f1cdff506b3633" title="Constructor.">DMatrixParam</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="classUtil_1_1Parameter.html#af669796f0670a41a17fb7695b0036000" title="Return label string.">label</a>, <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>&amp; matrix, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n);
 <a name="l00051"></a>00051   
-<a name="l00055"></a>00055       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrixParam.html#ab5421d3c9175985c9acbf723e5392075" title="Read 2D array from file.">readParam</a>(std::istream &amp;in);
+<a name="l00055"></a>00055       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrixParam.html#a8d9b73c0bceb3c52ac47b9a60a54cd97" title="Read 2D array from file.">readParam</a>(std::istream &amp;in);
 <a name="l00056"></a>00056   
-<a name="l00060"></a>00060       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrixParam.html#a3919e7db0ce53e1ead2be4016d4d09ac" title="Write 2D C array to file.">writeParam</a>(std::ostream &amp;out);
+<a name="l00060"></a>00060       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrixParam.html#a488b27f2ba7aff5cbafb7892bc1d3acd" title="Write 2D C array to file.">writeParam</a>(std::ostream &amp;out);
 <a name="l00061"></a>00061 
 <a name="l00062"></a>00062    <span class="keyword">protected</span>:
 <a name="l00063"></a>00063    
-<a name="l00065"></a><a class="code" href="classUtil_1_1DMatrixParam.html#a56ddccc722532ab46c52e8b2e7411b5a">00065</a>       <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>* <a class="code" href="classUtil_1_1DMatrixParam.html#a56ddccc722532ab46c52e8b2e7411b5a" title="Pointer to first element in associated 1D C array.">matrixPtr_</a>;
+<a name="l00065"></a><a class="code" href="classUtil_1_1DMatrixParam.html#a5592abc341867ad4d0d06c4670d8a3db">00065</a>       <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>* <a class="code" href="classUtil_1_1DMatrixParam.html#a5592abc341867ad4d0d06c4670d8a3db" title="Pointer to first element in associated 1D C array.">matrixPtr_</a>;
 <a name="l00066"></a>00066    
-<a name="l00068"></a><a class="code" href="classUtil_1_1DMatrixParam.html#aa354117c3142686030cd4b474808e513">00068</a>       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DMatrixParam.html#aa354117c3142686030cd4b474808e513" title="Number of rows in array[m][n].">m_</a>; 
+<a name="l00068"></a><a class="code" href="classUtil_1_1DMatrixParam.html#a963f5a89d688a285b764ceab9bb31f70">00068</a>       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DMatrixParam.html#a963f5a89d688a285b764ceab9bb31f70" title="Number of rows in array[m][n].">m_</a>; 
 <a name="l00069"></a>00069 
-<a name="l00071"></a><a class="code" href="classUtil_1_1DMatrixParam.html#ae68b32adf588e61ef5472f52a16098d3">00071</a>       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DMatrixParam.html#ae68b32adf588e61ef5472f52a16098d3" title="Number of columns in array[m][n].">n_</a>; 
+<a name="l00071"></a><a class="code" href="classUtil_1_1DMatrixParam.html#a0355f563992dbfadd37d13285e40ef5c">00071</a>       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DMatrixParam.html#a0355f563992dbfadd37d13285e40ef5c" title="Number of columns in array[m][n].">n_</a>; 
 <a name="l00072"></a>00072    
 <a name="l00073"></a>00073    };
 <a name="l00074"></a>00074 
@@ -99,7 +99,7 @@
 <a name="l00076"></a>00076 <span class="comment">   * DMatrix constructor.</span>
 <a name="l00077"></a>00077 <span class="comment">   */</span>
 <a name="l00078"></a>00078    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Type&gt;
-<a name="l00079"></a><a class="code" href="classUtil_1_1DMatrixParam.html#aeed83c0abc7723087b8ab4851c7f20a6">00079</a>    <a class="code" href="classUtil_1_1DMatrixParam.html#aeed83c0abc7723087b8ab4851c7f20a6" title="Constructor.">DMatrixParam&lt;Type&gt;::DMatrixParam</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* label, <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>&amp; matrix, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n)
+<a name="l00079"></a><a class="code" href="classUtil_1_1DMatrixParam.html#a632821e63f0c7027b7f1cdff506b3633">00079</a>    <a class="code" href="classUtil_1_1DMatrixParam.html#a632821e63f0c7027b7f1cdff506b3633" title="Constructor.">DMatrixParam&lt;Type&gt;::DMatrixParam</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* label, <a class="code" href="classUtil_1_1DMatrix.html">DMatrix&lt;Type&gt;</a>&amp; matrix, <span class="keywordtype">int</span> m, <span class="keywordtype">int</span> n)
 <a name="l00080"></a>00080     : <a class="code" href="classUtil_1_1Parameter.html" title="A single variable in a parameter file.">Parameter</a>(label),
 <a name="l00081"></a>00081       matrixPtr_(&amp;matrix),
 <a name="l00082"></a>00082       m_(m),
@@ -110,7 +110,7 @@
 <a name="l00087"></a>00087 <span class="comment">   * Read DMatrixParam.</span>
 <a name="l00088"></a>00088 <span class="comment">   */</span>
 <a name="l00089"></a>00089    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Type&gt;
-<a name="l00090"></a><a class="code" href="classUtil_1_1DMatrixParam.html#ab5421d3c9175985c9acbf723e5392075">00090</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrixParam.html#ab5421d3c9175985c9acbf723e5392075" title="Read 2D array from file.">DMatrixParam&lt;Type&gt;::readParam</a>(std::istream &amp;in)
+<a name="l00090"></a><a class="code" href="classUtil_1_1DMatrixParam.html#a8d9b73c0bceb3c52ac47b9a60a54cd97">00090</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrixParam.html#a8d9b73c0bceb3c52ac47b9a60a54cd97" title="Read 2D array from file.">DMatrixParam&lt;Type&gt;::readParam</a>(std::istream &amp;in)
 <a name="l00091"></a>00091    {
 <a name="l00092"></a>00092       <span class="keywordflow">if</span> (isParamIoProcessor()) {
 <a name="l00093"></a>00093          <span class="keywordtype">int</span> i, j;
@@ -120,8 +120,8 @@
 <a name="l00097"></a>00097                in &gt;&gt; (*matrixPtr_)(i, j);
 <a name="l00098"></a>00098             }
 <a name="l00099"></a>00099          }
-<a name="l00100"></a>00100          <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#a24de2d9d8a57a07e1dd6fdc84779699c" title="Get echo parameter.">ParamComponent::echo</a>()) {
-<a name="l00101"></a>00101             writeParam(<a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>());
+<a name="l00100"></a>00100          <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2" title="Get echo parameter.">ParamComponent::echo</a>()) {
+<a name="l00101"></a>00101             writeParam(<a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>());
 <a name="l00102"></a>00102          }
 <a name="l00103"></a>00103       }
 <a name="l00104"></a>00104 <span class="preprocessor">      #ifdef UTIL_MPI</span>
@@ -134,7 +134,7 @@
 <a name="l00111"></a>00111 <span class="comment">   * Write a DMatrixParam.</span>
 <a name="l00112"></a>00112 <span class="comment">   */</span>
 <a name="l00113"></a>00113    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Type&gt;
-<a name="l00114"></a><a class="code" href="classUtil_1_1DMatrixParam.html#a3919e7db0ce53e1ead2be4016d4d09ac">00114</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrixParam.html#a3919e7db0ce53e1ead2be4016d4d09ac" title="Write 2D C array to file.">DMatrixParam&lt;Type&gt;::writeParam</a>(std::ostream &amp;out)
+<a name="l00114"></a><a class="code" href="classUtil_1_1DMatrixParam.html#a488b27f2ba7aff5cbafb7892bc1d3acd">00114</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrixParam.html#a488b27f2ba7aff5cbafb7892bc1d3acd" title="Write 2D C array to file.">DMatrixParam&lt;Type&gt;::writeParam</a>(std::ostream &amp;out)
 <a name="l00115"></a>00115    {
 <a name="l00116"></a>00116       <a class="code" href="classUtil_1_1Label.html" title="A label string in a file format.">Label</a> space(<span class="stringliteral">&quot;&quot;</span>);
 <a name="l00117"></a>00117       <span class="keywordtype">int</span> i, j;
@@ -147,8 +147,8 @@
 <a name="l00124"></a>00124          }
 <a name="l00125"></a>00125          <span class="keywordflow">for</span> (j = 0; j &lt; n_; ++j) {
 <a name="l00126"></a>00126             out &lt;&lt; std::right &lt;&lt; std::scientific 
-<a name="l00127"></a>00127                 &lt;&lt; std::setprecision(<a class="code" href="classUtil_1_1Parameter.html#a54f4f0d327a1ddbc574dc9bf5a44a66c" title="Precision for io of floating point data field.">Parameter::Precision</a>) 
-<a name="l00128"></a>00128                 &lt;&lt; std::setw(<a class="code" href="classUtil_1_1Parameter.html#a108dc03480fe2b122394ec55016bd42c" title="Width of data field for a scalar variable (numerical or string).">Parameter::Width</a>)
+<a name="l00127"></a>00127                 &lt;&lt; std::setprecision(<a class="code" href="classUtil_1_1Parameter.html#a5cd638eb2b87aef9ab7c755c6993d721" title="Precision for io of floating point data field.">Parameter::Precision</a>) 
+<a name="l00128"></a>00128                 &lt;&lt; std::setw(<a class="code" href="classUtil_1_1Parameter.html#af4db8fd5ca850496e8e599bae93aa2f2" title="Width of data field for a scalar variable (numerical or string).">Parameter::Width</a>)
 <a name="l00129"></a>00129                 &lt;&lt; (*matrixPtr_)(i, j);
 <a name="l00130"></a>00130          }
 <a name="l00131"></a>00131          out &lt;&lt; std::endl;
@@ -159,7 +159,7 @@
 <a name="l00136"></a>00136 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

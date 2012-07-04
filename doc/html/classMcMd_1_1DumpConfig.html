@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: DumpConfig Class Reference</title>
+<title>Simpatico: McMd::DumpConfig Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,27 +49,27 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>DumpConfig Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>McMd::DumpConfig Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::DumpConfig" --><!-- doxytag: inherits="SystemDiagnostic&lt; System &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Periodically dump system configuration to a new file. </p>
-<p>This class uses the <a class="el" href="classMcMd_1_1System.html#af4e000e87b4e5bf4bc5d2ea9f7395b80" title="Write system configuration to a specified ostream.">System::writeConfig()</a> method to write the entire system configuration periodically, at interval read from file. Names of configuration dump files are constructed by concatenating the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> outputPrefix, a dumpPrefix, the literal string "config.", and an integer that is incremented after each dump. The dump prefix is a string that is read by the <a class="el" href="classUtil_1_1ParamComposite.html#a725f62ddba13ef45cb42e597d4d8b402" title="Add a new Param &lt; Type &gt; object, and read its value.">read()</a> method of this class. For example, if System::outputPrefix is "out/" and dumpPrefix is "dump/", the configurations will be written to files "out/dump/config.0", "out/dump/config.1", etc. </p>
+<p>This class uses the <a class="el" href="classMcMd_1_1System.html#a84cad7f19715a1541e9a9f28b7fc0985" title="Write system configuration to a specified ostream.">System::writeConfig()</a> method to write the entire system configuration periodically, at interval read from file. Names of configuration dump files are constructed by concatenating the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> outputPrefix, a dumpPrefix, the literal string "config.", and an integer that is incremented after each dump. The dump prefix is a string that is read by the <a class="el" href="classUtil_1_1ParamComposite.html#ae6aa7ef9cfde8f96bec1bb34eecf451d" title="Add a new Param &lt; Type &gt; object, and read its value.">read()</a> method of this class. For example, if System::outputPrefix is "out/" and dumpPrefix is "dump/", the configurations will be written to files "out/dump/config.0", "out/dump/config.1", etc. </p>
 
 <p>Definition at line <a class="el" href="DumpConfig_8h_source.html#l00034">34</a> of file <a class="el" href="DumpConfig_8h_source.html">DumpConfig.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="DumpConfig_8h_source.html">DumpConfig.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for DumpConfig:</div>
+Inheritance diagram for McMd::DumpConfig:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1DumpConfig.png" usemap="#DumpConfig_map" alt=""/>
-  <map id="DumpConfig_map" name="DumpConfig_map">
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; System &gt;" shape="rect" coords="92,168,267,192"/>
-<area href="classMcMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="92,112,267,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,175,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="185,56,360,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,175,24"/>
+  <img src="classMcMd_1_1DumpConfig.png" usemap="#McMd::DumpConfig_map" alt=""/>
+  <map id="McMd::DumpConfig_map" name="McMd::DumpConfig_map">
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; System &gt;" shape="rect" coords="113,168,330,192"/>
+<area href="classMcMd_1_1Diagnostic.html" alt="McMd::Diagnostic" shape="rect" coords="113,112,330,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,217,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="227,56,444,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,217,24"/>
 </map>
  </div></div>
 
@@ -77,31 +77,31 @@ Inheritance diagram for DumpConfig:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#a2887e873ec37ef729a92fc433700551e">DumpConfig</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a2887e873ec37ef729a92fc433700551e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#a1dc5b0a12f0e4a88c50778067417807c">~DumpConfig</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a1dc5b0a12f0e4a88c50778067417807c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read dumpPrefix and interval.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear nSample counter.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#afc17577823a371a5ead4e51ebb8ec2ef">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump configuration to file.  <a href="#afc17577823a371a5ead4e51ebb8ec2ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#aa3d71af4cc5dfb2be6be816a8f562416">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#aa3d71af4cc5dfb2be6be816a8f562416"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#ad8fd1b9746cb9d0144660fff7703bf37">DumpConfig</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ad8fd1b9746cb9d0144660fff7703bf37"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#a15dd8fa141a3cf9b9acc156129f56e41">~DumpConfig</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a15dd8fa141a3cf9b9acc156129f56e41"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#adf03e0dd23199dab28dd9dafed6bc112">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read dumpPrefix and interval.  <a href="#adf03e0dd23199dab28dd9dafed6bc112"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#a3f0810b6069fe31343e9c99158bb435b">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear nSample counter.  <a href="#a3f0810b6069fe31343e9c99158bb435b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#a325bca8df4949ff5df5e19720f7920a6">sample</a> (long iStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump configuration to file.  <a href="#a325bca8df4949ff5df5e19720f7920a6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#a9ab1924e0a4bdf8c5bbca15506fa4f4d">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#a9ab1924e0a4bdf8c5bbca15506fa4f4d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#a0849aad5d725d1c1b428816ca01b4b0f">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#a0849aad5d725d1c1b428816ca01b4b0f"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1DumpConfig.html#a8090009108bf169ca1e3e4a94965c255">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a8090009108bf169ca1e3e4a94965c255"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a2887e873ec37ef729a92fc433700551e"></a><!-- doxytag: member="McMd::DumpConfig::DumpConfig" ref="a2887e873ec37ef729a92fc433700551e" args="(System &amp;system)" -->
+<a class="anchor" id="ad8fd1b9746cb9d0144660fff7703bf37"></a><!-- doxytag: member="McMd::DumpConfig::DumpConfig" ref="ad8fd1b9746cb9d0144660fff7703bf37" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1DumpConfig.html">DumpConfig</a> </td>
+          <td class="memname">McMd::DumpConfig::DumpConfig </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -123,12 +123,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1dc5b0a12f0e4a88c50778067417807c"></a><!-- doxytag: member="McMd::DumpConfig::~DumpConfig" ref="a1dc5b0a12f0e4a88c50778067417807c" args="()" -->
+<a class="anchor" id="a15dd8fa141a3cf9b9acc156129f56e41"></a><!-- doxytag: member="McMd::DumpConfig::~DumpConfig" ref="a15dd8fa141a3cf9b9acc156129f56e41" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual ~<a class="el" href="classMcMd_1_1DumpConfig.html">DumpConfig</a> </td>
+          <td class="memname">virtual McMd::DumpConfig::~DumpConfig </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, virtual]</code></td>
@@ -144,12 +144,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::DumpConfig::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="adf03e0dd23199dab28dd9dafed6bc112"></a><!-- doxytag: member="McMd::DumpConfig::readParam" ref="adf03e0dd23199dab28dd9dafed6bc112" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::DumpConfig::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -167,18 +167,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="DumpConfig_8cpp_source.html#l00036">36</a> of file <a class="el" href="DumpConfig_8cpp_source.html">DumpConfig.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::DumpConfig::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a3f0810b6069fe31343e9c99158bb435b"></a><!-- doxytag: member="McMd::DumpConfig::setup" ref="a3f0810b6069fe31343e9c99158bb435b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void McMd::DumpConfig::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -189,18 +189,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear nSample counter. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a93c5a174f073b2587a484999ca550829">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="DumpConfig_8cpp_source.html#l00046">46</a> of file <a class="el" href="DumpConfig_8cpp_source.html">DumpConfig.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afc17577823a371a5ead4e51ebb8ec2ef"></a><!-- doxytag: member="McMd::DumpConfig::sample" ref="afc17577823a371a5ead4e51ebb8ec2ef" args="(long iStep)" -->
+<a class="anchor" id="a325bca8df4949ff5df5e19720f7920a6"></a><!-- doxytag: member="McMd::DumpConfig::sample" ref="a325bca8df4949ff5df5e19720f7920a6" args="(long iStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void McMd::DumpConfig::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -218,7 +218,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f">Diagnostic</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#ae265d934fee552e1bd50ce37930ac63c">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="DumpConfig_8cpp_source.html#l00052">52</a> of file <a class="el" href="DumpConfig_8cpp_source.html">DumpConfig.cpp</a>.</p>
 
@@ -226,12 +226,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><!-- doxytag: member="McMd::DumpConfig::save" ref="a248dde9ccc0ef67e5d9cc5fd0bdc2b64" args="(Serializable::OArchiveType &amp;ar)" -->
+<a class="anchor" id="a9ab1924e0a4bdf8c5bbca15506fa4f4d"></a><!-- doxytag: member="McMd::DumpConfig::save" ref="a9ab1924e0a4bdf8c5bbca15506fa4f4d" args="(Serializable::OArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void save </td>
+          <td class="memname">void McMd::DumpConfig::save </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -249,18 +249,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac27203b7ee783c3cebc054c290e313ed">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="DumpConfig_8cpp_source.html#l00073">73</a> of file <a class="el" href="DumpConfig_8cpp_source.html">DumpConfig.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa3d71af4cc5dfb2be6be816a8f562416"></a><!-- doxytag: member="McMd::DumpConfig::load" ref="aa3d71af4cc5dfb2be6be816a8f562416" args="(Serializable::IArchiveType &amp;ar)" -->
+<a class="anchor" id="a0849aad5d725d1c1b428816ca01b4b0f"></a><!-- doxytag: member="McMd::DumpConfig::load" ref="a0849aad5d725d1c1b428816ca01b4b0f" args="(Serializable::IArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void load </td>
+          <td class="memname">void McMd::DumpConfig::load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -278,18 +278,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#aa3d71af4cc5dfb2be6be816a8f562416">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#afa44b6fb962ca0a8a979d0add2dc85b9">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="DumpConfig_8cpp_source.html#l00079">79</a> of file <a class="el" href="DumpConfig_8cpp_source.html">DumpConfig.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="McMd::DumpConfig::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="a8090009108bf169ca1e3e4a94965c255"></a><!-- doxytag: member="McMd::DumpConfig::serialize" ref="a8090009108bf169ca1e3e4a94965c255" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void McMd::DumpConfig::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -318,7 +320,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6765e839ab267e4959384e35a4112451">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6056717b367040d8605f67794a7e2ebc">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="DumpConfig_8h_source.html#l00112">112</a> of file <a class="el" href="DumpConfig_8h_source.html">DumpConfig.h</a>.</p>
 
@@ -331,7 +333,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="DumpConfig_8cpp_source.html">DumpConfig.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:54 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:25 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

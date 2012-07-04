@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,8 +71,8 @@
 <a name="l00020"></a>00020    <span class="comment">/*</span>
 <a name="l00021"></a>00021 <span class="comment">   * Constructor for rootPtr AverageStage, with stageId = 0.</span>
 <a name="l00022"></a>00022 <span class="comment">   */</span>
-<a name="l00023"></a>00023    <a class="code" href="classUtil_1_1AverageStage.html#ace39c2442efee87c9a1710afd1146fa3" title="Constructor.">AverageStage::AverageStage</a>(<span class="keywordtype">int</span> blockFactor)
-<a name="l00024"></a><a class="code" href="classUtil_1_1AverageStage.html#ace39c2442efee87c9a1710afd1146fa3">00024</a>     : sum_(0.0),
+<a name="l00023"></a>00023    <a class="code" href="classUtil_1_1AverageStage.html#ac3e7112d26e2f51c93ae1102a01ffeb0" title="Constructor.">AverageStage::AverageStage</a>(<span class="keywordtype">int</span> blockFactor)
+<a name="l00024"></a><a class="code" href="classUtil_1_1AverageStage.html#ac3e7112d26e2f51c93ae1102a01ffeb0">00024</a>     : sum_(0.0),
 <a name="l00025"></a>00025       sumSq_(0.0),
 <a name="l00026"></a>00026       blockSum_(0.0),
 <a name="l00027"></a>00027       nSample_(0),
@@ -89,7 +89,7 @@
 <a name="l00038"></a>00038    <span class="comment">/*</span>
 <a name="l00039"></a>00039 <span class="comment">   * Constructor for dynamically generated objects with stageId &gt; 0.</span>
 <a name="l00040"></a>00040 <span class="comment">   */</span>
-<a name="l00041"></a>00041    <a class="code" href="classUtil_1_1AverageStage.html#ace39c2442efee87c9a1710afd1146fa3" title="Constructor.">AverageStage::AverageStage</a>(<span class="keywordtype">long</span> stageInterval, <span class="keywordtype">int</span> stageId, <a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* rootPtr, <span class="keywordtype">int</span> blockFactor)
+<a name="l00041"></a>00041    <a class="code" href="classUtil_1_1AverageStage.html#ac3e7112d26e2f51c93ae1102a01ffeb0" title="Constructor.">AverageStage::AverageStage</a>(<span class="keywordtype">long</span> stageInterval, <span class="keywordtype">int</span> stageId, <a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* rootPtr, <span class="keywordtype">int</span> blockFactor)
 <a name="l00042"></a>00042     : sum_(0.0),
 <a name="l00043"></a>00043       sumSq_(0.0),
 <a name="l00044"></a>00044       blockSum_(0.0),
@@ -102,14 +102,14 @@
 <a name="l00051"></a>00051       blockFactor_(blockFactor)
 <a name="l00052"></a>00052    {}
 <a name="l00053"></a>00053    
-<a name="l00054"></a>00054    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AverageStage.html#aef7167a2340365892dc0f921a260383f" title="Register the creation of a descendant stage.">AverageStage::registerDescendant</a>(AverageStage* descendantPtr)
-<a name="l00055"></a><a class="code" href="classUtil_1_1AverageStage.html#aef7167a2340365892dc0f921a260383f">00055</a>    {}
+<a name="l00054"></a>00054    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AverageStage.html#af29052599333fceda9d2eba4712bb064" title="Register the creation of a descendant stage.">AverageStage::registerDescendant</a>(AverageStage* descendantPtr)
+<a name="l00055"></a><a class="code" href="classUtil_1_1AverageStage.html#af29052599333fceda9d2eba4712bb064">00055</a>    {}
 <a name="l00056"></a>00056 
 <a name="l00057"></a>00057    <span class="comment">/*</span>
 <a name="l00058"></a>00058 <span class="comment">   * Destructor.</span>
 <a name="l00059"></a>00059 <span class="comment">   */</span>
-<a name="l00060"></a>00060    <a class="code" href="classUtil_1_1AverageStage.html#a1cf5cf013add195effa08f3713757554" title="Destructor.">AverageStage::~AverageStage</a>()
-<a name="l00061"></a><a class="code" href="classUtil_1_1AverageStage.html#a1cf5cf013add195effa08f3713757554">00061</a>    { 
+<a name="l00060"></a>00060    <a class="code" href="classUtil_1_1AverageStage.html#a213800ca7b66ec765edafd5a4b667cda" title="Destructor.">AverageStage::~AverageStage</a>()
+<a name="l00061"></a><a class="code" href="classUtil_1_1AverageStage.html#a213800ca7b66ec765edafd5a4b667cda">00061</a>    { 
 <a name="l00062"></a>00062       <span class="keywordflow">if</span> (childPtr_) {
 <a name="l00063"></a>00063          <span class="keyword">delete</span> childPtr_; 
 <a name="l00064"></a>00064       }
@@ -118,8 +118,8 @@
 <a name="l00067"></a>00067    <span class="comment">/*</span>
 <a name="l00068"></a>00068 <span class="comment">   * Reset all accumulators and counters to zero.</span>
 <a name="l00069"></a>00069 <span class="comment">   */</span>
-<a name="l00070"></a>00070    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AverageStage.html#ac8bb3912a3ce86b15842e79d0b421204" title="Initialize all accumulators and recursively destroy all children.">AverageStage::clear</a>() 
-<a name="l00071"></a><a class="code" href="classUtil_1_1AverageStage.html#ac8bb3912a3ce86b15842e79d0b421204">00071</a>    {
+<a name="l00070"></a>00070    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AverageStage.html#a2c9065506a570a96cf72e66b574f9f1a" title="Initialize all accumulators and recursively destroy all children.">AverageStage::clear</a>() 
+<a name="l00071"></a><a class="code" href="classUtil_1_1AverageStage.html#a2c9065506a570a96cf72e66b574f9f1a">00071</a>    {
 <a name="l00072"></a>00072       sum_          = 0.0;
 <a name="l00073"></a>00073       sumSq_        = 0.0;
 <a name="l00074"></a>00074       blockSum_     = 0.0;
@@ -133,8 +133,8 @@
 <a name="l00082"></a>00082    <span class="comment">/*</span>
 <a name="l00083"></a>00083 <span class="comment">   * Add a sampled value to the ensemble.</span>
 <a name="l00084"></a>00084 <span class="comment">   */</span>
-<a name="l00085"></a>00085    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AverageStage.html#a6971e3c0e5036585549c6d6562d12d2d" title="Add a sampled value to the ensemble.">AverageStage::sample</a>(<span class="keywordtype">double</span> value) 
-<a name="l00086"></a><a class="code" href="classUtil_1_1AverageStage.html#a6971e3c0e5036585549c6d6562d12d2d">00086</a>    {
+<a name="l00085"></a>00085    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1AverageStage.html#a27a1cf9ab8b5478c5ff655705bf1e380" title="Add a sampled value to the ensemble.">AverageStage::sample</a>(<span class="keywordtype">double</span> value) 
+<a name="l00086"></a><a class="code" href="classUtil_1_1AverageStage.html#a27a1cf9ab8b5478c5ff655705bf1e380">00086</a>    {
 <a name="l00087"></a>00087    
 <a name="l00088"></a>00088       <span class="comment">// Increment global accumulators</span>
 <a name="l00089"></a>00089       sum_    += value;
@@ -150,12 +150,12 @@
 <a name="l00099"></a>00099          <span class="keywordflow">if</span> (!childPtr_) {
 <a name="l00100"></a>00100             <span class="keywordtype">long</span> nextStageInterval = stageInterval_*blockFactor_;
 <a name="l00101"></a>00101             <span class="keywordtype">int</span>  nextStageId       = stageId_ + 1;
-<a name="l00102"></a>00102             childPtr_ = <span class="keyword">new</span> <a class="code" href="classUtil_1_1AverageStage.html#ace39c2442efee87c9a1710afd1146fa3" title="Constructor.">AverageStage</a>(nextStageInterval, nextStageId, rootPtr_, blockFactor_);
-<a name="l00103"></a>00103             rootPtr_-&gt;<a class="code" href="classUtil_1_1AverageStage.html#aef7167a2340365892dc0f921a260383f" title="Register the creation of a descendant stage.">registerDescendant</a>(childPtr_);
+<a name="l00102"></a>00102             childPtr_ = <span class="keyword">new</span> <a class="code" href="classUtil_1_1AverageStage.html#ac3e7112d26e2f51c93ae1102a01ffeb0" title="Constructor.">AverageStage</a>(nextStageInterval, nextStageId, rootPtr_, blockFactor_);
+<a name="l00103"></a>00103             rootPtr_-&gt;<a class="code" href="classUtil_1_1AverageStage.html#af29052599333fceda9d2eba4712bb064" title="Register the creation of a descendant stage.">registerDescendant</a>(childPtr_);
 <a name="l00104"></a>00104          }
 <a name="l00105"></a>00105 
 <a name="l00106"></a>00106          <span class="comment">// Add block average to child ensemble</span>
-<a name="l00107"></a>00107          childPtr_-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a6971e3c0e5036585549c6d6562d12d2d" title="Add a sampled value to the ensemble.">sample</a>( blockSum_ / <span class="keywordtype">double</span>(blockFactor_) );
+<a name="l00107"></a>00107          childPtr_-&gt;<a class="code" href="classUtil_1_1AverageStage.html#a27a1cf9ab8b5478c5ff655705bf1e380" title="Add a sampled value to the ensemble.">sample</a>( blockSum_ / <span class="keywordtype">double</span>(blockFactor_) );
 <a name="l00108"></a>00108 
 <a name="l00109"></a>00109          <span class="comment">// Reset block accumulators</span>
 <a name="l00110"></a>00110          blockSum_     = 0.0;
@@ -168,14 +168,14 @@
 <a name="l00117"></a>00117    <span class="comment">/*</span>
 <a name="l00118"></a>00118 <span class="comment">   * Return the average of all sampled values.</span>
 <a name="l00119"></a>00119 <span class="comment">   */</span>
-<a name="l00120"></a>00120    <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a1b989d55fda78fb68102199720dfeaf1" title="Return the average of all sampled values.">AverageStage::average</a>()<span class="keyword"> const</span>
-<a name="l00121"></a><a class="code" href="classUtil_1_1AverageStage.html#a1b989d55fda78fb68102199720dfeaf1">00121</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> sum_/double(nSample_); }
+<a name="l00120"></a>00120    <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf" title="Return the average of all sampled values.">AverageStage::average</a>()<span class="keyword"> const</span>
+<a name="l00121"></a><a class="code" href="classUtil_1_1AverageStage.html#a01cbb2a55f0c80f58e3b8472b9eb47bf">00121</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> sum_/double(nSample_); }
 <a name="l00122"></a>00122    
 <a name="l00123"></a>00123    <span class="comment">/*</span>
 <a name="l00124"></a>00124 <span class="comment">   * Return the variance of all sampled values</span>
 <a name="l00125"></a>00125 <span class="comment">   */</span>
-<a name="l00126"></a>00126    <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a8ca2b77cf0a83e10d4dab0f029c8e526" title="Return the variance of all sampled values.">AverageStage::variance</a>()<span class="keyword"> const</span>
-<a name="l00127"></a><a class="code" href="classUtil_1_1AverageStage.html#a8ca2b77cf0a83e10d4dab0f029c8e526">00127</a> <span class="keyword">   </span>{
+<a name="l00126"></a>00126    <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a80b70a79df8fd318756248b88baa5a58" title="Return the variance of all sampled values.">AverageStage::variance</a>()<span class="keyword"> const</span>
+<a name="l00127"></a><a class="code" href="classUtil_1_1AverageStage.html#a80b70a79df8fd318756248b88baa5a58">00127</a> <span class="keyword">   </span>{
 <a name="l00128"></a>00128       <span class="keywordtype">double</span> rSample_ = double(nSample_);
 <a name="l00129"></a>00129       <span class="keywordtype">double</span> ave   = sum_/rSample_;
 <a name="l00130"></a>00130       <span class="keywordtype">double</span> aveSq = sumSq_/rSample_;
@@ -185,32 +185,32 @@
 <a name="l00134"></a>00134    <span class="comment">/*</span>
 <a name="l00135"></a>00135 <span class="comment">   * Return the standard deviation of all sampled values</span>
 <a name="l00136"></a>00136 <span class="comment">   */</span>
-<a name="l00137"></a>00137    <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a013c5f405368b6f4896f6f06b46e5054" title="Return the standard deviation of all sampled values.">AverageStage::stdDeviation</a>()<span class="keyword"> const</span>
-<a name="l00138"></a><a class="code" href="classUtil_1_1AverageStage.html#a013c5f405368b6f4896f6f06b46e5054">00138</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> sqrt(<a class="code" href="classUtil_1_1AverageStage.html#a8ca2b77cf0a83e10d4dab0f029c8e526" title="Return the variance of all sampled values.">variance</a>()); }
+<a name="l00137"></a>00137    <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a0b3e4f58dd3749192377aa2a2697a4fc" title="Return the standard deviation of all sampled values.">AverageStage::stdDeviation</a>()<span class="keyword"> const</span>
+<a name="l00138"></a><a class="code" href="classUtil_1_1AverageStage.html#a0b3e4f58dd3749192377aa2a2697a4fc">00138</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> sqrt(<a class="code" href="classUtil_1_1AverageStage.html#a80b70a79df8fd318756248b88baa5a58" title="Return the variance of all sampled values.">variance</a>()); }
 <a name="l00139"></a>00139       
 <a name="l00140"></a>00140    <span class="comment">/*</span>
 <a name="l00141"></a>00141 <span class="comment">   * Return the number of sampled values</span>
 <a name="l00142"></a>00142 <span class="comment">   */</span>
-<a name="l00143"></a>00143    <span class="keywordtype">long</span> <a class="code" href="classUtil_1_1AverageStage.html#ab2de304847c36b9bfccdcd7aae0720e7" title="Return the number of sampled values.">AverageStage::nSample</a>()<span class="keyword"> const</span>
-<a name="l00144"></a><a class="code" href="classUtil_1_1AverageStage.html#ab2de304847c36b9bfccdcd7aae0720e7">00144</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> nSample_; }
+<a name="l00143"></a>00143    <span class="keywordtype">long</span> <a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf" title="Return the number of sampled values.">AverageStage::nSample</a>()<span class="keyword"> const</span>
+<a name="l00144"></a><a class="code" href="classUtil_1_1AverageStage.html#a49502d80ee8be2e7322093d76723aebf">00144</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> nSample_; }
 <a name="l00145"></a>00145       
 <a name="l00146"></a>00146    <span class="comment">/*</span>
 <a name="l00147"></a>00147 <span class="comment">   * Return the number of measured values per sample at this stage.</span>
 <a name="l00148"></a>00148 <span class="comment">   */</span>
-<a name="l00149"></a>00149    <span class="keywordtype">long</span> <a class="code" href="classUtil_1_1AverageStage.html#a84de69d29c861cb68449ce092793b5d0" title="Return the number of sampled values per block at this stage.">AverageStage::stageInterval</a>()<span class="keyword"> const</span>
-<a name="l00150"></a><a class="code" href="classUtil_1_1AverageStage.html#a84de69d29c861cb68449ce092793b5d0">00150</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> stageInterval_; }
+<a name="l00149"></a>00149    <span class="keywordtype">long</span> <a class="code" href="classUtil_1_1AverageStage.html#adcd575005eb0240b6fb8e16a68763161" title="Return the number of sampled values per block at this stage.">AverageStage::stageInterval</a>()<span class="keyword"> const</span>
+<a name="l00150"></a><a class="code" href="classUtil_1_1AverageStage.html#adcd575005eb0240b6fb8e16a68763161">00150</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> stageInterval_; }
 <a name="l00151"></a>00151       
 <a name="l00152"></a>00152    <span class="comment">/*</span>
 <a name="l00153"></a>00153 <span class="comment">   * Estimated statistical error of the average().</span>
 <a name="l00154"></a>00154 <span class="comment">   */</span>
-<a name="l00155"></a>00155    <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#ae75852c9d9bf937552ee5a1bafea818f" title="Return an estimate for the std deviation of the average.">AverageStage::error</a>()<span class="keyword"> const</span>
-<a name="l00156"></a><a class="code" href="classUtil_1_1AverageStage.html#ae75852c9d9bf937552ee5a1bafea818f">00156</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> sqrt(<a class="code" href="classUtil_1_1AverageStage.html#a8ca2b77cf0a83e10d4dab0f029c8e526" title="Return the variance of all sampled values.">variance</a>()/<span class="keywordtype">double</span>(nSample_)); }
+<a name="l00155"></a>00155    <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c" title="Return an estimate for the std deviation of the average.">AverageStage::error</a>()<span class="keyword"> const</span>
+<a name="l00156"></a><a class="code" href="classUtil_1_1AverageStage.html#a63940537315e980ab256dbaaf61bff6c">00156</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> sqrt(<a class="code" href="classUtil_1_1AverageStage.html#a80b70a79df8fd318756248b88baa5a58" title="Return the variance of all sampled values.">variance</a>()/<span class="keywordtype">double</span>(nSample_)); }
 <a name="l00157"></a>00157 
 <a name="l00158"></a>00158 }
 <a name="l00159"></a>00159 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

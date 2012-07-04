@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -65,8 +65,8 @@
 <a name="l00013"></a>00013 <span class="comment">   *</span>
 <a name="l00014"></a>00014 <span class="comment">   * Uses default seed only if this is the first instance</span>
 <a name="l00015"></a>00015 <span class="comment">   */</span>
-<a name="l00016"></a>00016    <a class="code" href="classUtil_1_1MTRand__int32.html#a8e9bb351c54961109a10fb644a803457" title="Default constructor.">MTRand_int32::MTRand_int32</a>() 
-<a name="l00017"></a><a class="code" href="classUtil_1_1MTRand__int32.html#a8e9bb351c54961109a10fb644a803457">00017</a>     : p(0),
+<a name="l00016"></a>00016    <a class="code" href="classUtil_1_1MTRand__int32.html#a6e0ab7add2531db649f288137a4a5d59" title="Default constructor.">MTRand_int32::MTRand_int32</a>() 
+<a name="l00017"></a><a class="code" href="classUtil_1_1MTRand__int32.html#a6e0ab7add2531db649f288137a4a5d59">00017</a>     : p(0),
 <a name="l00018"></a>00018       init(false)
 <a name="l00019"></a>00019    { 
 <a name="l00020"></a>00020       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt; n; ++i) state[i] = 0x0UL;
@@ -77,8 +77,8 @@
 <a name="l00025"></a>00025    <span class="comment">/*</span>
 <a name="l00026"></a>00026 <span class="comment">   * Constructor with 32 bit int as seed.</span>
 <a name="l00027"></a>00027 <span class="comment">   */</span>
-<a name="l00028"></a>00028    <a class="code" href="classUtil_1_1MTRand__int32.html#a8e9bb351c54961109a10fb644a803457" title="Default constructor.">MTRand_int32::MTRand_int32</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> s) 
-<a name="l00029"></a><a class="code" href="classUtil_1_1MTRand__int32.html#ac7df076d7495d388fab048907fb2a89a">00029</a>     : p(0),
+<a name="l00028"></a>00028    <a class="code" href="classUtil_1_1MTRand__int32.html#a6e0ab7add2531db649f288137a4a5d59" title="Default constructor.">MTRand_int32::MTRand_int32</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> s) 
+<a name="l00029"></a><a class="code" href="classUtil_1_1MTRand__int32.html#aeae93088d1c23a2abd4a1707f99b0215">00029</a>     : p(0),
 <a name="l00030"></a>00030       init(false)
 <a name="l00031"></a>00031    { 
 <a name="l00032"></a>00032       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt; n; ++i) state[i] = 0x0UL;
@@ -89,8 +89,8 @@
 <a name="l00037"></a>00037    <span class="comment">/*</span>
 <a name="l00038"></a>00038 <span class="comment">   * Constructor with array of size 32 bit ints as seed</span>
 <a name="l00039"></a>00039 <span class="comment">   */</span>
-<a name="l00040"></a>00040    <a class="code" href="classUtil_1_1MTRand__int32.html#a8e9bb351c54961109a10fb644a803457" title="Default constructor.">MTRand_int32::MTRand_int32</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>* array, <span class="keywordtype">int</span> size) 
-<a name="l00041"></a><a class="code" href="classUtil_1_1MTRand__int32.html#ab50787cd0cb6a802aa35ab05919995dd">00041</a>     : p(0),
+<a name="l00040"></a>00040    <a class="code" href="classUtil_1_1MTRand__int32.html#a6e0ab7add2531db649f288137a4a5d59" title="Default constructor.">MTRand_int32::MTRand_int32</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>* array, <span class="keywordtype">int</span> size) 
+<a name="l00041"></a><a class="code" href="classUtil_1_1MTRand__int32.html#ac89a3d46037663c195cf6ac2d498f0b6">00041</a>     : p(0),
 <a name="l00042"></a>00042       init(false)
 <a name="l00043"></a>00043    { 
 <a name="l00044"></a>00044       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt; n; ++i) state[i] = 0x0UL;
@@ -101,8 +101,8 @@
 <a name="l00049"></a>00049    <span class="comment">/*</span>
 <a name="l00050"></a>00050 <span class="comment">   * Copy constructor.</span>
 <a name="l00051"></a>00051 <span class="comment">   */</span>
-<a name="l00052"></a>00052    <a class="code" href="classUtil_1_1MTRand__int32.html#a8e9bb351c54961109a10fb644a803457" title="Default constructor.">MTRand_int32::MTRand_int32</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1MTRand__int32.html" title="Mersenne Twister random number generator engine.">MTRand_int32</a>&amp; other) 
-<a name="l00053"></a><a class="code" href="classUtil_1_1MTRand__int32.html#ad88fb35ecc7d269134c03094bcaef8a7">00053</a>     : p(other.p),
+<a name="l00052"></a>00052    <a class="code" href="classUtil_1_1MTRand__int32.html#a6e0ab7add2531db649f288137a4a5d59" title="Default constructor.">MTRand_int32::MTRand_int32</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1MTRand__int32.html" title="Mersenne Twister random number generator engine.">MTRand_int32</a>&amp; other) 
+<a name="l00053"></a><a class="code" href="classUtil_1_1MTRand__int32.html#a1980249753ec7ecea4c6812a96719cab">00053</a>     : p(other.p),
 <a name="l00054"></a>00054       init(other.init)
 <a name="l00055"></a>00055    { 
 <a name="l00056"></a>00056       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt; n; ++i) {
@@ -113,8 +113,8 @@
 <a name="l00061"></a>00061    <span class="comment">/*</span>
 <a name="l00062"></a>00062 <span class="comment">   * Assignment constructor.</span>
 <a name="l00063"></a>00063 <span class="comment">   */</span>
-<a name="l00064"></a>00064    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1MTRand__int32.html#afd329ec4b41dbe6ec9063f309fdf8342" title="Assignment.">MTRand_int32::operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1MTRand__int32.html" title="Mersenne Twister random number generator engine.">MTRand_int32</a>&amp; other) 
-<a name="l00065"></a><a class="code" href="classUtil_1_1MTRand__int32.html#afd329ec4b41dbe6ec9063f309fdf8342">00065</a>    { 
+<a name="l00064"></a>00064    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1MTRand__int32.html#ac02a734c3fb0e277b59bdcae56aac262" title="Assignment.">MTRand_int32::operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1MTRand__int32.html" title="Mersenne Twister random number generator engine.">MTRand_int32</a>&amp; other) 
+<a name="l00065"></a><a class="code" href="classUtil_1_1MTRand__int32.html#ac02a734c3fb0e277b59bdcae56aac262">00065</a>    { 
 <a name="l00066"></a>00066       p = other.p;
 <a name="l00067"></a>00067       init = other.init;
 <a name="l00068"></a>00068       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt; n; ++i) {
@@ -138,8 +138,8 @@
 <a name="l00086"></a>00086    <span class="comment">/*</span>
 <a name="l00087"></a>00087 <span class="comment">   * Init by 32 bit seed</span>
 <a name="l00088"></a>00088 <span class="comment">   */</span>
-<a name="l00089"></a>00089    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1MTRand__int32.html#a94603b17caec1364bd46561b480787ce" title="Seed with 32 bit integer.">MTRand_int32::seed</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> s) {  
-<a name="l00090"></a><a class="code" href="classUtil_1_1MTRand__int32.html#a94603b17caec1364bd46561b480787ce">00090</a>      state[0] = s &amp; 0xFFFFFFFFUL; <span class="comment">// for &gt; 32 bit machines</span>
+<a name="l00089"></a>00089    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1MTRand__int32.html#aa7bdd37d658e6f6912a2ae694cda03a0" title="Seed with 32 bit integer.">MTRand_int32::seed</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> s) {  
+<a name="l00090"></a><a class="code" href="classUtil_1_1MTRand__int32.html#aa7bdd37d658e6f6912a2ae694cda03a0">00090</a>      state[0] = s &amp; 0xFFFFFFFFUL; <span class="comment">// for &gt; 32 bit machines</span>
 <a name="l00091"></a>00091      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; n; ++i) {
 <a name="l00092"></a>00092        state[i] = 1812433253UL * (state[i - 1] ^ (state[i - 1] &gt;&gt; 30)) + i;
 <a name="l00093"></a>00093    <span class="comment">// see Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier</span>
@@ -150,8 +150,8 @@
 <a name="l00098"></a>00098      p = n; <span class="comment">// force gen_state() to be called for next random number</span>
 <a name="l00099"></a>00099    }
 <a name="l00100"></a>00100    
-<a name="l00101"></a>00101    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1MTRand__int32.html#a94603b17caec1364bd46561b480787ce" title="Seed with 32 bit integer.">MTRand_int32::seed</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>* array, <span class="keywordtype">int</span> size) { <span class="comment">// init by array</span>
-<a name="l00102"></a><a class="code" href="classUtil_1_1MTRand__int32.html#a0e59b769d7f80836ab212b64ca9013ff">00102</a>      <a class="code" href="classUtil_1_1MTRand__int32.html#a94603b17caec1364bd46561b480787ce" title="Seed with 32 bit integer.">seed</a>(19650218UL);
+<a name="l00101"></a>00101    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1MTRand__int32.html#aa7bdd37d658e6f6912a2ae694cda03a0" title="Seed with 32 bit integer.">MTRand_int32::seed</a>(<span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span>* array, <span class="keywordtype">int</span> size) { <span class="comment">// init by array</span>
+<a name="l00102"></a><a class="code" href="classUtil_1_1MTRand__int32.html#a7957aba44c68fc08209bc6fded788284">00102</a>      <a class="code" href="classUtil_1_1MTRand__int32.html#aa7bdd37d658e6f6912a2ae694cda03a0" title="Seed with 32 bit integer.">seed</a>(19650218UL);
 <a name="l00103"></a>00103      <span class="keywordtype">int</span> i = 1, j = 0;
 <a name="l00104"></a>00104      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = ((n &gt; size) ? n : size); k; --k) {
 <a name="l00105"></a>00105        state[i] = (state[i] ^ ((state[i - 1] ^ (state[i - 1] &gt;&gt; 30)) * 1664525UL))
@@ -173,7 +173,7 @@
 <a name="l00121"></a>00121 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

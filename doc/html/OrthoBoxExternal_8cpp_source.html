@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,8 +71,8 @@
 <a name="l00020"></a>00020    <span class="comment">/* </span>
 <a name="l00021"></a>00021 <span class="comment">   * Constructor.</span>
 <a name="l00022"></a>00022 <span class="comment">   */</span>
-<a name="l00023"></a>00023    <a class="code" href="classInter_1_1OrthoBoxExternal.html#a3fac953c5f88dca33f78c1fe3bc5634a" title="Default constructor.">OrthoBoxExternal::OrthoBoxExternal</a>() 
-<a name="l00024"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#a3fac953c5f88dca33f78c1fe3bc5634a">00024</a>     : indConfine_(3),
+<a name="l00023"></a>00023    <a class="code" href="classInter_1_1OrthoBoxExternal.html#ab1eb1c4184366ddbc9729a9c9691a1db" title="Default constructor.">OrthoBoxExternal::OrthoBoxExternal</a>() 
+<a name="l00024"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#ab1eb1c4184366ddbc9729a9c9691a1db">00024</a>     : indConfine_(3),
 <a name="l00025"></a>00025       boundaryPtr_(0),
 <a name="l00026"></a>00026       nAtomType_(0),
 <a name="l00027"></a>00027       isInitialized_(false)
@@ -81,8 +81,8 @@
 <a name="l00030"></a>00030    <span class="comment">/* </span>
 <a name="l00031"></a>00031 <span class="comment">   * Copy constructor.</span>
 <a name="l00032"></a>00032 <span class="comment">   */</span>
-<a name="l00033"></a>00033    <a class="code" href="classInter_1_1OrthoBoxExternal.html#a3fac953c5f88dca33f78c1fe3bc5634a" title="Default constructor.">OrthoBoxExternal::OrthoBoxExternal</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html" title="A repulsive 9-3 potential confining particles inside an orthogonal box along directions specified by ...">OrthoBoxExternal</a>&amp; other)
-<a name="l00034"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#ac4a82fb484f3b219f6588292124dc345">00034</a>     : indConfine_(other.indConfine_),
+<a name="l00033"></a>00033    <a class="code" href="classInter_1_1OrthoBoxExternal.html#ab1eb1c4184366ddbc9729a9c9691a1db" title="Default constructor.">OrthoBoxExternal::OrthoBoxExternal</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html" title="A repulsive 9-3 potential confining particles inside an orthogonal box along directions specified by ...">OrthoBoxExternal</a>&amp; other)
+<a name="l00034"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#a1fa8ed2d63d1f909fe90fa7a15585534">00034</a>     : indConfine_(other.indConfine_),
 <a name="l00035"></a>00035       epsilon_(other.epsilon_),
 <a name="l00036"></a>00036       sigma_(other.sigma_),
 <a name="l00037"></a>00037       sigmaCb_(other.sigmaCb_),
@@ -96,8 +96,8 @@
 <a name="l00045"></a>00045    <span class="comment">/* </span>
 <a name="l00046"></a>00046 <span class="comment">   * Assignment operator.</span>
 <a name="l00047"></a>00047 <span class="comment">   */</span>
-<a name="l00048"></a>00048    <a class="code" href="classInter_1_1OrthoBoxExternal.html" title="A repulsive 9-3 potential confining particles inside an orthogonal box along directions specified by ...">OrthoBoxExternal</a>&amp; <a class="code" href="classInter_1_1OrthoBoxExternal.html#aaf1098b9d6cddaaf063009d224b8c454" title="Assignment.">OrthoBoxExternal::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html" title="A repulsive 9-3 potential confining particles inside an orthogonal box along directions specified by ...">OrthoBoxExternal</a>&amp; other)
-<a name="l00049"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#aaf1098b9d6cddaaf063009d224b8c454">00049</a>    {
+<a name="l00048"></a>00048    <a class="code" href="classInter_1_1OrthoBoxExternal.html" title="A repulsive 9-3 potential confining particles inside an orthogonal box along directions specified by ...">OrthoBoxExternal</a>&amp; <a class="code" href="classInter_1_1OrthoBoxExternal.html#a0682a5fb6e440498abd1d08cff9c1ab6" title="Assignment.">OrthoBoxExternal::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html" title="A repulsive 9-3 potential confining particles inside an orthogonal box along directions specified by ...">OrthoBoxExternal</a>&amp; other)
+<a name="l00049"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#a0682a5fb6e440498abd1d08cff9c1ab6">00049</a>    {
 <a name="l00050"></a>00050       indConfine_    = other.indConfine_;
 <a name="l00051"></a>00051       boundaryPtr_   = other.boundaryPtr_;
 <a name="l00052"></a>00052       nAtomType_     = other.nAtomType_;
@@ -113,8 +113,8 @@
 <a name="l00062"></a>00062    <span class="comment">/* </span>
 <a name="l00063"></a>00063 <span class="comment">   * Set nAtomType</span>
 <a name="l00064"></a>00064 <span class="comment">   */</span>
-<a name="l00065"></a>00065    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html#a9549e24ee72625c94fd6ae7d61ceeee8" title="Set nAtomType value.">OrthoBoxExternal::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType) 
-<a name="l00066"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#a9549e24ee72625c94fd6ae7d61ceeee8">00066</a>    {  
+<a name="l00065"></a>00065    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html#a8d48d1db5e0de17945050f3bdfd270fa" title="Set nAtomType value.">OrthoBoxExternal::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType) 
+<a name="l00066"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#a8d48d1db5e0de17945050f3bdfd270fa">00066</a>    {  
 <a name="l00067"></a>00067       <span class="keywordflow">if</span> (nAtomType &lt;= 0) {
 <a name="l00068"></a>00068          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtomType &lt;= 0&quot;</span>);
 <a name="l00069"></a>00069       }
@@ -127,11 +127,11 @@
 <a name="l00076"></a>00076    <span class="comment">/* </span>
 <a name="l00077"></a>00077 <span class="comment">   * Set pointer to the Boundary.</span>
 <a name="l00078"></a>00078 <span class="comment">   */</span>
-<a name="l00079"></a>00079    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html#aae3d88e326e8e921368e6d8fc0fc992c" title="Set pointer to Boundary.">OrthoBoxExternal::setBoundary</a>(Boundary &amp;boundary)
-<a name="l00080"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#aae3d88e326e8e921368e6d8fc0fc992c">00080</a>    {  boundaryPtr_ = &amp;boundary; }
+<a name="l00079"></a>00079    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html#ab96d4338aa3f8da1075dcede97db8323" title="Set pointer to Boundary.">OrthoBoxExternal::setBoundary</a>(<a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary)
+<a name="l00080"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#ab96d4338aa3f8da1075dcede97db8323">00080</a>    {  boundaryPtr_ = &amp;boundary; }
 <a name="l00081"></a>00081    
-<a name="l00085"></a>00085    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html#a0166cd3d432c47fb9c95ffed5209fbcb" title="Sets external parameter.">OrthoBoxExternal::setExternalParameter</a>(<span class="keywordtype">double</span> externalParameter)
-<a name="l00086"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#a0166cd3d432c47fb9c95ffed5209fbcb">00086</a>    {
+<a name="l00085"></a>00085    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html#abbac7f8a29947a188ec5d536f7ad5d8d" title="Sets external parameter.">OrthoBoxExternal::setExternalParameter</a>(<span class="keywordtype">double</span> externalParameter)
+<a name="l00086"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#abbac7f8a29947a188ec5d536f7ad5d8d">00086</a>    {
 <a name="l00087"></a>00087       <span class="comment">// Preconditions</span>
 <a name="l00088"></a>00088       <span class="keywordflow">if</span> (!isInitialized_) {
 <a name="l00089"></a>00089          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;OrthoBoxExternal potential is not initialized&quot;</span>);
@@ -143,8 +143,8 @@
 <a name="l00095"></a>00095    <span class="comment">/* </span>
 <a name="l00096"></a>00096 <span class="comment">   * Read potential parameters from file.</span>
 <a name="l00097"></a>00097 <span class="comment">   */</span>
-<a name="l00098"></a>00098    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html#ab5421d3c9175985c9acbf723e5392075" title="Read potential parameters, and initialize other variables.">OrthoBoxExternal::readParam</a>(std::istream &amp;in) 
-<a name="l00099"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#ab5421d3c9175985c9acbf723e5392075">00099</a>    {
+<a name="l00098"></a>00098    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html#aa53b832cb4e217ad84562904f59321e8" title="Read potential parameters, and initialize other variables.">OrthoBoxExternal::readParam</a>(std::istream &amp;in) 
+<a name="l00099"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#aa53b832cb4e217ad84562904f59321e8">00099</a>    {
 <a name="l00100"></a>00100       <span class="keywordflow">if</span> (nAtomType_ == 0) {
 <a name="l00101"></a>00101          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtomType must be set before readParam&quot;</span>);
 <a name="l00102"></a>00102       }
@@ -155,7 +155,7 @@
 <a name="l00107"></a>00107       <span class="comment">// Read parameters</span>
 <a name="l00108"></a>00108       <span class="comment">//readBegin(in,  &quot;OrthoBoxExternal&quot;);</span>
 <a name="l00109"></a>00109       read&lt;int&gt;(in, <span class="stringliteral">&quot;indexConfinement&quot;</span>, indConfine_);
-<a name="l00110"></a>00110       <span class="keywordflow">if</span> (indConfine_ &lt; 0 || indConfine_ &gt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>) {
+<a name="l00110"></a>00110       <span class="keywordflow">if</span> (indConfine_ &lt; 0 || indConfine_ &gt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>) {
 <a name="l00111"></a>00111          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid index for confinement directions.&quot;</span>);
 <a name="l00112"></a>00112       }
 <a name="l00113"></a>00113       read&lt;double&gt;(in, <span class="stringliteral">&quot;epsilon&quot;</span>, epsilon_);
@@ -170,20 +170,20 @@
 <a name="l00122"></a>00122       isInitialized_ = <span class="keyword">true</span>;
 <a name="l00123"></a>00123    }
 <a name="l00124"></a>00124 
-<a name="l00128"></a>00128    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html#a59d3288a2ea0c6d85b0511cd9009f496" title="Returns external parameter.">OrthoBoxExternal::externalParameter</a>()<span class="keyword"> const</span>
-<a name="l00129"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#a59d3288a2ea0c6d85b0511cd9009f496">00129</a> <span class="keyword">   </span>{
+<a name="l00128"></a>00128    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1OrthoBoxExternal.html#a0e2e108842ac828d3efb7daa741f095d" title="Returns external parameter.">OrthoBoxExternal::externalParameter</a>()<span class="keyword"> const</span>
+<a name="l00129"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#a0e2e108842ac828d3efb7daa741f095d">00129</a> <span class="keyword">   </span>{
 <a name="l00130"></a>00130      <span class="keywordflow">return</span> epsilon_;
 <a name="l00131"></a>00131    }
 <a name="l00132"></a>00132 
-<a name="l00136"></a>00136    std::string <a class="code" href="classInter_1_1OrthoBoxExternal.html#a13c07285e858b2c232919fd57b635e1b" title="Return name string &amp;quot;LJPair&amp;quot; for this evaluator class.">OrthoBoxExternal::className</a>()<span class="keyword"> const</span>
-<a name="l00137"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#a13c07285e858b2c232919fd57b635e1b">00137</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;OrthoBoxExternal&quot;</span>); }
+<a name="l00136"></a>00136    std::string <a class="code" href="classInter_1_1OrthoBoxExternal.html#a4475d0251f23538b33d02b1624e8759e" title="Return name string &amp;quot;LJPair&amp;quot; for this evaluator class.">OrthoBoxExternal::className</a>()<span class="keyword"> const</span>
+<a name="l00137"></a><a class="code" href="classInter_1_1OrthoBoxExternal.html#a4475d0251f23538b33d02b1624e8759e">00137</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;OrthoBoxExternal&quot;</span>); }
 <a name="l00138"></a>00138  
 <a name="l00139"></a>00139 
 <a name="l00140"></a>00140 } 
 <a name="l00141"></a>00141 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

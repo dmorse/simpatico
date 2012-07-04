@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Manager&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::Manager&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Manager&lt; Data &gt; Class Template Reference</h1>  </div>
+<h1>Util::Manager&lt; Data &gt; Class Template Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Manager" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -58,20 +58,20 @@
  class Util::Manager&lt; Data &gt;</h3>
 
 <p>Template container for pointers to objects with a common base class. </p>
-<p>A Manager&lt;Data&gt; has an array of Data* pointers to Data objects, an array of corresponding subclass names, and a pointer to a Factory&lt;Data&gt; object. The default implementation of the <a class="el" href="classUtil_1_1Manager.html#ab5421d3c9175985c9acbf723e5392075" title="Read a list from file that controls creation of a series of objects.">Manager&lt;Data&gt;::readParam()</a> method uses an associated Factory&lt;Data&gt; object to recognize the class name string that begins a polymorphic block in a parameter file (which must refer to a known subclass of Data) and to instantiate an object of the specified subclass.</p>
+<p>A Manager&lt;Data&gt; has an array of Data* pointers to Data objects, an array of corresponding subclass names, and a pointer to a Factory&lt;Data&gt; object. The default implementation of the <a class="el" href="classUtil_1_1Manager.html#a115f9d62a9e538f20660683eb0eb3a10" title="Read a list from file that controls creation of a series of objects.">Manager&lt;Data&gt;::readParam()</a> method uses an associated Factory&lt;Data&gt; object to recognize the class name string that begins a polymorphic block in a parameter file (which must refer to a known subclass of Data) and to instantiate an object of the specified subclass.</p>
 <p>Subclasses of Manager&lt;Data&gt; are used to manage arrays of Species, McMove, and Diagnostic objects. </p>
 
 <p>Definition at line <a class="el" href="Manager_8h_source.html#l00038">38</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="Manager_8h_source.html">Manager.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Manager&lt; Data &gt;:</div>
+Inheritance diagram for Util::Manager&lt; Data &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classUtil_1_1Manager.png" usemap="#Manager&lt; Data &gt;_map" alt=""/>
-  <map id="Manager&lt; Data &gt;_map" name="Manager&lt; Data &gt;_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,113,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,113,24"/>
+  <img src="classUtil_1_1Manager.png" usemap="#Util::Manager&lt; Data &gt;_map" alt=""/>
+  <map id="Util::Manager&lt; Data &gt;_map" name="Util::Manager&lt; Data &gt;_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,136,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,136,24"/>
 </map>
  </div></div>
 
@@ -79,44 +79,46 @@ Inheritance diagram for Manager&lt; Data &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a8fae1352a98517c1ecb0a6e7396e3f06">Manager</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a8fae1352a98517c1ecb0a6e7396e3f06"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a829d7114e3ed38c555af0fb4e974a6f6">~Manager</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a829d7114e3ed38c555af0fb4e974a6f6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a46579535f660aabc15e6297541b758fc">addSubfactory</a> (<a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp;subfactory)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a SubFactory for this <a class="el" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class.">Manager</a>.  <a href="#a46579535f660aabc15e6297541b758fc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a1b2f84695b858cbd9d970c863d234f32">setFactory</a> (<a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp;factory)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate a <a class="el" href="classUtil_1_1Factory.html" title="Factory template.">Factory</a> with this <a class="el" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class.">Manager</a>.  <a href="#a1b2f84695b858cbd9d970c863d234f32"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a2969a8e51e87393f5e29dd0f5db666e1">setFactory</a> (<a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; *factoryPtr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associated a <a class="el" href="classUtil_1_1Factory.html" title="Factory template.">Factory</a> with this <a class="el" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class.">Manager</a> (pass by pointer).  <a href="#a2969a8e51e87393f5e29dd0f5db666e1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a list from file that controls creation of a series of objects.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a59d70827af58d3b682a8ccc869484c34">append</a> (Data &amp;data, const std::string &amp;name)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Append a Data object to the end of the sequence.  <a href="#a59d70827af58d3b682a8ccc869484c34"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">size</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get logical size.  <a href="#ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a878ce732ddd49f5a6866d4015c946b46">className</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the subclass name for object number i.  <a href="#a878ce732ddd49f5a6866d4015c946b46"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#ad11a6fd72cf0ec5fcf2c9deeecc83406">factory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to the factory.  <a href="#ad11a6fd72cf0ec5fcf2c9deeecc83406"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#aca25984dc6d21d93ccc222c8fb370046">hasFactory</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this <a class="el" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class.">Manager</a> has a <a class="el" href="classUtil_1_1Factory.html" title="Factory template.">Factory</a>, false otherwise.  <a href="#aca25984dc6d21d93ccc222c8fb370046"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a68c509e5d63b2561d23baa887f215cb9">operator[]</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#a68c509e5d63b2561d23baa887f215cb9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a03f6a21677eadced2f6f1427a7f10c33">Manager</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a03f6a21677eadced2f6f1427a7f10c33"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a3cea09e1ebc29426b743cac062ceeb51">~Manager</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a3cea09e1ebc29426b743cac062ceeb51"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#aa4b5ed1282aad551951fa086ec125aab">addSubfactory</a> (<a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp;subfactory)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a SubFactory for this <a class="el" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class.">Manager</a>.  <a href="#aa4b5ed1282aad551951fa086ec125aab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a102f5b21e2f7788ade3e4743758f9827">setFactory</a> (<a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp;factory)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate a <a class="el" href="classUtil_1_1Factory.html" title="Factory template.">Factory</a> with this <a class="el" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class.">Manager</a>.  <a href="#a102f5b21e2f7788ade3e4743758f9827"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a068e403529f63b0d333b53c5a7ff41d8">setFactory</a> (<a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; *factoryPtr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associated a <a class="el" href="classUtil_1_1Factory.html" title="Factory template.">Factory</a> with this <a class="el" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class.">Manager</a> (pass by pointer).  <a href="#a068e403529f63b0d333b53c5a7ff41d8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a115f9d62a9e538f20660683eb0eb3a10">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a list from file that controls creation of a series of objects.  <a href="#a115f9d62a9e538f20660683eb0eb3a10"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#ab9674d8bcbbb96c13424624f6c0c09c6">append</a> (Data &amp;data, const std::string &amp;name)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Append a Data object to the end of the sequence.  <a href="#ab9674d8bcbbb96c13424624f6c0c09c6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a222f7a35ec583044c76543bf366b0fe6">size</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get logical size.  <a href="#a222f7a35ec583044c76543bf366b0fe6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a40cb1b41c1d1b5f9321ea9d03ef5fa76">className</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the subclass name for object number i.  <a href="#a40cb1b41c1d1b5f9321ea9d03ef5fa76"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a12f3d8f6c5747ac6e267cf3bf4dea4cf">factory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to the factory.  <a href="#a12f3d8f6c5747ac6e267cf3bf4dea4cf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a827e90bfa6d093650edaa330b9689751">hasFactory</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this <a class="el" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class.">Manager</a> has a <a class="el" href="classUtil_1_1Factory.html" title="Factory template.">Factory</a>, false otherwise.  <a href="#a827e90bfa6d093650edaa330b9689751"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#aa8181a050f974d07764f4362eee77496">operator[]</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#aa8181a050f974d07764f4362eee77496"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a93594a17402c96f9fba5c7fae18dc72e">initFactory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create factory if necessary.  <a href="#a93594a17402c96f9fba5c7fae18dc72e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#af85c20a6e39bafffb57b7d0de86a9237">newDefaultFactory</a> () const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an instance of the default Factory&lt;Data&gt; class.  <a href="#af85c20a6e39bafffb57b7d0de86a9237"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a2061554cbc37ccf90946baba0ddb7d4f">initFactory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create factory if necessary.  <a href="#a2061554cbc37ccf90946baba0ddb7d4f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Manager.html#a8c7e94ba2272856da68a31f8d5eb3b0c">newDefaultFactory</a> () const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an instance of the default Factory&lt;Data&gt; class.  <a href="#a8c7e94ba2272856da68a31f8d5eb3b0c"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a8fae1352a98517c1ecb0a6e7396e3f06"></a><!-- doxytag: member="Util::Manager::Manager" ref="a8fae1352a98517c1ecb0a6e7396e3f06" args="()" -->
+<a class="anchor" id="a03f6a21677eadced2f6f1427a7f10c33"></a><!-- doxytag: member="Util::Manager::Manager" ref="a03f6a21677eadced2f6f1427a7f10c33" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Manager.html">Manager</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1Manager.html">Manager</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -131,12 +133,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a829d7114e3ed38c555af0fb4e974a6f6"></a><!-- doxytag: member="Util::Manager::~Manager" ref="a829d7114e3ed38c555af0fb4e974a6f6" args="()" -->
+<a class="anchor" id="a3cea09e1ebc29426b743cac062ceeb51"></a><!-- doxytag: member="Util::Manager::~Manager" ref="a3cea09e1ebc29426b743cac062ceeb51" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1Manager.html">Manager</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::~<a class="el" href="classUtil_1_1Manager.html">Manager</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -152,12 +156,14 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a46579535f660aabc15e6297541b758fc"></a><!-- doxytag: member="Util::Manager::addSubfactory" ref="a46579535f660aabc15e6297541b758fc" args="(Factory&lt; Data &gt; &amp;subfactory)" -->
+<a class="anchor" id="aa4b5ed1282aad551951fa086ec125aab"></a><!-- doxytag: member="Util::Manager::addSubfactory" ref="aa4b5ed1282aad551951fa086ec125aab" args="(Factory&lt; Data &gt; &amp;subfactory)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void addSubfactory </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::addSubfactory </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>subfactory</em></td><td>)</td>
@@ -179,12 +185,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1b2f84695b858cbd9d970c863d234f32"></a><!-- doxytag: member="Util::Manager::setFactory" ref="a1b2f84695b858cbd9d970c863d234f32" args="(Factory&lt; Data &gt; &amp;factory)" -->
+<a class="anchor" id="a102f5b21e2f7788ade3e4743758f9827"></a><!-- doxytag: member="Util::Manager::setFactory" ref="a102f5b21e2f7788ade3e4743758f9827" args="(Factory&lt; Data &gt; &amp;factory)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setFactory </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::setFactory </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>factory</em></td><td>)</td>
@@ -206,12 +214,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2969a8e51e87393f5e29dd0f5db666e1"></a><!-- doxytag: member="Util::Manager::setFactory" ref="a2969a8e51e87393f5e29dd0f5db666e1" args="(Factory&lt; Data &gt; *factoryPtr)" -->
+<a class="anchor" id="a068e403529f63b0d333b53c5a7ff41d8"></a><!-- doxytag: member="Util::Manager::setFactory" ref="a068e403529f63b0d333b53c5a7ff41d8" args="(Factory&lt; Data &gt; *factoryPtr)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setFactory </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::setFactory </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; *&#160;</td>
           <td class="paramname"><em>factoryPtr</em></td><td>)</td>
@@ -233,12 +243,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="Util::Manager::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a115f9d62a9e538f20660683eb0eb3a10"></a><!-- doxytag: member="Util::Manager::readParam" ref="a115f9d62a9e538f20660683eb0eb3a10" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -257,14 +269,14 @@ Protected Member Functions</h2></td></tr>
 <li>uses factory object to create a new instance of className.</li>
 </ul>
 <ul>
-<li>invokes the <a class="el" href="classUtil_1_1Manager.html#ab5421d3c9175985c9acbf723e5392075" title="Read a list from file that controls creation of a series of objects.">readParam()</a> method of the new object.</li>
+<li>invokes the <a class="el" href="classUtil_1_1Manager.html#a115f9d62a9e538f20660683eb0eb3a10" title="Read a list from file that controls creation of a series of objects.">readParam()</a> method of the new object.</li>
 </ul>
 <p>The implementation of the factory must recognize all valid className string values, and invoke the appropriate constructor for each. The loop over blocks terminates when it encounters a closing bracket '}' surrounded by white space.</p>
 <p>This implementation does not read a line containing the name of the <a class="el" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class.">Manager</a> and an opening bracket. This should thus be read by a subclass implementation that invokes this default implementation. A minimal implementation of readParam for a subclass named ThingManager of Manager&lt;Thing&gt; would look like this: </p>
-<div class="fragment"><pre class="fragment"> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Manager.html#ab5421d3c9175985c9acbf723e5392075" title="Read a list from file that controls creation of a series of objects.">ThingManager::readParam</a>(std::istream&amp; in)
+<div class="fragment"><pre class="fragment"> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Manager.html#a115f9d62a9e538f20660683eb0eb3a10" title="Read a list from file that controls creation of a series of objects.">ThingManager::readParam</a>(std::istream&amp; in)
  {
-    <a class="code" href="classUtil_1_1ParamComposite.html#ae62d63b03a6f5cb70c0978082e455e03" title="Add and read a class label and opening bracket.">readBegin</a>(in, <span class="stringliteral">&quot;ThingManager&quot;</span>);
-    <a class="code" href="classUtil_1_1Manager.html#ab5421d3c9175985c9acbf723e5392075" title="Read a list from file that controls creation of a series of objects.">Manager&lt;Thing&gt;::readParam</a>(in);
+    <a class="code" href="classUtil_1_1ParamComposite.html#af21bd2c40a05014df5f0ee85ed73d8f7" title="Add and read a class label and opening bracket.">readBegin</a>(in, <span class="stringliteral">&quot;ThingManager&quot;</span>);
+    <a class="code" href="classUtil_1_1Manager.html#a115f9d62a9e538f20660683eb0eb3a10" title="Read a list from file that controls creation of a series of objects.">Manager&lt;Thing&gt;::readParam</a>(in);
  }
 </pre></div><dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -273,24 +285,26 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classMcMd_1_1DiagnosticManager.html#ab5421d3c9175985c9acbf723e5392075">DiagnosticManager</a>, <a class="el" href="classMcMd_1_1McMoveManager.html#ab5421d3c9175985c9acbf723e5392075">McMoveManager</a>, <a class="el" href="classMcMd_1_1SpeciesManager.html#ab5421d3c9175985c9acbf723e5392075">SpeciesManager</a>, and <a class="el" href="classDdMd_1_1DiagnosticManager.html#ab5421d3c9175985c9acbf723e5392075">DiagnosticManager</a>.</p>
+<p>Reimplemented in <a class="el" href="classMcMd_1_1DiagnosticManager.html#ac52d0291ce72950550cfe7cc0c0d5edd">McMd::DiagnosticManager</a>, <a class="el" href="classMcMd_1_1McMoveManager.html#a68741ab8147174873db8e59d87427a5e">McMd::McMoveManager</a>, <a class="el" href="classMcMd_1_1SpeciesManager.html#a9b5cf1291fab366273f24999c604bf3e">McMd::SpeciesManager</a>, and <a class="el" href="classDdMd_1_1DiagnosticManager.html#a7a4555dd42c640e5c627d1e5967b0869">DdMd::DiagnosticManager</a>.</p>
 
 <p>Definition at line <a class="el" href="Manager_8h_source.html#l00273">273</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>References <a class="el" href="ParamComponent_8cpp_source.html#l00085">ParamComponent::echo()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="End_8cpp_source.html#l00060">End::writeParam()</a>.</p>
+<p>References <a class="el" href="ParamComponent_8cpp_source.html#l00085">Util::ParamComponent::echo()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="End_8cpp_source.html#l00060">Util::End::writeParam()</a>.</p>
 
-<p>Referenced by <a class="el" href="SpeciesManager_8cpp_source.html#l00023">SpeciesManager::readParam()</a>, and <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00039">DiagnosticManager::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="SpeciesManager_8cpp_source.html#l00023">McMd::SpeciesManager::readParam()</a>, <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00039">DdMd::DiagnosticManager::readParam()</a>, and <a class="el" href="mcMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00039">McMd::DiagnosticManager::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a59d70827af58d3b682a8ccc869484c34"></a><!-- doxytag: member="Util::Manager::append" ref="a59d70827af58d3b682a8ccc869484c34" args="(Data &amp;data, const std::string &amp;name)" -->
+<a class="anchor" id="ab9674d8bcbbb96c13424624f6c0c09c6"></a><!-- doxytag: member="Util::Manager::append" ref="ab9674d8bcbbb96c13424624f6c0c09c6" args="(Data &amp;data, const std::string &amp;name)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void append </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::append </td>
           <td>(</td>
           <td class="paramtype">Data &amp;&#160;</td>
           <td class="paramname"><em>data</em>, </td>
@@ -323,12 +337,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><!-- doxytag: member="Util::Manager::size" ref="ab8e4e3e2a7bf18888b71bdf9dda0770b" args="() const " -->
+<a class="anchor" id="a222f7a35ec583044c76543bf366b0fe6"></a><!-- doxytag: member="Util::Manager::size" ref="a222f7a35ec583044c76543bf366b0fe6" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int size </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -344,12 +360,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a878ce732ddd49f5a6866d4015c946b46"></a><!-- doxytag: member="Util::Manager::className" ref="a878ce732ddd49f5a6866d4015c946b46" args="(int i) const " -->
+<a class="anchor" id="a40cb1b41c1d1b5f9321ea9d03ef5fa76"></a><!-- doxytag: member="Util::Manager::className" ref="a40cb1b41c1d1b5f9321ea9d03ef5fa76" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::string className </td>
+          <td class="memname">std::string <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::className </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -374,12 +392,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad11a6fd72cf0ec5fcf2c9deeecc83406"></a><!-- doxytag: member="Util::Manager::factory" ref="ad11a6fd72cf0ec5fcf2c9deeecc83406" args="()" -->
+<a class="anchor" id="a12f3d8f6c5747ac6e267cf3bf4dea4cf"></a><!-- doxytag: member="Util::Manager::factory" ref="a12f3d8f6c5747ac6e267cf3bf4dea4cf" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp; factory </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp; <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::factory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -392,16 +412,18 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Manager_8h_source.html#l00228">228</a> of file <a class="el" href="Manager_8h_source.html">Manager.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00680">McSimulation::mcMoveFactory()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00680">McMd::McSimulation::mcMoveFactory()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aca25984dc6d21d93ccc222c8fb370046"></a><!-- doxytag: member="Util::Manager::hasFactory" ref="aca25984dc6d21d93ccc222c8fb370046" args="() const " -->
+<a class="anchor" id="a827e90bfa6d093650edaa330b9689751"></a><!-- doxytag: member="Util::Manager::hasFactory" ref="a827e90bfa6d093650edaa330b9689751" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool hasFactory </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::hasFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -416,12 +438,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a68c509e5d63b2561d23baa887f215cb9"></a><!-- doxytag: member="Util::Manager::operator[]" ref="a68c509e5d63b2561d23baa887f215cb9" args="(int i) const " -->
+<a class="anchor" id="aa8181a050f974d07764f4362eee77496"></a><!-- doxytag: member="Util::Manager::operator[]" ref="aa8181a050f974d07764f4362eee77496" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data &amp; operator[] </td>
+          <td class="memname">Data &amp; <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -444,12 +468,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a93594a17402c96f9fba5c7fae18dc72e"></a><!-- doxytag: member="Util::Manager::initFactory" ref="a93594a17402c96f9fba5c7fae18dc72e" args="()" -->
+<a class="anchor" id="a2061554cbc37ccf90946baba0ddb7d4f"></a><!-- doxytag: member="Util::Manager::initFactory" ref="a2061554cbc37ccf90946baba0ddb7d4f" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void initFactory </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::initFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [protected]</code></td>
@@ -464,12 +490,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af85c20a6e39bafffb57b7d0de86a9237"></a><!-- doxytag: member="Util::Manager::newDefaultFactory" ref="af85c20a6e39bafffb57b7d0de86a9237" args="() const =0" -->
+<a class="anchor" id="a8c7e94ba2272856da68a31f8d5eb3b0c"></a><!-- doxytag: member="Util::Manager::newDefaultFactory" ref="a8c7e94ba2272856da68a31f8d5eb3b0c" args="() const =0" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt;Data&gt;* newDefaultFactory </td>
+          <td class="memname">virtual <a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt;Data&gt;* <a class="el" href="classUtil_1_1Manager.html">Util::Manager</a>&lt; Data &gt;::newDefaultFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [protected, pure virtual]</code></td>
@@ -481,7 +509,7 @@ Protected Member Functions</h2></td></tr>
 <p>Create an instance of the default Factory&lt;Data&gt; class. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>a pointer to a new Factory&lt;Data&gt; object. </dd></dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1McDiagnosticManager.html#a7122261efa4c9ab4e4318821ae5da60d">McDiagnosticManager</a>, <a class="el" href="classMcMd_1_1MdDiagnosticManager.html#a7122261efa4c9ab4e4318821ae5da60d">MdDiagnosticManager</a>, <a class="el" href="classMcMd_1_1SpeciesManager.html#a55cc834ebfdd24a6883ec27f2622000c">SpeciesManager</a>, and <a class="el" href="classDdMd_1_1DiagnosticManager.html#a7122261efa4c9ab4e4318821ae5da60d">DiagnosticManager</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1McDiagnosticManager.html#ad6ce3d1d3f49844a05054af98b188453">McMd::McDiagnosticManager</a>, <a class="el" href="classMcMd_1_1MdDiagnosticManager.html#afdf986cf4336c886fb25c802404b0737">McMd::MdDiagnosticManager</a>, <a class="el" href="classMcMd_1_1SpeciesManager.html#a3f6e29f882e6104c6ae3165bdb6ea133">McMd::SpeciesManager</a>, and <a class="el" href="classDdMd_1_1DiagnosticManager.html#a8a0e83ef446d38fce224e105b5813a14">DdMd::DiagnosticManager</a>.</p>
 
 </div>
 </div>
@@ -489,7 +517,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="Manager_8h_source.html">Manager.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

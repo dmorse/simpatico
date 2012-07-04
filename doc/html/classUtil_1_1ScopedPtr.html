@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: ScopedPtr&lt; T &gt; Class Template Reference</title>
+<title>Simpatico: Util::ScopedPtr&lt; T &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>ScopedPtr&lt; T &gt; Class Template Reference</h1>  </div>
+<h1>Util::ScopedPtr&lt; T &gt; Class Template Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::ScopedPtr" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -58,7 +58,7 @@
  class Util::ScopedPtr&lt; T &gt;</h3>
 
 <p>A very simple RAII pointer. </p>
-<p>A <a class="el" href="classUtil_1_1ScopedPtr.html" title="A very simple RAII pointer.">ScopedPtr</a> mimics a built-in pointer, except that guarantees destruction of the object to which it points when the <a class="el" href="classUtil_1_1ScopedPtr.html" title="A very simple RAII pointer.">ScopedPtr</a> goes out of scope. It accepts ownership of a built-in pointer either upon construction or by the <a class="el" href="classUtil_1_1ScopedPtr.html#ad6a89b4fd7364e5104563003e8d0a008" title="Acquire ownership of a built-in pointer.">reset()</a> method, and deletes the associated object in its destructor. A <a class="el" href="classUtil_1_1ScopedPtr.html" title="A very simple RAII pointer.">ScopedPtr</a> cannot be copy constructed or assigned.</p>
+<p>A <a class="el" href="classUtil_1_1ScopedPtr.html" title="A very simple RAII pointer.">ScopedPtr</a> mimics a built-in pointer, except that guarantees destruction of the object to which it points when the <a class="el" href="classUtil_1_1ScopedPtr.html" title="A very simple RAII pointer.">ScopedPtr</a> goes out of scope. It accepts ownership of a built-in pointer either upon construction or by the <a class="el" href="classUtil_1_1ScopedPtr.html#acb03afa4ff6d00f458453ea7a5ddade1" title="Acquire ownership of a built-in pointer.">reset()</a> method, and deletes the associated object in its destructor. A <a class="el" href="classUtil_1_1ScopedPtr.html" title="A very simple RAII pointer.">ScopedPtr</a> cannot be copy constructed or assigned.</p>
 <p>Similar to boost::scoped_ptr, with minor differences. It takes the same amount of memory as a built-in pointer, and should be equally fast. </p>
 
 <p>Definition at line <a class="el" href="ScopedPtr_8h_source.html#l00029">29</a> of file <a class="el" href="ScopedPtr_8h_source.html">ScopedPtr.h</a>.</p>
@@ -69,30 +69,32 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#ae37fb942067e67c711beb897e7b7b5de">element_type</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of object pointed to.  <a href="#ae37fb942067e67c711beb897e7b7b5de"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#a79c8d038f8866286dbd9fb5b61695aae">element_type</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of object pointed to.  <a href="#a79c8d038f8866286dbd9fb5b61695aae"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#ab8eaaf2bb18200b0849cb758319f5434">ScopedPtr</a> (T *p=0)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ab8eaaf2bb18200b0849cb758319f5434"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#ab947011386598df1ad1ffd0ce186213f">~ScopedPtr</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor, destroys object pointed to, if any.  <a href="#ab947011386598df1ad1ffd0ce186213f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#ad6a89b4fd7364e5104563003e8d0a008">reset</a> (T *p=0)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Acquire ownership of a built-in pointer.  <a href="#ad6a89b4fd7364e5104563003e8d0a008"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#abcc36ef133f26e7e3145b785df23eb18">operator*</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereference.  <a href="#abcc36ef133f26e7e3145b785df23eb18"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#ac0ddd007dfcfef3121f74d0665dfd0cd">operator-&gt;</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Member access.  <a href="#ac0ddd007dfcfef3121f74d0665dfd0cd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#a07f851191ad3a7c5c1598ef14f710f96">get</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return enclosed built-in pointer.  <a href="#a07f851191ad3a7c5c1598ef14f710f96"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#a22abac4cdd74330f0bb494c13bde9689">ScopedPtr</a> (T *p=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a22abac4cdd74330f0bb494c13bde9689"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#ae2ff7cd2c067c140d225126c8f933e20">~ScopedPtr</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor, destroys object pointed to, if any.  <a href="#ae2ff7cd2c067c140d225126c8f933e20"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#acb03afa4ff6d00f458453ea7a5ddade1">reset</a> (T *p=0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Acquire ownership of a built-in pointer.  <a href="#acb03afa4ff6d00f458453ea7a5ddade1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#a4a0f948bdbfa490caa6ce83e4d632f19">operator*</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereference.  <a href="#a4a0f948bdbfa490caa6ce83e4d632f19"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#aec17210a49bbb5e6e7a5c2ad1a26e901">operator-&gt;</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Member access.  <a href="#aec17210a49bbb5e6e7a5c2ad1a26e901"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ScopedPtr.html#ae15f2262949c699c71c194ff5c3eb055">get</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return enclosed built-in pointer.  <a href="#ae15f2262949c699c71c194ff5c3eb055"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Typedef Documentation</h2>
-<a class="anchor" id="ae37fb942067e67c711beb897e7b7b5de"></a><!-- doxytag: member="Util::ScopedPtr::element_type" ref="ae37fb942067e67c711beb897e7b7b5de" args="" -->
+<a class="anchor" id="a79c8d038f8866286dbd9fb5b61695aae"></a><!-- doxytag: member="Util::ScopedPtr::element_type" ref="a79c8d038f8866286dbd9fb5b61695aae" args="" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">typedef T <a class="el" href="classUtil_1_1ScopedPtr.html#ae37fb942067e67c711beb897e7b7b5de">element_type</a></td>
+          <td class="memname">typedef T <a class="el" href="classUtil_1_1ScopedPtr.html">Util::ScopedPtr</a>&lt; T &gt;::<a class="el" href="classUtil_1_1ScopedPtr.html#a79c8d038f8866286dbd9fb5b61695aae">element_type</a></td>
         </tr>
       </table>
 </div>
@@ -105,12 +107,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ab8eaaf2bb18200b0849cb758319f5434"></a><!-- doxytag: member="Util::ScopedPtr::ScopedPtr" ref="ab8eaaf2bb18200b0849cb758319f5434" args="(T *p=0)" -->
+<a class="anchor" id="a22abac4cdd74330f0bb494c13bde9689"></a><!-- doxytag: member="Util::ScopedPtr::ScopedPtr" ref="a22abac4cdd74330f0bb494c13bde9689" args="(T *p=0)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1ScopedPtr.html">ScopedPtr</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ScopedPtr.html">Util::ScopedPtr</a>&lt; T &gt;::<a class="el" href="classUtil_1_1ScopedPtr.html">ScopedPtr</a> </td>
           <td>(</td>
           <td class="paramtype">T *&#160;</td>
           <td class="paramname"><em>p</em> = <code>0</code></td><td>)</td>
@@ -126,12 +130,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab947011386598df1ad1ffd0ce186213f"></a><!-- doxytag: member="Util::ScopedPtr::~ScopedPtr" ref="ab947011386598df1ad1ffd0ce186213f" args="()" -->
+<a class="anchor" id="ae2ff7cd2c067c140d225126c8f933e20"></a><!-- doxytag: member="Util::ScopedPtr::~ScopedPtr" ref="ae2ff7cd2c067c140d225126c8f933e20" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1ScopedPtr.html">ScopedPtr</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ScopedPtr.html">Util::ScopedPtr</a>&lt; T &gt;::~<a class="el" href="classUtil_1_1ScopedPtr.html">ScopedPtr</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -147,12 +153,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ad6a89b4fd7364e5104563003e8d0a008"></a><!-- doxytag: member="Util::ScopedPtr::reset" ref="ad6a89b4fd7364e5104563003e8d0a008" args="(T *p=0)" -->
+<a class="anchor" id="acb03afa4ff6d00f458453ea7a5ddade1"></a><!-- doxytag: member="Util::ScopedPtr::reset" ref="acb03afa4ff6d00f458453ea7a5ddade1" args="(T *p=0)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void reset </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1ScopedPtr.html">Util::ScopedPtr</a>&lt; T &gt;::reset </td>
           <td>(</td>
           <td class="paramtype">T *&#160;</td>
           <td class="paramname"><em>p</em> = <code>0</code></td><td>)</td>
@@ -174,12 +182,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="abcc36ef133f26e7e3145b785df23eb18"></a><!-- doxytag: member="Util::ScopedPtr::operator*" ref="abcc36ef133f26e7e3145b785df23eb18" args="() const " -->
+<a class="anchor" id="a4a0f948bdbfa490caa6ce83e4d632f19"></a><!-- doxytag: member="Util::ScopedPtr::operator*" ref="a4a0f948bdbfa490caa6ce83e4d632f19" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">T&amp; operator* </td>
+          <td class="memname">T&amp; <a class="el" href="classUtil_1_1ScopedPtr.html">Util::ScopedPtr</a>&lt; T &gt;::operator* </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -194,12 +204,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac0ddd007dfcfef3121f74d0665dfd0cd"></a><!-- doxytag: member="Util::ScopedPtr::operator&#45;&gt;" ref="ac0ddd007dfcfef3121f74d0665dfd0cd" args="() const " -->
+<a class="anchor" id="aec17210a49bbb5e6e7a5c2ad1a26e901"></a><!-- doxytag: member="Util::ScopedPtr::operator&#45;&gt;" ref="aec17210a49bbb5e6e7a5c2ad1a26e901" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">T* operator-&gt; </td>
+          <td class="memname">T* <a class="el" href="classUtil_1_1ScopedPtr.html">Util::ScopedPtr</a>&lt; T &gt;::operator-&gt; </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -214,12 +226,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a07f851191ad3a7c5c1598ef14f710f96"></a><!-- doxytag: member="Util::ScopedPtr::get" ref="a07f851191ad3a7c5c1598ef14f710f96" args="() const " -->
+<a class="anchor" id="ae15f2262949c699c71c194ff5c3eb055"></a><!-- doxytag: member="Util::ScopedPtr::get" ref="ae15f2262949c699c71c194ff5c3eb055" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">T* get </td>
+          <td class="memname">T* <a class="el" href="classUtil_1_1ScopedPtr.html">Util::ScopedPtr</a>&lt; T &gt;::get </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -240,7 +254,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="ScopedPtr_8h_source.html">ScopedPtr.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:45:01 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:33 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

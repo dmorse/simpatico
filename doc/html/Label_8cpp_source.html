@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -72,40 +72,40 @@
 <a name="l00021"></a>00021    <span class="comment">/*</span>
 <a name="l00022"></a>00022 <span class="comment">   * Constructor.</span>
 <a name="l00023"></a>00023 <span class="comment">   */</span>
-<a name="l00024"></a>00024    <a class="code" href="classUtil_1_1Label.html#a08db6fb2d3238a9e4b4f621e40ee854f" title="Constructor.">Label::Label</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* label)
-<a name="l00025"></a><a class="code" href="classUtil_1_1Label.html#a08db6fb2d3238a9e4b4f621e40ee854f">00025</a>     : label_(label)
+<a name="l00024"></a>00024    <a class="code" href="classUtil_1_1Label.html#a21fedc1021ba5327764bd1fee2d393e4" title="Constructor.">Label::Label</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* label)
+<a name="l00025"></a><a class="code" href="classUtil_1_1Label.html#a21fedc1021ba5327764bd1fee2d393e4">00025</a>     : label_(label)
 <a name="l00026"></a>00026    {}
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028    <span class="comment">/*</span>
 <a name="l00029"></a>00029 <span class="comment">   * Copy constructor.</span>
 <a name="l00030"></a>00030 <span class="comment">   */</span>
-<a name="l00031"></a>00031    <a class="code" href="classUtil_1_1Label.html#a08db6fb2d3238a9e4b4f621e40ee854f" title="Constructor.">Label::Label</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Label.html" title="A label string in a file format.">Label</a>&amp; other)
-<a name="l00032"></a><a class="code" href="classUtil_1_1Label.html#aa6a4dce8dfe0a7c4c31a106dcd22e8b4">00032</a>     : label_(other.label_)
+<a name="l00031"></a>00031    <a class="code" href="classUtil_1_1Label.html#a21fedc1021ba5327764bd1fee2d393e4" title="Constructor.">Label::Label</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Label.html" title="A label string in a file format.">Label</a>&amp; other)
+<a name="l00032"></a><a class="code" href="classUtil_1_1Label.html#a4e67da7f9094195a1dff7c75e7edb5e5">00032</a>     : label_(other.label_)
 <a name="l00033"></a>00033    {}
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035    <span class="comment">/*</span>
 <a name="l00036"></a>00036 <span class="comment">   * Destructor.</span>
 <a name="l00037"></a>00037 <span class="comment">   */</span>
-<a name="l00038"></a>00038    <a class="code" href="classUtil_1_1Label.html#a5e78f4c9eb7667a565e14233bba6fa27" title="Destructor.">Label::~Label</a>()
-<a name="l00039"></a><a class="code" href="classUtil_1_1Label.html#a5e78f4c9eb7667a565e14233bba6fa27">00039</a>    {}
+<a name="l00038"></a>00038    <a class="code" href="classUtil_1_1Label.html#a8782aabe2a82db72eb5cffa35c6bd5bf" title="Destructor.">Label::~Label</a>()
+<a name="l00039"></a><a class="code" href="classUtil_1_1Label.html#a8782aabe2a82db72eb5cffa35c6bd5bf">00039</a>    {}
 <a name="l00040"></a>00040 
 <a name="l00041"></a>00041    <span class="comment">/*</span>
 <a name="l00042"></a>00042 <span class="comment">   * Return label string.</span>
 <a name="l00043"></a>00043 <span class="comment">   */</span>
-<a name="l00044"></a>00044    std::string <a class="code" href="classUtil_1_1Label.html#a4b486eb3b6db77d86249dbe7fb63194f" title="Return label string.">Label::string</a>()<span class="keyword"> const</span>
-<a name="l00045"></a><a class="code" href="classUtil_1_1Label.html#a4b486eb3b6db77d86249dbe7fb63194f">00045</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> label_; }
+<a name="l00044"></a>00044    std::string <a class="code" href="classUtil_1_1Label.html#a370a3abd008ada02a7471b574f148b6c" title="Return label string.">Label::string</a>()<span class="keyword"> const</span>
+<a name="l00045"></a><a class="code" href="classUtil_1_1Label.html#a370a3abd008ada02a7471b574f148b6c">00045</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> label_; }
 <a name="l00046"></a>00046 
 <a name="l00047"></a>00047    <span class="comment">/*</span>
 <a name="l00048"></a>00048 <span class="comment">   * Extract a label from an input stream.</span>
 <a name="l00049"></a>00049 <span class="comment">   */</span>
-<a name="l00050"></a>00050    std::istream&amp; <a class="code" href="namespaceUtil.html#a993c7220c84aadae4eb1085cef083e74" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Label.html" title="A label string in a file format.">Label</a> label)
-<a name="l00051"></a><a class="code" href="namespaceUtil.html#a2794d5d732d47ad140c7ce19b5095808">00051</a>    {
+<a name="l00050"></a>00050    std::istream&amp; <a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Label.html" title="A label string in a file format.">Label</a> label)
+<a name="l00051"></a><a class="code" href="namespaceUtil.html#a8301f4a2bb0afc29b7bcac4604151d0b">00051</a>    {
 <a name="l00052"></a>00052       std::string actual;
 <a name="l00053"></a>00053       in &gt;&gt; actual;
 <a name="l00054"></a>00054       <span class="keywordflow">if</span> ( actual != label.label_ ) {
-<a name="l00055"></a>00055          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Error reading label&quot;</span>          &lt;&lt; std::endl;
-<a name="l00056"></a>00056          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Expected: &quot;</span> &lt;&lt;  label.label_  &lt;&lt; std::endl;
-<a name="l00057"></a>00057     <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Scanned:  &quot;</span> &lt;&lt;  actual        &lt;&lt; std::endl;
+<a name="l00055"></a>00055          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Error reading label&quot;</span>          &lt;&lt; std::endl;
+<a name="l00056"></a>00056          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Expected: &quot;</span> &lt;&lt;  label.label_  &lt;&lt; std::endl;
+<a name="l00057"></a>00057     <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Scanned:  &quot;</span> &lt;&lt;  actual        &lt;&lt; std::endl;
 <a name="l00058"></a>00058          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Incorrect label&quot;</span>);
 <a name="l00059"></a>00059       };
 <a name="l00060"></a>00060       <span class="keywordflow">return</span> in;
@@ -114,9 +114,9 @@
 <a name="l00063"></a>00063    <span class="comment">/*</span>
 <a name="l00064"></a>00064 <span class="comment">   * Insert a Label into an output stream.</span>
 <a name="l00065"></a>00065 <span class="comment">   */</span>
-<a name="l00066"></a>00066    std::ostream&amp; <a class="code" href="namespaceUtil.html#a7a94bc3185d3be0028eacd3076edb6d3" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, Label label)
-<a name="l00067"></a><a class="code" href="namespaceUtil.html#af47e2c76f6f40d7935fa50a62ee2d04a">00067</a>    {
-<a name="l00068"></a>00068       out &lt;&lt; std::left &lt;&lt; std::setw(<a class="code" href="classUtil_1_1Label.html#a804a248a9bd192d2744f154d13d2e528" title="Width of label field in file format.">Label::LabelWidth</a>) 
+<a name="l00066"></a>00066    std::ostream&amp; <a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, Label label)
+<a name="l00067"></a><a class="code" href="namespaceUtil.html#a6d08f531a2e938c6e63314a5812df02f">00067</a>    {
+<a name="l00068"></a>00068       out &lt;&lt; std::left &lt;&lt; std::setw(<a class="code" href="classUtil_1_1Label.html#a565ae6c808ea000faaf211615f3e5759" title="Width of label field in file format.">Label::LabelWidth</a>) 
 <a name="l00069"></a>00069           &lt;&lt; label.label_; 
 <a name="l00070"></a>00070       out &lt;&lt; std::right;
 <a name="l00071"></a>00071       <span class="keywordflow">return</span> out;
@@ -126,7 +126,7 @@
 <a name="l00075"></a>00075 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -72,60 +72,60 @@
 <a name="l00038"></a>00038 
 <a name="l00039"></a>00039    <span class="keyword">public</span>:
 <a name="l00040"></a>00040 
-<a name="l00044"></a>00044       <a class="code" href="classUtil_1_1FSArray.html#a92ce1e89d539e75a84f442fe88c4dab4" title="Constructor.">FSArray</a>();
+<a name="l00044"></a>00044       <a class="code" href="classUtil_1_1FSArray.html#a28374df579a3876bef32480e1207470d" title="Constructor.">FSArray</a>();
 <a name="l00045"></a>00045 
-<a name="l00051"></a>00051       <a class="code" href="classUtil_1_1FSArray.html#a92ce1e89d539e75a84f442fe88c4dab4" title="Constructor.">FSArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;Data, Capacity&gt;</a>&amp; other); 
+<a name="l00051"></a>00051       <a class="code" href="classUtil_1_1FSArray.html#a28374df579a3876bef32480e1207470d" title="Constructor.">FSArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;Data, Capacity&gt;</a>&amp; other); 
 <a name="l00052"></a>00052    
-<a name="l00060"></a>00060       <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;Data, Capacity&gt;</a>&amp; <a class="code" href="classUtil_1_1FSArray.html#acf73acb721e228faf02513ce479adcc2" title="Assignment, element by element.">operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;Data, Capacity&gt;</a>&amp; other);
+<a name="l00060"></a>00060       <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;Data, Capacity&gt;</a>&amp; <a class="code" href="classUtil_1_1FSArray.html#a9c2e9918825c71c1f5c9cf3467c19a45" title="Assignment, element by element.">operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;Data, Capacity&gt;</a>&amp; other);
 <a name="l00061"></a>00061 
-<a name="l00065"></a>00065       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1FSArray.html#a401dab055dca366c61bcfdd17f26377a" title="Destructor.">~FSArray</a>();
+<a name="l00065"></a>00065       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1FSArray.html#aff16f80f768df10b45d6ecccd2c0f112" title="Destructor.">~FSArray</a>();
 <a name="l00066"></a>00066 
-<a name="l00070"></a>00070       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#a104736719cd4e5f21c25705c77064dde" title="Return physical capacity of array.">capacity</a>() <span class="keyword">const</span>;
+<a name="l00070"></a>00070       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#a5c041a3b35512f82f2428659369801fa" title="Return physical capacity of array.">capacity</a>() <span class="keyword">const</span>;
 <a name="l00071"></a>00071 
-<a name="l00075"></a>00075       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">size</a>() <span class="keyword">const</span>;
+<a name="l00075"></a>00075       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>() <span class="keyword">const</span>;
 <a name="l00076"></a>00076 
-<a name="l00082"></a>00082       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator);
+<a name="l00082"></a>00082       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a6c6452f7b7ccdcc9ff1f36bdcd55e4c1" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator);
 <a name="l00083"></a>00083 
-<a name="l00089"></a>00089       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator) <span class="keyword">const</span>;
+<a name="l00089"></a>00089       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a6c6452f7b7ccdcc9ff1f36bdcd55e4c1" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator) <span class="keyword">const</span>;
 <a name="l00090"></a>00090 
-<a name="l00097"></a>00097       Data&amp; <a class="code" href="classUtil_1_1FSArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i);
+<a name="l00097"></a>00097       Data&amp; <a class="code" href="classUtil_1_1FSArray.html#a04b469f944a47a443f04bbed2568d166" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i);
 <a name="l00098"></a>00098 
-<a name="l00105"></a>00105       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FSArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;
+<a name="l00105"></a>00105       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FSArray.html#a04b469f944a47a443f04bbed2568d166" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;
 <a name="l00106"></a>00106 
-<a name="l00112"></a>00112       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a578e50675e1ec828c5a5a92737ad4cf7" title="Append data to the end of the array.">append</a>(<span class="keyword">const</span> Data &amp;data);
+<a name="l00112"></a>00112       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a74ef93eabdb54ff1453a3252019984bc" title="Append data to the end of the array.">append</a>(<span class="keyword">const</span> Data &amp;data);
 <a name="l00113"></a>00113 
-<a name="l00117"></a>00117       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#ac8bb3912a3ce86b15842e79d0b421204" title="Set logical size to zero.">clear</a>();
+<a name="l00117"></a>00117       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#aa5da5b07a40d627d37e0dac7e8e39207" title="Set logical size to zero.">clear</a>();
 <a name="l00118"></a>00118 
 <a name="l00125"></a>00125       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00126"></a>00126       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a6765e839ab267e4959384e35a4112451" title="Serialize to/from an Archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00126"></a>00126       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#aaac7166b86fb0c2343e9e208bb3766c6" title="Serialize to/from an Archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00127"></a>00127 
-<a name="l00131"></a>00131       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#ad70de0c77d9ebf1156173a9055f0383c" title="Packed size of FSArray in a MemoryArchive, in bytes.">packedSize</a>();
+<a name="l00131"></a>00131       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#a841622a1f6cc358fb72b69a4e8694ba2" title="Packed size of FSArray in a MemoryArchive, in bytes.">packedSize</a>();
 <a name="l00132"></a>00132 
 <a name="l00133"></a>00133    <span class="keyword">protected</span>:
 <a name="l00134"></a>00134 
-<a name="l00136"></a><a class="code" href="classUtil_1_1FSArray.html#af13b38b4eafb4229eff035dcfe71f22d">00136</a>       Data <a class="code" href="classUtil_1_1FSArray.html#af13b38b4eafb4229eff035dcfe71f22d" title="Array of Data elements.">data_</a>[Capacity];
+<a name="l00136"></a><a class="code" href="classUtil_1_1FSArray.html#a49fa4f65033d7bffda661a2aba978fe3">00136</a>       Data <a class="code" href="classUtil_1_1FSArray.html#a49fa4f65033d7bffda661a2aba978fe3" title="Array of Data elements.">data_</a>[Capacity];
 <a name="l00137"></a>00137 
-<a name="l00139"></a><a class="code" href="classUtil_1_1FSArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80">00139</a>       <span class="keywordtype">int</span>  <a class="code" href="classUtil_1_1FSArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>;
+<a name="l00139"></a><a class="code" href="classUtil_1_1FSArray.html#ac52acf5996728db40a36c18138260b2a">00139</a>       <span class="keywordtype">int</span>  <a class="code" href="classUtil_1_1FSArray.html#ac52acf5996728db40a36c18138260b2a" title="Logical size of array (number of elements used).">size_</a>;
 <a name="l00140"></a>00140 
 <a name="l00141"></a>00141    };
 <a name="l00142"></a>00142 
 <a name="l00146"></a>00146    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00147"></a><a class="code" href="classUtil_1_1FSArray.html#a92ce1e89d539e75a84f442fe88c4dab4">00147</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FSArray.html#a92ce1e89d539e75a84f442fe88c4dab4" title="Constructor.">FSArray&lt;Data, Capacity&gt;::FSArray</a>()
+<a name="l00147"></a><a class="code" href="classUtil_1_1FSArray.html#a28374df579a3876bef32480e1207470d">00147</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1FSArray.html#a28374df579a3876bef32480e1207470d" title="Constructor.">FSArray&lt;Data, Capacity&gt;::FSArray</a>()
 <a name="l00148"></a>00148     : size_(0)
 <a name="l00149"></a>00149    {}
 <a name="l00150"></a>00150 
 <a name="l00156"></a>00156    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00157"></a><a class="code" href="classUtil_1_1FSArray.html#a31b678499c6ce5ce685065673875f07a">00157</a>    <a class="code" href="classUtil_1_1FSArray.html#a92ce1e89d539e75a84f442fe88c4dab4" title="Constructor.">FSArray&lt;Data, Capacity&gt;::FSArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;Data, Capacity&gt;</a>&amp; other) 
+<a name="l00157"></a><a class="code" href="classUtil_1_1FSArray.html#a38231ded1875a70d61eee34500e15a58">00157</a>    <a class="code" href="classUtil_1_1FSArray.html#a28374df579a3876bef32480e1207470d" title="Constructor.">FSArray&lt;Data, Capacity&gt;::FSArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;Data, Capacity&gt;</a>&amp; other) 
 <a name="l00158"></a>00158    {
-<a name="l00159"></a>00159       size_  = other.<a class="code" href="classUtil_1_1FSArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>;
+<a name="l00159"></a>00159       size_  = other.<a class="code" href="classUtil_1_1FSArray.html#ac52acf5996728db40a36c18138260b2a" title="Logical size of array (number of elements used).">size_</a>;
 <a name="l00160"></a>00160       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; size_; ++i) {
-<a name="l00161"></a>00161          data_[i] = other.<a class="code" href="classUtil_1_1FSArray.html#af13b38b4eafb4229eff035dcfe71f22d" title="Array of Data elements.">data_</a>[i];
+<a name="l00161"></a>00161          data_[i] = other.<a class="code" href="classUtil_1_1FSArray.html#a49fa4f65033d7bffda661a2aba978fe3" title="Array of Data elements.">data_</a>[i];
 <a name="l00162"></a>00162       }
 <a name="l00163"></a>00163    }
 <a name="l00164"></a>00164 
 <a name="l00172"></a>00172    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
 <a name="l00173"></a>00173    <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;Data, Capacity&gt;</a>&amp; 
-<a name="l00174"></a><a class="code" href="classUtil_1_1FSArray.html#acf73acb721e228faf02513ce479adcc2">00174</a>    <a class="code" href="classUtil_1_1FSArray.html#acf73acb721e228faf02513ce479adcc2" title="Assignment, element by element.">FSArray&lt;Data, Capacity&gt;::operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;Data, Capacity&gt;</a>&amp; other) 
+<a name="l00174"></a><a class="code" href="classUtil_1_1FSArray.html#a9c2e9918825c71c1f5c9cf3467c19a45">00174</a>    <a class="code" href="classUtil_1_1FSArray.html#a9c2e9918825c71c1f5c9cf3467c19a45" title="Assignment, element by element.">FSArray&lt;Data, Capacity&gt;::operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1FSArray.html" title="A fixed capacity array with a variable logical size.">FSArray&lt;Data, Capacity&gt;</a>&amp; other) 
 <a name="l00175"></a>00175    {
 <a name="l00176"></a>00176 
 <a name="l00177"></a>00177       <span class="comment">// Check for self assignment</span>
@@ -135,48 +135,48 @@
 <a name="l00181"></a>00181       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; size_; ++i) {
 <a name="l00182"></a>00182          data_[i] = other[i];
 <a name="l00183"></a>00183       }
-<a name="l00184"></a>00184       size = other.<a class="code" href="classUtil_1_1FSArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>;
+<a name="l00184"></a>00184       size = other.<a class="code" href="classUtil_1_1FSArray.html#ac52acf5996728db40a36c18138260b2a" title="Logical size of array (number of elements used).">size_</a>;
 <a name="l00185"></a>00185 
 <a name="l00186"></a>00186       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
 <a name="l00187"></a>00187    }
 <a name="l00188"></a>00188 
 <a name="l00192"></a>00192    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00193"></a><a class="code" href="classUtil_1_1FSArray.html#a401dab055dca366c61bcfdd17f26377a">00193</a>    <a class="code" href="classUtil_1_1FSArray.html#a401dab055dca366c61bcfdd17f26377a" title="Destructor.">FSArray&lt;Data, Capacity&gt;::~FSArray</a>()
+<a name="l00193"></a><a class="code" href="classUtil_1_1FSArray.html#aff16f80f768df10b45d6ecccd2c0f112">00193</a>    <a class="code" href="classUtil_1_1FSArray.html#aff16f80f768df10b45d6ecccd2c0f112" title="Destructor.">FSArray&lt;Data, Capacity&gt;::~FSArray</a>()
 <a name="l00194"></a>00194    {}
 <a name="l00195"></a>00195 
 <a name="l00196"></a>00196    <span class="comment">/*</span>
 <a name="l00197"></a>00197 <span class="comment">   * Return physical capacity of array.</span>
 <a name="l00198"></a>00198 <span class="comment">   */</span>
 <a name="l00199"></a>00199    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00200"></a><a class="code" href="classUtil_1_1FSArray.html#a104736719cd4e5f21c25705c77064dde">00200</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#a104736719cd4e5f21c25705c77064dde" title="Return physical capacity of array.">FSArray&lt;Data, Capacity&gt;::capacity</a>()<span class="keyword"> const</span>
+<a name="l00200"></a><a class="code" href="classUtil_1_1FSArray.html#a5c041a3b35512f82f2428659369801fa">00200</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#a5c041a3b35512f82f2428659369801fa" title="Return physical capacity of array.">FSArray&lt;Data, Capacity&gt;::capacity</a>()<span class="keyword"> const</span>
 <a name="l00201"></a>00201 <span class="keyword">   </span>{ <span class="keywordflow">return</span> Capacity; }
 <a name="l00202"></a>00202 
 <a name="l00206"></a>00206    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00207"></a><a class="code" href="classUtil_1_1FSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">00207</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">FSArray&lt;Data, Capacity&gt;::size</a>()<span class="keyword"> const</span>
+<a name="l00207"></a><a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813">00207</a>    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">FSArray&lt;Data, Capacity&gt;::size</a>()<span class="keyword"> const</span>
 <a name="l00208"></a>00208 <span class="keyword">   </span>{ <span class="keywordflow">return</span> size_; }
 <a name="l00209"></a>00209 
 <a name="l00215"></a>00215    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00216"></a><a class="code" href="classUtil_1_1FSArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6">00216</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">FSArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator)
+<a name="l00216"></a><a class="code" href="classUtil_1_1FSArray.html#a6c6452f7b7ccdcc9ff1f36bdcd55e4c1">00216</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a6c6452f7b7ccdcc9ff1f36bdcd55e4c1" title="Set an ArrayIterator to the beginning of this Array.">FSArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator)
 <a name="l00217"></a>00217    {
-<a name="l00218"></a>00218       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#ac96801e7ef37aabe6156ae3ba508524b" title="Set the current pointer value.">setCurrent</a>(data_);
-<a name="l00219"></a>00219       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#a0e8ab752dbe9a6f922fb3d19018fda1d" title="Set the value of the end pointer.">setEnd</a>(data_ + size_);
+<a name="l00218"></a>00218       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#ac208690b94d1be77cad9c51eb1cfcdb8" title="Set the current pointer value.">setCurrent</a>(data_);
+<a name="l00219"></a>00219       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#a5527ef0f4bdae08eeacd11025b91a971" title="Set the value of the end pointer.">setEnd</a>(data_ + size_);
 <a name="l00220"></a>00220    }
 <a name="l00221"></a>00221 
 <a name="l00222"></a>00222    <span class="comment">/*</span>
 <a name="l00223"></a>00223 <span class="comment">   * Set a ConstArrayIterator to the beginning of this Array.</span>
 <a name="l00224"></a>00224 <span class="comment">   */</span>
 <a name="l00225"></a>00225    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00226"></a><a class="code" href="classUtil_1_1FSArray.html#aeafeff76c665316e581605a2ad765d5c">00226</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">FSArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator)<span class="keyword"> const</span>
+<a name="l00226"></a><a class="code" href="classUtil_1_1FSArray.html#acd5f76c86ff6c54c86e563d7d2df7dbe">00226</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a6c6452f7b7ccdcc9ff1f36bdcd55e4c1" title="Set an ArrayIterator to the beginning of this Array.">FSArray&lt;Data, Capacity&gt;::begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator)<span class="keyword"> const</span>
 <a name="l00227"></a>00227 <span class="keyword">   </span>{
-<a name="l00228"></a>00228       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#ac96801e7ef37aabe6156ae3ba508524b" title="Set the current pointer value.">setCurrent</a>(data_);
-<a name="l00229"></a>00229       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#a0e8ab752dbe9a6f922fb3d19018fda1d" title="Set the value of the end pointer.">setEnd</a>(data_ + size_);
+<a name="l00228"></a>00228       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#a39735f67c57df14be6ce7f40e1f2646f" title="Set the current pointer value.">setCurrent</a>(data_);
+<a name="l00229"></a>00229       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#a1b06236f546d1046bb6e8e4a56d19d74" title="Set the value of the end pointer.">setEnd</a>(data_ + size_);
 <a name="l00230"></a>00230    }
 <a name="l00231"></a>00231 
 <a name="l00232"></a>00232    <span class="comment">/*</span>
 <a name="l00233"></a>00233 <span class="comment">   * Mimic C array subscripting.</span>
 <a name="l00234"></a>00234 <span class="comment">   */</span>
 <a name="l00235"></a>00235    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00236"></a><a class="code" href="classUtil_1_1FSArray.html#a8cc8b5696ce4a17c06360e7f41f95096">00236</a>    Data&amp; <a class="code" href="classUtil_1_1FSArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">FSArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i) 
+<a name="l00236"></a><a class="code" href="classUtil_1_1FSArray.html#a04b469f944a47a443f04bbed2568d166">00236</a>    Data&amp; <a class="code" href="classUtil_1_1FSArray.html#a04b469f944a47a443f04bbed2568d166" title="Mimic C array subscripting.">FSArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i) 
 <a name="l00237"></a>00237    {
 <a name="l00238"></a>00238       assert(i &lt; size_);
 <a name="l00239"></a>00239       assert(i &gt;= 0);
@@ -187,7 +187,7 @@
 <a name="l00244"></a>00244 <span class="comment">   * Mimic C array subscripting.</span>
 <a name="l00245"></a>00245 <span class="comment">   */</span>
 <a name="l00246"></a>00246    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00247"></a><a class="code" href="classUtil_1_1FSArray.html#a6ec4b9cb529f024cd28e96290a4ca410">00247</a>    <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FSArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">FSArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00247"></a><a class="code" href="classUtil_1_1FSArray.html#ac44248dbd490da1b39a3e785c4b78b9a">00247</a>    <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1FSArray.html#a04b469f944a47a443f04bbed2568d166" title="Mimic C array subscripting.">FSArray&lt;Data, Capacity&gt;::operator[] </a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00248"></a>00248 <span class="keyword">   </span>{
 <a name="l00249"></a>00249       assert(i &lt; size_);
 <a name="l00250"></a>00250       assert(i &gt;= 0);
@@ -198,7 +198,7 @@
 <a name="l00255"></a>00255 <span class="comment">   * Append data to the end of the array.</span>
 <a name="l00256"></a>00256 <span class="comment">   */</span>
 <a name="l00257"></a>00257    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00258"></a><a class="code" href="classUtil_1_1FSArray.html#a578e50675e1ec828c5a5a92737ad4cf7">00258</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a578e50675e1ec828c5a5a92737ad4cf7" title="Append data to the end of the array.">FSArray&lt;Data, Capacity&gt;::append</a>(<span class="keyword">const</span> Data &amp;data) 
+<a name="l00258"></a><a class="code" href="classUtil_1_1FSArray.html#a74ef93eabdb54ff1453a3252019984bc">00258</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a74ef93eabdb54ff1453a3252019984bc" title="Append data to the end of the array.">FSArray&lt;Data, Capacity&gt;::append</a>(<span class="keyword">const</span> Data &amp;data) 
 <a name="l00259"></a>00259    {
 <a name="l00260"></a>00260       <span class="keywordflow">if</span> (size_ == Capacity) {
 <a name="l00261"></a>00261          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to add to full FSArray&quot;</span>);
@@ -208,7 +208,7 @@
 <a name="l00265"></a>00265    }
 <a name="l00266"></a>00266 
 <a name="l00270"></a>00270    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00271"></a><a class="code" href="classUtil_1_1FSArray.html#ac8bb3912a3ce86b15842e79d0b421204">00271</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#ac8bb3912a3ce86b15842e79d0b421204" title="Set logical size to zero.">FSArray&lt;Data, Capacity&gt;::clear</a>() 
+<a name="l00271"></a><a class="code" href="classUtil_1_1FSArray.html#aa5da5b07a40d627d37e0dac7e8e39207">00271</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#aa5da5b07a40d627d37e0dac7e8e39207" title="Set logical size to zero.">FSArray&lt;Data, Capacity&gt;::clear</a>() 
 <a name="l00272"></a>00272    { size_ = 0; }
 <a name="l00273"></a>00273 
 <a name="l00274"></a>00274    <span class="comment">/*</span>
@@ -216,7 +216,7 @@
 <a name="l00276"></a>00276 <span class="comment">   */</span>
 <a name="l00277"></a>00277    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data, <span class="keywordtype">int</span> Capacity&gt;
 <a name="l00278"></a>00278    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00279"></a><a class="code" href="classUtil_1_1FSArray.html#a6765e839ab267e4959384e35a4112451">00279</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#a6765e839ab267e4959384e35a4112451" title="Serialize to/from an Archive.">FSArray&lt;Data, Capacity&gt;::serialize</a>(Archive&amp; ar, 
+<a name="l00279"></a><a class="code" href="classUtil_1_1FSArray.html#aaac7166b86fb0c2343e9e208bb3766c6">00279</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1FSArray.html#aaac7166b86fb0c2343e9e208bb3766c6" title="Serialize to/from an Archive.">FSArray&lt;Data, Capacity&gt;::serialize</a>(Archive&amp; ar, 
 <a name="l00280"></a>00280                                           <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00281"></a>00281    {
 <a name="l00282"></a>00282       ar &amp; size_;
@@ -229,14 +229,14 @@
 <a name="l00289"></a>00289 <span class="comment">   * Packed size of FSArray in a MemoryArchive, in bytes.</span>
 <a name="l00290"></a>00290 <span class="comment">   */</span>
 <a name="l00291"></a>00291    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data, <span class="keywordtype">int</span> Capacity&gt;
-<a name="l00292"></a><a class="code" href="classUtil_1_1FSArray.html#ad70de0c77d9ebf1156173a9055f0383c">00292</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#ad70de0c77d9ebf1156173a9055f0383c" title="Packed size of FSArray in a MemoryArchive, in bytes.">FSArray&lt;Data, Capacity&gt;::packedSize</a>()
+<a name="l00292"></a><a class="code" href="classUtil_1_1FSArray.html#a841622a1f6cc358fb72b69a4e8694ba2">00292</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1FSArray.html#a841622a1f6cc358fb72b69a4e8694ba2" title="Packed size of FSArray in a MemoryArchive, in bytes.">FSArray&lt;Data, Capacity&gt;::packedSize</a>()
 <a name="l00293"></a>00293    {  <span class="keywordflow">return</span> Capacity*<span class="keyword">sizeof</span>(Data) + <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>); }
 <a name="l00294"></a>00294 
 <a name="l00295"></a>00295 } 
 <a name="l00296"></a>00296 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

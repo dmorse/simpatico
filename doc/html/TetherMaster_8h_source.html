@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -137,32 +137,32 @@
 <a name="l00229"></a>00229    <span class="comment">/*</span>
 <a name="l00230"></a>00230 <span class="comment">   * Is this atom Tethered ?</span>
 <a name="l00231"></a>00231 <span class="comment">   */</span> 
-<a name="l00232"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a2a25cfd75e914d448e2a689b906bf053">00232</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1TetherMaster.html#a2a25cfd75e914d448e2a689b906bf053" title="Is this atom Tethered ?">TetherMaster::isTethered</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)<span class="keyword"> const</span>
-<a name="l00233"></a>00233 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (tetherPtrs_[atom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>()]); }
+<a name="l00232"></a><a class="code" href="classMcMd_1_1TetherMaster.html#af46ddc3b69e491ebce8551fcb9e4a3cd">00232</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1TetherMaster.html#af46ddc3b69e491ebce8551fcb9e4a3cd" title="Is this atom Tethered ?">TetherMaster::isTethered</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)<span class="keyword"> const</span>
+<a name="l00233"></a>00233 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (tetherPtrs_[atom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>()]); }
 <a name="l00234"></a>00234 
-<a name="l00238"></a><a class="code" href="classMcMd_1_1TetherMaster.html#afc9b7b1e227c4e4cad45a172f977d8c2">00238</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; <a class="code" href="classMcMd_1_1TetherMaster.html#afc9b7b1e227c4e4cad45a172f977d8c2" title="Return the Tether associated with an Atom, if any.">TetherMaster::tether</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)<span class="keyword"> const</span>
+<a name="l00238"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a7ac0afe86022f6c0662ff16179195faf">00238</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; <a class="code" href="classMcMd_1_1TetherMaster.html#a7ac0afe86022f6c0662ff16179195faf" title="Return the Tether associated with an Atom, if any.">TetherMaster::tether</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)<span class="keyword"> const</span>
 <a name="l00239"></a>00239 <span class="keyword">   </span>{  
-<a name="l00240"></a>00240       assert(tetherPtrs_[atom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>()]);
-<a name="l00241"></a>00241       <span class="keywordflow">return</span> (*tetherPtrs_[atom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>()]); 
+<a name="l00240"></a>00240       assert(tetherPtrs_[atom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>()]);
+<a name="l00241"></a>00241       <span class="keywordflow">return</span> (*tetherPtrs_[atom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>()]); 
 <a name="l00242"></a>00242    }
 <a name="l00243"></a>00243 
 <a name="l00244"></a>00244    <span class="comment">/*</span>
 <a name="l00245"></a>00245 <span class="comment">   * Get an active tether by index.</span>
 <a name="l00246"></a>00246 <span class="comment">   */</span> 
-<a name="l00247"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a48e7d193aa7f5a903f81db4fc881ae37">00247</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; <a class="code" href="classMcMd_1_1TetherMaster.html#afc9b7b1e227c4e4cad45a172f977d8c2" title="Return the Tether associated with an Atom, if any.">TetherMaster::tether</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)<span class="keyword"> const</span>
+<a name="l00247"></a><a class="code" href="classMcMd_1_1TetherMaster.html#a81d60e74e433dfadb2686d57f7576054">00247</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Tether.html" title="A Tether represents an interaction between an Atom and an anchor position.">Tether</a>&amp; <a class="code" href="classMcMd_1_1TetherMaster.html#a7ac0afe86022f6c0662ff16179195faf" title="Return the Tether associated with an Atom, if any.">TetherMaster::tether</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)<span class="keyword"> const</span>
 <a name="l00248"></a>00248 <span class="keyword">   </span>{  <span class="keywordflow">return</span> tetherSet_[id]; }
 <a name="l00249"></a>00249 
 <a name="l00250"></a>00250    <span class="comment">/*</span>
 <a name="l00251"></a>00251 <span class="comment">   * Get number of active Tethers.</span>
 <a name="l00252"></a>00252 <span class="comment">   */</span> 
-<a name="l00253"></a><a class="code" href="classMcMd_1_1TetherMaster.html#af77d4e7ff18c25051c3add4eecf1f6de">00253</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1TetherMaster.html#af77d4e7ff18c25051c3add4eecf1f6de" title="Get the total number of active Tethers.">TetherMaster::nTether</a>()<span class="keyword"> const</span>
+<a name="l00253"></a><a class="code" href="classMcMd_1_1TetherMaster.html#add7a6f1d25642db3a4e9b183c4582f4b">00253</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1TetherMaster.html#add7a6f1d25642db3a4e9b183c4582f4b" title="Get the total number of active Tethers.">TetherMaster::nTether</a>()<span class="keyword"> const</span>
 <a name="l00254"></a>00254 <span class="keyword">   </span>{  <span class="keywordflow">return</span> tetherSet_.size(); }
 <a name="l00255"></a>00255 
 <a name="l00256"></a>00256 } 
 <a name="l00257"></a>00257 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

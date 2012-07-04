@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: NphIntegrator Class Reference</title>
+<title>Simpatico: McMd::NphIntegrator Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>NphIntegrator Class Reference<div class="ingroups"><a class="el" href="group__McMd__MdIntegrator__Module.html">Molecular Dynamics Integrators</a></div></h1>  </div>
+<h1>McMd::NphIntegrator Class Reference<div class="ingroups"><a class="el" href="group__McMd__MdIntegrator__Module.html">Molecular Dynamics Integrators</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::NphIntegrator" --><!-- doxytag: inherits="McMd::MdIntegrator" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -67,15 +67,15 @@
 </div>
 <p><code>#include &lt;<a class="el" href="NphIntegrator_8h_source.html">NphIntegrator.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for NphIntegrator:</div>
+Inheritance diagram for McMd::NphIntegrator:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1NphIntegrator.png" usemap="#NphIntegrator_map" alt=""/>
-  <map id="NphIntegrator_map" name="NphIntegrator_map">
-<area href="classMcMd_1_1MdIntegrator.html" alt="MdIntegrator" shape="rect" coords="60,112,171,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="121,56,232,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classMcMd_1_1NphIntegrator.png" usemap="#McMd::NphIntegrator_map" alt=""/>
+  <map id="McMd::NphIntegrator_map" name="McMd::NphIntegrator_map">
+<area href="classMcMd_1_1MdIntegrator.html" alt="McMd::MdIntegrator" shape="rect" coords="72,112,206,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="144,56,278,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,134,24"/>
 </map>
  </div></div>
 
@@ -83,36 +83,36 @@ Inheritance diagram for NphIntegrator:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#a88e926dc15caff0c9d5c8282268fc284">NphIntegrator</a> (<a class="el" href="classMcMd_1_1MdSystem.html">MdSystem</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a88e926dc15caff0c9d5c8282268fc284"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#af572a6eabad60c637c90ae6a85453304">~NphIntegrator</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#af572a6eabad60c637c90ae6a85453304"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file and initialize this <a class="el" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup private variables before main loop.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#ac6bf1a12c5c98ddec5b65e07fe74cabe">step</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a complete NVE MD integration step.  <a href="#ac6bf1a12c5c98ddec5b65e07fe74cabe"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#a5f354535bade1082c5c29f9b5ebab24a">barostatEnergy</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the barostat energy.  <a href="#a5f354535bade1082c5c29f9b5ebab24a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#aa8cca21445d692c7f1563f946a416c62">barostatMass</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the barostat mass.  <a href="#aa8cca21445d692c7f1563f946a416c62"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__Crystal__Module.html#ga70ce043243ca82cc6c7353c4b01f7317">LatticeSystem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#aca09b627115529ef162ee8ab08fe22f6">mode</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the integrator mode.  <a href="#aca09b627115529ef162ee8ab08fe22f6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#a97db19066cfb6353bb9583ad8e64db02">setEta</a> (unsigned int index, double eta)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the barostat momentum.  <a href="#a97db19066cfb6353bb9583ad8e64db02"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the internal state to an archive.  <a href="#a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#aa3d71af4cc5dfb2be6be816a8f562416">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the internal state to an archive.  <a href="#aa3d71af4cc5dfb2be6be816a8f562416"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#a775d950a2ebc93acde6c3f9d5160536d">NphIntegrator</a> (<a class="el" href="classMcMd_1_1MdSystem.html">MdSystem</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a775d950a2ebc93acde6c3f9d5160536d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#ab01461fb51ed5f46d4ca5e71b6a88a6a">~NphIntegrator</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ab01461fb51ed5f46d4ca5e71b6a88a6a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#aeb41003abfffe7f66e0c6cfab5fb0f37">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file and initialize this <a class="el" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>.  <a href="#aeb41003abfffe7f66e0c6cfab5fb0f37"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#ae679042748087682d0a7f8dca0b1cf9a">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup private variables before main loop.  <a href="#ae679042748087682d0a7f8dca0b1cf9a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#aa4e09238e4c23413bad7a0c8cec1874e">step</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Take a complete NVE MD integration step.  <a href="#aa4e09238e4c23413bad7a0c8cec1874e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#adb587233e212da2b308413b2b4360754">barostatEnergy</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the barostat energy.  <a href="#adb587233e212da2b308413b2b4360754"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#a83324349734ded48ce9057716edf39d2">barostatMass</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the barostat mass.  <a href="#a83324349734ded48ce9057716edf39d2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__Crystal__Module.html#gae791ac7b853a3532698da0763ae0741e">LatticeSystem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#a09bb1e2c35e2f3f598eabbde1061f294">mode</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the integrator mode.  <a href="#a09bb1e2c35e2f3f598eabbde1061f294"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#a4bcb9b3ea9cf90500a9047d8cf40ccea">setEta</a> (unsigned int index, double eta)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the barostat momentum.  <a href="#a4bcb9b3ea9cf90500a9047d8cf40ccea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#a183d0f9517d917af2dfaa5b6a4d6524c">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the internal state to an archive.  <a href="#a183d0f9517d917af2dfaa5b6a4d6524c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1NphIntegrator.html#a5cb53e40092a946cbc70d1233716bde9">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the internal state to an archive.  <a href="#a5cb53e40092a946cbc70d1233716bde9"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a88e926dc15caff0c9d5c8282268fc284"></a><!-- doxytag: member="McMd::NphIntegrator::NphIntegrator" ref="a88e926dc15caff0c9d5c8282268fc284" args="(MdSystem &amp;system)" -->
+<a class="anchor" id="a775d950a2ebc93acde6c3f9d5160536d"></a><!-- doxytag: member="McMd::NphIntegrator::NphIntegrator" ref="a775d950a2ebc93acde6c3f9d5160536d" args="(MdSystem &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1NphIntegrator.html">NphIntegrator</a> </td>
+          <td class="memname">McMd::NphIntegrator::NphIntegrator </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1MdSystem.html">MdSystem</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -126,16 +126,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="NphIntegrator_8cpp_source.html#l00032">32</a> of file <a class="el" href="NphIntegrator_8cpp_source.html">NphIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="Vector_8h_source.html#l00494">Vector::zero()</a>.</p>
+<p>References <a class="el" href="Vector_8h_source.html#l00494">Util::Vector::zero()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af572a6eabad60c637c90ae6a85453304"></a><!-- doxytag: member="McMd::NphIntegrator::~NphIntegrator" ref="af572a6eabad60c637c90ae6a85453304" args="()" -->
+<a class="anchor" id="ab01461fb51ed5f46d4ca5e71b6a88a6a"></a><!-- doxytag: member="McMd::NphIntegrator::~NphIntegrator" ref="ab01461fb51ed5f46d4ca5e71b6a88a6a" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1NphIntegrator.html">NphIntegrator</a> </td>
+          <td class="memname">McMd::NphIntegrator::~NphIntegrator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -151,12 +151,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::NphIntegrator::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="aeb41003abfffe7f66e0c6cfab5fb0f37"></a><!-- doxytag: member="McMd::NphIntegrator::readParam" ref="aeb41003abfffe7f66e0c6cfab5fb0f37" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::NphIntegrator::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -174,20 +174,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="NphIntegrator_8cpp_source.html#l00049">49</a> of file <a class="el" href="NphIntegrator_8cpp_source.html">NphIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00226">DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">MdIntegrator::dt_</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00638">Simulation::nAtomType()</a>, and <a class="el" href="MdIntegrator_8h_source.html#l00119">MdIntegrator::simulation()</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00226">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">McMd::MdIntegrator::dt_</a>, <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00638">McMd::Simulation::nAtomType()</a>, and <a class="el" href="MdIntegrator_8h_source.html#l00119">McMd::MdIntegrator::simulation()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::NphIntegrator::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="ae679042748087682d0a7f8dca0b1cf9a"></a><!-- doxytag: member="McMd::NphIntegrator::setup" ref="ae679042748087682d0a7f8dca0b1cf9a" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void McMd::NphIntegrator::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -198,20 +198,20 @@ Public Member Functions</h2></td></tr>
 
 <p>Setup private variables before main loop. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#a43128fa8695ca9394ba69cd759d04b99">MdIntegrator</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#a5637182496a25c43cf69909309f76a37">McMd::MdIntegrator</a>.</p>
 
 <p>Definition at line <a class="el" href="NphIntegrator_8cpp_source.html#l00064">64</a> of file <a class="el" href="NphIntegrator_8cpp_source.html">NphIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00698">Simulation::atomType()</a>, <a class="el" href="Array_8h_source.html#l00146">Array&lt; Data &gt;::capacity()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">MdIntegrator::dt_</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00110">AtomType::mass()</a>, and <a class="el" href="MdIntegrator_8h_source.html#l00119">MdIntegrator::simulation()</a>.</p>
+<p>References <a class="el" href="mcMd_2simulation_2Simulation_8h_source.html#l00698">McMd::Simulation::atomType()</a>, <a class="el" href="Array_8h_source.html#l00146">Util::Array&lt; Data &gt;::capacity()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">McMd::MdIntegrator::dt_</a>, <a class="el" href="mcMd_2chemistry_2AtomType_8h_source.html#l00110">McMd::AtomType::mass()</a>, and <a class="el" href="MdIntegrator_8h_source.html#l00119">McMd::MdIntegrator::simulation()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac6bf1a12c5c98ddec5b65e07fe74cabe"></a><!-- doxytag: member="McMd::NphIntegrator::step" ref="ac6bf1a12c5c98ddec5b65e07fe74cabe" args="()" -->
+<a class="anchor" id="aa4e09238e4c23413bad7a0c8cec1874e"></a><!-- doxytag: member="McMd::NphIntegrator::step" ref="aa4e09238e4c23413bad7a0c8cec1874e" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void step </td>
+          <td class="memname">void McMd::NphIntegrator::step </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -222,20 +222,20 @@ Public Member Functions</h2></td></tr>
 
 <p>Take a complete NVE MD integration step. </p>
 
-<p>Implements <a class="el" href="classMcMd_1_1MdIntegrator.html#aa6f73ac7d5899119d156a0b3a27fba31">MdIntegrator</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1MdIntegrator.html#a2622fe6c9fd3e0141a679660cb99d2a6">McMd::MdIntegrator</a>.</p>
 
 <p>Definition at line <a class="el" href="NphIntegrator_8cpp_source.html#l00074">74</a> of file <a class="el" href="NphIntegrator_8cpp_source.html">NphIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="Vector_8h_source.html#l00629">Vector::add()</a>, <a class="el" href="System_8h_source.html#l00936">System::begin()</a>, <a class="el" href="System_8h_source.html#l00853">System::boundary()</a>, <a class="el" href="System_8h_source.html#l00893">System::boundaryEnsemble()</a>, <a class="el" href="MdPairPotential_8cpp_source.html#l00044">MdPairPotential::buildPairList()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00467">MdSystem::calculateForces()</a>, <a class="el" href="classMcMd_1_1MdSystem.html#aba85acb24fb51b2cb552ea840a5cbc8e">MdSystem::computeStress()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">MdIntegrator::dt_</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00287">Atom::force()</a>, <a class="el" href="Vector_8h_source.html#l00658">Vector::multiply()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00685">Simulation::nSpecies()</a>, <a class="el" href="MdSystem_8h_source.html#l00390">MdSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00267">Atom::position()</a>, <a class="el" href="BoundaryEnsemble_8h_source.html#l00120">BoundaryEnsemble::pressure()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00119">MdIntegrator::simulation()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00113">MdIntegrator::system()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00263">Atom::typeId()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00279">Atom::velocity()</a>.</p>
+<p>References <a class="el" href="Vector_8h_source.html#l00629">Util::Vector::add()</a>, <a class="el" href="System_8h_source.html#l00936">McMd::System::begin()</a>, <a class="el" href="System_8h_source.html#l00853">McMd::System::boundary()</a>, <a class="el" href="System_8h_source.html#l00893">McMd::System::boundaryEnsemble()</a>, <a class="el" href="MdPairPotential_8cpp_source.html#l00044">McMd::MdPairPotential::buildPairList()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00467">McMd::MdSystem::calculateForces()</a>, <a class="el" href="classMcMd_1_1MdSystem.html#aa46342d66a92a75c2676d4e779314aa1">McMd::MdSystem::computeStress()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00087">McMd::MdIntegrator::dt_</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00287">McMd::Atom::force()</a>, <a class="el" href="Vector_8h_source.html#l00658">Util::Vector::multiply()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00685">McMd::Simulation::nSpecies()</a>, <a class="el" href="MdSystem_8h_source.html#l00390">McMd::MdSystem::pairPotential()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00267">McMd::Atom::position()</a>, <a class="el" href="BoundaryEnsemble_8h_source.html#l00120">Util::BoundaryEnsemble::pressure()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00119">McMd::MdIntegrator::simulation()</a>, <a class="el" href="MdIntegrator_8h_source.html#l00113">McMd::MdIntegrator::system()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00263">McMd::Atom::typeId()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00279">McMd::Atom::velocity()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5f354535bade1082c5c29f9b5ebab24a"></a><!-- doxytag: member="McMd::NphIntegrator::barostatEnergy" ref="a5f354535bade1082c5c29f9b5ebab24a" args="()" -->
+<a class="anchor" id="adb587233e212da2b308413b2b4360754"></a><!-- doxytag: member="McMd::NphIntegrator::barostatEnergy" ref="adb587233e212da2b308413b2b4360754" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double barostatEnergy </td>
+          <td class="memname">double McMd::NphIntegrator::barostatEnergy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -250,12 +250,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa8cca21445d692c7f1563f946a416c62"></a><!-- doxytag: member="McMd::NphIntegrator::barostatMass" ref="aa8cca21445d692c7f1563f946a416c62" args="() const " -->
+<a class="anchor" id="a83324349734ded48ce9057716edf39d2"></a><!-- doxytag: member="McMd::NphIntegrator::barostatMass" ref="a83324349734ded48ce9057716edf39d2" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double barostatMass </td>
+          <td class="memname">double McMd::NphIntegrator::barostatMass </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [virtual]</code></td>
@@ -268,16 +268,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="NphIntegrator_8cpp_source.html#l00312">312</a> of file <a class="el" href="NphIntegrator_8cpp_source.html">NphIntegrator.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="HybridNphMdMove_8cpp_source.html#l00058">HybridNphMdMove::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="HybridNphMdMove_8cpp_source.html#l00058">McMd::HybridNphMdMove::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aca09b627115529ef162ee8ab08fe22f6"></a><!-- doxytag: member="McMd::NphIntegrator::mode" ref="aca09b627115529ef162ee8ab08fe22f6" args="() const " -->
+<a class="anchor" id="a09bb1e2c35e2f3f598eabbde1061f294"></a><!-- doxytag: member="McMd::NphIntegrator::mode" ref="a09bb1e2c35e2f3f598eabbde1061f294" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__Crystal__Module.html#ga70ce043243ca82cc6c7353c4b01f7317">LatticeSystem</a> mode </td>
+          <td class="memname"><a class="el" href="group__Crystal__Module.html#gae791ac7b853a3532698da0763ae0741e">LatticeSystem</a> McMd::NphIntegrator::mode </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [virtual]</code></td>
@@ -292,12 +292,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a97db19066cfb6353bb9583ad8e64db02"></a><!-- doxytag: member="McMd::NphIntegrator::setEta" ref="a97db19066cfb6353bb9583ad8e64db02" args="(unsigned int index, double eta)" -->
+<a class="anchor" id="a4bcb9b3ea9cf90500a9047d8cf40ccea"></a><!-- doxytag: member="McMd::NphIntegrator::setEta" ref="a4bcb9b3ea9cf90500a9047d8cf40ccea" args="(unsigned int index, double eta)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setEta </td>
+          <td class="memname">void McMd::NphIntegrator::setEta </td>
           <td>(</td>
           <td class="paramtype">unsigned int&#160;</td>
           <td class="paramname"><em>index</em>, </td>
@@ -331,12 +331,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><!-- doxytag: member="McMd::NphIntegrator::save" ref="a248dde9ccc0ef67e5d9cc5fd0bdc2b64" args="(Serializable::OArchiveType &amp;ar)" -->
+<a class="anchor" id="a183d0f9517d917af2dfaa5b6a4d6524c"></a><!-- doxytag: member="McMd::NphIntegrator::save" ref="a183d0f9517d917af2dfaa5b6a4d6524c" args="(Serializable::OArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void save </td>
+          <td class="memname">void McMd::NphIntegrator::save </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -354,20 +354,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">MdIntegrator</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#a6259ee8c0020e77a9face348ae98fb45">McMd::MdIntegrator</a>.</p>
 
 <p>Definition at line <a class="el" href="NphIntegrator_8cpp_source.html#l00338">338</a> of file <a class="el" href="NphIntegrator_8cpp_source.html">NphIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="MdIntegrator_8h_source.html#l00087">MdIntegrator::dt_</a>, and <a class="el" href="util_2archives_2serialize_8h_source.html#l00038">Util::serializeEnum()</a>.</p>
+<p>References <a class="el" href="MdIntegrator_8h_source.html#l00087">McMd::MdIntegrator::dt_</a>, and <a class="el" href="util_2archives_2serialize_8h_source.html#l00038">Util::serializeEnum()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa3d71af4cc5dfb2be6be816a8f562416"></a><!-- doxytag: member="McMd::NphIntegrator::load" ref="aa3d71af4cc5dfb2be6be816a8f562416" args="(Serializable::IArchiveType &amp;ar)" -->
+<a class="anchor" id="a5cb53e40092a946cbc70d1233716bde9"></a><!-- doxytag: member="McMd::NphIntegrator::load" ref="a5cb53e40092a946cbc70d1233716bde9" args="(Serializable::IArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void load </td>
+          <td class="memname">void McMd::NphIntegrator::load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -385,11 +385,11 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#aa3d71af4cc5dfb2be6be816a8f562416">MdIntegrator</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1MdIntegrator.html#a0ed070dd242d5cd9e36565ad16c9c6f5">McMd::MdIntegrator</a>.</p>
 
 <p>Definition at line <a class="el" href="NphIntegrator_8cpp_source.html#l00350">350</a> of file <a class="el" href="NphIntegrator_8cpp_source.html">NphIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="MdIntegrator_8h_source.html#l00087">MdIntegrator::dt_</a>, and <a class="el" href="util_2archives_2serialize_8h_source.html#l00038">Util::serializeEnum()</a>.</p>
+<p>References <a class="el" href="MdIntegrator_8h_source.html#l00087">McMd::MdIntegrator::dt_</a>, and <a class="el" href="util_2archives_2serialize_8h_source.html#l00038">Util::serializeEnum()</a>.</p>
 
 </div>
 </div>
@@ -398,7 +398,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="NphIntegrator_8cpp_source.html">NphIntegrator.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:56 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:27 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

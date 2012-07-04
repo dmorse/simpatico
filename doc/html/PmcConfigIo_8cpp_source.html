@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -79,18 +79,18 @@
 <a name="l00028"></a>00028    <span class="comment">/* </span>
 <a name="l00029"></a>00029 <span class="comment">   * Constructor.   </span>
 <a name="l00030"></a>00030 <span class="comment">   */</span>
-<a name="l00031"></a>00031    <a class="code" href="classMcMd_1_1PmcConfigIo.html#a53692eb4a475503eea2bf02d6e4cef87" title="Constructor.">PmcConfigIo::PmcConfigIo</a>(System &amp;system) 
-<a name="l00032"></a><a class="code" href="classMcMd_1_1PmcConfigIo.html#a53692eb4a475503eea2bf02d6e4cef87">00032</a>    : <a class="code" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>(system)
+<a name="l00031"></a>00031    <a class="code" href="classMcMd_1_1PmcConfigIo.html#a725cd9e5e56aa5f770611939e577f056" title="Constructor.">PmcConfigIo::PmcConfigIo</a>(System &amp;system) 
+<a name="l00032"></a><a class="code" href="classMcMd_1_1PmcConfigIo.html#a725cd9e5e56aa5f770611939e577f056">00032</a>    : <a class="code" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>(system)
 <a name="l00033"></a>00033    {}
 <a name="l00034"></a>00034  
 <a name="l00035"></a>00035    <span class="comment">/* </span>
 <a name="l00036"></a>00036 <span class="comment">   * Destructor.   </span>
 <a name="l00037"></a>00037 <span class="comment">   */</span>
-<a name="l00038"></a>00038    <a class="code" href="classMcMd_1_1PmcConfigIo.html#accee6468f194952020975b4cd5b0828b" title="Destructor.">PmcConfigIo::~PmcConfigIo</a>() 
-<a name="l00039"></a><a class="code" href="classMcMd_1_1PmcConfigIo.html#accee6468f194952020975b4cd5b0828b">00039</a>    {}
+<a name="l00038"></a>00038    <a class="code" href="classMcMd_1_1PmcConfigIo.html#a501a8f96bd603583cdc11f1ae750d0e9" title="Destructor.">PmcConfigIo::~PmcConfigIo</a>() 
+<a name="l00039"></a><a class="code" href="classMcMd_1_1PmcConfigIo.html#a501a8f96bd603583cdc11f1ae750d0e9">00039</a>    {}
 <a name="l00040"></a>00040 
-<a name="l00041"></a>00041    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PmcConfigIo.html#a8b985440832ee211c81e433c3038f640" title="Read configuration (particle positions) from file.">PmcConfigIo::read</a>(std::istream &amp;in)
-<a name="l00042"></a><a class="code" href="classMcMd_1_1PmcConfigIo.html#a8b985440832ee211c81e433c3038f640">00042</a>    {
+<a name="l00041"></a>00041    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PmcConfigIo.html#adf7c76777d68171d03b64a543e5edf3c" title="Read configuration (particle positions) from file.">PmcConfigIo::read</a>(std::istream &amp;in)
+<a name="l00042"></a><a class="code" href="classMcMd_1_1PmcConfigIo.html#adf7c76777d68171d03b64a543e5edf3c">00042</a>    {
 <a name="l00043"></a>00043       std::vector&lt;int&gt; nMoleculeSpecies;
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045       <span class="comment">// Read and set dimensions of simulation Boundary.</span>
@@ -105,8 +105,8 @@
 <a name="l00054"></a>00054       <span class="keywordflow">if</span> (nSpecies != simulation().nSpecies()) {
 <a name="l00055"></a>00055          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Input nSpecies != simulation().nSpecies()&quot;</span>);
 <a name="l00056"></a>00056       }
-<a name="l00057"></a>00057       <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;nParticle =&quot;</span> &lt;&lt; nAtom &lt;&lt; std::endl;
-<a name="l00058"></a>00058       <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;nSpecies  =&quot;</span> &lt;&lt; nSpecies &lt;&lt; std::endl;
+<a name="l00057"></a>00057       <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;nParticle =&quot;</span> &lt;&lt; nAtom &lt;&lt; std::endl;
+<a name="l00058"></a>00058       <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;nSpecies  =&quot;</span> &lt;&lt; nSpecies &lt;&lt; std::endl;
 <a name="l00059"></a>00059 
 <a name="l00060"></a>00060 
 <a name="l00061"></a>00061       <span class="comment">// Read number of molecules of each species.</span>
@@ -117,12 +117,12 @@
 <a name="l00066"></a>00066          speciesPtr = &amp;simulation().species(iSpec);
 <a name="l00067"></a>00067          in &gt;&gt; <a class="code" href="classUtil_1_1Label.html" title="A label string in a file format.">Label</a>(<span class="stringliteral">&quot;nMolecule&quot;</span>) &gt;&gt; nMolecule;
 <a name="l00068"></a>00068          nMoleculeSpecies.push_back(nMolecule);
-<a name="l00069"></a>00069          nAtomSum += nMolecule*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00069"></a>00069          nAtomSum += nMolecule*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
 <a name="l00070"></a>00070       }
 <a name="l00071"></a>00071       <span class="keywordflow">if</span> (nAtomSum != nAtom) {
 <a name="l00072"></a>00072          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Input nParticle != Atom Sum over Species&quot;</span>);
 <a name="l00073"></a>00073       }
-<a name="l00074"></a>00074       <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;nAtomSum =&quot;</span> &lt;&lt; nAtomSum;
+<a name="l00074"></a>00074       <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;nAtomSum =&quot;</span> &lt;&lt; nAtomSum;
 <a name="l00075"></a>00075 
 <a name="l00076"></a>00076       <span class="comment">// Read atomic positions</span>
 <a name="l00077"></a>00077       <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>              *molPtr;
@@ -132,9 +132,9 @@
 <a name="l00081"></a>00081          speciesPtr = &amp;simulation().species(iSpec);
 <a name="l00082"></a>00082          nMolecule = nMoleculeSpecies[iSpec];
 <a name="l00083"></a>00083          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iMol=0; iMol &lt; nMolecule; ++iMol) {
-<a name="l00084"></a>00084             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5c347060621ccff81193a1674ae34891" title="Get the reservoir for this Species by reference.">reservoir</a>().pop());
+<a name="l00084"></a>00084             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().pop());
 <a name="l00085"></a>00085             system().addMolecule(*molPtr);
-<a name="l00086"></a>00086             <span class="keywordflow">for</span> (molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ade5ca539682da662dd30b2628d4d21c7" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00086"></a>00086             <span class="keywordflow">for</span> (molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a593e8b56859b59dc753ff342a8063022" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00087"></a>00087                in &gt;&gt; atomIter-&gt;position() &gt;&gt; atomType;
 <a name="l00088"></a>00088                boundary().shift(atomIter-&gt;position());
 <a name="l00089"></a>00089             }
@@ -144,8 +144,8 @@
 <a name="l00093"></a>00093    }
 <a name="l00094"></a>00094 
 <a name="l00095"></a>00095 
-<a name="l00096"></a>00096    <span class="keywordtype">void</span> <a class="code" href="group__Format__Module.html#gada7be702171eb14ebaf498bc5839affa" title="Function template for output in a standard format.">PmcConfigIo::write</a>(std::ostream &amp;out)
-<a name="l00097"></a><a class="code" href="classMcMd_1_1PmcConfigIo.html#a4d3e77f085209778908a6869118d385e">00097</a>    {
+<a name="l00096"></a>00096    <span class="keywordtype">void</span> <a class="code" href="group__Format__Module.html#gaabeeaafc2872bcd5428befc5da1b532b" title="Function template for output in a standard format.">PmcConfigIo::write</a>(std::ostream &amp;out)
+<a name="l00097"></a><a class="code" href="classMcMd_1_1PmcConfigIo.html#ae6a1eec3f89dfc352ce501287bca2c6f">00097</a>    {
 <a name="l00098"></a>00098       <span class="keyword">using</span> std::endl;
 <a name="l00099"></a>00099 
 <a name="l00100"></a>00100       <span class="comment">// Write Boundary dimensions</span>
@@ -162,8 +162,8 @@
 <a name="l00111"></a>00111       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">System::MoleculeIterator</a> molIter;
 <a name="l00112"></a>00112       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a>   atomIter;
 <a name="l00113"></a>00113       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
-<a name="l00114"></a>00114          <span class="keywordflow">for</span> (system().begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00115"></a>00115             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00114"></a>00114          <span class="keywordflow">for</span> (system().begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00115"></a>00115             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00116"></a>00116                out &lt;&lt; atomIter-&gt;position();
 <a name="l00117"></a>00117                out.width(10);
 <a name="l00118"></a>00118                out &lt;&lt; atomIter-&gt;typeId() &lt;&lt; endl;
@@ -185,7 +185,7 @@
 <a name="l00134"></a>00134 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

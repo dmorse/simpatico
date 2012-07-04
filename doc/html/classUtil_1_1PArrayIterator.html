@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: PArrayIterator&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::PArrayIterator&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>PArrayIterator&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Pointer__Array__Module.html">Pointer Arrays</a> &#124; <a class="el" href="group__Iterator__Module.html">Iterators</a></div></h1>  </div>
+<h1>Util::PArrayIterator&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Pointer__Array__Module.html">Pointer Arrays</a> &#124; <a class="el" href="group__Iterator__Module.html">Iterators</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::PArrayIterator" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -58,7 +58,7 @@
 
 <p>Forward iterator for a <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a>. </p>
 <p>An <a class="el" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator</a> is an abstraction of a pointer, similar to an STL forward iterator. The * operator returns a reference to an associated Data object, the -&gt; operator returns a pointer to that object. The ++ operator increments the current pointer by one array element.</p>
-<p>Unlike an STL forward iterator, an <a class="el" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator</a> contains the address of the end of the array. The <a class="el" href="classUtil_1_1PArrayIterator.html#a11cbf4ba82ee565cb9eef28b972bf145" title="Is the current pointer at the end of the PArray?">atEnd()</a> method can be used to test for termination of a for or while loop. When <a class="el" href="classUtil_1_1PArrayIterator.html#a11cbf4ba82ee565cb9eef28b972bf145" title="Is the current pointer at the end of the PArray?">atEnd()</a> is true, the iterator has no current value, and cannot be incremented further. The <a class="el" href="classUtil_1_1PArrayIterator.html#a11cbf4ba82ee565cb9eef28b972bf145" title="Is the current pointer at the end of the PArray?">atEnd()</a> method returns true either if the iterator: i) has already been incremented one past the end of an associated <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a>, or ii) is in a null state that is produced by the constructor and the clear() method. </p>
+<p>Unlike an STL forward iterator, an <a class="el" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">PArrayIterator</a> contains the address of the end of the array. The <a class="el" href="classUtil_1_1PArrayIterator.html#aeacd11ebeed0487fdfe3f5de26999cfc" title="Is the current pointer at the end of the PArray?">atEnd()</a> method can be used to test for termination of a for or while loop. When <a class="el" href="classUtil_1_1PArrayIterator.html#aeacd11ebeed0487fdfe3f5de26999cfc" title="Is the current pointer at the end of the PArray?">atEnd()</a> is true, the iterator has no current value, and cannot be incremented further. The <a class="el" href="classUtil_1_1PArrayIterator.html#aeacd11ebeed0487fdfe3f5de26999cfc" title="Is the current pointer at the end of the PArray?">atEnd()</a> method returns true either if the iterator: i) has already been incremented one past the end of an associated <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a>, or ii) is in a null state that is produced by the constructor and the clear() method. </p>
 
 <p>Definition at line <a class="el" href="PArrayIterator_8h_source.html#l00034">34</a> of file <a class="el" href="PArrayIterator_8h_source.html">PArrayIterator.h</a>.</p>
 </div>
@@ -68,35 +68,37 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#ae1e3956b2a780fed56b661d67240a755">PArrayIterator</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ae1e3956b2a780fed56b661d67240a755"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a4e76e7894a3fb90953af94a3339d6ec7">setCurrent</a> (Data **ptr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current pointer value.  <a href="#a4e76e7894a3fb90953af94a3339d6ec7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a05f78f359a646a2e9370d99a23c58c5c">setEnd</a> (Data **ptr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of the end pointer.  <a href="#a05f78f359a646a2e9370d99a23c58c5c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a91e28e1274cd18a6413c67bf55356cf6">setNull</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Nullify the iterator.  <a href="#a91e28e1274cd18a6413c67bf55356cf6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a11cbf4ba82ee565cb9eef28b972bf145">atEnd</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the current pointer at the end of the <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a>?  <a href="#a11cbf4ba82ee565cb9eef28b972bf145"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816">notEnd</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the current pointer not at the end of the <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a>?  <a href="#acf66f57fcd15c0f1ba36e4470589c816"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a0b3179f07230ed74d5caee9b383d4ef9">get</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to the current data.  <a href="#a0b3179f07230ed74d5caee9b383d4ef9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a2341566a1442093b6efe58dadae89416">PArrayIterator</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a2341566a1442093b6efe58dadae89416"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#afca88258b51ab50fb694a3e910666534">setCurrent</a> (Data **ptr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current pointer value.  <a href="#afca88258b51ab50fb694a3e910666534"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#acfc2e9cb1f932424fe773df52a5acb15">setEnd</a> (Data **ptr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of the end pointer.  <a href="#acfc2e9cb1f932424fe773df52a5acb15"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#acb0990da53e2c44c63481c64f776a163">setNull</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Nullify the iterator.  <a href="#acb0990da53e2c44c63481c64f776a163"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#aeacd11ebeed0487fdfe3f5de26999cfc">atEnd</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the current pointer at the end of the <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a>?  <a href="#aeacd11ebeed0487fdfe3f5de26999cfc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d">notEnd</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the current pointer not at the end of the <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a>?  <a href="#a9a108a1b20ef4c09353b96ad5b29cc4d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a561ea75642c2ed8d246208b27f8c0299">get</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to the current data.  <a href="#a561ea75642c2ed8d246208b27f8c0299"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Operators</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a78260def3aba396ded6b62cd808606ba">operator*</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to the current Data.  <a href="#a78260def3aba396ded6b62cd808606ba"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a414258d2629891bc0b050442e339709a">operator-&gt;</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide a pointer to the current Data object.  <a href="#a414258d2629891bc0b050442e339709a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a51c5a5fbb6ab3c772603a905c5b73dd7">operator++</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment the current pointer.  <a href="#a51c5a5fbb6ab3c772603a905c5b73dd7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#aa6183fb4dfcaeff62155123115855283">operator*</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to the current Data.  <a href="#aa6183fb4dfcaeff62155123115855283"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#a5910b3f58bbb9f5cb6c6fb8883e5c76e">operator-&gt;</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide a pointer to the current Data object.  <a href="#a5910b3f58bbb9f5cb6c6fb8883e5c76e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PArrayIterator.html#af16f796d24eead717ccdc0e95065b584">operator++</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment the current pointer.  <a href="#af16f796d24eead717ccdc0e95065b584"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ae1e3956b2a780fed56b661d67240a755"></a><!-- doxytag: member="Util::PArrayIterator::PArrayIterator" ref="ae1e3956b2a780fed56b661d67240a755" args="()" -->
+<a class="anchor" id="a2341566a1442093b6efe58dadae89416"></a><!-- doxytag: member="Util::PArrayIterator::PArrayIterator" ref="a2341566a1442093b6efe58dadae89416" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1PArrayIterator.html">Util::PArrayIterator</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -113,12 +115,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a4e76e7894a3fb90953af94a3339d6ec7"></a><!-- doxytag: member="Util::PArrayIterator::setCurrent" ref="a4e76e7894a3fb90953af94a3339d6ec7" args="(Data **ptr)" -->
+<a class="anchor" id="afca88258b51ab50fb694a3e910666534"></a><!-- doxytag: member="Util::PArrayIterator::setCurrent" ref="afca88258b51ab50fb694a3e910666534" args="(Data **ptr)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setCurrent </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1PArrayIterator.html">Util::PArrayIterator</a>&lt; Data &gt;::setCurrent </td>
           <td>(</td>
           <td class="paramtype">Data **&#160;</td>
           <td class="paramname"><em>ptr</em></td><td>)</td>
@@ -138,16 +142,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PArrayIterator_8h_source.html#l00055">55</a> of file <a class="el" href="PArrayIterator_8h_source.html">PArrayIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="SSet_8h_source.html#l00263">SSet&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="PArray_8h_source.html#l00146">PArray&lt; Data &gt;::begin()</a>, and <a class="el" href="FPArray_8h_source.html#l00222">FPArray&lt; Data, Capacity &gt;::begin()</a>.</p>
+<p>Referenced by <a class="el" href="SSet_8h_source.html#l00263">Util::SSet&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="PArray_8h_source.html#l00146">Util::PArray&lt; Data &gt;::begin()</a>, and <a class="el" href="FPArray_8h_source.html#l00222">Util::FPArray&lt; Data, Capacity &gt;::begin()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a05f78f359a646a2e9370d99a23c58c5c"></a><!-- doxytag: member="Util::PArrayIterator::setEnd" ref="a05f78f359a646a2e9370d99a23c58c5c" args="(Data **ptr)" -->
+<a class="anchor" id="acfc2e9cb1f932424fe773df52a5acb15"></a><!-- doxytag: member="Util::PArrayIterator::setEnd" ref="acfc2e9cb1f932424fe773df52a5acb15" args="(Data **ptr)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setEnd </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1PArrayIterator.html">Util::PArrayIterator</a>&lt; Data &gt;::setEnd </td>
           <td>(</td>
           <td class="paramtype">Data **&#160;</td>
           <td class="paramname"><em>ptr</em></td><td>)</td>
@@ -167,16 +173,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PArrayIterator_8h_source.html#l00066">66</a> of file <a class="el" href="PArrayIterator_8h_source.html">PArrayIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="SSet_8h_source.html#l00263">SSet&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="PArray_8h_source.html#l00146">PArray&lt; Data &gt;::begin()</a>, and <a class="el" href="FPArray_8h_source.html#l00222">FPArray&lt; Data, Capacity &gt;::begin()</a>.</p>
+<p>Referenced by <a class="el" href="SSet_8h_source.html#l00263">Util::SSet&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="PArray_8h_source.html#l00146">Util::PArray&lt; Data &gt;::begin()</a>, and <a class="el" href="FPArray_8h_source.html#l00222">Util::FPArray&lt; Data, Capacity &gt;::begin()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a91e28e1274cd18a6413c67bf55356cf6"></a><!-- doxytag: member="Util::PArrayIterator::setNull" ref="a91e28e1274cd18a6413c67bf55356cf6" args="()" -->
+<a class="anchor" id="acb0990da53e2c44c63481c64f776a163"></a><!-- doxytag: member="Util::PArrayIterator::setNull" ref="acb0990da53e2c44c63481c64f776a163" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setNull </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1PArrayIterator.html">Util::PArrayIterator</a>&lt; Data &gt;::setNull </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -189,16 +197,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PArrayIterator_8h_source.html#l00072">72</a> of file <a class="el" href="PArrayIterator_8h_source.html">PArrayIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="PArray_8h_source.html#l00146">PArray&lt; Data &gt;::begin()</a>.</p>
+<p>Referenced by <a class="el" href="PArray_8h_source.html#l00146">Util::PArray&lt; Data &gt;::begin()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a11cbf4ba82ee565cb9eef28b972bf145"></a><!-- doxytag: member="Util::PArrayIterator::atEnd" ref="a11cbf4ba82ee565cb9eef28b972bf145" args="() const " -->
+<a class="anchor" id="aeacd11ebeed0487fdfe3f5de26999cfc"></a><!-- doxytag: member="Util::PArrayIterator::atEnd" ref="aeacd11ebeed0487fdfe3f5de26999cfc" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool atEnd </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1PArrayIterator.html">Util::PArrayIterator</a>&lt; Data &gt;::atEnd </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -214,12 +224,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acf66f57fcd15c0f1ba36e4470589c816"></a><!-- doxytag: member="Util::PArrayIterator::notEnd" ref="acf66f57fcd15c0f1ba36e4470589c816" args="() const " -->
+<a class="anchor" id="a9a108a1b20ef4c09353b96ad5b29cc4d"></a><!-- doxytag: member="Util::PArrayIterator::notEnd" ref="a9a108a1b20ef4c09353b96ad5b29cc4d" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool notEnd </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1PArrayIterator.html">Util::PArrayIterator</a>&lt; Data &gt;::notEnd </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -233,16 +245,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PArrayIterator_8h_source.html#l00092">92</a> of file <a class="el" href="PArrayIterator_8h_source.html">PArrayIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00246">ExternalPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00343">DihedralPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00323">BondPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00329">AnglePotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="McPairPotential_8cpp_source.html#l00045">McPairPotential::buildCellList()</a>, <a class="el" href="MdPairPotential_8cpp_source.html#l00044">MdPairPotential::buildPairList()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00629">Simulation::computeKineticEnergy()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="McExternalPerturbation_8cpp_source.html#l00094">McExternalPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00403">Exchanger::exchangeAtoms()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00110">PairPotential::findNeighbors()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00118">ReplicaMove::move()</a>, <a class="el" href="HybridNphMdMove_8cpp_source.html#l00073">HybridNphMdMove::move()</a>, <a class="el" href="HybridMdMove_8cpp_source.html#l00063">HybridMdMove::move()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00435">MdSystem::removeDriftVelocity()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00068">McExternalEnergyAverage::sample()</a>, <a class="el" href="BondLengthDist_8cpp_source.html#l00060">BondLengthDist::sample()</a>, <a class="el" href="mcMd_2simulation_2serialize_8h_source.html#l00029">System::serialize()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00425">ConfigIo::setAtomMasks()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00557">Simulation::setBoltzmannVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00407">MdSystem::setBoltzmannVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00374">MdSystem::setZeroForces()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00390">MdSystem::setZeroVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00353">MdSystem::shiftAtoms()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00105">NvtNhIntegrator::step()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00182">NvtDpdVvIntegrator::step()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">NveVvIntegrator::step()</a>, <a class="el" href="NphIntegrator_8cpp_source.html#l00074">NphIntegrator::step()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00097">PmcConfigIo::write()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">LammpsConfigIo::write()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">DdMdConfigIo::write()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00574">Simulation::zeroForces()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00246">McMd::ExternalPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00343">McMd::DihedralPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00323">McMd::BondPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00329">McMd::AnglePotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="McPairPotential_8cpp_source.html#l00045">McMd::McPairPotential::buildCellList()</a>, <a class="el" href="MdPairPotential_8cpp_source.html#l00044">McMd::MdPairPotential::buildPairList()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00629">DdMd::Simulation::computeKineticEnergy()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="McExternalPerturbation_8cpp_source.html#l00094">McMd::McExternalPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00403">DdMd::Exchanger::exchangeAtoms()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00110">DdMd::PairPotential::findNeighbors()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00118">McMd::ReplicaMove::move()</a>, <a class="el" href="HybridNphMdMove_8cpp_source.html#l00073">McMd::HybridNphMdMove::move()</a>, <a class="el" href="HybridMdMove_8cpp_source.html#l00063">McMd::HybridMdMove::move()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00435">McMd::MdSystem::removeDriftVelocity()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00068">McMd::McExternalEnergyAverage::sample()</a>, <a class="el" href="BondLengthDist_8cpp_source.html#l00060">McMd::BondLengthDist::sample()</a>, <a class="el" href="mcMd_2simulation_2serialize_8h_source.html#l00029">McMd::System::serialize()</a>, <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00425">DdMd::ConfigIo::setAtomMasks()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00557">DdMd::Simulation::setBoltzmannVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00407">McMd::MdSystem::setBoltzmannVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00374">McMd::MdSystem::setZeroForces()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00390">McMd::MdSystem::setZeroVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00353">McMd::MdSystem::shiftAtoms()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00105">McMd::NvtNhIntegrator::step()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00182">McMd::NvtDpdVvIntegrator::step()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">McMd::NveVvIntegrator::step()</a>, <a class="el" href="NphIntegrator_8cpp_source.html#l00074">McMd::NphIntegrator::step()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00097">McMd::PmcConfigIo::write()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">McMd::LammpsConfigIo::write()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">McMd::DdMdConfigIo::write()</a>, and <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00574">DdMd::Simulation::zeroForces()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0b3179f07230ed74d5caee9b383d4ef9"></a><!-- doxytag: member="Util::PArrayIterator::get" ref="a0b3179f07230ed74d5caee9b383d4ef9" args="() const " -->
+<a class="anchor" id="a561ea75642c2ed8d246208b27f8c0299"></a><!-- doxytag: member="Util::PArrayIterator::get" ref="a561ea75642c2ed8d246208b27f8c0299" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data* get </td>
+          <td class="memname">Data* <a class="el" href="classUtil_1_1PArrayIterator.html">Util::PArrayIterator</a>&lt; Data &gt;::get </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -258,12 +272,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a78260def3aba396ded6b62cd808606ba"></a><!-- doxytag: member="Util::PArrayIterator::operator*" ref="a78260def3aba396ded6b62cd808606ba" args="() const " -->
+<a class="anchor" id="aa6183fb4dfcaeff62155123115855283"></a><!-- doxytag: member="Util::PArrayIterator::operator*" ref="aa6183fb4dfcaeff62155123115855283" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data&amp; operator* </td>
+          <td class="memname">Data&amp; <a class="el" href="classUtil_1_1PArrayIterator.html">Util::PArrayIterator</a>&lt; Data &gt;::operator* </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -279,12 +295,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a414258d2629891bc0b050442e339709a"></a><!-- doxytag: member="Util::PArrayIterator::operator&#45;&gt;" ref="a414258d2629891bc0b050442e339709a" args="() const " -->
+<a class="anchor" id="a5910b3f58bbb9f5cb6c6fb8883e5c76e"></a><!-- doxytag: member="Util::PArrayIterator::operator&#45;&gt;" ref="a5910b3f58bbb9f5cb6c6fb8883e5c76e" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data* operator-&gt; </td>
+          <td class="memname">Data* <a class="el" href="classUtil_1_1PArrayIterator.html">Util::PArrayIterator</a>&lt; Data &gt;::operator-&gt; </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -300,12 +318,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a51c5a5fbb6ab3c772603a905c5b73dd7"></a><!-- doxytag: member="Util::PArrayIterator::operator++" ref="a51c5a5fbb6ab3c772603a905c5b73dd7" args="()" -->
+<a class="anchor" id="af16f796d24eead717ccdc0e95065b584"></a><!-- doxytag: member="Util::PArrayIterator::operator++" ref="af16f796d24eead717ccdc0e95065b584" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt;Data&gt;&amp; operator++ </td>
+          <td class="memname"><a class="el" href="classUtil_1_1PArrayIterator.html">PArrayIterator</a>&lt;Data&gt;&amp; <a class="el" href="classUtil_1_1PArrayIterator.html">Util::PArrayIterator</a>&lt; Data &gt;::operator++ </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -325,7 +345,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="PArrayIterator_8h_source.html">PArrayIterator.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

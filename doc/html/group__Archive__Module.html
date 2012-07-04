@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,27 +49,27 @@
     ar &amp;  data;
 </pre></div><p> are equivalent, and both load the state of variable data from archive ar.</p>
 <p>Objects of type T can be saved to or loaded from an instance of a class Archive if and only if the compiler can find a function named serialize with the signature </p>
-<div class="fragment"><pre class="fragment">     <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, T&amp; data, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<div class="fragment"><pre class="fragment">     <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, T&amp; data, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 </pre></div><p> Here, "version" is an integer index that indicates the version of the archive. This version id is normally given by an integer member of the archive class. The operator &amp; for a class Archive is normally implemented by a method template </p>
 <div class="fragment"><pre class="fragment">  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
   <span class="keywordtype">void</span> Archive::operator &amp; (T&amp; data);
-  {  <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(*<span class="keyword">this</span>, data, version_); }
+  {  <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(*<span class="keyword">this</span>, data, version_); }
 </pre></div><p> that simply calls the appropiate serialize method. Here, version_ is an integer member of the Archive class that stores the archive version id. Similar templates must be provided for the &lt;&lt; or &gt;&gt; operator.</p>
 <p>Each archive class provides serialize functions for all of the built-in C/C++ types, as well as few other common data types such as std::string. Definitions of the serialize function for saving archive types must save (write) data, and those for loading archive types must load (read) data.</p>
 <p>Instances of user-defined classes may also be serialized if an appropriate serialize function can be found by the compiler. Serialization of instances of a class T may be enabled by defining either:</p>
 <ul>
 <li>A global serialize function template, with a signature <div class="fragment"><pre class="fragment"> <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
- <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, T&amp; data, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+ <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, T&amp; data, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 </pre></div></li>
 </ul>
 <ul>
 <li>A serialize method template in class T, with a signature <div class="fragment"><pre class="fragment"> <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
- <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">T::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+ <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">T::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 </pre></div> Note that, in either case, the archive type is normally a template parameter, so that the same serialize function can work with multiple types of archives.</li>
 </ul>
 <p>In order to use this system, it is worth understanding how the compiler finds an appropriate serialize method. When the C++ compiler needs a serialize method for a particular archive type Archive and data type T, it will look first for a function <a class="el" href="namespaceUtil.html#a3b4ab759eba45a5e988a0b65cd5828ef" title="Serialize one object of type T.">serialize(Archive&amp;, T&amp;, unsigned int)</a> with exactly the required signature, and then for an appropriate template. Such functions are provided for each archive classes for all of the built-in C/C++ types, and are always used to serialize such types. For class types, their is normally no such non-template function, and so the compiler will look for an appropriate template, giving priority to templates in which fewer of the function parameters have types given by template arguments, rather than explicit types. If the compiler has access to a global serialize function template for class T with the signature described above, in which the archive type is a template parameter but the data type T is explicit, it will use this. If no such global serialize function template is found, the compiler will try to compile the following generic template, </p>
 <div class="fragment"><pre class="fragment"> <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive, <span class="keyword">typename</span> T&gt;
- <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, T&amp; data, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+ <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, T&amp; data, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
  {  data.serialize(ar, version); }
 </pre></div><p> which is defined in the file src/util/serialize.h. This template simply calls the serialize method of class T, and so will not compile if no such method exists. The compiler can thus use, in decreasing order of priority: 1) An explicit serialize function for type T and a specific archive type, 2) A serialize function template for a specific type T in which the archive type is a template parameter, or 3) A serialize method of class T in which the archive type is a template parameter. If none of these are accessible for class T, compilation will fail for any code that attempts to serialize an instance of class T.</p>
 <p>The use of a single operator &amp; to represent both output (when applied to a saving archive) and input (when applied to a loading archive), makes it possible to write a single serialize function template for each class that specifies how to order save or load instances of that class, by specifying the order in which members of the class are serialized. For example, consider the following definition of a simple complex number class: </p>
@@ -79,7 +79,7 @@
       A(<span class="keywordtype">double</span> real, <span class="keywordtype">double</span> imag) : real_(real), imag_(imag) {}
  
       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-      <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+      <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
       { 
          ar &amp; real_;
          ar &amp; imag_:
@@ -96,21 +96,21 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">BinaryFileIArchive</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">Util::BinaryFileIArchive</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Saving archive for binary istream.  <a href="classUtil_1_1BinaryFileIArchive.html#_details">More...</a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">BinaryFileOArchive</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">Util::BinaryFileOArchive</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Saving archive for binary ostream.  <a href="classUtil_1_1BinaryFileOArchive.html#_details">More...</a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MemoryIArchive.html">MemoryIArchive</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MemoryIArchive.html">Util::MemoryIArchive</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Input archive for packed heterogeneous binary data.  <a href="classUtil_1_1MemoryIArchive.html#_details">More...</a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MemoryOArchive.html">MemoryOArchive</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MemoryOArchive.html">Util::MemoryOArchive</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save archive for packed heterogeneous binary data.  <a href="classUtil_1_1MemoryOArchive.html#_details">More...</a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1TextFileIArchive.html">TextFileIArchive</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1TextFileIArchive.html">Util::TextFileIArchive</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Saving archive for binary istream.  <a href="classUtil_1_1TextFileIArchive.html#_details">More...</a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1TextFileOArchive.html">TextFileOArchive</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1TextFileOArchive.html">Util::TextFileOArchive</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Saving archive for character based ostream.  <a href="classUtil_1_1TextFileOArchive.html#_details">More...</a><br/></td></tr>
 </table>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

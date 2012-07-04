@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -70,8 +70,8 @@
 <a name="l00019"></a>00019    <span class="comment">/* </span>
 <a name="l00020"></a>00020 <span class="comment">   * Constructor.</span>
 <a name="l00021"></a>00021 <span class="comment">   */</span>
-<a name="l00022"></a>00022    <a class="code" href="classInter_1_1HarmonicBond.html#af8aa6fd20ce09724a328f3b3634fad3c" title="Default constructor.">HarmonicBond::HarmonicBond</a>()
-<a name="l00023"></a><a class="code" href="classInter_1_1HarmonicBond.html#af8aa6fd20ce09724a328f3b3634fad3c">00023</a>     : nBondType_(0)
+<a name="l00022"></a>00022    <a class="code" href="classInter_1_1HarmonicBond.html#aed91822a75f015ff9ec23afb30ba1d90" title="Default constructor.">HarmonicBond::HarmonicBond</a>()
+<a name="l00023"></a><a class="code" href="classInter_1_1HarmonicBond.html#aed91822a75f015ff9ec23afb30ba1d90">00023</a>     : nBondType_(0)
 <a name="l00024"></a>00024    {
 <a name="l00025"></a>00025       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; MaxNBondType; ++i) {
 <a name="l00026"></a>00026          kappa_[i]  =  0.0;
@@ -82,8 +82,8 @@
 <a name="l00031"></a>00031    <span class="comment">/* </span>
 <a name="l00032"></a>00032 <span class="comment">   * Copy constructor.</span>
 <a name="l00033"></a>00033 <span class="comment">   */</span>
-<a name="l00034"></a>00034    <a class="code" href="classInter_1_1HarmonicBond.html#af8aa6fd20ce09724a328f3b3634fad3c" title="Default constructor.">HarmonicBond::HarmonicBond</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1HarmonicBond.html" title="A harmonic covalent bond potential.">HarmonicBond</a>&amp; other)
-<a name="l00035"></a><a class="code" href="classInter_1_1HarmonicBond.html#ac2fe192502daef2c18cb65c7c8033e18">00035</a>     : nBondType_(other.nBondType_)
+<a name="l00034"></a>00034    <a class="code" href="classInter_1_1HarmonicBond.html#aed91822a75f015ff9ec23afb30ba1d90" title="Default constructor.">HarmonicBond::HarmonicBond</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1HarmonicBond.html" title="A harmonic covalent bond potential.">HarmonicBond</a>&amp; other)
+<a name="l00035"></a><a class="code" href="classInter_1_1HarmonicBond.html#a546c1c3487be969bb7f4818fa86a875e">00035</a>     : nBondType_(other.nBondType_)
 <a name="l00036"></a>00036    {
 <a name="l00037"></a>00037       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nBondType_; ++i) {
 <a name="l00038"></a>00038          kappa_[i]  =  other.kappa_[i];
@@ -94,8 +94,8 @@
 <a name="l00043"></a>00043    <span class="comment">/* </span>
 <a name="l00044"></a>00044 <span class="comment">   * Assignment.</span>
 <a name="l00045"></a>00045 <span class="comment">   */</span>
-<a name="l00046"></a>00046    <a class="code" href="classInter_1_1HarmonicBond.html" title="A harmonic covalent bond potential.">HarmonicBond</a>&amp; <a class="code" href="classInter_1_1HarmonicBond.html#a73f4957455fd59b015ae1ef90058fb8e" title="Assignment.">HarmonicBond::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1HarmonicBond.html" title="A harmonic covalent bond potential.">HarmonicBond</a>&amp; other)
-<a name="l00047"></a><a class="code" href="classInter_1_1HarmonicBond.html#a73f4957455fd59b015ae1ef90058fb8e">00047</a>    {
+<a name="l00046"></a>00046    <a class="code" href="classInter_1_1HarmonicBond.html" title="A harmonic covalent bond potential.">HarmonicBond</a>&amp; <a class="code" href="classInter_1_1HarmonicBond.html#afe043390bd31185b75b0bc3bfda00d87" title="Assignment.">HarmonicBond::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1HarmonicBond.html" title="A harmonic covalent bond potential.">HarmonicBond</a>&amp; other)
+<a name="l00047"></a><a class="code" href="classInter_1_1HarmonicBond.html#afe043390bd31185b75b0bc3bfda00d87">00047</a>    {
 <a name="l00048"></a>00048       nBondType_   = other.nBondType_;
 <a name="l00049"></a>00049       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nBondType_; ++i) {
 <a name="l00050"></a>00050          kappa_[i]  = other.kappa_[i];
@@ -107,8 +107,8 @@
 <a name="l00056"></a>00056    <span class="comment">/* </span>
 <a name="l00057"></a>00057 <span class="comment">   * Set the nBondType_ member</span>
 <a name="l00058"></a>00058 <span class="comment">   */</span>
-<a name="l00059"></a>00059    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1HarmonicBond.html#a8220bdfee50a757b7397b97e2dd37f75" title="Set the number of bond types.">HarmonicBond::setNBondType</a>(<span class="keywordtype">int</span> nBondType)
-<a name="l00060"></a><a class="code" href="classInter_1_1HarmonicBond.html#a8220bdfee50a757b7397b97e2dd37f75">00060</a>    {  
+<a name="l00059"></a>00059    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1HarmonicBond.html#a21f9d1f3b272d86d4884589938c00a4a" title="Set the number of bond types.">HarmonicBond::setNBondType</a>(<span class="keywordtype">int</span> nBondType)
+<a name="l00060"></a><a class="code" href="classInter_1_1HarmonicBond.html#a21f9d1f3b272d86d4884589938c00a4a">00060</a>    {  
 <a name="l00061"></a>00061       <span class="keywordflow">if</span> (nBondType &gt; MaxNBondType) {
 <a name="l00062"></a>00062          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nBondType &gt; HarmonicBond::MaxNBondType&quot;</span>);
 <a name="l00063"></a>00063       }
@@ -118,8 +118,8 @@
 <a name="l00067"></a>00067    <span class="comment">/* </span>
 <a name="l00068"></a>00068 <span class="comment">   * Read bond interaction parameters kappa and length from file</span>
 <a name="l00069"></a>00069 <span class="comment">   */</span>
-<a name="l00070"></a>00070    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1HarmonicBond.html#ab5421d3c9175985c9acbf723e5392075" title="Read bond interaction parameters from input stream.">HarmonicBond::readParam</a>(std::istream &amp;in) 
-<a name="l00071"></a><a class="code" href="classInter_1_1HarmonicBond.html#ab5421d3c9175985c9acbf723e5392075">00071</a>    {
+<a name="l00070"></a>00070    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1HarmonicBond.html#a3603324e8b14cbe8b3103487c0209668" title="Read bond interaction parameters from input stream.">HarmonicBond::readParam</a>(std::istream &amp;in) 
+<a name="l00071"></a><a class="code" href="classInter_1_1HarmonicBond.html#a3603324e8b14cbe8b3103487c0209668">00071</a>    {
 <a name="l00072"></a>00072 
 <a name="l00073"></a>00073       <span class="comment">// Preconditions</span>
 <a name="l00074"></a>00074       <span class="keywordflow">if</span> (nBondType_ &lt;= 0) {
@@ -156,8 +156,8 @@
 <a name="l00105"></a>00105 <span class="comment">   *     The distribution is correct only for x &lt; xm. The probability of</span>
 <a name="l00106"></a>00106 <span class="comment">   *     generating a value x &gt;= xm is, however, less than exp(-49/2).</span>
 <a name="l00107"></a>00107 <span class="comment">   */</span>
-<a name="l00108"></a>00108    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1HarmonicBond.html#a44c3d4907f4f2ac51031a1f2150b2f5e" title="Return bond length chosen from equilibrium distribution.">HarmonicBond::randomBondLength</a>(
-<a name="l00109"></a><a class="code" href="classInter_1_1HarmonicBond.html#a44c3d4907f4f2ac51031a1f2150b2f5e">00109</a>                          <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a> *random, <span class="keywordtype">double</span> beta, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
+<a name="l00108"></a>00108    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1HarmonicBond.html#aefa38d3e83f01f4c34849d85350ba4c5" title="Return bond length chosen from equilibrium distribution.">HarmonicBond::randomBondLength</a>(
+<a name="l00109"></a><a class="code" href="classInter_1_1HarmonicBond.html#aefa38d3e83f01f4c34849d85350ba4c5">00109</a>                          <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a> *random, <span class="keywordtype">double</span> beta, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
 <a name="l00110"></a>00110 <span class="keyword">   </span>{
 <a name="l00111"></a>00111    
 <a name="l00112"></a>00112       <span class="keywordtype">double</span> sd  = 1.0/sqrt( beta*kappa_[type] );
@@ -168,9 +168,9 @@
 <a name="l00117"></a>00117    
 <a name="l00118"></a>00118       <span class="comment">// Generate trials until one is accepted</span>
 <a name="l00119"></a>00119       <span class="keywordflow">for</span> (;;) { 
-<a name="l00120"></a>00120          x = x0 + sd*random-&gt;<a class="code" href="classUtil_1_1Random.html#a6f9a01f90d51bcd37befa231ee8527cb" title="Return a Gaussian random number with zero average and unit variance.">gaussian</a>();
+<a name="l00120"></a>00120          x = x0 + sd*random-&gt;<a class="code" href="classUtil_1_1Random.html#ae4056fb996c7072ec2a8815d818c7102" title="Return a Gaussian random number with zero average and unit variance.">gaussian</a>();
 <a name="l00121"></a>00121          <span class="keywordflow">if</span> (x &lt; 0) <span class="keywordflow">continue</span>;
-<a name="l00122"></a>00122          <span class="keywordflow">if</span> ( x*x/xm2 &gt;= random-&gt;<a class="code" href="classUtil_1_1Random.html#a30d1e43990eafb316df89c96cd213e6b" title="Return a random floating point number x, uniformly distributed in the range 0 &amp;lt;= x &amp;lt; 1...">uniform</a>(0.0,1.0) ) {
+<a name="l00122"></a>00122          <span class="keywordflow">if</span> ( x*x/xm2 &gt;= random-&gt;<a class="code" href="classUtil_1_1Random.html#ae18b83cdfb994352aa0ac1efc451e6ae" title="Return a random floating point number x, uniformly distributed in the range 0 &amp;lt;= x &amp;lt; 1...">uniform</a>(0.0,1.0) ) {
 <a name="l00123"></a>00123             <span class="keywordflow">return</span> x;
 <a name="l00124"></a>00124          };
 <a name="l00125"></a>00125       }
@@ -179,8 +179,8 @@
 <a name="l00128"></a>00128    <span class="comment">/*</span>
 <a name="l00129"></a>00129 <span class="comment">   * Modify a parameter, identified by a string.</span>
 <a name="l00130"></a>00130 <span class="comment">   */</span>
-<a name="l00131"></a>00131    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1HarmonicBond.html#a0ab8f6bbd2e18cfd4df7ced299fe82f0" title="Modify a parameter, identified by a string.">HarmonicBond::set</a>(std::string name, <span class="keywordtype">int</span> type, <span class="keywordtype">double</span> value)
-<a name="l00132"></a><a class="code" href="classInter_1_1HarmonicBond.html#a0ab8f6bbd2e18cfd4df7ced299fe82f0">00132</a>    {
+<a name="l00131"></a>00131    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1HarmonicBond.html#a8fa0603136fe6228b15c70fc077db4af" title="Modify a parameter, identified by a string.">HarmonicBond::set</a>(std::string name, <span class="keywordtype">int</span> type, <span class="keywordtype">double</span> value)
+<a name="l00132"></a><a class="code" href="classInter_1_1HarmonicBond.html#a8fa0603136fe6228b15c70fc077db4af">00132</a>    {
 <a name="l00133"></a>00133       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;kappa&quot;</span>) {
 <a name="l00134"></a>00134          kappa_[type] = value;
 <a name="l00135"></a>00135       } <span class="keywordflow">else</span>
@@ -194,8 +194,8 @@
 <a name="l00143"></a>00143    <span class="comment">/*</span>
 <a name="l00144"></a>00144 <span class="comment">   * Get a parameter value, identified by a string.</span>
 <a name="l00145"></a>00145 <span class="comment">   */</span>
-<a name="l00146"></a>00146    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1HarmonicBond.html#a29dcf205f23d3b29d6f3bb6755e01d80" title="Get a parameter value, identified by a string.">HarmonicBond::get</a>(std::string name, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
-<a name="l00147"></a><a class="code" href="classInter_1_1HarmonicBond.html#a29dcf205f23d3b29d6f3bb6755e01d80">00147</a> <span class="keyword">   </span>{
+<a name="l00146"></a>00146    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1HarmonicBond.html#abfa07407872a1a107f8a0cb68897bb38" title="Get a parameter value, identified by a string.">HarmonicBond::get</a>(std::string name, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
+<a name="l00147"></a><a class="code" href="classInter_1_1HarmonicBond.html#abfa07407872a1a107f8a0cb68897bb38">00147</a> <span class="keyword">   </span>{
 <a name="l00148"></a>00148       <span class="keywordtype">double</span> value;
 <a name="l00149"></a>00149       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;kappa&quot;</span>) {
 <a name="l00150"></a>00150          value = kappa_[type];
@@ -211,14 +211,14 @@
 <a name="l00160"></a>00160    <span class="comment">/*</span>
 <a name="l00161"></a>00161 <span class="comment">   * Return name string &quot;HarmonicBond&quot; for this evaluator class.</span>
 <a name="l00162"></a>00162 <span class="comment">   */</span>
-<a name="l00163"></a>00163    std::string <a class="code" href="classInter_1_1HarmonicBond.html#a13c07285e858b2c232919fd57b635e1b" title="Return name string &amp;quot;HarmonicBond&amp;quot; for this evaluator class.">HarmonicBond::className</a>()<span class="keyword"> const</span>
-<a name="l00164"></a><a class="code" href="classInter_1_1HarmonicBond.html#a13c07285e858b2c232919fd57b635e1b">00164</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;HarmonicBond&quot;</span>); }
+<a name="l00163"></a>00163    std::string <a class="code" href="classInter_1_1HarmonicBond.html#ac650aa67e929ef8b8de4de37e52805f7" title="Return name string &amp;quot;HarmonicBond&amp;quot; for this evaluator class.">HarmonicBond::className</a>()<span class="keyword"> const</span>
+<a name="l00164"></a><a class="code" href="classInter_1_1HarmonicBond.html#ac650aa67e929ef8b8de4de37e52805f7">00164</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;HarmonicBond&quot;</span>); }
 <a name="l00165"></a>00165 
 <a name="l00166"></a>00166 } 
 <a name="l00167"></a>00167 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

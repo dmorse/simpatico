@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -107,11 +107,11 @@
 <a name="l00097"></a>00097    {
 <a name="l00098"></a>00098       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r1, r2;
 <a name="l00099"></a>00099       <span class="keywordtype">double</span> cosTheta;
-<a name="l00100"></a>00100       system().boundary().distanceSq(b.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), a.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), r1);
-<a name="l00101"></a>00101       system().boundary().distanceSq(c.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), b.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), r2);
-<a name="l00102"></a>00102       r1 /= r1.<a class="code" href="classUtil_1_1Vector.html#a8eccd53c4cb659df8fff6d41ae058752" title="Return absolute magnitude of this vector.">abs</a>();
-<a name="l00103"></a>00103       r2 /= r2.<a class="code" href="classUtil_1_1Vector.html#a8eccd53c4cb659df8fff6d41ae058752" title="Return absolute magnitude of this vector.">abs</a>();
-<a name="l00104"></a>00104       cosTheta = r1.<a class="code" href="classUtil_1_1Vector.html#a5431123ac320a0ed069d9c7a30702c7b" title="Return dot product of this vector and vector v.">dot</a>(r2);
+<a name="l00100"></a>00100       system().boundary().distanceSq(b.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), a.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), r1);
+<a name="l00101"></a>00101       system().boundary().distanceSq(c.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), b.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), r2);
+<a name="l00102"></a>00102       r1 /= r1.<a class="code" href="classUtil_1_1Vector.html#ad79f77db899f4e202b21e66d8935cce8" title="Return absolute magnitude of this vector.">abs</a>();
+<a name="l00103"></a>00103       r2 /= r2.<a class="code" href="classUtil_1_1Vector.html#ad79f77db899f4e202b21e66d8935cce8" title="Return absolute magnitude of this vector.">abs</a>();
+<a name="l00104"></a>00104       cosTheta = r1.<a class="code" href="classUtil_1_1Vector.html#aa1b64030ac95721bc39038c003240c09" title="Return dot product of this vector and vector v.">dot</a>(r2);
 <a name="l00105"></a>00105       <span class="keywordflow">return</span> system().anglePotential().energy(cosTheta, type);
 <a name="l00106"></a>00106    }
 <a name="l00107"></a>00107 <span class="preprocessor">   #endif</span>
@@ -120,7 +120,7 @@
 <a name="l00110"></a>00110 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

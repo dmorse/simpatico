@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -78,38 +78,38 @@
 <a name="l00027"></a>00027    <span class="comment">/* </span>
 <a name="l00028"></a>00028 <span class="comment">   * Constructor.   </span>
 <a name="l00029"></a>00029 <span class="comment">   */</span>
-<a name="l00030"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#aec510ce02d759de7883f5df8d641d661">00030</a>    <a class="code" href="classMcMd_1_1NveVvIntegrator.html#aec510ce02d759de7883f5df8d641d661" title="Constructor.">NveVvIntegrator::NveVvIntegrator</a>(<a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>&amp; system)
+<a name="l00030"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#a87897b76c27ae8fe34c6d17f9a0adab8">00030</a>    <a class="code" href="classMcMd_1_1NveVvIntegrator.html#a87897b76c27ae8fe34c6d17f9a0adab8" title="Constructor.">NveVvIntegrator::NveVvIntegrator</a>(<a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>&amp; system)
 <a name="l00031"></a>00031    : <a class="code" href="classMcMd_1_1MdIntegrator.html" title="Abstract base for molecular dynamics integrators.">MdIntegrator</a>(system)
 <a name="l00032"></a>00032    {}
 <a name="l00033"></a>00033 
 <a name="l00034"></a>00034    <span class="comment">/* </span>
 <a name="l00035"></a>00035 <span class="comment">   * Destructor.   </span>
 <a name="l00036"></a>00036 <span class="comment">   */</span>
-<a name="l00037"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#a454a9020f1d570d78d0bb78c35ec5fac">00037</a>    <a class="code" href="classMcMd_1_1NveVvIntegrator.html#a454a9020f1d570d78d0bb78c35ec5fac" title="Destructor.">NveVvIntegrator::~NveVvIntegrator</a>() 
+<a name="l00037"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#ac434ef4016929e0686e2879b8a1a2ab0">00037</a>    <a class="code" href="classMcMd_1_1NveVvIntegrator.html#ac434ef4016929e0686e2879b8a1a2ab0" title="Destructor.">NveVvIntegrator::~NveVvIntegrator</a>() 
 <a name="l00038"></a>00038    {}
 <a name="l00039"></a>00039 
 <a name="l00040"></a>00040    <span class="comment">/* </span>
 <a name="l00041"></a>00041 <span class="comment">   * Read parameter and configuration files, initialize system.</span>
 <a name="l00042"></a>00042 <span class="comment">   */</span>
-<a name="l00043"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#ab5421d3c9175985c9acbf723e5392075">00043</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1NveVvIntegrator.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file and initialize this MdSystem.">NveVvIntegrator::readParam</a>(std::istream &amp;in) 
+<a name="l00043"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#aa2c93ca9adb23d436ffe0929313a1096">00043</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1NveVvIntegrator.html#aa2c93ca9adb23d436ffe0929313a1096" title="Read parameters from file and initialize this MdSystem.">NveVvIntegrator::readParam</a>(std::istream &amp;in) 
 <a name="l00044"></a>00044    {
-<a name="l00045"></a>00045       read&lt;double&gt;(in, <span class="stringliteral">&quot;dt&quot;</span>, <a class="code" href="classMcMd_1_1MdIntegrator.html#a42a65ea434d32fceba0cf1d6f88c9159" title="Integrator time step.">dt_</a>);
+<a name="l00045"></a>00045       read&lt;double&gt;(in, <span class="stringliteral">&quot;dt&quot;</span>, <a class="code" href="classMcMd_1_1MdIntegrator.html#ac516b532d37acc835a0c03b05e08e6d6" title="Integrator time step.">dt_</a>);
 <a name="l00046"></a>00046 
-<a name="l00047"></a>00047       <span class="keywordtype">int</span> nAtomType = <a class="code" href="classMcMd_1_1MdIntegrator.html#a9c48d9c8c09632e9489efe52722a7937" title="Get parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a75990126a7bab14aff4a94db42b29f61" title="Get the number of atom types.">nAtomType</a>();
-<a name="l00048"></a>00048       prefactors_.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nAtomType);
+<a name="l00047"></a>00047       <span class="keywordtype">int</span> nAtomType = <a class="code" href="classMcMd_1_1MdIntegrator.html#ae57c7b8ebc4325e4d5e852466333c391" title="Get parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a54f547a8259478908be74fff6e76ba70" title="Get the number of atom types.">nAtomType</a>();
+<a name="l00048"></a>00048       prefactors_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nAtomType);
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050    }
 <a name="l00051"></a>00051 
 <a name="l00052"></a>00052    <span class="comment">/* </span>
 <a name="l00053"></a>00053 <span class="comment">   * Initialize constants.</span>
 <a name="l00054"></a>00054 <span class="comment">   */</span>
-<a name="l00055"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#a4fc01d736fe50cf5b977f755b675f11d">00055</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1NveVvIntegrator.html#a4fc01d736fe50cf5b977f755b675f11d" title="Setup private variables before main loop.">NveVvIntegrator::setup</a>() 
+<a name="l00055"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#a523967293db775dc76856539f73cd491">00055</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1NveVvIntegrator.html#a523967293db775dc76856539f73cd491" title="Setup private variables before main loop.">NveVvIntegrator::setup</a>() 
 <a name="l00056"></a>00056    {
 <a name="l00057"></a>00057       <span class="keywordtype">double</span> mass;
-<a name="l00058"></a>00058       <span class="keywordtype">int</span> nAtomType = prefactors_.<a class="code" href="classUtil_1_1Array.html#a104736719cd4e5f21c25705c77064dde" title="Return allocated size.">capacity</a>();
+<a name="l00058"></a>00058       <span class="keywordtype">int</span> nAtomType = prefactors_.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>();
 <a name="l00059"></a>00059       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nAtomType; ++i) {
-<a name="l00060"></a>00060          mass = <a class="code" href="classMcMd_1_1MdIntegrator.html#a9c48d9c8c09632e9489efe52722a7937" title="Get parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#ab6bbaf9cb8f4d80bee8bc097fe081b2f" title="Get an AtomType object by const reference.">atomType</a>(i).<a class="code" href="classMcMd_1_1AtomType.html#a83976846b90298e208d6bca1599e3fb3" title="Get the mass.">mass</a>();
-<a name="l00061"></a>00061          prefactors_[i] = 0.5*<a class="code" href="classMcMd_1_1MdIntegrator.html#a42a65ea434d32fceba0cf1d6f88c9159" title="Integrator time step.">dt_</a>/mass;
+<a name="l00060"></a>00060          mass = <a class="code" href="classMcMd_1_1MdIntegrator.html#ae57c7b8ebc4325e4d5e852466333c391" title="Get parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#aaa66eab8cfb22ac117f93cd076cfe3f4" title="Get an AtomType object by const reference.">atomType</a>(i).<a class="code" href="classMcMd_1_1AtomType.html#a5f2cdb3e532127d965b5573e32f094be" title="Get the mass.">mass</a>();
+<a name="l00061"></a>00061          prefactors_[i] = 0.5*<a class="code" href="classMcMd_1_1MdIntegrator.html#ac516b532d37acc835a0c03b05e08e6d6" title="Integrator time step.">dt_</a>/mass;
 <a name="l00062"></a>00062       }
 <a name="l00063"></a>00063    }
 <a name="l00064"></a>00064 
@@ -127,7 +127,7 @@
 <a name="l00076"></a>00076 <span class="comment">   *</span>
 <a name="l00077"></a>00077 <span class="comment">   * where x is position, v is velocity, and a is acceleration.</span>
 <a name="l00078"></a>00078 <span class="comment">   */</span>
-<a name="l00079"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#ac6bf1a12c5c98ddec5b65e07fe74cabe">00079</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1NveVvIntegrator.html#ac6bf1a12c5c98ddec5b65e07fe74cabe" title="Take a complete NVE MD integration step.">NveVvIntegrator::step</a>() 
+<a name="l00079"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#a835d969eb36d8f8b477359fc75cb4bd6">00079</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1NveVvIntegrator.html#a835d969eb36d8f8b477359fc75cb4bd6" title="Take a complete NVE MD integration step.">NveVvIntegrator::step</a>() 
 <a name="l00080"></a>00080    {
 <a name="l00081"></a>00081       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dv;
 <a name="l00082"></a>00082       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr;
@@ -136,22 +136,22 @@
 <a name="l00085"></a>00085       <span class="comment">//double dtHalf = 0.5*dt_;</span>
 <a name="l00086"></a>00086       <span class="keywordtype">int</span>    iSpecies, nSpecies;
 <a name="l00087"></a>00087 
-<a name="l00088"></a>00088       nSpecies = <a class="code" href="classMcMd_1_1MdIntegrator.html#a9c48d9c8c09632e9489efe52722a7937" title="Get parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>();
+<a name="l00088"></a>00088       nSpecies = <a class="code" href="classMcMd_1_1MdIntegrator.html#ae57c7b8ebc4325e4d5e852466333c391" title="Get parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>();
 <a name="l00089"></a>00089 
 <a name="l00090"></a>00090       <span class="comment">// 1st half velocity Verlet, loop over atoms </span>
 <a name="l00091"></a>00091 <span class="preprocessor">      #if USE_ITERATOR</span>
 <a name="l00092"></a>00092 <span class="preprocessor"></span>      <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a> atomIter;
 <a name="l00093"></a>00093       <span class="keywordflow">for</span> (iSpecies=0; iSpecies &lt; nSpecies; ++iSpecies) {
-<a name="l00094"></a>00094          <a class="code" href="classMcMd_1_1MdIntegrator.html#a5d59ae247ef02b18b7eec01950b4112e" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpecies, molIter); 
-<a name="l00095"></a>00095          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00096"></a>00096             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00094"></a>00094          <a class="code" href="classMcMd_1_1MdIntegrator.html#a9c316fa2e9f6fc1e63cb808138b794f8" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpecies, molIter); 
+<a name="l00095"></a>00095          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00096"></a>00096             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00097"></a>00097 
 <a name="l00098"></a>00098                prefactor = prefactors_[atomIter-&gt;typeId()];
 <a name="l00099"></a>00099 
-<a name="l00100"></a>00100                dv.<a class="code" href="classUtil_1_1Vector.html#a93125fcca5b3af76a88698903291bcbd" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;force(), prefactor);
+<a name="l00100"></a>00100                dv.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;force(), prefactor);
 <a name="l00101"></a>00101                atomIter-&gt;velocity() += dv;
 <a name="l00102"></a>00102 
-<a name="l00103"></a>00103                dr.<a class="code" href="classUtil_1_1Vector.html#a93125fcca5b3af76a88698903291bcbd" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;velocity(), <a class="code" href="classMcMd_1_1MdIntegrator.html#a42a65ea434d32fceba0cf1d6f88c9159" title="Integrator time step.">dt_</a>);
+<a name="l00103"></a>00103                dr.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;velocity(), <a class="code" href="classMcMd_1_1MdIntegrator.html#ac516b532d37acc835a0c03b05e08e6d6" title="Integrator time step.">dt_</a>);
 <a name="l00104"></a>00104                atomIter-&gt;position() += dr;
 <a name="l00105"></a>00105 
 <a name="l00106"></a>00106             }
@@ -161,55 +161,55 @@
 <a name="l00110"></a>00110 <span class="preprocessor"></span>      <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* atomPtr;
 <a name="l00111"></a>00111       <span class="keywordtype">int</span>   ia;
 <a name="l00112"></a>00112       <span class="keywordflow">for</span> (iSpecies=0; iSpecies &lt; nSpecies; ++iSpecies) {
-<a name="l00113"></a>00113          <a class="code" href="classMcMd_1_1MdIntegrator.html#a5d59ae247ef02b18b7eec01950b4112e" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpecies, molIter); 
-<a name="l00114"></a>00114          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00113"></a>00113          <a class="code" href="classMcMd_1_1MdIntegrator.html#a9c316fa2e9f6fc1e63cb808138b794f8" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpecies, molIter); 
+<a name="l00114"></a>00114          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
 <a name="l00115"></a>00115             <span class="keywordflow">for</span> (ia=0; ia &lt; molIter-&gt;nAtom(); ++ia) {
 <a name="l00116"></a>00116                atomPtr = &amp;molIter-&gt;atom(ia);
-<a name="l00117"></a>00117                prefactor = prefactors_[atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>()];
+<a name="l00117"></a>00117                prefactor = prefactors_[atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>()];
 <a name="l00118"></a>00118 
-<a name="l00119"></a>00119                dv.<a class="code" href="classUtil_1_1Vector.html#a93125fcca5b3af76a88698903291bcbd" title="Multiply a vector v by a scalar s.">multiply</a>(atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>(), prefactor);
-<a name="l00120"></a>00120                atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a0a918625496f209cee72908ba31867a2" title="Get atomic velocity Vector by reference.">velocity</a>() += dv;
-<a name="l00121"></a>00121                dr.<a class="code" href="classUtil_1_1Vector.html#a93125fcca5b3af76a88698903291bcbd" title="Multiply a vector v by a scalar s.">multiply</a>(atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a0a918625496f209cee72908ba31867a2" title="Get atomic velocity Vector by reference.">velocity</a>(), <a class="code" href="classMcMd_1_1MdIntegrator.html#a42a65ea434d32fceba0cf1d6f88c9159" title="Integrator time step.">dt_</a>);
+<a name="l00119"></a>00119                dv.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>(), prefactor);
+<a name="l00120"></a>00120                atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a780e54fe8955e96c6a6de8d9933a7f92" title="Get atomic velocity Vector by reference.">velocity</a>() += dv;
+<a name="l00121"></a>00121                dr.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a780e54fe8955e96c6a6de8d9933a7f92" title="Get atomic velocity Vector by reference.">velocity</a>(), <a class="code" href="classMcMd_1_1MdIntegrator.html#ac516b532d37acc835a0c03b05e08e6d6" title="Integrator time step.">dt_</a>);
 <a name="l00122"></a>00122                
-<a name="l00123"></a>00123                atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() += dr;
+<a name="l00123"></a>00123                atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() += dr;
 <a name="l00124"></a>00124 
 <a name="l00125"></a>00125             }
 <a name="l00126"></a>00126          }
 <a name="l00127"></a>00127       }
 <a name="l00128"></a>00128 <span class="preprocessor">      #endif</span>
 <a name="l00129"></a>00129 <span class="preprocessor"></span>
-<a name="l00130"></a>00130       <a class="code" href="classMcMd_1_1MdIntegrator.html#a5d59ae247ef02b18b7eec01950b4112e" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1MdSystem.html#a8265f3b5934e1984f33d3cde9899a507" title="Compute all forces in this System.">calculateForces</a>();
+<a name="l00130"></a>00130       <a class="code" href="classMcMd_1_1MdIntegrator.html#a9c316fa2e9f6fc1e63cb808138b794f8" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1MdSystem.html#a00fce01c6a30fd2ba32178b3f7781239" title="Compute all forces in this System.">calculateForces</a>();
 <a name="l00131"></a>00131 
 <a name="l00132"></a>00132       <span class="comment">// 2nd half velocity Verlet, loop over atoms</span>
 <a name="l00133"></a>00133 <span class="preprocessor">      #if USE_ITERATOR</span>
 <a name="l00134"></a>00134 <span class="preprocessor"></span>      <span class="keywordflow">for</span> (iSpecies=0; iSpecies &lt; nSpecies; ++iSpecies) {
-<a name="l00135"></a>00135          <a class="code" href="classMcMd_1_1MdIntegrator.html#a5d59ae247ef02b18b7eec01950b4112e" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpecies, molIter); 
-<a name="l00136"></a>00136          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00137"></a>00137             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00135"></a>00135          <a class="code" href="classMcMd_1_1MdIntegrator.html#a9c316fa2e9f6fc1e63cb808138b794f8" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpecies, molIter); 
+<a name="l00136"></a>00136          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00137"></a>00137             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00138"></a>00138                prefactor = prefactors_[atomIter-&gt;typeId()];
-<a name="l00139"></a>00139                dv.<a class="code" href="classUtil_1_1Vector.html#a93125fcca5b3af76a88698903291bcbd" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;force(), prefactor);
+<a name="l00139"></a>00139                dv.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;force(), prefactor);
 <a name="l00140"></a>00140                atomIter-&gt;velocity() += dv;
 <a name="l00141"></a>00141             }
 <a name="l00142"></a>00142          }
 <a name="l00143"></a>00143       }
 <a name="l00144"></a>00144 <span class="preprocessor">      #else</span>
 <a name="l00145"></a>00145 <span class="preprocessor"></span>      <span class="keywordflow">for</span> (iSpecies=0; iSpecies &lt; nSpecies; ++iSpecies) {
-<a name="l00146"></a>00146          <a class="code" href="classMcMd_1_1MdIntegrator.html#a5d59ae247ef02b18b7eec01950b4112e" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpecies, molIter); 
-<a name="l00147"></a>00147          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter)
+<a name="l00146"></a>00146          <a class="code" href="classMcMd_1_1MdIntegrator.html#a9c316fa2e9f6fc1e63cb808138b794f8" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpecies, molIter); 
+<a name="l00147"></a>00147          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter)
 <a name="l00148"></a>00148          {
 <a name="l00149"></a>00149             <span class="keywordflow">for</span> (ia=0; ia &lt; molIter-&gt;nAtom(); ++ia) {
 <a name="l00150"></a>00150                atomPtr = &amp;molIter-&gt;atom(ia);
-<a name="l00151"></a>00151                prefactor = prefactors_[atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>()];
-<a name="l00152"></a>00152                dv.<a class="code" href="classUtil_1_1Vector.html#a93125fcca5b3af76a88698903291bcbd" title="Multiply a vector v by a scalar s.">multiply</a>(atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>(), prefactor);
-<a name="l00153"></a>00153                atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a0a918625496f209cee72908ba31867a2" title="Get atomic velocity Vector by reference.">velocity</a>() += dv;
+<a name="l00151"></a>00151                prefactor = prefactors_[atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>()];
+<a name="l00152"></a>00152                dv.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>(), prefactor);
+<a name="l00153"></a>00153                atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a780e54fe8955e96c6a6de8d9933a7f92" title="Get atomic velocity Vector by reference.">velocity</a>() += dv;
 <a name="l00154"></a>00154             }
 <a name="l00155"></a>00155          }
 <a name="l00156"></a>00156       }
 <a name="l00157"></a>00157 <span class="preprocessor">      #endif</span>
 <a name="l00158"></a>00158 <span class="preprocessor"></span>
 <a name="l00159"></a>00159 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
-<a name="l00160"></a>00160 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1MdIntegrator.html#a5d59ae247ef02b18b7eec01950b4112e" title="Get parent MdSystem by reference.">system</a>().pairPotential().isPairListCurrent()) {
-<a name="l00161"></a>00161          <a class="code" href="classMcMd_1_1MdIntegrator.html#a5d59ae247ef02b18b7eec01950b4112e" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1MdSystem.html#a0026c0990ab9c244b90327d7e6c1e628" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#acb0619cd1cde30f8e3b2a062341eaed7" title="Build the internal PairList.">buildPairList</a>();
+<a name="l00160"></a>00160 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1MdIntegrator.html#a9c316fa2e9f6fc1e63cb808138b794f8" title="Get parent MdSystem by reference.">system</a>().pairPotential().isPairListCurrent()) {
+<a name="l00161"></a>00161          <a class="code" href="classMcMd_1_1MdIntegrator.html#a9c316fa2e9f6fc1e63cb808138b794f8" title="Get parent MdSystem by reference.">system</a>().<a class="code" href="classMcMd_1_1MdSystem.html#ae68ae421f5cead5dfaab22fba53a40c6" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#ac7cf257101e79baaf8f92517f7ff874a" title="Build the internal PairList.">buildPairList</a>();
 <a name="l00162"></a>00162       }
 <a name="l00163"></a>00163 <span class="preprocessor">      #endif</span>
 <a name="l00164"></a>00164 <span class="preprocessor"></span>
@@ -218,15 +218,15 @@
 <a name="l00167"></a>00167    <span class="comment">/*</span>
 <a name="l00168"></a>00168 <span class="comment">   * Save the internal state to an archive.</span>
 <a name="l00169"></a>00169 <span class="comment">   */</span>
-<a name="l00170"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">00170</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1NveVvIntegrator.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64" title="Save the internal state to an archive.">NveVvIntegrator::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
+<a name="l00170"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#a41a832d568b2bc2a3b3500d49713b0b0">00170</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1NveVvIntegrator.html#a41a832d568b2bc2a3b3500d49713b0b0" title="Save the internal state to an archive.">NveVvIntegrator::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
 <a name="l00171"></a>00171    {  
-<a name="l00172"></a>00172       ar &amp; <a class="code" href="classMcMd_1_1MdIntegrator.html#a42a65ea434d32fceba0cf1d6f88c9159" title="Integrator time step.">dt_</a>;
+<a name="l00172"></a>00172       ar &amp; <a class="code" href="classMcMd_1_1MdIntegrator.html#ac516b532d37acc835a0c03b05e08e6d6" title="Integrator time step.">dt_</a>;
 <a name="l00173"></a>00173       ar &amp; prefactors_;
 <a name="l00174"></a>00174    }
 <a name="l00175"></a>00175 
-<a name="l00179"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#aa3d71af4cc5dfb2be6be816a8f562416">00179</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1NveVvIntegrator.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load the internal state to an archive.">NveVvIntegrator::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00179"></a><a class="code" href="classMcMd_1_1NveVvIntegrator.html#afdba57646a404ab21322cbc1a5e6fd03">00179</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1NveVvIntegrator.html#afdba57646a404ab21322cbc1a5e6fd03" title="Load the internal state to an archive.">NveVvIntegrator::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
 <a name="l00180"></a>00180    {  
-<a name="l00181"></a>00181       ar &amp; <a class="code" href="classMcMd_1_1MdIntegrator.html#a42a65ea434d32fceba0cf1d6f88c9159" title="Integrator time step.">dt_</a>;
+<a name="l00181"></a>00181       ar &amp; <a class="code" href="classMcMd_1_1MdIntegrator.html#ac516b532d37acc835a0c03b05e08e6d6" title="Integrator time step.">dt_</a>;
 <a name="l00182"></a>00182       ar &amp; prefactors_;
 <a name="l00183"></a>00183    }
 <a name="l00184"></a>00184 
@@ -235,7 +235,7 @@
 <a name="l00187"></a>00187 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

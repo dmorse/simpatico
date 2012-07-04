@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,23 +71,23 @@
 <a name="l00032"></a>00032 
 <a name="l00033"></a>00033    <span class="keyword">public</span>:
 <a name="l00034"></a>00034 
-<a name="l00036"></a><a class="code" href="classDdMd_1_1Mask.html#a3167e45fe2904b41a89fcd63e873997d">00036</a>       <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Mask.html#a3167e45fe2904b41a89fcd63e873997d" title="Maximum number of masked atoms per target atom.">Capacity</a>  = 4;
+<a name="l00036"></a><a class="code" href="classDdMd_1_1Mask.html#ac99555d703a71913a0cc0ea9cbf157e1">00036</a>       <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Mask.html#ac99555d703a71913a0cc0ea9cbf157e1" title="Maximum number of masked atoms per target atom.">Capacity</a>  = 4;
 <a name="l00037"></a>00037 
-<a name="l00041"></a>00041       <a class="code" href="classDdMd_1_1Mask.html#aff640d0586d34d3bf48359de39a4771c" title="Constructor.">Mask</a>();
+<a name="l00041"></a>00041       <a class="code" href="classDdMd_1_1Mask.html#a6e6f1997cfe1f32aff5c5a30ea73fd16" title="Constructor.">Mask</a>();
 <a name="l00042"></a>00042 
-<a name="l00046"></a>00046       <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Mask.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear the masked set (remove all atoms).">clear</a>();
+<a name="l00046"></a>00046       <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Mask.html#aed6c42fb9d685317fcbf99c832c3064e" title="Clear the masked set (remove all atoms).">clear</a>();
 <a name="l00047"></a>00047 
-<a name="l00053"></a>00053       <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Mask.html#a7c6cfb23f3e3ddb8093c318e7f042b36" title="Add an Atom to the masked set.">append</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
+<a name="l00053"></a>00053       <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Mask.html#a19dd062bf1ebe985153a7545e8e3c4bc" title="Add an Atom to the masked set.">append</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);
 <a name="l00054"></a>00054 
-<a name="l00061"></a>00061       <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Mask.html#a5aeea0c441e4dd68d631945e71ffed71" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>) <span class="keyword">const</span>;
+<a name="l00061"></a>00061       <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Mask.html#a0ef82f4ec270d8579cf0f9633c6b8ccc" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>) <span class="keyword">const</span>;
 <a name="l00062"></a>00062 
-<a name="l00068"></a>00068       <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Mask.html#a0ef642f5b4f3b4a1fc83724dc6fdcbe0" title="Return value of atom index number i.">operator [] </a>(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;
+<a name="l00068"></a>00068       <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Mask.html#ace82f979c574db4999f60d7bf351ce6c" title="Return value of atom index number i.">operator [] </a>(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;
 <a name="l00069"></a>00069 
-<a name="l00073"></a>00073       <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Mask.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return the number of masked atoms.">size</a>() <span class="keyword">const</span>;
+<a name="l00073"></a>00073       <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Mask.html#a48c8c88539a59e00cba4cc0b674ecc4c" title="Return the number of masked atoms.">size</a>() <span class="keyword">const</span>;
 <a name="l00074"></a>00074 
 <a name="l00075"></a>00075    <span class="keyword">private</span>:
 <a name="l00076"></a>00076 
-<a name="l00078"></a>00078       <span class="keywordtype">int</span> atomIds_[<a class="code" href="classDdMd_1_1Mask.html#a3167e45fe2904b41a89fcd63e873997d" title="Maximum number of masked atoms per target atom.">Capacity</a>];      
+<a name="l00078"></a>00078       <span class="keywordtype">int</span> atomIds_[<a class="code" href="classDdMd_1_1Mask.html#ac99555d703a71913a0cc0ea9cbf157e1" title="Maximum number of masked atoms per target atom.">Capacity</a>];      
 <a name="l00079"></a>00079 
 <a name="l00081"></a>00081       <span class="keywordtype">int</span>  size_;                 
 <a name="l00082"></a>00082 
@@ -96,7 +96,7 @@
 <a name="l00085"></a>00085    <span class="comment">// Inline methods</span>
 <a name="l00086"></a>00086 
 <a name="l00087"></a>00087    <span class="comment">// Check if an Atom is in the masked set.</span>
-<a name="l00088"></a><a class="code" href="classDdMd_1_1Mask.html#a5aeea0c441e4dd68d631945e71ffed71">00088</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Mask.html#a5aeea0c441e4dd68d631945e71ffed71" title="True if the atom is in the masked set for the target Atom.">Mask::isMasked</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)<span class="keyword"> const</span>
+<a name="l00088"></a><a class="code" href="classDdMd_1_1Mask.html#a0ef82f4ec270d8579cf0f9633c6b8ccc">00088</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Mask.html#a0ef82f4ec270d8579cf0f9633c6b8ccc" title="True if the atom is in the masked set for the target Atom.">Mask::isMasked</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)<span class="keyword"> const</span>
 <a name="l00089"></a>00089 <span class="keyword">   </span>{
 <a name="l00090"></a>00090       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; size_ ; ++i) {
 <a name="l00091"></a>00091          <span class="keywordflow">if</span> (atomIds_[i] == <span class="keywordtype">id</span>) <span class="keywordflow">return</span> <span class="keyword">true</span>;
@@ -107,13 +107,13 @@
 <a name="l00096"></a>00096    <span class="comment">/*</span>
 <a name="l00097"></a>00097 <span class="comment">   * Return the number of masked atoms.</span>
 <a name="l00098"></a>00098 <span class="comment">   */</span>
-<a name="l00099"></a><a class="code" href="classDdMd_1_1Mask.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">00099</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Mask.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return the number of masked atoms.">Mask::size</a>()<span class="keyword"> const</span>
+<a name="l00099"></a><a class="code" href="classDdMd_1_1Mask.html#a48c8c88539a59e00cba4cc0b674ecc4c">00099</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Mask.html#a48c8c88539a59e00cba4cc0b674ecc4c" title="Return the number of masked atoms.">Mask::size</a>()<span class="keyword"> const</span>
 <a name="l00100"></a>00100 <span class="keyword">   </span>{ <span class="keywordflow">return</span> size_; }
 <a name="l00101"></a>00101 
 <a name="l00102"></a>00102    <span class="comment">/*</span>
 <a name="l00103"></a>00103 <span class="comment">   * Return value of index</span>
 <a name="l00104"></a>00104 <span class="comment">   */</span>
-<a name="l00105"></a><a class="code" href="classDdMd_1_1Mask.html#a0ef642f5b4f3b4a1fc83724dc6fdcbe0">00105</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Mask.html#a0ef642f5b4f3b4a1fc83724dc6fdcbe0" title="Return value of atom index number i.">Mask::operator[] </a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00105"></a><a class="code" href="classDdMd_1_1Mask.html#ace82f979c574db4999f60d7bf351ce6c">00105</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Mask.html#ace82f979c574db4999f60d7bf351ce6c" title="Return value of atom index number i.">Mask::operator[] </a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00106"></a>00106 <span class="keyword">   </span>{
 <a name="l00107"></a>00107       assert(i &gt;= 0);
 <a name="l00108"></a>00108       assert(i &lt;  size_);
@@ -124,7 +124,7 @@
 <a name="l00113"></a>00113 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

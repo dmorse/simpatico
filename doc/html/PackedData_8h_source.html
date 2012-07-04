@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -69,29 +69,29 @@
 <a name="l00081"></a>00081 
 <a name="l00082"></a>00082    <span class="keyword">public</span>:
 <a name="l00083"></a>00083 
-<a name="l00087"></a><a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3">00087</a>       <span class="keyword">typedef</span> <span class="keywordtype">char</span> <a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>;
+<a name="l00087"></a><a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687">00087</a>       <span class="keyword">typedef</span> <span class="keywordtype">char</span> <a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>;
 <a name="l00088"></a>00088 
-<a name="l00092"></a>00092       <a class="code" href="classUtil_1_1PackedData.html#a391ca31055432394b56c7fd82e3f4434" title="Constructor.">PackedData</a>();
+<a name="l00092"></a>00092       <a class="code" href="classUtil_1_1PackedData.html#aa42867fca9770c1aa35e064581ecbd72" title="Constructor.">PackedData</a>();
 <a name="l00093"></a>00093 
-<a name="l00097"></a>00097       <a class="code" href="classUtil_1_1PackedData.html#af6d87ee0bc8c8f500e5836958cb40413" title="Destructor.">~PackedData</a>();
+<a name="l00097"></a>00097       <a class="code" href="classUtil_1_1PackedData.html#a27a54e0079734e1ea202d83462108212" title="Destructor.">~PackedData</a>();
 <a name="l00098"></a>00098 
-<a name="l00104"></a>00104       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate memory block.">allocate</a>(<span class="keywordtype">int</span> <a class="code" href="classUtil_1_1PackedData.html#a104736719cd4e5f21c25705c77064dde" title="Return capacity in Bytes.">capacity</a>);
+<a name="l00104"></a>00104       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a50a0f4addf9493f0a167a57e51bf8bdf" title="Allocate memory block.">allocate</a>(<span class="keywordtype">int</span> <a class="code" href="classUtil_1_1PackedData.html#a0bab06bbe3e3bbd6d7ef37a0a586d357" title="Return capacity in Bytes.">capacity</a>);
 <a name="l00105"></a>00105 
-<a name="l00109"></a>00109       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a12b1405cb35231329dd1060ea604384c" title="Begin packing, set cursor to the beginning.">beginPacking</a>();
+<a name="l00109"></a>00109       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#aa6c3fe8640bf5c7769a4b31cf54dd61b" title="Begin packing, set cursor to the beginning.">beginPacking</a>();
 <a name="l00110"></a>00110 
-<a name="l00114"></a>00114       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a1ccf832a7711ccea656195de4e3113f7" title="Begin unpacking, set cursor to the beginning.">beginUnpacking</a>();
+<a name="l00114"></a>00114       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a77a7104a0969a5776dbd8522997c86b8" title="Begin unpacking, set cursor to the beginning.">beginUnpacking</a>();
 <a name="l00115"></a>00115 
 <a name="l00123"></a>00123       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00124"></a>00124       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a9852f699017c6bcefd6232278de423e5" title="Pack one object.">pack</a>(<span class="keyword">const</span> T&amp; data);
+<a name="l00124"></a>00124       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a329675158ff58e9c91db855c261e6ea5" title="Pack one object.">pack</a>(<span class="keyword">const</span> T&amp; data);
 <a name="l00125"></a>00125 
 <a name="l00134"></a>00134       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00135"></a>00135       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a9852f699017c6bcefd6232278de423e5" title="Pack one object.">pack</a>(<span class="keyword">const</span> T* array, <span class="keywordtype">int</span> n);
+<a name="l00135"></a>00135       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a329675158ff58e9c91db855c261e6ea5" title="Pack one object.">pack</a>(<span class="keyword">const</span> T* array, <span class="keywordtype">int</span> n);
 <a name="l00136"></a>00136 
 <a name="l00144"></a>00144       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00145"></a>00145       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#ad90834a7650756a10b86c42747610caa" title="Unpack one object.">unpack</a>(T&amp; data);
+<a name="l00145"></a>00145       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#afb687196dd428796c87abd4da7ca14f2" title="Unpack one object.">unpack</a>(T&amp; data);
 <a name="l00146"></a>00146 
 <a name="l00155"></a>00155       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00156"></a>00156       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#ad90834a7650756a10b86c42747610caa" title="Unpack one object.">unpack</a>(T* array, <span class="keywordtype">int</span> n);
+<a name="l00156"></a>00156       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#afb687196dd428796c87abd4da7ca14f2" title="Unpack one object.">unpack</a>(T* array, <span class="keywordtype">int</span> n);
 <a name="l00157"></a>00157 
 <a name="l00158"></a>00158 <span class="preprocessor">      #if 0</span>
 <a name="l00159"></a>00159 <span class="preprocessor"></span><span class="preprocessor">      #ifdef UTIL_MPI</span>
@@ -102,29 +102,29 @@
 <a name="l00175"></a>00175 <span class="preprocessor">      #endif</span>
 <a name="l00176"></a>00176 <span class="preprocessor"></span><span class="preprocessor">      #endif</span>
 <a name="l00177"></a>00177 <span class="preprocessor"></span>
-<a name="l00181"></a>00181       <a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#ac1038da5344219ffef39152524a8cc55" title="Return pointer to beginning of block.">begin</a>() <span class="keyword">const</span>;
+<a name="l00181"></a>00181       <a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#ac6683b84e35ca0095c3f77ffce257503" title="Return pointer to beginning of block.">begin</a>() <span class="keyword">const</span>;
 <a name="l00182"></a>00182 
-<a name="l00186"></a>00186       <a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#aa0bba90406db04f64ea287d56519ef7a" title="Return pointer to end of allocated block (one Byte past the last).">endAllocated</a>() <span class="keyword">const</span>;
+<a name="l00186"></a>00186       <a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#a4f1b444d95db18c6716e7680279b8cfa" title="Return pointer to end of allocated block (one Byte past the last).">endAllocated</a>() <span class="keyword">const</span>;
 <a name="l00187"></a>00187 
-<a name="l00191"></a>00191       <a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#a0ee685d877cbc90677f1f0b00b4c2f36" title="Return pointer to end of packed block (one Byte past the last).">endPacked</a>() <span class="keyword">const</span>;
+<a name="l00191"></a>00191       <a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#a40e55de85fc9daa55fd15f37a9966c5d" title="Return pointer to end of packed block (one Byte past the last).">endPacked</a>() <span class="keyword">const</span>;
 <a name="l00192"></a>00192 
-<a name="l00196"></a>00196       <a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#aef88a7054da600cbfcb4d8ac1f06ed19" title="Return pointer to cursor position (cursor).">cursor</a>() <span class="keyword">const</span>;
+<a name="l00196"></a>00196       <a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#a57633d86a593818eff7915a55945a7c4" title="Return pointer to cursor position (cursor).">cursor</a>() <span class="keyword">const</span>;
 <a name="l00197"></a>00197 
-<a name="l00201"></a>00201       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1PackedData.html#a0bcdab3616db481dd211594529479f94" title="Has memory been allocated?">isAllocated</a>() <span class="keyword">const</span>;
+<a name="l00201"></a>00201       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1PackedData.html#ae8bcb2795f1bf42acec33cfbaf97f8db" title="Has memory been allocated?">isAllocated</a>() <span class="keyword">const</span>;
 <a name="l00202"></a>00202 
-<a name="l00206"></a>00206       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1PackedData.html#a104736719cd4e5f21c25705c77064dde" title="Return capacity in Bytes.">capacity</a>() <span class="keyword">const</span>;
+<a name="l00206"></a>00206       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1PackedData.html#a0bab06bbe3e3bbd6d7ef37a0a586d357" title="Return capacity in Bytes.">capacity</a>() <span class="keyword">const</span>;
 <a name="l00207"></a>00207 
 <a name="l00208"></a>00208    <span class="keyword">private</span>:
 <a name="l00209"></a>00209 
 <a name="l00213"></a>00213       <span class="keyword">enum</span> Status {NONE, PACKING, UNPACKING};
 <a name="l00214"></a>00214 
-<a name="l00216"></a>00216       <a class="code" href="namespaceUtil.html#ae3a497195d617519e5353ea7b417940f" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* begin_;
+<a name="l00216"></a>00216       <a class="code" href="namespaceUtil.html#aeb6f2071b71e3433dd3cfc1bce6c2e6d" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* begin_;
 <a name="l00217"></a>00217 
-<a name="l00219"></a>00219       <a class="code" href="namespaceUtil.html#ae3a497195d617519e5353ea7b417940f" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* endAllocated_;
+<a name="l00219"></a>00219       <a class="code" href="namespaceUtil.html#aeb6f2071b71e3433dd3cfc1bce6c2e6d" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* endAllocated_;
 <a name="l00220"></a>00220 
-<a name="l00222"></a>00222       <a class="code" href="namespaceUtil.html#ae3a497195d617519e5353ea7b417940f" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* endPacked_;
+<a name="l00222"></a>00222       <a class="code" href="namespaceUtil.html#aeb6f2071b71e3433dd3cfc1bce6c2e6d" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* endPacked_;
 <a name="l00223"></a>00223 
-<a name="l00225"></a>00225       <a class="code" href="namespaceUtil.html#ae3a497195d617519e5353ea7b417940f" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* cursor_;
+<a name="l00225"></a>00225       <a class="code" href="namespaceUtil.html#aeb6f2071b71e3433dd3cfc1bce6c2e6d" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a>* cursor_;
 <a name="l00226"></a>00226 
 <a name="l00228"></a>00228       <span class="keywordtype">int</span> capacity_;
 <a name="l00229"></a>00229 
@@ -137,37 +137,37 @@
 <a name="l00237"></a>00237    <span class="comment">/*</span>
 <a name="l00238"></a>00238 <span class="comment">   * Has this data block been allocated?</span>
 <a name="l00239"></a>00239 <span class="comment">   */</span>
-<a name="l00240"></a><a class="code" href="classUtil_1_1PackedData.html#a0bcdab3616db481dd211594529479f94">00240</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1PackedData.html#a0bcdab3616db481dd211594529479f94" title="Has memory been allocated?">PackedData::isAllocated</a>()<span class="keyword"> const</span>
+<a name="l00240"></a><a class="code" href="classUtil_1_1PackedData.html#ae8bcb2795f1bf42acec33cfbaf97f8db">00240</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1PackedData.html#ae8bcb2795f1bf42acec33cfbaf97f8db" title="Has memory been allocated?">PackedData::isAllocated</a>()<span class="keyword"> const</span>
 <a name="l00241"></a>00241 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (<span class="keywordtype">bool</span>) begin_; }
 <a name="l00242"></a>00242 
 <a name="l00243"></a>00243    <span class="comment">/*</span>
 <a name="l00244"></a>00244 <span class="comment">   * Return capacity in Bytes.</span>
 <a name="l00245"></a>00245 <span class="comment">   */</span>
-<a name="l00246"></a><a class="code" href="classUtil_1_1PackedData.html#a104736719cd4e5f21c25705c77064dde">00246</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1PackedData.html#a104736719cd4e5f21c25705c77064dde" title="Return capacity in Bytes.">PackedData::capacity</a>()<span class="keyword"> const</span>
+<a name="l00246"></a><a class="code" href="classUtil_1_1PackedData.html#a0bab06bbe3e3bbd6d7ef37a0a586d357">00246</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1PackedData.html#a0bab06bbe3e3bbd6d7ef37a0a586d357" title="Return capacity in Bytes.">PackedData::capacity</a>()<span class="keyword"> const</span>
 <a name="l00247"></a>00247 <span class="keyword">   </span>{  <span class="keywordflow">return</span> capacity_; }
 <a name="l00248"></a>00248 
 <a name="l00249"></a>00249    <span class="comment">/*</span>
 <a name="l00250"></a>00250 <span class="comment">   * Return pointer to beginning of block.</span>
 <a name="l00251"></a>00251 <span class="comment">   */</span>
-<a name="l00252"></a><a class="code" href="classUtil_1_1PackedData.html#ac1038da5344219ffef39152524a8cc55">00252</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">PackedData::Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#ac1038da5344219ffef39152524a8cc55" title="Return pointer to beginning of block.">PackedData::begin</a>()<span class="keyword"> const</span>
+<a name="l00252"></a><a class="code" href="classUtil_1_1PackedData.html#ac6683b84e35ca0095c3f77ffce257503">00252</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">PackedData::Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#ac6683b84e35ca0095c3f77ffce257503" title="Return pointer to beginning of block.">PackedData::begin</a>()<span class="keyword"> const</span>
 <a name="l00253"></a>00253 <span class="keyword">   </span>{  <span class="keywordflow">return</span> begin_; }
 <a name="l00254"></a>00254 
 <a name="l00255"></a>00255    <span class="comment">/*</span>
 <a name="l00256"></a>00256 <span class="comment">   * Return end of allocated block (one Byte past the last).</span>
 <a name="l00257"></a>00257 <span class="comment">   */</span>
-<a name="l00258"></a><a class="code" href="classUtil_1_1PackedData.html#aa0bba90406db04f64ea287d56519ef7a">00258</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">PackedData::Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#aa0bba90406db04f64ea287d56519ef7a" title="Return pointer to end of allocated block (one Byte past the last).">PackedData::endAllocated</a>()<span class="keyword"> const</span>
+<a name="l00258"></a><a class="code" href="classUtil_1_1PackedData.html#a4f1b444d95db18c6716e7680279b8cfa">00258</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">PackedData::Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#a4f1b444d95db18c6716e7680279b8cfa" title="Return pointer to end of allocated block (one Byte past the last).">PackedData::endAllocated</a>()<span class="keyword"> const</span>
 <a name="l00259"></a>00259 <span class="keyword">   </span>{  <span class="keywordflow">return</span> endAllocated_; }
 <a name="l00260"></a>00260 
 <a name="l00261"></a>00261    <span class="comment">/*</span>
 <a name="l00262"></a>00262 <span class="comment">   * Return end of packed block (one Byte past the last).</span>
 <a name="l00263"></a>00263 <span class="comment">   */</span>
-<a name="l00264"></a><a class="code" href="classUtil_1_1PackedData.html#a0ee685d877cbc90677f1f0b00b4c2f36">00264</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">PackedData::Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#a0ee685d877cbc90677f1f0b00b4c2f36" title="Return pointer to end of packed block (one Byte past the last).">PackedData::endPacked</a>()<span class="keyword"> const</span>
+<a name="l00264"></a><a class="code" href="classUtil_1_1PackedData.html#a40e55de85fc9daa55fd15f37a9966c5d">00264</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">PackedData::Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#a40e55de85fc9daa55fd15f37a9966c5d" title="Return pointer to end of packed block (one Byte past the last).">PackedData::endPacked</a>()<span class="keyword"> const</span>
 <a name="l00265"></a>00265 <span class="keyword">   </span>{  <span class="keywordflow">return</span> endPacked_; }
 <a name="l00266"></a>00266 
 <a name="l00267"></a>00267    <span class="comment">/*</span>
 <a name="l00268"></a>00268 <span class="comment">   * Return pointer to cursor position.</span>
 <a name="l00269"></a>00269 <span class="comment">   */</span>
-<a name="l00270"></a><a class="code" href="classUtil_1_1PackedData.html#aef88a7054da600cbfcb4d8ac1f06ed19">00270</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">PackedData::Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#aef88a7054da600cbfcb4d8ac1f06ed19" title="Return pointer to cursor position (cursor).">PackedData::cursor</a>()<span class="keyword"> const</span>
+<a name="l00270"></a><a class="code" href="classUtil_1_1PackedData.html#a57633d86a593818eff7915a55945a7c4">00270</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">PackedData::Byte</a>* <a class="code" href="classUtil_1_1PackedData.html#a57633d86a593818eff7915a55945a7c4" title="Return pointer to cursor position (cursor).">PackedData::cursor</a>()<span class="keyword"> const</span>
 <a name="l00271"></a>00271 <span class="keyword">   </span>{  <span class="keywordflow">return</span> cursor_; }
 <a name="l00272"></a>00272 
 <a name="l00273"></a>00273    <span class="comment">// Template methods</span>
@@ -176,7 +176,7 @@
 <a name="l00276"></a>00276 <span class="comment">   * Pack an object of type T into send block.</span>
 <a name="l00277"></a>00277 <span class="comment">   */</span>
 <a name="l00278"></a>00278    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00279"></a><a class="code" href="classUtil_1_1PackedData.html#a9852f699017c6bcefd6232278de423e5">00279</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a9852f699017c6bcefd6232278de423e5" title="Pack one object.">PackedData::pack</a>(<span class="keyword">const</span> T&amp; data)
+<a name="l00279"></a><a class="code" href="classUtil_1_1PackedData.html#a329675158ff58e9c91db855c261e6ea5">00279</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a329675158ff58e9c91db855c261e6ea5" title="Pack one object.">PackedData::pack</a>(<span class="keyword">const</span> T&amp; data)
 <a name="l00280"></a>00280    {
 <a name="l00281"></a>00281       <span class="keywordflow">if</span> (status_ != PACKING) {
 <a name="l00282"></a>00282          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Status is not PACKING&quot;</span>);
@@ -187,14 +187,14 @@
 <a name="l00287"></a>00287       T* ptr = (T *)cursor_;
 <a name="l00288"></a>00288       *ptr = data;
 <a name="l00289"></a>00289       ++ptr;
-<a name="l00290"></a>00290       cursor_ = (<a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a> *)ptr;
+<a name="l00290"></a>00290       cursor_ = (<a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a> *)ptr;
 <a name="l00291"></a>00291    }
 <a name="l00292"></a>00292 
 <a name="l00293"></a>00293    <span class="comment">/*</span>
 <a name="l00294"></a>00294 <span class="comment">   * Pack a C-array of objects of type T.</span>
 <a name="l00295"></a>00295 <span class="comment">   */</span>
 <a name="l00296"></a>00296    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00297"></a><a class="code" href="classUtil_1_1PackedData.html#aecd1b915caea37097ab7ebbada300d07">00297</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a9852f699017c6bcefd6232278de423e5" title="Pack one object.">PackedData::pack</a>(<span class="keyword">const</span> T* array, <span class="keywordtype">int</span> n)
+<a name="l00297"></a><a class="code" href="classUtil_1_1PackedData.html#ae57850793fcb8f30a6e21e987fd4fca7">00297</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#a329675158ff58e9c91db855c261e6ea5" title="Pack one object.">PackedData::pack</a>(<span class="keyword">const</span> T* array, <span class="keywordtype">int</span> n)
 <a name="l00298"></a>00298    {
 <a name="l00299"></a>00299       <span class="keywordflow">if</span> (status_ != PACKING) {
 <a name="l00300"></a>00300          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Status is not PACKING&quot;</span>);
@@ -207,14 +207,14 @@
 <a name="l00307"></a>00307          *ptr = array[i];
 <a name="l00308"></a>00308          ++ptr;
 <a name="l00309"></a>00309       }
-<a name="l00310"></a>00310       cursor_ = (<a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a> *)ptr;
+<a name="l00310"></a>00310       cursor_ = (<a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a> *)ptr;
 <a name="l00311"></a>00311    }
 <a name="l00312"></a>00312 
 <a name="l00313"></a>00313    <span class="comment">/*</span>
 <a name="l00314"></a>00314 <span class="comment">   * Unpack one object of type T.</span>
 <a name="l00315"></a>00315 <span class="comment">   */</span>
 <a name="l00316"></a>00316    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00317"></a><a class="code" href="classUtil_1_1PackedData.html#ad90834a7650756a10b86c42747610caa">00317</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#ad90834a7650756a10b86c42747610caa" title="Unpack one object.">PackedData::unpack</a>(T&amp; data)
+<a name="l00317"></a><a class="code" href="classUtil_1_1PackedData.html#afb687196dd428796c87abd4da7ca14f2">00317</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#afb687196dd428796c87abd4da7ca14f2" title="Unpack one object.">PackedData::unpack</a>(T&amp; data)
 <a name="l00318"></a>00318    {
 <a name="l00319"></a>00319       <span class="keywordflow">if</span> (status_ != UNPACKING) {
 <a name="l00320"></a>00320          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Status is not UNPACKING&quot;</span>);
@@ -225,14 +225,14 @@
 <a name="l00325"></a>00325       T* ptr = (T *)cursor_;
 <a name="l00326"></a>00326       data = *ptr;
 <a name="l00327"></a>00327       ++ptr;
-<a name="l00328"></a>00328       cursor_ = (<a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a> *)ptr;
+<a name="l00328"></a>00328       cursor_ = (<a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a> *)ptr;
 <a name="l00329"></a>00329    }
 <a name="l00330"></a>00330 
 <a name="l00331"></a>00331    <span class="comment">/*</span>
 <a name="l00332"></a>00332 <span class="comment">   * Unpack a C-array of objects of type T.</span>
 <a name="l00333"></a>00333 <span class="comment">   */</span>
 <a name="l00334"></a>00334    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00335"></a><a class="code" href="classUtil_1_1PackedData.html#af0bfd8889831946ade0f6559b7f808ce">00335</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#ad90834a7650756a10b86c42747610caa" title="Unpack one object.">PackedData::unpack</a>(T* array, <span class="keywordtype">int</span> n)
+<a name="l00335"></a><a class="code" href="classUtil_1_1PackedData.html#ae12809789ae25711e9733ea02687d1fb">00335</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1PackedData.html#afb687196dd428796c87abd4da7ca14f2" title="Unpack one object.">PackedData::unpack</a>(T* array, <span class="keywordtype">int</span> n)
 <a name="l00336"></a>00336    {
 <a name="l00337"></a>00337       <span class="keywordflow">if</span> (status_ != UNPACKING) {
 <a name="l00338"></a>00338          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Status is not UNPACKING&quot;</span>);
@@ -245,14 +245,14 @@
 <a name="l00345"></a>00345          array[i] = *ptr;
 <a name="l00346"></a>00346          ++ptr;
 <a name="l00347"></a>00347       }
-<a name="l00348"></a>00348       cursor_ = (<a class="code" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a> *)ptr;
+<a name="l00348"></a>00348       cursor_ = (<a class="code" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687" title="Define a &amp;quot;Byte&amp;quot; type.">Byte</a> *)ptr;
 <a name="l00349"></a>00349    }
 <a name="l00350"></a>00350 
 <a name="l00351"></a>00351 }
 <a name="l00352"></a>00352 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -81,8 +81,8 @@
 <a name="l00029"></a>00029    <span class="comment">/* </span>
 <a name="l00030"></a>00030 <span class="comment">   * Constructor</span>
 <a name="l00031"></a>00031 <span class="comment">   */</span>
-<a name="l00032"></a>00032    <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a3e03570a4fe048c5185f99862d0328f3" title="Constructor.">CfbDoubleRebridgeMove::CfbDoubleRebridgeMove</a>(McSystem&amp; system) : 
-<a name="l00033"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a3e03570a4fe048c5185f99862d0328f3">00033</a>       <a class="code" href="classMcMd_1_1CfbRebridgeBase.html" title="Base class configuration bias moves internal segment regrowth moves.">CfbRebridgeBase</a>(system),
+<a name="l00032"></a>00032    <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a8c9bfd8048c0d05b3a2b52c898ec7977" title="Constructor.">CfbDoubleRebridgeMove::CfbDoubleRebridgeMove</a>(McSystem&amp; system) : 
+<a name="l00033"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a8c9bfd8048c0d05b3a2b52c898ec7977">00033</a>       <a class="code" href="classMcMd_1_1CfbRebridgeBase.html" title="Base class configuration bias moves internal segment regrowth moves.">CfbRebridgeBase</a>(system),
 <a name="l00034"></a>00034       speciesId_(-1),
 <a name="l00035"></a>00035       nRegrow_(-1),
 <a name="l00036"></a>00036       bridgeLength_(0)
@@ -91,8 +91,8 @@
 <a name="l00039"></a>00039    <span class="comment">/* </span>
 <a name="l00040"></a>00040 <span class="comment">   * Read parameters speciesId, nRegrow, and nTrial</span>
 <a name="l00041"></a>00041 <span class="comment">   */</span>
-<a name="l00042"></a>00042    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#ab5421d3c9175985c9acbf723e5392075" title="Read species to which displacement is applied.">CfbDoubleRebridgeMove::readParam</a>(std::istream&amp; in) 
-<a name="l00043"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#ab5421d3c9175985c9acbf723e5392075">00043</a>    {
+<a name="l00042"></a>00042    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#addcc9f794d9cb52e0a37ca4d23dc55dc" title="Read species to which displacement is applied.">CfbDoubleRebridgeMove::readParam</a>(std::istream&amp; in) 
+<a name="l00043"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#addcc9f794d9cb52e0a37ca4d23dc55dc">00043</a>    {
 <a name="l00044"></a>00044       <span class="comment">// Read parameters</span>
 <a name="l00045"></a>00045       readProbability(in);
 <a name="l00046"></a>00046       read&lt;int&gt;(in, <span class="stringliteral">&quot;speciesId&quot;</span>, speciesId_);
@@ -100,7 +100,7 @@
 <a name="l00048"></a>00048       read&lt;double&gt;(in, <span class="stringliteral">&quot;bridgeLength&quot;</span>, bridgeLength_);
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050       <span class="comment">// Read parameters hold by RebridgeBase</span>
-<a name="l00051"></a>00051       <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#ab5421d3c9175985c9acbf723e5392075" title="Read species type, nTrial, and parameters needed to evaluate the orientation bias.">CfbRebridgeBase::readParam</a>(in);
+<a name="l00051"></a>00051       <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a8e87f778ba49f26898825f5cfdfaa99e" title="Read species type, nTrial, and parameters needed to evaluate the orientation bias.">CfbRebridgeBase::readParam</a>(in);
 <a name="l00052"></a>00052 
 <a name="l00053"></a>00053       <span class="comment">// Initialize tables for spring constants and normalizations.</span>
 <a name="l00054"></a>00054       setup();
@@ -110,7 +110,7 @@
 <a name="l00058"></a>00058       chainPtr = <span class="keyword">dynamic_cast&lt;</span><a class="code" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract).">Linear</a>*<span class="keyword">&gt;</span>(&amp;(simulation().species(speciesId_)));
 <a name="l00059"></a>00059   
 <a name="l00060"></a>00060       <span class="comment">// Allocate array to store old positions </span>
-<a name="l00061"></a>00061       iOldPos_.<a class="code" href="classMcMd_1_1Species.html#acaefe811b78a2fdc4a0dba0c4029c3ef" title="Allocate chemical structure arrays.">allocate</a>(nRegrow_); 
+<a name="l00061"></a>00061       iOldPos_.<a class="code" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca" title="Allocate chemical structure arrays.">allocate</a>(nRegrow_); 
 <a name="l00062"></a>00062       jOldPos_.allocate(nRegrow_); 
 <a name="l00063"></a>00063    }
 <a name="l00064"></a>00064 
@@ -128,8 +128,8 @@
 <a name="l00076"></a>00076 <span class="comment">   *       at random.)</span>
 <a name="l00077"></a>00077 <span class="comment">   *</span>
 <a name="l00078"></a>00078 <span class="comment">   */</span>
-<a name="l00079"></a>00079    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635" title="Generate and accept or reject configuration bias move.">CfbDoubleRebridgeMove::move</a>() 
-<a name="l00080"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635">00080</a>    {
+<a name="l00079"></a>00079    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a164b51720454f8d7a933e91e68a5c220" title="Generate and accept or reject configuration bias move.">CfbDoubleRebridgeMove::move</a>() 
+<a name="l00080"></a><a class="code" href="classMcMd_1_1CfbDoubleRebridgeMove.html#a164b51720454f8d7a933e91e68a5c220">00080</a>    {
 <a name="l00081"></a>00081       <span class="keywordtype">bool</span>      found, accept;
 <a name="l00082"></a>00082       <span class="keywordtype">int</span>       iMol, jMol, sign, beginId, nEnd, i;
 <a name="l00083"></a>00083       <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> *iPtr;     <span class="comment">// pointer to i-th molecule</span>
@@ -158,11 +158,11 @@
 <a name="l00106"></a>00106       jPtr = &amp;(system().molecule(speciesId_, jMol));
 <a name="l00107"></a>00107 
 <a name="l00108"></a>00108       <span class="comment">// Save positions for atoms to be regrown</span>
-<a name="l00109"></a>00109       thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
-<a name="l00110"></a>00110       tempPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00109"></a>00109       thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00110"></a>00110       tempPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
 <a name="l00111"></a>00111       <span class="keywordflow">for</span> (i = 0; i &lt; nRegrow_; ++i) {
-<a name="l00112"></a>00112          iOldPos_[i] = thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00113"></a>00113          jOldPos_[i] = tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00112"></a>00112          iOldPos_[i] = thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00113"></a>00113          jOldPos_[i] = tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00114"></a>00114 
 <a name="l00115"></a>00115          thisPtr += sign;
 <a name="l00116"></a>00116          tempPtr += sign;
@@ -174,43 +174,43 @@
 <a name="l00122"></a>00122       bonds = <span class="keyword">new</span> <span class="keywordtype">int</span>[nRegrow_ + 1];
 <a name="l00123"></a>00123       <span class="keywordflow">if</span> (sign == +1) {
 <a name="l00124"></a>00124          <span class="keywordflow">for</span> (i = 0; i &lt; nRegrow_ + 1; ++i)
-<a name="l00125"></a>00125             bonds[i] = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a1dee63eefb65e4b66b6d643c4a093fc9" title="Get a specific Bond in this Molecule by reference.">bond</a>(beginId - 1 + nRegrow_ - i).<a class="code" href="classMcMd_1_1Group.html#af68aca851173d8f261a70897bff349c9" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00125"></a>00125             bonds[i] = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(beginId - 1 + nRegrow_ - i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00126"></a>00126       } <span class="keywordflow">else</span> {
 <a name="l00127"></a>00127          <span class="keywordflow">for</span> (i = 0; i &lt; nRegrow_ + 1; ++i)
-<a name="l00128"></a>00128             bonds[i] = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a1dee63eefb65e4b66b6d643c4a093fc9" title="Get a specific Bond in this Molecule by reference.">bond</a>(beginId - nRegrow_ + i).<a class="code" href="classMcMd_1_1Group.html#af68aca851173d8f261a70897bff349c9" title="Get the typeId for this covalent group.">typeId</a>();
+<a name="l00128"></a>00128             bonds[i] = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#adac9ca00ae6e99d8f0d573e89b22e2fc" title="Get a specific Bond in this Molecule by reference.">bond</a>(beginId - nRegrow_ + i).<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>();
 <a name="l00129"></a>00129       }
 <a name="l00130"></a>00130 
 <a name="l00131"></a>00131       <span class="comment">// Deleting atoms: first i-th molecule, then j-th</span>
 <a name="l00132"></a>00132       rosen_r = 1.0;
 <a name="l00133"></a>00133       energy_r = 0.0;
 <a name="l00134"></a>00134 
-<a name="l00135"></a>00135       thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId + (nRegrow_-1)*sign));
+<a name="l00135"></a>00135       thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId + (nRegrow_-1)*sign));
 <a name="l00136"></a>00136       deleteSequence(nRegrow_, sign, thisPtr, bonds, rosenbluth, energy);
 <a name="l00137"></a>00137       rosen_r *= rosenbluth;
 <a name="l00138"></a>00138       energy_r += energy;
 <a name="l00139"></a>00139 
-<a name="l00140"></a>00140       thisPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId + (nRegrow_-1)*sign));
+<a name="l00140"></a>00140       thisPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId + (nRegrow_-1)*sign));
 <a name="l00141"></a>00141       deleteSequence(nRegrow_, sign, thisPtr, bonds, rosenbluth, energy);
 <a name="l00142"></a>00142       rosen_r *= rosenbluth;
 <a name="l00143"></a>00143       energy_r += energy;
 <a name="l00144"></a>00144 
 <a name="l00145"></a>00145       <span class="comment">// Swap the atom positions of the dangling end</span>
 <a name="l00146"></a>00146       <span class="keywordflow">if</span> (sign == +1)
-<a name="l00147"></a>00147          nEnd = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ac91579bd63979a294891d330a5533838" title="Get the number of Atoms in this Molecule.">nAtom</a>() - beginId - nRegrow_;
+<a name="l00147"></a>00147          nEnd = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>() - beginId - nRegrow_;
 <a name="l00148"></a>00148       <span class="keywordflow">else</span>
 <a name="l00149"></a>00149          nEnd = beginId + 1 - nRegrow_;
 <a name="l00150"></a>00150 
-<a name="l00151"></a>00151       thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId + nRegrow_*sign));
-<a name="l00152"></a>00152       tempPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId + nRegrow_*sign));
+<a name="l00151"></a>00151       thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId + nRegrow_*sign));
+<a name="l00152"></a>00152       tempPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId + nRegrow_*sign));
 <a name="l00153"></a>00153       <span class="keywordflow">for</span> (i = 0; i &lt; nEnd; ++i) {
-<a name="l00154"></a>00154          swapPos = thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00154"></a>00154          swapPos = thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00155"></a>00155          <span class="comment">//system().moveAtom(*thisPtr, tempPtr-&gt;position());</span>
-<a name="l00156"></a>00156          thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00156"></a>00156          thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00157"></a>00157 <span class="preprocessor">         #ifndef INTER_NOPAIR</span>
 <a name="l00158"></a>00158 <span class="preprocessor"></span>         system().pairPotential().updateAtomCell(*thisPtr);
 <a name="l00159"></a>00159 <span class="preprocessor">         #endif</span>
 <a name="l00160"></a>00160 <span class="preprocessor"></span>         <span class="comment">//system().moveAtom(*tempPtr, swapPos);</span>
-<a name="l00161"></a>00161          tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = swapPos;
+<a name="l00161"></a>00161          tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = swapPos;
 <a name="l00162"></a>00162 <span class="preprocessor">         #ifndef INTER_NOPAIR</span>
 <a name="l00163"></a>00163 <span class="preprocessor"></span>         system().pairPotential().updateAtomCell(*tempPtr);
 <a name="l00164"></a>00164 <span class="preprocessor">         #endif</span>
@@ -223,12 +223,12 @@
 <a name="l00171"></a>00171       rosen_f = 1.0;
 <a name="l00172"></a>00172       energy_f = 0.0;
 <a name="l00173"></a>00173 
-<a name="l00174"></a>00174       thisPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00174"></a>00174       thisPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
 <a name="l00175"></a>00175       addSequence(nRegrow_, sign, thisPtr, bonds, rosenbluth, energy);
 <a name="l00176"></a>00176       rosen_f *= rosenbluth;
 <a name="l00177"></a>00177       energy_f += energy;
 <a name="l00178"></a>00178 
-<a name="l00179"></a>00179       thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00179"></a>00179       thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
 <a name="l00180"></a>00180       addSequence(nRegrow_, sign, thisPtr, bonds, rosenbluth, energy);
 <a name="l00181"></a>00181       rosen_f *= rosenbluth;
 <a name="l00182"></a>00182       energy_f += energy;
@@ -250,16 +250,16 @@
 <a name="l00198"></a>00198       } <span class="keywordflow">else</span> {
 <a name="l00199"></a>00199 
 <a name="l00200"></a>00200          <span class="comment">// If the move is rejected, restore nRegrow_ positions</span>
-<a name="l00201"></a>00201          thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
-<a name="l00202"></a>00202          tempPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00201"></a>00201          thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
+<a name="l00202"></a>00202          tempPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId));
 <a name="l00203"></a>00203          <span class="keywordflow">for</span> (i = 0; i &lt; nRegrow_; ++i) {
 <a name="l00204"></a>00204             <span class="comment">//system().moveAtom(*thisPtr, iOldPos_[i]);</span>
-<a name="l00205"></a>00205             thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = iOldPos_[i];
+<a name="l00205"></a>00205             thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = iOldPos_[i];
 <a name="l00206"></a>00206 <span class="preprocessor">            #ifndef INTER_NOPAIR</span>
 <a name="l00207"></a>00207 <span class="preprocessor"></span>            system().pairPotential().updateAtomCell(*thisPtr);
 <a name="l00208"></a>00208 <span class="preprocessor">            #endif</span>
 <a name="l00209"></a>00209 <span class="preprocessor"></span>            <span class="comment">//system().moveAtom(*tempPtr, jOldPos_[i]);</span>
-<a name="l00210"></a>00210             tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = jOldPos_[i];
+<a name="l00210"></a>00210             tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = jOldPos_[i];
 <a name="l00211"></a>00211 <span class="preprocessor">            #ifndef INTER_NOPAIR</span>
 <a name="l00212"></a>00212 <span class="preprocessor"></span>            system().pairPotential().updateAtomCell(*tempPtr);
 <a name="l00213"></a>00213 <span class="preprocessor">            #endif</span>
@@ -269,17 +269,17 @@
 <a name="l00217"></a>00217          }
 <a name="l00218"></a>00218 
 <a name="l00219"></a>00219          <span class="comment">// Restore atom positions at the dangling end</span>
-<a name="l00220"></a>00220          thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId + nRegrow_*sign));
-<a name="l00221"></a>00221          tempPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId + nRegrow_*sign));
+<a name="l00220"></a>00220          thisPtr = &amp;(iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId + nRegrow_*sign));
+<a name="l00221"></a>00221          tempPtr = &amp;(jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId + nRegrow_*sign));
 <a name="l00222"></a>00222          <span class="keywordflow">for</span> (i = 0; i &lt; nEnd; ++i) {
-<a name="l00223"></a>00223             swapPos = thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00223"></a>00223             swapPos = thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00224"></a>00224             <span class="comment">//system().moveAtom(*thisPtr, tempPtr-&gt;position());</span>
-<a name="l00225"></a>00225             thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00225"></a>00225             thisPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00226"></a>00226 <span class="preprocessor">            #ifndef INTER_NOPAIR</span>
 <a name="l00227"></a>00227 <span class="preprocessor"></span>            system().pairPotential().updateAtomCell(*thisPtr);
 <a name="l00228"></a>00228 <span class="preprocessor">            #endif</span>
 <a name="l00229"></a>00229 <span class="preprocessor"></span>            <span class="comment">//system().moveAtom(*tempPtr, swapPos);</span>
-<a name="l00230"></a>00230             tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = swapPos;
+<a name="l00230"></a>00230             tempPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = swapPos;
 <a name="l00231"></a>00231 <span class="preprocessor">            #ifndef INTER_NOPAIR</span>
 <a name="l00232"></a>00232 <span class="preprocessor"></span>            system().pairPotential().updateAtomCell(*tempPtr);
 <a name="l00233"></a>00233 <span class="preprocessor">            #endif</span>
@@ -337,7 +337,7 @@
 <a name="l00285"></a>00285       iMol = system().moleculeId(*iPtr);
 <a name="l00286"></a>00286 
 <a name="l00287"></a>00287       <span class="comment">// Number of atoms per molecule</span>
-<a name="l00288"></a>00288       nAtom = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ac91579bd63979a294891d330a5533838" title="Get the number of Atoms in this Molecule.">nAtom</a>();
+<a name="l00288"></a>00288       nAtom = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>();
 <a name="l00289"></a>00289 
 <a name="l00290"></a>00290       <span class="comment">// Require that chain length - 2 &gt;= nRegrow_</span>
 <a name="l00291"></a>00291       <span class="keywordflow">if</span> (nRegrow_ &gt; nAtom - 2) {
@@ -370,14 +370,14 @@
 <a name="l00318"></a>00318             <span class="keywordflow">for</span> (k = 0; k &lt;  nAtom - 1 - nRegrow_; ++k) {  
 <a name="l00319"></a>00319 
 <a name="l00320"></a>00320                <span class="comment">// Check if i1 to j2 bridging is possible</span>
-<a name="l00321"></a>00321                iPos1 = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId + k*sign).position();
-<a name="l00322"></a>00322                jPos2 = jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId + signRegrow + k*sign).position();
+<a name="l00321"></a>00321                iPos1 = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId + k*sign).position();
+<a name="l00322"></a>00322                jPos2 = jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId + signRegrow + k*sign).position();
 <a name="l00323"></a>00323                lengthSq = boundary().distanceSq(iPos1, jPos2);
 <a name="l00324"></a>00324 
 <a name="l00325"></a>00325                <span class="keywordflow">if</span> (lengthSq &lt; bridgeLengthSq) {
 <a name="l00326"></a>00326                   <span class="comment">// Check if j2 to i1 bridging is possible          </span>
-<a name="l00327"></a>00327                   jPos1 = jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId + k*sign).position();
-<a name="l00328"></a>00328                   iPos2 = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(beginId + signRegrow + k*sign).position();
+<a name="l00327"></a>00327                   jPos1 = jPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId + k*sign).position();
+<a name="l00328"></a>00328                   iPos2 = iPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(beginId + signRegrow + k*sign).position();
 <a name="l00329"></a>00329                   lengthSq = boundary().distanceSq(iPos2, jPos1);
 <a name="l00330"></a>00330                   
 <a name="l00331"></a>00331                   <span class="keywordflow">if</span> (lengthSq &lt; bridgeLengthSq) {
@@ -516,7 +516,7 @@
 <a name="l00464"></a>00464 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

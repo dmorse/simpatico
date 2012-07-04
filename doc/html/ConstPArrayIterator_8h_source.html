@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -68,46 +68,46 @@
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037    <span class="keyword">public</span>:
 <a name="l00038"></a>00038 
-<a name="l00044"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a51f9467a1eac1f3921d30b6da4d00e76">00044</a>       <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a51f9467a1eac1f3921d30b6da4d00e76" title="Default constructor.">ConstPArrayIterator</a>()
+<a name="l00044"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a4be0e5b3e183c5fffe8896ed0678575f">00044</a>       <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a4be0e5b3e183c5fffe8896ed0678575f" title="Default constructor.">ConstPArrayIterator</a>()
 <a name="l00045"></a>00045        : current_(0),
 <a name="l00046"></a>00046          end_(0),
 <a name="l00047"></a>00047          data_(0)
 <a name="l00048"></a>00048       {}
 <a name="l00049"></a>00049 
-<a name="l00055"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a4e76e7894a3fb90953af94a3339d6ec7">00055</a>       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a4e76e7894a3fb90953af94a3339d6ec7" title="Set the current pointer value.">setCurrent</a>(Data** ptr)
+<a name="l00055"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a527a5e7aa3ff82ef4d2f73cc8e2a83e4">00055</a>       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a527a5e7aa3ff82ef4d2f73cc8e2a83e4" title="Set the current pointer value.">setCurrent</a>(Data** ptr)
 <a name="l00056"></a>00056       { 
 <a name="l00057"></a>00057          current_ =  ptr;
 <a name="l00058"></a>00058          data_    = *ptr; 
 <a name="l00059"></a>00059       }
 <a name="l00060"></a>00060 
-<a name="l00066"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a05f78f359a646a2e9370d99a23c58c5c">00066</a>       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a05f78f359a646a2e9370d99a23c58c5c" title="Set the value of the end pointer.">setEnd</a>(Data** ptr)
+<a name="l00066"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a0a8be86610173337dbb3c30adccb36d6">00066</a>       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a0a8be86610173337dbb3c30adccb36d6" title="Set the value of the end pointer.">setEnd</a>(Data** ptr)
 <a name="l00067"></a>00067       {  end_ = ptr; }
 <a name="l00068"></a>00068 
-<a name="l00072"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a91e28e1274cd18a6413c67bf55356cf6">00072</a>       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a91e28e1274cd18a6413c67bf55356cf6" title="Nullify the iterator.">setNull</a>()
+<a name="l00072"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#aa288662fb8269962188b39aa31ad5a8d">00072</a>       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html#aa288662fb8269962188b39aa31ad5a8d" title="Nullify the iterator.">setNull</a>()
 <a name="l00073"></a>00073       {
 <a name="l00074"></a>00074          current_ = 0; 
 <a name="l00075"></a>00075          end_ = 0; 
 <a name="l00076"></a>00076          data_ = 0; 
 <a name="l00077"></a>00077       }
 <a name="l00078"></a>00078 
-<a name="l00084"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a11cbf4ba82ee565cb9eef28b972bf145">00084</a>       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a11cbf4ba82ee565cb9eef28b972bf145" title="Is the current pointer at the end of the array.">atEnd</a>()<span class="keyword"> const</span>
+<a name="l00084"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a4fc560244a3256e8466fcca9d4c06ed7">00084</a>       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a4fc560244a3256e8466fcca9d4c06ed7" title="Is the current pointer at the end of the array.">atEnd</a>()<span class="keyword"> const</span>
 <a name="l00085"></a>00085 <span class="keyword">      </span>{ <span class="keywordflow">return</span> (current_ == end_); }
 <a name="l00086"></a>00086 
-<a name="l00092"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816">00092</a>       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>()<span class="keyword"> const</span>
+<a name="l00092"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc">00092</a>       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>()<span class="keyword"> const</span>
 <a name="l00093"></a>00093 <span class="keyword">      </span>{ <span class="keywordflow">return</span> (current_ != end_); }
 <a name="l00094"></a>00094 
-<a name="l00100"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a378cadcbc76e1f99f972fa1da0072f3a">00100</a>       <span class="keyword">const</span> Data* <span class="keyword">get</span>() <span class="keyword">const</span>
+<a name="l00100"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#ae7e58a8e26e1e3e0608f712fed1c149d">00100</a>       <span class="keyword">const</span> Data* <span class="keyword">get</span>() <span class="keyword">const</span>
 <a name="l00101"></a>00101       { <span class="keywordflow">return</span> data_; }
 <a name="l00102"></a>00102 
 <a name="l00104"></a>00104 
 <a name="l00105"></a>00105       
-<a name="l00111"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a9c2dbcb3f216e52b9e1f8e168273003f">00111</a>       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a9c2dbcb3f216e52b9e1f8e168273003f" title="Return a const refererence to the current Data.">operator* </a>()<span class="keyword"> const</span>
+<a name="l00111"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a77b22e1173e347643c38bbf705e70868">00111</a>       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a77b22e1173e347643c38bbf705e70868" title="Return a const refererence to the current Data.">operator* </a>()<span class="keyword"> const</span>
 <a name="l00112"></a>00112 <span class="keyword">      </span>{ <span class="keywordflow">return</span> *data_; }
 <a name="l00113"></a>00113 
-<a name="l00119"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#ab27b321761b7608f40e857542883bf8c">00119</a>       <span class="keyword">const</span> Data* <a class="code" href="classUtil_1_1ConstPArrayIterator.html#ab27b321761b7608f40e857542883bf8c" title="Provide a pointer to the current Data object.">operator -&gt; </a>()<span class="keyword"> const</span>
+<a name="l00119"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#aa9be50742a0ba069fa43cec11d55a784">00119</a>       <span class="keyword">const</span> Data* <a class="code" href="classUtil_1_1ConstPArrayIterator.html#aa9be50742a0ba069fa43cec11d55a784" title="Provide a pointer to the current Data object.">operator -&gt; </a>()<span class="keyword"> const</span>
 <a name="l00120"></a>00120 <span class="keyword">      </span>{  <span class="keywordflow">return</span> data_; }
 <a name="l00121"></a>00121 
-<a name="l00127"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#aa6c1e60960973fe6ccc6cb1301fb9d4b">00127</a>       <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1ConstPArrayIterator.html#aa6c1e60960973fe6ccc6cb1301fb9d4b" title="Increment the current pointer.">operator++ </a>()
+<a name="l00127"></a><a class="code" href="classUtil_1_1ConstPArrayIterator.html#a4ee7cdcd2274f6f7560fbb0aa8e29884">00127</a>       <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1ConstPArrayIterator.html#a4ee7cdcd2274f6f7560fbb0aa8e29884" title="Increment the current pointer.">operator++ </a>()
 <a name="l00128"></a>00128       {
 <a name="l00129"></a>00129          ++current_;
 <a name="l00130"></a>00130          <span class="keywordflow">if</span> (current_ != end_) {
@@ -136,7 +136,7 @@
 <a name="l00154"></a>00154 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

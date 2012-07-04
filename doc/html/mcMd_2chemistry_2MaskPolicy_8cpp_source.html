@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -65,8 +65,8 @@
 <a name="l00014"></a>00014 <span class="preprocessor"></span><span class="keyword">namespace </span>Util
 <a name="l00015"></a>00015 {
 <a name="l00016"></a>00016 
-<a name="l00020"></a>00020    MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1MaskPolicy_01_4.html#a0c7a142afbd37744484fd5a9d9ae7e2a" title="MPI Datatype.">MpiTraits&lt;McMd::MaskPolicy&gt;::type</a>    = MPI::INT;
-<a name="l00021"></a>00021    <span class="keywordtype">bool</span>          <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1MaskPolicy_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a" title="Is the MPI type initialized?">MpiTraits&lt;McMd::MaskPolicy&gt;::hasType</a> = <span class="keyword">true</span>;
+<a name="l00020"></a>00020    MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1MaskPolicy_01_4.html#ad92991d12903c9f33fa7b70361ad7124" title="MPI Datatype.">MpiTraits&lt;McMd::MaskPolicy&gt;::type</a>    = MPI::INT;
+<a name="l00021"></a>00021    <span class="keywordtype">bool</span>          <a class="code" href="classUtil_1_1MpiTraits_3_01McMd_1_1MaskPolicy_01_4.html#a3ded20fc2805e328828fbd6b6fdd0782" title="Is the MPI type initialized?">MpiTraits&lt;McMd::MaskPolicy&gt;::hasType</a> = <span class="keyword">true</span>;
 <a name="l00022"></a>00022 
 <a name="l00023"></a>00023 }
 <a name="l00024"></a>00024 <span class="preprocessor">#endif</span>
@@ -79,7 +79,7 @@
 <a name="l00031"></a>00031    <span class="comment">/* </span>
 <a name="l00032"></a>00032 <span class="comment">   * Extract a MaskPolicy from an istream as a string.</span>
 <a name="l00033"></a>00033 <span class="comment">   */</span>
-<a name="l00034"></a><a class="code" href="namespaceMcMd.html#ac27dfaa73d4874a8a99a9000b800bf0f">00034</a>    std::istream&amp; <a class="code" href="namespaceMcMd.html#a74181b023cf44a9612ac683897cd203d" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="group__McMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a>&amp; policy)
+<a name="l00034"></a><a class="code" href="namespaceMcMd.html#a237d5a985ed8ac6fe40f4a274b05f30e">00034</a>    std::istream&amp; <a class="code" href="namespaceMcMd.html#ab3ee02adda6eba075cd5464bd179c747" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="group__McMd__Chemistry__Module.html#ga43203d681ebb2c62d748de0516d59a82" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a>&amp; policy)
 <a name="l00035"></a>00035    {
 <a name="l00036"></a>00036       std::string buffer;
 <a name="l00037"></a>00037       in &gt;&gt; buffer;
@@ -97,7 +97,7 @@
 <a name="l00049"></a>00049    <span class="comment">/* </span>
 <a name="l00050"></a>00050 <span class="comment">   * Insert a MaskPolicy to an ostream as a string.</span>
 <a name="l00051"></a>00051 <span class="comment">   */</span>
-<a name="l00052"></a><a class="code" href="namespaceMcMd.html#a284ec6e137cdcc7aefd95e0935255e90">00052</a>    std::ostream&amp; <a class="code" href="namespaceMcMd.html#a1dabcc9af06e19085b4abbdd1babb8e5" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <a class="code" href="group__McMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> policy) 
+<a name="l00052"></a><a class="code" href="namespaceMcMd.html#a792c655ab00fb0778485aefae9201f8e">00052</a>    std::ostream&amp; <a class="code" href="namespaceMcMd.html#a9edb092360785f73beae9606f0b1f68f" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <a class="code" href="group__McMd__Chemistry__Module.html#ga43203d681ebb2c62d748de0516d59a82" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> policy) 
 <a name="l00053"></a>00053    {
 <a name="l00054"></a>00054       <span class="keywordflow">if</span> (policy == MaskNone) {
 <a name="l00055"></a>00055          out &lt;&lt; <span class="stringliteral">&quot;MaskNone&quot;</span>;
@@ -114,7 +114,7 @@
 <a name="l00066"></a>00066 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: MpiStructBuilder Class Reference</title>
+<title>Simpatico: Util::MpiStructBuilder Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>MpiStructBuilder Class Reference</h1>  </div>
+<h1>Util::MpiStructBuilder Class Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::MpiStructBuilder" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -64,7 +64,7 @@
 </pre></div><p> The code required to build and commit the MPI datatype MyClassMpi is: </p>
 <div class="fragment"><pre class="fragment">    MyClass          object;
     MPI::Datatype  MyClassMpi;
-    <a class="code" href="classUtil_1_1MpiStructBuilder.html#a3314ef3e8b03208b2f8cb846e08a7f0c" title="Default constructor.">MpiStructBuilder</a> builder;
+    <a class="code" href="classUtil_1_1MpiStructBuilder.html#aecb2ec45f327292d3e4d1ea9e7d6f0e2" title="Default constructor.">MpiStructBuilder</a> builder;
 
     builder.setBase(&amp;<span class="keywordtype">object</span>)
     builder.addMember(&amp;<span class="keywordtype">object</span>.x, MPI::DOUBLE, 3);
@@ -81,22 +81,22 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiStructBuilder.html#a3314ef3e8b03208b2f8cb846e08a7f0c">MpiStructBuilder</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a3314ef3e8b03208b2f8cb846e08a7f0c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiStructBuilder.html#a5882a267b18044ab1149b71aea7d6b6d">setBase</a> (void *objectAddress)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set address of an class instance.  <a href="#a5882a267b18044ab1149b71aea7d6b6d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiStructBuilder.html#aa91ba3ec4fb3b4f5a469a400f0f5e16a">addMember</a> (void *memberAddress, MPI::Datatype type, int count=1)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new member variable to the type map.  <a href="#aa91ba3ec4fb3b4f5a469a400f0f5e16a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiStructBuilder.html#a0f12d9ca5f37ab23eae4d2ae7abb4e8f">commit</a> (MPI::Datatype &amp;newType)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build and commit a user-defined MPI Struct datatype.  <a href="#a0f12d9ca5f37ab23eae4d2ae7abb4e8f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiStructBuilder.html#aecb2ec45f327292d3e4d1ea9e7d6f0e2">MpiStructBuilder</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#aecb2ec45f327292d3e4d1ea9e7d6f0e2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiStructBuilder.html#a34f85f4a1e1c296ba324fe274ea22f24">setBase</a> (void *objectAddress)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set address of an class instance.  <a href="#a34f85f4a1e1c296ba324fe274ea22f24"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1">addMember</a> (void *memberAddress, MPI::Datatype type, int count=1)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new member variable to the type map.  <a href="#a0b7815cfc8afac5fb7f225de784b07a1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MpiStructBuilder.html#ae95e12f80d3991fe0bd7848010924c25">commit</a> (MPI::Datatype &amp;newType)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build and commit a user-defined MPI Struct datatype.  <a href="#ae95e12f80d3991fe0bd7848010924c25"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a3314ef3e8b03208b2f8cb846e08a7f0c"></a><!-- doxytag: member="Util::MpiStructBuilder::MpiStructBuilder" ref="a3314ef3e8b03208b2f8cb846e08a7f0c" args="()" -->
+<a class="anchor" id="aecb2ec45f327292d3e4d1ea9e7d6f0e2"></a><!-- doxytag: member="Util::MpiStructBuilder::MpiStructBuilder" ref="aecb2ec45f327292d3e4d1ea9e7d6f0e2" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">home david code simpatico src util mpi <a class="el" href="classUtil_1_1MpiStructBuilder.html">MpiStructBuilder</a> cpp <a class="el" href="classUtil_1_1MpiStructBuilder.html">MpiStructBuilder</a> </td>
+          <td class="memname">home david code simpatico src util mpi <a class="el" href="classUtil_1_1MpiStructBuilder.html">MpiStructBuilder</a> cpp Util::MpiStructBuilder::MpiStructBuilder </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -112,12 +112,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a5882a267b18044ab1149b71aea7d6b6d"></a><!-- doxytag: member="Util::MpiStructBuilder::setBase" ref="a5882a267b18044ab1149b71aea7d6b6d" args="(void *objectAddress)" -->
+<a class="anchor" id="a34f85f4a1e1c296ba324fe274ea22f24"></a><!-- doxytag: member="Util::MpiStructBuilder::setBase" ref="a34f85f4a1e1c296ba324fe274ea22f24" args="(void *objectAddress)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setBase </td>
+          <td class="memname">void Util::MpiStructBuilder::setBase </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>objectAddress</em></td><td>)</td>
@@ -131,16 +131,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="MpiStructBuilder_8cpp_source.html#l00021">21</a> of file <a class="el" href="MpiStructBuilder_8cpp_source.html">MpiStructBuilder.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Vector_8cpp_source.html#l00101">Vector::commitMpiType()</a>, <a class="el" href="Tensor_8cpp_source.html#l00114">Tensor::commitMpiType()</a>, <a class="el" href="SpeciesGroup_8tpp_source.html#l00062">SpeciesGroup&lt; NAtom &gt;::commitMpiType()</a>, <a class="el" href="SpeciesEnsemble_8cpp_source.html#l00101">SpeciesEnsemble::commitMpiType()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00165">PairSelector::commitMpiType()</a>, <a class="el" href="Pair_8h_source.html#l00069">Pair&lt; Data &gt;::commitMpiType()</a>, <a class="el" href="IntVector_8cpp_source.html#l00096">IntVector::commitMpiType()</a>, <a class="el" href="FArray_8h_source.html#l00291">FArray&lt; Data, Capacity &gt;::commitMpiType()</a>, <a class="el" href="EnergyEnsemble_8cpp_source.html#l00104">EnergyEnsemble::commitMpiType()</a>, and <a class="el" href="BoundaryEnsemble_8cpp_source.html#l00103">BoundaryEnsemble::commitMpiType()</a>.</p>
+<p>Referenced by <a class="el" href="Vector_8cpp_source.html#l00101">Util::Vector::commitMpiType()</a>, <a class="el" href="Tensor_8cpp_source.html#l00114">Util::Tensor::commitMpiType()</a>, <a class="el" href="SpeciesGroup_8tpp_source.html#l00062">McMd::SpeciesGroup&lt; NAtom &gt;::commitMpiType()</a>, <a class="el" href="SpeciesEnsemble_8cpp_source.html#l00101">Util::SpeciesEnsemble::commitMpiType()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00165">McMd::PairSelector::commitMpiType()</a>, <a class="el" href="Pair_8h_source.html#l00069">Util::Pair&lt; Data &gt;::commitMpiType()</a>, <a class="el" href="IntVector_8cpp_source.html#l00096">Util::IntVector::commitMpiType()</a>, <a class="el" href="FArray_8h_source.html#l00291">Util::FArray&lt; Data, Capacity &gt;::commitMpiType()</a>, <a class="el" href="EnergyEnsemble_8cpp_source.html#l00104">Util::EnergyEnsemble::commitMpiType()</a>, and <a class="el" href="BoundaryEnsemble_8cpp_source.html#l00103">Util::BoundaryEnsemble::commitMpiType()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa91ba3ec4fb3b4f5a469a400f0f5e16a"></a><!-- doxytag: member="Util::MpiStructBuilder::addMember" ref="aa91ba3ec4fb3b4f5a469a400f0f5e16a" args="(void *memberAddress, MPI::Datatype type, int count=1)" -->
+<a class="anchor" id="a0b7815cfc8afac5fb7f225de784b07a1"></a><!-- doxytag: member="Util::MpiStructBuilder::addMember" ref="a0b7815cfc8afac5fb7f225de784b07a1" args="(void *memberAddress, MPI::Datatype type, int count=1)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void addMember </td>
+          <td class="memname">void Util::MpiStructBuilder::addMember </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>memberAddress</em>, </td>
@@ -167,7 +167,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Add a new member variable to the type map. </p>
-<p>This method must be called once for each member. The address parameter must be a pointer to a member variable of the object whose base address is passed to <a class="el" href="classUtil_1_1MpiStructBuilder.html#a5882a267b18044ab1149b71aea7d6b6d" title="Set address of an class instance.">setBase()</a>.</p>
+<p>This method must be called once for each member. The address parameter must be a pointer to a member variable of the object whose base address is passed to <a class="el" href="classUtil_1_1MpiStructBuilder.html#a34f85f4a1e1c296ba324fe274ea22f24" title="Set address of an class instance.">setBase()</a>.</p>
 <p>The count parameter is required only for array members: the default value of count=1 may be used for scalar members.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -180,16 +180,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="MpiStructBuilder_8cpp_source.html#l00029">29</a> of file <a class="el" href="MpiStructBuilder_8cpp_source.html">MpiStructBuilder.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Vector_8cpp_source.html#l00101">Vector::commitMpiType()</a>, <a class="el" href="Tensor_8cpp_source.html#l00114">Tensor::commitMpiType()</a>, <a class="el" href="SpeciesGroup_8tpp_source.html#l00062">SpeciesGroup&lt; NAtom &gt;::commitMpiType()</a>, <a class="el" href="SpeciesEnsemble_8cpp_source.html#l00101">SpeciesEnsemble::commitMpiType()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00165">PairSelector::commitMpiType()</a>, <a class="el" href="Pair_8h_source.html#l00069">Pair&lt; Data &gt;::commitMpiType()</a>, <a class="el" href="IntVector_8cpp_source.html#l00096">IntVector::commitMpiType()</a>, <a class="el" href="FArray_8h_source.html#l00291">FArray&lt; Data, Capacity &gt;::commitMpiType()</a>, <a class="el" href="EnergyEnsemble_8cpp_source.html#l00104">EnergyEnsemble::commitMpiType()</a>, and <a class="el" href="BoundaryEnsemble_8cpp_source.html#l00103">BoundaryEnsemble::commitMpiType()</a>.</p>
+<p>Referenced by <a class="el" href="Vector_8cpp_source.html#l00101">Util::Vector::commitMpiType()</a>, <a class="el" href="Tensor_8cpp_source.html#l00114">Util::Tensor::commitMpiType()</a>, <a class="el" href="SpeciesGroup_8tpp_source.html#l00062">McMd::SpeciesGroup&lt; NAtom &gt;::commitMpiType()</a>, <a class="el" href="SpeciesEnsemble_8cpp_source.html#l00101">Util::SpeciesEnsemble::commitMpiType()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00165">McMd::PairSelector::commitMpiType()</a>, <a class="el" href="Pair_8h_source.html#l00069">Util::Pair&lt; Data &gt;::commitMpiType()</a>, <a class="el" href="IntVector_8cpp_source.html#l00096">Util::IntVector::commitMpiType()</a>, <a class="el" href="FArray_8h_source.html#l00291">Util::FArray&lt; Data, Capacity &gt;::commitMpiType()</a>, <a class="el" href="EnergyEnsemble_8cpp_source.html#l00104">Util::EnergyEnsemble::commitMpiType()</a>, and <a class="el" href="BoundaryEnsemble_8cpp_source.html#l00103">Util::BoundaryEnsemble::commitMpiType()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0f12d9ca5f37ab23eae4d2ae7abb4e8f"></a><!-- doxytag: member="Util::MpiStructBuilder::commit" ref="a0f12d9ca5f37ab23eae4d2ae7abb4e8f" args="(MPI::Datatype &amp;newType)" -->
+<a class="anchor" id="ae95e12f80d3991fe0bd7848010924c25"></a><!-- doxytag: member="Util::MpiStructBuilder::commit" ref="ae95e12f80d3991fe0bd7848010924c25" args="(MPI::Datatype &amp;newType)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void commit </td>
+          <td class="memname">void Util::MpiStructBuilder::commit </td>
           <td>(</td>
           <td class="paramtype">MPI::Datatype &amp;&#160;</td>
           <td class="paramname"><em>newType</em></td><td>)</td>
@@ -200,7 +200,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Build and commit a user-defined MPI Struct datatype. </p>
-<p>The <a class="el" href="classUtil_1_1MpiStructBuilder.html#a5882a267b18044ab1149b71aea7d6b6d" title="Set address of an class instance.">setBase()</a> method must be called once and the <a class="el" href="classUtil_1_1MpiStructBuilder.html#aa91ba3ec4fb3b4f5a469a400f0f5e16a" title="Add a new member variable to the type map.">addMember()</a> method must be called once per member before calling this method.</p>
+<p>The <a class="el" href="classUtil_1_1MpiStructBuilder.html#a34f85f4a1e1c296ba324fe274ea22f24" title="Set address of an class instance.">setBase()</a> method must be called once and the <a class="el" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember()</a> method must be called once per member before calling this method.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">newType</td><td>new MPI datatype (on output). </td></tr>
@@ -210,7 +210,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="MpiStructBuilder_8cpp_source.html#l00042">42</a> of file <a class="el" href="MpiStructBuilder_8cpp_source.html">MpiStructBuilder.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Vector_8cpp_source.html#l00101">Vector::commitMpiType()</a>, <a class="el" href="Tensor_8cpp_source.html#l00114">Tensor::commitMpiType()</a>, <a class="el" href="SpeciesGroup_8tpp_source.html#l00062">SpeciesGroup&lt; NAtom &gt;::commitMpiType()</a>, <a class="el" href="SpeciesEnsemble_8cpp_source.html#l00101">SpeciesEnsemble::commitMpiType()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00165">PairSelector::commitMpiType()</a>, <a class="el" href="Pair_8h_source.html#l00069">Pair&lt; Data &gt;::commitMpiType()</a>, <a class="el" href="IntVector_8cpp_source.html#l00096">IntVector::commitMpiType()</a>, <a class="el" href="FArray_8h_source.html#l00291">FArray&lt; Data, Capacity &gt;::commitMpiType()</a>, <a class="el" href="EnergyEnsemble_8cpp_source.html#l00104">EnergyEnsemble::commitMpiType()</a>, and <a class="el" href="BoundaryEnsemble_8cpp_source.html#l00103">BoundaryEnsemble::commitMpiType()</a>.</p>
+<p>Referenced by <a class="el" href="Vector_8cpp_source.html#l00101">Util::Vector::commitMpiType()</a>, <a class="el" href="Tensor_8cpp_source.html#l00114">Util::Tensor::commitMpiType()</a>, <a class="el" href="SpeciesGroup_8tpp_source.html#l00062">McMd::SpeciesGroup&lt; NAtom &gt;::commitMpiType()</a>, <a class="el" href="SpeciesEnsemble_8cpp_source.html#l00101">Util::SpeciesEnsemble::commitMpiType()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00165">McMd::PairSelector::commitMpiType()</a>, <a class="el" href="Pair_8h_source.html#l00069">Util::Pair&lt; Data &gt;::commitMpiType()</a>, <a class="el" href="IntVector_8cpp_source.html#l00096">Util::IntVector::commitMpiType()</a>, <a class="el" href="FArray_8h_source.html#l00291">Util::FArray&lt; Data, Capacity &gt;::commitMpiType()</a>, <a class="el" href="EnergyEnsemble_8cpp_source.html#l00104">Util::EnergyEnsemble::commitMpiType()</a>, and <a class="el" href="BoundaryEnsemble_8cpp_source.html#l00103">Util::BoundaryEnsemble::commitMpiType()</a>.</p>
 
 </div>
 </div>
@@ -219,7 +219,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="MpiStructBuilder_8cpp_source.html">MpiStructBuilder.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

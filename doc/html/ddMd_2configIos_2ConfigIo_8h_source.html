@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -92,7 +92,7 @@
 <a name="l00052"></a>00052 
 <a name="l00058"></a>00058       <a class="code" href="classDdMd_1_1ConfigIo.html" title="Class to read and write configuration files.">ConfigIo</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation);
 <a name="l00059"></a>00059 
-<a name="l00065"></a>00065       <span class="keywordtype">void</span> associate(<a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain, Boundary&amp; boundary,
+<a name="l00065"></a>00065       <span class="keywordtype">void</span> associate(<a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain, <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary,
 <a name="l00066"></a>00066                      <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; atomStorage,
 <a name="l00067"></a>00067                      <a class="code" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a>&amp; bondStorage,
 <a name="l00068"></a>00068                      #ifdef INTER_ANGLE
@@ -115,7 +115,7 @@
 <a name="l00094"></a>00094                               #endif
 <a name="l00095"></a>00095                               );
 <a name="l00096"></a>00096 
-<a name="l00106"></a>00106       <span class="keyword">virtual</span> <span class="keywordtype">void</span> readConfig(std::istream&amp; file, <a class="code" href="group__DdMd__Chemistry__Module.html#gaa1f02e8296519cf153ffa60bcb0ef6a7" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> maskPolicy);
+<a name="l00106"></a>00106       <span class="keyword">virtual</span> <span class="keywordtype">void</span> readConfig(std::istream&amp; file, <a class="code" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> maskPolicy);
 <a name="l00107"></a>00107 
 <a name="l00116"></a>00116       <span class="keyword">virtual</span> <span class="keywordtype">void</span> writeConfig(std::ostream&amp; file);
 <a name="l00117"></a>00117 
@@ -147,7 +147,7 @@
 <a name="l00168"></a>00168 <span class="preprocessor"></span>
 <a name="l00172"></a>00172       <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain();
 <a name="l00173"></a>00173 
-<a name="l00177"></a>00177       Boundary&amp; boundary();
+<a name="l00177"></a>00177       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary();
 <a name="l00178"></a>00178    
 <a name="l00182"></a>00182       <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; atomStorage();
 <a name="l00183"></a>00183    
@@ -183,7 +183,7 @@
 <a name="l00220"></a>00220 <span class="preprocessor"></span>
 <a name="l00221"></a>00221       <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>* domainPtr_;
 <a name="l00222"></a>00222 
-<a name="l00223"></a>00223       Boundary* boundaryPtr_;
+<a name="l00223"></a>00223       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>* boundaryPtr_;
 <a name="l00224"></a>00224 
 <a name="l00225"></a>00225       <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>* atomStoragePtr_;
 <a name="l00226"></a>00226 
@@ -223,16 +223,16 @@
 <a name="l00266"></a>00266 
 <a name="l00267"></a>00267    <span class="comment">// Inline method definitions</span>
 <a name="l00268"></a>00268 
-<a name="l00269"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a4061a400fc3a2a7393aaaee3a0a8d738">00269</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomDistributor.html" title="Class for distributing Atoms among processors.">AtomDistributor</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#a4061a400fc3a2a7393aaaee3a0a8d738" title="Get the AtomDistributor by reference.">ConfigIo::atomDistributor</a>()
+<a name="l00269"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a8a6d0d92fdf8ee254bbb14cc2162e672">00269</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomDistributor.html" title="Class for distributing Atoms among processors.">AtomDistributor</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#a8a6d0d92fdf8ee254bbb14cc2162e672" title="Get the AtomDistributor by reference.">ConfigIo::atomDistributor</a>()
 <a name="l00270"></a>00270    { <span class="keywordflow">return</span> atomDistributor_; }
 <a name="l00271"></a>00271 
-<a name="l00272"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a20a2aec3473d4411a84923258128af7e">00272</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomCollector.html" title="Class for collecting Atoms from processors to master processor.">AtomCollector</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#a20a2aec3473d4411a84923258128af7e" title="Get the AtomCollector by reference.">ConfigIo::atomCollector</a>()
+<a name="l00272"></a><a class="code" href="classDdMd_1_1ConfigIo.html#ae2d6a3768f69720306d65e828f46cba7">00272</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomCollector.html" title="Class for collecting Atoms from processors to master processor.">AtomCollector</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#ae2d6a3768f69720306d65e828f46cba7" title="Get the AtomCollector by reference.">ConfigIo::atomCollector</a>()
 <a name="l00273"></a>00273    { <span class="keywordflow">return</span> atomCollector_; }
 <a name="l00274"></a>00274 
-<a name="l00275"></a><a class="code" href="classDdMd_1_1ConfigIo.html#afc349ee8e049fb13fd5f2552e92fe721">00275</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1GroupDistributor.html">GroupDistributor&lt;2&gt;</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#afc349ee8e049fb13fd5f2552e92fe721" title="Get the AtomDistributor by reference.">ConfigIo::bondDistributor</a>()
+<a name="l00275"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a3b10dc2fef0240450220f357e0e69864">00275</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1GroupDistributor.html">GroupDistributor&lt;2&gt;</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#a3b10dc2fef0240450220f357e0e69864" title="Get the AtomDistributor by reference.">ConfigIo::bondDistributor</a>()
 <a name="l00276"></a>00276    { <span class="keywordflow">return</span> bondDistributor_; }
 <a name="l00277"></a>00277 
-<a name="l00278"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a9c989bcc01a488af0105351267d19154">00278</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1GroupCollector.html">GroupCollector&lt;2&gt;</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#a9c989bcc01a488af0105351267d19154" title="Get the bond collector by reference.">ConfigIo::bondCollector</a>()
+<a name="l00278"></a><a class="code" href="classDdMd_1_1ConfigIo.html#af946ffe613ae3b7879f76674051b7dce">00278</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1GroupCollector.html">GroupCollector&lt;2&gt;</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#af946ffe613ae3b7879f76674051b7dce" title="Get the bond collector by reference.">ConfigIo::bondCollector</a>()
 <a name="l00279"></a>00279    { <span class="keywordflow">return</span> bondCollector_; }
 <a name="l00280"></a>00280 
 <a name="l00281"></a>00281 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
@@ -251,16 +251,16 @@
 <a name="l00294"></a>00294    { <span class="keywordflow">return</span> dihedralCollector_; }
 <a name="l00295"></a>00295 <span class="preprocessor">   #endif</span>
 <a name="l00296"></a>00296 <span class="preprocessor"></span>
-<a name="l00297"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a64ddaf9dd004b6c301f8f23e8995b6d1">00297</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#a64ddaf9dd004b6c301f8f23e8995b6d1" title="Get the Domain by reference.">ConfigIo::domain</a>()
+<a name="l00297"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a981f9fdec5a3c0fd49b27db4e59ba345">00297</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#a981f9fdec5a3c0fd49b27db4e59ba345" title="Get the Domain by reference.">ConfigIo::domain</a>()
 <a name="l00298"></a>00298    { <span class="keywordflow">return</span> *domainPtr_; }
 <a name="l00299"></a>00299 
-<a name="l00300"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a5daa73910cfb398e1ba647b4821d18ba">00300</a>    <span class="keyword">inline</span> Boundary&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#a5daa73910cfb398e1ba647b4821d18ba" title="Get Boundary by reference.">ConfigIo::boundary</a>()
+<a name="l00300"></a><a class="code" href="classDdMd_1_1ConfigIo.html#aa561695e34b6f85db7aabae5a19319eb">00300</a>    <span class="keyword">inline</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#aa561695e34b6f85db7aabae5a19319eb" title="Get Boundary by reference.">ConfigIo::boundary</a>()
 <a name="l00301"></a>00301    { <span class="keywordflow">return</span> *boundaryPtr_; }
 <a name="l00302"></a>00302 
-<a name="l00303"></a><a class="code" href="classDdMd_1_1ConfigIo.html#aa34b0aab4d37e8b42704954d57b5c126">00303</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#aa34b0aab4d37e8b42704954d57b5c126" title="Get AtomStorage by reference.">ConfigIo::atomStorage</a>()
+<a name="l00303"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a8ff8114f2fb6e24904857e63bb314435">00303</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#a8ff8114f2fb6e24904857e63bb314435" title="Get AtomStorage by reference.">ConfigIo::atomStorage</a>()
 <a name="l00304"></a>00304    { <span class="keywordflow">return</span> *atomStoragePtr_; }
 <a name="l00305"></a>00305 
-<a name="l00306"></a><a class="code" href="classDdMd_1_1ConfigIo.html#ac0ff8b7a630972e48ad29b007ae770de">00306</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#ac0ff8b7a630972e48ad29b007ae770de" title="Get BondStorage by reference.">ConfigIo::bondStorage</a>()
+<a name="l00306"></a><a class="code" href="classDdMd_1_1ConfigIo.html#a1489593cc1bc0d635d908c47ea4510a0">00306</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a>&amp; <a class="code" href="classDdMd_1_1ConfigIo.html#a1489593cc1bc0d635d908c47ea4510a0" title="Get BondStorage by reference.">ConfigIo::bondStorage</a>()
 <a name="l00307"></a>00307    { <span class="keywordflow">return</span> *bondStoragePtr_; }
 <a name="l00308"></a>00308 
 <a name="l00309"></a>00309 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
@@ -277,7 +277,7 @@
 <a name="l00320"></a>00320 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

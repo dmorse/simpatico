@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -41,7 +41,7 @@
 <h1>readParam() Methods </h1>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p>The format of the parameter file (discussed in <a class="el" href="param_page.html">Parameter File</a>) consists of a set of nested blocks, in which each block contains the data required to initialize an instance of a particular class. Each class that reads data from the parameter file is derived from the <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">Util::ParamComposite</a> base class, and must provide an implementation of the virtual <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf" title="Read all parameters from an input stream.">Util::ParamComposite::readParam()</a> method, which has a signature </p>
+<div class="textblock"><p>The format of the parameter file (discussed in <a class="el" href="param_page.html">Parameter File</a>) consists of a set of nested blocks, in which each block contains the data required to initialize an instance of a particular class. Each class that reads data from the parameter file is derived from the <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">Util::ParamComposite</a> base class, and must provide an implementation of the virtual <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724" title="Read all parameters from an input stream.">Util::ParamComposite::readParam()</a> method, which has a signature </p>
 <div class="fragment"><pre class="fragment">   <span class="keywordtype">void</span> readParam(std::istream&amp; in);
 </pre></div><p> The format of the associated parameter file block is defined by the implementation of the readParam method. The source code for the readParam() method of the associated class is thus the most reliable documentation of the file format for a parameter file block. It is thus useful for users (as well as developers) to be able to read the implementation of a readParam() method, so that they can check the source code to resolve any questions about the file format.</p>
 <p>The implementation of a readParam() method typically uses a several protected methods that are inherited from the parent <a class="el" href="classUtil_1_1ParamComposite.html" title="An object that can read multiple parameters from file.">Util::ParamComposite</a> class. These are: </p>
@@ -101,12 +101,12 @@ readEnd(std::istream&amp; in) reads the closing bracket of a parameter block.  <
 <li>
 <a class="el" href="test_page.html">Unit Tests</a> (Prev)  </li>
 <li>
-<a class="el" href="guide_page.html">User Guide</a> (Up)  </li>
+<a class="el" href="developer_page.html">Developer Information</a> (Up)  </li>
 <li>
 <a class="el" href="data_page.html">Data Structures (mcSim and mdSim)</a> (Next)  </li>
 </ul>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

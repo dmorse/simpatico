@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -83,30 +83,30 @@
 <a name="l00032"></a>00032    <span class="comment">/* </span>
 <a name="l00033"></a>00033 <span class="comment">   * Constructor.   </span>
 <a name="l00034"></a>00034 <span class="comment">   */</span>
-<a name="l00035"></a><a class="code" href="classMcMd_1_1LammpsConfigIo.html#a04fc6669a53be96309d29c41b17a8df7">00035</a>    <a class="code" href="classMcMd_1_1LammpsConfigIo.html#a04fc6669a53be96309d29c41b17a8df7" title="Constructor.">LammpsConfigIo::LammpsConfigIo</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> &amp;system) 
+<a name="l00035"></a><a class="code" href="classMcMd_1_1LammpsConfigIo.html#ae8959032555603ef37a08a6cfea328b2">00035</a>    <a class="code" href="classMcMd_1_1LammpsConfigIo.html#ae8959032555603ef37a08a6cfea328b2" title="Constructor.">LammpsConfigIo::LammpsConfigIo</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> &amp;system) 
 <a name="l00036"></a>00036    : <a class="code" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>(system)
 <a name="l00037"></a>00037    {}
 <a name="l00038"></a>00038  
 <a name="l00039"></a>00039    <span class="comment">/* </span>
 <a name="l00040"></a>00040 <span class="comment">   * Destructor.   </span>
 <a name="l00041"></a>00041 <span class="comment">   */</span>
-<a name="l00042"></a><a class="code" href="classMcMd_1_1LammpsConfigIo.html#a5a7a8543db6238b56eb92f275b0265a9">00042</a>    <a class="code" href="classMcMd_1_1LammpsConfigIo.html#a5a7a8543db6238b56eb92f275b0265a9" title="Destructor.">LammpsConfigIo::~LammpsConfigIo</a>() 
+<a name="l00042"></a><a class="code" href="classMcMd_1_1LammpsConfigIo.html#a4e3d79b7b74da8aaebf89b23ea13e083">00042</a>    <a class="code" href="classMcMd_1_1LammpsConfigIo.html#a4e3d79b7b74da8aaebf89b23ea13e083" title="Destructor.">LammpsConfigIo::~LammpsConfigIo</a>() 
 <a name="l00043"></a>00043    {}
 <a name="l00044"></a>00044 
-<a name="l00045"></a><a class="code" href="classMcMd_1_1LammpsConfigIo.html#a8b985440832ee211c81e433c3038f640">00045</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LammpsConfigIo.html#a8b985440832ee211c81e433c3038f640" title="Read configuration (particle positions) from file.">LammpsConfigIo::read</a>(std::istream &amp;in)
+<a name="l00045"></a><a class="code" href="classMcMd_1_1LammpsConfigIo.html#a2bd48e73d26aff306bfe1d1d94c661a5">00045</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LammpsConfigIo.html#a2bd48e73d26aff306bfe1d1d94c661a5" title="Read configuration (particle positions) from file.">LammpsConfigIo::read</a>(std::istream &amp;in)
 <a name="l00046"></a>00046    {
 <a name="l00047"></a>00047       <span class="comment">// Calculate atomCapacity for entire simulation</span>
 <a name="l00048"></a>00048       <span class="keywordtype">int</span> atomCapacity = 0;
 <a name="l00049"></a>00049       <span class="keywordtype">int</span> bondCapacity = 0;
-<a name="l00050"></a>00050       <span class="keywordtype">int</span> nSpecies = <a class="code" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>();
+<a name="l00050"></a>00050       <span class="keywordtype">int</span> nSpecies = <a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>();
 <a name="l00051"></a>00051       <span class="keywordtype">int</span> speciesCapacity = 0;
 <a name="l00052"></a>00052       <span class="keywordtype">int</span> iSpec, i;
 <a name="l00053"></a>00053       <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>* speciesPtr;
 <a name="l00054"></a>00054       <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpecies; ++iSpec) {
-<a name="l00055"></a>00055          speciesPtr = &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#aa235ed92aee83e7119b594bd4ea2a49a" title="Get a specific Species by reference.">species</a>(iSpec);
-<a name="l00056"></a>00056          speciesCapacity = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a104736719cd4e5f21c25705c77064dde" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
-<a name="l00057"></a>00057          atomCapacity   += speciesCapacity*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>();
-<a name="l00058"></a>00058          bondCapacity   += speciesCapacity*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a03a7ae70b3c47d3439a3459d072ad300" title="Get number of bonds per molecule for this Species.">nBond</a>();
+<a name="l00055"></a>00055          speciesPtr = &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpec);
+<a name="l00056"></a>00056          speciesCapacity = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00057"></a>00057          atomCapacity   += speciesCapacity*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00058"></a>00058          bondCapacity   += speciesCapacity*speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>();
 <a name="l00059"></a>00059       }
 <a name="l00060"></a>00060 
 <a name="l00061"></a>00061 
@@ -150,7 +150,7 @@
 <a name="l00099"></a>00099       in &gt;&gt; nDihedralType &gt;&gt; Label(<span class="stringliteral">&quot;dihedral&quot;</span>) &gt;&gt; Label(<span class="stringliteral">&quot;types&quot;</span>);
 <a name="l00100"></a>00100       in &gt;&gt; nImproperType &gt;&gt; Label(<span class="stringliteral">&quot;improper&quot;</span>) &gt;&gt; Label(<span class="stringliteral">&quot;types&quot;</span>);
 <a name="l00101"></a>00101 
-<a name="l00102"></a>00102       <span class="keywordflow">if</span> (nAtomType &gt; <a class="code" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">simulation</a>().nAtomType()) {
+<a name="l00102"></a>00102       <span class="keywordflow">if</span> (nAtomType &gt; <a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().nAtomType()) {
 <a name="l00103"></a>00103          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtomType &gt; simulation().nAtomType()&quot;</span>);
 <a name="l00104"></a>00104       } 
 <a name="l00105"></a>00105 
@@ -161,8 +161,8 @@
 <a name="l00110"></a>00110       in &gt;&gt; min[0] &gt;&gt; max[0] &gt;&gt; Label(<span class="stringliteral">&quot;xlo&quot;</span>) &gt;&gt; Label(<span class="stringliteral">&quot;xhi&quot;</span>);
 <a name="l00111"></a>00111       in &gt;&gt; min[1] &gt;&gt; max[1] &gt;&gt; Label(<span class="stringliteral">&quot;ylo&quot;</span>) &gt;&gt; Label(<span class="stringliteral">&quot;yhi&quot;</span>);
 <a name="l00112"></a>00112       in &gt;&gt; min[2] &gt;&gt; max[2] &gt;&gt; Label(<span class="stringliteral">&quot;zlo&quot;</span>) &gt;&gt; Label(<span class="stringliteral">&quot;zhi&quot;</span>);
-<a name="l00113"></a>00113       lengths.<a class="code" href="classUtil_1_1Vector.html#a1d7c5b73ae56a7ad991a6c54517698c2" title="Subtract vector v2 from v1.">subtract</a>(max, min);
-<a name="l00114"></a>00114       <a class="code" href="classMcMd_1_1ConfigIo.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary.">boundary</a>().setLengths(lengths);
+<a name="l00113"></a>00113       lengths.<a class="code" href="classUtil_1_1Vector.html#a7e6de9bb77beddc412ab6055957656cc" title="Subtract vector v2 from v1.">subtract</a>(max, min);
+<a name="l00114"></a>00114       <a class="code" href="classMcMd_1_1ConfigIo.html#ab7939cdcfe6174017d8f6689a70230e6" title="Get the Boundary.">boundary</a>().setLengths(lengths);
 <a name="l00115"></a>00115 
 <a name="l00116"></a>00116       <span class="comment">// Read particle masses (discard values)</span>
 <a name="l00117"></a>00117       <span class="keywordtype">double</span> mass;
@@ -183,18 +183,18 @@
 <a name="l00132"></a>00132       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>                shift;
 <a name="l00133"></a>00133       <span class="keywordtype">int</span> atomId, molId, iMol, nMolecule;
 <a name="l00134"></a>00134       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; nSpecies; ++iSpec) {
-<a name="l00135"></a>00135          speciesPtr = &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#aa235ed92aee83e7119b594bd4ea2a49a" title="Get a specific Species by reference.">species</a>(iSpec);
-<a name="l00136"></a>00136          nMolecule  = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a104736719cd4e5f21c25705c77064dde" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
+<a name="l00135"></a>00135          speciesPtr = &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpec);
+<a name="l00136"></a>00136          nMolecule  = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7" title="Get total number of Molecule objects allocated for this Species.">capacity</a>();
 <a name="l00137"></a>00137          <span class="keywordflow">for</span> (iMol = 0; iMol &lt; nMolecule; ++iMol) {
-<a name="l00138"></a>00138             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5c347060621ccff81193a1674ae34891" title="Get the reservoir for this Species by reference.">reservoir</a>().pop());
-<a name="l00139"></a>00139             <a class="code" href="classMcMd_1_1ConfigIo.html#a4a3af9eda1fe22f46d6209a7d29aa020" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#a939f190986aed5350c92022b59cab7b4" title="Add a Molecule to this System.">addMolecule</a>(*molPtr);
+<a name="l00138"></a>00138             molPtr = &amp;(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2" title="Get the reservoir for this Species by reference.">reservoir</a>().pop());
+<a name="l00139"></a>00139             <a class="code" href="classMcMd_1_1ConfigIo.html#a3f20f914433938f289522c221751c5aa" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#a5311d7245d55b3efa0848ed040b053b3" title="Add a Molecule to this System.">addMolecule</a>(*molPtr);
 <a name="l00140"></a>00140    
-<a name="l00141"></a>00141             <span class="keywordflow">if</span> (molPtr != &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#a4a3af9eda1fe22f46d6209a7d29aa020" title="Get a reference to the parent System.">system</a>().molecule(iSpec, iMol)) {
+<a name="l00141"></a>00141             <span class="keywordflow">if</span> (molPtr != &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#a3f20f914433938f289522c221751c5aa" title="Get a reference to the parent System.">system</a>().molecule(iSpec, iMol)) {
 <a name="l00142"></a>00142                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Molecule index error&quot;</span>);
 <a name="l00143"></a>00143             }
 <a name="l00144"></a>00144    
 <a name="l00145"></a>00145             <span class="comment">// Read positions, shift into primary cell</span>
-<a name="l00146"></a>00146             <span class="keywordflow">for</span> (molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ade5ca539682da662dd30b2628d4d21c7" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00146"></a>00146             <span class="keywordflow">for</span> (molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a593e8b56859b59dc753ff342a8063022" title="Set an Molecule::AtomIterator to first Atom in this Molecule.">begin</a>(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00147"></a>00147 
 <a name="l00148"></a>00148                in &gt;&gt; atomId &gt;&gt; molId &gt;&gt; atomTypeId;
 <a name="l00149"></a>00149                <span class="keywordflow">if</span> (atomId != atomIter-&gt;id() + 1) 
@@ -217,7 +217,7 @@
 <a name="l00166"></a>00166    }
 <a name="l00167"></a>00167 
 <a name="l00168"></a>00168 
-<a name="l00169"></a><a class="code" href="classMcMd_1_1LammpsConfigIo.html#a4d3e77f085209778908a6869118d385e">00169</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LammpsConfigIo.html#a4d3e77f085209778908a6869118d385e" title="Write configuration (particle positions) to file.">LammpsConfigIo::write</a>(std::ostream &amp;out)
+<a name="l00169"></a><a class="code" href="classMcMd_1_1LammpsConfigIo.html#a40ff6721c3cc30f736b02a37db887d24">00169</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LammpsConfigIo.html#a40ff6721c3cc30f736b02a37db887d24" title="Write configuration (particle positions) to file.">LammpsConfigIo::write</a>(std::ostream &amp;out)
 <a name="l00170"></a>00170    {
 <a name="l00171"></a>00171       <span class="keyword">using</span> std::endl;
 <a name="l00172"></a>00172 
@@ -230,15 +230,15 @@
 <a name="l00179"></a>00179       <span class="keywordtype">int</span>       iSpec, nMolecule;
 <a name="l00180"></a>00180       <span class="keywordtype">int</span>       nAtom = 0;
 <a name="l00181"></a>00181       <span class="keywordtype">int</span>       nBond = 0;
-<a name="l00182"></a>00182       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
-<a name="l00183"></a>00183          speciesPtr = &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#aa235ed92aee83e7119b594bd4ea2a49a" title="Get a specific Species by reference.">species</a>(iSpec);
-<a name="l00184"></a>00184          nMolecule  = <a class="code" href="classMcMd_1_1ConfigIo.html#a4a3af9eda1fe22f46d6209a7d29aa020" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#afeb11722e2573abb727e2267538df604" title="Get the number of molecules of one Species in this System.">nMolecule</a>(iSpec);
-<a name="l00185"></a>00185          nAtom += nMolecule*(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>());
-<a name="l00186"></a>00186          nBond += nMolecule*(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a03a7ae70b3c47d3439a3459d072ad300" title="Get number of bonds per molecule for this Species.">nBond</a>());
+<a name="l00182"></a>00182       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
+<a name="l00183"></a>00183          speciesPtr = &amp;<a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a8d54e049a2fe0266fc26fbe9bc8441d5" title="Get a specific Species by reference.">species</a>(iSpec);
+<a name="l00184"></a>00184          nMolecule  = <a class="code" href="classMcMd_1_1ConfigIo.html#a3f20f914433938f289522c221751c5aa" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#a8784ff471540e53f5c1e40a55cabf6c6" title="Get the number of molecules of one Species in this System.">nMolecule</a>(iSpec);
+<a name="l00185"></a>00185          nAtom += nMolecule*(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>());
+<a name="l00186"></a>00186          nBond += nMolecule*(speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5" title="Get number of bonds per molecule for this Species.">nBond</a>());
 <a name="l00187"></a>00187       }
 <a name="l00188"></a>00188 
 <a name="l00189"></a>00189       <span class="comment">// Write numbers of atoms, bonds, etc.</span>
-<a name="l00190"></a>00190       <a class="code" href="classUtil_1_1Format.html#aacda655b39cf12712a5c25b65dc41187" title="Set the default output field width.">Format::setDefaultWidth</a>(8);
+<a name="l00190"></a>00190       <a class="code" href="classUtil_1_1Format.html#ac74f4b64bc83811fcd5e5f1a13b1e87f" title="Set the default output field width.">Format::setDefaultWidth</a>(8);
 <a name="l00191"></a>00191       out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(nAtom) &lt;&lt; <span class="stringliteral">&quot; atoms    &quot;</span> &lt;&lt; endl;
 <a name="l00192"></a>00192       out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(nBond) &lt;&lt; <span class="stringliteral">&quot; bonds    &quot;</span> &lt;&lt; endl;
 <a name="l00193"></a>00193       out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(0)     &lt;&lt; <span class="stringliteral">&quot; angles   &quot;</span> &lt;&lt; endl;
@@ -247,18 +247,18 @@
 <a name="l00196"></a>00196       out &lt;&lt; endl;
 <a name="l00197"></a>00197 
 <a name="l00198"></a>00198       <span class="comment">// Write numbers of atom types, bond types, etc.</span>
-<a name="l00199"></a>00199       <a class="code" href="classUtil_1_1Format.html#aacda655b39cf12712a5c25b65dc41187" title="Set the default output field width.">Format::setDefaultWidth</a>(5);
-<a name="l00200"></a>00200       out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">simulation</a>().nAtomType()) &lt;&lt; <span class="stringliteral">&quot; atom types&quot;</span> &lt;&lt; endl;
-<a name="l00201"></a>00201       out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">simulation</a>().nBondType()) &lt;&lt; <span class="stringliteral">&quot; bond types&quot;</span> &lt;&lt; endl;
+<a name="l00199"></a>00199       <a class="code" href="classUtil_1_1Format.html#ac74f4b64bc83811fcd5e5f1a13b1e87f" title="Set the default output field width.">Format::setDefaultWidth</a>(5);
+<a name="l00200"></a>00200       out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().nAtomType()) &lt;&lt; <span class="stringliteral">&quot; atom types&quot;</span> &lt;&lt; endl;
+<a name="l00201"></a>00201       out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().nBondType()) &lt;&lt; <span class="stringliteral">&quot; bond types&quot;</span> &lt;&lt; endl;
 <a name="l00202"></a>00202       out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(0) &lt;&lt; <span class="stringliteral">&quot; angle types&quot;</span> &lt;&lt; endl;
 <a name="l00203"></a>00203       out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(0) &lt;&lt; <span class="stringliteral">&quot; dihedral types&quot;</span> &lt;&lt; endl;
 <a name="l00204"></a>00204       out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(0) &lt;&lt; <span class="stringliteral">&quot; improper types&quot;</span> &lt;&lt; endl;
 <a name="l00205"></a>00205       out &lt;&lt; endl;
 <a name="l00206"></a>00206 
 <a name="l00207"></a>00207       <span class="comment">// Write Boundary dimensions</span>
-<a name="l00208"></a>00208       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> lengths = <a class="code" href="classMcMd_1_1ConfigIo.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary.">boundary</a>().lengths();
-<a name="l00209"></a>00209       <a class="code" href="classUtil_1_1Format.html#aacda655b39cf12712a5c25b65dc41187" title="Set the default output field width.">Format::setDefaultWidth</a>(15);
-<a name="l00210"></a>00210       <a class="code" href="classUtil_1_1Format.html#aaf40434ffdd494ea136f5c20448570af" title="Set the default output precision.">Format::setDefaultPrecision</a>(7);
+<a name="l00208"></a>00208       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> lengths = <a class="code" href="classMcMd_1_1ConfigIo.html#ab7939cdcfe6174017d8f6689a70230e6" title="Get the Boundary.">boundary</a>().lengths();
+<a name="l00209"></a>00209       <a class="code" href="classUtil_1_1Format.html#ac74f4b64bc83811fcd5e5f1a13b1e87f" title="Set the default output field width.">Format::setDefaultWidth</a>(15);
+<a name="l00210"></a>00210       <a class="code" href="classUtil_1_1Format.html#a8af41659ebb3de8137359e1a4a4947f7" title="Set the default output precision.">Format::setDefaultPrecision</a>(7);
 <a name="l00211"></a>00211       out &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(0.0) &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(lengths[0]) &lt;&lt; <span class="stringliteral">&quot;  xlo xhi&quot;</span> &lt;&lt; endl;
 <a name="l00212"></a>00212       out &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(0.0) &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(lengths[1]) &lt;&lt; <span class="stringliteral">&quot;  ylo yhi&quot;</span> &lt;&lt; endl;
 <a name="l00213"></a>00213       out &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(0.0) &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(lengths[2]) &lt;&lt; <span class="stringliteral">&quot;  zlo zhi&quot;</span> &lt;&lt; endl;
@@ -268,7 +268,7 @@
 <a name="l00217"></a>00217       <span class="comment">// lammps atom type = Simpatico atom type + 1</span>
 <a name="l00218"></a>00218       out &lt;&lt; <span class="stringliteral">&quot;Masses&quot;</span> &lt;&lt; endl;
 <a name="l00219"></a>00219       out &lt;&lt; endl;
-<a name="l00220"></a>00220       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iType = 0; iType &lt; <a class="code" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a75990126a7bab14aff4a94db42b29f61" title="Get the number of atom types.">nAtomType</a>(); ++iType) {
+<a name="l00220"></a>00220       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iType = 0; iType &lt; <a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#a54f547a8259478908be74fff6e76ba70" title="Get the number of atom types.">nAtomType</a>(); ++iType) {
 <a name="l00221"></a>00221           out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(iType+1, 5) &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(1.0) &lt;&lt; endl;
 <a name="l00222"></a>00222       }
 <a name="l00223"></a>00223       out &lt;&lt; endl;
@@ -282,13 +282,13 @@
 <a name="l00231"></a>00231       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a>   atomIter;
 <a name="l00232"></a>00232       <span class="keywordtype">int</span> i;
 <a name="l00233"></a>00233       <span class="keywordtype">int</span> shift = 0;
-<a name="l00234"></a>00234       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
-<a name="l00235"></a>00235          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1ConfigIo.html#a4a3af9eda1fe22f46d6209a7d29aa020" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00236"></a>00236             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00234"></a>00234       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
+<a name="l00235"></a>00235          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1ConfigIo.html#a3f20f914433938f289522c221751c5aa" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00236"></a>00236             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00237"></a>00237                out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>( atomIter-&gt;id() + 1, 8 ) &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>( molIter-&gt;id() + 1, 8 );
 <a name="l00238"></a>00238                out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>( atomIter-&gt;typeId() + 1, 5 );
 <a name="l00239"></a>00239                out &lt;&lt; atomIter-&gt;position();
-<a name="l00240"></a>00240                <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00240"></a>00240                <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00241"></a>00241                   out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(shift, 4);
 <a name="l00242"></a>00242                }
 <a name="l00243"></a>00243                out &lt;&lt; endl;
@@ -302,9 +302,9 @@
 <a name="l00251"></a>00251       out &lt;&lt; endl;
 <a name="l00252"></a>00252       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::BondIterator</a> bondIter;
 <a name="l00253"></a>00253       <span class="keywordtype">int</span>                    iBond = 1;
-<a name="l00254"></a>00254       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1ConfigIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
-<a name="l00255"></a>00255          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1ConfigIo.html#a4a3af9eda1fe22f46d6209a7d29aa020" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00256"></a>00256             <span class="keywordflow">for</span> (molIter-&gt;begin(bondIter); bondIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++bondIter) {
+<a name="l00254"></a>00254       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1ConfigIo.html#a2dba6a4e4d905af80bb8f5d782c3bfb8" title="Get a reference to the parent Simulation.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
+<a name="l00255"></a>00255          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1ConfigIo.html#a3f20f914433938f289522c221751c5aa" title="Get a reference to the parent System.">system</a>().<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00256"></a>00256             <span class="keywordflow">for</span> (molIter-&gt;begin(bondIter); bondIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++bondIter) {
 <a name="l00257"></a>00257                out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(iBond, 8 ) &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(bondIter-&gt;typeId() + 1, 5);
 <a name="l00258"></a>00258                out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(bondIter-&gt;atom(0).id() + 1, 8);
 <a name="l00259"></a>00259                out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(bondIter-&gt;atom(1).id() + 1, 8);
@@ -316,14 +316,14 @@
 <a name="l00265"></a>00265       out &lt;&lt; endl;
 <a name="l00266"></a>00266 
 <a name="l00267"></a>00267       <span class="comment">// Reset Format defaults to initialization values</span>
-<a name="l00268"></a>00268       <a class="code" href="classUtil_1_1Format.html#a608e10d093425c9228f10ed3c4994598" title="Initialize or reset default width and precision values.">Format::initStatic</a>();
+<a name="l00268"></a>00268       <a class="code" href="classUtil_1_1Format.html#a2bbb0cd30d1f0afa35737b9eacda4b6a" title="Initialize or reset default width and precision values.">Format::initStatic</a>();
 <a name="l00269"></a>00269    }
 <a name="l00270"></a>00270  
 <a name="l00271"></a>00271 } 
 <a name="l00272"></a>00272 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -73,32 +73,32 @@
 <a name="l00037"></a>00037    
 <a name="l00038"></a>00038    <span class="keyword">public</span>:
 <a name="l00039"></a>00039 
-<a name="l00045"></a>00045       <a class="code" href="classUtil_1_1Average.html#a0f2217d225aac73076c9ed4a0f74fc28" title="Constructor.">Average</a>(<span class="keywordtype">int</span> blockFactor = 2);
+<a name="l00045"></a>00045       <a class="code" href="classUtil_1_1Average.html#a12391edd4804bdd1f90e3bd447789470" title="Constructor.">Average</a>(<span class="keywordtype">int</span> blockFactor = 2);
 <a name="l00046"></a>00046    
-<a name="l00050"></a>00050       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1Average.html#af22ad60c3ff7238ca7071fcee0ca448a" title="Destructor.">~Average</a>();
+<a name="l00050"></a>00050       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1Average.html#a365dbabdde7ff7e10445168b8563f1c7" title="Destructor.">~Average</a>();
 <a name="l00051"></a>00051    
-<a name="l00055"></a>00055       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ac8bb3912a3ce86b15842e79d0b421204" title="Initialize accumulators to zero initial state.">clear</a>();
+<a name="l00055"></a>00055       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de" title="Initialize accumulators to zero initial state.">clear</a>();
 <a name="l00056"></a>00056    
-<a name="l00065"></a>00065       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file and initialize.">readParam</a>(std::istream&amp; in);
+<a name="l00065"></a>00065       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#aeade87cb077818bdd16fb923f78c2464" title="Read parameters from file and initialize.">readParam</a>(std::istream&amp; in);
 <a name="l00066"></a>00066    
-<a name="l00077"></a>00077       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ab7bbb9824f0f48033a2de3bed435fc70" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(<span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Average.html#a6f58754b6c74f76a35e309a6dec00657" title="Get nSamplePerBlock.">nSamplePerBlock</a>);
+<a name="l00077"></a>00077       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock</a>(<span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Average.html#a4fe42669fbf31981f9dc0a54aab70d9f" title="Get nSamplePerBlock.">nSamplePerBlock</a>);
 <a name="l00078"></a>00078   
-<a name="l00085"></a>00085       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ad996b3f89b7ae529fe991f75b2db0616" title="Add a sampled value to the ensemble, and output block averages.">sample</a>(<span class="keywordtype">double</span> value, std::ostream&amp; out);
+<a name="l00085"></a>00085       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block averages.">sample</a>(<span class="keywordtype">double</span> value, std::ostream&amp; out);
 <a name="l00086"></a>00086  
-<a name="l00095"></a>00095       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ad996b3f89b7ae529fe991f75b2db0616" title="Add a sampled value to the ensemble, and output block averages.">sample</a>(<span class="keywordtype">double</span> value);
+<a name="l00095"></a>00095       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block averages.">sample</a>(<span class="keywordtype">double</span> value);
 <a name="l00096"></a>00096  
-<a name="l00102"></a>00102       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a012e48b5ec7769b2e5614bd6b3a62488" title="Output final statistical properties to file.">output</a>(std::ostream&amp; out);
+<a name="l00102"></a>00102       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a08634c8f7a1c8791a77168b70f6884e4" title="Output final statistical properties to file.">output</a>(std::ostream&amp; out);
 <a name="l00103"></a>00103   
-<a name="l00109"></a>00109       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Average.html#a6f58754b6c74f76a35e309a6dec00657" title="Get nSamplePerBlock.">nSamplePerBlock</a>();
+<a name="l00109"></a>00109       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Average.html#a4fe42669fbf31981f9dc0a54aab70d9f" title="Get nSamplePerBlock.">nSamplePerBlock</a>();
 <a name="l00110"></a>00110 
-<a name="l00114"></a>00114       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#aef7167a2340365892dc0f921a260383f" title="Add pointer to a descendant to an array.">registerDescendant</a>(<a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* descendantPtr);
+<a name="l00114"></a>00114       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a80703978c5aceecac2ff2a273fd1efc9" title="Add pointer to a descendant to an array.">registerDescendant</a>(<a class="code" href="classUtil_1_1AverageStage.html" title="A hierarchical block average algorithm.">AverageStage</a>* descendantPtr);
 <a name="l00115"></a>00115          
 <a name="l00122"></a>00122       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00123"></a>00123       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a6765e839ab267e4959384e35a4112451" title="Serialize this Average to or from an archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00123"></a>00123       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ad4432617b146a26af64c59a677de83bc" title="Serialize this Average to or from an archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00124"></a>00124 
 <a name="l00125"></a>00125    <span class="keyword">private</span>:
 <a name="l00126"></a>00126    
-<a name="l00135"></a>00135       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ad996b3f89b7ae529fe991f75b2db0616" title="Add a sampled value to the ensemble, and output block averages.">sample</a>(<span class="keywordtype">double</span> value, std::ostream* outPtr);
+<a name="l00135"></a>00135       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block averages.">sample</a>(<span class="keywordtype">double</span> value, std::ostream* outPtr);
 <a name="l00136"></a>00136 
 <a name="l00138"></a>00138       std::vector&lt;AverageStage*&gt; descendants_;
 <a name="l00139"></a>00139  
@@ -108,7 +108,7 @@
 <a name="l00145"></a>00145       
 <a name="l00147"></a>00147       <span class="keywordtype">int</span>    nSamplePerBlock_;  
 <a name="l00148"></a>00148 
-<a name="l00150"></a>00150       <a class="code" href="classUtil_1_1Average.html#a0f2217d225aac73076c9ed4a0f74fc28" title="Constructor.">Average</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Average.html" title="Calculates the average and variance of a sampled property.">Average</a>&amp; other);
+<a name="l00150"></a>00150       <a class="code" href="classUtil_1_1Average.html#a12391edd4804bdd1f90e3bd447789470" title="Constructor.">Average</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Average.html" title="Calculates the average and variance of a sampled property.">Average</a>&amp; other);
 <a name="l00151"></a>00151 
 <a name="l00153"></a>00153       <a class="code" href="classUtil_1_1Average.html" title="Calculates the average and variance of a sampled property.">Average</a>&amp; operator = (<span class="keyword">const</span> <a class="code" href="classUtil_1_1Average.html" title="Calculates the average and variance of a sampled property.">Average</a>&amp; other);
 <a name="l00154"></a>00154      
@@ -119,22 +119,22 @@
 <a name="l00159"></a>00159    <span class="comment">/*</span>
 <a name="l00160"></a>00160 <span class="comment">   * Add a sampled value to the ensemble, and output block averages.</span>
 <a name="l00161"></a>00161 <span class="comment">   */</span>
-<a name="l00162"></a><a class="code" href="classUtil_1_1Average.html#ad996b3f89b7ae529fe991f75b2db0616">00162</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ad996b3f89b7ae529fe991f75b2db0616" title="Add a sampled value to the ensemble, and output block averages.">Average::sample</a>(<span class="keywordtype">double</span> value, std::ostream&amp; out)
-<a name="l00163"></a>00163    {  <a class="code" href="classUtil_1_1Average.html#ad996b3f89b7ae529fe991f75b2db0616" title="Add a sampled value to the ensemble, and output block averages.">sample</a>(value, &amp;out); }
+<a name="l00162"></a><a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de">00162</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block averages.">Average::sample</a>(<span class="keywordtype">double</span> value, std::ostream&amp; out)
+<a name="l00163"></a>00163    {  <a class="code" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de" title="Add a sampled value to the ensemble, and output block averages.">sample</a>(value, &amp;out); }
 <a name="l00164"></a>00164  
 <a name="l00165"></a>00165    <span class="comment">/*</span>
 <a name="l00166"></a>00166 <span class="comment">   * Get nSamplePerBlock. </span>
 <a name="l00167"></a>00167 <span class="comment">   */</span>
-<a name="l00168"></a><a class="code" href="classUtil_1_1Average.html#a6f58754b6c74f76a35e309a6dec00657">00168</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Average.html#a6f58754b6c74f76a35e309a6dec00657" title="Get nSamplePerBlock.">Average::nSamplePerBlock</a>()
+<a name="l00168"></a><a class="code" href="classUtil_1_1Average.html#a4fe42669fbf31981f9dc0a54aab70d9f">00168</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Average.html#a4fe42669fbf31981f9dc0a54aab70d9f" title="Get nSamplePerBlock.">Average::nSamplePerBlock</a>()
 <a name="l00169"></a>00169    {  <span class="keywordflow">return</span> nSamplePerBlock_; }
 <a name="l00170"></a>00170 
 <a name="l00171"></a>00171    <span class="comment">/*</span>
 <a name="l00172"></a>00172 <span class="comment">   * Serialize this Average.</span>
 <a name="l00173"></a>00173 <span class="comment">   */</span>
 <a name="l00174"></a>00174    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00175"></a><a class="code" href="classUtil_1_1Average.html#a6765e839ab267e4959384e35a4112451">00175</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#a6765e839ab267e4959384e35a4112451" title="Serialize this Average to or from an archive.">Average::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00175"></a><a class="code" href="classUtil_1_1Average.html#ad4432617b146a26af64c59a677de83bc">00175</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Average.html#ad4432617b146a26af64c59a677de83bc" title="Serialize this Average to or from an archive.">Average::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00176"></a>00176    {
-<a name="l00177"></a>00177       <a class="code" href="classUtil_1_1Average.html#a6765e839ab267e4959384e35a4112451" title="Serialize this Average to or from an archive.">AverageStage::serialize</a>(ar, version);
+<a name="l00177"></a>00177       <a class="code" href="classUtil_1_1Average.html#ad4432617b146a26af64c59a677de83bc" title="Serialize this Average to or from an archive.">AverageStage::serialize</a>(ar, version);
 <a name="l00178"></a>00178       ar &amp; blockSum_;    
 <a name="l00179"></a>00179       ar &amp; iBlock_;     
 <a name="l00180"></a>00180       ar &amp; nSamplePerBlock_;  
@@ -144,7 +144,7 @@
 <a name="l00184"></a>00184 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

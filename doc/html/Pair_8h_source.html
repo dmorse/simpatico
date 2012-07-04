@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -72,13 +72,13 @@
 <a name="l00026"></a>00026 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00027"></a>00027 <span class="preprocessor"></span>      <span class="keyword">public</span>:
 <a name="l00028"></a>00028 
-<a name="l00032"></a>00032       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Pair.html#a8170d98ea8b055e49ef256d15cfbc5af" title="Commit associated MPI DataType.">commitMpiType</a>();
+<a name="l00032"></a>00032       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Pair.html#a895c64b78e9dac32196231986c7f9fdf" title="Commit associated MPI DataType.">commitMpiType</a>();
 <a name="l00033"></a>00033 <span class="preprocessor">      #endif</span>
 <a name="l00034"></a>00034 <span class="preprocessor"></span>
 <a name="l00035"></a>00035    };
 <a name="l00036"></a>00036 
 <a name="l00043"></a>00043    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00044"></a><a class="code" href="namespaceUtil.html#a43d41a4dd61121fa7b705a3b506bd598">00044</a>    std::istream&amp; <a class="code" href="namespaceUtil.html#a993c7220c84aadae4eb1085cef083e74" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Pair.html" title="An array of exactly 2 objects.">Pair&lt;Data&gt;</a> &amp;pair)
+<a name="l00044"></a><a class="code" href="namespaceUtil.html#a43d41a4dd61121fa7b705a3b506bd598">00044</a>    std::istream&amp; <a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Pair.html" title="An array of exactly 2 objects.">Pair&lt;Data&gt;</a> &amp;pair)
 <a name="l00045"></a>00045    {
 <a name="l00046"></a>00046       in &gt;&gt; pair[0] &gt;&gt; pair[1];
 <a name="l00047"></a>00047       <span class="keywordflow">return</span> in;
@@ -97,15 +97,15 @@
 <a name="l00066"></a>00066 <span class="comment">   * Commit associated MPI Datatype.</span>
 <a name="l00067"></a>00067 <span class="comment">   */</span>
 <a name="l00068"></a>00068    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00069"></a><a class="code" href="classUtil_1_1Pair.html#a8170d98ea8b055e49ef256d15cfbc5af">00069</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Pair.html#a8170d98ea8b055e49ef256d15cfbc5af" title="Commit associated MPI DataType.">Pair&lt;Data&gt;::commitMpiType</a>() 
+<a name="l00069"></a><a class="code" href="classUtil_1_1Pair.html#a895c64b78e9dac32196231986c7f9fdf">00069</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Pair.html#a895c64b78e9dac32196231986c7f9fdf" title="Commit associated MPI DataType.">Pair&lt;Data&gt;::commitMpiType</a>() 
 <a name="l00070"></a>00070    {
 <a name="l00071"></a>00071       <span class="keywordflow">if</span> (!<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt; <a class="code" href="classUtil_1_1Pair.html" title="An array of exactly 2 objects.">Pair&lt;Data&gt;</a> &gt;::hasType) {
 <a name="l00072"></a>00072          <a class="code" href="classUtil_1_1MpiStructBuilder.html" title="A MpiStructBuilder objects is used to create an MPI Struct datatype.">MpiStructBuilder</a> builder;
 <a name="l00073"></a>00073          <a class="code" href="classUtil_1_1Pair.html" title="An array of exactly 2 objects.">Pair&lt;Data&gt;</a>       object;
-<a name="l00074"></a>00074          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a5882a267b18044ab1149b71aea7d6b6d" title="Set address of an class instance.">setBase</a>(&amp;<span class="keywordtype">object</span>);
-<a name="l00075"></a>00075          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#aa91ba3ec4fb3b4f5a469a400f0f5e16a" title="Add a new member variable to the type map.">addMember</a>(&amp;<span class="keywordtype">object</span>[0], <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;Data&gt;::type</a>);
-<a name="l00076"></a>00076          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#aa91ba3ec4fb3b4f5a469a400f0f5e16a" title="Add a new member variable to the type map.">addMember</a>(&amp;<span class="keywordtype">object</span>[1], <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;Data&gt;::type</a>);
-<a name="l00077"></a>00077          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0f12d9ca5f37ab23eae4d2ae7abb4e8f" title="Build and commit a user-defined MPI Struct datatype.">commit</a>(<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt; <a class="code" href="classUtil_1_1Pair.html" title="An array of exactly 2 objects.">Pair&lt;Data&gt;</a> &gt;::type);
+<a name="l00074"></a>00074          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a34f85f4a1e1c296ba324fe274ea22f24" title="Set address of an class instance.">setBase</a>(&amp;<span class="keywordtype">object</span>);
+<a name="l00075"></a>00075          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;<span class="keywordtype">object</span>[0], <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;Data&gt;::type</a>);
+<a name="l00076"></a>00076          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;<span class="keywordtype">object</span>[1], <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;Data&gt;::type</a>);
+<a name="l00077"></a>00077          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#ae95e12f80d3991fe0bd7848010924c25" title="Build and commit a user-defined MPI Struct datatype.">commit</a>(<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt; <a class="code" href="classUtil_1_1Pair.html" title="An array of exactly 2 objects.">Pair&lt;Data&gt;</a> &gt;::type);
 <a name="l00078"></a>00078          <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt; Pair&lt;Data&gt;</a> &gt;::hasType = <span class="keyword">true</span>;
 <a name="l00079"></a>00079       }
 <a name="l00080"></a>00080    }
@@ -115,7 +115,7 @@
 <a name="l00084"></a>00084 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

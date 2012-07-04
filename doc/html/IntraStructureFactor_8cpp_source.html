@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -79,13 +79,13 @@
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028    <span class="keyword">using namespace </span>Util;
 <a name="l00029"></a>00029 
-<a name="l00031"></a>00031    <a class="code" href="classMcMd_1_1IntraStructureFactor.html#ade04e2f90318745b031ef7193ae1c7a7" title="Constructor.">IntraStructureFactor::IntraStructureFactor</a>(System&amp; system) 
-<a name="l00032"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#ade04e2f90318745b031ef7193ae1c7a7">00032</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
+<a name="l00031"></a>00031    <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a1dc81b99bc2de6e9c9beb58c252b98b6" title="Constructor.">IntraStructureFactor::IntraStructureFactor</a>(System&amp; system) 
+<a name="l00032"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#a1dc81b99bc2de6e9c9beb58c252b98b6">00032</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
 <a name="l00033"></a>00033       isInitialized_(false)
 <a name="l00034"></a>00034    {}
 <a name="l00035"></a>00035 
-<a name="l00037"></a>00037    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file.">IntraStructureFactor::readParam</a>(std::istream&amp; in) 
-<a name="l00038"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#ab5421d3c9175985c9acbf723e5392075">00038</a>    {
+<a name="l00037"></a>00037    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#ad4b08ed09a1b82543db360551c302ae1" title="Read parameters from file.">IntraStructureFactor::readParam</a>(std::istream&amp; in) 
+<a name="l00038"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#ad4b08ed09a1b82543db360551c302ae1">00038</a>    {
 <a name="l00039"></a>00039 
 <a name="l00040"></a>00040       <span class="comment">// Read interval and parameters for AutoCorrArray</span>
 <a name="l00041"></a>00041       readInterval(in);
@@ -113,8 +113,8 @@
 <a name="l00063"></a>00063    <span class="comment">/*</span>
 <a name="l00064"></a>00064 <span class="comment">   * Set up before simulation.</span>
 <a name="l00065"></a>00065 <span class="comment">   */</span>
-<a name="l00066"></a>00066    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a4fc01d736fe50cf5b977f755b675f11d" title="Clear accumulators.">IntraStructureFactor::setup</a>() 
-<a name="l00067"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#a4fc01d736fe50cf5b977f755b675f11d">00067</a>    {
+<a name="l00066"></a>00066    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a99b39affad4aa55ff96c0de79af5acfd" title="Clear accumulators.">IntraStructureFactor::setup</a>() 
+<a name="l00067"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#a99b39affad4aa55ff96c0de79af5acfd">00067</a>    {
 <a name="l00068"></a>00068       <span class="keywordflow">if</span> (!isInitialized_) 
 <a name="l00069"></a>00069          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Object is not initialized&quot;</span>);
 <a name="l00070"></a>00070       assert (nWave_ &gt; 0);
@@ -133,8 +133,8 @@
 <a name="l00083"></a>00083    <span class="comment">/* </span>
 <a name="l00084"></a>00084 <span class="comment">   * Increment Structure Factor</span>
 <a name="l00085"></a>00085 <span class="comment">   */</span>
-<a name="l00086"></a>00086    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Add particle pairs to IntraStructureFactor histogram.">IntraStructureFactor::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00087"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#afc17577823a371a5ead4e51ebb8ec2ef">00087</a>    {
+<a name="l00086"></a>00086    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a87e5466c624149c029b8c7b9e4a168cc" title="Add particle pairs to IntraStructureFactor histogram.">IntraStructureFactor::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00087"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#a87e5466c624149c029b8c7b9e4a168cc">00087</a>    {
 <a name="l00088"></a>00088       <span class="keywordflow">if</span> (isAtInterval(iStep))  {
 <a name="l00089"></a>00089 
 <a name="l00090"></a>00090          <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  position;
@@ -150,7 +150,7 @@
 <a name="l00100"></a>00100 
 <a name="l00101"></a>00101          <span class="comment">// Loop over molecules in species</span>
 <a name="l00102"></a>00102          system().begin(speciesId_, molIter); 
-<a name="l00103"></a>00103          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00103"></a>00103          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
 <a name="l00104"></a>00104 
 <a name="l00105"></a>00105             <span class="comment">// Set all Fourier modes to zero</span>
 <a name="l00106"></a>00106             <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
@@ -161,14 +161,14 @@
 <a name="l00111"></a>00111  
 <a name="l00112"></a>00112             <span class="comment">// Loop over all atoms in one molecule</span>
 <a name="l00113"></a>00113             molIter-&gt;begin(atomIter); 
-<a name="l00114"></a>00114             <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00114"></a>00114             <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00115"></a>00115                position = atomIter-&gt;position();
 <a name="l00116"></a>00116                typeId   = atomIter-&gt;typeId();
 <a name="l00117"></a>00117  
 <a name="l00118"></a>00118                <span class="comment">// Loop over wavevectors</span>
 <a name="l00119"></a>00119                <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
-<a name="l00120"></a>00120                   product = position.<a class="code" href="classUtil_1_1Vector.html#a5431123ac320a0ed069d9c7a30702c7b" title="Return dot product of this vector and vector v.">dot</a>(waveVectors_[i]);
-<a name="l00121"></a>00121                   expFactor = exp( product*<a class="code" href="classUtil_1_1Constants.html#ae5e782ecd9edaa713f754637e8fbe364" title="Square root of -1.">Constants::Im</a> );
+<a name="l00120"></a>00120                   product = position.<a class="code" href="classUtil_1_1Vector.html#aa1b64030ac95721bc39038c003240c09" title="Return dot product of this vector and vector v.">dot</a>(waveVectors_[i]);
+<a name="l00121"></a>00121                   expFactor = exp( product*<a class="code" href="classUtil_1_1Constants.html#af5e73d2cc0c0da9efe5cdb9c3b100d86" title="Square root of -1.">Constants::Im</a> );
 <a name="l00122"></a>00122                   fourierModes_(i, typeId)     += expFactor;
 <a name="l00123"></a>00123                   fourierModes_(i, nAtomType_) += expFactor;
 <a name="l00124"></a>00124                }
@@ -202,13 +202,13 @@
 <a name="l00155"></a>00155    <span class="keywordtype">void</span> IntraStructureFactor::makeWaveVectors() 
 <a name="l00156"></a>00156    {
 <a name="l00157"></a>00157       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>    dWave;
-<a name="l00158"></a>00158       Boundary* boundaryPtr = &amp;system().boundary();
+<a name="l00158"></a>00158       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>* boundaryPtr = &amp;system().boundary();
 <a name="l00159"></a>00159       <span class="keywordtype">int</span>       i, j;
 <a name="l00160"></a>00160 
 <a name="l00161"></a>00161       <span class="comment">// Calculate wavevectors</span>
 <a name="l00162"></a>00162       <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
-<a name="l00163"></a>00163          waveVectors_[i] = <a class="code" href="classUtil_1_1Vector.html#a9295b4b42a83e7087e7eb10e4a65fa5d" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>;
-<a name="l00164"></a>00164          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00163"></a>00163          waveVectors_[i] = <a class="code" href="classUtil_1_1Vector.html#a2b7442f15bc3e08a496e3dc3c684525b" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>;
+<a name="l00164"></a>00164          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00165"></a>00165             dWave  = boundaryPtr-&gt;reciprocalBasisVector(j);
 <a name="l00166"></a>00166             dWave *= waveIntVectors_[i][j];
 <a name="l00167"></a>00167             waveVectors_[i] += dWave;
@@ -217,8 +217,8 @@
 <a name="l00170"></a>00170       }
 <a name="l00171"></a>00171    }
 <a name="l00172"></a>00172 
-<a name="l00173"></a>00173    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results to predefined output file.">IntraStructureFactor::output</a>() 
-<a name="l00174"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#a7437b254e19e7e12fc2ec99945f4ecea">00174</a>    {
+<a name="l00173"></a>00173    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a0746a2067e0d84c6c94d3e1151fd3994" title="Output results to predefined output file.">IntraStructureFactor::output</a>() 
+<a name="l00174"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#a0746a2067e0d84c6c94d3e1151fd3994">00174</a>    {
 <a name="l00175"></a>00175       <span class="keywordtype">double</span>      value;
 <a name="l00176"></a>00176       <span class="keywordtype">int</span>         i, j, k;
 <a name="l00177"></a>00177 
@@ -230,7 +230,7 @@
 <a name="l00183"></a>00183       <span class="comment">// Output structure factors to one file</span>
 <a name="l00184"></a>00184       fileMaster().openOutputFile(outputFileName(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
 <a name="l00185"></a>00185       <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
-<a name="l00186"></a>00186          <span class="keywordflow">for</span> (k = 0; k &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++k) {
+<a name="l00186"></a>00186          <span class="keywordflow">for</span> (k = 0; k &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++k) {
 <a name="l00187"></a>00187             outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(waveIntVectors_[i][k], 5);
 <a name="l00188"></a>00188          }
 <a name="l00189"></a>00189          outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[i].abs(), 20, 8);
@@ -247,20 +247,20 @@
 <a name="l00200"></a>00200    <span class="comment">/*</span>
 <a name="l00201"></a>00201 <span class="comment">   * Save state to binary file archive.</span>
 <a name="l00202"></a>00202 <span class="comment">   */</span>
-<a name="l00203"></a>00203    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64" title="Save state to binary file archive.">IntraStructureFactor::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
-<a name="l00204"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">00204</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00203"></a>00203    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a9805678413cb93298b132d560a0f877a" title="Save state to binary file archive.">IntraStructureFactor::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
+<a name="l00204"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#a9805678413cb93298b132d560a0f877a">00204</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00205"></a>00205 
 <a name="l00206"></a>00206    <span class="comment">/*</span>
 <a name="l00207"></a>00207 <span class="comment">   * Load state from a binary file archive.</span>
 <a name="l00208"></a>00208 <span class="comment">   */</span>
-<a name="l00209"></a>00209    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load state from a binary file archive.">IntraStructureFactor::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
-<a name="l00210"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#aa3d71af4cc5dfb2be6be816a8f562416">00210</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00209"></a>00209    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a449072a422f8a292a76e124933af9ed4" title="Load state from a binary file archive.">IntraStructureFactor::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00210"></a><a class="code" href="classMcMd_1_1IntraStructureFactor.html#a449072a422f8a292a76e124933af9ed4">00210</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00211"></a>00211 
 <a name="l00212"></a>00212 }
 <a name="l00213"></a>00213 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

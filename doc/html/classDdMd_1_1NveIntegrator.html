@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: NveIntegrator Class Reference</title>
+<title>Simpatico: DdMd::NveIntegrator Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>NveIntegrator Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Integrator__Module.html">MD Integrators</a></div></h1>  </div>
+<h1>DdMd::NveIntegrator Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Integrator__Module.html">MD Integrators</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::NveIntegrator" --><!-- doxytag: inherits="DdMd::Integrator" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -59,15 +59,15 @@
 </div>
 <p><code>#include &lt;<a class="el" href="NveIntegrator_8h_source.html">NveIntegrator.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for NveIntegrator:</div>
+Inheritance diagram for DdMd::NveIntegrator:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1NveIntegrator.png" usemap="#NveIntegrator_map" alt=""/>
-  <map id="NveIntegrator_map" name="NveIntegrator_map">
-<area href="classDdMd_1_1Integrator.html" alt="Integrator" shape="rect" coords="60,112,171,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classDdMd_1_1SimulationAccess.html" alt="SimulationAccess" shape="rect" coords="121,56,232,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classDdMd_1_1NveIntegrator.png" usemap="#DdMd::NveIntegrator_map" alt=""/>
+  <map id="DdMd::NveIntegrator_map" name="DdMd::NveIntegrator_map">
+<area href="classDdMd_1_1Integrator.html" alt="DdMd::Integrator" shape="rect" coords="80,112,231,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,151,80"/>
+<area href="classDdMd_1_1SimulationAccess.html" alt="DdMd::SimulationAccess" shape="rect" coords="161,56,312,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,151,24"/>
 </map>
  </div></div>
 
@@ -75,24 +75,24 @@ Inheritance diagram for NveIntegrator:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1NveIntegrator.html#a8b5220351f77bead1a814866dfa6c741">NveIntegrator</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a8b5220351f77bead1a814866dfa6c741"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1NveIntegrator.html#a0402c08228c9b59ea7f53053d5b7afbb">~NveIntegrator</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a0402c08228c9b59ea7f53053d5b7afbb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1NveIntegrator.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read required parameters.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1NveIntegrator.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup state just before integration.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1NveIntegrator.html#a2a3d256197432e9c39329b2e742a9b7f">run</a> (int nStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a simulation.  <a href="#a2a3d256197432e9c39329b2e742a9b7f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1NveIntegrator.html#aacf8da52748a61312bf88d7ad406de90">NveIntegrator</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aacf8da52748a61312bf88d7ad406de90"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1NveIntegrator.html#ab6042aa356c44f6e77f00b94e07707c4">~NveIntegrator</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ab6042aa356c44f6e77f00b94e07707c4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1NveIntegrator.html#adee874ca13e70ad5aa7e169e17cc9c99">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read required parameters.  <a href="#adee874ca13e70ad5aa7e169e17cc9c99"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1NveIntegrator.html#ab0642ad8c5048a0323a940a8a71944ee">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup state just before integration.  <a href="#ab0642ad8c5048a0323a940a8a71944ee"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1NveIntegrator.html#a2ed6a04b0353739118fe46412e402264">run</a> (int nStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a simulation.  <a href="#a2ed6a04b0353739118fe46412e402264"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a8b5220351f77bead1a814866dfa6c741"></a><!-- doxytag: member="DdMd::NveIntegrator::NveIntegrator" ref="a8b5220351f77bead1a814866dfa6c741" args="(Simulation &amp;simulation)" -->
+<a class="anchor" id="aacf8da52748a61312bf88d7ad406de90"></a><!-- doxytag: member="DdMd::NveIntegrator::NveIntegrator" ref="aacf8da52748a61312bf88d7ad406de90" args="(Simulation &amp;simulation)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1NveIntegrator.html">NveIntegrator</a> </td>
+          <td class="memname">DdMd::NveIntegrator::NveIntegrator </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td>
           <td class="paramname"><em>simulation</em></td><td>)</td>
@@ -108,12 +108,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0402c08228c9b59ea7f53053d5b7afbb"></a><!-- doxytag: member="DdMd::NveIntegrator::~NveIntegrator" ref="a0402c08228c9b59ea7f53053d5b7afbb" args="()" -->
+<a class="anchor" id="ab6042aa356c44f6e77f00b94e07707c4"></a><!-- doxytag: member="DdMd::NveIntegrator::~NveIntegrator" ref="ab6042aa356c44f6e77f00b94e07707c4" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1NveIntegrator.html">NveIntegrator</a> </td>
+          <td class="memname">DdMd::NveIntegrator::~NveIntegrator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -129,12 +129,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="DdMd::NveIntegrator::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="adee874ca13e70ad5aa7e169e17cc9c99"></a><!-- doxytag: member="DdMd::NveIntegrator::readParam" ref="adee874ca13e70ad5aa7e169e17cc9c99" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void DdMd::NveIntegrator::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -147,20 +147,20 @@ Public Member Functions</h2></td></tr>
 <p>Read required parameters. </p>
 <p>For velocity-verlet algorithm, reads the time step dt. </p>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="NveIntegrator_8cpp_source.html#l00042">42</a> of file <a class="el" href="NveIntegrator_8cpp_source.html">NveIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00226">DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00258">DArray&lt; Data &gt;::isAllocated()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00764">Simulation::nAtomType()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00334">SimulationAccess::nAtomType()</a>, and <a class="el" href="SimulationAccess_8h_source.html#l00273">SimulationAccess::simulation()</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00226">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="DArray_8h_source.html#l00258">Util::DArray&lt; Data &gt;::isAllocated()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00764">DdMd::Simulation::nAtomType()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00334">DdMd::SimulationAccess::nAtomType()</a>, and <a class="el" href="SimulationAccess_8h_source.html#l00273">DdMd::SimulationAccess::simulation()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="DdMd::NveIntegrator::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="ab0642ad8c5048a0323a940a8a71944ee"></a><!-- doxytag: member="DdMd::NveIntegrator::setup" ref="ab0642ad8c5048a0323a940a8a71944ee" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void DdMd::NveIntegrator::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -171,20 +171,20 @@ Public Member Functions</h2></td></tr>
 
 <p>Setup state just before integration. </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1Integrator.html#a39fe489f6eb526d59b6b804a8343fe8c">Integrator</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Integrator.html#a150e41e95b19bb2f8593719b88297a80">DdMd::Integrator</a>.</p>
 
 <p>Definition at line <a class="el" href="NveIntegrator_8cpp_source.html#l00055">55</a> of file <a class="el" href="NveIntegrator_8cpp_source.html">NveIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="SimulationAccess_8h_source.html#l00279">SimulationAccess::atomStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00800">Simulation::atomType()</a>, <a class="el" href="Array_8h_source.html#l00146">Array&lt; Data &gt;::capacity()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00301">AtomStorage::clearSnapshot()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00586">Simulation::computeForces()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00142">Exchanger::exchange()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00328">SimulationAccess::exchanger()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00143">PairPotential::findNeighbors()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00287">AtomStorage::makeSnapshot()</a>, <a class="el" href="ddMd_2chemistry_2AtomType_8h_source.html#l00111">AtomType::mass()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00334">SimulationAccess::nAtomType()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00295">SimulationAccess::pairPotential()</a>, and <a class="el" href="SimulationAccess_8h_source.html#l00273">SimulationAccess::simulation()</a>.</p>
+<p>References <a class="el" href="SimulationAccess_8h_source.html#l00279">DdMd::SimulationAccess::atomStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00800">DdMd::Simulation::atomType()</a>, <a class="el" href="Array_8h_source.html#l00146">Util::Array&lt; Data &gt;::capacity()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00301">DdMd::AtomStorage::clearSnapshot()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00586">DdMd::Simulation::computeForces()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00142">DdMd::Exchanger::exchange()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00328">DdMd::SimulationAccess::exchanger()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00143">DdMd::PairPotential::findNeighbors()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00287">DdMd::AtomStorage::makeSnapshot()</a>, <a class="el" href="ddMd_2chemistry_2AtomType_8h_source.html#l00111">DdMd::AtomType::mass()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00334">DdMd::SimulationAccess::nAtomType()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00295">DdMd::SimulationAccess::pairPotential()</a>, and <a class="el" href="SimulationAccess_8h_source.html#l00273">DdMd::SimulationAccess::simulation()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2a3d256197432e9c39329b2e742a9b7f"></a><!-- doxytag: member="DdMd::NveIntegrator::run" ref="a2a3d256197432e9c39329b2e742a9b7f" args="(int nStep)" -->
+<a class="anchor" id="a2ed6a04b0353739118fe46412e402264"></a><!-- doxytag: member="DdMd::NveIntegrator::run" ref="a2ed6a04b0353739118fe46412e402264" args="(int nStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void run </td>
+          <td class="memname">void DdMd::NveIntegrator::run </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>nStep</em></td><td>)</td>
@@ -202,11 +202,11 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classDdMd_1_1Integrator.html#adc5b899e54d8c8a9581ce9763b343530">Integrator</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Integrator.html#ab041ca632c8fee43d96b01e5cad0f19d">DdMd::Integrator</a>.</p>
 
 <p>Definition at line <a class="el" href="NveIntegrator_8cpp_source.html#l00075">75</a> of file <a class="el" href="NveIntegrator_8cpp_source.html">NveIntegrator.cpp</a>.</p>
 
-<p>References <a class="el" href="SimulationAccess_8h_source.html#l00279">SimulationAccess::atomStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00800">Simulation::atomType()</a>, <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00110">Diagnostic::baseInterval</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00373">AtomStorage::begin()</a>, <a class="el" href="Array_8h_source.html#l00146">Array&lt; Data &gt;::capacity()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00301">AtomStorage::clearSnapshot()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00586">Simulation::computeForces()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00755">Simulation::diagnosticManager()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00325">SimulationAccess::domain()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00142">Exchanger::exchange()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00328">SimulationAccess::exchanger()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00143">PairPotential::findNeighbors()</a>, <a class="el" href="Integrator_8h_source.html#l00073">Integrator::iStep_</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00287">AtomStorage::makeSnapshot()</a>, <a class="el" href="ddMd_2chemistry_2AtomType_8h_source.html#l00111">AtomType::mass()</a>, <a class="el" href="Vector_8h_source.html#l00658">Vector::multiply()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00334">SimulationAccess::nAtomType()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00328">AtomStorage::needExchange()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Integrator_8h_source.html#l00070">Integrator::nStep_</a>, <a class="el" href="SimulationAccess_8h_source.html#l00295">SimulationAccess::pairPotential()</a>, <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00059">DiagnosticManager::sample()</a>, <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00049">DiagnosticManager::setup()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00273">SimulationAccess::simulation()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00310">PairPotential::timer()</a>, <a class="el" href="Exchanger_8h_source.html#l00112">Exchanger::timer()</a>, <a class="el" href="Integrator_8h_source.html#l00066">Integrator::timer()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">Exchanger::update()</a>.</p>
+<p>References <a class="el" href="SimulationAccess_8h_source.html#l00279">DdMd::SimulationAccess::atomStorage()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00800">DdMd::Simulation::atomType()</a>, <a class="el" href="ddMd_2diagnostics_2Diagnostic_8h_source.html#l00110">DdMd::Diagnostic::baseInterval</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00373">DdMd::AtomStorage::begin()</a>, <a class="el" href="Array_8h_source.html#l00146">Util::Array&lt; Data &gt;::capacity()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00301">DdMd::AtomStorage::clearSnapshot()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00586">DdMd::Simulation::computeForces()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00755">DdMd::Simulation::diagnosticManager()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00325">DdMd::SimulationAccess::domain()</a>, <a class="el" href="Exchanger_8cpp_source.html#l00142">DdMd::Exchanger::exchange()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00328">DdMd::SimulationAccess::exchanger()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>, <a class="el" href="PairPotential_8cpp_source.html#l00143">DdMd::PairPotential::findNeighbors()</a>, <a class="el" href="Integrator_8h_source.html#l00073">DdMd::Integrator::iStep_</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00287">DdMd::AtomStorage::makeSnapshot()</a>, <a class="el" href="ddMd_2chemistry_2AtomType_8h_source.html#l00111">DdMd::AtomType::mass()</a>, <a class="el" href="Vector_8h_source.html#l00658">Util::Vector::multiply()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00334">DdMd::SimulationAccess::nAtomType()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00328">DdMd::AtomStorage::needExchange()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Integrator_8h_source.html#l00070">DdMd::Integrator::nStep_</a>, <a class="el" href="SimulationAccess_8h_source.html#l00295">DdMd::SimulationAccess::pairPotential()</a>, <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00059">DdMd::DiagnosticManager::sample()</a>, <a class="el" href="ddMd_2diagnostics_2DiagnosticManager_8cpp_source.html#l00049">DdMd::DiagnosticManager::setup()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00273">DdMd::SimulationAccess::simulation()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00310">DdMd::PairPotential::timer()</a>, <a class="el" href="Exchanger_8h_source.html#l00112">DdMd::Exchanger::timer()</a>, <a class="el" href="Integrator_8h_source.html#l00066">DdMd::Integrator::timer()</a>, and <a class="el" href="Exchanger_8cpp_source.html#l01093">DdMd::Exchanger::update()</a>.</p>
 
 </div>
 </div>
@@ -215,7 +215,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="NveIntegrator_8cpp_source.html">NveIntegrator.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

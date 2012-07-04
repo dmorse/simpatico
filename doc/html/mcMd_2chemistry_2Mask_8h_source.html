@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -69,15 +69,15 @@
 <a name="l00030"></a>00030 
 <a name="l00031"></a>00031    <span class="keyword">public</span>:
 <a name="l00032"></a>00032 
-<a name="l00036"></a>00036       <a class="code" href="classMcMd_1_1Mask.html#aff640d0586d34d3bf48359de39a4771c" title="Constructor.">Mask</a>();
+<a name="l00036"></a>00036       <a class="code" href="classMcMd_1_1Mask.html#ac80e0f6192a994e2632d74d8e5ea7c07" title="Constructor.">Mask</a>();
 <a name="l00037"></a>00037 
-<a name="l00041"></a>00041       <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Mask.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear the mask set (remove all atoms).">clear</a>();
+<a name="l00041"></a>00041       <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Mask.html#a9ae03a67c7f2722b83dd9a6bad0a88cc" title="Clear the mask set (remove all atoms).">clear</a>();
 <a name="l00042"></a>00042 
-<a name="l00048"></a>00048       <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Mask.html#a2c891fe7d5716eb2f94c417607d96204" title="Add an Atom to the masked set.">append</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom);
+<a name="l00048"></a>00048       <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Mask.html#a89ef5dfd6243e4cfc611d2cda7fc4404" title="Add an Atom to the masked set.">append</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom);
 <a name="l00049"></a>00049 
-<a name="l00056"></a>00056       <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Mask.html#a250dbffb1fa61c07f232c26648f0ec2d" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom) <span class="keyword">const</span>;
+<a name="l00056"></a>00056       <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Mask.html#aa2b748da6579dc033f5da1db08988f5b" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom) <span class="keyword">const</span>;
 <a name="l00057"></a>00057 
-<a name="l00061"></a>00061       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Mask.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return the number of masked atoms.">size</a>() <span class="keyword">const</span>;
+<a name="l00061"></a>00061       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Mask.html#a3ccd7170434f0571061a0eaa1ad36493" title="Return the number of masked atoms.">size</a>() <span class="keyword">const</span>;
 <a name="l00062"></a>00062 
 <a name="l00063"></a>00063    <span class="keyword">private</span>:
 <a name="l00064"></a>00064 
@@ -87,14 +87,14 @@
 <a name="l00070"></a>00070 
 <a name="l00072"></a>00072       <span class="keywordtype">int</span>  size_;                 
 <a name="l00073"></a>00073 
-<a name="l00075"></a>00075       <a class="code" href="classMcMd_1_1Mask.html#aff640d0586d34d3bf48359de39a4771c" title="Constructor.">Mask</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &amp;quot;masked&amp;quot;.">Mask</a>&amp; other);
+<a name="l00075"></a>00075       <a class="code" href="classMcMd_1_1Mask.html#ac80e0f6192a994e2632d74d8e5ea7c07" title="Constructor.">Mask</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &amp;quot;masked&amp;quot;.">Mask</a>&amp; other);
 <a name="l00076"></a>00076 
 <a name="l00077"></a>00077    }; 
 <a name="l00078"></a>00078 
 <a name="l00079"></a>00079    <span class="comment">// Inline methods</span>
 <a name="l00080"></a>00080 
 <a name="l00081"></a>00081    <span class="comment">// Check if an Atom is in the masked set.</span>
-<a name="l00082"></a><a class="code" href="classMcMd_1_1Mask.html#a250dbffb1fa61c07f232c26648f0ec2d">00082</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Mask.html#a250dbffb1fa61c07f232c26648f0ec2d" title="True if the atom is in the masked set for the target Atom.">Mask::isMasked</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)<span class="keyword"> const</span>
+<a name="l00082"></a><a class="code" href="classMcMd_1_1Mask.html#aa2b748da6579dc033f5da1db08988f5b">00082</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Mask.html#aa2b748da6579dc033f5da1db08988f5b" title="True if the atom is in the masked set for the target Atom.">Mask::isMasked</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)<span class="keyword"> const</span>
 <a name="l00083"></a>00083 <span class="keyword">   </span>{
 <a name="l00084"></a>00084       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* ptr = &amp;atom;
 <a name="l00085"></a>00085       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; size_ ; ++i) {
@@ -104,14 +104,14 @@
 <a name="l00089"></a>00089    }
 <a name="l00090"></a>00090 
 <a name="l00091"></a>00091    <span class="comment">// Return the number of masked atoms.</span>
-<a name="l00092"></a><a class="code" href="classMcMd_1_1Mask.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">00092</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Mask.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return the number of masked atoms.">Mask::size</a>()<span class="keyword"> const</span>
+<a name="l00092"></a><a class="code" href="classMcMd_1_1Mask.html#a3ccd7170434f0571061a0eaa1ad36493">00092</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Mask.html#a3ccd7170434f0571061a0eaa1ad36493" title="Return the number of masked atoms.">Mask::size</a>()<span class="keyword"> const</span>
 <a name="l00093"></a>00093 <span class="keyword">   </span>{ <span class="keywordflow">return</span> size_; }
 <a name="l00094"></a>00094 
 <a name="l00095"></a>00095 } 
 <a name="l00096"></a>00096 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

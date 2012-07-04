@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -206,50 +206,50 @@
 <a name="l00260"></a>00260    <span class="comment">/*</span>
 <a name="l00261"></a>00261 <span class="comment">   * Get the current number of primary atoms in the pairlist.</span>
 <a name="l00262"></a>00262 <span class="comment">   */</span> 
-<a name="l00263"></a><a class="code" href="classDdMd_1_1PairList.html#ac91579bd63979a294891d330a5533838">00263</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#ac91579bd63979a294891d330a5533838" title="Get the number of primary atoms in the PairList.">PairList::nAtom</a>()<span class="keyword"> const</span>
+<a name="l00263"></a><a class="code" href="classDdMd_1_1PairList.html#a93f0bd5850a44d72ef3e441eb03752e2">00263</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#a93f0bd5850a44d72ef3e441eb03752e2" title="Get the number of primary atoms in the PairList.">PairList::nAtom</a>()<span class="keyword"> const</span>
 <a name="l00264"></a>00264 <span class="keyword">   </span>{ <span class="keywordflow">return</span> nAtom1_; }
 <a name="l00265"></a>00265 
 <a name="l00266"></a>00266    <span class="comment">/*</span>
 <a name="l00267"></a>00267 <span class="comment">   * Get the current number of pairs.</span>
 <a name="l00268"></a>00268 <span class="comment">   */</span> 
-<a name="l00269"></a><a class="code" href="classDdMd_1_1PairList.html#a6b24a3df06b149a917c02db0c649264b">00269</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#a6b24a3df06b149a917c02db0c649264b" title="Get the number of pairs in the PairList.">PairList::nPair</a>()<span class="keyword"> const</span>
+<a name="l00269"></a><a class="code" href="classDdMd_1_1PairList.html#a43986309349e7623a748e63310d8658e">00269</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#a43986309349e7623a748e63310d8658e" title="Get the number of pairs in the PairList.">PairList::nPair</a>()<span class="keyword"> const</span>
 <a name="l00270"></a>00270 <span class="keyword">   </span>{ <span class="keywordflow">return</span> nAtom2_; }
 <a name="l00271"></a>00271 
-<a name="l00275"></a><a class="code" href="classDdMd_1_1PairList.html#ac0b27a7cfd17d857426ae44a7db7b4f8">00275</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#ac0b27a7cfd17d857426ae44a7db7b4f8" title="Get the maximum number of pairs.">PairList::pairCapacity</a>()<span class="keyword"> const</span>
+<a name="l00275"></a><a class="code" href="classDdMd_1_1PairList.html#acf50672817301f2175c32a835eb2bdd0">00275</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#acf50672817301f2175c32a835eb2bdd0" title="Get the maximum number of pairs.">PairList::pairCapacity</a>()<span class="keyword"> const</span>
 <a name="l00276"></a>00276 <span class="keyword">   </span>{  <span class="keywordflow">return</span> pairCapacity_; }
 <a name="l00277"></a>00277 
-<a name="l00281"></a><a class="code" href="classDdMd_1_1PairList.html#a72fbb50e40dfdc5f3710e54aac41b97e">00281</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#a72fbb50e40dfdc5f3710e54aac41b97e" title="Get the maximum number of primary atoms.">PairList::atomCapacity</a>()<span class="keyword"> const</span>
+<a name="l00281"></a><a class="code" href="classDdMd_1_1PairList.html#a0e8ab3b5653f783660a612ae1d49fc24">00281</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#a0e8ab3b5653f783660a612ae1d49fc24" title="Get the maximum number of primary atoms.">PairList::atomCapacity</a>()<span class="keyword"> const</span>
 <a name="l00282"></a>00282 <span class="keyword">   </span>{  <span class="keywordflow">return</span> atomCapacity_; }
 <a name="l00283"></a>00283 
 <a name="l00284"></a>00284    <span class="comment">/*</span>
 <a name="l00285"></a>00285 <span class="comment">   * Get the maximum value of aAtom() since instantiation.</span>
 <a name="l00286"></a>00286 <span class="comment">   */</span> 
-<a name="l00287"></a><a class="code" href="classDdMd_1_1PairList.html#a3684f71ec521bde567c5e6b1bf097458">00287</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#a3684f71ec521bde567c5e6b1bf097458" title="Get the maximum number of primary atoms encountered thus far.">PairList::maxNAtom</a>()<span class="keyword"> const</span>
+<a name="l00287"></a><a class="code" href="classDdMd_1_1PairList.html#a194e00574171ee00d4c8300d9d2cbf4b">00287</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#a194e00574171ee00d4c8300d9d2cbf4b" title="Get the maximum number of primary atoms encountered thus far.">PairList::maxNAtom</a>()<span class="keyword"> const</span>
 <a name="l00288"></a>00288 <span class="keyword">   </span>{ <span class="keywordflow">return</span> maxNAtom_; }
 <a name="l00289"></a>00289 
 <a name="l00290"></a>00290    <span class="comment">/*</span>
 <a name="l00291"></a>00291 <span class="comment">   * Get the maximum value of nPair() since instantiation.</span>
 <a name="l00292"></a>00292 <span class="comment">   */</span> 
-<a name="l00293"></a><a class="code" href="classDdMd_1_1PairList.html#a984ef7969716eff3f6f051e88a7b77ed">00293</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#a984ef7969716eff3f6f051e88a7b77ed" title="Get the maximum number of pairs encountered thus far.">PairList::maxNPair</a>()<span class="keyword"> const</span>
+<a name="l00293"></a><a class="code" href="classDdMd_1_1PairList.html#a47c5391f60d98da4375b0008c0306483">00293</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#a47c5391f60d98da4375b0008c0306483" title="Get the maximum number of pairs encountered thus far.">PairList::maxNPair</a>()<span class="keyword"> const</span>
 <a name="l00294"></a>00294 <span class="keyword">   </span>{ <span class="keywordflow">return</span> maxNPair_; }
 <a name="l00295"></a>00295 
 <a name="l00296"></a>00296    <span class="comment">/*</span>
 <a name="l00297"></a>00297 <span class="comment">   * Get the number of times this PairList has been built.</span>
 <a name="l00298"></a>00298 <span class="comment">   */</span> 
-<a name="l00299"></a><a class="code" href="classDdMd_1_1PairList.html#a6e0b57608b761c1e4bb8be878a94519c">00299</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#a6e0b57608b761c1e4bb8be878a94519c" title="Return number of times the PairList has been built thus far.">PairList::buildCounter</a>()<span class="keyword"> const</span>
+<a name="l00299"></a><a class="code" href="classDdMd_1_1PairList.html#afa98ce42e83384bf8cca4ec7edd55600">00299</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1PairList.html#afa98ce42e83384bf8cca4ec7edd55600" title="Return number of times the PairList has been built thus far.">PairList::buildCounter</a>()<span class="keyword"> const</span>
 <a name="l00300"></a>00300 <span class="keyword">   </span>{ <span class="keywordflow">return</span> buildCounter_; }
 <a name="l00301"></a>00301 
 <a name="l00302"></a>00302    <span class="comment">/*</span>
 <a name="l00303"></a>00303 <span class="comment">   * Has memory been allocated for this PairList?</span>
 <a name="l00304"></a>00304 <span class="comment">   */</span> 
-<a name="l00305"></a><a class="code" href="classDdMd_1_1PairList.html#a0bcdab3616db481dd211594529479f94">00305</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1PairList.html#a0bcdab3616db481dd211594529479f94" title="Has memory been allocated for this PairList?">PairList::isAllocated</a>()<span class="keyword"> const</span>
+<a name="l00305"></a><a class="code" href="classDdMd_1_1PairList.html#aa12f449180795e01232f2285c6f43ac1">00305</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1PairList.html#aa12f449180795e01232f2285c6f43ac1" title="Has memory been allocated for this PairList?">PairList::isAllocated</a>()<span class="keyword"> const</span>
 <a name="l00306"></a>00306 <span class="keyword">   </span>{ <span class="keywordflow">return</span> isAllocated_; }
 <a name="l00307"></a>00307 
 <a name="l00308"></a>00308 } 
 <a name="l00309"></a>00309 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

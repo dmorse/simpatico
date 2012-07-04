@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -41,8 +41,8 @@
 <h1>Unit Tests </h1>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p>The src/test/ directory contain source code for a simple unit test framework. This framework can be used to test MPI parallel programs as well as single processor classes and programs. Documentation for the test framework, including examples, is in the the src/test/ directory.</p>
-<p>The unit test class for each class (if any) is generally located in a subdirectory named "tests/" of the directory containing the class header and source files. Unit tests are not compiled by the makefile system that is used to compile the classes needed for simulation. Tests may be compiled separately by invoking "make all" from any tests/ directory. This generally creates an executable named "Test" that runs all of the tests in one test directory.</p>
+<div class="textblock"><p>The src/test/ directory contain source code for a simple unit test framework. This framework can be used to test MPI parallel programs as well as single processor classes and programs. Documentation for the test framework is provided within the header files in the src/test directory, and in several examples in the src/test/examples directory.</p>
+<p>Actual unit tests are located in the simpatico/tests/ directory. This contains a directory treee analogous to that of the src/ directory, in which the test for each class is located in a position analogous to that of the source files in the src/ directory. Unit tests are not compiled by the makefile system that is used to compile the classes needed for simulation. Tests may be compiled separately by invoking "make all" from the subdirectory containing a particular test. This generally creates an executable named "Test" that runs all of the tests in that directory.</p>
 <ul>
 <li>
 <a class="el" href="make_page.html">Makefiles</a> (Previous)  </li>
@@ -52,7 +52,7 @@
 <a class="el" href="read_param_page.html">readParam() Methods</a> (Next)  </li>
 </ul>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

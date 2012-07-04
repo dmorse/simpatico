@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -93,17 +93,17 @@
 <a name="l00076"></a>00076  
 <a name="l00077"></a>00077    <span class="keyword">protected</span>:
 <a name="l00078"></a>00078 
-<a name="l00080"></a><a class="code" href="classMcMd_1_1TrajectoryIo.html#acf47de04042f996dd7e0e8d05d8c02a9">00080</a>       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1TrajectoryIo.html#acf47de04042f996dd7e0e8d05d8c02a9" title="The number of frames in the trajectory file.">nFrames_</a>;
+<a name="l00080"></a><a class="code" href="classMcMd_1_1TrajectoryIo.html#ab1a32ab72d1f1a20f46f171c58aaf118">00080</a>       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1TrajectoryIo.html#ab1a32ab72d1f1a20f46f171c58aaf118" title="The number of frames in the trajectory file.">nFrames_</a>;
 <a name="l00081"></a>00081 
 <a name="l00083"></a>00083       <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a> &amp;system() <span class="keyword">const</span>;
 <a name="l00084"></a>00084 
 <a name="l00086"></a>00086       <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a> &amp;simulation() <span class="keyword">const</span>;
 <a name="l00087"></a>00087 
-<a name="l00089"></a>00089       Boundary &amp;boundary() <span class="keyword">const</span>;
+<a name="l00089"></a>00089       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary() <span class="keyword">const</span>;
 <a name="l00090"></a>00090 
 <a name="l00091"></a>00091    <span class="keyword">private</span>:
 <a name="l00092"></a>00092    
-<a name="l00094"></a>00094       Boundary   *boundaryPtr_;
+<a name="l00094"></a>00094       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>   *boundaryPtr_;
 <a name="l00095"></a>00095    
 <a name="l00097"></a>00097       <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>     *systemPtr_;
 <a name="l00098"></a>00098    
@@ -117,7 +117,7 @@
 <a name="l00107"></a>00107    <span class="comment">/* </span>
 <a name="l00108"></a>00108 <span class="comment">   * Get the number of frames</span>
 <a name="l00109"></a>00109 <span class="comment">   */</span>
-<a name="l00110"></a><a class="code" href="classMcMd_1_1TrajectoryIo.html#a968a1938d2664531ff53e0b1b742f842">00110</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1TrajectoryIo.html#a968a1938d2664531ff53e0b1b742f842" title="Return number of frames in trajectory file.">TrajectoryIo::nFrames</a>()<span class="keyword"> const</span>
+<a name="l00110"></a><a class="code" href="classMcMd_1_1TrajectoryIo.html#ae752378ee100aabf32299f9b64571736">00110</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1TrajectoryIo.html#ae752378ee100aabf32299f9b64571736" title="Return number of frames in trajectory file.">TrajectoryIo::nFrames</a>()<span class="keyword"> const</span>
 <a name="l00111"></a>00111 <span class="keyword">   </span>{
 <a name="l00112"></a>00112       <span class="keywordflow">return</span> nFrames_;
 <a name="l00113"></a>00113    }
@@ -125,7 +125,7 @@
 <a name="l00115"></a>00115    <span class="comment">/* </span>
 <a name="l00116"></a>00116 <span class="comment">   * Get the parent System. </span>
 <a name="l00117"></a>00117 <span class="comment">   */</span>
-<a name="l00118"></a><a class="code" href="classMcMd_1_1TrajectoryIo.html#a4a3af9eda1fe22f46d6209a7d29aa020">00118</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; <a class="code" href="classMcMd_1_1TrajectoryIo.html#a4a3af9eda1fe22f46d6209a7d29aa020" title="Get a reference to the parent System.">TrajectoryIo::system</a>()<span class="keyword"> const</span>
+<a name="l00118"></a><a class="code" href="classMcMd_1_1TrajectoryIo.html#a5f0cc3067a7e23c8edcaaca92e87f3f4">00118</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; <a class="code" href="classMcMd_1_1TrajectoryIo.html#a5f0cc3067a7e23c8edcaaca92e87f3f4" title="Get a reference to the parent System.">TrajectoryIo::system</a>()<span class="keyword"> const</span>
 <a name="l00119"></a>00119 <span class="keyword">   </span>{
 <a name="l00120"></a>00120       assert(systemPtr_); 
 <a name="l00121"></a>00121       <span class="keywordflow">return</span> *systemPtr_; 
@@ -134,7 +134,7 @@
 <a name="l00124"></a>00124    <span class="comment">/* </span>
 <a name="l00125"></a>00125 <span class="comment">   * Get the parent Simulation.</span>
 <a name="l00126"></a>00126 <span class="comment">   */</span>
-<a name="l00127"></a><a class="code" href="classMcMd_1_1TrajectoryIo.html#ae705530f1911ce586ce525c58dbe24e9">00127</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; <a class="code" href="classMcMd_1_1TrajectoryIo.html#ae705530f1911ce586ce525c58dbe24e9" title="Get a reference to the parent Simulation.">TrajectoryIo::simulation</a>()<span class="keyword"> const</span>
+<a name="l00127"></a><a class="code" href="classMcMd_1_1TrajectoryIo.html#a6276f65c7804d8cc083ae7e09d7bb303">00127</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; <a class="code" href="classMcMd_1_1TrajectoryIo.html#a6276f65c7804d8cc083ae7e09d7bb303" title="Get a reference to the parent Simulation.">TrajectoryIo::simulation</a>()<span class="keyword"> const</span>
 <a name="l00128"></a>00128 <span class="keyword">   </span>{ 
 <a name="l00129"></a>00129       assert(simulationPtr_);
 <a name="l00130"></a>00130       <span class="keywordflow">return</span> *simulationPtr_; 
@@ -143,7 +143,7 @@
 <a name="l00133"></a>00133    <span class="comment">/* </span>
 <a name="l00134"></a>00134 <span class="comment">   * Get the Boundary.</span>
 <a name="l00135"></a>00135 <span class="comment">   */</span>
-<a name="l00136"></a><a class="code" href="classMcMd_1_1TrajectoryIo.html#a81f23e720d23ad05f41e966ca5d76553">00136</a>    <span class="keyword">inline</span> Boundary&amp; <a class="code" href="classMcMd_1_1TrajectoryIo.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary.">TrajectoryIo::boundary</a>()<span class="keyword"> const</span>
+<a name="l00136"></a><a class="code" href="classMcMd_1_1TrajectoryIo.html#a8ad6de70fa206d7f92d38c5287e2b2e3">00136</a>    <span class="keyword">inline</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; <a class="code" href="classMcMd_1_1TrajectoryIo.html#a8ad6de70fa206d7f92d38c5287e2b2e3" title="Get the Boundary.">TrajectoryIo::boundary</a>()<span class="keyword"> const</span>
 <a name="l00137"></a>00137 <span class="keyword">   </span>{
 <a name="l00138"></a>00138       assert(boundaryPtr_); 
 <a name="l00139"></a>00139       <span class="keywordflow">return</span> *boundaryPtr_; 
@@ -154,7 +154,7 @@
 <a name="l00144"></a>00144 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Log Class Reference</title>
+<title>Simpatico: Util::Log Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,13 +49,13 @@
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Log Class Reference<div class="ingroups"><a class="el" href="group__Util__Module.html">Utilities</a></div></h1>  </div>
+<h1>Util::Log Class Reference<div class="ingroups"><a class="el" href="group__Util__Module.html">Utilities</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Log" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>A static class that holds a log output stream. </p>
-<p>The <a class="el" href="classUtil_1_1Log.html" title="A static class that holds a log output stream.">Log</a> class has one a static pointer member that points to an ostream that should be used by all other classes to output log and error messages. This stream is accessed by the <a class="el" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">file()</a> method.</p>
-<p>The log file initialized to point to std::cout. It may be reset to point to a ofstream file object using the static <a class="el" href="classUtil_1_1Log.html#a403fac2e622512d222c9e91869a8e96a" title="Set the log ostream to a file.">setFile()</a> method. </p>
+<p>The <a class="el" href="classUtil_1_1Log.html" title="A static class that holds a log output stream.">Log</a> class has one a static pointer member that points to an ostream that should be used by all other classes to output log and error messages. This stream is accessed by the <a class="el" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">file()</a> method.</p>
+<p>The log file initialized to point to std::cout. It may be reset to point to a ofstream file object using the static <a class="el" href="classUtil_1_1Log.html#a4d40ebcfa31f857e1cd57734419dbbde" title="Set the log ostream to a file.">setFile()</a> method. </p>
 
 <p>Definition at line <a class="el" href="Log_8h_source.html#l00030">30</a> of file <a class="el" href="Log_8h_source.html">Log.h</a>.</p>
 </div>
@@ -65,22 +65,22 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Log.html#a608e10d093425c9228f10ed3c4994598">initStatic</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize static members.  <a href="#a608e10d093425c9228f10ed3c4994598"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Log.html#a403fac2e622512d222c9e91869a8e96a">setFile</a> (std::ofstream &amp;file)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the log ostream to a file.  <a href="#a403fac2e622512d222c9e91869a8e96a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Log.html#a5ae591df94fc66ccb85cbb6565368bca">close</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close log file, if any.  <a href="#a5ae591df94fc66ccb85cbb6565368bca"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155">file</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get log ostream by reference.  <a href="#a1957f2bc5b6c26002b209633d5ce6155"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Log.html#aefbad8d1a1e28df65481effb7afd70cb">initStatic</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize static members.  <a href="#aefbad8d1a1e28df65481effb7afd70cb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Log.html#a4d40ebcfa31f857e1cd57734419dbbde">setFile</a> (std::ofstream &amp;file)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the log ostream to a file.  <a href="#a4d40ebcfa31f857e1cd57734419dbbde"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Log.html#a665d080ef4a041fccfaf0b6bc0e78901">close</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Close log file, if any.  <a href="#a665d080ef4a041fccfaf0b6bc0e78901"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817">file</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get log ostream by reference.  <a href="#a7b86f7c53e482f8f4a1a8b756c162817"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a608e10d093425c9228f10ed3c4994598"></a><!-- doxytag: member="Util::Log::initStatic" ref="a608e10d093425c9228f10ed3c4994598" args="()" -->
+<a class="anchor" id="aefbad8d1a1e28df65481effb7afd70cb"></a><!-- doxytag: member="Util::Log::initStatic" ref="aefbad8d1a1e28df65481effb7afd70cb" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void initStatic </td>
+          <td class="memname">void Util::Log::initStatic </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -97,12 +97,12 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a403fac2e622512d222c9e91869a8e96a"></a><!-- doxytag: member="Util::Log::setFile" ref="a403fac2e622512d222c9e91869a8e96a" args="(std::ofstream &amp;file)" -->
+<a class="anchor" id="a4d40ebcfa31f857e1cd57734419dbbde"></a><!-- doxytag: member="Util::Log::setFile" ref="a4d40ebcfa31f857e1cd57734419dbbde" args="(std::ofstream &amp;file)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setFile </td>
+          <td class="memname">void Util::Log::setFile </td>
           <td>(</td>
           <td class="paramtype">std::ofstream &amp;&#160;</td>
           <td class="paramname"><em>file</em></td><td>)</td>
@@ -122,18 +122,18 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Log_8cpp_source.html#l00039">39</a> of file <a class="el" href="Log_8cpp_source.html">Log.cpp</a>.</p>
 
-<p>References <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>.</p>
+<p>References <a class="el" href="Log_8cpp_source.html#l00054">file()</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00039">Simulation::Simulation()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00039">McMd::Simulation::Simulation()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5ae591df94fc66ccb85cbb6565368bca"></a><!-- doxytag: member="Util::Log::close" ref="a5ae591df94fc66ccb85cbb6565368bca" args="()" -->
+<a class="anchor" id="a665d080ef4a041fccfaf0b6bc0e78901"></a><!-- doxytag: member="Util::Log::close" ref="a665d080ef4a041fccfaf0b6bc0e78901" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void close </td>
+          <td class="memname">void Util::Log::close </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -148,12 +148,12 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1957f2bc5b6c26002b209633d5ce6155"></a><!-- doxytag: member="Util::Log::file" ref="a1957f2bc5b6c26002b209633d5ce6155" args="()" -->
+<a class="anchor" id="a7b86f7c53e482f8f4a1a8b756c162817"></a><!-- doxytag: member="Util::Log::file" ref="a7b86f7c53e482f8f4a1a8b756c162817" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::ostream &amp; file </td>
+          <td class="memname">std::ostream &amp; Util::Log::file </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -166,7 +166,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Log_8cpp_source.html#l00054">54</a> of file <a class="el" href="Log_8cpp_source.html">Log.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="LinkMaster_8cpp_source.html#l00046">LinkMaster::addLink()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00043">TetherMaster::addTether()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00558">McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00497">MdSimulation::analyzeDumps()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00565">MdSimulation::analyzeTrajectory()</a>, <a class="el" href="ioUtil_8cpp_source.html#l00041">Util::checkString()</a>, <a class="el" href="Exception_8cpp_source.html#l00023">Exception::Exception()</a>, <a class="el" href="Label_8cpp_source.html#l00051">Util::operator&gt;&gt;()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00042">PmcConfigIo::read()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00049">McMdConfigIo::read()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00191">MdSimulation::readCommands()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00225">McSimulation::readCommands()</a>, <a class="el" href="Factory_8h_source.html#l00188">Factory&lt; Data &gt;::readObject()</a>, <a class="el" href="ScalarParam_8h_source.html#l00099">ScalarParam&lt; Type &gt;::readParam()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00044">McMoveManager::readParam()</a>, <a class="el" href="Manager_8h_source.html#l00273">Manager&lt; Data &gt;::readParam()</a>, <a class="el" href="FArrayParam_8h_source.html#l00071">FArrayParam&lt; Type, N &gt;::readParam()</a>, <a class="el" href="End_8cpp_source.html#l00033">End::readParam()</a>, <a class="el" href="DMatrixParam_8h_source.html#l00090">DMatrixParam&lt; Type &gt;::readParam()</a>, <a class="el" href="DArrayParam_8h_source.html#l00074">DArrayParam&lt; Type &gt;::readParam()</a>, <a class="el" href="CArrayParam_8h_source.html#l00070">CArrayParam&lt; Type &gt;::readParam()</a>, <a class="el" href="CArray2DParam_8h_source.html#l00091">CArray2DParam&lt; Type &gt;::readParam()</a>, <a class="el" href="Blank_8cpp_source.html#l00031">Blank::readParam()</a>, <a class="el" href="Begin_8cpp_source.html#l00028">Begin::readParam()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00167">LinkMaster::reSetAtom()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00122">LinkMaster::reSetAtoms()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>, <a class="el" href="LogProgress_8cpp_source.html#l00029">LogProgress::sample()</a>, <a class="el" href="Log_8cpp_source.html#l00039">Log::setFile()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00096">MdSimulation::setOptions()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00120">McSimulation::setOptions()</a>, <a class="el" href="ParamComponent_8cpp_source.html#l00062">ParamComponent::setParamCommunicator()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00611">Simulation::simulate()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00401">MdSimulation::simulate()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00430">McSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="LinkMaster_8cpp_source.html#l00046">McMd::LinkMaster::addLink()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00043">McMd::TetherMaster::addTether()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00558">McMd::McSimulation::analyze()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00497">McMd::MdSimulation::analyzeDumps()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00565">McMd::MdSimulation::analyzeTrajectory()</a>, <a class="el" href="ioUtil_8cpp_source.html#l00041">Util::checkString()</a>, <a class="el" href="Exception_8cpp_source.html#l00023">Util::Exception::Exception()</a>, <a class="el" href="Label_8cpp_source.html#l00051">Util::operator&gt;&gt;()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00042">McMd::PmcConfigIo::read()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00049">McMd::McMdConfigIo::read()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00191">McMd::MdSimulation::readCommands()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00225">McMd::McSimulation::readCommands()</a>, <a class="el" href="Factory_8h_source.html#l00188">Util::Factory&lt; Data &gt;::readObject()</a>, <a class="el" href="ScalarParam_8h_source.html#l00099">Util::ScalarParam&lt; Type &gt;::readParam()</a>, <a class="el" href="McMoveManager_8cpp_source.html#l00044">McMd::McMoveManager::readParam()</a>, <a class="el" href="Manager_8h_source.html#l00273">Util::Manager&lt; Data &gt;::readParam()</a>, <a class="el" href="FArrayParam_8h_source.html#l00071">Util::FArrayParam&lt; Type, N &gt;::readParam()</a>, <a class="el" href="End_8cpp_source.html#l00033">Util::End::readParam()</a>, <a class="el" href="DMatrixParam_8h_source.html#l00090">Util::DMatrixParam&lt; Type &gt;::readParam()</a>, <a class="el" href="DArrayParam_8h_source.html#l00074">Util::DArrayParam&lt; Type &gt;::readParam()</a>, <a class="el" href="CArrayParam_8h_source.html#l00070">Util::CArrayParam&lt; Type &gt;::readParam()</a>, <a class="el" href="CArray2DParam_8h_source.html#l00091">Util::CArray2DParam&lt; Type &gt;::readParam()</a>, <a class="el" href="Blank_8cpp_source.html#l00031">Util::Blank::readParam()</a>, <a class="el" href="Begin_8cpp_source.html#l00028">Util::Begin::readParam()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00167">McMd::LinkMaster::reSetAtom()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00122">McMd::LinkMaster::reSetAtoms()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="LogProgress_8cpp_source.html#l00029">McMd::LogProgress::sample()</a>, <a class="el" href="Log_8cpp_source.html#l00039">setFile()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00096">McMd::MdSimulation::setOptions()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00120">McMd::McSimulation::setOptions()</a>, <a class="el" href="ParamComponent_8cpp_source.html#l00062">Util::ParamComponent::setParamCommunicator()</a>, <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00611">DdMd::Simulation::simulate()</a>, <a class="el" href="MdSimulation_8cpp_source.html#l00401">McMd::MdSimulation::simulate()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00430">McMd::McSimulation::simulate()</a>.</p>
 
 </div>
 </div>
@@ -175,7 +175,7 @@ Static Public Member Functions</h2></td></tr>
 <li><a class="el" href="Log_8cpp_source.html">Log.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:45:01 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:34 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

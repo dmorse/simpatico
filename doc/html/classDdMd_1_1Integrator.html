@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Integrator Class Reference</title>
+<title>Simpatico: DdMd::Integrator Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -52,7 +52,7 @@
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<h1>Integrator Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Integrator__Module.html">MD Integrators</a></div></h1>  </div>
+<h1>DdMd::Integrator Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Integrator__Module.html">MD Integrators</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::Integrator" --><!-- doxytag: inherits="Util::ParamComposite,DdMd::SimulationAccess" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -62,16 +62,16 @@
 </div>
 <p><code>#include &lt;<a class="el" href="Integrator_8h_source.html">Integrator.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Integrator:</div>
+Inheritance diagram for DdMd::Integrator:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1Integrator.png" usemap="#Integrator_map" alt=""/>
-  <map id="Integrator_map" name="Integrator_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classDdMd_1_1SimulationAccess.html" alt="SimulationAccess" shape="rect" coords="121,56,232,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
-<area href="classDdMd_1_1NveIntegrator.html" alt="NveIntegrator" shape="rect" coords="0,168,111,192"/>
-<area href="classDdMd_1_1NvtIntegrator.html" alt="NvtIntegrator" shape="rect" coords="121,168,232,192"/>
+  <img src="classDdMd_1_1Integrator.png" usemap="#DdMd::Integrator_map" alt=""/>
+  <map id="DdMd::Integrator_map" name="DdMd::Integrator_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,151,80"/>
+<area href="classDdMd_1_1SimulationAccess.html" alt="DdMd::SimulationAccess" shape="rect" coords="161,56,312,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,151,24"/>
+<area href="classDdMd_1_1NveIntegrator.html" alt="DdMd::NveIntegrator" shape="rect" coords="0,168,151,192"/>
+<area href="classDdMd_1_1NvtIntegrator.html" alt="DdMd::NvtIntegrator" shape="rect" coords="161,168,312,192"/>
 </map>
  </div></div>
 
@@ -79,39 +79,39 @@ Inheritance diagram for Integrator:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#a50e4b4dfa557f8788e2346e49c88d010">Integrator</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a50e4b4dfa557f8788e2346e49c88d010"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#a14255d076fed15f0241db521a5a67fb0">~Integrator</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a14255d076fed15f0241db521a5a67fb0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#a39fe489f6eb526d59b6b804a8343fe8c">setup</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize just before integration.  <a href="#a39fe489f6eb526d59b6b804a8343fe8c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#adc5b899e54d8c8a9581ce9763b343530">run</a> (int nStep)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a simulation of iStep steps.  <a href="#adc5b899e54d8c8a9581ce9763b343530"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#a3e41568a1eb325a1b63880652946343a">outputStatistics</a> (std::ostream &amp;out)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output statistics immediately after a run.  <a href="#a3e41568a1eb325a1b63880652946343a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#ab321b0a8fcbf4f436b26a87f1993bb2e">Integrator</a> (<a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;simulation)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ab321b0a8fcbf4f436b26a87f1993bb2e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#a8ef85619daf118971ee08369c0b7d22a">~Integrator</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a8ef85619daf118971ee08369c0b7d22a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#a150e41e95b19bb2f8593719b88297a80">setup</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize just before integration.  <a href="#a150e41e95b19bb2f8593719b88297a80"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#ab041ca632c8fee43d96b01e5cad0f19d">run</a> (int nStep)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Run a simulation of iStep steps.  <a href="#ab041ca632c8fee43d96b01e5cad0f19d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#ada6b32ffe23deb03c4d1a6af73e3f374">outputStatistics</a> (std::ostream &amp;out)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output statistics immediately after a run.  <a href="#ada6b32ffe23deb03c4d1a6af73e3f374"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-types"></a>
 Protected Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#ad4c1ea253fbb59e66f66071f082e5610">TimeId</a> </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#a988ddbcea34ca09ff2d218ee489c203d">TimeId</a> </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><p>Timestamps for loop timing. </p>
- <a href="classDdMd_1_1Integrator.html#ad4c1ea253fbb59e66f66071f082e5610">More...</a><br/></td></tr>
+ <a href="classDdMd_1_1Integrator.html#a988ddbcea34ca09ff2d218ee489c203d">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1DdTimer.html">DdTimer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#abf07eeafcaa4b7d90986266c0e26b09b">timer</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the timer by reference.  <a href="#abf07eeafcaa4b7d90986266c0e26b09b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1DdTimer.html">DdTimer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297">timer</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the timer by reference.  <a href="#aea63b2daa313636e526bfb9c39982297"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#a97a1a2d2aa8e5ec3431b4430bf169f64">nStep_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of steps.  <a href="#a97a1a2d2aa8e5ec3431b4430bf169f64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#aceec8996e76f6f60627c59050a24d284">iStep_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Current step number.  <a href="#aceec8996e76f6f60627c59050a24d284"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077">nStep_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of steps.  <a href="#aa57d90f9880ea40ed2d84df5482be077"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Integrator.html#a3579b1c124337bbec98c515185187817">iStep_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Current step number.  <a href="#a3579b1c124337bbec98c515185187817"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Enumeration Documentation</h2>
-<a class="anchor" id="ad4c1ea253fbb59e66f66071f082e5610"></a><!-- doxytag: member="DdMd::Integrator::TimeId" ref="ad4c1ea253fbb59e66f66071f082e5610" args="" -->
+<a class="anchor" id="a988ddbcea34ca09ff2d218ee489c203d"></a><!-- doxytag: member="DdMd::Integrator::TimeId" ref="a988ddbcea34ca09ff2d218ee489c203d" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="classDdMd_1_1Integrator.html#ad4c1ea253fbb59e66f66071f082e5610">TimeId</a><code> [protected]</code></td>
+          <td class="memname">enum <a class="el" href="classDdMd_1_1Integrator.html#a988ddbcea34ca09ff2d218ee489c203d">DdMd::Integrator::TimeId</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -124,12 +124,12 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a50e4b4dfa557f8788e2346e49c88d010"></a><!-- doxytag: member="DdMd::Integrator::Integrator" ref="a50e4b4dfa557f8788e2346e49c88d010" args="(Simulation &amp;simulation)" -->
+<a class="anchor" id="ab321b0a8fcbf4f436b26a87f1993bb2e"></a><!-- doxytag: member="DdMd::Integrator::Integrator" ref="ab321b0a8fcbf4f436b26a87f1993bb2e" args="(Simulation &amp;simulation)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Integrator.html">Integrator</a> </td>
+          <td class="memname">DdMd::Integrator::Integrator </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td>
           <td class="paramname"><em>simulation</em></td><td>)</td>
@@ -145,12 +145,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a14255d076fed15f0241db521a5a67fb0"></a><!-- doxytag: member="DdMd::Integrator::~Integrator" ref="a14255d076fed15f0241db521a5a67fb0" args="()" -->
+<a class="anchor" id="a8ef85619daf118971ee08369c0b7d22a"></a><!-- doxytag: member="DdMd::Integrator::~Integrator" ref="a8ef85619daf118971ee08369c0b7d22a" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1Integrator.html">Integrator</a> </td>
+          <td class="memname">DdMd::Integrator::~Integrator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -166,12 +166,12 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a39fe489f6eb526d59b6b804a8343fe8c"></a><!-- doxytag: member="DdMd::Integrator::setup" ref="a39fe489f6eb526d59b6b804a8343fe8c" args="()=0" -->
+<a class="anchor" id="a150e41e95b19bb2f8593719b88297a80"></a><!-- doxytag: member="DdMd::Integrator::setup" ref="a150e41e95b19bb2f8593719b88297a80" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void setup </td>
+          <td class="memname">virtual void DdMd::Integrator::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [pure virtual]</code></td>
@@ -182,16 +182,16 @@ Protected Attributes</h2></td></tr>
 
 <p>Initialize just before integration. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1NveIntegrator.html#a4fc01d736fe50cf5b977f755b675f11d">NveIntegrator</a>, and <a class="el" href="classDdMd_1_1NvtIntegrator.html#a4fc01d736fe50cf5b977f755b675f11d">NvtIntegrator</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1NveIntegrator.html#ab0642ad8c5048a0323a940a8a71944ee">DdMd::NveIntegrator</a>, and <a class="el" href="classDdMd_1_1NvtIntegrator.html#af446839e12d4b5ca16280fcc7065d9fe">DdMd::NvtIntegrator</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="adc5b899e54d8c8a9581ce9763b343530"></a><!-- doxytag: member="DdMd::Integrator::run" ref="adc5b899e54d8c8a9581ce9763b343530" args="(int nStep)=0" -->
+<a class="anchor" id="ab041ca632c8fee43d96b01e5cad0f19d"></a><!-- doxytag: member="DdMd::Integrator::run" ref="ab041ca632c8fee43d96b01e5cad0f19d" args="(int nStep)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void run </td>
+          <td class="memname">virtual void DdMd::Integrator::run </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>nStep</em></td><td>)</td>
@@ -203,16 +203,16 @@ Protected Attributes</h2></td></tr>
 
 <p>Run a simulation of iStep steps. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1NveIntegrator.html#a2a3d256197432e9c39329b2e742a9b7f">NveIntegrator</a>, and <a class="el" href="classDdMd_1_1NvtIntegrator.html#ab0b451de0da11c99a7b73224d95b103c">NvtIntegrator</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1NveIntegrator.html#a2ed6a04b0353739118fe46412e402264">DdMd::NveIntegrator</a>, and <a class="el" href="classDdMd_1_1NvtIntegrator.html#a0727319016a8ca91e91fa8ea059b7f11">DdMd::NvtIntegrator</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3e41568a1eb325a1b63880652946343a"></a><!-- doxytag: member="DdMd::Integrator::outputStatistics" ref="a3e41568a1eb325a1b63880652946343a" args="(std::ostream &amp;out)" -->
+<a class="anchor" id="ada6b32ffe23deb03c4d1a6af73e3f374"></a><!-- doxytag: member="DdMd::Integrator::outputStatistics" ref="ada6b32ffe23deb03c4d1a6af73e3f374" args="(std::ostream &amp;out)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void outputStatistics </td>
+          <td class="memname">void DdMd::Integrator::outputStatistics </td>
           <td>(</td>
           <td class="paramtype">std::ostream &amp;&#160;</td>
           <td class="paramname"><em>out</em></td><td>)</td>
@@ -226,16 +226,16 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Integrator_8cpp_source.html#l00047">47</a> of file <a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a>.</p>
 
-<p>References <a class="el" href="SimulationAccess_8h_source.html#l00279">SimulationAccess::atomStorage()</a>, <a class="el" href="Domain_8h_source.html#l00237">Domain::communicator()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00459">AtomStorage::computeNAtomTotal()</a>, <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00246">PairList::computeStatistics()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00325">SimulationAccess::domain()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00328">SimulationAccess::exchanger()</a>, <a class="el" href="AtomStorage_8h_source.html#l00476">AtomStorage::nAtomTotal()</a>, <a class="el" href="Integrator_8h_source.html#l00070">Integrator::nStep_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00292">PairPotential::pairList()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00295">SimulationAccess::pairPotential()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00310">PairPotential::timer()</a>, <a class="el" href="Exchanger_8h_source.html#l00112">Exchanger::timer()</a>, and <a class="el" href="Integrator_8h_source.html#l00066">Integrator::timer()</a>.</p>
+<p>References <a class="el" href="SimulationAccess_8h_source.html#l00279">DdMd::SimulationAccess::atomStorage()</a>, <a class="el" href="Domain_8h_source.html#l00237">DdMd::Domain::communicator()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00459">DdMd::AtomStorage::computeNAtomTotal()</a>, <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00246">DdMd::PairList::computeStatistics()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00325">DdMd::SimulationAccess::domain()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00328">DdMd::SimulationAccess::exchanger()</a>, <a class="el" href="AtomStorage_8h_source.html#l00487">DdMd::AtomStorage::nAtomTotal()</a>, <a class="el" href="Integrator_8h_source.html#l00070">nStep_</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00292">DdMd::PairPotential::pairList()</a>, <a class="el" href="SimulationAccess_8h_source.html#l00295">DdMd::SimulationAccess::pairPotential()</a>, <a class="el" href="ddMd_2potentials_2pair_2PairPotential_8h_source.html#l00310">DdMd::PairPotential::timer()</a>, <a class="el" href="Exchanger_8h_source.html#l00112">DdMd::Exchanger::timer()</a>, and <a class="el" href="Integrator_8h_source.html#l00066">timer()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abf07eeafcaa4b7d90986266c0e26b09b"></a><!-- doxytag: member="DdMd::Integrator::timer" ref="abf07eeafcaa4b7d90986266c0e26b09b" args="()" -->
+<a class="anchor" id="aea63b2daa313636e526bfb9c39982297"></a><!-- doxytag: member="DdMd::Integrator::timer" ref="aea63b2daa313636e526bfb9c39982297" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1DdTimer.html">DdTimer</a>&amp; timer </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1DdTimer.html">DdTimer</a>&amp; DdMd::Integrator::timer </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, protected]</code></td>
@@ -248,17 +248,17 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Integrator_8h_source.html#l00066">66</a> of file <a class="el" href="Integrator_8h_source.html">Integrator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">Integrator::outputStatistics()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">outputStatistics()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a97a1a2d2aa8e5ec3431b4430bf169f64"></a><!-- doxytag: member="DdMd::Integrator::nStep_" ref="a97a1a2d2aa8e5ec3431b4430bf169f64" args="" -->
+<a class="anchor" id="aa57d90f9880ea40ed2d84df5482be077"></a><!-- doxytag: member="DdMd::Integrator::nStep_" ref="aa57d90f9880ea40ed2d84df5482be077" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classDdMd_1_1Integrator.html#a97a1a2d2aa8e5ec3431b4430bf169f64">nStep_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077">DdMd::Integrator::nStep_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -268,16 +268,16 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Integrator_8h_source.html#l00070">70</a> of file <a class="el" href="Integrator_8h_source.html">Integrator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">Integrator::outputStatistics()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">outputStatistics()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aceec8996e76f6f60627c59050a24d284"></a><!-- doxytag: member="DdMd::Integrator::iStep_" ref="aceec8996e76f6f60627c59050a24d284" args="" -->
+<a class="anchor" id="a3579b1c124337bbec98c515185187817"></a><!-- doxytag: member="DdMd::Integrator::iStep_" ref="a3579b1c124337bbec98c515185187817" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classDdMd_1_1Integrator.html#aceec8996e76f6f60627c59050a24d284">iStep_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classDdMd_1_1Integrator.html#a3579b1c124337bbec98c515185187817">DdMd::Integrator::iStep_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -287,7 +287,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Integrator_8h_source.html#l00073">73</a> of file <a class="el" href="Integrator_8h_source.html">Integrator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>.</p>
 
 </div>
 </div>
@@ -296,7 +296,7 @@ Protected Attributes</h2></td></tr>
 <li><a class="el" href="Integrator_8cpp_source.html">Integrator.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

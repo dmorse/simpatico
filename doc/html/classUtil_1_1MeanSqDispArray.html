@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: MeanSqDispArray&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::MeanSqDispArray&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>MeanSqDispArray&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Accumulators__Module.html">Statistical Accumulators</a></div></h1>  </div>
+<h1>Util::MeanSqDispArray&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Accumulators__Module.html">Statistical Accumulators</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::MeanSqDispArray" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -64,13 +64,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="MeanSqDispArray_8h_source.html">MeanSqDispArray.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for MeanSqDispArray&lt; Data &gt;:</div>
+Inheritance diagram for Util::MeanSqDispArray&lt; Data &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classUtil_1_1MeanSqDispArray.png" usemap="#MeanSqDispArray&lt; Data &gt;_map" alt=""/>
-  <map id="MeanSqDispArray&lt; Data &gt;_map" name="MeanSqDispArray&lt; Data &gt;_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,166,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,166,24"/>
+  <img src="classUtil_1_1MeanSqDispArray.png" usemap="#Util::MeanSqDispArray&lt; Data &gt;_map" alt=""/>
+  <map id="Util::MeanSqDispArray&lt; Data &gt;_map" name="Util::MeanSqDispArray&lt; Data &gt;_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,189,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,189,24"/>
 </map>
  </div></div>
 
@@ -78,39 +78,41 @@ Inheritance diagram for MeanSqDispArray&lt; Data &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a6a179ec3d8fd1c2216d6982ea909c3d1">MeanSqDispArray</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a6a179ec3d8fd1c2216d6982ea909c3d1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a1752986ab50d9b28370b31b47685d99d">~MeanSqDispArray</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <a href="#a1752986ab50d9b28370b31b47685d99d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters, allocate memory and clear history.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a898f56cb8f64afd76f8ea003fd3f25d4">setParam</a> (int ensembleCapacity, int bufferCapacity)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set parameters, allocate memory, and clear history.  <a href="#a898f56cb8f64afd76f8ea003fd3f25d4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a8c1b1a750edc60d8d7727a6b8fe495cf">setNEnsemble</a> (int nEnsemble)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set actual number of sequences in ensemble.  <a href="#a8c1b1a750edc60d8d7727a6b8fe495cf"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#ac8bb3912a3ce86b15842e79d0b421204">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset to empty state.  <a href="#ac8bb3912a3ce86b15842e79d0b421204"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#ab69f32daa8fd8af48df319798e80da97">sample</a> (const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; Data &gt; &amp;values)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample an array of current values.  <a href="#ab69f32daa8fd8af48df319798e80da97"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a012e48b5ec7769b2e5614bd6b3a62488">output</a> (std::ostream &amp;out)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output the autocorrelation function.  <a href="#a012e48b5ec7769b2e5614bd6b3a62488"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a4979a9a5c8b480a0485158725c704d18">bufferCapacity</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity of the history buffer for each sequence.  <a href="#a4979a9a5c8b480a0485158725c704d18"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a4f730d3a038a8d8303986b16ee761ff5">nEnsemble</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of sequences in the ensemble.  <a href="#a4f730d3a038a8d8303986b16ee761ff5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a596094ce431e8df5187b91fe209713e8">nSample</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of values sampled from each sequence thus far.  <a href="#a596094ce431e8df5187b91fe209713e8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#af6fc6aa6f8898fee99fc192a3f382478">MeanSqDispArray</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#af6fc6aa6f8898fee99fc192a3f382478"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a41bf3f0259bb3016e7ba1aa3a38c52c4">~MeanSqDispArray</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default destructor.  <a href="#a41bf3f0259bb3016e7ba1aa3a38c52c4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a6031214bb3e7d76ac9d613276884e70c">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters, allocate memory and clear history.  <a href="#a6031214bb3e7d76ac9d613276884e70c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a4a8cb730e024205da4d773152e1447b6">setParam</a> (int ensembleCapacity, int bufferCapacity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set parameters, allocate memory, and clear history.  <a href="#a4a8cb730e024205da4d773152e1447b6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#acdcf571e8ef9bdcf1943eaaa02a6b405">setNEnsemble</a> (int nEnsemble)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set actual number of sequences in ensemble.  <a href="#acdcf571e8ef9bdcf1943eaaa02a6b405"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a37d7bb9ee79d7c9292b2353d456d7b31">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset to empty state.  <a href="#a37d7bb9ee79d7c9292b2353d456d7b31"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a6b21d191c565df0aa0eb8c619ea10aa2">sample</a> (const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; Data &gt; &amp;values)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample an array of current values.  <a href="#a6b21d191c565df0aa0eb8c619ea10aa2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a0368caf235590e57b3f185a0e8d15acd">output</a> (std::ostream &amp;out)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output the autocorrelation function.  <a href="#a0368caf235590e57b3f185a0e8d15acd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#aa1743fc8e14b96e182b8bd98e106889c">bufferCapacity</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity of the history buffer for each sequence.  <a href="#aa1743fc8e14b96e182b8bd98e106889c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a2d760a96c2584135bd196ce3b4cc3a4d">nEnsemble</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of sequences in the ensemble.  <a href="#a2d760a96c2584135bd196ce3b4cc3a4d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#abfa5be64ec9434a3ab1f3360664d7af4">nSample</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of values sampled from each sequence thus far.  <a href="#abfa5be64ec9434a3ab1f3360664d7af4"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize this <a class="el" href="classUtil_1_1MeanSqDispArray.html" title="Mean-squared displacement (MSD) vs.">MeanSqDispArray</a> to/from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1MeanSqDispArray.html#a462e8296543dd07fe2e546cb46b22fb7">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize this <a class="el" href="classUtil_1_1MeanSqDispArray.html" title="Mean-squared displacement (MSD) vs.">MeanSqDispArray</a> to/from an archive.  <a href="#a462e8296543dd07fe2e546cb46b22fb7"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a6a179ec3d8fd1c2216d6982ea909c3d1"></a><!-- doxytag: member="Util::MeanSqDispArray::MeanSqDispArray" ref="a6a179ec3d8fd1c2216d6982ea909c3d1" args="()" -->
+<a class="anchor" id="af6fc6aa6f8898fee99fc192a3f382478"></a><!-- doxytag: member="Util::MeanSqDispArray::MeanSqDispArray" ref="af6fc6aa6f8898fee99fc192a3f382478" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1MeanSqDispArray.html">MeanSqDispArray</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1MeanSqDispArray.html">MeanSqDispArray</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -125,12 +127,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1752986ab50d9b28370b31b47685d99d"></a><!-- doxytag: member="Util::MeanSqDispArray::~MeanSqDispArray" ref="a1752986ab50d9b28370b31b47685d99d" args="()" -->
+<a class="anchor" id="a41bf3f0259bb3016e7ba1aa3a38c52c4"></a><!-- doxytag: member="Util::MeanSqDispArray::~MeanSqDispArray" ref="a41bf3f0259bb3016e7ba1aa3a38c52c4" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1MeanSqDispArray.html">MeanSqDispArray</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::~<a class="el" href="classUtil_1_1MeanSqDispArray.html">MeanSqDispArray</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -146,12 +150,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="Util::MeanSqDispArray::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a6031214bb3e7d76ac9d613276884e70c"></a><!-- doxytag: member="Util::MeanSqDispArray::readParam" ref="a6031214bb3e7d76ac9d613276884e70c" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -162,7 +168,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Read parameters, allocate memory and clear history. </p>
-<p>Reads parameters nEnsemble and capacity, allocates memory, and then calls <a class="el" href="classUtil_1_1MeanSqDispArray.html#ac8bb3912a3ce86b15842e79d0b421204" title="Reset to empty state.">clear()</a>.</p>
+<p>Reads parameters nEnsemble and capacity, allocates memory, and then calls <a class="el" href="classUtil_1_1MeanSqDispArray.html#a37d7bb9ee79d7c9292b2353d456d7b31" title="Reset to empty state.">clear()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">in</td><td>input parameter stream </td></tr>
@@ -170,18 +176,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="MeanSqDispArray_8h_source.html#l00199">199</a> of file <a class="el" href="MeanSqDispArray_8h_source.html">MeanSqDispArray.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a898f56cb8f64afd76f8ea003fd3f25d4"></a><!-- doxytag: member="Util::MeanSqDispArray::setParam" ref="a898f56cb8f64afd76f8ea003fd3f25d4" args="(int ensembleCapacity, int bufferCapacity)" -->
+<a class="anchor" id="a4a8cb730e024205da4d773152e1447b6"></a><!-- doxytag: member="Util::MeanSqDispArray::setParam" ref="a4a8cb730e024205da4d773152e1447b6" args="(int ensembleCapacity, int bufferCapacity)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setParam </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::setParam </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>ensembleCapacity</em>, </td>
@@ -202,7 +210,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Set parameters, allocate memory, and clear history. </p>
-<p>Sets parameters nEnsemble and capacity, allocates memory and then calls <a class="el" href="classUtil_1_1MeanSqDispArray.html#ac8bb3912a3ce86b15842e79d0b421204" title="Reset to empty state.">clear()</a>.</p>
+<p>Sets parameters nEnsemble and capacity, allocates memory and then calls <a class="el" href="classUtil_1_1MeanSqDispArray.html#a37d7bb9ee79d7c9292b2353d456d7b31" title="Reset to empty state.">clear()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">ensembleCapacity</td><td>number of sequence in ensemble </td></tr>
@@ -215,12 +223,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8c1b1a750edc60d8d7727a6b8fe495cf"></a><!-- doxytag: member="Util::MeanSqDispArray::setNEnsemble" ref="a8c1b1a750edc60d8d7727a6b8fe495cf" args="(int nEnsemble)" -->
+<a class="anchor" id="acdcf571e8ef9bdcf1943eaaa02a6b405"></a><!-- doxytag: member="Util::MeanSqDispArray::setNEnsemble" ref="acdcf571e8ef9bdcf1943eaaa02a6b405" args="(int nEnsemble)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setNEnsemble </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::setNEnsemble </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>nEnsemble</em></td><td>)</td>
@@ -231,7 +241,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Set actual number of sequences in ensemble. </p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classUtil_1_1MeanSqDispArray.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters, allocate memory and clear history.">readParam()</a> or <a class="el" href="classUtil_1_1MeanSqDispArray.html#a898f56cb8f64afd76f8ea003fd3f25d4" title="Set parameters, allocate memory, and clear history.">setParam()</a> must have been called previously </dd>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd><a class="el" href="classUtil_1_1MeanSqDispArray.html#a6031214bb3e7d76ac9d613276884e70c" title="Read parameters, allocate memory and clear history.">readParam()</a> or <a class="el" href="classUtil_1_1MeanSqDispArray.html#a4a8cb730e024205da4d773152e1447b6" title="Set parameters, allocate memory, and clear history.">setParam()</a> must have been called previously </dd>
 <dd>
 nEnsemble &lt;= ensembleCapacity</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
@@ -247,12 +257,14 @@ nEnsemble &lt;= ensembleCapacity</dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ac8bb3912a3ce86b15842e79d0b421204"></a><!-- doxytag: member="Util::MeanSqDispArray::clear" ref="ac8bb3912a3ce86b15842e79d0b421204" args="()" -->
+<a class="anchor" id="a37d7bb9ee79d7c9292b2353d456d7b31"></a><!-- doxytag: member="Util::MeanSqDispArray::clear" ref="a37d7bb9ee79d7c9292b2353d456d7b31" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void clear </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -269,12 +281,14 @@ nEnsemble &lt;= ensembleCapacity</dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="ab69f32daa8fd8af48df319798e80da97"></a><!-- doxytag: member="Util::MeanSqDispArray::sample" ref="ab69f32daa8fd8af48df319798e80da97" args="(const Array&lt; Data &gt; &amp;values)" -->
+<a class="anchor" id="a6b21d191c565df0aa0eb8c619ea10aa2"></a><!-- doxytag: member="Util::MeanSqDispArray::sample" ref="a6b21d191c565df0aa0eb8c619ea10aa2" args="(const Array&lt; Data &gt; &amp;values)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::sample </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Array.html">Array</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>values</em></td><td>)</td>
@@ -296,12 +310,14 @@ nEnsemble &lt;= ensembleCapacity</dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a012e48b5ec7769b2e5614bd6b3a62488"></a><!-- doxytag: member="Util::MeanSqDispArray::output" ref="a012e48b5ec7769b2e5614bd6b3a62488" args="(std::ostream &amp;out)" -->
+<a class="anchor" id="a0368caf235590e57b3f185a0e8d15acd"></a><!-- doxytag: member="Util::MeanSqDispArray::output" ref="a0368caf235590e57b3f185a0e8d15acd" args="(std::ostream &amp;out)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::output </td>
           <td>(</td>
           <td class="paramtype">std::ostream &amp;&#160;</td>
           <td class="paramname"><em>out</em></td><td>)</td>
@@ -317,12 +333,14 @@ nEnsemble &lt;= ensembleCapacity</dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a4979a9a5c8b480a0485158725c704d18"></a><!-- doxytag: member="Util::MeanSqDispArray::bufferCapacity" ref="a4979a9a5c8b480a0485158725c704d18" args="()" -->
+<a class="anchor" id="aa1743fc8e14b96e182b8bd98e106889c"></a><!-- doxytag: member="Util::MeanSqDispArray::bufferCapacity" ref="aa1743fc8e14b96e182b8bd98e106889c" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int bufferCapacity </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::bufferCapacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -337,12 +355,14 @@ nEnsemble &lt;= ensembleCapacity</dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a4f730d3a038a8d8303986b16ee761ff5"></a><!-- doxytag: member="Util::MeanSqDispArray::nEnsemble" ref="a4f730d3a038a8d8303986b16ee761ff5" args="()" -->
+<a class="anchor" id="a2d760a96c2584135bd196ce3b4cc3a4d"></a><!-- doxytag: member="Util::MeanSqDispArray::nEnsemble" ref="a2d760a96c2584135bd196ce3b4cc3a4d" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int nEnsemble </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::nEnsemble </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -357,12 +377,14 @@ nEnsemble &lt;= ensembleCapacity</dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a596094ce431e8df5187b91fe209713e8"></a><!-- doxytag: member="Util::MeanSqDispArray::nSample" ref="a596094ce431e8df5187b91fe209713e8" args="()" -->
+<a class="anchor" id="abfa5be64ec9434a3ab1f3360664d7af4"></a><!-- doxytag: member="Util::MeanSqDispArray::nSample" ref="abfa5be64ec9434a3ab1f3360664d7af4" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int nSample </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::nSample </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -377,12 +399,16 @@ nEnsemble &lt;= ensembleCapacity</dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="Util::MeanSqDispArray::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="a462e8296543dd07fe2e546cb46b22fb7"></a><!-- doxytag: member="Util::MeanSqDispArray::serialize" ref="a462e8296543dd07fe2e546cb46b22fb7" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1MeanSqDispArray.html">Util::MeanSqDispArray</a>&lt; Data &gt;::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -411,7 +437,7 @@ nEnsemble &lt;= ensembleCapacity</dd></dl>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComponent.html#a6765e839ab267e4959384e35a4112451">ParamComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComponent.html#a43f7dd33894b4ad67245162146042e6e">Util::ParamComponent</a>.</p>
 
 <p>Definition at line <a class="el" href="MeanSqDispArray_8h_source.html#l00379">379</a> of file <a class="el" href="MeanSqDispArray_8h_source.html">MeanSqDispArray.h</a>.</p>
 
@@ -421,7 +447,7 @@ nEnsemble &lt;= ensembleCapacity</dd></dl>
 <li><a class="el" href="MeanSqDispArray_8h_source.html">MeanSqDispArray.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:57 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:29 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

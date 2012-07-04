@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: ArrayIterator&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::ArrayIterator&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>ArrayIterator&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Array__Module.html">Object Arrays</a> &#124; <a class="el" href="group__Iterator__Module.html">Iterators</a></div></h1>  </div>
+<h1>Util::ArrayIterator&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Array__Module.html">Object Arrays</a> &#124; <a class="el" href="group__Iterator__Module.html">Iterators</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::ArrayIterator" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -58,7 +58,7 @@
 
 <p>Forward iterator for an <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> or a C array. </p>
 <p>An <a class="el" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator</a> is an abstraction of a pointer, similar to an STL forward iterator. The * operator returns a reference to an associated Data object, the -&gt; operator returns a pointer to that object. The ++ operator increments the current pointer by one array element.</p>
-<p>Unlike an STL forward iterator, an <a class="el" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator</a> contains the address of the end of the array. The <a class="el" href="classUtil_1_1ArrayIterator.html#a11cbf4ba82ee565cb9eef28b972bf145" title="Has the end of the array been reached?">atEnd()</a> method can be used to test for termination of a for or while loop. When <a class="el" href="classUtil_1_1ArrayIterator.html#a11cbf4ba82ee565cb9eef28b972bf145" title="Has the end of the array been reached?">atEnd()</a> is true, the current pointer is one past the end of the array, and thus the iterator has no current value, and cannot be incremented further.</p>
+<p>Unlike an STL forward iterator, an <a class="el" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator</a> contains the address of the end of the array. The <a class="el" href="classUtil_1_1ArrayIterator.html#a971bf64d5e02d91928e065129da36277" title="Has the end of the array been reached?">atEnd()</a> method can be used to test for termination of a for or while loop. When <a class="el" href="classUtil_1_1ArrayIterator.html#a971bf64d5e02d91928e065129da36277" title="Has the end of the array been reached?">atEnd()</a> is true, the current pointer is one past the end of the array, and thus the iterator has no current value, and cannot be incremented further.</p>
 <p>An <a class="el" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator</a> behave like a pointer to non-const data, and provides read-write access to the objects to which it points. A <a class="el" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator</a> behaves like a pointer to const, and provides read-only access </p>
 
 <p>Definition at line <a class="el" href="ArrayIterator_8h_source.html#l00039">39</a> of file <a class="el" href="ArrayIterator_8h_source.html">ArrayIterator.h</a>.</p>
@@ -69,33 +69,35 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#ae976743f57701d2753a05a9ec6b639ea">ArrayIterator</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ae976743f57701d2753a05a9ec6b639ea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#ac96801e7ef37aabe6156ae3ba508524b">setCurrent</a> (Data *ptr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current pointer value.  <a href="#ac96801e7ef37aabe6156ae3ba508524b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a0e8ab752dbe9a6f922fb3d19018fda1d">setEnd</a> (Data *ptr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of the end pointer.  <a href="#a0e8ab752dbe9a6f922fb3d19018fda1d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a11cbf4ba82ee565cb9eef28b972bf145">atEnd</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has the end of the array been reached?  <a href="#a11cbf4ba82ee565cb9eef28b972bf145"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816">notEnd</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the current pointer not at the end of the array?  <a href="#acf66f57fcd15c0f1ba36e4470589c816"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a0b3179f07230ed74d5caee9b383d4ef9">get</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to the current data.  <a href="#a0b3179f07230ed74d5caee9b383d4ef9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a85f96b02ec0abfdeffb7016f3b06acd8">ArrayIterator</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a85f96b02ec0abfdeffb7016f3b06acd8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#ac208690b94d1be77cad9c51eb1cfcdb8">setCurrent</a> (Data *ptr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current pointer value.  <a href="#ac208690b94d1be77cad9c51eb1cfcdb8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a5527ef0f4bdae08eeacd11025b91a971">setEnd</a> (Data *ptr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of the end pointer.  <a href="#a5527ef0f4bdae08eeacd11025b91a971"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a971bf64d5e02d91928e065129da36277">atEnd</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has the end of the array been reached?  <a href="#a971bf64d5e02d91928e065129da36277"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c">notEnd</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the current pointer not at the end of the array?  <a href="#a7632e032938bf2cebe26c06d28cbc36c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a29b36f8b6bea7b75c7720319e40d271c">get</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to the current data.  <a href="#a29b36f8b6bea7b75c7720319e40d271c"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Operators</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a78260def3aba396ded6b62cd808606ba">operator*</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the current Data.  <a href="#a78260def3aba396ded6b62cd808606ba"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a414258d2629891bc0b050442e339709a">operator-&gt;</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide a pointer to the current Data object.  <a href="#a414258d2629891bc0b050442e339709a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ArrayIterator.html">ArrayIterator</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a8255029de8b1115f1f951e21d2fab622">operator++</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment the current pointer.  <a href="#a8255029de8b1115f1f951e21d2fab622"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a0dab85fd683a3297ca396accb3781448">operator*</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the current Data.  <a href="#a0dab85fd683a3297ca396accb3781448"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#a71ef1a6d7360a37a36b455d7b055d30f">operator-&gt;</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide a pointer to the current Data object.  <a href="#a71ef1a6d7360a37a36b455d7b055d30f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ArrayIterator.html">ArrayIterator</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ArrayIterator.html#acd90001bd9ecb205d3b3d80c445e3924">operator++</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment the current pointer.  <a href="#acd90001bd9ecb205d3b3d80c445e3924"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ae976743f57701d2753a05a9ec6b639ea"></a><!-- doxytag: member="Util::ArrayIterator::ArrayIterator" ref="ae976743f57701d2753a05a9ec6b639ea" args="()" -->
+<a class="anchor" id="a85f96b02ec0abfdeffb7016f3b06acd8"></a><!-- doxytag: member="Util::ArrayIterator::ArrayIterator" ref="a85f96b02ec0abfdeffb7016f3b06acd8" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1ArrayIterator.html">ArrayIterator</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ArrayIterator.html">Util::ArrayIterator</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1ArrayIterator.html">ArrayIterator</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -112,12 +114,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ac96801e7ef37aabe6156ae3ba508524b"></a><!-- doxytag: member="Util::ArrayIterator::setCurrent" ref="ac96801e7ef37aabe6156ae3ba508524b" args="(Data *ptr)" -->
+<a class="anchor" id="ac208690b94d1be77cad9c51eb1cfcdb8"></a><!-- doxytag: member="Util::ArrayIterator::setCurrent" ref="ac208690b94d1be77cad9c51eb1cfcdb8" args="(Data *ptr)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setCurrent </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1ArrayIterator.html">Util::ArrayIterator</a>&lt; Data &gt;::setCurrent </td>
           <td>(</td>
           <td class="paramtype">Data *&#160;</td>
           <td class="paramname"><em>ptr</em></td><td>)</td>
@@ -137,16 +141,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ArrayIterator_8h_source.html#l00059">59</a> of file <a class="el" href="ArrayIterator_8h_source.html">ArrayIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="FSArray_8h_source.html#l00216">FSArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="FArray_8h_source.html#l00213">FArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="DSArray_8h_source.html#l00275">DSArray&lt; Data &gt;::begin()</a>, and <a class="el" href="Array_8h_source.html#l00155">Array&lt; Data &gt;::begin()</a>.</p>
+<p>Referenced by <a class="el" href="FSArray_8h_source.html#l00216">Util::FSArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="FArray_8h_source.html#l00213">Util::FArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="DSArray_8h_source.html#l00275">Util::DSArray&lt; Data &gt;::begin()</a>, and <a class="el" href="Array_8h_source.html#l00155">Util::Array&lt; Data &gt;::begin()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0e8ab752dbe9a6f922fb3d19018fda1d"></a><!-- doxytag: member="Util::ArrayIterator::setEnd" ref="a0e8ab752dbe9a6f922fb3d19018fda1d" args="(Data *ptr)" -->
+<a class="anchor" id="a5527ef0f4bdae08eeacd11025b91a971"></a><!-- doxytag: member="Util::ArrayIterator::setEnd" ref="a5527ef0f4bdae08eeacd11025b91a971" args="(Data *ptr)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setEnd </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1ArrayIterator.html">Util::ArrayIterator</a>&lt; Data &gt;::setEnd </td>
           <td>(</td>
           <td class="paramtype">Data *&#160;</td>
           <td class="paramname"><em>ptr</em></td><td>)</td>
@@ -166,16 +172,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ArrayIterator_8h_source.html#l00067">67</a> of file <a class="el" href="ArrayIterator_8h_source.html">ArrayIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="FSArray_8h_source.html#l00216">FSArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="FArray_8h_source.html#l00213">FArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="DSArray_8h_source.html#l00275">DSArray&lt; Data &gt;::begin()</a>, and <a class="el" href="Array_8h_source.html#l00155">Array&lt; Data &gt;::begin()</a>.</p>
+<p>Referenced by <a class="el" href="FSArray_8h_source.html#l00216">Util::FSArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="FArray_8h_source.html#l00213">Util::FArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="DSArray_8h_source.html#l00275">Util::DSArray&lt; Data &gt;::begin()</a>, and <a class="el" href="Array_8h_source.html#l00155">Util::Array&lt; Data &gt;::begin()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a11cbf4ba82ee565cb9eef28b972bf145"></a><!-- doxytag: member="Util::ArrayIterator::atEnd" ref="a11cbf4ba82ee565cb9eef28b972bf145" args="() const " -->
+<a class="anchor" id="a971bf64d5e02d91928e065129da36277"></a><!-- doxytag: member="Util::ArrayIterator::atEnd" ref="a971bf64d5e02d91928e065129da36277" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool atEnd </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1ArrayIterator.html">Util::ArrayIterator</a>&lt; Data &gt;::atEnd </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -191,12 +199,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acf66f57fcd15c0f1ba36e4470589c816"></a><!-- doxytag: member="Util::ArrayIterator::notEnd" ref="acf66f57fcd15c0f1ba36e4470589c816" args="() const " -->
+<a class="anchor" id="a7632e032938bf2cebe26c06d28cbc36c"></a><!-- doxytag: member="Util::ArrayIterator::notEnd" ref="a7632e032938bf2cebe26c06d28cbc36c" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool notEnd </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1ArrayIterator.html">Util::ArrayIterator</a>&lt; Data &gt;::notEnd </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -210,16 +220,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ArrayIterator_8h_source.html#l00083">83</a> of file <a class="el" href="ArrayIterator_8h_source.html">ArrayIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00246">ExternalPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00323">BondPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="McPairPotential_8cpp_source.html#l00045">McPairPotential::buildCellList()</a>, <a class="el" href="MdPairPotential_8cpp_source.html#l00044">MdPairPotential::buildPairList()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="McExternalPerturbation_8cpp_source.html#l00094">McExternalPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00118">ReplicaMove::move()</a>, <a class="el" href="HybridNphMdMove_8cpp_source.html#l00073">HybridNphMdMove::move()</a>, <a class="el" href="HybridMdMove_8cpp_source.html#l00063">HybridMdMove::move()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00042">PmcConfigIo::read()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00049">McMdConfigIo::read()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">DdMdConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">DCDTrajectoryIo::readFrame()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00435">MdSystem::removeDriftVelocity()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00068">McExternalEnergyAverage::sample()</a>, <a class="el" href="BondLengthDist_8cpp_source.html#l00060">BondLengthDist::sample()</a>, <a class="el" href="mcMd_2simulation_2serialize_8h_source.html#l00029">System::serialize()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00407">MdSystem::setBoltzmannVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00374">MdSystem::setZeroForces()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00390">MdSystem::setZeroVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00353">MdSystem::shiftAtoms()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00105">NvtNhIntegrator::step()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00182">NvtDpdVvIntegrator::step()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">NveVvIntegrator::step()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00097">PmcConfigIo::write()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">LammpsConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">DdMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00246">McMd::ExternalPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00323">McMd::BondPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="McPairPotential_8cpp_source.html#l00045">McMd::McPairPotential::buildCellList()</a>, <a class="el" href="MdPairPotential_8cpp_source.html#l00044">McMd::MdPairPotential::buildPairList()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="McExternalPerturbation_8cpp_source.html#l00094">McMd::McExternalPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="ReplicaMove_8cpp_source.html#l00118">McMd::ReplicaMove::move()</a>, <a class="el" href="HybridNphMdMove_8cpp_source.html#l00073">McMd::HybridNphMdMove::move()</a>, <a class="el" href="HybridMdMove_8cpp_source.html#l00063">McMd::HybridMdMove::move()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00042">McMd::PmcConfigIo::read()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00049">McMd::McMdConfigIo::read()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">McMd::LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">McMd::DdMdConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">McMd::DCDTrajectoryIo::readFrame()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00435">McMd::MdSystem::removeDriftVelocity()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00068">McMd::McExternalEnergyAverage::sample()</a>, <a class="el" href="BondLengthDist_8cpp_source.html#l00060">McMd::BondLengthDist::sample()</a>, <a class="el" href="mcMd_2simulation_2serialize_8h_source.html#l00029">McMd::System::serialize()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00407">McMd::MdSystem::setBoltzmannVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00374">McMd::MdSystem::setZeroForces()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00390">McMd::MdSystem::setZeroVelocities()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00353">McMd::MdSystem::shiftAtoms()</a>, <a class="el" href="NvtNhIntegrator_8cpp_source.html#l00105">McMd::NvtNhIntegrator::step()</a>, <a class="el" href="NvtDpdVvIntegrator_8cpp_source.html#l00182">McMd::NvtDpdVvIntegrator::step()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">McMd::NveVvIntegrator::step()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00097">McMd::PmcConfigIo::write()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">McMd::LammpsConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">McMd::DdMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0b3179f07230ed74d5caee9b383d4ef9"></a><!-- doxytag: member="Util::ArrayIterator::get" ref="a0b3179f07230ed74d5caee9b383d4ef9" args="() const " -->
+<a class="anchor" id="a29b36f8b6bea7b75c7720319e40d271c"></a><!-- doxytag: member="Util::ArrayIterator::get" ref="a29b36f8b6bea7b75c7720319e40d271c" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data* get </td>
+          <td class="memname">Data* <a class="el" href="classUtil_1_1ArrayIterator.html">Util::ArrayIterator</a>&lt; Data &gt;::get </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -235,12 +247,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a78260def3aba396ded6b62cd808606ba"></a><!-- doxytag: member="Util::ArrayIterator::operator*" ref="a78260def3aba396ded6b62cd808606ba" args="() const " -->
+<a class="anchor" id="a0dab85fd683a3297ca396accb3781448"></a><!-- doxytag: member="Util::ArrayIterator::operator*" ref="a0dab85fd683a3297ca396accb3781448" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data&amp; operator* </td>
+          <td class="memname">Data&amp; <a class="el" href="classUtil_1_1ArrayIterator.html">Util::ArrayIterator</a>&lt; Data &gt;::operator* </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -256,12 +270,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a414258d2629891bc0b050442e339709a"></a><!-- doxytag: member="Util::ArrayIterator::operator&#45;&gt;" ref="a414258d2629891bc0b050442e339709a" args="() const " -->
+<a class="anchor" id="a71ef1a6d7360a37a36b455d7b055d30f"></a><!-- doxytag: member="Util::ArrayIterator::operator&#45;&gt;" ref="a71ef1a6d7360a37a36b455d7b055d30f" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data* operator-&gt; </td>
+          <td class="memname">Data* <a class="el" href="classUtil_1_1ArrayIterator.html">Util::ArrayIterator</a>&lt; Data &gt;::operator-&gt; </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -277,12 +293,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8255029de8b1115f1f951e21d2fab622"></a><!-- doxytag: member="Util::ArrayIterator::operator++" ref="a8255029de8b1115f1f951e21d2fab622" args="()" -->
+<a class="anchor" id="acd90001bd9ecb205d3b3d80c445e3924"></a><!-- doxytag: member="Util::ArrayIterator::operator++" ref="acd90001bd9ecb205d3b3d80c445e3924" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1ArrayIterator.html">ArrayIterator</a>&lt;Data&gt;&amp; operator++ </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ArrayIterator.html">ArrayIterator</a>&lt;Data&gt;&amp; <a class="el" href="classUtil_1_1ArrayIterator.html">Util::ArrayIterator</a>&lt; Data &gt;::operator++ </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -302,7 +320,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="ArrayIterator_8h_source.html">ArrayIterator.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

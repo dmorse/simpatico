@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: AutoCorr&lt; Data, Product &gt; Class Template Reference</title>
+<title>Simpatico: Util::AutoCorr&lt; Data, Product &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>AutoCorr&lt; Data, Product &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Accumulators__Module.html">Statistical Accumulators</a></div></h1>  </div>
+<h1>Util::AutoCorr&lt; Data, Product &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Accumulators__Module.html">Statistical Accumulators</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::AutoCorr" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -65,13 +65,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="AutoCorr_8h_source.html">AutoCorr.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for AutoCorr&lt; Data, Product &gt;:</div>
+Inheritance diagram for Util::AutoCorr&lt; Data, Product &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classUtil_1_1AutoCorr.png" usemap="#AutoCorr&lt; Data, Product &gt;_map" alt=""/>
-  <map id="AutoCorr&lt; Data, Product &gt;_map" name="AutoCorr&lt; Data, Product &gt;_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,167,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,167,24"/>
+  <img src="classUtil_1_1AutoCorr.png" usemap="#Util::AutoCorr&lt; Data, Product &gt;_map" alt=""/>
+  <map id="Util::AutoCorr&lt; Data, Product &gt;_map" name="Util::AutoCorr&lt; Data, Product &gt;_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,190,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,190,24"/>
 </map>
  </div></div>
 
@@ -79,45 +79,47 @@ Inheritance diagram for AutoCorr&lt; Data, Product &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a4cb9d2034b587f8dc8518fe3779f6357">AutoCorr</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a4cb9d2034b587f8dc8518fe3779f6357"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#ac8bb3912a3ce86b15842e79d0b421204">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset to empty state.  <a href="#ac8bb3912a3ce86b15842e79d0b421204"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read buffer capacity, allocate memory and initialize.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a08be97800ea312966708a14bbaacfd76">setParam</a> (int bufferCapacity)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set buffer capacity, allocate memory and initialize.  <a href="#a08be97800ea312966708a14bbaacfd76"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a2e5a9038ceb78c9f25abe44dad0be122">sample</a> (Data value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample a value.  <a href="#a2e5a9038ceb78c9f25abe44dad0be122"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a012e48b5ec7769b2e5614bd6b3a62488">output</a> (std::ostream &amp;out)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output the autocorrelation function.  <a href="#a012e48b5ec7769b2e5614bd6b3a62488"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a57118c8a6ff3a32ffbdf852295a9bdaa">bufferCapacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity of history buffer.  <a href="#a57118c8a6ff3a32ffbdf852295a9bdaa"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a5271d3c821039a770825e80c05132fd5">nSample</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of values sampled thus far.  <a href="#a5271d3c821039a770825e80c05132fd5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#adcc93ec2fd4f07e9d9f239514e7fccd6">average</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return average of all sampled values.  <a href="#adcc93ec2fd4f07e9d9f239514e7fccd6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#aa95007061e6d0f55d01c40fcd277a1b0">corrTime</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Numerical integration of autocorrelation function.  <a href="#aa95007061e6d0f55d01c40fcd277a1b0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Product&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a8185dc66d115a56c878d86d23cb3ca48">autoCorrelation</a> (int t) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return autocorrelation at a given lag time.  <a href="#a8185dc66d115a56c878d86d23cb3ca48"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a7ee7184119080658dbd9a6e629e6e90b">pack</a> (char *&amp;current, char *end) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack array into a block of memory.  <a href="#a7ee7184119080658dbd9a6e629e6e90b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a7243335e2851a09c967fa7743a0fcd1f">unpack</a> (char *&amp;current, char *end)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack array from a block of memory.  <a href="#a7243335e2851a09c967fa7743a0fcd1f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a8fdb9a0413b176e1a0191d8adda9b34b">packedSize</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return packed size of this <a class="el" href="classUtil_1_1AutoCorr.html" title="Auto-correlation function for one sequence of Data values.">AutoCorr</a>.  <a href="#a8fdb9a0413b176e1a0191d8adda9b34b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a16ea043bc9a7296eeb501ef96fe14f8f">AutoCorr</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a16ea043bc9a7296eeb501ef96fe14f8f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a3508f52cefa629324915e4a2b0bfb34a">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset to empty state.  <a href="#a3508f52cefa629324915e4a2b0bfb34a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#aff94a25efedb0d7ddd1fd5c6432065fc">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read buffer capacity, allocate memory and initialize.  <a href="#aff94a25efedb0d7ddd1fd5c6432065fc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a40ec3ef43be2ecc331e2d1e1cc38f029">setParam</a> (int bufferCapacity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set buffer capacity, allocate memory and initialize.  <a href="#a40ec3ef43be2ecc331e2d1e1cc38f029"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a3192f37e28ba8202d08d3c157a34836d">sample</a> (Data value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample a value.  <a href="#a3192f37e28ba8202d08d3c157a34836d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a8a9d792a79e0dd4eefcd379960807b78">output</a> (std::ostream &amp;out)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output the autocorrelation function.  <a href="#a8a9d792a79e0dd4eefcd379960807b78"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a3f1f8e0ee0c3aa07c6d0c4053c6c3b89">bufferCapacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity of history buffer.  <a href="#a3f1f8e0ee0c3aa07c6d0c4053c6c3b89"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#aeb08c0462a870e334a7ef5435b607eb7">nSample</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of values sampled thus far.  <a href="#aeb08c0462a870e334a7ef5435b607eb7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a7d418738dc3ff503cd7320e20983ad01">average</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return average of all sampled values.  <a href="#a7d418738dc3ff503cd7320e20983ad01"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#ab42e49401d8e5e45dc4e4ba2d78778ec">corrTime</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Numerical integration of autocorrelation function.  <a href="#ab42e49401d8e5e45dc4e4ba2d78778ec"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Product&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a7357621d3be8f8f0d2938f32f4a7614a">autoCorrelation</a> (int t) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return autocorrelation at a given lag time.  <a href="#a7357621d3be8f8f0d2938f32f4a7614a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a8b9cba3a96e2787f2247b1bee4002721">pack</a> (char *&amp;current, char *end) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack array into a block of memory.  <a href="#a8b9cba3a96e2787f2247b1bee4002721"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a85f4df38837345dac74e4978dc9ffafb">unpack</a> (char *&amp;current, char *end)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack array from a block of memory.  <a href="#a85f4df38837345dac74e4978dc9ffafb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#ab7501094ebb9cb35a6a3edad81c58824">packedSize</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return packed size of this <a class="el" href="classUtil_1_1AutoCorr.html" title="Auto-correlation function for one sequence of Data values.">AutoCorr</a>.  <a href="#ab7501094ebb9cb35a6a3edad81c58824"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial to or from an Archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1AutoCorr.html#a1ed6b6e0e766833af326c696ef68f350">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial to or from an Archive.  <a href="#a1ed6b6e0e766833af326c696ef68f350"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a4cb9d2034b587f8dc8518fe3779f6357"></a><!-- doxytag: member="Util::AutoCorr::AutoCorr" ref="a4cb9d2034b587f8dc8518fe3779f6357" args="()" -->
+<a class="anchor" id="a16ea043bc9a7296eeb501ef96fe14f8f"></a><!-- doxytag: member="Util::AutoCorr::AutoCorr" ref="a16ea043bc9a7296eeb501ef96fe14f8f" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1AutoCorr.html">AutoCorr</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::<a class="el" href="classUtil_1_1AutoCorr.html">AutoCorr</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -135,12 +137,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ac8bb3912a3ce86b15842e79d0b421204"></a><!-- doxytag: member="Util::AutoCorr::clear" ref="ac8bb3912a3ce86b15842e79d0b421204" args="()" -->
+<a class="anchor" id="a3508f52cefa629324915e4a2b0bfb34a"></a><!-- doxytag: member="Util::AutoCorr::clear" ref="a3508f52cefa629324915e4a2b0bfb34a" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void clear </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -155,16 +159,18 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="setToZero_8h_source.html#l00025">Util::setToZero()</a>.</p>
 
-<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00059">McStressAutoCorr::setup()</a>.</p>
+<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00059">McMd::McStressAutoCorr::setup()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="Util::AutoCorr::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="aff94a25efedb0d7ddd1fd5c6432065fc"></a><!-- doxytag: member="Util::AutoCorr::readParam" ref="aff94a25efedb0d7ddd1fd5c6432065fc" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -182,18 +188,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="AutoCorr_8h_source.html#l00199">199</a> of file <a class="el" href="AutoCorr_8h_source.html">AutoCorr.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a08be97800ea312966708a14bbaacfd76"></a><!-- doxytag: member="Util::AutoCorr::setParam" ref="a08be97800ea312966708a14bbaacfd76" args="(int bufferCapacity)" -->
+<a class="anchor" id="a40ec3ef43be2ecc331e2d1e1cc38f029"></a><!-- doxytag: member="Util::AutoCorr::setParam" ref="a40ec3ef43be2ecc331e2d1e1cc38f029" args="(int bufferCapacity)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setParam </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::setParam </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>bufferCapacity</em></td><td>)</td>
@@ -213,16 +221,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AutoCorr_8h_source.html#l00213">213</a> of file <a class="el" href="AutoCorr_8h_source.html">AutoCorr.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00037">McStressAutoCorr::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00037">McMd::McStressAutoCorr::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2e5a9038ceb78c9f25abe44dad0be122"></a><!-- doxytag: member="Util::AutoCorr::sample" ref="a2e5a9038ceb78c9f25abe44dad0be122" args="(Data value)" -->
+<a class="anchor" id="a3192f37e28ba8202d08d3c157a34836d"></a><!-- doxytag: member="Util::AutoCorr::sample" ref="a3192f37e28ba8202d08d3c157a34836d" args="(Data value)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data, typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::sample </td>
           <td>(</td>
           <td class="paramtype">Data&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -244,16 +254,18 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="product_8h_source.html#l00022">Util::product()</a>.</p>
 
-<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00067">McStressAutoCorr::sample()</a>.</p>
+<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00067">McMd::McStressAutoCorr::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a012e48b5ec7769b2e5614bd6b3a62488"></a><!-- doxytag: member="Util::AutoCorr::output" ref="a012e48b5ec7769b2e5614bd6b3a62488" args="(std::ostream &amp;out)" -->
+<a class="anchor" id="a8a9d792a79e0dd4eefcd379960807b78"></a><!-- doxytag: member="Util::AutoCorr::output" ref="a8a9d792a79e0dd4eefcd379960807b78" args="(std::ostream &amp;out)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::output </td>
           <td>(</td>
           <td class="paramtype">std::ostream &amp;&#160;</td>
           <td class="paramname"><em>out</em></td><td>)</td>
@@ -275,16 +287,18 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="product_8h_source.html#l00022">Util::product()</a>.</p>
 
-<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00086">McStressAutoCorr::output()</a>.</p>
+<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00086">McMd::McStressAutoCorr::output()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a57118c8a6ff3a32ffbdf852295a9bdaa"></a><!-- doxytag: member="Util::AutoCorr::bufferCapacity" ref="a57118c8a6ff3a32ffbdf852295a9bdaa" args="() const " -->
+<a class="anchor" id="a3f1f8e0ee0c3aa07c6d0c4053c6c3b89"></a><!-- doxytag: member="Util::AutoCorr::bufferCapacity" ref="a3f1f8e0ee0c3aa07c6d0c4053c6c3b89" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int bufferCapacity </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::bufferCapacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -297,16 +311,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AutoCorr_8h_source.html#l00286">286</a> of file <a class="el" href="AutoCorr_8h_source.html">AutoCorr.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00086">McStressAutoCorr::output()</a>.</p>
+<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00086">McMd::McStressAutoCorr::output()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5271d3c821039a770825e80c05132fd5"></a><!-- doxytag: member="Util::AutoCorr::nSample" ref="a5271d3c821039a770825e80c05132fd5" args="() const " -->
+<a class="anchor" id="aeb08c0462a870e334a7ef5435b607eb7"></a><!-- doxytag: member="Util::AutoCorr::nSample" ref="aeb08c0462a870e334a7ef5435b607eb7" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int nSample </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::nSample </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -319,16 +335,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AutoCorr_8h_source.html#l00293">293</a> of file <a class="el" href="AutoCorr_8h_source.html">AutoCorr.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00086">McStressAutoCorr::output()</a>.</p>
+<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00086">McMd::McStressAutoCorr::output()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="adcc93ec2fd4f07e9d9f239514e7fccd6"></a><!-- doxytag: member="Util::AutoCorr::average" ref="adcc93ec2fd4f07e9d9f239514e7fccd6" args="() const " -->
+<a class="anchor" id="a7d418738dc3ff503cd7320e20983ad01"></a><!-- doxytag: member="Util::AutoCorr::average" ref="a7d418738dc3ff503cd7320e20983ad01" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data average </td>
+          <td class="memname">Data <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::average </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -341,16 +359,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="AutoCorr_8h_source.html#l00300">300</a> of file <a class="el" href="AutoCorr_8h_source.html">AutoCorr.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00086">McStressAutoCorr::output()</a>.</p>
+<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00086">McMd::McStressAutoCorr::output()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa95007061e6d0f55d01c40fcd277a1b0"></a><!-- doxytag: member="Util::AutoCorr::corrTime" ref="aa95007061e6d0f55d01c40fcd277a1b0" args="() const " -->
+<a class="anchor" id="ab42e49401d8e5e45dc4e4ba2d78778ec"></a><!-- doxytag: member="Util::AutoCorr::corrTime" ref="ab42e49401d8e5e45dc4e4ba2d78778ec" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double corrTime </td>
+          <td class="memname">double <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::corrTime </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -367,12 +387,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8185dc66d115a56c878d86d23cb3ca48"></a><!-- doxytag: member="Util::AutoCorr::autoCorrelation" ref="a8185dc66d115a56c878d86d23cb3ca48" args="(int t) const " -->
+<a class="anchor" id="a7357621d3be8f8f0d2938f32f4a7614a"></a><!-- doxytag: member="Util::AutoCorr::autoCorrelation" ref="a7357621d3be8f8f0d2938f32f4a7614a" args="(int t) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Product autoCorrelation </td>
+          <td class="memname">Product <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::autoCorrelation </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>t</em></td><td>)</td>
@@ -396,12 +418,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7ee7184119080658dbd9a6e629e6e90b"></a><!-- doxytag: member="Util::AutoCorr::pack" ref="a7ee7184119080658dbd9a6e629e6e90b" args="(char *&amp;current, char *end) const " -->
+<a class="anchor" id="a8b9cba3a96e2787f2247b1bee4002721"></a><!-- doxytag: member="Util::AutoCorr::pack" ref="a8b9cba3a96e2787f2247b1bee4002721" args="(char *&amp;current, char *end) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void pack </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::pack </td>
           <td>(</td>
           <td class="paramtype">char *&amp;&#160;</td>
           <td class="paramname"><em>current</em>, </td>
@@ -436,12 +460,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a7243335e2851a09c967fa7743a0fcd1f"></a><!-- doxytag: member="Util::AutoCorr::unpack" ref="a7243335e2851a09c967fa7743a0fcd1f" args="(char *&amp;current, char *end)" -->
+<a class="anchor" id="a85f4df38837345dac74e4978dc9ffafb"></a><!-- doxytag: member="Util::AutoCorr::unpack" ref="a85f4df38837345dac74e4978dc9ffafb" args="(char *&amp;current, char *end)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void unpack </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::unpack </td>
           <td>(</td>
           <td class="paramtype">char *&amp;&#160;</td>
           <td class="paramname"><em>current</em>, </td>
@@ -476,12 +502,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8fdb9a0413b176e1a0191d8adda9b34b"></a><!-- doxytag: member="Util::AutoCorr::packedSize" ref="a8fdb9a0413b176e1a0191d8adda9b34b" args="() const " -->
+<a class="anchor" id="ab7501094ebb9cb35a6a3edad81c58824"></a><!-- doxytag: member="Util::AutoCorr::packedSize" ref="ab7501094ebb9cb35a6a3edad81c58824" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int packedSize </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::packedSize </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -497,12 +525,16 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="Util::AutoCorr::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="a1ed6b6e0e766833af326c696ef68f350"></a><!-- doxytag: member="Util::AutoCorr::serialize" ref="a1ed6b6e0e766833af326c696ef68f350" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data , typename Product &gt; </div>
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1AutoCorr.html">Util::AutoCorr</a>&lt; Data, Product &gt;::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -531,7 +563,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComponent.html#a6765e839ab267e4959384e35a4112451">ParamComponent</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComponent.html#a43f7dd33894b4ad67245162146042e6e">Util::ParamComponent</a>.</p>
 
 <p>Definition at line <a class="el" href="AutoCorr_8h_source.html#l00461">461</a> of file <a class="el" href="AutoCorr_8h_source.html">AutoCorr.h</a>.</p>
 
@@ -541,7 +573,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="AutoCorr_8h_source.html">AutoCorr.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:57 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:29 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

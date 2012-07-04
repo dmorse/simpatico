@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -75,11 +75,11 @@
 <a name="l00024"></a>00024    <span class="comment">/*</span>
 <a name="l00025"></a>00025 <span class="comment">   * Default constructor.</span>
 <a name="l00026"></a>00026 <span class="comment">   */</span>
-<a name="l00027"></a>00027    <a class="code" href="classDdMd_1_1AtomStorage.html#a60cb5af339d08530002da84cc550b013" title="Constructor.">AtomStorage::AtomStorage</a>()
+<a name="l00027"></a>00027    <a class="code" href="classDdMd_1_1AtomStorage.html#a2bba2162e62cc9262a7c13d90cfc6764" title="Constructor.">AtomStorage::AtomStorage</a>()
 <a name="l00028"></a>00028     : atoms_(),
 <a name="l00029"></a>00029       atomSet_(),
 <a name="l00030"></a>00030       atomReservoir_(),
-<a name="l00031"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a60cb5af339d08530002da84cc550b013">00031</a>       ghosts_(),
+<a name="l00031"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a2bba2162e62cc9262a7c13d90cfc6764">00031</a>       ghosts_(),
 <a name="l00032"></a>00032       ghostSet_(),
 <a name="l00033"></a>00033       ghostReservoir_(),
 <a name="l00034"></a>00034       atomPtrs_(),
@@ -95,17 +95,17 @@
 <a name="l00044"></a>00044    <span class="comment">/*</span>
 <a name="l00045"></a>00045 <span class="comment">   * Destructor.</span>
 <a name="l00046"></a>00046 <span class="comment">   */</span>
-<a name="l00047"></a>00047    <a class="code" href="classDdMd_1_1AtomStorage.html#adcdabb8a41f3b9d33beeb38612bc67bf" title="Destructor.">AtomStorage::~AtomStorage</a>()
+<a name="l00047"></a>00047    <a class="code" href="classDdMd_1_1AtomStorage.html#a23845627f17bfafff3c7ad4dcd684bf8" title="Destructor.">AtomStorage::~AtomStorage</a>()
 <a name="l00048"></a>00048    {}
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050    <span class="comment">/*</span>
-<a name="l00051"></a><a class="code" href="classDdMd_1_1AtomStorage.html#adcdabb8a41f3b9d33beeb38612bc67bf">00051</a> <span class="comment">   * Read parameters and allocate memory.</span>
+<a name="l00051"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a23845627f17bfafff3c7ad4dcd684bf8">00051</a> <span class="comment">   * Read parameters and allocate memory.</span>
 <a name="l00052"></a>00052 <span class="comment">   */</span>
-<a name="l00053"></a>00053    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters, allocate memory and initialize.">AtomStorage::readParam</a>(std::istream&amp; in)
+<a name="l00053"></a>00053    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a52ec8be5e026f65cbe128bb543dbf819" title="Read parameters, allocate memory and initialize.">AtomStorage::readParam</a>(std::istream&amp; in)
 <a name="l00054"></a>00054    {
 <a name="l00055"></a>00055       readBegin(in, <span class="stringliteral">&quot;AtomStorage&quot;</span>);
 <a name="l00056"></a>00056       read&lt;int&gt;(in, <span class="stringliteral">&quot;atomCapacity&quot;</span>, atomCapacity_);
-<a name="l00057"></a><a class="code" href="classDdMd_1_1AtomStorage.html#ab5421d3c9175985c9acbf723e5392075">00057</a>       read&lt;int&gt;(in, <span class="stringliteral">&quot;ghostCapacity&quot;</span>, ghostCapacity_);
+<a name="l00057"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a52ec8be5e026f65cbe128bb543dbf819">00057</a>       read&lt;int&gt;(in, <span class="stringliteral">&quot;ghostCapacity&quot;</span>, ghostCapacity_);
 <a name="l00058"></a>00058       read&lt;int&gt;(in, <span class="stringliteral">&quot;totalAtomCapacity&quot;</span>, totalAtomCapacity_);
 <a name="l00059"></a>00059       allocate();
 <a name="l00060"></a>00060       readEnd(in);
@@ -114,11 +114,11 @@
 <a name="l00063"></a>00063    <span class="comment">/*</span>
 <a name="l00064"></a>00064 <span class="comment">   * Set parameters and allocate memory.</span>
 <a name="l00065"></a>00065 <span class="comment">   */</span>
-<a name="l00066"></a>00066    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a3f9d3bac3f31a5cf63746f907aa57fe0" title="Set parameters, allocate memory and initialize.">AtomStorage::initialize</a>(<span class="keywordtype">int</span> atomCapacity, <span class="keywordtype">int</span> ghostCapacity, 
+<a name="l00066"></a>00066    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a8fd75f029461aa5e91e67b1d5f7de05d" title="Set parameters, allocate memory and initialize.">AtomStorage::initialize</a>(<span class="keywordtype">int</span> atomCapacity, <span class="keywordtype">int</span> ghostCapacity, 
 <a name="l00067"></a>00067       <span class="keywordtype">int</span> totalAtomCapacity)
 <a name="l00068"></a>00068    {
 <a name="l00069"></a>00069       atomCapacity_ = atomCapacity;
-<a name="l00070"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a3f9d3bac3f31a5cf63746f907aa57fe0">00070</a>       ghostCapacity_ = ghostCapacity;
+<a name="l00070"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a8fd75f029461aa5e91e67b1d5f7de05d">00070</a>       ghostCapacity_ = ghostCapacity;
 <a name="l00071"></a>00071       totalAtomCapacity_ = totalAtomCapacity;
 <a name="l00072"></a>00072       allocate();
 <a name="l00073"></a>00073    }
@@ -160,11 +160,11 @@
 <a name="l00112"></a>00112    <span class="comment">/*</span>
 <a name="l00113"></a>00113 <span class="comment">   * Returns address for a new local Atom.</span>
 <a name="l00114"></a>00114 <span class="comment">   */</span> 
-<a name="l00115"></a>00115    Atom* <a class="code" href="classDdMd_1_1AtomStorage.html#a66368eb5960fe94561084251ce7a20b3" title="Returns pointer an address available for a new Atom.">AtomStorage::newAtomPtr</a>()
+<a name="l00115"></a>00115    Atom* <a class="code" href="classDdMd_1_1AtomStorage.html#abc22d2eb159d4184464c4d23c3818fa5" title="Returns pointer an address available for a new Atom.">AtomStorage::newAtomPtr</a>()
 <a name="l00116"></a>00116    {
 <a name="l00117"></a>00117       <span class="comment">// Preconditions</span>
 <a name="l00118"></a>00118       <span class="keywordflow">if</span> (newAtomPtr_ != 0) 
-<a name="l00119"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a66368eb5960fe94561084251ce7a20b3">00119</a>          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Unregistered newAtomPtr_ still active&quot;</span>);
+<a name="l00119"></a><a class="code" href="classDdMd_1_1AtomStorage.html#abc22d2eb159d4184464c4d23c3818fa5">00119</a>          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Unregistered newAtomPtr_ still active&quot;</span>);
 <a name="l00120"></a>00120       <span class="keywordflow">if</span> (locked_ ) 
 <a name="l00121"></a>00121          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomStorage is locked&quot;</span>);
 <a name="l00122"></a>00122       <span class="keywordflow">if</span> (ghostSet_.size() &gt; 0)
@@ -178,11 +178,11 @@
 <a name="l00130"></a>00130    <span class="comment">/*</span>
 <a name="l00131"></a>00131 <span class="comment">   * Register new local Atom in internal data structures.</span>
 <a name="l00132"></a>00132 <span class="comment">   */</span> 
-<a name="l00133"></a>00133    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a3004eb4f4d427d50f629b1c1846d2c9c" title="Finalize addition of the most recent new atom.">AtomStorage::addNewAtom</a>()
+<a name="l00133"></a>00133    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a942d32521cb743f3b49dfe4f5f505dba" title="Finalize addition of the most recent new atom.">AtomStorage::addNewAtom</a>()
 <a name="l00134"></a>00134    {
 <a name="l00135"></a>00135       <span class="keywordflow">if</span> (newAtomPtr_ == 0) 
 <a name="l00136"></a>00136          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;No active newAtomPtr_&quot;</span>);
-<a name="l00137"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a3004eb4f4d427d50f629b1c1846d2c9c">00137</a>       <span class="keywordflow">if</span> (locked_) 
+<a name="l00137"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a942d32521cb743f3b49dfe4f5f505dba">00137</a>       <span class="keywordflow">if</span> (locked_) 
 <a name="l00138"></a>00138          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomStorage is locked&quot;</span>);
 <a name="l00139"></a>00139       <span class="keywordtype">int</span> atomId = newAtomPtr_-&gt;id();
 <a name="l00140"></a>00140       <span class="keywordflow">if</span> (atomId &lt; 0 || atomId &gt;= totalAtomCapacity_) {
@@ -204,30 +204,30 @@
 <a name="l00156"></a>00156       newAtomPtr_ = 0;
 <a name="l00157"></a>00157    }
 <a name="l00158"></a>00158 
-<a name="l00159"></a>00159    Atom* <a class="code" href="classDdMd_1_1AtomStorage.html#a8ebfa9ed65403cdb1d8ba98a38b7b8a2" title="Add atom with specified global id.">AtomStorage::addAtom</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
+<a name="l00159"></a>00159    Atom* <a class="code" href="classDdMd_1_1AtomStorage.html#af04f63da68471c0a5e43a1e600537600" title="Add atom with specified global id.">AtomStorage::addAtom</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
 <a name="l00160"></a>00160    {
 <a name="l00161"></a>00161       Atom* ptr = newAtomPtr();
 <a name="l00162"></a>00162       ptr-&gt;setId(<span class="keywordtype">id</span>);
-<a name="l00163"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a8ebfa9ed65403cdb1d8ba98a38b7b8a2">00163</a>       addNewAtom();
+<a name="l00163"></a><a class="code" href="classDdMd_1_1AtomStorage.html#af04f63da68471c0a5e43a1e600537600">00163</a>       addNewAtom();
 <a name="l00164"></a>00164       <span class="keywordflow">return</span> ptr;
 <a name="l00165"></a>00165    }
 <a name="l00166"></a>00166 
 <a name="l00167"></a>00167    <span class="comment">/*</span>
 <a name="l00168"></a>00168 <span class="comment">   * Remove a specific local Atom.</span>
 <a name="l00169"></a>00169 <span class="comment">   */</span>
-<a name="l00170"></a>00170    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#acc683904b96e0f7c8098088cf1ac121e" title="Remove a specific Atom.">AtomStorage::removeAtom</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr)
+<a name="l00170"></a>00170    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a969d44b8c69318ebafef123e893d8910" title="Remove a specific Atom.">AtomStorage::removeAtom</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr)
 <a name="l00171"></a>00171    {
 <a name="l00172"></a>00172       <span class="comment">// Precondition</span>
-<a name="l00173"></a>00173       <span class="keywordtype">int</span> atomId = atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get unique global index.">id</a>();
-<a name="l00174"></a><a class="code" href="classDdMd_1_1AtomStorage.html#acc683904b96e0f7c8098088cf1ac121e">00174</a>       <span class="keywordflow">if</span> (atomId &lt; 0 || atomId &gt;= totalAtomCapacity_) {
+<a name="l00173"></a>00173       <span class="keywordtype">int</span> atomId = atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">id</a>();
+<a name="l00174"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a969d44b8c69318ebafef123e893d8910">00174</a>       <span class="keywordflow">if</span> (atomId &lt; 0 || atomId &gt;= totalAtomCapacity_) {
 <a name="l00175"></a>00175          std::cout &lt;&lt; <span class="stringliteral">&quot;atomId = &quot;</span> &lt;&lt; atomId &lt;&lt; std::endl;
 <a name="l00176"></a>00176          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;atomId is out of range&quot;</span>);
 <a name="l00177"></a>00177       }
 <a name="l00178"></a>00178       atomReservoir_.push(*atomPtr);
 <a name="l00179"></a>00179       atomSet_.remove(*atomPtr);
 <a name="l00180"></a>00180       atomPtrs_[atomId] = 0;
-<a name="l00181"></a>00181       atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#af27d12f590d5654c5068497d58825b29" title="Set unique id for this Atom.">setId</a>(-1);
-<a name="l00182"></a>00182       atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae3477c3fac769559f4c8780c657a0998" title="Mark as ghost or local atom.">setIsGhost</a>(<span class="keyword">false</span>);
+<a name="l00181"></a>00181       atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae" title="Set unique id for this Atom.">setId</a>(-1);
+<a name="l00182"></a>00182       atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8dd0a66c21f1475111f5049e9f386604" title="Mark as ghost or local atom.">setIsGhost</a>(<span class="keyword">false</span>);
 <a name="l00183"></a>00183    }
 <a name="l00184"></a>00184 
 <a name="l00185"></a>00185    <span class="comment">// Ghost atom mutators</span>
@@ -235,11 +235,11 @@
 <a name="l00187"></a>00187    <span class="comment">/*</span>
 <a name="l00188"></a>00188 <span class="comment">   * Return address for a new ghost Atom.</span>
 <a name="l00189"></a>00189 <span class="comment">   */</span> 
-<a name="l00190"></a>00190    Atom* <a class="code" href="classDdMd_1_1AtomStorage.html#a4124057311d7f7dd9c745c5cf8a16828" title="Returns pointer an address available for a new ghost Atom.">AtomStorage::newGhostPtr</a>()
+<a name="l00190"></a>00190    Atom* <a class="code" href="classDdMd_1_1AtomStorage.html#a3f8a03c3561b9611b2730394294cd5f1" title="Returns pointer an address available for a new ghost Atom.">AtomStorage::newGhostPtr</a>()
 <a name="l00191"></a>00191    {
 <a name="l00192"></a>00192       <span class="comment">// Preconditions</span>
 <a name="l00193"></a>00193       <span class="keywordflow">if</span> (newGhostPtr_ != 0) 
-<a name="l00194"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a4124057311d7f7dd9c745c5cf8a16828">00194</a>          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Unregistered newGhostPtr_ still active&quot;</span>);
+<a name="l00194"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a3f8a03c3561b9611b2730394294cd5f1">00194</a>          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Unregistered newGhostPtr_ still active&quot;</span>);
 <a name="l00195"></a>00195       <span class="keywordflow">if</span> (locked_ ) 
 <a name="l00196"></a>00196          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomStorage is locked&quot;</span>);
 <a name="l00197"></a>00197       newGhostPtr_ = &amp;ghostReservoir_.pop();
@@ -250,11 +250,11 @@
 <a name="l00202"></a>00202    <span class="comment">/*</span>
 <a name="l00203"></a>00203 <span class="comment">   * Register new ghost Atom to internal data structures.</span>
 <a name="l00204"></a>00204 <span class="comment">   */</span> 
-<a name="l00205"></a>00205    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a4ed39e6f9b982d62af31cf2a94609b71" title="Register the most recent new ghost atom.">AtomStorage::addNewGhost</a>()
+<a name="l00205"></a>00205    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#abc05e573880eeffb228245973521c8ab" title="Register the most recent new ghost atom.">AtomStorage::addNewGhost</a>()
 <a name="l00206"></a>00206    {
 <a name="l00207"></a>00207       <span class="keywordflow">if</span> (newGhostPtr_ == 0) 
 <a name="l00208"></a>00208          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;No active newGhostPtr_&quot;</span>);
-<a name="l00209"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a4ed39e6f9b982d62af31cf2a94609b71">00209</a>       <span class="keywordflow">if</span> (locked_) 
+<a name="l00209"></a><a class="code" href="classDdMd_1_1AtomStorage.html#abc05e573880eeffb228245973521c8ab">00209</a>       <span class="keywordflow">if</span> (locked_) 
 <a name="l00210"></a>00210          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomStorage is locked&quot;</span>);
 <a name="l00211"></a>00211       <span class="keywordtype">int</span> atomId = newGhostPtr_-&gt;id();
 <a name="l00212"></a>00212       <span class="keywordflow">if</span> (atomId &lt; 0 || atomId &gt;= totalAtomCapacity_) 
@@ -270,51 +270,51 @@
 <a name="l00222"></a>00222       newGhostPtr_ = 0;
 <a name="l00223"></a>00223    }
 <a name="l00224"></a>00224 
-<a name="l00225"></a>00225    Atom* <a class="code" href="classDdMd_1_1AtomStorage.html#af4b640e8f6c635206190772d6963ce3c" title="Add ghost atom with specified global id.">AtomStorage::addGhost</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
+<a name="l00225"></a>00225    Atom* <a class="code" href="classDdMd_1_1AtomStorage.html#a0cc50b7691cc4dacb7501eb9e2fc1ad2" title="Add ghost atom with specified global id.">AtomStorage::addGhost</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
 <a name="l00226"></a>00226    {
 <a name="l00227"></a>00227       Atom* ptr = newGhostPtr();
 <a name="l00228"></a>00228       ptr-&gt;setId(<span class="keywordtype">id</span>);
-<a name="l00229"></a><a class="code" href="classDdMd_1_1AtomStorage.html#af4b640e8f6c635206190772d6963ce3c">00229</a>       addNewGhost();
+<a name="l00229"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a0cc50b7691cc4dacb7501eb9e2fc1ad2">00229</a>       addNewGhost();
 <a name="l00230"></a>00230       <span class="keywordflow">return</span> ptr;
 <a name="l00231"></a>00231    }
 <a name="l00232"></a>00232 
 <a name="l00233"></a>00233    <span class="comment">/*</span>
 <a name="l00234"></a>00234 <span class="comment">   * Remove a specific ghost Atom.</span>
 <a name="l00235"></a>00235 <span class="comment">   */</span>
-<a name="l00236"></a>00236    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a30de67768fef61a1325986eb142cf4ec" title="Remove a specific ghost Atom.">AtomStorage::removeGhost</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr)
+<a name="l00236"></a>00236    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a1f5d2bc0ea04f2719d914fec74abe0a9" title="Remove a specific ghost Atom.">AtomStorage::removeGhost</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr)
 <a name="l00237"></a>00237    {
 <a name="l00238"></a>00238       <span class="comment">// Precondition</span>
 <a name="l00239"></a>00239       <span class="keywordflow">if</span> (locked_) 
-<a name="l00240"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a30de67768fef61a1325986eb142cf4ec">00240</a>          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomStorage is locked&quot;</span>);
+<a name="l00240"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a1f5d2bc0ea04f2719d914fec74abe0a9">00240</a>          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomStorage is locked&quot;</span>);
 <a name="l00241"></a>00241 
 <a name="l00242"></a>00242       ghostReservoir_.push(*atomPtr);
 <a name="l00243"></a>00243       ghostSet_.remove(*atomPtr);
-<a name="l00244"></a>00244       <span class="keywordtype">int</span> atomId = atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get unique global index.">id</a>();
+<a name="l00244"></a>00244       <span class="keywordtype">int</span> atomId = atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">id</a>();
 <a name="l00245"></a>00245       <span class="keywordflow">if</span> (atomPtrs_[atomId] == atomPtr) {
 <a name="l00246"></a>00246          atomPtrs_[atomId] = 0;
 <a name="l00247"></a>00247       }
-<a name="l00248"></a>00248       atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#af27d12f590d5654c5068497d58825b29" title="Set unique id for this Atom.">setId</a>(-1);
+<a name="l00248"></a>00248       atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae" title="Set unique id for this Atom.">setId</a>(-1);
 <a name="l00249"></a>00249    }
 <a name="l00250"></a>00250 
 <a name="l00251"></a>00251    <span class="comment">/*</span>
 <a name="l00252"></a>00252 <span class="comment">   * Remove a specific ghost Atom.</span>
 <a name="l00253"></a>00253 <span class="comment">   */</span>
-<a name="l00254"></a>00254    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a7e9c5443d27222ad5470193153ee4098" title="Clear all ghost atoms.">AtomStorage::clearGhosts</a>()
+<a name="l00254"></a>00254    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a011537880a550eba654fb3ce0a21e4b0" title="Clear all ghost atoms.">AtomStorage::clearGhosts</a>()
 <a name="l00255"></a>00255    {
 <a name="l00256"></a>00256       <span class="comment">// Precondition</span>
 <a name="l00257"></a>00257       <span class="keywordflow">if</span> (locked_) 
-<a name="l00258"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a7e9c5443d27222ad5470193153ee4098">00258</a>          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomStorage is locked&quot;</span>);
+<a name="l00258"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a011537880a550eba654fb3ce0a21e4b0">00258</a>          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomStorage is locked&quot;</span>);
 <a name="l00259"></a>00259 
 <a name="l00260"></a>00260       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atomPtr;
 <a name="l00261"></a>00261       <span class="keywordtype">int</span>   atomId;
 <a name="l00262"></a>00262       <span class="keywordflow">while</span> (ghostSet_.size() &gt; 0) {
 <a name="l00263"></a>00263          atomPtr = &amp;ghostSet_.pop();
-<a name="l00264"></a>00264          atomId = atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get unique global index.">id</a>();
+<a name="l00264"></a>00264          atomId = atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">id</a>();
 <a name="l00265"></a>00265          <span class="keywordflow">if</span> (atomPtrs_[atomId] == atomPtr) { 
 <a name="l00266"></a>00266             atomPtrs_[atomId] = 0;
 <a name="l00267"></a>00267          }
-<a name="l00268"></a>00268          atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#af27d12f590d5654c5068497d58825b29" title="Set unique id for this Atom.">setId</a>(-1);
-<a name="l00269"></a>00269          atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ac8bb3912a3ce86b15842e79d0b421204" title="Reset integer members to initial null values.">clear</a>();
+<a name="l00268"></a>00268          atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#afc5ee7af355e4b16e425f96c83c2aeae" title="Set unique id for this Atom.">setId</a>(-1);
+<a name="l00269"></a>00269          atomPtr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a16099c037037d8879f1d8a4357e84719" title="Reset integer members to initial null values.">clear</a>();
 <a name="l00270"></a>00270          ghostReservoir_.push(*atomPtr);
 <a name="l00271"></a>00271       }
 <a name="l00272"></a>00272 
@@ -325,30 +325,30 @@
 <a name="l00277"></a>00277 
 <a name="l00278"></a>00278    <span class="comment">// Snapshot functions</span>
 <a name="l00279"></a>00279 
-<a name="l00283"></a>00283    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#afd65f6fcf3f61ad2b0595f37d55e5bbd" title="Record current positions of all local atoms.">AtomStorage::makeSnapshot</a>()
+<a name="l00283"></a>00283    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a8bdb321770232e6f4bb1ba7413aa9509" title="Record current positions of all local atoms.">AtomStorage::makeSnapshot</a>()
 <a name="l00284"></a>00284    {
 <a name="l00285"></a>00285       AtomIterator iter;
 <a name="l00286"></a>00286       <span class="keywordtype">int</span> i = 0;
-<a name="l00287"></a><a class="code" href="classDdMd_1_1AtomStorage.html#afd65f6fcf3f61ad2b0595f37d55e5bbd">00287</a>       <span class="keywordflow">for</span> (begin(iter); iter.notEnd(); ++iter) {
+<a name="l00287"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a8bdb321770232e6f4bb1ba7413aa9509">00287</a>       <span class="keywordflow">for</span> (begin(iter); iter.notEnd(); ++iter) {
 <a name="l00288"></a>00288          snapshot_[i] = iter-&gt;position();
 <a name="l00289"></a>00289          ++i;
 <a name="l00290"></a>00290       }
 <a name="l00291"></a>00291       locked_ = <span class="keyword">true</span>;
 <a name="l00292"></a>00292    }
 <a name="l00293"></a>00293 
-<a name="l00297"></a>00297    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a33a6127d6859d83cd467e961a3b115c8" title="Clear previous snapshot.">AtomStorage::clearSnapshot</a>()
+<a name="l00297"></a>00297    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#ac456e424c1c2d2909293d6ffe4658f69" title="Clear previous snapshot.">AtomStorage::clearSnapshot</a>()
 <a name="l00298"></a>00298    {  locked_ = <span class="keyword">false</span>; }
 <a name="l00299"></a>00299 
-<a name="l00303"></a>00303    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a3a0643851274dfcdbd12913fd1ed5768" title="Return max.">AtomStorage::maxSqDisplacement</a>()
+<a name="l00303"></a>00303    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a03169962f8e58d36fb5f6b57ea3bae92" title="Return max.">AtomStorage::maxSqDisplacement</a>()
 <a name="l00304"></a>00304    {
 <a name="l00305"></a>00305       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr;
 <a name="l00306"></a>00306       <span class="keywordtype">double</span> norm;
-<a name="l00307"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a3a0643851274dfcdbd12913fd1ed5768">00307</a>       <span class="keywordtype">double</span> max = 0;
+<a name="l00307"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a03169962f8e58d36fb5f6b57ea3bae92">00307</a>       <span class="keywordtype">double</span> max = 0;
 <a name="l00308"></a>00308       <a class="code" href="classDdMd_1_1AtomIterator.html" title="Iterator for all atoms owned by an AtomStorage.">AtomIterator</a> iter;
 <a name="l00309"></a>00309       <span class="keywordtype">int</span> i = 0;
-<a name="l00310"></a>00310       <span class="keywordflow">for</span> (begin(iter); iter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
-<a name="l00311"></a>00311          dr.<a class="code" href="classUtil_1_1Vector.html#a1d7c5b73ae56a7ad991a6c54517698c2" title="Subtract vector v2 from v1.">subtract</a>(iter-&gt;position(), snapshot_[i]);
-<a name="l00312"></a>00312          norm = dr.<a class="code" href="classUtil_1_1Vector.html#ac8e155d7aa8c019159787bd6ac797559" title="Return square magnitude of this vector.">square</a>();
+<a name="l00310"></a>00310       <span class="keywordflow">for</span> (begin(iter); iter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
+<a name="l00311"></a>00311          dr.<a class="code" href="classUtil_1_1Vector.html#a7e6de9bb77beddc412ab6055957656cc" title="Subtract vector v2 from v1.">subtract</a>(iter-&gt;position(), snapshot_[i]);
+<a name="l00312"></a>00312          norm = dr.<a class="code" href="classUtil_1_1Vector.html#ad3c4e4b143f8c8e45b3fe189af6437cb" title="Return square magnitude of this vector.">square</a>();
 <a name="l00313"></a>00313          <span class="keywordflow">if</span> (norm &gt; max) max = norm;
 <a name="l00314"></a>00314          ++i;
 <a name="l00315"></a>00315       }
@@ -360,11 +360,11 @@
 <a name="l00321"></a>00321    <span class="comment">/*</span>
 <a name="l00322"></a>00322 <span class="comment">   * Determine whether an atom exchange and reneighboring is needed.</span>
 <a name="l00323"></a>00323 <span class="comment">   */</span>
-<a name="l00324"></a>00324    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a5df4f70f1955379da903905e0f4a0d7d" title="Is exchange of atoms among processors needed?">AtomStorage::needExchange</a>(MPI::Intracomm&amp; communicator, <span class="keywordtype">double</span> skin) 
+<a name="l00324"></a>00324    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a474306cc652bb66e0855406e2c3aca5a" title="Is exchange of atoms among processors needed?">AtomStorage::needExchange</a>(MPI::Intracomm&amp; communicator, <span class="keywordtype">double</span> skin) 
 <a name="l00325"></a>00325    {
 <a name="l00326"></a>00326       <span class="comment">// Calculate maximum square displacment among along nodes</span>
 <a name="l00327"></a>00327       <span class="keywordtype">double</span> maxSqDisp = maxSqDisplacement(); <span class="comment">// maximum on node</span>
-<a name="l00328"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a5df4f70f1955379da903905e0f4a0d7d">00328</a>       <span class="keywordtype">double</span> maxSqDispAll;                    <span class="comment">// global maximum</span>
+<a name="l00328"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a474306cc652bb66e0855406e2c3aca5a">00328</a>       <span class="keywordtype">double</span> maxSqDispAll;                    <span class="comment">// global maximum</span>
 <a name="l00329"></a>00329       communicator.Reduce(&amp;maxSqDisp, &amp;maxSqDispAll, 1, 
 <a name="l00330"></a>00330                           MPI::DOUBLE, MPI::MAX, 0);
 <a name="l00331"></a>00331 
@@ -383,7 +383,7 @@
 <a name="l00344"></a>00344 
 <a name="l00345"></a>00345 <span class="preprocessor">   #else</span>
 <a name="l00346"></a>00346 <span class="preprocessor"></span>
-<a name="l00347"></a>00347    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a5df4f70f1955379da903905e0f4a0d7d" title="Is exchange of atoms among processors needed?">AtomStorage::needExchange</a>(<span class="keywordtype">double</span> skin) 
+<a name="l00347"></a>00347    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a474306cc652bb66e0855406e2c3aca5a" title="Is exchange of atoms among processors needed?">AtomStorage::needExchange</a>(<span class="keywordtype">double</span> skin) 
 <a name="l00348"></a>00348    {
 <a name="l00349"></a>00349       <span class="keywordtype">int</span> needed = 0;
 <a name="l00350"></a>00350       <span class="keywordflow">if</span> (sqrt(maxSqDisplacement()) &gt; 0.5*skin) {
@@ -399,43 +399,43 @@
 <a name="l00360"></a>00360    <span class="comment">/*</span>
 <a name="l00361"></a>00361 <span class="comment">   * Return pointer to Atom with specified id.</span>
 <a name="l00362"></a>00362 <span class="comment">   */</span>
-<a name="l00363"></a>00363    Atom* <a class="code" href="classDdMd_1_1AtomStorage.html#a40392fb4a69a3ec5f12a05698c91c8bb" title="Return pointer to Atom with specified id.">AtomStorage::find</a>(<span class="keywordtype">int</span> atomId)<span class="keyword"> const</span>
+<a name="l00363"></a>00363    Atom* <a class="code" href="classDdMd_1_1AtomStorage.html#a1eecfbd71fa21f180e6e11bd16dacb4c" title="Return pointer to Atom with specified id.">AtomStorage::find</a>(<span class="keywordtype">int</span> atomId)<span class="keyword"> const</span>
 <a name="l00364"></a>00364 <span class="keyword">   </span>{  <span class="keywordflow">return</span> atomPtrs_[atomId]; }
 <a name="l00365"></a>00365 
 <a name="l00366"></a>00366    <span class="comment">/*</span>
-<a name="l00367"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a40392fb4a69a3ec5f12a05698c91c8bb">00367</a> <span class="comment">   * Set iterator to beginning of the set of local atoms.</span>
+<a name="l00367"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a1eecfbd71fa21f180e6e11bd16dacb4c">00367</a> <span class="comment">   * Set iterator to beginning of the set of local atoms.</span>
 <a name="l00368"></a>00368 <span class="comment">   */</span>
-<a name="l00369"></a>00369    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#ade5ca539682da662dd30b2628d4d21c7" title="Set iterator to beginning of the set of atoms.">AtomStorage::begin</a>(<a class="code" href="classDdMd_1_1AtomIterator.html" title="Iterator for all atoms owned by an AtomStorage.">AtomIterator</a>&amp; iterator)
+<a name="l00369"></a>00369    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">AtomStorage::begin</a>(<a class="code" href="classDdMd_1_1AtomIterator.html" title="Iterator for all atoms owned by an AtomStorage.">AtomIterator</a>&amp; iterator)
 <a name="l00370"></a>00370    {  atomSet_.begin(iterator); }
 <a name="l00371"></a>00371  
 <a name="l00372"></a>00372    <span class="comment">/*</span>
-<a name="l00373"></a><a class="code" href="classDdMd_1_1AtomStorage.html#ade5ca539682da662dd30b2628d4d21c7">00373</a> <span class="comment">   * Set const iterator to beginning of the set of local atoms.</span>
+<a name="l00373"></a><a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5">00373</a> <span class="comment">   * Set const iterator to beginning of the set of local atoms.</span>
 <a name="l00374"></a>00374 <span class="comment">   */</span>
-<a name="l00375"></a>00375    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#ade5ca539682da662dd30b2628d4d21c7" title="Set iterator to beginning of the set of atoms.">AtomStorage::begin</a>(<a class="code" href="classDdMd_1_1ConstAtomIterator.html" title="Const iterator for all atoms owned by an AtomStorage.">ConstAtomIterator</a>&amp; iterator)<span class="keyword"> const</span>
+<a name="l00375"></a>00375    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">AtomStorage::begin</a>(<a class="code" href="classDdMd_1_1ConstAtomIterator.html" title="Const iterator for all atoms owned by an AtomStorage.">ConstAtomIterator</a>&amp; iterator)<span class="keyword"> const</span>
 <a name="l00376"></a>00376 <span class="keyword">   </span>{  atomSet_.begin(iterator); }
 <a name="l00377"></a>00377  
 <a name="l00378"></a>00378    <span class="comment">/*</span>
-<a name="l00379"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a775369f4e5ba2634a515a4f82ba6295e">00379</a> <span class="comment">   * Set iterator to beginning of the set of ghost atoms.</span>
+<a name="l00379"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a954c72fafaccf7decf9aaa9f73d6c1a1">00379</a> <span class="comment">   * Set iterator to beginning of the set of ghost atoms.</span>
 <a name="l00380"></a>00380 <span class="comment">   */</span>
-<a name="l00381"></a>00381    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#ade5ca539682da662dd30b2628d4d21c7" title="Set iterator to beginning of the set of atoms.">AtomStorage::begin</a>(<a class="code" href="classDdMd_1_1GhostIterator.html" title="Iterator for all ghost atoms owned by an AtomStorage.">GhostIterator</a>&amp; iterator)
+<a name="l00381"></a>00381    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">AtomStorage::begin</a>(<a class="code" href="classDdMd_1_1GhostIterator.html" title="Iterator for all ghost atoms owned by an AtomStorage.">GhostIterator</a>&amp; iterator)
 <a name="l00382"></a>00382    {  ghostSet_.begin(iterator); }
 <a name="l00383"></a>00383 
 <a name="l00384"></a>00384    <span class="comment">/*</span>
-<a name="l00385"></a><a class="code" href="classDdMd_1_1AtomStorage.html#ae34c45860a4940c2ad18aee25f97940c">00385</a> <span class="comment">   * Set iterator to beginning of the set of ghost atoms.</span>
+<a name="l00385"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a48400f2e2fa33582526a66203fb1a6ad">00385</a> <span class="comment">   * Set iterator to beginning of the set of ghost atoms.</span>
 <a name="l00386"></a>00386 <span class="comment">   */</span>
-<a name="l00387"></a>00387    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#ade5ca539682da662dd30b2628d4d21c7" title="Set iterator to beginning of the set of atoms.">AtomStorage::begin</a>(<a class="code" href="classDdMd_1_1ConstGhostIterator.html" title="Iterator for all ghost atoms owned by an AtomStorage.">ConstGhostIterator</a>&amp; iterator)<span class="keyword"> const</span>
+<a name="l00387"></a>00387    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">AtomStorage::begin</a>(<a class="code" href="classDdMd_1_1ConstGhostIterator.html" title="Iterator for all ghost atoms owned by an AtomStorage.">ConstGhostIterator</a>&amp; iterator)<span class="keyword"> const</span>
 <a name="l00388"></a>00388 <span class="keyword">   </span>{  ghostSet_.begin(iterator); }
 <a name="l00389"></a>00389 
 <a name="l00390"></a>00390    <span class="comment">/*</span>
-<a name="l00391"></a><a class="code" href="classDdMd_1_1AtomStorage.html#ae8d9731b906b666878491cb59d901016">00391</a> <span class="comment">   * Check validity of this AtomStorage.</span>
+<a name="l00391"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a0b50f8991a403e6e53cc85756e96cf4c">00391</a> <span class="comment">   * Check validity of this AtomStorage.</span>
 <a name="l00392"></a>00392 <span class="comment">   *</span>
 <a name="l00393"></a>00393 <span class="comment">   * Returns true if all is ok, or throws an Exception.</span>
 <a name="l00394"></a>00394 <span class="comment">   */</span>
-<a name="l00395"></a>00395    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1AtomStorage.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if the container is valid, or throw an Exception.">AtomStorage::isValid</a>()<span class="keyword"> const</span>
+<a name="l00395"></a>00395    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1AtomStorage.html#a648f8dc58ab38a365bdd82d67180df00" title="Return true if the container is valid, or throw an Exception.">AtomStorage::isValid</a>()<span class="keyword"> const</span>
 <a name="l00396"></a>00396 <span class="keyword">   </span>{
 <a name="l00397"></a>00397       
 <a name="l00398"></a>00398       <span class="keywordflow">if</span> (nAtom() + atomReservoir_.size() != atomCapacity_) 
-<a name="l00399"></a><a class="code" href="classDdMd_1_1AtomStorage.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">00399</a>          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtom + reservoir size != local capacity&quot;</span>); 
+<a name="l00399"></a><a class="code" href="classDdMd_1_1AtomStorage.html#a648f8dc58ab38a365bdd82d67180df00">00399</a>          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtom + reservoir size != local capacity&quot;</span>); 
 <a name="l00400"></a>00400 
 <a name="l00401"></a>00401       <span class="keywordflow">if</span> (nGhost() + ghostReservoir_.size() != ghostCapacity_) 
 <a name="l00402"></a>00402          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nGhost + reservoir size != ghost capacity&quot;</span>); 
@@ -449,7 +449,7 @@
 <a name="l00410"></a>00410          ptr = atomPtrs_[i];
 <a name="l00411"></a>00411          <span class="keywordflow">if</span> (ptr != 0) {
 <a name="l00412"></a>00412             ++j;
-<a name="l00413"></a>00413             <span class="keywordflow">if</span> (ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get unique global index.">id</a>() != i) {
+<a name="l00413"></a>00413             <span class="keywordflow">if</span> (ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">id</a>() != i) {
 <a name="l00414"></a>00414                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;ptr-&gt;id() != i&quot;</span>); 
 <a name="l00415"></a>00415             }
 <a name="l00416"></a>00416          }
@@ -461,12 +461,12 @@
 <a name="l00422"></a>00422       <span class="comment">// Count local atoms on this processor.</span>
 <a name="l00423"></a>00423       <a class="code" href="classDdMd_1_1ConstAtomIterator.html" title="Const iterator for all atoms owned by an AtomStorage.">ConstAtomIterator</a> localIter;
 <a name="l00424"></a>00424       j = 0;
-<a name="l00425"></a>00425       <span class="keywordflow">for</span> (begin(localIter); localIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++localIter) {
+<a name="l00425"></a>00425       <span class="keywordflow">for</span> (begin(localIter); localIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++localIter) {
 <a name="l00426"></a>00426          ++j;
 <a name="l00427"></a>00427          ptr = find(localIter-&gt;id());
 <a name="l00428"></a>00428          <span class="keywordflow">if</span> (ptr == 0)
 <a name="l00429"></a>00429             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Unable to find local atom returned by iterator&quot;</span>); 
-<a name="l00430"></a>00430          <span class="keywordflow">if</span> (ptr != localIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a378cadcbc76e1f99f972fa1da0072f3a" title="Return a pointer to const current data.">get</a>())
+<a name="l00430"></a>00430          <span class="keywordflow">if</span> (ptr != localIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#ae7e58a8e26e1e3e0608f712fed1c149d" title="Return a pointer to const current data.">get</a>())
 <a name="l00431"></a>00431             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Inconsistent find(localIter-&gt;id()&quot;</span>); 
 <a name="l00432"></a>00432       }
 <a name="l00433"></a>00433       <span class="keywordflow">if</span> (j != nAtom())
@@ -489,11 +489,11 @@
 <a name="l00450"></a>00450 
 <a name="l00451"></a>00451 <span class="preprocessor">   #ifdef UTIL_MPI</span>
 <a name="l00452"></a>00452 <span class="preprocessor"></span>
-<a name="l00455"></a>00455    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#ac72d8e9cb5af034d2e9a1d15de92dbb1" title="Compute and store the total number of atoms on all processors.">AtomStorage::computeNAtomTotal</a>(MPI::Intracomm&amp; communicator)
+<a name="l00455"></a>00455    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomStorage.html#afb0a8ac1fba5fe05c77ada005c873d63" title="Compute and store the total number of atoms on all processors.">AtomStorage::computeNAtomTotal</a>(MPI::Intracomm&amp; communicator)
 <a name="l00456"></a>00456    {
 <a name="l00457"></a>00457       <span class="keywordtype">int</span> nAtomLocal = nAtom();
 <a name="l00458"></a>00458       communicator.Reduce(&amp;nAtomLocal, &amp;nAtomTotal_, 1, 
-<a name="l00459"></a><a class="code" href="classDdMd_1_1AtomStorage.html#ac72d8e9cb5af034d2e9a1d15de92dbb1">00459</a>                           MPI::INT, MPI::SUM, 0);
+<a name="l00459"></a><a class="code" href="classDdMd_1_1AtomStorage.html#afb0a8ac1fba5fe05c77ada005c873d63">00459</a>                           MPI::INT, MPI::SUM, 0);
 <a name="l00460"></a>00460       <span class="keywordflow">if</span> (communicator.Get_rank() !=0) {
 <a name="l00461"></a>00461          nAtomTotal_ = -1;
 <a name="l00462"></a>00462       }
@@ -504,7 +504,7 @@
 <a name="l00467"></a>00467 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

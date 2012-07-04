@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -79,21 +79,21 @@
 <a name="l00027"></a>00027    <span class="comment">/* </span>
 <a name="l00028"></a>00028 <span class="comment">   * Constructor</span>
 <a name="l00029"></a>00029 <span class="comment">   */</span>
-<a name="l00030"></a>00030    <a class="code" href="classMcMd_1_1EndSwapMove.html#aa44bf35d31f6225f8d97a1cb3eff588a" title="Constructor.">EndSwapMove::EndSwapMove</a>(McSystem&amp; system) : 
-<a name="l00031"></a><a class="code" href="classMcMd_1_1EndSwapMove.html#aa44bf35d31f6225f8d97a1cb3eff588a">00031</a>       <a class="code" href="classMcMd_1_1SystemMove.html" title="An McMove that acts on one McSystem.">SystemMove</a>(system),
+<a name="l00030"></a>00030    <a class="code" href="classMcMd_1_1EndSwapMove.html#a20a569516e5dc509fea37e5556b7e976" title="Constructor.">EndSwapMove::EndSwapMove</a>(McSystem&amp; system) : 
+<a name="l00031"></a><a class="code" href="classMcMd_1_1EndSwapMove.html#a20a569516e5dc509fea37e5556b7e976">00031</a>       <a class="code" href="classMcMd_1_1SystemMove.html" title="An McMove that acts on one McSystem.">SystemMove</a>(system),
 <a name="l00032"></a>00032       speciesId_(-1)
 <a name="l00033"></a>00033    {} 
 <a name="l00034"></a>00034    
 <a name="l00035"></a>00035    <span class="comment">/* </span>
 <a name="l00036"></a>00036 <span class="comment">   * Read parameter speciesId.</span>
 <a name="l00037"></a>00037 <span class="comment">   */</span>
-<a name="l00038"></a>00038    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1EndSwapMove.html#ab5421d3c9175985c9acbf723e5392075" title="Read species to which displacement is applied.">EndSwapMove::readParam</a>(std::istream&amp; in) 
-<a name="l00039"></a><a class="code" href="classMcMd_1_1EndSwapMove.html#ab5421d3c9175985c9acbf723e5392075">00039</a>    {
+<a name="l00038"></a>00038    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1EndSwapMove.html#aab56352148d6ea450b02bbb7b0e826c8" title="Read species to which displacement is applied.">EndSwapMove::readParam</a>(std::istream&amp; in) 
+<a name="l00039"></a><a class="code" href="classMcMd_1_1EndSwapMove.html#aab56352148d6ea450b02bbb7b0e826c8">00039</a>    {
 <a name="l00040"></a>00040       readProbability(in);
 <a name="l00041"></a>00041       read&lt;int&gt;(in, <span class="stringliteral">&quot;speciesId&quot;</span>, speciesId_);
 <a name="l00042"></a>00042 
 <a name="l00043"></a>00043       <a class="code" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>* speciesPtr = &amp;(simulation().species(speciesId_));
-<a name="l00044"></a>00044       <span class="keywordtype">int</span> nAtom = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838" title="Get number of atoms per molecule for this Species.">nAtom</a>();
+<a name="l00044"></a>00044       <span class="keywordtype">int</span> nAtom = speciesPtr-&gt;<a class="code" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55" title="Get number of atoms per molecule for this Species.">nAtom</a>();
 <a name="l00045"></a>00045 
 <a name="l00046"></a>00046       <span class="comment">// Preconditions: species must be immutable and a subclass of Linear </span>
 <a name="l00047"></a>00047       <span class="keywordflow">if</span> (speciesPtr-&gt;isMutable()) {
@@ -118,8 +118,8 @@
 <a name="l00066"></a>00066    <span class="comment">/* </span>
 <a name="l00067"></a>00067 <span class="comment">   * Generate, attempt and accept or reject a Monte Carlo move.</span>
 <a name="l00068"></a>00068 <span class="comment">   */</span>
-<a name="l00069"></a>00069    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1EndSwapMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635" title="Generate and accept or reject configuration bias move.">EndSwapMove::move</a>() 
-<a name="l00070"></a><a class="code" href="classMcMd_1_1EndSwapMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635">00070</a>    {
+<a name="l00069"></a>00069    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1EndSwapMove.html#aeba214460db7b2d0045014ff82c8cb8b" title="Generate and accept or reject configuration bias move.">EndSwapMove::move</a>() 
+<a name="l00070"></a><a class="code" href="classMcMd_1_1EndSwapMove.html#aeba214460db7b2d0045014ff82c8cb8b">00070</a>    {
 <a name="l00071"></a>00071       <span class="keywordtype">double</span> newEnergy, oldEnergy;
 <a name="l00072"></a>00072       <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>* molPtr;
 <a name="l00073"></a>00073       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* atomPtr;
@@ -128,7 +128,7 @@
 <a name="l00076"></a>00076       incrementNAttempt();
 <a name="l00077"></a>00077 
 <a name="l00078"></a>00078       molPtr = &amp;(system().randomMolecule(speciesId_));
-<a name="l00079"></a>00079       nAtom  = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#ac91579bd63979a294891d330a5533838" title="Get the number of Atoms in this Molecule.">nAtom</a>();
+<a name="l00079"></a>00079       nAtom  = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#aec071b24c9bff0fe1033b613aaaf0905" title="Get the number of Atoms in this Molecule.">nAtom</a>();
 <a name="l00080"></a>00080 
 <a name="l00081"></a>00081       <span class="comment">// Calculate old molecule energy = pair + external </span>
 <a name="l00082"></a>00082       oldEnergy = 0.0;
@@ -137,15 +137,15 @@
 <a name="l00085"></a>00085 <span class="preprocessor">      #endif</span>
 <a name="l00086"></a>00086 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
 <a name="l00087"></a>00087 <span class="preprocessor"></span>      <span class="keywordflow">for</span> (i = 0; i &lt; nAtom; ++i) {
-<a name="l00088"></a>00088          atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(i);
+<a name="l00088"></a>00088          atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(i);
 <a name="l00089"></a>00089          oldEnergy += system().externalPotential().atomEnergy(*atomPtr);
 <a name="l00090"></a>00090       }
 <a name="l00091"></a>00091 <span class="preprocessor">      #endif</span>
 <a name="l00092"></a>00092 <span class="preprocessor"></span>
 <a name="l00093"></a>00093       <span class="comment">// Reverse sequence of atom types</span>
 <a name="l00094"></a>00094       <span class="keywordflow">for</span> (i = 0; i &lt; nAtom; ++i) {
-<a name="l00095"></a>00095          assert(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>() == atomTypeIds_[i]);
-<a name="l00096"></a>00096          molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#a4eda9bc9ef7228643fd3311552601523" title="Set the atomic type index.">setTypeId</a>(atomTypeIds_[nAtom - 1 - i]);   
+<a name="l00095"></a>00095          assert(molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>() == atomTypeIds_[i]);
+<a name="l00096"></a>00096          molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#a9d8d02e9178f6387ef3afff10990c05a" title="Set the atomic type index.">setTypeId</a>(atomTypeIds_[nAtom - 1 - i]);   
 <a name="l00097"></a>00097       }
 <a name="l00098"></a>00098 
 <a name="l00099"></a>00099       <span class="comment">// Calculate new energy (with reversed sequence of atom types).</span>
@@ -155,15 +155,15 @@
 <a name="l00103"></a>00103 <span class="preprocessor">      #endif</span>
 <a name="l00104"></a>00104 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
 <a name="l00105"></a>00105 <span class="preprocessor"></span>      <span class="keywordflow">for</span> (i = 0; i &lt; nAtom; ++i) {
-<a name="l00106"></a>00106          molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#a4eda9bc9ef7228643fd3311552601523" title="Set the atomic type index.">setTypeId</a>(atomTypeIds_[nAtom - 1 - i]);   
-<a name="l00107"></a>00107          atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(i);
+<a name="l00106"></a>00106          molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#a9d8d02e9178f6387ef3afff10990c05a" title="Set the atomic type index.">setTypeId</a>(atomTypeIds_[nAtom - 1 - i]);   
+<a name="l00107"></a>00107          atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(i);
 <a name="l00108"></a>00108          newEnergy += system().externalPotential().atomEnergy(*atomPtr);
 <a name="l00109"></a>00109       }
 <a name="l00110"></a>00110 <span class="preprocessor">      #endif</span>
 <a name="l00111"></a>00111 <span class="preprocessor"></span>
 <a name="l00112"></a>00112       <span class="comment">// Restore original sequence of atom type Ids</span>
 <a name="l00113"></a>00113       <span class="keywordflow">for</span> (i = 0; i &lt; nAtom; ++i) {
-<a name="l00114"></a>00114          molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#a4eda9bc9ef7228643fd3311552601523" title="Set the atomic type index.">setTypeId</a>(atomTypeIds_[i]);   
+<a name="l00114"></a>00114          molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#a9d8d02e9178f6387ef3afff10990c05a" title="Set the atomic type index.">setTypeId</a>(atomTypeIds_[i]);   
 <a name="l00115"></a>00115       }
 <a name="l00116"></a>00116    
 <a name="l00117"></a>00117       <span class="comment">// Decide whether to accept or reject</span>
@@ -173,13 +173,13 @@
 <a name="l00121"></a>00121 
 <a name="l00122"></a>00122          <span class="comment">// Store all atomic positions</span>
 <a name="l00123"></a>00123          <span class="keywordflow">for</span> (i = 0; i &lt; nAtom; ++i) {
-<a name="l00124"></a>00124             positions_[i] = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00124"></a>00124             positions_[i] = molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(i).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00125"></a>00125          }
 <a name="l00126"></a>00126 
 <a name="l00127"></a>00127          <span class="comment">// Reverse sequence of atomic positions </span>
 <a name="l00128"></a>00128          <span class="keywordflow">for</span> (i = 0; i &lt; nAtom; ++i) {
-<a name="l00129"></a>00129             atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(i);
-<a name="l00130"></a>00130             atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = positions_[nAtom - 1 - i];
+<a name="l00129"></a>00129             atomPtr = &amp;molPtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(i);
+<a name="l00130"></a>00130             atomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = positions_[nAtom - 1 - i];
 <a name="l00131"></a>00131 <span class="preprocessor">            #ifndef INTER_NOPAIR</span>
 <a name="l00132"></a>00132 <span class="preprocessor"></span>            system().pairPotential().updateAtomCell(*atomPtr);
 <a name="l00133"></a>00133 <span class="preprocessor">            #endif</span>
@@ -196,7 +196,7 @@
 <a name="l00144"></a>00144 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: PackedData Class Reference</title>
+<title>Simpatico: Util::PackedData Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,18 +50,18 @@
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>PackedData Class Reference</h1>  </div>
+<h1>Util::PackedData Class Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::PackedData" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classUtil_1_1Memory.html" title="Provides method to allocate array.">Memory</a> block for packed heterogeneous binary data. </p>
 <p>A <a class="el" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a> object encapsulates a unsigned char array that may be used to store packed, heterogenous binary data. A <a class="el" href="classUtil_1_1PackedData.html" title="Memory block for packed heterogeneous binary data.">PackedData</a> object must be allocated before it can be used.</p>
-<p>To pack data, first call <a class="el" href="classUtil_1_1PackedData.html#a12b1405cb35231329dd1060ea604384c" title="Begin packing, set cursor to the beginning.">beginPacking()</a>, followed by a series of calls of the pack methods. During packing, the <a class="el" href="classUtil_1_1PackedData.html#aef88a7054da600cbfcb4d8ac1f06ed19" title="Return pointer to cursor position (cursor).">cursor()</a> method returns the address of the next available unwritten byte. The overloaded pack method templates write either a single object or an array of objects to memory at the current cursor location, and then updates the cursor. Packing is terminated by calling <a class="el" href="classUtil_1_1PackedData.html#a1ccf832a7711ccea656195de4e3113f7" title="Begin unpacking, set cursor to the beginning.">beginUnpacking()</a>, which sets the cursor to the beginning in preparation for unpacking.</p>
-<p>To unpack data, call <a class="el" href="classUtil_1_1PackedData.html#a1ccf832a7711ccea656195de4e3113f7" title="Begin unpacking, set cursor to the beginning.">beginUnpacking()</a>, followed by a series of calls of the unpack methods. During unpacking, <a class="el" href="classUtil_1_1PackedData.html#aef88a7054da600cbfcb4d8ac1f06ed19" title="Return pointer to cursor position (cursor).">cursor()</a> points to the first unread byte, and <a class="el" href="classUtil_1_1PackedData.html#a0ee685d877cbc90677f1f0b00b4c2f36" title="Return pointer to end of packed block (one Byte past the last).">endPacked()</a> points to end of the packed block (one byte after the last). Unpacking is terminated by calling <a class="el" href="classUtil_1_1PackedData.html#a12b1405cb35231329dd1060ea604384c" title="Begin packing, set cursor to the beginning.">beginPacking()</a>, which resets the cursor to the beginning in preparation for re-packing.</p>
-<p>The pack and unpack methods may not be intermingled. One or more calls to pack must be preceded by a call of <a class="el" href="classUtil_1_1PackedData.html#a12b1405cb35231329dd1060ea604384c" title="Begin packing, set cursor to the beginning.">beginPacking()</a>, and one or more calls to unpack must be preceded by a call to <a class="el" href="classUtil_1_1PackedData.html#a1ccf832a7711ccea656195de4e3113f7" title="Begin unpacking, set cursor to the beginning.">beginUnpacking()</a>.</p>
+<p>To pack data, first call <a class="el" href="classUtil_1_1PackedData.html#aa6c3fe8640bf5c7769a4b31cf54dd61b" title="Begin packing, set cursor to the beginning.">beginPacking()</a>, followed by a series of calls of the pack methods. During packing, the <a class="el" href="classUtil_1_1PackedData.html#a57633d86a593818eff7915a55945a7c4" title="Return pointer to cursor position (cursor).">cursor()</a> method returns the address of the next available unwritten byte. The overloaded pack method templates write either a single object or an array of objects to memory at the current cursor location, and then updates the cursor. Packing is terminated by calling <a class="el" href="classUtil_1_1PackedData.html#a77a7104a0969a5776dbd8522997c86b8" title="Begin unpacking, set cursor to the beginning.">beginUnpacking()</a>, which sets the cursor to the beginning in preparation for unpacking.</p>
+<p>To unpack data, call <a class="el" href="classUtil_1_1PackedData.html#a77a7104a0969a5776dbd8522997c86b8" title="Begin unpacking, set cursor to the beginning.">beginUnpacking()</a>, followed by a series of calls of the unpack methods. During unpacking, <a class="el" href="classUtil_1_1PackedData.html#a57633d86a593818eff7915a55945a7c4" title="Return pointer to cursor position (cursor).">cursor()</a> points to the first unread byte, and <a class="el" href="classUtil_1_1PackedData.html#a40e55de85fc9daa55fd15f37a9966c5d" title="Return pointer to end of packed block (one Byte past the last).">endPacked()</a> points to end of the packed block (one byte after the last). Unpacking is terminated by calling <a class="el" href="classUtil_1_1PackedData.html#aa6c3fe8640bf5c7769a4b31cf54dd61b" title="Begin packing, set cursor to the beginning.">beginPacking()</a>, which resets the cursor to the beginning in preparation for re-packing.</p>
+<p>The pack and unpack methods may not be intermingled. One or more calls to pack must be preceded by a call of <a class="el" href="classUtil_1_1PackedData.html#aa6c3fe8640bf5c7769a4b31cf54dd61b" title="Begin packing, set cursor to the beginning.">beginPacking()</a>, and one or more calls to unpack must be preceded by a call to <a class="el" href="classUtil_1_1PackedData.html#a77a7104a0969a5776dbd8522997c86b8" title="Begin unpacking, set cursor to the beginning.">beginUnpacking()</a>.</p>
 <p>Example: </p>
-<div class="fragment"><pre class="fragment"> <a class="code" href="classUtil_1_1PackedData.html#a391ca31055432394b56c7fd82e3f4434" title="Constructor.">PackedData</a> buffer;
- <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1PackedData.html#a104736719cd4e5f21c25705c77064dde" title="Return capacity in Bytes.">capacity</a> = 128;
+<div class="fragment"><pre class="fragment"> <a class="code" href="classUtil_1_1PackedData.html#aa42867fca9770c1aa35e064581ecbd72" title="Constructor.">PackedData</a> buffer;
+ <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1PackedData.html#a0bab06bbe3e3bbd6d7ef37a0a586d357" title="Return capacity in Bytes.">capacity</a> = 128;
  buffer.allocate(capacity);
 
  <span class="keyword">const</span> <span class="keywordtype">int</span> n  = 2;
@@ -96,52 +96,52 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3">Byte</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a "Byte" type.  <a href="#a50626603cd245d9ac35514f5612171f3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687">Byte</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Define a "Byte" type.  <a href="#a41b7b8d3de55e63ecbb496ab1ab81687"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a391ca31055432394b56c7fd82e3f4434">PackedData</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a391ca31055432394b56c7fd82e3f4434"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#af6d87ee0bc8c8f500e5836958cb40413">~PackedData</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#af6d87ee0bc8c8f500e5836958cb40413"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a1be38a6eb2f04de4d9457d506f948321">allocate</a> (int capacity)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory block.  <a href="#a1be38a6eb2f04de4d9457d506f948321"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a12b1405cb35231329dd1060ea604384c">beginPacking</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block.">Begin</a> packing, set cursor to the beginning.  <a href="#a12b1405cb35231329dd1060ea604384c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a1ccf832a7711ccea656195de4e3113f7">beginUnpacking</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block.">Begin</a> unpacking, set cursor to the beginning.  <a href="#a1ccf832a7711ccea656195de4e3113f7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#aa42867fca9770c1aa35e064581ecbd72">PackedData</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aa42867fca9770c1aa35e064581ecbd72"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a27a54e0079734e1ea202d83462108212">~PackedData</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a27a54e0079734e1ea202d83462108212"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a50a0f4addf9493f0a167a57e51bf8bdf">allocate</a> (int capacity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory block.  <a href="#a50a0f4addf9493f0a167a57e51bf8bdf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#aa6c3fe8640bf5c7769a4b31cf54dd61b">beginPacking</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block.">Begin</a> packing, set cursor to the beginning.  <a href="#aa6c3fe8640bf5c7769a4b31cf54dd61b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a77a7104a0969a5776dbd8522997c86b8">beginUnpacking</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classUtil_1_1Begin.html" title="Beginning line of a composite parameter block.">Begin</a> unpacking, set cursor to the beginning.  <a href="#a77a7104a0969a5776dbd8522997c86b8"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a9852f699017c6bcefd6232278de423e5">pack</a> (const T &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack one object.  <a href="#a9852f699017c6bcefd6232278de423e5"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a329675158ff58e9c91db855c261e6ea5">pack</a> (const T &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack one object.  <a href="#a329675158ff58e9c91db855c261e6ea5"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#aecd1b915caea37097ab7ebbada300d07">pack</a> (const T *array, int n)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack a C array of objects of type T.  <a href="#aecd1b915caea37097ab7ebbada300d07"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#ae57850793fcb8f30a6e21e987fd4fca7">pack</a> (const T *array, int n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pack a C array of objects of type T.  <a href="#ae57850793fcb8f30a6e21e987fd4fca7"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#ad90834a7650756a10b86c42747610caa">unpack</a> (T &amp;data)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack one object.  <a href="#ad90834a7650756a10b86c42747610caa"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#afb687196dd428796c87abd4da7ca14f2">unpack</a> (T &amp;data)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack one object.  <a href="#afb687196dd428796c87abd4da7ca14f2"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#af0bfd8889831946ade0f6559b7f808ce">unpack</a> (T *array, int n)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack a C array and update cursor .  <a href="#af0bfd8889831946ade0f6559b7f808ce"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3">Byte</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#ac1038da5344219ffef39152524a8cc55">begin</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to beginning of block.  <a href="#ac1038da5344219ffef39152524a8cc55"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3">Byte</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#aa0bba90406db04f64ea287d56519ef7a">endAllocated</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to end of allocated block (one Byte past the last).  <a href="#aa0bba90406db04f64ea287d56519ef7a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3">Byte</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a0ee685d877cbc90677f1f0b00b4c2f36">endPacked</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to end of packed block (one Byte past the last).  <a href="#a0ee685d877cbc90677f1f0b00b4c2f36"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3">Byte</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#aef88a7054da600cbfcb4d8ac1f06ed19">cursor</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to cursor position (cursor).  <a href="#aef88a7054da600cbfcb4d8ac1f06ed19"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a0bcdab3616db481dd211594529479f94">isAllocated</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has memory been allocated?  <a href="#a0bcdab3616db481dd211594529479f94"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a104736719cd4e5f21c25705c77064dde">capacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity in Bytes.  <a href="#a104736719cd4e5f21c25705c77064dde"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#ae12809789ae25711e9733ea02687d1fb">unpack</a> (T *array, int n)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unpack a C array and update cursor .  <a href="#ae12809789ae25711e9733ea02687d1fb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687">Byte</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#ac6683b84e35ca0095c3f77ffce257503">begin</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to beginning of block.  <a href="#ac6683b84e35ca0095c3f77ffce257503"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687">Byte</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a4f1b444d95db18c6716e7680279b8cfa">endAllocated</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to end of allocated block (one Byte past the last).  <a href="#a4f1b444d95db18c6716e7680279b8cfa"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687">Byte</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a40e55de85fc9daa55fd15f37a9966c5d">endPacked</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to end of packed block (one Byte past the last).  <a href="#a40e55de85fc9daa55fd15f37a9966c5d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687">Byte</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a57633d86a593818eff7915a55945a7c4">cursor</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to cursor position (cursor).  <a href="#a57633d86a593818eff7915a55945a7c4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#ae8bcb2795f1bf42acec33cfbaf97f8db">isAllocated</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has memory been allocated?  <a href="#ae8bcb2795f1bf42acec33cfbaf97f8db"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PackedData.html#a0bab06bbe3e3bbd6d7ef37a0a586d357">capacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity in Bytes.  <a href="#a0bab06bbe3e3bbd6d7ef37a0a586d357"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Typedef Documentation</h2>
-<a class="anchor" id="a50626603cd245d9ac35514f5612171f3"></a><!-- doxytag: member="Util::PackedData::Byte" ref="a50626603cd245d9ac35514f5612171f3" args="" -->
+<a class="anchor" id="a41b7b8d3de55e63ecbb496ab1ab81687"></a><!-- doxytag: member="Util::PackedData::Byte" ref="a41b7b8d3de55e63ecbb496ab1ab81687" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef char <a class="el" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3">Byte</a></td>
+          <td class="memname">typedef char <a class="el" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687">Util::PackedData::Byte</a></td>
         </tr>
       </table>
 </div>
@@ -154,12 +154,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a391ca31055432394b56c7fd82e3f4434"></a><!-- doxytag: member="Util::PackedData::PackedData" ref="a391ca31055432394b56c7fd82e3f4434" args="()" -->
+<a class="anchor" id="aa42867fca9770c1aa35e064581ecbd72"></a><!-- doxytag: member="Util::PackedData::PackedData" ref="aa42867fca9770c1aa35e064581ecbd72" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">home david code simpatico src util containers <a class="el" href="classUtil_1_1PackedData.html">PackedData</a> cpp <a class="el" href="classUtil_1_1PackedData.html">PackedData</a> </td>
+          <td class="memname">home david code simpatico src util containers <a class="el" href="classUtil_1_1PackedData.html">PackedData</a> cpp Util::PackedData::PackedData </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -174,12 +174,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af6d87ee0bc8c8f500e5836958cb40413"></a><!-- doxytag: member="Util::PackedData::~PackedData" ref="af6d87ee0bc8c8f500e5836958cb40413" args="()" -->
+<a class="anchor" id="a27a54e0079734e1ea202d83462108212"></a><!-- doxytag: member="Util::PackedData::~PackedData" ref="a27a54e0079734e1ea202d83462108212" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1PackedData.html">PackedData</a> </td>
+          <td class="memname">Util::PackedData::~PackedData </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -195,12 +195,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a1be38a6eb2f04de4d9457d506f948321"></a><!-- doxytag: member="Util::PackedData::allocate" ref="a1be38a6eb2f04de4d9457d506f948321" args="(int capacity)" -->
+<a class="anchor" id="a50a0f4addf9493f0a167a57e51bf8bdf"></a><!-- doxytag: member="Util::PackedData::allocate" ref="a50a0f4addf9493f0a167a57e51bf8bdf" args="(int capacity)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void Util::PackedData::allocate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>capacity</em></td><td>)</td>
@@ -220,16 +220,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PackedData_8cpp_source.html#l00038">38</a> of file <a class="el" href="PackedData_8cpp_source.html">PackedData.cpp</a>.</p>
 
-<p>References <a class="el" href="PackedData_8h_source.html#l00246">PackedData::capacity()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="PackedData_8h_source.html#l00246">capacity()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a12b1405cb35231329dd1060ea604384c"></a><!-- doxytag: member="Util::PackedData::beginPacking" ref="a12b1405cb35231329dd1060ea604384c" args="()" -->
+<a class="anchor" id="aa6c3fe8640bf5c7769a4b31cf54dd61b"></a><!-- doxytag: member="Util::PackedData::beginPacking" ref="aa6c3fe8640bf5c7769a4b31cf54dd61b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void beginPacking </td>
+          <td class="memname">void Util::PackedData::beginPacking </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -244,12 +244,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1ccf832a7711ccea656195de4e3113f7"></a><!-- doxytag: member="Util::PackedData::beginUnpacking" ref="a1ccf832a7711ccea656195de4e3113f7" args="()" -->
+<a class="anchor" id="a77a7104a0969a5776dbd8522997c86b8"></a><!-- doxytag: member="Util::PackedData::beginUnpacking" ref="a77a7104a0969a5776dbd8522997c86b8" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void beginUnpacking </td>
+          <td class="memname">void Util::PackedData::beginUnpacking </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -264,12 +264,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9852f699017c6bcefd6232278de423e5"></a><!-- doxytag: member="Util::PackedData::pack" ref="a9852f699017c6bcefd6232278de423e5" args="(const T &amp;data)" -->
+<a class="anchor" id="a329675158ff58e9c91db855c261e6ea5"></a><!-- doxytag: member="Util::PackedData::pack" ref="a329675158ff58e9c91db855c261e6ea5" args="(const T &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void pack </td>
+          <td class="memname">void Util::PackedData::pack </td>
           <td>(</td>
           <td class="paramtype">const T &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -292,16 +294,18 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="RingBuffer_8h_source.html#l00409">RingBuffer&lt; Data &gt;::pack()</a>, and <a class="el" href="DArray_8h_source.html#l00311">DArray&lt; Data &gt;::pack()</a>.</p>
+<p>Referenced by <a class="el" href="RingBuffer_8h_source.html#l00409">Util::RingBuffer&lt; Data &gt;::pack()</a>, and <a class="el" href="DArray_8h_source.html#l00311">Util::DArray&lt; Data &gt;::pack()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aecd1b915caea37097ab7ebbada300d07"></a><!-- doxytag: member="Util::PackedData::pack" ref="aecd1b915caea37097ab7ebbada300d07" args="(const T *array, int n)" -->
+<a class="anchor" id="ae57850793fcb8f30a6e21e987fd4fca7"></a><!-- doxytag: member="Util::PackedData::pack" ref="ae57850793fcb8f30a6e21e987fd4fca7" args="(const T *array, int n)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void pack </td>
+          <td class="memname">void Util::PackedData::pack </td>
           <td>(</td>
           <td class="paramtype">const T *&#160;</td>
           <td class="paramname"><em>array</em>, </td>
@@ -337,12 +341,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad90834a7650756a10b86c42747610caa"></a><!-- doxytag: member="Util::PackedData::unpack" ref="ad90834a7650756a10b86c42747610caa" args="(T &amp;data)" -->
+<a class="anchor" id="afb687196dd428796c87abd4da7ca14f2"></a><!-- doxytag: member="Util::PackedData::unpack" ref="afb687196dd428796c87abd4da7ca14f2" args="(T &amp;data)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void unpack </td>
+          <td class="memname">void Util::PackedData::unpack </td>
           <td>(</td>
           <td class="paramtype">T &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -365,16 +371,18 @@ Public Member Functions</h2></td></tr>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="RingBuffer_8h_source.html#l00421">RingBuffer&lt; Data &gt;::unpack()</a>, and <a class="el" href="DArray_8h_source.html#l00321">DArray&lt; Data &gt;::unpack()</a>.</p>
+<p>Referenced by <a class="el" href="RingBuffer_8h_source.html#l00421">Util::RingBuffer&lt; Data &gt;::unpack()</a>, and <a class="el" href="DArray_8h_source.html#l00321">Util::DArray&lt; Data &gt;::unpack()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af0bfd8889831946ade0f6559b7f808ce"></a><!-- doxytag: member="Util::PackedData::unpack" ref="af0bfd8889831946ade0f6559b7f808ce" args="(T *array, int n)" -->
+<a class="anchor" id="ae12809789ae25711e9733ea02687d1fb"></a><!-- doxytag: member="Util::PackedData::unpack" ref="ae12809789ae25711e9733ea02687d1fb" args="(T *array, int n)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void unpack </td>
+          <td class="memname">void Util::PackedData::unpack </td>
           <td>(</td>
           <td class="paramtype">T *&#160;</td>
           <td class="paramname"><em>array</em>, </td>
@@ -410,12 +418,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac1038da5344219ffef39152524a8cc55"></a><!-- doxytag: member="Util::PackedData::begin" ref="ac1038da5344219ffef39152524a8cc55" args="() const " -->
+<a class="anchor" id="ac6683b84e35ca0095c3f77ffce257503"></a><!-- doxytag: member="Util::PackedData::begin" ref="ac6683b84e35ca0095c3f77ffce257503" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3">PackedData::Byte</a> * begin </td>
+          <td class="memname"><a class="el" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687">PackedData::Byte</a> * Util::PackedData::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -430,12 +438,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa0bba90406db04f64ea287d56519ef7a"></a><!-- doxytag: member="Util::PackedData::endAllocated" ref="aa0bba90406db04f64ea287d56519ef7a" args="() const " -->
+<a class="anchor" id="a4f1b444d95db18c6716e7680279b8cfa"></a><!-- doxytag: member="Util::PackedData::endAllocated" ref="a4f1b444d95db18c6716e7680279b8cfa" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3">PackedData::Byte</a> * endAllocated </td>
+          <td class="memname"><a class="el" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687">PackedData::Byte</a> * Util::PackedData::endAllocated </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -450,12 +458,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0ee685d877cbc90677f1f0b00b4c2f36"></a><!-- doxytag: member="Util::PackedData::endPacked" ref="a0ee685d877cbc90677f1f0b00b4c2f36" args="() const " -->
+<a class="anchor" id="a40e55de85fc9daa55fd15f37a9966c5d"></a><!-- doxytag: member="Util::PackedData::endPacked" ref="a40e55de85fc9daa55fd15f37a9966c5d" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3">PackedData::Byte</a> * endPacked </td>
+          <td class="memname"><a class="el" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687">PackedData::Byte</a> * Util::PackedData::endPacked </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -470,12 +478,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aef88a7054da600cbfcb4d8ac1f06ed19"></a><!-- doxytag: member="Util::PackedData::cursor" ref="aef88a7054da600cbfcb4d8ac1f06ed19" args="() const " -->
+<a class="anchor" id="a57633d86a593818eff7915a55945a7c4"></a><!-- doxytag: member="Util::PackedData::cursor" ref="a57633d86a593818eff7915a55945a7c4" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1PackedData.html#a50626603cd245d9ac35514f5612171f3">PackedData::Byte</a> * cursor </td>
+          <td class="memname"><a class="el" href="classUtil_1_1PackedData.html#a41b7b8d3de55e63ecbb496ab1ab81687">PackedData::Byte</a> * Util::PackedData::cursor </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -490,12 +498,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0bcdab3616db481dd211594529479f94"></a><!-- doxytag: member="Util::PackedData::isAllocated" ref="a0bcdab3616db481dd211594529479f94" args="() const " -->
+<a class="anchor" id="ae8bcb2795f1bf42acec33cfbaf97f8db"></a><!-- doxytag: member="Util::PackedData::isAllocated" ref="ae8bcb2795f1bf42acec33cfbaf97f8db" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isAllocated </td>
+          <td class="memname">bool Util::PackedData::isAllocated </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -510,12 +518,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a104736719cd4e5f21c25705c77064dde"></a><!-- doxytag: member="Util::PackedData::capacity" ref="a104736719cd4e5f21c25705c77064dde" args="() const " -->
+<a class="anchor" id="a0bab06bbe3e3bbd6d7ef37a0a586d357"></a><!-- doxytag: member="Util::PackedData::capacity" ref="a0bab06bbe3e3bbd6d7ef37a0a586d357" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int capacity </td>
+          <td class="memname">int Util::PackedData::capacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -528,7 +536,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PackedData_8h_source.html#l00246">246</a> of file <a class="el" href="PackedData_8h_source.html">PackedData.h</a>.</p>
 
-<p>Referenced by <a class="el" href="PackedData_8cpp_source.html#l00038">PackedData::allocate()</a>.</p>
+<p>Referenced by <a class="el" href="PackedData_8cpp_source.html#l00038">allocate()</a>.</p>
 
 </div>
 </div>
@@ -537,7 +545,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="PackedData_8cpp_source.html">PackedData.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

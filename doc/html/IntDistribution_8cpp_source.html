@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -69,8 +69,8 @@
 <a name="l00018"></a>00018    <span class="comment">/* </span>
 <a name="l00019"></a>00019 <span class="comment">   * Constructor.</span>
 <a name="l00020"></a>00020 <span class="comment">   */</span>
-<a name="l00021"></a>00021    <a class="code" href="classUtil_1_1IntDistribution.html#acebf2694debb945f3ab0fa6e465998b2" title="Default constructor.">IntDistribution::IntDistribution</a>() 
-<a name="l00022"></a><a class="code" href="classUtil_1_1IntDistribution.html#acebf2694debb945f3ab0fa6e465998b2">00022</a>     : histogram_(),
+<a name="l00021"></a>00021    <a class="code" href="classUtil_1_1IntDistribution.html#a1806ea946360944a7187feb632e903c9" title="Default constructor.">IntDistribution::IntDistribution</a>() 
+<a name="l00022"></a><a class="code" href="classUtil_1_1IntDistribution.html#a1806ea946360944a7187feb632e903c9">00022</a>     : histogram_(),
 <a name="l00023"></a>00023       min_(0),
 <a name="l00024"></a>00024       max_(0),
 <a name="l00025"></a>00025       nBin_(0),
@@ -81,8 +81,8 @@
 <a name="l00030"></a>00030    <span class="comment">/* </span>
 <a name="l00031"></a>00031 <span class="comment">   * Copy constructor.</span>
 <a name="l00032"></a>00032 <span class="comment">   */</span>
-<a name="l00033"></a>00033    <a class="code" href="classUtil_1_1IntDistribution.html#acebf2694debb945f3ab0fa6e465998b2" title="Default constructor.">IntDistribution::IntDistribution</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntDistribution.html" title="A distribution (or histogram) of values for an int variable.">IntDistribution</a>&amp; other) 
-<a name="l00034"></a><a class="code" href="classUtil_1_1IntDistribution.html#ab19df7dbc98485f958e2c1e9b5a01d0d">00034</a>     : histogram_(),
+<a name="l00033"></a>00033    <a class="code" href="classUtil_1_1IntDistribution.html#a1806ea946360944a7187feb632e903c9" title="Default constructor.">IntDistribution::IntDistribution</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntDistribution.html" title="A distribution (or histogram) of values for an int variable.">IntDistribution</a>&amp; other) 
+<a name="l00034"></a><a class="code" href="classUtil_1_1IntDistribution.html#a69fc7b1626c38b2baa5379a066026fb5">00034</a>     : histogram_(),
 <a name="l00035"></a>00035       min_(other.min_),
 <a name="l00036"></a>00036       max_(other.max_),
 <a name="l00037"></a>00037       nBin_(other.nBin_),
@@ -91,13 +91,13 @@
 <a name="l00040"></a>00040    {
 <a name="l00041"></a>00041       <span class="keywordflow">if</span> (nBin_ &gt; 0) {
 <a name="l00042"></a>00042          assert(nBin_ == max_ - min_ + 1);
-<a name="l00043"></a>00043          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1Array.html#a104736719cd4e5f21c25705c77064dde" title="Return allocated size.">capacity</a>() != 0);
+<a name="l00043"></a>00043          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>() != 0);
 <a name="l00044"></a>00044          histogram_.allocate(nBin_);
 <a name="l00045"></a>00045          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; nBin_; ++i) {
-<a name="l00046"></a>00046             histogram_[i] = other.<a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>[i];
+<a name="l00046"></a>00046             histogram_[i] = other.<a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>[i];
 <a name="l00047"></a>00047          }
 <a name="l00048"></a>00048       } <span class="keywordflow">else</span> {
-<a name="l00049"></a>00049          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1Array.html#a104736719cd4e5f21c25705c77064dde" title="Return allocated size.">capacity</a>() == 0);
+<a name="l00049"></a>00049          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>() == 0);
 <a name="l00050"></a>00050          assert(min_ == 0);
 <a name="l00051"></a>00051          assert(max_ == 0);
 <a name="l00052"></a>00052          assert(nSample_ == 0);
@@ -108,36 +108,36 @@
 <a name="l00057"></a>00057    <span class="comment">/* </span>
 <a name="l00058"></a>00058 <span class="comment">   * Assignment operator.</span>
 <a name="l00059"></a>00059 <span class="comment">   */</span>
-<a name="l00060"></a>00060    <a class="code" href="classUtil_1_1IntDistribution.html" title="A distribution (or histogram) of values for an int variable.">IntDistribution</a>&amp; <a class="code" href="classUtil_1_1IntDistribution.html#a86fd61f7bba917f7c1aea580b69d8af7" title="Assignment operator.">IntDistribution::operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntDistribution.html" title="A distribution (or histogram) of values for an int variable.">IntDistribution</a>&amp; other) 
-<a name="l00061"></a><a class="code" href="classUtil_1_1IntDistribution.html#a86fd61f7bba917f7c1aea580b69d8af7">00061</a>    {
+<a name="l00060"></a>00060    <a class="code" href="classUtil_1_1IntDistribution.html" title="A distribution (or histogram) of values for an int variable.">IntDistribution</a>&amp; <a class="code" href="classUtil_1_1IntDistribution.html#ab3d735c42bca1ba55366437065d74c3a" title="Assignment operator.">IntDistribution::operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1IntDistribution.html" title="A distribution (or histogram) of values for an int variable.">IntDistribution</a>&amp; other) 
+<a name="l00061"></a><a class="code" href="classUtil_1_1IntDistribution.html#ab3d735c42bca1ba55366437065d74c3a">00061</a>    {
 <a name="l00062"></a>00062       <span class="comment">// Check for self assignment</span>
 <a name="l00063"></a>00063       <span class="keywordflow">if</span> (<span class="keyword">this</span> == &amp;other) <span class="keywordflow">return</span> *<span class="keyword">this</span>;
 <a name="l00064"></a>00064 
 <a name="l00065"></a>00065       <span class="comment">// Check validity of other object</span>
-<a name="l00066"></a>00066       <span class="keywordflow">if</span> (other.<a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a> &gt; 0) {
-<a name="l00067"></a>00067          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a> == other.<a class="code" href="classUtil_1_1IntDistribution.html#ac2f9f30879a5755492b38a927b189816" title="maximum value.">max_</a> - other.<a class="code" href="classUtil_1_1IntDistribution.html#abb13d7ed1a8c94b9b991ac20472ad4d0" title="minimum value.">min_</a> + 1);
-<a name="l00068"></a>00068          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1Array.html#a104736719cd4e5f21c25705c77064dde" title="Return allocated size.">capacity</a>() != 0);
+<a name="l00066"></a>00066       <span class="keywordflow">if</span> (other.<a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a> &gt; 0) {
+<a name="l00067"></a>00067          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a> == other.<a class="code" href="classUtil_1_1IntDistribution.html#aed595df0c0bd290989c69f72431ef419" title="maximum value.">max_</a> - other.<a class="code" href="classUtil_1_1IntDistribution.html#a592ad6f05d4af20c448a54de12e85846" title="minimum value.">min_</a> + 1);
+<a name="l00068"></a>00068          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>() != 0);
 <a name="l00069"></a>00069       } <span class="keywordflow">else</span> {
-<a name="l00070"></a>00070          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a> == 0);
-<a name="l00071"></a>00071          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1Array.html#a104736719cd4e5f21c25705c77064dde" title="Return allocated size.">capacity</a>() == 0);
-<a name="l00072"></a>00072          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#abb13d7ed1a8c94b9b991ac20472ad4d0" title="minimum value.">min_</a> == 0);
-<a name="l00073"></a>00073          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#ac2f9f30879a5755492b38a927b189816" title="maximum value.">max_</a> == 0);
-<a name="l00074"></a>00074          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#ac50cf6ede880aad2a811578ab9b34b4d" title="Number of sampled values in Histogram.">nSample_</a> == 0);
-<a name="l00075"></a>00075          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#ae1496b433549191551de394f077bc85b" title="Number of sampled values that were out of range.">nReject_</a> == 0);
+<a name="l00070"></a>00070          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a> == 0);
+<a name="l00071"></a>00071          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>() == 0);
+<a name="l00072"></a>00072          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#a592ad6f05d4af20c448a54de12e85846" title="minimum value.">min_</a> == 0);
+<a name="l00073"></a>00073          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#aed595df0c0bd290989c69f72431ef419" title="maximum value.">max_</a> == 0);
+<a name="l00074"></a>00074          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#a55b9defc3958740d31e9695a9deb5e3f" title="Number of sampled values in Histogram.">nSample_</a> == 0);
+<a name="l00075"></a>00075          assert(other.<a class="code" href="classUtil_1_1IntDistribution.html#ae1c9befb89c1f38e1f31ba14951df5f1" title="Number of sampled values that were out of range.">nReject_</a> == 0);
 <a name="l00076"></a>00076       }
 <a name="l00077"></a>00077 
 <a name="l00078"></a>00078       <span class="comment">// Assign primitive values</span>
-<a name="l00079"></a>00079       <a class="code" href="classUtil_1_1IntDistribution.html#abb13d7ed1a8c94b9b991ac20472ad4d0" title="minimum value.">min_</a>      = other.<a class="code" href="classUtil_1_1IntDistribution.html#abb13d7ed1a8c94b9b991ac20472ad4d0" title="minimum value.">min_</a>;
-<a name="l00080"></a>00080       <a class="code" href="classUtil_1_1IntDistribution.html#ac2f9f30879a5755492b38a927b189816" title="maximum value.">max_</a>      = other.<a class="code" href="classUtil_1_1IntDistribution.html#ac2f9f30879a5755492b38a927b189816" title="maximum value.">max_</a>;
-<a name="l00081"></a>00081       <a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>     = other.<a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>;
-<a name="l00082"></a>00082       <a class="code" href="classUtil_1_1IntDistribution.html#ac50cf6ede880aad2a811578ab9b34b4d" title="Number of sampled values in Histogram.">nSample_</a>  = other.<a class="code" href="classUtil_1_1IntDistribution.html#ac50cf6ede880aad2a811578ab9b34b4d" title="Number of sampled values in Histogram.">nSample_</a>;
-<a name="l00083"></a>00083       <a class="code" href="classUtil_1_1IntDistribution.html#ae1496b433549191551de394f077bc85b" title="Number of sampled values that were out of range.">nReject_</a>  = other.<a class="code" href="classUtil_1_1IntDistribution.html#ae1496b433549191551de394f077bc85b" title="Number of sampled values that were out of range.">nReject_</a>;
+<a name="l00079"></a>00079       <a class="code" href="classUtil_1_1IntDistribution.html#a592ad6f05d4af20c448a54de12e85846" title="minimum value.">min_</a>      = other.<a class="code" href="classUtil_1_1IntDistribution.html#a592ad6f05d4af20c448a54de12e85846" title="minimum value.">min_</a>;
+<a name="l00080"></a>00080       <a class="code" href="classUtil_1_1IntDistribution.html#aed595df0c0bd290989c69f72431ef419" title="maximum value.">max_</a>      = other.<a class="code" href="classUtil_1_1IntDistribution.html#aed595df0c0bd290989c69f72431ef419" title="maximum value.">max_</a>;
+<a name="l00081"></a>00081       <a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a>     = other.<a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a>;
+<a name="l00082"></a>00082       <a class="code" href="classUtil_1_1IntDistribution.html#a55b9defc3958740d31e9695a9deb5e3f" title="Number of sampled values in Histogram.">nSample_</a>  = other.<a class="code" href="classUtil_1_1IntDistribution.html#a55b9defc3958740d31e9695a9deb5e3f" title="Number of sampled values in Histogram.">nSample_</a>;
+<a name="l00083"></a>00083       <a class="code" href="classUtil_1_1IntDistribution.html#ae1c9befb89c1f38e1f31ba14951df5f1" title="Number of sampled values that were out of range.">nReject_</a>  = other.<a class="code" href="classUtil_1_1IntDistribution.html#ae1c9befb89c1f38e1f31ba14951df5f1" title="Number of sampled values that were out of range.">nReject_</a>;
 <a name="l00084"></a>00084 
 <a name="l00085"></a>00085       <span class="comment">// Allocate histogram if necessary</span>
-<a name="l00086"></a>00086       <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a> &gt; 0) {
-<a name="l00087"></a>00087          <a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>);
-<a name="l00088"></a>00088          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>; ++i) {
-<a name="l00089"></a>00089             <a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>[i] = other.<a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>[i];
+<a name="l00086"></a>00086       <span class="keywordflow">if</span> (<a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a> &gt; 0) {
+<a name="l00087"></a>00087          <a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a>);
+<a name="l00088"></a>00088          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a>; ++i) {
+<a name="l00089"></a>00089             <a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>[i] = other.<a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>[i];
 <a name="l00090"></a>00090          }
 <a name="l00091"></a>00091       }
 <a name="l00092"></a>00092 
@@ -147,67 +147,67 @@
 <a name="l00096"></a>00096    <span class="comment">/* </span>
 <a name="l00097"></a>00097 <span class="comment">   * Destructor.</span>
 <a name="l00098"></a>00098 <span class="comment">   */</span>
-<a name="l00099"></a>00099    <a class="code" href="classUtil_1_1IntDistribution.html#a4f81037f67992118bf3cc92eaf97f56b" title="Destructor.">IntDistribution::~IntDistribution</a>() 
-<a name="l00100"></a><a class="code" href="classUtil_1_1IntDistribution.html#a4f81037f67992118bf3cc92eaf97f56b">00100</a>    {}
+<a name="l00099"></a>00099    <a class="code" href="classUtil_1_1IntDistribution.html#a1bbca9c30bf901734143a763211dc21a" title="Destructor.">IntDistribution::~IntDistribution</a>() 
+<a name="l00100"></a><a class="code" href="classUtil_1_1IntDistribution.html#a1bbca9c30bf901734143a763211dc21a">00100</a>    {}
 <a name="l00101"></a>00101 
 <a name="l00102"></a>00102    <span class="comment">/* </span>
 <a name="l00103"></a>00103 <span class="comment">   * Read min and max from file.</span>
 <a name="l00104"></a>00104 <span class="comment">   */</span>
-<a name="l00105"></a>00105    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntDistribution.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file and initialize.">IntDistribution::readParam</a>(std::istream&amp; in)
-<a name="l00106"></a><a class="code" href="classUtil_1_1IntDistribution.html#ab5421d3c9175985c9acbf723e5392075">00106</a>    {
-<a name="l00107"></a>00107       read&lt;int&gt;(in, <span class="stringliteral">&quot;min&quot;</span>, <a class="code" href="classUtil_1_1IntDistribution.html#abb13d7ed1a8c94b9b991ac20472ad4d0" title="minimum value.">min_</a>);
-<a name="l00108"></a>00108       read&lt;int&gt;(in, <span class="stringliteral">&quot;max&quot;</span>, <a class="code" href="classUtil_1_1IntDistribution.html#ac2f9f30879a5755492b38a927b189816" title="maximum value.">max_</a>);
-<a name="l00109"></a>00109       <a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a> = <a class="code" href="classUtil_1_1IntDistribution.html#ac2f9f30879a5755492b38a927b189816" title="maximum value.">max_</a> - <a class="code" href="classUtil_1_1IntDistribution.html#abb13d7ed1a8c94b9b991ac20472ad4d0" title="minimum value.">min_</a> + 1;
-<a name="l00110"></a>00110       <a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nBin_);
-<a name="l00111"></a>00111       <a class="code" href="classUtil_1_1IntDistribution.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear (i.e., zero) previously allocated histogram.">clear</a>();
+<a name="l00105"></a>00105    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntDistribution.html#afe575689aac8a4c6196c33b6fc5ff609" title="Read parameters from file and initialize.">IntDistribution::readParam</a>(std::istream&amp; in)
+<a name="l00106"></a><a class="code" href="classUtil_1_1IntDistribution.html#afe575689aac8a4c6196c33b6fc5ff609">00106</a>    {
+<a name="l00107"></a>00107       read&lt;int&gt;(in, <span class="stringliteral">&quot;min&quot;</span>, <a class="code" href="classUtil_1_1IntDistribution.html#a592ad6f05d4af20c448a54de12e85846" title="minimum value.">min_</a>);
+<a name="l00108"></a>00108       read&lt;int&gt;(in, <span class="stringliteral">&quot;max&quot;</span>, <a class="code" href="classUtil_1_1IntDistribution.html#aed595df0c0bd290989c69f72431ef419" title="maximum value.">max_</a>);
+<a name="l00109"></a>00109       <a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a> = <a class="code" href="classUtil_1_1IntDistribution.html#aed595df0c0bd290989c69f72431ef419" title="maximum value.">max_</a> - <a class="code" href="classUtil_1_1IntDistribution.html#a592ad6f05d4af20c448a54de12e85846" title="minimum value.">min_</a> + 1;
+<a name="l00110"></a>00110       <a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nBin_);
+<a name="l00111"></a>00111       <a class="code" href="classUtil_1_1IntDistribution.html#ae272244b0bb347076898b91024abdcec" title="Clear (i.e., zero) previously allocated histogram.">clear</a>();
 <a name="l00112"></a>00112    }
 <a name="l00113"></a>00113    
 <a name="l00114"></a>00114    <span class="comment">/*</span>
 <a name="l00115"></a>00115 <span class="comment">   * Set parameters and initialize.</span>
 <a name="l00116"></a>00116 <span class="comment">   */</span>
-<a name="l00117"></a>00117    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntDistribution.html#ad8953def9ee83c40f2a994e9281efd34" title="Set parameters and initialize.">IntDistribution::setParam</a>(<span class="keywordtype">int</span> min, <span class="keywordtype">int</span> max)
-<a name="l00118"></a><a class="code" href="classUtil_1_1IntDistribution.html#ad8953def9ee83c40f2a994e9281efd34">00118</a>    {
-<a name="l00119"></a>00119       <a class="code" href="classUtil_1_1IntDistribution.html#abb13d7ed1a8c94b9b991ac20472ad4d0" title="minimum value.">min_</a>      = <a class="code" href="classUtil_1_1IntDistribution.html#ad880f132edfb865a295f382a6acb3c84" title="Get minimum value in range of histogram.">min</a>;
-<a name="l00120"></a>00120       <a class="code" href="classUtil_1_1IntDistribution.html#ac2f9f30879a5755492b38a927b189816" title="maximum value.">max_</a>      = <a class="code" href="classUtil_1_1IntDistribution.html#a672f215da315c59fe5cdacae82692ab6" title="Get maximum value in range of histogram.">max</a>;
-<a name="l00121"></a>00121       <a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>     = <a class="code" href="classUtil_1_1IntDistribution.html#ac2f9f30879a5755492b38a927b189816" title="maximum value.">max_</a> - <a class="code" href="classUtil_1_1IntDistribution.html#abb13d7ed1a8c94b9b991ac20472ad4d0" title="minimum value.">min_</a> + 1;
-<a name="l00122"></a>00122       <a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>);
-<a name="l00123"></a>00123       <a class="code" href="classUtil_1_1IntDistribution.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear (i.e., zero) previously allocated histogram.">clear</a>();
+<a name="l00117"></a>00117    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntDistribution.html#a2bb641b4a8306af26267760be012d3fc" title="Set parameters and initialize.">IntDistribution::setParam</a>(<span class="keywordtype">int</span> min, <span class="keywordtype">int</span> max)
+<a name="l00118"></a><a class="code" href="classUtil_1_1IntDistribution.html#a2bb641b4a8306af26267760be012d3fc">00118</a>    {
+<a name="l00119"></a>00119       <a class="code" href="classUtil_1_1IntDistribution.html#a592ad6f05d4af20c448a54de12e85846" title="minimum value.">min_</a>      = <a class="code" href="classUtil_1_1IntDistribution.html#a0a7cb9ac256dbdd6b08993ae5e1eacf1" title="Get minimum value in range of histogram.">min</a>;
+<a name="l00120"></a>00120       <a class="code" href="classUtil_1_1IntDistribution.html#aed595df0c0bd290989c69f72431ef419" title="maximum value.">max_</a>      = <a class="code" href="classUtil_1_1IntDistribution.html#a43e330c972ed5aa37211a2a67e6a6350" title="Get maximum value in range of histogram.">max</a>;
+<a name="l00121"></a>00121       <a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a>     = <a class="code" href="classUtil_1_1IntDistribution.html#aed595df0c0bd290989c69f72431ef419" title="maximum value.">max_</a> - <a class="code" href="classUtil_1_1IntDistribution.html#a592ad6f05d4af20c448a54de12e85846" title="minimum value.">min_</a> + 1;
+<a name="l00122"></a>00122       <a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(<a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a>);
+<a name="l00123"></a>00123       <a class="code" href="classUtil_1_1IntDistribution.html#ae272244b0bb347076898b91024abdcec" title="Clear (i.e., zero) previously allocated histogram.">clear</a>();
 <a name="l00124"></a>00124    }  
 <a name="l00125"></a>00125    
 <a name="l00126"></a>00126    <span class="comment">/* </span>
 <a name="l00127"></a>00127 <span class="comment">   * Zero all accumulators.</span>
 <a name="l00128"></a>00128 <span class="comment">   */</span>
-<a name="l00129"></a>00129    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntDistribution.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear (i.e., zero) previously allocated histogram.">IntDistribution::clear</a>()
-<a name="l00130"></a><a class="code" href="classUtil_1_1IntDistribution.html#ac8bb3912a3ce86b15842e79d0b421204">00130</a>    {  
-<a name="l00131"></a>00131       <a class="code" href="classUtil_1_1IntDistribution.html#ac50cf6ede880aad2a811578ab9b34b4d" title="Number of sampled values in Histogram.">nSample_</a> = 0; 
-<a name="l00132"></a>00132       <a class="code" href="classUtil_1_1IntDistribution.html#ae1496b433549191551de394f077bc85b" title="Number of sampled values that were out of range.">nReject_</a> = 0; 
-<a name="l00133"></a>00133       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>; ++i) {
-<a name="l00134"></a>00134          <a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>[i] = 0;
+<a name="l00129"></a>00129    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntDistribution.html#ae272244b0bb347076898b91024abdcec" title="Clear (i.e., zero) previously allocated histogram.">IntDistribution::clear</a>()
+<a name="l00130"></a><a class="code" href="classUtil_1_1IntDistribution.html#ae272244b0bb347076898b91024abdcec">00130</a>    {  
+<a name="l00131"></a>00131       <a class="code" href="classUtil_1_1IntDistribution.html#a55b9defc3958740d31e9695a9deb5e3f" title="Number of sampled values in Histogram.">nSample_</a> = 0; 
+<a name="l00132"></a>00132       <a class="code" href="classUtil_1_1IntDistribution.html#ae1c9befb89c1f38e1f31ba14951df5f1" title="Number of sampled values that were out of range.">nReject_</a> = 0; 
+<a name="l00133"></a>00133       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a>; ++i) {
+<a name="l00134"></a>00134          <a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>[i] = 0;
 <a name="l00135"></a>00135       }
 <a name="l00136"></a>00136    }
 <a name="l00137"></a>00137    
 <a name="l00138"></a>00138    <span class="comment">/* </span>
 <a name="l00139"></a>00139 <span class="comment">   * Add a value to the histogram</span>
 <a name="l00140"></a>00140 <span class="comment">   */</span>
-<a name="l00141"></a>00141    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntDistribution.html#a70e04e56bdb68bc91cf4e7a6bd854166" title="Sample a value.">IntDistribution::sample</a>(<span class="keywordtype">int</span> value)
-<a name="l00142"></a><a class="code" href="classUtil_1_1IntDistribution.html#a70e04e56bdb68bc91cf4e7a6bd854166">00142</a>    {
+<a name="l00141"></a>00141    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntDistribution.html#a9ac5ebdc8cbcb6c8ae9300fc4109e031" title="Sample a value.">IntDistribution::sample</a>(<span class="keywordtype">int</span> value)
+<a name="l00142"></a><a class="code" href="classUtil_1_1IntDistribution.html#a9ac5ebdc8cbcb6c8ae9300fc4109e031">00142</a>    {
 <a name="l00143"></a>00143       <span class="keywordtype">int</span> i;
-<a name="l00144"></a>00144       <span class="keywordflow">if</span> (value &gt;= <a class="code" href="classUtil_1_1IntDistribution.html#abb13d7ed1a8c94b9b991ac20472ad4d0" title="minimum value.">min_</a> &amp;&amp; value &lt;= <a class="code" href="classUtil_1_1IntDistribution.html#ac2f9f30879a5755492b38a927b189816" title="maximum value.">max_</a>) {
-<a name="l00145"></a>00145          i = <a class="code" href="classUtil_1_1IntDistribution.html#a2af05793b8db5be20d4839f294661e90" title="Return the index of the bin for a value.">binIndex</a>(value);
-<a name="l00146"></a>00146          <a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>[i] += 1;
-<a name="l00147"></a>00147          <a class="code" href="classUtil_1_1IntDistribution.html#ac50cf6ede880aad2a811578ab9b34b4d" title="Number of sampled values in Histogram.">nSample_</a> += 1;
+<a name="l00144"></a>00144       <span class="keywordflow">if</span> (value &gt;= <a class="code" href="classUtil_1_1IntDistribution.html#a592ad6f05d4af20c448a54de12e85846" title="minimum value.">min_</a> &amp;&amp; value &lt;= <a class="code" href="classUtil_1_1IntDistribution.html#aed595df0c0bd290989c69f72431ef419" title="maximum value.">max_</a>) {
+<a name="l00145"></a>00145          i = <a class="code" href="classUtil_1_1IntDistribution.html#a7e691f3180a430c9e5c9fafda0aa8519" title="Return the index of the bin for a value.">binIndex</a>(value);
+<a name="l00146"></a>00146          <a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>[i] += 1;
+<a name="l00147"></a>00147          <a class="code" href="classUtil_1_1IntDistribution.html#a55b9defc3958740d31e9695a9deb5e3f" title="Number of sampled values in Histogram.">nSample_</a> += 1;
 <a name="l00148"></a>00148       } <span class="keywordflow">else</span> {
-<a name="l00149"></a>00149          <a class="code" href="classUtil_1_1IntDistribution.html#ae1496b433549191551de394f077bc85b" title="Number of sampled values that were out of range.">nReject_</a> += 1;
+<a name="l00149"></a>00149          <a class="code" href="classUtil_1_1IntDistribution.html#ae1c9befb89c1f38e1f31ba14951df5f1" title="Number of sampled values that were out of range.">nReject_</a> += 1;
 <a name="l00150"></a>00150       }
 <a name="l00151"></a>00151    }
 <a name="l00152"></a>00152    
 <a name="l00153"></a>00153    <span class="comment">/* </span>
 <a name="l00154"></a>00154 <span class="comment">   * Output histogram</span>
 <a name="l00155"></a>00155 <span class="comment">   */</span>
-<a name="l00156"></a>00156    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntDistribution.html#a012e48b5ec7769b2e5614bd6b3a62488" title="Output the distribution to file.">IntDistribution::output</a>(std::ostream&amp; out) 
-<a name="l00157"></a><a class="code" href="classUtil_1_1IntDistribution.html#a012e48b5ec7769b2e5614bd6b3a62488">00157</a>    {
-<a name="l00158"></a>00158       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>; ++i) {
-<a name="l00159"></a>00159          out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(i + <a class="code" href="classUtil_1_1IntDistribution.html#abb13d7ed1a8c94b9b991ac20472ad4d0" title="minimum value.">min_</a>) &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>[i]) &lt;&lt; std::endl;
+<a name="l00156"></a>00156    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1IntDistribution.html#acbfb7c3ed04fefe2d9e799a297609389" title="Output the distribution to file.">IntDistribution::output</a>(std::ostream&amp; out) 
+<a name="l00157"></a><a class="code" href="classUtil_1_1IntDistribution.html#acbfb7c3ed04fefe2d9e799a297609389">00157</a>    {
+<a name="l00158"></a>00158       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a>; ++i) {
+<a name="l00159"></a>00159          out &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(i + <a class="code" href="classUtil_1_1IntDistribution.html#a592ad6f05d4af20c448a54de12e85846" title="minimum value.">min_</a>) &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(<a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>[i]) &lt;&lt; std::endl;
 <a name="l00160"></a>00160       }
 <a name="l00161"></a>00161    }
 <a name="l00162"></a>00162   
@@ -217,10 +217,10 @@
 <a name="l00166"></a>00166 <span class="comment">   */</span>
 <a name="l00167"></a>00167    <span class="keywordtype">void</span> IntDistribution::backup(FILE *file) 
 <a name="l00168"></a>00168    {
-<a name="l00169"></a>00169       fprintf(file, <span class="stringliteral">&quot;nSample       %i \n&quot;</span>, <a class="code" href="classUtil_1_1IntDistribution.html#ac50cf6ede880aad2a811578ab9b34b4d" title="Number of sampled values in Histogram.">nSample_</a>);
-<a name="l00170"></a>00170       fprintf(file, <span class="stringliteral">&quot;nReject       %i \n&quot;</span>, <a class="code" href="classUtil_1_1IntDistribution.html#ae1496b433549191551de394f077bc85b" title="Number of sampled values that were out of range.">nReject_</a>);
-<a name="l00171"></a>00171       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>; ++i) {
-<a name="l00172"></a>00172          fprintf(file, <span class="stringliteral">&quot;%li &quot;</span>, <a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>[i]);
+<a name="l00169"></a>00169       fprintf(file, <span class="stringliteral">&quot;nSample       %i \n&quot;</span>, <a class="code" href="classUtil_1_1IntDistribution.html#a55b9defc3958740d31e9695a9deb5e3f" title="Number of sampled values in Histogram.">nSample_</a>);
+<a name="l00170"></a>00170       fprintf(file, <span class="stringliteral">&quot;nReject       %i \n&quot;</span>, <a class="code" href="classUtil_1_1IntDistribution.html#ae1c9befb89c1f38e1f31ba14951df5f1" title="Number of sampled values that were out of range.">nReject_</a>);
+<a name="l00171"></a>00171       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a>; ++i) {
+<a name="l00172"></a>00172          fprintf(file, <span class="stringliteral">&quot;%li &quot;</span>, <a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>[i]);
 <a name="l00173"></a>00173       }
 <a name="l00174"></a>00174       fprintf(file, <span class="stringliteral">&quot;\n&quot;</span>);
 <a name="l00175"></a>00175    }
@@ -229,10 +229,10 @@
 <a name="l00178"></a>00178 <span class="comment">   *</span>
 <a name="l00179"></a>00179 <span class="comment">   */</span>
 <a name="l00180"></a>00180    <span class="keywordtype">void</span> IntDistribution::restore(FILE *file) {
-<a name="l00181"></a>00181       fscanf(file, <span class="stringliteral">&quot;nSample       %i \n&quot;</span>, &amp;<a class="code" href="classUtil_1_1IntDistribution.html#ac50cf6ede880aad2a811578ab9b34b4d" title="Number of sampled values in Histogram.">nSample_</a>);
-<a name="l00182"></a>00182       fscanf(file, <span class="stringliteral">&quot;nReject       %i \n&quot;</span>, &amp;<a class="code" href="classUtil_1_1IntDistribution.html#ae1496b433549191551de394f077bc85b" title="Number of sampled values that were out of range.">nReject_</a>);
-<a name="l00183"></a>00183       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="classUtil_1_1IntDistribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>; ++i) {
-<a name="l00184"></a>00184          fscanf(file, <span class="stringliteral">&quot;%li &quot;</span>, &amp;<a class="code" href="classUtil_1_1IntDistribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram array.">histogram_</a>[i]);
+<a name="l00181"></a>00181       fscanf(file, <span class="stringliteral">&quot;nSample       %i \n&quot;</span>, &amp;<a class="code" href="classUtil_1_1IntDistribution.html#a55b9defc3958740d31e9695a9deb5e3f" title="Number of sampled values in Histogram.">nSample_</a>);
+<a name="l00182"></a>00182       fscanf(file, <span class="stringliteral">&quot;nReject       %i \n&quot;</span>, &amp;<a class="code" href="classUtil_1_1IntDistribution.html#ae1c9befb89c1f38e1f31ba14951df5f1" title="Number of sampled values that were out of range.">nReject_</a>);
+<a name="l00183"></a>00183       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="classUtil_1_1IntDistribution.html#a119b44e44651079694a20e85bc4f4387" title="number of bins.">nBin_</a>; ++i) {
+<a name="l00184"></a>00184          fscanf(file, <span class="stringliteral">&quot;%li &quot;</span>, &amp;<a class="code" href="classUtil_1_1IntDistribution.html#aa630386f81cc2a5690ebf9b61bb6959c" title="Histogram array.">histogram_</a>[i]);
 <a name="l00185"></a>00185       }
 <a name="l00186"></a>00186       fscanf(file, <span class="stringliteral">&quot;\n&quot;</span>);
 <a name="l00187"></a>00187    }
@@ -242,7 +242,7 @@
 <a name="l00191"></a>00191 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: CellList Class Reference</title>
+<title>Simpatico: DdMd::CellList Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>CellList Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Neighbor__Module.html">Nonbonded Neighbors</a></div></h1>  </div>
+<h1>DdMd::CellList Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Neighbor__Module.html">Nonbonded Neighbors</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::CellList" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -59,14 +59,14 @@
 <p>All operations of this class are local (no MPI).</p>
 <p>Building a <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> (usage): </p>
 <div class="fragment"><pre class="fragment">    AtomStorage storage;
-    <a class="code" href="classDdMd_1_1CellList.html#a9a3af8501f8608e8d5fdecfbe0c85f8e" title="Constructor.">CellList</a> cellList;
+    <a class="code" href="classDdMd_1_1CellList.html#a2aa58b0cd5493d2977245c77aeba3f1c" title="Constructor.">CellList</a> cellList;
     Vector   lower;        <span class="comment">// Vector of lower bounds (local atoms)</span>
     Vector   upper;        <span class="comment">// Vector of upper bounds (local atoms)</span>
     <span class="keywordtype">double</span>   cutoff;       <span class="comment">// minimum cell dimension</span>
-    <span class="keywordtype">int</span>      <a class="code" href="classDdMd_1_1CellList.html#a72fbb50e40dfdc5f3710e54aac41b97e" title="Maximum number of atoms for which space is allocated.">atomCapacity</a>  <span class="comment">// max number of atoms on this processor</span>
+    <span class="keywordtype">int</span>      <a class="code" href="classDdMd_1_1CellList.html#af0d5f2d4a532c158b1c864001b3577a9" title="Maximum number of atoms for which space is allocated.">atomCapacity</a>  <span class="comment">// max number of atoms on this processor</span>
 
     <span class="comment">// Bounds on lower and upper used here to allocate memory.</span>
-    cellList.allocate(<a class="code" href="classDdMd_1_1CellList.html#a72fbb50e40dfdc5f3710e54aac41b97e" title="Maximum number of atoms for which space is allocated.">atomCapacity</a>, lower, upper, cutoff);
+    cellList.allocate(<a class="code" href="classDdMd_1_1CellList.html#af0d5f2d4a532c158b1c864001b3577a9" title="Maximum number of atoms for which space is allocated.">atomCapacity</a>, lower, upper, cutoff);
   
     <span class="comment">// Make the actual grid.</span>
     cellList.makeGrid(lower, upper, cutoff);
@@ -98,52 +98,52 @@ Classes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><b>AtomTag</b></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a9a3af8501f8608e8d5fdecfbe0c85f8e">CellList</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a9a3af8501f8608e8d5fdecfbe0c85f8e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#ac5ddcb849045a381aa407e75d80c7f5f">~CellList</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ac5ddcb849045a381aa407e75d80c7f5f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a97346dcf4a96ecbbc279eaaa12629371">allocate</a> (int atomCapacity, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper, double cutoff)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory for this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>.  <a href="#a97346dcf4a96ecbbc279eaaa12629371"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a9b8bff08d561156cd51152e8b396cf58">makeGrid</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper, double cutoff)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the cell grid.  <a href="#a9b8bff08d561156cd51152e8b396cf58"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a40f73e573c2cc4906a2ae2261e02389d">placeAtom</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the appropriate cell for an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>, based on its position.  <a href="#a40f73e573c2cc4906a2ae2261e02389d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a7740c7ab195c03ac140f1f75f633470f">build</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the cell list.  <a href="#a7740c7ab195c03ac140f1f75f633470f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#ac8bb3912a3ce86b15842e79d0b421204">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the cell list to its empty state (no Atoms).  <a href="#ac8bb3912a3ce86b15842e79d0b421204"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Grid.html">Grid</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#ae85ec1ce4bd74bc16569c104e711bbdc">grid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return Grid object by const reference.  <a href="#ae85ec1ce4bd74bc16569c104e711bbdc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a039b61f9a54603c3def80654ab509d3e">cellLength</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dimension of each cell in direction i.  <a href="#a039b61f9a54603c3def80654ab509d3e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#aaf595bbc4fbae892199c0ffa729db78c">cellIndexFromPosition</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;position) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the index of the cell that contains a position Vector.  <a href="#aaf595bbc4fbae892199c0ffa729db78c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classDdMd_1_1Cell.html">Cell</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a24f37d2e5f584a4e63daf74901524021">begin</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to first local cell in linked list.  <a href="#a24f37d2e5f584a4e63daf74901524021"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classDdMd_1_1Cell.html">Cell</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#aeea2877f703eaee565045618dcf694b7">cell</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a specified cell by const reference.  <a href="#aeea2877f703eaee565045618dcf694b7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#ac91579bd63979a294891d330a5533838">nAtom</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total number of atoms (local and ghost) in this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>.  <a href="#ac91579bd63979a294891d330a5533838"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#aef1c19a0c1e5442f7b9ee3bbd39d6413">nReject</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of atoms that were rejected (not placed in cells)  <a href="#aef1c19a0c1e5442f7b9ee3bbd39d6413"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a72fbb50e40dfdc5f3710e54aac41b97e">atomCapacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of atoms for which space is allocated.  <a href="#a72fbb50e40dfdc5f3710e54aac41b97e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#ae1b737ba0b8a4b2fc8814035d132dc99">cellCapacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of cells for which space has been allocated.  <a href="#ae1b737ba0b8a4b2fc8814035d132dc99"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a0bcdab3616db481dd211594529479f94">isAllocated</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has memory been allocated for this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>?  <a href="#a0bcdab3616db481dd211594529479f94"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#af10d7be2a4678e55f767b3149a03fd56">isBuilt</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> been built?  <a href="#af10d7be2a4678e55f767b3149a03fd56"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">isValid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if valid, or throw Exception.  <a href="#aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a2aa58b0cd5493d2977245c77aeba3f1c">CellList</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a2aa58b0cd5493d2977245c77aeba3f1c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#ab139bfdac19c3328607cee4e242952c8">~CellList</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ab139bfdac19c3328607cee4e242952c8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a3679f3de692b89c6a24d9a45d0f56744">allocate</a> (int atomCapacity, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper, double cutoff)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory for this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>.  <a href="#a3679f3de692b89c6a24d9a45d0f56744"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#ac2c80627afd5dfbd01e4cb3181f207c5">makeGrid</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper, double cutoff)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the cell grid.  <a href="#ac2c80627afd5dfbd01e4cb3181f207c5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a86801f1caf32420a380c2885b08e2337">placeAtom</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the appropriate cell for an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>, based on its position.  <a href="#a86801f1caf32420a380c2885b08e2337"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3">build</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the cell list.  <a href="#abefc5a59a0f035b7aa3d9545ef91dfa3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#aae15fc4934318b9caad30c39d94f969f">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the cell list to its empty state (no Atoms).  <a href="#aae15fc4934318b9caad30c39d94f969f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Grid.html">Grid</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a26541fd54c65f392732afeca64a5b93f">grid</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return Grid object by const reference.  <a href="#a26541fd54c65f392732afeca64a5b93f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#ad6596477cdf06547980f5db4faab4a99">cellLength</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dimension of each cell in direction i.  <a href="#ad6596477cdf06547980f5db4faab4a99"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#abf7898efdd6f9a2e97f68afeb6b9966c">cellIndexFromPosition</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;position) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the index of the cell that contains a position Vector.  <a href="#abf7898efdd6f9a2e97f68afeb6b9966c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classDdMd_1_1Cell.html">Cell</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a4dc8d93e300ad81d7156680f31af9a1c">begin</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to first local cell in linked list.  <a href="#a4dc8d93e300ad81d7156680f31af9a1c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classDdMd_1_1Cell.html">Cell</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a03fa5f2a7d3bbc4316a0b9d090e5bb4e">cell</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a specified cell by const reference.  <a href="#a03fa5f2a7d3bbc4316a0b9d090e5bb4e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a13b1d437f35cd3206d21c5201431a001">nAtom</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total number of atoms (local and ghost) in this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>.  <a href="#a13b1d437f35cd3206d21c5201431a001"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a718c4aecf005cc6162d9109107a2f2cf">nReject</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of atoms that were rejected (not placed in cells)  <a href="#a718c4aecf005cc6162d9109107a2f2cf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#af0d5f2d4a532c158b1c864001b3577a9">atomCapacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of atoms for which space is allocated.  <a href="#af0d5f2d4a532c158b1c864001b3577a9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a19f230b8ebbc08967c75f4e412a42506">cellCapacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of cells for which space has been allocated.  <a href="#a19f230b8ebbc08967c75f4e412a42506"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a14ab92f284967e1876260b47a2a70c23">isAllocated</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has memory been allocated for this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>?  <a href="#a14ab92f284967e1876260b47a2a70c23"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a2bcc850a306f1144025bf6896da3480f">isBuilt</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> been built?  <a href="#a2bcc850a306f1144025bf6896da3480f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a204507e1337d618d1c7519a8870ae000">isValid</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if valid, or throw Exception.  <a href="#a204507e1337d618d1c7519a8870ae000"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a9a3af8501f8608e8d5fdecfbe0c85f8e"></a><!-- doxytag: member="DdMd::CellList::CellList" ref="a9a3af8501f8608e8d5fdecfbe0c85f8e" args="()" -->
+<a class="anchor" id="a2aa58b0cd5493d2977245c77aeba3f1c"></a><!-- doxytag: member="DdMd::CellList::CellList" ref="a2aa58b0cd5493d2977245c77aeba3f1c" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1CellList.html">CellList</a> </td>
+          <td class="memname">DdMd::CellList::CellList </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -160,12 +160,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac5ddcb849045a381aa407e75d80c7f5f"></a><!-- doxytag: member="DdMd::CellList::~CellList" ref="ac5ddcb849045a381aa407e75d80c7f5f" args="()" -->
+<a class="anchor" id="ab139bfdac19c3328607cee4e242952c8"></a><!-- doxytag: member="DdMd::CellList::~CellList" ref="ab139bfdac19c3328607cee4e242952c8" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1CellList.html">CellList</a> </td>
+          <td class="memname">DdMd::CellList::~CellList </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -182,12 +182,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a97346dcf4a96ecbbc279eaaa12629371"></a><!-- doxytag: member="DdMd::CellList::allocate" ref="a97346dcf4a96ecbbc279eaaa12629371" args="(int atomCapacity, const Vector &amp;lower, const Vector &amp;upper, double cutoff)" -->
+<a class="anchor" id="a3679f3de692b89c6a24d9a45d0f56744"></a><!-- doxytag: member="DdMd::CellList::allocate" ref="a3679f3de692b89c6a24d9a45d0f56744" args="(int atomCapacity, const Vector &amp;lower, const Vector &amp;upper, double cutoff)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void DdMd::CellList::allocate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>atomCapacity</em>, </td>
@@ -240,12 +240,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9b8bff08d561156cd51152e8b396cf58"></a><!-- doxytag: member="DdMd::CellList::makeGrid" ref="a9b8bff08d561156cd51152e8b396cf58" args="(const Vector &amp;lower, const Vector &amp;upper, double cutoff)" -->
+<a class="anchor" id="ac2c80627afd5dfbd01e4cb3181f207c5"></a><!-- doxytag: member="DdMd::CellList::makeGrid" ref="ac2c80627afd5dfbd01e4cb3181f207c5" args="(const Vector &amp;lower, const Vector &amp;upper, double cutoff)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void makeGrid </td>
+          <td class="memname">void DdMd::CellList::makeGrid </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>lower</em>, </td>
@@ -284,16 +284,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00101">101</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00033">Cell::setIsGhostCell()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00039">Cell::setLastCell()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00036">Cell::setNextCell()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00033">DdMd::Cell::setIsGhostCell()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00039">DdMd::Cell::setLastCell()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00036">DdMd::Cell::setNextCell()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a40f73e573c2cc4906a2ae2261e02389d"></a><!-- doxytag: member="DdMd::CellList::placeAtom" ref="a40f73e573c2cc4906a2ae2261e02389d" args="(Atom &amp;atom)" -->
+<a class="anchor" id="a86801f1caf32420a380c2885b08e2337"></a><!-- doxytag: member="DdMd::CellList::placeAtom" ref="a86801f1caf32420a380c2885b08e2337" args="(Atom &amp;atom)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void placeAtom </td>
+          <td class="memname">void DdMd::CellList::placeAtom </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -304,7 +304,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Determine the appropriate cell for an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>, based on its position. </p>
-<p>This method does not place the atom in a cell, but retains a record of the cell index that is used to place atoms in the <a class="el" href="classDdMd_1_1CellList.html#a7740c7ab195c03ac140f1f75f633470f" title="Build the cell list.">build()</a> method.</p>
+<p>This method does not place the atom in a cell, but retains a record of the cell index that is used to place atoms in the <a class="el" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3" title="Build the cell list.">build()</a> method.</p>
 <p>This method quietly does nothing if the atom is outside the expanded domain for nonbonded ghosts, which extends one cutoff length beyond the domain boundaries the domain boundaries in each direction.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -315,16 +315,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00337">337</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">Atom::position()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7740c7ab195c03ac140f1f75f633470f"></a><!-- doxytag: member="DdMd::CellList::build" ref="a7740c7ab195c03ac140f1f75f633470f" args="()" -->
+<a class="anchor" id="abefc5a59a0f035b7aa3d9545ef91dfa3"></a><!-- doxytag: member="DdMd::CellList::build" ref="abefc5a59a0f035b7aa3d9545ef91dfa3" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void build </td>
+          <td class="memname">void DdMd::CellList::build </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -334,18 +334,18 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Build the cell list. </p>
-<p>This method must be called after completing a loop over atoms, in which <a class="el" href="classDdMd_1_1CellList.html#a40f73e573c2cc4906a2ae2261e02389d" title="Determine the appropriate cell for an Atom, based on its position.">placeAtom()</a> is called for each atom. The <a class="el" href="classDdMd_1_1CellList.html#a7740c7ab195c03ac140f1f75f633470f" title="Build the cell list.">build()</a> method uses information gathered in this loop to build and fill all of the cells. </p>
+<p>This method must be called after completing a loop over atoms, in which <a class="el" href="classDdMd_1_1CellList.html#a86801f1caf32420a380c2885b08e2337" title="Determine the appropriate cell for an Atom, based on its position.">placeAtom()</a> is called for each atom. The <a class="el" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3" title="Build the cell list.">build()</a> method uses information gathered in this loop to build and fill all of the cells. </p>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00206">206</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac8bb3912a3ce86b15842e79d0b421204"></a><!-- doxytag: member="DdMd::CellList::clear" ref="ac8bb3912a3ce86b15842e79d0b421204" args="()" -->
+<a class="anchor" id="aae15fc4934318b9caad30c39d94f969f"></a><!-- doxytag: member="DdMd::CellList::clear" ref="aae15fc4934318b9caad30c39d94f969f" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void clear </td>
+          <td class="memname">void DdMd::CellList::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -360,12 +360,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae85ec1ce4bd74bc16569c104e711bbdc"></a><!-- doxytag: member="DdMd::CellList::grid" ref="ae85ec1ce4bd74bc16569c104e711bbdc" args="() const " -->
+<a class="anchor" id="a26541fd54c65f392732afeca64a5b93f"></a><!-- doxytag: member="DdMd::CellList::grid" ref="a26541fd54c65f392732afeca64a5b93f" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classUtil_1_1Grid.html">Grid</a> &amp; grid </td>
+          <td class="memname">const <a class="el" href="classUtil_1_1Grid.html">Grid</a> &amp; DdMd::CellList::grid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -380,12 +380,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a039b61f9a54603c3def80654ab509d3e"></a><!-- doxytag: member="DdMd::CellList::cellLength" ref="a039b61f9a54603c3def80654ab509d3e" args="(int i) const " -->
+<a class="anchor" id="ad6596477cdf06547980f5db4faab4a99"></a><!-- doxytag: member="DdMd::CellList::cellLength" ref="ad6596477cdf06547980f5db4faab4a99" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double cellLength </td>
+          <td class="memname">double DdMd::CellList::cellLength </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -407,12 +407,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aaf595bbc4fbae892199c0ffa729db78c"></a><!-- doxytag: member="DdMd::CellList::cellIndexFromPosition" ref="aaf595bbc4fbae892199c0ffa729db78c" args="(const Vector &amp;position) const " -->
+<a class="anchor" id="abf7898efdd6f9a2e97f68afeb6b9966c"></a><!-- doxytag: member="DdMd::CellList::cellIndexFromPosition" ref="abf7898efdd6f9a2e97f68afeb6b9966c" args="(const Vector &amp;position) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int cellIndexFromPosition </td>
+          <td class="memname">int DdMd::CellList::cellIndexFromPosition </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>position</em></td><td>)</td>
@@ -437,12 +437,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a24f37d2e5f584a4e63daf74901524021"></a><!-- doxytag: member="DdMd::CellList::begin" ref="a24f37d2e5f584a4e63daf74901524021" args="() const " -->
+<a class="anchor" id="a4dc8d93e300ad81d7156680f31af9a1c"></a><!-- doxytag: member="DdMd::CellList::begin" ref="a4dc8d93e300ad81d7156680f31af9a1c" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classDdMd_1_1Cell.html">Cell</a> * begin </td>
+          <td class="memname">const <a class="el" href="classDdMd_1_1Cell.html">Cell</a> * DdMd::CellList::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -455,16 +455,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00362">362</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00093">PairList::build()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00093">DdMd::PairList::build()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aeea2877f703eaee565045618dcf694b7"></a><!-- doxytag: member="DdMd::CellList::cell" ref="aeea2877f703eaee565045618dcf694b7" args="(int i) const " -->
+<a class="anchor" id="a03fa5f2a7d3bbc4316a0b9d090e5bb4e"></a><!-- doxytag: member="DdMd::CellList::cell" ref="a03fa5f2a7d3bbc4316a0b9d090e5bb4e" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classDdMd_1_1Cell.html">Cell</a> &amp; cell </td>
+          <td class="memname">const <a class="el" href="classDdMd_1_1Cell.html">Cell</a> &amp; DdMd::CellList::cell </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -486,12 +486,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac91579bd63979a294891d330a5533838"></a><!-- doxytag: member="DdMd::CellList::nAtom" ref="ac91579bd63979a294891d330a5533838" args="() const " -->
+<a class="anchor" id="a13b1d437f35cd3206d21c5201431a001"></a><!-- doxytag: member="DdMd::CellList::nAtom" ref="a13b1d437f35cd3206d21c5201431a001" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nAtom </td>
+          <td class="memname">int DdMd::CellList::nAtom </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -506,12 +506,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aef1c19a0c1e5442f7b9ee3bbd39d6413"></a><!-- doxytag: member="DdMd::CellList::nReject" ref="aef1c19a0c1e5442f7b9ee3bbd39d6413" args="() const " -->
+<a class="anchor" id="a718c4aecf005cc6162d9109107a2f2cf"></a><!-- doxytag: member="DdMd::CellList::nReject" ref="a718c4aecf005cc6162d9109107a2f2cf" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nReject </td>
+          <td class="memname">int DdMd::CellList::nReject </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -526,12 +526,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a72fbb50e40dfdc5f3710e54aac41b97e"></a><!-- doxytag: member="DdMd::CellList::atomCapacity" ref="a72fbb50e40dfdc5f3710e54aac41b97e" args="() const " -->
+<a class="anchor" id="af0d5f2d4a532c158b1c864001b3577a9"></a><!-- doxytag: member="DdMd::CellList::atomCapacity" ref="af0d5f2d4a532c158b1c864001b3577a9" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atomCapacity </td>
+          <td class="memname">int DdMd::CellList::atomCapacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -546,12 +546,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae1b737ba0b8a4b2fc8814035d132dc99"></a><!-- doxytag: member="DdMd::CellList::cellCapacity" ref="ae1b737ba0b8a4b2fc8814035d132dc99" args="() const " -->
+<a class="anchor" id="a19f230b8ebbc08967c75f4e412a42506"></a><!-- doxytag: member="DdMd::CellList::cellCapacity" ref="a19f230b8ebbc08967c75f4e412a42506" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int cellCapacity </td>
+          <td class="memname">int DdMd::CellList::cellCapacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -566,12 +566,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0bcdab3616db481dd211594529479f94"></a><!-- doxytag: member="DdMd::CellList::isAllocated" ref="a0bcdab3616db481dd211594529479f94" args="() const " -->
+<a class="anchor" id="a14ab92f284967e1876260b47a2a70c23"></a><!-- doxytag: member="DdMd::CellList::isAllocated" ref="a14ab92f284967e1876260b47a2a70c23" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isAllocated </td>
+          <td class="memname">bool DdMd::CellList::isAllocated </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -586,12 +586,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af10d7be2a4678e55f767b3149a03fd56"></a><!-- doxytag: member="DdMd::CellList::isBuilt" ref="af10d7be2a4678e55f767b3149a03fd56" args="() const " -->
+<a class="anchor" id="a2bcc850a306f1144025bf6896da3480f"></a><!-- doxytag: member="DdMd::CellList::isBuilt" ref="a2bcc850a306f1144025bf6896da3480f" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isBuilt </td>
+          <td class="memname">bool DdMd::CellList::isBuilt </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -601,18 +601,18 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Has this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> been built? </p>
-<p>IsBuilt is set true by the <a class="el" href="classDdMd_1_1CellList.html#a7740c7ab195c03ac140f1f75f633470f" title="Build the cell list.">build()</a> method and false by <a class="el" href="classDdMd_1_1CellList.html#ac8bb3912a3ce86b15842e79d0b421204" title="Reset the cell list to its empty state (no Atoms).">clear()</a>. </p>
+<p>IsBuilt is set true by the <a class="el" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3" title="Build the cell list.">build()</a> method and false by <a class="el" href="classDdMd_1_1CellList.html#aae15fc4934318b9caad30c39d94f969f" title="Reset the cell list to its empty state (no Atoms).">clear()</a>. </p>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00251">251</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><!-- doxytag: member="DdMd::CellList::isValid" ref="aac1b70a2ed67ead038c4d3f5ac4d8a81" args="() const " -->
+<a class="anchor" id="a204507e1337d618d1c7519a8870ae000"></a><!-- doxytag: member="DdMd::CellList::isValid" ref="a204507e1337d618d1c7519a8870ae000" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool DdMd::CellList::isValid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -626,7 +626,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00257">257</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00321">Cell::atomCapacity()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00291">Cell::atomPtr()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00285">Cell::nAtom()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00321">DdMd::Cell::atomCapacity()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00291">DdMd::Cell::atomPtr()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00285">DdMd::Cell::nAtom()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -635,7 +635,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

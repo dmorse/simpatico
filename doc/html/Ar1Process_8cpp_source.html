@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -67,8 +67,8 @@
 <a name="l00016"></a>00016    <span class="comment">/*</span>
 <a name="l00017"></a>00017 <span class="comment">   * Default constructor.</span>
 <a name="l00018"></a>00018 <span class="comment">   */</span>   
-<a name="l00019"></a>00019    <a class="code" href="classUtil_1_1Ar1Process.html#aaad93a0e28564b3818217d48476c37f8" title="Constructor.">Ar1Process::Ar1Process</a>()
-<a name="l00020"></a><a class="code" href="classUtil_1_1Ar1Process.html#aaad93a0e28564b3818217d48476c37f8">00020</a>     : x_(0.0),
+<a name="l00019"></a>00019    <a class="code" href="classUtil_1_1Ar1Process.html#a96df1968a21bd6fafcfcae5100cb5dfc" title="Constructor.">Ar1Process::Ar1Process</a>()
+<a name="l00020"></a><a class="code" href="classUtil_1_1Ar1Process.html#a96df1968a21bd6fafcfcae5100cb5dfc">00020</a>     : x_(0.0),
 <a name="l00021"></a>00021       B_(1.0),
 <a name="l00022"></a>00022       C_(0.0),
 <a name="l00023"></a>00023       randomPtr_(0),
@@ -78,8 +78,8 @@
 <a name="l00027"></a>00027    <span class="comment">/*</span>
 <a name="l00028"></a>00028 <span class="comment">   * Constructor.</span>
 <a name="l00029"></a>00029 <span class="comment">   */</span>   
-<a name="l00030"></a>00030    <a class="code" href="classUtil_1_1Ar1Process.html#aaad93a0e28564b3818217d48476c37f8" title="Constructor.">Ar1Process::Ar1Process</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; random)
-<a name="l00031"></a><a class="code" href="classUtil_1_1Ar1Process.html#a5a76a6b7a84d7c47c3463695391b108d">00031</a>     : x_(0.0),
+<a name="l00030"></a>00030    <a class="code" href="classUtil_1_1Ar1Process.html#a96df1968a21bd6fafcfcae5100cb5dfc" title="Constructor.">Ar1Process::Ar1Process</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; random)
+<a name="l00031"></a><a class="code" href="classUtil_1_1Ar1Process.html#a47aad8b46f43dfe7e76b8d7560e2201f">00031</a>     : x_(0.0),
 <a name="l00032"></a>00032       B_(1.0),
 <a name="l00033"></a>00033       C_(0.0),
 <a name="l00034"></a>00034       randomPtr_(&amp;random),
@@ -89,16 +89,16 @@
 <a name="l00038"></a>00038    <span class="comment">/*</span>
 <a name="l00039"></a>00039 <span class="comment">   * Set pointer to random number generator.</span>
 <a name="l00040"></a>00040 <span class="comment">   */</span>
-<a name="l00041"></a>00041    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Ar1Process.html#a41ddf6103814a290a64a880826d158b2" title="Associate a random number generator.">Ar1Process::setRNG</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; random)
-<a name="l00042"></a><a class="code" href="classUtil_1_1Ar1Process.html#a41ddf6103814a290a64a880826d158b2">00042</a>    { randomPtr_ = &amp;random; }
+<a name="l00041"></a>00041    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Ar1Process.html#a9c60ab97782c9c20e96d8668f2391019" title="Associate a random number generator.">Ar1Process::setRNG</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; random)
+<a name="l00042"></a><a class="code" href="classUtil_1_1Ar1Process.html#a9c60ab97782c9c20e96d8668f2391019">00042</a>    { randomPtr_ = &amp;random; }
 <a name="l00043"></a>00043 
 <a name="l00044"></a>00044    <span class="comment">/*</span>
 <a name="l00045"></a>00045 <span class="comment">   * Initialize process</span>
 <a name="l00046"></a>00046 <span class="comment">   *</span>
 <a name="l00047"></a>00047 <span class="comment">   * \param tau decay time (in discrete steps)</span>
 <a name="l00048"></a>00048 <span class="comment">   */</span>
-<a name="l00049"></a>00049    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Ar1Process.html#a2c801c921909823872028294055614ef" title="Initialize process.">Ar1Process::init</a>(<span class="keywordtype">double</span> tau)
-<a name="l00050"></a><a class="code" href="classUtil_1_1Ar1Process.html#a2c801c921909823872028294055614ef">00050</a>    { 
+<a name="l00049"></a>00049    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Ar1Process.html#a9816d24784201773a2f3cc4d14b45070" title="Initialize process.">Ar1Process::init</a>(<span class="keywordtype">double</span> tau)
+<a name="l00050"></a><a class="code" href="classUtil_1_1Ar1Process.html#a9816d24784201773a2f3cc4d14b45070">00050</a>    { 
 <a name="l00051"></a>00051       <span class="comment">// Precondition</span>
 <a name="l00052"></a>00052       <span class="keywordflow">if</span> (randomPtr_ == 0) {
 <a name="l00053"></a>00053          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Random number generator not yet set&quot;</span>);
@@ -106,7 +106,7 @@
 <a name="l00055"></a>00055 
 <a name="l00056"></a>00056       C_ = exp(-1.0/tau);
 <a name="l00057"></a>00057       B_ = sqrt(1.0 - C_*C_);
-<a name="l00058"></a>00058       x_ = B_*randomPtr_-&gt;<a class="code" href="classUtil_1_1Random.html#a6f9a01f90d51bcd37befa231ee8527cb" title="Return a Gaussian random number with zero average and unit variance.">gaussian</a>();
+<a name="l00058"></a>00058       x_ = B_*randomPtr_-&gt;<a class="code" href="classUtil_1_1Random.html#ae4056fb996c7072ec2a8815d818c7102" title="Return a Gaussian random number with zero average and unit variance.">gaussian</a>();
 <a name="l00059"></a>00059       isInitialized_ = <span class="keyword">true</span>;
 <a name="l00060"></a>00060    }
 <a name="l00061"></a>00061 
@@ -114,7 +114,7 @@
 <a name="l00063"></a>00063 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

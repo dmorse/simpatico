@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: RArray&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::RArray&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>RArray&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Array__Module.html">Object Arrays</a></div></h1>  </div>
+<h1>Util::RArray&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Array__Module.html">Object Arrays</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::RArray" --><!-- doxytag: inherits="Util::Array" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -57,7 +57,7 @@
  class Util::RArray&lt; Data &gt;</h3>
 
 <p>An <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> that acts as a reference to another <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> or C array. </p>
-<p>An <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> is associated with a "target" <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable Array class template.">DArray</a> or C array by the <a class="el" href="classUtil_1_1RArray.html#a6225510426182f2bb452819a57aa54ed" title="Associate this RArray with an existing Array object.">associate()</a> method. The <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> and its target array then wrap the same underlying C array, and so access the same data. The <a class="el" href="classUtil_1_1RArray.html#a6225510426182f2bb452819a57aa54ed" title="Associate this RArray with an existing Array object.">associate()</a> method simply copies the address and capacity of a C array. An <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> can be associated only once, after which it can be safely used as an alias for its target.</p>
+<p>An <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> is associated with a "target" <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable Array class template.">DArray</a> or C array by the <a class="el" href="classUtil_1_1RArray.html#a5ce7d0c2e141487a265591cc8e6d00dc" title="Associate this RArray with an existing Array object.">associate()</a> method. The <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> and its target array then wrap the same underlying C array, and so access the same data. The <a class="el" href="classUtil_1_1RArray.html#a5ce7d0c2e141487a265591cc8e6d00dc" title="Associate this RArray with an existing Array object.">associate()</a> method simply copies the address and capacity of a C array. An <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> can be associated only once, after which it can be safely used as an alias for its target.</p>
 <p>An <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> can only be associated with a <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable Array class template.">DArray</a> after the target <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable Array class template.">DArray</a> has been allocated. Because a <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable Array class template.">DArray</a> can be allocated only once, this association cannot be corrupted by re-allocation or re-sizing of the target <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable Array class template.">DArray</a>.</p>
 <p>An <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> can be created from another <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> only after the target <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> has already been associated with some other <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.</p>
 <p>An <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> differs from a C++ reference to an <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> because a C++ reference must be initialized when it is instantiated, whereas an <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> is associated after it is instantiated. Because association is implemented by copying the address and capacity of a shared C array, access through an <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> should be exactly as efficient as access through a <a class="el" href="classUtil_1_1DArray.html" title="Dynamically allocatable Array class template.">DArray</a>. </p>
@@ -66,12 +66,12 @@
 </div>
 <p><code>#include &lt;<a class="el" href="RArray_8h_source.html">RArray.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for RArray&lt; Data &gt;:</div>
+Inheritance diagram for Util::RArray&lt; Data &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classUtil_1_1RArray.png" usemap="#RArray&lt; Data &gt;_map" alt=""/>
-  <map id="RArray&lt; Data &gt;_map" name="RArray&lt; Data &gt;_map">
-<area href="classUtil_1_1Array.html" alt="Array&lt; Data &gt;" shape="rect" coords="0,0,103,24"/>
+  <img src="classUtil_1_1RArray.png" usemap="#Util::RArray&lt; Data &gt;_map" alt=""/>
+  <map id="Util::RArray&lt; Data &gt;_map" name="Util::RArray&lt; Data &gt;_map">
+<area href="classUtil_1_1Array.html" alt="Util::Array&lt; Data &gt;" shape="rect" coords="0,0,126,24"/>
 </map>
  </div></div>
 
@@ -79,22 +79,24 @@ Inheritance diagram for RArray&lt; Data &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RArray.html#abc0d189b68338c0a7267621ecf053666">RArray</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#abc0d189b68338c0a7267621ecf053666"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RArray.html#a5da08c7c2086b37fa96d8091718b1bed">RArray</a> (const <a class="el" href="classUtil_1_1RArray.html">RArray</a>&lt; Data &gt; &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#a5da08c7c2086b37fa96d8091718b1bed"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RArray.html#a6225510426182f2bb452819a57aa54ed">associate</a> (<a class="el" href="classUtil_1_1Array.html">Array</a>&lt; Data &gt; &amp;array)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate this <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> with an existing <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> object.  <a href="#a6225510426182f2bb452819a57aa54ed"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RArray.html#a181562d1e30782eaa5e062ab24b0e7b7">associate</a> (Data *array, int capacity)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate this <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> with an existing C array.  <a href="#a181562d1e30782eaa5e062ab24b0e7b7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RArray.html#a6d8ee52dffba3b46778aea7ead3e3fc6">RArray</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6d8ee52dffba3b46778aea7ead3e3fc6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RArray.html#a6e504f52bf81c81ea57772777da0a275">RArray</a> (const <a class="el" href="classUtil_1_1RArray.html">RArray</a>&lt; Data &gt; &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#a6e504f52bf81c81ea57772777da0a275"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RArray.html#a5ce7d0c2e141487a265591cc8e6d00dc">associate</a> (<a class="el" href="classUtil_1_1Array.html">Array</a>&lt; Data &gt; &amp;array)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate this <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> with an existing <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> object.  <a href="#a5ce7d0c2e141487a265591cc8e6d00dc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1RArray.html#a5367ce59399bd1c03c09842bd5b047c6">associate</a> (Data *array, int capacity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate this <a class="el" href="classUtil_1_1RArray.html" title="An Array that acts as a reference to another Array or C array.">RArray</a> with an existing C array.  <a href="#a5367ce59399bd1c03c09842bd5b047c6"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="abc0d189b68338c0a7267621ecf053666"></a><!-- doxytag: member="Util::RArray::RArray" ref="abc0d189b68338c0a7267621ecf053666" args="()" -->
+<a class="anchor" id="a6d8ee52dffba3b46778aea7ead3e3fc6"></a><!-- doxytag: member="Util::RArray::RArray" ref="a6d8ee52dffba3b46778aea7ead3e3fc6" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1RArray.html">RArray</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1RArray.html">Util::RArray</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1RArray.html">RArray</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -109,12 +111,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5da08c7c2086b37fa96d8091718b1bed"></a><!-- doxytag: member="Util::RArray::RArray" ref="a5da08c7c2086b37fa96d8091718b1bed" args="(const RArray&lt; Data &gt; &amp;other)" -->
+<a class="anchor" id="a6e504f52bf81c81ea57772777da0a275"></a><!-- doxytag: member="Util::RArray::RArray" ref="a6e504f52bf81c81ea57772777da0a275" args="(const RArray&lt; Data &gt; &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1RArray.html">RArray</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1RArray.html">Util::RArray</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1RArray.html">RArray</a> </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1RArray.html">RArray</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -138,12 +142,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a6225510426182f2bb452819a57aa54ed"></a><!-- doxytag: member="Util::RArray::associate" ref="a6225510426182f2bb452819a57aa54ed" args="(Array&lt; Data &gt; &amp;array)" -->
+<a class="anchor" id="a5ce7d0c2e141487a265591cc8e6d00dc"></a><!-- doxytag: member="Util::RArray::associate" ref="a5ce7d0c2e141487a265591cc8e6d00dc" args="(Array&lt; Data &gt; &amp;array)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void associate </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1RArray.html">Util::RArray</a>&lt; Data &gt;::associate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Array.html">Array</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>array</em></td><td>)</td>
@@ -164,16 +170,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="RArray_8h_source.html#l00083">83</a> of file <a class="el" href="RArray_8h_source.html">RArray.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Atom_8cpp_source.html#l00048">Atom::allocate()</a>.</p>
+<p>Referenced by <a class="el" href="Atom_8cpp_source.html#l00048">McMd::Atom::allocate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a181562d1e30782eaa5e062ab24b0e7b7"></a><!-- doxytag: member="Util::RArray::associate" ref="a181562d1e30782eaa5e062ab24b0e7b7" args="(Data *array, int capacity)" -->
+<a class="anchor" id="a5367ce59399bd1c03c09842bd5b047c6"></a><!-- doxytag: member="Util::RArray::associate" ref="a5367ce59399bd1c03c09842bd5b047c6" args="(Data *array, int capacity)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void associate </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1RArray.html">Util::RArray</a>&lt; Data &gt;::associate </td>
           <td>(</td>
           <td class="paramtype">Data *&#160;</td>
           <td class="paramname"><em>array</em>, </td>
@@ -210,7 +218,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="RArray_8h_source.html">RArray.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

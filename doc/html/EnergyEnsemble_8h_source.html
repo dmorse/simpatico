@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -73,28 +73,28 @@
 <a name="l00029"></a>00029 
 <a name="l00030"></a>00030    <span class="keyword">public</span>:
 <a name="l00031"></a>00031 
-<a name="l00035"></a><a class="code" href="classUtil_1_1EnergyEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7">00035</a>       <span class="keyword">enum</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7" title="Enumeration of the allowed types of EnergyEnsemble.">Type</a>{UNKNOWN, ADIABATIC, ISOTHERMAL};
+<a name="l00035"></a><a class="code" href="classUtil_1_1EnergyEnsemble.html#a7685d5a360ecfeda650262a9b7c56640">00035</a>       <span class="keyword">enum</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a7685d5a360ecfeda650262a9b7c56640" title="Enumeration of the allowed types of EnergyEnsemble.">Type</a>{UNKNOWN, ADIABATIC, ISOTHERMAL};
 <a name="l00036"></a>00036 
-<a name="l00040"></a>00040       <a class="code" href="classUtil_1_1EnergyEnsemble.html#ad118e51b6055176e30beea4c060dd2a7" title="Constructor.">EnergyEnsemble</a>(<a class="code" href="classUtil_1_1EnergyEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7" title="Enumeration of the allowed types of EnergyEnsemble.">Type</a> type = UNKNOWN);
+<a name="l00040"></a>00040       <a class="code" href="classUtil_1_1EnergyEnsemble.html#abfbdfeb747bea0a04822ae03e564a622" title="Constructor.">EnergyEnsemble</a>(<a class="code" href="classUtil_1_1EnergyEnsemble.html#a7685d5a360ecfeda650262a9b7c56640" title="Enumeration of the allowed types of EnergyEnsemble.">Type</a> type = UNKNOWN);
 <a name="l00041"></a>00041 
-<a name="l00045"></a>00045       <span class="keywordtype">void</span>  <a class="code" href="classUtil_1_1EnergyEnsemble.html#abf63d4183cb51c5eb951390f66851976" title="Set the temperature.">setTemperature</a>(<span class="keywordtype">double</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#ae313309743d7c8adc1bbb28b5a48d841" title="Return the temperature.">temperature</a>);
+<a name="l00045"></a>00045       <span class="keywordtype">void</span>  <a class="code" href="classUtil_1_1EnergyEnsemble.html#a6e375d1e95646491c743a375aca826af" title="Set the temperature.">setTemperature</a>(<span class="keywordtype">double</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a783172a4702ba22a168f11c932ab883a" title="Return the temperature.">temperature</a>);
 <a name="l00046"></a>00046 
-<a name="l00053"></a>00053       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#ab5421d3c9175985c9acbf723e5392075" title="Read the type and (if necessary) temperature from file.">readParam</a>(std::istream&amp; in);
+<a name="l00053"></a>00053       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a53020845653d7afed3f1f6918a938797" title="Read the type and (if necessary) temperature from file.">readParam</a>(std::istream&amp; in);
 <a name="l00054"></a>00054 
 <a name="l00056"></a>00056 
 <a name="l00057"></a>00057       
-<a name="l00061"></a>00061       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#aeab3840cea6d5af32816d64fc58d43c4" title="Is this an Adiabatic ensemble?">isAdiabatic</a>() <span class="keyword">const</span>;
+<a name="l00061"></a>00061       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a248cd489d7c79966cb1a42cb6fb7e50f" title="Is this an Adiabatic ensemble?">isAdiabatic</a>() <span class="keyword">const</span>;
 <a name="l00062"></a>00062 
-<a name="l00066"></a>00066       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a7b8e0086327154ca5eed397ff37e173a" title="Is this an Isothermal ensemble?">isIsothermal</a>() <span class="keyword">const</span>;
+<a name="l00066"></a>00066       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a68ec93bf7c0a3074ac8e98d06ee2cb21" title="Is this an Isothermal ensemble?">isIsothermal</a>() <span class="keyword">const</span>;
 <a name="l00067"></a>00067 
-<a name="l00071"></a>00071       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#ae313309743d7c8adc1bbb28b5a48d841" title="Return the temperature.">temperature</a>() <span class="keyword">const</span>;
+<a name="l00071"></a>00071       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a783172a4702ba22a168f11c932ab883a" title="Return the temperature.">temperature</a>() <span class="keyword">const</span>;
 <a name="l00072"></a>00072 
-<a name="l00076"></a>00076       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#af344c493854c019c23a29e30d4dc3b4f" title="Return the inverse temperature.">beta</a>() <span class="keyword">const</span>;
+<a name="l00076"></a>00076       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a41d84a2074977f8f34a08e1c5fcf0d64" title="Return the inverse temperature.">beta</a>() <span class="keyword">const</span>;
 <a name="l00077"></a>00077 
 <a name="l00079"></a>00079       
 <a name="l00080"></a>00080 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00081"></a>00081 <span class="preprocessor"></span>
-<a name="l00084"></a>00084       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a8170d98ea8b055e49ef256d15cfbc5af" title="Commit associated MPI DataType.">commitMpiType</a>();
+<a name="l00084"></a>00084       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a568d1926cbac3eee15a55462cae3ce2f" title="Commit associated MPI DataType.">commitMpiType</a>();
 <a name="l00085"></a>00085 <span class="preprocessor">      #endif</span>
 <a name="l00086"></a>00086 <span class="preprocessor"></span>
 <a name="l00087"></a>00087    <span class="keyword">private</span>:
@@ -103,28 +103,28 @@
 <a name="l00091"></a>00091 
 <a name="l00093"></a>00093       <span class="keywordtype">double</span> beta_;
 <a name="l00094"></a>00094 
-<a name="l00096"></a>00096       <a class="code" href="classUtil_1_1EnergyEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7" title="Enumeration of the allowed types of EnergyEnsemble.">Type</a>   type_;
+<a name="l00096"></a>00096       <a class="code" href="classUtil_1_1EnergyEnsemble.html#a7685d5a360ecfeda650262a9b7c56640" title="Enumeration of the allowed types of EnergyEnsemble.">Type</a>   type_;
 <a name="l00097"></a>00097 
 <a name="l00098"></a>00098    };
 <a name="l00099"></a>00099 
-<a name="l00107"></a>00107    std::istream&amp; <a class="code" href="namespaceUtil.html#a993c7220c84aadae4eb1085cef083e74" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1EnergyEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7" title="Enumeration of the allowed types of EnergyEnsemble.">EnergyEnsemble::Type</a> &amp;type);
+<a name="l00107"></a>00107    std::istream&amp; <a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1EnergyEnsemble.html#a7685d5a360ecfeda650262a9b7c56640" title="Enumeration of the allowed types of EnergyEnsemble.">EnergyEnsemble::Type</a> &amp;type);
 <a name="l00108"></a>00108 
-<a name="l00116"></a>00116    std::ostream&amp; <a class="code" href="namespaceUtil.html#a7a94bc3185d3be0028eacd3076edb6d3" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a1d1cfd8ffb84e947f82999c682b666a7" title="Enumeration of the allowed types of EnergyEnsemble.">EnergyEnsemble::Type</a> &amp;type);
+<a name="l00116"></a>00116    std::ostream&amp; <a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a7685d5a360ecfeda650262a9b7c56640" title="Enumeration of the allowed types of EnergyEnsemble.">EnergyEnsemble::Type</a> &amp;type);
 <a name="l00117"></a>00117 
 <a name="l00118"></a>00118    <span class="comment">// Inline methods</span>
 <a name="l00119"></a>00119  
-<a name="l00123"></a><a class="code" href="classUtil_1_1EnergyEnsemble.html#ae313309743d7c8adc1bbb28b5a48d841">00123</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#ae313309743d7c8adc1bbb28b5a48d841" title="Return the temperature.">EnergyEnsemble::temperature</a>()<span class="keyword"> const</span>
+<a name="l00123"></a><a class="code" href="classUtil_1_1EnergyEnsemble.html#a783172a4702ba22a168f11c932ab883a">00123</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a783172a4702ba22a168f11c932ab883a" title="Return the temperature.">EnergyEnsemble::temperature</a>()<span class="keyword"> const</span>
 <a name="l00124"></a>00124 <span class="keyword">   </span>{  <span class="keywordflow">return</span> temperature_; }
 <a name="l00125"></a>00125 
-<a name="l00129"></a><a class="code" href="classUtil_1_1EnergyEnsemble.html#af344c493854c019c23a29e30d4dc3b4f">00129</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#af344c493854c019c23a29e30d4dc3b4f" title="Return the inverse temperature.">EnergyEnsemble::beta</a>()<span class="keyword"> const</span>
+<a name="l00129"></a><a class="code" href="classUtil_1_1EnergyEnsemble.html#a41d84a2074977f8f34a08e1c5fcf0d64">00129</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a41d84a2074977f8f34a08e1c5fcf0d64" title="Return the inverse temperature.">EnergyEnsemble::beta</a>()<span class="keyword"> const</span>
 <a name="l00130"></a>00130 <span class="keyword">   </span>{  <span class="keywordflow">return</span> beta_; }
 <a name="l00131"></a>00131 
 <a name="l00132"></a>00132    <span class="comment">// Return true if this is an Adiabatic ensemble.</span>
-<a name="l00133"></a><a class="code" href="classUtil_1_1EnergyEnsemble.html#aeab3840cea6d5af32816d64fc58d43c4">00133</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#aeab3840cea6d5af32816d64fc58d43c4" title="Is this an Adiabatic ensemble?">EnergyEnsemble::isAdiabatic</a>()<span class="keyword"> const</span>
+<a name="l00133"></a><a class="code" href="classUtil_1_1EnergyEnsemble.html#a248cd489d7c79966cb1a42cb6fb7e50f">00133</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a248cd489d7c79966cb1a42cb6fb7e50f" title="Is this an Adiabatic ensemble?">EnergyEnsemble::isAdiabatic</a>()<span class="keyword"> const</span>
 <a name="l00134"></a>00134 <span class="keyword">   </span>{ <span class="keywordflow">return</span> (type_ == ADIABATIC); }
 <a name="l00135"></a>00135  
 <a name="l00136"></a>00136    <span class="comment">// Return true if this is an IsothermalEnsemble.</span>
-<a name="l00137"></a><a class="code" href="classUtil_1_1EnergyEnsemble.html#a7b8e0086327154ca5eed397ff37e173a">00137</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a7b8e0086327154ca5eed397ff37e173a" title="Is this an Isothermal ensemble?">EnergyEnsemble::isIsothermal</a>()<span class="keyword"> const</span>
+<a name="l00137"></a><a class="code" href="classUtil_1_1EnergyEnsemble.html#a68ec93bf7c0a3074ac8e98d06ee2cb21">00137</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html#a68ec93bf7c0a3074ac8e98d06ee2cb21" title="Is this an Isothermal ensemble?">EnergyEnsemble::isIsothermal</a>()<span class="keyword"> const</span>
 <a name="l00138"></a>00138 <span class="keyword">   </span>{ <span class="keywordflow">return</span> (type_ == ISOTHERMAL); }
 <a name="l00139"></a>00139 
 <a name="l00140"></a>00140 
@@ -134,16 +134,16 @@
 <a name="l00146"></a><a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_01_4.html">00146</a>    <span class="keyword">class </span><a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt;<a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>&gt;
 <a name="l00147"></a>00147    {  
 <a name="l00148"></a>00148    <span class="keyword">public</span>:  
-<a name="l00149"></a><a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_01_4.html#a94a4825c5b6a741265d65e260050cfce">00149</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_01_4.html#a94a4825c5b6a741265d65e260050cfce" title="MPI Datatype.">type</a>;       
-<a name="l00150"></a><a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a">00150</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a" title="Is the MPI type initialized?">hasType</a>;             
+<a name="l00149"></a><a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_01_4.html#aaa350797a18cf683630a2f65df034c29">00149</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_01_4.html#aaa350797a18cf683630a2f65df034c29" title="MPI Datatype.">type</a>;       
+<a name="l00150"></a><a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_01_4.html#a7be9c1cef64d1f681ee20ac87a3987b6">00150</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_01_4.html#a7be9c1cef64d1f681ee20ac87a3987b6" title="Is the MPI type initialized?">hasType</a>;             
 <a name="l00151"></a>00151    };
 <a name="l00152"></a>00152 
 <a name="l00156"></a>00156    <span class="keyword">template</span> &lt;&gt;
 <a name="l00157"></a><a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_1_1Type_01_4.html">00157</a>    <span class="keyword">class </span><a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits</a>&lt;<a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>::Type&gt;
 <a name="l00158"></a>00158    {  
 <a name="l00159"></a>00159    <span class="keyword">public</span>:  
-<a name="l00160"></a><a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_1_1Type_01_4.html#a94a4825c5b6a741265d65e260050cfce">00160</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_1_1Type_01_4.html#a94a4825c5b6a741265d65e260050cfce" title="MPI Datatype.">type</a>;       
-<a name="l00161"></a><a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_1_1Type_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a">00161</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_1_1Type_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a" title="Is the MPI type initialized?">hasType</a>;             
+<a name="l00160"></a><a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_1_1Type_01_4.html#aa5b839c669a668c8787cae7cda640c0d">00160</a>       <span class="keyword">static</span> MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_1_1Type_01_4.html#aa5b839c669a668c8787cae7cda640c0d" title="MPI Datatype.">type</a>;       
+<a name="l00161"></a><a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_1_1Type_01_4.html#ae855cf1ff6b05723966c8f216261706c">00161</a>       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01EnergyEnsemble_1_1Type_01_4.html#ae855cf1ff6b05723966c8f216261706c" title="Is the MPI type initialized?">hasType</a>;             
 <a name="l00162"></a>00162    };
 <a name="l00163"></a>00163 <span class="preprocessor">   #endif</span>
 <a name="l00164"></a>00164 <span class="preprocessor"></span>
@@ -151,7 +151,7 @@
 <a name="l00166"></a>00166 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Atom Class Reference</title>
+<title>Simpatico: McMd::Atom Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -47,7 +47,7 @@
 </div>
 <div class="header">
   <div class="headertitle">
-<h1>Atom Class Reference<div class="ingroups"><a class="el" href="group__McMd__Chemistry__Module.html">Chemical Structure</a></div></h1>  </div>
+<h1>McMd::Atom Class Reference<div class="ingroups"><a class="el" href="group__McMd__Chemistry__Module.html">Chemical Structure</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::Atom" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -55,16 +55,16 @@
 <p>Each <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> has a position Vector, an integer atom type Id, and a global integer id that is unique in the <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>. Each <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> has a force and velocity, for use in Md simulations. Each atom has a pointer to its parent <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>, and has an associated <a class="el" href="classMcMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &quot;masked&quot;.">Mask</a> object. A <a class="el" href="classMcMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &quot;masked&quot;.">Mask</a> contains a list of other atoms for which pair interactions with this <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> are suppressed.</p>
 <h2><a class="anchor" id="Allocate"></a>
 Allocation and Deallocation</h2>
-<p><a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects can only be created by the static <a class="el" href="classMcMd_1_1Atom.html#a756c62af477064d88c170751f9bea836" title="Allocate a static array of Atom objects.">Atom::allocate()</a> method. This method allocates a static member array containing all of the <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects available in a program. The global index that is returned by the <a class="el" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id()</a> method is the index of an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> within this array. This array of all Atoms must be allocated and deallocated using the following pattern: </p>
+<p><a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects can only be created by the static <a class="el" href="classMcMd_1_1Atom.html#a2d2175ba5b0934a509650253a8254dab" title="Allocate a static array of Atom objects.">Atom::allocate()</a> method. This method allocates a static member array containing all of the <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects available in a program. The global index that is returned by the <a class="el" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id()</a> method is the index of an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> within this array. This array of all Atoms must be allocated and deallocated using the following pattern: </p>
 <div class="fragment"><pre class="fragment"> RArray&lt;Atom&gt; atoms;          
  <span class="keywordtype">int</span>          atomCapacity;   <span class="comment">// number of Atoms to be allocated</span>
 
- <a class="code" href="classMcMd_1_1Atom.html#a756c62af477064d88c170751f9bea836" title="Allocate a static array of Atom objects.">Atom::allocate</a>(atomCapacity, atoms)
+ <a class="code" href="classMcMd_1_1Atom.html#a2d2175ba5b0934a509650253a8254dab" title="Allocate a static array of Atom objects.">Atom::allocate</a>(atomCapacity, atoms)
 
  <span class="comment">// ... code that uses elements of the RArray atoms ...</span>
 
- Atom::<a class="code" href="classMcMd_1_1Atom.html#a2d68be4fd20ffdd7f7a9b51579eacc2f" title="Delete all static arrays.">deallocate</a>();
-</pre></div><p> Access to the array of <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects is provided by an <a class="el" href="classUtil_1_1RArray.html">RArray&lt;Atom&gt;</a> array container (called "atoms" in the above example) that is passed to <a class="el" href="classMcMd_1_1Atom.html#a756c62af477064d88c170751f9bea836" title="Allocate a static array of Atom objects.">Atom::allocate</a> by reference as its second parameter. After <a class="el" href="classMcMd_1_1Atom.html#a756c62af477064d88c170751f9bea836" title="Allocate a static array of Atom objects.">Atom::allocate()</a> returns, this container holds the address and capacity of the underlying C array, and may thereafter be used to access individual atoms.</p>
+ Atom::<a class="code" href="classMcMd_1_1Atom.html#a3cd7efed48bafe66f5669ac55b5069f5" title="Delete all static arrays.">deallocate</a>();
+</pre></div><p> Access to the array of <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects is provided by an <a class="el" href="classUtil_1_1RArray.html">RArray&lt;Atom&gt;</a> array container (called "atoms" in the above example) that is passed to <a class="el" href="classMcMd_1_1Atom.html#a2d2175ba5b0934a509650253a8254dab" title="Allocate a static array of Atom objects.">Atom::allocate</a> by reference as its second parameter. After <a class="el" href="classMcMd_1_1Atom.html#a2d2175ba5b0934a509650253a8254dab" title="Allocate a static array of Atom objects.">Atom::allocate()</a> returns, this container holds the address and capacity of the underlying C array, and may thereafter be used to access individual atoms.</p>
 <p>This interface is designed to allow an implementation of the <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> class in which some logical attributes of an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> are not actually members of the object, but are instead stored in separate private arrays. These additional arrays are private static members of the <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> class that can be directly accessed by the accessor and setter functions for the associated attributes. This allows a public interface identical to what one would expect if these quantities were stored as normal non-static class members. The only unusual feature of the interface is the absence of a public constructor: In order to make it impossible to construct individual <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects, the default constructor and the copy constructor are declared private. </p>
 
 <p>Definition at line <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00078">78</a> of file <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html">mcMd/chemistry/Atom.h</a>.</p>
@@ -76,54 +76,54 @@ Allocation and Deallocation</h2>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Mutators</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#ab791642f7bf0efcb7a74358c78cd194e">setMolecule</a> (<a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &amp;molecule)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the molecule.  <a href="#ab791642f7bf0efcb7a74358c78cd194e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a4eda9bc9ef7228643fd3311552601523">setTypeId</a> (int Id)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the atomic type index.  <a href="#a4eda9bc9ef7228643fd3311552601523"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a46c89a6db1c10304d1d0cdf5c7e28cf9">setMolecule</a> (<a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &amp;molecule)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the molecule.  <a href="#a46c89a6db1c10304d1d0cdf5c7e28cf9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a9d8d02e9178f6387ef3afff10990c05a">setTypeId</a> (int Id)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the atomic type index.  <a href="#a9d8d02e9178f6387ef3afff10990c05a"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63">id</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get global index for this <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> within the <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>.  <a href="#ae0c063cfb2479f614be43b9d2f92ba63"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a43ee7a458e69d065f6c9fd6e7e5c5e09">indexInMolecule</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get local index for this <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> within the parent molecule;.  <a href="#a43ee7a458e69d065f6c9fd6e7e5c5e09"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9">typeId</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get type index for this <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#af68aca851173d8f261a70897bff349c9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#ae73230f53be08f7eb347b5201d903bb4">molecule</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parent <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> by reference.  <a href="#ae73230f53be08f7eb347b5201d903bb4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523">position</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the position Vector by const reference.  <a href="#ab9185395797b37f678e8a48e4361d523"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d">position</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get position Vector by reference.  <a href="#ae385bb070452150eec2eb79431bc281d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Mask.html">Mask</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a">mask</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classMcMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &quot;masked&quot;.">Mask</a> by reference.  <a href="#a0ea3a94405b029e702eebd119f4fb03a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classMcMd_1_1Mask.html">Mask</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a70b1f3f124853db67bb7c7013b160e7c">mask</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classMcMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &quot;masked&quot;.">Mask</a> by const reference.  <a href="#a70b1f3f124853db67bb7c7013b160e7c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a0a918625496f209cee72908ba31867a2">velocity</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get atomic velocity Vector by reference.  <a href="#a0a918625496f209cee72908ba31867a2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a0fa47a53a63bd26c1e5714c66ff11f5a">velocity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the atomic velocity Vector by const reference.  <a href="#a0fa47a53a63bd26c1e5714c66ff11f5a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088">force</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get atomic force Vector by reference.  <a href="#abf167a7208cca549b00a3048b0742088"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a9420be3b47ba1ca6bcd8b5ef5cff24a3">force</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get atomic force Vector by const reference.  <a href="#a9420be3b47ba1ca6bcd8b5ef5cff24a3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125">id</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get global index for this <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> within the <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>.  <a href="#a71c29d3d43fb70bce630cc3203b2c125"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#ad051dc3ce9d5a8535f03936e021a8e9c">indexInMolecule</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get local index for this <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> within the parent molecule;.  <a href="#ad051dc3ce9d5a8535f03936e021a8e9c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded">typeId</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get type index for this <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#a87942730c255558af2b27d438fa1bded"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304">molecule</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the parent <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> by reference.  <a href="#a6c1e500fe698dc9ede1e58c261005304"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd">position</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the position Vector by const reference.  <a href="#abf58b0a56a92b8b6de70326dbbbffcfd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a9a74f4c101d35426b12455bd31a98481">position</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get position Vector by reference.  <a href="#a9a74f4c101d35426b12455bd31a98481"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Mask.html">Mask</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#af02003b1de6abffcf7ae7cd2187ff22c">mask</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classMcMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &quot;masked&quot;.">Mask</a> by reference.  <a href="#af02003b1de6abffcf7ae7cd2187ff22c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classMcMd_1_1Mask.html">Mask</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a3adb0c8bb6326ce024b95d01f16bab25">mask</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated <a class="el" href="classMcMd_1_1Mask.html" title="Set of Atoms for which pair interactions with a target Atom are &quot;masked&quot;.">Mask</a> by const reference.  <a href="#a3adb0c8bb6326ce024b95d01f16bab25"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a780e54fe8955e96c6a6de8d9933a7f92">velocity</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get atomic velocity Vector by reference.  <a href="#a780e54fe8955e96c6a6de8d9933a7f92"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a27b9f26574bc30d136eb32eb11ce7eb9">velocity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the atomic velocity Vector by const reference.  <a href="#a27b9f26574bc30d136eb32eb11ce7eb9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e">force</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get atomic force Vector by reference.  <a href="#a4d50648b4715d5d96b0c59f4ce37b80e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a13b8fad992f4f48d9b9f10ffe34d9160">force</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get atomic force Vector by const reference.  <a href="#a13b8fad992f4f48d9b9f10ffe34d9160"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Allocation and de-allocation</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a608e10d093425c9228f10ed3c4994598">initStatic</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to guarantee initialization of static data.  <a href="#a608e10d093425c9228f10ed3c4994598"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a756c62af477064d88c170751f9bea836">allocate</a> (int capacity, <a class="el" href="classUtil_1_1RArray.html">RArray</a>&lt; <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &gt; &amp;atoms)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a static array of <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects.  <a href="#a756c62af477064d88c170751f9bea836"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a2d68be4fd20ffdd7f7a9b51579eacc2f">deallocate</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all static arrays.  <a href="#a2d68be4fd20ffdd7f7a9b51579eacc2f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a66ab050973deeb9e36ad491bac4758ab">capacity</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total number of atoms (capacity of the static atom array.)  <a href="#a66ab050973deeb9e36ad491bac4758ab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a113013bd1a361f57657688b4602cb813">initStatic</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to guarantee initialization of static data.  <a href="#a113013bd1a361f57657688b4602cb813"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a2d2175ba5b0934a509650253a8254dab">allocate</a> (int capacity, <a class="el" href="classUtil_1_1RArray.html">RArray</a>&lt; <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &gt; &amp;atoms)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a static array of <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects.  <a href="#a2d2175ba5b0934a509650253a8254dab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a3cd7efed48bafe66f5669ac55b5069f5">deallocate</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all static arrays.  <a href="#a3cd7efed48bafe66f5669ac55b5069f5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Atom.html#a4c6fa4494c88db56ad5e149f11a75e50">capacity</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total number of atoms (capacity of the static atom array.)  <a href="#a4c6fa4494c88db56ad5e149f11a75e50"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab791642f7bf0efcb7a74358c78cd194e"></a><!-- doxytag: member="McMd::Atom::setMolecule" ref="ab791642f7bf0efcb7a74358c78cd194e" args="(Molecule &amp;molecule)" -->
+<a class="anchor" id="a46c89a6db1c10304d1d0cdf5c7e28cf9"></a><!-- doxytag: member="McMd::Atom::setMolecule" ref="a46c89a6db1c10304d1d0cdf5c7e28cf9" args="(Molecule &amp;molecule)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setMolecule </td>
+          <td class="memname">void McMd::Atom::setMolecule </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &amp;&#160;</td>
           <td class="paramname"><em>molecule</em></td><td>)</td>
@@ -143,16 +143,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Atom_8cpp_source.html#l00127">127</a> of file <a class="el" href="Atom_8cpp_source.html">Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00299">Atom::molecule()</a>.</p>
+<p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00299">molecule()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4eda9bc9ef7228643fd3311552601523"></a><!-- doxytag: member="McMd::Atom::setTypeId" ref="a4eda9bc9ef7228643fd3311552601523" args="(int Id)" -->
+<a class="anchor" id="a9d8d02e9178f6387ef3afff10990c05a"></a><!-- doxytag: member="McMd::Atom::setTypeId" ref="a9d8d02e9178f6387ef3afff10990c05a" args="(int Id)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setTypeId </td>
+          <td class="memname">void McMd::Atom::setTypeId </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>Id</em></td><td>)</td>
@@ -172,16 +172,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00255">255</a> of file <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html">mcMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="EndSwapMove_8cpp_source.html#l00070">EndSwapMove::move()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00122">CfbReptationMove::move()</a>, and <a class="el" href="CfbHomoReptationMove_8cpp_source.html#l00067">CfbHomoReptationMove::move()</a>.</p>
+<p>Referenced by <a class="el" href="EndSwapMove_8cpp_source.html#l00070">McMd::EndSwapMove::move()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00122">McMd::CfbReptationMove::move()</a>, and <a class="el" href="CfbHomoReptationMove_8cpp_source.html#l00067">McMd::CfbHomoReptationMove::move()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae0c063cfb2479f614be43b9d2f92ba63"></a><!-- doxytag: member="McMd::Atom::id" ref="ae0c063cfb2479f614be43b9d2f92ba63" args="() const " -->
+<a class="anchor" id="a71c29d3d43fb70bce630cc3203b2c125"></a><!-- doxytag: member="McMd::Atom::id" ref="a71c29d3d43fb70bce630cc3203b2c125" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int id </td>
+          <td class="memname">int McMd::Atom::id </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -194,16 +194,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">259</a> of file <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html">mcMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00352">CellList::addAtom()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00046">LinkMaster::addLink()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00043">TetherMaster::addTether()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00252">McPairPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="LinkMaster_8h_source.html#l00226">LinkMaster::atomLinkSet()</a>, <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00130">PairList::build()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00341">CellList::deleteAtom()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00172">McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00335">McPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="TetherMaster_8h_source.html#l00232">TetherMaster::isTethered()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00302">TetherMaster::isValid()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00252">LinkMaster::isValid()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00033">PairSelector::match()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00289">McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00136">TetherMaster::pairTethers()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00084">LinkMaster::removeLink()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00195">TetherMaster::removeTether()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00167">LinkMaster::reSetAtom()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00122">LinkMaster::reSetAtoms()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McPairEnergyAverage::sample()</a>, <a class="el" href="TetherMaster_8h_source.html#l00238">TetherMaster::tether()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00072">TetherMaster::transferTether()</a>, and <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00364">CellList::updateAtomCell()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00352">McMd::CellList::addAtom()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00046">McMd::LinkMaster::addLink()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00043">McMd::TetherMaster::addTether()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00252">McMd::McPairPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="LinkMaster_8h_source.html#l00226">McMd::LinkMaster::atomLinkSet()</a>, <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00130">McMd::PairList::build()</a>, <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00341">McMd::CellList::deleteAtom()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00172">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00335">McMd::McPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="TetherMaster_8h_source.html#l00232">McMd::TetherMaster::isTethered()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00302">McMd::TetherMaster::isValid()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00252">McMd::LinkMaster::isValid()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00033">McMd::PairSelector::match()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00289">McMd::McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00136">McMd::TetherMaster::pairTethers()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00084">McMd::LinkMaster::removeLink()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00195">McMd::TetherMaster::removeTether()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00167">McMd::LinkMaster::reSetAtom()</a>, <a class="el" href="LinkMaster_8cpp_source.html#l00122">McMd::LinkMaster::reSetAtoms()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McMd::McPairEnergyAverage::sample()</a>, <a class="el" href="TetherMaster_8h_source.html#l00238">McMd::TetherMaster::tether()</a>, <a class="el" href="TetherMaster_8cpp_source.html#l00072">McMd::TetherMaster::transferTether()</a>, and <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00364">McMd::CellList::updateAtomCell()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a43ee7a458e69d065f6c9fd6e7e5c5e09"></a><!-- doxytag: member="McMd::Atom::indexInMolecule" ref="a43ee7a458e69d065f6c9fd6e7e5c5e09" args="() const " -->
+<a class="anchor" id="ad051dc3ce9d5a8535f03936e021a8e9c"></a><!-- doxytag: member="McMd::Atom::indexInMolecule" ref="ad051dc3ce9d5a8535f03936e021a8e9c" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int indexInMolecule </td>
+          <td class="memname">int McMd::Atom::indexInMolecule </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -216,16 +216,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Molecule_8h_source.html#l00731">731</a> of file <a class="el" href="Molecule_8h_source.html">Molecule.h</a>.</p>
 
-<p>Referenced by <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00162">RingOctaRebridgeMove::scanBridge()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00162">McMd::RingOctaRebridgeMove::scanBridge()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMd::McMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af68aca851173d8f261a70897bff349c9"></a><!-- doxytag: member="McMd::Atom::typeId" ref="af68aca851173d8f261a70897bff349c9" args="() const " -->
+<a class="anchor" id="a87942730c255558af2b27d438fa1bded"></a><!-- doxytag: member="McMd::Atom::typeId" ref="a87942730c255558af2b27d438fa1bded" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int typeId </td>
+          <td class="memname">int McMd::Atom::typeId </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -238,16 +238,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00263">263</a> of file <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html">mcMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdPairPotentialImpl_8h_source.html#l00314">MdPairPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00252">McPairPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00263">ExternalPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00172">McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="MdPairPotentialImpl_8h_source.html#l00285">MdPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00335">McPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="Linear_8cpp_source.html#l00187">Linear::generateMolecules()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">Simulation::isValid()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00033">PairSelector::match()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00289">McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00070">EndSwapMove::move()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00122">CfbReptationMove::move()</a>, <a class="el" href="CfbHomoReptationMove_8cpp_source.html#l00067">CfbHomoReptationMove::move()</a>, <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00186">GroupRebridgeBase::octaEnergy()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">MdPairEnergyCoefficients::sample()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McPairEnergyAverage::sample()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00109">BlockRadiusGyration::sample()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">NveVvIntegrator::step()</a>, <a class="el" href="NphIntegrator_8cpp_source.html#l00074">NphIntegrator::step()</a>, and <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00049">GroupRebridgeBase::tetraEnergy()</a>.</p>
+<p>Referenced by <a class="el" href="MdPairPotentialImpl_8h_source.html#l00314">McMd::MdPairPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00252">McMd::McPairPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00263">McMd::ExternalPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00172">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="MdPairPotentialImpl_8h_source.html#l00285">McMd::MdPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00335">McMd::McPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="Linear_8cpp_source.html#l00187">McMd::Linear::generateMolecules()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">McMd::Simulation::isValid()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00033">McMd::PairSelector::match()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00289">McMd::McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00070">McMd::EndSwapMove::move()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00122">McMd::CfbReptationMove::move()</a>, <a class="el" href="CfbHomoReptationMove_8cpp_source.html#l00067">McMd::CfbHomoReptationMove::move()</a>, <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00186">McMd::GroupRebridgeBase::octaEnergy()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">McMd::MdPairEnergyCoefficients::sample()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McMd::McPairEnergyAverage::sample()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00109">McMd::BlockRadiusGyration::sample()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">McMd::NveVvIntegrator::step()</a>, <a class="el" href="NphIntegrator_8cpp_source.html#l00074">McMd::NphIntegrator::step()</a>, and <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00049">McMd::GroupRebridgeBase::tetraEnergy()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae73230f53be08f7eb347b5201d903bb4"></a><!-- doxytag: member="McMd::Atom::molecule" ref="ae73230f53be08f7eb347b5201d903bb4" args="() const " -->
+<a class="anchor" id="a6c1e500fe698dc9ede1e58c261005304"></a><!-- doxytag: member="McMd::Atom::molecule" ref="a6c1e500fe698dc9ede1e58c261005304" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &amp; molecule </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &amp; McMd::Atom::molecule </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -260,16 +260,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00299">299</a> of file <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html">mcMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="CfbEndBase_8cpp_source.html#l00185">CfbEndBase::addEndAtom()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00279">DihedralPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00271">BondPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00270">AnglePotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00058">CfbEndBase::deleteEndAtom()</a>, <a class="el" href="Species_8cpp_source.html#l00153">Species::getAtomBonds()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">Simulation::isValid()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00033">PairSelector::match()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00289">McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">MdPairEnergyCoefficients::sample()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00162">RingOctaRebridgeMove::scanBridge()</a>, <a class="el" href="Atom_8cpp_source.html#l00127">Atom::setMolecule()</a>, <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00049">GroupRebridgeBase::tetraEnergy()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="CfbEndBase_8cpp_source.html#l00185">McMd::CfbEndBase::addEndAtom()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00279">McMd::DihedralPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00271">McMd::BondPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00270">McMd::AnglePotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00058">McMd::CfbEndBase::deleteEndAtom()</a>, <a class="el" href="Species_8cpp_source.html#l00153">McMd::Species::getAtomBonds()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">McMd::Simulation::isValid()</a>, <a class="el" href="PairSelector_8cpp_source.html#l00033">McMd::PairSelector::match()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00289">McMd::McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">McMd::MdPairEnergyCoefficients::sample()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00162">McMd::RingOctaRebridgeMove::scanBridge()</a>, <a class="el" href="Atom_8cpp_source.html#l00127">setMolecule()</a>, <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00049">McMd::GroupRebridgeBase::tetraEnergy()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMd::McMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab9185395797b37f678e8a48e4361d523"></a><!-- doxytag: member="McMd::Atom::position" ref="ab9185395797b37f678e8a48e4361d523" args="() const " -->
+<a class="anchor" id="abf58b0a56a92b8b6de70326dbbbffcfd"></a><!-- doxytag: member="McMd::Atom::position" ref="abf58b0a56a92b8b6de70326dbbbffcfd" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; position </td>
+          <td class="memname">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; McMd::Atom::position </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -282,16 +282,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00267">267</a> of file <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html">mcMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00352">CellList::addAtom()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00185">CfbEndBase::addEndAtom()</a>, <a class="el" href="MdPairPotentialImpl_8h_source.html#l00314">MdPairPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00326">LinkPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00343">DihedralPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00323">BondPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00329">AnglePotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="CfbRebridgeBase_8cpp_source.html#l00240">CfbRebridgeBase::addMiddleAtom()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00252">McPairPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00281">LinkPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00263">ExternalPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00279">DihedralPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00271">BondPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00270">AnglePotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00130">PairList::build()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00058">CfbEndBase::deleteEndAtom()</a>, <a class="el" href="CfbRebridgeBase_8cpp_source.html#l00122">CfbRebridgeBase::deleteMiddleAtom()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00172">McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="MdPairPotentialImpl_8h_source.html#l00285">MdPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00335">McPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00306">LinkPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="Linear_8cpp_source.html#l00187">Linear::generateMolecules()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00289">McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00073">RingTetraRebridgeMove::move()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00066">RingOctaRebridgeMove::move()</a>, <a class="el" href="RigidDisplaceMove_8cpp_source.html#l00054">RigidDisplaceMove::move()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00070">EndSwapMove::move()</a>, <a class="el" href="CfbRingRebridgeMove_8cpp_source.html#l00080">CfbRingRebridgeMove::move()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00122">CfbReptationMove::move()</a>, <a class="el" href="CfbRebridgeMove_8cpp_source.html#l00076">CfbRebridgeMove::move()</a>, <a class="el" href="CfbHomoReptationMove_8cpp_source.html#l00067">CfbHomoReptationMove::move()</a>, <a class="el" href="CfbEndMove_8cpp_source.html#l00066">CfbEndMove::move()</a>, <a class="el" href="CfbDoubleRebridgeMove_8cpp_source.html#l00080">CfbDoubleRebridgeMove::move()</a>, <a class="el" href="AtomDisplaceMove_8cpp_source.html#l00051">AtomDisplaceMove::move()</a>, <a class="el" href="McPairPotential_8h_source.html#l00160">McPairPotential::moveAtom()</a>, <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00186">GroupRebridgeBase::octaEnergy()</a>, <a class="el" href="MdConfigIo_8cpp_source.html#l00037">MdConfigIo::readAtom()</a>, <a class="el" href="McConfigIo_8cpp_source.html#l00035">McConfigIo::readAtom()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00121">RingRouseAutoCorr::sample()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00078">RadiusGyration::sample()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">MdPairEnergyCoefficients::sample()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McPairEnergyAverage::sample()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00123">LinearRouseAutoCorr::sample()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00112">IntraPairAutoCorr::sample()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00109">BlockRadiusGyration::sample()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00173">RingTetraRebridgeMove::scanBridge()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00162">RingOctaRebridgeMove::scanBridge()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">NveVvIntegrator::step()</a>, <a class="el" href="NphIntegrator_8cpp_source.html#l00074">NphIntegrator::step()</a>, <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00049">GroupRebridgeBase::tetraEnergy()</a>, <a class="el" href="McPairPotential_8h_source.html#l00156">McPairPotential::updateAtomCell()</a>, <a class="el" href="MdConfigIo_8cpp_source.html#l00052">MdConfigIo::writeAtom()</a>, and <a class="el" href="McConfigIo_8cpp_source.html#l00044">McConfigIo::writeAtom()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00352">McMd::CellList::addAtom()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00185">McMd::CfbEndBase::addEndAtom()</a>, <a class="el" href="MdPairPotentialImpl_8h_source.html#l00314">McMd::MdPairPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00326">McMd::LinkPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00343">McMd::DihedralPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00323">McMd::BondPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00329">McMd::AnglePotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="CfbRebridgeBase_8cpp_source.html#l00240">McMd::CfbRebridgeBase::addMiddleAtom()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00252">McMd::McPairPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00281">McMd::LinkPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00263">McMd::ExternalPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00279">McMd::DihedralPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00271">McMd::BondPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00270">McMd::AnglePotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00130">McMd::PairList::build()</a>, <a class="el" href="CfbEndBase_8cpp_source.html#l00058">McMd::CfbEndBase::deleteEndAtom()</a>, <a class="el" href="CfbRebridgeBase_8cpp_source.html#l00122">McMd::CfbRebridgeBase::deleteMiddleAtom()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00172">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="MdPairPotentialImpl_8h_source.html#l00285">McMd::MdPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00335">McMd::McPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00306">McMd::LinkPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="Linear_8cpp_source.html#l00187">McMd::Linear::generateMolecules()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00289">McMd::McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00073">McMd::RingTetraRebridgeMove::move()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00066">McMd::RingOctaRebridgeMove::move()</a>, <a class="el" href="RigidDisplaceMove_8cpp_source.html#l00054">McMd::RigidDisplaceMove::move()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00070">McMd::EndSwapMove::move()</a>, <a class="el" href="CfbRingRebridgeMove_8cpp_source.html#l00080">McMd::CfbRingRebridgeMove::move()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00122">McMd::CfbReptationMove::move()</a>, <a class="el" href="CfbRebridgeMove_8cpp_source.html#l00076">McMd::CfbRebridgeMove::move()</a>, <a class="el" href="CfbHomoReptationMove_8cpp_source.html#l00067">McMd::CfbHomoReptationMove::move()</a>, <a class="el" href="CfbEndMove_8cpp_source.html#l00066">McMd::CfbEndMove::move()</a>, <a class="el" href="CfbDoubleRebridgeMove_8cpp_source.html#l00080">McMd::CfbDoubleRebridgeMove::move()</a>, <a class="el" href="AtomDisplaceMove_8cpp_source.html#l00051">McMd::AtomDisplaceMove::move()</a>, <a class="el" href="McPairPotential_8h_source.html#l00160">McMd::McPairPotential::moveAtom()</a>, <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00186">McMd::GroupRebridgeBase::octaEnergy()</a>, <a class="el" href="MdConfigIo_8cpp_source.html#l00037">McMd::MdConfigIo::readAtom()</a>, <a class="el" href="McConfigIo_8cpp_source.html#l00035">McMd::McConfigIo::readAtom()</a>, <a class="el" href="RingRouseAutoCorr_8cpp_source.html#l00121">McMd::RingRouseAutoCorr::sample()</a>, <a class="el" href="RadiusGyration_8cpp_source.html#l00078">McMd::RadiusGyration::sample()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">McMd::MdPairEnergyCoefficients::sample()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McMd::McPairEnergyAverage::sample()</a>, <a class="el" href="LinearRouseAutoCorr_8cpp_source.html#l00123">McMd::LinearRouseAutoCorr::sample()</a>, <a class="el" href="IntraPairAutoCorr_8cpp_source.html#l00112">McMd::IntraPairAutoCorr::sample()</a>, <a class="el" href="BlockRadiusGyration_8cpp_source.html#l00109">McMd::BlockRadiusGyration::sample()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00173">McMd::RingTetraRebridgeMove::scanBridge()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00162">McMd::RingOctaRebridgeMove::scanBridge()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">McMd::NveVvIntegrator::step()</a>, <a class="el" href="NphIntegrator_8cpp_source.html#l00074">McMd::NphIntegrator::step()</a>, <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00049">McMd::GroupRebridgeBase::tetraEnergy()</a>, <a class="el" href="McPairPotential_8h_source.html#l00156">McMd::McPairPotential::updateAtomCell()</a>, <a class="el" href="MdConfigIo_8cpp_source.html#l00052">McMd::MdConfigIo::writeAtom()</a>, and <a class="el" href="McConfigIo_8cpp_source.html#l00044">McMd::McConfigIo::writeAtom()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae385bb070452150eec2eb79431bc281d"></a><!-- doxytag: member="McMd::Atom::position" ref="ae385bb070452150eec2eb79431bc281d" args="()" -->
+<a class="anchor" id="a9a74f4c101d35426b12455bd31a98481"></a><!-- doxytag: member="McMd::Atom::position" ref="a9a74f4c101d35426b12455bd31a98481" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; position </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; McMd::Atom::position </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -306,12 +306,12 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0ea3a94405b029e702eebd119f4fb03a"></a><!-- doxytag: member="McMd::Atom::mask" ref="a0ea3a94405b029e702eebd119f4fb03a" args="()" -->
+<a class="anchor" id="af02003b1de6abffcf7ae7cd2187ff22c"></a><!-- doxytag: member="McMd::Atom::mask" ref="af02003b1de6abffcf7ae7cd2187ff22c" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1Mask.html">Mask</a> &amp; mask </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1Mask.html">Mask</a> &amp; McMd::Atom::mask </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -324,16 +324,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00291">291</a> of file <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html">mcMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McPairPotentialImpl_8h_source.html#l00252">McPairPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00130">PairList::build()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00172">McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00335">McPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">Simulation::isValid()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00289">McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00122">CfbReptationMove::move()</a>, <a class="el" href="CfbHomoReptationMove_8cpp_source.html#l00067">CfbHomoReptationMove::move()</a>, and <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McPairEnergyAverage::sample()</a>.</p>
+<p>Referenced by <a class="el" href="McPairPotentialImpl_8h_source.html#l00252">McMd::McPairPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, <a class="el" href="mcMd_2neighbor_2PairList_8cpp_source.html#l00130">McMd::PairList::build()</a>, <a class="el" href="McPairPerturbation_8h_source.html#l00172">McMd::McPairPerturbation&lt; Interaction &gt;::derivative()</a>, <a class="el" href="McPairExternalPerturbation_8h_source.html#l00212">McMd::McPairExternalPerturbation&lt; PairInteraction, ExternalInteraction &gt;::derivative()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00335">McMd::McPairPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">McMd::Simulation::isValid()</a>, <a class="el" href="McPairPotentialImpl_8h_source.html#l00289">McMd::McPairPotentialImpl&lt; Interaction &gt;::moleculeEnergy()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00122">McMd::CfbReptationMove::move()</a>, <a class="el" href="CfbHomoReptationMove_8cpp_source.html#l00067">McMd::CfbHomoReptationMove::move()</a>, and <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McMd::McPairEnergyAverage::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a70b1f3f124853db67bb7c7013b160e7c"></a><!-- doxytag: member="McMd::Atom::mask" ref="a70b1f3f124853db67bb7c7013b160e7c" args="() const " -->
+<a class="anchor" id="a3adb0c8bb6326ce024b95d01f16bab25"></a><!-- doxytag: member="McMd::Atom::mask" ref="a3adb0c8bb6326ce024b95d01f16bab25" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classMcMd_1_1Mask.html">Mask</a> &amp; mask </td>
+          <td class="memname">const <a class="el" href="classMcMd_1_1Mask.html">Mask</a> &amp; McMd::Atom::mask </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -348,12 +348,12 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0a918625496f209cee72908ba31867a2"></a><!-- doxytag: member="McMd::Atom::velocity" ref="a0a918625496f209cee72908ba31867a2" args="()" -->
+<a class="anchor" id="a780e54fe8955e96c6a6de8d9933a7f92"></a><!-- doxytag: member="McMd::Atom::velocity" ref="a780e54fe8955e96c6a6de8d9933a7f92" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; velocity </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; McMd::Atom::velocity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -366,16 +366,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00279">279</a> of file <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html">mcMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdConfigIo_8cpp_source.html#l00037">MdConfigIo::readAtom()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">NveVvIntegrator::step()</a>, <a class="el" href="NphIntegrator_8cpp_source.html#l00074">NphIntegrator::step()</a>, and <a class="el" href="MdConfigIo_8cpp_source.html#l00052">MdConfigIo::writeAtom()</a>.</p>
+<p>Referenced by <a class="el" href="MdConfigIo_8cpp_source.html#l00037">McMd::MdConfigIo::readAtom()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">McMd::NveVvIntegrator::step()</a>, <a class="el" href="NphIntegrator_8cpp_source.html#l00074">McMd::NphIntegrator::step()</a>, and <a class="el" href="MdConfigIo_8cpp_source.html#l00052">McMd::MdConfigIo::writeAtom()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0fa47a53a63bd26c1e5714c66ff11f5a"></a><!-- doxytag: member="McMd::Atom::velocity" ref="a0fa47a53a63bd26c1e5714c66ff11f5a" args="() const " -->
+<a class="anchor" id="a27b9f26574bc30d136eb32eb11ce7eb9"></a><!-- doxytag: member="McMd::Atom::velocity" ref="a27b9f26574bc30d136eb32eb11ce7eb9" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; velocity </td>
+          <td class="memname">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; McMd::Atom::velocity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -390,12 +390,12 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="abf167a7208cca549b00a3048b0742088"></a><!-- doxytag: member="McMd::Atom::force" ref="abf167a7208cca549b00a3048b0742088" args="()" -->
+<a class="anchor" id="a4d50648b4715d5d96b0c59f4ce37b80e"></a><!-- doxytag: member="McMd::Atom::force" ref="a4d50648b4715d5d96b0c59f4ce37b80e" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; force </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; McMd::Atom::force </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -408,16 +408,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00287">287</a> of file <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html">mcMd/chemistry/Atom.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdPairPotentialImpl_8h_source.html#l00314">MdPairPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00326">LinkPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00343">DihedralPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00323">BondPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00329">AnglePotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">NveVvIntegrator::step()</a>, and <a class="el" href="NphIntegrator_8cpp_source.html#l00074">NphIntegrator::step()</a>.</p>
+<p>Referenced by <a class="el" href="MdPairPotentialImpl_8h_source.html#l00314">McMd::MdPairPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="LinkPotentialImpl_8h_source.html#l00326">McMd::LinkPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00343">McMd::DihedralPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00323">McMd::BondPotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00329">McMd::AnglePotentialImpl&lt; Interaction &gt;::addForces()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00079">McMd::NveVvIntegrator::step()</a>, and <a class="el" href="NphIntegrator_8cpp_source.html#l00074">McMd::NphIntegrator::step()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9420be3b47ba1ca6bcd8b5ef5cff24a3"></a><!-- doxytag: member="McMd::Atom::force" ref="a9420be3b47ba1ca6bcd8b5ef5cff24a3" args="() const " -->
+<a class="anchor" id="a13b8fad992f4f48d9b9f10ffe34d9160"></a><!-- doxytag: member="McMd::Atom::force" ref="a13b8fad992f4f48d9b9f10ffe34d9160" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; force </td>
+          <td class="memname">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp; McMd::Atom::force </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -432,12 +432,12 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a608e10d093425c9228f10ed3c4994598"></a><!-- doxytag: member="McMd::Atom::initStatic" ref="a608e10d093425c9228f10ed3c4994598" args="()" -->
+<a class="anchor" id="a113013bd1a361f57657688b4602cb813"></a><!-- doxytag: member="McMd::Atom::initStatic" ref="a113013bd1a361f57657688b4602cb813" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void initStatic </td>
+          <td class="memname">void McMd::Atom::initStatic </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -450,16 +450,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Atom_8cpp_source.html#l00032">32</a> of file <a class="el" href="Atom_8cpp_source.html">Atom.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00039">Simulation::Simulation()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00039">McMd::Simulation::Simulation()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a756c62af477064d88c170751f9bea836"></a><!-- doxytag: member="McMd::Atom::allocate" ref="a756c62af477064d88c170751f9bea836" args="(int capacity, RArray&lt; Atom &gt; &amp;atoms)" -->
+<a class="anchor" id="a2d2175ba5b0934a509650253a8254dab"></a><!-- doxytag: member="McMd::Atom::allocate" ref="a2d2175ba5b0934a509650253a8254dab" args="(int capacity, RArray&lt; Atom &gt; &amp;atoms)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void McMd::Atom::allocate </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>capacity</em>, </td>
@@ -481,7 +481,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Allocate a static array of <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects. </p>
 <p>Upon return, the parameter atoms is associated with a new private static array of <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects, and every <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> has an id set equal to its index within this array.</p>
-<p><a class="el" href="classMcMd_1_1Atom.html#a756c62af477064d88c170751f9bea836" title="Allocate a static array of Atom objects.">Atom::allocate</a> creates a static array that contains all of the <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects available for use in a program. <a class="el" href="classMcMd_1_1Atom.html#a2d68be4fd20ffdd7f7a9b51579eacc2f" title="Delete all static arrays.">Atom::deallocate()</a> releases the memory allocated by <a class="el" href="classMcMd_1_1Atom.html#a756c62af477064d88c170751f9bea836" title="Allocate a static array of Atom objects.">Atom::allocate</a>. <a class="el" href="classMcMd_1_1Atom.html#a756c62af477064d88c170751f9bea836" title="Allocate a static array of Atom objects.">Atom::allocate()</a> cannot be called more than once without first calling <a class="el" href="classMcMd_1_1Atom.html#a2d68be4fd20ffdd7f7a9b51579eacc2f" title="Delete all static arrays.">Atom::deallocate()</a>.</p>
+<p><a class="el" href="classMcMd_1_1Atom.html#a2d2175ba5b0934a509650253a8254dab" title="Allocate a static array of Atom objects.">Atom::allocate</a> creates a static array that contains all of the <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> objects available for use in a program. <a class="el" href="classMcMd_1_1Atom.html#a3cd7efed48bafe66f5669ac55b5069f5" title="Delete all static arrays.">Atom::deallocate()</a> releases the memory allocated by <a class="el" href="classMcMd_1_1Atom.html#a2d2175ba5b0934a509650253a8254dab" title="Allocate a static array of Atom objects.">Atom::allocate</a>. <a class="el" href="classMcMd_1_1Atom.html#a2d2175ba5b0934a509650253a8254dab" title="Allocate a static array of Atom objects.">Atom::allocate()</a> cannot be called more than once without first calling <a class="el" href="classMcMd_1_1Atom.html#a3cd7efed48bafe66f5669ac55b5069f5" title="Delete all static arrays.">Atom::deallocate()</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">capacity</td><td>total number of Atoms to be allocated in the array. </td></tr>
@@ -492,16 +492,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Atom_8cpp_source.html#l00048">48</a> of file <a class="el" href="Atom_8cpp_source.html">Atom.cpp</a>.</p>
 
-<p>References <a class="el" href="RArray_8h_source.html#l00083">RArray&lt; Data &gt;::associate()</a>, <a class="el" href="IntVector_8h_source.html#l00139">IntVector::zero()</a>, and <a class="el" href="Vector_8h_source.html#l00494">Vector::zero()</a>.</p>
+<p>References <a class="el" href="RArray_8h_source.html#l00083">Util::RArray&lt; Data &gt;::associate()</a>, <a class="el" href="IntVector_8h_source.html#l00139">Util::IntVector::zero()</a>, and <a class="el" href="Vector_8h_source.html#l00494">Util::Vector::zero()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2d68be4fd20ffdd7f7a9b51579eacc2f"></a><!-- doxytag: member="McMd::Atom::deallocate" ref="a2d68be4fd20ffdd7f7a9b51579eacc2f" args="()" -->
+<a class="anchor" id="a3cd7efed48bafe66f5669ac55b5069f5"></a><!-- doxytag: member="McMd::Atom::deallocate" ref="a3cd7efed48bafe66f5669ac55b5069f5" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void deallocate </td>
+          <td class="memname">void McMd::Atom::deallocate </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -515,16 +515,16 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Atom_8cpp_source.html#l00093">93</a> of file <a class="el" href="Atom_8cpp_source.html">Atom.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00138">Simulation::~Simulation()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00138">McMd::Simulation::~Simulation()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a66ab050973deeb9e36ad491bac4758ab"></a><!-- doxytag: member="McMd::Atom::capacity" ref="a66ab050973deeb9e36ad491bac4758ab" args="()" -->
+<a class="anchor" id="a4c6fa4494c88db56ad5e149f11a75e50"></a><!-- doxytag: member="McMd::Atom::capacity" ref="a4c6fa4494c88db56ad5e149f11a75e50" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">static int capacity </td>
+          <td class="memname">static int McMd::Atom::capacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -543,7 +543,7 @@ Static Public Member Functions</h2></td></tr>
 <li><a class="el" href="Molecule_8h_source.html">Molecule.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:52 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

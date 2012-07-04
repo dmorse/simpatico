@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -60,7 +60,7 @@
 <a name="l00008"></a>00008 <span class="comment">/*</span>
 <a name="l00009"></a>00009 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00010"></a>00010 <span class="comment">*</span>
-<a name="l00011"></a>00011 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00011"></a>00011 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00012"></a>00012 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00013"></a>00013 <span class="comment">*/</span>
 <a name="l00014"></a>00014 
@@ -128,7 +128,7 @@
 <a name="l00117"></a>00117 <span class="comment">   * Constructor.</span>
 <a name="l00118"></a>00118 <span class="comment">   */</span>
 <a name="l00119"></a>00119    <span class="keyword">template</span> &lt; <span class="keyword">class</span> PairInteraction, <span class="keyword">class</span> ExternalInteraction &gt;
-<a name="l00120"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#af68c1877dfaff6b1ef36532dec958559">00120</a>    <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html" title="A Perturbation in the pair interaction epsilon(0,1) for any pair potential supporting setEpsilon() an...">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;::McPairExternalPerturbation</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system)
+<a name="l00120"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#a7a16092ddfda3fead135b5e73e64b2c1">00120</a>    <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html" title="A Perturbation in the pair interaction epsilon(0,1) for any pair potential supporting setEpsilon() an...">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;::McPairExternalPerturbation</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system)
 <a name="l00121"></a>00121     : <a class="code" href="classMcMd_1_1LinearPerturbation.html" title="A Perturbation that is a linear function of a parameter.">LinearPerturbation</a>&lt;<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&gt;(system),
 <a name="l00122"></a>00122       pairInteractionPtr_(0),
 <a name="l00123"></a>00123       externalInteractionPtr_(0)
@@ -138,17 +138,17 @@
 <a name="l00127"></a>00127 <span class="comment">   * Destructor.</span>
 <a name="l00128"></a>00128 <span class="comment">   */</span>
 <a name="l00129"></a>00129    <span class="keyword">template</span> &lt; <span class="keyword">class</span> PairInteraction, <span class="keyword">class</span> ExternalInteraction &gt;
-<a name="l00130"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#a552b64626f42c45b09323ac81f017f60">00130</a>    <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html" title="A Perturbation in the pair interaction epsilon(0,1) for any pair potential supporting setEpsilon() an...">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;</a>::~McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;()
+<a name="l00130"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#abbfcfb79b67e502dfc66c080ebdcfd58">00130</a>    <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html" title="A Perturbation in the pair interaction epsilon(0,1) for any pair potential supporting setEpsilon() an...">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;</a>::~McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;()
 <a name="l00131"></a>00131    {}
 <a name="l00132"></a>00132 
 <a name="l00133"></a>00133    <span class="comment">/*</span>
 <a name="l00134"></a>00134 <span class="comment">   * Read epsilon(0,1) and external parameter from file</span>
 <a name="l00135"></a>00135 <span class="comment">   */</span>
 <a name="l00136"></a>00136    <span class="keyword">template</span> &lt; <span class="keyword">class</span> PairInteraction, <span class="keyword">class</span> ExternalInteraction &gt;
-<a name="l00137"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#ab5421d3c9175985c9acbf723e5392075">00137</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameter epsilon(0, 1) and external parameter from file.">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;::readParam</a>(std::istream&amp; in)
+<a name="l00137"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#a80cc03a5a88ee865a2cf5b656249bf4c">00137</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#a80cc03a5a88ee865a2cf5b656249bf4c" title="Read parameter epsilon(0, 1) and external parameter from file.">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;::readParam</a>(std::istream&amp; in)
 <a name="l00138"></a>00138    { 
-<a name="l00139"></a>00139       <a class="code" href="classMcMd_1_1Perturbation.html#a32f520577a6158f1f5c6831ce35529c9" title="Read perturbation parameter(s) from file.">Perturbation::readParameters</a>(in);
-<a name="l00140"></a>00140       nParameters_ = <a class="code" href="classMcMd_1_1Perturbation.html#a3e5684d9033624cba933d06b5b031b55" title="Gets the number of perturbation parameters asssociated with a system.">Perturbation::getNParameters</a>();
+<a name="l00139"></a>00139       <a class="code" href="classMcMd_1_1Perturbation.html#a6734738d947980f4ca6a33c1c0cd45d2" title="Read perturbation parameter(s) from file.">Perturbation::readParameters</a>(in);
+<a name="l00140"></a>00140       nParameters_ = <a class="code" href="classMcMd_1_1Perturbation.html#a985515ab0da2fa46321b790fa50c21e5" title="Gets the number of perturbation parameters asssociated with a system.">Perturbation::getNParameters</a>();
 <a name="l00141"></a>00141    }
 <a name="l00142"></a>00142 
 <a name="l00143"></a>00143    <span class="comment">/* </span>
@@ -163,7 +163,7 @@
 <a name="l00152"></a>00152          <span class="keywordflow">if</span> (implPtr == 0) {
 <a name="l00153"></a>00153             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Failed dynamic cast of McPairPotential&quot;</span>);
 <a name="l00154"></a>00154          }
-<a name="l00155"></a>00155          pairInteractionPtr_ = &amp;implPtr-&gt;<a class="code" href="classMcMd_1_1McPairPotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0" title="Return reference to underlying pair interaction.">interaction</a>();
+<a name="l00155"></a>00155          pairInteractionPtr_ = &amp;implPtr-&gt;<a class="code" href="classMcMd_1_1McPairPotentialImpl.html#a2a8ec171c425900731fdf9a05e1f8223" title="Return reference to underlying pair interaction.">interaction</a>();
 <a name="l00156"></a>00156       }
 <a name="l00157"></a>00157       <span class="keywordflow">return</span> *pairInteractionPtr_;
 <a name="l00158"></a>00158    }
@@ -190,7 +190,7 @@
 <a name="l00179"></a>00179 <span class="comment">   * Set the parameter epsilon(0,1) and external parameter for this McSystem.</span>
 <a name="l00180"></a>00180 <span class="comment">   */</span>
 <a name="l00181"></a>00181    <span class="keyword">template</span> &lt; <span class="keyword">class</span> PairInteraction, <span class="keyword">class</span> ExternalInteraction &gt;
-<a name="l00182"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#a425b4045d456b053c63dd08178d58abb">00182</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#a425b4045d456b053c63dd08178d58abb" title="Set pair interaction parameter epsilon(0,1) and external parameter for this System.">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;::setParameter</a>()
+<a name="l00182"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#a95faf0c3ae1af02709f8f1ef959adf01">00182</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#a95faf0c3ae1af02709f8f1ef959adf01" title="Set pair interaction parameter epsilon(0,1) and external parameter for this System.">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;::setParameter</a>()
 <a name="l00183"></a>00183    { 
 <a name="l00184"></a>00184       pairInteraction().setEpsilon(0, 1, parameter_[0]);
 <a name="l00185"></a>00185       externalInteraction().setExternalParameter(parameter_[1]);
@@ -201,7 +201,7 @@
 <a name="l00190"></a>00190 <span class="comment">   * i = 1: Get the externalParameter from the parent System.</span>
 <a name="l00191"></a>00191 <span class="comment">   */</span>
 <a name="l00192"></a>00192    <span class="keyword">template</span> &lt; <span class="keyword">class</span> PairInteraction, <span class="keyword">class</span> ExternalInteraction &gt;
-<a name="l00193"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#aa442fe452a774006424e54b6fb6719fa">00193</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#aa442fe452a774006424e54b6fb6719fa" title="Return the perturbation parameter for this System.">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;::parameter</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00193"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#ad1ffd1462bd055f37dfdba3783d9b041">00193</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#ad1ffd1462bd055f37dfdba3783d9b041" title="Return the perturbation parameter for this System.">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;::parameter</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00194"></a>00194 <span class="keyword">   </span>{  
 <a name="l00195"></a>00195       <span class="keywordflow">if</span> (i &gt;= nParameters_) {
 <a name="l00196"></a>00196          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;perturbation parameter index is out of bounds&quot;</span>);
@@ -220,7 +220,7 @@
 <a name="l00209"></a>00209 <span class="comment">   * i = 1: Returns external potential energy / ( kT *external parameter )</span>
 <a name="l00210"></a>00210 <span class="comment">   */</span>
 <a name="l00211"></a>00211    <span class="keyword">template</span> &lt; <span class="keyword">class</span> PairInteraction, <span class="keyword">class</span> ExternalInteraction &gt;
-<a name="l00212"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#ad282b731b9b51ee21f6ae3f58006dcac">00212</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#ad282b731b9b51ee21f6ae3f58006dcac" title="Return (0-1 pair energy) / ( kT *epsilon(0,1) ) if i is 0 or (external potential energy)/ ( kT *exter...">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;::derivative</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00212"></a><a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#a81b7765cacdd1cefd671c90f20a6bae6">00212</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McPairExternalPerturbation.html#a81b7765cacdd1cefd671c90f20a6bae6" title="Return (0-1 pair energy) / ( kT *epsilon(0,1) ) if i is 0 or (external potential energy)/ ( kT *exter...">McPairExternalPerturbation&lt;PairInteraction, ExternalInteraction&gt;::derivative</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00213"></a>00213 <span class="keyword">   </span>{  
 <a name="l00214"></a>00214       <span class="comment">// Preconditions</span>
 <a name="l00215"></a>00215       <span class="keywordflow">if</span> (i &gt;= nParameters_) {
@@ -247,25 +247,25 @@
 <a name="l00236"></a>00236             <span class="comment">// Loop over primary atoms in this cell</span>
 <a name="l00237"></a>00237             <span class="keywordflow">for</span> (j = 0; j &lt; nInCell; ++j) {
 <a name="l00238"></a>00238                jAtomPtr = neighbors_[j];
-<a name="l00239"></a>00239                jId      = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
-<a name="l00240"></a>00240                jType    = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>();
+<a name="l00239"></a>00239                jId      = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00240"></a>00240                jType    = jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>();
 <a name="l00241"></a>00241 
 <a name="l00242"></a>00242                <span class="comment">// Loop over secondary atoms in this and neighboring cells</span>
 <a name="l00243"></a>00243                <span class="keywordflow">for</span> (k = 0; k &lt; nNeighbor; ++k) {
 <a name="l00244"></a>00244                   kAtomPtr = neighbors_[k];
-<a name="l00245"></a>00245                   kId      = kAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
-<a name="l00246"></a>00246                   kType    = kAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>();
+<a name="l00245"></a>00245                   kId      = kAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00246"></a>00246                   kType    = kAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>();
 <a name="l00247"></a>00247 
 <a name="l00248"></a>00248                   <span class="comment">// Count each pair only once </span>
 <a name="l00249"></a>00249                   <span class="keywordflow">if</span> (kId &gt; jId &amp;&amp; jType != kType) {
 <a name="l00250"></a>00250 
 <a name="l00251"></a>00251                      <span class="comment">// Exclude masked pairs</span>
-<a name="l00252"></a>00252                      <span class="keywordflow">if</span> (!jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classMcMd_1_1Mask.html#a250dbffb1fa61c07f232c26648f0ec2d" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(*kAtomPtr)) {
+<a name="l00252"></a>00252                      <span class="keywordflow">if</span> (!jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af02003b1de6abffcf7ae7cd2187ff22c" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classMcMd_1_1Mask.html#aa2b748da6579dc033f5da1db08988f5b" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(*kAtomPtr)) {
 <a name="l00253"></a>00253 
 <a name="l00254"></a>00254                         rsq = system().boundary().
-<a name="l00255"></a>00255                               distanceSq(jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), kAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>());
+<a name="l00255"></a>00255                               distanceSq(jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), kAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>());
 <a name="l00256"></a>00256                         pairEnergy += pairInteraction().
-<a name="l00257"></a>00257                               energy(rsq, jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>(), kAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>());
+<a name="l00257"></a>00257                               energy(rsq, jAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>(), kAtomPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>());
 <a name="l00258"></a>00258 
 <a name="l00259"></a>00259                      }
 <a name="l00260"></a>00260 
@@ -296,8 +296,8 @@
 <a name="l00285"></a>00285          externalEnergy = 0.0;
 <a name="l00286"></a>00286 
 <a name="l00287"></a>00287          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; system().simulation().nSpecies(); ++iSpec){
-<a name="l00288"></a>00288              <span class="keywordflow">for</span> (system().begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter){
-<a name="l00289"></a>00289                   <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00288"></a>00288              <span class="keywordflow">for</span> (system().begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter){
+<a name="l00289"></a>00289                   <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00290"></a>00290                       externalEnergy += system().externalPotential().energy(atomIter-&gt;position(), atomIter-&gt;typeId());
 <a name="l00291"></a>00291                   }
 <a name="l00292"></a>00292              }
@@ -325,7 +325,7 @@
 <a name="l00314"></a>00314 <span class="preprocessor"></span><span class="preprocessor">#endif  // ifdef MCMD_PERTURB</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

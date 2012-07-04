@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Lng Class Reference</title>
+<title>Simpatico: Util::Lng Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,14 +49,14 @@
   <div class="summary">
 <a href="#friends">Friends</a>  </div>
   <div class="headertitle">
-<h1>Lng Class Reference<div class="ingroups"><a class="el" href="group__Format__Module.html">Output Format</a></div></h1>  </div>
+<h1>Util::Lng Class Reference<div class="ingroups"><a class="el" href="group__Format__Module.html">Output Format</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Lng" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Wrapper for a long int, for formatted ostream output. </p>
-<p>An <a class="el" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a> object has a long int numerical value, and a minimum output field width. The &lt;&lt; operator for an <a class="el" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a> uses the specified width. The numerical value and width may both be optionally specified as parameters to a constructor. If the width is not specified, it is is is set to a default value equal to <a class="el" href="classUtil_1_1Format.html#a6174575d1d0c312a822272e46655c935" title="Return the default output field width.">Format::defaultWidth()</a>.</p>
+<p>An <a class="el" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a> object has a long int numerical value, and a minimum output field width. The &lt;&lt; operator for an <a class="el" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a> uses the specified width. The numerical value and width may both be optionally specified as parameters to a constructor. If the width is not specified, it is is is set to a default value equal to <a class="el" href="classUtil_1_1Format.html#ac6cf6620e160c66757429bec0fb4dd23" title="Return the default output field width.">Format::defaultWidth()</a>.</p>
 <p>An <a class="el" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a> object may be passed to an ostream as a temporary object. For example, the expression: </p>
-<div class="fragment"><pre class="fragment">    std::cout &lt;&lt; <a class="code" href="classUtil_1_1Lng.html#ae467f4ead0191d252c5c2bba4323f21b" title="Default constructor.">Lng</a>(13) &lt;&lt; <a class="code" href="classUtil_1_1Lng.html#ae467f4ead0191d252c5c2bba4323f21b" title="Default constructor.">Lng</a>(25, 10) &lt;&lt; std::endl;
+<div class="fragment"><pre class="fragment">    std::cout &lt;&lt; <a class="code" href="classUtil_1_1Lng.html#ab9b7a8bdf0e09cf7a9a2b7c2a988317d" title="Default constructor.">Lng</a>(13) &lt;&lt; <a class="code" href="classUtil_1_1Lng.html#ab9b7a8bdf0e09cf7a9a2b7c2a988317d" title="Default constructor.">Lng</a>(25, 10) &lt;&lt; std::endl;
 </pre></div><p> outputs the number 13 using the default width, followed by the number 25 in a field of minimum width 10. </p>
 
 <p>Definition at line <a class="el" href="Lng_8h_source.html#l00035">35</a> of file <a class="el" href="Lng_8h_source.html">Lng.h</a>.</p>
@@ -68,22 +68,22 @@
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#ae467f4ead0191d252c5c2bba4323f21b">Lng</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ae467f4ead0191d252c5c2bba4323f21b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#a15c6851493b24e538b76519480e4acc0">Lng</a> (long int value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value only.  <a href="#a15c6851493b24e538b76519480e4acc0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#a33c32480d484548eb00bc8c28278d266">Lng</a> (long int value, int width)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value and width.  <a href="#a33c32480d484548eb00bc8c28278d266"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#ab9b7a8bdf0e09cf7a9a2b7c2a988317d">Lng</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ab9b7a8bdf0e09cf7a9a2b7c2a988317d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#ab5b1955edbbca47683aa88e45c5a9f55">Lng</a> (long int value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value only.  <a href="#ab5b1955edbbca47683aa88e45c5a9f55"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#a24f0c8b8104c3dbfd4d0869b197bdc4e">Lng</a> (long int value, int width)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value and width.  <a href="#a24f0c8b8104c3dbfd4d0869b197bdc4e"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Setters</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#a219051cd58fc476fb523917951ea2dbc">setValue</a> (long int value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value of long int.  <a href="#a219051cd58fc476fb523917951ea2dbc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#a8b4c8bccc530aa0a9b0139e04913af32">setWidth</a> (int width)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set field width.  <a href="#a8b4c8bccc530aa0a9b0139e04913af32"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#a67232e002aeff5a71a8b47d0371f6dbc">setValue</a> (long int value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value of long int.  <a href="#a67232e002aeff5a71a8b47d0371f6dbc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#a6461f9f0e4d57e693f59a6a5d3da8790">setWidth</a> (int width)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set field width.  <a href="#a6461f9f0e4d57e693f59a6a5d3da8790"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">long int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#af4489c1b1e34c77e5f751200d5cad70f">value</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of long int.  <a href="#af4489c1b1e34c77e5f751200d5cad70f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#a3eeed61a3424d2f907c8a1e420fddf6d">width</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get field width.  <a href="#a3eeed61a3424d2f907c8a1e420fddf6d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">long int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#ad75f89b4a8b73629e7a6eb1dcdde7552">value</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of long int.  <a href="#ad75f89b4a8b73629e7a6eb1dcdde7552"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#ac4814cc7c2d87f0636a4190625a1d618">width</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get field width.  <a href="#ac4814cc7c2d87f0636a4190625a1d618"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Lng.html#ab3619e54ba840943365158e4dbec98c0">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="classUtil_1_1Lng.html">Lng</a> &amp;object)</td></tr>
@@ -92,12 +92,12 @@ Friends</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output stream inserter for an <a class="el" href="classUtil_1_1Lng.html" title="Wrapper for a long int, for formatted ostream output.">Lng</a> object.  <a href="#a817b76cae82c696b93ef47b8186b065d"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ae467f4ead0191d252c5c2bba4323f21b"></a><!-- doxytag: member="Util::Lng::Lng" ref="ae467f4ead0191d252c5c2bba4323f21b" args="()" -->
+<a class="anchor" id="ab9b7a8bdf0e09cf7a9a2b7c2a988317d"></a><!-- doxytag: member="Util::Lng::Lng" ref="ab9b7a8bdf0e09cf7a9a2b7c2a988317d" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">home david code simpatico src util format <a class="el" href="classUtil_1_1Lng.html">Lng</a> cpp <a class="el" href="classUtil_1_1Lng.html">Lng</a> </td>
+          <td class="memname">home david code simpatico src util format <a class="el" href="classUtil_1_1Lng.html">Lng</a> cpp Util::Lng::Lng </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -112,12 +112,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a15c6851493b24e538b76519480e4acc0"></a><!-- doxytag: member="Util::Lng::Lng" ref="a15c6851493b24e538b76519480e4acc0" args="(long int value)" -->
+<a class="anchor" id="ab5b1955edbbca47683aa88e45c5a9f55"></a><!-- doxytag: member="Util::Lng::Lng" ref="ab5b1955edbbca47683aa88e45c5a9f55" args="(long int value)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Lng.html">Lng</a> </td>
+          <td class="memname">Util::Lng::Lng </td>
           <td>(</td>
           <td class="paramtype">long int&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -139,12 +139,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a33c32480d484548eb00bc8c28278d266"></a><!-- doxytag: member="Util::Lng::Lng" ref="a33c32480d484548eb00bc8c28278d266" args="(long int value, int width)" -->
+<a class="anchor" id="a24f0c8b8104c3dbfd4d0869b197bdc4e"></a><!-- doxytag: member="Util::Lng::Lng" ref="a24f0c8b8104c3dbfd4d0869b197bdc4e" args="(long int value, int width)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Lng.html">Lng</a> </td>
+          <td class="memname">Util::Lng::Lng </td>
           <td>(</td>
           <td class="paramtype">long int&#160;</td>
           <td class="paramname"><em>value</em>, </td>
@@ -178,12 +178,12 @@ Friends</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a219051cd58fc476fb523917951ea2dbc"></a><!-- doxytag: member="Util::Lng::setValue" ref="a219051cd58fc476fb523917951ea2dbc" args="(long int value)" -->
+<a class="anchor" id="a67232e002aeff5a71a8b47d0371f6dbc"></a><!-- doxytag: member="Util::Lng::setValue" ref="a67232e002aeff5a71a8b47d0371f6dbc" args="(long int value)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setValue </td>
+          <td class="memname">void Util::Lng::setValue </td>
           <td>(</td>
           <td class="paramtype">long int&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -203,16 +203,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Lng_8cpp_source.html#l00038">38</a> of file <a class="el" href="Lng_8cpp_source.html">Lng.cpp</a>.</p>
 
-<p>References <a class="el" href="Lng_8cpp_source.html#l00044">Lng::value()</a>.</p>
+<p>References <a class="el" href="Lng_8cpp_source.html#l00044">value()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8b4c8bccc530aa0a9b0139e04913af32"></a><!-- doxytag: member="Util::Lng::setWidth" ref="a8b4c8bccc530aa0a9b0139e04913af32" args="(int width)" -->
+<a class="anchor" id="a6461f9f0e4d57e693f59a6a5d3da8790"></a><!-- doxytag: member="Util::Lng::setWidth" ref="a6461f9f0e4d57e693f59a6a5d3da8790" args="(int width)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setWidth </td>
+          <td class="memname">void Util::Lng::setWidth </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>width</em></td><td>)</td>
@@ -232,16 +232,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Lng_8cpp_source.html#l00041">41</a> of file <a class="el" href="Lng_8cpp_source.html">Lng.cpp</a>.</p>
 
-<p>References <a class="el" href="Lng_8cpp_source.html#l00047">Lng::width()</a>.</p>
+<p>References <a class="el" href="Lng_8cpp_source.html#l00047">width()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af4489c1b1e34c77e5f751200d5cad70f"></a><!-- doxytag: member="Util::Lng::value" ref="af4489c1b1e34c77e5f751200d5cad70f" args="()" -->
+<a class="anchor" id="ad75f89b4a8b73629e7a6eb1dcdde7552"></a><!-- doxytag: member="Util::Lng::value" ref="ad75f89b4a8b73629e7a6eb1dcdde7552" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">long int value </td>
+          <td class="memname">long int Util::Lng::value </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -254,16 +254,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Lng_8cpp_source.html#l00044">44</a> of file <a class="el" href="Lng_8cpp_source.html">Lng.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Lng_8cpp_source.html#l00038">Lng::setValue()</a>.</p>
+<p>Referenced by <a class="el" href="Lng_8cpp_source.html#l00038">setValue()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3eeed61a3424d2f907c8a1e420fddf6d"></a><!-- doxytag: member="Util::Lng::width" ref="a3eeed61a3424d2f907c8a1e420fddf6d" args="()" -->
+<a class="anchor" id="ac4814cc7c2d87f0636a4190625a1d618"></a><!-- doxytag: member="Util::Lng::width" ref="ac4814cc7c2d87f0636a4190625a1d618" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int width </td>
+          <td class="memname">int Util::Lng::width </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -276,7 +276,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Lng_8cpp_source.html#l00047">47</a> of file <a class="el" href="Lng_8cpp_source.html">Lng.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Lng_8cpp_source.html#l00041">Lng::setWidth()</a>.</p>
+<p>Referenced by <a class="el" href="Lng_8cpp_source.html#l00041">setWidth()</a>.</p>
 
 </div>
 </div>
@@ -364,7 +364,7 @@ Friends</h2></td></tr>
 <li><a class="el" href="Lng_8cpp_source.html">Lng.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

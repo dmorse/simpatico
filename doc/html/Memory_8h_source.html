@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,14 +71,14 @@
 <a name="l00027"></a>00027    <span class="keyword">public</span>:
 <a name="l00028"></a>00028 
 <a name="l00035"></a>00035       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00036"></a>00036       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Memory.html#a9cff6658869b1e33603608194732fe7c" title="Allocate a C array.">allocate</a>(Data*&amp; ptr, <span class="keywordtype">size_t</span> size);
+<a name="l00036"></a>00036       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Memory.html#ae18e5528b402ff46fcd4cdfb33cc0981" title="Allocate a C array.">allocate</a>(Data*&amp; ptr, <span class="keywordtype">size_t</span> size);
 <a name="l00037"></a>00037 
 <a name="l00044"></a>00044       <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00045"></a>00045       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Memory.html#a272faf5e6054d2b34f1f9e214c9603d2" title="Allocate a C array.">deallocate</a>(Data*&amp; ptr, <span class="keywordtype">size_t</span> size);
+<a name="l00045"></a>00045       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Memory.html#a69c495b5608ec024ad9c88430c2282ac" title="Allocate a C array.">deallocate</a>(Data*&amp; ptr, <span class="keywordtype">size_t</span> size);
 <a name="l00046"></a>00046 
-<a name="l00050"></a>00050       <span class="keyword">static</span> <span class="keywordtype">size_t</span> <a class="code" href="classUtil_1_1Memory.html#a892dbf5065fc6651654e6e463cc660e8" title="Return total amount of memory allocated thus far.">totalAllocated</a>();
+<a name="l00050"></a>00050       <span class="keyword">static</span> <span class="keywordtype">size_t</span> <a class="code" href="classUtil_1_1Memory.html#a149d9ebfc7efa798938ea8e65c147bf4" title="Return total amount of memory allocated thus far.">totalAllocated</a>();
 <a name="l00051"></a>00051 
-<a name="l00055"></a>00055       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Memory.html#a608e10d093425c9228f10ed3c4994598" title="Call this just to guarantee initialization of static memory.">initStatic</a>();
+<a name="l00055"></a>00055       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Memory.html#acefa80470b03b3ccc2469aad3d38cd04" title="Call this just to guarantee initialization of static memory.">initStatic</a>();
 <a name="l00056"></a>00056    
 <a name="l00057"></a>00057    <span class="keyword">private</span>: 
 <a name="l00058"></a>00058 
@@ -90,7 +90,7 @@
 <a name="l00065"></a>00065 <span class="comment">   * Allocate a C array.</span>
 <a name="l00066"></a>00066 <span class="comment">   */</span>
 <a name="l00067"></a>00067    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00068"></a><a class="code" href="classUtil_1_1Memory.html#a9cff6658869b1e33603608194732fe7c">00068</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Memory.html#a9cff6658869b1e33603608194732fe7c" title="Allocate a C array.">Memory::allocate</a>(Data*&amp; ptr, <span class="keywordtype">size_t</span> size)
+<a name="l00068"></a><a class="code" href="classUtil_1_1Memory.html#ae18e5528b402ff46fcd4cdfb33cc0981">00068</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Memory.html#ae18e5528b402ff46fcd4cdfb33cc0981" title="Allocate a C array.">Memory::allocate</a>(Data*&amp; ptr, <span class="keywordtype">size_t</span> size)
 <a name="l00069"></a>00069    {
 <a name="l00070"></a>00070       <span class="keywordflow">try</span> {
 <a name="l00071"></a>00071          ptr  = <span class="keyword">new</span> Data[size];
@@ -105,7 +105,7 @@
 <a name="l00080"></a>00080 <span class="comment">   * De-allocate a C array.</span>
 <a name="l00081"></a>00081 <span class="comment">   */</span>
 <a name="l00082"></a>00082    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00083"></a><a class="code" href="classUtil_1_1Memory.html#a272faf5e6054d2b34f1f9e214c9603d2">00083</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Memory.html#a272faf5e6054d2b34f1f9e214c9603d2" title="Allocate a C array.">Memory::deallocate</a>(Data*&amp; ptr, <span class="keywordtype">size_t</span> size)
+<a name="l00083"></a><a class="code" href="classUtil_1_1Memory.html#a69c495b5608ec024ad9c88430c2282ac">00083</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Memory.html#a69c495b5608ec024ad9c88430c2282ac" title="Allocate a C array.">Memory::deallocate</a>(Data*&amp; ptr, <span class="keywordtype">size_t</span> size)
 <a name="l00084"></a>00084    {
 <a name="l00085"></a>00085       <span class="keywordflow">if</span> (ptr) {
 <a name="l00086"></a>00086          <span class="keyword">delete</span> [] ptr;
@@ -118,7 +118,7 @@
 <a name="l00093"></a>00093 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

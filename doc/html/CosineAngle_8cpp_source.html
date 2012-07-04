@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -69,8 +69,8 @@
 <a name="l00018"></a>00018    <span class="comment">/* </span>
 <a name="l00019"></a>00019 <span class="comment">   * Constructor.</span>
 <a name="l00020"></a>00020 <span class="comment">   */</span>
-<a name="l00021"></a>00021    <a class="code" href="classInter_1_1CosineAngle.html#a23586600e2e40cf18d96b596f81a5d20" title="Default constructor.">CosineAngle::CosineAngle</a>()
-<a name="l00022"></a><a class="code" href="classInter_1_1CosineAngle.html#a23586600e2e40cf18d96b596f81a5d20">00022</a>     : nAngleType_(0)
+<a name="l00021"></a>00021    <a class="code" href="classInter_1_1CosineAngle.html#a49c8c7ac3db2e0a277790593534e9dfa" title="Default constructor.">CosineAngle::CosineAngle</a>()
+<a name="l00022"></a><a class="code" href="classInter_1_1CosineAngle.html#a49c8c7ac3db2e0a277790593534e9dfa">00022</a>     : nAngleType_(0)
 <a name="l00023"></a>00023    { 
 <a name="l00024"></a>00024       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; MaxNAngleType; ++i) {
 <a name="l00025"></a>00025          kappa_[i] = 0.0; 
@@ -80,8 +80,8 @@
 <a name="l00029"></a>00029    <span class="comment">/* </span>
 <a name="l00030"></a>00030 <span class="comment">   * Copy constructor.</span>
 <a name="l00031"></a>00031 <span class="comment">   */</span>
-<a name="l00032"></a>00032    <a class="code" href="classInter_1_1CosineAngle.html#a23586600e2e40cf18d96b596f81a5d20" title="Default constructor.">CosineAngle::CosineAngle</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1CosineAngle.html" title="A three body angle potential, as a function of angle cosine.">CosineAngle</a>&amp; other)
-<a name="l00033"></a><a class="code" href="classInter_1_1CosineAngle.html#aa910ccac182d46ad638adbd449a09034">00033</a>     : nAngleType_(other.nAngleType_)
+<a name="l00032"></a>00032    <a class="code" href="classInter_1_1CosineAngle.html#a49c8c7ac3db2e0a277790593534e9dfa" title="Default constructor.">CosineAngle::CosineAngle</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1CosineAngle.html" title="A three body angle potential, as a function of angle cosine.">CosineAngle</a>&amp; other)
+<a name="l00033"></a><a class="code" href="classInter_1_1CosineAngle.html#a4b8338d0c55241dc640fecc5988d0e63">00033</a>     : nAngleType_(other.nAngleType_)
 <a name="l00034"></a>00034    { 
 <a name="l00035"></a>00035       assert(other.nAngleType_ &gt; 0);
 <a name="l00036"></a>00036       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nAngleType_; ++i) {
@@ -92,14 +92,14 @@
 <a name="l00041"></a>00041    <span class="comment">/* </span>
 <a name="l00042"></a>00042 <span class="comment">   * Destructor.</span>
 <a name="l00043"></a>00043 <span class="comment">   */</span>
-<a name="l00044"></a>00044    <a class="code" href="classInter_1_1CosineAngle.html#a667bbd5c323ad97827b12152f3802758" title="Destructor.">CosineAngle::~CosineAngle</a>()
-<a name="l00045"></a><a class="code" href="classInter_1_1CosineAngle.html#a667bbd5c323ad97827b12152f3802758">00045</a>    {}
+<a name="l00044"></a>00044    <a class="code" href="classInter_1_1CosineAngle.html#aca0e5b4e9b33b98fbd8695c90afed87d" title="Destructor.">CosineAngle::~CosineAngle</a>()
+<a name="l00045"></a><a class="code" href="classInter_1_1CosineAngle.html#aca0e5b4e9b33b98fbd8695c90afed87d">00045</a>    {}
 <a name="l00046"></a>00046  
 <a name="l00047"></a>00047    <span class="comment">/* </span>
 <a name="l00048"></a>00048 <span class="comment">   * Assignment.</span>
 <a name="l00049"></a>00049 <span class="comment">   */</span>
-<a name="l00050"></a>00050    <a class="code" href="classInter_1_1CosineAngle.html" title="A three body angle potential, as a function of angle cosine.">CosineAngle</a>&amp; <a class="code" href="classInter_1_1CosineAngle.html#aaa993b523b9db63f4a8b835274e86045" title="Assignment.">CosineAngle::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1CosineAngle.html" title="A three body angle potential, as a function of angle cosine.">CosineAngle</a>&amp; other)
-<a name="l00051"></a><a class="code" href="classInter_1_1CosineAngle.html#aaa993b523b9db63f4a8b835274e86045">00051</a>    {
+<a name="l00050"></a>00050    <a class="code" href="classInter_1_1CosineAngle.html" title="A three body angle potential, as a function of angle cosine.">CosineAngle</a>&amp; <a class="code" href="classInter_1_1CosineAngle.html#ab547aa7e6fea0c0c777614094da408a1" title="Assignment.">CosineAngle::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1CosineAngle.html" title="A three body angle potential, as a function of angle cosine.">CosineAngle</a>&amp; other)
+<a name="l00051"></a><a class="code" href="classInter_1_1CosineAngle.html#ab547aa7e6fea0c0c777614094da408a1">00051</a>    {
 <a name="l00052"></a>00052       assert(other.nAngleType_ &gt; 0);
 <a name="l00053"></a>00053 
 <a name="l00054"></a>00054       nAngleType_ = other.nAngleType_;
@@ -112,8 +112,8 @@
 <a name="l00061"></a>00061    <span class="comment">/* </span>
 <a name="l00062"></a>00062 <span class="comment">   * Set the nAngleType_ member.</span>
 <a name="l00063"></a>00063 <span class="comment">   */</span>
-<a name="l00064"></a>00064    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineAngle.html#a668567dfa8d2ffd1d9c87f1fa8f00511" title="Set the number of angle types.">CosineAngle::setNAngleType</a>(<span class="keywordtype">int</span> nAngleType)
-<a name="l00065"></a><a class="code" href="classInter_1_1CosineAngle.html#a668567dfa8d2ffd1d9c87f1fa8f00511">00065</a>    {  
+<a name="l00064"></a>00064    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineAngle.html#a16b2a40058b01bf49f501913fe723e2e" title="Set the number of angle types.">CosineAngle::setNAngleType</a>(<span class="keywordtype">int</span> nAngleType)
+<a name="l00065"></a><a class="code" href="classInter_1_1CosineAngle.html#a16b2a40058b01bf49f501913fe723e2e">00065</a>    {  
 <a name="l00066"></a>00066       <span class="keywordflow">if</span> (nAngleType &gt; MaxNAngleType) {
 <a name="l00067"></a>00067          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAngleType &gt; CosineAngle::MaxNAngleType&quot;</span>);
 <a name="l00068"></a>00068       }
@@ -123,8 +123,8 @@
 <a name="l00072"></a>00072    <span class="comment">/* </span>
 <a name="l00073"></a>00073 <span class="comment">   * Read bend interaction parameters kappa from file.</span>
 <a name="l00074"></a>00074 <span class="comment">   */</span>
-<a name="l00075"></a>00075    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineAngle.html#ab5421d3c9175985c9acbf723e5392075" title="Read angle interaction parameters from input stream.">CosineAngle::readParam</a>(std::istream &amp;in) 
-<a name="l00076"></a><a class="code" href="classInter_1_1CosineAngle.html#ab5421d3c9175985c9acbf723e5392075">00076</a>    {
+<a name="l00075"></a>00075    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineAngle.html#a4e66df573e65c1baaf6a62d1eb293278" title="Read angle interaction parameters from input stream.">CosineAngle::readParam</a>(std::istream &amp;in) 
+<a name="l00076"></a><a class="code" href="classInter_1_1CosineAngle.html#a4e66df573e65c1baaf6a62d1eb293278">00076</a>    {
 <a name="l00077"></a>00077       <span class="comment">// Preconditions</span>
 <a name="l00078"></a>00078       <span class="keywordflow">if</span> (nAngleType_ &lt;= 0) {
 <a name="l00079"></a>00079          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAngleType must be set before readParam&quot;</span>);
@@ -139,8 +139,8 @@
 <a name="l00088"></a>00088    <span class="comment">/*</span>
 <a name="l00089"></a>00089 <span class="comment">   * Modify a parameter, identified by a string.</span>
 <a name="l00090"></a>00090 <span class="comment">   */</span>
-<a name="l00091"></a>00091    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineAngle.html#a0ab8f6bbd2e18cfd4df7ced299fe82f0" title="Modify a parameter, identified by a string.">CosineAngle::set</a>(std::string name, <span class="keywordtype">int</span> type, <span class="keywordtype">double</span> value)
-<a name="l00092"></a><a class="code" href="classInter_1_1CosineAngle.html#a0ab8f6bbd2e18cfd4df7ced299fe82f0">00092</a>    {
+<a name="l00091"></a>00091    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1CosineAngle.html#a6192148a06ebb8f915ab7e5645bbabda" title="Modify a parameter, identified by a string.">CosineAngle::set</a>(std::string name, <span class="keywordtype">int</span> type, <span class="keywordtype">double</span> value)
+<a name="l00092"></a><a class="code" href="classInter_1_1CosineAngle.html#a6192148a06ebb8f915ab7e5645bbabda">00092</a>    {
 <a name="l00093"></a>00093       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;kappa&quot;</span>) {
 <a name="l00094"></a>00094          kappa_[type] = value;
 <a name="l00095"></a>00095       } <span class="keywordflow">else</span> {
@@ -151,8 +151,8 @@
 <a name="l00100"></a>00100    <span class="comment">/*</span>
 <a name="l00101"></a>00101 <span class="comment">   * Get a parameter value, identified by a string.</span>
 <a name="l00102"></a>00102 <span class="comment">   */</span>
-<a name="l00103"></a>00103    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1CosineAngle.html#a29dcf205f23d3b29d6f3bb6755e01d80" title="Get a parameter value, identified by a string.">CosineAngle::get</a>(std::string name, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
-<a name="l00104"></a><a class="code" href="classInter_1_1CosineAngle.html#a29dcf205f23d3b29d6f3bb6755e01d80">00104</a> <span class="keyword">   </span>{
+<a name="l00103"></a>00103    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1CosineAngle.html#ade48953c3ebb388f11200d0962d94042" title="Get a parameter value, identified by a string.">CosineAngle::get</a>(std::string name, <span class="keywordtype">int</span> type)<span class="keyword"> const</span>
+<a name="l00104"></a><a class="code" href="classInter_1_1CosineAngle.html#ade48953c3ebb388f11200d0962d94042">00104</a> <span class="keyword">   </span>{
 <a name="l00105"></a>00105       <span class="keywordtype">double</span> value = 0.0;
 <a name="l00106"></a>00106       <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;kappa&quot;</span>) {
 <a name="l00107"></a>00107          value = kappa_[type];
@@ -165,15 +165,15 @@
 <a name="l00114"></a>00114    <span class="comment">/*</span>
 <a name="l00115"></a>00115 <span class="comment">   * Return name string &quot;CosineAngle&quot; for this evaluator class.</span>
 <a name="l00116"></a>00116 <span class="comment">   */</span>
-<a name="l00117"></a>00117    std::string <a class="code" href="classInter_1_1CosineAngle.html#a13c07285e858b2c232919fd57b635e1b" title="Return name string &amp;quot;CosineAngle&amp;quot; for this evaluator class.">CosineAngle::className</a>()<span class="keyword"> const</span>
-<a name="l00118"></a><a class="code" href="classInter_1_1CosineAngle.html#a13c07285e858b2c232919fd57b635e1b">00118</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;CosineAngle&quot;</span>); }
+<a name="l00117"></a>00117    std::string <a class="code" href="classInter_1_1CosineAngle.html#a9e940d89449bb2740b6edae9b48c8213" title="Return name string &amp;quot;CosineAngle&amp;quot; for this evaluator class.">CosineAngle::className</a>()<span class="keyword"> const</span>
+<a name="l00118"></a><a class="code" href="classInter_1_1CosineAngle.html#a9e940d89449bb2740b6edae9b48c8213">00118</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;CosineAngle&quot;</span>); }
 <a name="l00119"></a>00119 
 <a name="l00120"></a>00120 }
 <a name="l00121"></a>00121  
 <a name="l00122"></a>00122 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

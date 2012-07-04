@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,8 +71,8 @@
 <a name="l00020"></a>00020    <span class="comment">/* </span>
 <a name="l00021"></a>00021 <span class="comment">   * Constructor.</span>
 <a name="l00022"></a>00022 <span class="comment">   */</span>
-<a name="l00023"></a>00023    <a class="code" href="classInter_1_1TanhCosineExternal.html#aca5a9ee8aa44170ec86e324a18ea12ce" title="Default constructor.">TanhCosineExternal::TanhCosineExternal</a>() 
-<a name="l00024"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#aca5a9ee8aa44170ec86e324a18ea12ce">00024</a>     : perpDirection_(0),
+<a name="l00023"></a>00023    <a class="code" href="classInter_1_1TanhCosineExternal.html#ad07e73e46c401c725b37bdedd654a7a3" title="Default constructor.">TanhCosineExternal::TanhCosineExternal</a>() 
+<a name="l00024"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#ad07e73e46c401c725b37bdedd654a7a3">00024</a>     : perpDirection_(0),
 <a name="l00025"></a>00025       width_(),
 <a name="l00026"></a>00026       externalParameter_(),
 <a name="l00027"></a>00027       periodicity_(),
@@ -84,8 +84,8 @@
 <a name="l00033"></a>00033    <span class="comment">/* </span>
 <a name="l00034"></a>00034 <span class="comment">   * Copy constructor.</span>
 <a name="l00035"></a>00035 <span class="comment">   */</span>
-<a name="l00036"></a>00036    <a class="code" href="classInter_1_1TanhCosineExternal.html#aca5a9ee8aa44170ec86e324a18ea12ce" title="Default constructor.">TanhCosineExternal::TanhCosineExternal</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1TanhCosineExternal.html" title="A clipped cosine potential that induces lamellar ordering along the direction specified by perpDirect...">TanhCosineExternal</a>&amp; other)
-<a name="l00037"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#ae6cd00561fbbb47fa4dd0f37e45c56e9">00037</a>     : perpDirection_(other.perpDirection_),
+<a name="l00036"></a>00036    <a class="code" href="classInter_1_1TanhCosineExternal.html#ad07e73e46c401c725b37bdedd654a7a3" title="Default constructor.">TanhCosineExternal::TanhCosineExternal</a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1TanhCosineExternal.html" title="A clipped cosine potential that induces lamellar ordering along the direction specified by perpDirect...">TanhCosineExternal</a>&amp; other)
+<a name="l00037"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#a644db876daa4a8312ce735bf8da2af4d">00037</a>     : perpDirection_(other.perpDirection_),
 <a name="l00038"></a>00038       width_(other.width_),
 <a name="l00039"></a>00039       externalParameter_(other.externalParameter_),
 <a name="l00040"></a>00040       periodicity_(other.periodicity_),
@@ -102,8 +102,8 @@
 <a name="l00051"></a>00051    <span class="comment">/* </span>
 <a name="l00052"></a>00052 <span class="comment">   * Assignment operator.</span>
 <a name="l00053"></a>00053 <span class="comment">   */</span>
-<a name="l00054"></a>00054    <a class="code" href="classInter_1_1TanhCosineExternal.html" title="A clipped cosine potential that induces lamellar ordering along the direction specified by perpDirect...">TanhCosineExternal</a>&amp; <a class="code" href="classInter_1_1TanhCosineExternal.html#a3f346afea3fff726d6e940d18d8dae5a" title="Assignment.">TanhCosineExternal::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1TanhCosineExternal.html" title="A clipped cosine potential that induces lamellar ordering along the direction specified by perpDirect...">TanhCosineExternal</a>&amp; other)
-<a name="l00055"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#a3f346afea3fff726d6e940d18d8dae5a">00055</a>    {
+<a name="l00054"></a>00054    <a class="code" href="classInter_1_1TanhCosineExternal.html" title="A clipped cosine potential that induces lamellar ordering along the direction specified by perpDirect...">TanhCosineExternal</a>&amp; <a class="code" href="classInter_1_1TanhCosineExternal.html#aafa98b47aa8d5f39f4a02fb5a7a777b3" title="Assignment.">TanhCosineExternal::operator = </a>(<span class="keyword">const</span> <a class="code" href="classInter_1_1TanhCosineExternal.html" title="A clipped cosine potential that induces lamellar ordering along the direction specified by perpDirect...">TanhCosineExternal</a>&amp; other)
+<a name="l00055"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#aafa98b47aa8d5f39f4a02fb5a7a777b3">00055</a>    {
 <a name="l00056"></a>00056       perpDirection_    = other.perpDirection_;
 <a name="l00057"></a>00057       boundaryPtr_      = other.boundaryPtr_;
 <a name="l00058"></a>00058       nAtomType_        = other.nAtomType_;
@@ -121,8 +121,8 @@
 <a name="l00070"></a>00070    <span class="comment">/* </span>
 <a name="l00071"></a>00071 <span class="comment">   * Set nAtomType</span>
 <a name="l00072"></a>00072 <span class="comment">   */</span>
-<a name="l00073"></a>00073    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1TanhCosineExternal.html#a9549e24ee72625c94fd6ae7d61ceeee8" title="Set nAtomType value.">TanhCosineExternal::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType) 
-<a name="l00074"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#a9549e24ee72625c94fd6ae7d61ceeee8">00074</a>    {  
+<a name="l00073"></a>00073    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1TanhCosineExternal.html#a2dd4a75cb9f7d5f29e4b3efc233858a4" title="Set nAtomType value.">TanhCosineExternal::setNAtomType</a>(<span class="keywordtype">int</span> nAtomType) 
+<a name="l00074"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#a2dd4a75cb9f7d5f29e4b3efc233858a4">00074</a>    {  
 <a name="l00075"></a>00075       <span class="keywordflow">if</span> (nAtomType &lt;= 0) {
 <a name="l00076"></a>00076          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtomType &lt;= 0&quot;</span>);
 <a name="l00077"></a>00077       }
@@ -132,8 +132,8 @@
 <a name="l00081"></a>00081       nAtomType_ = nAtomType;
 <a name="l00082"></a>00082    }
 <a name="l00083"></a>00083 
-<a name="l00084"></a>00084    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1TanhCosineExternal.html#a0166cd3d432c47fb9c95ffed5209fbcb" title="Sets external parameter.">TanhCosineExternal::setExternalParameter</a>(<span class="keywordtype">double</span> externalParameter) 
-<a name="l00085"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#a0166cd3d432c47fb9c95ffed5209fbcb">00085</a>    {  
+<a name="l00084"></a>00084    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1TanhCosineExternal.html#aaf84a34c54d03ab45def8e9ea74e9ab6" title="Sets external parameter.">TanhCosineExternal::setExternalParameter</a>(<span class="keywordtype">double</span> externalParameter) 
+<a name="l00085"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#aaf84a34c54d03ab45def8e9ea74e9ab6">00085</a>    {  
 <a name="l00086"></a>00086       <span class="comment">// Preconditions</span>
 <a name="l00087"></a>00087       <span class="keywordflow">if</span> (!isInitialized_) {
 <a name="l00088"></a>00088          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;TanhCosineExternal potential is not initialized&quot;</span>);
@@ -146,14 +146,14 @@
 <a name="l00095"></a>00095    <span class="comment">/* </span>
 <a name="l00096"></a>00096 <span class="comment">   * Set pointer to the Boundary.</span>
 <a name="l00097"></a>00097 <span class="comment">   */</span>
-<a name="l00098"></a>00098    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1TanhCosineExternal.html#aae3d88e326e8e921368e6d8fc0fc992c" title="Set pointer to Boundary.">TanhCosineExternal::setBoundary</a>(Boundary &amp;boundary)
-<a name="l00099"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#aae3d88e326e8e921368e6d8fc0fc992c">00099</a>    {  boundaryPtr_ = &amp;boundary; }
+<a name="l00098"></a>00098    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1TanhCosineExternal.html#a7bd5775d8d84402b1f8f65fff062bd30" title="Set pointer to Boundary.">TanhCosineExternal::setBoundary</a>(<a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a> &amp;boundary)
+<a name="l00099"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#a7bd5775d8d84402b1f8f65fff062bd30">00099</a>    {  boundaryPtr_ = &amp;boundary; }
 <a name="l00100"></a>00100    
 <a name="l00101"></a>00101    <span class="comment">/* </span>
 <a name="l00102"></a>00102 <span class="comment">   * Read potential parameters from file.</span>
 <a name="l00103"></a>00103 <span class="comment">   */</span>
-<a name="l00104"></a>00104    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1TanhCosineExternal.html#ab5421d3c9175985c9acbf723e5392075" title="Read potential parameters, and initialize other variables.">TanhCosineExternal::readParam</a>(std::istream &amp;in) 
-<a name="l00105"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#ab5421d3c9175985c9acbf723e5392075">00105</a>    {
+<a name="l00104"></a>00104    <span class="keywordtype">void</span> <a class="code" href="classInter_1_1TanhCosineExternal.html#ab4907724b4f20f74ae371eb77d120b02" title="Read potential parameters, and initialize other variables.">TanhCosineExternal::readParam</a>(std::istream &amp;in) 
+<a name="l00105"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#ab4907724b4f20f74ae371eb77d120b02">00105</a>    {
 <a name="l00106"></a>00106       <span class="keywordflow">if</span> (nAtomType_ == 0) {
 <a name="l00107"></a>00107          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtomType must be set before readParam&quot;</span>);
 <a name="l00108"></a>00108       }
@@ -164,7 +164,7 @@
 <a name="l00113"></a>00113       <span class="comment">// Read parameters</span>
 <a name="l00114"></a>00114       <span class="comment">//readBegin(in,  &quot;TanhCosineExternal&quot;);</span>
 <a name="l00115"></a>00115       read&lt;int&gt;(in, <span class="stringliteral">&quot;perpDirection&quot;</span>, perpDirection_);
-<a name="l00116"></a>00116       <span class="keywordflow">if</span> (perpDirection_ &lt; 0 || perpDirection_ &gt;= <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>) {
+<a name="l00116"></a>00116       <span class="keywordflow">if</span> (perpDirection_ &lt; 0 || perpDirection_ &gt;= <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>) {
 <a name="l00117"></a>00117          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid index for perpendicular direction.&quot;</span>);
 <a name="l00118"></a>00118       }
 <a name="l00119"></a>00119       prefactor_.allocate(nAtomType_);
@@ -179,22 +179,22 @@
 <a name="l00128"></a>00128       isInitialized_ = <span class="keyword">true</span>;
 <a name="l00129"></a>00129    }
 <a name="l00130"></a>00130 
-<a name="l00131"></a>00131    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1TanhCosineExternal.html#a59d3288a2ea0c6d85b0511cd9009f496" title="Returns external parameter.">TanhCosineExternal::externalParameter</a>()<span class="keyword"> const</span>
-<a name="l00132"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#a59d3288a2ea0c6d85b0511cd9009f496">00132</a> <span class="keyword">   </span>{ 
+<a name="l00131"></a>00131    <span class="keywordtype">double</span> <a class="code" href="classInter_1_1TanhCosineExternal.html#aa3238e76198a07a3ce94357fc83762a2" title="Returns external parameter.">TanhCosineExternal::externalParameter</a>()<span class="keyword"> const</span>
+<a name="l00132"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#aa3238e76198a07a3ce94357fc83762a2">00132</a> <span class="keyword">   </span>{ 
 <a name="l00133"></a>00133      <span class="keywordflow">return</span> externalParameter_; 
 <a name="l00134"></a>00134    }
 <a name="l00135"></a>00135 
 <a name="l00136"></a>00136    <span class="comment">/*</span>
 <a name="l00137"></a>00137 <span class="comment">   * Return name string &quot;TanhCosineExternal&quot;.</span>
 <a name="l00138"></a>00138 <span class="comment">   */</span>
-<a name="l00139"></a>00139    std::string <a class="code" href="classInter_1_1TanhCosineExternal.html#a13c07285e858b2c232919fd57b635e1b" title="Return name string &amp;quot;TanhCosineExternal&amp;quot;.">TanhCosineExternal::className</a>()<span class="keyword"> const</span>
-<a name="l00140"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#a13c07285e858b2c232919fd57b635e1b">00140</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;TanhCosineExternal&quot;</span>); }
+<a name="l00139"></a>00139    std::string <a class="code" href="classInter_1_1TanhCosineExternal.html#aed00588dd8da1d3be6c2eb1d4f4e7343" title="Return name string &amp;quot;TanhCosineExternal&amp;quot;.">TanhCosineExternal::className</a>()<span class="keyword"> const</span>
+<a name="l00140"></a><a class="code" href="classInter_1_1TanhCosineExternal.html#aed00588dd8da1d3be6c2eb1d4f4e7343">00140</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;TanhCosineExternal&quot;</span>); }
 <a name="l00141"></a>00141  
 <a name="l00142"></a>00142 } 
 <a name="l00143"></a>00143 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

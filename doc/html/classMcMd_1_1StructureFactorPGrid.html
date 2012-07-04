@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: StructureFactorPGrid Class Reference</title>
+<title>Simpatico: McMd::StructureFactorPGrid Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>StructureFactorPGrid Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>McMd::StructureFactorPGrid Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::StructureFactorPGrid" --><!-- doxytag: inherits="McMd::StructureFactorP" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -57,9 +57,9 @@
 <p>This class evaluates the structures factors for all wavevectors for all wavevectors within a grid, within a region in which all of the h, k, l integer wavevector components (i.e., Miller indices) has an absolute magnitude less than or equal to a parameter hMax.</p>
 <p>The class also requires a user to specify a variable lattice of enum type LatticeSystem whose value (e.g., Cubic, Orthorhombic, Triclinic) determines the symmetry group that is used to group group equivalent wavevectors into "stars". Use Triclinic to impose no symmetry.</p>
 <p>Example: Here is parameter file for a system with nAtomType = 2, with two monomer types 0 and 1, for calculating the total, 00, and 01 correlation functions on a grid with Miller indices up and including 5:</p>
-<div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#add443713a9ef044f6507b9911b835284" title="Constructor.">StructureFactorPGrid</a>{
-    <a class="code" href="classMcMd_1_1Diagnostic.html#afe5b7de87b935531edcd3d15fbd92166" title="Get interval value.">interval</a>                     1000
-    <a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>     <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#add443713a9ef044f6507b9911b835284" title="Constructor.">StructureFactorPGrid</a>
+<div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#ac66daf9f9099b449a18e8f1d050b5cf6" title="Constructor.">StructureFactorPGrid</a>{
+    <a class="code" href="classMcMd_1_1Diagnostic.html#ad399e6c8cf5acab10360278dc964b4f4" title="Get interval value.">interval</a>                     1000
+    <a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>     <a class="code" href="classMcMd_1_1StructureFactorPGrid.html#ac66daf9f9099b449a18e8f1d050b5cf6" title="Constructor.">StructureFactorPGrid</a>
     nAtomTypeIdPair                  3
     atomTypeIdPairs          -1     -1
                               0      0
@@ -73,17 +73,17 @@
 </div>
 <p><code>#include &lt;<a class="el" href="StructureFactorPGrid_8h_source.html">StructureFactorPGrid.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for StructureFactorPGrid:</div>
+Inheritance diagram for McMd::StructureFactorPGrid:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1StructureFactorPGrid.png" usemap="#StructureFactorPGrid_map" alt=""/>
-  <map id="StructureFactorPGrid_map" name="StructureFactorPGrid_map">
-<area href="classMcMd_1_1StructureFactorP.html" alt="StructureFactorP" shape="rect" coords="92,224,267,248"/>
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; System &gt;" shape="rect" coords="92,168,267,192"/>
-<area href="classMcMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="92,112,267,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,175,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="185,56,360,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,175,24"/>
+  <img src="classMcMd_1_1StructureFactorPGrid.png" usemap="#McMd::StructureFactorPGrid_map" alt=""/>
+  <map id="McMd::StructureFactorPGrid_map" name="McMd::StructureFactorPGrid_map">
+<area href="classMcMd_1_1StructureFactorP.html" alt="McMd::StructureFactorP" shape="rect" coords="113,224,330,248"/>
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; System &gt;" shape="rect" coords="113,168,330,192"/>
+<area href="classMcMd_1_1Diagnostic.html" alt="McMd::Diagnostic" shape="rect" coords="113,112,330,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,217,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="227,56,444,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,217,24"/>
 </map>
  </div></div>
 
@@ -91,22 +91,22 @@ Inheritance diagram for StructureFactorPGrid:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorPGrid.html#add443713a9ef044f6507b9911b835284">StructureFactorPGrid</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#add443713a9ef044f6507b9911b835284"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorPGrid.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorPGrid.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up before a simulation.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorPGrid.html#a7437b254e19e7e12fc2ec99945f4ecea">output</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output structure factors, averaged over stars.  <a href="#a7437b254e19e7e12fc2ec99945f4ecea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorPGrid.html#ac66daf9f9099b449a18e8f1d050b5cf6">StructureFactorPGrid</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac66daf9f9099b449a18e8f1d050b5cf6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorPGrid.html#adf796554a6bd53321fbe18ae1709f006">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#adf796554a6bd53321fbe18ae1709f006"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorPGrid.html#a18798591c2e296f20f64a323f2e9b73f">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up before a simulation.  <a href="#a18798591c2e296f20f64a323f2e9b73f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1StructureFactorPGrid.html#a607f2f21919e6b0a3d85397c7dbc5059">output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output structure factors, averaged over stars.  <a href="#a607f2f21919e6b0a3d85397c7dbc5059"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="add443713a9ef044f6507b9911b835284"></a><!-- doxytag: member="McMd::StructureFactorPGrid::StructureFactorPGrid" ref="add443713a9ef044f6507b9911b835284" args="(System &amp;system)" -->
+<a class="anchor" id="ac66daf9f9099b449a18e8f1d050b5cf6"></a><!-- doxytag: member="McMd::StructureFactorPGrid::StructureFactorPGrid" ref="ac66daf9f9099b449a18e8f1d050b5cf6" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1StructureFactorPGrid.html">StructureFactorPGrid</a> </td>
+          <td class="memname">McMd::StructureFactorPGrid::StructureFactorPGrid </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -129,12 +129,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::StructureFactorPGrid::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="adf796554a6bd53321fbe18ae1709f006"></a><!-- doxytag: member="McMd::StructureFactorPGrid::readParam" ref="adf796554a6bd53321fbe18ae1709f006" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::StructureFactorPGrid::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -161,20 +161,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1StructureFactorP.html#ab5421d3c9175985c9acbf723e5392075">StructureFactorP</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1StructureFactorP.html#a86b2bb414ae7f99f3e1a0917592dac31">McMd::StructureFactorP</a>.</p>
 
 <p>Definition at line <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00035">35</a> of file <a class="el" href="StructureFactorPGrid_8cpp_source.html">StructureFactorPGrid.cpp</a>.</p>
 
-<p>References <a class="el" href="SymmetryGroup_8h_source.html#l00180">SymmetryGroup&lt; Symmetry &gt;::add()</a>, <a class="el" href="SymmetryGroup_8h_source.html#l00198">SymmetryGroup&lt; Symmetry &gt;::makeCompleteGroup()</a>, <a class="el" href="PointGroup_8h_source.html#l00047">PointGroup::makeStar()</a>, <a class="el" href="PointSymmetry_8h_source.html#l00170">PointSymmetry::R()</a>, <a class="el" href="FSArray_8h_source.html#l00207">FSArray&lt; Data, Capacity &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="SymmetryGroup_8h_source.html#l00180">Util::SymmetryGroup&lt; Symmetry &gt;::add()</a>, <a class="el" href="SymmetryGroup_8h_source.html#l00198">Util::SymmetryGroup&lt; Symmetry &gt;::makeCompleteGroup()</a>, <a class="el" href="PointGroup_8h_source.html#l00047">Util::PointGroup::makeStar()</a>, <a class="el" href="PointSymmetry_8h_source.html#l00170">Util::PointSymmetry::R()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::StructureFactorPGrid::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a18798591c2e296f20f64a323f2e9b73f"></a><!-- doxytag: member="McMd::StructureFactorPGrid::setup" ref="a18798591c2e296f20f64a323f2e9b73f" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void McMd::StructureFactorPGrid::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -185,18 +185,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Set up before a simulation. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1StructureFactorP.html#a4fc01d736fe50cf5b977f755b675f11d">StructureFactorP</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1StructureFactorP.html#a35842451b8907b8c1dd55831fe057609">McMd::StructureFactorP</a>.</p>
 
 <p>Definition at line <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00127">127</a> of file <a class="el" href="StructureFactorPGrid_8cpp_source.html">StructureFactorPGrid.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7437b254e19e7e12fc2ec99945f4ecea"></a><!-- doxytag: member="McMd::StructureFactorPGrid::output" ref="a7437b254e19e7e12fc2ec99945f4ecea" args="()" -->
+<a class="anchor" id="a607f2f21919e6b0a3d85397c7dbc5059"></a><!-- doxytag: member="McMd::StructureFactorPGrid::output" ref="a607f2f21919e6b0a3d85397c7dbc5059" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void McMd::StructureFactorPGrid::output </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -207,7 +207,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Output structure factors, averaged over stars. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1StructureFactorP.html#a7437b254e19e7e12fc2ec99945f4ecea">StructureFactorP</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1StructureFactorP.html#ae73786ea8e2f4063740c0a9dbd7264f4">McMd::StructureFactorP</a>.</p>
 
 <p>Definition at line <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00130">130</a> of file <a class="el" href="StructureFactorPGrid_8cpp_source.html">StructureFactorPGrid.cpp</a>.</p>
 
@@ -220,7 +220,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="StructureFactorPGrid_8cpp_source.html">StructureFactorPGrid.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:54 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:26 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -79,16 +79,16 @@
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028    <span class="keyword">using namespace </span>Util;
 <a name="l00029"></a>00029 
-<a name="l00031"></a>00031    <a class="code" href="classMcMd_1_1StructureFactor.html#acc9fe3ae4989f5130b4f6282abc3baf5" title="Constructor.">StructureFactor::StructureFactor</a>(System&amp; system) 
-<a name="l00032"></a><a class="code" href="classMcMd_1_1StructureFactor.html#acc9fe3ae4989f5130b4f6282abc3baf5">00032</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
+<a name="l00031"></a>00031    <a class="code" href="classMcMd_1_1StructureFactor.html#aa28353dc8806cc27580301d7ea726689" title="Constructor.">StructureFactor::StructureFactor</a>(System&amp; system) 
+<a name="l00032"></a><a class="code" href="classMcMd_1_1StructureFactor.html#aa28353dc8806cc27580301d7ea726689">00032</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
 <a name="l00033"></a>00033       isInitialized_(false)
 <a name="l00034"></a>00034    {}
 <a name="l00035"></a>00035 
-<a name="l00036"></a>00036    <a class="code" href="classMcMd_1_1StructureFactor.html#a961acb397e2b5e19ed673a3405f171be" title="Destructor.">StructureFactor::~StructureFactor</a>() 
-<a name="l00037"></a><a class="code" href="classMcMd_1_1StructureFactor.html#a961acb397e2b5e19ed673a3405f171be">00037</a>    {}
+<a name="l00036"></a>00036    <a class="code" href="classMcMd_1_1StructureFactor.html#a1549166958f6db836e10b15f1ab45d90" title="Destructor.">StructureFactor::~StructureFactor</a>() 
+<a name="l00037"></a><a class="code" href="classMcMd_1_1StructureFactor.html#a1549166958f6db836e10b15f1ab45d90">00037</a>    {}
 <a name="l00038"></a>00038 
-<a name="l00040"></a>00040    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file.">StructureFactor::readParam</a>(std::istream&amp; in) 
-<a name="l00041"></a><a class="code" href="classMcMd_1_1StructureFactor.html#ab5421d3c9175985c9acbf723e5392075">00041</a>    {
+<a name="l00040"></a>00040    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#a1102aa938724252b6b14ade8c87484f2" title="Read parameters from file.">StructureFactor::readParam</a>(std::istream&amp; in) 
+<a name="l00041"></a><a class="code" href="classMcMd_1_1StructureFactor.html#a1102aa938724252b6b14ade8c87484f2">00041</a>    {
 <a name="l00042"></a>00042 
 <a name="l00043"></a>00043       <span class="comment">// Read interval and parameters for AutoCorrArray</span>
 <a name="l00044"></a>00044       <span class="comment">//SystemDiagnostic&lt;System&gt;::readParam(in);</span>
@@ -119,8 +119,8 @@
 <a name="l00069"></a>00069    <span class="comment">/*</span>
 <a name="l00070"></a>00070 <span class="comment">   * Clear accumulators.</span>
 <a name="l00071"></a>00071 <span class="comment">   */</span>
-<a name="l00072"></a>00072    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#a4fc01d736fe50cf5b977f755b675f11d" title="Clear accumulators.">StructureFactor::setup</a>() 
-<a name="l00073"></a><a class="code" href="classMcMd_1_1StructureFactor.html#a4fc01d736fe50cf5b977f755b675f11d">00073</a>    {
+<a name="l00072"></a>00072    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#adad59faccad30eb510aa782095ac588e" title="Clear accumulators.">StructureFactor::setup</a>() 
+<a name="l00073"></a><a class="code" href="classMcMd_1_1StructureFactor.html#adad59faccad30eb510aa782095ac588e">00073</a>    {
 <a name="l00074"></a>00074       <span class="keywordflow">if</span> (!isInitialized_) {
 <a name="l00075"></a>00075          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: object is not initialized&quot;</span>);
 <a name="l00076"></a>00076       }
@@ -142,8 +142,8 @@
 <a name="l00092"></a>00092       nSample_ = 0;
 <a name="l00093"></a>00093    }
 <a name="l00094"></a>00094  
-<a name="l00096"></a>00096    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Add particles to StructureFactor accumulators.">StructureFactor::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00097"></a><a class="code" href="classMcMd_1_1StructureFactor.html#afc17577823a371a5ead4e51ebb8ec2ef">00097</a>    {
+<a name="l00096"></a>00096    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#a72a7ffceb6e51feaac435a87febd35b0" title="Add particles to StructureFactor accumulators.">StructureFactor::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00097"></a><a class="code" href="classMcMd_1_1StructureFactor.html#a72a7ffceb6e51feaac435a87febd35b0">00097</a>    {
 <a name="l00098"></a>00098       <span class="keywordflow">if</span> (isAtInterval(iStep))  {
 <a name="l00099"></a>00099 
 <a name="l00100"></a>00100          <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  position;
@@ -166,17 +166,17 @@
 <a name="l00117"></a>00117          nSpecies = system().simulation().nSpecies();
 <a name="l00118"></a>00118          <span class="keywordflow">for</span> (iSpecies = 0; iSpecies &lt; nSpecies; ++iSpecies) {
 <a name="l00119"></a>00119             system().begin(iSpecies, molIter); 
-<a name="l00120"></a>00120             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00120"></a>00120             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
 <a name="l00121"></a>00121                molIter-&gt;begin(atomIter); 
-<a name="l00122"></a>00122                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00122"></a>00122                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00123"></a>00123                   position = atomIter-&gt;position();
 <a name="l00124"></a>00124                   typeId   = atomIter-&gt;typeId();
 <a name="l00125"></a>00125  
 <a name="l00126"></a>00126         <span class="comment">// Loop over wavevectors</span>
 <a name="l00127"></a>00127                   <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
 <a name="l00128"></a>00128                
-<a name="l00129"></a>00129                      product = position.<a class="code" href="classUtil_1_1Vector.html#a5431123ac320a0ed069d9c7a30702c7b" title="Return dot product of this vector and vector v.">dot</a>(waveVectors_[i]);
-<a name="l00130"></a>00130                      expFactor = exp( product*<a class="code" href="classUtil_1_1Constants.html#ae5e782ecd9edaa713f754637e8fbe364" title="Square root of -1.">Constants::Im</a> );
+<a name="l00129"></a>00129                      product = position.<a class="code" href="classUtil_1_1Vector.html#aa1b64030ac95721bc39038c003240c09" title="Return dot product of this vector and vector v.">dot</a>(waveVectors_[i]);
+<a name="l00130"></a>00130                      expFactor = exp( product*<a class="code" href="classUtil_1_1Constants.html#af5e73d2cc0c0da9efe5cdb9c3b100d86" title="Square root of -1.">Constants::Im</a> );
 <a name="l00131"></a>00131                      <span class="keywordflow">for</span> (j = 0; j &lt; nMode_; ++j) {
 <a name="l00132"></a>00132                         fourierModes_(i, j) += modes_(j, typeId)*expFactor;
 <a name="l00133"></a>00133                      }
@@ -209,16 +209,16 @@
 <a name="l00160"></a>00160 
 <a name="l00161"></a>00161    }
 <a name="l00162"></a>00162 
-<a name="l00166"></a>00166    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#ac8f153070ac13cd33c3ff5c00cf3ef4a" title="Update wavevectors.">StructureFactor::makeWaveVectors</a>() 
-<a name="l00167"></a><a class="code" href="classMcMd_1_1StructureFactor.html#ac8f153070ac13cd33c3ff5c00cf3ef4a">00167</a>    {
+<a name="l00166"></a>00166    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#a08ffda8482273a7f399a1139a136e0e1" title="Update wavevectors.">StructureFactor::makeWaveVectors</a>() 
+<a name="l00167"></a><a class="code" href="classMcMd_1_1StructureFactor.html#a08ffda8482273a7f399a1139a136e0e1">00167</a>    {
 <a name="l00168"></a>00168       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>    dWave;
-<a name="l00169"></a>00169       Boundary* boundaryPtr = &amp;system().boundary();
+<a name="l00169"></a>00169       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>* boundaryPtr = &amp;system().boundary();
 <a name="l00170"></a>00170       <span class="keywordtype">int</span>       i, j;
 <a name="l00171"></a>00171 
 <a name="l00172"></a>00172       <span class="comment">// Calculate wavevectors</span>
 <a name="l00173"></a>00173       <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
-<a name="l00174"></a>00174          waveVectors_[i] = <a class="code" href="classUtil_1_1Vector.html#a9295b4b42a83e7087e7eb10e4a65fa5d" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>;
-<a name="l00175"></a>00175          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00174"></a>00174          waveVectors_[i] = <a class="code" href="classUtil_1_1Vector.html#a2b7442f15bc3e08a496e3dc3c684525b" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>;
+<a name="l00175"></a>00175          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00176"></a>00176             dWave  = boundaryPtr-&gt;reciprocalBasisVector(j);
 <a name="l00177"></a>00177             dWave *= waveIntVectors_[i][j];
 <a name="l00178"></a>00178             waveVectors_[i] += dWave;
@@ -227,8 +227,8 @@
 <a name="l00181"></a>00181       }
 <a name="l00182"></a>00182    }
 <a name="l00183"></a>00183 
-<a name="l00184"></a>00184    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results to predefined output file.">StructureFactor::output</a>() 
-<a name="l00185"></a><a class="code" href="classMcMd_1_1StructureFactor.html#a7437b254e19e7e12fc2ec99945f4ecea">00185</a>    {
+<a name="l00184"></a>00184    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#a12a7f01baf0eb4ca12ebd84600c8414b" title="Output results to predefined output file.">StructureFactor::output</a>() 
+<a name="l00185"></a><a class="code" href="classMcMd_1_1StructureFactor.html#a12a7f01baf0eb4ca12ebd84600c8414b">00185</a>    {
 <a name="l00186"></a>00186       <span class="comment">// Echo parameters to a log file</span>
 <a name="l00187"></a>00187       fileMaster().openOutputFile(outputFileName(<span class="stringliteral">&quot;.prm&quot;</span>), outputFile_);
 <a name="l00188"></a>00188       writeParam(outputFile_);
@@ -239,7 +239,7 @@
 <a name="l00193"></a>00193       <span class="keywordtype">double</span>      value;
 <a name="l00194"></a>00194       <span class="keywordtype">int</span>         i, j, k;
 <a name="l00195"></a>00195       <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
-<a name="l00196"></a>00196          <span class="keywordflow">for</span> (k = 0; k &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++k) {
+<a name="l00196"></a>00196          <span class="keywordflow">for</span> (k = 0; k &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++k) {
 <a name="l00197"></a>00197             outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(waveIntVectors_[i][k], 5);
 <a name="l00198"></a>00198          }
 <a name="l00199"></a>00199          outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[i].abs(), 20, 8);
@@ -269,14 +269,14 @@
 <a name="l00223"></a>00223 
 <a name="l00224"></a>00224          <span class="comment">// Construct file suffix for this structure factor</span>
 <a name="l00225"></a>00225          suffix = std::string(<span class="stringliteral">&quot;.&quot;</span>);
-<a name="l00226"></a>00226          suffix += <a class="code" href="namespaceUtil.html#a48ded7fea065b110a5bf453d3c30826f" title="Return string representation of an integer.">toString</a>(j);
+<a name="l00226"></a>00226          suffix += <a class="code" href="namespaceUtil.html#a69d6f862289b96b4b0c0591357c8823e" title="Return string representation of an integer.">toString</a>(j);
 <a name="l00227"></a>00227          suffix += std::string(<span class="stringliteral">&quot;.dat&quot;</span>);
 <a name="l00228"></a>00228 
 <a name="l00229"></a>00229          fileMaster().openOutputFile(outputFileName(suffix), outputFile_);
 <a name="l00230"></a>00230 
 <a name="l00231"></a>00231          <span class="comment">// Loop over waves to output structure factor</span>
 <a name="l00232"></a>00232          <span class="keywordflow">for</span> (i = 0; i &lt; nWave_; ++i) {
-<a name="l00233"></a>00233             <span class="keywordflow">for</span> (k = 0; k &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++k) {
+<a name="l00233"></a>00233             <span class="keywordflow">for</span> (k = 0; k &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++k) {
 <a name="l00234"></a>00234                outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(waveIntVectors_[i][k], 5);
 <a name="l00235"></a>00235             }
 <a name="l00236"></a>00236             outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(waveVectors_[i].abs(), 20, 8);
@@ -294,19 +294,19 @@
 <a name="l00248"></a>00248    <span class="comment">/*</span>
 <a name="l00249"></a>00249 <span class="comment">   * Save state to binary file archive.</span>
 <a name="l00250"></a>00250 <span class="comment">   */</span>
-<a name="l00251"></a>00251    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64" title="Save state to binary file archive.">StructureFactor::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
-<a name="l00252"></a><a class="code" href="classMcMd_1_1StructureFactor.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">00252</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00251"></a>00251    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#a528ca82c5d4ee1199b4850ef26d00ffb" title="Save state to binary file archive.">StructureFactor::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
+<a name="l00252"></a><a class="code" href="classMcMd_1_1StructureFactor.html#a528ca82c5d4ee1199b4850ef26d00ffb">00252</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00253"></a>00253 
 <a name="l00254"></a>00254    <span class="comment">/*</span>
 <a name="l00255"></a>00255 <span class="comment">   * Load state from a binary file archive.</span>
 <a name="l00256"></a>00256 <span class="comment">   */</span>
-<a name="l00257"></a>00257    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load state from a binary file archive.">StructureFactor::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
-<a name="l00258"></a><a class="code" href="classMcMd_1_1StructureFactor.html#aa3d71af4cc5dfb2be6be816a8f562416">00258</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00257"></a>00257    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1StructureFactor.html#a3a015cd16aa404148218746a04e5da6c" title="Load state from a binary file archive.">StructureFactor::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00258"></a><a class="code" href="classMcMd_1_1StructureFactor.html#a3a015cd16aa404148218746a04e5da6c">00258</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00259"></a>00259 }
 <a name="l00260"></a>00260 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: GroupStorage&lt; N &gt; Class Template Reference</title>
+<title>Simpatico: DdMd::GroupStorage&lt; N &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>GroupStorage&lt; N &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__DdMd__Storage__Module.html">Storage</a></div></h1>  </div>
+<h1>DdMd::GroupStorage&lt; N &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__DdMd__Storage__Module.html">Storage</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::GroupStorage" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -62,13 +62,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for GroupStorage&lt; N &gt;:</div>
+Inheritance diagram for DdMd::GroupStorage&lt; N &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classDdMd_1_1GroupStorage.png" usemap="#GroupStorage&lt; N &gt;_map" alt=""/>
-  <map id="GroupStorage&lt; N &gt;_map" name="GroupStorage&lt; N &gt;_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,124,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,124,24"/>
+  <img src="classDdMd_1_1GroupStorage.png" usemap="#DdMd::GroupStorage&lt; N &gt;_map" alt=""/>
+  <map id="DdMd::GroupStorage&lt; N &gt;_map" name="DdMd::GroupStorage&lt; N &gt;_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,164,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,164,24"/>
 </map>
  </div></div>
 
@@ -76,64 +76,57 @@ Inheritance diagram for GroupStorage&lt; N &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a62bbe9be65c21741337d558e9b401be4">GroupStorage</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a62bbe9be65c21741337d558e9b401be4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a68b105508bf52017b2cbac3291046b53">~GroupStorage</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a68b105508bf52017b2cbac3291046b53"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters, allocate memory and initialize.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#abf832aa0ab14e571716c586f7187ab92">initialize</a> (int capacity, int totalCapacity)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set parameters, allocate memory and initialize.  <a href="#abf832aa0ab14e571716c586f7187ab92"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#aecb4f5cfbf6d377b659c9266b16f713a">setNTotal</a> (int nTotal)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value for total number of distinct groups on all processors.  <a href="#aecb4f5cfbf6d377b659c9266b16f713a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a8471e0d31f0964a614a24305bae1e584">newPtr</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer to an address available for a new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>.  <a href="#a8471e0d31f0964a614a24305bae1e584"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a3b2c99a01d5f70ef89e04b0896d727ea">returnPtr</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the action of newPtr.  <a href="#a3b2c99a01d5f70ef89e04b0896d727ea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#aa667972f5079bc3394a016da86db2aa0">add</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the most recent new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> to the set of local groups.  <a href="#aa667972f5079bc3394a016da86db2aa0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#aff27b1e08be74b62a46e09744c951248">add</a> (int id)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> with a specified id.  <a href="#aff27b1e08be74b62a46e09744c951248"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ae5543aefb3ae85ddc328ca2e2463bfd6">remove</a> (<a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *groupPtr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a specific <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>.  <a href="#ae5543aefb3ae85ddc328ca2e2463bfd6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#add8505e9a4df8d90b6b16d5f15b0c8b0">addIncomplete</a> (<a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *groupPtr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add to set of incomplete groups.  <a href="#add8505e9a4df8d90b6b16d5f15b0c8b0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a5117d1866a6ea423841a5f2904c814ee">removeIncomplete</a> (<a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *groupPtr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove from set of incomplete groups.  <a href="#a5117d1866a6ea423841a5f2904c814ee"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#aeac62854c54a1ec2c05f93539b269d5a">clearIncompleteSet</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the set of incomplete groups.  <a href="#aeac62854c54a1ec2c05f93539b269d5a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a7f7642aaa5f071e12ad230093559e13b">computeNTotal</a> (MPI::Intracomm &amp;communicator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute and store the number of distinct groups on all processors.  <a href="#a7f7642aaa5f071e12ad230093559e13b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a6e712b69166854fedd8d0a6ee969e462">find</a> (int id) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find local Group&lt;N&gt; indexed by global id.  <a href="#a6e712b69166854fedd8d0a6ee969e462"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a42a74137fc7566d3f150b65bd54fb04a">begin</a> (<a class="el" href="classDdMd_1_1GroupIterator.html">GroupIterator</a>&lt; N &gt; &amp;iterator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set iterator to beginning of the set of groups.  <a href="#a42a74137fc7566d3f150b65bd54fb04a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a70cb27dc8790d94101ecf93fd1175585">begin</a> (<a class="el" href="classDdMd_1_1ConstGroupIterator.html">ConstGroupIterator</a>&lt; N &gt; &amp;iterator) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set iterator to beginning of the set of groups.  <a href="#a70cb27dc8790d94101ecf93fd1175585"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#abf002ab5feee35d6b759793433834d60">begin</a> (<a class="el" href="classDdMd_1_1IncompleteGroupIterator.html">IncompleteGroupIterator</a>&lt; N &gt; &amp;iterator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set iterator to beginning of the set of incomplete groups.  <a href="#abf002ab5feee35d6b759793433834d60"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a2792d4961a711e745c4969dbc0b407d2">begin</a> (<a class="el" href="classDdMd_1_1ConstIncompleteGroupIterator.html">ConstIncompleteGroupIterator</a>&lt; N &gt; &amp;iterator) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set const iterator to beginning of the set of incomplete groups.  <a href="#a2792d4961a711e745c4969dbc0b407d2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">size</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return current number of groups on this processor.  <a href="#ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a104736719cd4e5f21c25705c77064dde">capacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity for groups on this processor.  <a href="#a104736719cd4e5f21c25705c77064dde"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ac4e0e4a443325eabd515ae2983b0d239">totalCapacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum number of groups on all processors.  <a href="#ac4e0e4a443325eabd515ae2983b0d239"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a502aae408ac5875ceb770f780ba954eb">nTotal</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total number of distinct groups on all processors.  <a href="#a502aae408ac5875ceb770f780ba954eb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#afe93e17ac89cd97917811068ba2af214">isValid</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the container is valid, or throw an Exception.  <a href="#afe93e17ac89cd97917811068ba2af214"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a1b35ee0848cf53594affb786612b8691">isValid</a> (<a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;atomStorage, MPI::Intracomm &amp;communicator, bool hasGhosts)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the container is valid, or throw an Exception.  <a href="#a1b35ee0848cf53594affb786612b8691"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ad7eb5de35eb1a72853f6632b99d5e235">GroupStorage</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ad7eb5de35eb1a72853f6632b99d5e235"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#aabefc11e828f17512b4d61baa5dc345d">~GroupStorage</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#aabefc11e828f17512b4d61baa5dc345d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a0abfd7cc5ff5e4088ff6366c33eb6bc3">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters, allocate memory and initialize.  <a href="#a0abfd7cc5ff5e4088ff6366c33eb6bc3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ae61e94fac2ace9df291c525009026a19">initialize</a> (int capacity, int totalCapacity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set parameters, allocate memory and initialize.  <a href="#ae61e94fac2ace9df291c525009026a19"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Group Management</div></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a47e9d341eaef7ecaba59c6deb84107f2">newPtr</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer to an address available for a new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>.  <a href="#a47e9d341eaef7ecaba59c6deb84107f2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ae40f5903392f548ffe3cda2f020c94a9">returnPtr</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the action of newPtr.  <a href="#ae40f5903392f548ffe3cda2f020c94a9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a3f74333a6f941ab89d4a8489a1346316">add</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the most recent new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> to the set of local groups.  <a href="#a3f74333a6f941ab89d4a8489a1346316"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a3ed43652b4af4f407c4c3c8550417ee5">add</a> (int id)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> with a specified id.  <a href="#a3ed43652b4af4f407c4c3c8550417ee5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a7e66e8443f13c8788acaacb548d1c685">remove</a> (<a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *groupPtr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a specific <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>.  <a href="#a7e66e8443f13c8788acaacb548d1c685"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Iterator Interface</div></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ab12bbdf624189531c1e3571e074b4489">begin</a> (<a class="el" href="classDdMd_1_1GroupIterator.html">GroupIterator</a>&lt; N &gt; &amp;iterator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set iterator to beginning of the set of groups.  <a href="#ab12bbdf624189531c1e3571e074b4489"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a60fedb228af0825c631d440580032b68">begin</a> (<a class="el" href="classDdMd_1_1ConstGroupIterator.html">ConstGroupIterator</a>&lt; N &gt; &amp;iterator) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set iterator to beginning of the set of groups.  <a href="#a60fedb228af0825c631d440580032b68"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a09b365683f112f4a6d90cc9a11deb832">find</a> (int id) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Find local Group&lt;N&gt; indexed by global id.  <a href="#a09b365683f112f4a6d90cc9a11deb832"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a71bffcd187bbc0f58ed45e32ce19b513">size</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return current number of groups on this processor.  <a href="#a71bffcd187bbc0f58ed45e32ce19b513"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a9d2c09c9e2fdef8ea7f15fd75d17e9b3">capacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return capacity for groups on this processor.  <a href="#a9d2c09c9e2fdef8ea7f15fd75d17e9b3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a1001e053811ee1bf208908cc0639d51e">totalCapacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum allowable number of groups on all processors.  <a href="#a1001e053811ee1bf208908cc0639d51e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a7772dc78cc8ae60c2c8cf9632a436891">nTotal</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total number of distinct groups on all processors.  <a href="#a7772dc78cc8ae60c2c8cf9632a436891"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a6b83c531665594d3a40328aaef57d4d4">computeNTotal</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute and store the number of distinct groups on all processors.  <a href="#a6b83c531665594d3a40328aaef57d4d4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#a139276b9ac95d1ab29d09257fff5f43c">isValid</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the container is valid, or throw an Exception.  <a href="#a139276b9ac95d1ab29d09257fff5f43c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1GroupStorage.html#ab222388126c682b15077fa64404459f8">isValid</a> (<a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;atomStorage, MPI::Intracomm &amp;communicator, bool hasGhosts)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if the container is valid, or throw an Exception.  <a href="#ab222388126c682b15077fa64404459f8"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a62bbe9be65c21741337d558e9b401be4"></a><!-- doxytag: member="DdMd::GroupStorage::GroupStorage" ref="a62bbe9be65c21741337d558e9b401be4" args="()" -->
+<a class="anchor" id="ad7eb5de35eb1a72853f6632b99d5e235"></a><!-- doxytag: member="DdMd::GroupStorage::GroupStorage" ref="ad7eb5de35eb1a72853f6632b99d5e235" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a> </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::<a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -144,16 +137,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Default constructor. </p>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00336">336</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00297">297</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a68b105508bf52017b2cbac3291046b53"></a><!-- doxytag: member="DdMd::GroupStorage::~GroupStorage" ref="a68b105508bf52017b2cbac3291046b53" args="()" -->
+<a class="anchor" id="aabefc11e828f17512b4d61baa5dc345d"></a><!-- doxytag: member="DdMd::GroupStorage::~GroupStorage" ref="aabefc11e828f17512b4d61baa5dc345d" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a> </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::~<a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -164,17 +159,19 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00350">350</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00311">311</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="DdMd::GroupStorage::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a0abfd7cc5ff5e4088ff6366c33eb6bc3"></a><!-- doxytag: member="DdMd::GroupStorage::readParam" ref="a0abfd7cc5ff5e4088ff6366c33eb6bc3" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -197,20 +194,22 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classDdMd_1_1AngleStorage.html#acba47a6f5ddc14bbcf57dd1b5c95cea2">AngleStorage</a>, <a class="el" href="classDdMd_1_1BondStorage.html#a92a2863b50b24dda02c14308ecbb2052">BondStorage</a>, and <a class="el" href="classDdMd_1_1DihedralStorage.html#aa377e6021059f19a3cb0b9603b750b60">DihedralStorage</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1AngleStorage.html#a2e0b4d7538527c3559c1a4daca833fbd">DdMd::AngleStorage</a>, <a class="el" href="classDdMd_1_1BondStorage.html#adea219824f86b62ef9584db60f54abad">DdMd::BondStorage</a>, and <a class="el" href="classDdMd_1_1DihedralStorage.html#a68ecedca3cb800edaa0bedeea535ebda">DdMd::DihedralStorage</a>.</p>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00357">357</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00318">318</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abf832aa0ab14e571716c586f7187ab92"></a><!-- doxytag: member="DdMd::GroupStorage::initialize" ref="abf832aa0ab14e571716c586f7187ab92" args="(int capacity, int totalCapacity)" -->
+<a class="anchor" id="ae61e94fac2ace9df291c525009026a19"></a><!-- doxytag: member="DdMd::GroupStorage::initialize" ref="ae61e94fac2ace9df291c525009026a19" args="(int capacity, int totalCapacity)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void initialize </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::initialize </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>capacity</em>, </td>
@@ -239,38 +238,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00368">368</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00329">329</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aecb4f5cfbf6d377b659c9266b16f713a"></a><!-- doxytag: member="DdMd::GroupStorage::setNTotal" ref="aecb4f5cfbf6d377b659c9266b16f713a" args="(int nTotal)" -->
+<a class="anchor" id="a47e9d341eaef7ecaba59c6deb84107f2"></a><!-- doxytag: member="DdMd::GroupStorage::newPtr" ref="a47e9d341eaef7ecaba59c6deb84107f2" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setNTotal </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nTotal</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set value for total number of distinct groups on all processors. </p>
-<p>This value is used by the <a class="el" href="classDdMd_1_1GroupStorage.html#afe93e17ac89cd97917811068ba2af214" title="Return true if the container is valid, or throw an Exception.">isValid()</a> method, and should be set only on the master processor. </p>
-
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00379">379</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a8471e0d31f0964a614a24305bae1e584"></a><!-- doxytag: member="DdMd::GroupStorage::newPtr" ref="a8471e0d31f0964a614a24305bae1e584" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * newPtr </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::newPtr </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -280,21 +259,23 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Returns pointer to an address available for a new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>. </p>
-<p>This method returns the address of an empty Group&lt;N&gt; object that can be used for a new local Group&lt;N&gt;. The pointer that it returns is popped off the reservoir of unused objects. This method does not modify the object id or add the <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> to the set of local Group&lt;N&gt; objects, and so must be followed by either a call to <a class="el" href="classDdMd_1_1GroupStorage.html#aa667972f5079bc3394a016da86db2aa0" title="Adds the most recent new Group to the set of local groups.">add()</a>, which adds the object to the set, or <a class="el" href="classDdMd_1_1GroupStorage.html#a3b2c99a01d5f70ef89e04b0896d727ea" title="Reverses the action of newPtr.">returnPtr()</a>, which pushes the new pointer back onto the reservoir.</p>
+<p>This method returns the address of an empty Group&lt;N&gt; object that can be used for a new local Group&lt;N&gt;. The pointer that it returns is popped off the reservoir of unused objects. This method does not modify the object id or add the <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> to the set of local Group&lt;N&gt; objects, and so must be followed by either a call to <a class="el" href="classDdMd_1_1GroupStorage.html#a3f74333a6f941ab89d4a8489a1346316" title="Adds the most recent new Group to the set of local groups.">add()</a>, which adds the object to the set, or <a class="el" href="classDdMd_1_1GroupStorage.html#ae40f5903392f548ffe3cda2f020c94a9" title="Reverses the action of newPtr.">returnPtr()</a>, which pushes the new pointer back onto the reservoir.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>address available for a new group. </dd></dl>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00412">412</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00365">365</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3b2c99a01d5f70ef89e04b0896d727ea"></a><!-- doxytag: member="DdMd::GroupStorage::returnPtr" ref="a3b2c99a01d5f70ef89e04b0896d727ea" args="()" -->
+<a class="anchor" id="ae40f5903392f548ffe3cda2f020c94a9"></a><!-- doxytag: member="DdMd::GroupStorage::returnPtr" ref="ae40f5903392f548ffe3cda2f020c94a9" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void returnPtr </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::returnPtr </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -306,18 +287,20 @@ Public Member Functions</h2></td></tr>
 <p>Reverses the action of newPtr. </p>
 <p>This method pushes the pointer returned by a previous call to newPtr back onto the reservoir, without adding it to the local group set. </p>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00426">426</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00379">379</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa667972f5079bc3394a016da86db2aa0"></a><!-- doxytag: member="DdMd::GroupStorage::add" ref="aa667972f5079bc3394a016da86db2aa0" args="()" -->
+<a class="anchor" id="a3f74333a6f941ab89d4a8489a1346316"></a><!-- doxytag: member="DdMd::GroupStorage::add" ref="a3f74333a6f941ab89d4a8489a1346316" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * add </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::add </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -327,29 +310,31 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Adds the most recent new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> to the set of local groups. </p>
-<p>This method adds the <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> that is pointed at by the pointer returned by the most recent call to <a class="el" href="classDdMd_1_1GroupStorage.html#a8471e0d31f0964a614a24305bae1e584" title="Returns pointer to an address available for a new Group.">newPtr()</a>. This method thus completes the process initiated by <a class="el" href="classDdMd_1_1GroupStorage.html#a8471e0d31f0964a614a24305bae1e584" title="Returns pointer to an address available for a new Group.">newPtr()</a>.</p>
+<p>This method adds the <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> that is pointed at by the pointer returned by the most recent call to <a class="el" href="classDdMd_1_1GroupStorage.html#a47e9d341eaef7ecaba59c6deb84107f2" title="Returns pointer to an address available for a new Group.">newPtr()</a>. This method thus completes the process initiated by <a class="el" href="classDdMd_1_1GroupStorage.html#a47e9d341eaef7ecaba59c6deb84107f2" title="Returns pointer to an address available for a new Group.">newPtr()</a>.</p>
 <p>Usage: </p>
 <div class="fragment"><pre class="fragment"> GroupStorage&lt;N&gt; storage;
 
  Group&lt;N&gt;* ptr = storage.newPtr();
  ptr-&gt;setId(<span class="keywordtype">id</span>);
  storage.add();
-</pre></div><p> The <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> id must be set before calling <a class="el" href="classDdMd_1_1GroupStorage.html#aa667972f5079bc3394a016da86db2aa0" title="Adds the most recent new Group to the set of local groups.">add()</a>, but other properties may be set either before or after calling <a class="el" href="classDdMd_1_1GroupStorage.html#aa667972f5079bc3394a016da86db2aa0" title="Adds the most recent new Group to the set of local groups.">add()</a>.</p>
-<p>Preconditions: 1) <a class="el" href="classDdMd_1_1GroupStorage.html#a8471e0d31f0964a614a24305bae1e584" title="Returns pointer to an address available for a new Group.">newPtr()</a> must have been called since the last <a class="el" href="classDdMd_1_1GroupStorage.html#aa667972f5079bc3394a016da86db2aa0" title="Adds the most recent new Group to the set of local groups.">add()</a>. 2) A valid global group id for this pointer must have been set. 3) A <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> with the specified id must not already be in the set.</p>
+</pre></div><p> The <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> id must be set before calling <a class="el" href="classDdMd_1_1GroupStorage.html#a3f74333a6f941ab89d4a8489a1346316" title="Adds the most recent new Group to the set of local groups.">add()</a>, but other properties may be set either before or after calling <a class="el" href="classDdMd_1_1GroupStorage.html#a3f74333a6f941ab89d4a8489a1346316" title="Adds the most recent new Group to the set of local groups.">add()</a>.</p>
+<p>Preconditions: 1) <a class="el" href="classDdMd_1_1GroupStorage.html#a47e9d341eaef7ecaba59c6deb84107f2" title="Returns pointer to an address available for a new Group.">newPtr()</a> must have been called since the last <a class="el" href="classDdMd_1_1GroupStorage.html#a3f74333a6f941ab89d4a8489a1346316" title="Adds the most recent new Group to the set of local groups.">add()</a>. 2) A valid global group id for this pointer must have been set. 3) A <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> with the specified id must not already be in the set.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>pointer to newly added <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00440">440</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00393">393</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aff27b1e08be74b62a46e09744c951248"></a><!-- doxytag: member="DdMd::GroupStorage::add" ref="aff27b1e08be74b62a46e09744c951248" args="(int id)" -->
+<a class="anchor" id="a3ed43652b4af4f407c4c3c8550417ee5"></a><!-- doxytag: member="DdMd::GroupStorage::add" ref="a3ed43652b4af4f407c4c3c8550417ee5" args="(int id)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * add </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::add </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
@@ -360,7 +345,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Add a new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> with a specified id. </p>
-<p>Adds a new Group&lt;N&gt; to the set owned by this method, with a specified global id, and returns a pointer to the new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>. This method calls <a class="el" href="classDdMd_1_1GroupStorage.html#a8471e0d31f0964a614a24305bae1e584" title="Returns pointer to an address available for a new Group.">newPtr()</a>, and sets the id of the new group, and calls <a class="el" href="classDdMd_1_1GroupStorage.html#aa667972f5079bc3394a016da86db2aa0" title="Adds the most recent new Group to the set of local groups.">add()</a>. Other member variables must be set after calling this method, using the returned pointer.</p>
+<p>Adds a new Group&lt;N&gt; to the set owned by this method, with a specified global id, and returns a pointer to the new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>. This method calls <a class="el" href="classDdMd_1_1GroupStorage.html#a47e9d341eaef7ecaba59c6deb84107f2" title="Returns pointer to an address available for a new Group.">newPtr()</a>, and sets the id of the new group, and calls <a class="el" href="classDdMd_1_1GroupStorage.html#a3f74333a6f941ab89d4a8489a1346316" title="Adds the most recent new Group to the set of local groups.">add()</a>. Other member variables must be set after calling this method, using the returned pointer.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>global id for the new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>. </td></tr>
@@ -369,18 +354,20 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>pointer to the new <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>. </dd></dl>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00471">471</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00424">424</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00083">Group&lt; N &gt;::setId()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00083">DdMd::Group&lt; N &gt;::setId()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae5543aefb3ae85ddc328ca2e2463bfd6"></a><!-- doxytag: member="DdMd::GroupStorage::remove" ref="ae5543aefb3ae85ddc328ca2e2463bfd6" args="(Group&lt; N &gt; *groupPtr)" -->
+<a class="anchor" id="a7e66e8443f13c8788acaacb548d1c685"></a><!-- doxytag: member="DdMd::GroupStorage::remove" ref="a7e66e8443f13c8788acaacb548d1c685" args="(Group&lt; N &gt; *groupPtr)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void remove </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::remove </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td>
           <td class="paramname"><em>groupPtr</em></td><td>)</td>
@@ -404,108 +391,195 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00483">483</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00436">436</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00144">Group&lt; N &gt;::id()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00083">Group&lt; N &gt;::setId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00144">DdMd::Group&lt; N &gt;::id()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00083">DdMd::Group&lt; N &gt;::setId()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="add8505e9a4df8d90b6b16d5f15b0c8b0"></a><!-- doxytag: member="DdMd::GroupStorage::addIncomplete" ref="add8505e9a4df8d90b6b16d5f15b0c8b0" args="(Group&lt; N &gt; *groupPtr)" -->
+<a class="anchor" id="ab12bbdf624189531c1e3571e074b4489"></a><!-- doxytag: member="DdMd::GroupStorage::begin" ref="ab12bbdf624189531c1e3571e074b4489" args="(GroupIterator&lt; N &gt; &amp;iterator)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void addIncomplete </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::begin </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td>
-          <td class="paramname"><em>groupPtr</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classDdMd_1_1GroupIterator.html">GroupIterator</a>&lt; N &gt; &amp;&#160;</td>
+          <td class="paramname"><em>iterator</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Add to set of incomplete groups. </p>
-<dl><dt><b>Exceptions:</b></dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">Exception</td><td>if groupPtr is not address of a local <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>.</td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Set iterator to beginning of the set of groups. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">groupPtr</td><td>pointer to the group to be added to set. </td></tr>
+    <tr><td class="paramname">iterator</td><td>iterator for all groups. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00502">502</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00144">Group&lt; N &gt;::id()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00464">464</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5117d1866a6ea423841a5f2904c814ee"></a><!-- doxytag: member="DdMd::GroupStorage::removeIncomplete" ref="a5117d1866a6ea423841a5f2904c814ee" args="(Group&lt; N &gt; *groupPtr)" -->
+<a class="anchor" id="a60fedb228af0825c631d440580032b68"></a><!-- doxytag: member="DdMd::GroupStorage::begin" ref="a60fedb228af0825c631d440580032b68" args="(ConstGroupIterator&lt; N &gt; &amp;iterator) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void removeIncomplete </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::begin </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; *&#160;</td>
-          <td class="paramname"><em>groupPtr</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype"><a class="el" href="classDdMd_1_1ConstGroupIterator.html">ConstGroupIterator</a>&lt; N &gt; &amp;&#160;</td>
+          <td class="paramname"><em>iterator</em></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Remove from set of incomplete groups. </p>
-<dl><dt><b>Exceptions:</b></dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">Exception</td><td>if groupPtr is not address of a <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>.</td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Set iterator to beginning of the set of groups. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">groupPtr</td><td>pointer to the group to be removed </td></tr>
+    <tr><td class="paramname">iterator</td><td>iterator for all groups. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00515">515</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-<p>References <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00144">Group&lt; N &gt;::id()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00471">471</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aeac62854c54a1ec2c05f93539b269d5a"></a><!-- doxytag: member="DdMd::GroupStorage::clearIncompleteSet" ref="aeac62854c54a1ec2c05f93539b269d5a" args="()" -->
+<a class="anchor" id="a09b365683f112f4a6d90cc9a11deb832"></a><!-- doxytag: member="DdMd::GroupStorage::find" ref="a09b365683f112f4a6d90cc9a11deb832" args="(int id) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void clearIncompleteSet </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::find </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Find local Group&lt;N&gt; indexed by global id. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>pointer to Group&lt;N&gt; object, or null pointer if absent. </dd></dl>
+
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00457">457</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a71bffcd187bbc0f58ed45e32ce19b513"></a><!-- doxytag: member="DdMd::GroupStorage::size" ref="a71bffcd187bbc0f58ed45e32ce19b513" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> const<code> [inline]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Clear the set of incomplete groups. </p>
+<p>Return current number of groups on this processor. </p>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00528">528</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00276">276</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+
+<p>References <a class="el" href="GroupStorage_8h_source.html#l00276">DdMd::GroupStorage&lt; N &gt;::size()</a>.</p>
+
+<p>Referenced by <a class="el" href="GroupStorage_8h_source.html#l00276">DdMd::GroupStorage&lt; N &gt;::size()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7f7642aaa5f071e12ad230093559e13b"></a><!-- doxytag: member="DdMd::GroupStorage::computeNTotal" ref="a7f7642aaa5f071e12ad230093559e13b" args="(MPI::Intracomm &amp;communicator)" -->
+<a class="anchor" id="a9d2c09c9e2fdef8ea7f15fd75d17e9b3"></a><!-- doxytag: member="DdMd::GroupStorage::capacity" ref="a9d2c09c9e2fdef8ea7f15fd75d17e9b3" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void computeNTotal </td>
+          <td class="memname">int <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::capacity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return capacity for groups on this processor. </p>
+
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00280">280</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1001e053811ee1bf208908cc0639d51e"></a><!-- doxytag: member="DdMd::GroupStorage::totalCapacity" ref="a1001e053811ee1bf208908cc0639d51e" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::totalCapacity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return maximum allowable number of groups on all processors. </p>
+<p>Note: <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> ids must be in range 0, ..., totalCapacity-1 </p>
+
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00284">284</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a7772dc78cc8ae60c2c8cf9632a436891"></a><!-- doxytag: member="DdMd::GroupStorage::nTotal" ref="a7772dc78cc8ae60c2c8cf9632a436891" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::nTotal </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return total number of distinct groups on all processors. </p>
+
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00288">288</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6b83c531665594d3a40328aaef57d4d4"></a><!-- doxytag: member="DdMd::GroupStorage::computeNTotal" ref="a6b83c531665594d3a40328aaef57d4d4" args="(MPI::Intracomm &amp;communicator)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::computeNTotal </td>
           <td>(</td>
           <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
           <td class="paramname"><em>communicator</em></td><td>)</td>
@@ -526,233 +600,20 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>on master node, return total number of groups. </dd></dl>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00615">615</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00521">521</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
-<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">Atom::isGhost()</a>, and <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, and <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6e712b69166854fedd8d0a6ee969e462"></a><!-- doxytag: member="DdMd::GroupStorage::find" ref="a6e712b69166854fedd8d0a6ee969e462" args="(int id) const " -->
+<a class="anchor" id="a139276b9ac95d1ab29d09257fff5f43c"></a><!-- doxytag: member="DdMd::GroupStorage::isValid" ref="a139276b9ac95d1ab29d09257fff5f43c" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1Group.html">Group</a>&lt; N &gt; * find </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>id</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Find local Group&lt;N&gt; indexed by global id. </p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>pointer to Group&lt;N&gt; object, or null pointer if absent. </dd></dl>
-
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00537">537</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a42a74137fc7566d3f150b65bd54fb04a"></a><!-- doxytag: member="DdMd::GroupStorage::begin" ref="a42a74137fc7566d3f150b65bd54fb04a" args="(GroupIterator&lt; N &gt; &amp;iterator)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void begin </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classDdMd_1_1GroupIterator.html">GroupIterator</a>&lt; N &gt; &amp;&#160;</td>
-          <td class="paramname"><em>iterator</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set iterator to beginning of the set of groups. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">iterator</td><td>iterator for all groups. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00544">544</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a70cb27dc8790d94101ecf93fd1175585"></a><!-- doxytag: member="DdMd::GroupStorage::begin" ref="a70cb27dc8790d94101ecf93fd1175585" args="(ConstGroupIterator&lt; N &gt; &amp;iterator) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void begin </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classDdMd_1_1ConstGroupIterator.html">ConstGroupIterator</a>&lt; N &gt; &amp;&#160;</td>
-          <td class="paramname"><em>iterator</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set iterator to beginning of the set of groups. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">iterator</td><td>iterator for all groups. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00551">551</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="abf002ab5feee35d6b759793433834d60"></a><!-- doxytag: member="DdMd::GroupStorage::begin" ref="abf002ab5feee35d6b759793433834d60" args="(IncompleteGroupIterator&lt; N &gt; &amp;iterator)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void begin </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classDdMd_1_1IncompleteGroupIterator.html">IncompleteGroupIterator</a>&lt; N &gt; &amp;&#160;</td>
-          <td class="paramname"><em>iterator</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set iterator to beginning of the set of incomplete groups. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">iterator</td><td>iterator for all incomplete groups. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00558">558</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a2792d4961a711e745c4969dbc0b407d2"></a><!-- doxytag: member="DdMd::GroupStorage::begin" ref="a2792d4961a711e745c4969dbc0b407d2" args="(ConstIncompleteGroupIterator&lt; N &gt; &amp;iterator) const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void begin </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classDdMd_1_1ConstIncompleteGroupIterator.html">ConstIncompleteGroupIterator</a>&lt; N &gt; &amp;&#160;</td>
-          <td class="paramname"><em>iterator</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set const iterator to beginning of the set of incomplete groups. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">iterator</td><td>iterator for all incomplete groups. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00565">565</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ab8e4e3e2a7bf18888b71bdf9dda0770b"></a><!-- doxytag: member="DdMd::GroupStorage::size" ref="ab8e4e3e2a7bf18888b71bdf9dda0770b" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int size </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return current number of groups on this processor. </p>
-
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00315">315</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-<p>References <a class="el" href="GroupStorage_8h_source.html#l00315">GroupStorage&lt; N &gt;::size()</a>.</p>
-
-<p>Referenced by <a class="el" href="GroupStorage_8h_source.html#l00315">GroupStorage&lt; N &gt;::size()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a104736719cd4e5f21c25705c77064dde"></a><!-- doxytag: member="DdMd::GroupStorage::capacity" ref="a104736719cd4e5f21c25705c77064dde" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int capacity </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return capacity for groups on this processor. </p>
-
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00319">319</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ac4e0e4a443325eabd515ae2983b0d239"></a><!-- doxytag: member="DdMd::GroupStorage::totalCapacity" ref="ac4e0e4a443325eabd515ae2983b0d239" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int totalCapacity </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return maximum number of groups on all processors. </p>
-<p><a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> ids are labelled from 0, ..., totalCapacity-1 </p>
-
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00323">323</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a502aae408ac5875ceb770f780ba954eb"></a><!-- doxytag: member="DdMd::GroupStorage::nTotal" ref="a502aae408ac5875ceb770f780ba954eb" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int nTotal </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return total number of distinct groups on all processors. </p>
-
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00327">327</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="afe93e17ac89cd97917811068ba2af214"></a><!-- doxytag: member="DdMd::GroupStorage::isValid" ref="afe93e17ac89cd97917811068ba2af214" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::isValid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -763,20 +624,22 @@ Public Member Functions</h2></td></tr>
 
 <p>Return true if the container is valid, or throw an Exception. </p>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00574">574</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00480">480</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
-<p>References <a class="el" href="PArrayIterator_8h_source.html#l00100">PArrayIterator&lt; Group&lt; N &gt; &gt;::get()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00144">Group&lt; N &gt;::id()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="PArrayIterator_8h_source.html#l00100">Util::PArrayIterator&lt; Group&lt; N &gt; &gt;::get()</a>, <a class="el" href="ddMd_2chemistry_2Group_8h_source.html#l00144">DdMd::Group&lt; N &gt;::id()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMdConfigIo::readConfig()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00092">DdMd::DdMdConfigIo::readConfig()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1b35ee0848cf53594affb786612b8691"></a><!-- doxytag: member="DdMd::GroupStorage::isValid" ref="a1b35ee0848cf53594affb786612b8691" args="(AtomStorage &amp;atomStorage, MPI::Intracomm &amp;communicator, bool hasGhosts)" -->
+<a class="anchor" id="ab222388126c682b15077fa64404459f8"></a><!-- doxytag: member="DdMd::GroupStorage::isValid" ref="ab222388126c682b15077fa64404459f8" args="(AtomStorage &amp;atomStorage, MPI::Intracomm &amp;communicator, bool hasGhosts)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool <a class="el" href="classDdMd_1_1GroupStorage.html">DdMd::GroupStorage</a>&lt; N &gt;::isValid </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;&#160;</td>
           <td class="paramname"><em>atomStorage</em>, </td>
@@ -803,7 +666,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Return true if the container is valid, or throw an Exception. </p>
-<p>Calls overloaded <a class="el" href="classDdMd_1_1GroupStorage.html#afe93e17ac89cd97917811068ba2af214" title="Return true if the container is valid, or throw an Exception.">isValid()</a> method, then checks consistency of atom pointers with those in an asociated <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>. If hasGhosts is false, the method requires that no group contain a pointer to a ghost atom. If hasGhosts is true, requires that every <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> be complete.</p>
+<p>Calls overloaded <a class="el" href="classDdMd_1_1GroupStorage.html#a139276b9ac95d1ab29d09257fff5f43c" title="Return true if the container is valid, or throw an Exception.">isValid()</a> method, then checks consistency of atom pointers with those in an asociated <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>. If hasGhosts is false, the method requires that no group contain a pointer to a ghost atom. If hasGhosts is true, requires that every <a class="el" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a> be complete.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">atomStorage</td><td>associated <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> object </td></tr>
@@ -813,9 +676,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00648">648</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
+<p>Definition at line <a class="el" href="GroupStorage_8h_source.html#l00554">554</a> of file <a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a>.</p>
 
-<p>References <a class="el" href="AtomStorage_8cpp_source.html#l00367">AtomStorage::find()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">Atom::isGhost()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">ConstPArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, <a class="el" href="AtomStorage_8h_source.html#l00470">AtomStorage::totalAtomCapacity()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="AtomStorage_8cpp_source.html#l00367">DdMd::AtomStorage::find()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, <a class="el" href="AtomStorage_8h_source.html#l00481">DdMd::AtomStorage::totalAtomCapacity()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -823,7 +686,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="GroupStorage_8h_source.html">GroupStorage.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -62,7 +62,7 @@
 <a name="l00010"></a>00010 <span class="comment">/*</span>
 <a name="l00011"></a>00011 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00012"></a>00012 <span class="comment">*</span>
-<a name="l00013"></a>00013 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00013"></a>00013 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00014"></a>00014 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00015"></a>00015 <span class="comment">*/</span>
 <a name="l00016"></a>00016 
@@ -83,7 +83,7 @@
 <a name="l00037"></a>00037 
 <a name="l00041"></a>00041       <a class="code" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a>();
 <a name="l00042"></a>00042 
-<a name="l00051"></a>00051       <span class="keyword">virtual</span> <span class="keywordtype">void</span> associate(Boundary&amp; boundary, <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; storage);
+<a name="l00051"></a>00051       <span class="keyword">virtual</span> <span class="keywordtype">void</span> associate(<a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary, <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; storage);
 <a name="l00052"></a>00052 
 <a name="l00056"></a>00056       <span class="keyword">virtual</span> ~<a class="code" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a>();
 <a name="l00057"></a>00057 
@@ -120,7 +120,7 @@
 <a name="l00121"></a>00121 
 <a name="l00125"></a>00125       <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation();
 <a name="l00126"></a>00126 
-<a name="l00130"></a>00130       Boundary&amp; boundary();
+<a name="l00130"></a>00130       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary();
 <a name="l00131"></a>00131 
 <a name="l00135"></a>00135       <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; storage();
 <a name="l00136"></a>00136 
@@ -130,27 +130,27 @@
 <a name="l00140"></a>00140       <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>* simulationPtr_;
 <a name="l00141"></a>00141 
 <a name="l00142"></a>00142       <span class="comment">// Pointer to associated Boundary object.</span>
-<a name="l00143"></a>00143       Boundary* boundaryPtr_;
+<a name="l00143"></a>00143       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>* boundaryPtr_;
 <a name="l00144"></a>00144 
 <a name="l00145"></a>00145       <span class="comment">// Pointer to associated AtomStorage object.</span>
 <a name="l00146"></a>00146       <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>* storagePtr_;
 <a name="l00147"></a>00147 
 <a name="l00148"></a>00148    };
 <a name="l00149"></a>00149 
-<a name="l00150"></a><a class="code" href="classDdMd_1_1ExternalPotential.html#a9c48d9c8c09632e9489efe52722a7937">00150</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; <a class="code" href="classDdMd_1_1ExternalPotential.html#a9c48d9c8c09632e9489efe52722a7937" title="Get the parent Simulation by reference.">ExternalPotential::simulation</a>() 
+<a name="l00150"></a><a class="code" href="classDdMd_1_1ExternalPotential.html#acc10e3b61139762857dea6841d0a2f78">00150</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; <a class="code" href="classDdMd_1_1ExternalPotential.html#acc10e3b61139762857dea6841d0a2f78" title="Get the parent Simulation by reference.">ExternalPotential::simulation</a>() 
 <a name="l00151"></a>00151    {  <span class="keywordflow">return</span> *simulationPtr_; }
 <a name="l00152"></a>00152 
-<a name="l00153"></a><a class="code" href="classDdMd_1_1ExternalPotential.html#a5daa73910cfb398e1ba647b4821d18ba">00153</a>    <span class="keyword">inline</span> Boundary&amp; <a class="code" href="classDdMd_1_1ExternalPotential.html#a5daa73910cfb398e1ba647b4821d18ba" title="Get the Boundary by reference.">ExternalPotential::boundary</a>() 
+<a name="l00153"></a><a class="code" href="classDdMd_1_1ExternalPotential.html#a6a615a759320a615594ebaf8acbe3689">00153</a>    <span class="keyword">inline</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; <a class="code" href="classDdMd_1_1ExternalPotential.html#a6a615a759320a615594ebaf8acbe3689" title="Get the Boundary by reference.">ExternalPotential::boundary</a>() 
 <a name="l00154"></a>00154    {  <span class="keywordflow">return</span> *boundaryPtr_; }
 <a name="l00155"></a>00155 
-<a name="l00156"></a><a class="code" href="classDdMd_1_1ExternalPotential.html#a8ac7346f5778c47da49efe1b7b352f1e">00156</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; <a class="code" href="classDdMd_1_1ExternalPotential.html#a8ac7346f5778c47da49efe1b7b352f1e" title="Get the AtomStorage by reference.">ExternalPotential::storage</a>()
+<a name="l00156"></a><a class="code" href="classDdMd_1_1ExternalPotential.html#aef6ef800e92c4433947a41d4f990ccbc">00156</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; <a class="code" href="classDdMd_1_1ExternalPotential.html#aef6ef800e92c4433947a41d4f990ccbc" title="Get the AtomStorage by reference.">ExternalPotential::storage</a>()
 <a name="l00157"></a>00157    {  <span class="keywordflow">return</span> *storagePtr_; }
 <a name="l00158"></a>00158 
 <a name="l00159"></a>00159 }
 <a name="l00160"></a>00160 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

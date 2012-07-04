@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: McSystem Class Reference</title>
+<title>Simpatico: McMd::McSystem Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>McSystem Class Reference<div class="ingroups"><a class="el" href="group__McMd__System__Module.html">Systems</a></div></h1>  </div>
+<h1>McMd::McSystem Class Reference<div class="ingroups"><a class="el" href="group__McMd__System__Module.html">Systems</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::McSystem" --><!-- doxytag: inherits="McMd::System" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -61,15 +61,15 @@
 </div>
 <p><code>#include &lt;<a class="el" href="McSystem_8h_source.html">McSystem.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for McSystem:</div>
+Inheritance diagram for McMd::McSystem:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1McSystem.png" usemap="#McSystem_map" alt=""/>
-  <map id="McSystem_map" name="McSystem_map">
-<area href="classMcMd_1_1System.html" alt="System" shape="rect" coords="60,112,171,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="121,56,232,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classMcMd_1_1McSystem.png" usemap="#McMd::McSystem_map" alt=""/>
+  <map id="McMd::McSystem_map" name="McMd::McSystem_map">
+<area href="classMcMd_1_1System.html" alt="McMd::System" shape="rect" coords="72,112,206,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="144,56,278,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,134,24"/>
 </map>
  </div></div>
 
@@ -77,57 +77,57 @@ Inheritance diagram for McSystem:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a5ed581618a6b977dd55591a50ceab592">McSystem</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a5ed581618a6b977dd55591a50ceab592"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#abfaaaa6eb0016f09bdd442c9ff271044">~McSystem</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#abfaaaa6eb0016f09bdd442c9ff271044"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from input file.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#ac100e87d4f59a03f0ca63685def1ef15">readConfig</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read system configuration from file.  <a href="#ac100e87d4f59a03f0ca63685def1ef15"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#aa3d71af4cc5dfb2be6be816a8f562416">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the <a class="el" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a> configuration from an archive.  <a href="#aa3d71af4cc5dfb2be6be816a8f562416"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">isValid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a> is valid, or throw Exception.  <a href="#aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a7f67c1c874511b85f3bc59359fcc1cc0">McSystem</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a7f67c1c874511b85f3bc59359fcc1cc0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a5b8fbd6f1303f842d9cacd9d786b9f4b">~McSystem</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a5b8fbd6f1303f842d9cacd9d786b9f4b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a77bda0351000fbca2b5589cc63d42922">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from input file.  <a href="#a77bda0351000fbca2b5589cc63d42922"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a68d7d0a062419bc2ff3aeb45c3bea1d5">readConfig</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read system configuration from file.  <a href="#a68d7d0a062419bc2ff3aeb45c3bea1d5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a1845f8ceb98e661b9dde6279ba949465">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load the <a class="el" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a> configuration from an archive.  <a href="#a1845f8ceb98e661b9dde6279ba949465"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a868a1be00da1e40b5cc4c83100759a8c">isValid</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a> is valid, or throw Exception.  <a href="#a868a1be00da1e40b5cc4c83100759a8c"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Energy and Stress calculators</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a61bb967112342a4bcf53acdec54d6fae">atomPotentialEnergy</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total potential energy for one <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#a61bb967112342a4bcf53acdec54d6fae"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a8079226e84b68812c2ee4a6e4c00a35a">potentialEnergy</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total potential energy of this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.  <a href="#a8079226e84b68812c2ee4a6e4c00a35a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a0bb7699e421625dd5397a9955c0674cb">atomPotentialEnergy</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total potential energy for one <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#a0bb7699e421625dd5397a9955c0674cb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#af2e45aa802a5f63dc72b70bf6c1ce72c">potentialEnergy</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total potential energy of this <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.  <a href="#af2e45aa802a5f63dc72b70bf6c1ce72c"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#aee6b343c65e2c342151f11e7882d5a08">computeVirialStress</a> (T &amp;stress) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total virial stress (excludes kinetic contribution).  <a href="#aee6b343c65e2c342151f11e7882d5a08"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#aeae49c68789b3870c21cbb86f7a43d08">computeVirialStress</a> (T &amp;stress) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total virial stress (excludes kinetic contribution).  <a href="#aeae49c68789b3870c21cbb86f7a43d08"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#aba85acb24fb51b2cb552ea840a5cbc8e">computeStress</a> (T &amp;stress) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total pressure (T=double), xyz pressures (T=Vector) or stress (T=Tensor).  <a href="#aba85acb24fb51b2cb552ea840a5cbc8e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a95732dcabe9f491e9bb9636dc9d194ec">pairPotential</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a> by reference.  <a href="#a95732dcabe9f491e9bb9636dc9d194ec"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a99605c893b3efd2a1129a25afe19de46">hasBondPotential</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does a bond potential exist?.  <a href="#a99605c893b3efd2a1129a25afe19de46"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a6ded80b5664672f56a62f8bf8295d641">bondPotential</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the <a class="el" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a> by reference.  <a href="#a6ded80b5664672f56a62f8bf8295d641"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#ad94cba44b90992a12934ae2be6dcc707">hasLinkPotential</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does a link potential exist?.  <a href="#ad94cba44b90992a12934ae2be6dcc707"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#afd6f92eb30537c2f70a260a067176dea">linkPotential</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the McLinkPotential by reference.  <a href="#afd6f92eb30537c2f70a260a067176dea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a2e1624ef024a3ecfc4567949279eb7f9">hasExternalPotential</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does an external potential exist?.  <a href="#a2e1624ef024a3ecfc4567949279eb7f9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1ExternalPotential.html">ExternalPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#aa307441c683f245a3554e28c2e9ef9f5">externalPotential</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <a class="el" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class.">ExternalPotential</a> by reference.  <a href="#aa307441c683f245a3554e28c2e9ef9f5"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a10c99179a06c42eb8b8041efd54eb19c">computeStress</a> (T &amp;stress) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total pressure (T=double), xyz pressures (T=Vector) or stress (T=Tensor).  <a href="#a10c99179a06c42eb8b8041efd54eb19c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12">pairPotential</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the <a class="el" href="classMcMd_1_1McPairPotential.html" title="A PairPotential for MC simulations (abstract).">McPairPotential</a> by reference.  <a href="#aa2ef0761c70ac56a5fbc792cf3aa2b12"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#af53d46e025334360c2824fcd14dbabda">hasBondPotential</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does a bond potential exist?.  <a href="#af53d46e025334360c2824fcd14dbabda"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#aed9c37cc7b5ad23cdb6f7648e17a74b7">bondPotential</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the <a class="el" href="classMcMd_1_1BondPotential.html" title="Abstract Bond Potential class.">BondPotential</a> by reference.  <a href="#aed9c37cc7b5ad23cdb6f7648e17a74b7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a83f2add55298ddbee90ec459c9d9a406">hasLinkPotential</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does a link potential exist?.  <a href="#a83f2add55298ddbee90ec459c9d9a406"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a8247c62e71ebc13e4b146cdeb6ab0189">linkPotential</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the McLinkPotential by reference.  <a href="#a8247c62e71ebc13e4b146cdeb6ab0189"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a776439171922d9e5757f4fb97128f04b">hasExternalPotential</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does an external potential exist?.  <a href="#a776439171922d9e5757f4fb97128f04b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1ExternalPotential.html">ExternalPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#a0952ff38daa10a3fe294302a16a9ece1">externalPotential</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return <a class="el" href="classMcMd_1_1ExternalPotential.html" title="Abstract External Potential class.">ExternalPotential</a> by reference.  <a href="#a0952ff38daa10a3fe294302a16a9ece1"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1Perturbation.html">Perturbation</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#ae7cf1e8ee4f5343cb9101cc1a2c67ac5">newDefaultPerturbationFactory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to a new <a class="el" href="classMcMd_1_1McPerturbationFactory.html" title="Default Factory for subclasses of Perturbation.">McPerturbationFactory</a>.  <a href="#ae7cf1e8ee4f5343cb9101cc1a2c67ac5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#ac7d25c1a931ec680bef425fef79a0744">setPairPotential</a> (<a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> *pairPotentialPtr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the <a class="el" href="classMcMd_1_1PairPotential.html" title="Interface for a Pair Potential.">PairPotential</a>.  <a href="#ac7d25c1a931ec680bef425fef79a0744"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1Perturbation.html">Perturbation</a> &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#ae8790a3f0b4b3d07a63920cc97cf84d4">newDefaultPerturbationFactory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to a new <a class="el" href="classMcMd_1_1McPerturbationFactory.html" title="Default Factory for subclasses of Perturbation.">McPerturbationFactory</a>.  <a href="#ae8790a3f0b4b3d07a63920cc97cf84d4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1McSystem.html#acf0a554696289bbb1a1661b08f5c2b98">setPairPotential</a> (<a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> *pairPotentialPtr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the <a class="el" href="classMcMd_1_1PairPotential.html" title="Interface for a Pair Potential.">PairPotential</a>.  <a href="#acf0a554696289bbb1a1661b08f5c2b98"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a5ed581618a6b977dd55591a50ceab592"></a><!-- doxytag: member="McMd::McSystem::McSystem" ref="a5ed581618a6b977dd55591a50ceab592" args="()" -->
+<a class="anchor" id="a7f67c1c874511b85f3bc59359fcc1cc0"></a><!-- doxytag: member="McMd::McSystem::McSystem" ref="a7f67c1c874511b85f3bc59359fcc1cc0" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> </td>
+          <td class="memname">McMd::McSystem::McSystem </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -142,12 +142,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="abfaaaa6eb0016f09bdd442c9ff271044"></a><!-- doxytag: member="McMd::McSystem::~McSystem" ref="abfaaaa6eb0016f09bdd442c9ff271044" args="()" -->
+<a class="anchor" id="a5b8fbd6f1303f842d9cacd9d786b9f4b"></a><!-- doxytag: member="McMd::McSystem::~McSystem" ref="a5b8fbd6f1303f842d9cacd9d786b9f4b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1McSystem.html">McSystem</a> </td>
+          <td class="memname">McMd::McSystem::~McSystem </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -163,12 +163,12 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::McSystem::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a77bda0351000fbca2b5589cc63d42922"></a><!-- doxytag: member="McMd::McSystem::readParam" ref="a77bda0351000fbca2b5589cc63d42922" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::McSystem::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -180,7 +180,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Read parameters from input file. </p>
 <p>This method first calls System::readParam(in).</p>
-<p>Finally, it allocates a <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>, and builds the new <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> if an initial configuration has been read previously by <a class="el" href="classMcMd_1_1System.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameter file.">System::readParam</a>. The number of cells allocated for the <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> is determined by the dimensions of maxBoundary and the maximum nonbonded cutoff distance.</p>
+<p>Finally, it allocates a <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>, and builds the new <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> if an initial configuration has been read previously by <a class="el" href="classMcMd_1_1System.html#ac2688cd7998d11c76630c5105df3e7c8" title="Read parameter file.">System::readParam</a>. The number of cells allocated for the <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a> is determined by the dimensions of maxBoundary and the maximum nonbonded cutoff distance.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">in</td><td>file stream. </td></tr>
@@ -188,7 +188,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1System.html#ab5421d3c9175985c9acbf723e5392075">System</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1System.html#ac2688cd7998d11c76630c5105df3e7c8">McMd::System</a>.</p>
 
 <p>Definition at line <a class="el" href="McSystem_8cpp_source.html#l00118">118</a> of file <a class="el" href="McSystem_8cpp_source.html">McSystem.cpp</a>.</p>
 
@@ -196,12 +196,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac100e87d4f59a03f0ca63685def1ef15"></a><!-- doxytag: member="McMd::McSystem::readConfig" ref="ac100e87d4f59a03f0ca63685def1ef15" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a68d7d0a062419bc2ff3aeb45c3bea1d5"></a><!-- doxytag: member="McMd::McSystem::readConfig" ref="a68d7d0a062419bc2ff3aeb45c3bea1d5" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readConfig </td>
+          <td class="memname">void McMd::McSystem::readConfig </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -212,7 +212,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Read system configuration from file. </p>
-<p>Calls <a class="el" href="classMcMd_1_1System.html#ac100e87d4f59a03f0ca63685def1ef15" title="Read system configuration from file.">System::readConfig()</a> and then builds <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>.</p>
+<p>Calls <a class="el" href="classMcMd_1_1System.html#a6a369e52ffa04b81f54e367a8a296a0f" title="Read system configuration from file.">System::readConfig()</a> and then builds <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">in</td><td>configuration file input stream </td></tr>
@@ -220,22 +220,22 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1System.html#ac100e87d4f59a03f0ca63685def1ef15">System</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1System.html#a6a369e52ffa04b81f54e367a8a296a0f">McMd::System</a>.</p>
 
 <p>Definition at line <a class="el" href="McSystem_8cpp_source.html#l00216">216</a> of file <a class="el" href="McSystem_8cpp_source.html">McSystem.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8cpp_source.html#l00427">System::readConfig()</a>.</p>
+<p>References <a class="el" href="System_8cpp_source.html#l00427">McMd::System::readConfig()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McSimulation::analyze()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00225">McSimulation::readCommands()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McMd::McSimulation::analyze()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00225">McMd::McSimulation::readCommands()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa3d71af4cc5dfb2be6be816a8f562416"></a><!-- doxytag: member="McMd::McSystem::load" ref="aa3d71af4cc5dfb2be6be816a8f562416" args="(Serializable::IArchiveType &amp;ar)" -->
+<a class="anchor" id="a1845f8ceb98e661b9dde6279ba949465"></a><!-- doxytag: member="McMd::McSystem::load" ref="a1845f8ceb98e661b9dde6279ba949465" args="(Serializable::IArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void load </td>
+          <td class="memname">void McMd::McSystem::load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -253,22 +253,22 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1System.html#aa3d71af4cc5dfb2be6be816a8f562416">System</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1System.html#ac52045ff67600ead96765b7909bfb982">McMd::System</a>.</p>
 
 <p>Definition at line <a class="el" href="McSystem_8cpp_source.html#l00227">227</a> of file <a class="el" href="McSystem_8cpp_source.html">McSystem.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8cpp_source.html#l00461">System::load()</a>.</p>
+<p>References <a class="el" href="System_8cpp_source.html#l00461">McMd::System::load()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00642">McSimulation::readRestart()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00642">McMd::McSimulation::readRestart()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a61bb967112342a4bcf53acdec54d6fae"></a><!-- doxytag: member="McMd::McSystem::atomPotentialEnergy" ref="a61bb967112342a4bcf53acdec54d6fae" args="(const Atom &amp;atom) const " -->
+<a class="anchor" id="a0bb7699e421625dd5397a9955c0674cb"></a><!-- doxytag: member="McMd::McSystem::atomPotentialEnergy" ref="a0bb7699e421625dd5397a9955c0674cb" args="(const Atom &amp;atom) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double atomPotentialEnergy </td>
+          <td class="memname">double McMd::McSystem::atomPotentialEnergy </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -289,16 +289,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSystem_8cpp_source.html#l00240">240</a> of file <a class="el" href="McSystem_8cpp_source.html">McSystem.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00066">RingOctaRebridgeMove::move()</a>.</p>
+<p>Referenced by <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00066">McMd::RingOctaRebridgeMove::move()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8079226e84b68812c2ee4a6e4c00a35a"></a><!-- doxytag: member="McMd::McSystem::potentialEnergy" ref="a8079226e84b68812c2ee4a6e4c00a35a" args="() const " -->
+<a class="anchor" id="af2e45aa802a5f63dc72b70bf6c1ce72c"></a><!-- doxytag: member="McMd::McSystem::potentialEnergy" ref="af2e45aa802a5f63dc72b70bf6c1ce72c" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double potentialEnergy </td>
+          <td class="memname">double McMd::McSystem::potentialEnergy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -313,12 +313,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aee6b343c65e2c342151f11e7882d5a08"></a><!-- doxytag: member="McMd::McSystem::computeVirialStress" ref="aee6b343c65e2c342151f11e7882d5a08" args="(T &amp;stress) const " -->
+<a class="anchor" id="aeae49c68789b3870c21cbb86f7a43d08"></a><!-- doxytag: member="McMd::McSystem::computeVirialStress" ref="aeae49c68789b3870c21cbb86f7a43d08" args="(T &amp;stress) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void computeVirialStress </td>
+          <td class="memname">void McMd::McSystem::computeVirialStress </td>
           <td>(</td>
           <td class="paramtype">T &amp;&#160;</td>
           <td class="paramname"><em>stress</em></td><td>)</td>
@@ -340,12 +342,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aba85acb24fb51b2cb552ea840a5cbc8e"></a><!-- doxytag: member="McMd::McSystem::computeStress" ref="aba85acb24fb51b2cb552ea840a5cbc8e" args="(T &amp;stress) const " -->
+<a class="anchor" id="a10c99179a06c42eb8b8041efd54eb19c"></a><!-- doxytag: member="McMd::McSystem::computeStress" ref="a10c99179a06c42eb8b8041efd54eb19c" args="(T &amp;stress) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void computeStress </td>
+          <td class="memname">void McMd::McSystem::computeStress </td>
           <td>(</td>
           <td class="paramtype">T &amp;&#160;</td>
           <td class="paramname"><em>stress</em></td><td>)</td>
@@ -365,16 +369,16 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00067">McStressAutoCorr::sample()</a>.</p>
+<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00067">McMd::McStressAutoCorr::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a95732dcabe9f491e9bb9636dc9d194ec"></a><!-- doxytag: member="McMd::McSystem::pairPotential" ref="a95732dcabe9f491e9bb9636dc9d194ec" args="() const " -->
+<a class="anchor" id="aa2ef0761c70ac56a5fbc792cf3aa2b12"></a><!-- doxytag: member="McMd::McSystem::pairPotential" ref="aa2ef0761c70ac56a5fbc792cf3aa2b12" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> &amp; pairPotential </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> &amp; McMd::McSystem::pairPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -387,16 +391,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSystem_8h_source.html#l00297">297</a> of file <a class="el" href="McSystem_8h_source.html">McSystem.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McSimulation::analyze()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00092">MdSystem::MdSystem()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00073">RingTetraRebridgeMove::move()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00066">RingOctaRebridgeMove::move()</a>, <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00053">HomopolymerSemiGrandMove::move()</a>, <a class="el" href="CfbRingRebridgeMove_8cpp_source.html#l00080">CfbRingRebridgeMove::move()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00225">McSimulation::readCommands()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McPairEnergyAverage::sample()</a>, <a class="el" href="McEnergyOutput_8cpp_source.html#l00034">McEnergyOutput::sample()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00162">RingOctaRebridgeMove::scanBridge()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00430">McSimulation::simulate()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00558">McMd::McSimulation::analyze()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00092">McMd::MdSystem::MdSystem()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00073">McMd::RingTetraRebridgeMove::move()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00066">McMd::RingOctaRebridgeMove::move()</a>, <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00053">McMd::HomopolymerSemiGrandMove::move()</a>, <a class="el" href="CfbRingRebridgeMove_8cpp_source.html#l00080">McMd::CfbRingRebridgeMove::move()</a>, <a class="el" href="McSimulation_8cpp_source.html#l00225">McMd::McSimulation::readCommands()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McMd::McPairEnergyAverage::sample()</a>, <a class="el" href="McEnergyOutput_8cpp_source.html#l00034">McMd::McEnergyOutput::sample()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00162">McMd::RingOctaRebridgeMove::scanBridge()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00430">McMd::McSimulation::simulate()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a99605c893b3efd2a1129a25afe19de46"></a><!-- doxytag: member="McMd::McSystem::hasBondPotential" ref="a99605c893b3efd2a1129a25afe19de46" args="() const " -->
+<a class="anchor" id="af53d46e025334360c2824fcd14dbabda"></a><!-- doxytag: member="McMd::McSystem::hasBondPotential" ref="af53d46e025334360c2824fcd14dbabda" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool hasBondPotential </td>
+          <td class="memname">bool McMd::McSystem::hasBondPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -411,12 +415,12 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6ded80b5664672f56a62f8bf8295d641"></a><!-- doxytag: member="McMd::McSystem::bondPotential" ref="a6ded80b5664672f56a62f8bf8295d641" args="() const " -->
+<a class="anchor" id="aed9c37cc7b5ad23cdb6f7648e17a74b7"></a><!-- doxytag: member="McMd::McSystem::bondPotential" ref="aed9c37cc7b5ad23cdb6f7648e17a74b7" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp; bondPotential </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp; McMd::McSystem::bondPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -429,16 +433,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSystem_8h_source.html#l00310">310</a> of file <a class="el" href="McSystem_8h_source.html">McSystem.h</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00225">McSimulation::readCommands()</a>, and <a class="el" href="McEnergyOutput_8cpp_source.html#l00034">McEnergyOutput::sample()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00225">McMd::McSimulation::readCommands()</a>, and <a class="el" href="McEnergyOutput_8cpp_source.html#l00034">McMd::McEnergyOutput::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad94cba44b90992a12934ae2be6dcc707"></a><!-- doxytag: member="McMd::McSystem::hasLinkPotential" ref="ad94cba44b90992a12934ae2be6dcc707" args="() const " -->
+<a class="anchor" id="a83f2add55298ddbee90ec459c9d9a406"></a><!-- doxytag: member="McMd::McSystem::hasLinkPotential" ref="a83f2add55298ddbee90ec459c9d9a406" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool hasLinkPotential </td>
+          <td class="memname">bool McMd::McSystem::hasLinkPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -451,16 +455,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSystem_8h_source.html#l00345">345</a> of file <a class="el" href="McSystem_8h_source.html">McSystem.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00092">MdSystem::MdSystem()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00092">McMd::MdSystem::MdSystem()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afd6f92eb30537c2f70a260a067176dea"></a><!-- doxytag: member="McMd::McSystem::linkPotential" ref="afd6f92eb30537c2f70a260a067176dea" args="() const " -->
+<a class="anchor" id="a8247c62e71ebc13e4b146cdeb6ab0189"></a><!-- doxytag: member="McMd::McSystem::linkPotential" ref="a8247c62e71ebc13e4b146cdeb6ab0189" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp; linkPotential </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> &amp; McMd::McSystem::linkPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -473,16 +477,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSystem_8h_source.html#l00351">351</a> of file <a class="el" href="McSystem_8h_source.html">McSystem.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00092">MdSystem::MdSystem()</a>, and <a class="el" href="McEnergyOutput_8cpp_source.html#l00034">McEnergyOutput::sample()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00092">McMd::MdSystem::MdSystem()</a>, and <a class="el" href="McEnergyOutput_8cpp_source.html#l00034">McMd::McEnergyOutput::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2e1624ef024a3ecfc4567949279eb7f9"></a><!-- doxytag: member="McMd::McSystem::hasExternalPotential" ref="a2e1624ef024a3ecfc4567949279eb7f9" args="() const " -->
+<a class="anchor" id="a776439171922d9e5757f4fb97128f04b"></a><!-- doxytag: member="McMd::McSystem::hasExternalPotential" ref="a776439171922d9e5757f4fb97128f04b" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool hasExternalPotential </td>
+          <td class="memname">bool McMd::McSystem::hasExternalPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -495,16 +499,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSystem_8h_source.html#l00359">359</a> of file <a class="el" href="McSystem_8h_source.html">McSystem.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00092">MdSystem::MdSystem()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00092">McMd::MdSystem::MdSystem()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa307441c683f245a3554e28c2e9ef9f5"></a><!-- doxytag: member="McMd::McSystem::externalPotential" ref="aa307441c683f245a3554e28c2e9ef9f5" args="() const " -->
+<a class="anchor" id="a0952ff38daa10a3fe294302a16a9ece1"></a><!-- doxytag: member="McMd::McSystem::externalPotential" ref="a0952ff38daa10a3fe294302a16a9ece1" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1ExternalPotential.html">ExternalPotential</a> &amp; externalPotential </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1ExternalPotential.html">ExternalPotential</a> &amp; McMd::McSystem::externalPotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -517,16 +521,16 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="McSystem_8h_source.html#l00365">365</a> of file <a class="el" href="McSystem_8h_source.html">McSystem.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00092">MdSystem::MdSystem()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00068">McExternalEnergyAverage::sample()</a>, and <a class="el" href="McEnergyOutput_8cpp_source.html#l00034">McEnergyOutput::sample()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00092">McMd::MdSystem::MdSystem()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00068">McMd::McExternalEnergyAverage::sample()</a>, and <a class="el" href="McEnergyOutput_8cpp_source.html#l00034">McMd::McEnergyOutput::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><!-- doxytag: member="McMd::McSystem::isValid" ref="aac1b70a2ed67ead038c4d3f5ac4d8a81" args="() const " -->
+<a class="anchor" id="a868a1be00da1e40b5cc4c83100759a8c"></a><!-- doxytag: member="McMd::McSystem::isValid" ref="a868a1be00da1e40b5cc4c83100759a8c" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool McMd::McSystem::isValid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [virtual]</code></td>
@@ -537,22 +541,22 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return true if <a class="el" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a> is valid, or throw Exception. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1System.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">System</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1System.html#ac066e1e75e661009a1524f7996f1e07a">McMd::System</a>.</p>
 
 <p>Definition at line <a class="el" href="McSystem_8cpp_source.html#l00450">450</a> of file <a class="el" href="McSystem_8cpp_source.html">McSystem.cpp</a>.</p>
 
-<p>References <a class="el" href="System_8cpp_source.html#l00877">System::isValid()</a>.</p>
+<p>References <a class="el" href="System_8cpp_source.html#l00877">McMd::System::isValid()</a>.</p>
 
-<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00686">McSimulation::isValid()</a>.</p>
+<p>Referenced by <a class="el" href="McSimulation_8cpp_source.html#l00686">McMd::McSimulation::isValid()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae7cf1e8ee4f5343cb9101cc1a2c67ac5"></a><!-- doxytag: member="McMd::McSystem::newDefaultPerturbationFactory" ref="ae7cf1e8ee4f5343cb9101cc1a2c67ac5" args="()" -->
+<a class="anchor" id="ae8790a3f0b4b3d07a63920cc97cf84d4"></a><!-- doxytag: member="McMd::McSystem::newDefaultPerturbationFactory" ref="ae8790a3f0b4b3d07a63920cc97cf84d4" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1Perturbation.html">Perturbation</a> &gt; * newDefaultPerturbationFactory </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classMcMd_1_1Perturbation.html">Perturbation</a> &gt; * McMd::McSystem::newDefaultPerturbationFactory </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [protected, virtual]</code></td>
@@ -563,18 +567,18 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return a pointer to a new <a class="el" href="classMcMd_1_1McPerturbationFactory.html" title="Default Factory for subclasses of Perturbation.">McPerturbationFactory</a>. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1System.html#a7198da52ff1acf70ebe590650dd78d22">System</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1System.html#ad092598759ad0929721d82eccc1b14ad">McMd::System</a>.</p>
 
 <p>Definition at line <a class="el" href="McSystem_8cpp_source.html#l00465">465</a> of file <a class="el" href="McSystem_8cpp_source.html">McSystem.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac7d25c1a931ec680bef425fef79a0744"></a><!-- doxytag: member="McMd::McSystem::setPairPotential" ref="ac7d25c1a931ec680bef425fef79a0744" args="(McPairPotential *pairPotentialPtr)" -->
+<a class="anchor" id="acf0a554696289bbb1a1661b08f5c2b98"></a><!-- doxytag: member="McMd::McSystem::setPairPotential" ref="acf0a554696289bbb1a1661b08f5c2b98" args="(McPairPotential *pairPotentialPtr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setPairPotential </td>
+          <td class="memname">void McMd::McSystem::setPairPotential </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1McPairPotential.html">McPairPotential</a> *&#160;</td>
           <td class="paramname"><em>pairPotentialPtr</em></td><td>)</td>
@@ -601,7 +605,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="McSystem_8cpp_source.html">McSystem.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:56 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:27 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

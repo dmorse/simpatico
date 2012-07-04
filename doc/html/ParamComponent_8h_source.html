@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -74,51 +74,51 @@
 <a name="l00032"></a>00032 
 <a name="l00033"></a>00033    <span class="keyword">public</span>:
 <a name="l00034"></a>00034 
-<a name="l00036"></a>00036       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1ParamComponent.html#ace69555a4f2c711e40d075c3bfe93c2c" title="Destructor.">~ParamComponent</a>();
+<a name="l00036"></a>00036       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1ParamComponent.html#a4714eb00e44cdca1f1efc019bea99492" title="Destructor.">~ParamComponent</a>();
 <a name="l00037"></a>00037 
-<a name="l00043"></a>00043       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#af942352d2e2db7dea4c13dd5cd0feeea" title="Read parameter(s) from file.">readParam</a>(std::istream&amp; in) = 0;
+<a name="l00043"></a>00043       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a5234b604f9e852f53eedd7de7c354a1e" title="Read parameter(s) from file.">readParam</a>(std::istream&amp; in) = 0;
 <a name="l00044"></a>00044 
-<a name="l00050"></a>00050       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a12d10c6e17be8ca7d162fe25a1503933" title="Read parameter(s) to file.">writeParam</a>(std::ostream&amp; out) = 0;
+<a name="l00050"></a>00050       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#ac17d6ab63f9b0e5f966d6a3cfbc26d86" title="Read parameter(s) to file.">writeParam</a>(std::ostream&amp; out) = 0;
 <a name="l00051"></a>00051 
-<a name="l00057"></a><a class="code" href="classUtil_1_1ParamComponent.html#ac679b6c5362ea920e71bf690b8346029">00057</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#ac679b6c5362ea920e71bf690b8346029" title="Nontrivial implementation provided by ParamComposite subclass.">resetParam</a>()
+<a name="l00057"></a><a class="code" href="classUtil_1_1ParamComponent.html#a57e24c95c5bcbf1f473628b6b2d51eb8">00057</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a57e24c95c5bcbf1f473628b6b2d51eb8" title="Nontrivial implementation provided by ParamComposite subclass.">resetParam</a>()
 <a name="l00058"></a>00058       {}
 <a name="l00059"></a>00059 
-<a name="l00069"></a>00069       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a2ea6fb18592c42cfc8c8dd78f246a55f" title="Set indent level.">setIndent</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file.">ParamComponent</a>&amp; parent, <span class="keywordtype">bool</span> next = <span class="keyword">true</span>);
+<a name="l00069"></a>00069       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a71952c63913050d18e8ec5d1b146d191" title="Set indent level.">setIndent</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file.">ParamComponent</a>&amp; parent, <span class="keywordtype">bool</span> next = <span class="keyword">true</span>);
 <a name="l00070"></a>00070 
-<a name="l00074"></a>00074       std::string <a class="code" href="classUtil_1_1ParamComponent.html#ad95e57f3fab64c095f8098ab3b376efa" title="Return indent string for this object (string of spaces).">indent</a>() <span class="keyword">const</span>;
+<a name="l00074"></a>00074       std::string <a class="code" href="classUtil_1_1ParamComponent.html#aba73fd906e0df1da6fb2f6db3ecba3c7" title="Return indent string for this object (string of spaces).">indent</a>() <span class="keyword">const</span>;
 <a name="l00075"></a>00075 
 <a name="l00076"></a>00076 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00077"></a>00077 <span class="preprocessor"></span>
-<a name="l00080"></a>00080       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#acebbb541ac87f56979a5b03a8604887a" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(MPI::Intracomm&amp; communicator);
+<a name="l00080"></a>00080       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a83caf770ecb7311e1257a1d8c4b27d37" title="Set an MPI communicator for parameter IO.">setParamCommunicator</a>(MPI::Intracomm&amp; communicator);
 <a name="l00081"></a>00081 <span class="preprocessor">      #endif</span>
 <a name="l00082"></a>00082 <span class="preprocessor"></span>
 <a name="l00089"></a>00089       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00090"></a>00090       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a6765e839ab267e4959384e35a4112451" title="Serialize this ParamComponent as a string.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00090"></a>00090       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a43f7dd33894b4ad67245162146042e6e" title="Serialize this ParamComponent as a string.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00091"></a>00091 
 <a name="l00092"></a>00092       <span class="comment">// Public static methods</span>
 <a name="l00093"></a>00093 
-<a name="l00097"></a>00097       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a608e10d093425c9228f10ed3c4994598" title="Initialize static echo member to false.">initStatic</a>();
+<a name="l00097"></a>00097       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a5350c0432130f7feba8392f5b3a75cb4" title="Initialize static echo member to false.">initStatic</a>();
 <a name="l00098"></a>00098 
-<a name="l00102"></a>00102       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#aa6a79147fc967b562e62963e96d22b4a" title="Set echo parameter to true enable echoing, or false to disable.">setEcho</a>(<span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#a24de2d9d8a57a07e1dd6fdc84779699c" title="Get echo parameter.">echo</a> = <span class="keyword">true</span>);
+<a name="l00102"></a>00102       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#add72ad7add98e0b90979ee2638c7468d" title="Set echo parameter to true enable echoing, or false to disable.">setEcho</a>(<span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2" title="Get echo parameter.">echo</a> = <span class="keyword">true</span>);
 <a name="l00103"></a>00103 
-<a name="l00107"></a>00107       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#a24de2d9d8a57a07e1dd6fdc84779699c" title="Get echo parameter.">echo</a>();
+<a name="l00107"></a>00107       <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#ac5808de278115409092e94f9c72362c2" title="Get echo parameter.">echo</a>();
 <a name="l00108"></a>00108 
 <a name="l00109"></a>00109    <span class="keyword">protected</span>:
 <a name="l00110"></a>00110 
-<a name="l00120"></a>00120       <a class="code" href="classUtil_1_1ParamComponent.html#a137a1f03cac2d2f2b85e2ae4e62f8b5c" title="Constructor.">ParamComponent</a>();
+<a name="l00120"></a>00120       <a class="code" href="classUtil_1_1ParamComponent.html#a6f859f325ca7d36747d28c9677fe0bfc" title="Constructor.">ParamComponent</a>();
 <a name="l00121"></a>00121 
-<a name="l00125"></a>00125       <a class="code" href="classUtil_1_1ParamComponent.html#a137a1f03cac2d2f2b85e2ae4e62f8b5c" title="Constructor.">ParamComponent</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file.">ParamComponent</a>&amp; other);
+<a name="l00125"></a>00125       <a class="code" href="classUtil_1_1ParamComponent.html#a6f859f325ca7d36747d28c9677fe0bfc" title="Constructor.">ParamComponent</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1ParamComponent.html" title="Abstract base class for classes that input and ouput parameters to file.">ParamComponent</a>&amp; other);
 <a name="l00126"></a>00126 
-<a name="l00132"></a><a class="code" href="classUtil_1_1ParamComponent.html#a15eb1c49e45f79c5603775996e7c294e">00132</a>       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#a15eb1c49e45f79c5603775996e7c294e" title="Should this processor do parameter file IO?">isParamIoProcessor</a>()<span class="keyword"> const</span>
-<a name="l00133"></a>00133 <span class="keyword">      </span>{  <span class="keywordflow">return</span> io_.<a class="code" href="classUtil_1_1MpiFileIo.html#af44e324ef239057c834cf781fa528e5d" title="Can this processor do file I/O ?">isIoProcessor</a>(); }
+<a name="l00132"></a><a class="code" href="classUtil_1_1ParamComponent.html#ae5dd13aea6c6576782ac6391e17c141b">00132</a>       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#ae5dd13aea6c6576782ac6391e17c141b" title="Should this processor do parameter file IO?">isParamIoProcessor</a>()<span class="keyword"> const</span>
+<a name="l00133"></a>00133 <span class="keyword">      </span>{  <span class="keywordflow">return</span> io_.<a class="code" href="classUtil_1_1MpiFileIo.html#ae81b1c15aeb5287fef1955db77db883f" title="Can this processor do file I/O ?">isIoProcessor</a>(); }
 <a name="l00134"></a>00134 
 <a name="l00135"></a>00135 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00136"></a>00136 <span class="preprocessor"></span>
-<a name="l00139"></a><a class="code" href="classUtil_1_1ParamComponent.html#ac6781f223c4e1ef925ab847bd927d486">00139</a>       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#ac6781f223c4e1ef925ab847bd927d486" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()<span class="keyword"> const</span>
-<a name="l00140"></a>00140 <span class="keyword">      </span>{  <span class="keywordflow">return</span> io_.<a class="code" href="classUtil_1_1MpiFileIo.html#a96a9247e9bcf7da4a655e71ddd316f34" title="Does this object have a communicator?">hasCommunicator</a>(); }
+<a name="l00139"></a><a class="code" href="classUtil_1_1ParamComponent.html#a38972de00a768f2db43cc1149b264d8a">00139</a>       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1ParamComponent.html#a38972de00a768f2db43cc1149b264d8a" title="Has an MPI communicator been set for parameter input?">hasParamCommunicator</a>()<span class="keyword"> const</span>
+<a name="l00140"></a>00140 <span class="keyword">      </span>{  <span class="keywordflow">return</span> io_.<a class="code" href="classUtil_1_1MpiFileIo.html#ab308bde6f007cb3f8687072597359f88" title="Does this object have a communicator?">hasCommunicator</a>(); }
 <a name="l00141"></a>00141 
-<a name="l00145"></a><a class="code" href="classUtil_1_1ParamComponent.html#a47f5915e785a2c48758048a04e1d3389">00145</a>       MPI::Intracomm&amp; <a class="code" href="classUtil_1_1ParamComponent.html#a47f5915e785a2c48758048a04e1d3389" title="Return the parameter communicator.">paramCommunicator</a>()<span class="keyword"> const</span>
-<a name="l00146"></a>00146 <span class="keyword">      </span>{  <span class="keywordflow">return</span> io_.<a class="code" href="classUtil_1_1MpiFileIo.html#aee20740c90cc24a06535e08022dfcb40" title="Get the communicator.">communicator</a>(); }
+<a name="l00145"></a><a class="code" href="classUtil_1_1ParamComponent.html#afa226f06622cd0dce587da2b56eccbbd">00145</a>       MPI::Intracomm&amp; <a class="code" href="classUtil_1_1ParamComponent.html#afa226f06622cd0dce587da2b56eccbbd" title="Return the parameter communicator.">paramCommunicator</a>()<span class="keyword"> const</span>
+<a name="l00146"></a>00146 <span class="keyword">      </span>{  <span class="keywordflow">return</span> io_.<a class="code" href="classUtil_1_1MpiFileIo.html#ae1395a123bff23b4996e03c8d12bf16e" title="Get the communicator.">communicator</a>(); }
 <a name="l00147"></a>00147 <span class="preprocessor">      #endif</span>
 <a name="l00148"></a>00148 <span class="preprocessor"></span>
 <a name="l00149"></a>00149    <span class="keyword">private</span>:
@@ -147,12 +147,12 @@
 <a name="l00175"></a>00175 <span class="comment">   * Serialize a ParamComponent as a string.</span>
 <a name="l00176"></a>00176 <span class="comment">   */</span>
 <a name="l00177"></a>00177    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00178"></a><a class="code" href="classUtil_1_1ParamComponent.html#a6765e839ab267e4959384e35a4112451">00178</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a6765e839ab267e4959384e35a4112451" title="Serialize this ParamComponent as a string.">ParamComponent::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00178"></a><a class="code" href="classUtil_1_1ParamComponent.html#a43f7dd33894b4ad67245162146042e6e">00178</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1ParamComponent.html#a43f7dd33894b4ad67245162146042e6e" title="Serialize this ParamComponent as a string.">ParamComponent::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00179"></a>00179    {
 <a name="l00180"></a>00180       std::string str;
 <a name="l00181"></a>00181       <span class="keywordflow">if</span> (Archive::is_saving()) {
 <a name="l00182"></a>00182          std::ostringstream buffer;
-<a name="l00183"></a>00183          <a class="code" href="classUtil_1_1ParamComponent.html#a12d10c6e17be8ca7d162fe25a1503933" title="Read parameter(s) to file.">writeParam</a>(buffer);
+<a name="l00183"></a>00183          <a class="code" href="classUtil_1_1ParamComponent.html#ac17d6ab63f9b0e5f966d6a3cfbc26d86" title="Read parameter(s) to file.">writeParam</a>(buffer);
 <a name="l00184"></a>00184          str = buffer.str();
 <a name="l00185"></a>00185          <span class="comment">// std::cout &lt;&lt; &quot;Saving archive&quot; &lt;&lt; std::endl;</span>
 <a name="l00186"></a>00186          <span class="comment">// std::cout &lt;&lt; str &lt;&lt; std::endl;</span>
@@ -162,7 +162,7 @@
 <a name="l00190"></a>00190          <span class="comment">// std::cout &lt;&lt; &quot;Loading archive&quot; &lt;&lt; std::endl;</span>
 <a name="l00191"></a>00191          <span class="comment">// std::cout &lt;&lt; str &lt;&lt; std::endl;</span>
 <a name="l00192"></a>00192          std::istringstream buffer(str);
-<a name="l00193"></a>00193          <a class="code" href="classUtil_1_1ParamComponent.html#af942352d2e2db7dea4c13dd5cd0feeea" title="Read parameter(s) from file.">readParam</a>(buffer);
+<a name="l00193"></a>00193          <a class="code" href="classUtil_1_1ParamComponent.html#a5234b604f9e852f53eedd7de7c354a1e" title="Read parameter(s) from file.">readParam</a>(buffer);
 <a name="l00194"></a>00194       } 
 <a name="l00195"></a>00195    }
 <a name="l00196"></a>00196 
@@ -170,7 +170,7 @@
 <a name="l00198"></a>00198 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

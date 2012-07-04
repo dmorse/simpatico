@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -98,10 +98,10 @@
 <a name="l00086"></a>00086       <span class="keywordtype">void</span> force(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R2,
 <a name="l00087"></a>00087                        <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F1, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F2, <span class="keywordtype">int</span> type) <span class="keyword">const</span>;
 <a name="l00088"></a>00088 
-<a name="l00096"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a0ab8f6bbd2e18cfd4df7ced299fe82f0">00096</a>       <span class="keywordtype">void</span> <span class="keyword">set</span>(std::string name, <span class="keywordtype">int</span> type, <span class="keywordtype">double</span> value)
+<a name="l00096"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#aba1d98aa021a2b2f998258bc3e905924">00096</a>       <span class="keywordtype">void</span> <span class="keyword">set</span>(std::string name, <span class="keywordtype">int</span> type, <span class="keywordtype">double</span> value)
 <a name="l00097"></a>00097       {   interactionPtr_-&gt;set(name, type, value); }
 <a name="l00098"></a>00098 
-<a name="l00106"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a29dcf205f23d3b29d6f3bb6755e01d80">00106</a>       <span class="keywordtype">double</span> <span class="keyword">get</span>(std::string name, <span class="keywordtype">int</span> type) <span class="keyword">const</span>
+<a name="l00106"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a07b376e2bb20d024d31487d4300eb816">00106</a>       <span class="keywordtype">double</span> <span class="keyword">get</span>(std::string name, <span class="keywordtype">int</span> type) <span class="keyword">const</span>
 <a name="l00107"></a>00107       {   <span class="keywordflow">return</span> interactionPtr_-&gt;get(name, type); }
 <a name="l00108"></a>00108 
 <a name="l00112"></a>00112       <span class="keyword">virtual</span> std::string interactionClassName() <span class="keyword">const</span>;
@@ -161,7 +161,7 @@
 <a name="l00201"></a>00201 <span class="comment">   * Default constructor.</span>
 <a name="l00202"></a>00202 <span class="comment">   */</span>
 <a name="l00203"></a>00203    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00204"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a7858f68c5584c3599297694ec1e8e1ac">00204</a>    <a class="code" href="classMcMd_1_1AnglePotentialImpl.html" title="Implementation template for an AnglePotential.">AnglePotentialImpl&lt;Interaction&gt;::AnglePotentialImpl</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)
+<a name="l00204"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a37c89bb2904a9a07da202ad7ba61ee29">00204</a>    <a class="code" href="classMcMd_1_1AnglePotentialImpl.html" title="Implementation template for an AnglePotential.">AnglePotentialImpl&lt;Interaction&gt;::AnglePotentialImpl</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)
 <a name="l00205"></a>00205     : <a class="code" href="classMcMd_1_1AnglePotential.html" title="Interface for a Angle Interaction.">AnglePotential</a>(),
 <a name="l00206"></a>00206       <a class="code" href="classMcMd_1_1SubSystem.html" title="A SubSystem is a partial copy of a System that has:">SubSystem</a>(system),
 <a name="l00207"></a>00207       interactionPtr_(0),
@@ -172,7 +172,7 @@
 <a name="l00212"></a>00212 <span class="comment">   * Constructor, copy from AnglePotentialImpl&lt;Interaction&gt;.</span>
 <a name="l00213"></a>00213 <span class="comment">   */</span>
 <a name="l00214"></a>00214    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00215"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#aff67b404682b41dc98eab5f3f171378c">00215</a>    <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a7858f68c5584c3599297694ec1e8e1ac" title="Constructor.">AnglePotentialImpl&lt;Interaction&gt;::AnglePotentialImpl</a>(
+<a name="l00215"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a4ae1108802ac32a97b149c135e4d0137">00215</a>    <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a37c89bb2904a9a07da202ad7ba61ee29" title="Constructor.">AnglePotentialImpl&lt;Interaction&gt;::AnglePotentialImpl</a>(
 <a name="l00216"></a>00216                          <a class="code" href="classMcMd_1_1AnglePotentialImpl.html" title="Implementation template for an AnglePotential.">AnglePotentialImpl&lt;Interaction&gt;</a>&amp; other)
 <a name="l00217"></a>00217     : <a class="code" href="classMcMd_1_1AnglePotential.html" title="Interface for a Angle Interaction.">AnglePotential</a>(),
 <a name="l00218"></a>00218       <a class="code" href="classMcMd_1_1SubSystem.html" title="A SubSystem is a partial copy of a System that has:">SubSystem</a>(other.system()),
@@ -184,7 +184,7 @@
 <a name="l00224"></a>00224 <span class="comment">   * Destructor. </span>
 <a name="l00225"></a>00225 <span class="comment">   */</span>
 <a name="l00226"></a>00226    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00227"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#ace80f983b9c10de9da174499650ccfdb">00227</a>    <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#ace80f983b9c10de9da174499650ccfdb" title="Destructor.">AnglePotentialImpl&lt;Interaction&gt;::~AnglePotentialImpl</a>() 
+<a name="l00227"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a3fe13f6e138b2d0a88023b17cc251bac">00227</a>    <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a3fe13f6e138b2d0a88023b17cc251bac" title="Destructor.">AnglePotentialImpl&lt;Interaction&gt;::~AnglePotentialImpl</a>() 
 <a name="l00228"></a>00228    {
 <a name="l00229"></a>00229       <span class="keywordflow">if</span> (interactionPtr_ &amp;&amp; !isCopy_) {
 <a name="l00230"></a>00230          <span class="keyword">delete</span> interactionPtr_; 
@@ -196,7 +196,7 @@
 <a name="l00236"></a>00236 <span class="comment">   * Read parameters from file.</span>
 <a name="l00237"></a>00237 <span class="comment">   */</span>
 <a name="l00238"></a>00238    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00239"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#ab5421d3c9175985c9acbf723e5392075">00239</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#ab5421d3c9175985c9acbf723e5392075" title="Read angle potential parameters.">AnglePotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream &amp;in) 
+<a name="l00239"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a4ddab69842cca794420eca47918569c7">00239</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a4ddab69842cca794420eca47918569c7" title="Read angle potential parameters.">AnglePotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream &amp;in) 
 <a name="l00240"></a>00240    {
 <a name="l00241"></a>00241       <span class="keywordflow">if</span> (!isCopy_) {
 <a name="l00242"></a>00242          readBegin(in, <span class="stringliteral">&quot;AnglePotential&quot;</span>);
@@ -211,7 +211,7 @@
 <a name="l00251"></a>00251 <span class="comment">   * Return energy for a single angle.</span>
 <a name="l00252"></a>00252 <span class="comment">   */</span>
 <a name="l00253"></a>00253    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00254"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a432216092cd60cd94dd6458e42f61701">00254</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a7d8a7d1d94db857f9b53e50c675f216b" title="Return total angle potential energy of this System.">AnglePotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keywordtype">double</span> cosTheta, <span class="keywordtype">int</span> angleTypeId)<span class="keyword"> </span>
+<a name="l00254"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#aefa7e7e1d8de9236bb440e3eb44ffe3a">00254</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a87c587a577ca8527eeb43d69422e958c" title="Return total angle potential energy of this System.">AnglePotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keywordtype">double</span> cosTheta, <span class="keywordtype">int</span> angleTypeId)<span class="keyword"> </span>
 <a name="l00255"></a>00255 <span class="keyword">      const</span>
 <a name="l00256"></a>00256 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().energy(cosTheta, angleTypeId); }
 <a name="l00257"></a>00257 
@@ -219,7 +219,7 @@
 <a name="l00259"></a>00259 <span class="comment">   * Return forces for a single angle.</span>
 <a name="l00260"></a>00260 <span class="comment">   */</span>
 <a name="l00261"></a>00261    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00262"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a8136fd3ee6e12bdf78f12d308a76c930">00262</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a8136fd3ee6e12bdf78f12d308a76c930" title="Returns forces along two bonds at the angle, for use in MD and stress calculation.">AnglePotentialImpl&lt;Interaction&gt;::force</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R2, 
+<a name="l00262"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a56f2607be5197ff318cbdb97a9ee8ae0">00262</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a56f2607be5197ff318cbdb97a9ee8ae0" title="Returns forces along two bonds at the angle, for use in MD and stress calculation.">AnglePotentialImpl&lt;Interaction&gt;::force</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R2, 
 <a name="l00263"></a>00263                                           <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F1, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F2, <span class="keywordtype">int</span> typeId)<span class="keyword"> const</span>
 <a name="l00264"></a>00264 <span class="keyword">   </span>{  interaction().force(R1, R2, F1, F2, typeId); }
 <a name="l00265"></a>00265 
@@ -227,7 +227,7 @@
 <a name="l00267"></a>00267 <span class="comment">   * Return angle energy for one Atom. </span>
 <a name="l00268"></a>00268 <span class="comment">   */</span>
 <a name="l00269"></a>00269    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00270"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a4851d6fa60c176b9369effbb1da0e7bd">00270</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a4851d6fa60c176b9369effbb1da0e7bd" title="Calculate the angle energy for one Atom.">AnglePotentialImpl&lt;Interaction&gt;::atomEnergy</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)<span class="keyword"> const</span>
+<a name="l00270"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a76c94bb506b15b2c6375077d7ee3d173">00270</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a76c94bb506b15b2c6375077d7ee3d173" title="Calculate the angle energy for one Atom.">AnglePotentialImpl&lt;Interaction&gt;::atomEnergy</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)<span class="keyword"> const</span>
 <a name="l00271"></a>00271 <span class="keyword">   </span>{
 <a name="l00272"></a>00272       Species::AtomAngleArray angles;
 <a name="l00273"></a>00273       <span class="keyword">const</span>  <a class="code" href="classMcMd_1_1Group.html" title="A group of covalently interacting atoms.">Angle</a>* anglePtr;
@@ -237,15 +237,15 @@
 <a name="l00277"></a>00277       <span class="keywordtype">double</span> rsq1, rsq2, cosTheta;
 <a name="l00278"></a>00278       <span class="keywordtype">double</span> energy = 0.0;
 <a name="l00279"></a>00279 
-<a name="l00280"></a>00280       atom.<a class="code" href="classMcMd_1_1Atom.html#ae73230f53be08f7eb347b5201d903bb4" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#a140d8e2d6c3504522858415289c49e05" title="Get the molecular Species by reference.">species</a>().getAtomAngles(atom, angles);
+<a name="l00280"></a>00280       atom.<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>().<a class="code" href="classMcMd_1_1Molecule.html#a1be3c69c8bbdf2ac3cfe40e56fb1f6d1" title="Get the molecular Species by reference.">species</a>().getAtomAngles(atom, angles);
 <a name="l00281"></a>00281       <span class="keywordflow">for</span> (iAngle = 0; iAngle &lt; angles.size(); ++iAngle) {
 <a name="l00282"></a>00282          anglePtr = angles[iAngle];
-<a name="l00283"></a>00283          rsq1 = boundary().distanceSq(anglePtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e" title="Get a specific Atom in the Group.">atom</a>(1).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00284"></a>00284                                anglePtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e" title="Get a specific Atom in the Group.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr1);
-<a name="l00285"></a>00285          rsq2 = boundary().distanceSq(anglePtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e" title="Get a specific Atom in the Group.">atom</a>(2).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00286"></a>00286                                anglePtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e" title="Get a specific Atom in the Group.">atom</a>(1).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr2);
-<a name="l00287"></a>00287          cosTheta = dr1.<a class="code" href="classUtil_1_1Vector.html#a5431123ac320a0ed069d9c7a30702c7b" title="Return dot product of this vector and vector v.">dot</a>(dr2) / sqrt(rsq1 * rsq2);
-<a name="l00288"></a>00288          energy += interaction().energy(cosTheta, anglePtr-&gt;<a class="code" href="classMcMd_1_1Group.html#af68aca851173d8f261a70897bff349c9" title="Get the typeId for this covalent group.">typeId</a>());
+<a name="l00283"></a>00283          rsq1 = boundary().distanceSq(anglePtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00284"></a>00284                                anglePtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr1);
+<a name="l00285"></a>00285          rsq2 = boundary().distanceSq(anglePtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(2).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00286"></a>00286                                anglePtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a" title="Get a specific Atom in the Group.">atom</a>(1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr2);
+<a name="l00287"></a>00287          cosTheta = dr1.<a class="code" href="classUtil_1_1Vector.html#aa1b64030ac95721bc39038c003240c09" title="Return dot product of this vector and vector v.">dot</a>(dr2) / sqrt(rsq1 * rsq2);
+<a name="l00288"></a>00288          energy += interaction().energy(cosTheta, anglePtr-&gt;<a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878" title="Get the typeId for this covalent group.">typeId</a>());
 <a name="l00289"></a>00289       }
 <a name="l00290"></a>00290 
 <a name="l00291"></a>00291       <span class="keywordflow">return</span> energy;
@@ -255,7 +255,7 @@
 <a name="l00295"></a>00295 <span class="comment">   * Calculate angle energy.</span>
 <a name="l00296"></a>00296 <span class="comment">   */</span>
 <a name="l00297"></a>00297    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00298"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a7d8a7d1d94db857f9b53e50c675f216b">00298</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a7d8a7d1d94db857f9b53e50c675f216b" title="Return total angle potential energy of this System.">AnglePotentialImpl&lt;Interaction&gt;::energy</a>()<span class="keyword"> const</span>
+<a name="l00298"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a87c587a577ca8527eeb43d69422e958c">00298</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a87c587a577ca8527eeb43d69422e958c" title="Return total angle potential energy of this System.">AnglePotentialImpl&lt;Interaction&gt;::energy</a>()<span class="keyword"> const</span>
 <a name="l00299"></a>00299 <span class="keyword">   </span>{
 <a name="l00300"></a>00300       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr1; <span class="comment">// R[1] - R[0]</span>
 <a name="l00301"></a>00301       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr2; <span class="comment">// R[2] - R[1]</span>
@@ -266,13 +266,13 @@
 <a name="l00306"></a>00306 
 <a name="l00307"></a>00307       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
 <a name="l00308"></a>00308          <span class="keywordflow">if</span> (simulation().species(iSpec).nAngle() &gt; 0) {
-<a name="l00309"></a>00309             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
-<a name="l00310"></a>00310                <span class="keywordflow">for</span> (molIter-&gt;begin(angleIter); angleIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++angleIter){
+<a name="l00309"></a>00309             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00310"></a>00310                <span class="keywordflow">for</span> (molIter-&gt;begin(angleIter); angleIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++angleIter){
 <a name="l00311"></a>00311                   rsq1 = boundary().distanceSq(angleIter-&gt;atom(1).position(),
 <a name="l00312"></a>00312                                         angleIter-&gt;atom(0).position(), dr1);
 <a name="l00313"></a>00313                   rsq2 = boundary().distanceSq(angleIter-&gt;atom(2).position(),
 <a name="l00314"></a>00314                                         angleIter-&gt;atom(1).position(), dr2);
-<a name="l00315"></a>00315                   cosTheta = dr1.<a class="code" href="classUtil_1_1Vector.html#a5431123ac320a0ed069d9c7a30702c7b" title="Return dot product of this vector and vector v.">dot</a>(dr2) / sqrt(rsq1 * rsq2);
+<a name="l00315"></a>00315                   cosTheta = dr1.<a class="code" href="classUtil_1_1Vector.html#aa1b64030ac95721bc39038c003240c09" title="Return dot product of this vector and vector v.">dot</a>(dr2) / sqrt(rsq1 * rsq2);
 <a name="l00316"></a>00316                   energy += interaction().energy(cosTheta, angleIter-&gt;typeId());
 <a name="l00317"></a>00317                }
 <a name="l00318"></a>00318             }
@@ -286,7 +286,7 @@
 <a name="l00326"></a>00326 <span class="comment">   * Add angle forces to forces array.</span>
 <a name="l00327"></a>00327 <span class="comment">   */</span>
 <a name="l00328"></a>00328    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00329"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a384ffca983ce601febd69f2d38b9911d">00329</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Calculate the angle energy for one Atom.">AnglePotentialImpl&lt;Interaction&gt;::addForces</a>() 
+<a name="l00329"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a9d63fc34ffcf68c8a8143aa9a1d2b728">00329</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a9d63fc34ffcf68c8a8143aa9a1d2b728" title="Calculate the angle energy for one Atom.">AnglePotentialImpl&lt;Interaction&gt;::addForces</a>() 
 <a name="l00330"></a>00330    {
 <a name="l00331"></a>00331       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr1, dr2, force1, force2;
 <a name="l00332"></a>00332       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">System::MoleculeIterator</a> molIter;
@@ -296,21 +296,21 @@
 <a name="l00336"></a>00336 
 <a name="l00337"></a>00337       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
 <a name="l00338"></a>00338          <span class="keywordflow">if</span> (simulation().species(iSpec).nAngle() &gt; 0) {
-<a name="l00339"></a>00339             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00340"></a>00340                <span class="keywordflow">for</span> (molIter-&gt;begin(angleIter); angleIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++angleIter){
+<a name="l00339"></a>00339             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00340"></a>00340                <span class="keywordflow">for</span> (molIter-&gt;begin(angleIter); angleIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++angleIter){
 <a name="l00341"></a>00341                   atom0Ptr = &amp;(angleIter-&gt;atom(0));
 <a name="l00342"></a>00342                   atom1Ptr = &amp;(angleIter-&gt;atom(1));
 <a name="l00343"></a>00343                   atom2Ptr = &amp;(angleIter-&gt;atom(2));
-<a name="l00344"></a>00344                   boundary().distanceSq(atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00345"></a>00345                                         atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr1);
-<a name="l00346"></a>00346                   boundary().distanceSq(atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00347"></a>00347                                         atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr2);
-<a name="l00348"></a>00348                   interaction().<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>(dr1, dr2, force1, force2,
+<a name="l00344"></a>00344                   boundary().distanceSq(atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00345"></a>00345                                         atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr1);
+<a name="l00346"></a>00346                   boundary().distanceSq(atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00347"></a>00347                                         atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr2);
+<a name="l00348"></a>00348                   interaction().<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>(dr1, dr2, force1, force2,
 <a name="l00349"></a>00349                                     angleIter-&gt;typeId());
-<a name="l00350"></a>00350                   atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() += force1;
-<a name="l00351"></a>00351                   atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() -= force1;
-<a name="l00352"></a>00352                   atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() += force2;
-<a name="l00353"></a>00353                   atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>() -= force2;
+<a name="l00350"></a>00350                   atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() += force1;
+<a name="l00351"></a>00351                   atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() -= force1;
+<a name="l00352"></a>00352                   atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() += force2;
+<a name="l00353"></a>00353                   atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>() -= force2;
 <a name="l00354"></a>00354                }
 <a name="l00355"></a>00355             }
 <a name="l00356"></a>00356          }
@@ -334,19 +334,19 @@
 <a name="l00374"></a>00374       Molecule::ConstAngleIterator  angleIter;
 <a name="l00375"></a>00375       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec = 0; iSpec &lt; simulation().nSpecies(); ++iSpec) {
 <a name="l00376"></a>00376          <span class="keywordflow">if</span> (simulation().species(iSpec).nAngle() &gt; 0) {
-<a name="l00377"></a>00377             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
-<a name="l00378"></a>00378                <span class="keywordflow">for</span> (molIter-&gt;begin(angleIter); angleIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++angleIter){
+<a name="l00377"></a>00377             <span class="keywordflow">for</span> (begin(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00378"></a>00378                <span class="keywordflow">for</span> (molIter-&gt;begin(angleIter); angleIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++angleIter){
 <a name="l00379"></a>00379                   atom0Ptr = &amp;(angleIter-&gt;atom(0));
 <a name="l00380"></a>00380                   atom1Ptr = &amp;(angleIter-&gt;atom(1));
 <a name="l00381"></a>00381                   atom2Ptr = &amp;(angleIter-&gt;atom(2));
 <a name="l00382"></a>00382 
-<a name="l00383"></a>00383                   boundary().distanceSq(atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00384"></a>00384                                         atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr1);
-<a name="l00385"></a>00385                   boundary().distanceSq(atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(),
-<a name="l00386"></a>00386                                         atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>(), dr2);
+<a name="l00383"></a>00383                   boundary().distanceSq(atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00384"></a>00384                                         atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr1);
+<a name="l00385"></a>00385                   boundary().distanceSq(atom2Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(),
+<a name="l00386"></a>00386                                         atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>(), dr2);
 <a name="l00387"></a>00387 
 <a name="l00388"></a>00388                   <span class="comment">// force1 -- along dr1; force2 -- along dr2.</span>
-<a name="l00389"></a>00389                   interaction().<a class="code" href="classMcMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get atomic force Vector by reference.">force</a>(dr1, dr2,
+<a name="l00389"></a>00389                   interaction().<a class="code" href="classMcMd_1_1Atom.html#a4d50648b4715d5d96b0c59f4ce37b80e" title="Get atomic force Vector by reference.">force</a>(dr1, dr2,
 <a name="l00390"></a>00390                                     force1, force2, angleIter-&gt;typeId());
 <a name="l00391"></a>00391 
 <a name="l00392"></a>00392                   dr1 *= -1.0;
@@ -363,39 +363,39 @@
 <a name="l00403"></a>00403    }
 <a name="l00404"></a>00404 
 <a name="l00405"></a>00405    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00406"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d">00406</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d" title="Compute total angle pressure.">AnglePotentialImpl&lt;Interaction&gt;::computeStress</a>(<span class="keywordtype">double</span>&amp; stress)<span class="keyword"> const</span>
+<a name="l00406"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a817f0510ba929a3329bd63fd21b43b99">00406</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a817f0510ba929a3329bd63fd21b43b99" title="Compute total angle pressure.">AnglePotentialImpl&lt;Interaction&gt;::computeStress</a>(<span class="keywordtype">double</span>&amp; stress)<span class="keyword"> const</span>
 <a name="l00407"></a>00407 <span class="keyword">   </span>{  computeStressImpl(stress); }
 <a name="l00408"></a>00408 
 <a name="l00409"></a>00409    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00410"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a664e9e28ebd82ef0744a495912c8131c">00410</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d" title="Compute total angle pressure.">AnglePotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Util::Vector</a>&amp; stress)<span class="keyword"> </span>
+<a name="l00410"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#af3e8ade6a3b35d866f930f0a165e4d09">00410</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a817f0510ba929a3329bd63fd21b43b99" title="Compute total angle pressure.">AnglePotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Util::Vector</a>&amp; stress)<span class="keyword"> </span>
 <a name="l00411"></a>00411 <span class="keyword">        const</span>
 <a name="l00412"></a>00412 <span class="keyword">   </span>{  computeStressImpl(stress); }
 <a name="l00413"></a>00413 
 <a name="l00414"></a>00414    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00415"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a7179cc96d78bbce80d68170bdfdab3fb">00415</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d" title="Compute total angle pressure.">AnglePotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Util::Tensor</a>&amp; stress)<span class="keyword"> </span>
+<a name="l00415"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#ab618b6eca188d2162b26b0d51bd4db99">00415</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a817f0510ba929a3329bd63fd21b43b99" title="Compute total angle pressure.">AnglePotentialImpl&lt;Interaction&gt;::computeStress</a>(<a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Util::Tensor</a>&amp; stress)<span class="keyword"> </span>
 <a name="l00416"></a>00416 <span class="keyword">        const</span>
 <a name="l00417"></a>00417 <span class="keyword">   </span>{  computeStressImpl(stress); }
 <a name="l00418"></a>00418 
 <a name="l00419"></a>00419    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00420"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0">00420</a>    <span class="keyword">inline</span> Interaction&amp; <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0" title="Return angle interaction by reference.">AnglePotentialImpl&lt;Interaction&gt;::interaction</a>()
+<a name="l00420"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a9b2d9663347711b5f91130f5df8b43ad">00420</a>    <span class="keyword">inline</span> Interaction&amp; <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a9b2d9663347711b5f91130f5df8b43ad" title="Return angle interaction by reference.">AnglePotentialImpl&lt;Interaction&gt;::interaction</a>()
 <a name="l00421"></a>00421    { <span class="keywordflow">return</span> *interactionPtr_; }
 <a name="l00422"></a>00422 
 <a name="l00423"></a>00423    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00424"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a7c088e3beaea91f544fa2929b1cb13bf">00424</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Interaction&amp; <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0" title="Return angle interaction by reference.">AnglePotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
+<a name="l00424"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#ad886158fd50da8581f7f47b04c5f62e8">00424</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Interaction&amp; <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a9b2d9663347711b5f91130f5df8b43ad" title="Return angle interaction by reference.">AnglePotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
 <a name="l00425"></a>00425 <span class="keyword">   </span>{ <span class="keywordflow">return</span> *interactionPtr_; }
 <a name="l00426"></a>00426 
 <a name="l00427"></a>00427    <span class="comment">/*</span>
 <a name="l00428"></a>00428 <span class="comment">   * Return angle potential interaction class name.</span>
 <a name="l00429"></a>00429 <span class="comment">   */</span>
 <a name="l00430"></a>00430    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00431"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#af02a7265da2c0156eeb829fea1be4747">00431</a>    std::string <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#af02a7265da2c0156eeb829fea1be4747" title="Return pair interaction class name (e.g., &amp;quot;CosineAngle&amp;quot;).">AnglePotentialImpl&lt;Interaction&gt;::interactionClassName</a>()<span class="keyword"> const</span>
+<a name="l00431"></a><a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a8424af1bb6df54d21b0d0a33ab41e48b">00431</a>    std::string <a class="code" href="classMcMd_1_1AnglePotentialImpl.html#a8424af1bb6df54d21b0d0a33ab41e48b" title="Return pair interaction class name (e.g., &amp;quot;CosineAngle&amp;quot;).">AnglePotentialImpl&lt;Interaction&gt;::interactionClassName</a>()<span class="keyword"> const</span>
 <a name="l00432"></a>00432 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().className(); }
 <a name="l00433"></a>00433 
 <a name="l00434"></a>00434 }
 <a name="l00435"></a>00435 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

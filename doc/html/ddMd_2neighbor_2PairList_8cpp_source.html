@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -74,8 +74,8 @@
 <a name="l00023"></a>00023    <span class="comment">/*</span>
 <a name="l00024"></a>00024 <span class="comment">   * Default constructor.</span>
 <a name="l00025"></a>00025 <span class="comment">   */</span>
-<a name="l00026"></a>00026    <a class="code" href="classDdMd_1_1PairList.html#a02c2b3e1687d7a0474693ac6ea10f2ea" title="Default constructor.">PairList::PairList</a>()
-<a name="l00027"></a><a class="code" href="classDdMd_1_1PairList.html#a02c2b3e1687d7a0474693ac6ea10f2ea">00027</a>     :
+<a name="l00026"></a>00026    <a class="code" href="classDdMd_1_1PairList.html#af803ec7a79b11d16e6c72d114e28d4fe" title="Default constructor.">PairList::PairList</a>()
+<a name="l00027"></a><a class="code" href="classDdMd_1_1PairList.html#af803ec7a79b11d16e6c72d114e28d4fe">00027</a>     :
 <a name="l00028"></a>00028       atom1Ptrs_(),
 <a name="l00029"></a>00029       atom2Ptrs_(),
 <a name="l00030"></a>00030       first_(),
@@ -95,14 +95,14 @@
 <a name="l00044"></a>00044    <span class="comment">/*</span>
 <a name="l00045"></a>00045 <span class="comment">   * Destructor.</span>
 <a name="l00046"></a>00046 <span class="comment">   */</span>
-<a name="l00047"></a>00047    <a class="code" href="classDdMd_1_1PairList.html#a5c95764dfef2020dc28d75e6f4687c2e" title="Destructor.">PairList::~PairList</a>() 
-<a name="l00048"></a><a class="code" href="classDdMd_1_1PairList.html#a5c95764dfef2020dc28d75e6f4687c2e">00048</a>    {}
+<a name="l00047"></a>00047    <a class="code" href="classDdMd_1_1PairList.html#a134312a647834613b0bffc6068e2c980" title="Destructor.">PairList::~PairList</a>() 
+<a name="l00048"></a><a class="code" href="classDdMd_1_1PairList.html#a134312a647834613b0bffc6068e2c980">00048</a>    {}
 <a name="l00049"></a>00049    
 <a name="l00050"></a>00050    <span class="comment">/*</span>
 <a name="l00051"></a>00051 <span class="comment">   * Allocate CellList and PairList arrays, initialize to empty state.</span>
 <a name="l00052"></a>00052 <span class="comment">   */</span>
-<a name="l00053"></a>00053    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a10ac0962f06dec58bc514b518488fb4a" title="Allocate memory and set cutoff.">PairList::allocate</a>(<span class="keywordtype">int</span> atomCapacity, <span class="keywordtype">int</span> pairCapacity , <span class="keywordtype">double</span> cutoff) 
-<a name="l00054"></a><a class="code" href="classDdMd_1_1PairList.html#a10ac0962f06dec58bc514b518488fb4a">00054</a>    {
+<a name="l00053"></a>00053    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a6f4378807386780d0c0c84c56098ad2f" title="Allocate memory and set cutoff.">PairList::allocate</a>(<span class="keywordtype">int</span> atomCapacity, <span class="keywordtype">int</span> pairCapacity , <span class="keywordtype">double</span> cutoff) 
+<a name="l00054"></a><a class="code" href="classDdMd_1_1PairList.html#a6f4378807386780d0c0c84c56098ad2f">00054</a>    {
 <a name="l00055"></a>00055       <span class="keywordtype">int</span> i;
 <a name="l00056"></a>00056 
 <a name="l00057"></a>00057       atomCapacity_ = atomCapacity;
@@ -130,8 +130,8 @@
 <a name="l00079"></a>00079    <span class="comment">/*</span>
 <a name="l00080"></a>00080 <span class="comment">   * Clear the PairList.</span>
 <a name="l00081"></a>00081 <span class="comment">   */</span>
-<a name="l00082"></a>00082    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#ac8bb3912a3ce86b15842e79d0b421204" title="Reset this to empty state.">PairList::clear</a>()
-<a name="l00083"></a><a class="code" href="classDdMd_1_1PairList.html#ac8bb3912a3ce86b15842e79d0b421204">00083</a>    { 
+<a name="l00082"></a>00082    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#aee3076ace9e9c31845cc1dcb5ebebe7d" title="Reset this to empty state.">PairList::clear</a>()
+<a name="l00083"></a><a class="code" href="classDdMd_1_1PairList.html#aee3076ace9e9c31845cc1dcb5ebebe7d">00083</a>    { 
 <a name="l00084"></a>00084       nAtom1_   = 0; 
 <a name="l00085"></a>00085       nAtom2_   = 0; 
 <a name="l00086"></a>00086       first_[0] = PairList::NullIndex;
@@ -140,8 +140,8 @@
 <a name="l00089"></a>00089    <span class="comment">/*</span>
 <a name="l00090"></a>00090 <span class="comment">   * Build the PairList, i.e., populate it with atom pairs.</span>
 <a name="l00091"></a>00091 <span class="comment">   */</span>
-<a name="l00092"></a>00092    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a1041efd2495069565892f62d256a3058" title="Use a CellList to build a new PairList.">PairList::build</a>(<a class="code" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>&amp; cellList)
-<a name="l00093"></a><a class="code" href="classDdMd_1_1PairList.html#a1041efd2495069565892f62d256a3058">00093</a>    {
+<a name="l00092"></a>00092    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#acb7798541b9fbd041becd9ddc2d6a0ed" title="Use a CellList to build a new PairList.">PairList::build</a>(<a class="code" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>&amp; cellList)
+<a name="l00093"></a><a class="code" href="classDdMd_1_1PairList.html#acb7798541b9fbd041becd9ddc2d6a0ed">00093</a>    {
 <a name="l00094"></a>00094       <span class="comment">// Precondition</span>
 <a name="l00095"></a>00095       assert(isAllocated());
 <a name="l00096"></a>00096  
@@ -166,11 +166,11 @@
 <a name="l00115"></a>00115       first_[0] = 0;
 <a name="l00116"></a>00116    
 <a name="l00117"></a>00117       <span class="comment">// Find all neighbors (cell list)</span>
-<a name="l00118"></a>00118       cellPtr = cellList.<a class="code" href="classDdMd_1_1CellList.html#a24f37d2e5f584a4e63daf74901524021" title="Return pointer to first local cell in linked list.">begin</a>();
+<a name="l00118"></a>00118       cellPtr = cellList.<a class="code" href="classDdMd_1_1CellList.html#a4dc8d93e300ad81d7156680f31af9a1c" title="Return pointer to first local cell in linked list.">begin</a>();
 <a name="l00119"></a>00119       <span class="keywordflow">while</span> (cellPtr) {
-<a name="l00120"></a>00120          cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#ab841dfc7af235fa53c9083e4a0dced70" title="Fill an array with pointers to atoms in a cell and neighboring cells.">getNeighbors</a>(neighbors);
-<a name="l00121"></a>00121          na = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#ac91579bd63979a294891d330a5533838" title="Number of atoms in cell.">nAtom</a>();
-<a name="l00122"></a>00122          nn = neighbors.<a class="code" href="classUtil_1_1FSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">size</a>();
+<a name="l00120"></a>00120          cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a5161d4d39b76bed275d5327ca4f8337f" title="Fill an array with pointers to atoms in a cell and neighboring cells.">getNeighbors</a>(neighbors);
+<a name="l00121"></a>00121          na = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#ac5ba44f6436e965590f7abb08f117f18" title="Number of atoms in cell.">nAtom</a>();
+<a name="l00122"></a>00122          nn = neighbors.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
 <a name="l00123"></a>00123          <span class="keywordflow">for</span> (i = 0; i &lt; na; ++i) {
 <a name="l00124"></a>00124             atom1Ptr = neighbors[i];
 <a name="l00125"></a>00125             foundNeighbor = <span class="keyword">false</span>;
@@ -180,10 +180,10 @@
 <a name="l00129"></a>00129 
 <a name="l00130"></a>00130                <span class="comment">// Neighbors in the same cell as atom1</span>
 <a name="l00131"></a>00131                <span class="keywordflow">if</span> (atom2Ptr &gt; atom1Ptr) {
-<a name="l00132"></a>00132                   atom2Id  = atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get unique global index.">id</a>();
-<a name="l00133"></a>00133                   <span class="keywordflow">if</span> (!atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classDdMd_1_1Mask.html#a5aeea0c441e4dd68d631945e71ffed71" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(atom2Id)) {
-<a name="l00134"></a>00134                      dr.<a class="code" href="classUtil_1_1Vector.html#a1d7c5b73ae56a7ad991a6c54517698c2" title="Subtract vector v2 from v1.">subtract</a>(atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>(), atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>()); 
-<a name="l00135"></a>00135                      dRSq = dr.<a class="code" href="classUtil_1_1Vector.html#ac8e155d7aa8c019159787bd6ac797559" title="Return square magnitude of this vector.">square</a>();
+<a name="l00132"></a>00132                   atom2Id  = atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">id</a>();
+<a name="l00133"></a>00133                   <span class="keywordflow">if</span> (!atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8a468104f3541cdf012977f3de4f0e98" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classDdMd_1_1Mask.html#a0ef82f4ec270d8579cf0f9633c6b8ccc" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(atom2Id)) {
+<a name="l00134"></a>00134                      dr.<a class="code" href="classUtil_1_1Vector.html#a7e6de9bb77beddc412ab6055957656cc" title="Subtract vector v2 from v1.">subtract</a>(atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>()); 
+<a name="l00135"></a>00135                      dRSq = dr.<a class="code" href="classUtil_1_1Vector.html#ad3c4e4b143f8c8e45b3fe189af6437cb" title="Return square magnitude of this vector.">square</a>();
 <a name="l00136"></a>00136                      <span class="keywordflow">if</span> (dRSq &lt; cutoffSq) {
 <a name="l00137"></a>00137       
 <a name="l00138"></a>00138                         <span class="keywordflow">if</span> (nAtom2_ &gt;= pairCapacity_) {
@@ -214,10 +214,10 @@
 <a name="l00163"></a>00163             <span class="comment">// Neighbors in the same cell as atom1</span>
 <a name="l00164"></a>00164             <span class="keywordflow">for</span> (j = na; j &lt; nn; ++j) {
 <a name="l00165"></a>00165                atom2Ptr = neighbors[j];
-<a name="l00166"></a>00166                atom2Id  = atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get unique global index.">id</a>();
-<a name="l00167"></a>00167                <span class="keywordflow">if</span> (!atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a0ea3a94405b029e702eebd119f4fb03a" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classDdMd_1_1Mask.html#a5aeea0c441e4dd68d631945e71ffed71" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(atom2Id)) {
-<a name="l00168"></a>00168                   dr.<a class="code" href="classUtil_1_1Vector.html#a1d7c5b73ae56a7ad991a6c54517698c2" title="Subtract vector v2 from v1.">subtract</a>(atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>(), atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>()); 
-<a name="l00169"></a>00169                   dRSq = dr.<a class="code" href="classUtil_1_1Vector.html#ac8e155d7aa8c019159787bd6ac797559" title="Return square magnitude of this vector.">square</a>();
+<a name="l00166"></a>00166                atom2Id  = atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">id</a>();
+<a name="l00167"></a>00167                <span class="keywordflow">if</span> (!atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8a468104f3541cdf012977f3de4f0e98" title="Get the associated Mask by reference.">mask</a>().<a class="code" href="classDdMd_1_1Mask.html#a0ef82f4ec270d8579cf0f9633c6b8ccc" title="True if the atom is in the masked set for the target Atom.">isMasked</a>(atom2Id)) {
+<a name="l00168"></a>00168                   dr.<a class="code" href="classUtil_1_1Vector.html#a7e6de9bb77beddc412ab6055957656cc" title="Subtract vector v2 from v1.">subtract</a>(atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>()); 
+<a name="l00169"></a>00169                   dRSq = dr.<a class="code" href="classUtil_1_1Vector.html#ad3c4e4b143f8c8e45b3fe189af6437cb" title="Return square magnitude of this vector.">square</a>();
 <a name="l00170"></a>00170                   <span class="keywordflow">if</span> (dRSq &lt; cutoffSq) {
 <a name="l00171"></a>00171    
 <a name="l00172"></a>00172                      <span class="comment">// Check for overflow of atom2Ptrs_</span>
@@ -251,7 +251,7 @@
 <a name="l00200"></a>00200                first_[nAtom1_] = nAtom2_;
 <a name="l00201"></a>00201             }
 <a name="l00202"></a>00202          }
-<a name="l00203"></a>00203          cellPtr = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a9d72fac2aebb13648413cb3814cefb73" title="Return a pointer to neighbor cell i.">nextCellPtr</a>();
+<a name="l00203"></a>00203          cellPtr = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a18121553cc98eb9570d8107b20ddfadf" title="Return a pointer to neighbor cell i.">nextCellPtr</a>();
 <a name="l00204"></a>00204       }
 <a name="l00205"></a>00205 
 <a name="l00206"></a>00206       <span class="comment">// Increment buildCounter_= number of times the list has been built.</span>
@@ -266,8 +266,8 @@
 <a name="l00215"></a>00215    <span class="comment">/*</span>
 <a name="l00216"></a>00216 <span class="comment">   * Initialize a pair iterator.</span>
 <a name="l00217"></a>00217 <span class="comment">   */</span>
-<a name="l00218"></a>00218    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a384894ea9d3bce2679601b80e7c7de82" title="Initialize a PairIterator.">PairList::begin</a>(<a class="code" href="classDdMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a>&amp; iterator)<span class="keyword"> const</span>
-<a name="l00219"></a><a class="code" href="classDdMd_1_1PairList.html#a384894ea9d3bce2679601b80e7c7de82">00219</a> <span class="keyword">   </span>{
+<a name="l00218"></a>00218    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a890cfbc0e6d42695fefa7183f63359cc" title="Initialize a PairIterator.">PairList::begin</a>(<a class="code" href="classDdMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a>&amp; iterator)<span class="keyword"> const</span>
+<a name="l00219"></a><a class="code" href="classDdMd_1_1PairList.html#a890cfbc0e6d42695fefa7183f63359cc">00219</a> <span class="keyword">   </span>{
 <a name="l00220"></a>00220       iterator.atom1Ptrs_ = &amp;atom1Ptrs_[0];
 <a name="l00221"></a>00221       iterator.atom2Ptrs_ = &amp;atom2Ptrs_[0];
 <a name="l00222"></a>00222       iterator.first_     = &amp;first_[0];
@@ -280,8 +280,8 @@
 <a name="l00229"></a>00229    <span class="comment">/*</span>
 <a name="l00230"></a>00230 <span class="comment">   * Clear all statistics.</span>
 <a name="l00231"></a>00231 <span class="comment">   */</span>
-<a name="l00232"></a>00232    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a3ec1931e5ea88671ed6be9885968b327" title="Clear statistical accumulators (call on all processors).">PairList::clearStatistics</a>()
-<a name="l00233"></a><a class="code" href="classDdMd_1_1PairList.html#a3ec1931e5ea88671ed6be9885968b327">00233</a>    {
+<a name="l00232"></a>00232    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#af5b606249c3c4ff509650aabfd03c029" title="Clear statistical accumulators (call on all processors).">PairList::clearStatistics</a>()
+<a name="l00233"></a><a class="code" href="classDdMd_1_1PairList.html#af5b606249c3c4ff509650aabfd03c029">00233</a>    {
 <a name="l00234"></a>00234       maxNAtomLocal_ = 0;
 <a name="l00235"></a>00235       maxNPairLocal_ = 0;
 <a name="l00236"></a>00236       maxNAtom_ = -1;
@@ -293,9 +293,9 @@
 <a name="l00242"></a>00242 <span class="comment">   * Compute memory usage statistics (call on all processors).</span>
 <a name="l00243"></a>00243 <span class="comment">   */</span>
 <a name="l00244"></a>00244 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00245"></a>00245 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a0b7d0d0d07173241f226786de564c3f5" title="Compute statistics (reduce from all processors).">PairList::computeStatistics</a>(MPI::Intracomm&amp; communicator)
-<a name="l00246"></a><a class="code" href="classDdMd_1_1PairList.html#a0b7d0d0d07173241f226786de564c3f5">00246</a>    <span class="preprocessor">#else</span>
-<a name="l00247"></a>00247 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a0b7d0d0d07173241f226786de564c3f5" title="Compute statistics (reduce from all processors).">PairList::computeStatistics</a>()
+<a name="l00245"></a>00245 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a1ca7d08a1def05fae60c6551595ab53a" title="Compute statistics (reduce from all processors).">PairList::computeStatistics</a>(MPI::Intracomm&amp; communicator)
+<a name="l00246"></a><a class="code" href="classDdMd_1_1PairList.html#a1ca7d08a1def05fae60c6551595ab53a">00246</a>    <span class="preprocessor">#else</span>
+<a name="l00247"></a>00247 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a1ca7d08a1def05fae60c6551595ab53a" title="Compute statistics (reduce from all processors).">PairList::computeStatistics</a>()
 <a name="l00248"></a>00248    <span class="preprocessor">#endif</span>
 <a name="l00249"></a>00249 <span class="preprocessor"></span>   { 
 <a name="l00250"></a>00250 <span class="preprocessor">      #ifdef UTIL_MPI</span>
@@ -309,8 +309,8 @@
 <a name="l00258"></a>00258 <span class="preprocessor">      #endif</span>
 <a name="l00259"></a>00259 <span class="preprocessor"></span>   }
 <a name="l00260"></a>00260 
-<a name="l00264"></a>00264    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a3e41568a1eb325a1b63880652946343a" title="Output statistics.">PairList::outputStatistics</a>(std::ostream&amp; out) {
-<a name="l00265"></a><a class="code" href="classDdMd_1_1PairList.html#a3e41568a1eb325a1b63880652946343a">00265</a>       out &lt;&lt; <span class="stringliteral">&quot;Maximum number of pairs, pair capacity&quot;</span>
+<a name="l00264"></a>00264    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a6cf94e9c84005f984dd748b99bb2fc66" title="Output statistics.">PairList::outputStatistics</a>(std::ostream&amp; out) {
+<a name="l00265"></a><a class="code" href="classDdMd_1_1PairList.html#a6cf94e9c84005f984dd748b99bb2fc66">00265</a>       out &lt;&lt; <span class="stringliteral">&quot;Maximum number of pairs, pair capacity&quot;</span>
 <a name="l00266"></a>00266           &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(maxNPair_, 10) 
 <a name="l00267"></a>00267           &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(pairCapacity_, 10) 
 <a name="l00268"></a>00268           &lt;&lt; std::endl;
@@ -324,7 +324,7 @@
 <a name="l00276"></a>00276 <span class="preprocessor"></span>   <span class="comment">/*</span>
 <a name="l00277"></a>00277 <span class="comment">   * Return true if valid, or throw Exception.</span>
 <a name="l00278"></a>00278 <span class="comment">   */</span>
-<a name="l00279"></a>00279    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1PairList.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if valid, or throw Exception.">PairList::isValid</a>()<span class="keyword"> const</span>
+<a name="l00279"></a>00279    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1PairList.html#aeeeb83f5acfa65a99d52b4b9fc64f6d3" title="Return true if valid, or throw Exception.">PairList::isValid</a>()<span class="keyword"> const</span>
 <a name="l00280"></a>00280 <span class="keyword">   </span>{
 <a name="l00281"></a>00281       <span class="keywordflow">if</span> (isAllocated()) {
 <a name="l00282"></a>00282 
@@ -350,7 +350,7 @@
 <a name="l00302"></a>00302 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

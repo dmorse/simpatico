@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -105,7 +105,7 @@
 <a name="l00165"></a>00165       <span class="keywordtype">void</span> readRestart(<span class="keyword">const</span> std::string&amp; filename);
 <a name="l00166"></a>00166 
 <a name="l00173"></a>00173       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00174"></a>00174       <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00174"></a>00174       <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00175"></a>00175 
 <a name="l00179"></a>00179       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>&amp; system() <span class="keyword">const</span>;
 <a name="l00180"></a>00180 
@@ -128,18 +128,18 @@
 <a name="l00207"></a>00207    <span class="comment">// Inline method definitions</span>
 <a name="l00208"></a>00208 
 <a name="l00209"></a>00209    <span class="comment">// Get the System being simulated by const reference.</span>
-<a name="l00210"></a><a class="code" href="classMcMd_1_1MdSimulation.html#aeeef82679c13dae3b160ff030b2a5d11">00210</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>&amp; <a class="code" href="classMcMd_1_1MdSimulation.html#aeeef82679c13dae3b160ff030b2a5d11" title="Get the MdSystem being simulated by const reference.">MdSimulation::system</a>()<span class="keyword"> const</span>
+<a name="l00210"></a><a class="code" href="classMcMd_1_1MdSimulation.html#ac682e48578088b26f8b51675419b6954">00210</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>&amp; <a class="code" href="classMcMd_1_1MdSimulation.html#ac682e48578088b26f8b51675419b6954" title="Get the MdSystem being simulated by const reference.">MdSimulation::system</a>()<span class="keyword"> const</span>
 <a name="l00211"></a>00211 <span class="keyword">   </span>{  <span class="keywordflow">return</span> system_; }
 <a name="l00212"></a>00212 
 <a name="l00213"></a>00213    <span class="comment">// Get the System being simulated by reference.</span>
-<a name="l00214"></a><a class="code" href="classMcMd_1_1MdSimulation.html#a5d59ae247ef02b18b7eec01950b4112e">00214</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>&amp; <a class="code" href="classMcMd_1_1MdSimulation.html#aeeef82679c13dae3b160ff030b2a5d11" title="Get the MdSystem being simulated by const reference.">MdSimulation::system</a>()
+<a name="l00214"></a><a class="code" href="classMcMd_1_1MdSimulation.html#a10d21bd8717ff9722f56230435b576c9">00214</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1MdSystem.html" title="A System for Molecular Dynamics simulation.">MdSystem</a>&amp; <a class="code" href="classMcMd_1_1MdSimulation.html#ac682e48578088b26f8b51675419b6954" title="Get the MdSystem being simulated by const reference.">MdSimulation::system</a>()
 <a name="l00215"></a>00215    {  <span class="keywordflow">return</span> system_; }
 <a name="l00216"></a>00216 
 <a name="l00217"></a>00217 }    
 <a name="l00218"></a>00218 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

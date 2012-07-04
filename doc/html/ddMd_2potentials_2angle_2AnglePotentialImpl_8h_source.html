@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -181,7 +181,7 @@
 <a name="l00216"></a>00216 <span class="comment">   * Constructor.</span>
 <a name="l00217"></a>00217 <span class="comment">   */</span>
 <a name="l00218"></a>00218    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00219"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#aa91f54d43a2160c70e2b3b6e40b08e14">00219</a>    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html" title="Implementation template for a AnglePotential.">AnglePotentialImpl&lt;Interaction&gt;::AnglePotentialImpl</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation)
+<a name="l00219"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#af9156b2b86fd5d8445952f3a328b2402">00219</a>    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html" title="Implementation template for a AnglePotential.">AnglePotentialImpl&lt;Interaction&gt;::AnglePotentialImpl</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation)
 <a name="l00220"></a>00220     : <a class="code" href="classDdMd_1_1AnglePotential.html" title="An AnglePotential calculates angle forces and energies for a parent Simulation.">AnglePotential</a>(simulation),
 <a name="l00221"></a>00221       interactionPtr_(0)
 <a name="l00222"></a>00222    {  interactionPtr_ = <span class="keyword">new</span> Interaction(); }
@@ -190,7 +190,7 @@
 <a name="l00225"></a>00225 <span class="comment">   * Default constructor.</span>
 <a name="l00226"></a>00226 <span class="comment">   */</span>
 <a name="l00227"></a>00227    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00228"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#aa448ef790d6a3df5e8b748f4ef24fe21">00228</a>    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#aa448ef790d6a3df5e8b748f4ef24fe21" title="Default constructor.">AnglePotentialImpl&lt;Interaction&gt;::AnglePotentialImpl</a>()
+<a name="l00228"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a878bcc878ff3898bacca963484467980">00228</a>    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a878bcc878ff3898bacca963484467980" title="Default constructor.">AnglePotentialImpl&lt;Interaction&gt;::AnglePotentialImpl</a>()
 <a name="l00229"></a>00229     : <a class="code" href="classDdMd_1_1AnglePotential.html" title="An AnglePotential calculates angle forces and energies for a parent Simulation.">AnglePotential</a>(),
 <a name="l00230"></a>00230       interactionPtr_(0)
 <a name="l00231"></a>00231    {  interactionPtr_ = <span class="keyword">new</span> Interaction(); }
@@ -199,7 +199,7 @@
 <a name="l00234"></a>00234 <span class="comment">   * Destructor. </span>
 <a name="l00235"></a>00235 <span class="comment">   */</span>
 <a name="l00236"></a>00236    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00237"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#ace80f983b9c10de9da174499650ccfdb">00237</a>    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#ace80f983b9c10de9da174499650ccfdb" title="Destructor.">AnglePotentialImpl&lt;Interaction&gt;::~AnglePotentialImpl</a>() 
+<a name="l00237"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#aca2cfc600728b975eca344e9e9ecba75">00237</a>    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#aca2cfc600728b975eca344e9e9ecba75" title="Destructor.">AnglePotentialImpl&lt;Interaction&gt;::~AnglePotentialImpl</a>() 
 <a name="l00238"></a>00238    {
 <a name="l00239"></a>00239       <span class="keywordflow">if</span> (interactionPtr_) {
 <a name="l00240"></a>00240          <span class="keyword">delete</span> interactionPtr_;
@@ -211,14 +211,14 @@
 <a name="l00246"></a>00246 <span class="comment">   * Set the maximum number of atom types.</span>
 <a name="l00247"></a>00247 <span class="comment">   */</span>
 <a name="l00248"></a>00248    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00249"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a612706300cf09861a0f8549241f65874">00249</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a612706300cf09861a0f8549241f65874" title="Set the maximum number of atom types.">AnglePotentialImpl&lt;Interaction&gt;::setNAngleType</a>(<span class="keywordtype">int</span> nAngleType)
+<a name="l00249"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#ab647613f0976f8059f72dc3795b8e7b7">00249</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#ab647613f0976f8059f72dc3795b8e7b7" title="Set the maximum number of atom types.">AnglePotentialImpl&lt;Interaction&gt;::setNAngleType</a>(<span class="keywordtype">int</span> nAngleType)
 <a name="l00250"></a>00250    {  interaction().setNAngleType(nAngleType); }
 <a name="l00251"></a>00251 
 <a name="l00252"></a>00252    <span class="comment">/*</span>
 <a name="l00253"></a>00253 <span class="comment">   * Read angle interaction parameters.</span>
 <a name="l00254"></a>00254 <span class="comment">   */</span>
 <a name="l00255"></a>00255    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00256"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#ab5421d3c9175985c9acbf723e5392075">00256</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#ab5421d3c9175985c9acbf723e5392075" title="Read potential energy parameters.">AnglePotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream&amp; in)
+<a name="l00256"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a5aa696f82519b6f949f262e783c02867">00256</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a5aa696f82519b6f949f262e783c02867" title="Read potential energy parameters.">AnglePotentialImpl&lt;Interaction&gt;::readParam</a>(std::istream&amp; in)
 <a name="l00257"></a>00257    {
 <a name="l00258"></a>00258       readBegin(in,<span class="stringliteral">&quot;AnglePotential&quot;</span>);
 <a name="l00259"></a>00259       <span class="keywordtype">bool</span> nextIndent = <span class="keyword">false</span>;
@@ -231,7 +231,7 @@
 <a name="l00266"></a>00266 <span class="comment">   */</span>
 <a name="l00267"></a>00267    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
 <a name="l00268"></a>00268    <span class="keywordtype">double</span> 
-<a name="l00269"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a432216092cd60cd94dd6458e42f61701">00269</a>    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521" title="Get the total angle energy, computed previously by computeEnergy().">AnglePotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keywordtype">double</span> cosTheta, <span class="keywordtype">int</span> angleTypeId)<span class="keyword"> </span>
+<a name="l00269"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a4d6073ae3d174a9c23233ced72791e3a">00269</a>    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a164554acebe7bf34adc6b5b4df643cf3" title="Get the total angle energy, computed previously by computeEnergy().">AnglePotentialImpl&lt;Interaction&gt;::energy</a>(<span class="keywordtype">double</span> cosTheta, <span class="keywordtype">int</span> angleTypeId)<span class="keyword"> </span>
 <a name="l00270"></a>00270 <span class="keyword">      const</span>
 <a name="l00271"></a>00271 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interaction().energy(cosTheta, angleTypeId); }
 <a name="l00272"></a>00272 
@@ -239,7 +239,7 @@
 <a name="l00274"></a>00274 <span class="comment">   * Return forces for a single angle.</span>
 <a name="l00275"></a>00275 <span class="comment">   */</span>
 <a name="l00276"></a>00276    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00277"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a8136fd3ee6e12bdf78f12d308a76c930">00277</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a8136fd3ee6e12bdf78f12d308a76c930" title="Returns forces along two bonds at the angle, for use in MD and stress calculation.">AnglePotentialImpl&lt;Interaction&gt;::force</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R2, 
+<a name="l00277"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a041564877c7dd040fd3b394032fcbb78">00277</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a041564877c7dd040fd3b394032fcbb78" title="Returns forces along two bonds at the angle, for use in MD and stress calculation.">AnglePotentialImpl&lt;Interaction&gt;::force</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; R2, 
 <a name="l00278"></a>00278                                           <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F1, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; F2, <span class="keywordtype">int</span> typeId)<span class="keyword"> const</span>
 <a name="l00279"></a>00279 <span class="keyword">   </span>{  interaction().force(R1, R2, F1, F2, typeId); }
 <a name="l00280"></a>00280 
@@ -253,25 +253,25 @@
 <a name="l00288"></a>00288 <span class="preprocessor">   #endif</span>
 <a name="l00289"></a>00289 <span class="preprocessor"></span>
 <a name="l00293"></a>00293    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00294"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a99cb5c842a0412a5bf88c67d1358f2f0">00294</a>    <span class="keyword">inline</span> Interaction&amp; <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a7c088e3beaea91f544fa2929b1cb13bf" title="Return angle interaction by const reference.">AnglePotentialImpl&lt;Interaction&gt;::interaction</a>()
+<a name="l00294"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#aa667787310191df3a3426574f91794b2">00294</a>    <span class="keyword">inline</span> Interaction&amp; <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a66e52f33e233e00f4d5c63219df0286a" title="Return angle interaction by const reference.">AnglePotentialImpl&lt;Interaction&gt;::interaction</a>()
 <a name="l00295"></a>00295    {  <span class="keywordflow">return</span> *interactionPtr_; }
 <a name="l00296"></a>00296 
 <a name="l00300"></a>00300    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00301"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a7c088e3beaea91f544fa2929b1cb13bf">00301</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Interaction&amp; <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a7c088e3beaea91f544fa2929b1cb13bf" title="Return angle interaction by const reference.">AnglePotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
+<a name="l00301"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a66e52f33e233e00f4d5c63219df0286a">00301</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Interaction&amp; <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a66e52f33e233e00f4d5c63219df0286a" title="Return angle interaction by const reference.">AnglePotentialImpl&lt;Interaction&gt;::interaction</a>()<span class="keyword"> const</span>
 <a name="l00302"></a>00302 <span class="keyword">   </span>{  <span class="keywordflow">return</span> *interactionPtr_; }
 <a name="l00303"></a>00303 
 <a name="l00304"></a>00304    <span class="comment">/*</span>
 <a name="l00305"></a>00305 <span class="comment">   * Increment atomic forces, without calculating energy.</span>
 <a name="l00306"></a>00306 <span class="comment">   */</span>
 <a name="l00307"></a>00307    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00308"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a384ffca983ce601febd69f2d38b9911d">00308</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Add the angle forces for all atoms.">AnglePotentialImpl&lt;Interaction&gt;::addForces</a>()
+<a name="l00308"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a86c011c602a91dcf4d2509bbbb86419f">00308</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a86c011c602a91dcf4d2509bbbb86419f" title="Add the angle forces for all atoms.">AnglePotentialImpl&lt;Interaction&gt;::addForces</a>()
 <a name="l00309"></a>00309    {  addForces(<span class="keyword">true</span>, <span class="keyword">false</span>);  }
 <a name="l00310"></a>00310 
 <a name="l00311"></a>00311    <span class="comment">/*</span>
 <a name="l00312"></a>00312 <span class="comment">   * Increment atomic forces and compute pair energy for this processor.</span>
 <a name="l00313"></a>00313 <span class="comment">   */</span>
 <a name="l00314"></a>00314    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00315"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#ab2d51f7c0ec14e310c3e19047bc5e8e0">00315</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Add the angle forces for all atoms.">AnglePotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">double</span>&amp; energy)
+<a name="l00315"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#ac0e626f67beffefe340318035ee74428">00315</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a86c011c602a91dcf4d2509bbbb86419f" title="Add the angle forces for all atoms.">AnglePotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">double</span>&amp; energy)
 <a name="l00316"></a>00316    {  energy = addForces(<span class="keyword">true</span>, <span class="keyword">true</span>);  }
 <a name="l00317"></a>00317 
 <a name="l00318"></a>00318    <span class="comment">/*</span>
@@ -280,9 +280,9 @@
 <a name="l00321"></a>00321    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
 <a name="l00322"></a>00322 <span class="preprocessor">   #ifdef UTIL_MPI</span>
 <a name="l00323"></a>00323 <span class="preprocessor"></span>   <span class="keywordtype">void</span> 
-<a name="l00324"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a75c8fc396bfb65c3d317943f64666d08">00324</a>    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a75c8fc396bfb65c3d317943f64666d08" title="Compute the total angle energy for all processors.">AnglePotentialImpl&lt;Interaction&gt;::computeEnergy</a>(MPI::Intracomm&amp; communicator)
+<a name="l00324"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#ade5a9ec00b5931a70e3f72be2cb3fd1e">00324</a>    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#ade5a9ec00b5931a70e3f72be2cb3fd1e" title="Compute the total angle energy for all processors.">AnglePotentialImpl&lt;Interaction&gt;::computeEnergy</a>(MPI::Intracomm&amp; communicator)
 <a name="l00325"></a>00325    <span class="preprocessor">#else</span>
-<a name="l00326"></a>00326 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a75c8fc396bfb65c3d317943f64666d08" title="Compute the total angle energy for all processors.">AnglePotentialImpl&lt;Interaction&gt;::computeEnergy</a>()
+<a name="l00326"></a>00326 <span class="preprocessor"></span>   <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#ade5a9ec00b5931a70e3f72be2cb3fd1e" title="Compute the total angle energy for all processors.">AnglePotentialImpl&lt;Interaction&gt;::computeEnergy</a>()
 <a name="l00327"></a>00327    <span class="preprocessor">#endif</span>
 <a name="l00328"></a>00328 <span class="preprocessor"></span>   { 
 <a name="l00329"></a>00329       <span class="keywordtype">double</span> localEnergy = 0; 
@@ -299,14 +299,14 @@
 <a name="l00340"></a>00340 <span class="comment">   * Return total pair energy from all processors.</span>
 <a name="l00341"></a>00341 <span class="comment">   */</span>
 <a name="l00342"></a>00342    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00343"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521">00343</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a9a340c051a0b2b60c1a8200d21cba521" title="Get the total angle energy, computed previously by computeEnergy().">AnglePotentialImpl&lt;Interaction&gt;::energy</a>()
+<a name="l00343"></a><a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a164554acebe7bf34adc6b5b4df643cf3">00343</a>    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a164554acebe7bf34adc6b5b4df643cf3" title="Get the total angle energy, computed previously by computeEnergy().">AnglePotentialImpl&lt;Interaction&gt;::energy</a>()
 <a name="l00344"></a>00344    {  <span class="keywordflow">return</span> energy_; } 
 <a name="l00345"></a>00345 
 <a name="l00346"></a>00346    <span class="comment">/*</span>
 <a name="l00347"></a>00347 <span class="comment">   * Increment atomic forces and/or pair energy (private).</span>
 <a name="l00348"></a>00348 <span class="comment">   */</span>
 <a name="l00349"></a>00349    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt; <span class="keywordtype">double</span> 
-<a name="l00350"></a>00350    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a384ffca983ce601febd69f2d38b9911d" title="Add the angle forces for all atoms.">AnglePotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">bool</span> needForce, <span class="keywordtype">bool</span> needEnergy)
+<a name="l00350"></a>00350    <a class="code" href="classDdMd_1_1AnglePotentialImpl.html#a86c011c602a91dcf4d2509bbbb86419f" title="Add the angle forces for all atoms.">AnglePotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">bool</span> needForce, <span class="keywordtype">bool</span> needEnergy)
 <a name="l00351"></a>00351    {
 <a name="l00352"></a>00352       <span class="comment">// Preconditions</span>
 <a name="l00353"></a>00353       <span class="comment">//if (!storagePtr_-&gt;isInitialized()) {</span>
@@ -321,28 +321,28 @@
 <a name="l00362"></a>00362       <span class="keywordtype">double</span> angleEnergy;
 <a name="l00363"></a>00363       <span class="keywordtype">double</span> fraction;
 <a name="l00364"></a>00364       <span class="keywordtype">double</span> third = 1.0/3.0;
-<a name="l00365"></a>00365       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group&amp;lt;N&amp;gt; objects owned by this processor.">GroupIterator&lt;3&gt;</a> iter;
+<a name="l00365"></a>00365       <a class="code" href="classDdMd_1_1GroupIterator.html" title="Iterator for all Group &amp;lt; N &amp;gt; objects owned by a GroupStorage&amp;lt; N &amp;gt;.">GroupIterator&lt;3&gt;</a> iter;
 <a name="l00366"></a>00366       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atom0Ptr;
 <a name="l00367"></a>00367       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atom1Ptr;
 <a name="l00368"></a>00368       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* atom2Ptr;
 <a name="l00369"></a>00369       <span class="keywordtype">int</span>   type, isLocal0, isLocal1, isLocal2;
 <a name="l00370"></a>00370 
 <a name="l00371"></a>00371       storagePtr_-&gt;begin(iter);
-<a name="l00372"></a>00372       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
+<a name="l00372"></a>00372       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter) {
 <a name="l00373"></a>00373          type = iter-&gt;typeId();
 <a name="l00374"></a>00374          atom0Ptr = iter-&gt;atomPtr(0);
 <a name="l00375"></a>00375          atom1Ptr = iter-&gt;atomPtr(1);
 <a name="l00376"></a>00376          atom2Ptr = iter-&gt;atomPtr(2);
-<a name="l00377"></a>00377          isLocal0 = !(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a26877e4c250e1af8697836f7aadae1e8" title="Is this atom a ghost?">isGhost</a>());
-<a name="l00378"></a>00378          isLocal1 = !(atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a26877e4c250e1af8697836f7aadae1e8" title="Is this atom a ghost?">isGhost</a>());
-<a name="l00379"></a>00379          isLocal2 = !(atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a26877e4c250e1af8697836f7aadae1e8" title="Is this atom a ghost?">isGhost</a>());
+<a name="l00377"></a>00377          isLocal0 = !(atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
+<a name="l00378"></a>00378          isLocal1 = !(atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
+<a name="l00379"></a>00379          isLocal2 = !(atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a8b0e30903e82bc270923959b1946fdbf" title="Is this atom a ghost?">isGhost</a>());
 <a name="l00380"></a>00380          <span class="comment">// Calculate minimimum image separations</span>
-<a name="l00381"></a>00381          rsq1 = boundaryPtr_-&gt;distanceSq(atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>(),
-<a name="l00382"></a>00382                                          atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>(), dr1);
-<a name="l00383"></a>00383          rsq2 = boundaryPtr_-&gt;distanceSq(atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>(),
-<a name="l00384"></a>00384                                          atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae385bb070452150eec2eb79431bc281d" title="Get position Vector by reference.">position</a>(), dr2);
+<a name="l00381"></a>00381          rsq1 = boundaryPtr_-&gt;distanceSq(atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(),
+<a name="l00382"></a>00382                                          atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), dr1);
+<a name="l00383"></a>00383          rsq2 = boundaryPtr_-&gt;distanceSq(atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(),
+<a name="l00384"></a>00384                                          atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>(), dr2);
 <a name="l00385"></a>00385          <span class="keywordflow">if</span> (needEnergy) {
-<a name="l00386"></a>00386             cosTheta = dr1.<a class="code" href="classUtil_1_1Vector.html#a5431123ac320a0ed069d9c7a30702c7b" title="Return dot product of this vector and vector v.">dot</a>(dr2) / sqrt(rsq1 * rsq2);
+<a name="l00386"></a>00386             cosTheta = dr1.<a class="code" href="classUtil_1_1Vector.html#aa1b64030ac95721bc39038c003240c09" title="Return dot product of this vector and vector v.">dot</a>(dr2) / sqrt(rsq1 * rsq2);
 <a name="l00387"></a>00387             angleEnergy = interaction().energy(cosTheta, type);
 <a name="l00388"></a>00388             fraction = (isLocal0 + isLocal1 + isLocal2)*third;
 <a name="l00389"></a>00389             energy += fraction*angleEnergy;
@@ -350,14 +350,14 @@
 <a name="l00391"></a>00391          <span class="keywordflow">if</span> (needForce) {
 <a name="l00392"></a>00392             interaction().force(dr1, dr2, f1, f2, type);
 <a name="l00393"></a>00393             <span class="keywordflow">if</span> (isLocal0) {
-<a name="l00394"></a>00394                atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get force Vector by reference.">force</a>() += f1;
+<a name="l00394"></a>00394                atom0Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() += f1;
 <a name="l00395"></a>00395             }
 <a name="l00396"></a>00396             <span class="keywordflow">if</span> (isLocal1) {
-<a name="l00397"></a>00397                atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get force Vector by reference.">force</a>() -= f1;
-<a name="l00398"></a>00398                atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get force Vector by reference.">force</a>() += f2;
+<a name="l00397"></a>00397                atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() -= f1;
+<a name="l00398"></a>00398                atom1Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() += f2;
 <a name="l00399"></a>00399             }
 <a name="l00400"></a>00400             <span class="keywordflow">if</span> (isLocal2) {
-<a name="l00401"></a>00401                atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#abf167a7208cca549b00a3048b0742088" title="Get force Vector by reference.">force</a>() -= f2;
+<a name="l00401"></a>00401                atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#ae0a78644f309e5d90e0e872951e9d3ce" title="Get force Vector by reference.">force</a>() -= f2;
 <a name="l00402"></a>00402             }
 <a name="l00403"></a>00403          }
 <a name="l00404"></a>00404       }
@@ -379,7 +379,7 @@
 <a name="l00420"></a>00420 
 <a name="l00421"></a>00421       <span class="comment">// Iterate over all angles in System.</span>
 <a name="l00422"></a>00422       storagePtr_-&gt;begin(iter);
-<a name="l00423"></a>00423       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter){
+<a name="l00423"></a>00423       <span class="keywordflow">for</span> ( ; iter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++iter){
 <a name="l00424"></a>00424          atom0Ptr = &amp;(iter-&gt;atom(0));
 <a name="l00425"></a>00425          atom1Ptr = &amp;(iter-&gt;atom(1));
 <a name="l00426"></a>00426          atom2Ptr = &amp;(iter-&gt;atom(2));
@@ -422,7 +422,7 @@
 <a name="l00463"></a>00463 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

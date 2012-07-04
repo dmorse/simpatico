@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Average Class Reference</title>
+<title>Simpatico: Util::Average Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Average Class Reference<div class="ingroups"><a class="el" href="group__Accumulators__Module.html">Statistical Accumulators</a></div></h1>  </div>
+<h1>Util::Average Class Reference<div class="ingroups"><a class="el" href="group__Accumulators__Module.html">Statistical Accumulators</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Average" --><!-- doxytag: inherits="Util::AverageStage,Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -61,14 +61,14 @@
 </div>
 <p><code>#include &lt;<a class="el" href="Average_8h_source.html">Average.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Average:</div>
+Inheritance diagram for Util::Average:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classUtil_1_1Average.png" usemap="#Average_map" alt=""/>
-  <map id="Average_map" name="Average_map">
-<area href="classUtil_1_1AverageStage.html" alt="AverageStage" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="121,56,232,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="121,0,232,24"/>
+  <img src="classUtil_1_1Average.png" usemap="#Util::Average_map" alt=""/>
+  <map id="Util::Average_map" name="Util::Average_map">
+<area href="classUtil_1_1AverageStage.html" alt="Util::AverageStage" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="144,56,278,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="144,0,278,24"/>
 </map>
  </div></div>
 
@@ -76,37 +76,37 @@ Inheritance diagram for Average:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a0f2217d225aac73076c9ed4a0f74fc28">Average</a> (int blockFactor=2)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a0f2217d225aac73076c9ed4a0f74fc28"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#af22ad60c3ff7238ca7071fcee0ca448a">~Average</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#af22ad60c3ff7238ca7071fcee0ca448a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#ac8bb3912a3ce86b15842e79d0b421204">clear</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize accumulators to zero initial state.  <a href="#ac8bb3912a3ce86b15842e79d0b421204"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file and initialize.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#ab7bbb9824f0f48033a2de3bed435fc70">setNSamplePerBlock</a> (int nSamplePerBlock)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set nSamplePerBlock.  <a href="#ab7bbb9824f0f48033a2de3bed435fc70"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#ad996b3f89b7ae529fe991f75b2db0616">sample</a> (double value, std::ostream &amp;out)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a sampled value to the ensemble, and output block averages.  <a href="#ad996b3f89b7ae529fe991f75b2db0616"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a6971e3c0e5036585549c6d6562d12d2d">sample</a> (double value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a sampled value to the ensemble.  <a href="#a6971e3c0e5036585549c6d6562d12d2d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a012e48b5ec7769b2e5614bd6b3a62488">output</a> (std::ostream &amp;out)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output final statistical properties to file.  <a href="#a012e48b5ec7769b2e5614bd6b3a62488"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a6f58754b6c74f76a35e309a6dec00657">nSamplePerBlock</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get nSamplePerBlock.  <a href="#a6f58754b6c74f76a35e309a6dec00657"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#aef7167a2340365892dc0f921a260383f">registerDescendant</a> (<a class="el" href="classUtil_1_1AverageStage.html">AverageStage</a> *descendantPtr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add pointer to a descendant to an array.  <a href="#aef7167a2340365892dc0f921a260383f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a12391edd4804bdd1f90e3bd447789470">Average</a> (int blockFactor=2)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a12391edd4804bdd1f90e3bd447789470"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a365dbabdde7ff7e10445168b8563f1c7">~Average</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a365dbabdde7ff7e10445168b8563f1c7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a03fe5551e0a62d22ef7b923c94a457de">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize accumulators to zero initial state.  <a href="#a03fe5551e0a62d22ef7b923c94a457de"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#aeade87cb077818bdd16fb923f78c2464">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file and initialize.  <a href="#aeade87cb077818bdd16fb923f78c2464"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad">setNSamplePerBlock</a> (int nSamplePerBlock)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set nSamplePerBlock.  <a href="#ae11f951ab1e57545f3c580f904fff5ad"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a872c4954766036d6603b3a8d81f117de">sample</a> (double value, std::ostream &amp;out)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a sampled value to the ensemble, and output block averages.  <a href="#a872c4954766036d6603b3a8d81f117de"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#adf13dad094b6b95cbbd7d7a7dc9fb65c">sample</a> (double value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a sampled value to the ensemble.  <a href="#adf13dad094b6b95cbbd7d7a7dc9fb65c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a08634c8f7a1c8791a77168b70f6884e4">output</a> (std::ostream &amp;out)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output final statistical properties to file.  <a href="#a08634c8f7a1c8791a77168b70f6884e4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a4fe42669fbf31981f9dc0a54aab70d9f">nSamplePerBlock</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get nSamplePerBlock.  <a href="#a4fe42669fbf31981f9dc0a54aab70d9f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a80703978c5aceecac2ff2a273fd1efc9">registerDescendant</a> (<a class="el" href="classUtil_1_1AverageStage.html">AverageStage</a> *descendantPtr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add pointer to a descendant to an array.  <a href="#a80703978c5aceecac2ff2a273fd1efc9"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize this <a class="el" href="classUtil_1_1Average.html" title="Calculates the average and variance of a sampled property.">Average</a> to or from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1Average.html#ad4432617b146a26af64c59a677de83bc">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize this <a class="el" href="classUtil_1_1Average.html" title="Calculates the average and variance of a sampled property.">Average</a> to or from an archive.  <a href="#ad4432617b146a26af64c59a677de83bc"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a0f2217d225aac73076c9ed4a0f74fc28"></a><!-- doxytag: member="Util::Average::Average" ref="a0f2217d225aac73076c9ed4a0f74fc28" args="(int blockFactor=2)" -->
+<a class="anchor" id="a12391edd4804bdd1f90e3bd447789470"></a><!-- doxytag: member="Util::Average::Average" ref="a12391edd4804bdd1f90e3bd447789470" args="(int blockFactor=2)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">home david code simpatico src util accumulators <a class="el" href="classUtil_1_1Average.html">Average</a> cpp <a class="el" href="classUtil_1_1Average.html">Average</a> </td>
+          <td class="memname">home david code simpatico src util accumulators <a class="el" href="classUtil_1_1Average.html">Average</a> cpp Util::Average::Average </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>blockFactor</em> = <code>2</code></td><td>)</td>
@@ -128,12 +128,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af22ad60c3ff7238ca7071fcee0ca448a"></a><!-- doxytag: member="Util::Average::~Average" ref="af22ad60c3ff7238ca7071fcee0ca448a" args="()" -->
+<a class="anchor" id="a365dbabdde7ff7e10445168b8563f1c7"></a><!-- doxytag: member="Util::Average::~Average" ref="a365dbabdde7ff7e10445168b8563f1c7" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1Average.html">Average</a> </td>
+          <td class="memname">Util::Average::~Average </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -149,12 +149,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ac8bb3912a3ce86b15842e79d0b421204"></a><!-- doxytag: member="Util::Average::clear" ref="ac8bb3912a3ce86b15842e79d0b421204" args="()" -->
+<a class="anchor" id="a03fe5551e0a62d22ef7b923c94a457de"></a><!-- doxytag: member="Util::Average::clear" ref="a03fe5551e0a62d22ef7b923c94a457de" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void clear </td>
+          <td class="memname">void Util::Average::clear </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -165,20 +165,20 @@ Public Member Functions</h2></td></tr>
 
 <p>Initialize accumulators to zero initial state. </p>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1AverageStage.html#ac8bb3912a3ce86b15842e79d0b421204">AverageStage</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1AverageStage.html#a2c9065506a570a96cf72e66b574f9f1a">Util::AverageStage</a>.</p>
 
 <p>Definition at line <a class="el" href="Average_8cpp_source.html#l00042">42</a> of file <a class="el" href="Average_8cpp_source.html">Average.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00055">MdPotentialEnergyAverage::setup()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00054">MdKineticEnergyAverage::setup()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00066">McPairEnergyAverage::setup()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00062">McExternalEnergyAverage::setup()</a>, and <a class="el" href="McEnergyAverage_8cpp_source.html#l00057">McEnergyAverage::setup()</a>.</p>
+<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00055">McMd::MdPotentialEnergyAverage::setup()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00054">McMd::MdKineticEnergyAverage::setup()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00066">McMd::McPairEnergyAverage::setup()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00062">McMd::McExternalEnergyAverage::setup()</a>, and <a class="el" href="McEnergyAverage_8cpp_source.html#l00057">McMd::McEnergyAverage::setup()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="Util::Average::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="aeade87cb077818bdd16fb923f78c2464"></a><!-- doxytag: member="Util::Average::readParam" ref="aeade87cb077818bdd16fb923f78c2464" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void Util::Average::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -189,7 +189,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Read parameters from file and initialize. </p>
-<p>Read nSamplePerBlock. See <a class="el" href="classUtil_1_1Average.html#ab7bbb9824f0f48033a2de3bed435fc70" title="Set nSamplePerBlock.">setNSamplePerBlock()</a> for discussion of value.</p>
+<p>Read nSamplePerBlock. See <a class="el" href="classUtil_1_1Average.html#ae11f951ab1e57545f3c580f904fff5ad" title="Set nSamplePerBlock.">setNSamplePerBlock()</a> for discussion of value.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">in</td><td>input stream </td></tr>
@@ -197,20 +197,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="Average_8cpp_source.html#l00053">53</a> of file <a class="el" href="Average_8cpp_source.html">Average.cpp</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00148">ParamComposite::readBegin()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00177">ParamComposite::readEnd()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8cpp_source.html#l00148">Util::ParamComposite::readBegin()</a>, and <a class="el" href="ParamComposite_8cpp_source.html#l00177">Util::ParamComposite::readEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab7bbb9824f0f48033a2de3bed435fc70"></a><!-- doxytag: member="Util::Average::setNSamplePerBlock" ref="ab7bbb9824f0f48033a2de3bed435fc70" args="(int nSamplePerBlock)" -->
+<a class="anchor" id="ae11f951ab1e57545f3c580f904fff5ad"></a><!-- doxytag: member="Util::Average::setNSamplePerBlock" ref="ae11f951ab1e57545f3c580f904fff5ad" args="(int nSamplePerBlock)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setNSamplePerBlock </td>
+          <td class="memname">void Util::Average::setNSamplePerBlock </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>nSamplePerBlock</em></td><td>)</td>
@@ -232,18 +232,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Average_8cpp_source.html#l00063">63</a> of file <a class="el" href="Average_8cpp_source.html">Average.cpp</a>.</p>
 
-<p>References <a class="el" href="Average_8h_source.html#l00168">Average::nSamplePerBlock()</a>.</p>
+<p>References <a class="el" href="Average_8h_source.html#l00168">nSamplePerBlock()</a>.</p>
 
-<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00035">MdPotentialEnergyAverage::readParam()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00035">MdKineticEnergyAverage::readParam()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00045">McPairEnergyAverage::readParam()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00042">McExternalEnergyAverage::readParam()</a>, and <a class="el" href="McEnergyAverage_8cpp_source.html#l00037">McEnergyAverage::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00035">McMd::MdPotentialEnergyAverage::readParam()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00035">McMd::MdKineticEnergyAverage::readParam()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00045">McMd::McPairEnergyAverage::readParam()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00042">McMd::McExternalEnergyAverage::readParam()</a>, and <a class="el" href="McEnergyAverage_8cpp_source.html#l00037">McMd::McEnergyAverage::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad996b3f89b7ae529fe991f75b2db0616"></a><!-- doxytag: member="Util::Average::sample" ref="ad996b3f89b7ae529fe991f75b2db0616" args="(double value, std::ostream &amp;out)" -->
+<a class="anchor" id="a872c4954766036d6603b3a8d81f117de"></a><!-- doxytag: member="Util::Average::sample" ref="a872c4954766036d6603b3a8d81f117de" args="(double value, std::ostream &amp;out)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void Util::Average::sample </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>value</em>, </td>
@@ -274,16 +274,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Average_8h_source.html#l00162">162</a> of file <a class="el" href="Average_8h_source.html">Average.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00061">MdPotentialEnergyAverage::sample()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">MdPairEnergyCoefficients::sample()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00060">MdKineticEnergyAverage::sample()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McPairEnergyAverage::sample()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00068">McExternalEnergyAverage::sample()</a>, <a class="el" href="McEnergyAverage_8cpp_source.html#l00063">McEnergyAverage::sample()</a>, and <a class="el" href="Average_8cpp_source.html#l00071">Average::sample()</a>.</p>
+<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00061">McMd::MdPotentialEnergyAverage::sample()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">McMd::MdPairEnergyCoefficients::sample()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00060">McMd::MdKineticEnergyAverage::sample()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McMd::McPairEnergyAverage::sample()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00068">McMd::McExternalEnergyAverage::sample()</a>, <a class="el" href="McEnergyAverage_8cpp_source.html#l00063">McMd::McEnergyAverage::sample()</a>, and <a class="el" href="Average_8cpp_source.html#l00071">sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6971e3c0e5036585549c6d6562d12d2d"></a><!-- doxytag: member="Util::Average::sample" ref="a6971e3c0e5036585549c6d6562d12d2d" args="(double value)" -->
+<a class="anchor" id="adf13dad094b6b95cbbd7d7a7dc9fb65c"></a><!-- doxytag: member="Util::Average::sample" ref="adf13dad094b6b95cbbd7d7a7dc9fb65c" args="(double value)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void Util::Average::sample </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -302,20 +302,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1AverageStage.html#a6971e3c0e5036585549c6d6562d12d2d">AverageStage</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1AverageStage.html#a27a1cf9ab8b5478c5ff655705bf1e380">Util::AverageStage</a>.</p>
 
 <p>Definition at line <a class="el" href="Average_8cpp_source.html#l00071">71</a> of file <a class="el" href="Average_8cpp_source.html">Average.cpp</a>.</p>
 
-<p>References <a class="el" href="Average_8h_source.html#l00162">Average::sample()</a>.</p>
+<p>References <a class="el" href="Average_8h_source.html#l00162">sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a012e48b5ec7769b2e5614bd6b3a62488"></a><!-- doxytag: member="Util::Average::output" ref="a012e48b5ec7769b2e5614bd6b3a62488" args="(std::ostream &amp;out)" -->
+<a class="anchor" id="a08634c8f7a1c8791a77168b70f6884e4"></a><!-- doxytag: member="Util::Average::output" ref="a08634c8f7a1c8791a77168b70f6884e4" args="(std::ostream &amp;out)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void Util::Average::output </td>
           <td>(</td>
           <td class="paramtype">std::ostream &amp;&#160;</td>
           <td class="paramname"><em>out</em></td><td>)</td>
@@ -335,18 +335,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Average_8cpp_source.html#l00112">112</a> of file <a class="el" href="Average_8cpp_source.html">Average.cpp</a>.</p>
 
-<p>References <a class="el" href="AverageStage_8cpp_source.html#l00121">AverageStage::average()</a>, <a class="el" href="AverageStage_8cpp_source.html#l00156">AverageStage::error()</a>, <a class="el" href="AverageStage_8cpp_source.html#l00144">AverageStage::nSample()</a>, <a class="el" href="AverageStage_8cpp_source.html#l00150">AverageStage::stageInterval()</a>, <a class="el" href="AverageStage_8cpp_source.html#l00138">AverageStage::stdDeviation()</a>, and <a class="el" href="AverageStage_8cpp_source.html#l00127">AverageStage::variance()</a>.</p>
+<p>References <a class="el" href="AverageStage_8cpp_source.html#l00121">Util::AverageStage::average()</a>, <a class="el" href="AverageStage_8cpp_source.html#l00156">Util::AverageStage::error()</a>, <a class="el" href="AverageStage_8cpp_source.html#l00144">Util::AverageStage::nSample()</a>, <a class="el" href="AverageStage_8cpp_source.html#l00150">Util::AverageStage::stageInterval()</a>, <a class="el" href="AverageStage_8cpp_source.html#l00138">Util::AverageStage::stdDeviation()</a>, and <a class="el" href="AverageStage_8cpp_source.html#l00127">Util::AverageStage::variance()</a>.</p>
 
-<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00071">MdPotentialEnergyAverage::output()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00259">MdPairEnergyCoefficients::output()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00070">MdKineticEnergyAverage::output()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00131">McPairEnergyAverage::output()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00094">McExternalEnergyAverage::output()</a>, and <a class="el" href="McEnergyAverage_8cpp_source.html#l00073">McEnergyAverage::output()</a>.</p>
+<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00071">McMd::MdPotentialEnergyAverage::output()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00259">McMd::MdPairEnergyCoefficients::output()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00070">McMd::MdKineticEnergyAverage::output()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00131">McMd::McPairEnergyAverage::output()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00094">McMd::McExternalEnergyAverage::output()</a>, and <a class="el" href="McEnergyAverage_8cpp_source.html#l00073">McMd::McEnergyAverage::output()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6f58754b6c74f76a35e309a6dec00657"></a><!-- doxytag: member="Util::Average::nSamplePerBlock" ref="a6f58754b6c74f76a35e309a6dec00657" args="()" -->
+<a class="anchor" id="a4fe42669fbf31981f9dc0a54aab70d9f"></a><!-- doxytag: member="Util::Average::nSamplePerBlock" ref="a4fe42669fbf31981f9dc0a54aab70d9f" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nSamplePerBlock </td>
+          <td class="memname">int Util::Average::nSamplePerBlock </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -360,16 +360,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Average_8h_source.html#l00168">168</a> of file <a class="el" href="Average_8h_source.html">Average.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00071">MdPotentialEnergyAverage::output()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00070">MdKineticEnergyAverage::output()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00131">McPairEnergyAverage::output()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00094">McExternalEnergyAverage::output()</a>, <a class="el" href="McEnergyAverage_8cpp_source.html#l00073">McEnergyAverage::output()</a>, <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00035">MdPotentialEnergyAverage::readParam()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00035">MdKineticEnergyAverage::readParam()</a>, <a class="el" href="McEnergyAverage_8cpp_source.html#l00037">McEnergyAverage::readParam()</a>, and <a class="el" href="Average_8cpp_source.html#l00063">Average::setNSamplePerBlock()</a>.</p>
+<p>Referenced by <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00071">McMd::MdPotentialEnergyAverage::output()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00070">McMd::MdKineticEnergyAverage::output()</a>, <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00131">McMd::McPairEnergyAverage::output()</a>, <a class="el" href="McExternalEnergyAverage_8cpp_source.html#l00094">McMd::McExternalEnergyAverage::output()</a>, <a class="el" href="McEnergyAverage_8cpp_source.html#l00073">McMd::McEnergyAverage::output()</a>, <a class="el" href="MdPotentialEnergyAverage_8cpp_source.html#l00035">McMd::MdPotentialEnergyAverage::readParam()</a>, <a class="el" href="MdKineticEnergyAverage_8cpp_source.html#l00035">McMd::MdKineticEnergyAverage::readParam()</a>, <a class="el" href="McEnergyAverage_8cpp_source.html#l00037">McMd::McEnergyAverage::readParam()</a>, and <a class="el" href="Average_8cpp_source.html#l00063">setNSamplePerBlock()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aef7167a2340365892dc0f921a260383f"></a><!-- doxytag: member="Util::Average::registerDescendant" ref="aef7167a2340365892dc0f921a260383f" args="(AverageStage *descendantPtr)" -->
+<a class="anchor" id="a80703978c5aceecac2ff2a273fd1efc9"></a><!-- doxytag: member="Util::Average::registerDescendant" ref="a80703978c5aceecac2ff2a273fd1efc9" args="(AverageStage *descendantPtr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void registerDescendant </td>
+          <td class="memname">void Util::Average::registerDescendant </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1AverageStage.html">AverageStage</a> *&#160;</td>
           <td class="paramname"><em>descendantPtr</em></td><td>)</td>
@@ -381,18 +381,20 @@ Public Member Functions</h2></td></tr>
 
 <p>Add pointer to a descendant to an array. </p>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1AverageStage.html#aef7167a2340365892dc0f921a260383f">AverageStage</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1AverageStage.html#af29052599333fceda9d2eba4712bb064">Util::AverageStage</a>.</p>
 
 <p>Definition at line <a class="el" href="Average_8cpp_source.html#l00181">181</a> of file <a class="el" href="Average_8cpp_source.html">Average.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="Util::Average::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="ad4432617b146a26af64c59a677de83bc"></a><!-- doxytag: member="Util::Average::serialize" ref="ad4432617b146a26af64c59a677de83bc" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void Util::Average::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -421,7 +423,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1AverageStage.html#a6765e839ab267e4959384e35a4112451">AverageStage</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1AverageStage.html#a1f5bfc9f6f50ee7fc99f2c5fed41e0b2">Util::AverageStage</a>.</p>
 
 <p>Definition at line <a class="el" href="Average_8h_source.html#l00175">175</a> of file <a class="el" href="Average_8h_source.html">Average.h</a>.</p>
 
@@ -432,7 +434,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="Average_8cpp_source.html">Average.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:57 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:29 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

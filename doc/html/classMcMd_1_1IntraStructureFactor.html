@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: IntraStructureFactor Class Reference</title>
+<title>Simpatico: McMd::IntraStructureFactor Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>IntraStructureFactor Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>McMd::IntraStructureFactor Class Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::IntraStructureFactor" --><!-- doxytag: inherits="SystemDiagnostic&lt; System &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -67,9 +67,9 @@
 <p>If a &lt; 0, then <img class="formulaInl" alt="$ \rho_a(k) $" src="form_14.png"/> is given by a sum over all atoms on molecule m, including those of all types. By convention, we use a = -1 to indicate this.</p>
 <p>This class can evaluate multiple types of structures factors, corresponding to different choices for the type pair ab, for multiple wavevectors. The input format thus requires the user to specify one or more atom typeId pairs, and one or more wavevectors. Each wavevector is specified as an IntVector containing integer Miller indices. These are the coeficients in an expansion of a reciprocal lattice wavevector in terms of recprocal lattice basis vectors for the periodic unit cell.</p>
 <p>In a system with nAtomType = 2, with two monomer types 0 and 1, the parameter file input for calculating the total, 00 and 01 correlation functions for 5 wavevectors along the x axis in an orthorhombic unit cell might look like this:</p>
-<div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#ade04e2f90318745b031ef7193ae1c7a7" title="Constructor.">IntraStructureFactor</a>{
-    <a class="code" href="classMcMd_1_1Diagnostic.html#afe5b7de87b935531edcd3d15fbd92166" title="Get interval value.">interval</a>                     1000
-    <a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>     <a class="code" href="classMcMd_1_1IntraStructureFactor.html#ade04e2f90318745b031ef7193ae1c7a7" title="Constructor.">IntraStructureFactor</a>
+<div class="fragment"><pre class="fragment"> <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a1dc81b99bc2de6e9c9beb58c252b98b6" title="Constructor.">IntraStructureFactor</a>{
+    <a class="code" href="classMcMd_1_1Diagnostic.html#ad399e6c8cf5acab10360278dc964b4f4" title="Get interval value.">interval</a>                     1000
+    <a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>     <a class="code" href="classMcMd_1_1IntraStructureFactor.html#a1dc81b99bc2de6e9c9beb58c252b98b6" title="Constructor.">IntraStructureFactor</a>
     nAtomTypeIdPair                  3
     atomTypeIdPairs          -1     -1
                               0      0
@@ -87,16 +87,16 @@
 </div>
 <p><code>#include &lt;<a class="el" href="IntraStructureFactor_8h_source.html">IntraStructureFactor.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for IntraStructureFactor:</div>
+Inheritance diagram for McMd::IntraStructureFactor:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1IntraStructureFactor.png" usemap="#IntraStructureFactor_map" alt=""/>
-  <map id="IntraStructureFactor_map" name="IntraStructureFactor_map">
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; System &gt;" shape="rect" coords="92,168,267,192"/>
-<area href="classMcMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="92,112,267,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,175,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="185,56,360,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,175,24"/>
+  <img src="classMcMd_1_1IntraStructureFactor.png" usemap="#McMd::IntraStructureFactor_map" alt=""/>
+  <map id="McMd::IntraStructureFactor_map" name="McMd::IntraStructureFactor_map">
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; System &gt;" shape="rect" coords="113,168,330,192"/>
+<area href="classMcMd_1_1Diagnostic.html" alt="McMd::Diagnostic" shape="rect" coords="113,112,330,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,217,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="227,56,444,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,217,24"/>
 </map>
  </div></div>
 
@@ -104,31 +104,31 @@ Inheritance diagram for IntraStructureFactor:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#ade04e2f90318745b031ef7193ae1c7a7">IntraStructureFactor</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ade04e2f90318745b031ef7193ae1c7a7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear accumulators.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#afc17577823a371a5ead4e51ebb8ec2ef">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particle pairs to <a class="el" href="classMcMd_1_1IntraStructureFactor.html" title="Intramolecular contribution to the structure factor S(k)">IntraStructureFactor</a> histogram.  <a href="#afc17577823a371a5ead4e51ebb8ec2ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#a7437b254e19e7e12fc2ec99945f4ecea">output</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to predefined output file.  <a href="#a7437b254e19e7e12fc2ec99945f4ecea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#aa3d71af4cc5dfb2be6be816a8f562416">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#aa3d71af4cc5dfb2be6be816a8f562416"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#a1dc81b99bc2de6e9c9beb58c252b98b6">IntraStructureFactor</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a1dc81b99bc2de6e9c9beb58c252b98b6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#ad4b08ed09a1b82543db360551c302ae1">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters from file.  <a href="#ad4b08ed09a1b82543db360551c302ae1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#a99b39affad4aa55ff96c0de79af5acfd">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear accumulators.  <a href="#a99b39affad4aa55ff96c0de79af5acfd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#a87e5466c624149c029b8c7b9e4a168cc">sample</a> (long iStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add particle pairs to <a class="el" href="classMcMd_1_1IntraStructureFactor.html" title="Intramolecular contribution to the structure factor S(k)">IntraStructureFactor</a> histogram.  <a href="#a87e5466c624149c029b8c7b9e4a168cc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#a0746a2067e0d84c6c94d3e1151fd3994">output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results to predefined output file.  <a href="#a0746a2067e0d84c6c94d3e1151fd3994"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#a9805678413cb93298b132d560a0f877a">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#a9805678413cb93298b132d560a0f877a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#a449072a422f8a292a76e124933af9ed4">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#a449072a422f8a292a76e124933af9ed4"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1IntraStructureFactor.html#a99c432072a166f245438cdb0e1a06fad">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a99c432072a166f245438cdb0e1a06fad"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ade04e2f90318745b031ef7193ae1c7a7"></a><!-- doxytag: member="McMd::IntraStructureFactor::IntraStructureFactor" ref="ade04e2f90318745b031ef7193ae1c7a7" args="(System &amp;system)" -->
+<a class="anchor" id="a1dc81b99bc2de6e9c9beb58c252b98b6"></a><!-- doxytag: member="McMd::IntraStructureFactor::IntraStructureFactor" ref="a1dc81b99bc2de6e9c9beb58c252b98b6" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1IntraStructureFactor.html">IntraStructureFactor</a> </td>
+          <td class="memname">McMd::IntraStructureFactor::IntraStructureFactor </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -151,12 +151,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::IntraStructureFactor::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ad4b08ed09a1b82543db360551c302ae1"></a><!-- doxytag: member="McMd::IntraStructureFactor::readParam" ref="ad4b08ed09a1b82543db360551c302ae1" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::IntraStructureFactor::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -184,18 +184,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00038">38</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::IntraStructureFactor::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a99b39affad4aa55ff96c0de79af5acfd"></a><!-- doxytag: member="McMd::IntraStructureFactor::setup" ref="a99b39affad4aa55ff96c0de79af5acfd" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void McMd::IntraStructureFactor::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -206,7 +206,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Clear accumulators. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a93c5a174f073b2587a484999ca550829">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00067">67</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
@@ -214,12 +214,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afc17577823a371a5ead4e51ebb8ec2ef"></a><!-- doxytag: member="McMd::IntraStructureFactor::sample" ref="afc17577823a371a5ead4e51ebb8ec2ef" args="(long iStep)" -->
+<a class="anchor" id="a87e5466c624149c029b8c7b9e4a168cc"></a><!-- doxytag: member="McMd::IntraStructureFactor::sample" ref="a87e5466c624149c029b8c7b9e4a168cc" args="(long iStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void McMd::IntraStructureFactor::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -237,20 +237,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f">Diagnostic</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#ae265d934fee552e1bd50ce37930ac63c">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00087">87</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
-<p>References <a class="el" href="Vector_8h_source.html#l00604">Vector::dot()</a>, <a class="el" href="Constants_8h_source.html#l00039">Constants::Im</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00084">ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="product_8h_source.html#l00022">Util::product()</a>.</p>
+<p>References <a class="el" href="Vector_8h_source.html#l00604">Util::Vector::dot()</a>, <a class="el" href="Constants_8h_source.html#l00039">Util::Constants::Im</a>, <a class="el" href="ConstArrayIterator_8h_source.html#l00084">Util::ConstArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">Util::ConstPArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="product_8h_source.html#l00022">Util::product()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7437b254e19e7e12fc2ec99945f4ecea"></a><!-- doxytag: member="McMd::IntraStructureFactor::output" ref="a7437b254e19e7e12fc2ec99945f4ecea" args="()" -->
+<a class="anchor" id="a0746a2067e0d84c6c94d3e1151fd3994"></a><!-- doxytag: member="McMd::IntraStructureFactor::output" ref="a0746a2067e0d84c6c94d3e1151fd3994" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void McMd::IntraStructureFactor::output </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -261,7 +261,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Output results to predefined output file. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a209e4a470fcdeb3d5b87da3dd6960def">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac5481c8016af4c70d19d59905261c0bf">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00174">174</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
@@ -269,12 +269,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><!-- doxytag: member="McMd::IntraStructureFactor::save" ref="a248dde9ccc0ef67e5d9cc5fd0bdc2b64" args="(Serializable::OArchiveType &amp;ar)" -->
+<a class="anchor" id="a9805678413cb93298b132d560a0f877a"></a><!-- doxytag: member="McMd::IntraStructureFactor::save" ref="a9805678413cb93298b132d560a0f877a" args="(Serializable::OArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void save </td>
+          <td class="memname">void McMd::IntraStructureFactor::save </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -292,18 +292,18 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac27203b7ee783c3cebc054c290e313ed">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00204">204</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa3d71af4cc5dfb2be6be816a8f562416"></a><!-- doxytag: member="McMd::IntraStructureFactor::load" ref="aa3d71af4cc5dfb2be6be816a8f562416" args="(Serializable::IArchiveType &amp;ar)" -->
+<a class="anchor" id="a449072a422f8a292a76e124933af9ed4"></a><!-- doxytag: member="McMd::IntraStructureFactor::load" ref="a449072a422f8a292a76e124933af9ed4" args="(Serializable::IArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void load </td>
+          <td class="memname">void McMd::IntraStructureFactor::load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -321,18 +321,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#aa3d71af4cc5dfb2be6be816a8f562416">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#afa44b6fb962ca0a8a979d0add2dc85b9">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8cpp_source.html#l00210">210</a> of file <a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="McMd::IntraStructureFactor::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="a99c432072a166f245438cdb0e1a06fad"></a><!-- doxytag: member="McMd::IntraStructureFactor::serialize" ref="a99c432072a166f245438cdb0e1a06fad" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void McMd::IntraStructureFactor::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -361,7 +363,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6765e839ab267e4959384e35a4112451">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6056717b367040d8605f67794a7e2ebc">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="IntraStructureFactor_8h_source.html#l00216">216</a> of file <a class="el" href="IntraStructureFactor_8h_source.html">IntraStructureFactor.h</a>.</p>
 
@@ -374,7 +376,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="IntraStructureFactor_8cpp_source.html">IntraStructureFactor.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:54 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:25 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

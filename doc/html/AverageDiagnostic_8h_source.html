@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -85,11 +85,11 @@
 <a name="l00050"></a>00050 
 <a name="l00051"></a>00051    <span class="keyword">protected</span>:
 <a name="l00052"></a>00052 
-<a name="l00054"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#a405a931ed1680bb5a3da7c89e5b2dd06">00054</a>       std::ofstream <a class="code" href="classMcMd_1_1AverageDiagnostic.html#a405a931ed1680bb5a3da7c89e5b2dd06" title="Output file stream.">outputFile_</a>;
+<a name="l00054"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#a5141f28376cb1bf50426921f3da08807">00054</a>       std::ofstream <a class="code" href="classMcMd_1_1AverageDiagnostic.html#a5141f28376cb1bf50426921f3da08807" title="Output file stream.">outputFile_</a>;
 <a name="l00055"></a>00055 
-<a name="l00057"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#a52012ad671ff9476cfee84e768047461">00057</a>       <a class="code" href="classUtil_1_1Average.html" title="Calculates the average and variance of a sampled property.">Average</a>  <a class="code" href="classMcMd_1_1AverageDiagnostic.html#a52012ad671ff9476cfee84e768047461" title="Average object - statistical accumulator.">accumulator_</a>;
+<a name="l00057"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#aacc883da4cafaa06098a46d58f62be21">00057</a>       <a class="code" href="classUtil_1_1Average.html" title="Calculates the average and variance of a sampled property.">Average</a>  <a class="code" href="classMcMd_1_1AverageDiagnostic.html#aacc883da4cafaa06098a46d58f62be21" title="Average object - statistical accumulator.">accumulator_</a>;
 <a name="l00058"></a>00058 
-<a name="l00060"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#ad5d67b17bb890f56c75dce137dc4ed8a">00060</a>       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1AverageDiagnostic.html#ad5d67b17bb890f56c75dce137dc4ed8a" title="Number of samples per block average output.">nSamplePerBlock_</a>;
+<a name="l00060"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#a4e01cd7fbb870aff930201b0ef4b5645">00060</a>       <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1AverageDiagnostic.html#a4e01cd7fbb870aff930201b0ef4b5645" title="Number of samples per block average output.">nSamplePerBlock_</a>;
 <a name="l00061"></a>00061 
 <a name="l00062"></a>00062    };
 <a name="l00063"></a>00063 
@@ -97,7 +97,7 @@
 <a name="l00065"></a>00065 <span class="comment">   * Constructor.</span>
 <a name="l00066"></a>00066 <span class="comment">   */</span>
 <a name="l00067"></a>00067    <span class="keyword">template</span> &lt;<span class="keyword">class</span> SystemType&gt;
-<a name="l00068"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#ad29e4ff54aedf20879675847e8bd5319">00068</a>    <a class="code" href="classMcMd_1_1AverageDiagnostic.html" title="AverageDiagnostic averages of total potential energy.">AverageDiagnostic&lt;SystemType&gt;::AverageDiagnostic</a>(SystemType&amp; system)
+<a name="l00068"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#ad9c5e8a2960efdc8b01470fcc389d277">00068</a>    <a class="code" href="classMcMd_1_1AverageDiagnostic.html" title="AverageDiagnostic averages of total potential energy.">AverageDiagnostic&lt;SystemType&gt;::AverageDiagnostic</a>(SystemType&amp; system)
 <a name="l00069"></a>00069     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;SystemType&gt;(system),
 <a name="l00070"></a>00070       outputFile_(),
 <a name="l00071"></a>00071       accumulator_(),
@@ -108,19 +108,19 @@
 <a name="l00076"></a>00076 <span class="comment">   * Read parameters and initialize.</span>
 <a name="l00077"></a>00077 <span class="comment">   */</span>
 <a name="l00078"></a>00078    <span class="keyword">template</span> &lt;<span class="keyword">class</span> SystemType&gt;
-<a name="l00079"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#ab5421d3c9175985c9acbf723e5392075">00079</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AverageDiagnostic.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters and initialize.">AverageDiagnostic&lt;SystemType&gt;::readParam</a>(std::istream&amp; in)
+<a name="l00079"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#af14fdf1d2669686de0b712f47ebe5043">00079</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AverageDiagnostic.html#af14fdf1d2669686de0b712f47ebe5043" title="Read parameters and initialize.">AverageDiagnostic&lt;SystemType&gt;::readParam</a>(std::istream&amp; in)
 <a name="l00080"></a>00080    {
 <a name="l00081"></a>00081 
-<a name="l00082"></a>00082       <a class="code" href="classMcMd_1_1Diagnostic.html#a0d9d7b5fc89cf6f04d0119cfcc7ac942" title="Read parameter interval from file.">Diagnostic::readInterval</a>(in);
-<a name="l00083"></a>00083       <a class="code" href="classMcMd_1_1Diagnostic.html#a7fb5e9c0364a81f5a630d0f26acfb234" title="Read outputFileName from file.">Diagnostic::readOutputFileName</a>(in);
+<a name="l00082"></a>00082       <a class="code" href="classMcMd_1_1Diagnostic.html#abda32f953247ab813bbad3aa336d56c0" title="Read parameter interval from file.">Diagnostic::readInterval</a>(in);
+<a name="l00083"></a>00083       <a class="code" href="classMcMd_1_1Diagnostic.html#a6cace7ea7c10f7a8a2a76dba8ed1122c" title="Read outputFileName from file.">Diagnostic::readOutputFileName</a>(in);
 <a name="l00084"></a>00084       ParamComposite::read&lt;int&gt;(in,<span class="stringliteral">&quot;nSamplePerBlock&quot;</span>, nSamplePerBlock_);
 <a name="l00085"></a>00085 
 <a name="l00086"></a>00086       accumulator_.setNSamplePerBlock(nSamplePerBlock_);
 <a name="l00087"></a>00087 
 <a name="l00088"></a>00088       <span class="comment">// If nSamplePerBlock != 0, open an output file for block averages.</span>
 <a name="l00089"></a>00089       <span class="keywordflow">if</span> (accumulator_.nSamplePerBlock()) {
-<a name="l00090"></a>00090          <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">Diagnostic::fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(
-<a name="l00091"></a>00091                              <a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">Diagnostic::outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
+<a name="l00090"></a>00090          <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">Diagnostic::fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(
+<a name="l00091"></a>00091                              <a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">Diagnostic::outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
 <a name="l00092"></a>00092       }
 <a name="l00093"></a>00093 
 <a name="l00094"></a>00094    }
@@ -129,14 +129,14 @@
 <a name="l00097"></a>00097 <span class="comment">   * Clear accumulators.</span>
 <a name="l00098"></a>00098 <span class="comment">   */</span>
 <a name="l00099"></a>00099    <span class="keyword">template</span> &lt;<span class="keyword">class</span> SystemType&gt;
-<a name="l00100"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#a4fc01d736fe50cf5b977f755b675f11d">00100</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AverageDiagnostic.html#a4fc01d736fe50cf5b977f755b675f11d" title="Clear accumulators.">AverageDiagnostic&lt;SystemType&gt;::setup</a>()
+<a name="l00100"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#aedabac2b31c8b0780ab980c9487ae617">00100</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AverageDiagnostic.html#aedabac2b31c8b0780ab980c9487ae617" title="Clear accumulators.">AverageDiagnostic&lt;SystemType&gt;::setup</a>()
 <a name="l00101"></a>00101    {  accumulator_.clear(); }
 <a name="l00102"></a>00102 
 <a name="l00103"></a>00103    <span class="comment">/*</span>
 <a name="l00104"></a>00104 <span class="comment">   * Output results to file after simulation is completed.</span>
 <a name="l00105"></a>00105 <span class="comment">   */</span>
 <a name="l00106"></a>00106    <span class="keyword">template</span> &lt;<span class="keyword">class</span> SystemType&gt;
-<a name="l00107"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#a7437b254e19e7e12fc2ec99945f4ecea">00107</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AverageDiagnostic.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results at end of simulation.">AverageDiagnostic&lt;SystemType&gt;::output</a>() 
+<a name="l00107"></a><a class="code" href="classMcMd_1_1AverageDiagnostic.html#a54112946d97ba1ef68800acab7f3b0b4">00107</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1AverageDiagnostic.html#a54112946d97ba1ef68800acab7f3b0b4" title="Output results at end of simulation.">AverageDiagnostic&lt;SystemType&gt;::output</a>() 
 <a name="l00108"></a>00108    { 
 <a name="l00109"></a>00109       <span class="comment">// If outputFile_ was used to write block averages, close it.</span>
 <a name="l00110"></a>00110       <span class="keywordflow">if</span> (accumulator_.nSamplePerBlock()) {
@@ -144,13 +144,13 @@
 <a name="l00112"></a>00112       }
 <a name="l00113"></a>00113      
 <a name="l00114"></a>00114       <span class="comment">// Write parameter block to *.prm file</span>
-<a name="l00115"></a>00115       <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">Diagnostic::fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">Diagnostic::outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), 
+<a name="l00115"></a>00115       <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">Diagnostic::fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">Diagnostic::outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), 
 <a name="l00116"></a>00116                                               outputFile_);
-<a name="l00117"></a>00117       <a class="code" href="classUtil_1_1ParamComposite.html#a3919e7db0ce53e1ead2be4016d4d09ac" title="Write all parameters to an output stream.">ParamComposite::writeParam</a>(outputFile_); 
+<a name="l00117"></a>00117       <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">ParamComposite::writeParam</a>(outputFile_); 
 <a name="l00118"></a>00118       outputFile_.close();
 <a name="l00119"></a>00119 
 <a name="l00120"></a>00120       <span class="comment">// Write average value to *.avefile</span>
-<a name="l00121"></a>00121       <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">Diagnostic::fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">Diagnostic::outputFileName</a>(<span class="stringliteral">&quot;.ave&quot;</span>), 
+<a name="l00121"></a>00121       <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">Diagnostic::fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">Diagnostic::outputFileName</a>(<span class="stringliteral">&quot;.ave&quot;</span>), 
 <a name="l00122"></a>00122                                               outputFile_);
 <a name="l00123"></a>00123       accumulator_.output(outputFile_); 
 <a name="l00124"></a>00124       outputFile_.close();
@@ -161,7 +161,7 @@
 <a name="l00129"></a>00129 <span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

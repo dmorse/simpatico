@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -76,36 +76,36 @@
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035    <span class="keyword">public</span>:
 <a name="l00036"></a>00036 
-<a name="l00040"></a>00040       <a class="code" href="classUtil_1_1List.html#a17e6c90f14225bdac5c65ed915b0a2f6" title="Default constructor.">List</a>();
+<a name="l00040"></a>00040       <a class="code" href="classUtil_1_1List.html#ac8ba2c98c9ae136f52b86e851004f02d" title="Default constructor.">List</a>();
 <a name="l00041"></a>00041 
-<a name="l00045"></a><a class="code" href="classUtil_1_1List.html#a5bcc2f367a33d13b9cff77e81ab5bb40">00045</a>       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1List.html#a5bcc2f367a33d13b9cff77e81ab5bb40" title="Destructor (does nothing).">~List</a>()
+<a name="l00045"></a><a class="code" href="classUtil_1_1List.html#acf685d2a5be75ca6231008ca4bbf81b9">00045</a>       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1List.html#acf685d2a5be75ca6231008ca4bbf81b9" title="Destructor (does nothing).">~List</a>()
 <a name="l00046"></a>00046       {}
 <a name="l00047"></a>00047 
-<a name="l00051"></a>00051       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#af051ff365def6aa19f434b2f832868ab" title="Provide an array of Node&amp;lt;Data&amp;gt; objects for this List.">initialize</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>* nodes, <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1List.html#a104736719cd4e5f21c25705c77064dde" title="Get capacity of the array.">capacity</a>);
+<a name="l00051"></a>00051       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#ae61e57eb25257fffa52e8ba6dc5ccbd0" title="Provide an array of Node&amp;lt;Data&amp;gt; objects for this List.">initialize</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>* nodes, <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1List.html#a7600c8e71ef7fc1325c3250a92a48e89" title="Get capacity of the array.">capacity</a>);
 <a name="l00052"></a>00052 
-<a name="l00058"></a>00058       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1List.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Get the number of elements.">size</a>() <span class="keyword">const</span>;
+<a name="l00058"></a>00058       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1List.html#a6272df68615c728c7c8dfaf28a23f7ff" title="Get the number of elements.">size</a>() <span class="keyword">const</span>;
 <a name="l00059"></a>00059 
-<a name="l00065"></a>00065       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1List.html#a104736719cd4e5f21c25705c77064dde" title="Get capacity of the array.">capacity</a>() <span class="keyword">const</span>;
+<a name="l00065"></a>00065       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1List.html#a7600c8e71ef7fc1325c3250a92a48e89" title="Get capacity of the array.">capacity</a>() <span class="keyword">const</span>;
 <a name="l00066"></a>00066 
-<a name="l00072"></a>00072       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#a0429232a3a3948dbf2a639c21b05449b" title="Push a node onto the the back of the List.">pushBack</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node);
+<a name="l00072"></a>00072       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#aca748fb26b939d579655537b5fa0526a" title="Push a node onto the the back of the List.">pushBack</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node);
 <a name="l00073"></a>00073 
-<a name="l00079"></a>00079       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#ab6bfb9305f2e1ab7bad97aac1ceea7a0" title="Push a node onto the the front of the List.">pushFront</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node);
+<a name="l00079"></a>00079       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#aac2b6544ae3512d67fe0bac0ed140a70" title="Push a node onto the the front of the List.">pushFront</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node);
 <a name="l00080"></a>00080 
-<a name="l00086"></a>00086       <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1List.html#a2481d876705957c70e4c8a72ef81f1a0" title="Remove a node from the back of the list.">popBack</a>();
+<a name="l00086"></a>00086       <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1List.html#a02809a8a953951bf639c8a0ad3bff317" title="Remove a node from the back of the list.">popBack</a>();
 <a name="l00087"></a>00087 
-<a name="l00093"></a>00093       <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1List.html#a503c2b71d177a8cbca5609b9f24b8065" title="Remove a node from the front of the list.">popFront</a>();
+<a name="l00093"></a>00093       <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1List.html#a1123671c92cc14b82a9dfd5015c087eb" title="Remove a node from the front of the list.">popFront</a>();
 <a name="l00094"></a>00094 
-<a name="l00101"></a>00101       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#aef05c80592ee919c455bbb7cf2933ddd" title="Insert newNode into list after node.">insertNext</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node, <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; newNode);
+<a name="l00101"></a>00101       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#a2eabdf0d1935abed4212ba887c1f48d7" title="Insert newNode into list after node.">insertNext</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node, <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; newNode);
 <a name="l00102"></a>00102 
-<a name="l00109"></a>00109       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#a2f2327be4039882afc5aa98af37ef5a9" title="Insert newNode into list before node.">insertPrev</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node, <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; newNode);
+<a name="l00109"></a>00109       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#ae9806d319b67e1d8d6102d7198411005" title="Insert newNode into list before node.">insertPrev</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node, <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; newNode);
 <a name="l00110"></a>00110 
-<a name="l00116"></a>00116       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#a654a26f1717a47ae8140580eb5547c7d" title="Insert node into list in sequential order.">insert</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a> &amp;node);
+<a name="l00116"></a>00116       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#ad4e5c63d93d9362a26e17423e87bd434" title="Insert node into list in sequential order.">insert</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a> &amp;node);
 <a name="l00117"></a>00117 
 <a name="l00123"></a>00123       <span class="keywordtype">void</span> <span class="keyword">remove</span>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a> &amp;node);
 <a name="l00124"></a>00124 
-<a name="l00130"></a>00130       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#ac51924546efa09274083626d2f3813ef" title="Set an iterator to the front of this List.">begin</a>(<a class="code" href="classUtil_1_1ListIterator.html" title="Bidirectional iterator for a List.">ListIterator&lt;Data&gt;</a> &amp;iterator) <span class="keyword">const</span>;
+<a name="l00130"></a>00130       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#a0721103985550baedc28959cd6766c28" title="Set an iterator to the front of this List.">begin</a>(<a class="code" href="classUtil_1_1ListIterator.html" title="Bidirectional iterator for a List.">ListIterator&lt;Data&gt;</a> &amp;iterator) <span class="keyword">const</span>;
 <a name="l00131"></a>00131 
-<a name="l00137"></a>00137       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1List.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Check validity of linked list.">isValid</a>() <span class="keyword">const</span>;
+<a name="l00137"></a>00137       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1List.html#ab51c0f4a0692c3f18b89ee8e23368c9a" title="Check validity of linked list.">isValid</a>() <span class="keyword">const</span>;
 <a name="l00138"></a>00138 
 <a name="l00139"></a>00139    <span class="keyword">private</span>:
 <a name="l00140"></a>00140 
@@ -140,7 +140,7 @@
 <a name="l00189"></a>00189 <span class="comment">   * Default constructor.</span>
 <a name="l00190"></a>00190 <span class="comment">   */</span>
 <a name="l00191"></a>00191    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00192"></a><a class="code" href="classUtil_1_1List.html#a17e6c90f14225bdac5c65ed915b0a2f6">00192</a>    <a class="code" href="classUtil_1_1List.html#a17e6c90f14225bdac5c65ed915b0a2f6" title="Default constructor.">List&lt;Data&gt;::List</a>()
+<a name="l00192"></a><a class="code" href="classUtil_1_1List.html#ac8ba2c98c9ae136f52b86e851004f02d">00192</a>    <a class="code" href="classUtil_1_1List.html#ac8ba2c98c9ae136f52b86e851004f02d" title="Default constructor.">List&lt;Data&gt;::List</a>()
 <a name="l00193"></a>00193     : nodes_(0),
 <a name="l00194"></a>00194       front_(0),
 <a name="l00195"></a>00195       back_(0),
@@ -154,7 +154,7 @@
 <a name="l00203"></a>00203 <span class="comment">   * Provide a C array of Node&lt;Data&gt; objects for this List.</span>
 <a name="l00204"></a>00204 <span class="comment">   */</span>
 <a name="l00205"></a>00205    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00206"></a><a class="code" href="classUtil_1_1List.html#af051ff365def6aa19f434b2f832868ab">00206</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#af051ff365def6aa19f434b2f832868ab" title="Provide an array of Node&amp;lt;Data&amp;gt; objects for this List.">List&lt;Data&gt;::initialize</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>* nodes, <span class="keywordtype">int</span> capacity)
+<a name="l00206"></a><a class="code" href="classUtil_1_1List.html#ae61e57eb25257fffa52e8ba6dc5ccbd0">00206</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#ae61e57eb25257fffa52e8ba6dc5ccbd0" title="Provide an array of Node&amp;lt;Data&amp;gt; objects for this List.">List&lt;Data&gt;::initialize</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>* nodes, <span class="keywordtype">int</span> capacity)
 <a name="l00207"></a>00207    {
 <a name="l00208"></a>00208       nodes_    = nodes;
 <a name="l00209"></a>00209       capacity_ = capacity;
@@ -165,33 +165,33 @@
 <a name="l00214"></a>00214 <span class="comment">   * Get number of elements in list.</span>
 <a name="l00215"></a>00215 <span class="comment">   */</span>
 <a name="l00216"></a>00216    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00217"></a><a class="code" href="classUtil_1_1List.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">00217</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1List.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Get the number of elements.">List&lt;Data&gt;::size</a>()<span class="keyword"> const</span>
+<a name="l00217"></a><a class="code" href="classUtil_1_1List.html#a6272df68615c728c7c8dfaf28a23f7ff">00217</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1List.html#a6272df68615c728c7c8dfaf28a23f7ff" title="Get the number of elements.">List&lt;Data&gt;::size</a>()<span class="keyword"> const</span>
 <a name="l00218"></a>00218 <span class="keyword">   </span>{  <span class="keywordflow">return</span> size_; }
 <a name="l00219"></a>00219 
 <a name="l00220"></a>00220    <span class="comment">/*</span>
 <a name="l00221"></a>00221 <span class="comment">   * Get capacity of underlying array.</span>
 <a name="l00222"></a>00222 <span class="comment">   */</span>
 <a name="l00223"></a>00223    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00224"></a><a class="code" href="classUtil_1_1List.html#a104736719cd4e5f21c25705c77064dde">00224</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1List.html#a104736719cd4e5f21c25705c77064dde" title="Get capacity of the array.">List&lt;Data&gt;::capacity</a>()<span class="keyword"> const</span>
+<a name="l00224"></a><a class="code" href="classUtil_1_1List.html#a7600c8e71ef7fc1325c3250a92a48e89">00224</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1List.html#a7600c8e71ef7fc1325c3250a92a48e89" title="Get capacity of the array.">List&lt;Data&gt;::capacity</a>()<span class="keyword"> const</span>
 <a name="l00225"></a>00225 <span class="keyword">   </span>{  <span class="keywordflow">return</span> capacity_; }
 <a name="l00226"></a>00226 
 <a name="l00227"></a>00227    <span class="comment">/*</span>
 <a name="l00228"></a>00228 <span class="comment">   * Push a node onto the the back of the List.</span>
 <a name="l00229"></a>00229 <span class="comment">   */</span>
 <a name="l00230"></a>00230    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00231"></a><a class="code" href="classUtil_1_1List.html#a0429232a3a3948dbf2a639c21b05449b">00231</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#a0429232a3a3948dbf2a639c21b05449b" title="Push a node onto the the back of the List.">List&lt;Data&gt;::pushBack</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node)
+<a name="l00231"></a><a class="code" href="classUtil_1_1List.html#aca748fb26b939d579655537b5fa0526a">00231</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#aca748fb26b939d579655537b5fa0526a" title="Push a node onto the the back of the List.">List&lt;Data&gt;::pushBack</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node)
 <a name="l00232"></a>00232    {
 <a name="l00233"></a>00233       <span class="keywordflow">if</span> (back_ == 0) {
-<a name="l00234"></a>00234          node.<a class="code" href="classUtil_1_1Node.html#a002e47002443a7db8d43f1d82d0801ab" title="Set the list.">setList</a>(*<span class="keyword">this</span>);
+<a name="l00234"></a>00234          node.<a class="code" href="classUtil_1_1Node.html#a89b6aff8223b062bb3cb75d06573bda1" title="Set the list.">setList</a>(*<span class="keyword">this</span>);
 <a name="l00235"></a>00235          front_ = &amp;node;
 <a name="l00236"></a>00236          lower_ = &amp;node;
 <a name="l00237"></a>00237          upper_ = &amp;node;
 <a name="l00238"></a>00238       } <span class="keywordflow">else</span> {
-<a name="l00239"></a>00239          back_-&gt;<a class="code" href="classUtil_1_1Node.html#acf07b7e9334d6170a2d5b898531faf7d" title="Set pointers connecting the other node after this node.">attachNext</a>(node);
+<a name="l00239"></a>00239          back_-&gt;<a class="code" href="classUtil_1_1Node.html#a8e8d5687795acbce3a6681d9b97570a7" title="Set pointers connecting the other node after this node.">attachNext</a>(node);
 <a name="l00240"></a>00240          expandBounds(node);
 <a name="l00241"></a>00241       }
 <a name="l00242"></a>00242       back_ = &amp;node;
-<a name="l00243"></a>00243       node.<a class="code" href="classUtil_1_1Node.html#a58ec80fd8edd852125cca5fe7946532c" title="Set pointer to the next Node.">setNext</a>(0);
+<a name="l00243"></a>00243       node.<a class="code" href="classUtil_1_1Node.html#abbd1c485466e14dfadfff9fa17e7b5f8" title="Set pointer to the next Node.">setNext</a>(0);
 <a name="l00244"></a>00244       ++size_;
 <a name="l00245"></a>00245    }
 <a name="l00246"></a>00246 
@@ -199,29 +199,29 @@
 <a name="l00248"></a>00248 <span class="comment">   * Push a node onto the the front of the List.</span>
 <a name="l00249"></a>00249 <span class="comment">   */</span>
 <a name="l00250"></a>00250    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00251"></a><a class="code" href="classUtil_1_1List.html#ab6bfb9305f2e1ab7bad97aac1ceea7a0">00251</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#ab6bfb9305f2e1ab7bad97aac1ceea7a0" title="Push a node onto the the front of the List.">List&lt;Data&gt;::pushFront</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node)
+<a name="l00251"></a><a class="code" href="classUtil_1_1List.html#aac2b6544ae3512d67fe0bac0ed140a70">00251</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#aac2b6544ae3512d67fe0bac0ed140a70" title="Push a node onto the the front of the List.">List&lt;Data&gt;::pushFront</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node)
 <a name="l00252"></a>00252    {
 <a name="l00253"></a>00253       <span class="keywordflow">if</span> (front_ == 0) {
-<a name="l00254"></a>00254          node.<a class="code" href="classUtil_1_1Node.html#a002e47002443a7db8d43f1d82d0801ab" title="Set the list.">setList</a>(*<span class="keyword">this</span>);
+<a name="l00254"></a>00254          node.<a class="code" href="classUtil_1_1Node.html#a89b6aff8223b062bb3cb75d06573bda1" title="Set the list.">setList</a>(*<span class="keyword">this</span>);
 <a name="l00255"></a>00255          front_ = &amp;node;
 <a name="l00256"></a>00256          back_ = &amp;node;
 <a name="l00257"></a>00257          lower_ = &amp;node;
 <a name="l00258"></a>00258          upper_ = &amp;node;
 <a name="l00259"></a>00259          size_  = 1;
 <a name="l00260"></a>00260       } <span class="keywordflow">else</span> {
-<a name="l00261"></a>00261          front_-&gt;<a class="code" href="classUtil_1_1Node.html#a75ba108c8ba1be8402ceaf88f7b8ff88" title="Set pointers connecting the other node before this node.">attachPrev</a>(node);
+<a name="l00261"></a>00261          front_-&gt;<a class="code" href="classUtil_1_1Node.html#a875335842884011eb1246d55134d9c98" title="Set pointers connecting the other node before this node.">attachPrev</a>(node);
 <a name="l00262"></a>00262          front_ = &amp;node;
 <a name="l00263"></a>00263          expandBounds(node);
 <a name="l00264"></a>00264          ++size_;
 <a name="l00265"></a>00265       }
-<a name="l00266"></a>00266       node.<a class="code" href="classUtil_1_1Node.html#ac0d14e7fbd750e0b1bdf94d0add33c6b" title="Set pointer to the previous Node.">setPrev</a>(0);
+<a name="l00266"></a>00266       node.<a class="code" href="classUtil_1_1Node.html#a20e5144f84e048328d76f2110f2c5987" title="Set pointer to the previous Node.">setPrev</a>(0);
 <a name="l00267"></a>00267    }
 <a name="l00268"></a>00268 
 <a name="l00269"></a>00269    <span class="comment">/*</span>
 <a name="l00270"></a>00270 <span class="comment">   * Remove a node from the back of the list.</span>
 <a name="l00271"></a>00271 <span class="comment">   */</span>
 <a name="l00272"></a>00272    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00273"></a><a class="code" href="classUtil_1_1List.html#a2481d876705957c70e4c8a72ef81f1a0">00273</a>    <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1List.html#a2481d876705957c70e4c8a72ef81f1a0" title="Remove a node from the back of the list.">List&lt;Data&gt;::popBack</a>()
+<a name="l00273"></a><a class="code" href="classUtil_1_1List.html#a02809a8a953951bf639c8a0ad3bff317">00273</a>    <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1List.html#a02809a8a953951bf639c8a0ad3bff317" title="Remove a node from the back of the list.">List&lt;Data&gt;::popBack</a>()
 <a name="l00274"></a>00274    {
 <a name="l00275"></a>00275       <span class="keywordflow">if</span> (size_ == 0) {
 <a name="l00276"></a>00276          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempted popBack from empty List&quot;</span>);
@@ -230,13 +230,13 @@
 <a name="l00279"></a>00279       assert(front_ != 0);
 <a name="l00280"></a>00280       <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; oldBack = *back_;
 <a name="l00281"></a>00281       <span class="keywordflow">if</span> (back_ == front_) {
-<a name="l00282"></a>00282          back_-&gt;<a class="code" href="classUtil_1_1Node.html#ac8bb3912a3ce86b15842e79d0b421204" title="Nullify previous and next pointers, and nullify the list pointer.">clear</a>();
+<a name="l00282"></a>00282          back_-&gt;<a class="code" href="classUtil_1_1Node.html#a2dc789a11a0bb6974c5c0a037108d272" title="Nullify previous and next pointers, and nullify the list pointer.">clear</a>();
 <a name="l00283"></a>00283          setEmpty();
 <a name="l00284"></a>00284       } <span class="keywordflow">else</span> {
-<a name="l00285"></a>00285          back_ = oldBack.<a class="code" href="classUtil_1_1Node.html#a18d2031a787437796eb1ef15dfda5230" title="Get the previous pointer.">prev</a>();
+<a name="l00285"></a>00285          back_ = oldBack.<a class="code" href="classUtil_1_1Node.html#a34031e467b4231ee968f8064d35ba340" title="Get the previous pointer.">prev</a>();
 <a name="l00286"></a>00286          back_-&gt;setNext(0);
 <a name="l00287"></a>00287          contractBounds(oldBack);
-<a name="l00288"></a>00288          oldBack.<a class="code" href="classUtil_1_1Node.html#ac8bb3912a3ce86b15842e79d0b421204" title="Nullify previous and next pointers, and nullify the list pointer.">clear</a>();
+<a name="l00288"></a>00288          oldBack.<a class="code" href="classUtil_1_1Node.html#a2dc789a11a0bb6974c5c0a037108d272" title="Nullify previous and next pointers, and nullify the list pointer.">clear</a>();
 <a name="l00289"></a>00289          --size_;
 <a name="l00290"></a>00290       }
 <a name="l00291"></a>00291       <span class="keywordflow">return</span> oldBack;
@@ -246,7 +246,7 @@
 <a name="l00295"></a>00295 <span class="comment">   * Remove a node from the back of the list.</span>
 <a name="l00296"></a>00296 <span class="comment">   */</span>
 <a name="l00297"></a>00297    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00298"></a><a class="code" href="classUtil_1_1List.html#a503c2b71d177a8cbca5609b9f24b8065">00298</a>    <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1List.html#a503c2b71d177a8cbca5609b9f24b8065" title="Remove a node from the front of the list.">List&lt;Data&gt;::popFront</a>()
+<a name="l00298"></a><a class="code" href="classUtil_1_1List.html#a1123671c92cc14b82a9dfd5015c087eb">00298</a>    <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1List.html#a1123671c92cc14b82a9dfd5015c087eb" title="Remove a node from the front of the list.">List&lt;Data&gt;::popFront</a>()
 <a name="l00299"></a>00299    {
 <a name="l00300"></a>00300       <span class="keywordflow">if</span> (size_ == 0) {
 <a name="l00301"></a>00301          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempted popFront from empty List&quot;</span>);
@@ -255,13 +255,13 @@
 <a name="l00304"></a>00304       assert(back_  != 0);
 <a name="l00305"></a>00305       <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; oldFront = *front_;
 <a name="l00306"></a>00306       <span class="keywordflow">if</span> (front_ == back_) {
-<a name="l00307"></a>00307          front_-&gt;<a class="code" href="classUtil_1_1Node.html#ac8bb3912a3ce86b15842e79d0b421204" title="Nullify previous and next pointers, and nullify the list pointer.">clear</a>();
+<a name="l00307"></a>00307          front_-&gt;<a class="code" href="classUtil_1_1Node.html#a2dc789a11a0bb6974c5c0a037108d272" title="Nullify previous and next pointers, and nullify the list pointer.">clear</a>();
 <a name="l00308"></a>00308          setEmpty();
 <a name="l00309"></a>00309       } <span class="keywordflow">else</span> {
-<a name="l00310"></a>00310          front_ = oldFront.<a class="code" href="classUtil_1_1Node.html#ac9c6847ae215dbe594a39bd3b3ebbf6e" title="Get the next pointer.">next</a>();
+<a name="l00310"></a>00310          front_ = oldFront.<a class="code" href="classUtil_1_1Node.html#a83121de14bd40b87450d45d3d3be86b0" title="Get the next pointer.">next</a>();
 <a name="l00311"></a>00311          front_-&gt;setPrev(0);
 <a name="l00312"></a>00312          contractBounds(oldFront);
-<a name="l00313"></a>00313          oldFront.<a class="code" href="classUtil_1_1Node.html#ac8bb3912a3ce86b15842e79d0b421204" title="Nullify previous and next pointers, and nullify the list pointer.">clear</a>();
+<a name="l00313"></a>00313          oldFront.<a class="code" href="classUtil_1_1Node.html#a2dc789a11a0bb6974c5c0a037108d272" title="Nullify previous and next pointers, and nullify the list pointer.">clear</a>();
 <a name="l00314"></a>00314          --size_;
 <a name="l00315"></a>00315       }
 <a name="l00316"></a>00316       <span class="keywordflow">return</span> oldFront;
@@ -271,15 +271,15 @@
 <a name="l00320"></a>00320 <span class="comment">   * Insert newNode into the list after previous.</span>
 <a name="l00321"></a>00321 <span class="comment">   */</span>
 <a name="l00322"></a>00322    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00323"></a><a class="code" href="classUtil_1_1List.html#aef05c80592ee919c455bbb7cf2933ddd">00323</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#aef05c80592ee919c455bbb7cf2933ddd" title="Insert newNode into list after node.">List&lt;Data&gt;::insertNext</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; previous, <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; newNode)
+<a name="l00323"></a><a class="code" href="classUtil_1_1List.html#a2eabdf0d1935abed4212ba887c1f48d7">00323</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#a2eabdf0d1935abed4212ba887c1f48d7" title="Insert newNode into list after node.">List&lt;Data&gt;::insertNext</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; previous, <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; newNode)
 <a name="l00324"></a>00324    {
 <a name="l00325"></a>00325       <span class="keywordflow">if</span> (&amp;previous == back_) {
 <a name="l00326"></a>00326          back_ = &amp;newNode;
-<a name="l00327"></a>00327          newNode.<a class="code" href="classUtil_1_1Node.html#a58ec80fd8edd852125cca5fe7946532c" title="Set pointer to the next Node.">setNext</a>(0);
+<a name="l00327"></a>00327          newNode.<a class="code" href="classUtil_1_1Node.html#abbd1c485466e14dfadfff9fa17e7b5f8" title="Set pointer to the next Node.">setNext</a>(0);
 <a name="l00328"></a>00328       } <span class="keywordflow">else</span> {
-<a name="l00329"></a>00329          previous.<a class="code" href="classUtil_1_1Node.html#ac9c6847ae215dbe594a39bd3b3ebbf6e" title="Get the next pointer.">next</a>()-&gt;attachPrev(newNode);
+<a name="l00329"></a>00329          previous.<a class="code" href="classUtil_1_1Node.html#a83121de14bd40b87450d45d3d3be86b0" title="Get the next pointer.">next</a>()-&gt;attachPrev(newNode);
 <a name="l00330"></a>00330       }
-<a name="l00331"></a>00331       previous.<a class="code" href="classUtil_1_1Node.html#acf07b7e9334d6170a2d5b898531faf7d" title="Set pointers connecting the other node after this node.">attachNext</a>(newNode);
+<a name="l00331"></a>00331       previous.<a class="code" href="classUtil_1_1Node.html#a8e8d5687795acbce3a6681d9b97570a7" title="Set pointers connecting the other node after this node.">attachNext</a>(newNode);
 <a name="l00332"></a>00332       expandBounds(newNode);
 <a name="l00333"></a>00333       ++size_;
 <a name="l00334"></a>00334    }
@@ -288,15 +288,15 @@
 <a name="l00337"></a>00337 <span class="comment">   * Insert newNode into the list before next.</span>
 <a name="l00338"></a>00338 <span class="comment">   */</span>
 <a name="l00339"></a>00339    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00340"></a><a class="code" href="classUtil_1_1List.html#a2f2327be4039882afc5aa98af37ef5a9">00340</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#a2f2327be4039882afc5aa98af37ef5a9" title="Insert newNode into list before node.">List&lt;Data&gt;::insertPrev</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; next, <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; newNode)
+<a name="l00340"></a><a class="code" href="classUtil_1_1List.html#ae9806d319b67e1d8d6102d7198411005">00340</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#ae9806d319b67e1d8d6102d7198411005" title="Insert newNode into list before node.">List&lt;Data&gt;::insertPrev</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; next, <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; newNode)
 <a name="l00341"></a>00341    {
 <a name="l00342"></a>00342       <span class="keywordflow">if</span> (&amp;next == front_ ) {
 <a name="l00343"></a>00343          front_ = &amp;newNode;
-<a name="l00344"></a>00344          newNode.<a class="code" href="classUtil_1_1Node.html#ac0d14e7fbd750e0b1bdf94d0add33c6b" title="Set pointer to the previous Node.">setPrev</a>(0);
+<a name="l00344"></a>00344          newNode.<a class="code" href="classUtil_1_1Node.html#a20e5144f84e048328d76f2110f2c5987" title="Set pointer to the previous Node.">setPrev</a>(0);
 <a name="l00345"></a>00345       } <span class="keywordflow">else</span> {
-<a name="l00346"></a>00346          next.<a class="code" href="classUtil_1_1Node.html#a18d2031a787437796eb1ef15dfda5230" title="Get the previous pointer.">prev</a>()-&gt;attachNext(newNode);
+<a name="l00346"></a>00346          next.<a class="code" href="classUtil_1_1Node.html#a34031e467b4231ee968f8064d35ba340" title="Get the previous pointer.">prev</a>()-&gt;attachNext(newNode);
 <a name="l00347"></a>00347       }
-<a name="l00348"></a>00348       next.<a class="code" href="classUtil_1_1Node.html#a75ba108c8ba1be8402ceaf88f7b8ff88" title="Set pointers connecting the other node before this node.">attachPrev</a>(newNode);
+<a name="l00348"></a>00348       next.<a class="code" href="classUtil_1_1Node.html#a875335842884011eb1246d55134d9c98" title="Set pointers connecting the other node before this node.">attachPrev</a>(newNode);
 <a name="l00349"></a>00349       expandBounds(newNode);
 <a name="l00350"></a>00350       ++size_;
 <a name="l00351"></a>00351    }
@@ -305,28 +305,28 @@
 <a name="l00354"></a>00354 <span class="comment">   * Remove a specific node from the list.</span>
 <a name="l00355"></a>00355 <span class="comment">   */</span>
 <a name="l00356"></a>00356    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00357"></a><a class="code" href="classUtil_1_1List.html#aabf916ca03cfa5f0b28f7c81482bd518">00357</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#aabf916ca03cfa5f0b28f7c81482bd518" title="Remove node from list.">List&lt;Data&gt;::remove</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node)
+<a name="l00357"></a><a class="code" href="classUtil_1_1List.html#a9a8460716f0d55fc3c0a6d79a6ab3663">00357</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#a9a8460716f0d55fc3c0a6d79a6ab3663" title="Remove node from list.">List&lt;Data&gt;::remove</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>&amp; node)
 <a name="l00358"></a>00358    {
-<a name="l00359"></a>00359       assert( &amp;node.<a class="code" href="classUtil_1_1Node.html#adb5d7cd07c258365c060600141a86cb3" title="Get a reference to the List.">list</a>() == this );
+<a name="l00359"></a>00359       assert( &amp;node.<a class="code" href="classUtil_1_1Node.html#ad30cd2035fe368d43c2fba1c767a2c90" title="Get a reference to the List.">list</a>() == this );
 <a name="l00360"></a>00360       <span class="keywordflow">if</span> (&amp;node == back_) {
 <a name="l00361"></a>00361          <span class="keywordflow">if</span> (back_ == front_) {
 <a name="l00362"></a>00362             back_-&gt;clear();
 <a name="l00363"></a>00363             setEmpty();
 <a name="l00364"></a>00364             <span class="keywordflow">return</span>;
 <a name="l00365"></a>00365          } <span class="keywordflow">else</span> {
-<a name="l00366"></a>00366             back_ = node.<a class="code" href="classUtil_1_1Node.html#a18d2031a787437796eb1ef15dfda5230" title="Get the previous pointer.">prev</a>();
+<a name="l00366"></a>00366             back_ = node.<a class="code" href="classUtil_1_1Node.html#a34031e467b4231ee968f8064d35ba340" title="Get the previous pointer.">prev</a>();
 <a name="l00367"></a>00367             back_-&gt;setNext(0);
 <a name="l00368"></a>00368          }
 <a name="l00369"></a>00369       } <span class="keywordflow">else</span>
 <a name="l00370"></a>00370       <span class="keywordflow">if</span> (&amp;node == front_) {
-<a name="l00371"></a>00371          front_ = node.<a class="code" href="classUtil_1_1Node.html#ac9c6847ae215dbe594a39bd3b3ebbf6e" title="Get the next pointer.">next</a>();
+<a name="l00371"></a>00371          front_ = node.<a class="code" href="classUtil_1_1Node.html#a83121de14bd40b87450d45d3d3be86b0" title="Get the next pointer.">next</a>();
 <a name="l00372"></a>00372          front_-&gt;setPrev(0);
 <a name="l00373"></a>00373       } <span class="keywordflow">else</span> {
-<a name="l00374"></a>00374          node.<a class="code" href="classUtil_1_1Node.html#a18d2031a787437796eb1ef15dfda5230" title="Get the previous pointer.">prev</a>()-&gt;setNext( node.<a class="code" href="classUtil_1_1Node.html#ac9c6847ae215dbe594a39bd3b3ebbf6e" title="Get the next pointer.">next</a>() );
-<a name="l00375"></a>00375          node.<a class="code" href="classUtil_1_1Node.html#ac9c6847ae215dbe594a39bd3b3ebbf6e" title="Get the next pointer.">next</a>()-&gt;setPrev( node.<a class="code" href="classUtil_1_1Node.html#a18d2031a787437796eb1ef15dfda5230" title="Get the previous pointer.">prev</a>() );
+<a name="l00374"></a>00374          node.<a class="code" href="classUtil_1_1Node.html#a34031e467b4231ee968f8064d35ba340" title="Get the previous pointer.">prev</a>()-&gt;setNext( node.<a class="code" href="classUtil_1_1Node.html#a83121de14bd40b87450d45d3d3be86b0" title="Get the next pointer.">next</a>() );
+<a name="l00375"></a>00375          node.<a class="code" href="classUtil_1_1Node.html#a83121de14bd40b87450d45d3d3be86b0" title="Get the next pointer.">next</a>()-&gt;setPrev( node.<a class="code" href="classUtil_1_1Node.html#a34031e467b4231ee968f8064d35ba340" title="Get the previous pointer.">prev</a>() );
 <a name="l00376"></a>00376       }
 <a name="l00377"></a>00377       contractBounds(node);
-<a name="l00378"></a>00378       node.<a class="code" href="classUtil_1_1Node.html#ac8bb3912a3ce86b15842e79d0b421204" title="Nullify previous and next pointers, and nullify the list pointer.">clear</a>();
+<a name="l00378"></a>00378       node.<a class="code" href="classUtil_1_1Node.html#a2dc789a11a0bb6974c5c0a037108d272" title="Nullify previous and next pointers, and nullify the list pointer.">clear</a>();
 <a name="l00379"></a>00379       --size_;
 <a name="l00380"></a>00380    }
 <a name="l00381"></a>00381 
@@ -334,18 +334,18 @@
 <a name="l00383"></a>00383 <span class="comment">   * Insert one new node.</span>
 <a name="l00384"></a>00384 <span class="comment">   */</span>
 <a name="l00385"></a>00385    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00386"></a><a class="code" href="classUtil_1_1List.html#a654a26f1717a47ae8140580eb5547c7d">00386</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#a654a26f1717a47ae8140580eb5547c7d" title="Insert node into list in sequential order.">List&lt;Data&gt;::insert</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a> &amp;node)
+<a name="l00386"></a><a class="code" href="classUtil_1_1List.html#ad4e5c63d93d9362a26e17423e87bd434">00386</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#ad4e5c63d93d9362a26e17423e87bd434" title="Insert node into list in sequential order.">List&lt;Data&gt;::insert</a>(<a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a> &amp;node)
 <a name="l00387"></a>00387    {
 <a name="l00388"></a>00388       <span class="comment">//List&lt;Data&gt;&amp; list = node.list();</span>
 <a name="l00389"></a>00389       <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>* current;
 <a name="l00390"></a>00390       <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>* target;
 <a name="l00391"></a>00391 
 <a name="l00392"></a>00392       <span class="comment">// Assert that node does not already belong to this list</span>
-<a name="l00393"></a>00393       assert( &amp;node.<a class="code" href="classUtil_1_1Node.html#adb5d7cd07c258365c060600141a86cb3" title="Get a reference to the List.">list</a>() != <span class="keyword">this</span>);
+<a name="l00393"></a>00393       assert( &amp;node.<a class="code" href="classUtil_1_1Node.html#ad30cd2035fe368d43c2fba1c767a2c90" title="Get a reference to the List.">list</a>() != <span class="keyword">this</span>);
 <a name="l00394"></a>00394 
 <a name="l00395"></a>00395       <span class="comment">// If list is empty</span>
 <a name="l00396"></a>00396       <span class="keywordflow">if</span> (front_ == 0) {
-<a name="l00397"></a>00397          node.<a class="code" href="classUtil_1_1Node.html#a002e47002443a7db8d43f1d82d0801ab" title="Set the list.">setList</a>(*<span class="keyword">this</span>);
+<a name="l00397"></a>00397          node.<a class="code" href="classUtil_1_1Node.html#a89b6aff8223b062bb3cb75d06573bda1" title="Set the list.">setList</a>(*<span class="keyword">this</span>);
 <a name="l00398"></a>00398          front_ = &amp;node;
 <a name="l00399"></a>00399          back_ = &amp;node;
 <a name="l00400"></a>00400          lower_ = &amp;node;
@@ -356,17 +356,17 @@
 <a name="l00405"></a>00405 
 <a name="l00406"></a>00406       <span class="comment">// If node address is above highest address</span>
 <a name="l00407"></a>00407       <span class="keywordflow">if</span> (&amp;node &gt; upper_) {
-<a name="l00408"></a>00408          target = upper_-&gt;<a class="code" href="classUtil_1_1Node.html#ac9c6847ae215dbe594a39bd3b3ebbf6e" title="Get the next pointer.">next</a>();
+<a name="l00408"></a>00408          target = upper_-&gt;<a class="code" href="classUtil_1_1Node.html#a83121de14bd40b87450d45d3d3be86b0" title="Get the next pointer.">next</a>();
 <a name="l00409"></a>00409          upper_-&gt;attachNext(node);
 <a name="l00410"></a>00410          upper_ = &amp;node;
 <a name="l00411"></a>00411       } <span class="keywordflow">else</span> <span class="comment">// If node address is below lowest address</span>
 <a name="l00412"></a>00412       <span class="keywordflow">if</span> (&amp;node &lt; lower_) {
-<a name="l00413"></a>00413          target = lower_-&gt;<a class="code" href="classUtil_1_1Node.html#a18d2031a787437796eb1ef15dfda5230" title="Get the previous pointer.">prev</a>();
+<a name="l00413"></a>00413          target = lower_-&gt;<a class="code" href="classUtil_1_1Node.html#a34031e467b4231ee968f8064d35ba340" title="Get the previous pointer.">prev</a>();
 <a name="l00414"></a>00414          <span class="keywordflow">if</span> (target) {
-<a name="l00415"></a>00415             target-&gt;<a class="code" href="classUtil_1_1Node.html#acf07b7e9334d6170a2d5b898531faf7d" title="Set pointers connecting the other node after this node.">attachNext</a>(node);
+<a name="l00415"></a>00415             target-&gt;<a class="code" href="classUtil_1_1Node.html#a8e8d5687795acbce3a6681d9b97570a7" title="Set pointers connecting the other node after this node.">attachNext</a>(node);
 <a name="l00416"></a>00416          } <span class="keywordflow">else</span> {
-<a name="l00417"></a>00417             node.<a class="code" href="classUtil_1_1Node.html#ac0d14e7fbd750e0b1bdf94d0add33c6b" title="Set pointer to the previous Node.">setPrev</a>(0);
-<a name="l00418"></a>00418             node.<a class="code" href="classUtil_1_1Node.html#a002e47002443a7db8d43f1d82d0801ab" title="Set the list.">setList</a>(*<span class="keyword">this</span>);
+<a name="l00417"></a>00417             node.<a class="code" href="classUtil_1_1Node.html#a20e5144f84e048328d76f2110f2c5987" title="Set pointer to the previous Node.">setPrev</a>(0);
+<a name="l00418"></a>00418             node.<a class="code" href="classUtil_1_1Node.html#a89b6aff8223b062bb3cb75d06573bda1" title="Set the list.">setList</a>(*<span class="keyword">this</span>);
 <a name="l00419"></a>00419             front_ = &amp;node;
 <a name="l00420"></a>00420          }
 <a name="l00421"></a>00421          target = lower_;
@@ -377,16 +377,16 @@
 <a name="l00426"></a>00426          <span class="keywordflow">do</span> {
 <a name="l00427"></a>00427             assert(current &gt; lower_);
 <a name="l00428"></a>00428             --current;
-<a name="l00429"></a>00429          } <span class="keywordflow">while</span> (&amp;current-&gt;<a class="code" href="classUtil_1_1Node.html#adb5d7cd07c258365c060600141a86cb3" title="Get a reference to the List.">list</a>() != <span class="keyword">this</span>);
-<a name="l00430"></a>00430          target = current-&gt;<a class="code" href="classUtil_1_1Node.html#ac9c6847ae215dbe594a39bd3b3ebbf6e" title="Get the next pointer.">next</a>();
-<a name="l00431"></a>00431          current-&gt;<a class="code" href="classUtil_1_1Node.html#acf07b7e9334d6170a2d5b898531faf7d" title="Set pointers connecting the other node after this node.">attachNext</a>(node);
+<a name="l00429"></a>00429          } <span class="keywordflow">while</span> (&amp;current-&gt;<a class="code" href="classUtil_1_1Node.html#ad30cd2035fe368d43c2fba1c767a2c90" title="Get a reference to the List.">list</a>() != <span class="keyword">this</span>);
+<a name="l00430"></a>00430          target = current-&gt;<a class="code" href="classUtil_1_1Node.html#a83121de14bd40b87450d45d3d3be86b0" title="Get the next pointer.">next</a>();
+<a name="l00431"></a>00431          current-&gt;<a class="code" href="classUtil_1_1Node.html#a8e8d5687795acbce3a6681d9b97570a7" title="Set pointers connecting the other node after this node.">attachNext</a>(node);
 <a name="l00432"></a>00432       }
 <a name="l00433"></a>00433 
 <a name="l00434"></a>00434       <span class="comment">// Set Next for new Node, or set to back_</span>
 <a name="l00435"></a>00435       <span class="keywordflow">if</span> (target != 0) {
-<a name="l00436"></a>00436          node.<a class="code" href="classUtil_1_1Node.html#acf07b7e9334d6170a2d5b898531faf7d" title="Set pointers connecting the other node after this node.">attachNext</a>(*target);
+<a name="l00436"></a>00436          node.<a class="code" href="classUtil_1_1Node.html#a8e8d5687795acbce3a6681d9b97570a7" title="Set pointers connecting the other node after this node.">attachNext</a>(*target);
 <a name="l00437"></a>00437       } <span class="keywordflow">else</span> {
-<a name="l00438"></a>00438          node.<a class="code" href="classUtil_1_1Node.html#a58ec80fd8edd852125cca5fe7946532c" title="Set pointer to the next Node.">setNext</a>(0);
+<a name="l00438"></a>00438          node.<a class="code" href="classUtil_1_1Node.html#abbd1c485466e14dfadfff9fa17e7b5f8" title="Set pointer to the next Node.">setNext</a>(0);
 <a name="l00439"></a>00439          back_ = &amp;node;
 <a name="l00440"></a>00440       }
 <a name="l00441"></a>00441 
@@ -397,17 +397,17 @@
 <a name="l00446"></a>00446 <span class="comment">   * Set iterator to front of list.</span>
 <a name="l00447"></a>00447 <span class="comment">   */</span>
 <a name="l00448"></a>00448    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00449"></a><a class="code" href="classUtil_1_1List.html#ac51924546efa09274083626d2f3813ef">00449</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#ac51924546efa09274083626d2f3813ef" title="Set an iterator to the front of this List.">List&lt;Data&gt;::begin</a>(<a class="code" href="classUtil_1_1ListIterator.html" title="Bidirectional iterator for a List.">ListIterator&lt;Data&gt;</a> &amp;iterator)<span class="keyword"> const</span>
+<a name="l00449"></a><a class="code" href="classUtil_1_1List.html#a0721103985550baedc28959cd6766c28">00449</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1List.html#a0721103985550baedc28959cd6766c28" title="Set an iterator to the front of this List.">List&lt;Data&gt;::begin</a>(<a class="code" href="classUtil_1_1ListIterator.html" title="Bidirectional iterator for a List.">ListIterator&lt;Data&gt;</a> &amp;iterator)<span class="keyword"> const</span>
 <a name="l00450"></a>00450 <span class="keyword">   </span>{
 <a name="l00451"></a>00451       assert(front_ != 0);  
-<a name="l00452"></a>00452       iterator.<a class="code" href="classUtil_1_1ListIterator.html#a6bfaacfac5ac83d3d30bcea52d00f484" title="Point the iterator at a Node.">setCurrent</a>(front_); 
+<a name="l00452"></a>00452       iterator.<a class="code" href="classUtil_1_1ListIterator.html#a8afe69f441472010f8902e00cc343329" title="Point the iterator at a Node.">setCurrent</a>(front_); 
 <a name="l00453"></a>00453    }
 <a name="l00454"></a>00454 
 <a name="l00455"></a>00455    <span class="comment">/*</span>
 <a name="l00456"></a>00456 <span class="comment">   * Check validity of linked list.</span>
 <a name="l00457"></a>00457 <span class="comment">   */</span>
 <a name="l00458"></a>00458    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00459"></a><a class="code" href="classUtil_1_1List.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">00459</a>    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1List.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Check validity of linked list.">List&lt;Data&gt;::isValid</a>()<span class="keyword"> const</span>
+<a name="l00459"></a><a class="code" href="classUtil_1_1List.html#ab51c0f4a0692c3f18b89ee8e23368c9a">00459</a>    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1List.html#ab51c0f4a0692c3f18b89ee8e23368c9a" title="Check validity of linked list.">List&lt;Data&gt;::isValid</a>()<span class="keyword"> const</span>
 <a name="l00460"></a>00460 <span class="keyword">   </span>{
 <a name="l00461"></a>00461       <span class="keywordflow">if</span> (front_ == 0) {
 <a name="l00462"></a>00462 
@@ -436,12 +436,12 @@
 <a name="l00485"></a>00485          <span class="keywordtype">int</span> i=1;
 <a name="l00486"></a>00486          <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>* prev = 0;
 <a name="l00487"></a>00487          <a class="code" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node&lt;Data&gt;</a>* node = front_;
-<a name="l00488"></a>00488          <span class="keywordflow">while</span> (node-&gt;<a class="code" href="classUtil_1_1Node.html#ac9c6847ae215dbe594a39bd3b3ebbf6e" title="Get the next pointer.">next</a>() != 0 ) {
-<a name="l00489"></a>00489             <span class="keywordflow">if</span> (node-&gt;<a class="code" href="classUtil_1_1Node.html#a18d2031a787437796eb1ef15dfda5230" title="Get the previous pointer.">prev</a>() != prev) {
+<a name="l00488"></a>00488          <span class="keywordflow">while</span> (node-&gt;<a class="code" href="classUtil_1_1Node.html#a83121de14bd40b87450d45d3d3be86b0" title="Get the next pointer.">next</a>() != 0 ) {
+<a name="l00489"></a>00489             <span class="keywordflow">if</span> (node-&gt;<a class="code" href="classUtil_1_1Node.html#a34031e467b4231ee968f8064d35ba340" title="Get the previous pointer.">prev</a>() != prev) {
 <a name="l00490"></a>00490                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;List&lt;Data&gt;::isValid:  node-&gt;prev() != prev.&quot;</span>);
 <a name="l00491"></a>00491                <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00492"></a>00492             }
-<a name="l00493"></a>00493             <span class="keywordflow">if</span> (&amp;node-&gt;<a class="code" href="classUtil_1_1Node.html#adb5d7cd07c258365c060600141a86cb3" title="Get a reference to the List.">list</a>() != <span class="keyword">this</span>) {
+<a name="l00493"></a>00493             <span class="keywordflow">if</span> (&amp;node-&gt;<a class="code" href="classUtil_1_1Node.html#ad30cd2035fe368d43c2fba1c767a2c90" title="Get a reference to the List.">list</a>() != <span class="keyword">this</span>) {
 <a name="l00494"></a>00494                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;List&lt;Data&gt;::isValid: &amp;node-&gt;list() != this.&quot;</span>);
 <a name="l00495"></a>00495                <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00496"></a>00496             }
@@ -454,7 +454,7 @@
 <a name="l00503"></a>00503                <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00504"></a>00504             }
 <a name="l00505"></a>00505             prev = node;
-<a name="l00506"></a>00506             node = node-&gt;<a class="code" href="classUtil_1_1Node.html#ac9c6847ae215dbe594a39bd3b3ebbf6e" title="Get the next pointer.">next</a>();
+<a name="l00506"></a>00506             node = node-&gt;<a class="code" href="classUtil_1_1Node.html#a83121de14bd40b87450d45d3d3be86b0" title="Get the next pointer.">next</a>();
 <a name="l00507"></a>00507             ++i;
 <a name="l00508"></a>00508          }
 <a name="l00509"></a>00509 
@@ -470,7 +470,7 @@
 <a name="l00519"></a>00519             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;List&lt;Data&gt;::isValid: Last node != back_.&quot;</span>);
 <a name="l00520"></a>00520             <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00521"></a>00521          }
-<a name="l00522"></a>00522          <span class="keywordflow">if</span> (node-&gt;<a class="code" href="classUtil_1_1Node.html#ac9c6847ae215dbe594a39bd3b3ebbf6e" title="Get the next pointer.">next</a>() != 0) {
+<a name="l00522"></a>00522          <span class="keywordflow">if</span> (node-&gt;<a class="code" href="classUtil_1_1Node.html#a83121de14bd40b87450d45d3d3be86b0" title="Get the next pointer.">next</a>() != 0) {
 <a name="l00523"></a>00523             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;List&lt;Data&gt;::isValid: Last node, node-&gt;next() != 0.&quot;</span>);
 <a name="l00524"></a>00524             <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00525"></a>00525          }
@@ -535,7 +535,7 @@
 <a name="l00584"></a>00584 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

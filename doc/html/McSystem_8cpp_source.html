@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -112,8 +112,8 @@
 <a name="l00061"></a>00061    <span class="comment">/*</span>
 <a name="l00062"></a>00062 <span class="comment">   * Constructor.</span>
 <a name="l00063"></a>00063 <span class="comment">   */</span>
-<a name="l00064"></a>00064    <a class="code" href="classMcMd_1_1McSystem.html#a5ed581618a6b977dd55591a50ceab592" title="Constructor.">McSystem::McSystem</a>()
-<a name="l00065"></a><a class="code" href="classMcMd_1_1McSystem.html#a5ed581618a6b977dd55591a50ceab592">00065</a>     :
+<a name="l00064"></a>00064    <a class="code" href="classMcMd_1_1McSystem.html#a7f67c1c874511b85f3bc59359fcc1cc0" title="Constructor.">McSystem::McSystem</a>()
+<a name="l00065"></a><a class="code" href="classMcMd_1_1McSystem.html#a7f67c1c874511b85f3bc59359fcc1cc0">00065</a>     :
 <a name="l00066"></a>00066       <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>(),
 <a name="l00067"></a>00067       #ifndef INTER_NOPAIR
 <a name="l00068"></a>00068       pairPotentialPtr_(0),
@@ -139,8 +139,8 @@
 <a name="l00088"></a>00088    <span class="comment">/*</span>
 <a name="l00089"></a>00089 <span class="comment">   * Destructor.</span>
 <a name="l00090"></a>00090 <span class="comment">   */</span>
-<a name="l00091"></a>00091    <a class="code" href="classMcMd_1_1McSystem.html#abfaaaa6eb0016f09bdd442c9ff271044" title="Destructor.">McSystem::~McSystem</a>()
-<a name="l00092"></a><a class="code" href="classMcMd_1_1McSystem.html#abfaaaa6eb0016f09bdd442c9ff271044">00092</a>    {
+<a name="l00091"></a>00091    <a class="code" href="classMcMd_1_1McSystem.html#a5b8fbd6f1303f842d9cacd9d786b9f4b" title="Destructor.">McSystem::~McSystem</a>()
+<a name="l00092"></a><a class="code" href="classMcMd_1_1McSystem.html#a5b8fbd6f1303f842d9cacd9d786b9f4b">00092</a>    {
 <a name="l00093"></a>00093 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
 <a name="l00094"></a>00094 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (pairPotentialPtr_) <span class="keyword">delete</span> pairPotentialPtr_;
 <a name="l00095"></a>00095 <span class="preprocessor">      #endif</span>
@@ -165,8 +165,8 @@
 <a name="l00114"></a>00114    <span class="comment">/*</span>
 <a name="l00115"></a>00115 <span class="comment">   * Read parameters from file.</span>
 <a name="l00116"></a>00116 <span class="comment">   */</span>
-<a name="l00117"></a>00117    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McSystem.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from input file.">McSystem::readParam</a>(std::istream &amp;in)
-<a name="l00118"></a><a class="code" href="classMcMd_1_1McSystem.html#ab5421d3c9175985c9acbf723e5392075">00118</a>    {
+<a name="l00117"></a>00117    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McSystem.html#a77bda0351000fbca2b5589cc63d42922" title="Read parameters from input file.">McSystem::readParam</a>(std::istream &amp;in)
+<a name="l00118"></a><a class="code" href="classMcMd_1_1McSystem.html#a77bda0351000fbca2b5589cc63d42922">00118</a>    {
 <a name="l00119"></a>00119       readBegin(in, <span class="stringliteral">&quot;McSystem&quot;</span>);
 <a name="l00120"></a>00120 
 <a name="l00121"></a>00121       allocateMoleculeSets();
@@ -263,9 +263,9 @@
 <a name="l00212"></a>00212    <span class="comment">/*</span>
 <a name="l00213"></a>00213 <span class="comment">   * Read configuration from a specific input stream.</span>
 <a name="l00214"></a>00214 <span class="comment">   */</span>
-<a name="l00215"></a>00215    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McSystem.html#ac100e87d4f59a03f0ca63685def1ef15" title="Read system configuration from file.">McSystem::readConfig</a>(std::istream &amp;in)
-<a name="l00216"></a><a class="code" href="classMcMd_1_1McSystem.html#ac100e87d4f59a03f0ca63685def1ef15">00216</a>    {
-<a name="l00217"></a>00217       <a class="code" href="classMcMd_1_1System.html#ac100e87d4f59a03f0ca63685def1ef15" title="Read system configuration from file.">System::readConfig</a>(in);
+<a name="l00215"></a>00215    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McSystem.html#a68d7d0a062419bc2ff3aeb45c3bea1d5" title="Read system configuration from file.">McSystem::readConfig</a>(std::istream &amp;in)
+<a name="l00216"></a><a class="code" href="classMcMd_1_1McSystem.html#a68d7d0a062419bc2ff3aeb45c3bea1d5">00216</a>    {
+<a name="l00217"></a>00217       <a class="code" href="classMcMd_1_1System.html#a6a369e52ffa04b81f54e367a8a296a0f" title="Read system configuration from file.">System::readConfig</a>(in);
 <a name="l00218"></a>00218 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
 <a name="l00219"></a>00219 <span class="preprocessor"></span>      pairPotential().buildCellList();
 <a name="l00220"></a>00220 <span class="preprocessor">      #endif</span>
@@ -274,9 +274,9 @@
 <a name="l00223"></a>00223    <span class="comment">/* </span>
 <a name="l00224"></a>00224 <span class="comment">   * Load a System configuration from an archive.</span>
 <a name="l00225"></a>00225 <span class="comment">   */</span>
-<a name="l00226"></a>00226    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McSystem.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load the MdSystem configuration from an archive.">McSystem::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
-<a name="l00227"></a><a class="code" href="classMcMd_1_1McSystem.html#aa3d71af4cc5dfb2be6be816a8f562416">00227</a>    {  
-<a name="l00228"></a>00228       <a class="code" href="classMcMd_1_1System.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load the System configuration from an archive.">System::load</a>(ar); 
+<a name="l00226"></a>00226    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McSystem.html#a1845f8ceb98e661b9dde6279ba949465" title="Load the MdSystem configuration from an archive.">McSystem::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00227"></a><a class="code" href="classMcMd_1_1McSystem.html#a1845f8ceb98e661b9dde6279ba949465">00227</a>    {  
+<a name="l00228"></a>00228       <a class="code" href="classMcMd_1_1System.html#ac52045ff67600ead96765b7909bfb982" title="Load the System configuration from an archive.">System::load</a>(ar); 
 <a name="l00229"></a>00229 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
 <a name="l00230"></a>00230 <span class="preprocessor"></span>      pairPotential().buildCellList();
 <a name="l00231"></a>00231 <span class="preprocessor">      #endif</span>
@@ -287,8 +287,8 @@
 <a name="l00236"></a>00236    <span class="comment">/*</span>
 <a name="l00237"></a>00237 <span class="comment">   * Return total potential energy for one Atom.</span>
 <a name="l00238"></a>00238 <span class="comment">   */</span>
-<a name="l00239"></a>00239    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McSystem.html#a61bb967112342a4bcf53acdec54d6fae" title="Calculate the total potential energy for one Atom.">McSystem::atomPotentialEnergy</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)<span class="keyword"> const</span>
-<a name="l00240"></a><a class="code" href="classMcMd_1_1McSystem.html#a61bb967112342a4bcf53acdec54d6fae">00240</a> <span class="keyword">   </span>{
+<a name="l00239"></a>00239    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McSystem.html#a0bb7699e421625dd5397a9955c0674cb" title="Calculate the total potential energy for one Atom.">McSystem::atomPotentialEnergy</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)<span class="keyword"> const</span>
+<a name="l00240"></a><a class="code" href="classMcMd_1_1McSystem.html#a0bb7699e421625dd5397a9955c0674cb">00240</a> <span class="keyword">   </span>{
 <a name="l00241"></a>00241       <span class="keywordtype">double</span> energy = 0;
 <a name="l00242"></a>00242 
 <a name="l00243"></a>00243 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
@@ -337,8 +337,8 @@
 <a name="l00286"></a>00286    <span class="comment">/*</span>
 <a name="l00287"></a>00287 <span class="comment">   * Return total potential energy for this McSystem.</span>
 <a name="l00288"></a>00288 <span class="comment">   */</span>
-<a name="l00289"></a>00289    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McSystem.html#a8079226e84b68812c2ee4a6e4c00a35a" title="Return total potential energy of this System.">McSystem::potentialEnergy</a>()<span class="keyword"> const</span>
-<a name="l00290"></a><a class="code" href="classMcMd_1_1McSystem.html#a8079226e84b68812c2ee4a6e4c00a35a">00290</a> <span class="keyword">   </span>{
+<a name="l00289"></a>00289    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1McSystem.html#af2e45aa802a5f63dc72b70bf6c1ce72c" title="Return total potential energy of this System.">McSystem::potentialEnergy</a>()<span class="keyword"> const</span>
+<a name="l00290"></a><a class="code" href="classMcMd_1_1McSystem.html#af2e45aa802a5f63dc72b70bf6c1ce72c">00290</a> <span class="keyword">   </span>{
 <a name="l00291"></a>00291       <span class="keywordtype">double</span> energy = 0.0;
 <a name="l00292"></a>00292 
 <a name="l00293"></a>00293 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
@@ -472,7 +472,7 @@
 <a name="l00421"></a>00421       <span class="keywordflow">if</span> (energyEnsemble().isIsothermal()) {
 <a name="l00422"></a>00422          <span class="keywordtype">double</span> rho = nAtom()/boundary().volume();
 <a name="l00423"></a>00423          <span class="keywordtype">double</span> temperature = energyEnsemble().temperature();
-<a name="l00424"></a>00424          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00424"></a>00424          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00425"></a>00425             stress[i] += rho*temperature;
 <a name="l00426"></a>00426          }
 <a name="l00427"></a>00427       }
@@ -488,7 +488,7 @@
 <a name="l00437"></a>00437       <span class="keywordflow">if</span> (energyEnsemble().isIsothermal()) {
 <a name="l00438"></a>00438          <span class="keywordtype">double</span> rho = nAtom()/boundary().volume();
 <a name="l00439"></a>00439          <span class="keywordtype">double</span> temperature = energyEnsemble().temperature();
-<a name="l00440"></a>00440          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00440"></a>00440          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00441"></a>00441             stress(i, i) += rho*temperature;
 <a name="l00442"></a>00442          }
 <a name="l00443"></a>00443       }
@@ -497,9 +497,9 @@
 <a name="l00446"></a>00446    <span class="comment">/*</span>
 <a name="l00447"></a>00447 <span class="comment">   * Return true if this McSystem is valid, or an throw Exception.</span>
 <a name="l00448"></a>00448 <span class="comment">   */</span>
-<a name="l00449"></a>00449    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1McSystem.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if McSystem is valid, or throw Exception.">McSystem::isValid</a>()<span class="keyword"> const</span>
-<a name="l00450"></a><a class="code" href="classMcMd_1_1McSystem.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">00450</a> <span class="keyword">   </span>{
-<a name="l00451"></a>00451       <a class="code" href="classMcMd_1_1System.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if valid, or throw Exception.">System::isValid</a>();
+<a name="l00449"></a>00449    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1McSystem.html#a868a1be00da1e40b5cc4c83100759a8c" title="Return true if McSystem is valid, or throw Exception.">McSystem::isValid</a>()<span class="keyword"> const</span>
+<a name="l00450"></a><a class="code" href="classMcMd_1_1McSystem.html#a868a1be00da1e40b5cc4c83100759a8c">00450</a> <span class="keyword">   </span>{
+<a name="l00451"></a>00451       <a class="code" href="classMcMd_1_1System.html#ac066e1e75e661009a1524f7996f1e07a" title="Return true if valid, or throw Exception.">System::isValid</a>();
 <a name="l00452"></a>00452 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
 <a name="l00453"></a>00453 <span class="preprocessor"></span>      pairPotentialPtr_-&gt;cellList().isValid();
 <a name="l00454"></a>00454 <span class="preprocessor">      #endif</span>
@@ -512,8 +512,8 @@
 <a name="l00461"></a>00461    <span class="comment">/*</span>
 <a name="l00462"></a>00462 <span class="comment">   * Return a pointer to a new default McPerturbationFactory.</span>
 <a name="l00463"></a>00463 <span class="comment">   */</span>
-<a name="l00464"></a>00464    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;Perturbation&gt;</a>* <a class="code" href="classMcMd_1_1McSystem.html#ae7cf1e8ee4f5343cb9101cc1a2c67ac5" title="Return a pointer to a new McPerturbationFactory.">McSystem::newDefaultPerturbationFactory</a>()
-<a name="l00465"></a><a class="code" href="classMcMd_1_1McSystem.html#ae7cf1e8ee4f5343cb9101cc1a2c67ac5">00465</a>    {  <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classMcMd_1_1McPerturbationFactory.html" title="Default Factory for subclasses of Perturbation.">McPerturbationFactory</a>(*<span class="keyword">this</span>); }
+<a name="l00464"></a>00464    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;Perturbation&gt;</a>* <a class="code" href="classMcMd_1_1McSystem.html#ae8790a3f0b4b3d07a63920cc97cf84d4" title="Return a pointer to a new McPerturbationFactory.">McSystem::newDefaultPerturbationFactory</a>()
+<a name="l00465"></a><a class="code" href="classMcMd_1_1McSystem.html#ae8790a3f0b4b3d07a63920cc97cf84d4">00465</a>    {  <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classMcMd_1_1McPerturbationFactory.html" title="Default Factory for subclasses of Perturbation.">McPerturbationFactory</a>(*<span class="keyword">this</span>); }
 <a name="l00466"></a>00466 
 <a name="l00467"></a>00467 <span class="preprocessor">   #endif</span>
 <a name="l00468"></a>00468 <span class="preprocessor"></span>   <span class="comment">// ------------------------------------------------------------------</span>
@@ -522,7 +522,7 @@
 <a name="l00471"></a>00471 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

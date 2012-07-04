@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: ListIterator&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::ListIterator&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>ListIterator&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Iterator__Module.html">Iterators</a></div></h1>  </div>
+<h1>Util::ListIterator&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Iterator__Module.html">Iterators</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::ListIterator" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -58,7 +58,7 @@
 
 <p>Bidirectional iterator for a <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>. </p>
 <p>A <a class="el" href="classUtil_1_1ListIterator.html" title="Bidirectional iterator for a List.">ListIterator</a> provides bidirectional input/output access to a linked list, similar to an STL bidirectional iterator. An * operator returns a reference to an associated Data object. The ++ and -- operators change the current pointer to the next or prev element in a list.</p>
-<p>The <a class="el" href="classUtil_1_1ListIterator.html#a11cbf4ba82ee565cb9eef28b972bf145" title="Has the end of the list been reached?">atEnd()</a> method returns true if either end of the list has already been passed by a previous ++ or -- operation. When <a class="el" href="classUtil_1_1ListIterator.html#a11cbf4ba82ee565cb9eef28b972bf145" title="Has the end of the list been reached?">atEnd()</a> is true, the iterator is no longer usable, since it no longer points to a <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> and cannot be incremented or decremented. </p>
+<p>The <a class="el" href="classUtil_1_1ListIterator.html#a1b669bfa67e0d1c4454b718340cf804f" title="Has the end of the list been reached?">atEnd()</a> method returns true if either end of the list has already been passed by a previous ++ or -- operation. When <a class="el" href="classUtil_1_1ListIterator.html#a1b669bfa67e0d1c4454b718340cf804f" title="Has the end of the list been reached?">atEnd()</a> is true, the iterator is no longer usable, since it no longer points to a <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> and cannot be incremented or decremented. </p>
 
 <p>Definition at line <a class="el" href="ListIterator_8h_source.html#l00027">27</a> of file <a class="el" href="ListIterator_8h_source.html">ListIterator.h</a>.</p>
 </div>
@@ -68,39 +68,41 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#aa2f4064e41b22dce6a444c748656710b">ListIterator</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#aa2f4064e41b22dce6a444c748656710b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#aa01b66f711164a9e069c04318179148f">ListIterator</a> (const <a class="el" href="classUtil_1_1List.html">List</a>&lt; Data &gt; &amp;list)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for initialized iterator.  <a href="#aa01b66f711164a9e069c04318179148f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a6bfaacfac5ac83d3d30bcea52d00f484">setCurrent</a> (<a class="el" href="classUtil_1_1Node.html">Node</a>&lt; Data &gt; *nodePtr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Point the iterator at a <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a>.  <a href="#a6bfaacfac5ac83d3d30bcea52d00f484"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a11cbf4ba82ee565cb9eef28b972bf145">atEnd</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has the end of the list been reached?  <a href="#a11cbf4ba82ee565cb9eef28b972bf145"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a0f52e2c6d8a300a523a4d3b594eb7407">isBack</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this the back of the <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>?  <a href="#a0f52e2c6d8a300a523a4d3b594eb7407"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#af861e286f2397ba4dcd9b141e1665aff">isFront</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this the front of the <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>?  <a href="#af861e286f2397ba4dcd9b141e1665aff"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a44f8ef660b74eae26002f1b056d992e2">ListIterator</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a44f8ef660b74eae26002f1b056d992e2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a06ddffe30c132da25dbab32fea4e2d4f">ListIterator</a> (const <a class="el" href="classUtil_1_1List.html">List</a>&lt; Data &gt; &amp;list)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for initialized iterator.  <a href="#a06ddffe30c132da25dbab32fea4e2d4f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a8afe69f441472010f8902e00cc343329">setCurrent</a> (<a class="el" href="classUtil_1_1Node.html">Node</a>&lt; Data &gt; *nodePtr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Point the iterator at a <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a>.  <a href="#a8afe69f441472010f8902e00cc343329"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a1b669bfa67e0d1c4454b718340cf804f">atEnd</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has the end of the list been reached?  <a href="#a1b669bfa67e0d1c4454b718340cf804f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#ac1f107c526a78ced34934e30f9ad1888">isBack</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this the back of the <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>?  <a href="#ac1f107c526a78ced34934e30f9ad1888"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a41a9eee5d3ece2e685cd2c223ebb5f2c">isFront</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this the front of the <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>?  <a href="#a41a9eee5d3ece2e685cd2c223ebb5f2c"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Operators</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a9c2dbcb3f216e52b9e1f8e168273003f">operator*</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a const reference to the associated Data object.  <a href="#a9c2dbcb3f216e52b9e1f8e168273003f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a0b4839ebeb8142170b63d7ac3520dfce">operator*</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated Data object.  <a href="#a0b4839ebeb8142170b63d7ac3520dfce"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#ab27b321761b7608f40e857542883bf8c">operator-&gt;</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a pointer to const to the associated Data object.  <a href="#ab27b321761b7608f40e857542883bf8c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a1d23281d3323cc5eb423a4cac298c3ed">operator-&gt;</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a pointer to the associated Data object.  <a href="#a1d23281d3323cc5eb423a4cac298c3ed"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#aa3011d3a1eb3c56f5a326f7b988350cd">operator++</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Go to the next element in a linked list.  <a href="#aa3011d3a1eb3c56f5a326f7b988350cd"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#adf4ce8fe8ab3867a330c2b2f0e18c0d8">operator--</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Go to the previous element in a linked list.  <a href="#adf4ce8fe8ab3867a330c2b2f0e18c0d8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#ac565759fb7555399fc88d4ba7bf16ed3">operator*</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a const reference to the associated Data object.  <a href="#ac565759fb7555399fc88d4ba7bf16ed3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a3dacfc6b8b0cf8905a8eb0dcc77e0556">operator*</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated Data object.  <a href="#a3dacfc6b8b0cf8905a8eb0dcc77e0556"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a20232106a7d9ce0259c724bdbadaffe0">operator-&gt;</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a pointer to const to the associated Data object.  <a href="#a20232106a7d9ce0259c724bdbadaffe0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#aa92fb7f6712e245ba84469237e9d1e6a">operator-&gt;</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a pointer to the associated Data object.  <a href="#aa92fb7f6712e245ba84469237e9d1e6a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#ae9f8d780c7933da8e18da8fcca0cbad5">operator++</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Go to the next element in a linked list.  <a href="#ae9f8d780c7933da8e18da8fcca0cbad5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a>&lt; Data &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a14834cb181ab8af96f4160027cf2748e">operator--</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Go to the previous element in a linked list.  <a href="#a14834cb181ab8af96f4160027cf2748e"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aa2f4064e41b22dce6a444c748656710b"></a><!-- doxytag: member="Util::ListIterator::ListIterator" ref="aa2f4064e41b22dce6a444c748656710b" args="()" -->
+<a class="anchor" id="a44f8ef660b74eae26002f1b056d992e2"></a><!-- doxytag: member="Util::ListIterator::ListIterator" ref="a44f8ef660b74eae26002f1b056d992e2" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -110,18 +112,20 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Default constructor. </p>
-<p>Creates a "dead" iterator, for which <a class="el" href="classUtil_1_1ListIterator.html#a11cbf4ba82ee565cb9eef28b972bf145" title="Has the end of the list been reached?">atEnd()</a>==true. Before it can be used, such an iterator must be initialized by either the <a class="el" href="classUtil_1_1ListIterator.html#a6bfaacfac5ac83d3d30bcea52d00f484" title="Point the iterator at a Node.">ListIterator&lt;Data&gt;::setCurrent()</a> method or the <a class="el" href="classUtil_1_1List.html#ac51924546efa09274083626d2f3813ef" title="Set an iterator to the front of this List.">List&lt;Data&gt;::begin()</a> method of an associated <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>. </p>
+<p>Creates a "dead" iterator, for which <a class="el" href="classUtil_1_1ListIterator.html#a1b669bfa67e0d1c4454b718340cf804f" title="Has the end of the list been reached?">atEnd()</a>==true. Before it can be used, such an iterator must be initialized by either the <a class="el" href="classUtil_1_1ListIterator.html#a8afe69f441472010f8902e00cc343329" title="Point the iterator at a Node.">ListIterator&lt;Data&gt;::setCurrent()</a> method or the <a class="el" href="classUtil_1_1List.html#a0721103985550baedc28959cd6766c28" title="Set an iterator to the front of this List.">List&lt;Data&gt;::begin()</a> method of an associated <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>. </p>
 
 <p>Definition at line <a class="el" href="ListIterator_8h_source.html#l00040">40</a> of file <a class="el" href="ListIterator_8h_source.html">ListIterator.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa01b66f711164a9e069c04318179148f"></a><!-- doxytag: member="Util::ListIterator::ListIterator" ref="aa01b66f711164a9e069c04318179148f" args="(const List&lt; Data &gt; &amp;list)" -->
+<a class="anchor" id="a06ddffe30c132da25dbab32fea4e2d4f"></a><!-- doxytag: member="Util::ListIterator::ListIterator" ref="a06ddffe30c132da25dbab32fea4e2d4f" args="(const List&lt; Data &gt; &amp;list)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a> </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1List.html">List</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>list</em></td><td>)</td>
@@ -142,17 +146,19 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ListIterator_8h_source.html#l00052">52</a> of file <a class="el" href="ListIterator_8h_source.html">ListIterator.h</a>.</p>
 
-<p>References <a class="el" href="List_8h_source.html#l00449">List&lt; Data &gt;::begin()</a>.</p>
+<p>References <a class="el" href="List_8h_source.html#l00449">Util::List&lt; Data &gt;::begin()</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a6bfaacfac5ac83d3d30bcea52d00f484"></a><!-- doxytag: member="Util::ListIterator::setCurrent" ref="a6bfaacfac5ac83d3d30bcea52d00f484" args="(Node&lt; Data &gt; *nodePtr)" -->
+<a class="anchor" id="a8afe69f441472010f8902e00cc343329"></a><!-- doxytag: member="Util::ListIterator::setCurrent" ref="a8afe69f441472010f8902e00cc343329" args="(Node&lt; Data &gt; *nodePtr)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setCurrent </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::setCurrent </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Node.html">Node</a>&lt; Data &gt; *&#160;</td>
           <td class="paramname"><em>nodePtr</em></td><td>)</td>
@@ -172,16 +178,18 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ListIterator_8h_source.html#l00061">61</a> of file <a class="el" href="ListIterator_8h_source.html">ListIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="List_8h_source.html#l00449">List&lt; Data &gt;::begin()</a>.</p>
+<p>Referenced by <a class="el" href="List_8h_source.html#l00449">Util::List&lt; Data &gt;::begin()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a11cbf4ba82ee565cb9eef28b972bf145"></a><!-- doxytag: member="Util::ListIterator::atEnd" ref="a11cbf4ba82ee565cb9eef28b972bf145" args="() const " -->
+<a class="anchor" id="a1b669bfa67e0d1c4454b718340cf804f"></a><!-- doxytag: member="Util::ListIterator::atEnd" ref="a1b669bfa67e0d1c4454b718340cf804f" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool atEnd </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::atEnd </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -198,12 +206,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0f52e2c6d8a300a523a4d3b594eb7407"></a><!-- doxytag: member="Util::ListIterator::isBack" ref="a0f52e2c6d8a300a523a4d3b594eb7407" args="() const " -->
+<a class="anchor" id="ac1f107c526a78ced34934e30f9ad1888"></a><!-- doxytag: member="Util::ListIterator::isBack" ref="ac1f107c526a78ced34934e30f9ad1888" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool isBack </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::isBack </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -219,12 +229,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af861e286f2397ba4dcd9b141e1665aff"></a><!-- doxytag: member="Util::ListIterator::isFront" ref="af861e286f2397ba4dcd9b141e1665aff" args="() const " -->
+<a class="anchor" id="a41a9eee5d3ece2e685cd2c223ebb5f2c"></a><!-- doxytag: member="Util::ListIterator::isFront" ref="a41a9eee5d3ece2e685cd2c223ebb5f2c" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool isFront </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::isFront </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -240,12 +252,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9c2dbcb3f216e52b9e1f8e168273003f"></a><!-- doxytag: member="Util::ListIterator::operator*" ref="a9c2dbcb3f216e52b9e1f8e168273003f" args="() const " -->
+<a class="anchor" id="ac565759fb7555399fc88d4ba7bf16ed3"></a><!-- doxytag: member="Util::ListIterator::operator*" ref="ac565759fb7555399fc88d4ba7bf16ed3" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Data&amp; operator* </td>
+          <td class="memname">const Data&amp; <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::operator* </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -261,12 +275,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0b4839ebeb8142170b63d7ac3520dfce"></a><!-- doxytag: member="Util::ListIterator::operator*" ref="a0b4839ebeb8142170b63d7ac3520dfce" args="()" -->
+<a class="anchor" id="a3dacfc6b8b0cf8905a8eb0dcc77e0556"></a><!-- doxytag: member="Util::ListIterator::operator*" ref="a3dacfc6b8b0cf8905a8eb0dcc77e0556" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data&amp; operator* </td>
+          <td class="memname">Data&amp; <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::operator* </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -282,12 +298,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab27b321761b7608f40e857542883bf8c"></a><!-- doxytag: member="Util::ListIterator::operator&#45;&gt;" ref="ab27b321761b7608f40e857542883bf8c" args="() const " -->
+<a class="anchor" id="a20232106a7d9ce0259c724bdbadaffe0"></a><!-- doxytag: member="Util::ListIterator::operator&#45;&gt;" ref="a20232106a7d9ce0259c724bdbadaffe0" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Data* operator-&gt; </td>
+          <td class="memname">const Data* <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::operator-&gt; </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -303,12 +321,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1d23281d3323cc5eb423a4cac298c3ed"></a><!-- doxytag: member="Util::ListIterator::operator&#45;&gt;" ref="a1d23281d3323cc5eb423a4cac298c3ed" args="()" -->
+<a class="anchor" id="aa92fb7f6712e245ba84469237e9d1e6a"></a><!-- doxytag: member="Util::ListIterator::operator&#45;&gt;" ref="aa92fb7f6712e245ba84469237e9d1e6a" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data* operator-&gt; </td>
+          <td class="memname">Data* <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::operator-&gt; </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -324,12 +344,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aa3011d3a1eb3c56f5a326f7b988350cd"></a><!-- doxytag: member="Util::ListIterator::operator++" ref="aa3011d3a1eb3c56f5a326f7b988350cd" args="()" -->
+<a class="anchor" id="ae9f8d780c7933da8e18da8fcca0cbad5"></a><!-- doxytag: member="Util::ListIterator::operator++" ref="ae9f8d780c7933da8e18da8fcca0cbad5" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a>&lt;Data&gt;&amp; operator++ </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a>&lt;Data&gt;&amp; <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::operator++ </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -339,19 +361,21 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Go to the next element in a linked list. </p>
-<p>This method assigns the current pointer to the address of the next <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> in the list, and then returns *this. If there is no next <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a>, the current pointer is set null, and any subsequent call to <a class="el" href="classUtil_1_1ListIterator.html#a11cbf4ba82ee565cb9eef28b972bf145" title="Has the end of the list been reached?">atEnd()</a> will return true.</p>
+<p>This method assigns the current pointer to the address of the next <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> in the list, and then returns *this. If there is no next <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a>, the current pointer is set null, and any subsequent call to <a class="el" href="classUtil_1_1ListIterator.html#a1b669bfa67e0d1c4454b718340cf804f" title="Has the end of the list been reached?">atEnd()</a> will return true.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>this <a class="el" href="classUtil_1_1ListIterator.html" title="Bidirectional iterator for a List.">ListIterator</a>, after modification. </dd></dl>
 
 <p>Definition at line <a class="el" href="ListIterator_8h_source.html#l00136">136</a> of file <a class="el" href="ListIterator_8h_source.html">ListIterator.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="adf4ce8fe8ab3867a330c2b2f0e18c0d8"></a><!-- doxytag: member="Util::ListIterator::operator&#45;&#45;" ref="adf4ce8fe8ab3867a330c2b2f0e18c0d8" args="()" -->
+<a class="anchor" id="a14834cb181ab8af96f4160027cf2748e"></a><!-- doxytag: member="Util::ListIterator::operator&#45;&#45;" ref="a14834cb181ab8af96f4160027cf2748e" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a>&lt;Data&gt;&amp; operator-- </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ListIterator.html">ListIterator</a>&lt;Data&gt;&amp; <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::operator-- </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -372,7 +396,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="ListIterator_8h_source.html">ListIterator.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -74,13 +74,13 @@
 <a name="l00022"></a>00022 
 <a name="l00023"></a>00023    <span class="keyword">using namespace </span>Util;
 <a name="l00024"></a>00024 
-<a name="l00026"></a>00026    <a class="code" href="classMcMd_1_1RadiusGyration.html#a6945c580e602cbf8e3f421e49e2f54d0" title="Constructor.">RadiusGyration::RadiusGyration</a>(System&amp; system) 
-<a name="l00027"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#a6945c580e602cbf8e3f421e49e2f54d0">00027</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
+<a name="l00026"></a>00026    <a class="code" href="classMcMd_1_1RadiusGyration.html#ab04cb582806ce73ee88a5da87b019fa2" title="Constructor.">RadiusGyration::RadiusGyration</a>(System&amp; system) 
+<a name="l00027"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#ab04cb582806ce73ee88a5da87b019fa2">00027</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
 <a name="l00028"></a>00028       isInitialized_(false)
 <a name="l00029"></a>00029    {}
 <a name="l00030"></a>00030 
-<a name="l00032"></a>00032    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file, and allocate data array.">RadiusGyration::readParam</a>(std::istream&amp; in) 
-<a name="l00033"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#ab5421d3c9175985c9acbf723e5392075">00033</a>    {
+<a name="l00032"></a>00032    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#ab87d95394b2621e79447351dc84a48af" title="Read parameters from file, and allocate data array.">RadiusGyration::readParam</a>(std::istream&amp; in) 
+<a name="l00033"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#ab87d95394b2621e79447351dc84a48af">00033</a>    {
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035       readInterval(in);
 <a name="l00036"></a>00036       readOutputFileName(in);
@@ -115,16 +115,16 @@
 <a name="l00065"></a>00065    <span class="comment">/*</span>
 <a name="l00066"></a>00066 <span class="comment">   * Clear accumulator.</span>
 <a name="l00067"></a>00067 <span class="comment">   */</span>
-<a name="l00068"></a>00068    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#a4fc01d736fe50cf5b977f755b675f11d" title="Clear accumulator.">RadiusGyration::setup</a>() 
-<a name="l00069"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#a4fc01d736fe50cf5b977f755b675f11d">00069</a>    {
+<a name="l00068"></a>00068    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#a66adc56b5b192799e15613cf9b6c0f82" title="Clear accumulator.">RadiusGyration::setup</a>() 
+<a name="l00069"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#a66adc56b5b192799e15613cf9b6c0f82">00069</a>    {
 <a name="l00070"></a>00070       <span class="keywordflow">if</span> (!isInitialized_) {
 <a name="l00071"></a>00071          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Object is not initialized&quot;</span>);
 <a name="l00072"></a>00072       }  
 <a name="l00073"></a>00073       accumulator_.clear(); 
 <a name="l00074"></a>00074    }
 <a name="l00075"></a>00075  
-<a name="l00077"></a>00077    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Evaluate squared radii of gyration for all molecules, add to ensemble.">RadiusGyration::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00078"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#afc17577823a371a5ead4e51ebb8ec2ef">00078</a>    { 
+<a name="l00077"></a>00077    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#a026ea3946c90d85ce740199a0e349c49" title="Evaluate squared radii of gyration for all molecules, add to ensemble.">RadiusGyration::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00078"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#a026ea3946c90d85ce740199a0e349c49">00078</a>    { 
 <a name="l00079"></a>00079       <span class="keywordflow">if</span> (isAtInterval(iStep))  {
 <a name="l00080"></a>00080 
 <a name="l00081"></a>00081          <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>* moleculePtr;
@@ -138,11 +138,11 @@
 <a name="l00089"></a>00089             moleculePtr = &amp;system().molecule(speciesId_, i);
 <a name="l00090"></a>00090 
 <a name="l00091"></a>00091             <span class="comment">// Construct map of molecule with no periodic boundary conditions</span>
-<a name="l00092"></a>00092             positions_[0] = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00092"></a>00092             positions_[0] = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(0).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00093"></a>00093             Rcm = positions_[0];
 <a name="l00094"></a>00094             <span class="keywordflow">for</span> (j = 1 ; j &lt; nAtom_; j++) {
-<a name="l00095"></a>00095                r1 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(j-1).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00096"></a>00096                r2 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a73b565bbdf60c806e962a1d932e796b6" title="Get a specific Atom in this Molecule.">atom</a>(j).<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00095"></a>00095                r1 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(j-1).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00096"></a>00096                r2 = moleculePtr-&gt;<a class="code" href="classMcMd_1_1Molecule.html#a4d8573f93c1c51fa84e9ceb83ae4950e" title="Get a specific Atom in this Molecule.">atom</a>(j).<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00097"></a>00097                system().boundary().distanceSq(r1, r2, dR);
 <a name="l00098"></a>00098                positions_[j]  = positions_[j-1];
 <a name="l00099"></a>00099                positions_[j] += dR;
@@ -151,8 +151,8 @@
 <a name="l00102"></a>00102             Rcm /= double(nAtom_);
 <a name="l00103"></a>00103 
 <a name="l00104"></a>00104             <span class="keywordflow">for</span> (j = 0 ; j &lt; nAtom_; j++) {
-<a name="l00105"></a>00105                dR.<a class="code" href="classUtil_1_1Vector.html#a1d7c5b73ae56a7ad991a6c54517698c2" title="Subtract vector v2 from v1.">subtract</a>(positions_[j], Rcm);
-<a name="l00106"></a>00106                dRSq += dR.<a class="code" href="classUtil_1_1Vector.html#ac8e155d7aa8c019159787bd6ac797559" title="Return square magnitude of this vector.">square</a>();
+<a name="l00105"></a>00105                dR.<a class="code" href="classUtil_1_1Vector.html#a7e6de9bb77beddc412ab6055957656cc" title="Subtract vector v2 from v1.">subtract</a>(positions_[j], Rcm);
+<a name="l00106"></a>00106                dRSq += dR.<a class="code" href="classUtil_1_1Vector.html#ad3c4e4b143f8c8e45b3fe189af6437cb" title="Return square magnitude of this vector.">square</a>();
 <a name="l00107"></a>00107             }
 <a name="l00108"></a>00108      
 <a name="l00109"></a>00109          }
@@ -168,8 +168,8 @@
 <a name="l00119"></a>00119    <span class="comment">/*</span>
 <a name="l00120"></a>00120 <span class="comment">   * Output results to file after simulation is completed.</span>
 <a name="l00121"></a>00121 <span class="comment">   */</span>
-<a name="l00122"></a>00122    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results at end of simulation.">RadiusGyration::output</a>() 
-<a name="l00123"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#a7437b254e19e7e12fc2ec99945f4ecea">00123</a>    { 
+<a name="l00122"></a>00122    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#a1eacd877d8ee0530142e3bea976f4036" title="Output results at end of simulation.">RadiusGyration::output</a>() 
+<a name="l00123"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#a1eacd877d8ee0530142e3bea976f4036">00123</a>    { 
 <a name="l00124"></a>00124       <span class="comment">// If outputFile_ was used to write block averages, close it.</span>
 <a name="l00125"></a>00125       <span class="keywordflow">if</span> (accumulator_.nSamplePerBlock()) {
 <a name="l00126"></a>00126          outputFile_.close();
@@ -177,7 +177,7 @@
 <a name="l00128"></a>00128 
 <a name="l00129"></a>00129       <span class="comment">// Write parameters to file</span>
 <a name="l00130"></a>00130       fileMaster().openOutputFile(outputFileName(<span class="stringliteral">&quot;.prm&quot;</span>), outputFile_);
-<a name="l00131"></a>00131       <a class="code" href="classUtil_1_1ParamComposite.html#a3919e7db0ce53e1ead2be4016d4d09ac" title="Write all parameters to an output stream.">ParamComposite::writeParam</a>(outputFile_); 
+<a name="l00131"></a>00131       <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">ParamComposite::writeParam</a>(outputFile_); 
 <a name="l00132"></a>00132       outputFile_.close();
 <a name="l00133"></a>00133 
 <a name="l00134"></a>00134       <span class="comment">// Write average to file</span>
@@ -189,19 +189,19 @@
 <a name="l00140"></a>00140    <span class="comment">/*</span>
 <a name="l00141"></a>00141 <span class="comment">   * Save state to binary file archive.</span>
 <a name="l00142"></a>00142 <span class="comment">   */</span>
-<a name="l00143"></a>00143    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64" title="Save state to binary file archive.">RadiusGyration::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
-<a name="l00144"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">00144</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00143"></a>00143    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#ac1acbaf1b9e55ea65a2c08c7db73ded4" title="Save state to binary file archive.">RadiusGyration::save</a>(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar)
+<a name="l00144"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#ac1acbaf1b9e55ea65a2c08c7db73ded4">00144</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00145"></a>00145 
 <a name="l00146"></a>00146    <span class="comment">/*</span>
 <a name="l00147"></a>00147 <span class="comment">   * Load state from a binary file archive.</span>
 <a name="l00148"></a>00148 <span class="comment">   */</span>
-<a name="l00149"></a>00149    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load state from a binary file archive.">RadiusGyration::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
-<a name="l00150"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#aa3d71af4cc5dfb2be6be816a8f562416">00150</a>    { ar &amp; *<span class="keyword">this</span>; }
+<a name="l00149"></a>00149    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1RadiusGyration.html#a82036c8dca11b9e3c5fd44a5a5030bba" title="Load state from a binary file archive.">RadiusGyration::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00150"></a><a class="code" href="classMcMd_1_1RadiusGyration.html#a82036c8dca11b9e3c5fd44a5a5030bba">00150</a>    { ar &amp; *<span class="keyword">this</span>; }
 <a name="l00151"></a>00151 }
 <a name="l00152"></a>00152 <span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

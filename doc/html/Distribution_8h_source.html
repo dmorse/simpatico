@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -70,46 +70,46 @@
 <a name="l00024"></a>00024    
 <a name="l00025"></a>00025    <span class="keyword">public</span>:
 <a name="l00026"></a>00026   
-<a name="l00030"></a>00030       <a class="code" href="classUtil_1_1Distribution.html#aa9f0e950acd1bb4da995f6ea6340a901" title="Default constructor.">Distribution</a>();
+<a name="l00030"></a>00030       <a class="code" href="classUtil_1_1Distribution.html#a95141956c46e6bd1553cea02f3c2489b" title="Default constructor.">Distribution</a>();
 <a name="l00031"></a>00031    
-<a name="l00037"></a>00037       <a class="code" href="classUtil_1_1Distribution.html#aa9f0e950acd1bb4da995f6ea6340a901" title="Default constructor.">Distribution</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Distribution.html" title="A distribution (or histogram) of values for a real variable.">Distribution</a>&amp; other);
+<a name="l00037"></a>00037       <a class="code" href="classUtil_1_1Distribution.html#a95141956c46e6bd1553cea02f3c2489b" title="Default constructor.">Distribution</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Distribution.html" title="A distribution (or histogram) of values for a real variable.">Distribution</a>&amp; other);
 <a name="l00038"></a>00038    
-<a name="l00044"></a>00044       <a class="code" href="classUtil_1_1Distribution.html" title="A distribution (or histogram) of values for a real variable.">Distribution</a>&amp; <a class="code" href="classUtil_1_1Distribution.html#a9b2e95e387905d5267d9b80167a7105c" title="Assignment operator.">operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Distribution.html" title="A distribution (or histogram) of values for a real variable.">Distribution</a>&amp; other);
+<a name="l00044"></a>00044       <a class="code" href="classUtil_1_1Distribution.html" title="A distribution (or histogram) of values for a real variable.">Distribution</a>&amp; <a class="code" href="classUtil_1_1Distribution.html#ac71883063e9ee8d73a7586d4fd35be2e" title="Assignment operator.">operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Distribution.html" title="A distribution (or histogram) of values for a real variable.">Distribution</a>&amp; other);
 <a name="l00045"></a>00045    
-<a name="l00049"></a>00049       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1Distribution.html#a4d4d89eab55140c928abfcb593d573af" title="Destructor.">~Distribution</a>();
+<a name="l00049"></a>00049       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1Distribution.html#ad8e941dc80fcb339332a5c1f3961b9b4" title="Destructor.">~Distribution</a>();
 <a name="l00050"></a>00050    
-<a name="l00059"></a>00059       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file and initialize.">readParam</a>(std::istream&amp; in);
+<a name="l00059"></a>00059       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#a8b0051d9a89ffb4cbd7c592fc7b76b9a" title="Read parameters from file and initialize.">readParam</a>(std::istream&amp; in);
 <a name="l00060"></a>00060   
-<a name="l00068"></a>00068       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#abf4a8632095982a7f04977d7d3768d47" title="Set parameters and initialize.">setParam</a>(<span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#a2316dcf397d4aaefbe79179748f2a007" title="Get minimum value in range of histogram.">min</a>, <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#a9bfc3700bf01576b1ca49e5a64b87abe" title="Get maximum value in range of histogram.">max</a>, <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Distribution.html#a3457db80c9596c3c667ee46af0a175a7" title="Get the number of bins.">nBin</a>);
+<a name="l00068"></a>00068       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#a722942b00ec80b281cd98490d0d25880" title="Set parameters and initialize.">setParam</a>(<span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#aa0d4190d1de41eb72ba9190065fa63ce" title="Get minimum value in range of histogram.">min</a>, <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#ae8b22088e6d3b84e895b7767b2c20231" title="Get maximum value in range of histogram.">max</a>, <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Distribution.html#af16fd4b26682902301357f9d445e8efd" title="Get the number of bins.">nBin</a>);
 <a name="l00069"></a>00069    
-<a name="l00073"></a>00073       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear (i.e., zero) previously allocated histogram.">clear</a>();
+<a name="l00073"></a>00073       <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#af001c322b9d0bd565595d8f10800c781" title="Clear (i.e., zero) previously allocated histogram.">clear</a>();
 <a name="l00074"></a>00074    
-<a name="l00080"></a>00080       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#a6971e3c0e5036585549c6d6562d12d2d" title="Sample a value.">sample</a>(<span class="keywordtype">double</span> value);
+<a name="l00080"></a>00080       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#a0375d0a1ccb9b4bb9595acd3c681123f" title="Sample a value.">sample</a>(<span class="keywordtype">double</span> value);
 <a name="l00081"></a>00081    
-<a name="l00087"></a>00087       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#a012e48b5ec7769b2e5614bd6b3a62488" title="Output the distribution to file.">output</a>(std::ostream&amp; out);
+<a name="l00087"></a>00087       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#aa8230deb4ce00b75163253660545a864" title="Output the distribution to file.">output</a>(std::ostream&amp; out);
 <a name="l00088"></a>00088   
-<a name="l00094"></a>00094       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Distribution.html#a7faff4b75c643ed24c13d087fde1088c" title="Return the index of the bin for a value.">binIndex</a>(<span class="keywordtype">double</span> value);
+<a name="l00094"></a>00094       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Distribution.html#a4ee7f3b80759803723898b29b41ddca2" title="Return the index of the bin for a value.">binIndex</a>(<span class="keywordtype">double</span> value);
 <a name="l00095"></a>00095   
-<a name="l00099"></a>00099       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#a2316dcf397d4aaefbe79179748f2a007" title="Get minimum value in range of histogram.">min</a>() <span class="keyword">const</span>;
+<a name="l00099"></a>00099       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#aa0d4190d1de41eb72ba9190065fa63ce" title="Get minimum value in range of histogram.">min</a>() <span class="keyword">const</span>;
 <a name="l00100"></a>00100   
-<a name="l00104"></a>00104       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#a9bfc3700bf01576b1ca49e5a64b87abe" title="Get maximum value in range of histogram.">max</a>() <span class="keyword">const</span>;
+<a name="l00104"></a>00104       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#ae8b22088e6d3b84e895b7767b2c20231" title="Get maximum value in range of histogram.">max</a>() <span class="keyword">const</span>;
 <a name="l00105"></a>00105     
-<a name="l00109"></a>00109       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#a113fd2c88a7416cc1c01c947612e0b37" title="Get binWidth, the width of each bin.">binWidth</a>() <span class="keyword">const</span>;
+<a name="l00109"></a>00109       <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#af37934c1b897706f50aa193f65e69fdc" title="Get binWidth, the width of each bin.">binWidth</a>() <span class="keyword">const</span>;
 <a name="l00110"></a>00110   
-<a name="l00114"></a>00114       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Distribution.html#a3457db80c9596c3c667ee46af0a175a7" title="Get the number of bins.">nBin</a>() <span class="keyword">const</span>;
+<a name="l00114"></a>00114       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Distribution.html#af16fd4b26682902301357f9d445e8efd" title="Get the number of bins.">nBin</a>() <span class="keyword">const</span>;
 <a name="l00115"></a>00115         
 <a name="l00122"></a>00122       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00123"></a>00123       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#a6765e839ab267e4959384e35a4112451" title="Serialize this Distribution to/from an archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00123"></a>00123       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#ae959315ca9e2ceb9bae41eb6c5cffcb0" title="Serialize this Distribution to/from an archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00124"></a>00124 
 <a name="l00125"></a>00125    <span class="keyword">protected</span>:
 <a name="l00126"></a>00126    
-<a name="l00127"></a><a class="code" href="classUtil_1_1Distribution.html#ae5ffa510bc17486c710c1db78c933b3a">00127</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;long&gt;</a> <a class="code" href="classUtil_1_1Distribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram of occurences, one element per bin.">histogram_</a>;  
-<a name="l00128"></a><a class="code" href="classUtil_1_1Distribution.html#ad3a27494d1093fc3a575682b38322f4d">00128</a>       <span class="keywordtype">double</span>  <a class="code" href="classUtil_1_1Distribution.html#ad3a27494d1093fc3a575682b38322f4d" title="minimum value.">min_</a>;             
-<a name="l00129"></a><a class="code" href="classUtil_1_1Distribution.html#a28726e931190dc86614c042722baa035">00129</a>       <span class="keywordtype">double</span>  <a class="code" href="classUtil_1_1Distribution.html#a28726e931190dc86614c042722baa035" title="maximum value.">max_</a>;             
-<a name="l00130"></a><a class="code" href="classUtil_1_1Distribution.html#a29a2dfedf5c80fa4b15a99e1ef364e96">00130</a>       <span class="keywordtype">double</span>  <a class="code" href="classUtil_1_1Distribution.html#a29a2dfedf5c80fa4b15a99e1ef364e96" title="width of bin = (max_-min_)/nBin_ .">binWidth_</a>;        
-<a name="l00131"></a><a class="code" href="classUtil_1_1Distribution.html#aa86535df4a524672643fb1dedd48d852">00131</a>       <span class="keywordtype">int</span>     <a class="code" href="classUtil_1_1Distribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>;            
-<a name="l00132"></a><a class="code" href="classUtil_1_1Distribution.html#ac50cf6ede880aad2a811578ab9b34b4d">00132</a>       <span class="keywordtype">int</span>     <a class="code" href="classUtil_1_1Distribution.html#ac50cf6ede880aad2a811578ab9b34b4d" title="Number of sampled values in Histogram.">nSample_</a>;         
-<a name="l00133"></a><a class="code" href="classUtil_1_1Distribution.html#ae1496b433549191551de394f077bc85b">00133</a>       <span class="keywordtype">int</span>     <a class="code" href="classUtil_1_1Distribution.html#ae1496b433549191551de394f077bc85b" title="Number of sampled values that were out of range.">nReject_</a>;         
+<a name="l00127"></a><a class="code" href="classUtil_1_1Distribution.html#a65c609eecdd6364468506b289ef7a371">00127</a>       <a class="code" href="classUtil_1_1DArray.html">DArray&lt;long&gt;</a> <a class="code" href="classUtil_1_1Distribution.html#a65c609eecdd6364468506b289ef7a371" title="Histogram of occurences, one element per bin.">histogram_</a>;  
+<a name="l00128"></a><a class="code" href="classUtil_1_1Distribution.html#a2baf9b4f77af2097ad63a38593d3b7a0">00128</a>       <span class="keywordtype">double</span>  <a class="code" href="classUtil_1_1Distribution.html#a2baf9b4f77af2097ad63a38593d3b7a0" title="minimum value.">min_</a>;             
+<a name="l00129"></a><a class="code" href="classUtil_1_1Distribution.html#a99b33b20d4a50962f9b0836b527c381b">00129</a>       <span class="keywordtype">double</span>  <a class="code" href="classUtil_1_1Distribution.html#a99b33b20d4a50962f9b0836b527c381b" title="maximum value.">max_</a>;             
+<a name="l00130"></a><a class="code" href="classUtil_1_1Distribution.html#a214cf6292bd2b0c1b433f398381d4c7e">00130</a>       <span class="keywordtype">double</span>  <a class="code" href="classUtil_1_1Distribution.html#a214cf6292bd2b0c1b433f398381d4c7e" title="width of bin = (max_-min_)/nBin_ .">binWidth_</a>;        
+<a name="l00131"></a><a class="code" href="classUtil_1_1Distribution.html#a9fac9a8c0a0c091dca8c6c8264d49e42">00131</a>       <span class="keywordtype">int</span>     <a class="code" href="classUtil_1_1Distribution.html#a9fac9a8c0a0c091dca8c6c8264d49e42" title="number of bins.">nBin_</a>;            
+<a name="l00132"></a><a class="code" href="classUtil_1_1Distribution.html#ae28a18807996f1c6bb351e4058cd1b27">00132</a>       <span class="keywordtype">int</span>     <a class="code" href="classUtil_1_1Distribution.html#ae28a18807996f1c6bb351e4058cd1b27" title="Number of sampled values in Histogram.">nSample_</a>;         
+<a name="l00133"></a><a class="code" href="classUtil_1_1Distribution.html#aeecc8bdc4ced32e7aa577947b1566502">00133</a>       <span class="keywordtype">int</span>     <a class="code" href="classUtil_1_1Distribution.html#aeecc8bdc4ced32e7aa577947b1566502" title="Number of sampled values that were out of range.">nReject_</a>;         
 <a name="l00134"></a>00134    
 <a name="l00135"></a>00135    };
 <a name="l00136"></a>00136 
@@ -118,53 +118,53 @@
 <a name="l00139"></a>00139    <span class="comment">/*</span>
 <a name="l00140"></a>00140 <span class="comment">   * Return the index of the bin for a value.</span>
 <a name="l00141"></a>00141 <span class="comment">   */</span>
-<a name="l00142"></a><a class="code" href="classUtil_1_1Distribution.html#a7faff4b75c643ed24c13d087fde1088c">00142</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Distribution.html#a7faff4b75c643ed24c13d087fde1088c" title="Return the index of the bin for a value.">Distribution::binIndex</a>(<span class="keywordtype">double</span> value) 
-<a name="l00143"></a>00143    { <span class="keywordflow">return</span> int( (value - <a class="code" href="classUtil_1_1Distribution.html#ad3a27494d1093fc3a575682b38322f4d" title="minimum value.">min_</a>)/<a class="code" href="classUtil_1_1Distribution.html#a29a2dfedf5c80fa4b15a99e1ef364e96" title="width of bin = (max_-min_)/nBin_ .">binWidth_</a> ); }
+<a name="l00142"></a><a class="code" href="classUtil_1_1Distribution.html#a4ee7f3b80759803723898b29b41ddca2">00142</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Distribution.html#a4ee7f3b80759803723898b29b41ddca2" title="Return the index of the bin for a value.">Distribution::binIndex</a>(<span class="keywordtype">double</span> value) 
+<a name="l00143"></a>00143    { <span class="keywordflow">return</span> int( (value - <a class="code" href="classUtil_1_1Distribution.html#a2baf9b4f77af2097ad63a38593d3b7a0" title="minimum value.">min_</a>)/<a class="code" href="classUtil_1_1Distribution.html#a214cf6292bd2b0c1b433f398381d4c7e" title="width of bin = (max_-min_)/nBin_ .">binWidth_</a> ); }
 <a name="l00144"></a>00144   
 <a name="l00145"></a>00145    <span class="comment">/*</span>
 <a name="l00146"></a>00146 <span class="comment">   * Get minimum value in range of histogram.</span>
 <a name="l00147"></a>00147 <span class="comment">   */</span>
-<a name="l00148"></a><a class="code" href="classUtil_1_1Distribution.html#a2316dcf397d4aaefbe79179748f2a007">00148</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#a2316dcf397d4aaefbe79179748f2a007" title="Get minimum value in range of histogram.">Distribution::min</a>()<span class="keyword"> const</span>
-<a name="l00149"></a>00149 <span class="keyword">   </span>{  <span class="keywordflow">return</span> <a class="code" href="classUtil_1_1Distribution.html#ad3a27494d1093fc3a575682b38322f4d" title="minimum value.">min_</a>; }
+<a name="l00148"></a><a class="code" href="classUtil_1_1Distribution.html#aa0d4190d1de41eb72ba9190065fa63ce">00148</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#aa0d4190d1de41eb72ba9190065fa63ce" title="Get minimum value in range of histogram.">Distribution::min</a>()<span class="keyword"> const</span>
+<a name="l00149"></a>00149 <span class="keyword">   </span>{  <span class="keywordflow">return</span> <a class="code" href="classUtil_1_1Distribution.html#a2baf9b4f77af2097ad63a38593d3b7a0" title="minimum value.">min_</a>; }
 <a name="l00150"></a>00150   
 <a name="l00151"></a>00151    <span class="comment">/*</span>
 <a name="l00152"></a>00152 <span class="comment">   * Get maximum value in range of histogram.</span>
 <a name="l00153"></a>00153 <span class="comment">   */</span>
-<a name="l00154"></a><a class="code" href="classUtil_1_1Distribution.html#a9bfc3700bf01576b1ca49e5a64b87abe">00154</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#a9bfc3700bf01576b1ca49e5a64b87abe" title="Get maximum value in range of histogram.">Distribution::max</a>()<span class="keyword"> const</span>
-<a name="l00155"></a>00155 <span class="keyword">   </span>{  <span class="keywordflow">return</span> <a class="code" href="classUtil_1_1Distribution.html#a28726e931190dc86614c042722baa035" title="maximum value.">max_</a>; }
+<a name="l00154"></a><a class="code" href="classUtil_1_1Distribution.html#ae8b22088e6d3b84e895b7767b2c20231">00154</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#ae8b22088e6d3b84e895b7767b2c20231" title="Get maximum value in range of histogram.">Distribution::max</a>()<span class="keyword"> const</span>
+<a name="l00155"></a>00155 <span class="keyword">   </span>{  <span class="keywordflow">return</span> <a class="code" href="classUtil_1_1Distribution.html#a99b33b20d4a50962f9b0836b527c381b" title="maximum value.">max_</a>; }
 <a name="l00156"></a>00156  
 <a name="l00157"></a>00157    <span class="comment">/*</span>
 <a name="l00158"></a>00158 <span class="comment">   * Get binWidth, the width of each bin.</span>
 <a name="l00159"></a>00159 <span class="comment">   */</span>
-<a name="l00160"></a><a class="code" href="classUtil_1_1Distribution.html#a113fd2c88a7416cc1c01c947612e0b37">00160</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#a113fd2c88a7416cc1c01c947612e0b37" title="Get binWidth, the width of each bin.">Distribution::binWidth</a>()<span class="keyword"> const</span>
-<a name="l00161"></a>00161 <span class="keyword">   </span>{  <span class="keywordflow">return</span> <a class="code" href="classUtil_1_1Distribution.html#a29a2dfedf5c80fa4b15a99e1ef364e96" title="width of bin = (max_-min_)/nBin_ .">binWidth_</a>; }
+<a name="l00160"></a><a class="code" href="classUtil_1_1Distribution.html#af37934c1b897706f50aa193f65e69fdc">00160</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classUtil_1_1Distribution.html#af37934c1b897706f50aa193f65e69fdc" title="Get binWidth, the width of each bin.">Distribution::binWidth</a>()<span class="keyword"> const</span>
+<a name="l00161"></a>00161 <span class="keyword">   </span>{  <span class="keywordflow">return</span> <a class="code" href="classUtil_1_1Distribution.html#a214cf6292bd2b0c1b433f398381d4c7e" title="width of bin = (max_-min_)/nBin_ .">binWidth_</a>; }
 <a name="l00162"></a>00162   
 <a name="l00163"></a>00163    <span class="comment">/*</span>
 <a name="l00164"></a>00164 <span class="comment">   * Get the number of bins</span>
 <a name="l00165"></a>00165 <span class="comment">   */</span>
-<a name="l00166"></a><a class="code" href="classUtil_1_1Distribution.html#a3457db80c9596c3c667ee46af0a175a7">00166</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Distribution.html#a3457db80c9596c3c667ee46af0a175a7" title="Get the number of bins.">Distribution::nBin</a>()<span class="keyword"> const</span>
-<a name="l00167"></a>00167 <span class="keyword">   </span>{  <span class="keywordflow">return</span> <a class="code" href="classUtil_1_1Distribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>; }
+<a name="l00166"></a><a class="code" href="classUtil_1_1Distribution.html#af16fd4b26682902301357f9d445e8efd">00166</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Distribution.html#af16fd4b26682902301357f9d445e8efd" title="Get the number of bins.">Distribution::nBin</a>()<span class="keyword"> const</span>
+<a name="l00167"></a>00167 <span class="keyword">   </span>{  <span class="keywordflow">return</span> <a class="code" href="classUtil_1_1Distribution.html#a9fac9a8c0a0c091dca8c6c8264d49e42" title="number of bins.">nBin_</a>; }
 <a name="l00168"></a>00168 
 <a name="l00169"></a>00169    <span class="comment">/*</span>
 <a name="l00170"></a>00170 <span class="comment">   * Serialize this Distribution.</span>
 <a name="l00171"></a>00171 <span class="comment">   */</span>
 <a name="l00172"></a>00172    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00173"></a><a class="code" href="classUtil_1_1Distribution.html#a6765e839ab267e4959384e35a4112451">00173</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#a6765e839ab267e4959384e35a4112451" title="Serialize this Distribution to/from an archive.">Distribution::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00173"></a><a class="code" href="classUtil_1_1Distribution.html#ae959315ca9e2ceb9bae41eb6c5cffcb0">00173</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Distribution.html#ae959315ca9e2ceb9bae41eb6c5cffcb0" title="Serialize this Distribution to/from an archive.">Distribution::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00174"></a>00174    {
-<a name="l00175"></a>00175       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#ae5ffa510bc17486c710c1db78c933b3a" title="Histogram of occurences, one element per bin.">histogram_</a>; 
-<a name="l00176"></a>00176       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#ad3a27494d1093fc3a575682b38322f4d" title="minimum value.">min_</a>;        
-<a name="l00177"></a>00177       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#a28726e931190dc86614c042722baa035" title="maximum value.">max_</a>;    
-<a name="l00178"></a>00178       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#a29a2dfedf5c80fa4b15a99e1ef364e96" title="width of bin = (max_-min_)/nBin_ .">binWidth_</a>;  
-<a name="l00179"></a>00179       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#aa86535df4a524672643fb1dedd48d852" title="number of bins.">nBin_</a>;     
-<a name="l00180"></a>00180       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#ac50cf6ede880aad2a811578ab9b34b4d" title="Number of sampled values in Histogram.">nSample_</a>;   
-<a name="l00181"></a>00181       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#ae1496b433549191551de394f077bc85b" title="Number of sampled values that were out of range.">nReject_</a>;    
+<a name="l00175"></a>00175       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#a65c609eecdd6364468506b289ef7a371" title="Histogram of occurences, one element per bin.">histogram_</a>; 
+<a name="l00176"></a>00176       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#a2baf9b4f77af2097ad63a38593d3b7a0" title="minimum value.">min_</a>;        
+<a name="l00177"></a>00177       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#a99b33b20d4a50962f9b0836b527c381b" title="maximum value.">max_</a>;    
+<a name="l00178"></a>00178       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#a214cf6292bd2b0c1b433f398381d4c7e" title="width of bin = (max_-min_)/nBin_ .">binWidth_</a>;  
+<a name="l00179"></a>00179       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#a9fac9a8c0a0c091dca8c6c8264d49e42" title="number of bins.">nBin_</a>;     
+<a name="l00180"></a>00180       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#ae28a18807996f1c6bb351e4058cd1b27" title="Number of sampled values in Histogram.">nSample_</a>;   
+<a name="l00181"></a>00181       ar &amp; <a class="code" href="classUtil_1_1Distribution.html#aeecc8bdc4ced32e7aa577947b1566502" title="Number of sampled values that were out of range.">nReject_</a>;    
 <a name="l00182"></a>00182    }
 <a name="l00183"></a>00183         
 <a name="l00184"></a>00184 }
 <a name="l00185"></a>00185 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

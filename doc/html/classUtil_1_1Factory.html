@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Factory&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::Factory&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Factory&lt; Data &gt; Class Template Reference</h1>  </div>
+<h1>Util::Factory&lt; Data &gt; Class Template Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Factory" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -67,32 +67,34 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#ac2945b13a69ae1ef77b9fa0a0d88d4df">Factory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac2945b13a69ae1ef77b9fa0a0d88d4df"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#ae2e066058f416babe64854a46eb5c70e">~Factory</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ae2e066058f416babe64854a46eb5c70e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#a46579535f660aabc15e6297541b758fc">addSubfactory</a> (<a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp;subfactory)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new subfactory to the list.  <a href="#a46579535f660aabc15e6297541b758fc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#acb58a8eeb66d2b2a4179c5f4399c6da9">readObject</a> (std::istream &amp;in, <a class="el" href="classUtil_1_1ParamComposite.html">ParamComposite</a> &amp;parent, std::string &amp;className, bool &amp;isEnd)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a class name, instantiate an object, and read its parameters.  <a href="#acb58a8eeb66d2b2a4179c5f4399c6da9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#ac8bffc34c2d8fa6973fd13f878983808">factory</a> (const std::string &amp;className) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to a new instance of specified subclass.  <a href="#ac8bffc34c2d8fa6973fd13f878983808"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#abed74f57b3e4aa935aa9c6ac00237bf4">Factory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#abed74f57b3e4aa935aa9c6ac00237bf4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#a7d0e3928c0ec7ac854b96d9201cc757a">~Factory</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a7d0e3928c0ec7ac854b96d9201cc757a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#acc4e596c0a8636a5553ada58dfe898ce">addSubfactory</a> (<a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp;subfactory)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new subfactory to the list.  <a href="#acc4e596c0a8636a5553ada58dfe898ce"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#aff55a134e6b770ca6f656417f4519fd5">readObject</a> (std::istream &amp;in, <a class="el" href="classUtil_1_1ParamComposite.html">ParamComposite</a> &amp;parent, std::string &amp;className, bool &amp;isEnd)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a class name, instantiate an object, and read its parameters.  <a href="#aff55a134e6b770ca6f656417f4519fd5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#a75ae49003fb0b92da58e370ceae64153">factory</a> (const std::string &amp;className) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to a new instance of specified subclass.  <a href="#a75ae49003fb0b92da58e370ceae64153"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#ac657056f9370cae446505c0f0d16b345">trySubfactories</a> (const std::string &amp;className) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search through subfactories for match.  <a href="#ac657056f9370cae446505c0f0d16b345"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#acebbb541ac87f56979a5b03a8604887a">setParamCommunicator</a> (MPI::Intracomm &amp;communicator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set associated Mpi communicator.  <a href="#acebbb541ac87f56979a5b03a8604887a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#ac6781f223c4e1ef925ab847bd927d486">hasParamCommunicator</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does this factory have a param communicator?  <a href="#ac6781f223c4e1ef925ab847bd927d486"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#a0ed7025e8764a29d33ab446c25ae4554">trySubfactories</a> (const std::string &amp;className) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Search through subfactories for match.  <a href="#a0ed7025e8764a29d33ab446c25ae4554"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#a0d60aaa379160cb2032476e8f4220322">setParamCommunicator</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set associated Mpi communicator.  <a href="#a0d60aaa379160cb2032476e8f4220322"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Factory.html#aa8fb82d07a9ced4f8265a8f6b51c78fc">hasParamCommunicator</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does this factory have a param communicator?  <a href="#aa8fb82d07a9ced4f8265a8f6b51c78fc"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ac2945b13a69ae1ef77b9fa0a0d88d4df"></a><!-- doxytag: member="Util::Factory::Factory" ref="ac2945b13a69ae1ef77b9fa0a0d88d4df" args="()" -->
+<a class="anchor" id="abed74f57b3e4aa935aa9c6ac00237bf4"></a><!-- doxytag: member="Util::Factory::Factory" ref="abed74f57b3e4aa935aa9c6ac00237bf4" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Factory</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Util::Factory</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1Factory.html">Factory</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -107,12 +109,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae2e066058f416babe64854a46eb5c70e"></a><!-- doxytag: member="Util::Factory::~Factory" ref="ae2e066058f416babe64854a46eb5c70e" args="()" -->
+<a class="anchor" id="a7d0e3928c0ec7ac854b96d9201cc757a"></a><!-- doxytag: member="Util::Factory::~Factory" ref="a7d0e3928c0ec7ac854b96d9201cc757a" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1Factory.html">Factory</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Factory.html">Util::Factory</a>&lt; Data &gt;::~<a class="el" href="classUtil_1_1Factory.html">Factory</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -128,12 +132,14 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a46579535f660aabc15e6297541b758fc"></a><!-- doxytag: member="Util::Factory::addSubfactory" ref="a46579535f660aabc15e6297541b758fc" args="(Factory&lt; Data &gt; &amp;subfactory)" -->
+<a class="anchor" id="acc4e596c0a8636a5553ada58dfe898ce"></a><!-- doxytag: member="Util::Factory::addSubfactory" ref="acc4e596c0a8636a5553ada58dfe898ce" args="(Factory&lt; Data &gt; &amp;subfactory)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void addSubfactory </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1Factory.html">Util::Factory</a>&lt; Data &gt;::addSubfactory </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>subfactory</em></td><td>)</td>
@@ -155,12 +161,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acb58a8eeb66d2b2a4179c5f4399c6da9"></a><!-- doxytag: member="Util::Factory::readObject" ref="acb58a8eeb66d2b2a4179c5f4399c6da9" args="(std::istream &amp;in, ParamComposite &amp;parent, std::string &amp;className, bool &amp;isEnd)" -->
+<a class="anchor" id="aff55a134e6b770ca6f656417f4519fd5"></a><!-- doxytag: member="Util::Factory::readObject" ref="aff55a134e6b770ca6f656417f4519fd5" args="(std::istream &amp;in, ParamComposite &amp;parent, std::string &amp;className, bool &amp;isEnd)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data * readObject </td>
+          <td class="memname">Data * <a class="el" href="classUtil_1_1Factory.html">Util::Factory</a>&lt; Data &gt;::readObject </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em>, </td>
@@ -219,18 +227,20 @@ Protected Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Factory_8h_source.html#l00188">188</a> of file <a class="el" href="Factory_8h_source.html">Factory.h</a>.</p>
 
-<p>References <a class="el" href="ParamComponent_8cpp_source.html#l00085">ParamComponent::echo()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Log::file()</a>, <a class="el" href="ParamComponent_8h_source.html#l00139">ParamComponent::hasParamCommunicator()</a>, <a class="el" href="ParamComponent_8h_source.html#l00145">ParamComponent::paramCommunicator()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00120">ParamComposite::readParamComposite()</a>, <a class="el" href="ParamComponent_8cpp_source.html#l00052">ParamComponent::setIndent()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="Begin_8cpp_source.html#l00056">Begin::writeParam()</a>.</p>
+<p>References <a class="el" href="ParamComponent_8cpp_source.html#l00085">Util::ParamComponent::echo()</a>, <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>, <a class="el" href="ParamComponent_8h_source.html#l00139">Util::ParamComponent::hasParamCommunicator()</a>, <a class="el" href="ParamComponent_8h_source.html#l00145">Util::ParamComponent::paramCommunicator()</a>, <a class="el" href="ParamComposite_8cpp_source.html#l00120">Util::ParamComposite::readParamComposite()</a>, <a class="el" href="ParamComponent_8cpp_source.html#l00052">Util::ParamComponent::setIndent()</a>, <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>, and <a class="el" href="Begin_8cpp_source.html#l00056">Util::Begin::writeParam()</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00199">MdSystem::readParam()</a>, and <a class="el" href="McMoveManager_8cpp_source.html#l00044">McMoveManager::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00199">McMd::MdSystem::readParam()</a>, and <a class="el" href="McMoveManager_8cpp_source.html#l00044">McMd::McMoveManager::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac8bffc34c2d8fa6973fd13f878983808"></a><!-- doxytag: member="Util::Factory::factory" ref="ac8bffc34c2d8fa6973fd13f878983808" args="(const std::string &amp;className) const =0" -->
+<a class="anchor" id="a75ae49003fb0b92da58e370ceae64153"></a><!-- doxytag: member="Util::Factory::factory" ref="a75ae49003fb0b92da58e370ceae64153" args="(const std::string &amp;className) const =0" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">virtual Data* factory </td>
+          <td class="memname">virtual Data* <a class="el" href="classUtil_1_1Factory.html">Util::Factory</a>&lt; Data &gt;::factory </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>className</em></td><td>)</td>
@@ -251,18 +261,20 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>base class pointer to new object, or a null pointer. </dd></dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1ConfigIoFactory.html#ab1378cdcf4273b5f43388e5352062833">ConfigIoFactory</a>, <a class="el" href="classMcMd_1_1McDiagnosticFactory.html#aaf3b2cfb35ea281e6db85b4e0f7f432d">McDiagnosticFactory</a>, <a class="el" href="classMcMd_1_1MdDiagnosticFactory.html#aaf3b2cfb35ea281e6db85b4e0f7f432d">MdDiagnosticFactory</a>, <a class="el" href="classMcMd_1_1SystemDiagnosticFactory.html#aaf3b2cfb35ea281e6db85b4e0f7f432d">SystemDiagnosticFactory</a>, <a class="el" href="classMcMd_1_1McMoveFactory.html#ae971a07906fde5ffd2143c0340c490de">McMoveFactory</a>, <a class="el" href="classMcMd_1_1MdIntegratorFactory.html#a6df157befa9c35c6457c07bf37c102a0">MdIntegratorFactory</a>, <a class="el" href="classMcMd_1_1McPerturbationFactory.html#a56bc21ba022f97c992e4ce88112ee875">McPerturbationFactory</a>, <a class="el" href="classMcMd_1_1AngleFactory.html#a09e0e332fb9419902f4b8b30676a55b8">AngleFactory</a>, <a class="el" href="classMcMd_1_1BondFactory.html#ae34f204fe220e57ce9144061600c1698">BondFactory</a>, <a class="el" href="classMcMd_1_1DihedralFactory.html#a3aa8e373b151c18b8a72e102dd671ce9">DihedralFactory</a>, <a class="el" href="classMcMd_1_1ExternalFactory.html#ab4efcc4c8debd30f0ed8d0f476b1dd15">ExternalFactory</a>, <a class="el" href="classMcMd_1_1LinkFactory.html#ae34f204fe220e57ce9144061600c1698">LinkFactory</a>, <a class="el" href="classMcMd_1_1SpeciesFactory.html#a1c5e70ea6de52234009adb6706e0c964">SpeciesFactory</a>, <a class="el" href="classMcMd_1_1TrajectoryIoFactory.html#a559de822cea5c36f3a100cf10b525f64">TrajectoryIoFactory</a>, <a class="el" href="classDdMd_1_1ConfigIoFactory.html#aae75229edfeb5ba5f82d5d9f30770917">ConfigIoFactory</a>, <a class="el" href="classDdMd_1_1DiagnosticFactory.html#aaf3b2cfb35ea281e6db85b4e0f7f432d">DiagnosticFactory</a>, <a class="el" href="classDdMd_1_1IntegratorFactory.html#a64ad2c85f9457a0dcd127181b395a30f">IntegratorFactory</a>, <a class="el" href="classDdMd_1_1AngleFactory.html#a09e0e332fb9419902f4b8b30676a55b8">AngleFactory</a>, <a class="el" href="classDdMd_1_1BondFactory.html#ae34f204fe220e57ce9144061600c1698">BondFactory</a>, <a class="el" href="classDdMd_1_1DihedralFactory.html#a3aa8e373b151c18b8a72e102dd671ce9">DihedralFactory</a>, <a class="el" href="classDdMd_1_1ExternalFactory.html#ab4efcc4c8debd30f0ed8d0f476b1dd15">ExternalFactory</a>, and <a class="el" href="classDdMd_1_1PairFactory.html#a7b5d3532e5833dd19cfc7013f28de622">PairFactory</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1ConfigIoFactory.html#a0a630961a2f8f38d6a6e24a469753521">McMd::ConfigIoFactory</a>, <a class="el" href="classMcMd_1_1McDiagnosticFactory.html#aa96678bd73b8383622a4a47458d83613">McMd::McDiagnosticFactory</a>, <a class="el" href="classMcMd_1_1MdDiagnosticFactory.html#ac181e076dfa67854143b40bc0e9e3545">McMd::MdDiagnosticFactory</a>, <a class="el" href="classMcMd_1_1SystemDiagnosticFactory.html#a3eedb24f970be583be466bc9aa1b4919">McMd::SystemDiagnosticFactory</a>, <a class="el" href="classMcMd_1_1McMoveFactory.html#a2ad45108e49e7a3ddef7751053f19867">McMd::McMoveFactory</a>, <a class="el" href="classMcMd_1_1MdIntegratorFactory.html#a311ab329444414f294a77e629df8047a">McMd::MdIntegratorFactory</a>, <a class="el" href="classMcMd_1_1McPerturbationFactory.html#ab522f7322d8af00fd4d61c85795d4f69">McMd::McPerturbationFactory</a>, <a class="el" href="classMcMd_1_1AngleFactory.html#a25124f8d5121af79fede689f990463e4">McMd::AngleFactory</a>, <a class="el" href="classMcMd_1_1BondFactory.html#a8b643b87281935b7d539b355a25dfa5b">McMd::BondFactory</a>, <a class="el" href="classMcMd_1_1DihedralFactory.html#aa1d72111702136cc2770784c2c8c0828">McMd::DihedralFactory</a>, <a class="el" href="classMcMd_1_1ExternalFactory.html#a21fcfa7615abbdceafaca829a7af5ee1">McMd::ExternalFactory</a>, <a class="el" href="classMcMd_1_1LinkFactory.html#a95ea20a2fbc1dfb1bf7fbc5677d2a223">McMd::LinkFactory</a>, <a class="el" href="classMcMd_1_1SpeciesFactory.html#a9bfedbd000dd1083883fb39016bd2d62">McMd::SpeciesFactory</a>, <a class="el" href="classMcMd_1_1TrajectoryIoFactory.html#aa57329c24164d2b98a6ce354d52fbab4">McMd::TrajectoryIoFactory</a>, <a class="el" href="classDdMd_1_1ConfigIoFactory.html#a5288a6c21661b7fe241bfc40073b9355">DdMd::ConfigIoFactory</a>, <a class="el" href="classDdMd_1_1DiagnosticFactory.html#ae9e0f0b9b24be2c44f9c2a4b4ebda353">DdMd::DiagnosticFactory</a>, <a class="el" href="classDdMd_1_1IntegratorFactory.html#a4629e0947fe197b6c3700e26bf938240">DdMd::IntegratorFactory</a>, <a class="el" href="classDdMd_1_1AngleFactory.html#a4dafbbaad8cf18840a48dcc4fcac1dbf">DdMd::AngleFactory</a>, <a class="el" href="classDdMd_1_1BondFactory.html#a129a08939534589615f9c6173baec647">DdMd::BondFactory</a>, <a class="el" href="classDdMd_1_1DihedralFactory.html#a89e14d7ea14fc375259821d811318dc6">DdMd::DihedralFactory</a>, <a class="el" href="classDdMd_1_1ExternalFactory.html#a44ccdc2eb96a29b0f29527921793c39b">DdMd::ExternalFactory</a>, and <a class="el" href="classDdMd_1_1PairFactory.html#af93bc27114be1d1521149048f190c012">DdMd::PairFactory</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00199">MdSystem::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="MdSystem_8cpp_source.html#l00199">McMd::MdSystem::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac657056f9370cae446505c0f0d16b345"></a><!-- doxytag: member="Util::Factory::trySubfactories" ref="ac657056f9370cae446505c0f0d16b345" args="(const std::string &amp;className) const " -->
+<a class="anchor" id="a0ed7025e8764a29d33ab446c25ae4554"></a><!-- doxytag: member="Util::Factory::trySubfactories" ref="a0ed7025e8764a29d33ab446c25ae4554" args="(const std::string &amp;className) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data * trySubfactories </td>
+          <td class="memname">Data * <a class="el" href="classUtil_1_1Factory.html">Util::Factory</a>&lt; Data &gt;::trySubfactories </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>className</em></td><td>)</td>
@@ -286,12 +298,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acebbb541ac87f56979a5b03a8604887a"></a><!-- doxytag: member="Util::Factory::setParamCommunicator" ref="acebbb541ac87f56979a5b03a8604887a" args="(MPI::Intracomm &amp;communicator)" -->
+<a class="anchor" id="a0d60aaa379160cb2032476e8f4220322"></a><!-- doxytag: member="Util::Factory::setParamCommunicator" ref="a0d60aaa379160cb2032476e8f4220322" args="(MPI::Intracomm &amp;communicator)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setParamCommunicator </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1Factory.html">Util::Factory</a>&lt; Data &gt;::setParamCommunicator </td>
           <td>(</td>
           <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
           <td class="paramname"><em>communicator</em></td><td>)</td>
@@ -316,12 +330,14 @@ Protected Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac6781f223c4e1ef925ab847bd927d486"></a><!-- doxytag: member="Util::Factory::hasParamCommunicator" ref="ac6781f223c4e1ef925ab847bd927d486" args="() const " -->
+<a class="anchor" id="aa8fb82d07a9ced4f8265a8f6b51c78fc"></a><!-- doxytag: member="Util::Factory::hasParamCommunicator" ref="aa8fb82d07a9ced4f8265a8f6b51c78fc" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool hasParamCommunicator </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1Factory.html">Util::Factory</a>&lt; Data &gt;::hasParamCommunicator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [protected]</code></td>
@@ -340,7 +356,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="Factory_8h_source.html">Factory.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Species Class Reference</title>
+<title>Simpatico: McMd::Species Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="#pro-static-attribs">Static Protected Attributes</a>  </div>
   <div class="headertitle">
-<h1>Species Class Reference<div class="ingroups"><a class="el" href="group__McMd__Species__Module.html">Species</a></div></h1>  </div>
+<h1>McMd::Species Class Reference<div class="ingroups"><a class="el" href="group__McMd__Species__Module.html">Species</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::Species" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -71,28 +71,28 @@
 <li>A reservoir, which holds pointers to unused <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> objects.</li>
 </ul>
 <p>The chemical structure is initialized in the readParam method and may be queried by several accessor methods. The capacity specifies the number of Molecules of this of this species for which space should be allocated by the parent <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>. The reservoir is a stack that is used to hold pointers to Molecules of this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> that are not currently owned by any <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.</p>
-<p>The chemical structure of a generic molecule within a <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> is defined by specifying the type of each atom and constructing a list of bond, angle and dihedral covalent groups. Information about covalent groups is stored internally in a set of SpeciesGroup&lt;N&gt; objects with N=2,3, and 4. This chemical structure is defined within the virtual protected <a class="el" href="classMcMd_1_1Species.html#a02e9577ec42da7be4d2ed79a13f654e3" title="Define chemical structure for this Species.">readSpeciesParam(std::istream&amp;)</a> method, which is called by readParam.</p>
-<p>Implementations of <a class="el" href="classMcMd_1_1Species.html#a02e9577ec42da7be4d2ed79a13f654e3" title="Define chemical structure for this Species.">readSpeciesParam()</a> may read any parameters that are required to define the chemical structure of an particular <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>. The default implementation of <a class="el" href="classMcMd_1_1Species.html#a02e9577ec42da7be4d2ed79a13f654e3" title="Define chemical structure for this Species.">Species::readSpeciesParam()</a> simply reads all of the required information from file. This is thus sufficiently flexible to describe any molecular species. Subclasses of <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> may instead hard-code some or all of the information required to describe a molecular structure into the class definition, and thus reduce the amount of information that must be read from file. For example, if a subclass of <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> represents a unique chemical structure, such as water or some other specific molecule, then the entire structure can be hard-coded into the method implementtion. In other cases, in which a subclass is used to describe a category of molecular species, a more limited amount of information must be read from file in order to specify a unique structure. For example, a class that represents a linear homopolymer might read information required describe the monomer and to specify the number of monomers per chain.</p>
+<p>The chemical structure of a generic molecule within a <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> is defined by specifying the type of each atom and constructing a list of bond, angle and dihedral covalent groups. Information about covalent groups is stored internally in a set of SpeciesGroup&lt;N&gt; objects with N=2,3, and 4. This chemical structure is defined within the virtual protected <a class="el" href="classMcMd_1_1Species.html#ae0689a4a0707f09bde431b4c8cb26369" title="Define chemical structure for this Species.">readSpeciesParam(std::istream&amp;)</a> method, which is called by readParam.</p>
+<p>Implementations of <a class="el" href="classMcMd_1_1Species.html#ae0689a4a0707f09bde431b4c8cb26369" title="Define chemical structure for this Species.">readSpeciesParam()</a> may read any parameters that are required to define the chemical structure of an particular <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>. The default implementation of <a class="el" href="classMcMd_1_1Species.html#ae0689a4a0707f09bde431b4c8cb26369" title="Define chemical structure for this Species.">Species::readSpeciesParam()</a> simply reads all of the required information from file. This is thus sufficiently flexible to describe any molecular species. Subclasses of <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> may instead hard-code some or all of the information required to describe a molecular structure into the class definition, and thus reduce the amount of information that must be read from file. For example, if a subclass of <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> represents a unique chemical structure, such as water or some other specific molecule, then the entire structure can be hard-coded into the method implementtion. In other cases, in which a subclass is used to describe a category of molecular species, a more limited amount of information must be read from file in order to specify a unique structure. For example, a class that represents a linear homopolymer might read information required describe the monomer and to specify the number of monomers per chain.</p>
 <p>A subclass of <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> may also be usd to represent a "psuedo species". A pseudo species is a species in which each molecule can be in any of a finite number of different internal states, in which the chemical structure is slightly different in different states. A pseudo-molecule could, for example, be used implement a semi-grand ensemble for a polymer mixture, in which each polymer can be of either of two types. The readMoleculeState() and writeMoleculeState() methods are provided to allow information about the internal state of each molecules in such an ensemble to be read from and written to a configuration file. The default implementations of these methods do nothing. </p>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00092">92</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="Species_8h_source.html">Species.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Species:</div>
+Inheritance diagram for McMd::Species:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1Species.png" usemap="#Species_map" alt=""/>
-  <map id="Species_map" name="Species_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="242,56,353,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="242,0,353,24"/>
-<area href="classMcMd_1_1Linear.html" alt="Linear" shape="rect" coords="121,168,232,192"/>
-<area href="classMcMd_1_1Point.html" alt="Point" shape="rect" coords="242,168,353,192"/>
-<area href="classMcMd_1_1Ring.html" alt="Ring" shape="rect" coords="363,168,474,192"/>
-<area href="classMcMd_1_1Diblock.html" alt="Diblock" shape="rect" coords="0,224,111,248"/>
-<area href="classMcMd_1_1Homopolymer.html" alt="Homopolymer" shape="rect" coords="121,224,232,248"/>
-<area href="classMcMd_1_1HomopolymerSG.html" alt="HomopolymerSG" shape="rect" coords="242,224,353,248"/>
-<area href="classMcMd_1_1HomoRing.html" alt="HomoRing" shape="rect" coords="363,224,474,248"/>
+  <img src="classMcMd_1_1Species.png" usemap="#McMd::Species_map" alt=""/>
+  <map id="McMd::Species_map" name="McMd::Species_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="316,56,464,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="316,0,464,24"/>
+<area href="classMcMd_1_1Linear.html" alt="McMd::Linear" shape="rect" coords="158,168,306,192"/>
+<area href="classMcMd_1_1Point.html" alt="McMd::Point" shape="rect" coords="316,168,464,192"/>
+<area href="classMcMd_1_1Ring.html" alt="McMd::Ring" shape="rect" coords="474,168,622,192"/>
+<area href="classMcMd_1_1Diblock.html" alt="McMd::Diblock" shape="rect" coords="0,224,148,248"/>
+<area href="classMcMd_1_1Homopolymer.html" alt="McMd::Homopolymer" shape="rect" coords="158,224,306,248"/>
+<area href="classMcMd_1_1HomopolymerSG.html" alt="McMd::HomopolymerSG" shape="rect" coords="316,224,464,248"/>
+<area href="classMcMd_1_1HomoRing.html" alt="McMd::HomoRing" shape="rect" coords="474,224,622,248"/>
 </map>
  </div></div>
 
@@ -100,97 +100,97 @@ Inheritance diagram for Species:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classMcMd_1_1SpeciesGroup.html">SpeciesGroup</a>&lt; 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#accc45ac34f9e5158494929515791ae95">SpeciesBond</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A SpeciesBond has the local atom ids and a type id for one bond.  <a href="#accc45ac34f9e5158494929515791ae95"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classMcMd_1_1SpeciesGroup.html">SpeciesGroup</a>&lt; 2 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a64ebdaf06b38382811a307d4185479ff">SpeciesBond</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A SpeciesBond has the local atom ids and a type id for one bond.  <a href="#a64ebdaf06b38382811a307d4185479ff"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1FSArray.html">FSArray</a>&lt; const <a class="el" href="classMcMd_1_1Group.html">Bond</a> <br class="typebreak"/>
-*, <a class="el" href="classMcMd_1_1Species.html#a441b7b6670bb2e3c61bf9a014baf2992">MaxBondPerAtom</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a792539121d672e69a913f6fb2c0abdf4">AtomBondArray</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of pointers to Bond objects that contain a specific <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#a792539121d672e69a913f6fb2c0abdf4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1ArrayStack.html">ArrayStack</a>&lt; <a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a90e392824b9e77705611d9135af62358">Reservoir</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A stack of unused <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> objects available for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#a90e392824b9e77705611d9135af62358"></a><br/></td></tr>
+*, <a class="el" href="classMcMd_1_1Species.html#a4f74b00cb21af0ab51a88bf74a77f446">MaxBondPerAtom</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a3d5c549626582ff1d4487979fc02738f">AtomBondArray</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of pointers to Bond objects that contain a specific <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#a3d5c549626582ff1d4487979fc02738f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1ArrayStack.html">ArrayStack</a>&lt; <a class="el" href="classMcMd_1_1Molecule.html">Molecule</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#af1ce4ecf5e4b10bee98184e89ea71f70">Reservoir</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">A stack of unused <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> objects available for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#af1ce4ecf5e4b10bee98184e89ea71f70"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a6a928824e5f9bc4ec3ab0f4a3d0ce304">Species</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6a928824e5f9bc4ec3ab0f4a3d0ce304"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a9e5f173230f8401877ddfd442e9cd5d9">~Species</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a9e5f173230f8401877ddfd442e9cd5d9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters and allocate molecules for this species.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a3d929477fef71d52c9c6df2ba2d50841">setId</a> (int id)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set integer id for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#a3d929477fef71d52c9c6df2ba2d50841"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a9847904f278fea947c4c142004985ff5">Species</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a9847904f278fea947c4c142004985ff5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#abbf2c77c5b2e71ab753293da41313dd8">~Species</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#abbf2c77c5b2e71ab753293da41313dd8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a4c14a30bca031f7eab854239384ece23">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters and allocate molecules for this species.  <a href="#a4c14a30bca031f7eab854239384ece23"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a3d884d6e1819e8ef1d3b98f7ad6ae7bd">setId</a> (int id)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set integer id for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#a3d884d6e1819e8ef1d3b98f7ad6ae7bd"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Chemical Structure Accessors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#ac91579bd63979a294891d330a5533838">nAtom</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of atoms per molecule for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#ac91579bd63979a294891d330a5533838"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a03a7ae70b3c47d3439a3459d072ad300">nBond</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of bonds per molecule for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#a03a7ae70b3c47d3439a3459d072ad300"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#addb10a81097e9f45c67d1997eeb0b823">atomTypeId</a> (int iAtom) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get atom type index for a specific atom, by local atom index.  <a href="#addb10a81097e9f45c67d1997eeb0b823"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classMcMd_1_1SpeciesGroup.html">SpeciesBond</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#afcc3ac548c6b552e035426ef3108a380">speciesBond</a> (int iBond) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a specific SpeciesBond object, by local bond index.  <a href="#afcc3ac548c6b552e035426ef3108a380"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a8d5610c3c568c1f4509a836b8a54f736">getAtomBonds</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom, <a class="el" href="classUtil_1_1FSArray.html">AtomBondArray</a> &amp;bonds) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get array of pointers to Bonds that contain an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#a8d5610c3c568c1f4509a836b8a54f736"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a90f27faa15c854aa1b94dc391ac7ee1d">generateMolecules</a> (int nMolecule, <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; double &gt; exclusionRadius, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;system, <a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> *bondPotentialPtr, const Boundary &amp;boundary)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate random molecules.  <a href="#a90f27faa15c854aa1b94dc391ac7ee1d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a7ff59e6b9183670bc88c51d92e20fc55">nAtom</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of atoms per molecule for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#a7ff59e6b9183670bc88c51d92e20fc55"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a6baba7fcb17814145e7d425b55b254f5">nBond</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of bonds per molecule for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#a6baba7fcb17814145e7d425b55b254f5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#aa25843142bad3e2505466c79ca23df7f">atomTypeId</a> (int iAtom) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get atom type index for a specific atom, by local atom index.  <a href="#aa25843142bad3e2505466c79ca23df7f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classMcMd_1_1SpeciesGroup.html">SpeciesBond</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a411088bd3d19359017145a54a968a80b">speciesBond</a> (int iBond) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a specific SpeciesBond object, by local bond index.  <a href="#a411088bd3d19359017145a54a968a80b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a49506e13656db7da5bf2e9824720a263">getAtomBonds</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom, <a class="el" href="classUtil_1_1FSArray.html">AtomBondArray</a> &amp;bonds) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get array of pointers to Bonds that contain an <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#a49506e13656db7da5bf2e9824720a263"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a7856fdf81aaba0eea72498deffb38664">generateMolecules</a> (int nMolecule, <a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; double &gt; exclusionRadius, <a class="el" href="classMcMd_1_1System.html">System</a> &amp;system, <a class="el" href="classMcMd_1_1BondPotential.html">BondPotential</a> *bondPotentialPtr, const Boundary &amp;boundary)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate random molecules.  <a href="#a7856fdf81aaba0eea72498deffb38664"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Miscellaneous Accessors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#ae0c063cfb2479f614be43b9d2f92ba63">id</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get integer id of this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#ae0c063cfb2479f614be43b9d2f92ba63"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a104736719cd4e5f21c25705c77064dde">capacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total number of <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> objects allocated for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#a104736719cd4e5f21c25705c77064dde"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ArrayStack.html">Reservoir</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a5c347060621ccff81193a1674ae34891">reservoir</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the reservoir for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> by reference.  <a href="#a5c347060621ccff81193a1674ae34891"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">isValid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> is valid, or throw an Exception.  <a href="#aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a24f3b1e8df801868d8afde9997cacf61">id</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get integer id of this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#a24f3b1e8df801868d8afde9997cacf61"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a669f4a6f99f5986cb8dcc0e4e09a0bf7">capacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total number of <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> objects allocated for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#a669f4a6f99f5986cb8dcc0e4e09a0bf7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1ArrayStack.html">Reservoir</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a5a13decdb8d26f4ade55c98e1cdc61e2">reservoir</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the reservoir for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> by reference.  <a href="#a5a13decdb8d26f4ade55c98e1cdc61e2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a733a73f803ada53575fe62a4aa882d05">isValid</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> is valid, or throw an Exception.  <a href="#a733a73f803ada53575fe62a4aa882d05"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Interface for mutable species.</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#ad687aabba553d1c66bfc253ec7e5bd05">isMutable</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this a mutable <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>?  <a href="#ad687aabba553d1c66bfc253ec7e5bd05"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1SpeciesMutator.html">SpeciesMutator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a8fb83fdaa519051889f8fe121f46acc9">mutator</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the species mutator object by reference.  <a href="#a8fb83fdaa519051889f8fe121f46acc9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a196a2b822968ba57d14a09bb0833a5b4">isMutable</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this a mutable <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>?  <a href="#a196a2b822968ba57d14a09bb0833a5b4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1SpeciesMutator.html">SpeciesMutator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#acab56ccef7f5e9a05e61fb35d88b1a96">mutator</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the species mutator object by reference.  <a href="#acab56ccef7f5e9a05e61fb35d88b1a96"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a441b7b6670bb2e3c61bf9a014baf2992">MaxBondPerAtom</a> = 4</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of bonds that can be connected to one atom.  <a href="#a441b7b6670bb2e3c61bf9a014baf2992"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a977a0351e144ddeea032671e532b6d3d">MaxAnglePerAtom</a> = 18</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of angles groups that can contain one atom.  <a href="#a977a0351e144ddeea032671e532b6d3d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#acf5b41c56b404908eba1be3a05b10602">MaxDihedralPerAtom</a> = 72</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of dihedral groups that can contain one atom.  <a href="#acf5b41c56b404908eba1be3a05b10602"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a4f74b00cb21af0ab51a88bf74a77f446">MaxBondPerAtom</a> = 4</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of bonds that can be connected to one atom.  <a href="#a4f74b00cb21af0ab51a88bf74a77f446"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#ae07e3e77c42f48b0fa33a5cf11b29739">MaxAnglePerAtom</a> = 18</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of angles groups that can contain one atom.  <a href="#ae07e3e77c42f48b0fa33a5cf11b29739"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#ad947bfda180b8ab0ebcb0dbdd6dbe9db">MaxDihedralPerAtom</a> = 72</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of dihedral groups that can contain one atom.  <a href="#ad947bfda180b8ab0ebcb0dbdd6dbe9db"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-types"></a>
 Protected Types</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classUtil_1_1FSArray.html">FSArray</a>&lt; int, <br class="typebreak"/>
-<a class="el" href="classMcMd_1_1Species.html#a441b7b6670bb2e3c61bf9a014baf2992">MaxBondPerAtom</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#adabcb5e8ba41097cb97d2018cb66f307">AtomBondIdArray</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">An array of local integer bond ids for all bonds containing one atom.  <a href="#adabcb5e8ba41097cb97d2018cb66f307"></a><br/></td></tr>
+<a class="el" href="classMcMd_1_1Species.html#a4f74b00cb21af0ab51a88bf74a77f446">MaxBondPerAtom</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a0ee6c76ebbd2304e54ca7bcd05566dd5">AtomBondIdArray</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">An array of local integer bond ids for all bonds containing one atom.  <a href="#a0ee6c76ebbd2304e54ca7bcd05566dd5"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a02e9577ec42da7be4d2ed79a13f654e3">readSpeciesParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Define chemical structure for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#a02e9577ec42da7be4d2ed79a13f654e3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#acaefe811b78a2fdc4a0dba0c4029c3ef">allocate</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate chemical structure arrays.  <a href="#acaefe811b78a2fdc4a0dba0c4029c3ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#afd63c7961866e4362658f5ee9a894d87">setAtomType</a> (int atomId, int atomType)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the type for one atom in a generic molecule of this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#afd63c7961866e4362658f5ee9a894d87"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a05616ad5c8d4a6ee45eee1015fd46517">makeBond</a> (int bondId, int atomId1, int atomId2, int bondType)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a bond to the chemical structure of a generic molecule.  <a href="#a05616ad5c8d4a6ee45eee1015fd46517"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#abf8ed352e21a51378425854fed701cc0">setMutatorPtr</a> (<a class="el" href="classMcMd_1_1SpeciesMutator.html">SpeciesMutator</a> *mutatorPtr)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a pointer to an associated <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a> for a mutable species.  <a href="#abf8ed352e21a51378425854fed701cc0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#ae0689a4a0707f09bde431b4c8cb26369">readSpeciesParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Define chemical structure for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#ae0689a4a0707f09bde431b4c8cb26369"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a5437893d22fc7b58ed35c5c442b2eaca">allocate</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate chemical structure arrays.  <a href="#a5437893d22fc7b58ed35c5c442b2eaca"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a5244d3eab99baf79b4b270f3abd168a6">setAtomType</a> (int atomId, int atomType)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the type for one atom in a generic molecule of this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>.  <a href="#a5244d3eab99baf79b4b270f3abd168a6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a2d72cd7d93ac802ce5f567e4a41eb152">makeBond</a> (int bondId, int atomId1, int atomId2, int bondType)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a bond to the chemical structure of a generic molecule.  <a href="#a2d72cd7d93ac802ce5f567e4a41eb152"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#aafebfcbd4a71bb8bcb7486836a6cf510">setMutatorPtr</a> (<a class="el" href="classMcMd_1_1SpeciesMutator.html">SpeciesMutator</a> *mutatorPtr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a pointer to an associated <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a> for a mutable species.  <a href="#aafebfcbd4a71bb8bcb7486836a6cf510"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#af8ff275d100b53dff741c6905ab02405">atomTypeIds_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of atom type Ids, indexed by local atom id.  <a href="#af8ff275d100b53dff741c6905ab02405"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classMcMd_1_1SpeciesGroup.html">SpeciesBond</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a55e355a25550b1fcb5d51efa3956018b">speciesBonds_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of SpeciesBonds for all bonds, indexed by local bond id.  <a href="#a55e355a25550b1fcb5d51efa3956018b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f">nAtom_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of atoms per molecule.  <a href="#ad690e1741e5b0d0092b00f1154d4c45f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b">nBond_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bonds per molecule.  <a href="#ac7fb24a4c620d0eeeaa4c2cfd0cf903b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272">atomTypeIds_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of atom type Ids, indexed by local atom id.  <a href="#acbfb535c42ed32b2542cec1472c9b272"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt; <a class="el" href="classMcMd_1_1SpeciesGroup.html">SpeciesBond</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#ab4f546965b9d1bcaa917b0b5fcb4a3fc">speciesBonds_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of SpeciesBonds for all bonds, indexed by local bond id.  <a href="#ab4f546965b9d1bcaa917b0b5fcb4a3fc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c">nAtom_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of atoms per molecule.  <a href="#a6cde003d8b6605012a622f966ea5ac9c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37">nBond_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of bonds per molecule.  <a href="#a3a7a7b73781cfb08f971573f7cb84d37"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#af2414ca46b856cd6f066938cae9cdfcc">NullIndex</a> = -1</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Null (unknown) value for any non-negative index.  <a href="#af2414ca46b856cd6f066938cae9cdfcc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1Species.html#afa569612950e2f59284983e976531b91">NullIndex</a> = -1</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Null (unknown) value for any non-negative index.  <a href="#afa569612950e2f59284983e976531b91"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Typedef Documentation</h2>
-<a class="anchor" id="accc45ac34f9e5158494929515791ae95"></a><!-- doxytag: member="McMd::Species::SpeciesBond" ref="accc45ac34f9e5158494929515791ae95" args="" -->
+<a class="anchor" id="a64ebdaf06b38382811a307d4185479ff"></a><!-- doxytag: member="McMd::Species::SpeciesBond" ref="a64ebdaf06b38382811a307d4185479ff" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classMcMd_1_1SpeciesGroup.html">SpeciesGroup</a>&lt;2&gt; <a class="el" href="classMcMd_1_1SpeciesGroup.html">SpeciesBond</a></td>
+          <td class="memname">typedef <a class="el" href="classMcMd_1_1SpeciesGroup.html">SpeciesGroup</a>&lt;2&gt; <a class="el" href="classMcMd_1_1SpeciesGroup.html">McMd::Species::SpeciesBond</a></td>
         </tr>
       </table>
 </div>
@@ -202,12 +202,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a792539121d672e69a913f6fb2c0abdf4"></a><!-- doxytag: member="McMd::Species::AtomBondArray" ref="a792539121d672e69a913f6fb2c0abdf4" args="" -->
+<a class="anchor" id="a3d5c549626582ff1d4487979fc02738f"></a><!-- doxytag: member="McMd::Species::AtomBondArray" ref="a3d5c549626582ff1d4487979fc02738f" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classUtil_1_1FSArray.html">FSArray</a>&lt;const <a class="el" href="classMcMd_1_1Group.html">Bond</a>*, <a class="el" href="classMcMd_1_1Species.html#a441b7b6670bb2e3c61bf9a014baf2992">MaxBondPerAtom</a>&gt; <a class="el" href="classUtil_1_1FSArray.html">AtomBondArray</a></td>
+          <td class="memname">typedef <a class="el" href="classUtil_1_1FSArray.html">FSArray</a>&lt;const <a class="el" href="classMcMd_1_1Group.html">Bond</a>*, <a class="el" href="classMcMd_1_1Species.html#a4f74b00cb21af0ab51a88bf74a77f446">MaxBondPerAtom</a>&gt; <a class="el" href="classUtil_1_1FSArray.html">McMd::Species::AtomBondArray</a></td>
         </tr>
       </table>
 </div>
@@ -219,12 +219,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a90e392824b9e77705611d9135af62358"></a><!-- doxytag: member="McMd::Species::Reservoir" ref="a90e392824b9e77705611d9135af62358" args="" -->
+<a class="anchor" id="af1ce4ecf5e4b10bee98184e89ea71f70"></a><!-- doxytag: member="McMd::Species::Reservoir" ref="af1ce4ecf5e4b10bee98184e89ea71f70" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classUtil_1_1ArrayStack.html">ArrayStack</a>&lt;<a class="el" href="classMcMd_1_1Molecule.html">Molecule</a>&gt; <a class="el" href="classUtil_1_1ArrayStack.html">Reservoir</a></td>
+          <td class="memname">typedef <a class="el" href="classUtil_1_1ArrayStack.html">ArrayStack</a>&lt;<a class="el" href="classMcMd_1_1Molecule.html">Molecule</a>&gt; <a class="el" href="classUtil_1_1ArrayStack.html">McMd::Species::Reservoir</a></td>
         </tr>
       </table>
 </div>
@@ -236,12 +236,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adabcb5e8ba41097cb97d2018cb66f307"></a><!-- doxytag: member="McMd::Species::AtomBondIdArray" ref="adabcb5e8ba41097cb97d2018cb66f307" args="" -->
+<a class="anchor" id="a0ee6c76ebbd2304e54ca7bcd05566dd5"></a><!-- doxytag: member="McMd::Species::AtomBondIdArray" ref="a0ee6c76ebbd2304e54ca7bcd05566dd5" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef <a class="el" href="classUtil_1_1FSArray.html">FSArray</a>&lt;int, <a class="el" href="classMcMd_1_1Species.html#a441b7b6670bb2e3c61bf9a014baf2992">MaxBondPerAtom</a>&gt; <a class="el" href="classUtil_1_1FSArray.html">AtomBondIdArray</a><code> [protected]</code></td>
+          <td class="memname">typedef <a class="el" href="classUtil_1_1FSArray.html">FSArray</a>&lt;int, <a class="el" href="classMcMd_1_1Species.html#a4f74b00cb21af0ab51a88bf74a77f446">MaxBondPerAtom</a>&gt; <a class="el" href="classUtil_1_1FSArray.html">McMd::Species::AtomBondIdArray</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -254,12 +254,12 @@ Static Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a6a928824e5f9bc4ec3ab0f4a3d0ce304"></a><!-- doxytag: member="McMd::Species::Species" ref="a6a928824e5f9bc4ec3ab0f4a3d0ce304" args="()" -->
+<a class="anchor" id="a9847904f278fea947c4c142004985ff5"></a><!-- doxytag: member="McMd::Species::Species" ref="a9847904f278fea947c4c142004985ff5" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1Species.html">Species</a> </td>
+          <td class="memname">McMd::Species::Species </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -274,12 +274,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9e5f173230f8401877ddfd442e9cd5d9"></a><!-- doxytag: member="McMd::Species::~Species" ref="a9e5f173230f8401877ddfd442e9cd5d9" args="()" -->
+<a class="anchor" id="abbf2c77c5b2e71ab753293da41313dd8"></a><!-- doxytag: member="McMd::Species::~Species" ref="abbf2c77c5b2e71ab753293da41313dd8" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1Species.html">Species</a> </td>
+          <td class="memname">McMd::Species::~Species </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -295,12 +295,12 @@ Static Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::Species::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a4c14a30bca031f7eab854239384ece23"></a><!-- doxytag: member="McMd::Species::readParam" ref="a4c14a30bca031f7eab854239384ece23" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void McMd::Species::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -311,7 +311,7 @@ Static Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Read parameters and allocate molecules for this species. </p>
-<p>This method reads the parameter moleculeCapacity (the number of <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> objects allocated for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>) and invokes virtual <a class="el" href="classMcMd_1_1Species.html#a02e9577ec42da7be4d2ed79a13f654e3" title="Define chemical structure for this Species.">Species::readSpeciesParam()</a> method to define the chemical structure of the <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>, and read any parameters required to do so. The method also allocates memory for an associated reservoir.</p>
+<p>This method reads the parameter moleculeCapacity (the number of <a class="el" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a> objects allocated for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>) and invokes virtual <a class="el" href="classMcMd_1_1Species.html#ae0689a4a0707f09bde431b4c8cb26369" title="Define chemical structure for this Species.">Species::readSpeciesParam()</a> method to define the chemical structure of the <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>, and read any parameters required to do so. The method also allocates memory for an associated reservoir.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">in</td><td>input stream. </td></tr>
@@ -319,24 +319,24 @@ Static Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classMcMd_1_1HomopolymerSG.html#ab5421d3c9175985c9acbf723e5392075">HomopolymerSG</a>.</p>
+<p>Reimplemented in <a class="el" href="classMcMd_1_1HomopolymerSG.html#a74c5b6d6e169cb586dbe7b4e45ecd2ba">McMd::HomopolymerSG</a>.</p>
 
 <p>Definition at line <a class="el" href="Species_8cpp_source.html#l00055">55</a> of file <a class="el" href="Species_8cpp_source.html">Species.cpp</a>.</p>
 
-<p>References <a class="el" href="ArrayStack_8h_source.html#l00147">ArrayStack&lt; Data &gt;::allocate()</a>, <a class="el" href="Species_8cpp_source.html#l00379">Species::isValid()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">Species::readSpeciesParam()</a>.</p>
+<p>References <a class="el" href="ArrayStack_8h_source.html#l00147">Util::ArrayStack&lt; Data &gt;::allocate()</a>, <a class="el" href="Species_8cpp_source.html#l00379">isValid()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">readSpeciesParam()</a>.</p>
 
-<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00041">HomopolymerSG::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="HomopolymerSG_8cpp_source.html#l00041">McMd::HomopolymerSG::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3d929477fef71d52c9c6df2ba2d50841"></a><!-- doxytag: member="McMd::Species::setId" ref="a3d929477fef71d52c9c6df2ba2d50841" args="(int id)" -->
+<a class="anchor" id="a3d884d6e1819e8ef1d3b98f7ad6ae7bd"></a><!-- doxytag: member="McMd::Species::setId" ref="a3d884d6e1819e8ef1d3b98f7ad6ae7bd" args="(int id)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setId </td>
+          <td class="memname">void McMd::Species::setId </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
@@ -356,16 +356,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8cpp_source.html#l00232">232</a> of file <a class="el" href="Species_8cpp_source.html">Species.cpp</a>.</p>
 
-<p>References <a class="el" href="Species_8h_source.html#l00554">Species::id()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Species_8h_source.html#l00554">id()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac91579bd63979a294891d330a5533838"></a><!-- doxytag: member="McMd::Species::nAtom" ref="ac91579bd63979a294891d330a5533838" args="() const " -->
+<a class="anchor" id="a7ff59e6b9183670bc88c51d92e20fc55"></a><!-- doxytag: member="McMd::Species::nAtom" ref="a7ff59e6b9183670bc88c51d92e20fc55" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nAtom </td>
+          <td class="memname">int McMd::Species::nAtom </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -378,16 +378,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00572">572</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00048">Linear::buildLinear()</a>, <a class="el" href="Ring_8cpp_source.html#l00028">Ring::buildRing()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">Simulation::isValid()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00042">PmcConfigIo::read()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">DdMdConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">DCDTrajectoryIo::readHeader()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00043">RingTetraRebridgeMove::readParam()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00039">EndSwapMove::readParam()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00047">CfbReptationMove::readParam()</a>, <a class="el" href="AtomMSD_8cpp_source.html#l00048">AtomMSD::readParam()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">LammpsConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">DdMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00048">McMd::Linear::buildLinear()</a>, <a class="el" href="Ring_8cpp_source.html#l00028">McMd::Ring::buildRing()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">McMd::Simulation::isValid()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00042">McMd::PmcConfigIo::read()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">McMd::LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">McMd::DdMdConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">McMd::DCDTrajectoryIo::readHeader()</a>, <a class="el" href="RingTetraRebridgeMove_8cpp_source.html#l00043">McMd::RingTetraRebridgeMove::readParam()</a>, <a class="el" href="EndSwapMove_8cpp_source.html#l00039">McMd::EndSwapMove::readParam()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00047">McMd::CfbReptationMove::readParam()</a>, <a class="el" href="AtomMSD_8cpp_source.html#l00048">McMd::AtomMSD::readParam()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">McMd::LammpsConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">McMd::DdMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a03a7ae70b3c47d3439a3459d072ad300"></a><!-- doxytag: member="McMd::Species::nBond" ref="a03a7ae70b3c47d3439a3459d072ad300" args="() const " -->
+<a class="anchor" id="a6baba7fcb17814145e7d425b55b254f5"></a><!-- doxytag: member="McMd::Species::nBond" ref="a6baba7fcb17814145e7d425b55b254f5" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nBond </td>
+          <td class="memname">int McMd::Species::nBond </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -400,16 +400,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00578">578</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00048">Linear::buildLinear()</a>, <a class="el" href="Ring_8cpp_source.html#l00028">Ring::buildRing()</a>, <a class="el" href="Species_8cpp_source.html#l00153">Species::getAtomBonds()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">Simulation::isValid()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">DdMdConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">DCDTrajectoryIo::readHeader()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00047">CfbReptationMove::readParam()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">LammpsConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">DdMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00048">McMd::Linear::buildLinear()</a>, <a class="el" href="Ring_8cpp_source.html#l00028">McMd::Ring::buildRing()</a>, <a class="el" href="Species_8cpp_source.html#l00153">getAtomBonds()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">McMd::Simulation::isValid()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">McMd::LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">McMd::DdMdConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">McMd::DCDTrajectoryIo::readHeader()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00047">McMd::CfbReptationMove::readParam()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00169">McMd::LammpsConfigIo::write()</a>, and <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00102">McMd::DdMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="addb10a81097e9f45c67d1997eeb0b823"></a><!-- doxytag: member="McMd::Species::atomTypeId" ref="addb10a81097e9f45c67d1997eeb0b823" args="(int iAtom) const " -->
+<a class="anchor" id="aa25843142bad3e2505466c79ca23df7f"></a><!-- doxytag: member="McMd::Species::atomTypeId" ref="aa25843142bad3e2505466c79ca23df7f" args="(int iAtom) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int atomTypeId </td>
+          <td class="memname">int McMd::Species::atomTypeId </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>iAtom</em></td><td>)</td>
@@ -429,16 +429,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00600">600</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">Simulation::isValid()</a>, and <a class="el" href="CfbReptationMove_8cpp_source.html#l00047">CfbReptationMove::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">McMd::Simulation::isValid()</a>, and <a class="el" href="CfbReptationMove_8cpp_source.html#l00047">McMd::CfbReptationMove::readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afcc3ac548c6b552e035426ef3108a380"></a><!-- doxytag: member="McMd::Species::speciesBond" ref="afcc3ac548c6b552e035426ef3108a380" args="(int iBond) const " -->
+<a class="anchor" id="a411088bd3d19359017145a54a968a80b"></a><!-- doxytag: member="McMd::Species::speciesBond" ref="a411088bd3d19359017145a54a968a80b" args="(int iBond) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classMcMd_1_1SpeciesGroup.html">Species::SpeciesBond</a> &amp; speciesBond </td>
+          <td class="memname">const <a class="el" href="classMcMd_1_1SpeciesGroup.html">Species::SpeciesBond</a> &amp; McMd::Species::speciesBond </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>iBond</em></td><td>)</td>
@@ -458,16 +458,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00606">606</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00379">Species::isValid()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">Simulation::isValid()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00047">CfbReptationMove::readParam()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">Species::readSpeciesParam()</a>.</p>
+<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00379">isValid()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">McMd::Simulation::isValid()</a>, <a class="el" href="CfbReptationMove_8cpp_source.html#l00047">McMd::CfbReptationMove::readParam()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">readSpeciesParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8d5610c3c568c1f4509a836b8a54f736"></a><!-- doxytag: member="McMd::Species::getAtomBonds" ref="a8d5610c3c568c1f4509a836b8a54f736" args="(const Atom &amp;atom, AtomBondArray &amp;bonds) const " -->
+<a class="anchor" id="a49506e13656db7da5bf2e9824720a263"></a><!-- doxytag: member="McMd::Species::getAtomBonds" ref="a49506e13656db7da5bf2e9824720a263" args="(const Atom &amp;atom, AtomBondArray &amp;bonds) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void getAtomBonds </td>
+          <td class="memname">void McMd::Species::getAtomBonds </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em>, </td>
@@ -498,18 +498,18 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8cpp_source.html#l00153">153</a> of file <a class="el" href="Species_8cpp_source.html">Species.cpp</a>.</p>
 
-<p>References <a class="el" href="FSArray_8h_source.html#l00258">FSArray&lt; Data, Capacity &gt;::append()</a>, <a class="el" href="Molecule_8h_source.html#l00471">Molecule::atom()</a>, <a class="el" href="Molecule_8h_source.html#l00482">Molecule::bond()</a>, <a class="el" href="FSArray_8h_source.html#l00271">FSArray&lt; Data, Capacity &gt;::clear()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00299">Atom::molecule()</a>, <a class="el" href="Species_8h_source.html#l00578">Species::nBond()</a>, <a class="el" href="Species_8h_source.html#l00372">Species::nBond_</a>, and <a class="el" href="Molecule_8h_source.html#l00414">Molecule::species()</a>.</p>
+<p>References <a class="el" href="FSArray_8h_source.html#l00258">Util::FSArray&lt; Data, Capacity &gt;::append()</a>, <a class="el" href="Molecule_8h_source.html#l00471">McMd::Molecule::atom()</a>, <a class="el" href="Molecule_8h_source.html#l00482">McMd::Molecule::bond()</a>, <a class="el" href="FSArray_8h_source.html#l00271">Util::FSArray&lt; Data, Capacity &gt;::clear()</a>, <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00299">McMd::Atom::molecule()</a>, <a class="el" href="Species_8h_source.html#l00578">nBond()</a>, <a class="el" href="Species_8h_source.html#l00372">nBond_</a>, and <a class="el" href="Molecule_8h_source.html#l00414">McMd::Molecule::species()</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00271">BondPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, and <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00049">GroupRebridgeBase::tetraEnergy()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00271">McMd::BondPotentialImpl&lt; Interaction &gt;::atomEnergy()</a>, and <a class="el" href="GroupRebridgeBase_8cpp_source.html#l00049">McMd::GroupRebridgeBase::tetraEnergy()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a90f27faa15c854aa1b94dc391ac7ee1d"></a><!-- doxytag: member="McMd::Species::generateMolecules" ref="a90f27faa15c854aa1b94dc391ac7ee1d" args="(int nMolecule, DArray&lt; double &gt; exclusionRadius, System &amp;system, BondPotential *bondPotentialPtr, const Boundary &amp;boundary)" -->
+<a class="anchor" id="a7856fdf81aaba0eea72498deffb38664"></a><!-- doxytag: member="McMd::Species::generateMolecules" ref="a7856fdf81aaba0eea72498deffb38664" args="(int nMolecule, DArray&lt; double &gt; exclusionRadius, System &amp;system, BondPotential *bondPotentialPtr, const Boundary &amp;boundary)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void generateMolecules </td>
+          <td class="memname">void McMd::Species::generateMolecules </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>nMolecule</em>, </td>
@@ -560,22 +560,22 @@ Static Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classMcMd_1_1Linear.html#a90f27faa15c854aa1b94dc391ac7ee1d">Linear</a>.</p>
+<p>Reimplemented in <a class="el" href="classMcMd_1_1Linear.html#ae9190ad60c8a5c58ede0165aed0ada84">McMd::Linear</a>.</p>
 
 <p>Definition at line <a class="el" href="Species_8cpp_source.html#l00604">604</a> of file <a class="el" href="Species_8cpp_source.html">Species.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00191">MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00225">McSimulation::readCommands()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00191">McMd::MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00225">McMd::McSimulation::readCommands()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae0c063cfb2479f614be43b9d2f92ba63"></a><!-- doxytag: member="McMd::Species::id" ref="ae0c063cfb2479f614be43b9d2f92ba63" args="() const " -->
+<a class="anchor" id="a24f3b1e8df801868d8afde9997cacf61"></a><!-- doxytag: member="McMd::Species::id" ref="a24f3b1e8df801868d8afde9997cacf61" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int id </td>
+          <td class="memname">int McMd::Species::id </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -588,16 +588,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00554">554</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00379">Species::isValid()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">MdPairEnergyCoefficients::sample()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00162">RingOctaRebridgeMove::scanBridge()</a>, <a class="el" href="Species_8cpp_source.html#l00232">Species::setId()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00379">isValid()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">McMd::MdPairEnergyCoefficients::sample()</a>, <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00162">McMd::RingOctaRebridgeMove::scanBridge()</a>, <a class="el" href="Species_8cpp_source.html#l00232">setId()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMd::McMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a104736719cd4e5f21c25705c77064dde"></a><!-- doxytag: member="McMd::Species::capacity" ref="a104736719cd4e5f21c25705c77064dde" args="() const " -->
+<a class="anchor" id="a669f4a6f99f5986cb8dcc0e4e09a0bf7"></a><!-- doxytag: member="McMd::Species::capacity" ref="a669f4a6f99f5986cb8dcc0e4e09a0bf7" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int capacity </td>
+          <td class="memname">int McMd::Species::capacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -610,16 +610,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00560">560</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00187">Linear::generateMolecules()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">Simulation::isValid()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">DdMdConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">DCDTrajectoryIo::readFrame()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">DCDTrajectoryIo::readHeader()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00061">MdPairEnergyCoefficients::readParam()</a>, <a class="el" href="AtomMSD_8cpp_source.html#l00048">AtomMSD::readParam()</a>, and <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">MdPairEnergyCoefficients::sample()</a>.</p>
+<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00187">McMd::Linear::generateMolecules()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">McMd::Simulation::isValid()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">McMd::LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">McMd::DdMdConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">McMd::DCDTrajectoryIo::readFrame()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">McMd::DCDTrajectoryIo::readHeader()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00061">McMd::MdPairEnergyCoefficients::readParam()</a>, <a class="el" href="AtomMSD_8cpp_source.html#l00048">McMd::AtomMSD::readParam()</a>, and <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">McMd::MdPairEnergyCoefficients::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5c347060621ccff81193a1674ae34891"></a><!-- doxytag: member="McMd::Species::reservoir" ref="a5c347060621ccff81193a1674ae34891" args="()" -->
+<a class="anchor" id="a5a13decdb8d26f4ade55c98e1cdc61e2"></a><!-- doxytag: member="McMd::Species::reservoir" ref="a5a13decdb8d26f4ade55c98e1cdc61e2" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1ArrayStack.html">Species::Reservoir</a> &amp; reservoir </td>
+          <td class="memname"><a class="el" href="classUtil_1_1ArrayStack.html">Species::Reservoir</a> &amp; McMd::Species::reservoir </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -633,16 +633,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00566">566</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00187">Linear::generateMolecules()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00042">PmcConfigIo::read()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00049">McMdConfigIo::read()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">DdMdConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">DCDTrajectoryIo::readHeader()</a>, <a class="el" href="System_8cpp_source.html#l00674">System::removeAllMolecules()</a>, and <a class="el" href="mcMd_2simulation_2serialize_8h_source.html#l00029">System::serialize()</a>.</p>
+<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00187">McMd::Linear::generateMolecules()</a>, <a class="el" href="PmcConfigIo_8cpp_source.html#l00042">McMd::PmcConfigIo::read()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00049">McMd::McMdConfigIo::read()</a>, <a class="el" href="LammpsConfigIo_8cpp_source.html#l00045">McMd::LammpsConfigIo::read()</a>, <a class="el" href="mcMd_2configIos_2DdMdConfigIo_8cpp_source.html#l00045">McMd::DdMdConfigIo::read()</a>, <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">McMd::DCDTrajectoryIo::readHeader()</a>, <a class="el" href="System_8cpp_source.html#l00674">McMd::System::removeAllMolecules()</a>, and <a class="el" href="mcMd_2simulation_2serialize_8h_source.html#l00029">McMd::System::serialize()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aac1b70a2ed67ead038c4d3f5ac4d8a81"></a><!-- doxytag: member="McMd::Species::isValid" ref="aac1b70a2ed67ead038c4d3f5ac4d8a81" args="() const " -->
+<a class="anchor" id="a733a73f803ada53575fe62a4aa882d05"></a><!-- doxytag: member="McMd::Species::isValid" ref="a733a73f803ada53575fe62a4aa882d05" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isValid </td>
+          <td class="memname">bool McMd::Species::isValid </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -655,18 +655,18 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8cpp_source.html#l00379">379</a> of file <a class="el" href="Species_8cpp_source.html">Species.cpp</a>.</p>
 
-<p>References <a class="el" href="SpeciesGroup_8h_source.html#l00095">SpeciesGroup&lt; NAtom &gt;::atomId()</a>, <a class="el" href="Species_8h_source.html#l00334">Species::atomTypeIds_</a>, <a class="el" href="Species_8h_source.html#l00554">Species::id()</a>, <a class="el" href="DArray_8h_source.html#l00258">DArray&lt; Data &gt;::isAllocated()</a>, <a class="el" href="ArrayStack_8h_source.html#l00257">ArrayStack&lt; Data &gt;::isAllocated()</a>, <a class="el" href="Species_8h_source.html#l00628">Species::isMutable()</a>, <a class="el" href="ArrayStack_8h_source.html#l00221">ArrayStack&lt; Data &gt;::isValid()</a>, <a class="el" href="Species_8h_source.html#l00367">Species::nAtom_</a>, <a class="el" href="Species_8h_source.html#l00372">Species::nBond_</a>, <a class="el" href="Species_8h_source.html#l00606">Species::speciesBond()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="SpeciesGroup_8h_source.html#l00095">McMd::SpeciesGroup&lt; NAtom &gt;::atomId()</a>, <a class="el" href="Species_8h_source.html#l00334">atomTypeIds_</a>, <a class="el" href="Species_8h_source.html#l00554">id()</a>, <a class="el" href="DArray_8h_source.html#l00258">Util::DArray&lt; Data &gt;::isAllocated()</a>, <a class="el" href="ArrayStack_8h_source.html#l00257">Util::ArrayStack&lt; Data &gt;::isAllocated()</a>, <a class="el" href="Species_8h_source.html#l00628">isMutable()</a>, <a class="el" href="ArrayStack_8h_source.html#l00221">Util::ArrayStack&lt; Data &gt;::isValid()</a>, <a class="el" href="Species_8h_source.html#l00367">nAtom_</a>, <a class="el" href="Species_8h_source.html#l00372">nBond_</a>, <a class="el" href="Species_8h_source.html#l00606">speciesBond()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00055">Species::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00055">readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad687aabba553d1c66bfc253ec7e5bd05"></a><!-- doxytag: member="McMd::Species::isMutable" ref="ad687aabba553d1c66bfc253ec7e5bd05" args="() const " -->
+<a class="anchor" id="a196a2b822968ba57d14a09bb0833a5b4"></a><!-- doxytag: member="McMd::Species::isMutable" ref="a196a2b822968ba57d14a09bb0833a5b4" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool isMutable </td>
+          <td class="memname">bool McMd::Species::isMutable </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -679,16 +679,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00628">628</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00379">Species::isValid()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">Simulation::isValid()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00049">McMdConfigIo::read()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00379">isValid()</a>, <a class="el" href="mcMd_2simulation_2Simulation_8cpp_source.html#l00703">McMd::Simulation::isValid()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00049">McMd::McMdConfigIo::read()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMd::McMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8fb83fdaa519051889f8fe121f46acc9"></a><!-- doxytag: member="McMd::Species::mutator" ref="a8fb83fdaa519051889f8fe121f46acc9" args="()" -->
+<a class="anchor" id="acab56ccef7f5e9a05e61fb35d88b1a96"></a><!-- doxytag: member="McMd::Species::mutator" ref="acab56ccef7f5e9a05e61fb35d88b1a96" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1SpeciesMutator.html">SpeciesMutator</a> &amp; mutator </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1SpeciesMutator.html">SpeciesMutator</a> &amp; McMd::Species::mutator </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -701,16 +701,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00634">634</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00053">HomopolymerSemiGrandMove::move()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00049">McMdConfigIo::read()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="HomopolymerSemiGrandMove_8cpp_source.html#l00053">McMd::HomopolymerSemiGrandMove::move()</a>, <a class="el" href="McMdConfigIo_8cpp_source.html#l00049">McMd::McMdConfigIo::read()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMd::McMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a02e9577ec42da7be4d2ed79a13f654e3"></a><!-- doxytag: member="McMd::Species::readSpeciesParam" ref="a02e9577ec42da7be4d2ed79a13f654e3" args="(std::istream &amp;in)" -->
+<a class="anchor" id="ae0689a4a0707f09bde431b4c8cb26369"></a><!-- doxytag: member="McMd::Species::readSpeciesParam" ref="ae0689a4a0707f09bde431b4c8cb26369" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readSpeciesParam </td>
+          <td class="memname">void McMd::Species::readSpeciesParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -721,7 +721,7 @@ Static Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Define chemical structure for this <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a>. </p>
-<p>This virtual method must define the structure of a molecule of this species, and read any data required to do so. The default implementation <a class="el" href="classMcMd_1_1Species.html#a02e9577ec42da7be4d2ed79a13f654e3" title="Define chemical structure for this Species.">Species::readSpeciesParam</a> reads nAtom_, nBond_, nAngle_, and the elements of the arrays atomTypeIds_ and speciesBonds_, speciesAngles_.</p>
+<p>This virtual method must define the structure of a molecule of this species, and read any data required to do so. The default implementation <a class="el" href="classMcMd_1_1Species.html#ae0689a4a0707f09bde431b4c8cb26369" title="Define chemical structure for this Species.">Species::readSpeciesParam</a> reads nAtom_, nBond_, nAngle_, and the elements of the arrays atomTypeIds_ and speciesBonds_, speciesAngles_.</p>
 <p>Re-implementations of this method by subclasses may hard-code some or all of the information contained in these variables, and may define a more compact file format for any parameters that are read from file.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -730,22 +730,22 @@ Static Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classMcMd_1_1Diblock.html#a02e9577ec42da7be4d2ed79a13f654e3">Diblock</a>, <a class="el" href="classMcMd_1_1Homopolymer.html#a02e9577ec42da7be4d2ed79a13f654e3">Homopolymer</a>, <a class="el" href="classMcMd_1_1HomopolymerSG.html#a02e9577ec42da7be4d2ed79a13f654e3">HomopolymerSG</a>, <a class="el" href="classMcMd_1_1HomoRing.html#a02e9577ec42da7be4d2ed79a13f654e3">HomoRing</a>, and <a class="el" href="classMcMd_1_1Point.html#a02e9577ec42da7be4d2ed79a13f654e3">Point</a>.</p>
+<p>Reimplemented in <a class="el" href="classMcMd_1_1Diblock.html#a4d2f4df4089e136ac5a66eb881c5e315">McMd::Diblock</a>, <a class="el" href="classMcMd_1_1Homopolymer.html#ad4676f7e70b50ec70347d2b64ccf2c67">McMd::Homopolymer</a>, <a class="el" href="classMcMd_1_1HomopolymerSG.html#a1ba316f26a7eccb81d4668e52de9550b">McMd::HomopolymerSG</a>, <a class="el" href="classMcMd_1_1HomoRing.html#a38130f58a1f25f115c8773b536d186ca">McMd::HomoRing</a>, and <a class="el" href="classMcMd_1_1Point.html#ac921291c79265cc465591c65c3fb9894">McMd::Point</a>.</p>
 
 <p>Definition at line <a class="el" href="Species_8cpp_source.html#l00073">73</a> of file <a class="el" href="Species_8cpp_source.html">Species.cpp</a>.</p>
 
-<p>References <a class="el" href="Species_8cpp_source.html#l00250">Species::allocate()</a>, <a class="el" href="SpeciesGroup_8h_source.html#l00095">SpeciesGroup&lt; NAtom &gt;::atomId()</a>, <a class="el" href="Species_8h_source.html#l00334">Species::atomTypeIds_</a>, <a class="el" href="Species_8h_source.html#l00367">Species::nAtom_</a>, <a class="el" href="Species_8h_source.html#l00372">Species::nBond_</a>, <a class="el" href="Species_8h_source.html#l00606">Species::speciesBond()</a>, and <a class="el" href="Species_8h_source.html#l00342">Species::speciesBonds_</a>.</p>
+<p>References <a class="el" href="Species_8cpp_source.html#l00250">allocate()</a>, <a class="el" href="SpeciesGroup_8h_source.html#l00095">McMd::SpeciesGroup&lt; NAtom &gt;::atomId()</a>, <a class="el" href="Species_8h_source.html#l00334">atomTypeIds_</a>, <a class="el" href="Species_8h_source.html#l00367">nAtom_</a>, <a class="el" href="Species_8h_source.html#l00372">nBond_</a>, <a class="el" href="Species_8h_source.html#l00606">speciesBond()</a>, and <a class="el" href="Species_8h_source.html#l00342">speciesBonds_</a>.</p>
 
-<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00055">Species::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00055">readParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="acaefe811b78a2fdc4a0dba0c4029c3ef"></a><!-- doxytag: member="McMd::Species::allocate" ref="acaefe811b78a2fdc4a0dba0c4029c3ef" args="()" -->
+<a class="anchor" id="a5437893d22fc7b58ed35c5c442b2eaca"></a><!-- doxytag: member="McMd::Species::allocate" ref="a5437893d22fc7b58ed35c5c442b2eaca" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void McMd::Species::allocate </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [protected]</code></td>
@@ -760,18 +760,18 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8cpp_source.html#l00250">250</a> of file <a class="el" href="Species_8cpp_source.html">Species.cpp</a>.</p>
 
-<p>References <a class="el" href="DArray_8h_source.html#l00226">DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="Species_8h_source.html#l00334">Species::atomTypeIds_</a>, <a class="el" href="Species_8h_source.html#l00367">Species::nAtom_</a>, <a class="el" href="Species_8h_source.html#l00372">Species::nBond_</a>, and <a class="el" href="Species_8h_source.html#l00342">Species::speciesBonds_</a>.</p>
+<p>References <a class="el" href="DArray_8h_source.html#l00226">Util::DArray&lt; Data &gt;::allocate()</a>, <a class="el" href="Species_8h_source.html#l00334">atomTypeIds_</a>, <a class="el" href="Species_8h_source.html#l00367">nAtom_</a>, <a class="el" href="Species_8h_source.html#l00372">nBond_</a>, and <a class="el" href="Species_8h_source.html#l00342">speciesBonds_</a>.</p>
 
-<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00048">Linear::buildLinear()</a>, <a class="el" href="Ring_8cpp_source.html#l00028">Ring::buildRing()</a>, <a class="el" href="CfbRebridgeMove_8cpp_source.html#l00042">CfbRebridgeMove::readParam()</a>, <a class="el" href="CfbEndMove_8cpp_source.html#l00042">CfbEndMove::readParam()</a>, <a class="el" href="CfbDoubleRebridgeMove_8cpp_source.html#l00043">CfbDoubleRebridgeMove::readParam()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">Species::readSpeciesParam()</a>.</p>
+<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00048">McMd::Linear::buildLinear()</a>, <a class="el" href="Ring_8cpp_source.html#l00028">McMd::Ring::buildRing()</a>, <a class="el" href="CfbRebridgeMove_8cpp_source.html#l00042">McMd::CfbRebridgeMove::readParam()</a>, <a class="el" href="CfbEndMove_8cpp_source.html#l00042">McMd::CfbEndMove::readParam()</a>, <a class="el" href="CfbDoubleRebridgeMove_8cpp_source.html#l00043">McMd::CfbDoubleRebridgeMove::readParam()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">readSpeciesParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afd63c7961866e4362658f5ee9a894d87"></a><!-- doxytag: member="McMd::Species::setAtomType" ref="afd63c7961866e4362658f5ee9a894d87" args="(int atomId, int atomType)" -->
+<a class="anchor" id="a5244d3eab99baf79b4b270f3abd168a6"></a><!-- doxytag: member="McMd::Species::setAtomType" ref="a5244d3eab99baf79b4b270f3abd168a6" args="(int atomId, int atomType)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setAtomType </td>
+          <td class="memname">void McMd::Species::setAtomType </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>atomId</em>, </td>
@@ -802,18 +802,18 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8cpp_source.html#l00283">283</a> of file <a class="el" href="Species_8cpp_source.html">Species.cpp</a>.</p>
 
-<p>References <a class="el" href="Species_8h_source.html#l00334">Species::atomTypeIds_</a>.</p>
+<p>References <a class="el" href="Species_8h_source.html#l00334">atomTypeIds_</a>.</p>
 
-<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00048">Linear::buildLinear()</a>, and <a class="el" href="Ring_8cpp_source.html#l00028">Ring::buildRing()</a>.</p>
+<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00048">McMd::Linear::buildLinear()</a>, and <a class="el" href="Ring_8cpp_source.html#l00028">McMd::Ring::buildRing()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a05616ad5c8d4a6ee45eee1015fd46517"></a><!-- doxytag: member="McMd::Species::makeBond" ref="a05616ad5c8d4a6ee45eee1015fd46517" args="(int bondId, int atomId1, int atomId2, int bondType)" -->
+<a class="anchor" id="a2d72cd7d93ac802ce5f567e4a41eb152"></a><!-- doxytag: member="McMd::Species::makeBond" ref="a2d72cd7d93ac802ce5f567e4a41eb152" args="(int bondId, int atomId1, int atomId2, int bondType)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void makeBond </td>
+          <td class="memname">void McMd::Species::makeBond </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>bondId</em>, </td>
@@ -859,18 +859,18 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8cpp_source.html#l00291">291</a> of file <a class="el" href="Species_8cpp_source.html">Species.cpp</a>.</p>
 
-<p>References <a class="el" href="Species_8h_source.html#l00367">Species::nAtom_</a>, <a class="el" href="Species_8h_source.html#l00372">Species::nBond_</a>, and <a class="el" href="Species_8h_source.html#l00342">Species::speciesBonds_</a>.</p>
+<p>References <a class="el" href="Species_8h_source.html#l00367">nAtom_</a>, <a class="el" href="Species_8h_source.html#l00372">nBond_</a>, and <a class="el" href="Species_8h_source.html#l00342">speciesBonds_</a>.</p>
 
-<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00048">Linear::buildLinear()</a>, and <a class="el" href="Ring_8cpp_source.html#l00028">Ring::buildRing()</a>.</p>
+<p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00048">McMd::Linear::buildLinear()</a>, and <a class="el" href="Ring_8cpp_source.html#l00028">McMd::Ring::buildRing()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="abf8ed352e21a51378425854fed701cc0"></a><!-- doxytag: member="McMd::Species::setMutatorPtr" ref="abf8ed352e21a51378425854fed701cc0" args="(SpeciesMutator *mutatorPtr)" -->
+<a class="anchor" id="aafebfcbd4a71bb8bcb7486836a6cf510"></a><!-- doxytag: member="McMd::Species::setMutatorPtr" ref="aafebfcbd4a71bb8bcb7486836a6cf510" args="(SpeciesMutator *mutatorPtr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setMutatorPtr </td>
+          <td class="memname">void McMd::Species::setMutatorPtr </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1SpeciesMutator.html">SpeciesMutator</a> *&#160;</td>
           <td class="paramname"><em>mutatorPtr</em></td><td>)</td>
@@ -881,7 +881,7 @@ Static Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Set a pointer to an associated <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a> for a mutable species. </p>
-<p>A mutable species must be implemented as a subclass of both <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> and <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a>. The constructor of any such class must call setMutatorPtr(this) to give the address of the <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a> subobject to the <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> subobject. If an instance of such a class is accessed through a Species* pointer, the <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a> is then be accessible via the <a class="el" href="classMcMd_1_1Species.html#a8fb83fdaa519051889f8fe121f46acc9" title="Return the species mutator object by reference.">Species::mutator()</a> method.</p>
+<p>A mutable species must be implemented as a subclass of both <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> and <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a>. The constructor of any such class must call setMutatorPtr(this) to give the address of the <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a> subobject to the <a class="el" href="classMcMd_1_1Species.html" title="A Species represents a set of chemically similar molecules.">Species</a> subobject. If an instance of such a class is accessed through a Species* pointer, the <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a> is then be accessible via the <a class="el" href="classMcMd_1_1Species.html#acab56ccef7f5e9a05e61fb35d88b1a96" title="Return the species mutator object by reference.">Species::mutator()</a> method.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">mutatorPtr</td><td>pointer to an associated <a class="el" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a> object </td></tr>
@@ -894,12 +894,12 @@ Static Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a441b7b6670bb2e3c61bf9a014baf2992"></a><!-- doxytag: member="McMd::Species::MaxBondPerAtom" ref="a441b7b6670bb2e3c61bf9a014baf2992" args="" -->
+<a class="anchor" id="a4f74b00cb21af0ab51a88bf74a77f446"></a><!-- doxytag: member="McMd::Species::MaxBondPerAtom" ref="a4f74b00cb21af0ab51a88bf74a77f446" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const int <a class="el" href="classMcMd_1_1Species.html#a441b7b6670bb2e3c61bf9a014baf2992">MaxBondPerAtom</a> = 4<code> [static]</code></td>
+          <td class="memname">const int <a class="el" href="classMcMd_1_1Species.html#a4f74b00cb21af0ab51a88bf74a77f446">McMd::Species::MaxBondPerAtom</a> = 4<code> [static]</code></td>
         </tr>
       </table>
 </div>
@@ -911,12 +911,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a977a0351e144ddeea032671e532b6d3d"></a><!-- doxytag: member="McMd::Species::MaxAnglePerAtom" ref="a977a0351e144ddeea032671e532b6d3d" args="" -->
+<a class="anchor" id="ae07e3e77c42f48b0fa33a5cf11b29739"></a><!-- doxytag: member="McMd::Species::MaxAnglePerAtom" ref="ae07e3e77c42f48b0fa33a5cf11b29739" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const int <a class="el" href="classMcMd_1_1Species.html#a977a0351e144ddeea032671e532b6d3d">MaxAnglePerAtom</a> = 18<code> [static]</code></td>
+          <td class="memname">const int <a class="el" href="classMcMd_1_1Species.html#ae07e3e77c42f48b0fa33a5cf11b29739">McMd::Species::MaxAnglePerAtom</a> = 18<code> [static]</code></td>
         </tr>
       </table>
 </div>
@@ -928,12 +928,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acf5b41c56b404908eba1be3a05b10602"></a><!-- doxytag: member="McMd::Species::MaxDihedralPerAtom" ref="acf5b41c56b404908eba1be3a05b10602" args="" -->
+<a class="anchor" id="ad947bfda180b8ab0ebcb0dbdd6dbe9db"></a><!-- doxytag: member="McMd::Species::MaxDihedralPerAtom" ref="ad947bfda180b8ab0ebcb0dbdd6dbe9db" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const int <a class="el" href="classMcMd_1_1Species.html#acf5b41c56b404908eba1be3a05b10602">MaxDihedralPerAtom</a> = 72<code> [static]</code></td>
+          <td class="memname">const int <a class="el" href="classMcMd_1_1Species.html#ad947bfda180b8ab0ebcb0dbdd6dbe9db">McMd::Species::MaxDihedralPerAtom</a> = 72<code> [static]</code></td>
         </tr>
       </table>
 </div>
@@ -945,12 +945,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af2414ca46b856cd6f066938cae9cdfcc"></a><!-- doxytag: member="McMd::Species::NullIndex" ref="af2414ca46b856cd6f066938cae9cdfcc" args="" -->
+<a class="anchor" id="afa569612950e2f59284983e976531b91"></a><!-- doxytag: member="McMd::Species::NullIndex" ref="afa569612950e2f59284983e976531b91" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const int <a class="el" href="classMcMd_1_1Species.html#af2414ca46b856cd6f066938cae9cdfcc">NullIndex</a> = -1<code> [static, protected]</code></td>
+          <td class="memname">const int <a class="el" href="classMcMd_1_1Species.html#afa569612950e2f59284983e976531b91">McMd::Species::NullIndex</a> = -1<code> [static, protected]</code></td>
         </tr>
       </table>
 </div>
@@ -962,12 +962,12 @@ Static Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af8ff275d100b53dff741c6905ab02405"></a><!-- doxytag: member="McMd::Species::atomTypeIds_" ref="af8ff275d100b53dff741c6905ab02405" args="" -->
+<a class="anchor" id="acbfb535c42ed32b2542cec1472c9b272"></a><!-- doxytag: member="McMd::Species::atomTypeIds_" ref="acbfb535c42ed32b2542cec1472c9b272" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;int&gt; <a class="el" href="classMcMd_1_1Species.html#af8ff275d100b53dff741c6905ab02405">atomTypeIds_</a><code> [protected]</code></td>
+          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;int&gt; <a class="el" href="classMcMd_1_1Species.html#acbfb535c42ed32b2542cec1472c9b272">McMd::Species::atomTypeIds_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -978,16 +978,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00334">334</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00250">Species::allocate()</a>, <a class="el" href="Species_8cpp_source.html#l00379">Species::isValid()</a>, <a class="el" href="Species_8cpp_source.html#l00073">Species::readSpeciesParam()</a>, and <a class="el" href="Species_8cpp_source.html#l00283">Species::setAtomType()</a>.</p>
+<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00250">allocate()</a>, <a class="el" href="Species_8cpp_source.html#l00379">isValid()</a>, <a class="el" href="Species_8cpp_source.html#l00073">readSpeciesParam()</a>, and <a class="el" href="Species_8cpp_source.html#l00283">setAtomType()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a55e355a25550b1fcb5d51efa3956018b"></a><!-- doxytag: member="McMd::Species::speciesBonds_" ref="a55e355a25550b1fcb5d51efa3956018b" args="" -->
+<a class="anchor" id="ab4f546965b9d1bcaa917b0b5fcb4a3fc"></a><!-- doxytag: member="McMd::Species::speciesBonds_" ref="ab4f546965b9d1bcaa917b0b5fcb4a3fc" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classMcMd_1_1SpeciesGroup.html">SpeciesBond</a>&gt; <a class="el" href="classMcMd_1_1Species.html#a55e355a25550b1fcb5d51efa3956018b">speciesBonds_</a><code> [protected]</code></td>
+          <td class="memname"><a class="el" href="classUtil_1_1DArray.html">DArray</a>&lt;<a class="el" href="classMcMd_1_1SpeciesGroup.html">SpeciesBond</a>&gt; <a class="el" href="classMcMd_1_1Species.html#ab4f546965b9d1bcaa917b0b5fcb4a3fc">McMd::Species::speciesBonds_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -998,16 +998,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00342">342</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00250">Species::allocate()</a>, <a class="el" href="Species_8cpp_source.html#l00291">Species::makeBond()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">Species::readSpeciesParam()</a>.</p>
+<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00250">allocate()</a>, <a class="el" href="Species_8cpp_source.html#l00291">makeBond()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">readSpeciesParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad690e1741e5b0d0092b00f1154d4c45f"></a><!-- doxytag: member="McMd::Species::nAtom_" ref="ad690e1741e5b0d0092b00f1154d4c45f" args="" -->
+<a class="anchor" id="a6cde003d8b6605012a622f966ea5ac9c"></a><!-- doxytag: member="McMd::Species::nAtom_" ref="a6cde003d8b6605012a622f966ea5ac9c" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classMcMd_1_1Species.html#ad690e1741e5b0d0092b00f1154d4c45f">nAtom_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classMcMd_1_1Species.html#a6cde003d8b6605012a622f966ea5ac9c">McMd::Species::nAtom_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -1017,16 +1017,16 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00367">367</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00250">Species::allocate()</a>, <a class="el" href="Species_8cpp_source.html#l00379">Species::isValid()</a>, <a class="el" href="Species_8cpp_source.html#l00291">Species::makeBond()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">Species::readSpeciesParam()</a>.</p>
+<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00250">allocate()</a>, <a class="el" href="Species_8cpp_source.html#l00379">isValid()</a>, <a class="el" href="Species_8cpp_source.html#l00291">makeBond()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">readSpeciesParam()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac7fb24a4c620d0eeeaa4c2cfd0cf903b"></a><!-- doxytag: member="McMd::Species::nBond_" ref="ac7fb24a4c620d0eeeaa4c2cfd0cf903b" args="" -->
+<a class="anchor" id="a3a7a7b73781cfb08f971573f7cb84d37"></a><!-- doxytag: member="McMd::Species::nBond_" ref="a3a7a7b73781cfb08f971573f7cb84d37" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classMcMd_1_1Species.html#ac7fb24a4c620d0eeeaa4c2cfd0cf903b">nBond_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classMcMd_1_1Species.html#a3a7a7b73781cfb08f971573f7cb84d37">McMd::Species::nBond_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -1036,7 +1036,7 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Species_8h_source.html#l00372">372</a> of file <a class="el" href="Species_8h_source.html">Species.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00250">Species::allocate()</a>, <a class="el" href="Species_8cpp_source.html#l00153">Species::getAtomBonds()</a>, <a class="el" href="Species_8cpp_source.html#l00379">Species::isValid()</a>, <a class="el" href="Species_8cpp_source.html#l00291">Species::makeBond()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">Species::readSpeciesParam()</a>.</p>
+<p>Referenced by <a class="el" href="Species_8cpp_source.html#l00250">allocate()</a>, <a class="el" href="Species_8cpp_source.html#l00153">getAtomBonds()</a>, <a class="el" href="Species_8cpp_source.html#l00379">isValid()</a>, <a class="el" href="Species_8cpp_source.html#l00291">makeBond()</a>, and <a class="el" href="Species_8cpp_source.html#l00073">readSpeciesParam()</a>.</p>
 
 </div>
 </div>
@@ -1045,7 +1045,7 @@ Static Protected Attributes</h2></td></tr>
 <li><a class="el" href="Species_8cpp_source.html">Species.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:57 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:29 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

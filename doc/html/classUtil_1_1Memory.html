@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Memory Class Reference</title>
+<title>Simpatico: Util::Memory Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,12 +49,12 @@
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>Memory Class Reference</h1>  </div>
+<h1>Util::Memory Class Reference</h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Memory" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Provides method to allocate array. </p>
-<p>The <a class="el" href="classUtil_1_1Memory.html#a9cff6658869b1e33603608194732fe7c" title="Allocate a C array.">Memory::allocate()</a> method invokes the new operator within a try catch block, and keeps track of the total memory allocated. </p>
+<p>The <a class="el" href="classUtil_1_1Memory.html#ae18e5528b402ff46fcd4cdfb33cc0981" title="Allocate a C array.">Memory::allocate()</a> method invokes the new operator within a try catch block, and keeps track of the total memory allocated. </p>
 
 <p>Definition at line <a class="el" href="Memory_8h_source.html#l00025">25</a> of file <a class="el" href="Memory_8h_source.html">Memory.h</a>.</p>
 </div>
@@ -65,23 +65,25 @@
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;typename Data &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1Memory.html#a9cff6658869b1e33603608194732fe7c">allocate</a> (Data *&amp;ptr, size_t size)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a C array.  <a href="#a9cff6658869b1e33603608194732fe7c"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1Memory.html#ae18e5528b402ff46fcd4cdfb33cc0981">allocate</a> (Data *&amp;ptr, size_t size)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a C array.  <a href="#ae18e5528b402ff46fcd4cdfb33cc0981"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;typename Data &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1Memory.html#a272faf5e6054d2b34f1f9e214c9603d2">deallocate</a> (Data *&amp;ptr, size_t size)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a C array.  <a href="#a272faf5e6054d2b34f1f9e214c9603d2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Memory.html#a892dbf5065fc6651654e6e463cc660e8">totalAllocated</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total amount of memory allocated thus far.  <a href="#a892dbf5065fc6651654e6e463cc660e8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Memory.html#a608e10d093425c9228f10ed3c4994598">initStatic</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this just to guarantee initialization of static memory.  <a href="#a608e10d093425c9228f10ed3c4994598"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1Memory.html#a69c495b5608ec024ad9c88430c2282ac">deallocate</a> (Data *&amp;ptr, size_t size)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate a C array.  <a href="#a69c495b5608ec024ad9c88430c2282ac"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Memory.html#a149d9ebfc7efa798938ea8e65c147bf4">totalAllocated</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total amount of memory allocated thus far.  <a href="#a149d9ebfc7efa798938ea8e65c147bf4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Memory.html#acefa80470b03b3ccc2469aad3d38cd04">initStatic</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Call this just to guarantee initialization of static memory.  <a href="#acefa80470b03b3ccc2469aad3d38cd04"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a9cff6658869b1e33603608194732fe7c"></a><!-- doxytag: member="Util::Memory::allocate" ref="a9cff6658869b1e33603608194732fe7c" args="(Data *&amp;ptr, size_t size)" -->
+<a class="anchor" id="ae18e5528b402ff46fcd4cdfb33cc0981"></a><!-- doxytag: member="Util::Memory::allocate" ref="ae18e5528b402ff46fcd4cdfb33cc0981" args="(Data *&amp;ptr, size_t size)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void allocate </td>
+          <td class="memname">void Util::Memory::allocate </td>
           <td>(</td>
           <td class="paramtype">Data *&amp;&#160;</td>
           <td class="paramname"><em>ptr</em>, </td>
@@ -108,12 +110,14 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a272faf5e6054d2b34f1f9e214c9603d2"></a><!-- doxytag: member="Util::Memory::deallocate" ref="a272faf5e6054d2b34f1f9e214c9603d2" args="(Data *&amp;ptr, size_t size)" -->
+<a class="anchor" id="a69c495b5608ec024ad9c88430c2282ac"></a><!-- doxytag: member="Util::Memory::deallocate" ref="a69c495b5608ec024ad9c88430c2282ac" args="(Data *&amp;ptr, size_t size)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void deallocate </td>
+          <td class="memname">void Util::Memory::deallocate </td>
           <td>(</td>
           <td class="paramtype">Data *&amp;&#160;</td>
           <td class="paramname"><em>ptr</em>, </td>
@@ -140,12 +144,12 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a892dbf5065fc6651654e6e463cc660e8"></a><!-- doxytag: member="Util::Memory::totalAllocated" ref="a892dbf5065fc6651654e6e463cc660e8" args="()" -->
+<a class="anchor" id="a149d9ebfc7efa798938ea8e65c147bf4"></a><!-- doxytag: member="Util::Memory::totalAllocated" ref="a149d9ebfc7efa798938ea8e65c147bf4" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">size_t totalAllocated </td>
+          <td class="memname">size_t Util::Memory::totalAllocated </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -160,12 +164,12 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a608e10d093425c9228f10ed3c4994598"></a><!-- doxytag: member="Util::Memory::initStatic" ref="a608e10d093425c9228f10ed3c4994598" args="()" -->
+<a class="anchor" id="acefa80470b03b3ccc2469aad3d38cd04"></a><!-- doxytag: member="Util::Memory::initStatic" ref="acefa80470b03b3ccc2469aad3d38cd04" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void initStatic </td>
+          <td class="memname">void Util::Memory::initStatic </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -188,7 +192,7 @@ Static Public Member Functions</h2></td></tr>
 <li><a class="el" href="Memory_8cpp_source.html">Memory.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

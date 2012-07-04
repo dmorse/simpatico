@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Tensor Class Reference</title>
+<title>Simpatico: Util::Tensor Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#friends">Friends</a>  </div>
   <div class="headertitle">
-<h1>Tensor Class Reference<div class="ingroups"><a class="el" href="group__Space__Module.html">Space (Vector, Tensor)</a></div></h1>  </div>
+<h1>Util::Tensor Class Reference<div class="ingroups"><a class="el" href="group__Space__Module.html">Space (Vector, Tensor)</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Tensor" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -64,65 +64,65 @@
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a09dacbd79d16b74ba8698e27ae3dc42b">Tensor</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a09dacbd79d16b74ba8698e27ae3dc42b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#ae7ef02deb3684a98ec467792e242124b">Tensor</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#ae7ef02deb3684a98ec467792e242124b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a4f72f3858fe239396561d333c8474c5b">Tensor</a> (double scalar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, initialize all elements to a scalar value.  <a href="#a4f72f3858fe239396561d333c8474c5b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a1180d4d302d8c1eb2b6dfb0102a863cd">Tensor</a> (const double a[][<a class="el" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7">Dimension</a>])</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <a class="el" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> from double [][Dimension] 2D C array.  <a href="#a1180d4d302d8c1eb2b6dfb0102a863cd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a742164de495b221bc10bf98b974df39c">Tensor</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a742164de495b221bc10bf98b974df39c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a496bdc1bf0a852ca414cf29f42c558e2">Tensor</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#a496bdc1bf0a852ca414cf29f42c558e2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a719e784eec4529cc0935da8ac924725a">Tensor</a> (double scalar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, initialize all elements to a scalar value.  <a href="#a719e784eec4529cc0935da8ac924725a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a3ba10f8939f5d9521194d3cadd844ab6">Tensor</a> (const double a[][<a class="el" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7">Dimension</a>])</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct <a class="el" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> from double [][Dimension] 2D C array.  <a href="#a3ba10f8939f5d9521194d3cadd844ab6"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Assignment</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a45a02e3f9a5eba1735af2a72a0f61842">operator=</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy assignment.  <a href="#a45a02e3f9a5eba1735af2a72a0f61842"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a4349a7bda8fff8bb7d1eae9dd1d03d37">operator=</a> (const double a[][<a class="el" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7">Dimension</a>])</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment from C double [Dimension][Dimension] 2D array.  <a href="#a4349a7bda8fff8bb7d1eae9dd1d03d37"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#ab4d94f20d3b11ca7f7997854fee27c59">operator=</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy assignment.  <a href="#ab4d94f20d3b11ca7f7997854fee27c59"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a9623859327629bb7a4c607441ec5f2c5">operator=</a> (const double a[][<a class="el" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7">Dimension</a>])</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment from C double [Dimension][Dimension] 2D array.  <a href="#a9623859327629bb7a4c607441ec5f2c5"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Arithmetic Assignment</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a834b7b217e0b49f4c5604741bf623b11">operator+=</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;dt)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add tensor dt to this tensor.  <a href="#a834b7b217e0b49f4c5604741bf623b11"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a1bead6fa2f0cd2dbe6d0573b9a39c30b">operator-=</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;dt)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtract tensor dt from this tensor.  <a href="#a1bead6fa2f0cd2dbe6d0573b9a39c30b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a2973f1e626cbfbf2345118fafbdac72c">operator*=</a> (double s)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply this tensor by scalar s.  <a href="#a2973f1e626cbfbf2345118fafbdac72c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#ab2252222282d488c4210df0bc99f68b4">operator/=</a> (double s)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Divide this tensor by scalar s.  <a href="#ab2252222282d488c4210df0bc99f68b4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#ac98b79462df1e9c5587f7cc705ce6de0">operator+=</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;dt)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add tensor dt to this tensor.  <a href="#ac98b79462df1e9c5587f7cc705ce6de0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a9e4809aba09d563d81ed3b0adc1aecd8">operator-=</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;dt)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtract tensor dt from this tensor.  <a href="#a9e4809aba09d563d81ed3b0adc1aecd8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#aaa8b59bdbb55943de626045ba4ad3aa8">operator*=</a> (double s)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply this tensor by scalar s.  <a href="#aaa8b59bdbb55943de626045ba4ad3aa8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a35bf37b54c6704459183df0829e03d32">operator/=</a> (double s)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Divide this tensor by scalar s.  <a href="#a35bf37b54c6704459183df0829e03d32"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Array Subscript</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const double &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#ae04710d0da08dde5636165284bd9b94a">operator()</a> (int i, int j) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return one Cartesian element by value.  <a href="#ae04710d0da08dde5636165284bd9b94a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a038b7612115d760c469aef103760c8c9">operator()</a> (int i, int j)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to one element of the tensor.  <a href="#a038b7612115d760c469aef103760c8c9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const double &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a8225edb4c013bdf11cc82049736097a8">operator()</a> (int i, int j) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return one Cartesian element by value.  <a href="#a8225edb4c013bdf11cc82049736097a8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#aa6c03f6146d3ab0c9c3f65f15db3ddf1">operator()</a> (int i, int j)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a reference to one element of the tensor.  <a href="#aa6c03f6146d3ab0c9c3f65f15db3ddf1"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Tensor valued functions (result assigned to invoking object)</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a80c75ab0acf7709a2c7b966c436003ff">zero</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all elements of this tensor to zero.  <a href="#a80c75ab0acf7709a2c7b966c436003ff"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a9c9db9c312bc4b1170ce5b2b07b803a3">add</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t1, const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t2)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add tensors t1 and t2.  <a href="#a9c9db9c312bc4b1170ce5b2b07b803a3"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#ab5986f141d661dc9d9f547af1c39ce33">subtract</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t1, const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t2)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtract tensor t2 from t1.  <a href="#ab5986f141d661dc9d9f547af1c39ce33"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a17f58ab63e5ac09c564a56b220afd6c5">multiply</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t, double s)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply a tensor t by a scalar s.  <a href="#a17f58ab63e5ac09c564a56b220afd6c5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a6358e6e9c1dfd73a087b13cccf666841">divide</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t, double s)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Divide tensor t by scalar s.  <a href="#a6358e6e9c1dfd73a087b13cccf666841"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#acade5de9231c390d9eba50f04bd83251">transpose</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute transpose of a tensor.  <a href="#acade5de9231c390d9eba50f04bd83251"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a8969921dba281b10bd926eef97045a6c">transpose</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute transpose of this tensor.  <a href="#a8969921dba281b10bd926eef97045a6c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#ab1c4f34169e28a9f063bad98e122eb72">symmetrize</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute symmetric part of a tensor.  <a href="#ab1c4f34169e28a9f063bad98e122eb72"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a0c55c353bdd3d884113f7ed703629fc7">symmetrize</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute symmetric part of this tensor.  <a href="#a0c55c353bdd3d884113f7ed703629fc7"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#afdb9d8254b36b073117c6cabef37f4c4">dyad</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;v1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;v2)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create dyad of two vectors.  <a href="#afdb9d8254b36b073117c6cabef37f4c4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#aac0c50df8b2fddfa0a2264e9b0866441">zero</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set all elements of this tensor to zero.  <a href="#aac0c50df8b2fddfa0a2264e9b0866441"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a4cea7d3360169503bbc6c611849d2b64">add</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t1, const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t2)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add tensors t1 and t2.  <a href="#a4cea7d3360169503bbc6c611849d2b64"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a75b8bb7a97457441188540abfc541f76">subtract</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t1, const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t2)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtract tensor t2 from t1.  <a href="#a75b8bb7a97457441188540abfc541f76"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a63c6e5a3ee3c7f6a3a517a109358203e">multiply</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t, double s)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiply a tensor t by a scalar s.  <a href="#a63c6e5a3ee3c7f6a3a517a109358203e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#abdcd1b61cffc679faf6bb3911c199948">divide</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t, double s)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Divide tensor t by scalar s.  <a href="#abdcd1b61cffc679faf6bb3911c199948"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#ac9942abf0a3805738acc1f866e4870b5">transpose</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute transpose of a tensor.  <a href="#ac9942abf0a3805738acc1f866e4870b5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#af7e15fba7a10a96e59d6e42f740fb185">transpose</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute transpose of this tensor.  <a href="#af7e15fba7a10a96e59d6e42f740fb185"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a1a34bb71f1b728afb8f28e84c8eb5466">symmetrize</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute symmetric part of a tensor.  <a href="#a1a34bb71f1b728afb8f28e84c8eb5466"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a70239ee5060596eaebcc3d7d3c76b8ff">symmetrize</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute symmetric part of this tensor.  <a href="#a70239ee5060596eaebcc3d7d3c76b8ff"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a7571741bc53301d594df62d27899a000">dyad</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;v1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;v2)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create dyad of two vectors.  <a href="#a7571741bc53301d594df62d27899a000"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Miscellaneous</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a8bb842348e5c75a1f359d97fc9bce207">trace</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return trace this tensor.  <a href="#a8bb842348e5c75a1f359d97fc9bce207"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a37fea5e6d7bda01b52050c9df048c5cd">trace</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return trace this tensor.  <a href="#a37fea5e6d7bda01b52050c9df048c5cd"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#af3f9bf257f28cbe86a4426162f843ed0">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#af3f9bf257f28cbe86a4426162f843ed0"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a390070739cdb38a698e2b2e6ec993579">operator==</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t1, const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t2)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality for Tensors.  <a href="#a390070739cdb38a698e2b2e6ec993579"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a93d24a9bf32d221e3518e6366ecc6013">operator==</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t1, const double t2[][<a class="el" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7">Dimension</a>])</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a93d24a9bf32d221e3518e6366ecc6013">operator==</a> (const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;t1, const double t2[][<a class="el" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7">Dimension</a>])</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality of <a class="el" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> and 2D C array.  <a href="#a93d24a9bf32d221e3518e6366ecc6013"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#ada145e28745704482ec13be3acfbe3b0">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;tensor)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">istream extractor for a <a class="el" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>.  <a href="#ada145e28745704482ec13be3acfbe3b0"></a><br/></td></tr>
@@ -130,20 +130,20 @@ Friends</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">ostream inserter for a <a class="el" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>.  <a href="#aef436d3b7e66d1410ead8b7aedcbe18c"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="member-group"></a>
 Static Members</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#afa89e509d7105274173d11ae9238f703">Zero</a> = <a class="el" href="classUtil_1_1Tensor.html">Tensor</a>(0.0)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constant <a class="el" href="classUtil_1_1Tensor.html#afa89e509d7105274173d11ae9238f703" title="Constant Tensor::Zero with all zero elements.">Tensor::Zero</a> with all zero elements.  <a href="#afa89e509d7105274173d11ae9238f703"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a608e10d093425c9228f10ed3c4994598">initStatic</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Guarantee initialization of <a class="el" href="classUtil_1_1Tensor.html#afa89e509d7105274173d11ae9238f703" title="Constant Tensor::Zero with all zero elements.">Tensor::Zero</a> tensor.  <a href="#a608e10d093425c9228f10ed3c4994598"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#a8170d98ea8b055e49ef256d15cfbc5af">commitMpiType</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Commit MPI datatype <a class="el" href="classUtil_1_1MpiTraits_3_01Tensor_01_4.html#a94a4825c5b6a741265d65e260050cfce" title="MPI Datatype.">MpiTraits&lt;Tensor&gt;::type</a>.  <a href="#a8170d98ea8b055e49ef256d15cfbc5af"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#afb9c49b4f1b0eb0ba7ae2ea35bf5da33">Zero</a> = <a class="el" href="classUtil_1_1Tensor.html">Tensor</a>(0.0)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constant <a class="el" href="classUtil_1_1Tensor.html#afb9c49b4f1b0eb0ba7ae2ea35bf5da33" title="Constant Tensor::Zero with all zero elements.">Tensor::Zero</a> with all zero elements.  <a href="#afb9c49b4f1b0eb0ba7ae2ea35bf5da33"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#ace1048c4742dfb965e80e59f50afa488">initStatic</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Guarantee initialization of <a class="el" href="classUtil_1_1Tensor.html#afb9c49b4f1b0eb0ba7ae2ea35bf5da33" title="Constant Tensor::Zero with all zero elements.">Tensor::Zero</a> tensor.  <a href="#ace1048c4742dfb965e80e59f50afa488"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Tensor.html#ad57a483c6b720ba31bc5560d5b49cd2e">commitMpiType</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Commit MPI datatype <a class="el" href="classUtil_1_1MpiTraits_3_01Tensor_01_4.html#a68faa4fee8fbbc9664afee720874ce5c" title="MPI Datatype.">MpiTraits&lt;Tensor&gt;::type</a>.  <a href="#ad57a483c6b720ba31bc5560d5b49cd2e"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a09dacbd79d16b74ba8698e27ae3dc42b"></a><!-- doxytag: member="Util::Tensor::Tensor" ref="a09dacbd79d16b74ba8698e27ae3dc42b" args="()" -->
+<a class="anchor" id="a742164de495b221bc10bf98b974df39c"></a><!-- doxytag: member="Util::Tensor::Tensor" ref="a742164de495b221bc10bf98b974df39c" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> </td>
+          <td class="memname">Util::Tensor::Tensor </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -158,12 +158,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae7ef02deb3684a98ec467792e242124b"></a><!-- doxytag: member="Util::Tensor::Tensor" ref="ae7ef02deb3684a98ec467792e242124b" args="(const Tensor &amp;t)" -->
+<a class="anchor" id="a496bdc1bf0a852ca414cf29f42c558e2"></a><!-- doxytag: member="Util::Tensor::Tensor" ref="a496bdc1bf0a852ca414cf29f42c558e2" args="(const Tensor &amp;t)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> </td>
+          <td class="memname">Util::Tensor::Tensor </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>t</em></td><td>)</td>
@@ -181,12 +181,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4f72f3858fe239396561d333c8474c5b"></a><!-- doxytag: member="Util::Tensor::Tensor" ref="a4f72f3858fe239396561d333c8474c5b" args="(double scalar)" -->
+<a class="anchor" id="a719e784eec4529cc0935da8ac924725a"></a><!-- doxytag: member="Util::Tensor::Tensor" ref="a719e784eec4529cc0935da8ac924725a" args="(double scalar)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> </td>
+          <td class="memname">Util::Tensor::Tensor </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>scalar</em></td><td>)</td>
@@ -210,12 +210,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1180d4d302d8c1eb2b6dfb0102a863cd"></a><!-- doxytag: member="Util::Tensor::Tensor" ref="a1180d4d302d8c1eb2b6dfb0102a863cd" args="(const double a[][Dimension])" -->
+<a class="anchor" id="a3ba10f8939f5d9521194d3cadd844ab6"></a><!-- doxytag: member="Util::Tensor::Tensor" ref="a3ba10f8939f5d9521194d3cadd844ab6" args="(const double a[][Dimension])" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> </td>
+          <td class="memname">Util::Tensor::Tensor </td>
           <td>(</td>
           <td class="paramtype">const double&#160;</td>
           <td class="paramname"><em>a</em>[][Dimension]</td><td>)</td>
@@ -240,12 +240,12 @@ Static Members</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a45a02e3f9a5eba1735af2a72a0f61842"></a><!-- doxytag: member="Util::Tensor::operator=" ref="a45a02e3f9a5eba1735af2a72a0f61842" args="(const Tensor &amp;t)" -->
+<a class="anchor" id="ab4d94f20d3b11ca7f7997854fee27c59"></a><!-- doxytag: member="Util::Tensor::operator=" ref="ab4d94f20d3b11ca7f7997854fee27c59" args="(const Tensor &amp;t)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; operator= </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>t</em></td><td>)</td>
@@ -269,12 +269,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4349a7bda8fff8bb7d1eae9dd1d03d37"></a><!-- doxytag: member="Util::Tensor::operator=" ref="a4349a7bda8fff8bb7d1eae9dd1d03d37" args="(const double a[][Dimension])" -->
+<a class="anchor" id="a9623859327629bb7a4c607441ec5f2c5"></a><!-- doxytag: member="Util::Tensor::operator=" ref="a9623859327629bb7a4c607441ec5f2c5" args="(const double a[][Dimension])" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; operator= </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::operator= </td>
           <td>(</td>
           <td class="paramtype">const double&#160;</td>
           <td class="paramname"><em>a</em>[][Dimension]</td><td>)</td>
@@ -298,12 +298,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a834b7b217e0b49f4c5604741bf623b11"></a><!-- doxytag: member="Util::Tensor::operator+=" ref="a834b7b217e0b49f4c5604741bf623b11" args="(const Tensor &amp;dt)" -->
+<a class="anchor" id="ac98b79462df1e9c5587f7cc705ce6de0"></a><!-- doxytag: member="Util::Tensor::operator+=" ref="ac98b79462df1e9c5587f7cc705ce6de0" args="(const Tensor &amp;dt)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void operator+= </td>
+          <td class="memname">void Util::Tensor::operator+= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>dt</em></td><td>)</td>
@@ -328,12 +328,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1bead6fa2f0cd2dbe6d0573b9a39c30b"></a><!-- doxytag: member="Util::Tensor::operator&#45;=" ref="a1bead6fa2f0cd2dbe6d0573b9a39c30b" args="(const Tensor &amp;dt)" -->
+<a class="anchor" id="a9e4809aba09d563d81ed3b0adc1aecd8"></a><!-- doxytag: member="Util::Tensor::operator&#45;=" ref="a9e4809aba09d563d81ed3b0adc1aecd8" args="(const Tensor &amp;dt)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void operator-= </td>
+          <td class="memname">void Util::Tensor::operator-= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>dt</em></td><td>)</td>
@@ -358,12 +358,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2973f1e626cbfbf2345118fafbdac72c"></a><!-- doxytag: member="Util::Tensor::operator*=" ref="a2973f1e626cbfbf2345118fafbdac72c" args="(double s)" -->
+<a class="anchor" id="aaa8b59bdbb55943de626045ba4ad3aa8"></a><!-- doxytag: member="Util::Tensor::operator*=" ref="aaa8b59bdbb55943de626045ba4ad3aa8" args="(double s)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void operator*= </td>
+          <td class="memname">void Util::Tensor::operator*= </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
@@ -388,12 +388,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab2252222282d488c4210df0bc99f68b4"></a><!-- doxytag: member="Util::Tensor::operator/=" ref="ab2252222282d488c4210df0bc99f68b4" args="(double s)" -->
+<a class="anchor" id="a35bf37b54c6704459183df0829e03d32"></a><!-- doxytag: member="Util::Tensor::operator/=" ref="a35bf37b54c6704459183df0829e03d32" args="(double s)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void operator/= </td>
+          <td class="memname">void Util::Tensor::operator/= </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>s</em></td><td>)</td>
@@ -418,12 +418,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae04710d0da08dde5636165284bd9b94a"></a><!-- doxytag: member="Util::Tensor::operator()" ref="ae04710d0da08dde5636165284bd9b94a" args="(int i, int j) const " -->
+<a class="anchor" id="a8225edb4c013bdf11cc82049736097a8"></a><!-- doxytag: member="Util::Tensor::operator()" ref="a8225edb4c013bdf11cc82049736097a8" args="(int i, int j) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const double &amp; operator() </td>
+          <td class="memname">const double &amp; Util::Tensor::operator() </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em>, </td>
@@ -459,12 +459,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a038b7612115d760c469aef103760c8c9"></a><!-- doxytag: member="Util::Tensor::operator()" ref="a038b7612115d760c469aef103760c8c9" args="(int i, int j)" -->
+<a class="anchor" id="aa6c03f6146d3ab0c9c3f65f15db3ddf1"></a><!-- doxytag: member="Util::Tensor::operator()" ref="aa6c03f6146d3ab0c9c3f65f15db3ddf1" args="(int i, int j)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double &amp; operator() </td>
+          <td class="memname">double &amp; Util::Tensor::operator() </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em>, </td>
@@ -500,12 +500,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a80c75ab0acf7709a2c7b966c436003ff"></a><!-- doxytag: member="Util::Tensor::zero" ref="a80c75ab0acf7709a2c7b966c436003ff" args="()" -->
+<a class="anchor" id="aac0c50df8b2fddfa0a2264e9b0866441"></a><!-- doxytag: member="Util::Tensor::zero" ref="aac0c50df8b2fddfa0a2264e9b0866441" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; zero </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::zero </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -525,12 +525,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9c9db9c312bc4b1170ce5b2b07b803a3"></a><!-- doxytag: member="Util::Tensor::add" ref="a9c9db9c312bc4b1170ce5b2b07b803a3" args="(const Tensor &amp;t1, const Tensor &amp;t2)" -->
+<a class="anchor" id="a4cea7d3360169503bbc6c611849d2b64"></a><!-- doxytag: member="Util::Tensor::add" ref="a4cea7d3360169503bbc6c611849d2b64" args="(const Tensor &amp;t1, const Tensor &amp;t2)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; add </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::add </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>t1</em>, </td>
@@ -567,12 +567,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab5986f141d661dc9d9f547af1c39ce33"></a><!-- doxytag: member="Util::Tensor::subtract" ref="ab5986f141d661dc9d9f547af1c39ce33" args="(const Tensor &amp;t1, const Tensor &amp;t2)" -->
+<a class="anchor" id="a75b8bb7a97457441188540abfc541f76"></a><!-- doxytag: member="Util::Tensor::subtract" ref="a75b8bb7a97457441188540abfc541f76" args="(const Tensor &amp;t1, const Tensor &amp;t2)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; subtract </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::subtract </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>t1</em>, </td>
@@ -609,12 +609,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a17f58ab63e5ac09c564a56b220afd6c5"></a><!-- doxytag: member="Util::Tensor::multiply" ref="a17f58ab63e5ac09c564a56b220afd6c5" args="(const Tensor &amp;t, double s)" -->
+<a class="anchor" id="a63c6e5a3ee3c7f6a3a517a109358203e"></a><!-- doxytag: member="Util::Tensor::multiply" ref="a63c6e5a3ee3c7f6a3a517a109358203e" args="(const Tensor &amp;t, double s)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; multiply </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::multiply </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>t</em>, </td>
@@ -651,12 +651,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6358e6e9c1dfd73a087b13cccf666841"></a><!-- doxytag: member="Util::Tensor::divide" ref="a6358e6e9c1dfd73a087b13cccf666841" args="(const Tensor &amp;t, double s)" -->
+<a class="anchor" id="abdcd1b61cffc679faf6bb3911c199948"></a><!-- doxytag: member="Util::Tensor::divide" ref="abdcd1b61cffc679faf6bb3911c199948" args="(const Tensor &amp;t, double s)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; divide </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::divide </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>t</em>, </td>
@@ -693,12 +693,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acade5de9231c390d9eba50f04bd83251"></a><!-- doxytag: member="Util::Tensor::transpose" ref="acade5de9231c390d9eba50f04bd83251" args="(const Tensor &amp;t)" -->
+<a class="anchor" id="ac9942abf0a3805738acc1f866e4870b5"></a><!-- doxytag: member="Util::Tensor::transpose" ref="ac9942abf0a3805738acc1f866e4870b5" args="(const Tensor &amp;t)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; transpose </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::transpose </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>t</em></td><td>)</td>
@@ -724,12 +724,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8969921dba281b10bd926eef97045a6c"></a><!-- doxytag: member="Util::Tensor::transpose" ref="a8969921dba281b10bd926eef97045a6c" args="()" -->
+<a class="anchor" id="af7e15fba7a10a96e59d6e42f740fb185"></a><!-- doxytag: member="Util::Tensor::transpose" ref="af7e15fba7a10a96e59d6e42f740fb185" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; transpose </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::transpose </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -748,12 +748,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab1c4f34169e28a9f063bad98e122eb72"></a><!-- doxytag: member="Util::Tensor::symmetrize" ref="ab1c4f34169e28a9f063bad98e122eb72" args="(const Tensor &amp;t)" -->
+<a class="anchor" id="a1a34bb71f1b728afb8f28e84c8eb5466"></a><!-- doxytag: member="Util::Tensor::symmetrize" ref="a1a34bb71f1b728afb8f28e84c8eb5466" args="(const Tensor &amp;t)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; symmetrize </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::symmetrize </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>t</em></td><td>)</td>
@@ -777,16 +777,16 @@ Static Members</h2></td></tr>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
-<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00067">McStressAutoCorr::sample()</a>.</p>
+<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00067">McMd::McStressAutoCorr::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a0c55c353bdd3d884113f7ed703629fc7"></a><!-- doxytag: member="Util::Tensor::symmetrize" ref="a0c55c353bdd3d884113f7ed703629fc7" args="()" -->
+<a class="anchor" id="a70239ee5060596eaebcc3d7d3c76b8ff"></a><!-- doxytag: member="Util::Tensor::symmetrize" ref="a70239ee5060596eaebcc3d7d3c76b8ff" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; symmetrize </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::symmetrize </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -805,12 +805,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afdb9d8254b36b073117c6cabef37f4c4"></a><!-- doxytag: member="Util::Tensor::dyad" ref="afdb9d8254b36b073117c6cabef37f4c4" args="(const Vector &amp;v1, const Vector &amp;v2)" -->
+<a class="anchor" id="a7571741bc53301d594df62d27899a000"></a><!-- doxytag: member="Util::Tensor::dyad" ref="a7571741bc53301d594df62d27899a000" args="(const Vector &amp;v1, const Vector &amp;v2)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; dyad </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> &amp; Util::Tensor::dyad </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>v1</em>, </td>
@@ -845,16 +845,16 @@ Static Members</h2></td></tr>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
-<p>Referenced by <a class="el" href="IntraBondTensorAutoCorr__inc_8h_source.html#l00111">IntraBondTensorAutoCorr&lt; SystemType &gt;::sample()</a>.</p>
+<p>Referenced by <a class="el" href="IntraBondTensorAutoCorr__inc_8h_source.html#l00111">McMd::IntraBondTensorAutoCorr&lt; SystemType &gt;::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8bb842348e5c75a1f359d97fc9bce207"></a><!-- doxytag: member="Util::Tensor::trace" ref="a8bb842348e5c75a1f359d97fc9bce207" args="() const " -->
+<a class="anchor" id="a37fea5e6d7bda01b52050c9df048c5cd"></a><!-- doxytag: member="Util::Tensor::trace" ref="a37fea5e6d7bda01b52050c9df048c5cd" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double trace </td>
+          <td class="memname">double Util::Tensor::trace </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -869,16 +869,18 @@ Static Members</h2></td></tr>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
-<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00067">McStressAutoCorr::sample()</a>, and <a class="el" href="IntraBondTensorAutoCorr__inc_8h_source.html#l00111">IntraBondTensorAutoCorr&lt; SystemType &gt;::sample()</a>.</p>
+<p>Referenced by <a class="el" href="McStressAutoCorr_8cpp_source.html#l00067">McMd::McStressAutoCorr::sample()</a>, and <a class="el" href="IntraBondTensorAutoCorr__inc_8h_source.html#l00111">McMd::IntraBondTensorAutoCorr&lt; SystemType &gt;::sample()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="Util::Tensor::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="af3f9bf257f28cbe86a4426162f843ed0"></a><!-- doxytag: member="Util::Tensor::serialize" ref="af3f9bf257f28cbe86a4426162f843ed0" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void Util::Tensor::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -914,12 +916,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a608e10d093425c9228f10ed3c4994598"></a><!-- doxytag: member="Util::Tensor::initStatic" ref="a608e10d093425c9228f10ed3c4994598" args="()" -->
+<a class="anchor" id="ace1048c4742dfb965e80e59f50afa488"></a><!-- doxytag: member="Util::Tensor::initStatic" ref="ace1048c4742dfb965e80e59f50afa488" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void initStatic </td>
+          <td class="memname">void Util::Tensor::initStatic </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -928,7 +930,7 @@ Static Members</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Guarantee initialization of <a class="el" href="classUtil_1_1Tensor.html#afa89e509d7105274173d11ae9238f703" title="Constant Tensor::Zero with all zero elements.">Tensor::Zero</a> tensor. </p>
+<p>Guarantee initialization of <a class="el" href="classUtil_1_1Tensor.html#afb9c49b4f1b0eb0ba7ae2ea35bf5da33" title="Constant Tensor::Zero with all zero elements.">Tensor::Zero</a> tensor. </p>
 <p>Call this function once to guarantee that this file in linked. </p>
 
 <p>Definition at line <a class="el" href="Tensor_8cpp_source.html#l00029">29</a> of file <a class="el" href="Tensor_8cpp_source.html">Tensor.cpp</a>.</p>
@@ -939,12 +941,12 @@ Static Members</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8170d98ea8b055e49ef256d15cfbc5af"></a><!-- doxytag: member="Util::Tensor::commitMpiType" ref="a8170d98ea8b055e49ef256d15cfbc5af" args="()" -->
+<a class="anchor" id="ad57a483c6b720ba31bc5560d5b49cd2e"></a><!-- doxytag: member="Util::Tensor::commitMpiType" ref="ad57a483c6b720ba31bc5560d5b49cd2e" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void commitMpiType </td>
+          <td class="memname">void Util::Tensor::commitMpiType </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [static]</code></td>
@@ -953,12 +955,12 @@ Static Members</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Commit MPI datatype <a class="el" href="classUtil_1_1MpiTraits_3_01Tensor_01_4.html#a94a4825c5b6a741265d65e260050cfce" title="MPI Datatype.">MpiTraits&lt;Tensor&gt;::type</a>. </p>
+<p>Commit MPI datatype <a class="el" href="classUtil_1_1MpiTraits_3_01Tensor_01_4.html#a68faa4fee8fbbc9664afee720874ce5c" title="MPI Datatype.">MpiTraits&lt;Tensor&gt;::type</a>. </p>
 <p>Commit MPI Datatype. </p>
 
 <p>Definition at line <a class="el" href="Tensor_8cpp_source.html#l00114">114</a> of file <a class="el" href="Tensor_8cpp_source.html">Tensor.cpp</a>.</p>
 
-<p>References <a class="el" href="MpiStructBuilder_8cpp_source.html#l00029">MpiStructBuilder::addMember()</a>, <a class="el" href="MpiStructBuilder_8cpp_source.html#l00042">MpiStructBuilder::commit()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="MpiStructBuilder_8cpp_source.html#l00021">MpiStructBuilder::setBase()</a>.</p>
+<p>References <a class="el" href="MpiStructBuilder_8cpp_source.html#l00029">Util::MpiStructBuilder::addMember()</a>, <a class="el" href="MpiStructBuilder_8cpp_source.html#l00042">Util::MpiStructBuilder::commit()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="MpiStructBuilder_8cpp_source.html#l00021">Util::MpiStructBuilder::setBase()</a>.</p>
 
 </div>
 </div>
@@ -1106,18 +1108,18 @@ Static Members</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="afa89e509d7105274173d11ae9238f703"></a><!-- doxytag: member="Util::Tensor::Zero" ref="afa89e509d7105274173d11ae9238f703" args="" -->
+<a class="anchor" id="afb9c49b4f1b0eb0ba7ae2ea35bf5da33"></a><!-- doxytag: member="Util::Tensor::Zero" ref="afb9c49b4f1b0eb0ba7ae2ea35bf5da33" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">home david code simpatico src util space <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> cpp const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> <a class="el" href="classUtil_1_1Tensor.html#afa89e509d7105274173d11ae9238f703">Zero</a> = <a class="el" href="classUtil_1_1Tensor.html">Tensor</a>(0.0)<code> [static]</code></td>
+          <td class="memname">home david code simpatico src util space <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> cpp const <a class="el" href="classUtil_1_1Tensor.html">Tensor</a> <a class="el" href="classUtil_1_1Tensor.html#afb9c49b4f1b0eb0ba7ae2ea35bf5da33">Util::Tensor::Zero</a> = <a class="el" href="classUtil_1_1Tensor.html">Tensor</a>(0.0)<code> [static]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Constant <a class="el" href="classUtil_1_1Tensor.html#afa89e509d7105274173d11ae9238f703" title="Constant Tensor::Zero with all zero elements.">Tensor::Zero</a> with all zero elements. </p>
+<p>Constant <a class="el" href="classUtil_1_1Tensor.html#afb9c49b4f1b0eb0ba7ae2ea35bf5da33" title="Constant Tensor::Zero with all zero elements.">Tensor::Zero</a> with all zero elements. </p>
 
 <p>Definition at line <a class="el" href="Tensor_8h_source.html#l00275">275</a> of file <a class="el" href="Tensor_8h_source.html">Tensor.h</a>.</p>
 
@@ -1128,7 +1130,7 @@ Static Members</h2></td></tr>
 <li><a class="el" href="Tensor_8cpp_source.html">Tensor.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:45:01 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:34 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

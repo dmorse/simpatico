@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -46,16 +46,16 @@
 <div class="fragment"><pre class="fragment"><span class="keyword">class </span>McModule {
 <span class="keyword">public</span>:
 
-   <a class="code" href="classMcMd_1_1McModule.html#ab4538d5a1a9fa23261d5a2a9365ce67d" title="Constructor.">McModule</a>(McSimulation&amp; <a class="code" href="classMcMd_1_1McModule.html#a3853c912b459f53199e94bfdfd05159a" title="Return McSimulation by reference.">simulation</a>);
+   <a class="code" href="classMcMd_1_1McModule.html#a3fb37fd0c7b548a9e6c9bb73896a008f" title="Constructor.">McModule</a>(McSimulation&amp; <a class="code" href="classMcMd_1_1McModule.html#a7e8223c7c9c918e7e587cd9e9a7c7a9a" title="Return McSimulation by reference.">simulation</a>);
 
-   <a class="code" href="classMcMd_1_1McModule.html#a9564ad437c26591b47b71e14a03c930e" title="Destructor.">~McModule</a>();
+   <a class="code" href="classMcMd_1_1McModule.html#a6cd7ba14b94b5e72e355ea8d3f1a23cd" title="Destructor.">~McModule</a>();
 
-   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McModule.html#af061e5ca4cba8d48ab80017438e086c0" title="Adds all factories of all types to the simulation.">addFactories</a>() = 0;
+   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McModule.html#ae03d13b426df81f689966bc9cb831b85" title="Adds all factories of all types to the simulation.">addFactories</a>() = 0;
 
 <span class="keyword">protected</span>:
 
-   McSimulation&amp; <a class="code" href="classMcMd_1_1McModule.html#a3853c912b459f53199e94bfdfd05159a" title="Return McSimulation by reference.">simulation</a>();
-   McSystem&amp;     <a class="code" href="classMcMd_1_1McModule.html#a59b8c645bdab7e31e902c9acf02ba1d9" title="Return McSystem by reference.">system</a>();
+   McSimulation&amp; <a class="code" href="classMcMd_1_1McModule.html#a7e8223c7c9c918e7e587cd9e9a7c7a9a" title="Return McSimulation by reference.">simulation</a>();
+   McSystem&amp;     <a class="code" href="classMcMd_1_1McModule.html#ace45568b57b318530e8d5fc54c9a2c66" title="Return McSystem by reference.">system</a>();
 
 }
 </pre></div><p> In each subclass of <a class="el" href="classMcMd_1_1McModule.html" title="Abstract Module for an McSimulation.">McModule</a>, the implementation of the pure virtual addFactories() method must add a set of factories to the simulation, using the methods of the parent <a class="el" href="classMcMd_1_1McSimulation.html" title="A Monte-Carlo simulation of one McSystem.">McSimulation</a> and system objects. Normally, instances of the new factory factory classes are created in the constructor of the <a class="el" href="classMcMd_1_1McModule.html" title="Abstract Module for an McSimulation.">McModule</a> subclass, and destroyed in its destructor. The protected methods simulation() and system() return references to the parent <a class="el" href="classMcMd_1_1McSimulation.html" title="A Monte-Carlo simulation of one McSystem.">McSimulation</a> and <a class="el" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>, for use in the implementation of addFactories() by subclasses.</p>
@@ -148,7 +148,7 @@ Implementing a Module</h2>
 <a class="el" href="developer_page.html">Developer Information</a> (Next)  </li>
 </ul>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

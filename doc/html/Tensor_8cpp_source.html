@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,10 +71,10 @@
 <a name="l00020"></a>00020 {
 <a name="l00021"></a>00021 
 <a name="l00022"></a>00022    <span class="comment">// Define the Zero Tensor</span>
-<a name="l00023"></a>00023    <span class="keyword">const</span> Tensor <a class="code" href="classUtil_1_1Tensor.html#afa89e509d7105274173d11ae9238f703" title="Constant Tensor::Zero with all zero elements.">Tensor::Zero</a> = Tensor(0.0);
+<a name="l00023"></a>00023    <span class="keyword">const</span> Tensor <a class="code" href="classUtil_1_1Tensor.html#afb9c49b4f1b0eb0ba7ae2ea35bf5da33" title="Constant Tensor::Zero with all zero elements.">Tensor::Zero</a> = Tensor(0.0);
 <a name="l00024"></a>00024 
-<a name="l00028"></a>00028    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Tensor.html#a608e10d093425c9228f10ed3c4994598" title="Guarantee initialization of Tensor::Zero tensor.">Tensor::initStatic</a>()
-<a name="l00029"></a><a class="code" href="classUtil_1_1Tensor.html#a608e10d093425c9228f10ed3c4994598">00029</a>    {
+<a name="l00028"></a>00028    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Tensor.html#ace1048c4742dfb965e80e59f50afa488" title="Guarantee initialization of Tensor::Zero tensor.">Tensor::initStatic</a>()
+<a name="l00029"></a><a class="code" href="classUtil_1_1Tensor.html#ace1048c4742dfb965e80e59f50afa488">00029</a>    {
 <a name="l00030"></a>00030      <span class="keywordtype">int</span> nCall = 0;
 <a name="l00031"></a>00031      <span class="keywordflow">if</span> (nCall &gt; 0) <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Tensor::initStatic called more than once&quot;</span>);
 <a name="l00032"></a>00032      ++nCall;
@@ -84,9 +84,9 @@
 <a name="l00036"></a>00036    
 <a name="l00037"></a>00037 <span class="preprocessor">   #define EPSILON 1.0E-8</span>
 <a name="l00038"></a>00038 <span class="preprocessor"></span>   
-<a name="l00039"></a>00039    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a00539479fc6b2c7dda82313bc6e53e92" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>&amp; t1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>&amp; t2) 
-<a name="l00040"></a><a class="code" href="namespaceUtil.html#a390070739cdb38a698e2b2e6ec993579">00040</a>    {
-<a name="l00041"></a>00041       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga435df960ee81e770d4d2c9f736cc19bf" title="Square of Dimensionality of space.">DimensionSq</a>; ++i) {
+<a name="l00039"></a>00039    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ac55a53e38c064c7c70b3a356cdc62853" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>&amp; t1, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>&amp; t2) 
+<a name="l00040"></a><a class="code" href="namespaceUtil.html#a5308ef4f3a71a983ee035867cfdfb9d0">00040</a>    {
+<a name="l00041"></a>00041       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#gaba1e0e490046919d488d1dc7505d8003" title="Square of Dimensionality of space.">DimensionSq</a>; ++i) {
 <a name="l00042"></a>00042          <span class="keywordflow">if</span> ( fabs(t1.elem_[i] - t2.elem_[i]) &gt; EPSILON) {
 <a name="l00043"></a>00043             <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00044"></a>00044          }
@@ -94,10 +94,10 @@
 <a name="l00046"></a>00046       <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00047"></a>00047    }
 <a name="l00048"></a>00048    
-<a name="l00049"></a>00049    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a00539479fc6b2c7dda82313bc6e53e92" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> Tensor&amp; t1, <span class="keyword">const</span> <span class="keywordtype">double</span> a2[][<a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>]) 
-<a name="l00050"></a><a class="code" href="namespaceUtil.html#a93d24a9bf32d221e3518e6366ecc6013">00050</a>    {
-<a name="l00051"></a>00051       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
-<a name="l00052"></a>00052          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00049"></a>00049    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ac55a53e38c064c7c70b3a356cdc62853" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> Tensor&amp; t1, <span class="keyword">const</span> <span class="keywordtype">double</span> a2[][<a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>]) 
+<a name="l00050"></a><a class="code" href="namespaceUtil.html#aff7e66515cf8148cde71c38303356b33">00050</a>    {
+<a name="l00051"></a>00051       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00052"></a>00052          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
 <a name="l00053"></a>00053             <span class="keywordflow">if</span> ( fabs(t1(i, j) - a2[i][j]) &gt; EPSILON) {
 <a name="l00054"></a>00054                <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00055"></a>00055             }
@@ -108,26 +108,26 @@
 <a name="l00060"></a>00060    
 <a name="l00061"></a>00061 <span class="preprocessor">   #undef EPSILON</span>
 <a name="l00062"></a>00062 <span class="preprocessor"></span>   
-<a name="l00063"></a>00063    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a00539479fc6b2c7dda82313bc6e53e92" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> a1[][<a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>], <span class="keyword">const</span> Tensor&amp; t2) 
-<a name="l00064"></a><a class="code" href="namespaceUtil.html#a2a646fb30163905bbb4b28335d5d4f09">00064</a>    { <span class="keywordflow">return</span> (t2 == a1); }
+<a name="l00063"></a>00063    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ac55a53e38c064c7c70b3a356cdc62853" title="Are two PointSymmetry objects equivalent?">operator==</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> a1[][<a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>], <span class="keyword">const</span> Tensor&amp; t2) 
+<a name="l00064"></a><a class="code" href="namespaceUtil.html#a50207012b46bacb590b3ff53e52aad39">00064</a>    { <span class="keywordflow">return</span> (t2 == a1); }
 <a name="l00065"></a>00065    
 <a name="l00066"></a>00066    <span class="comment">// Inequality operators</span>
 <a name="l00067"></a>00067    
-<a name="l00068"></a>00068    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ad53616d4d38159bc63d98dadfd008f8d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> Tensor&amp; t1, <span class="keyword">const</span> Tensor&amp; t2) 
-<a name="l00069"></a><a class="code" href="namespaceUtil.html#a347c148dfe67793b84a222a1c9461745">00069</a>    { <span class="keywordflow">return</span> !(t1 == t2); }
+<a name="l00068"></a>00068    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a33608178e140012e6439e23adea10b9d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> Tensor&amp; t1, <span class="keyword">const</span> Tensor&amp; t2) 
+<a name="l00069"></a><a class="code" href="namespaceUtil.html#a406f4f64d0d001b9485b51809e7bb2e2">00069</a>    { <span class="keywordflow">return</span> !(t1 == t2); }
 <a name="l00070"></a>00070    
-<a name="l00071"></a>00071    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ad53616d4d38159bc63d98dadfd008f8d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> Tensor&amp; t1, <span class="keyword">const</span> <span class="keywordtype">double</span> a2[][<a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>]) 
-<a name="l00072"></a><a class="code" href="namespaceUtil.html#a622b91f57e86645c5be586fdc6656404">00072</a>    { <span class="keywordflow">return</span> !(t1 == a2); }
+<a name="l00071"></a>00071    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a33608178e140012e6439e23adea10b9d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> Tensor&amp; t1, <span class="keyword">const</span> <span class="keywordtype">double</span> a2[][<a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>]) 
+<a name="l00072"></a><a class="code" href="namespaceUtil.html#a908b770f48b11bd6244c77ba9447781a">00072</a>    { <span class="keywordflow">return</span> !(t1 == a2); }
 <a name="l00073"></a>00073    
-<a name="l00074"></a>00074    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#ad53616d4d38159bc63d98dadfd008f8d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> a1[][<a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>], <span class="keyword">const</span> Tensor&amp; t2) 
-<a name="l00075"></a><a class="code" href="namespaceUtil.html#a74b954b25e8dba04da7221316fb8fae1">00075</a>    { <span class="keywordflow">return</span> !(t2 == a1); }
+<a name="l00074"></a>00074    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a33608178e140012e6439e23adea10b9d" title="Are two PointSymmetry objects not equivalent?">operator!=</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> a1[][<a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>], <span class="keyword">const</span> Tensor&amp; t2) 
+<a name="l00075"></a><a class="code" href="namespaceUtil.html#a8f568eeb170b2f0ce35bfbcb90ae5dfd">00075</a>    { <span class="keywordflow">return</span> !(t2 == a1); }
 <a name="l00076"></a>00076    
 <a name="l00077"></a>00077    <span class="comment">/* </span>
 <a name="l00078"></a>00078 <span class="comment">   * Extract a Tensor from an istream.</span>
 <a name="l00079"></a>00079 <span class="comment">   */</span>
-<a name="l00080"></a>00080    std::istream&amp; <a class="code" href="namespaceUtil.html#a993c7220c84aadae4eb1085cef083e74" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, Tensor &amp;tensor)
-<a name="l00081"></a><a class="code" href="namespaceUtil.html#ab86974ce9ee1d3b950a7cb9f0593bd29">00081</a>    {
-<a name="l00082"></a>00082       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga435df960ee81e770d4d2c9f736cc19bf" title="Square of Dimensionality of space.">DimensionSq</a>; ++i) {
+<a name="l00080"></a>00080    std::istream&amp; <a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, Tensor &amp;tensor)
+<a name="l00081"></a><a class="code" href="namespaceUtil.html#a8f03c100d8796ed1adb05c2363cbca76">00081</a>    {
+<a name="l00082"></a>00082       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#gaba1e0e490046919d488d1dc7505d8003" title="Square of Dimensionality of space.">DimensionSq</a>; ++i) {
 <a name="l00083"></a>00083          in &gt;&gt; tensor.elem_[i];
 <a name="l00084"></a>00084       }
 <a name="l00085"></a>00085       <span class="keywordflow">return</span> in;
@@ -136,9 +136,9 @@
 <a name="l00088"></a>00088    <span class="comment">/* </span>
 <a name="l00089"></a>00089 <span class="comment">   * Output a Tensor to an ostream, without line breaks.</span>
 <a name="l00090"></a>00090 <span class="comment">   */</span>
-<a name="l00091"></a>00091    std::ostream&amp; <a class="code" href="namespaceUtil.html#a7a94bc3185d3be0028eacd3076edb6d3" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> Tensor &amp;tensor) 
-<a name="l00092"></a><a class="code" href="namespaceUtil.html#a8da807830f0e7bd4edf3bf37766095ad">00092</a>    {
-<a name="l00093"></a>00093       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga435df960ee81e770d4d2c9f736cc19bf" title="Square of Dimensionality of space.">DimensionSq</a>; ++i) {
+<a name="l00091"></a>00091    std::ostream&amp; <a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> Tensor &amp;tensor) 
+<a name="l00092"></a><a class="code" href="namespaceUtil.html#a502d0e8fd91db6d9f0355439e02db401">00092</a>    {
+<a name="l00093"></a>00093       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#gaba1e0e490046919d488d1dc7505d8003" title="Square of Dimensionality of space.">DimensionSq</a>; ++i) {
 <a name="l00094"></a>00094          out.setf(std::ios::scientific);
 <a name="l00095"></a>00095          out.width(Tensor::Width);
 <a name="l00096"></a>00096          out.precision(Tensor::Precision);
@@ -149,23 +149,23 @@
 <a name="l00101"></a>00101 
 <a name="l00102"></a>00102 <span class="preprocessor">   #ifdef UTIL_MPI</span>
 <a name="l00103"></a>00103 <span class="preprocessor"></span>
-<a name="l00107"></a>00107    MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01Tensor_01_4.html#a94a4825c5b6a741265d65e260050cfce" title="MPI Datatype.">MpiTraits&lt;Tensor&gt;::type</a> = MPI::BYTE;
-<a name="l00108"></a>00108    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01Tensor_01_4.html#a62a39495a18407e8f4251ff3e60c1b5a" title="Is the MPI type initialized?">MpiTraits&lt;Tensor&gt;::hasType</a> = <span class="keyword">false</span>;
+<a name="l00107"></a>00107    MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01Tensor_01_4.html#a68faa4fee8fbbc9664afee720874ce5c" title="MPI Datatype.">MpiTraits&lt;Tensor&gt;::type</a> = MPI::BYTE;
+<a name="l00108"></a>00108    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01Tensor_01_4.html#afcf9cb4402e5d6b8bf1e58db6a116627" title="Is the MPI type initialized?">MpiTraits&lt;Tensor&gt;::hasType</a> = <span class="keyword">false</span>;
 <a name="l00109"></a>00109 
-<a name="l00113"></a>00113    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Tensor.html#a8170d98ea8b055e49ef256d15cfbc5af" title="Commit MPI datatype MpiTraits&amp;lt;Tensor&amp;gt;::type.">Tensor::commitMpiType</a>() 
-<a name="l00114"></a><a class="code" href="classUtil_1_1Tensor.html#a8170d98ea8b055e49ef256d15cfbc5af">00114</a>    {
+<a name="l00113"></a>00113    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Tensor.html#ad57a483c6b720ba31bc5560d5b49cd2e" title="Commit MPI datatype MpiTraits&amp;lt;Tensor&amp;gt;::type.">Tensor::commitMpiType</a>() 
+<a name="l00114"></a><a class="code" href="classUtil_1_1Tensor.html#ad57a483c6b720ba31bc5560d5b49cd2e">00114</a>    {
 <a name="l00115"></a>00115       <span class="keywordflow">if</span> (!<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;Tensor&gt;::hasType</a>) {
 <a name="l00116"></a>00116          <a class="code" href="classUtil_1_1MpiStructBuilder.html" title="A MpiStructBuilder objects is used to create an MPI Struct datatype.">MpiStructBuilder</a> builder;
 <a name="l00117"></a>00117          <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>           tensor;
 <a name="l00118"></a>00118          <span class="keywordtype">int</span>              i, j;
 <a name="l00119"></a>00119    
-<a name="l00120"></a>00120          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a5882a267b18044ab1149b71aea7d6b6d" title="Set address of an class instance.">setBase</a>(&amp;tensor);
-<a name="l00121"></a>00121          <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
-<a name="l00122"></a>00122             <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
-<a name="l00123"></a>00123                builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#aa91ba3ec4fb3b4f5a469a400f0f5e16a" title="Add a new member variable to the type map.">addMember</a>(&amp;tensor(i, j), MPI::DOUBLE);
+<a name="l00120"></a>00120          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a34f85f4a1e1c296ba324fe274ea22f24" title="Set address of an class instance.">setBase</a>(&amp;tensor);
+<a name="l00121"></a>00121          <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00122"></a>00122             <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00123"></a>00123                builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;tensor(i, j), MPI::DOUBLE);
 <a name="l00124"></a>00124             }
 <a name="l00125"></a>00125          }
-<a name="l00126"></a>00126          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0f12d9ca5f37ab23eae4d2ae7abb4e8f" title="Build and commit a user-defined MPI Struct datatype.">commit</a>(<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;Tensor&gt;::type</a>);
+<a name="l00126"></a>00126          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#ae95e12f80d3991fe0bd7848010924c25" title="Build and commit a user-defined MPI Struct datatype.">commit</a>(<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;Tensor&gt;::type</a>);
 <a name="l00127"></a>00127          <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;Tensor&gt;::hasType</a> = <span class="keyword">true</span>;
 <a name="l00128"></a>00128       }
 <a name="l00129"></a>00129    }
@@ -175,7 +175,7 @@
 <a name="l00133"></a>00133 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

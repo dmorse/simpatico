@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -113,8 +113,8 @@
 <a name="l00130"></a>00130    <span class="comment">/*</span>
 <a name="l00131"></a>00131 <span class="comment">   * Default constructor.</span>
 <a name="l00132"></a>00132 <span class="comment">   */</span>
-<a name="l00133"></a>00133    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1PairIterator.html#a77b9eed76ecd52e07f59d3be84c8d60d" title="Default constructor.">PairIterator::PairIterator</a>()
-<a name="l00134"></a><a class="code" href="classDdMd_1_1PairIterator.html#a77b9eed76ecd52e07f59d3be84c8d60d">00134</a>     : atom1Ptrs_(0),
+<a name="l00133"></a>00133    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1PairIterator.html#a3dffc71d1430276e3f891aa9f75c510d" title="Default constructor.">PairIterator::PairIterator</a>()
+<a name="l00134"></a><a class="code" href="classDdMd_1_1PairIterator.html#a3dffc71d1430276e3f891aa9f75c510d">00134</a>     : atom1Ptrs_(0),
 <a name="l00135"></a>00135       atom2Ptrs_(0),
 <a name="l00136"></a>00136       first_(0),
 <a name="l00137"></a>00137       nAtom1_(0),
@@ -126,21 +126,21 @@
 <a name="l00143"></a>00143    <span class="comment">/*</span>
 <a name="l00144"></a>00144 <span class="comment">   * Constructor, initialized iterator.</span>
 <a name="l00145"></a>00145 <span class="comment">   */</span>
-<a name="l00146"></a>00146    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1PairIterator.html#a77b9eed76ecd52e07f59d3be84c8d60d" title="Default constructor.">PairIterator::PairIterator</a>(<span class="keyword">const</span> <a class="code" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> &amp;pairList)
-<a name="l00147"></a><a class="code" href="classDdMd_1_1PairIterator.html#a7e500fb9042b3e30a710e36c5f45ad33">00147</a>     : atom1Ptrs_(0),
+<a name="l00146"></a>00146    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1PairIterator.html#a3dffc71d1430276e3f891aa9f75c510d" title="Default constructor.">PairIterator::PairIterator</a>(<span class="keyword">const</span> <a class="code" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> &amp;pairList)
+<a name="l00147"></a><a class="code" href="classDdMd_1_1PairIterator.html#a21c96ce614b75f17ebc87f4d5727701d">00147</a>     : atom1Ptrs_(0),
 <a name="l00148"></a>00148       atom2Ptrs_(0),
 <a name="l00149"></a>00149       first_(0),
 <a name="l00150"></a>00150       nAtom1_(0),
 <a name="l00151"></a>00151       nAtom2_(0),
 <a name="l00152"></a>00152       atom1Id_(0),
 <a name="l00153"></a>00153       atom2Id_(0)
-<a name="l00154"></a>00154    {  pairList.<a class="code" href="classDdMd_1_1PairList.html#a384894ea9d3bce2679601b80e7c7de82" title="Initialize a PairIterator.">begin</a>(*<span class="keyword">this</span>); }
+<a name="l00154"></a>00154    {  pairList.<a class="code" href="classDdMd_1_1PairList.html#a890cfbc0e6d42695fefa7183f63359cc" title="Initialize a PairIterator.">begin</a>(*<span class="keyword">this</span>); }
 <a name="l00155"></a>00155 
 <a name="l00156"></a>00156    <span class="comment">/*</span>
 <a name="l00157"></a>00157 <span class="comment">   * Get pointers to current pair of Atoms. </span>
 <a name="l00158"></a>00158 <span class="comment">   */</span>
-<a name="l00159"></a>00159    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairIterator.html#ac835f74b5a55a62d48a3ff17f9e818f4" title="Get pointers for current pair of Atoms.">PairIterator::getPair</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* &amp;atom1Ptr, <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* &amp;atom2Ptr)<span class="keyword"> const</span>
-<a name="l00160"></a><a class="code" href="classDdMd_1_1PairIterator.html#ac835f74b5a55a62d48a3ff17f9e818f4">00160</a> <span class="keyword">   </span>{
+<a name="l00159"></a>00159    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairIterator.html#aa92c439aa81f742e8c90f5b6d99c60be" title="Get pointers for current pair of Atoms.">PairIterator::getPair</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* &amp;atom1Ptr, <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* &amp;atom2Ptr)<span class="keyword"> const</span>
+<a name="l00160"></a><a class="code" href="classDdMd_1_1PairIterator.html#aa92c439aa81f742e8c90f5b6d99c60be">00160</a> <span class="keyword">   </span>{
 <a name="l00161"></a>00161       assert(atom1Id_ &gt;=0);
 <a name="l00162"></a>00162       assert(atom1Id_ &lt; nAtom1_);
 <a name="l00163"></a>00163       assert(atom2Id_ &gt;=0);
@@ -152,8 +152,8 @@
 <a name="l00169"></a>00169    <span class="comment">/*</span>
 <a name="l00170"></a>00170 <span class="comment">   * Increment current pair.</span>
 <a name="l00171"></a>00171 <span class="comment">   */</span>
-<a name="l00172"></a>00172    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a>&amp; <a class="code" href="classDdMd_1_1PairIterator.html#af3b28a19f053940b2807a80e6c9c1981" title="Increment to next pair.">PairIterator::operator++ </a>()
-<a name="l00173"></a><a class="code" href="classDdMd_1_1PairIterator.html#af3b28a19f053940b2807a80e6c9c1981">00173</a>    {
+<a name="l00172"></a>00172    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a>&amp; <a class="code" href="classDdMd_1_1PairIterator.html#a783691ee6242c7b66fd5a6d610cc20fb" title="Increment to next pair.">PairIterator::operator++ </a>()
+<a name="l00173"></a><a class="code" href="classDdMd_1_1PairIterator.html#a783691ee6242c7b66fd5a6d610cc20fb">00173</a>    {
 <a name="l00174"></a>00174       assert(atom1Id_ &gt;=0);
 <a name="l00175"></a>00175       assert(atom1Id_ &lt; nAtom1_);
 <a name="l00176"></a>00176       assert(atom2Id_ &gt;=0);
@@ -168,14 +168,14 @@
 <a name="l00185"></a>00185    <span class="comment">/*</span>
 <a name="l00186"></a>00186 <span class="comment">   * Return true if past last pair in list.</span>
 <a name="l00187"></a>00187 <span class="comment">   */</span>
-<a name="l00188"></a>00188    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1PairIterator.html#a11cbf4ba82ee565cb9eef28b972bf145" title="Return true if at end of PairList.">PairIterator::atEnd</a>()<span class="keyword"> const</span>
-<a name="l00189"></a><a class="code" href="classDdMd_1_1PairIterator.html#a11cbf4ba82ee565cb9eef28b972bf145">00189</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> (atom2Id_ == nAtom2_); }
+<a name="l00188"></a>00188    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1PairIterator.html#afc2e7cf5f040f2284aa4c86cf9ce6536" title="Return true if at end of PairList.">PairIterator::atEnd</a>()<span class="keyword"> const</span>
+<a name="l00189"></a><a class="code" href="classDdMd_1_1PairIterator.html#afc2e7cf5f040f2284aa4c86cf9ce6536">00189</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> (atom2Id_ == nAtom2_); }
 <a name="l00190"></a>00190    
 <a name="l00191"></a>00191    <span class="comment">/*</span>
 <a name="l00192"></a>00192 <span class="comment">   * Return false if one past last pair in list.</span>
 <a name="l00193"></a>00193 <span class="comment">   */</span>
-<a name="l00194"></a>00194    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1PairIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Return true if not at end of PairList.">PairIterator::notEnd</a>()<span class="keyword"> const</span>
-<a name="l00195"></a><a class="code" href="classDdMd_1_1PairIterator.html#acf66f57fcd15c0f1ba36e4470589c816">00195</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> (atom2Id_ != nAtom2_); }
+<a name="l00194"></a>00194    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1PairIterator.html#a44db1f6a672762320a4e9739a2f8f951" title="Return true if not at end of PairList.">PairIterator::notEnd</a>()<span class="keyword"> const</span>
+<a name="l00195"></a><a class="code" href="classDdMd_1_1PairIterator.html#a44db1f6a672762320a4e9739a2f8f951">00195</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> (atom2Id_ != nAtom2_); }
 <a name="l00196"></a>00196    
 <a name="l00197"></a>00197  
 <a name="l00198"></a>00198  
@@ -183,7 +183,7 @@
 <a name="l00200"></a>00200 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

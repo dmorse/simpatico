@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -77,8 +77,8 @@
 <a name="l00025"></a>00025    <span class="comment">/*</span>
 <a name="l00026"></a>00026 <span class="comment">   * Constructor</span>
 <a name="l00027"></a>00027 <span class="comment">   */</span>
-<a name="l00028"></a>00028    <a class="code" href="classMcMd_1_1DpdMove.html#af5aabb17b865ce060cb44731ac26655b" title="Constructor.">DpdMove::DpdMove</a>(McSystem&amp; system) :
-<a name="l00029"></a><a class="code" href="classMcMd_1_1DpdMove.html#af5aabb17b865ce060cb44731ac26655b">00029</a>       <a class="code" href="classMcMd_1_1SystemMove.html" title="An McMove that acts on one McSystem.">SystemMove</a>(system),
+<a name="l00028"></a>00028    <a class="code" href="classMcMd_1_1DpdMove.html#ac72e4136965c49d505faf5f6c770fcff" title="Constructor.">DpdMove::DpdMove</a>(McSystem&amp; system) :
+<a name="l00029"></a><a class="code" href="classMcMd_1_1DpdMove.html#ac72e4136965c49d505faf5f6c770fcff">00029</a>       <a class="code" href="classMcMd_1_1SystemMove.html" title="An McMove that acts on one McSystem.">SystemMove</a>(system),
 <a name="l00030"></a>00030       mdSystemPtr_(0),
 <a name="l00031"></a>00031       nStep_(0)
 <a name="l00032"></a>00032    {
@@ -88,8 +88,8 @@
 <a name="l00036"></a>00036    <span class="comment">/*</span>
 <a name="l00037"></a>00037 <span class="comment">   * Destructor.</span>
 <a name="l00038"></a>00038 <span class="comment">   */</span>
-<a name="l00039"></a>00039    <a class="code" href="classMcMd_1_1DpdMove.html#afd0d6c5a7af907a743b80df7f5c260d8" title="Destructor.">DpdMove::~DpdMove</a>()
-<a name="l00040"></a><a class="code" href="classMcMd_1_1DpdMove.html#afd0d6c5a7af907a743b80df7f5c260d8">00040</a>    {
+<a name="l00039"></a>00039    <a class="code" href="classMcMd_1_1DpdMove.html#a75540fb7323394b433dfdae8a38554a9" title="Destructor.">DpdMove::~DpdMove</a>()
+<a name="l00040"></a><a class="code" href="classMcMd_1_1DpdMove.html#a75540fb7323394b433dfdae8a38554a9">00040</a>    {
 <a name="l00041"></a>00041       <span class="keywordflow">if</span> (mdSystemPtr_) {
 <a name="l00042"></a>00042          <span class="keyword">delete</span> mdSystemPtr_;
 <a name="l00043"></a>00043       }
@@ -98,8 +98,8 @@
 <a name="l00046"></a>00046    <span class="comment">/*</span>
 <a name="l00047"></a>00047 <span class="comment">   * Read parameter maxDisp</span>
 <a name="l00048"></a>00048 <span class="comment">   */</span>
-<a name="l00049"></a>00049    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DpdMove.html#ab5421d3c9175985c9acbf723e5392075" title="Read nStep, dt, skin, maxNPair from file.">DpdMove::readParam</a>(std::istream&amp; in)
-<a name="l00050"></a><a class="code" href="classMcMd_1_1DpdMove.html#ab5421d3c9175985c9acbf723e5392075">00050</a>    {
+<a name="l00049"></a>00049    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DpdMove.html#a74378f195ba13e2561904fb31ff9443d" title="Read nStep, dt, skin, maxNPair from file.">DpdMove::readParam</a>(std::istream&amp; in)
+<a name="l00050"></a><a class="code" href="classMcMd_1_1DpdMove.html#a74378f195ba13e2561904fb31ff9443d">00050</a>    {
 <a name="l00051"></a>00051       readProbability(in);
 <a name="l00052"></a>00052       read&lt;int&gt;(in, <span class="stringliteral">&quot;nStep&quot;</span>, nStep_);
 <a name="l00053"></a>00053       readParamComposite(in, *mdSystemPtr_);
@@ -108,14 +108,14 @@
 <a name="l00056"></a>00056    <span class="comment">/*</span>
 <a name="l00057"></a>00057 <span class="comment">   * Setup before simulation run.</span>
 <a name="l00058"></a>00058 <span class="comment">   */</span>
-<a name="l00059"></a>00059    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DpdMove.html#a4fc01d736fe50cf5b977f755b675f11d" title="Initialize before a run.">DpdMove::setup</a>()
-<a name="l00060"></a><a class="code" href="classMcMd_1_1DpdMove.html#a4fc01d736fe50cf5b977f755b675f11d">00060</a>    {  mdSystemPtr_-&gt;mdIntegrator().setup(); }
+<a name="l00059"></a>00059    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1DpdMove.html#a415eef2e486fca6b9e332d92b23c56b8" title="Initialize before a run.">DpdMove::setup</a>()
+<a name="l00060"></a><a class="code" href="classMcMd_1_1DpdMove.html#a415eef2e486fca6b9e332d92b23c56b8">00060</a>    {  mdSystemPtr_-&gt;mdIntegrator().setup(); }
 <a name="l00061"></a>00061 
 <a name="l00062"></a>00062    <span class="comment">/*</span>
 <a name="l00063"></a>00063 <span class="comment">   * Generate, attempt and accept or reject a Hybrid MD/MC move.</span>
 <a name="l00064"></a>00064 <span class="comment">   */</span>
-<a name="l00065"></a>00065    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1DpdMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635" title="Generate, attempt and accept or reject a move.">DpdMove::move</a>()
-<a name="l00066"></a><a class="code" href="classMcMd_1_1DpdMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635">00066</a>    {
+<a name="l00065"></a>00065    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1DpdMove.html#aa7ae45057ef703ab1966b5c1c8f66091" title="Generate, attempt and accept or reject a move.">DpdMove::move</a>()
+<a name="l00066"></a><a class="code" href="classMcMd_1_1DpdMove.html#aa7ae45057ef703ab1966b5c1c8f66091">00066</a>    {
 <a name="l00067"></a>00067       <span class="comment">// Increment counter for attempted moves</span>
 <a name="l00068"></a>00068       incrementNAttempt();
 <a name="l00069"></a>00069       
@@ -145,7 +145,7 @@
 <a name="l00093"></a>00093 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

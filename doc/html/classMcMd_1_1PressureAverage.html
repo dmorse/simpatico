@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: PressureAverage&lt; SystemType &gt; Class Template Reference</title>
+<title>Simpatico: McMd::PressureAverage&lt; SystemType &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>PressureAverage&lt; SystemType &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
+<h1>McMd::PressureAverage&lt; SystemType &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__McMd__Diagnostic__Module.html">Diagnostics</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::PressureAverage" --><!-- doxytag: inherits="McMd::SystemDiagnostic" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -63,16 +63,16 @@
 </div>
 <p><code>#include &lt;<a class="el" href="PressureAverage_8h_source.html">PressureAverage.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for PressureAverage&lt; SystemType &gt;:</div>
+Inheritance diagram for McMd::PressureAverage&lt; SystemType &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1PressureAverage.png" usemap="#PressureAverage&lt; SystemType &gt;_map" alt=""/>
-  <map id="PressureAverage&lt; SystemType &gt;_map" name="PressureAverage&lt; SystemType &gt;_map">
-<area href="classMcMd_1_1SystemDiagnostic.html" alt="SystemDiagnostic&lt; SystemType &gt;" shape="rect" coords="107,168,311,192"/>
-<area href="classMcMd_1_1Diagnostic.html" alt="Diagnostic" shape="rect" coords="107,112,311,136"/>
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,204,80"/>
-<area href="classUtil_1_1Serializable.html" alt="Serializable" shape="rect" coords="214,56,418,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,204,24"/>
+  <img src="classMcMd_1_1PressureAverage.png" usemap="#McMd::PressureAverage&lt; SystemType &gt;_map" alt=""/>
+  <map id="McMd::PressureAverage&lt; SystemType &gt;_map" name="McMd::PressureAverage&lt; SystemType &gt;_map">
+<area href="classMcMd_1_1SystemDiagnostic.html" alt="McMd::SystemDiagnostic&lt; SystemType &gt;" shape="rect" coords="128,168,374,192"/>
+<area href="classMcMd_1_1Diagnostic.html" alt="McMd::Diagnostic" shape="rect" coords="128,112,374,136"/>
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,246,80"/>
+<area href="classUtil_1_1Serializable.html" alt="Util::Serializable" shape="rect" coords="256,56,502,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,246,24"/>
 </map>
  </div></div>
 
@@ -80,31 +80,33 @@ Inheritance diagram for PressureAverage&lt; SystemType &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#a187bc0d8d252e5c745329c970954391d">PressureAverage</a> (SystemType &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a187bc0d8d252e5c745329c970954391d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters and initialize.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up before simulation.  <a href="#a4fc01d736fe50cf5b977f755b675f11d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#afc17577823a371a5ead4e51ebb8ec2ef">sample</a> (long iStep)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate, analyze and/or output a physical quantity.  <a href="#afc17577823a371a5ead4e51ebb8ec2ef"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#a7437b254e19e7e12fc2ec99945f4ecea">output</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results at end of simulation.  <a href="#a7437b254e19e7e12fc2ec99945f4ecea"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#aa3d71af4cc5dfb2be6be816a8f562416">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#aa3d71af4cc5dfb2be6be816a8f562416"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#a4dc312885d2c7ee1fdb66e2545223c45">PressureAverage</a> (SystemType &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a4dc312885d2c7ee1fdb66e2545223c45"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#acc0582d8d61853c8ca248588a162df55">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read parameters and initialize.  <a href="#acc0582d8d61853c8ca248588a162df55"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#a02db4be13bfb2b95725f03c0200315e0">setup</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up before simulation.  <a href="#a02db4be13bfb2b95725f03c0200315e0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#ad7c82df820be89af2f1d5ee9dad209d2">sample</a> (long iStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate, analyze and/or output a physical quantity.  <a href="#ad7c82df820be89af2f1d5ee9dad209d2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#aa20202667ac35730ef75a47729288e31">output</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output results at end of simulation.  <a href="#aa20202667ac35730ef75a47729288e31"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#a026dea8b0442c03e5b67ba720614817b">save</a> (<a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Save state to binary file archive.  <a href="#a026dea8b0442c03e5b67ba720614817b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#a242ee97a8f101bc2dfc0e6c7213eb841">load</a> (<a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;ar)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Load state from a binary file archive.  <a href="#a242ee97a8f101bc2dfc0e6c7213eb841"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#a6765e839ab267e4959384e35a4112451">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a6765e839ab267e4959384e35a4112451"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PressureAverage.html#a5d10f3cdb6483a758ac421123bfdff2e">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#a5d10f3cdb6483a758ac421123bfdff2e"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a187bc0d8d252e5c745329c970954391d"></a><!-- doxytag: member="McMd::PressureAverage::PressureAverage" ref="a187bc0d8d252e5c745329c970954391d" args="(SystemType &amp;system)" -->
+<a class="anchor" id="a4dc312885d2c7ee1fdb66e2545223c45"></a><!-- doxytag: member="McMd::PressureAverage::PressureAverage" ref="a4dc312885d2c7ee1fdb66e2545223c45" args="(SystemType &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class SystemType&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1PressureAverage.html">PressureAverage</a> </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1PressureAverage.html">McMd::PressureAverage</a>&lt; SystemType &gt;::<a class="el" href="classMcMd_1_1PressureAverage.html">PressureAverage</a> </td>
           <td>(</td>
           <td class="paramtype">SystemType &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -121,12 +123,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="McMd::PressureAverage::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="acc0582d8d61853c8ca248588a162df55"></a><!-- doxytag: member="McMd::PressureAverage::readParam" ref="acc0582d8d61853c8ca248588a162df55" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class SystemType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void <a class="el" href="classMcMd_1_1PressureAverage.html">McMd::PressureAverage</a>&lt; SystemType &gt;::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -138,20 +142,22 @@ Public Member Functions</h2></td></tr>
 
 <p>Read parameters and initialize. </p>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="PressureAverage_8h_source.html#l00125">125</a> of file <a class="el" href="PressureAverage_8h_source.html">PressureAverage.h</a>.</p>
 
-<p>References <a class="el" href="ParamComposite_8h_source.html#l00421">ParamComposite::read()</a>.</p>
+<p>References <a class="el" href="ParamComposite_8h_source.html#l00421">Util::ParamComposite::read()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4fc01d736fe50cf5b977f755b675f11d"></a><!-- doxytag: member="McMd::PressureAverage::setup" ref="a4fc01d736fe50cf5b977f755b675f11d" args="()" -->
+<a class="anchor" id="a02db4be13bfb2b95725f03c0200315e0"></a><!-- doxytag: member="McMd::PressureAverage::setup" ref="a02db4be13bfb2b95725f03c0200315e0" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class SystemType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void setup </td>
+          <td class="memname">void <a class="el" href="classMcMd_1_1PressureAverage.html">McMd::PressureAverage</a>&lt; SystemType &gt;::setup </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -162,7 +168,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Set up before simulation. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a93c5a174f073b2587a484999ca550829">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="PressureAverage_8h_source.html#l00146">146</a> of file <a class="el" href="PressureAverage_8h_source.html">PressureAverage.h</a>.</p>
 
@@ -170,12 +176,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afc17577823a371a5ead4e51ebb8ec2ef"></a><!-- doxytag: member="McMd::PressureAverage::sample" ref="afc17577823a371a5ead4e51ebb8ec2ef" args="(long iStep)" -->
+<a class="anchor" id="ad7c82df820be89af2f1d5ee9dad209d2"></a><!-- doxytag: member="McMd::PressureAverage::sample" ref="ad7c82df820be89af2f1d5ee9dad209d2" args="(long iStep)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class SystemType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void sample </td>
+          <td class="memname">void <a class="el" href="classMcMd_1_1PressureAverage.html">McMd::PressureAverage</a>&lt; SystemType &gt;::sample </td>
           <td>(</td>
           <td class="paramtype">long&#160;</td>
           <td class="paramname"><em>iStep</em></td><td>)</td>
@@ -194,18 +202,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#a539b7a077aea825f7195929db1a5944f">Diagnostic</a>.</p>
+<p>Implements <a class="el" href="classMcMd_1_1Diagnostic.html#ae265d934fee552e1bd50ce37930ac63c">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="PressureAverage_8h_source.html#l00158">158</a> of file <a class="el" href="PressureAverage_8h_source.html">PressureAverage.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7437b254e19e7e12fc2ec99945f4ecea"></a><!-- doxytag: member="McMd::PressureAverage::output" ref="a7437b254e19e7e12fc2ec99945f4ecea" args="()" -->
+<a class="anchor" id="aa20202667ac35730ef75a47729288e31"></a><!-- doxytag: member="McMd::PressureAverage::output" ref="aa20202667ac35730ef75a47729288e31" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class SystemType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void output </td>
+          <td class="memname">void <a class="el" href="classMcMd_1_1PressureAverage.html">McMd::PressureAverage</a>&lt; SystemType &gt;::output </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -216,18 +226,20 @@ Public Member Functions</h2></td></tr>
 
 <p>Output results at end of simulation. </p>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a209e4a470fcdeb3d5b87da3dd6960def">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac5481c8016af4c70d19d59905261c0bf">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="PressureAverage_8h_source.html#l00172">172</a> of file <a class="el" href="PressureAverage_8h_source.html">PressureAverage.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a248dde9ccc0ef67e5d9cc5fd0bdc2b64"></a><!-- doxytag: member="McMd::PressureAverage::save" ref="a248dde9ccc0ef67e5d9cc5fd0bdc2b64" args="(Serializable::OArchiveType &amp;ar)" -->
+<a class="anchor" id="a026dea8b0442c03e5b67ba720614817b"></a><!-- doxytag: member="McMd::PressureAverage::save" ref="a026dea8b0442c03e5b67ba720614817b" args="(Serializable::OArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class SystemType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void save </td>
+          <td class="memname">void <a class="el" href="classMcMd_1_1PressureAverage.html">McMd::PressureAverage</a>&lt; SystemType &gt;::save </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileOArchive.html">Serializable::OArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -245,18 +257,20 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a248dde9ccc0ef67e5d9cc5fd0bdc2b64">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#ac27203b7ee783c3cebc054c290e313ed">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="PressureAverage_8h_source.html#l00195">195</a> of file <a class="el" href="PressureAverage_8h_source.html">PressureAverage.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa3d71af4cc5dfb2be6be816a8f562416"></a><!-- doxytag: member="McMd::PressureAverage::load" ref="aa3d71af4cc5dfb2be6be816a8f562416" args="(Serializable::IArchiveType &amp;ar)" -->
+<a class="anchor" id="a242ee97a8f101bc2dfc0e6c7213eb841"></a><!-- doxytag: member="McMd::PressureAverage::load" ref="a242ee97a8f101bc2dfc0e6c7213eb841" args="(Serializable::IArchiveType &amp;ar)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class SystemType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void load </td>
+          <td class="memname">void <a class="el" href="classMcMd_1_1PressureAverage.html">McMd::PressureAverage</a>&lt; SystemType &gt;::load </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1BinaryFileIArchive.html">Serializable::IArchiveType</a> &amp;&#160;</td>
           <td class="paramname"><em>ar</em></td><td>)</td>
@@ -274,18 +288,22 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#aa3d71af4cc5dfb2be6be816a8f562416">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#afa44b6fb962ca0a8a979d0add2dc85b9">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="PressureAverage_8h_source.html#l00202">202</a> of file <a class="el" href="PressureAverage_8h_source.html">PressureAverage.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6765e839ab267e4959384e35a4112451"></a><!-- doxytag: member="McMd::PressureAverage::serialize" ref="a6765e839ab267e4959384e35a4112451" args="(Archive &amp;ar, const unsigned int version)" -->
+<a class="anchor" id="a5d10f3cdb6483a758ac421123bfdff2e"></a><!-- doxytag: member="McMd::PressureAverage::serialize" ref="a5d10f3cdb6483a758ac421123bfdff2e" args="(Archive &amp;ar, const unsigned int version)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;class SystemType &gt; </div>
+<div class="memtemplate">
+template&lt;class Archive &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void serialize </td>
+          <td class="memname">void <a class="el" href="classMcMd_1_1PressureAverage.html">McMd::PressureAverage</a>&lt; SystemType &gt;::serialize </td>
           <td>(</td>
           <td class="paramtype">Archive &amp;&#160;</td>
           <td class="paramname"><em>ar</em>, </td>
@@ -314,7 +332,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6765e839ab267e4959384e35a4112451">Diagnostic</a>.</p>
+<p>Reimplemented from <a class="el" href="classMcMd_1_1Diagnostic.html#a6056717b367040d8605f67794a7e2ebc">McMd::Diagnostic</a>.</p>
 
 <p>Definition at line <a class="el" href="PressureAverage_8h_source.html#l00210">210</a> of file <a class="el" href="PressureAverage_8h_source.html">PressureAverage.h</a>.</p>
 
@@ -326,7 +344,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="PressureAverage_8h_source.html">PressureAverage.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:54 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:25 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

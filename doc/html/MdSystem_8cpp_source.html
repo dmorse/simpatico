@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -111,7 +111,7 @@
 <a name="l00060"></a>00060    <span class="comment">/* </span>
 <a name="l00061"></a>00061 <span class="comment">   * Default constructor.</span>
 <a name="l00062"></a>00062 <span class="comment">   */</span>
-<a name="l00063"></a><a class="code" href="classMcMd_1_1MdSystem.html#aefd5f52e4126f9e50313e2ab7accc9f6">00063</a>    <a class="code" href="classMcMd_1_1MdSystem.html#aefd5f52e4126f9e50313e2ab7accc9f6" title="Constructor.">MdSystem::MdSystem</a>()
+<a name="l00063"></a><a class="code" href="classMcMd_1_1MdSystem.html#ae262b888f8cf3b6afcf06e9bba99b9a6">00063</a>    <a class="code" href="classMcMd_1_1MdSystem.html#ae262b888f8cf3b6afcf06e9bba99b9a6" title="Constructor.">MdSystem::MdSystem</a>()
 <a name="l00064"></a>00064     : <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>(),
 <a name="l00065"></a>00065       #ifndef INTER_NOPAIR
 <a name="l00066"></a>00066       pairPotentialPtr_(0),
@@ -140,7 +140,7 @@
 <a name="l00089"></a>00089    <span class="comment">/* </span>
 <a name="l00090"></a>00090 <span class="comment">   * Constructor, copy of a System.</span>
 <a name="l00091"></a>00091 <span class="comment">   */</span>
-<a name="l00092"></a><a class="code" href="classMcMd_1_1MdSystem.html#a8c7a1bcd1597b8681c239022b68354f1">00092</a>    <a class="code" href="classMcMd_1_1MdSystem.html#aefd5f52e4126f9e50313e2ab7accc9f6" title="Constructor.">MdSystem::MdSystem</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system)
+<a name="l00092"></a><a class="code" href="classMcMd_1_1MdSystem.html#a2ee2fab373caa46183911abdbaa678a2">00092</a>    <a class="code" href="classMcMd_1_1MdSystem.html#ae262b888f8cf3b6afcf06e9bba99b9a6" title="Constructor.">MdSystem::MdSystem</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system)
 <a name="l00093"></a>00093     : <a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>(system),
 <a name="l00094"></a>00094       #ifndef INTER_NOPAIR
 <a name="l00095"></a>00095       pairPotentialPtr_(0),
@@ -166,7 +166,7 @@
 <a name="l00115"></a>00115       createdMdIntegratorFactory_(false)
 <a name="l00116"></a>00116    {  
 <a name="l00117"></a>00117 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
-<a name="l00118"></a>00118 <span class="preprocessor"></span>      pairPotentialPtr_ = <a class="code" href="classMcMd_1_1System.html#a976367a2e4dc264de1ce24ebbcd41994" title="Get the PairFactory by reference.">pairFactory</a>().<a class="code" href="classMcMd_1_1PairFactory.html#ad36bb3513ffcf359a17fce37c129039e" title="Return a pointer to a new McPairPotential, if possible.">mdFactory</a>(system.<a class="code" href="classMcMd_1_1McSystem.html#a95732dcabe9f491e9bb9636dc9d194ec" title="Return the McPairPotential by reference.">pairPotential</a>());
+<a name="l00118"></a>00118 <span class="preprocessor"></span>      pairPotentialPtr_ = <a class="code" href="classMcMd_1_1System.html#a7f28c02097251e76853562ab4a97c7de" title="Get the PairFactory by reference.">pairFactory</a>().<a class="code" href="classMcMd_1_1PairFactory.html#a47dcf0997316eaf3629994527e376502" title="Return a pointer to a new McPairPotential, if possible.">mdFactory</a>(system.<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>());
 <a name="l00119"></a>00119       <span class="keywordflow">if</span> (pairPotentialPtr_ == 0) {
 <a name="l00120"></a>00120          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Failed attempt to clone McPairPotential&quot;</span>);
 <a name="l00121"></a>00121       }
@@ -182,13 +182,13 @@
 <a name="l00131"></a>00131       }
 <a name="l00132"></a>00132 <span class="preprocessor">      #endif</span>
 <a name="l00133"></a>00133 <span class="preprocessor"></span><span class="preprocessor">      #ifdef MCMD_LINK</span>
-<a name="l00134"></a>00134 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (system.<a class="code" href="classMcMd_1_1McSystem.html#ad94cba44b90992a12934ae2be6dcc707" title="Does a link potential exist?.">hasLinkPotential</a>()) {
-<a name="l00135"></a>00135          linkPotentialPtr_ = &amp;system.<a class="code" href="classMcMd_1_1McSystem.html#afd6f92eb30537c2f70a260a067176dea" title="Return the McLinkPotential by reference.">linkPotential</a>();
+<a name="l00134"></a>00134 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (system.<a class="code" href="classMcMd_1_1McSystem.html#a83f2add55298ddbee90ec459c9d9a406" title="Does a link potential exist?.">hasLinkPotential</a>()) {
+<a name="l00135"></a>00135          linkPotentialPtr_ = &amp;system.<a class="code" href="classMcMd_1_1McSystem.html#a8247c62e71ebc13e4b146cdeb6ab0189" title="Return the McLinkPotential by reference.">linkPotential</a>();
 <a name="l00136"></a>00136       }
 <a name="l00137"></a>00137 <span class="preprocessor">      #endif</span>
 <a name="l00138"></a>00138 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
-<a name="l00139"></a>00139 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (system.<a class="code" href="classMcMd_1_1McSystem.html#a2e1624ef024a3ecfc4567949279eb7f9" title="Does an external potential exist?.">hasExternalPotential</a>()) {
-<a name="l00140"></a>00140          externalPotentialPtr_ = &amp;system.<a class="code" href="classMcMd_1_1McSystem.html#aa307441c683f245a3554e28c2e9ef9f5" title="Return ExternalPotential by reference.">externalPotential</a>();
+<a name="l00139"></a>00139 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (system.<a class="code" href="classMcMd_1_1McSystem.html#a776439171922d9e5757f4fb97128f04b" title="Does an external potential exist?.">hasExternalPotential</a>()) {
+<a name="l00140"></a>00140          externalPotentialPtr_ = &amp;system.<a class="code" href="classMcMd_1_1McSystem.html#a0952ff38daa10a3fe294302a16a9ece1" title="Return ExternalPotential by reference.">externalPotential</a>();
 <a name="l00141"></a>00141       }
 <a name="l00142"></a>00142 <span class="preprocessor">      #endif</span>
 <a name="l00143"></a>00143 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_TETHER</span>
@@ -201,26 +201,26 @@
 <a name="l00150"></a>00150    <span class="comment">/* </span>
 <a name="l00151"></a>00151 <span class="comment">   * Destructor. </span>
 <a name="l00152"></a>00152 <span class="comment">   */</span>
-<a name="l00153"></a><a class="code" href="classMcMd_1_1MdSystem.html#a1f56e33a1d775ea11893564fea0758be">00153</a>    <a class="code" href="classMcMd_1_1MdSystem.html#a1f56e33a1d775ea11893564fea0758be" title="Destructor.">MdSystem::~MdSystem</a>() 
+<a name="l00153"></a><a class="code" href="classMcMd_1_1MdSystem.html#a382c9a5d9273713639e1fc2a8d088cb2">00153</a>    <a class="code" href="classMcMd_1_1MdSystem.html#a382c9a5d9273713639e1fc2a8d088cb2" title="Destructor.">MdSystem::~MdSystem</a>() 
 <a name="l00154"></a>00154    {
 <a name="l00155"></a>00155 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
 <a name="l00156"></a>00156 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (pairPotentialPtr_) <span class="keyword">delete</span> pairPotentialPtr_;
 <a name="l00157"></a>00157 <span class="preprocessor">      #endif</span>
-<a name="l00158"></a>00158 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a8dc6e53c404b351ec295caff43de3a48" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; bondPotentialPtr_) <span class="keyword">delete</span> bondPotentialPtr_;
+<a name="l00158"></a>00158 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a4c774921858ef5a9c09a2cf52c78c8b3" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; bondPotentialPtr_) <span class="keyword">delete</span> bondPotentialPtr_;
 <a name="l00159"></a>00159 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
-<a name="l00160"></a>00160 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a8dc6e53c404b351ec295caff43de3a48" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; anglePotentialPtr_) <span class="keyword">delete</span> anglePotentialPtr_;
+<a name="l00160"></a>00160 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a4c774921858ef5a9c09a2cf52c78c8b3" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; anglePotentialPtr_) <span class="keyword">delete</span> anglePotentialPtr_;
 <a name="l00161"></a>00161 <span class="preprocessor">      #endif</span>
 <a name="l00162"></a>00162 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
-<a name="l00163"></a>00163 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a8dc6e53c404b351ec295caff43de3a48" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; dihedralPotentialPtr_) <span class="keyword">delete</span> dihedralPotentialPtr_;
+<a name="l00163"></a>00163 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a4c774921858ef5a9c09a2cf52c78c8b3" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; dihedralPotentialPtr_) <span class="keyword">delete</span> dihedralPotentialPtr_;
 <a name="l00164"></a>00164 <span class="preprocessor">      #endif</span>
 <a name="l00165"></a>00165 <span class="preprocessor"></span><span class="preprocessor">      #ifdef MCMD_LINK</span>
-<a name="l00166"></a>00166 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a8dc6e53c404b351ec295caff43de3a48" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; linkPotentialPtr_) <span class="keyword">delete</span> linkPotentialPtr_;
+<a name="l00166"></a>00166 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a4c774921858ef5a9c09a2cf52c78c8b3" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; linkPotentialPtr_) <span class="keyword">delete</span> linkPotentialPtr_;
 <a name="l00167"></a>00167 <span class="preprocessor">      #endif</span>
 <a name="l00168"></a>00168 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
-<a name="l00169"></a>00169 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a8dc6e53c404b351ec295caff43de3a48" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; externalPotentialPtr_) <span class="keyword">delete</span> externalPotentialPtr_;
+<a name="l00169"></a>00169 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a4c774921858ef5a9c09a2cf52c78c8b3" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; externalPotentialPtr_) <span class="keyword">delete</span> externalPotentialPtr_;
 <a name="l00170"></a>00170 <span class="preprocessor">      #endif</span>
 <a name="l00171"></a>00171 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_TETHER</span>
-<a name="l00172"></a>00172 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a8dc6e53c404b351ec295caff43de3a48" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; tetherPotentialPtr_) <span class="keyword">delete</span> tetherPotentialPtr_;
+<a name="l00172"></a>00172 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a4c774921858ef5a9c09a2cf52c78c8b3" title="Was this System instantiated with the copy constructor?">isCopy</a>() &amp;&amp; tetherPotentialPtr_) <span class="keyword">delete</span> tetherPotentialPtr_;
 <a name="l00173"></a>00173 <span class="preprocessor">      #endif</span>
 <a name="l00174"></a>00174 <span class="preprocessor"></span>
 <a name="l00175"></a>00175       <span class="keywordflow">if</span> (mdIntegratorFactoryPtr_ &amp;&amp; createdMdIntegratorFactory_) {
@@ -235,7 +235,7 @@
 <a name="l00184"></a>00184    <span class="comment">/*</span>
 <a name="l00185"></a>00185 <span class="comment">   * Get the MdIntegrator factory</span>
 <a name="l00186"></a>00186 <span class="comment">   */</span>
-<a name="l00187"></a><a class="code" href="classMcMd_1_1MdSystem.html#a9e939fa8e74abf43494ec1a099fd33bc">00187</a>    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;MdIntegrator&gt;</a>&amp; <a class="code" href="classMcMd_1_1MdSystem.html#a9e939fa8e74abf43494ec1a099fd33bc" title="Return the MdIntegrator Factory by reference.">MdSystem::mdIntegratorFactory</a>() 
+<a name="l00187"></a><a class="code" href="classMcMd_1_1MdSystem.html#a2464533e36432fb77fe080b3224cfa9c">00187</a>    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;MdIntegrator&gt;</a>&amp; <a class="code" href="classMcMd_1_1MdSystem.html#a2464533e36432fb77fe080b3224cfa9c" title="Return the MdIntegrator Factory by reference.">MdSystem::mdIntegratorFactory</a>() 
 <a name="l00188"></a>00188    {
 <a name="l00189"></a>00189       <span class="keywordflow">if</span> (mdIntegratorFactoryPtr_ == 0) {
 <a name="l00190"></a>00190          mdIntegratorFactoryPtr_ = <span class="keyword">new</span> <a class="code" href="classMcMd_1_1MdIntegratorFactory.html" title="Default Factory for subclasses of MdIntegrator.">MdIntegratorFactory</a>(*<span class="keyword">this</span>);
@@ -247,101 +247,101 @@
 <a name="l00196"></a>00196    <span class="comment">/* </span>
 <a name="l00197"></a>00197 <span class="comment">   * Read parameter and configuration files, initialize system.</span>
 <a name="l00198"></a>00198 <span class="comment">   */</span>
-<a name="l00199"></a><a class="code" href="classMcMd_1_1MdSystem.html#ab5421d3c9175985c9acbf723e5392075">00199</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from input file.">MdSystem::readParam</a>(std::istream &amp;in) 
+<a name="l00199"></a><a class="code" href="classMcMd_1_1MdSystem.html#ac6ddf3c81a76fdb64a44022f18d0db24">00199</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#ac6ddf3c81a76fdb64a44022f18d0db24" title="Read parameters from input file.">MdSystem::readParam</a>(std::istream &amp;in) 
 <a name="l00200"></a>00200    {
 <a name="l00201"></a>00201 
-<a name="l00202"></a>00202       <a class="code" href="classUtil_1_1ParamComposite.html#ae62d63b03a6f5cb70c0978082e455e03" title="Add and read a class label and opening bracket.">readBegin</a>(in, <span class="stringliteral">&quot;MdSystem&quot;</span>);
+<a name="l00202"></a>00202       <a class="code" href="classUtil_1_1ParamComposite.html#af21bd2c40a05014df5f0ee85ed73d8f7" title="Add and read a class label and opening bracket.">readBegin</a>(in, <span class="stringliteral">&quot;MdSystem&quot;</span>);
 <a name="l00203"></a>00203 
-<a name="l00204"></a>00204       <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a8dc6e53c404b351ec295caff43de3a48" title="Was this System instantiated with the copy constructor?">isCopy</a>()) {
-<a name="l00205"></a>00205          <a class="code" href="classMcMd_1_1System.html#ac4191cf150808e3a7cf4c4d891e9694f" title="Allocate and initialize molecule sets for all species.">allocateMoleculeSets</a>();
-<a name="l00206"></a>00206          <a class="code" href="classMcMd_1_1System.html#a29cb9ccd6e27b8c44c0e35476cb9414a" title="If no FileMaster exists, create and initialize one.">readFileMaster</a>(in);
-<a name="l00207"></a>00207          <a class="code" href="classMcMd_1_1System.html#ada500231e17bfb7f1b9097caca487f15" title="Read potential styles, initialize LinkMaster or TetherMaster if needed.">readPotentialStyles</a>(in);
+<a name="l00204"></a>00204       <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a4c774921858ef5a9c09a2cf52c78c8b3" title="Was this System instantiated with the copy constructor?">isCopy</a>()) {
+<a name="l00205"></a>00205          <a class="code" href="classMcMd_1_1System.html#a9219c6451b47144c7bf0eb18383e443e" title="Allocate and initialize molecule sets for all species.">allocateMoleculeSets</a>();
+<a name="l00206"></a>00206          <a class="code" href="classMcMd_1_1System.html#a90361ca70761e3d5ab17feca7276aa53" title="If no FileMaster exists, create and initialize one.">readFileMaster</a>(in);
+<a name="l00207"></a>00207          <a class="code" href="classMcMd_1_1System.html#a212525b8073fd6427cade45d6b1b88af" title="Read potential styles, initialize LinkMaster or TetherMaster if needed.">readPotentialStyles</a>(in);
 <a name="l00208"></a>00208       }
 <a name="l00209"></a>00209 
 <a name="l00210"></a>00210 <span class="preprocessor">      #ifndef INTER_NOPAIR </span>
-<a name="l00211"></a>00211 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a8dc6e53c404b351ec295caff43de3a48" title="Was this System instantiated with the copy constructor?">isCopy</a>()) {
+<a name="l00211"></a>00211 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a4c774921858ef5a9c09a2cf52c78c8b3" title="Was this System instantiated with the copy constructor?">isCopy</a>()) {
 <a name="l00212"></a>00212 
-<a name="l00213"></a>00213          pairPotentialPtr_ = <a class="code" href="classMcMd_1_1System.html#a976367a2e4dc264de1ce24ebbcd41994" title="Get the PairFactory by reference.">pairFactory</a>().<a class="code" href="classMcMd_1_1PairFactory.html#ad36bb3513ffcf359a17fce37c129039e" title="Return a pointer to a new McPairPotential, if possible.">mdFactory</a>(<a class="code" href="classMcMd_1_1System.html#ab5df9a80f1bd3006eb704724ca8e2def" title="Return nonbonded pair style string.">pairStyle</a>(), *<span class="keyword">this</span>);
+<a name="l00213"></a>00213          pairPotentialPtr_ = <a class="code" href="classMcMd_1_1System.html#a7f28c02097251e76853562ab4a97c7de" title="Get the PairFactory by reference.">pairFactory</a>().<a class="code" href="classMcMd_1_1PairFactory.html#a47dcf0997316eaf3629994527e376502" title="Return a pointer to a new McPairPotential, if possible.">mdFactory</a>(<a class="code" href="classMcMd_1_1System.html#a2897ec304dcacc034aaa843915831a3f" title="Return nonbonded pair style string.">pairStyle</a>(), *<span class="keyword">this</span>);
 <a name="l00214"></a>00214          <span class="keywordflow">if</span> (pairPotentialPtr_ == 0) {
 <a name="l00215"></a>00215             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Failed attempt to create PairPotential&quot;</span>);
 <a name="l00216"></a>00216          }
 <a name="l00217"></a>00217       }
-<a name="l00218"></a>00218       <a class="code" href="classUtil_1_1ParamComposite.html#a4e9c12570de6ec52c319b66d306d9625" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *pairPotentialPtr_); 
+<a name="l00218"></a>00218       <a class="code" href="classUtil_1_1ParamComposite.html#ab2372dcc5d7d8db632b2b9844caf206e" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *pairPotentialPtr_); 
 <a name="l00219"></a>00219 <span class="preprocessor">      #endif</span>
 <a name="l00220"></a>00220 <span class="preprocessor"></span>
-<a name="l00221"></a>00221       <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a8dc6e53c404b351ec295caff43de3a48" title="Was this System instantiated with the copy constructor?">isCopy</a>()) {
+<a name="l00221"></a>00221       <span class="keywordflow">if</span> (!<a class="code" href="classMcMd_1_1System.html#a4c774921858ef5a9c09a2cf52c78c8b3" title="Was this System instantiated with the copy constructor?">isCopy</a>()) {
 <a name="l00222"></a>00222 
 <a name="l00223"></a>00223          assert(bondPotentialPtr_ == 0);
-<a name="l00224"></a>00224          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().nBondType() &gt; 0) {
-<a name="l00225"></a>00225             bondPotentialPtr_ = <a class="code" href="classMcMd_1_1System.html#ac5eaa682a9e4dd7bf3b166071e1d69a8" title="Get the associated Factory&amp;lt;BondPotential&amp;gt; by reference.">bondFactory</a>().<a class="code" href="classUtil_1_1Factory.html#ac8bffc34c2d8fa6973fd13f878983808" title="Returns a pointer to a new instance of specified subclass.">factory</a>(<a class="code" href="classMcMd_1_1System.html#a4d83d946cf31b1ac66aece56b7133683" title="Return covalent bond style string.">bondStyle</a>());
+<a name="l00224"></a>00224          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().nBondType() &gt; 0) {
+<a name="l00225"></a>00225             bondPotentialPtr_ = <a class="code" href="classMcMd_1_1System.html#a48d6b4068d96167cd4c519e56058160d" title="Get the associated Factory&amp;lt;BondPotential&amp;gt; by reference.">bondFactory</a>().<a class="code" href="classUtil_1_1Factory.html#a75ae49003fb0b92da58e370ceae64153" title="Returns a pointer to a new instance of specified subclass.">factory</a>(<a class="code" href="classMcMd_1_1System.html#a5d9584664c1224832a0d54d58dd702e4" title="Return covalent bond style string.">bondStyle</a>());
 <a name="l00226"></a>00226             <span class="keywordflow">if</span> (bondPotentialPtr_ == 0) {
 <a name="l00227"></a>00227                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Failed attempt to create bondPotential&quot;</span>);
 <a name="l00228"></a>00228             }
-<a name="l00229"></a>00229             <a class="code" href="classUtil_1_1ParamComposite.html#a4e9c12570de6ec52c319b66d306d9625" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *bondPotentialPtr_); 
+<a name="l00229"></a>00229             <a class="code" href="classUtil_1_1ParamComposite.html#ab2372dcc5d7d8db632b2b9844caf206e" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *bondPotentialPtr_); 
 <a name="l00230"></a>00230          }
 <a name="l00231"></a>00231 
 <a name="l00232"></a>00232 <span class="preprocessor">         #ifdef INTER_ANGLE</span>
 <a name="l00233"></a>00233 <span class="preprocessor"></span>         assert(anglePotentialPtr_ == 0);
-<a name="l00234"></a>00234          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().nAngleType() &gt; 0) {
+<a name="l00234"></a>00234          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().nAngleType() &gt; 0) {
 <a name="l00235"></a>00235             anglePotentialPtr_ = 
 <a name="l00236"></a>00236                        angleFactory().factory(angleStyle());
 <a name="l00237"></a>00237             <span class="keywordflow">if</span> (anglePotentialPtr_ == 0) {
 <a name="l00238"></a>00238                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Failed attempt to create anglePotential&quot;</span>);
 <a name="l00239"></a>00239             }
-<a name="l00240"></a>00240             <a class="code" href="classUtil_1_1ParamComposite.html#a4e9c12570de6ec52c319b66d306d9625" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *anglePotentialPtr_); 
+<a name="l00240"></a>00240             <a class="code" href="classUtil_1_1ParamComposite.html#ab2372dcc5d7d8db632b2b9844caf206e" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *anglePotentialPtr_); 
 <a name="l00241"></a>00241          }
 <a name="l00242"></a>00242 <span class="preprocessor">         #endif</span>
 <a name="l00243"></a>00243 <span class="preprocessor"></span>
 <a name="l00244"></a>00244 <span class="preprocessor">         #ifdef INTER_DIHEDRAL</span>
 <a name="l00245"></a>00245 <span class="preprocessor"></span>         assert(dihedralPotentialPtr_ == 0);
-<a name="l00246"></a>00246          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().nDihedralType() &gt; 0) {
+<a name="l00246"></a>00246          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().nDihedralType() &gt; 0) {
 <a name="l00247"></a>00247             dihedralPotentialPtr_ = 
 <a name="l00248"></a>00248                        dihedralFactory().factory(dihedralStyle());
 <a name="l00249"></a>00249             <span class="keywordflow">if</span> (dihedralPotentialPtr_ == 0) {
 <a name="l00250"></a>00250                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Failed attempt to create dihedralPotential&quot;</span>);
 <a name="l00251"></a>00251             }
-<a name="l00252"></a>00252             <a class="code" href="classUtil_1_1ParamComposite.html#a4e9c12570de6ec52c319b66d306d9625" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *dihedralPotentialPtr_); 
+<a name="l00252"></a>00252             <a class="code" href="classUtil_1_1ParamComposite.html#ab2372dcc5d7d8db632b2b9844caf206e" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *dihedralPotentialPtr_); 
 <a name="l00253"></a>00253          }
 <a name="l00254"></a>00254 <span class="preprocessor">         #endif</span>
 <a name="l00255"></a>00255 <span class="preprocessor"></span>
 <a name="l00256"></a>00256 <span class="preprocessor">         #ifdef MCMD_LINK</span>
 <a name="l00257"></a>00257 <span class="preprocessor"></span>         assert(linkPotentialPtr_ == 0);
-<a name="l00258"></a>00258          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().nLinkType() &gt; 0) {
-<a name="l00259"></a>00259             <a class="code" href="classMcMd_1_1System.html#a689bb118744e3e2dc6c3c1b863fe53fb" title="Read the LinkMaster.">readLinkMaster</a>(in);
-<a name="l00260"></a>00260             linkPotentialPtr_ = <a class="code" href="classMcMd_1_1System.html#ab47c9b547be97452125059dac6902411" title="Get the associated Link factory by reference.">linkFactory</a>().<a class="code" href="classUtil_1_1Factory.html#ac8bffc34c2d8fa6973fd13f878983808" title="Returns a pointer to a new instance of specified subclass.">factory</a>(<a class="code" href="classMcMd_1_1System.html#a1e494de13daea009a8a7c25ab61d5195" title="Return link potential style string.">linkStyle</a>());
+<a name="l00258"></a>00258          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().nLinkType() &gt; 0) {
+<a name="l00259"></a>00259             <a class="code" href="classMcMd_1_1System.html#a9d5d81775f07969d42bc2c7d3d6a807a" title="Read the LinkMaster.">readLinkMaster</a>(in);
+<a name="l00260"></a>00260             linkPotentialPtr_ = <a class="code" href="classMcMd_1_1System.html#aa9c0fb2c5e81be12ee756bc939d01ea5" title="Get the associated Link factory by reference.">linkFactory</a>().<a class="code" href="classUtil_1_1Factory.html#a75ae49003fb0b92da58e370ceae64153" title="Returns a pointer to a new instance of specified subclass.">factory</a>(<a class="code" href="classMcMd_1_1System.html#ac9fb7f3a0fcf8de5853d5f9ae4c0b1c4" title="Return link potential style string.">linkStyle</a>());
 <a name="l00261"></a>00261             <span class="keywordflow">if</span> (linkPotentialPtr_ == 0) {
 <a name="l00262"></a>00262                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Failed attempt to create linkPotential&quot;</span>);
 <a name="l00263"></a>00263             }
-<a name="l00264"></a>00264             <a class="code" href="classUtil_1_1ParamComposite.html#a4e9c12570de6ec52c319b66d306d9625" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *linkPotentialPtr_); 
+<a name="l00264"></a>00264             <a class="code" href="classUtil_1_1ParamComposite.html#ab2372dcc5d7d8db632b2b9844caf206e" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *linkPotentialPtr_); 
 <a name="l00265"></a>00265          }
 <a name="l00266"></a>00266 <span class="preprocessor">         #endif</span>
 <a name="l00267"></a>00267 <span class="preprocessor"></span>
 <a name="l00268"></a>00268 <span class="preprocessor">         #ifdef INTER_EXTERNAL</span>
 <a name="l00269"></a>00269 <span class="preprocessor"></span>         assert(externalPotentialPtr_ == 0);
-<a name="l00270"></a>00270          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().hasExternal() &gt; 0) {
+<a name="l00270"></a>00270          <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().hasExternal() &gt; 0) {
 <a name="l00271"></a>00271             externalPotentialPtr_ = 
-<a name="l00272"></a>00272                        <a class="code" href="classMcMd_1_1System.html#affe41c37893b4fb65b5aabb705b4271c" title="Get the associated ExternalPotential factory by reference.">externalFactory</a>().<a class="code" href="classUtil_1_1Factory.html#ac8bffc34c2d8fa6973fd13f878983808" title="Returns a pointer to a new instance of specified subclass.">factory</a>(<a class="code" href="classMcMd_1_1System.html#a70125de9a41d1ad0aa7c002e69fd9af6" title="Return external potential style string.">externalStyle</a>());
+<a name="l00272"></a>00272                        <a class="code" href="classMcMd_1_1System.html#ad3beac0f5ba061c0b05fcfa208b0cf70" title="Get the associated ExternalPotential factory by reference.">externalFactory</a>().<a class="code" href="classUtil_1_1Factory.html#a75ae49003fb0b92da58e370ceae64153" title="Returns a pointer to a new instance of specified subclass.">factory</a>(<a class="code" href="classMcMd_1_1System.html#a8de5fdc62be2c60f81c321be87c05bc4" title="Return external potential style string.">externalStyle</a>());
 <a name="l00273"></a>00273             <span class="keywordflow">if</span> (externalPotentialPtr_ == 0) {
 <a name="l00274"></a>00274                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Failed attempt to create externalPotential&quot;</span>);
 <a name="l00275"></a>00275             }
-<a name="l00276"></a>00276             <a class="code" href="classUtil_1_1ParamComposite.html#a4e9c12570de6ec52c319b66d306d9625" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *externalPotentialPtr_); 
+<a name="l00276"></a>00276             <a class="code" href="classUtil_1_1ParamComposite.html#ab2372dcc5d7d8db632b2b9844caf206e" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *externalPotentialPtr_); 
 <a name="l00277"></a>00277          }
 <a name="l00278"></a>00278 <span class="preprocessor">         #endif</span>
 <a name="l00279"></a>00279 <span class="preprocessor"></span>
 <a name="l00280"></a>00280 <span class="preprocessor">         #ifdef INTER_TETHER</span>
-<a name="l00281"></a>00281 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().hasExternal() &gt; 0) {
+<a name="l00281"></a>00281 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().hasExternal() &gt; 0) {
 <a name="l00282"></a>00282             readTetherMaster(in);
 <a name="l00283"></a>00283             tetherPotentialPtr_ = 
 <a name="l00284"></a>00284                        tetherFactory().factory(tetherStyle(), *<span class="keyword">this</span>);
 <a name="l00285"></a>00285             <span class="keywordflow">if</span> (tetherPotentialPtr_ == 0) {
 <a name="l00286"></a>00286                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Failed attempt to create tetherPotential&quot;</span>);
 <a name="l00287"></a>00287             }
-<a name="l00288"></a>00288             <a class="code" href="classUtil_1_1ParamComposite.html#a4e9c12570de6ec52c319b66d306d9625" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *tetherPotentialPtr_); 
+<a name="l00288"></a>00288             <a class="code" href="classUtil_1_1ParamComposite.html#ab2372dcc5d7d8db632b2b9844caf206e" title="Add and read a child ParamComposite.">readParamComposite</a>(in, *tetherPotentialPtr_); 
 <a name="l00289"></a>00289          }
 <a name="l00290"></a>00290 <span class="preprocessor">         #endif</span>
 <a name="l00291"></a>00291 <span class="preprocessor"></span>
 <a name="l00292"></a>00292          <span class="comment">// Read EnergyEnsemble and BoundaryEnsemble</span>
-<a name="l00293"></a>00293          <a class="code" href="classMcMd_1_1System.html#a7e4f36650a5fa0818045413f37e9bd9a" title="Read energy and boundary ensembles.">readEnsembles</a>(in);
+<a name="l00293"></a>00293          <a class="code" href="classMcMd_1_1System.html#a0485e882991974c6fa4d48dbd693074b" title="Read energy and boundary ensembles.">readEnsembles</a>(in);
 <a name="l00294"></a>00294       }
 <a name="l00295"></a>00295 
 <a name="l00296"></a>00296       <span class="comment">// Check for MdIntegratorFactory, create default if necessary.</span>
@@ -354,7 +354,7 @@
 <a name="l00303"></a>00303       std::string className;
 <a name="l00304"></a>00304       <span class="keywordtype">bool</span>        isEnd;
 <a name="l00305"></a>00305       mdIntegratorPtr_ = 
-<a name="l00306"></a>00306               mdIntegratorFactoryPtr_-&gt;<a class="code" href="classUtil_1_1Factory.html#acb58a8eeb66d2b2a4179c5f4399c6da9" title="Read a class name, instantiate an object, and read its parameters.">readObject</a>(in, *<span class="keyword">this</span>, className, isEnd);
+<a name="l00306"></a>00306               mdIntegratorFactoryPtr_-&gt;<a class="code" href="classUtil_1_1Factory.html#aff55a134e6b770ca6f656417f4519fd5" title="Read a class name, instantiate an object, and read its parameters.">readObject</a>(in, *<span class="keyword">this</span>, className, isEnd);
 <a name="l00307"></a>00307       <span class="keywordflow">if</span> (!mdIntegratorPtr_) {
 <a name="l00308"></a>00308          std::string msg(<span class="stringliteral">&quot;Unknown MdIntegrator subclass name: &quot;</span>);
 <a name="l00309"></a>00309          msg += className;
@@ -363,56 +363,56 @@
 <a name="l00312"></a>00312      
 <a name="l00313"></a>00313 <span class="preprocessor">      #ifdef MCMD_PERTURB</span>
 <a name="l00314"></a>00314 <span class="preprocessor"></span>      <span class="comment">// Read Perturbation object for free energy perturbation.</span>
-<a name="l00315"></a>00315       <a class="code" href="classMcMd_1_1System.html#ace51b5e2bb80676967deb5e34f138506" title="Read the perturbation parameter block (if any)">readPerturbation</a>(in);
+<a name="l00315"></a>00315       <a class="code" href="classMcMd_1_1System.html#a2a331854b6c75921d059ae7180cbb0d2" title="Read the perturbation parameter block (if any)">readPerturbation</a>(in);
 <a name="l00316"></a>00316 <span class="preprocessor">      #endif</span>
 <a name="l00317"></a>00317 <span class="preprocessor"></span>
-<a name="l00318"></a>00318       <a class="code" href="classUtil_1_1ParamComposite.html#a38c7f73d3a857afb146812da527b14f7" title="Add and read the closing bracket.">readEnd</a>(in);
+<a name="l00318"></a>00318       <a class="code" href="classUtil_1_1ParamComposite.html#ad688a41bbbd4d5c88d72c0edc7b1f55c" title="Add and read the closing bracket.">readEnd</a>(in);
 <a name="l00319"></a>00319    }
 <a name="l00320"></a>00320   
 <a name="l00321"></a>00321    <span class="comment">/*</span>
 <a name="l00322"></a>00322 <span class="comment">   * Read configuration from a specific input stream.</span>
 <a name="l00323"></a>00323 <span class="comment">   */</span>
-<a name="l00324"></a><a class="code" href="classMcMd_1_1MdSystem.html#ac100e87d4f59a03f0ca63685def1ef15">00324</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#ac100e87d4f59a03f0ca63685def1ef15" title="Read system configuration from file.">MdSystem::readConfig</a>(std::istream &amp;in)
+<a name="l00324"></a><a class="code" href="classMcMd_1_1MdSystem.html#ade5efc17b6f4811310d65911b38e89fd">00324</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#ade5efc17b6f4811310d65911b38e89fd" title="Read system configuration from file.">MdSystem::readConfig</a>(std::istream &amp;in)
 <a name="l00325"></a>00325    {
-<a name="l00326"></a>00326       <a class="code" href="classMcMd_1_1MdSystem.html#ac100e87d4f59a03f0ca63685def1ef15" title="Read system configuration from file.">System::readConfig</a>(in);
+<a name="l00326"></a>00326       <a class="code" href="classMcMd_1_1MdSystem.html#ade5efc17b6f4811310d65911b38e89fd" title="Read system configuration from file.">System::readConfig</a>(in);
 <a name="l00327"></a>00327 
 <a name="l00328"></a>00328 <span class="preprocessor">      #ifndef INTER_NOPAIR </span>
-<a name="l00329"></a>00329 <span class="preprocessor"></span>      <a class="code" href="classMcMd_1_1MdSystem.html#a0026c0990ab9c244b90327d7e6c1e628" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#a16d0e0b44ef07a20281f0462a9489c30" title="Clear all statistical accumulators stored in PairList.">clearPairListStatistics</a>();
-<a name="l00330"></a>00330       <a class="code" href="classMcMd_1_1MdSystem.html#a0026c0990ab9c244b90327d7e6c1e628" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#acb0619cd1cde30f8e3b2a062341eaed7" title="Build the internal PairList.">buildPairList</a>();
+<a name="l00329"></a>00329 <span class="preprocessor"></span>      <a class="code" href="classMcMd_1_1MdSystem.html#ae68ae421f5cead5dfaab22fba53a40c6" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#a1fb584e677f6232ad13717f293fbf2d9" title="Clear all statistical accumulators stored in PairList.">clearPairListStatistics</a>();
+<a name="l00330"></a>00330       <a class="code" href="classMcMd_1_1MdSystem.html#ae68ae421f5cead5dfaab22fba53a40c6" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#ac7cf257101e79baaf8f92517f7ff874a" title="Build the internal PairList.">buildPairList</a>();
 <a name="l00331"></a>00331 <span class="preprocessor">      #endif</span>
 <a name="l00332"></a>00332 <span class="preprocessor"></span>
-<a name="l00333"></a>00333       <a class="code" href="classMcMd_1_1MdSystem.html#a8265f3b5934e1984f33d3cde9899a507" title="Compute all forces in this System.">calculateForces</a>();
+<a name="l00333"></a>00333       <a class="code" href="classMcMd_1_1MdSystem.html#a00fce01c6a30fd2ba32178b3f7781239" title="Compute all forces in this System.">calculateForces</a>();
 <a name="l00334"></a>00334    }
 <a name="l00335"></a>00335 
 <a name="l00336"></a>00336    <span class="comment">/* </span>
 <a name="l00337"></a>00337 <span class="comment">   * Load a System configuration from an archive.</span>
 <a name="l00338"></a>00338 <span class="comment">   */</span>
-<a name="l00339"></a><a class="code" href="classMcMd_1_1MdSystem.html#aa3d71af4cc5dfb2be6be816a8f562416">00339</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load the MdSystem configuration from an archive.">MdSystem::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
+<a name="l00339"></a><a class="code" href="classMcMd_1_1MdSystem.html#a538b81de2d6651b94578a933b3024eb4">00339</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#a538b81de2d6651b94578a933b3024eb4" title="Load the MdSystem configuration from an archive.">MdSystem::load</a>(<a class="code" href="classUtil_1_1BinaryFileIArchive.html" title="Saving archive for binary istream.">Serializable::IArchiveType</a>&amp; ar)
 <a name="l00340"></a>00340    {  
-<a name="l00341"></a>00341       <a class="code" href="classMcMd_1_1MdSystem.html#aa3d71af4cc5dfb2be6be816a8f562416" title="Load the MdSystem configuration from an archive.">System::load</a>(ar); 
+<a name="l00341"></a>00341       <a class="code" href="classMcMd_1_1MdSystem.html#a538b81de2d6651b94578a933b3024eb4" title="Load the MdSystem configuration from an archive.">System::load</a>(ar); 
 <a name="l00342"></a>00342 
 <a name="l00343"></a>00343 <span class="preprocessor">      #ifndef INTER_NOPAIR </span>
-<a name="l00344"></a>00344 <span class="preprocessor"></span>      <a class="code" href="classMcMd_1_1MdSystem.html#a0026c0990ab9c244b90327d7e6c1e628" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#a16d0e0b44ef07a20281f0462a9489c30" title="Clear all statistical accumulators stored in PairList.">clearPairListStatistics</a>();
-<a name="l00345"></a>00345       <a class="code" href="classMcMd_1_1MdSystem.html#a0026c0990ab9c244b90327d7e6c1e628" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#acb0619cd1cde30f8e3b2a062341eaed7" title="Build the internal PairList.">buildPairList</a>();
+<a name="l00344"></a>00344 <span class="preprocessor"></span>      <a class="code" href="classMcMd_1_1MdSystem.html#ae68ae421f5cead5dfaab22fba53a40c6" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#a1fb584e677f6232ad13717f293fbf2d9" title="Clear all statistical accumulators stored in PairList.">clearPairListStatistics</a>();
+<a name="l00345"></a>00345       <a class="code" href="classMcMd_1_1MdSystem.html#ae68ae421f5cead5dfaab22fba53a40c6" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#ac7cf257101e79baaf8f92517f7ff874a" title="Build the internal PairList.">buildPairList</a>();
 <a name="l00346"></a>00346 <span class="preprocessor">      #endif</span>
-<a name="l00347"></a>00347 <span class="preprocessor"></span>      <a class="code" href="classMcMd_1_1MdSystem.html#a8265f3b5934e1984f33d3cde9899a507" title="Compute all forces in this System.">calculateForces</a>();
+<a name="l00347"></a>00347 <span class="preprocessor"></span>      <a class="code" href="classMcMd_1_1MdSystem.html#a00fce01c6a30fd2ba32178b3f7781239" title="Compute all forces in this System.">calculateForces</a>();
 <a name="l00348"></a>00348    }
 <a name="l00349"></a>00349 
 <a name="l00350"></a>00350    <span class="comment">/* </span>
 <a name="l00351"></a>00351 <span class="comment">   * Shift all atoms into primary unit cell.</span>
 <a name="l00352"></a>00352 <span class="comment">   */</span> 
-<a name="l00353"></a><a class="code" href="classMcMd_1_1MdSystem.html#ae2b964a445702e47a52ac0d888584a65">00353</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#ae2b964a445702e47a52ac0d888584a65" title="Shift all atoms into primary cell.">MdSystem::shiftAtoms</a>() 
+<a name="l00353"></a><a class="code" href="classMcMd_1_1MdSystem.html#aeac3f71f85681ff0f24aa4a502973315">00353</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#aeac3f71f85681ff0f24aa4a502973315" title="Shift all atoms into primary cell.">MdSystem::shiftAtoms</a>() 
 <a name="l00354"></a>00354    {
 <a name="l00355"></a>00355       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">MoleculeIterator</a> molIter;
 <a name="l00356"></a>00356       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a> atomIter;
-<a name="l00357"></a>00357       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
-<a name="l00358"></a>00358          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00357"></a>00357       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
+<a name="l00358"></a>00358          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
 <a name="l00359"></a>00359             molIter-&gt;begin(atomIter); 
-<a name="l00360"></a>00360             <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00360"></a>00360             <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00361"></a>00361 <span class="preprocessor">               #ifdef MCMD_SHIFT</span>
-<a name="l00362"></a>00362 <span class="preprocessor"></span>               <a class="code" href="classMcMd_1_1System.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary by reference.">boundary</a>().shift(atomIter-&gt;position(), atomIter-&gt;shift());
+<a name="l00362"></a>00362 <span class="preprocessor"></span>               <a class="code" href="classMcMd_1_1System.html#ace1b2b95dc094767d218e1dcf520b5ca" title="Get the Boundary by reference.">boundary</a>().shift(atomIter-&gt;position(), atomIter-&gt;shift());
 <a name="l00363"></a>00363 <span class="preprocessor">               #else</span>
-<a name="l00364"></a>00364 <span class="preprocessor"></span>               <a class="code" href="classMcMd_1_1System.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary by reference.">boundary</a>().shift(atomIter-&gt;position());
+<a name="l00364"></a>00364 <span class="preprocessor"></span>               <a class="code" href="classMcMd_1_1System.html#ace1b2b95dc094767d218e1dcf520b5ca" title="Get the Boundary by reference.">boundary</a>().shift(atomIter-&gt;position());
 <a name="l00365"></a>00365 <span class="preprocessor">               #endif</span>
 <a name="l00366"></a>00366 <span class="preprocessor"></span>            }
 <a name="l00367"></a>00367          }
@@ -422,13 +422,13 @@
 <a name="l00371"></a>00371    <span class="comment">/* </span>
 <a name="l00372"></a>00372 <span class="comment">   * Set force vectors to zero for all atoms in this System.</span>
 <a name="l00373"></a>00373 <span class="comment">   */</span> 
-<a name="l00374"></a><a class="code" href="classMcMd_1_1MdSystem.html#ac61bf8491841a64a10cd457078c44aef">00374</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#ac61bf8491841a64a10cd457078c44aef" title="Set all atomic forces to zero.">MdSystem::setZeroForces</a>() 
+<a name="l00374"></a><a class="code" href="classMcMd_1_1MdSystem.html#adced739c732c2767003dd78f22ede87c">00374</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#adced739c732c2767003dd78f22ede87c" title="Set all atomic forces to zero.">MdSystem::setZeroForces</a>() 
 <a name="l00375"></a>00375    {
 <a name="l00376"></a>00376       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">MoleculeIterator</a>       molIter;
 <a name="l00377"></a>00377       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a> atomIter;
-<a name="l00378"></a>00378       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
-<a name="l00379"></a>00379          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00380"></a>00380             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00378"></a>00378       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
+<a name="l00379"></a>00379          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00380"></a>00380             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00381"></a>00381                atomIter-&gt;force().zero();
 <a name="l00382"></a>00382             }
 <a name="l00383"></a>00383          }
@@ -438,13 +438,13 @@
 <a name="l00387"></a>00387    <span class="comment">/* </span>
 <a name="l00388"></a>00388 <span class="comment">   * Set velocity vectors to zero for all atoms in this System.</span>
 <a name="l00389"></a>00389 <span class="comment">   */</span> 
-<a name="l00390"></a><a class="code" href="classMcMd_1_1MdSystem.html#a02df8f04732b1dbb87bb447a7f1c2e7e">00390</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#a02df8f04732b1dbb87bb447a7f1c2e7e" title="Set all atomic velocities to zero.">MdSystem::setZeroVelocities</a>() 
+<a name="l00390"></a><a class="code" href="classMcMd_1_1MdSystem.html#ae2f9ceaa636bf36d1a608fa5aa9abb78">00390</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#ae2f9ceaa636bf36d1a608fa5aa9abb78" title="Set all atomic velocities to zero.">MdSystem::setZeroVelocities</a>() 
 <a name="l00391"></a>00391    {
 <a name="l00392"></a>00392       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">MoleculeIterator</a>       molIter;
 <a name="l00393"></a>00393       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a> atomIter;
-<a name="l00394"></a>00394       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
-<a name="l00395"></a>00395          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00396"></a>00396             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00394"></a>00394       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; <a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
+<a name="l00395"></a>00395          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00396"></a>00396             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00397"></a>00397                atomIter-&gt;velocity().zero();
 <a name="l00398"></a>00398             }
 <a name="l00399"></a>00399          }
@@ -455,24 +455,24 @@
 <a name="l00404"></a>00404    <span class="comment">/* </span>
 <a name="l00405"></a>00405 <span class="comment">   * Set velocities to Boltzmannian random values, for all atoms in System.</span>
 <a name="l00406"></a>00406 <span class="comment">   */</span> 
-<a name="l00407"></a><a class="code" href="classMcMd_1_1MdSystem.html#a0e463234fddc9f35cf6b3fb2ad5e380b">00407</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#a0e463234fddc9f35cf6b3fb2ad5e380b" title="Set all velocities to Boltzmann distributed random values.">MdSystem::setBoltzmannVelocities</a>(<span class="keywordtype">double</span> temperature) 
+<a name="l00407"></a><a class="code" href="classMcMd_1_1MdSystem.html#aa1002532674b377f3b03827141c73ada">00407</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#aa1002532674b377f3b03827141c73ada" title="Set all velocities to Boltzmann distributed random values.">MdSystem::setBoltzmannVelocities</a>(<span class="keywordtype">double</span> temperature) 
 <a name="l00408"></a>00408    {
-<a name="l00409"></a>00409       <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; sim = <a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>();
-<a name="l00410"></a>00410       <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a> &amp;random = sim.<a class="code" href="classMcMd_1_1Simulation.html#a3e9d2379455b7dc1bc206383917cd3b0" title="Get the random number generator by reference.">random</a>();
+<a name="l00409"></a>00409       <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; sim = <a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>();
+<a name="l00410"></a>00410       <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a> &amp;random = sim.<a class="code" href="classMcMd_1_1Simulation.html#afe4a8354b0ecaf6daf94ea9b8343b26b" title="Get the random number generator by reference.">random</a>();
 <a name="l00411"></a>00411       <span class="keywordtype">double</span> scale;
 <a name="l00412"></a>00412       <span class="keywordtype">double</span> mass;
 <a name="l00413"></a>00413       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">MoleculeIterator</a> molIter;
-<a name="l00414"></a>00414       <span class="keywordtype">int</span> nSpec = sim.<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>(); 
+<a name="l00414"></a>00414       <span class="keywordtype">int</span> nSpec = sim.<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); 
 <a name="l00415"></a>00415       <span class="keywordtype">int</span> iSpec, j;
 <a name="l00416"></a>00416    
 <a name="l00417"></a>00417       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a> atomIter;
 <a name="l00418"></a>00418       <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpec; ++iSpec) {
-<a name="l00419"></a>00419          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00420"></a>00420             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
-<a name="l00421"></a>00421                mass   = sim.<a class="code" href="classMcMd_1_1Simulation.html#ab6bbaf9cb8f4d80bee8bc097fe081b2f" title="Get an AtomType object by const reference.">atomType</a>(atomIter-&gt;typeId()).mass();
+<a name="l00419"></a>00419          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00420"></a>00420             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00421"></a>00421                mass   = sim.<a class="code" href="classMcMd_1_1Simulation.html#aaa66eab8cfb22ac117f93cd076cfe3f4" title="Get an AtomType object by const reference.">atomType</a>(atomIter-&gt;typeId()).mass();
 <a name="l00422"></a>00422                scale  = sqrt(temperature/mass);
-<a name="l00423"></a>00423                <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++j) {
-<a name="l00424"></a>00424                   atomIter-&gt;velocity()[j] = scale*random.<a class="code" href="classUtil_1_1Random.html#a6f9a01f90d51bcd37befa231ee8527cb" title="Return a Gaussian random number with zero average and unit variance.">gaussian</a>();
+<a name="l00423"></a>00423                <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00424"></a>00424                   atomIter-&gt;velocity()[j] = scale*random.<a class="code" href="classUtil_1_1Random.html#ae4056fb996c7072ec2a8815d818c7102" title="Return a Gaussian random number with zero average and unit variance.">gaussian</a>();
 <a name="l00425"></a>00425                }
 <a name="l00426"></a>00426             }
 <a name="l00427"></a>00427          }
@@ -483,27 +483,27 @@
 <a name="l00432"></a>00432    <span class="comment">/* </span>
 <a name="l00433"></a>00433 <span class="comment">   * Subtract average velocity from all atomic velocities.</span>
 <a name="l00434"></a>00434 <span class="comment">   */</span> 
-<a name="l00435"></a><a class="code" href="classMcMd_1_1MdSystem.html#a84cd83ac82d505b8d46fdd9f9fdb93c4">00435</a>    <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> <a class="code" href="classMcMd_1_1MdSystem.html#a84cd83ac82d505b8d46fdd9f9fdb93c4" title="Subtract average velocity from all atomic velocities.">MdSystem::removeDriftVelocity</a>() 
+<a name="l00435"></a><a class="code" href="classMcMd_1_1MdSystem.html#a305c7e96868a36f110f247abd36bc29e">00435</a>    <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> <a class="code" href="classMcMd_1_1MdSystem.html#a305c7e96868a36f110f247abd36bc29e" title="Subtract average velocity from all atomic velocities.">MdSystem::removeDriftVelocity</a>() 
 <a name="l00436"></a>00436    {
 <a name="l00437"></a>00437       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> average(0.0);
 <a name="l00438"></a>00438       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">MoleculeIterator</a> molIter;
 <a name="l00439"></a>00439       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a> atomIter;
-<a name="l00440"></a>00440       <span class="keywordtype">int</span>    nSpec = <a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>(); 
-<a name="l00441"></a>00441       <span class="keywordtype">int</span>    <a class="code" href="classMcMd_1_1System.html#ac91579bd63979a294891d330a5533838" title="Return the total number of atoms in this System.">nAtom</a> = 0; 
+<a name="l00440"></a>00440       <span class="keywordtype">int</span>    nSpec = <a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>().<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); 
+<a name="l00441"></a>00441       <span class="keywordtype">int</span>    <a class="code" href="classMcMd_1_1System.html#ac0788d3fc9bef45bb17903acb32e99ba" title="Return the total number of atoms in this System.">nAtom</a> = 0; 
 <a name="l00442"></a>00442       <span class="keywordtype">int</span>    iSpec;
 <a name="l00443"></a>00443    
 <a name="l00444"></a>00444       <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpec; ++iSpec) {
-<a name="l00445"></a>00445          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00446"></a>00446             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00445"></a>00445          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00446"></a>00446             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00447"></a>00447                average += atomIter-&gt;velocity();
-<a name="l00448"></a>00448                ++<a class="code" href="classMcMd_1_1System.html#ac91579bd63979a294891d330a5533838" title="Return the total number of atoms in this System.">nAtom</a>;
+<a name="l00448"></a>00448                ++<a class="code" href="classMcMd_1_1System.html#ac0788d3fc9bef45bb17903acb32e99ba" title="Return the total number of atoms in this System.">nAtom</a>;
 <a name="l00449"></a>00449             }
 <a name="l00450"></a>00450          }
 <a name="l00451"></a>00451       }
 <a name="l00452"></a>00452       average /= double(nAtom);
 <a name="l00453"></a>00453       <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpec; ++iSpec) {
-<a name="l00454"></a>00454          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00455"></a>00455             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00454"></a>00454          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00455"></a>00455             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00456"></a>00456                atomIter-&gt;velocity() -= average;
 <a name="l00457"></a>00457             }
 <a name="l00458"></a>00458          }
@@ -515,14 +515,14 @@
 <a name="l00464"></a>00464    <span class="comment">/* </span>
 <a name="l00465"></a>00465 <span class="comment">   * Calculate all forces.</span>
 <a name="l00466"></a>00466 <span class="comment">   */</span>
-<a name="l00467"></a><a class="code" href="classMcMd_1_1MdSystem.html#a8265f3b5934e1984f33d3cde9899a507">00467</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#a8265f3b5934e1984f33d3cde9899a507" title="Compute all forces in this System.">MdSystem::calculateForces</a>()
+<a name="l00467"></a><a class="code" href="classMcMd_1_1MdSystem.html#a00fce01c6a30fd2ba32178b3f7781239">00467</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1MdSystem.html#a00fce01c6a30fd2ba32178b3f7781239" title="Compute all forces in this System.">MdSystem::calculateForces</a>()
 <a name="l00468"></a>00468    {
-<a name="l00469"></a>00469       <a class="code" href="classMcMd_1_1MdSystem.html#ac61bf8491841a64a10cd457078c44aef" title="Set all atomic forces to zero.">setZeroForces</a>();
+<a name="l00469"></a>00469       <a class="code" href="classMcMd_1_1MdSystem.html#adced739c732c2767003dd78f22ede87c" title="Set all atomic forces to zero.">setZeroForces</a>();
 <a name="l00470"></a>00470 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
-<a name="l00471"></a>00471 <span class="preprocessor"></span>      <a class="code" href="classMcMd_1_1MdSystem.html#a0026c0990ab9c244b90327d7e6c1e628" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#a482f59b9d69effb8f105406d697a658e" title="Calculate non-bonded pair forces for all atoms in this System.">addForces</a>();
+<a name="l00471"></a>00471 <span class="preprocessor"></span>      <a class="code" href="classMcMd_1_1MdSystem.html#ae68ae421f5cead5dfaab22fba53a40c6" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1MdPairPotential.html#a8a932498c7a68f5bfc9a77c2e4169808" title="Calculate non-bonded pair forces for all atoms in this System.">addForces</a>();
 <a name="l00472"></a>00472 <span class="preprocessor">      #endif</span>
-<a name="l00473"></a>00473 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a99605c893b3efd2a1129a25afe19de46" title="Does a bond potential exist?.">hasBondPotential</a>()) {
-<a name="l00474"></a>00474          <a class="code" href="classMcMd_1_1MdSystem.html#a6ded80b5664672f56a62f8bf8295d641" title="Return BondPotential by reference.">bondPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a482f59b9d69effb8f105406d697a658e" title="Add bond forces to all atomic forces.">addForces</a>();
+<a name="l00473"></a>00473 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a643f544bfafcacafdcc87c034eeb9897" title="Does a bond potential exist?.">hasBondPotential</a>()) {
+<a name="l00474"></a>00474          <a class="code" href="classMcMd_1_1MdSystem.html#a1098b365f7ab49dce12728caad9ff2aa" title="Return BondPotential by reference.">bondPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a3d0e8db9f209eeaf8427324ad8a22aea" title="Add bond forces to all atomic forces.">addForces</a>();
 <a name="l00475"></a>00475       }
 <a name="l00476"></a>00476 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
 <a name="l00477"></a>00477 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (hasAnglePotential()) {
@@ -535,13 +535,13 @@
 <a name="l00484"></a>00484       }
 <a name="l00485"></a>00485 <span class="preprocessor">      #endif</span>
 <a name="l00486"></a>00486 <span class="preprocessor"></span><span class="preprocessor">      #ifdef MCMD_LINK</span>
-<a name="l00487"></a>00487 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#ad94cba44b90992a12934ae2be6dcc707" title="Does a link potential exist?.">hasLinkPotential</a>()) {
-<a name="l00488"></a>00488          <a class="code" href="classMcMd_1_1MdSystem.html#afd6f92eb30537c2f70a260a067176dea" title="Return link potential by reference.">linkPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a482f59b9d69effb8f105406d697a658e" title="Add bond forces to all atomic forces.">addForces</a>();
+<a name="l00487"></a>00487 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a35d45f4b75a57b2c6bbbf16b217f0778" title="Does a link potential exist?.">hasLinkPotential</a>()) {
+<a name="l00488"></a>00488          <a class="code" href="classMcMd_1_1MdSystem.html#aae1f968bb7a2ad612da1b52fbc21ea49" title="Return link potential by reference.">linkPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a3d0e8db9f209eeaf8427324ad8a22aea" title="Add bond forces to all atomic forces.">addForces</a>();
 <a name="l00489"></a>00489       }
 <a name="l00490"></a>00490 <span class="preprocessor">      #endif</span>
 <a name="l00491"></a>00491 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
-<a name="l00492"></a>00492 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a2e1624ef024a3ecfc4567949279eb7f9" title="Does an external potential exist?.">hasExternalPotential</a>()) {
-<a name="l00493"></a>00493          <a class="code" href="classMcMd_1_1MdSystem.html#aa307441c683f245a3554e28c2e9ef9f5" title="Return ExternalPotential by reference.">externalPotential</a>().<a class="code" href="classMcMd_1_1ExternalPotential.html#a482f59b9d69effb8f105406d697a658e" title="Add external force of an Atom to the total force acting on it.">addForces</a>();
+<a name="l00492"></a>00492 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a1220c0d81768419c52dfb1c178425473" title="Does an external potential exist?.">hasExternalPotential</a>()) {
+<a name="l00493"></a>00493          <a class="code" href="classMcMd_1_1MdSystem.html#afd2826b2836d10bbf73a3e01129510d7" title="Return ExternalPotential by reference.">externalPotential</a>().<a class="code" href="classMcMd_1_1ExternalPotential.html#a13c89076210d5b5726ef552f8ee969ab" title="Add external force of an Atom to the total force acting on it.">addForces</a>();
 <a name="l00494"></a>00494       }
 <a name="l00495"></a>00495 <span class="preprocessor">      #endif</span>
 <a name="l00496"></a>00496 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_TETHER</span>
@@ -554,14 +554,14 @@
 <a name="l00503"></a>00503    <span class="comment">/* </span>
 <a name="l00504"></a>00504 <span class="comment">   * Calculate and return total potential energy.</span>
 <a name="l00505"></a>00505 <span class="comment">   */</span>
-<a name="l00506"></a><a class="code" href="classMcMd_1_1MdSystem.html#a3b69eed28747f5c7af55bc3ef911da53">00506</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1MdSystem.html#a3b69eed28747f5c7af55bc3ef911da53" title="Compute and return total potential energy.">MdSystem::potentialEnergy</a>()
+<a name="l00506"></a><a class="code" href="classMcMd_1_1MdSystem.html#a8d1111fcc92eb150fa30100b85326563">00506</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1MdSystem.html#a8d1111fcc92eb150fa30100b85326563" title="Compute and return total potential energy.">MdSystem::potentialEnergy</a>()
 <a name="l00507"></a>00507    {
 <a name="l00508"></a>00508       <span class="keywordtype">double</span> energy = 0.0;
 <a name="l00509"></a>00509 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
-<a name="l00510"></a>00510 <span class="preprocessor"></span>      energy += <a class="code" href="classMcMd_1_1MdSystem.html#a0026c0990ab9c244b90327d7e6c1e628" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1PairPotential.html#a180348fce7f1059a0ad043110433d1c7" title="Return pair energy for a single pair.">energy</a>();
+<a name="l00510"></a>00510 <span class="preprocessor"></span>      energy += <a class="code" href="classMcMd_1_1MdSystem.html#ae68ae421f5cead5dfaab22fba53a40c6" title="Return MdPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1PairPotential.html#a04e3c8f31425931a8b8f5c5e2c8ea1a3" title="Return pair energy for a single pair.">energy</a>();
 <a name="l00511"></a>00511 <span class="preprocessor">      #endif</span>
-<a name="l00512"></a>00512 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a99605c893b3efd2a1129a25afe19de46" title="Does a bond potential exist?.">hasBondPotential</a>()) {
-<a name="l00513"></a>00513          energy += <a class="code" href="classMcMd_1_1MdSystem.html#a6ded80b5664672f56a62f8bf8295d641" title="Return BondPotential by reference.">bondPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a22da260329c0e87b9f7eb7edd1b5149e" title="Returns potential energy for one bond.">energy</a>();
+<a name="l00512"></a>00512 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a643f544bfafcacafdcc87c034eeb9897" title="Does a bond potential exist?.">hasBondPotential</a>()) {
+<a name="l00513"></a>00513          energy += <a class="code" href="classMcMd_1_1MdSystem.html#a1098b365f7ab49dce12728caad9ff2aa" title="Return BondPotential by reference.">bondPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a56746573b3255b86a0b2b008dfbb951e" title="Returns potential energy for one bond.">energy</a>();
 <a name="l00514"></a>00514       }
 <a name="l00515"></a>00515 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
 <a name="l00516"></a>00516 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (hasAnglePotential()) {
@@ -574,13 +574,13 @@
 <a name="l00523"></a>00523       }
 <a name="l00524"></a>00524 <span class="preprocessor">      #endif</span>
 <a name="l00525"></a>00525 <span class="preprocessor"></span><span class="preprocessor">      #ifdef MCMD_LINK</span>
-<a name="l00526"></a>00526 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#ad94cba44b90992a12934ae2be6dcc707" title="Does a link potential exist?.">hasLinkPotential</a>()) {
-<a name="l00527"></a>00527          energy += <a class="code" href="classMcMd_1_1MdSystem.html#afd6f92eb30537c2f70a260a067176dea" title="Return link potential by reference.">linkPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a22da260329c0e87b9f7eb7edd1b5149e" title="Returns potential energy for one bond.">energy</a>();
+<a name="l00526"></a>00526 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a35d45f4b75a57b2c6bbbf16b217f0778" title="Does a link potential exist?.">hasLinkPotential</a>()) {
+<a name="l00527"></a>00527          energy += <a class="code" href="classMcMd_1_1MdSystem.html#aae1f968bb7a2ad612da1b52fbc21ea49" title="Return link potential by reference.">linkPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a56746573b3255b86a0b2b008dfbb951e" title="Returns potential energy for one bond.">energy</a>();
 <a name="l00528"></a>00528       }
 <a name="l00529"></a>00529 <span class="preprocessor">      #endif</span>
 <a name="l00530"></a>00530 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
-<a name="l00531"></a>00531 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a2e1624ef024a3ecfc4567949279eb7f9" title="Does an external potential exist?.">hasExternalPotential</a>()) {
-<a name="l00532"></a>00532          energy += <a class="code" href="classMcMd_1_1MdSystem.html#aa307441c683f245a3554e28c2e9ef9f5" title="Return ExternalPotential by reference.">externalPotential</a>().<a class="code" href="classMcMd_1_1ExternalPotential.html#a7c7eb327223624354f20f964b8eb7aca" title="Returns external potential energy of a single particle.">energy</a>();
+<a name="l00531"></a>00531 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a1220c0d81768419c52dfb1c178425473" title="Does an external potential exist?.">hasExternalPotential</a>()) {
+<a name="l00532"></a>00532          energy += <a class="code" href="classMcMd_1_1MdSystem.html#afd2826b2836d10bbf73a3e01129510d7" title="Return ExternalPotential by reference.">externalPotential</a>().<a class="code" href="classMcMd_1_1ExternalPotential.html#adf721b489d5b875993f9ef2dc80964c2" title="Returns external potential energy of a single particle.">energy</a>();
 <a name="l00533"></a>00533       }
 <a name="l00534"></a>00534 <span class="preprocessor">      #endif</span>
 <a name="l00535"></a>00535 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_TETHER</span>
@@ -594,20 +594,20 @@
 <a name="l00543"></a>00543    <span class="comment">/* </span>
 <a name="l00544"></a>00544 <span class="comment">   * Return total kinetic energy.</span>
 <a name="l00545"></a>00545 <span class="comment">   */</span>
-<a name="l00546"></a><a class="code" href="classMcMd_1_1MdSystem.html#a5c7e2b912560e49d3ec8eb2a14780299">00546</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1MdSystem.html#a5c7e2b912560e49d3ec8eb2a14780299" title="Compute and return total kinetic energy.">MdSystem::kineticEnergy</a>()<span class="keyword"> const</span>
+<a name="l00546"></a><a class="code" href="classMcMd_1_1MdSystem.html#a86f5a5b17492b2466781921b0ce3e052">00546</a>    <span class="keywordtype">double</span> <a class="code" href="classMcMd_1_1MdSystem.html#a86f5a5b17492b2466781921b0ce3e052" title="Compute and return total kinetic energy.">MdSystem::kineticEnergy</a>()<span class="keyword"> const</span>
 <a name="l00547"></a>00547 <span class="keyword">   </span>{
-<a name="l00548"></a>00548       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; sim = <a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>();
+<a name="l00548"></a>00548       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; sim = <a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>();
 <a name="l00549"></a>00549       <span class="keywordtype">double</span> KE, mass;
 <a name="l00550"></a>00550       <a class="code" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstMoleculeIterator</a> molIter;
 <a name="l00551"></a>00551       <a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">Molecule::ConstAtomIterator</a> atomIter;
 <a name="l00552"></a>00552       <span class="keywordtype">int</span> iSpec, typeId;
 <a name="l00553"></a>00553 
 <a name="l00554"></a>00554       KE = 0.0;
-<a name="l00555"></a>00555       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; sim.<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
-<a name="l00556"></a>00556          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
-<a name="l00557"></a>00557             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00555"></a>00555       <span class="keywordflow">for</span> (iSpec=0; iSpec &lt; sim.<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
+<a name="l00556"></a>00556          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.<a class="code" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++molIter) {
+<a name="l00557"></a>00557             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00558"></a>00558                typeId = atomIter-&gt;typeId();
-<a name="l00559"></a>00559                mass = sim.<a class="code" href="classMcMd_1_1Simulation.html#ab6bbaf9cb8f4d80bee8bc097fe081b2f" title="Get an AtomType object by const reference.">atomType</a>(typeId).<a class="code" href="classMcMd_1_1AtomType.html#a83976846b90298e208d6bca1599e3fb3" title="Get the mass.">mass</a>();
+<a name="l00559"></a>00559                mass = sim.<a class="code" href="classMcMd_1_1Simulation.html#aaa66eab8cfb22ac117f93cd076cfe3f4" title="Get an AtomType object by const reference.">atomType</a>(typeId).<a class="code" href="classMcMd_1_1AtomType.html#a5f2cdb3e532127d965b5573e32f094be" title="Get the mass.">mass</a>();
 <a name="l00560"></a>00560                KE += atomIter-&gt;velocity().square()*mass;
 <a name="l00561"></a>00561             }
 <a name="l00562"></a>00562          }
@@ -626,23 +626,23 @@
 <a name="l00575"></a>00575 <span class="keyword">   </span>{
 <a name="l00576"></a>00576       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> p;
 <a name="l00577"></a>00577       <span class="keywordtype">double</span> mass;
-<a name="l00578"></a>00578       <a class="code" href="classMcMd_1_1System.html#aebe920e5a6dc4fc3db1927a3b93f5ada" title="Const Iterator for a MoleculeSet.">ConstMoleculeIterator</a> molIter;
+<a name="l00578"></a>00578       <a class="code" href="classMcMd_1_1System.html#acb5f24a14ca6186cb63c0ef4a69107d7" title="Const Iterator for a MoleculeSet.">ConstMoleculeIterator</a> molIter;
 <a name="l00579"></a>00579       <a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">Molecule::ConstAtomIterator</a> atomIter;
 <a name="l00580"></a>00580       <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>* vPtr;
-<a name="l00581"></a>00581       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; sim = <a class="code" href="classMcMd_1_1System.html#ae705530f1911ce586ce525c58dbe24e9" title="Get the parent Simulation by reference.">simulation</a>();
+<a name="l00581"></a>00581       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>&amp; sim = <a class="code" href="classMcMd_1_1System.html#a6f12a4fbf4b23914b14f1fabc34a03f0" title="Get the parent Simulation by reference.">simulation</a>();
 <a name="l00582"></a>00582 
 <a name="l00583"></a>00583       <a class="code" href="namespaceUtil.html#a892d1362ecc1ff6a8b9f47deeb688c1b" title="Set a float variable to zero.">setToZero</a>(stress);
-<a name="l00584"></a>00584       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; sim.<a class="code" href="classMcMd_1_1Simulation.html#afc042e122fa88c305624b57cdd8f7cf5" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
-<a name="l00585"></a>00585          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#a9aeebfa5e546da224daab2e0f0b55f85" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.notEnd(); ++molIter) {
-<a name="l00586"></a>00586             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00584"></a>00584       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iSpec=0; iSpec &lt; sim.<a class="code" href="classMcMd_1_1Simulation.html#afa700c2440413cd98a8d47900c4bdc8d" title="Get the number of Species in this Simulation.">nSpecies</a>(); ++iSpec) {
+<a name="l00585"></a>00585          <span class="keywordflow">for</span> (<a class="code" href="classMcMd_1_1System.html#adca6960d9c73e165193b039fdc205ac9" title="Initialize an iterator for molecules of one species in this System.">begin</a>(iSpec, molIter); molIter.notEnd(); ++molIter) {
+<a name="l00586"></a>00586             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d" title="Is this not the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00587"></a>00587                vPtr   = &amp;atomIter-&gt;velocity();
-<a name="l00588"></a>00588                mass   = sim.<a class="code" href="classMcMd_1_1Simulation.html#ab6bbaf9cb8f4d80bee8bc097fe081b2f" title="Get an AtomType object by const reference.">atomType</a>(atomIter-&gt;typeId()).mass();
-<a name="l00589"></a>00589                p.<a class="code" href="classUtil_1_1Vector.html#a93125fcca5b3af76a88698903291bcbd" title="Multiply a vector v by a scalar s.">multiply</a>(*vPtr, mass);
+<a name="l00588"></a>00588                mass   = sim.<a class="code" href="classMcMd_1_1Simulation.html#aaa66eab8cfb22ac117f93cd076cfe3f4" title="Get an AtomType object by const reference.">atomType</a>(atomIter-&gt;typeId()).mass();
+<a name="l00589"></a>00589                p.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(*vPtr, mass);
 <a name="l00590"></a>00590                incrementPairStress(*vPtr, p, stress);
 <a name="l00591"></a>00591             }
 <a name="l00592"></a>00592          }
 <a name="l00593"></a>00593       }
-<a name="l00594"></a>00594       stress /= <a class="code" href="classMcMd_1_1System.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary by reference.">boundary</a>().volume();
+<a name="l00594"></a>00594       stress /= <a class="code" href="classMcMd_1_1System.html#ace1b2b95dc094767d218e1dcf520b5ca" title="Get the Boundary by reference.">boundary</a>().volume();
 <a name="l00595"></a>00595       normalizeStress(stress);
 <a name="l00596"></a>00596    }
 <a name="l00597"></a>00597 
@@ -667,13 +667,13 @@
 <a name="l00616"></a>00616 
 <a name="l00617"></a>00617 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
 <a name="l00618"></a>00618 <span class="preprocessor"></span>      T pairStress;
-<a name="l00619"></a>00619       <a class="code" href="classMcMd_1_1MdSystem.html#a0026c0990ab9c244b90327d7e6c1e628" title="Return MdPairPotential by reference.">pairPotential</a>().computeStress(pairStress);
+<a name="l00619"></a>00619       <a class="code" href="classMcMd_1_1MdSystem.html#ae68ae421f5cead5dfaab22fba53a40c6" title="Return MdPairPotential by reference.">pairPotential</a>().computeStress(pairStress);
 <a name="l00620"></a>00620       stress += pairStress;
 <a name="l00621"></a>00621 <span class="preprocessor">      #endif</span>
 <a name="l00622"></a>00622 <span class="preprocessor"></span>
-<a name="l00623"></a>00623       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a99605c893b3efd2a1129a25afe19de46" title="Does a bond potential exist?.">hasBondPotential</a>()) {
+<a name="l00623"></a>00623       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a643f544bfafcacafdcc87c034eeb9897" title="Does a bond potential exist?.">hasBondPotential</a>()) {
 <a name="l00624"></a>00624          T bondStress;
-<a name="l00625"></a>00625          <a class="code" href="classMcMd_1_1MdSystem.html#a6ded80b5664672f56a62f8bf8295d641" title="Return BondPotential by reference.">bondPotential</a>().computeStress(bondStress);
+<a name="l00625"></a>00625          <a class="code" href="classMcMd_1_1MdSystem.html#a1098b365f7ab49dce12728caad9ff2aa" title="Return BondPotential by reference.">bondPotential</a>().computeStress(bondStress);
 <a name="l00626"></a>00626          stress += bondStress;
 <a name="l00627"></a>00627       }
 <a name="l00628"></a>00628 
@@ -694,9 +694,9 @@
 <a name="l00643"></a>00643 <span class="preprocessor">      #endif</span>
 <a name="l00644"></a>00644 <span class="preprocessor"></span>
 <a name="l00645"></a>00645 <span class="preprocessor">      #ifdef MCMD_LINK</span>
-<a name="l00646"></a>00646 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#ad94cba44b90992a12934ae2be6dcc707" title="Does a link potential exist?.">hasLinkPotential</a>()) {
+<a name="l00646"></a>00646 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1MdSystem.html#a35d45f4b75a57b2c6bbbf16b217f0778" title="Does a link potential exist?.">hasLinkPotential</a>()) {
 <a name="l00647"></a>00647          T linkStress;
-<a name="l00648"></a>00648          <a class="code" href="classMcMd_1_1MdSystem.html#afd6f92eb30537c2f70a260a067176dea" title="Return link potential by reference.">linkPotential</a>().computeStress(linkStress);
+<a name="l00648"></a>00648          <a class="code" href="classMcMd_1_1MdSystem.html#aae1f968bb7a2ad612da1b52fbc21ea49" title="Return link potential by reference.">linkPotential</a>().computeStress(linkStress);
 <a name="l00649"></a>00649          stress += linkStress;
 <a name="l00650"></a>00650       }
 <a name="l00651"></a>00651 <span class="preprocessor">      #endif</span>
@@ -753,11 +753,11 @@
 <a name="l00702"></a>00702    <span class="comment">/* </span>
 <a name="l00703"></a>00703 <span class="comment">   * Return true if this MdSystem is valid, or an throw Exception.</span>
 <a name="l00704"></a>00704 <span class="comment">   */</span>
-<a name="l00705"></a><a class="code" href="classMcMd_1_1MdSystem.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">00705</a>    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1MdSystem.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if valid, or throw Exception.">MdSystem::isValid</a>()<span class="keyword"> const</span>
+<a name="l00705"></a><a class="code" href="classMcMd_1_1MdSystem.html#a57316712e0558fef35dc557420dfaac6">00705</a>    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1MdSystem.html#a57316712e0558fef35dc557420dfaac6" title="Return true if valid, or throw Exception.">MdSystem::isValid</a>()<span class="keyword"> const</span>
 <a name="l00706"></a>00706 <span class="keyword">   </span>{
-<a name="l00707"></a>00707       <a class="code" href="classMcMd_1_1MdSystem.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if valid, or throw Exception.">System::isValid</a>();
+<a name="l00707"></a>00707       <a class="code" href="classMcMd_1_1MdSystem.html#a57316712e0558fef35dc557420dfaac6" title="Return true if valid, or throw Exception.">System::isValid</a>();
 <a name="l00708"></a>00708 <span class="preprocessor">      #ifndef INTER_NOPAIR</span>
-<a name="l00709"></a>00709 <span class="preprocessor"></span>      pairPotentialPtr_-&gt;<a class="code" href="classMcMd_1_1MdPairPotential.html#a5558bc8b3468234d2138c40529c46be8" title="Return a const reference to the internal PairList.">pairList</a>().<a class="code" href="classMcMd_1_1PairList.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if valid, or throw Exception.">isValid</a>();
+<a name="l00709"></a>00709 <span class="preprocessor"></span>      pairPotentialPtr_-&gt;<a class="code" href="classMcMd_1_1MdPairPotential.html#a4ad44402802d249c915fa51bba7bb876" title="Return a const reference to the internal PairList.">pairList</a>().<a class="code" href="classMcMd_1_1PairList.html#aa9f68b3bf705ef00e4bc6d120d199238" title="Return true if valid, or throw Exception.">isValid</a>();
 <a name="l00710"></a>00710 <span class="preprocessor">      #endif</span>
 <a name="l00711"></a>00711 <span class="preprocessor"></span>      <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00712"></a>00712    } 
@@ -765,14 +765,14 @@
 <a name="l00714"></a>00714    <span class="comment">/*</span>
 <a name="l00715"></a>00715 <span class="comment">   * Return a pointer to a new default ConfigIo.</span>
 <a name="l00716"></a>00716 <span class="comment">   */</span>
-<a name="l00717"></a><a class="code" href="classMcMd_1_1MdSystem.html#aa4ebd20bece54577de23e0677d266e8d">00717</a>    <a class="code" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>* <a class="code" href="classMcMd_1_1MdSystem.html#aa4ebd20bece54577de23e0677d266e8d" title="Return a pointer to a new MdConfigIo object.">MdSystem::newDefaultConfigIo</a>()
+<a name="l00717"></a><a class="code" href="classMcMd_1_1MdSystem.html#afa46946c3605847043520b15df6877cf">00717</a>    <a class="code" href="classMcMd_1_1ConfigIo.html" title="System configuration file reader and writer.">ConfigIo</a>* <a class="code" href="classMcMd_1_1MdSystem.html#afa46946c3605847043520b15df6877cf" title="Return a pointer to a new MdConfigIo object.">MdSystem::newDefaultConfigIo</a>()
 <a name="l00718"></a>00718    {  <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classMcMd_1_1MdConfigIo.html" title="ConfigIo for MD simulations (includes velocities).">MdConfigIo</a>(*<span class="keyword">this</span>); }
 <a name="l00719"></a>00719 
 <a name="l00720"></a>00720 }
 <a name="l00721"></a>00721 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

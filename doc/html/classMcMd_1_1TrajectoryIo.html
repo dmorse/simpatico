@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: TrajectoryIo Class Reference</title>
+<title>Simpatico: McMd::TrajectoryIo Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -51,23 +51,23 @@
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<h1>TrajectoryIo Class Reference<div class="ingroups"><a class="el" href="group__McMd__TrajectoryIo__Module.html">Trajectory File IO</a></div></h1>  </div>
+<h1>McMd::TrajectoryIo Class Reference<div class="ingroups"><a class="el" href="group__McMd__TrajectoryIo__Module.html">Trajectory File IO</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::TrajectoryIo" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Trajectory file reader and writer. </p>
-<p>A subclass of <a class="el" href="classMcMd_1_1TrajectoryIo.html" title="Trajectory file reader and writer.">TrajectoryIo</a> needs to implement a the pair <a class="el" href="classMcMd_1_1TrajectoryIo.html#a00d31442b1330d7dadc284e0b6ac81c1" title="Read trajectory file header.">readHeader()</a> and <a class="el" href="classMcMd_1_1TrajectoryIo.html#a77915f23668a852b90fb8e45a673848f" title="Read a single frame.">readFrame()</a> or the pair writeHedaer() and <a class="el" href="classMcMd_1_1TrajectoryIo.html#aaf55978df924183d210c8dab662ab906" title="Write a single frame.">writeFrame()</a> or both. If either pair is not implemented, calling the standard implementation will result in an error message. </p>
+<p>A subclass of <a class="el" href="classMcMd_1_1TrajectoryIo.html" title="Trajectory file reader and writer.">TrajectoryIo</a> needs to implement a the pair <a class="el" href="classMcMd_1_1TrajectoryIo.html#abce1a17b53cb135a3ac8d406f2716304" title="Read trajectory file header.">readHeader()</a> and <a class="el" href="classMcMd_1_1TrajectoryIo.html#a3a4edfef4292ea20deed2530e2e72c01" title="Read a single frame.">readFrame()</a> or the pair writeHedaer() and <a class="el" href="classMcMd_1_1TrajectoryIo.html#a62980f9333999236561db1cbb02a676c" title="Write a single frame.">writeFrame()</a> or both. If either pair is not implemented, calling the standard implementation will result in an error message. </p>
 
 <p>Definition at line <a class="el" href="TrajectoryIo_8h_source.html#l00032">32</a> of file <a class="el" href="TrajectoryIo_8h_source.html">TrajectoryIo.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="TrajectoryIo_8h_source.html">TrajectoryIo.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for TrajectoryIo:</div>
+Inheritance diagram for McMd::TrajectoryIo:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1TrajectoryIo.png" usemap="#TrajectoryIo_map" alt=""/>
-  <map id="TrajectoryIo_map" name="TrajectoryIo_map">
-<area href="classMcMd_1_1DCDTrajectoryIo.html" alt="DCDTrajectoryIo" shape="rect" coords="0,56,107,80"/>
+  <img src="classMcMd_1_1TrajectoryIo.png" usemap="#McMd::TrajectoryIo_map" alt=""/>
+  <map id="McMd::TrajectoryIo_map" name="McMd::TrajectoryIo_map">
+<area href="classMcMd_1_1DCDTrajectoryIo.html" alt="McMd::DCDTrajectoryIo" shape="rect" coords="0,56,149,80"/>
 </map>
  </div></div>
 
@@ -75,40 +75,40 @@ Inheritance diagram for TrajectoryIo:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a4288fb3e8615a6fa5196acdad595c23b">TrajectoryIo</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a4288fb3e8615a6fa5196acdad595c23b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a209ae5a4fb840c598b65e2afefcac71c">~TrajectoryIo</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a209ae5a4fb840c598b65e2afefcac71c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a00d31442b1330d7dadc284e0b6ac81c1">readHeader</a> (std::fstream &amp;file)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trajectory file header.  <a href="#a00d31442b1330d7dadc284e0b6ac81c1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a77915f23668a852b90fb8e45a673848f">readFrame</a> (std::fstream &amp;file)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a single frame.  <a href="#a77915f23668a852b90fb8e45a673848f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a9270282e4fffc283da85a36c82d1e022">writeHeader</a> (std::fstream &amp;file)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write trajectory file header.  <a href="#a9270282e4fffc283da85a36c82d1e022"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#aaf55978df924183d210c8dab662ab906">writeFrame</a> (std::fstream &amp;file)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a single frame.  <a href="#aaf55978df924183d210c8dab662ab906"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a968a1938d2664531ff53e0b1b742f842">nFrames</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of frames in trajectory file.  <a href="#a968a1938d2664531ff53e0b1b742f842"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a93f372469111163b6b3e252d5a5e2fc6">TrajectoryIo</a> (<a class="el" href="classMcMd_1_1System.html">System</a> &amp;system)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a93f372469111163b6b3e252d5a5e2fc6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a9f4ad37ae80b6a998169275516ac2516">~TrajectoryIo</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a9f4ad37ae80b6a998169275516ac2516"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#abce1a17b53cb135a3ac8d406f2716304">readHeader</a> (std::fstream &amp;file)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read trajectory file header.  <a href="#abce1a17b53cb135a3ac8d406f2716304"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a3a4edfef4292ea20deed2530e2e72c01">readFrame</a> (std::fstream &amp;file)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a single frame.  <a href="#a3a4edfef4292ea20deed2530e2e72c01"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a6d3aa8461bdeafb5d6516d4bb6a2eb22">writeHeader</a> (std::fstream &amp;file)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write trajectory file header.  <a href="#a6d3aa8461bdeafb5d6516d4bb6a2eb22"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a62980f9333999236561db1cbb02a676c">writeFrame</a> (std::fstream &amp;file)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a single frame.  <a href="#a62980f9333999236561db1cbb02a676c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#ae752378ee100aabf32299f9b64571736">nFrames</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of frames in trajectory file.  <a href="#ae752378ee100aabf32299f9b64571736"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a4a3af9eda1fe22f46d6209a7d29aa020">system</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the parent <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.  <a href="#a4a3af9eda1fe22f46d6209a7d29aa020"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#ae705530f1911ce586ce525c58dbe24e9">simulation</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the parent <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>.  <a href="#ae705530f1911ce586ce525c58dbe24e9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a81f23e720d23ad05f41e966ca5d76553">boundary</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Boundary.  <a href="#a81f23e720d23ad05f41e966ca5d76553"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a5f0cc3067a7e23c8edcaaca92e87f3f4">system</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the parent <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.  <a href="#a5f0cc3067a7e23c8edcaaca92e87f3f4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1Simulation.html">Simulation</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a6276f65c7804d8cc083ae7e09d7bb303">simulation</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a reference to the parent <a class="el" href="classMcMd_1_1Simulation.html" title="The main object in a simulation, which coordinates others.">Simulation</a>.  <a href="#a6276f65c7804d8cc083ae7e09d7bb303"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#a8ad6de70fa206d7f92d38c5287e2b2e3">boundary</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Boundary.  <a href="#a8ad6de70fa206d7f92d38c5287e2b2e3"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#acf47de04042f996dd7e0e8d05d8c02a9">nFrames_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of frames in the trajectory file.  <a href="#acf47de04042f996dd7e0e8d05d8c02a9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1TrajectoryIo.html#ab1a32ab72d1f1a20f46f171c58aaf118">nFrames_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of frames in the trajectory file.  <a href="#ab1a32ab72d1f1a20f46f171c58aaf118"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a4288fb3e8615a6fa5196acdad595c23b"></a><!-- doxytag: member="McMd::TrajectoryIo::TrajectoryIo" ref="a4288fb3e8615a6fa5196acdad595c23b" args="(System &amp;system)" -->
+<a class="anchor" id="a93f372469111163b6b3e252d5a5e2fc6"></a><!-- doxytag: member="McMd::TrajectoryIo::TrajectoryIo" ref="a93f372469111163b6b3e252d5a5e2fc6" args="(System &amp;system)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1TrajectoryIo.html">TrajectoryIo</a> </td>
+          <td class="memname">McMd::TrajectoryIo::TrajectoryIo </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classMcMd_1_1System.html">System</a> &amp;&#160;</td>
           <td class="paramname"><em>system</em></td><td>)</td>
@@ -124,12 +124,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a209ae5a4fb840c598b65e2afefcac71c"></a><!-- doxytag: member="McMd::TrajectoryIo::~TrajectoryIo" ref="a209ae5a4fb840c598b65e2afefcac71c" args="()" -->
+<a class="anchor" id="a9f4ad37ae80b6a998169275516ac2516"></a><!-- doxytag: member="McMd::TrajectoryIo::~TrajectoryIo" ref="a9f4ad37ae80b6a998169275516ac2516" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classMcMd_1_1TrajectoryIo.html">TrajectoryIo</a> </td>
+          <td class="memname">McMd::TrajectoryIo::~TrajectoryIo </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -145,12 +145,12 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a00d31442b1330d7dadc284e0b6ac81c1"></a><!-- doxytag: member="McMd::TrajectoryIo::readHeader" ref="a00d31442b1330d7dadc284e0b6ac81c1" args="(std::fstream &amp;file)" -->
+<a class="anchor" id="abce1a17b53cb135a3ac8d406f2716304"></a><!-- doxytag: member="McMd::TrajectoryIo::readHeader" ref="abce1a17b53cb135a3ac8d406f2716304" args="(std::fstream &amp;file)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readHeader </td>
+          <td class="memname">void McMd::TrajectoryIo::readHeader </td>
           <td>(</td>
           <td class="paramtype">std::fstream &amp;&#160;</td>
           <td class="paramname"><em>file</em></td><td>)</td>
@@ -169,22 +169,22 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classMcMd_1_1DCDTrajectoryIo.html#a00d31442b1330d7dadc284e0b6ac81c1">DCDTrajectoryIo</a>.</p>
+<p>Reimplemented in <a class="el" href="classMcMd_1_1DCDTrajectoryIo.html#a32bd5ac33f631a24a63d113236020da5">McMd::DCDTrajectoryIo</a>.</p>
 
 <p>Definition at line <a class="el" href="TrajectoryIo_8cpp_source.html#l00039">39</a> of file <a class="el" href="TrajectoryIo_8cpp_source.html">TrajectoryIo.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00565">MdSimulation::analyzeTrajectory()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00565">McMd::MdSimulation::analyzeTrajectory()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a77915f23668a852b90fb8e45a673848f"></a><!-- doxytag: member="McMd::TrajectoryIo::readFrame" ref="a77915f23668a852b90fb8e45a673848f" args="(std::fstream &amp;file)" -->
+<a class="anchor" id="a3a4edfef4292ea20deed2530e2e72c01"></a><!-- doxytag: member="McMd::TrajectoryIo::readFrame" ref="a3a4edfef4292ea20deed2530e2e72c01" args="(std::fstream &amp;file)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readFrame </td>
+          <td class="memname">void McMd::TrajectoryIo::readFrame </td>
           <td>(</td>
           <td class="paramtype">std::fstream &amp;&#160;</td>
           <td class="paramname"><em>file</em></td><td>)</td>
@@ -195,7 +195,7 @@ Protected Attributes</h2></td></tr>
 <div class="memdoc">
 
 <p>Read a single frame. </p>
-<p>Frames are assumed to be read consecutively. Before a call to <a class="el" href="classMcMd_1_1TrajectoryIo.html#a77915f23668a852b90fb8e45a673848f" title="Read a single frame.">readFrame()</a>, the <a class="el" href="classMcMd_1_1TrajectoryIo.html#a00d31442b1330d7dadc284e0b6ac81c1" title="Read trajectory file header.">readHeader()</a> method must be called.</p>
+<p>Frames are assumed to be read consecutively. Before a call to <a class="el" href="classMcMd_1_1TrajectoryIo.html#a3a4edfef4292ea20deed2530e2e72c01" title="Read a single frame.">readFrame()</a>, the <a class="el" href="classMcMd_1_1TrajectoryIo.html#abce1a17b53cb135a3ac8d406f2716304" title="Read trajectory file header.">readHeader()</a> method must be called.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">file</td><td>input file stream </td></tr>
@@ -203,22 +203,22 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classMcMd_1_1DCDTrajectoryIo.html#a77915f23668a852b90fb8e45a673848f">DCDTrajectoryIo</a>.</p>
+<p>Reimplemented in <a class="el" href="classMcMd_1_1DCDTrajectoryIo.html#a0130f75dbd6fe42e21fbe05f7eb274c6">McMd::DCDTrajectoryIo</a>.</p>
 
 <p>Definition at line <a class="el" href="TrajectoryIo_8cpp_source.html#l00047">47</a> of file <a class="el" href="TrajectoryIo_8cpp_source.html">TrajectoryIo.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00565">MdSimulation::analyzeTrajectory()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00565">McMd::MdSimulation::analyzeTrajectory()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9270282e4fffc283da85a36c82d1e022"></a><!-- doxytag: member="McMd::TrajectoryIo::writeHeader" ref="a9270282e4fffc283da85a36c82d1e022" args="(std::fstream &amp;file)" -->
+<a class="anchor" id="a6d3aa8461bdeafb5d6516d4bb6a2eb22"></a><!-- doxytag: member="McMd::TrajectoryIo::writeHeader" ref="a6d3aa8461bdeafb5d6516d4bb6a2eb22" args="(std::fstream &amp;file)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void writeHeader </td>
+          <td class="memname">void McMd::TrajectoryIo::writeHeader </td>
           <td>(</td>
           <td class="paramtype">std::fstream &amp;&#160;</td>
           <td class="paramname"><em>file</em></td><td>)</td>
@@ -242,12 +242,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aaf55978df924183d210c8dab662ab906"></a><!-- doxytag: member="McMd::TrajectoryIo::writeFrame" ref="aaf55978df924183d210c8dab662ab906" args="(std::fstream &amp;file)" -->
+<a class="anchor" id="a62980f9333999236561db1cbb02a676c"></a><!-- doxytag: member="McMd::TrajectoryIo::writeFrame" ref="a62980f9333999236561db1cbb02a676c" args="(std::fstream &amp;file)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void writeFrame </td>
+          <td class="memname">void McMd::TrajectoryIo::writeFrame </td>
           <td>(</td>
           <td class="paramtype">std::fstream &amp;&#160;</td>
           <td class="paramname"><em>file</em></td><td>)</td>
@@ -272,12 +272,12 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a968a1938d2664531ff53e0b1b742f842"></a><!-- doxytag: member="McMd::TrajectoryIo::nFrames" ref="a968a1938d2664531ff53e0b1b742f842" args="() const " -->
+<a class="anchor" id="ae752378ee100aabf32299f9b64571736"></a><!-- doxytag: member="McMd::TrajectoryIo::nFrames" ref="ae752378ee100aabf32299f9b64571736" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int nFrames </td>
+          <td class="memname">int McMd::TrajectoryIo::nFrames </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -290,16 +290,16 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="TrajectoryIo_8h_source.html#l00110">110</a> of file <a class="el" href="TrajectoryIo_8h_source.html">TrajectoryIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00565">MdSimulation::analyzeTrajectory()</a>.</p>
+<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00565">McMd::MdSimulation::analyzeTrajectory()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4a3af9eda1fe22f46d6209a7d29aa020"></a><!-- doxytag: member="McMd::TrajectoryIo::system" ref="a4a3af9eda1fe22f46d6209a7d29aa020" args="() const " -->
+<a class="anchor" id="a5f0cc3067a7e23c8edcaaca92e87f3f4"></a><!-- doxytag: member="McMd::TrajectoryIo::system" ref="a5f0cc3067a7e23c8edcaaca92e87f3f4" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1System.html">System</a> &amp; system </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1System.html">System</a> &amp; McMd::TrajectoryIo::system </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline, protected]</code></td>
@@ -312,16 +312,16 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="TrajectoryIo_8h_source.html#l00118">118</a> of file <a class="el" href="TrajectoryIo_8h_source.html">TrajectoryIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">DCDTrajectoryIo::readFrame()</a>, and <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">DCDTrajectoryIo::readHeader()</a>.</p>
+<p>Referenced by <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">McMd::DCDTrajectoryIo::readFrame()</a>, and <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">McMd::DCDTrajectoryIo::readHeader()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae705530f1911ce586ce525c58dbe24e9"></a><!-- doxytag: member="McMd::TrajectoryIo::simulation" ref="ae705530f1911ce586ce525c58dbe24e9" args="() const " -->
+<a class="anchor" id="a6276f65c7804d8cc083ae7e09d7bb303"></a><!-- doxytag: member="McMd::TrajectoryIo::simulation" ref="a6276f65c7804d8cc083ae7e09d7bb303" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classMcMd_1_1Simulation.html">Simulation</a> &amp; simulation </td>
+          <td class="memname"><a class="el" href="classMcMd_1_1Simulation.html">Simulation</a> &amp; McMd::TrajectoryIo::simulation </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline, protected]</code></td>
@@ -334,16 +334,16 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="TrajectoryIo_8h_source.html#l00127">127</a> of file <a class="el" href="TrajectoryIo_8h_source.html">TrajectoryIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">DCDTrajectoryIo::readFrame()</a>, and <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">DCDTrajectoryIo::readHeader()</a>.</p>
+<p>Referenced by <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">McMd::DCDTrajectoryIo::readFrame()</a>, and <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">McMd::DCDTrajectoryIo::readHeader()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a81f23e720d23ad05f41e966ca5d76553"></a><!-- doxytag: member="McMd::TrajectoryIo::boundary" ref="a81f23e720d23ad05f41e966ca5d76553" args="() const " -->
+<a class="anchor" id="a8ad6de70fa206d7f92d38c5287e2b2e3"></a><!-- doxytag: member="McMd::TrajectoryIo::boundary" ref="a8ad6de70fa206d7f92d38c5287e2b2e3" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">Boundary &amp; boundary </td>
+          <td class="memname">Boundary &amp; McMd::TrajectoryIo::boundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline, protected]</code></td>
@@ -356,17 +356,17 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="TrajectoryIo_8h_source.html#l00136">136</a> of file <a class="el" href="TrajectoryIo_8h_source.html">TrajectoryIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">DCDTrajectoryIo::readFrame()</a>.</p>
+<p>Referenced by <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">McMd::DCDTrajectoryIo::readFrame()</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="acf47de04042f996dd7e0e8d05d8c02a9"></a><!-- doxytag: member="McMd::TrajectoryIo::nFrames_" ref="acf47de04042f996dd7e0e8d05d8c02a9" args="" -->
+<a class="anchor" id="ab1a32ab72d1f1a20f46f171c58aaf118"></a><!-- doxytag: member="McMd::TrajectoryIo::nFrames_" ref="ab1a32ab72d1f1a20f46f171c58aaf118" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classMcMd_1_1TrajectoryIo.html#acf47de04042f996dd7e0e8d05d8c02a9">nFrames_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classMcMd_1_1TrajectoryIo.html#ab1a32ab72d1f1a20f46f171c58aaf118">McMd::TrajectoryIo::nFrames_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -376,7 +376,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="TrajectoryIo_8h_source.html#l00080">80</a> of file <a class="el" href="TrajectoryIo_8h_source.html">TrajectoryIo.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">DCDTrajectoryIo::readHeader()</a>.</p>
+<p>Referenced by <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00055">McMd::DCDTrajectoryIo::readHeader()</a>.</p>
 
 </div>
 </div>
@@ -385,7 +385,7 @@ Protected Attributes</h2></td></tr>
 <li><a class="el" href="TrajectoryIo_8cpp_source.html">TrajectoryIo.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:57 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:29 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

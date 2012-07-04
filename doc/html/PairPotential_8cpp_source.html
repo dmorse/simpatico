@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -77,8 +77,8 @@
 <a name="l00025"></a>00025    <span class="comment">/*</span>
 <a name="l00026"></a>00026 <span class="comment">   * Default constructor (for unit testing).</span>
 <a name="l00027"></a>00027 <span class="comment">   */</span>
-<a name="l00028"></a>00028    <a class="code" href="classDdMd_1_1PairPotential.html#adf1ab1d84bdbd37029e6169c05398671" title="Default constructor (for unit testing).">PairPotential::PairPotential</a>()
-<a name="l00029"></a><a class="code" href="classDdMd_1_1PairPotential.html#adf1ab1d84bdbd37029e6169c05398671">00029</a>     : skin_(0.0),
+<a name="l00028"></a>00028    <a class="code" href="classDdMd_1_1PairPotential.html#adca5dc6393736b237ce926c52c9acff8" title="Default constructor (for unit testing).">PairPotential::PairPotential</a>()
+<a name="l00029"></a><a class="code" href="classDdMd_1_1PairPotential.html#adca5dc6393736b237ce926c52c9acff8">00029</a>     : skin_(0.0),
 <a name="l00030"></a>00030       cutoff_(0.0),
 <a name="l00031"></a>00031       pairCapacity_(0),
 <a name="l00032"></a>00032       domainPtr_(0),
@@ -90,8 +90,8 @@
 <a name="l00038"></a>00038    <span class="comment">/*</span>
 <a name="l00039"></a>00039 <span class="comment">   * Constructor.</span>
 <a name="l00040"></a>00040 <span class="comment">   */</span>
-<a name="l00041"></a>00041    <a class="code" href="classDdMd_1_1PairPotential.html#adf1ab1d84bdbd37029e6169c05398671" title="Default constructor (for unit testing).">PairPotential::PairPotential</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation)
-<a name="l00042"></a><a class="code" href="classDdMd_1_1PairPotential.html#a9cbfff23a5470df94004f410d1e16d54">00042</a>     : skin_(0.0),
+<a name="l00041"></a>00041    <a class="code" href="classDdMd_1_1PairPotential.html#adca5dc6393736b237ce926c52c9acff8" title="Default constructor (for unit testing).">PairPotential::PairPotential</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation)
+<a name="l00042"></a><a class="code" href="classDdMd_1_1PairPotential.html#ade1e8d8a45611bf0623cea453b620a85">00042</a>     : skin_(0.0),
 <a name="l00043"></a>00043       cutoff_(0.0),
 <a name="l00044"></a>00044       pairCapacity_(0),
 <a name="l00045"></a>00045       domainPtr_(&amp;simulation.domain()),
@@ -103,8 +103,8 @@
 <a name="l00051"></a>00051    <span class="comment">/*</span>
 <a name="l00052"></a>00052 <span class="comment">   * Associate with related objects. (for unit testing).</span>
 <a name="l00053"></a>00053 <span class="comment">   */</span>
-<a name="l00054"></a>00054    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairPotential.html#a6ba7bbf71f983bd216ae7d369882f75a" title="Associate with related objects.">PairPotential::associate</a>(<a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain, Boundary&amp; boundary, 
-<a name="l00055"></a><a class="code" href="classDdMd_1_1PairPotential.html#a6ba7bbf71f983bd216ae7d369882f75a">00055</a>                                  <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; storage)
+<a name="l00054"></a>00054    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairPotential.html#a8bc85f16129cfb7dca61fda2145af92a" title="Associate with related objects.">PairPotential::associate</a>(<a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain, <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary, 
+<a name="l00055"></a><a class="code" href="classDdMd_1_1PairPotential.html#a8bc85f16129cfb7dca61fda2145af92a">00055</a>                                  <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; storage)
 <a name="l00056"></a>00056    {
 <a name="l00057"></a>00057       domainPtr_ = &amp;domain;
 <a name="l00058"></a>00058       boundaryPtr_ = &amp;boundary;
@@ -114,11 +114,11 @@
 <a name="l00062"></a>00062    <span class="comment">/*</span>
 <a name="l00063"></a>00063 <span class="comment">   * Destructor.</span>
 <a name="l00064"></a>00064 <span class="comment">   */</span>
-<a name="l00065"></a>00065    <a class="code" href="classDdMd_1_1PairPotential.html#a787cda0073366b3ffb656a925b71e032" title="Destructor.">PairPotential::~PairPotential</a>()
-<a name="l00066"></a><a class="code" href="classDdMd_1_1PairPotential.html#a787cda0073366b3ffb656a925b71e032">00066</a>    {}
+<a name="l00065"></a>00065    <a class="code" href="classDdMd_1_1PairPotential.html#ae66c7a7e874ddc2b882f2b1f4155b31e" title="Destructor.">PairPotential::~PairPotential</a>()
+<a name="l00066"></a><a class="code" href="classDdMd_1_1PairPotential.html#ae66c7a7e874ddc2b882f2b1f4155b31e">00066</a>    {}
 <a name="l00067"></a>00067 
-<a name="l00068"></a>00068    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairPotential.html#afadb6ec66809fc49319fd733bbff83d8" title="Read parameters and allocate memory for PairList.">PairPotential::readPairListParam</a>(std::istream&amp; in)
-<a name="l00069"></a><a class="code" href="classDdMd_1_1PairPotential.html#afadb6ec66809fc49319fd733bbff83d8">00069</a>    {
+<a name="l00068"></a>00068    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairPotential.html#ae9a4aecfd74073cea742585c60b155f9" title="Read parameters and allocate memory for PairList.">PairPotential::readPairListParam</a>(std::istream&amp; in)
+<a name="l00069"></a><a class="code" href="classDdMd_1_1PairPotential.html#ae9a4aecfd74073cea742585c60b155f9">00069</a>    {
 <a name="l00070"></a>00070       read&lt;double&gt;(in, <span class="stringliteral">&quot;skin&quot;</span>, skin_);
 <a name="l00071"></a>00071       read&lt;int&gt;(in, <span class="stringliteral">&quot;pairCapacity&quot;</span>, pairCapacity_);
 <a name="l00072"></a>00072       read&lt;Boundary&gt;(in, <span class="stringliteral">&quot;maxBoundary&quot;</span>, maxBoundary_);
@@ -127,7 +127,7 @@
 <a name="l00075"></a>00075       boundary().setLengths(maxBoundary_.lengths());
 <a name="l00076"></a>00076       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> lower;
 <a name="l00077"></a>00077       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> upper;
-<a name="l00078"></a>00078       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00078"></a>00078       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00079"></a>00079          lower[i] = domain().domainBound(i, 0);
 <a name="l00080"></a>00080          upper[i] = domain().domainBound(i, 1);
 <a name="l00081"></a>00081       }
@@ -142,8 +142,8 @@
 <a name="l00090"></a>00090    <span class="comment">/*</span>
 <a name="l00091"></a>00091 <span class="comment">   * Allocate memory for the cell list.</span>
 <a name="l00092"></a>00092 <span class="comment">   */</span>
-<a name="l00093"></a>00093    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairPotential.html#a5be5629f8cbb482ff60ad5360de3da54" title="Set parameters and allocate memory.">PairPotential::initialize</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; lower, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; upper, 
-<a name="l00094"></a><a class="code" href="classDdMd_1_1PairPotential.html#a5be5629f8cbb482ff60ad5360de3da54">00094</a>                                 <span class="keywordtype">double</span> skin, <span class="keywordtype">int</span> pairCapacity)
+<a name="l00093"></a>00093    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairPotential.html#a42485ad74dc979662c8568771dc5f3a2" title="Set parameters and allocate memory.">PairPotential::initialize</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; lower, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; upper, 
+<a name="l00094"></a><a class="code" href="classDdMd_1_1PairPotential.html#a42485ad74dc979662c8568771dc5f3a2">00094</a>                                 <span class="keywordtype">double</span> skin, <span class="keywordtype">int</span> pairCapacity)
 <a name="l00095"></a>00095    {
 <a name="l00096"></a>00096       skin_ = skin;
 <a name="l00097"></a>00097       pairCapacity_ = pairCapacity;
@@ -158,8 +158,8 @@
 <a name="l00106"></a>00106    <span class="comment">/*</span>
 <a name="l00107"></a>00107 <span class="comment">   * Build the cell list (i.e., fill with atoms).</span>
 <a name="l00108"></a>00108 <span class="comment">   */</span>
-<a name="l00109"></a>00109    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairPotential.html#a10f57499fc65e64db75d61711dda56fd" title="Build the cell and pair lists.">PairPotential::findNeighbors</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; lower, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; upper)
-<a name="l00110"></a><a class="code" href="classDdMd_1_1PairPotential.html#a0b8dcf2199d26c0edc08146f873b8afc">00110</a>    {
+<a name="l00109"></a>00109    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairPotential.html#ad88c1c7501f0222ce4a28cfd4deba7b7" title="Build the cell and pair lists.">PairPotential::findNeighbors</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; lower, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; upper)
+<a name="l00110"></a><a class="code" href="classDdMd_1_1PairPotential.html#a99e4c788cdd85dabb9a858ef04bdc579">00110</a>    {
 <a name="l00111"></a>00111       stamp(PairPotential::START);
 <a name="l00112"></a>00112 
 <a name="l00113"></a>00113       cellList_.makeGrid(lower, upper, cutoff_);
@@ -168,14 +168,14 @@
 <a name="l00116"></a>00116       <span class="comment">// Add all atoms to the cell list. </span>
 <a name="l00117"></a>00117       <a class="code" href="classDdMd_1_1AtomIterator.html" title="Iterator for all atoms owned by an AtomStorage.">AtomIterator</a> atomIter;
 <a name="l00118"></a>00118       storage().begin(atomIter);
-<a name="l00119"></a>00119       <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter) {
+<a name="l00119"></a>00119       <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter) {
 <a name="l00120"></a>00120          cellList_.placeAtom(*atomIter);
 <a name="l00121"></a>00121       }
 <a name="l00122"></a>00122 
 <a name="l00123"></a>00123       <span class="comment">// Add all ghosts to the cell list. </span>
 <a name="l00124"></a>00124       <a class="code" href="classDdMd_1_1GhostIterator.html" title="Iterator for all ghost atoms owned by an AtomStorage.">GhostIterator</a> ghostIter;
 <a name="l00125"></a>00125       storage().begin(ghostIter);
-<a name="l00126"></a>00126       <span class="keywordflow">for</span> ( ; ghostIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++ghostIter) {
+<a name="l00126"></a>00126       <span class="keywordflow">for</span> ( ; ghostIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++ghostIter) {
 <a name="l00127"></a>00127          cellList_.placeAtom(*ghostIter);
 <a name="l00128"></a>00128       }
 <a name="l00129"></a>00129 
@@ -191,12 +191,12 @@
 <a name="l00139"></a>00139    <span class="comment">/*</span>
 <a name="l00140"></a>00140 <span class="comment">   * Build the cell list (i.e., fill with atoms).</span>
 <a name="l00141"></a>00141 <span class="comment">   */</span>
-<a name="l00142"></a>00142    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairPotential.html#a10f57499fc65e64db75d61711dda56fd" title="Build the cell and pair lists.">PairPotential::findNeighbors</a>()
-<a name="l00143"></a><a class="code" href="classDdMd_1_1PairPotential.html#a10f57499fc65e64db75d61711dda56fd">00143</a>    {
+<a name="l00142"></a>00142    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairPotential.html#ad88c1c7501f0222ce4a28cfd4deba7b7" title="Build the cell and pair lists.">PairPotential::findNeighbors</a>()
+<a name="l00143"></a><a class="code" href="classDdMd_1_1PairPotential.html#ad88c1c7501f0222ce4a28cfd4deba7b7">00143</a>    {
 <a name="l00144"></a>00144       <span class="comment">// Make the cell list grid.</span>
 <a name="l00145"></a>00145       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> lower;
 <a name="l00146"></a>00146       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> upper;
-<a name="l00147"></a>00147       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00147"></a>00147       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00148"></a>00148          lower[i] = domain().domainBound(i, 0);
 <a name="l00149"></a>00149          upper[i] = domain().domainBound(i, 1);
 <a name="l00150"></a>00150       }
@@ -207,7 +207,7 @@
 <a name="l00155"></a>00155 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

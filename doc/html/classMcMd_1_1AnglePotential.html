@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: AnglePotential Class Reference</title>
+<title>Simpatico: McMd::AnglePotential Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>AnglePotential Class Reference<div class="ingroups"><a class="el" href="group__McMd__Angle__Module.html">Angle Potentials</a></div></h1>  </div>
+<h1>McMd::AnglePotential Class Reference<div class="ingroups"><a class="el" href="group__McMd__Angle__Module.html">Angle Potentials</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="McMd::AnglePotential" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -59,14 +59,14 @@
 </div>
 <p><code>#include &lt;<a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html">AnglePotential.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for AnglePotential:</div>
+Inheritance diagram for McMd::AnglePotential:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classMcMd_1_1AnglePotential.png" usemap="#AnglePotential_map" alt=""/>
-  <map id="AnglePotential_map" name="AnglePotential_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,198,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,198,24"/>
-<area href="classMcMd_1_1AnglePotentialImpl.html" alt="AnglePotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,168,198,192"/>
+  <img src="classMcMd_1_1AnglePotential.png" usemap="#McMd::AnglePotential_map" alt=""/>
+  <map id="McMd::AnglePotential_map" name="McMd::AnglePotential_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,240,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,240,24"/>
+<area href="classMcMd_1_1AnglePotentialImpl.html" alt="McMd::AnglePotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,168,240,192"/>
 </map>
  </div></div>
 
@@ -74,40 +74,40 @@ Inheritance diagram for AnglePotential:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a731baab5b0a01f15bb04567e7393b21a">~AnglePotential</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor (does nothing)  <a href="#a731baab5b0a01f15bb04567e7393b21a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a652012c19aa5d438786870aefd3dfd56">~AnglePotential</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor (does nothing)  <a href="#a652012c19aa5d438786870aefd3dfd56"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Angle Interaction interface</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#adfd97812fb6995a3c02f4d9e2ea09f87">energy</a> (double cosTheta, int type) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns potential energy for one angle.  <a href="#adfd97812fb6995a3c02f4d9e2ea09f87"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#add3def8a1ecdcc786e4f5c66e5088f72">force</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R2, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F1, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F2, int type) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns forces along two bonds at the angle, for use in MD and stress calculation.  <a href="#add3def8a1ecdcc786e4f5c66e5088f72"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a12ec809d1f6d45bb55dcd6fc7fa8e2a6">set</a> (std::string name, int type, double value)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify an interaction parameter, identified by a string.  <a href="#a12ec809d1f6d45bb55dcd6fc7fa8e2a6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a5eeeea7e879cda838e0becf4cb85901d">get</a> (std::string name, int type) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an interaction parameter value, identified by a string.  <a href="#a5eeeea7e879cda838e0becf4cb85901d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#ae355aef85b464e790c9e22b1364dabee">interactionClassName</a> () const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name of pair interaction class (e.g., "HarmonicAngle").  <a href="#ae355aef85b464e790c9e22b1364dabee"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a04ca6b505bb4b5ccc2a534ab7a4b70e5">energy</a> (double cosTheta, int type) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns potential energy for one angle.  <a href="#a04ca6b505bb4b5ccc2a534ab7a4b70e5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#aa9bebecc1446822a5f9f55942f9545bc">force</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R2, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F1, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F2, int type) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns forces along two bonds at the angle, for use in MD and stress calculation.  <a href="#aa9bebecc1446822a5f9f55942f9545bc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a8467e5c0000e7fd71058bb75b92d5c5e">set</a> (std::string name, int type, double value)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify an interaction parameter, identified by a string.  <a href="#a8467e5c0000e7fd71058bb75b92d5c5e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#ae17466d787e85a31a42278d2bb07e514">get</a> (std::string name, int type) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an interaction parameter value, identified by a string.  <a href="#ae17466d787e85a31a42278d2bb07e514"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a6e472acc8fe9c84aba71073d8eca0628">interactionClassName</a> () const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name of pair interaction class (e.g., "HarmonicAngle").  <a href="#a6e472acc8fe9c84aba71073d8eca0628"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">System energy, force, and stress.</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#ab11a8f356e663badb798f7a60030bebf">atomEnergy</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the covalent bond energy for one <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#ab11a8f356e663badb798f7a60030bebf"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a1b01a38088ef9e4890acbb12570e78b8">addForces</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add bond forces to all atomic forces.  <a href="#a1b01a38088ef9e4890acbb12570e78b8"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a5e6f047c94e10d0afa37aca4bc436f63">energy</a> () const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total angle potential energy for the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.  <a href="#a5e6f047c94e10d0afa37aca4bc436f63"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a6ebcf9d6c871aa23104ec5b1cb944742">computeStress</a> (double &amp;stress) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total angle potential isotropic pressure contribution.  <a href="#a6ebcf9d6c871aa23104ec5b1cb944742"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#ad2f8669a34d8e38a952b205e8f5a4e62">computeStress</a> (<a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;stress) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute x, y, z angle potential pressure components.  <a href="#ad2f8669a34d8e38a952b205e8f5a4e62"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a269a490a22f1c00f49ca931646749031">computeStress</a> (<a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;stress) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute angle potential stress tensor contribution.  <a href="#a269a490a22f1c00f49ca931646749031"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a52fb39943fd4735252f319ee03ee7c59">atomEnergy</a> (const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;atom) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the covalent bond energy for one <a class="el" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>.  <a href="#a52fb39943fd4735252f319ee03ee7c59"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a75de72c54ae6129551b185bf3c1c97f3">addForces</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add bond forces to all atomic forces.  <a href="#a75de72c54ae6129551b185bf3c1c97f3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a34f994833b3aee918626af9ad8968748">energy</a> () const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the total angle potential energy for the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>.  <a href="#a34f994833b3aee918626af9ad8968748"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#a93630740ff7df375a1edcff6ed30b23b">computeStress</a> (double &amp;stress) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total angle potential isotropic pressure contribution.  <a href="#a93630740ff7df375a1edcff6ed30b23b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#aa1fab6bc1867dd82f79da3c0a80af23d">computeStress</a> (<a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;stress) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute x, y, z angle potential pressure components.  <a href="#aa1fab6bc1867dd82f79da3c0a80af23d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1AnglePotential.html#aee511842883b6fa310f1a6aa8c15abf5">computeStress</a> (<a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;stress) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute angle potential stress tensor contribution.  <a href="#aee511842883b6fa310f1a6aa8c15abf5"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a731baab5b0a01f15bb04567e7393b21a"></a><!-- doxytag: member="McMd::AnglePotential::~AnglePotential" ref="a731baab5b0a01f15bb04567e7393b21a" args="()" -->
+<a class="anchor" id="a652012c19aa5d438786870aefd3dfd56"></a><!-- doxytag: member="McMd::AnglePotential::~AnglePotential" ref="a652012c19aa5d438786870aefd3dfd56" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual ~<a class="el" href="classMcMd_1_1AnglePotential.html">AnglePotential</a> </td>
+          <td class="memname">virtual McMd::AnglePotential::~AnglePotential </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, virtual]</code></td>
@@ -123,12 +123,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="adfd97812fb6995a3c02f4d9e2ea09f87"></a><!-- doxytag: member="McMd::AnglePotential::energy" ref="adfd97812fb6995a3c02f4d9e2ea09f87" args="(double cosTheta, int type) const =0" -->
+<a class="anchor" id="a04ca6b505bb4b5ccc2a534ab7a4b70e5"></a><!-- doxytag: member="McMd::AnglePotential::energy" ref="a04ca6b505bb4b5ccc2a534ab7a4b70e5" args="(double cosTheta, int type) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double energy </td>
+          <td class="memname">virtual double McMd::AnglePotential::energy </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>cosTheta</em>, </td>
@@ -157,16 +157,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a432216092cd60cd94dd6458e42f61701">AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#aefa7e7e1d8de9236bb440e3eb44ffe3a">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="add3def8a1ecdcc786e4f5c66e5088f72"></a><!-- doxytag: member="McMd::AnglePotential::force" ref="add3def8a1ecdcc786e4f5c66e5088f72" args="(const Vector &amp;R1, const Vector &amp;R2, Vector &amp;F1, Vector &amp;F2, int type) const =0" -->
+<a class="anchor" id="aa9bebecc1446822a5f9f55942f9545bc"></a><!-- doxytag: member="McMd::AnglePotential::force" ref="aa9bebecc1446822a5f9f55942f9545bc" args="(const Vector &amp;R1, const Vector &amp;R2, Vector &amp;F1, Vector &amp;F2, int type) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void force </td>
+          <td class="memname">virtual void McMd::AnglePotential::force </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>R1</em>, </td>
@@ -216,16 +216,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a8136fd3ee6e12bdf78f12d308a76c930">AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a56f2607be5197ff318cbdb97a9ee8ae0">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a12ec809d1f6d45bb55dcd6fc7fa8e2a6"></a><!-- doxytag: member="McMd::AnglePotential::set" ref="a12ec809d1f6d45bb55dcd6fc7fa8e2a6" args="(std::string name, int type, double value)=0" -->
+<a class="anchor" id="a8467e5c0000e7fd71058bb75b92d5c5e"></a><!-- doxytag: member="McMd::AnglePotential::set" ref="a8467e5c0000e7fd71058bb75b92d5c5e" args="(std::string name, int type, double value)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void set </td>
+          <td class="memname">virtual void McMd::AnglePotential::set </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -261,16 +261,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a0ab8f6bbd2e18cfd4df7ced299fe82f0">AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#aba1d98aa021a2b2f998258bc3e905924">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5eeeea7e879cda838e0becf4cb85901d"></a><!-- doxytag: member="McMd::AnglePotential::get" ref="a5eeeea7e879cda838e0becf4cb85901d" args="(std::string name, int type) const =0" -->
+<a class="anchor" id="ae17466d787e85a31a42278d2bb07e514"></a><!-- doxytag: member="McMd::AnglePotential::get" ref="ae17466d787e85a31a42278d2bb07e514" args="(std::string name, int type) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double get </td>
+          <td class="memname">virtual double McMd::AnglePotential::get </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -299,16 +299,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a29dcf205f23d3b29d6f3bb6755e01d80">AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a07b376e2bb20d024d31487d4300eb816">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ae355aef85b464e790c9e22b1364dabee"></a><!-- doxytag: member="McMd::AnglePotential::interactionClassName" ref="ae355aef85b464e790c9e22b1364dabee" args="() const =0" -->
+<a class="anchor" id="a6e472acc8fe9c84aba71073d8eca0628"></a><!-- doxytag: member="McMd::AnglePotential::interactionClassName" ref="a6e472acc8fe9c84aba71073d8eca0628" args="() const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual std::string interactionClassName </td>
+          <td class="memname">virtual std::string McMd::AnglePotential::interactionClassName </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [pure virtual]</code></td>
@@ -319,16 +319,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Return name of pair interaction class (e.g., "HarmonicAngle"). </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#af02a7265da2c0156eeb829fea1be4747">AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a8424af1bb6df54d21b0d0a33ab41e48b">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ab11a8f356e663badb798f7a60030bebf"></a><!-- doxytag: member="McMd::AnglePotential::atomEnergy" ref="ab11a8f356e663badb798f7a60030bebf" args="(const Atom &amp;atom) const " -->
+<a class="anchor" id="a52fb39943fd4735252f319ee03ee7c59"></a><!-- doxytag: member="McMd::AnglePotential::atomEnergy" ref="a52fb39943fd4735252f319ee03ee7c59" args="(const Atom &amp;atom) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double atomEnergy </td>
+          <td class="memname">virtual double McMd::AnglePotential::atomEnergy </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classMcMd_1_1Atom.html">Atom</a> &amp;&#160;</td>
           <td class="paramname"><em>atom</em></td><td>)</td>
@@ -347,7 +347,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>bond potential energy of atom </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a4851d6fa60c176b9369effbb1da0e7bd">AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a76c94bb506b15b2c6375077d7ee3d173">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 <p>Definition at line <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html#l00102">102</a> of file <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html">mcMd/potentials/angle/AnglePotential.h</a>.</p>
 
@@ -355,12 +355,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1b01a38088ef9e4890acbb12570e78b8"></a><!-- doxytag: member="McMd::AnglePotential::addForces" ref="a1b01a38088ef9e4890acbb12570e78b8" args="()" -->
+<a class="anchor" id="a75de72c54ae6129551b185bf3c1c97f3"></a><!-- doxytag: member="McMd::AnglePotential::addForces" ref="a75de72c54ae6129551b185bf3c1c97f3" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void addForces </td>
+          <td class="memname">virtual void McMd::AnglePotential::addForces </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline, virtual]</code></td>
@@ -371,7 +371,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Add bond forces to all atomic forces. </p>
 
-<p>Reimplemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a384ffca983ce601febd69f2d38b9911d">AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a9d63fc34ffcf68c8a8143aa9a1d2b728">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 <p>Definition at line <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html#l00108">108</a> of file <a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html">mcMd/potentials/angle/AnglePotential.h</a>.</p>
 
@@ -379,12 +379,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a5e6f047c94e10d0afa37aca4bc436f63"></a><!-- doxytag: member="McMd::AnglePotential::energy" ref="a5e6f047c94e10d0afa37aca4bc436f63" args="() const =0" -->
+<a class="anchor" id="a34f994833b3aee918626af9ad8968748"></a><!-- doxytag: member="McMd::AnglePotential::energy" ref="a34f994833b3aee918626af9ad8968748" args="() const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double energy </td>
+          <td class="memname">virtual double McMd::AnglePotential::energy </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [pure virtual]</code></td>
@@ -395,16 +395,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Calculate the total angle potential energy for the <a class="el" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>. </p>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a7d8a7d1d94db857f9b53e50c675f216b">AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a87c587a577ca8527eeb43d69422e958c">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6ebcf9d6c871aa23104ec5b1cb944742"></a><!-- doxytag: member="McMd::AnglePotential::computeStress" ref="a6ebcf9d6c871aa23104ec5b1cb944742" args="(double &amp;stress) const =0" -->
+<a class="anchor" id="a93630740ff7df375a1edcff6ed30b23b"></a><!-- doxytag: member="McMd::AnglePotential::computeStress" ref="a93630740ff7df375a1edcff6ed30b23b" args="(double &amp;stress) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void computeStress </td>
+          <td class="memname">virtual void McMd::AnglePotential::computeStress </td>
           <td>(</td>
           <td class="paramtype">double &amp;&#160;</td>
           <td class="paramname"><em>stress</em></td><td>)</td>
@@ -422,16 +422,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#afda441f52b7c8803d3dbaf4ac6b5742d">AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a817f0510ba929a3329bd63fd21b43b99">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad2f8669a34d8e38a952b205e8f5a4e62"></a><!-- doxytag: member="McMd::AnglePotential::computeStress" ref="ad2f8669a34d8e38a952b205e8f5a4e62" args="(Util::Vector &amp;stress) const =0" -->
+<a class="anchor" id="aa1fab6bc1867dd82f79da3c0a80af23d"></a><!-- doxytag: member="McMd::AnglePotential::computeStress" ref="aa1fab6bc1867dd82f79da3c0a80af23d" args="(Util::Vector &amp;stress) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void computeStress </td>
+          <td class="memname">virtual void McMd::AnglePotential::computeStress </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Vector.html">Util::Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>stress</em></td><td>)</td>
@@ -449,16 +449,16 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a664e9e28ebd82ef0744a495912c8131c">AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#af3e8ade6a3b35d866f930f0a165e4d09">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a269a490a22f1c00f49ca931646749031"></a><!-- doxytag: member="McMd::AnglePotential::computeStress" ref="a269a490a22f1c00f49ca931646749031" args="(Util::Tensor &amp;stress) const =0" -->
+<a class="anchor" id="aee511842883b6fa310f1a6aa8c15abf5"></a><!-- doxytag: member="McMd::AnglePotential::computeStress" ref="aee511842883b6fa310f1a6aa8c15abf5" args="(Util::Tensor &amp;stress) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void computeStress </td>
+          <td class="memname">virtual void McMd::AnglePotential::computeStress </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Tensor.html">Util::Tensor</a> &amp;&#160;</td>
           <td class="paramname"><em>stress</em></td><td>)</td>
@@ -476,7 +476,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#a7179cc96d78bbce80d68170bdfdab3fb">AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classMcMd_1_1AnglePotentialImpl.html#ab618b6eca188d2162b26b0d51bd4db99">McMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
@@ -484,7 +484,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="mcMd_2potentials_2angle_2AnglePotential_8h_source.html">mcMd/potentials/angle/AnglePotential.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:56 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:28 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -83,12 +83,12 @@
 <a name="l00054"></a>00054 
 <a name="l00058"></a>00058       <span class="keyword">virtual</span> ~<a class="code" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>();
 <a name="l00059"></a>00059 
-<a name="l00071"></a><a class="code" href="classDdMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">00071</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> setup()
+<a name="l00071"></a><a class="code" href="classDdMd_1_1Diagnostic.html#a25c1dd06e100ef655057d0c131998d58">00071</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> setup()
 <a name="l00072"></a>00072       {}
 <a name="l00073"></a>00073 
 <a name="l00083"></a>00083       <span class="keyword">virtual</span> <span class="keywordtype">void</span> sample(<span class="keywordtype">long</span> iStep) = 0;
 <a name="l00084"></a>00084 
-<a name="l00090"></a><a class="code" href="classDdMd_1_1Diagnostic.html#a209e4a470fcdeb3d5b87da3dd6960def">00090</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> output()
+<a name="l00090"></a><a class="code" href="classDdMd_1_1Diagnostic.html#a46ea7eb4b928570f8db51a1c02df642b">00090</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> output()
 <a name="l00091"></a>00091       {}
 <a name="l00092"></a>00092 
 <a name="l00096"></a>00096       <span class="keywordtype">int</span> interval() <span class="keyword">const</span>;
@@ -97,9 +97,9 @@
 <a name="l00104"></a>00104 
 <a name="l00105"></a>00105       <span class="comment">// Static members</span>
 <a name="l00106"></a>00106 
-<a name="l00110"></a><a class="code" href="classDdMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5">00110</a>       <span class="keyword">static</span> <span class="keywordtype">long</span> <a class="code" href="classDdMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5" title="The interval for a Diagnostic must be a multiple of baseInterval.">baseInterval</a>;
+<a name="l00110"></a><a class="code" href="classDdMd_1_1Diagnostic.html#ac195806b4a4f8c59b6f0664eef51e58f">00110</a>       <span class="keyword">static</span> <span class="keywordtype">long</span> <a class="code" href="classDdMd_1_1Diagnostic.html#ac195806b4a4f8c59b6f0664eef51e58f" title="The interval for a Diagnostic must be a multiple of baseInterval.">baseInterval</a>;
 <a name="l00111"></a>00111 
-<a name="l00115"></a>00115       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a608e10d093425c9228f10ed3c4994598" title="Guarantee initialization of all static class members in Util namespace.">initStatic</a>();
+<a name="l00115"></a>00115       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#ae378e26a0d525f0cdeb424f208724608" title="Guarantee initialization of all static class members in Util namespace.">initStatic</a>();
 <a name="l00116"></a>00116 
 <a name="l00117"></a>00117    <span class="keyword">protected</span>:
 <a name="l00118"></a>00118 
@@ -128,25 +128,25 @@
 <a name="l00167"></a>00167    <span class="comment">/*</span>
 <a name="l00168"></a>00168 <span class="comment">   * Return interval value.</span>
 <a name="l00169"></a>00169 <span class="comment">   */</span>
-<a name="l00170"></a><a class="code" href="classDdMd_1_1Diagnostic.html#afe5b7de87b935531edcd3d15fbd92166">00170</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Diagnostic.html#afe5b7de87b935531edcd3d15fbd92166" title="Get interval value.">Diagnostic::interval</a>()<span class="keyword"> const</span>
+<a name="l00170"></a><a class="code" href="classDdMd_1_1Diagnostic.html#ac2a7c41be042e0624fa027961b8d6342">00170</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Diagnostic.html#ac2a7c41be042e0624fa027961b8d6342" title="Get interval value.">Diagnostic::interval</a>()<span class="keyword"> const</span>
 <a name="l00171"></a>00171 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interval_; }
 <a name="l00172"></a>00172 
 <a name="l00173"></a>00173    <span class="comment">/*</span>
 <a name="l00174"></a>00174 <span class="comment">   * Return true iff the counter parameter is a multiple of the interval.</span>
 <a name="l00175"></a>00175 <span class="comment">   */</span>
-<a name="l00176"></a><a class="code" href="classDdMd_1_1Diagnostic.html#a56d6fc996d1e17d408288f86b6d9b4e7">00176</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Diagnostic.html#a56d6fc996d1e17d408288f86b6d9b4e7" title="Return true iff counter is a multiple of the interval.">Diagnostic::isAtInterval</a>(<span class="keywordtype">long</span> counter)<span class="keyword"> const</span>
+<a name="l00176"></a><a class="code" href="classDdMd_1_1Diagnostic.html#a6c1854a908b373a5deab2e686b988ae4">00176</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Diagnostic.html#a6c1854a908b373a5deab2e686b988ae4" title="Return true iff counter is a multiple of the interval.">Diagnostic::isAtInterval</a>(<span class="keywordtype">long</span> counter)<span class="keyword"> const</span>
 <a name="l00177"></a>00177 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (counter%interval_ == 0); }
 <a name="l00178"></a>00178 
 <a name="l00179"></a>00179    <span class="comment">/*</span>
 <a name="l00180"></a>00180 <span class="comment">   * Get the outputFileName string.</span>
 <a name="l00181"></a>00181 <span class="comment">   */</span>
-<a name="l00182"></a><a class="code" href="classDdMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5">00182</a>    <span class="keyword">inline</span> <span class="keyword">const</span> std::string&amp; <a class="code" href="classDdMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">Diagnostic::outputFileName</a>()<span class="keyword"> const</span>
+<a name="l00182"></a><a class="code" href="classDdMd_1_1Diagnostic.html#ac532ee2db0f9fe2c9cb9ce35fe77a809">00182</a>    <span class="keyword">inline</span> <span class="keyword">const</span> std::string&amp; <a class="code" href="classDdMd_1_1Diagnostic.html#ac532ee2db0f9fe2c9cb9ce35fe77a809" title="Return outputFileName string.">Diagnostic::outputFileName</a>()<span class="keyword"> const</span>
 <a name="l00183"></a>00183 <span class="keyword">   </span>{  <span class="keywordflow">return</span> outputFileName_; }
 <a name="l00184"></a>00184 
 <a name="l00185"></a>00185    <span class="comment">/*</span>
 <a name="l00186"></a>00186 <span class="comment">   * Get the parent Simulation by reference.</span>
 <a name="l00187"></a>00187 <span class="comment">   */</span>
-<a name="l00188"></a><a class="code" href="classDdMd_1_1Diagnostic.html#a9c48d9c8c09632e9489efe52722a7937">00188</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; <a class="code" href="classDdMd_1_1Diagnostic.html#a9c48d9c8c09632e9489efe52722a7937" title="Get the parent Simulation by reference.">Diagnostic::simulation</a>()
+<a name="l00188"></a><a class="code" href="classDdMd_1_1Diagnostic.html#af18bdfad174c975c0216764ef7887116">00188</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; <a class="code" href="classDdMd_1_1Diagnostic.html#af18bdfad174c975c0216764ef7887116" title="Get the parent Simulation by reference.">Diagnostic::simulation</a>()
 <a name="l00189"></a>00189    {  <span class="keywordflow">return</span> *simulationPtr_; }
 <a name="l00190"></a>00190 
 <a name="l00191"></a>00191 
@@ -155,7 +155,7 @@
 <a name="l00194"></a>00194 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

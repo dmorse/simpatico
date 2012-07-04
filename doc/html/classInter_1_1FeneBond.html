@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: FeneBond Class Reference</title>
+<title>Simpatico: Inter::FeneBond Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>FeneBond Class Reference<div class="ingroups"><a class="el" href="group__Inter__Bond__Module.html">Bond Interactions</a></div></h1>  </div>
+<h1>Inter::FeneBond Class Reference<div class="ingroups"><a class="el" href="group__Inter__Bond__Module.html">Bond Interactions</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Inter::FeneBond" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -61,13 +61,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="FeneBond_8h_source.html">FeneBond.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for FeneBond:</div>
+Inheritance diagram for Inter::FeneBond:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classInter_1_1FeneBond.png" usemap="#FeneBond_map" alt=""/>
-  <map id="FeneBond_map" name="FeneBond_map">
-<area href="classUtil_1_1ParamComposite.html" alt="ParamComposite" shape="rect" coords="0,56,111,80"/>
-<area href="classUtil_1_1ParamComponent.html" alt="ParamComponent" shape="rect" coords="0,0,111,24"/>
+  <img src="classInter_1_1FeneBond.png" usemap="#Inter::FeneBond_map" alt=""/>
+  <map id="Inter::FeneBond_map" name="Inter::FeneBond_map">
+<area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,134,80"/>
+<area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,134,24"/>
 </map>
  </div></div>
 
@@ -75,36 +75,36 @@ Inheritance diagram for FeneBond:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#aebb84417fafd3af4aecc50d8d9b9741f">FeneBond</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#aebb84417fafd3af4aecc50d8d9b9741f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a34f16a3651d70196815532021926e32a">FeneBond</a> (const <a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#a34f16a3651d70196815532021926e32a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a283fee15e629be0e15dd36190df68db6">operator=</a> (const <a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> &amp;other)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment.  <a href="#a283fee15e629be0e15dd36190df68db6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a8220bdfee50a757b7397b97e2dd37f75">setNBondType</a> (int nBondType)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number of bond types.  <a href="#a8220bdfee50a757b7397b97e2dd37f75"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#ab5421d3c9175985c9acbf723e5392075">readParam</a> (std::istream &amp;in)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read bond interaction parameters from input stream.  <a href="#ab5421d3c9175985c9acbf723e5392075"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a0ab8f6bbd2e18cfd4df7ced299fe82f0">set</a> (std::string name, int type, double value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify a parameter, identified by a string.  <a href="#a0ab8f6bbd2e18cfd4df7ced299fe82f0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a61f56332c11f4f79d0e79e388db4e75f">energy</a> (double rSq, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns potential energy for one bond.  <a href="#a61f56332c11f4f79d0e79e388db4e75f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#ade967d4c3f7fb02a95bcef21790b0f77">forceOverR</a> (double rSq, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns force/distance for one bond, for use in MD.  <a href="#ade967d4c3f7fb02a95bcef21790b0f77"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a44c3d4907f4f2ac51031a1f2150b2f5e">randomBondLength</a> (<a class="el" href="classUtil_1_1Random.html">Random</a> *random, double beta, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return bond length chosen from equilibrium distribution.  <a href="#a44c3d4907f4f2ac51031a1f2150b2f5e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a29dcf205f23d3b29d6f3bb6755e01d80">get</a> (std::string name, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a parameter value, identified by a string.  <a href="#a29dcf205f23d3b29d6f3bb6755e01d80"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a13c07285e858b2c232919fd57b635e1b">className</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name string "FeneBond" for this evaluator class.  <a href="#a13c07285e858b2c232919fd57b635e1b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a76664f99a5080ee5004715d61f91c9bf">FeneBond</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#a76664f99a5080ee5004715d61f91c9bf"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a5b2dec590557a1a30459a1f39ab75633">FeneBond</a> (const <a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <a href="#a5b2dec590557a1a30459a1f39ab75633"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a91fe91df8f2e766ad43c237b194c5dd6">operator=</a> (const <a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> &amp;other)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment.  <a href="#a91fe91df8f2e766ad43c237b194c5dd6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a6b5c9c75d74c4758a6424728fff26e34">setNBondType</a> (int nBondType)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the number of bond types.  <a href="#a6b5c9c75d74c4758a6424728fff26e34"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a810e88c4024e95e90db8e4587a4ea64d">readParam</a> (std::istream &amp;in)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read bond interaction parameters from input stream.  <a href="#a810e88c4024e95e90db8e4587a4ea64d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#aa7bd5f65f0503ecdc443265909d44ea9">set</a> (std::string name, int type, double value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify a parameter, identified by a string.  <a href="#aa7bd5f65f0503ecdc443265909d44ea9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#ab69e90b2bbc042fe18a00cf29e0dbecc">energy</a> (double rSq, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns potential energy for one bond.  <a href="#ab69e90b2bbc042fe18a00cf29e0dbecc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#ae74466a80873a6127d3449399e318445">forceOverR</a> (double rSq, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns force/distance for one bond, for use in MD.  <a href="#ae74466a80873a6127d3449399e318445"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a577fb96e8482bd7857497c0c80e8d53d">randomBondLength</a> (<a class="el" href="classUtil_1_1Random.html">Random</a> *random, double beta, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return bond length chosen from equilibrium distribution.  <a href="#a577fb96e8482bd7857497c0c80e8d53d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#a79218042515f888683f1fa6db120c353">get</a> (std::string name, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a parameter value, identified by a string.  <a href="#a79218042515f888683f1fa6db120c353"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classInter_1_1FeneBond.html#af7e157c715b90b52a35c1d8ebfaa6b8a">className</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return name string "FeneBond" for this evaluator class.  <a href="#af7e157c715b90b52a35c1d8ebfaa6b8a"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="aebb84417fafd3af4aecc50d8d9b9741f"></a><!-- doxytag: member="Inter::FeneBond::FeneBond" ref="aebb84417fafd3af4aecc50d8d9b9741f" args="()" -->
+<a class="anchor" id="a76664f99a5080ee5004715d61f91c9bf"></a><!-- doxytag: member="Inter::FeneBond::FeneBond" ref="a76664f99a5080ee5004715d61f91c9bf" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> </td>
+          <td class="memname">Inter::FeneBond::FeneBond </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -119,12 +119,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a34f16a3651d70196815532021926e32a"></a><!-- doxytag: member="Inter::FeneBond::FeneBond" ref="a34f16a3651d70196815532021926e32a" args="(const FeneBond &amp;other)" -->
+<a class="anchor" id="a5b2dec590557a1a30459a1f39ab75633"></a><!-- doxytag: member="Inter::FeneBond::FeneBond" ref="a5b2dec590557a1a30459a1f39ab75633" args="(const FeneBond &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> </td>
+          <td class="memname">Inter::FeneBond::FeneBond </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -141,12 +141,12 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a283fee15e629be0e15dd36190df68db6"></a><!-- doxytag: member="Inter::FeneBond::operator=" ref="a283fee15e629be0e15dd36190df68db6" args="(const FeneBond &amp;other)" -->
+<a class="anchor" id="a91fe91df8f2e766ad43c237b194c5dd6"></a><!-- doxytag: member="Inter::FeneBond::operator=" ref="a91fe91df8f2e766ad43c237b194c5dd6" args="(const FeneBond &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> &amp; operator= </td>
+          <td class="memname"><a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> &amp; Inter::FeneBond::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classInter_1_1FeneBond.html">FeneBond</a> &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -162,12 +162,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8220bdfee50a757b7397b97e2dd37f75"></a><!-- doxytag: member="Inter::FeneBond::setNBondType" ref="a8220bdfee50a757b7397b97e2dd37f75" args="(int nBondType)" -->
+<a class="anchor" id="a6b5c9c75d74c4758a6424728fff26e34"></a><!-- doxytag: member="Inter::FeneBond::setNBondType" ref="a6b5c9c75d74c4758a6424728fff26e34" args="(int nBondType)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setNBondType </td>
+          <td class="memname">void Inter::FeneBond::setNBondType </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>nBondType</em></td><td>)</td>
@@ -191,12 +191,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab5421d3c9175985c9acbf723e5392075"></a><!-- doxytag: member="Inter::FeneBond::readParam" ref="ab5421d3c9175985c9acbf723e5392075" args="(std::istream &amp;in)" -->
+<a class="anchor" id="a810e88c4024e95e90db8e4587a4ea64d"></a><!-- doxytag: member="Inter::FeneBond::readParam" ref="a810e88c4024e95e90db8e4587a4ea64d" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void readParam </td>
+          <td class="memname">void Inter::FeneBond::readParam </td>
           <td>(</td>
           <td class="paramtype">std::istream &amp;&#160;</td>
           <td class="paramname"><em>in</em></td><td>)</td>
@@ -208,7 +208,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Read bond interaction parameters from input stream. </p>
 <p>Format: kappa CArray&lt;double&gt; length CArray&lt;double&gt; energyCutoff double</p>
-<dl class="pre"><dt><b>Precondition:</b></dt><dd>nBondType must be set, by calling <a class="el" href="classInter_1_1FeneBond.html#a8220bdfee50a757b7397b97e2dd37f75" title="Set the number of bond types.">setNBondType()</a>.</dd></dl>
+<dl class="pre"><dt><b>Precondition:</b></dt><dd>nBondType must be set, by calling <a class="el" href="classInter_1_1FeneBond.html#a6b5c9c75d74c4758a6424728fff26e34" title="Set the number of bond types.">setNBondType()</a>.</dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">in</td><td>input stream </td></tr>
@@ -216,7 +216,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a972351ccededadbff33fb3bd854efdaf">ParamComposite</a>.</p>
+<p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
 <p>Definition at line <a class="el" href="FeneBond_8cpp_source.html#l00093">93</a> of file <a class="el" href="FeneBond_8cpp_source.html">FeneBond.cpp</a>.</p>
 
@@ -224,12 +224,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a0ab8f6bbd2e18cfd4df7ced299fe82f0"></a><!-- doxytag: member="Inter::FeneBond::set" ref="a0ab8f6bbd2e18cfd4df7ced299fe82f0" args="(std::string name, int type, double value)" -->
+<a class="anchor" id="aa7bd5f65f0503ecdc443265909d44ea9"></a><!-- doxytag: member="Inter::FeneBond::set" ref="aa7bd5f65f0503ecdc443265909d44ea9" args="(std::string name, int type, double value)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void set </td>
+          <td class="memname">void Inter::FeneBond::set </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -271,12 +271,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a61f56332c11f4f79d0e79e388db4e75f"></a><!-- doxytag: member="Inter::FeneBond::energy" ref="a61f56332c11f4f79d0e79e388db4e75f" args="(double rSq, int type) const " -->
+<a class="anchor" id="ab69e90b2bbc042fe18a00cf29e0dbecc"></a><!-- doxytag: member="Inter::FeneBond::energy" ref="ab69e90b2bbc042fe18a00cf29e0dbecc" args="(double rSq, int type) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double energy </td>
+          <td class="memname">double Inter::FeneBond::energy </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rSq</em>, </td>
@@ -309,12 +309,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ade967d4c3f7fb02a95bcef21790b0f77"></a><!-- doxytag: member="Inter::FeneBond::forceOverR" ref="ade967d4c3f7fb02a95bcef21790b0f77" args="(double rSq, int type) const " -->
+<a class="anchor" id="ae74466a80873a6127d3449399e318445"></a><!-- doxytag: member="Inter::FeneBond::forceOverR" ref="ae74466a80873a6127d3449399e318445" args="(double rSq, int type) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double forceOverR </td>
+          <td class="memname">double Inter::FeneBond::forceOverR </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rSq</em>, </td>
@@ -349,12 +349,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a44c3d4907f4f2ac51031a1f2150b2f5e"></a><!-- doxytag: member="Inter::FeneBond::randomBondLength" ref="a44c3d4907f4f2ac51031a1f2150b2f5e" args="(Random *random, double beta, int type) const " -->
+<a class="anchor" id="a577fb96e8482bd7857497c0c80e8d53d"></a><!-- doxytag: member="Inter::FeneBond::randomBondLength" ref="a577fb96e8482bd7857497c0c80e8d53d" args="(Random *random, double beta, int type) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double randomBondLength </td>
+          <td class="memname">double Inter::FeneBond::randomBondLength </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1Random.html">Random</a> *&#160;</td>
           <td class="paramname"><em>random</em>, </td>
@@ -394,16 +394,16 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="FeneBond_8cpp_source.html#l00141">141</a> of file <a class="el" href="FeneBond_8cpp_source.html">FeneBond.cpp</a>.</p>
 
-<p>References <a class="el" href="Random_8cpp_source.html#l00080">Random::gaussian()</a>, and <a class="el" href="Random_8h_source.html#l00189">Random::uniform()</a>.</p>
+<p>References <a class="el" href="Random_8cpp_source.html#l00080">Util::Random::gaussian()</a>, and <a class="el" href="Random_8h_source.html#l00189">Util::Random::uniform()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a29dcf205f23d3b29d6f3bb6755e01d80"></a><!-- doxytag: member="Inter::FeneBond::get" ref="a29dcf205f23d3b29d6f3bb6755e01d80" args="(std::string name, int type) const " -->
+<a class="anchor" id="a79218042515f888683f1fa6db120c353"></a><!-- doxytag: member="Inter::FeneBond::get" ref="a79218042515f888683f1fa6db120c353" args="(std::string name, int type) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double get </td>
+          <td class="memname">double Inter::FeneBond::get </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>name</em>, </td>
@@ -438,12 +438,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a13c07285e858b2c232919fd57b635e1b"></a><!-- doxytag: member="Inter::FeneBond::className" ref="a13c07285e858b2c232919fd57b635e1b" args="() const " -->
+<a class="anchor" id="af7e157c715b90b52a35c1d8ebfaa6b8a"></a><!-- doxytag: member="Inter::FeneBond::className" ref="af7e157c715b90b52a35c1d8ebfaa6b8a" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string className </td>
+          <td class="memname">std::string Inter::FeneBond::className </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -463,7 +463,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="FeneBond_8cpp_source.html">FeneBond.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:51 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

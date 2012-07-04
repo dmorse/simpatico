@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -70,34 +70,34 @@
 <a name="l00019"></a>00019    <span class="comment">/*</span>
 <a name="l00020"></a>00020 <span class="comment">   * Constructor.</span>
 <a name="l00021"></a>00021 <span class="comment">   */</span>
-<a name="l00022"></a>00022    <a class="code" href="classDdMd_1_1DiagnosticManager.html#a0c4e808ef5f66217459ca1b801a0894c" title="Constructor.">DiagnosticManager::DiagnosticManager</a>(Simulation&amp; simulation)
-<a name="l00023"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#a0c4e808ef5f66217459ca1b801a0894c">00023</a>    : <a class="code" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class.">Manager</a>&lt;<a class="code" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>&gt;(),
+<a name="l00022"></a>00022    <a class="code" href="classDdMd_1_1DiagnosticManager.html#ac1a48450fd692eae0e4d222c213448af" title="Constructor.">DiagnosticManager::DiagnosticManager</a>(Simulation&amp; simulation)
+<a name="l00023"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#ac1a48450fd692eae0e4d222c213448af">00023</a>    : <a class="code" href="classUtil_1_1Manager.html" title="Template container for pointers to objects with a common base class.">Manager</a>&lt;<a class="code" href="classDdMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>&gt;(),
 <a name="l00024"></a>00024      simulationPtr_(&amp;simulation)
 <a name="l00025"></a>00025    {}
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027    <span class="comment">/*</span>
 <a name="l00028"></a>00028 <span class="comment">   * Destructor.</span>
 <a name="l00029"></a>00029 <span class="comment">   */</span>
-<a name="l00030"></a>00030    <a class="code" href="classDdMd_1_1DiagnosticManager.html#a0bf2bee2a080fa7a1612f599eb30a498" title="Destructor.">DiagnosticManager::~DiagnosticManager</a>()
-<a name="l00031"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#a0bf2bee2a080fa7a1612f599eb30a498">00031</a>    {} 
+<a name="l00030"></a>00030    <a class="code" href="classDdMd_1_1DiagnosticManager.html#a411ceb434233811baf07476f3b05393c" title="Destructor.">DiagnosticManager::~DiagnosticManager</a>()
+<a name="l00031"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#a411ceb434233811baf07476f3b05393c">00031</a>    {} 
 <a name="l00032"></a>00032 
 <a name="l00033"></a>00033    <span class="comment">/*</span>
 <a name="l00034"></a>00034 <span class="comment">   * Read parameter file. </span>
 <a name="l00035"></a>00035 <span class="comment">   *</span>
 <a name="l00036"></a>00036 <span class="comment">   * \param in input parameter file stream.</span>
 <a name="l00037"></a>00037 <span class="comment">   */</span>
-<a name="l00038"></a>00038    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1DiagnosticManager.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameter file.">DiagnosticManager::readParam</a>(std::istream &amp;in)
-<a name="l00039"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#ab5421d3c9175985c9acbf723e5392075">00039</a>    {
+<a name="l00038"></a>00038    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1DiagnosticManager.html#a7a4555dd42c640e5c627d1e5967b0869" title="Read parameter file.">DiagnosticManager::readParam</a>(std::istream &amp;in)
+<a name="l00039"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#a7a4555dd42c640e5c627d1e5967b0869">00039</a>    {
 <a name="l00040"></a>00040       readBegin(in, <span class="stringliteral">&quot;DiagnosticManager&quot;</span>);
-<a name="l00041"></a>00041       read&lt;long&gt;(in,<span class="stringliteral">&quot;baseInterval&quot;</span>, <a class="code" href="classDdMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a>);
-<a name="l00042"></a>00042       <a class="code" href="classUtil_1_1Manager.html#ab5421d3c9175985c9acbf723e5392075" title="Read a list from file that controls creation of a series of objects.">Manager&lt;Diagnostic&gt;::readParam</a>(in);
+<a name="l00041"></a>00041       read&lt;long&gt;(in,<span class="stringliteral">&quot;baseInterval&quot;</span>, <a class="code" href="classDdMd_1_1Diagnostic.html#ac195806b4a4f8c59b6f0664eef51e58f" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a>);
+<a name="l00042"></a>00042       <a class="code" href="classUtil_1_1Manager.html#a115f9d62a9e538f20660683eb0eb3a10" title="Read a list from file that controls creation of a series of objects.">Manager&lt;Diagnostic&gt;::readParam</a>(in);
 <a name="l00043"></a>00043    }
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045    <span class="comment">/*</span>
 <a name="l00046"></a>00046 <span class="comment">   * Call setup method of each diagnostic.</span>
 <a name="l00047"></a>00047 <span class="comment">   */</span>
-<a name="l00048"></a>00048    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1DiagnosticManager.html#a4fc01d736fe50cf5b977f755b675f11d" title="Call setup method of each Diagnostic.">DiagnosticManager::setup</a>() 
-<a name="l00049"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#a4fc01d736fe50cf5b977f755b675f11d">00049</a>    {
+<a name="l00048"></a>00048    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1DiagnosticManager.html#afb8f206e8d25691183d6d8a7a64d5793" title="Call setup method of each Diagnostic.">DiagnosticManager::setup</a>() 
+<a name="l00049"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#afb8f206e8d25691183d6d8a7a64d5793">00049</a>    {
 <a name="l00050"></a>00050       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; size(); ++i) {
 <a name="l00051"></a>00051          (*this)[i].setup();
 <a name="l00052"></a>00052       }
@@ -106,9 +106,9 @@
 <a name="l00055"></a>00055    <span class="comment">/*</span>
 <a name="l00056"></a>00056 <span class="comment">   * Call sample method of each diagnostic.</span>
 <a name="l00057"></a>00057 <span class="comment">   */</span>
-<a name="l00058"></a>00058    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1DiagnosticManager.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Call sample method of each Diagnostic.">DiagnosticManager::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00059"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#afc17577823a371a5ead4e51ebb8ec2ef">00059</a>    {
-<a name="l00060"></a>00060       <span class="keywordflow">if</span> (iStep % <a class="code" href="classDdMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a> == 0) { 
+<a name="l00058"></a>00058    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1DiagnosticManager.html#ac34147522286db7ac6b4eb90f7440479" title="Call sample method of each Diagnostic.">DiagnosticManager::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00059"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#ac34147522286db7ac6b4eb90f7440479">00059</a>    {
+<a name="l00060"></a>00060       <span class="keywordflow">if</span> (iStep % <a class="code" href="classDdMd_1_1Diagnostic.html#ac195806b4a4f8c59b6f0664eef51e58f" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a> == 0) { 
 <a name="l00061"></a>00061          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; size(); ++i) {
 <a name="l00062"></a>00062             <span class="keywordflow">if</span> ((*<span class="keyword">this</span>)[i].isAtInterval(iStep)) {
 <a name="l00063"></a>00063                (*this)[i].sample(iStep);
@@ -120,8 +120,8 @@
 <a name="l00069"></a>00069    <span class="comment">/*</span>
 <a name="l00070"></a>00070 <span class="comment">   * Call output method of each diagnostic.</span>
 <a name="l00071"></a>00071 <span class="comment">   */</span>
-<a name="l00072"></a>00072    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1DiagnosticManager.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Call output method of each diagnostic.">DiagnosticManager::output</a>() 
-<a name="l00073"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#a7437b254e19e7e12fc2ec99945f4ecea">00073</a>    {
+<a name="l00072"></a>00072    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1DiagnosticManager.html#a27dc4acdfc9aef05777ebe3011b2ab10" title="Call output method of each diagnostic.">DiagnosticManager::output</a>() 
+<a name="l00073"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#a27dc4acdfc9aef05777ebe3011b2ab10">00073</a>    {
 <a name="l00074"></a>00074       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; size(); ++i) {
 <a name="l00075"></a>00075          (*this)[i].output();
 <a name="l00076"></a>00076       }
@@ -130,8 +130,8 @@
 <a name="l00079"></a>00079    <span class="comment">/*</span>
 <a name="l00080"></a>00080 <span class="comment">   * Return pointer to default factory.</span>
 <a name="l00081"></a>00081 <span class="comment">   */</span>
-<a name="l00082"></a>00082    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;Diagnostic&gt;</a>* <a class="code" href="classDdMd_1_1DiagnosticManager.html#a7122261efa4c9ab4e4318821ae5da60d" title="Return pointer to a new default factory.">DiagnosticManager::newDefaultFactory</a>()<span class="keyword"> const</span>
-<a name="l00083"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#a7122261efa4c9ab4e4318821ae5da60d">00083</a> <span class="keyword">   </span>{
+<a name="l00082"></a>00082    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;Diagnostic&gt;</a>* <a class="code" href="classDdMd_1_1DiagnosticManager.html#a8a0e83ef446d38fce224e105b5813a14" title="Return pointer to a new default factory.">DiagnosticManager::newDefaultFactory</a>()<span class="keyword"> const</span>
+<a name="l00083"></a><a class="code" href="classDdMd_1_1DiagnosticManager.html#a8a0e83ef446d38fce224e105b5813a14">00083</a> <span class="keyword">   </span>{
 <a name="l00084"></a>00084       <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="classDdMd_1_1DiagnosticFactory.html" title="Factory for DdMd::Diagnostic objects.">DiagnosticFactory</a>(*simulationPtr_);
 <a name="l00085"></a>00085    }
 <a name="l00086"></a>00086  
@@ -139,7 +139,7 @@
 <a name="l00088"></a>00088 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -58,7 +58,7 @@
 <a name="l00006"></a>00006 <span class="comment">/*</span>
 <a name="l00007"></a>00007 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00008"></a>00008 <span class="comment">*</span>
-<a name="l00009"></a>00009 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00009"></a>00009 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00010"></a>00010 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00011"></a>00011 <span class="comment">*/</span>
 <a name="l00012"></a>00012 
@@ -87,8 +87,8 @@
 <a name="l00035"></a>00035    <span class="comment">/* </span>
 <a name="l00036"></a>00036 <span class="comment">   * Constructor.</span>
 <a name="l00037"></a>00037 <span class="comment">   */</span>
-<a name="l00038"></a>00038    <a class="code" href="classMcMd_1_1BennettsMethod.html#adfa9e5ed225bb6e0a5ab5716627d1c3d" title="Constructor.">BennettsMethod::BennettsMethod</a>(System&amp; system)
-<a name="l00039"></a><a class="code" href="classMcMd_1_1BennettsMethod.html#adfa9e5ed225bb6e0a5ab5716627d1c3d">00039</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
+<a name="l00038"></a>00038    <a class="code" href="classMcMd_1_1BennettsMethod.html#ac550cb40f4f6f118fa759ed3dbb0ea2d" title="Constructor.">BennettsMethod::BennettsMethod</a>(System&amp; system)
+<a name="l00039"></a><a class="code" href="classMcMd_1_1BennettsMethod.html#ac550cb40f4f6f118fa759ed3dbb0ea2d">00039</a>     : <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&gt;(system),
 <a name="l00040"></a>00040       shift_(0.0),
 <a name="l00041"></a>00041       lowerShift_(0.0),
 <a name="l00042"></a>00042       shifts_(),
@@ -124,7 +124,7 @@
 <a name="l00072"></a>00072       } <span class="keywordflow">else</span> {
 <a name="l00073"></a>00073          upperId_ = myId_;
 <a name="l00074"></a>00074       }
-<a name="l00075"></a>00075       nParameter_ = system.<a class="code" href="classMcMd_1_1System.html#aefe1893c994aea0c5cc4de8ab8aab75e" title="Get the associated Perturbation by reference.">perturbation</a>().<a class="code" href="classMcMd_1_1Perturbation.html#a3e5684d9033624cba933d06b5b031b55" title="Gets the number of perturbation parameters asssociated with a system.">getNParameters</a>(); 
+<a name="l00075"></a>00075       nParameter_ = system.<a class="code" href="classMcMd_1_1System.html#a02f2016b57008ce32813163df3e57701" title="Get the associated Perturbation by reference.">perturbation</a>().<a class="code" href="classMcMd_1_1Perturbation.html#a985515ab0da2fa46321b790fa50c21e5" title="Gets the number of perturbation parameters asssociated with a system.">getNParameters</a>(); 
 <a name="l00076"></a>00076       myParam_.allocate(nParameter_);
 <a name="l00077"></a>00077       lowerParam_.allocate(nParameter_);
 <a name="l00078"></a>00078       upperParam_.allocate(nParameter_);
@@ -133,8 +133,8 @@
 <a name="l00081"></a>00081    <span class="comment">/*</span>
 <a name="l00082"></a>00082 <span class="comment">   * Read parameters and initialize.</span>
 <a name="l00083"></a>00083 <span class="comment">   */</span>
-<a name="l00084"></a>00084    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BennettsMethod.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters from file.">BennettsMethod::readParam</a>(std::istream&amp; in)
-<a name="l00085"></a><a class="code" href="classMcMd_1_1BennettsMethod.html#ab5421d3c9175985c9acbf723e5392075">00085</a>    {
+<a name="l00084"></a>00084    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BennettsMethod.html#a7c8618b2f1001432e87c4f15ac220171" title="Read parameters from file.">BennettsMethod::readParam</a>(std::istream&amp; in)
+<a name="l00085"></a><a class="code" href="classMcMd_1_1BennettsMethod.html#a7c8618b2f1001432e87c4f15ac220171">00085</a>    {
 <a name="l00086"></a>00086       readInterval(in);
 <a name="l00087"></a>00087       readOutputFileName(in);
 <a name="l00088"></a>00088 
@@ -158,16 +158,16 @@
 <a name="l00106"></a>00106 
 <a name="l00107"></a>00107    }
 <a name="l00108"></a>00108     
-<a name="l00109"></a>00109    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BennettsMethod.html#a4fc01d736fe50cf5b977f755b675f11d" title="Clear accumulators.">BennettsMethod::setup</a>()
-<a name="l00110"></a><a class="code" href="classMcMd_1_1BennettsMethod.html#a4fc01d736fe50cf5b977f755b675f11d">00110</a>    { 
+<a name="l00109"></a>00109    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BennettsMethod.html#a1d0c3eee530aca2ff55ac998062fc6dd" title="Clear accumulators.">BennettsMethod::setup</a>()
+<a name="l00110"></a><a class="code" href="classMcMd_1_1BennettsMethod.html#a1d0c3eee530aca2ff55ac998062fc6dd">00110</a>    { 
 <a name="l00111"></a>00111       communicatorPtr_-&gt;Bcast((<span class="keywordtype">void</span>*)&amp;shifts_[0], nProcs_, MPI::DOUBLE, 0);
 <a name="l00112"></a>00112       <span class="keywordflow">if</span> ( myId_ != 0 ) {
 <a name="l00113"></a>00113          lowerShift_ = shifts_[lowerId_];
 <a name="l00114"></a>00114       } <span class="keywordflow">else</span> {}
 <a name="l00115"></a>00115    }
 <a name="l00116"></a>00116 
-<a name="l00117"></a>00117    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BennettsMethod.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Calculate, analyze and/or output a physical quantity.">BennettsMethod::sample</a>(<span class="keywordtype">long</span> iStep) 
-<a name="l00118"></a><a class="code" href="classMcMd_1_1BennettsMethod.html#afc17577823a371a5ead4e51ebb8ec2ef">00118</a>    {
+<a name="l00117"></a>00117    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BennettsMethod.html#a8452548723294c0261eca7a9d408853d" title="Calculate, analyze and/or output a physical quantity.">BennettsMethod::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00118"></a><a class="code" href="classMcMd_1_1BennettsMethod.html#a8452548723294c0261eca7a9d408853d">00118</a>    {
 <a name="l00119"></a>00119       <span class="keywordflow">if</span> (!isAtInterval(iStep)) <span class="keywordflow">return</span>;
 <a name="l00120"></a>00120 
 <a name="l00121"></a>00121       <span class="keywordtype">int</span> myPort, upperPort;
@@ -273,8 +273,8 @@
 <a name="l00221"></a>00221    
 <a name="l00222"></a>00222    
 <a name="l00223"></a>00223    <span class="comment">// Output results to file after simulation is completed.</span>
-<a name="l00224"></a>00224    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BennettsMethod.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output results at end of simulation.">BennettsMethod::output</a>() 
-<a name="l00225"></a><a class="code" href="classMcMd_1_1BennettsMethod.html#a7437b254e19e7e12fc2ec99945f4ecea">00225</a>    {
+<a name="l00224"></a>00224    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1BennettsMethod.html#a5d54f6150c048f538eaebc89dc244f52" title="Output results at end of simulation.">BennettsMethod::output</a>() 
+<a name="l00225"></a><a class="code" href="classMcMd_1_1BennettsMethod.html#a5d54f6150c048f538eaebc89dc244f52">00225</a>    {
 <a name="l00226"></a>00226       analyze(); 
 <a name="l00227"></a>00227 
 <a name="l00228"></a>00228       communicatorPtr_-&gt;Gather((<span class="keyword">const</span> <span class="keywordtype">void</span> *) &amp;shift_, 1, MPI::DOUBLE, (<span class="keywordtype">void</span> *) &amp;shifts_[0], 1, MPI::DOUBLE, 0);
@@ -295,7 +295,7 @@
 <a name="l00243"></a>00243 <span class="preprocessor"></span><span class="preprocessor">#endif    // ifdef  MCMD_PERTURB</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

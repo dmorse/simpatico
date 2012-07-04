@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -72,8 +72,8 @@
 <a name="l00021"></a>00021    <span class="comment">/* </span>
 <a name="l00022"></a>00022 <span class="comment">   * Constructor.</span>
 <a name="l00023"></a>00023 <span class="comment">   */</span>
-<a name="l00024"></a>00024    <a class="code" href="classMcMd_1_1HomopolymerSG.html#ac2e769ad80c1c9e192f56f1f431fcc05" title="Constructor.">HomopolymerSG::HomopolymerSG</a>()
-<a name="l00025"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#ac2e769ad80c1c9e192f56f1f431fcc05">00025</a>     : <a class="code" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract).">Linear</a>(),
+<a name="l00024"></a>00024    <a class="code" href="classMcMd_1_1HomopolymerSG.html#a5906958704797202541e91d1eec79784" title="Constructor.">HomopolymerSG::HomopolymerSG</a>()
+<a name="l00025"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#a5906958704797202541e91d1eec79784">00025</a>     : <a class="code" href="classMcMd_1_1Linear.html" title="A Species of linear polymers (abstract).">Linear</a>(),
 <a name="l00026"></a>00026       <a class="code" href="classMcMd_1_1SpeciesMutator.html" title="Mix-in class for mutable subclasses of Species.">SpeciesMutator</a>()
 <a name="l00027"></a>00027    {
 <a name="l00028"></a>00028       setMutatorPtr(<span class="keyword">this</span>);
@@ -82,22 +82,22 @@
 <a name="l00031"></a>00031    <span class="comment">/* </span>
 <a name="l00032"></a>00032 <span class="comment">   * Destructor.</span>
 <a name="l00033"></a>00033 <span class="comment">   */</span>
-<a name="l00034"></a>00034    <a class="code" href="classMcMd_1_1HomopolymerSG.html#aca7e8db4ded70c538f15de090322fba6" title="Destructor.">HomopolymerSG::~HomopolymerSG</a>()
-<a name="l00035"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#aca7e8db4ded70c538f15de090322fba6">00035</a>    {}
+<a name="l00034"></a>00034    <a class="code" href="classMcMd_1_1HomopolymerSG.html#a6c12122e34d653e2cc0a5ec0c632a14b" title="Destructor.">HomopolymerSG::~HomopolymerSG</a>()
+<a name="l00035"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#a6c12122e34d653e2cc0a5ec0c632a14b">00035</a>    {}
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037    <span class="comment">/*</span>
 <a name="l00038"></a>00038 <span class="comment">   * Read a pair of monomer types and exchange chemical potential.</span>
 <a name="l00039"></a>00039 <span class="comment">   */</span>
-<a name="l00040"></a>00040    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HomopolymerSG.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters and initialize.">HomopolymerSG::readParam</a>(std::istream&amp; in)
-<a name="l00041"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#ab5421d3c9175985c9acbf723e5392075">00041</a>    {
-<a name="l00042"></a>00042       <a class="code" href="classMcMd_1_1Species.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters and allocate molecules for this species.">Species::readParam</a>(in);
+<a name="l00040"></a>00040    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HomopolymerSG.html#a74c5b6d6e169cb586dbe7b4e45ecd2ba" title="Read parameters and initialize.">HomopolymerSG::readParam</a>(std::istream&amp; in)
+<a name="l00041"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#a74c5b6d6e169cb586dbe7b4e45ecd2ba">00041</a>    {
+<a name="l00042"></a>00042       <a class="code" href="classMcMd_1_1Species.html#a4c14a30bca031f7eab854239384ece23" title="Read parameters and allocate molecules for this species.">Species::readParam</a>(in);
 <a name="l00043"></a>00043    }
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045    <span class="comment">/* </span>
 <a name="l00046"></a>00046 <span class="comment">   * Read a pair of monomer types and exchange chemical potential.</span>
 <a name="l00047"></a>00047 <span class="comment">   */</span>
-<a name="l00048"></a>00048    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HomopolymerSG.html#a02e9577ec42da7be4d2ed79a13f654e3" title="Read nAtom, a pair of atom type ids and weightRatio.">HomopolymerSG::readSpeciesParam</a>(std::istream&amp; in)
-<a name="l00049"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#a02e9577ec42da7be4d2ed79a13f654e3">00049</a>    {
+<a name="l00048"></a>00048    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HomopolymerSG.html#a1ba316f26a7eccb81d4668e52de9550b" title="Read nAtom, a pair of atom type ids and weightRatio.">HomopolymerSG::readSpeciesParam</a>(std::istream&amp; in)
+<a name="l00049"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#a1ba316f26a7eccb81d4668e52de9550b">00049</a>    {
 <a name="l00050"></a>00050       read&lt;int&gt;(in,<span class="stringliteral">&quot;nAtom&quot;</span>, nAtom_);
 <a name="l00051"></a>00051       nBond_ = nAtom_ - 1;
 <a name="l00052"></a>00052 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
@@ -127,16 +127,16 @@
 <a name="l00076"></a>00076 <span class="comment">   *</span>
 <a name="l00077"></a>00077 <span class="comment">   * Used by Linear::buildLinear().</span>
 <a name="l00078"></a>00078 <span class="comment">   */</span>
-<a name="l00079"></a>00079    <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1HomopolymerSG.html#ab02fd441a9dafcc99eaee3edb60cef76" title="Return the same type for any particle in any chain.">HomopolymerSG::calculateAtomTypeId</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const</span>
-<a name="l00080"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#ab02fd441a9dafcc99eaee3edb60cef76">00080</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> NullIndex; }
+<a name="l00079"></a>00079    <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1HomopolymerSG.html#ac331ed42ce4d19ddddbcf5825727e379" title="Return the same type for any particle in any chain.">HomopolymerSG::calculateAtomTypeId</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const</span>
+<a name="l00080"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#ac331ed42ce4d19ddddbcf5825727e379">00080</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> NullIndex; }
 <a name="l00081"></a>00081 
 <a name="l00082"></a>00082    <span class="comment">/* </span>
 <a name="l00083"></a>00083 <span class="comment">   * Return 0 for every bond.</span>
 <a name="l00084"></a>00084 <span class="comment">   *</span>
 <a name="l00085"></a>00085 <span class="comment">   * Used by Linear::buildLinear().</span>
 <a name="l00086"></a>00086 <span class="comment">   */</span>
-<a name="l00087"></a>00087    <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1HomopolymerSG.html#a46b144fa661dd93c92a90ade8ab4a4ee" title="Return same bond type for any bond in any chain.">HomopolymerSG::calculateBondTypeId</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const</span>
-<a name="l00088"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#a46b144fa661dd93c92a90ade8ab4a4ee">00088</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> 0; }
+<a name="l00087"></a>00087    <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1HomopolymerSG.html#a0b3128aa1b8ec0253941008cacb2001b" title="Return same bond type for any bond in any chain.">HomopolymerSG::calculateBondTypeId</a>(<span class="keywordtype">int</span> index)<span class="keyword"> const</span>
+<a name="l00088"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#a0b3128aa1b8ec0253941008cacb2001b">00088</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> 0; }
 <a name="l00089"></a>00089 
 <a name="l00090"></a>00090 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
 <a name="l00091"></a>00091 <span class="preprocessor"></span>   <span class="comment">/* </span>
@@ -161,8 +161,8 @@
 <a name="l00110"></a>00110    <span class="comment">/*</span>
 <a name="l00111"></a>00111 <span class="comment">   * Change the type of a specific molecule.</span>
 <a name="l00112"></a>00112 <span class="comment">   */</span>
-<a name="l00113"></a>00113    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HomopolymerSG.html#ade8eb48fccba8c26a755b3d55f719101" title="Set the type of all atoms in the molecule.">HomopolymerSG::setMoleculeState</a>(Molecule&amp; molecule, <span class="keywordtype">int</span> stateId)
-<a name="l00114"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#ade8eb48fccba8c26a755b3d55f719101">00114</a>    {
+<a name="l00113"></a>00113    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HomopolymerSG.html#a86dc948afd6c48e258d81ce1dfb0ad80" title="Set the type of all atoms in the molecule.">HomopolymerSG::setMoleculeState</a>(Molecule&amp; molecule, <span class="keywordtype">int</span> stateId)
+<a name="l00114"></a><a class="code" href="classMcMd_1_1HomopolymerSG.html#a86dc948afd6c48e258d81ce1dfb0ad80">00114</a>    {
 <a name="l00115"></a>00115       <span class="keywordtype">int</span> nAtom  = molecule.nAtom();
 <a name="l00116"></a>00116       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nAtom; ++i) {
 <a name="l00117"></a>00117          molecule.atom(i).setTypeId(typeIds_[stateId]);
@@ -174,7 +174,7 @@
 <a name="l00123"></a>00123 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

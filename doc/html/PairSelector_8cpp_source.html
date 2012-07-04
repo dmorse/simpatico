@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -65,8 +65,8 @@
 <a name="l00013"></a>00013    <span class="comment">/*</span>
 <a name="l00014"></a>00014 <span class="comment">   * Constructor</span>
 <a name="l00015"></a>00015 <span class="comment">   */</span>
-<a name="l00016"></a>00016    <a class="code" href="classMcMd_1_1PairSelector.html#a392a2aae9148463758f6998ed003460f" title="Constructor.">PairSelector::PairSelector</a>()
-<a name="l00017"></a><a class="code" href="classMcMd_1_1PairSelector.html#a392a2aae9148463758f6998ed003460f">00017</a>     : pairType_(ALL),
+<a name="l00016"></a>00016    <a class="code" href="classMcMd_1_1PairSelector.html#a13b4b971f672bf01248ac80ac2b45421" title="Constructor.">PairSelector::PairSelector</a>()
+<a name="l00017"></a><a class="code" href="classMcMd_1_1PairSelector.html#a13b4b971f672bf01248ac80ac2b45421">00017</a>     : pairType_(ALL),
 <a name="l00018"></a>00018       atom1TypeId_(-1),
 <a name="l00019"></a>00019       atom2TypeId_(-1),
 <a name="l00020"></a>00020       avoidDoubleCounting_(false)
@@ -75,17 +75,17 @@
 <a name="l00023"></a>00023    <span class="comment">/*</span>
 <a name="l00024"></a>00024 <span class="comment">   * Set policy to avoid double counting (true) or not (true).</span>
 <a name="l00025"></a>00025 <span class="comment">   */</span>
-<a name="l00026"></a>00026    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairSelector.html#a51cfb5f2cf3fab34adf5bbb4572de964" title="Set policy to avoid double counting (true) or to not avoid (false).">PairSelector::setAvoidDoubleCounting</a>(<span class="keywordtype">bool</span> avoidDoubleCounting)
-<a name="l00027"></a><a class="code" href="classMcMd_1_1PairSelector.html#a51cfb5f2cf3fab34adf5bbb4572de964">00027</a>    {  avoidDoubleCounting_ = avoidDoubleCounting; }
+<a name="l00026"></a>00026    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairSelector.html#a030a96ab10f6a05692cb8c67c6271ea7" title="Set policy to avoid double counting (true) or to not avoid (false).">PairSelector::setAvoidDoubleCounting</a>(<span class="keywordtype">bool</span> avoidDoubleCounting)
+<a name="l00027"></a><a class="code" href="classMcMd_1_1PairSelector.html#a030a96ab10f6a05692cb8c67c6271ea7">00027</a>    {  avoidDoubleCounting_ = avoidDoubleCounting; }
 <a name="l00028"></a>00028 
-<a name="l00032"></a>00032    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1PairSelector.html#a88ee0603acc20a4d0b580a6cbe3da0e0" title="Return true if pair of atoms matches the selector policy.">PairSelector::match</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom1, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom2)<span class="keyword"> const</span>
-<a name="l00033"></a><a class="code" href="classMcMd_1_1PairSelector.html#a88ee0603acc20a4d0b580a6cbe3da0e0">00033</a> <span class="keyword">   </span>{
+<a name="l00032"></a>00032    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1PairSelector.html#a90551e9cbe25da5f65ad26d8e3bc7235" title="Return true if pair of atoms matches the selector policy.">PairSelector::match</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom1, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom2)<span class="keyword"> const</span>
+<a name="l00033"></a><a class="code" href="classMcMd_1_1PairSelector.html#a90551e9cbe25da5f65ad26d8e3bc7235">00033</a> <span class="keyword">   </span>{
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035       <span class="comment">// Check molecular identities</span>
-<a name="l00036"></a>00036       <span class="keywordflow">if</span> (pairType_ == INTRA &amp;&amp; &amp;atom1.<a class="code" href="classMcMd_1_1Atom.html#ae73230f53be08f7eb347b5201d903bb4" title="Get the parent Molecule by reference.">molecule</a>() != &amp;atom2.<a class="code" href="classMcMd_1_1Atom.html#ae73230f53be08f7eb347b5201d903bb4" title="Get the parent Molecule by reference.">molecule</a>() ) {
+<a name="l00036"></a>00036       <span class="keywordflow">if</span> (pairType_ == INTRA &amp;&amp; &amp;atom1.<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>() != &amp;atom2.<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>() ) {
 <a name="l00037"></a>00037          <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00038"></a>00038       } <span class="keywordflow">else</span>
-<a name="l00039"></a>00039       <span class="keywordflow">if</span> (pairType_ == INTER &amp;&amp; &amp;atom1.<a class="code" href="classMcMd_1_1Atom.html#ae73230f53be08f7eb347b5201d903bb4" title="Get the parent Molecule by reference.">molecule</a>() == &amp;atom2.<a class="code" href="classMcMd_1_1Atom.html#ae73230f53be08f7eb347b5201d903bb4" title="Get the parent Molecule by reference.">molecule</a>() ) {
+<a name="l00039"></a>00039       <span class="keywordflow">if</span> (pairType_ == INTER &amp;&amp; &amp;atom1.<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>() == &amp;atom2.<a class="code" href="classMcMd_1_1Atom.html#a6c1e500fe698dc9ede1e58c261005304" title="Get the parent Molecule by reference.">molecule</a>() ) {
 <a name="l00040"></a>00040          <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00041"></a>00041       }
 <a name="l00042"></a>00042 
@@ -95,22 +95,22 @@
 <a name="l00046"></a>00046       }
 <a name="l00047"></a>00047 
 <a name="l00048"></a>00048       <span class="comment">// Check atom types</span>
-<a name="l00049"></a>00049       <span class="keywordflow">if</span> (atom1TypeId_ &gt;= 0 &amp;&amp; atom1.<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>() != atom1TypeId_) {
+<a name="l00049"></a>00049       <span class="keywordflow">if</span> (atom1TypeId_ &gt;= 0 &amp;&amp; atom1.<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>() != atom1TypeId_) {
 <a name="l00050"></a>00050          <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00051"></a>00051       }
-<a name="l00052"></a>00052       <span class="keywordflow">if</span> (atom2TypeId_ &gt;= 0 &amp;&amp; atom2.<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>() != atom2TypeId_) {
+<a name="l00052"></a>00052       <span class="keywordflow">if</span> (atom2TypeId_ &gt;= 0 &amp;&amp; atom2.<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>() != atom2TypeId_) {
 <a name="l00053"></a>00053          <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00054"></a>00054       }
 <a name="l00055"></a>00055 
 <a name="l00056"></a>00056       <span class="comment">// Check for double counting</span>
 <a name="l00057"></a>00057       <span class="keywordflow">if</span> (avoidDoubleCounting_) {
 <a name="l00058"></a>00058          <span class="keywordflow">if</span> (atom1TypeId_ &lt; 0 &amp;&amp; atom2TypeId_ &lt; 0) {
-<a name="l00059"></a>00059             <span class="keywordflow">if</span> (atom1.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>() &gt; atom2.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>()) {
+<a name="l00059"></a>00059             <span class="keywordflow">if</span> (atom1.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>() &gt; atom2.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>()) {
 <a name="l00060"></a>00060                <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00061"></a>00061             }       
 <a name="l00062"></a>00062          } <span class="keywordflow">else</span> 
-<a name="l00063"></a>00063          <span class="keywordflow">if</span> (atom1.<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>() == atom2.<a class="code" href="classMcMd_1_1Atom.html#af68aca851173d8f261a70897bff349c9" title="Get type index for this Atom.">typeId</a>()) {
-<a name="l00064"></a>00064             <span class="keywordflow">if</span> (atom1.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>() &gt; atom2.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>()) {
+<a name="l00063"></a>00063          <span class="keywordflow">if</span> (atom1.<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>() == atom2.<a class="code" href="classMcMd_1_1Atom.html#a87942730c255558af2b27d438fa1bded" title="Get type index for this Atom.">typeId</a>()) {
+<a name="l00064"></a>00064             <span class="keywordflow">if</span> (atom1.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>() &gt; atom2.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>()) {
 <a name="l00065"></a>00065                <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00066"></a>00066             }       
 <a name="l00067"></a>00067          }
@@ -124,8 +124,8 @@
 <a name="l00075"></a>00075    <span class="comment">/* </span>
 <a name="l00076"></a>00076 <span class="comment">   * Input a PairSelector from an istream, without line breaks.</span>
 <a name="l00077"></a>00077 <span class="comment">   */</span>
-<a name="l00078"></a>00078    std::istream&amp; <a class="code" href="namespaceMcMd.html#a74181b023cf44a9612ac683897cd203d" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classMcMd_1_1PairSelector.html" title="Selection rule for pairs of Atoms.">PairSelector</a> &amp;selector)
-<a name="l00079"></a><a class="code" href="namespaceMcMd.html#a29107dc7cc41b4d0e95e2688fc506abf">00079</a>    {
+<a name="l00078"></a>00078    std::istream&amp; <a class="code" href="namespaceMcMd.html#ab3ee02adda6eba075cd5464bd179c747" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classMcMd_1_1PairSelector.html" title="Selection rule for pairs of Atoms.">PairSelector</a> &amp;selector)
+<a name="l00079"></a><a class="code" href="namespaceMcMd.html#a845f383a749f0a7f4698652b2b5eea40">00079</a>    {
 <a name="l00080"></a>00080       in &gt;&gt; selector.pairType_;
 <a name="l00081"></a>00081       in &gt;&gt; selector.atom1TypeId_;
 <a name="l00082"></a>00082       in &gt;&gt; selector.atom2TypeId_;
@@ -135,9 +135,9 @@
 <a name="l00086"></a>00086    <span class="comment">/* </span>
 <a name="l00087"></a>00087 <span class="comment">   * Output a PairSelector to an ostream, without line breaks.</span>
 <a name="l00088"></a>00088 <span class="comment">   */</span>
-<a name="l00089"></a>00089    std::ostream&amp; <a class="code" href="namespaceMcMd.html#a1dabcc9af06e19085b4abbdd1babb8e5" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> PairSelector &amp;selector) 
-<a name="l00090"></a><a class="code" href="namespaceMcMd.html#aa1de1ed94e119a8e814019063f7b3a32">00090</a>    {
-<a name="l00091"></a>00091       out.width(<a class="code" href="classUtil_1_1Parameter.html#a108dc03480fe2b122394ec55016bd42c" title="Width of data field for a scalar variable (numerical or string).">Parameter::Width</a>);
+<a name="l00089"></a>00089    std::ostream&amp; <a class="code" href="namespaceMcMd.html#a9edb092360785f73beae9606f0b1f68f" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> PairSelector &amp;selector) 
+<a name="l00090"></a><a class="code" href="namespaceMcMd.html#a07eb7d12dd2ecf433a81cd9f4f01c54b">00090</a>    {
+<a name="l00091"></a>00091       out.width(<a class="code" href="classUtil_1_1Parameter.html#af4db8fd5ca850496e8e599bae93aa2f2" title="Width of data field for a scalar variable (numerical or string).">Parameter::Width</a>);
 <a name="l00092"></a>00092       out &lt;&lt; selector.pairType_;
 <a name="l00093"></a>00093       out.width(10);
 <a name="l00094"></a>00094       out &lt;&lt; selector.atom1TypeId_;
@@ -149,8 +149,8 @@
 <a name="l00100"></a>00100    <span class="comment">/* </span>
 <a name="l00101"></a>00101 <span class="comment">   * Input a PairSelector::PairType from an istream.</span>
 <a name="l00102"></a>00102 <span class="comment">   */</span>
-<a name="l00103"></a>00103    std::istream&amp; <a class="code" href="namespaceMcMd.html#a74181b023cf44a9612ac683897cd203d" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b" title="Type of atom pair, based on identity of parent molecules.">PairSelector::PairType</a> &amp;type)
-<a name="l00104"></a><a class="code" href="namespaceMcMd.html#a832cadf0af06583d1b0e99aced264d5f">00104</a>    {
+<a name="l00103"></a>00103    std::istream&amp; <a class="code" href="namespaceMcMd.html#ab3ee02adda6eba075cd5464bd179c747" title="istream extractor (&amp;gt;&amp;gt;) for an AtomType.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5" title="Type of atom pair, based on identity of parent molecules.">PairSelector::PairType</a> &amp;type)
+<a name="l00104"></a><a class="code" href="namespaceMcMd.html#afe7cf4e4ecacefd8117e99174da89bea">00104</a>    {
 <a name="l00105"></a>00105       std::string buffer;
 <a name="l00106"></a>00106       in &gt;&gt; buffer;
 <a name="l00107"></a>00107       <span class="keywordflow">if</span> (buffer == <span class="stringliteral">&quot;intra&quot;</span> || buffer == <span class="stringliteral">&quot;Intra&quot;</span> || buffer == <span class="stringliteral">&quot;INTRA&quot;</span>) {
@@ -170,8 +170,8 @@
 <a name="l00121"></a>00121    <span class="comment">/* </span>
 <a name="l00122"></a>00122 <span class="comment">   * Output a PairSelector to an ostream, without line breaks.</span>
 <a name="l00123"></a>00123 <span class="comment">   */</span>
-<a name="l00124"></a>00124    std::ostream&amp; <a class="code" href="namespaceMcMd.html#a1dabcc9af06e19085b4abbdd1babb8e5" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1PairSelector.html#a7029cb6b0f6d685ca8d36b9e45b3562b" title="Type of atom pair, based on identity of parent molecules.">PairSelector::PairType</a> &amp;type) 
-<a name="l00125"></a><a class="code" href="namespaceMcMd.html#ab2fc64a717e4c5950562cf0c2dda002b">00125</a>    {
+<a name="l00124"></a>00124    std::ostream&amp; <a class="code" href="namespaceMcMd.html#a9edb092360785f73beae9606f0b1f68f" title="ostream inserter (&amp;lt;&amp;lt;) for an AtomType.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1PairSelector.html#a5748e10047013f815e7ed719e10169a5" title="Type of atom pair, based on identity of parent molecules.">PairSelector::PairType</a> &amp;type) 
+<a name="l00125"></a><a class="code" href="namespaceMcMd.html#a7e297e5a8aa2613eee5a2e970b2aba7c">00125</a>    {
 <a name="l00126"></a>00126       <span class="keywordflow">if</span> (type == PairSelector::INTRA) {
 <a name="l00127"></a>00127          out &lt;&lt; <span class="stringliteral">&quot;Intra&quot;</span>; 
 <a name="l00128"></a>00128       } <span class="keywordflow">else</span>
@@ -211,16 +211,16 @@
 <a name="l00162"></a>00162    <span class="comment">/*</span>
 <a name="l00163"></a>00163 <span class="comment">   * Commit MPI Datatype.</span>
 <a name="l00164"></a>00164 <span class="comment">   */</span>
-<a name="l00165"></a><a class="code" href="classMcMd_1_1PairSelector.html#a8170d98ea8b055e49ef256d15cfbc5af">00165</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairSelector.html#a8170d98ea8b055e49ef256d15cfbc5af" title="Commit associated MPI DataType.">PairSelector::commitMpiType</a>() 
+<a name="l00165"></a><a class="code" href="classMcMd_1_1PairSelector.html#aeb91534c9ab4b00a387e873a35de0707">00165</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1PairSelector.html#aeb91534c9ab4b00a387e873a35de0707" title="Commit associated MPI DataType.">PairSelector::commitMpiType</a>() 
 <a name="l00166"></a>00166    {
 <a name="l00167"></a>00167       <span class="keywordflow">if</span> (!<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">Util::MpiTraits&lt;PairSelector&gt;::hasType</a>) {
 <a name="l00168"></a>00168          <a class="code" href="classUtil_1_1MpiStructBuilder.html" title="A MpiStructBuilder objects is used to create an MPI Struct datatype.">MpiStructBuilder</a> builder;
 <a name="l00169"></a>00169          <a class="code" href="classMcMd_1_1PairSelector.html" title="Selection rule for pairs of Atoms.">PairSelector</a>     object;
-<a name="l00170"></a>00170          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a5882a267b18044ab1149b71aea7d6b6d" title="Set address of an class instance.">setBase</a>(&amp;<span class="keywordtype">object</span>);
-<a name="l00171"></a>00171          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#aa91ba3ec4fb3b4f5a469a400f0f5e16a" title="Add a new member variable to the type map.">addMember</a>(&amp;<span class="keywordtype">object</span>.pairType_, <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;PairSelector::PairType&gt;::type</a>);
-<a name="l00172"></a>00172          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#aa91ba3ec4fb3b4f5a469a400f0f5e16a" title="Add a new member variable to the type map.">addMember</a>(&amp;<span class="keywordtype">object</span>.atom1TypeId_, MPI::INT);
-<a name="l00173"></a>00173          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#aa91ba3ec4fb3b4f5a469a400f0f5e16a" title="Add a new member variable to the type map.">addMember</a>(&amp;<span class="keywordtype">object</span>.atom2TypeId_, MPI::INT);
-<a name="l00174"></a>00174          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0f12d9ca5f37ab23eae4d2ae7abb4e8f" title="Build and commit a user-defined MPI Struct datatype.">commit</a>(<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">Util::MpiTraits&lt;PairSelector&gt;::type</a>);
+<a name="l00170"></a>00170          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a34f85f4a1e1c296ba324fe274ea22f24" title="Set address of an class instance.">setBase</a>(&amp;<span class="keywordtype">object</span>);
+<a name="l00171"></a>00171          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;<span class="keywordtype">object</span>.pairType_, <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">MpiTraits&lt;PairSelector::PairType&gt;::type</a>);
+<a name="l00172"></a>00172          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;<span class="keywordtype">object</span>.atom1TypeId_, MPI::INT);
+<a name="l00173"></a>00173          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#a0b7815cfc8afac5fb7f225de784b07a1" title="Add a new member variable to the type map.">addMember</a>(&amp;<span class="keywordtype">object</span>.atom2TypeId_, MPI::INT);
+<a name="l00174"></a>00174          builder.<a class="code" href="classUtil_1_1MpiStructBuilder.html#ae95e12f80d3991fe0bd7848010924c25" title="Build and commit a user-defined MPI Struct datatype.">commit</a>(<a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">Util::MpiTraits&lt;PairSelector&gt;::type</a>);
 <a name="l00175"></a>00175          <a class="code" href="classUtil_1_1MpiTraits.html" title="Default MpiTraits class.">Util::MpiTraits&lt;PairSelector&gt;::hasType</a> = <span class="keyword">true</span>;
 <a name="l00176"></a>00176       }
 <a name="l00177"></a>00177    }
@@ -231,7 +231,7 @@
 <a name="l00182"></a>00182 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -135,7 +135,7 @@
 <a name="l00193"></a>00193    <span class="comment">/* </span>
 <a name="l00194"></a>00194 <span class="comment">   * Calculate interaction energy for a pair, as function of squared distance.</span>
 <a name="l00195"></a>00195 <span class="comment">   */</span>
-<a name="l00196"></a><a class="code" href="classInter_1_1LJPair.html#af9b606369ee42f57deff4b9290d6859b">00196</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#af9b606369ee42f57deff4b9290d6859b" title="Returns interaction energy for a single pair of particles.">LJPair::energy</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const </span>
+<a name="l00196"></a><a class="code" href="classInter_1_1LJPair.html#a5ca3c46f0fabd3593b90d510fe1bf27a">00196</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#a5ca3c46f0fabd3593b90d510fe1bf27a" title="Returns interaction energy for a single pair of particles.">LJPair::energy</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const </span>
 <a name="l00197"></a>00197 <span class="keyword">   </span>{
 <a name="l00198"></a>00198       <span class="keywordtype">double</span> r6i;
 <a name="l00199"></a>00199       <span class="keywordflow">if</span> (rsq &lt; cutoffSq_[i][j]) {
@@ -153,7 +153,7 @@
 <a name="l00211"></a>00211    <span class="comment">/* </span>
 <a name="l00212"></a>00212 <span class="comment">   * Calculate force/distance for a pair as function of squared distance.</span>
 <a name="l00213"></a>00213 <span class="comment">   */</span>
-<a name="l00214"></a><a class="code" href="classInter_1_1LJPair.html#a086672ab75f824a9e108e103de93828e">00214</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#a086672ab75f824a9e108e103de93828e" title="Returns ratio of scalar pair interaction force to pair separation.">LJPair::forceOverR</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00214"></a><a class="code" href="classInter_1_1LJPair.html#a4b42707ce280d6202772cbe1504c700f">00214</a>    <span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="classInter_1_1LJPair.html#a4b42707ce280d6202772cbe1504c700f" title="Returns ratio of scalar pair interaction force to pair separation.">LJPair::forceOverR</a>(<span class="keywordtype">double</span> rsq, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
 <a name="l00215"></a>00215 <span class="keyword">   </span>{
 <a name="l00216"></a>00216       <span class="keywordtype">double</span> r2i, r6i;
 <a name="l00217"></a>00217       <span class="keywordflow">if</span> ( rsq &lt; cutoffSq_[i][j] ) {
@@ -173,7 +173,7 @@
 <a name="l00231"></a>00231 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -75,20 +75,20 @@
 <a name="l00029"></a>00029 
 <a name="l00030"></a>00030    <span class="keyword">public</span>:
 <a name="l00031"></a>00031 
-<a name="l00035"></a>00035       <a class="code" href="classUtil_1_1DMatrix.html#afc239829c455123e8aac9f7cae78b968" title="Constructor.">DMatrix</a>();
+<a name="l00035"></a>00035       <a class="code" href="classUtil_1_1DMatrix.html#a915e63b4182c912a7b3e824d8294e1d5" title="Constructor.">DMatrix</a>();
 <a name="l00036"></a>00036 
-<a name="l00040"></a>00040       <a class="code" href="classUtil_1_1DMatrix.html#afc239829c455123e8aac9f7cae78b968" title="Constructor.">DMatrix</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; other);
+<a name="l00040"></a>00040       <a class="code" href="classUtil_1_1DMatrix.html#a915e63b4182c912a7b3e824d8294e1d5" title="Constructor.">DMatrix</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; other);
 <a name="l00041"></a>00041 
-<a name="l00047"></a>00047       <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1DMatrix.html#aa44d48bb5520515844d88c62d506113e" title="Assignment.">operator= </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; other);
+<a name="l00047"></a>00047       <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1DMatrix.html#ad7f0ca9b56c6243c7d0a3afc308f61e9" title="Assignment.">operator= </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; other);
 <a name="l00048"></a>00048 
-<a name="l00054"></a>00054       <a class="code" href="classUtil_1_1DMatrix.html#a8d58c077392c7226d414c1391d70a6d5" title="Destructor.">~DMatrix</a>();
+<a name="l00054"></a>00054       <a class="code" href="classUtil_1_1DMatrix.html#ae78ec62d306902cd9b1a0454cc032a69" title="Destructor.">~DMatrix</a>();
 <a name="l00055"></a>00055 
-<a name="l00062"></a>00062       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrix.html#a28473205f6e6c8e83a9f03ca376533a2" title="Allocate memory for a matrix.">allocate</a>(<span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#a8af90ffcb84fd323e1b4b4fd1d8e1c0e" title="Get number of rows.">capacity1</a>, <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#aaa4b76a6c4fb66aa293ccc2bc95d7572" title="Get number of columns.">capacity2</a>);
+<a name="l00062"></a>00062       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(<span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#aa31b8adc30ead7439b013099bd3e41d3" title="Get number of rows.">capacity1</a>, <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Matrix.html#a6e861f39f260a80f787d202b533acab8" title="Get number of columns.">capacity2</a>);
 <a name="l00063"></a>00063 
 <a name="l00070"></a>00070       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00071"></a>00071       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrix.html#a6765e839ab267e4959384e35a4112451" title="Serialize a DMatrix to/from an Archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00071"></a>00071       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrix.html#a9d681d438383aff021a85ecf5fa8e807" title="Serialize a DMatrix to/from an Archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00072"></a>00072 
-<a name="l00076"></a>00076       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1DMatrix.html#a0bcdab3616db481dd211594529479f94" title="Return true if the DMatrix has been allocated, false otherwise.">isAllocated</a>() <span class="keyword">const</span>;
+<a name="l00076"></a>00076       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1DMatrix.html#a15a7ced3e32cfe67c927fb4caf9ec24e" title="Return true if the DMatrix has been allocated, false otherwise.">isAllocated</a>() <span class="keyword">const</span>;
 <a name="l00077"></a>00077 
 <a name="l00078"></a>00078    };
 <a name="l00079"></a>00079 
@@ -98,7 +98,7 @@
 <a name="l00083"></a>00083 <span class="comment">   * Default constructor.</span>
 <a name="l00084"></a>00084 <span class="comment">   */</span>
 <a name="l00085"></a>00085    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00086"></a><a class="code" href="classUtil_1_1DMatrix.html#afc239829c455123e8aac9f7cae78b968">00086</a>    <a class="code" href="classUtil_1_1DMatrix.html#afc239829c455123e8aac9f7cae78b968" title="Constructor.">DMatrix&lt;Data&gt;::DMatrix</a>() :
+<a name="l00086"></a><a class="code" href="classUtil_1_1DMatrix.html#a915e63b4182c912a7b3e824d8294e1d5">00086</a>    <a class="code" href="classUtil_1_1DMatrix.html#a915e63b4182c912a7b3e824d8294e1d5" title="Constructor.">DMatrix&lt;Data&gt;::DMatrix</a>() :
 <a name="l00087"></a>00087       <a class="code" href="classUtil_1_1Matrix.html" title="Two-dimensional array container template (abstract).">Matrix</a>&lt;Data&gt;()
 <a name="l00088"></a>00088    {}
 <a name="l00089"></a>00089       
@@ -106,20 +106,20 @@
 <a name="l00091"></a>00091 <span class="comment">   * Copy constructor.</span>
 <a name="l00092"></a>00092 <span class="comment">   */</span>
 <a name="l00093"></a>00093    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00094"></a><a class="code" href="classUtil_1_1DMatrix.html#aa2b563828b07b97b44ea13c70bfa685f">00094</a>    <a class="code" href="classUtil_1_1DMatrix.html#afc239829c455123e8aac9f7cae78b968" title="Constructor.">DMatrix&lt;Data&gt;::DMatrix</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; other) 
+<a name="l00094"></a><a class="code" href="classUtil_1_1DMatrix.html#a667a0ef842f2ce01facd591f7f3352a1">00094</a>    <a class="code" href="classUtil_1_1DMatrix.html#a915e63b4182c912a7b3e824d8294e1d5" title="Constructor.">DMatrix&lt;Data&gt;::DMatrix</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; other) 
 <a name="l00095"></a>00095      : <a class="code" href="classUtil_1_1Matrix.html" title="Two-dimensional array container template (abstract).">Matrix</a>&lt;Data&gt;()
 <a name="l00096"></a>00096    {
 <a name="l00097"></a>00097 
 <a name="l00098"></a>00098       <span class="comment">// Precondition</span>
-<a name="l00099"></a>00099       <span class="keywordflow">if</span> (other.<a class="code" href="classUtil_1_1Matrix.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to 1D C array of all elements.">data_</a> == 0) {
+<a name="l00099"></a>00099       <span class="keywordflow">if</span> (other.<a class="code" href="classUtil_1_1Matrix.html#a58613069a43b06ca55b00760e9f2a025" title="Pointer to 1D C array of all elements.">data_</a> == 0) {
 <a name="l00100"></a>00100          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Other DMatrix must be allocated&quot;</span>);
 <a name="l00101"></a>00101       }
 <a name="l00102"></a>00102 
-<a name="l00103"></a>00103       <a class="code" href="classUtil_1_1DMatrix.html#a28473205f6e6c8e83a9f03ca376533a2" title="Allocate memory for a matrix.">allocate</a>(other.<a class="code" href="classUtil_1_1Matrix.html#a8516d92163edd4be2775f79d99d12d61" title="Number of rows (range of first index).">capacity1_</a>, other.<a class="code" href="classUtil_1_1Matrix.html#afa5d17aa9fcb57c5b0b970a26b233b36" title="Number of columns (range of first index).">capacity2_</a>);
+<a name="l00103"></a>00103       <a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">allocate</a>(other.<a class="code" href="classUtil_1_1Matrix.html#ab2aa000328441c9173452ebed40a52b9" title="Number of rows (range of first index).">capacity1_</a>, other.<a class="code" href="classUtil_1_1Matrix.html#a6c524474706b1819f6f20f245c5bbf85" title="Number of columns (range of first index).">capacity2_</a>);
 <a name="l00104"></a>00104 
 <a name="l00105"></a>00105       <span class="comment">// Copy elements</span>
-<a name="l00106"></a>00106       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classUtil_1_1Matrix.html#a8516d92163edd4be2775f79d99d12d61" title="Number of rows (range of first index).">capacity1_</a>*<a class="code" href="classUtil_1_1Matrix.html#afa5d17aa9fcb57c5b0b970a26b233b36" title="Number of columns (range of first index).">capacity2_</a>; ++i) {
-<a name="l00107"></a>00107          <a class="code" href="classUtil_1_1Matrix.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to 1D C array of all elements.">data_</a>[i] = other.<a class="code" href="classUtil_1_1Matrix.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to 1D C array of all elements.">data_</a>[i];
+<a name="l00106"></a>00106       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classUtil_1_1Matrix.html#ab2aa000328441c9173452ebed40a52b9" title="Number of rows (range of first index).">capacity1_</a>*<a class="code" href="classUtil_1_1Matrix.html#a6c524474706b1819f6f20f245c5bbf85" title="Number of columns (range of first index).">capacity2_</a>; ++i) {
+<a name="l00107"></a>00107          <a class="code" href="classUtil_1_1Matrix.html#a58613069a43b06ca55b00760e9f2a025" title="Pointer to 1D C array of all elements.">data_</a>[i] = other.<a class="code" href="classUtil_1_1Matrix.html#a58613069a43b06ca55b00760e9f2a025" title="Pointer to 1D C array of all elements.">data_</a>[i];
 <a name="l00108"></a>00108       }
 <a name="l00109"></a>00109    }
 <a name="l00110"></a>00110    
@@ -127,31 +127,31 @@
 <a name="l00112"></a>00112 <span class="comment">   * Assignment.</span>
 <a name="l00113"></a>00113 <span class="comment">   */</span>
 <a name="l00114"></a>00114    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00115"></a><a class="code" href="classUtil_1_1DMatrix.html#aa44d48bb5520515844d88c62d506113e">00115</a>    <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1DMatrix.html#aa44d48bb5520515844d88c62d506113e" title="Assignment.">DMatrix&lt;Data&gt;::operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; other) 
+<a name="l00115"></a><a class="code" href="classUtil_1_1DMatrix.html#ad7f0ca9b56c6243c7d0a3afc308f61e9">00115</a>    <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1DMatrix.html#ad7f0ca9b56c6243c7d0a3afc308f61e9" title="Assignment.">DMatrix&lt;Data&gt;::operator = </a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DMatrix.html" title="Dynamically allocated Matrix.">DMatrix&lt;Data&gt;</a>&amp; other) 
 <a name="l00116"></a>00116    {
 <a name="l00117"></a>00117 
 <a name="l00118"></a>00118       <span class="comment">// Check for self assignment.</span>
 <a name="l00119"></a>00119       <span class="keywordflow">if</span> (<span class="keyword">this</span> == &amp;other) <span class="keywordflow">return</span> *<span class="keyword">this</span>;
 <a name="l00120"></a>00120 
 <a name="l00121"></a>00121       <span class="comment">// Precondition</span>
-<a name="l00122"></a>00122       <span class="keywordflow">if</span> (other.<a class="code" href="classUtil_1_1Matrix.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to 1D C array of all elements.">data_</a> == 0) {
+<a name="l00122"></a>00122       <span class="keywordflow">if</span> (other.<a class="code" href="classUtil_1_1Matrix.html#a58613069a43b06ca55b00760e9f2a025" title="Pointer to 1D C array of all elements.">data_</a> == 0) {
 <a name="l00123"></a>00123          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;RHS DMatrix must be allocated in assignment&quot;</span>);
 <a name="l00124"></a>00124       }
 <a name="l00125"></a>00125 
 <a name="l00126"></a>00126       <span class="comment">// If this this DMatrix if not allocated, allocate now.</span>
 <a name="l00127"></a>00127       <span class="comment">// If this this DMatrix is allocated, check that capacities are equal.</span>
 <a name="l00128"></a>00128       <span class="keywordflow">if</span> (data_ == 0) {
-<a name="l00129"></a>00129          allocate(other.<a class="code" href="classUtil_1_1Matrix.html#a8516d92163edd4be2775f79d99d12d61" title="Number of rows (range of first index).">capacity1_</a>, other.<a class="code" href="classUtil_1_1Matrix.html#afa5d17aa9fcb57c5b0b970a26b233b36" title="Number of columns (range of first index).">capacity2_</a>);
+<a name="l00129"></a>00129          allocate(other.<a class="code" href="classUtil_1_1Matrix.html#ab2aa000328441c9173452ebed40a52b9" title="Number of rows (range of first index).">capacity1_</a>, other.<a class="code" href="classUtil_1_1Matrix.html#a6c524474706b1819f6f20f245c5bbf85" title="Number of columns (range of first index).">capacity2_</a>);
 <a name="l00130"></a>00130       } <span class="keywordflow">else</span> {
-<a name="l00131"></a>00131          <span class="keywordflow">if</span> (capacity1_ != other.<a class="code" href="classUtil_1_1Matrix.html#a8516d92163edd4be2775f79d99d12d61" title="Number of rows (range of first index).">capacity1_</a> || 
-<a name="l00132"></a>00132              capacity2_ != other.<a class="code" href="classUtil_1_1Matrix.html#afa5d17aa9fcb57c5b0b970a26b233b36" title="Number of columns (range of first index).">capacity2_</a>) {
+<a name="l00131"></a>00131          <span class="keywordflow">if</span> (capacity1_ != other.<a class="code" href="classUtil_1_1Matrix.html#ab2aa000328441c9173452ebed40a52b9" title="Number of rows (range of first index).">capacity1_</a> || 
+<a name="l00132"></a>00132              capacity2_ != other.<a class="code" href="classUtil_1_1Matrix.html#a6c524474706b1819f6f20f245c5bbf85" title="Number of columns (range of first index).">capacity2_</a>) {
 <a name="l00133"></a>00133             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Unequal capacities in assignment&quot;</span>);
 <a name="l00134"></a>00134          }
 <a name="l00135"></a>00135       }
 <a name="l00136"></a>00136 
 <a name="l00137"></a>00137       <span class="comment">// Copy elements</span>
 <a name="l00138"></a>00138       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; capacity1_*capacity2_; ++i) {
-<a name="l00139"></a>00139          data_[i] = other.<a class="code" href="classUtil_1_1Matrix.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Pointer to 1D C array of all elements.">data_</a>[i];
+<a name="l00139"></a>00139          data_[i] = other.<a class="code" href="classUtil_1_1Matrix.html#a58613069a43b06ca55b00760e9f2a025" title="Pointer to 1D C array of all elements.">data_</a>[i];
 <a name="l00140"></a>00140       }
 <a name="l00141"></a>00141 
 <a name="l00142"></a>00142       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
@@ -163,7 +163,7 @@
 <a name="l00148"></a>00148 <span class="comment">   * Delete dynamically allocated C array.</span>
 <a name="l00149"></a>00149 <span class="comment">   */</span>
 <a name="l00150"></a>00150    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00151"></a><a class="code" href="classUtil_1_1DMatrix.html#a8d58c077392c7226d414c1391d70a6d5">00151</a>    <a class="code" href="classUtil_1_1DMatrix.html#a8d58c077392c7226d414c1391d70a6d5" title="Destructor.">DMatrix&lt;Data&gt;::~DMatrix</a>()
+<a name="l00151"></a><a class="code" href="classUtil_1_1DMatrix.html#ae78ec62d306902cd9b1a0454cc032a69">00151</a>    <a class="code" href="classUtil_1_1DMatrix.html#ae78ec62d306902cd9b1a0454cc032a69" title="Destructor.">DMatrix&lt;Data&gt;::~DMatrix</a>()
 <a name="l00152"></a>00152    {
 <a name="l00153"></a>00153       <span class="keywordflow">if</span> (data_ != 0) {
 <a name="l00154"></a>00154          <span class="keyword">delete</span> [] data_;
@@ -178,7 +178,7 @@
 <a name="l00163"></a>00163 <span class="comment">   * \param capacity2 number of columns (range of second index)</span>
 <a name="l00164"></a>00164 <span class="comment">   */</span>
 <a name="l00165"></a>00165    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Data&gt;
-<a name="l00166"></a><a class="code" href="classUtil_1_1DMatrix.html#a28473205f6e6c8e83a9f03ca376533a2">00166</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrix.html#a28473205f6e6c8e83a9f03ca376533a2" title="Allocate memory for a matrix.">DMatrix&lt;Data&gt;::allocate</a>(<span class="keywordtype">int</span> capacity1, <span class="keywordtype">int</span> capacity2)
+<a name="l00166"></a><a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846">00166</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrix.html#a8a6eee18a2a8458ccad0cd58df0d6846" title="Allocate memory for a matrix.">DMatrix&lt;Data&gt;::allocate</a>(<span class="keywordtype">int</span> capacity1, <span class="keywordtype">int</span> capacity2)
 <a name="l00167"></a>00167    {
 <a name="l00168"></a>00168 
 <a name="l00169"></a>00169       <span class="comment">// Preconditions</span>
@@ -196,7 +196,7 @@
 <a name="l00181"></a>00181 <span class="comment">   */</span>
 <a name="l00182"></a>00182    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
 <a name="l00183"></a>00183    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00184"></a><a class="code" href="classUtil_1_1DMatrix.html#a6765e839ab267e4959384e35a4112451">00184</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrix.html#a6765e839ab267e4959384e35a4112451" title="Serialize a DMatrix to/from an Archive.">DMatrix&lt;Data&gt;::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00184"></a><a class="code" href="classUtil_1_1DMatrix.html#a9d681d438383aff021a85ecf5fa8e807">00184</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DMatrix.html#a9d681d438383aff021a85ecf5fa8e807" title="Serialize a DMatrix to/from an Archive.">DMatrix&lt;Data&gt;::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00185"></a>00185    {
 <a name="l00186"></a>00186       <span class="keywordtype">int</span> capacity1, capacity2;
 <a name="l00187"></a>00187       <span class="keywordflow">if</span> (Archive::is_saving()) {
@@ -225,14 +225,14 @@
 <a name="l00210"></a>00210    }
 <a name="l00211"></a>00211 
 <a name="l00213"></a>00213    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00214"></a><a class="code" href="classUtil_1_1DMatrix.html#a0bcdab3616db481dd211594529479f94">00214</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1DMatrix.html#a0bcdab3616db481dd211594529479f94" title="Return true if the DMatrix has been allocated, false otherwise.">DMatrix&lt;Data&gt;::isAllocated</a>()<span class="keyword"> const </span>
+<a name="l00214"></a><a class="code" href="classUtil_1_1DMatrix.html#a15a7ced3e32cfe67c927fb4caf9ec24e">00214</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1DMatrix.html#a15a7ced3e32cfe67c927fb4caf9ec24e" title="Return true if the DMatrix has been allocated, false otherwise.">DMatrix&lt;Data&gt;::isAllocated</a>()<span class="keyword"> const </span>
 <a name="l00215"></a>00215 <span class="keyword">   </span>{  <span class="keywordflow">return</span> !(data_ == 0); }
 <a name="l00216"></a>00216 
 <a name="l00217"></a>00217 }
 <a name="l00218"></a>00218 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -70,7 +70,7 @@
 <a name="l00019"></a>00019    <span class="comment">/*</span>
 <a name="l00020"></a>00020 <span class="comment">   * Constructor.</span>
 <a name="l00021"></a>00021 <span class="comment">   */</span>
-<a name="l00022"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#a690f9e6a3e82959dc3967aece5558410">00022</a>    <a class="code" href="classMcMd_1_1SpeciesMutator.html#a690f9e6a3e82959dc3967aece5558410" title="Constructor.">SpeciesMutator::SpeciesMutator</a>()
+<a name="l00022"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#a06c59732031416df9e7a93e5ebde8001">00022</a>    <a class="code" href="classMcMd_1_1SpeciesMutator.html#a06c59732031416df9e7a93e5ebde8001" title="Constructor.">SpeciesMutator::SpeciesMutator</a>()
 <a name="l00023"></a>00023     : stateIdLabel_(<span class="stringliteral">&quot;stateId&quot;</span>),
 <a name="l00024"></a>00024       nState_(0)
 <a name="l00025"></a>00025    {}
@@ -78,29 +78,29 @@
 <a name="l00027"></a>00027    <span class="comment">/*</span>
 <a name="l00028"></a>00028 <span class="comment">   * Destructor.</span>
 <a name="l00029"></a>00029 <span class="comment">   */</span>
-<a name="l00030"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#a1fc2d6b0c641a42654a0a4b06b16ae4c">00030</a>    <a class="code" href="classMcMd_1_1SpeciesMutator.html#a1fc2d6b0c641a42654a0a4b06b16ae4c" title="Destructor.">SpeciesMutator::~SpeciesMutator</a>()
+<a name="l00030"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#a6687cfaa87bcd06f5273b2a0b6628295">00030</a>    <a class="code" href="classMcMd_1_1SpeciesMutator.html#a6687cfaa87bcd06f5273b2a0b6628295" title="Destructor.">SpeciesMutator::~SpeciesMutator</a>()
 <a name="l00031"></a>00031    {} 
 <a name="l00032"></a>00032 
 <a name="l00033"></a>00033    <span class="comment">/*</span>
 <a name="l00034"></a>00034 <span class="comment">   *</span>
 <a name="l00035"></a>00035 <span class="comment">   */</span>
-<a name="l00036"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#ade6f45c8b15471a653f80099c9123fbe">00036</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1SpeciesMutator.html#ade6f45c8b15471a653f80099c9123fbe" title="Allocate arrays of molecule state ids and statistical weights.">SpeciesMutator::allocateSpeciesMutator</a>(<span class="keywordtype">int</span> nMolecule, <span class="keywordtype">int</span> nState)
+<a name="l00036"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#a9317379fa30622bd163531e890cfff65">00036</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1SpeciesMutator.html#a9317379fa30622bd163531e890cfff65" title="Allocate arrays of molecule state ids and statistical weights.">SpeciesMutator::allocateSpeciesMutator</a>(<span class="keywordtype">int</span> nMolecule, <span class="keywordtype">int</span> nState)
 <a name="l00037"></a>00037    {  
 <a name="l00038"></a>00038       <span class="comment">// Allocate arrays</span>
-<a name="l00039"></a>00039       stateWeights_.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nState);
-<a name="l00040"></a>00040       stateOccupancies_.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nState);
-<a name="l00041"></a>00041       moleculeStateIds_.<a class="code" href="classUtil_1_1DArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocate the underlying C array.">allocate</a>(nMolecule);
-<a name="l00042"></a>00042       nState_ = <a class="code" href="classMcMd_1_1SpeciesMutator.html#adeed0675a21925c0c7a12ef4a030f65a" title="Get the number of possible molecule states.">nState</a>;
+<a name="l00039"></a>00039       stateWeights_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nState);
+<a name="l00040"></a>00040       stateOccupancies_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nState);
+<a name="l00041"></a>00041       moleculeStateIds_.<a class="code" href="classUtil_1_1DArray.html#a1ffe3de1a78d48c67fc0186dbb0c6f36" title="Allocate the underlying C array.">allocate</a>(nMolecule);
+<a name="l00042"></a>00042       nState_ = <a class="code" href="classMcMd_1_1SpeciesMutator.html#aad3a9233ea639b9087a77c0f98eda46d" title="Get the number of possible molecule states.">nState</a>;
 <a name="l00043"></a>00043 
 <a name="l00044"></a>00044       <span class="comment">// Initialize array elements</span>
-<a name="l00045"></a>00045       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1SpeciesMutator.html#adeed0675a21925c0c7a12ef4a030f65a" title="Get the number of possible molecule states.">nState</a>; ++i) {
+<a name="l00045"></a>00045       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1SpeciesMutator.html#aad3a9233ea639b9087a77c0f98eda46d" title="Get the number of possible molecule states.">nState</a>; ++i) {
 <a name="l00046"></a>00046          stateWeights_[i] = 1.0;
 <a name="l00047"></a>00047       }
-<a name="l00048"></a>00048       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1SpeciesMutator.html#adeed0675a21925c0c7a12ef4a030f65a" title="Get the number of possible molecule states.">nState</a>; ++i) {
+<a name="l00048"></a>00048       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classMcMd_1_1SpeciesMutator.html#aad3a9233ea639b9087a77c0f98eda46d" title="Get the number of possible molecule states.">nState</a>; ++i) {
 <a name="l00049"></a>00049          stateOccupancies_[i] = 0;
 <a name="l00050"></a>00050       }
 <a name="l00051"></a>00051       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; nMolecule; ++i) {
-<a name="l00052"></a>00052          moleculeStateIds_[i] = <a class="code" href="classMcMd_1_1SpeciesMutator.html#a2b0990c3cd7d14f551a5eb40e5ed094e" title="Null value for a state index.">NullStateId</a>;
+<a name="l00052"></a>00052          moleculeStateIds_[i] = <a class="code" href="classMcMd_1_1SpeciesMutator.html#aa7aeabbb7a30c8130744977403deb099" title="Null value for a state index.">NullStateId</a>;
 <a name="l00053"></a>00053       }
 <a name="l00054"></a>00054 
 <a name="l00055"></a>00055    }
@@ -108,14 +108,14 @@
 <a name="l00057"></a>00057    <span class="comment">/*</span>
 <a name="l00058"></a>00058 <span class="comment">   * Set the state id for a molecule and update occupancy histogram.</span>
 <a name="l00059"></a>00059 <span class="comment">   */</span>
-<a name="l00060"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#a734ea9efc2537b51444c450767aee302">00060</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1SpeciesMutator.html#a734ea9efc2537b51444c450767aee302" title="Set the state id of a specific molecule.">SpeciesMutator::setMoleculeStateId</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule, <span class="keywordtype">int</span> stateId)
+<a name="l00060"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#aa0aeb69df74df835c6b1c1f20a56c3a5">00060</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1SpeciesMutator.html#aa0aeb69df74df835c6b1c1f20a56c3a5" title="Set the state id of a specific molecule.">SpeciesMutator::setMoleculeStateId</a>(<span class="keyword">const</span> <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule, <span class="keywordtype">int</span> stateId)
 <a name="l00061"></a>00061    {
-<a name="l00062"></a>00062       <span class="keywordflow">if</span> (stateId &lt; 0 &amp;&amp; stateId != <a class="code" href="classMcMd_1_1SpeciesMutator.html#a2b0990c3cd7d14f551a5eb40e5ed094e" title="Null value for a state index.">NullStateId</a>) {
+<a name="l00062"></a>00062       <span class="keywordflow">if</span> (stateId &lt; 0 &amp;&amp; stateId != <a class="code" href="classMcMd_1_1SpeciesMutator.html#aa7aeabbb7a30c8130744977403deb099" title="Null value for a state index.">NullStateId</a>) {
 <a name="l00063"></a>00063          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid state index&quot;</span>);
 <a name="l00064"></a>00064       }
-<a name="l00065"></a>00065       <span class="keywordtype">int</span> molId = molecule.<a class="code" href="classMcMd_1_1Molecule.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get the index for this Molecule (unique in species).">id</a>();
+<a name="l00065"></a>00065       <span class="keywordtype">int</span> molId = molecule.<a class="code" href="classMcMd_1_1Molecule.html#a395b6fb70cd935a436be4c2413ce5c97" title="Get the index for this Molecule (unique in species).">id</a>();
 <a name="l00066"></a>00066       <span class="keywordtype">int</span> oldStateId = moleculeStateIds_[molId];
-<a name="l00067"></a>00067       <span class="keywordflow">if</span> (oldStateId != <a class="code" href="classMcMd_1_1SpeciesMutator.html#a2b0990c3cd7d14f551a5eb40e5ed094e" title="Null value for a state index.">NullStateId</a>) {
+<a name="l00067"></a>00067       <span class="keywordflow">if</span> (oldStateId != <a class="code" href="classMcMd_1_1SpeciesMutator.html#aa7aeabbb7a30c8130744977403deb099" title="Null value for a state index.">NullStateId</a>) {
 <a name="l00068"></a>00068          --stateOccupancies_[oldStateId];
 <a name="l00069"></a>00069       }
 <a name="l00070"></a>00070       moleculeStateIds_[molId] = stateId; 
@@ -126,27 +126,27 @@
 <a name="l00075"></a>00075    <span class="comment">/*</span>
 <a name="l00076"></a>00076 <span class="comment">   * Write state index for a molecule to output stream.</span>
 <a name="l00077"></a>00077 <span class="comment">   */</span>
-<a name="l00078"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#ad1bbbc8f41b610946afd7e39bb6b8e47">00078</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1SpeciesMutator.html#ad1bbbc8f41b610946afd7e39bb6b8e47" title="Write the state id for one molecule to a configuration file stream.">SpeciesMutator::writeMoleculeState</a>(std::ostream&amp; out, 
+<a name="l00078"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#aad874257d7554d3bd67c0418be01312b">00078</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1SpeciesMutator.html#aad874257d7554d3bd67c0418be01312b" title="Write the state id for one molecule to a configuration file stream.">SpeciesMutator::writeMoleculeState</a>(std::ostream&amp; out, 
 <a name="l00079"></a>00079                                 <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule)<span class="keyword"> const</span>
 <a name="l00080"></a>00080 <span class="keyword">   </span>{  
-<a name="l00081"></a>00081       out &lt;&lt; <span class="stringliteral">&quot;stateId    &quot;</span>&lt;&lt; <a class="code" href="classMcMd_1_1SpeciesMutator.html#a1b784062ce86ff38ba9f439ce6ad8d10" title="Get the state id for a specific molecule.">moleculeStateId</a>(molecule) &lt;&lt; std::endl; 
+<a name="l00081"></a>00081       out &lt;&lt; <span class="stringliteral">&quot;stateId    &quot;</span>&lt;&lt; <a class="code" href="classMcMd_1_1SpeciesMutator.html#a4cbc20191cbeed99bfb9c30cad7b7a51" title="Get the state id for a specific molecule.">moleculeStateId</a>(molecule) &lt;&lt; std::endl; 
 <a name="l00082"></a>00082    }
 <a name="l00083"></a>00083 
 <a name="l00084"></a>00084    <span class="comment">/*</span>
 <a name="l00085"></a>00085 <span class="comment">   * Read state index for a molecule to output stream, and set molecule state.</span>
 <a name="l00086"></a>00086 <span class="comment">   */</span>
-<a name="l00087"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#a3c75d26e5b36a5e501b420a14ed9e391">00087</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1SpeciesMutator.html#a3c75d26e5b36a5e501b420a14ed9e391" title="Read the state id for one molecule from a configuration file stream.">SpeciesMutator::readMoleculeState</a>(std::istream&amp; in, <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule)
+<a name="l00087"></a><a class="code" href="classMcMd_1_1SpeciesMutator.html#a6cdadfe436293f7ccdb2b43cb8f11051">00087</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1SpeciesMutator.html#a6cdadfe436293f7ccdb2b43cb8f11051" title="Read the state id for one molecule from a configuration file stream.">SpeciesMutator::readMoleculeState</a>(std::istream&amp; in, <a class="code" href="classMcMd_1_1Molecule.html" title="A physical molecule (a set of covalently bonded Atoms).">Molecule</a>&amp; molecule)
 <a name="l00088"></a>00088    {  
 <a name="l00089"></a>00089       <span class="keywordtype">int</span> stateId;
 <a name="l00090"></a>00090       in &gt;&gt; stateIdLabel_ &gt;&gt; stateId;
-<a name="l00091"></a>00091       <a class="code" href="classMcMd_1_1SpeciesMutator.html#a6c20a467eae3c00f5df76e54312805d5" title="Change the state of a specific molecule.">setMoleculeState</a>(molecule, stateId); 
+<a name="l00091"></a>00091       <a class="code" href="classMcMd_1_1SpeciesMutator.html#a1a51a86513e252896453feb55083098c" title="Change the state of a specific molecule.">setMoleculeState</a>(molecule, stateId); 
 <a name="l00092"></a>00092    }
 <a name="l00093"></a>00093 
 <a name="l00094"></a>00094 } 
 <a name="l00095"></a>00095 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

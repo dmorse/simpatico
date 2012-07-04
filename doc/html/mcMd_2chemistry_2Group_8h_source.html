@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -72,7 +72,7 @@
 <a name="l00038"></a>00038 
 <a name="l00039"></a>00039    <span class="keyword">public</span>: 
 <a name="l00040"></a>00040 
-<a name="l00044"></a><a class="code" href="classMcMd_1_1Group.html#a0b29b9393b4b6856ac75b759f4166c13">00044</a>       <a class="code" href="classMcMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>()
+<a name="l00044"></a><a class="code" href="classMcMd_1_1Group.html#ad2a0441b8bee7fb4f4146677eb52fde9">00044</a>       <a class="code" href="classMcMd_1_1Group.html" title="A group of covalently interacting atoms.">Group</a>()
 <a name="l00045"></a>00045        : typeId_(-1),
 <a name="l00046"></a>00046          isActive_(true)
 <a name="l00047"></a>00047       {
@@ -81,25 +81,25 @@
 <a name="l00050"></a>00050          }
 <a name="l00051"></a>00051       }
 <a name="l00052"></a>00052             
-<a name="l00058"></a><a class="code" href="classMcMd_1_1Group.html#a7b228f53cb819d400d0fb2d5eb24e49e">00058</a>       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom(<span class="keywordtype">int</span> i)
+<a name="l00058"></a><a class="code" href="classMcMd_1_1Group.html#a9efa869a34f0714f8827f053612d740a">00058</a>       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom(<span class="keywordtype">int</span> i)
 <a name="l00059"></a>00059       { <span class="keywordflow">return</span> *atoms_[i]; }
 <a name="l00060"></a>00060     
-<a name="l00066"></a><a class="code" href="classMcMd_1_1Group.html#aafa00e733c60e36b9452b03de3f0a3d8">00066</a>       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00066"></a><a class="code" href="classMcMd_1_1Group.html#a5b08a74a47851570b89e97a4dae30585">00066</a>       <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00067"></a>00067 <span class="keyword">      </span>{ <span class="keywordflow">return</span> *atoms_[i]; }
 <a name="l00068"></a>00068     
-<a name="l00072"></a><a class="code" href="classMcMd_1_1Group.html#af68aca851173d8f261a70897bff349c9">00072</a>       <span class="keywordtype">int</span> typeId()<span class="keyword"> const</span>
+<a name="l00072"></a><a class="code" href="classMcMd_1_1Group.html#a2dcc6ca0d497143307ebf5ab679f8878">00072</a>       <span class="keywordtype">int</span> typeId()<span class="keyword"> const</span>
 <a name="l00073"></a>00073 <span class="keyword">      </span>{ <span class="keywordflow">return</span> typeId_; }
 <a name="l00074"></a>00074    
-<a name="l00082"></a><a class="code" href="classMcMd_1_1Group.html#a22761609071413dcce0632885c820e87">00082</a>       <span class="keywordtype">bool</span> isActive()<span class="keyword"> const</span>
+<a name="l00082"></a><a class="code" href="classMcMd_1_1Group.html#a6014d18d9b4f391266d6418fdb10a273">00082</a>       <span class="keywordtype">bool</span> isActive()<span class="keyword"> const</span>
 <a name="l00083"></a>00083 <span class="keyword">      </span>{ <span class="keywordflow">return</span> isActive_; }
 <a name="l00084"></a>00084    
-<a name="l00091"></a><a class="code" href="classMcMd_1_1Group.html#a0831dd7093e7a3adb470955ebe023b5d">00091</a>       <span class="keywordtype">void</span> setAtom(<span class="keywordtype">int</span> i, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
+<a name="l00091"></a><a class="code" href="classMcMd_1_1Group.html#a32c3af46877925ec5fda097cc8bc79bb">00091</a>       <span class="keywordtype">void</span> setAtom(<span class="keywordtype">int</span> i, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a> &amp;atom)
 <a name="l00092"></a>00092       { atoms_[i] = &amp;atom; }
 <a name="l00093"></a>00093      
-<a name="l00099"></a><a class="code" href="classMcMd_1_1Group.html#a46b30f8f417b160a678438259066f83e">00099</a>       <span class="keywordtype">void</span> setTypeId(<span class="keywordtype">int</span> typeId)
+<a name="l00099"></a><a class="code" href="classMcMd_1_1Group.html#a846a8c879777dea0e3754ff99e2adf67">00099</a>       <span class="keywordtype">void</span> setTypeId(<span class="keywordtype">int</span> typeId)
 <a name="l00100"></a>00100       { typeId_ = typeId; }
 <a name="l00101"></a>00101    
-<a name="l00107"></a><a class="code" href="classMcMd_1_1Group.html#aaba3086ff72f894fcafd8b74014592bd">00107</a>       <span class="keywordtype">void</span> setIsActive(<span class="keywordtype">bool</span> isActive)
+<a name="l00107"></a><a class="code" href="classMcMd_1_1Group.html#ae0fd53f7b39ea110699ec5a3fce4cf28">00107</a>       <span class="keywordtype">void</span> setIsActive(<span class="keywordtype">bool</span> isActive)
 <a name="l00108"></a>00108       { isActive_ = isActive; }
 <a name="l00109"></a>00109    
 <a name="l00110"></a>00110    <span class="keyword">private</span>:
@@ -116,7 +116,7 @@
 <a name="l00124"></a>00124 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

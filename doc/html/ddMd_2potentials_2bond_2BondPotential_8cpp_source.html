@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -70,24 +70,24 @@
 <a name="l00018"></a>00018    <span class="comment">/*</span>
 <a name="l00019"></a>00019 <span class="comment">   * Constructor.</span>
 <a name="l00020"></a>00020 <span class="comment">   */</span>
-<a name="l00021"></a>00021    <a class="code" href="classDdMd_1_1BondPotential.html#a9b71b848334592231831dca3098e6923" title="Default constructor (for unit testing).">BondPotential::BondPotential</a>(Simulation&amp; simulation)
-<a name="l00022"></a><a class="code" href="classDdMd_1_1BondPotential.html#a2b4604d85e57acfdd028ac4fd7d4da85">00022</a>     : boundaryPtr_(&amp;simulation.boundary()),
+<a name="l00021"></a>00021    <a class="code" href="classDdMd_1_1BondPotential.html#a9d29a7f9c15ea1e0ab4ec18094672392" title="Default constructor (for unit testing).">BondPotential::BondPotential</a>(Simulation&amp; simulation)
+<a name="l00022"></a><a class="code" href="classDdMd_1_1BondPotential.html#ac71383ead6c379d7a29fd1a337efcc5e">00022</a>     : boundaryPtr_(&amp;simulation.boundary()),
 <a name="l00023"></a>00023       storagePtr_(&amp;simulation.bondStorage())
 <a name="l00024"></a>00024    {}
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026    <span class="comment">/*</span>
 <a name="l00027"></a>00027 <span class="comment">   * Default constructor (for unit testing).</span>
 <a name="l00028"></a>00028 <span class="comment">   */</span>
-<a name="l00029"></a>00029    <a class="code" href="classDdMd_1_1BondPotential.html#a9b71b848334592231831dca3098e6923" title="Default constructor (for unit testing).">BondPotential::BondPotential</a>()
-<a name="l00030"></a><a class="code" href="classDdMd_1_1BondPotential.html#a9b71b848334592231831dca3098e6923">00030</a>     : boundaryPtr_(0),
+<a name="l00029"></a>00029    <a class="code" href="classDdMd_1_1BondPotential.html#a9d29a7f9c15ea1e0ab4ec18094672392" title="Default constructor (for unit testing).">BondPotential::BondPotential</a>()
+<a name="l00030"></a><a class="code" href="classDdMd_1_1BondPotential.html#a9d29a7f9c15ea1e0ab4ec18094672392">00030</a>     : boundaryPtr_(0),
 <a name="l00031"></a>00031       storagePtr_(0)
 <a name="l00032"></a>00032    {} 
 <a name="l00033"></a>00033 
 <a name="l00034"></a>00034    <span class="comment">/*</span>
 <a name="l00035"></a>00035 <span class="comment">   * Associate with related objects. (for unit testing).</span>
 <a name="l00036"></a>00036 <span class="comment">   */</span>
-<a name="l00037"></a>00037    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotential.html#a3ae33ef8e4bb07f7afda98ae5d09cbfe" title="Associate with related objects.">BondPotential::associate</a>(Boundary&amp; boundary, <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;2&gt;</a>&amp; storage)
-<a name="l00038"></a><a class="code" href="classDdMd_1_1BondPotential.html#a3ae33ef8e4bb07f7afda98ae5d09cbfe">00038</a>    {
+<a name="l00037"></a>00037    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1BondPotential.html#a9b06c2b896764ec784df6a06e96c98dc" title="Associate with related objects.">BondPotential::associate</a>(<a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary, <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;2&gt;</a>&amp; storage)
+<a name="l00038"></a><a class="code" href="classDdMd_1_1BondPotential.html#a9b06c2b896764ec784df6a06e96c98dc">00038</a>    {
 <a name="l00039"></a>00039       boundaryPtr_ = &amp;boundary;
 <a name="l00040"></a>00040       storagePtr_ = &amp;storage;
 <a name="l00041"></a>00041    } 
@@ -95,14 +95,14 @@
 <a name="l00043"></a>00043    <span class="comment">/*</span>
 <a name="l00044"></a>00044 <span class="comment">   * Destructor.</span>
 <a name="l00045"></a>00045 <span class="comment">   */</span>
-<a name="l00046"></a>00046    <a class="code" href="classDdMd_1_1BondPotential.html#a8bf8d5210494c0e5920b8328edf96bd2" title="Destructor.">BondPotential::~BondPotential</a>()
-<a name="l00047"></a><a class="code" href="classDdMd_1_1BondPotential.html#a8bf8d5210494c0e5920b8328edf96bd2">00047</a>    {}
+<a name="l00046"></a>00046    <a class="code" href="classDdMd_1_1BondPotential.html#af3f3c22816b9d256509f71fccb2f8180" title="Destructor.">BondPotential::~BondPotential</a>()
+<a name="l00047"></a><a class="code" href="classDdMd_1_1BondPotential.html#af3f3c22816b9d256509f71fccb2f8180">00047</a>    {}
 <a name="l00048"></a>00048 
 <a name="l00049"></a>00049 }
 <a name="l00050"></a>00050 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

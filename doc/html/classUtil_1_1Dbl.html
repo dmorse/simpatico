@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Dbl Class Reference</title>
+<title>Simpatico: Util::Dbl Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -49,14 +49,14 @@
   <div class="summary">
 <a href="#friends">Friends</a>  </div>
   <div class="headertitle">
-<h1>Dbl Class Reference<div class="ingroups"><a class="el" href="group__Format__Module.html">Output Format</a></div></h1>  </div>
+<h1>Util::Dbl Class Reference<div class="ingroups"><a class="el" href="group__Format__Module.html">Output Format</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Dbl" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Wrapper for a double precision number, for formatted ostream output. </p>
-<p>An <a class="el" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a> object has a double precision numerical value, as well as members (width and precision) that control its output format. The &lt;&lt; operator for an <a class="el" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a> object uses the specified width and precision. The double precision number, the width and the precision may all be specified as parameters to one of several constructors. Values of width and precision that are not specified as parameters of a constructor are set within the constructor to default values given by <a class="el" href="classUtil_1_1Format.html#a6174575d1d0c312a822272e46655c935" title="Return the default output field width.">Format::defaultWidth()</a> and <a class="el" href="classUtil_1_1Format.html#ae6f296e00dce42c810de3a0bbbc310e0" title="Return the default output precision.">Format::defaultPrecision()</a>, respectively.</p>
+<p>An <a class="el" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a> object has a double precision numerical value, as well as members (width and precision) that control its output format. The &lt;&lt; operator for an <a class="el" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a> object uses the specified width and precision. The double precision number, the width and the precision may all be specified as parameters to one of several constructors. Values of width and precision that are not specified as parameters of a constructor are set within the constructor to default values given by <a class="el" href="classUtil_1_1Format.html#ac6cf6620e160c66757429bec0fb4dd23" title="Return the default output field width.">Format::defaultWidth()</a> and <a class="el" href="classUtil_1_1Format.html#ad09d93166bbb678297938e83a88bab9a" title="Return the default output precision.">Format::defaultPrecision()</a>, respectively.</p>
 <p>A <a class="el" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a> object may be passed to an ostream as a temporary object. For example, the expression: </p>
-<div class="fragment"><pre class="fragment">    std::cout &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html#ad4487f5d869ab6dd0f729eb2b6fbcacc" title="Default constructor.">Dbl</a>(2.0) &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html#ad4487f5d869ab6dd0f729eb2b6fbcacc" title="Default constructor.">Dbl</a>(3.0, 15, 8) &lt;&lt; std::endl;
+<div class="fragment"><pre class="fragment">    std::cout &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html#ac5b69fe633e7b414d51d67235b8bea2d" title="Default constructor.">Dbl</a>(2.0) &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html#ac5b69fe633e7b414d51d67235b8bea2d" title="Default constructor.">Dbl</a>(3.0, 15, 8) &lt;&lt; std::endl;
 </pre></div><p> outputs the number 2.0 using the default width and precision, followed by the number 3.0 in a field of minimum width 15 and precision 8. </p>
 
 <p>Definition at line <a class="el" href="Dbl_8h_source.html#l00039">39</a> of file <a class="el" href="Dbl_8h_source.html">Dbl.h</a>.</p>
@@ -68,28 +68,28 @@
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#ad4487f5d869ab6dd0f729eb2b6fbcacc">Dbl</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ad4487f5d869ab6dd0f729eb2b6fbcacc"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#ab4ef7167e9214f36b9cc3b76b0723366">Dbl</a> (double value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value only.  <a href="#ab4ef7167e9214f36b9cc3b76b0723366"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#ade10c0a353bc0b4d68f5838ff97e020a">Dbl</a> (double value, int width)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value and width.  <a href="#ade10c0a353bc0b4d68f5838ff97e020a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#a140e59fb4a16b117c20da586808933d0">Dbl</a> (double value, int width, int precision, bool isFixed=false)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: value, width, precision, and format.  <a href="#a140e59fb4a16b117c20da586808933d0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#ac5b69fe633e7b414d51d67235b8bea2d">Dbl</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#ac5b69fe633e7b414d51d67235b8bea2d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#ab6b72f658ca2d35fa6319347f1f27790">Dbl</a> (double value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value only.  <a href="#ab6b72f658ca2d35fa6319347f1f27790"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#a84cd3ef07667f67427ece530bcb930bb">Dbl</a> (double value, int width)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor, value and width.  <a href="#a84cd3ef07667f67427ece530bcb930bb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#a7114779824c05860a76b1e240e639861">Dbl</a> (double value, int width, int precision, bool isFixed=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor: value, width, precision, and format.  <a href="#a7114779824c05860a76b1e240e639861"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Mutators</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#a1a31743bc7def7cf7fdad044c84d9268">setValue</a> (double value)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value of associated double.  <a href="#a1a31743bc7def7cf7fdad044c84d9268"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#a8b4c8bccc530aa0a9b0139e04913af32">setWidth</a> (int width)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set output field width.  <a href="#a8b4c8bccc530aa0a9b0139e04913af32"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#a5fd0c8805aaa8144ddf1640ab4a017c3">setPrecision</a> (int precision)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set output floating point precision.  <a href="#a5fd0c8805aaa8144ddf1640ab4a017c3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#ab0899e3a72900e18d0d05ee776bbb10c">setValue</a> (double value)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set value of associated double.  <a href="#ab0899e3a72900e18d0d05ee776bbb10c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#ae9d75a02c5585a705fc16a0023531b67">setWidth</a> (int width)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set output field width.  <a href="#ae9d75a02c5585a705fc16a0023531b67"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#ad0a0e459e20ee18c2986a88d7126aa9b">setPrecision</a> (int precision)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set output floating point precision.  <a href="#ad0a0e459e20ee18c2986a88d7126aa9b"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#ac25a1dff53df1bd7dc9f0844ee04ec82">value</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of associated double.  <a href="#ac25a1dff53df1bd7dc9f0844ee04ec82"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#a3eeed61a3424d2f907c8a1e420fddf6d">width</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get field width.  <a href="#a3eeed61a3424d2f907c8a1e420fddf6d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#a1de59f1b10893c8c314b8fab5453d557">precision</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get floating point precision.  <a href="#a1de59f1b10893c8c314b8fab5453d557"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#a47cfd8b50881789c28772600894fa3d5">value</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get value of associated double.  <a href="#a47cfd8b50881789c28772600894fa3d5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#a78b9cce6e7874fcae255bb93720f80f0">width</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get field width.  <a href="#a78b9cce6e7874fcae255bb93720f80f0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#ad4cb4f724c4d8303f24832c4c3e583e6">precision</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get floating point precision.  <a href="#ad4cb4f724c4d8303f24832c4c3e583e6"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Dbl.html#ae1073f1c8b531d987107ec54b9c9401b">operator&gt;&gt;</a> (std::istream &amp;in, <a class="el" href="classUtil_1_1Dbl.html">Dbl</a> &amp;object)</td></tr>
@@ -98,12 +98,12 @@ Friends</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output stream inserter for an <a class="el" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a> object.  <a href="#a52a634ad842d6a842b5a79ced346de10"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ad4487f5d869ab6dd0f729eb2b6fbcacc"></a><!-- doxytag: member="Util::Dbl::Dbl" ref="ad4487f5d869ab6dd0f729eb2b6fbcacc" args="()" -->
+<a class="anchor" id="ac5b69fe633e7b414d51d67235b8bea2d"></a><!-- doxytag: member="Util::Dbl::Dbl" ref="ac5b69fe633e7b414d51d67235b8bea2d" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">home david code simpatico src util format <a class="el" href="classUtil_1_1Dbl.html">Dbl</a> cpp <a class="el" href="classUtil_1_1Dbl.html">Dbl</a> </td>
+          <td class="memname">home david code simpatico src util format <a class="el" href="classUtil_1_1Dbl.html">Dbl</a> cpp Util::Dbl::Dbl </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -118,12 +118,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ab4ef7167e9214f36b9cc3b76b0723366"></a><!-- doxytag: member="Util::Dbl::Dbl" ref="ab4ef7167e9214f36b9cc3b76b0723366" args="(double value)" -->
+<a class="anchor" id="ab6b72f658ca2d35fa6319347f1f27790"></a><!-- doxytag: member="Util::Dbl::Dbl" ref="ab6b72f658ca2d35fa6319347f1f27790" args="(double value)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Dbl.html">Dbl</a> </td>
+          <td class="memname">Util::Dbl::Dbl </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -139,12 +139,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ade10c0a353bc0b4d68f5838ff97e020a"></a><!-- doxytag: member="Util::Dbl::Dbl" ref="ade10c0a353bc0b4d68f5838ff97e020a" args="(double value, int width)" -->
+<a class="anchor" id="a84cd3ef07667f67427ece530bcb930bb"></a><!-- doxytag: member="Util::Dbl::Dbl" ref="a84cd3ef07667f67427ece530bcb930bb" args="(double value, int width)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Dbl.html">Dbl</a> </td>
+          <td class="memname">Util::Dbl::Dbl </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>value</em>, </td>
@@ -170,12 +170,12 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a140e59fb4a16b117c20da586808933d0"></a><!-- doxytag: member="Util::Dbl::Dbl" ref="a140e59fb4a16b117c20da586808933d0" args="(double value, int width, int precision, bool isFixed=false)" -->
+<a class="anchor" id="a7114779824c05860a76b1e240e639861"></a><!-- doxytag: member="Util::Dbl::Dbl" ref="a7114779824c05860a76b1e240e639861" args="(double value, int width, int precision, bool isFixed=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Dbl.html">Dbl</a> </td>
+          <td class="memname">Util::Dbl::Dbl </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>value</em>, </td>
@@ -214,12 +214,12 @@ Friends</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a1a31743bc7def7cf7fdad044c84d9268"></a><!-- doxytag: member="Util::Dbl::setValue" ref="a1a31743bc7def7cf7fdad044c84d9268" args="(double value)" -->
+<a class="anchor" id="ab0899e3a72900e18d0d05ee776bbb10c"></a><!-- doxytag: member="Util::Dbl::setValue" ref="ab0899e3a72900e18d0d05ee776bbb10c" args="(double value)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setValue </td>
+          <td class="memname">void Util::Dbl::setValue </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -233,16 +233,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Dbl_8cpp_source.html#l00052">52</a> of file <a class="el" href="Dbl_8cpp_source.html">Dbl.cpp</a>.</p>
 
-<p>References <a class="el" href="Dbl_8cpp_source.html#l00061">Dbl::value()</a>.</p>
+<p>References <a class="el" href="Dbl_8cpp_source.html#l00061">value()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8b4c8bccc530aa0a9b0139e04913af32"></a><!-- doxytag: member="Util::Dbl::setWidth" ref="a8b4c8bccc530aa0a9b0139e04913af32" args="(int width)" -->
+<a class="anchor" id="ae9d75a02c5585a705fc16a0023531b67"></a><!-- doxytag: member="Util::Dbl::setWidth" ref="ae9d75a02c5585a705fc16a0023531b67" args="(int width)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setWidth </td>
+          <td class="memname">void Util::Dbl::setWidth </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>width</em></td><td>)</td>
@@ -256,16 +256,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Dbl_8cpp_source.html#l00055">55</a> of file <a class="el" href="Dbl_8cpp_source.html">Dbl.cpp</a>.</p>
 
-<p>References <a class="el" href="Dbl_8cpp_source.html#l00064">Dbl::width()</a>.</p>
+<p>References <a class="el" href="Dbl_8cpp_source.html#l00064">width()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5fd0c8805aaa8144ddf1640ab4a017c3"></a><!-- doxytag: member="Util::Dbl::setPrecision" ref="a5fd0c8805aaa8144ddf1640ab4a017c3" args="(int precision)" -->
+<a class="anchor" id="ad0a0e459e20ee18c2986a88d7126aa9b"></a><!-- doxytag: member="Util::Dbl::setPrecision" ref="ad0a0e459e20ee18c2986a88d7126aa9b" args="(int precision)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void setPrecision </td>
+          <td class="memname">void Util::Dbl::setPrecision </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>precision</em></td><td>)</td>
@@ -279,16 +279,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Dbl_8cpp_source.html#l00058">58</a> of file <a class="el" href="Dbl_8cpp_source.html">Dbl.cpp</a>.</p>
 
-<p>References <a class="el" href="Dbl_8cpp_source.html#l00067">Dbl::precision()</a>.</p>
+<p>References <a class="el" href="Dbl_8cpp_source.html#l00067">precision()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac25a1dff53df1bd7dc9f0844ee04ec82"></a><!-- doxytag: member="Util::Dbl::value" ref="ac25a1dff53df1bd7dc9f0844ee04ec82" args="()" -->
+<a class="anchor" id="a47cfd8b50881789c28772600894fa3d5"></a><!-- doxytag: member="Util::Dbl::value" ref="a47cfd8b50881789c28772600894fa3d5" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double value </td>
+          <td class="memname">double Util::Dbl::value </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -301,16 +301,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Dbl_8cpp_source.html#l00061">61</a> of file <a class="el" href="Dbl_8cpp_source.html">Dbl.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Dbl_8cpp_source.html#l00052">Dbl::setValue()</a>.</p>
+<p>Referenced by <a class="el" href="Dbl_8cpp_source.html#l00052">setValue()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3eeed61a3424d2f907c8a1e420fddf6d"></a><!-- doxytag: member="Util::Dbl::width" ref="a3eeed61a3424d2f907c8a1e420fddf6d" args="()" -->
+<a class="anchor" id="a78b9cce6e7874fcae255bb93720f80f0"></a><!-- doxytag: member="Util::Dbl::width" ref="a78b9cce6e7874fcae255bb93720f80f0" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int width </td>
+          <td class="memname">int Util::Dbl::width </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -323,16 +323,16 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Dbl_8cpp_source.html#l00064">64</a> of file <a class="el" href="Dbl_8cpp_source.html">Dbl.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Dbl_8cpp_source.html#l00055">Dbl::setWidth()</a>.</p>
+<p>Referenced by <a class="el" href="Dbl_8cpp_source.html#l00055">setWidth()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1de59f1b10893c8c314b8fab5453d557"></a><!-- doxytag: member="Util::Dbl::precision" ref="a1de59f1b10893c8c314b8fab5453d557" args="()" -->
+<a class="anchor" id="ad4cb4f724c4d8303f24832c4c3e583e6"></a><!-- doxytag: member="Util::Dbl::precision" ref="ad4cb4f724c4d8303f24832c4c3e583e6" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int precision </td>
+          <td class="memname">int Util::Dbl::precision </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -345,7 +345,7 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Dbl_8cpp_source.html#l00067">67</a> of file <a class="el" href="Dbl_8cpp_source.html">Dbl.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="Dbl_8cpp_source.html#l00058">Dbl::setPrecision()</a>.</p>
+<p>Referenced by <a class="el" href="Dbl_8cpp_source.html#l00058">setPrecision()</a>.</p>
 
 </div>
 </div>
@@ -433,7 +433,7 @@ Friends</h2></td></tr>
 <li><a class="el" href="Dbl_8cpp_source.html">Dbl.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

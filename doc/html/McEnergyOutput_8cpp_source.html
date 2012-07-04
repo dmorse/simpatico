@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -71,60 +71,60 @@
 <a name="l00019"></a>00019    <span class="keyword">using namespace </span>Util;
 <a name="l00020"></a>00020 
 <a name="l00021"></a>00021    <span class="comment">// Constructor</span>
-<a name="l00022"></a><a class="code" href="classMcMd_1_1McEnergyOutput.html#a4312a26c17e9dba6dc48cce0fb8eedce">00022</a>    <a class="code" href="classMcMd_1_1McEnergyOutput.html#a4312a26c17e9dba6dc48cce0fb8eedce" title="Constructor.">McEnergyOutput::McEnergyOutput</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system) :
+<a name="l00022"></a><a class="code" href="classMcMd_1_1McEnergyOutput.html#aba6360233018c869e1a08cb8aff8e785">00022</a>    <a class="code" href="classMcMd_1_1McEnergyOutput.html#aba6360233018c869e1a08cb8aff8e785" title="Constructor.">McEnergyOutput::McEnergyOutput</a>(<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system) :
 <a name="l00023"></a>00023       <a class="code" href="classMcMd_1_1SystemDiagnostic.html" title="Template for Diagnostic associated with one System.">SystemDiagnostic</a>&lt;<a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&gt;(system)
 <a name="l00024"></a>00024    {}
 <a name="l00025"></a>00025 
-<a name="l00026"></a><a class="code" href="classMcMd_1_1McEnergyOutput.html#ab5421d3c9175985c9acbf723e5392075">00026</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McEnergyOutput.html#ab5421d3c9175985c9acbf723e5392075" title="Read output file and nStepPerSample.">McEnergyOutput::readParam</a>(std::istream&amp; in)
+<a name="l00026"></a><a class="code" href="classMcMd_1_1McEnergyOutput.html#acf9aa88bfe4a91db239bd3b3a71305e6">00026</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McEnergyOutput.html#acf9aa88bfe4a91db239bd3b3a71305e6" title="Read output file and nStepPerSample.">McEnergyOutput::readParam</a>(std::istream&amp; in)
 <a name="l00027"></a>00027    {
-<a name="l00028"></a>00028       <a class="code" href="classMcMd_1_1Diagnostic.html#a0d9d7b5fc89cf6f04d0119cfcc7ac942" title="Read parameter interval from file.">readInterval</a>(in);
-<a name="l00029"></a>00029       <a class="code" href="classMcMd_1_1Diagnostic.html#a7fb5e9c0364a81f5a630d0f26acfb234" title="Read outputFileName from file.">readOutputFileName</a>(in);
-<a name="l00030"></a>00030       <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
+<a name="l00028"></a>00028       <a class="code" href="classMcMd_1_1Diagnostic.html#abda32f953247ab813bbad3aa336d56c0" title="Read parameter interval from file.">readInterval</a>(in);
+<a name="l00029"></a>00029       <a class="code" href="classMcMd_1_1Diagnostic.html#a6cace7ea7c10f7a8a2a76dba8ed1122c" title="Read outputFileName from file.">readOutputFileName</a>(in);
+<a name="l00030"></a>00030       <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.dat&quot;</span>), outputFile_);
 <a name="l00031"></a>00031    }
 <a name="l00032"></a>00032  
 <a name="l00033"></a>00033    <span class="comment">// Evaluate energy and print.</span>
-<a name="l00034"></a><a class="code" href="classMcMd_1_1McEnergyOutput.html#afc17577823a371a5ead4e51ebb8ec2ef">00034</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McEnergyOutput.html#afc17577823a371a5ead4e51ebb8ec2ef" title="Evaluate energy and print.">McEnergyOutput::sample</a>(<span class="keywordtype">long</span> iStep) 
+<a name="l00034"></a><a class="code" href="classMcMd_1_1McEnergyOutput.html#ac0e65e7e1420dbdc49dcbcc1fbaaf1f5">00034</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McEnergyOutput.html#ac0e65e7e1420dbdc49dcbcc1fbaaf1f5" title="Evaluate energy and print.">McEnergyOutput::sample</a>(<span class="keywordtype">long</span> iStep) 
 <a name="l00035"></a>00035    {
-<a name="l00036"></a>00036       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Diagnostic.html#a56d6fc996d1e17d408288f86b6d9b4e7" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep)) {
+<a name="l00036"></a>00036       <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1Diagnostic.html#a6f9a95c770f5afc1a1efc65df7b9bea2" title="Return true iff counter is a multiple of the interval.">isAtInterval</a>(iStep)) {
 <a name="l00037"></a>00037          <span class="keywordtype">double</span> energy = 0.0;
 <a name="l00038"></a>00038 <span class="preprocessor">         #ifndef INTER_NOPAIR</span>
-<a name="l00039"></a>00039 <span class="preprocessor"></span>         <span class="keywordtype">double</span> pair = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#a95732dcabe9f491e9bb9636dc9d194ec" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1PairPotential.html#a180348fce7f1059a0ad043110433d1c7" title="Return pair energy for a single pair.">energy</a>();
+<a name="l00039"></a>00039 <span class="preprocessor"></span>         <span class="keywordtype">double</span> pair = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa2ef0761c70ac56a5fbc792cf3aa2b12" title="Return the McPairPotential by reference.">pairPotential</a>().<a class="code" href="classMcMd_1_1PairPotential.html#a04e3c8f31425931a8b8f5c5e2c8ea1a3" title="Return pair energy for a single pair.">energy</a>();
 <a name="l00040"></a>00040          outputFile_ &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(pair);
 <a name="l00041"></a>00041          energy += pair;
 <a name="l00042"></a>00042 <span class="preprocessor">         #endif</span>
-<a name="l00043"></a>00043 <span class="preprocessor"></span>         <span class="keywordtype">double</span> bond = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#a6ded80b5664672f56a62f8bf8295d641" title="Return the BondPotential by reference.">bondPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a22da260329c0e87b9f7eb7edd1b5149e" title="Returns potential energy for one bond.">energy</a>();
+<a name="l00043"></a>00043 <span class="preprocessor"></span>         <span class="keywordtype">double</span> bond = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aed9c37cc7b5ad23cdb6f7648e17a74b7" title="Return the BondPotential by reference.">bondPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a56746573b3255b86a0b2b008dfbb951e" title="Returns potential energy for one bond.">energy</a>();
 <a name="l00044"></a>00044          outputFile_ &lt;&lt; Dbl(bond);
 <a name="l00045"></a>00045          energy += bond;
 <a name="l00046"></a>00046 <span class="preprocessor">         #ifdef INTER_ANGLE</span>
-<a name="l00047"></a>00047 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().hasAnglePotential()) {
-<a name="l00048"></a>00048             <span class="keywordtype">double</span> angle = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().anglePotential().energy();
+<a name="l00047"></a>00047 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().hasAnglePotential()) {
+<a name="l00048"></a>00048             <span class="keywordtype">double</span> angle = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().anglePotential().energy();
 <a name="l00049"></a>00049             outputFile_ &lt;&lt; Dbl(angle);
 <a name="l00050"></a>00050             energy += angle;
 <a name="l00051"></a>00051          }
 <a name="l00052"></a>00052 <span class="preprocessor">         #endif</span>
 <a name="l00053"></a>00053 <span class="preprocessor"></span><span class="preprocessor">         #ifdef INTER_DIHEDRAL</span>
-<a name="l00054"></a>00054 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().hasDihedralPotential()) {
-<a name="l00055"></a>00055             <span class="keywordtype">double</span> dihedral = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().dihedralPotential().energy();
+<a name="l00054"></a>00054 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().hasDihedralPotential()) {
+<a name="l00055"></a>00055             <span class="keywordtype">double</span> dihedral = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().dihedralPotential().energy();
 <a name="l00056"></a>00056             outputFile_ &lt;&lt; Dbl(dihedral);
 <a name="l00057"></a>00057             energy += dihedral;
 <a name="l00058"></a>00058          }
 <a name="l00059"></a>00059 <span class="preprocessor">         #endif</span>
 <a name="l00060"></a>00060 <span class="preprocessor"></span><span class="preprocessor">         #ifdef MCMD_LINK</span>
-<a name="l00061"></a>00061 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().hasLinkPotential()) {
-<a name="l00062"></a>00062             <span class="keywordtype">double</span> link = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#afd6f92eb30537c2f70a260a067176dea" title="Return the McLinkPotential by reference.">linkPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a22da260329c0e87b9f7eb7edd1b5149e" title="Returns potential energy for one bond.">energy</a>();
+<a name="l00061"></a>00061 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().hasLinkPotential()) {
+<a name="l00062"></a>00062             <span class="keywordtype">double</span> link = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#a8247c62e71ebc13e4b146cdeb6ab0189" title="Return the McLinkPotential by reference.">linkPotential</a>().<a class="code" href="classMcMd_1_1BondPotential.html#a56746573b3255b86a0b2b008dfbb951e" title="Returns potential energy for one bond.">energy</a>();
 <a name="l00063"></a>00063             outputFile_ &lt;&lt; Dbl(link);
 <a name="l00064"></a>00064             energy += link;
 <a name="l00065"></a>00065          }
 <a name="l00066"></a>00066 <span class="preprocessor">         #endif</span>
 <a name="l00067"></a>00067 <span class="preprocessor"></span><span class="preprocessor">         #ifdef INTER_EXTERNAL</span>
-<a name="l00068"></a>00068 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().hasExternalPotential()) {
-<a name="l00069"></a>00069             <span class="keywordtype">double</span> external = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#aa307441c683f245a3554e28c2e9ef9f5" title="Return ExternalPotential by reference.">externalPotential</a>().<a class="code" href="classMcMd_1_1ExternalPotential.html#a7c7eb327223624354f20f964b8eb7aca" title="Returns external potential energy of a single particle.">energy</a>();
+<a name="l00068"></a>00068 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().hasExternalPotential()) {
+<a name="l00069"></a>00069             <span class="keywordtype">double</span> external = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().<a class="code" href="classMcMd_1_1McSystem.html#a0952ff38daa10a3fe294302a16a9ece1" title="Return ExternalPotential by reference.">externalPotential</a>().<a class="code" href="classMcMd_1_1ExternalPotential.html#adf721b489d5b875993f9ef2dc80964c2" title="Returns external potential energy of a single particle.">energy</a>();
 <a name="l00070"></a>00070             outputFile_ &lt;&lt; Dbl(external);
 <a name="l00071"></a>00071             energy += external;
 <a name="l00072"></a>00072          }
 <a name="l00073"></a>00073 <span class="preprocessor">         #endif</span>
 <a name="l00074"></a>00074 <span class="preprocessor"></span><span class="preprocessor">         #ifdef INTER_TETHER</span>
-<a name="l00075"></a>00075 <span class="preprocessor"></span>         <span class="keywordtype">double</span> tether = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().tetherPotential().energy();
+<a name="l00075"></a>00075 <span class="preprocessor"></span>         <span class="keywordtype">double</span> tether = <a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().tetherPotential().energy();
 <a name="l00076"></a>00076          outputFile_ &lt;&lt; Dbl(tether);
 <a name="l00077"></a>00077          energy += tether;
 <a name="l00078"></a>00078 <span class="preprocessor">         #endif</span>
@@ -135,14 +135,14 @@
 <a name="l00083"></a>00083    <span class="comment">/* </span>
 <a name="l00084"></a>00084 <span class="comment">   * Summary</span>
 <a name="l00085"></a>00085 <span class="comment">   */</span>
-<a name="l00086"></a><a class="code" href="classMcMd_1_1McEnergyOutput.html#a7437b254e19e7e12fc2ec99945f4ecea">00086</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McEnergyOutput.html#a7437b254e19e7e12fc2ec99945f4ecea" title="Output final summary and file format.">McEnergyOutput::output</a>() 
+<a name="l00086"></a><a class="code" href="classMcMd_1_1McEnergyOutput.html#af9bdf70a8c4805450be93bf9a88d9811">00086</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McEnergyOutput.html#af9bdf70a8c4805450be93bf9a88d9811" title="Output final summary and file format.">McEnergyOutput::output</a>() 
 <a name="l00087"></a>00087    {
 <a name="l00088"></a>00088       <span class="comment">// Close *.dat file</span>
 <a name="l00089"></a>00089       outputFile_.close();
 <a name="l00090"></a>00090 
 <a name="l00091"></a>00091       <span class="comment">// Open and write summary file</span>
-<a name="l00092"></a>00092       <a class="code" href="classMcMd_1_1Diagnostic.html#aab4571631d952de626f3a08388c45272" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#ab3b25e114e70a5cef93b47be2123da81" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), outputFile_);
-<a name="l00093"></a>00093       <a class="code" href="classUtil_1_1ParamComposite.html#a3919e7db0ce53e1ead2be4016d4d09ac" title="Write all parameters to an output stream.">writeParam</a>(outputFile_);
+<a name="l00092"></a>00092       <a class="code" href="classMcMd_1_1Diagnostic.html#a7448f9ad995a893c9b74e70849ec218c" title="Get the FileMaster by reference.">fileMaster</a>().<a class="code" href="classMcMd_1_1FileMaster.html#a620b2dfe6f68274da368aa0eaebaeee3" title="Open an output file named [directoryIdPrefix] + inputPrefix + filename.">openOutputFile</a>(<a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">outputFileName</a>(<span class="stringliteral">&quot;.prm&quot;</span>), outputFile_);
+<a name="l00093"></a>00093       <a class="code" href="classUtil_1_1ParamComposite.html#addf0c36c3560471bfe47f0be008575b9" title="Write all parameters to an output stream.">writeParam</a>(outputFile_);
 <a name="l00094"></a>00094       outputFile_ &lt;&lt; std::endl;
 <a name="l00095"></a>00095       outputFile_ &lt;&lt; std::endl;
 <a name="l00096"></a>00096 
@@ -152,22 +152,22 @@
 <a name="l00100"></a>00100 <span class="preprocessor">      #endif</span>
 <a name="l00101"></a>00101 <span class="preprocessor"></span>      outputFile_    &lt;&lt; <span class="stringliteral">&quot;[bond]       &quot;</span>;
 <a name="l00102"></a>00102 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
-<a name="l00103"></a>00103 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().hasAnglePotential()) {
+<a name="l00103"></a>00103 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().hasAnglePotential()) {
 <a name="l00104"></a>00104          outputFile_ &lt;&lt; <span class="stringliteral">&quot;[angle]      &quot;</span>;
 <a name="l00105"></a>00105       }
 <a name="l00106"></a>00106 <span class="preprocessor">      #endif</span>
 <a name="l00107"></a>00107 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
-<a name="l00108"></a>00108 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().hasDihedralPotential()) {
+<a name="l00108"></a>00108 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().hasDihedralPotential()) {
 <a name="l00109"></a>00109          outputFile_ &lt;&lt; <span class="stringliteral">&quot;[dihedral]   &quot;</span>;
 <a name="l00110"></a>00110       }
 <a name="l00111"></a>00111 <span class="preprocessor">      #endif</span>
 <a name="l00112"></a>00112 <span class="preprocessor"></span><span class="preprocessor">      #ifdef MCMD_LINK</span>
-<a name="l00113"></a>00113 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().hasLinkPotential()) {
+<a name="l00113"></a>00113 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().hasLinkPotential()) {
 <a name="l00114"></a>00114          outputFile_ &lt;&lt; <span class="stringliteral">&quot;[link]       &quot;</span>;
 <a name="l00115"></a>00115       }
 <a name="l00116"></a>00116 <span class="preprocessor">      #endif</span>
 <a name="l00117"></a>00117 <span class="preprocessor"></span><span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
-<a name="l00118"></a>00118 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a4fd95174f13b9373367911050e17bf5c" title="Return reference to parent system.">system</a>().hasExternalPotential()) {
+<a name="l00118"></a>00118 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classMcMd_1_1SystemDiagnostic.html#a37537074fc4cd95980be113e006e4379" title="Return reference to parent system.">system</a>().hasExternalPotential()) {
 <a name="l00119"></a>00119          outputFile_ &lt;&lt; <span class="stringliteral">&quot;[external]   &quot;</span>;
 <a name="l00120"></a>00120       }
 <a name="l00121"></a>00121 <span class="preprocessor">      #endif</span>
@@ -184,7 +184,7 @@
 <a name="l00132"></a>00132 <span class="preprocessor">#endif </span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

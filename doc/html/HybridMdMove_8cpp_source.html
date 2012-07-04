@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -79,8 +79,8 @@
 <a name="l00027"></a>00027    <span class="comment">/*</span>
 <a name="l00028"></a>00028 <span class="comment">   * Constructor</span>
 <a name="l00029"></a>00029 <span class="comment">   */</span>
-<a name="l00030"></a>00030    <a class="code" href="classMcMd_1_1HybridMdMove.html#a7f94c57cbec8ff9fa9b5e6072bc55434" title="Constructor.">HybridMdMove::HybridMdMove</a>(McSystem&amp; system) :
-<a name="l00031"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a7f94c57cbec8ff9fa9b5e6072bc55434">00031</a>       <a class="code" href="classMcMd_1_1SystemMove.html" title="An McMove that acts on one McSystem.">SystemMove</a>(system),
+<a name="l00030"></a>00030    <a class="code" href="classMcMd_1_1HybridMdMove.html#acd7b664f0431ea920a93161de3812bde" title="Constructor.">HybridMdMove::HybridMdMove</a>(McSystem&amp; system) :
+<a name="l00031"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#acd7b664f0431ea920a93161de3812bde">00031</a>       <a class="code" href="classMcMd_1_1SystemMove.html" title="An McMove that acts on one McSystem.">SystemMove</a>(system),
 <a name="l00032"></a>00032       mdSystemPtr_(0),
 <a name="l00033"></a>00033       nStep_(0)
 <a name="l00034"></a>00034    {
@@ -91,8 +91,8 @@
 <a name="l00039"></a>00039    <span class="comment">/*</span>
 <a name="l00040"></a>00040 <span class="comment">   * Destructor.</span>
 <a name="l00041"></a>00041 <span class="comment">   */</span>
-<a name="l00042"></a>00042    <a class="code" href="classMcMd_1_1HybridMdMove.html#aff1889648f3e6429fbc69dc1b91792cc" title="Destructor.">HybridMdMove::~HybridMdMove</a>()
-<a name="l00043"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#aff1889648f3e6429fbc69dc1b91792cc">00043</a>    {
+<a name="l00042"></a>00042    <a class="code" href="classMcMd_1_1HybridMdMove.html#a40a25194509469fa6cc0de60fa995fa5" title="Destructor.">HybridMdMove::~HybridMdMove</a>()
+<a name="l00043"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a40a25194509469fa6cc0de60fa995fa5">00043</a>    {
 <a name="l00044"></a>00044       <span class="keywordflow">if</span> (mdSystemPtr_) {
 <a name="l00045"></a>00045          <span class="keyword">delete</span> mdSystemPtr_;
 <a name="l00046"></a>00046       }
@@ -101,8 +101,8 @@
 <a name="l00049"></a>00049    <span class="comment">/*</span>
 <a name="l00050"></a>00050 <span class="comment">   * Read parameter maxDisp</span>
 <a name="l00051"></a>00051 <span class="comment">   */</span>
-<a name="l00052"></a>00052    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#ab5421d3c9175985c9acbf723e5392075" title="Read nStep, dt, skin, maxNPair from file.">HybridMdMove::readParam</a>(std::istream&amp; in)
-<a name="l00053"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#ab5421d3c9175985c9acbf723e5392075">00053</a>    {
+<a name="l00052"></a>00052    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#a05d3b65ab553914062b1aad1993e8687" title="Read nStep, dt, skin, maxNPair from file.">HybridMdMove::readParam</a>(std::istream&amp; in)
+<a name="l00053"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a05d3b65ab553914062b1aad1993e8687">00053</a>    {
 <a name="l00054"></a>00054       readProbability(in);
 <a name="l00055"></a>00055       read&lt;int&gt;(in, <span class="stringliteral">&quot;nStep&quot;</span>, nStep_);
 <a name="l00056"></a>00056       readParamComposite(in, *mdSystemPtr_);
@@ -111,8 +111,8 @@
 <a name="l00059"></a>00059    <span class="comment">/*</span>
 <a name="l00060"></a>00060 <span class="comment">   * Generate, attempt and accept or reject a Hybrid MD/MC move.</span>
 <a name="l00061"></a>00061 <span class="comment">   */</span>
-<a name="l00062"></a>00062    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635" title="Generate, attempt and accept or reject a move.">HybridMdMove::move</a>()
-<a name="l00063"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#af3ca0f83b79b4d5acbc3b0fc849d3635">00063</a>    {
+<a name="l00062"></a>00062    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1HybridMdMove.html#a1da2d057e0f0b27b600a4187dfd7179c" title="Generate, attempt and accept or reject a move.">HybridMdMove::move</a>()
+<a name="l00063"></a><a class="code" href="classMcMd_1_1HybridMdMove.html#a1da2d057e0f0b27b600a4187dfd7179c">00063</a>    {
 <a name="l00064"></a>00064       <a class="code" href="classUtil_1_1PArrayIterator.html" title="Forward iterator for a PArray.">System::MoleculeIterator</a> molIter;
 <a name="l00065"></a>00065       <a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">Molecule::AtomIterator</a>   atomIter;
 <a name="l00066"></a>00066       <span class="keywordtype">double</span> oldEnergy, newEnergy;
@@ -127,8 +127,8 @@
 <a name="l00075"></a>00075       <span class="comment">// Store old atom positions in oldPositions_ array.</span>
 <a name="l00076"></a>00076       <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpec; ++iSpec) {
 <a name="l00077"></a>00077          mdSystemPtr_-&gt;begin(iSpec, molIter);
-<a name="l00078"></a>00078          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
-<a name="l00079"></a>00079             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00078"></a>00078          <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00079"></a>00079             <span class="keywordflow">for</span> (molIter-&gt;begin(atomIter); atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00080"></a>00080                oldPositions_[atomIter-&gt;id()] = atomIter-&gt;position();
 <a name="l00081"></a>00081             }
 <a name="l00082"></a>00082          }
@@ -174,9 +174,9 @@
 <a name="l00122"></a>00122          <span class="comment">// Restore old atom positions</span>
 <a name="l00123"></a>00123          <span class="keywordflow">for</span> (iSpec = 0; iSpec &lt; nSpec; ++iSpec) {
 <a name="l00124"></a>00124             mdSystemPtr_-&gt;begin(iSpec, molIter);
-<a name="l00125"></a>00125             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
+<a name="l00125"></a>00125             <span class="keywordflow">for</span> ( ; molIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++molIter) {
 <a name="l00126"></a>00126                molIter-&gt;begin(atomIter);
-<a name="l00127"></a>00127                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
+<a name="l00127"></a>00127                <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1ArrayIterator.html#a7632e032938bf2cebe26c06d28cbc36c" title="Is the current pointer not at the end of the array?">notEnd</a>(); ++atomIter) {
 <a name="l00128"></a>00128                   atomIter-&gt;position() = oldPositions_[atomIter-&gt;id()];
 <a name="l00129"></a>00129                }
 <a name="l00130"></a>00130             }
@@ -192,7 +192,7 @@
 <a name="l00140"></a>00140 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

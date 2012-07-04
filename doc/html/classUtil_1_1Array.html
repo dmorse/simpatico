@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Array&lt; Data &gt; Class Template Reference</title>
+<title>Simpatico: Util::Array&lt; Data &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -51,7 +51,7 @@
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
-<h1>Array&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Array__Module.html">Object Arrays</a></div></h1>  </div>
+<h1>Util::Array&lt; Data &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__Array__Module.html">Object Arrays</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::Array" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -66,13 +66,13 @@
 </div>
 <p><code>#include &lt;<a class="el" href="Array_8h_source.html">Array.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for Array&lt; Data &gt;:</div>
+Inheritance diagram for Util::Array&lt; Data &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classUtil_1_1Array.png" usemap="#Array&lt; Data &gt;_map" alt=""/>
-  <map id="Array&lt; Data &gt;_map" name="Array&lt; Data &gt;_map">
-<area href="classUtil_1_1DArray.html" alt="DArray&lt; Data &gt;" shape="rect" coords="0,56,104,80"/>
-<area href="classUtil_1_1RArray.html" alt="RArray&lt; Data &gt;" shape="rect" coords="114,56,218,80"/>
+  <img src="classUtil_1_1Array.png" usemap="#Util::Array&lt; Data &gt;_map" alt=""/>
+  <map id="Util::Array&lt; Data &gt;_map" name="Util::Array&lt; Data &gt;_map">
+<area href="classUtil_1_1DArray.html" alt="Util::DArray&lt; Data &gt;" shape="rect" coords="0,56,127,80"/>
+<area href="classUtil_1_1RArray.html" alt="Util::RArray&lt; Data &gt;" shape="rect" coords="137,56,264,80"/>
 </map>
  </div></div>
 
@@ -80,40 +80,42 @@ Inheritance diagram for Array&lt; Data &gt;:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a9338ffdafb6c90a0d192ade96b24550a">~Array</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#a9338ffdafb6c90a0d192ade96b24550a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a104736719cd4e5f21c25705c77064dde">capacity</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return allocated size.  <a href="#a104736719cd4e5f21c25705c77064dde"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a172d51d4c65bb6c22e459b5a4c9d79f6">begin</a> (<a class="el" href="classUtil_1_1ArrayIterator.html">ArrayIterator</a>&lt; Data &gt; &amp;iterator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set an <a class="el" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#a172d51d4c65bb6c22e459b5a4c9d79f6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#aeafeff76c665316e581605a2ad765d5c">begin</a> (<a class="el" href="classUtil_1_1ConstArrayIterator.html">ConstArrayIterator</a>&lt; Data &gt; &amp;iterator) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a <a class="el" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#aeafeff76c665316e581605a2ad765d5c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a8cc8b5696ce4a17c06360e7f41f95096">operator[]</a> (int i)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#a8cc8b5696ce4a17c06360e7f41f95096"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a6ec4b9cb529f024cd28e96290a4ca410">operator[]</a> (int i) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#a6ec4b9cb529f024cd28e96290a4ca410"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a49de76f0008a14dde82feb573976075b">cArray</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to underlying C array.  <a href="#a49de76f0008a14dde82feb573976075b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a99e78da852bf0c7f5605c0a590a96c7a">cArray</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to const to underlying C array.  <a href="#a99e78da852bf0c7f5605c0a590a96c7a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#acb20bc6899f722fc3daecdfcbe7e6dc1">~Array</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#acb20bc6899f722fc3daecdfcbe7e6dc1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38">capacity</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return allocated size.  <a href="#a013a928470d09a8dd11937c1b28a3d38"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#aab6a0fd78f093c72eb3d9fadc10e975f">begin</a> (<a class="el" href="classUtil_1_1ArrayIterator.html">ArrayIterator</a>&lt; Data &gt; &amp;iterator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set an <a class="el" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#aab6a0fd78f093c72eb3d9fadc10e975f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a214ec92407796a9217a9a9124cbe7ac3">begin</a> (<a class="el" href="classUtil_1_1ConstArrayIterator.html">ConstArrayIterator</a>&lt; Data &gt; &amp;iterator) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a <a class="el" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator</a> to the beginning of this <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a>.  <a href="#a214ec92407796a9217a9a9124cbe7ac3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#ab90b22d68aa6336afbd6d512f048a23e">operator[]</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#ab90b22d68aa6336afbd6d512f048a23e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const Data &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a94c11eb1ec25fe405a91eb928b53b39b">operator[]</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mimic C array subscripting.  <a href="#a94c11eb1ec25fe405a91eb928b53b39b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a2d8d82e1f566c5787ef21951cf7f2859">cArray</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to underlying C array.  <a href="#a2d8d82e1f566c5787ef21951cf7f2859"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a4f7f902722126e0bbaf892bedb5a9c2b">cArray</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pointer to const to underlying C array.  <a href="#a4f7f902722126e0bbaf892bedb5a9c2b"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#af9474cac29f3177edf5e8d72ea4a440c">Array</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#af9474cac29f3177edf5e8d72ea4a440c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#afebcbd322d16507b686ac0b1152410a4">Array</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#afebcbd322d16507b686ac0b1152410a4"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a51a8255a7ec647fc0e77a41589bd4a0e">data_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to array of Data elements.  <a href="#a51a8255a7ec647fc0e77a41589bd4a0e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a9e2616fdebc24bf4bfa139964780d6dd">capacity_</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocated size of data_ array.  <a href="#a9e2616fdebc24bf4bfa139964780d6dd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#a3e7b24fc0708bb01cfd053bc15d2fcad">data_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to array of Data elements.  <a href="#a3e7b24fc0708bb01cfd053bc15d2fcad"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1Array.html#af41ed573abecee2abb3745a26128c9a8">capacity_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocated size of data_ array.  <a href="#af41ed573abecee2abb3745a26128c9a8"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a9338ffdafb6c90a0d192ade96b24550a"></a><!-- doxytag: member="Util::Array::~Array" ref="a9338ffdafb6c90a0d192ade96b24550a" args="()" -->
+<a class="anchor" id="acb20bc6899f722fc3daecdfcbe7e6dc1"></a><!-- doxytag: member="Util::Array::~Array" ref="acb20bc6899f722fc3daecdfcbe7e6dc1" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">~<a class="el" href="classUtil_1_1Array.html">Array</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Array.html">Util::Array</a>&lt; Data &gt;::~<a class="el" href="classUtil_1_1Array.html">Array</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -128,12 +130,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af9474cac29f3177edf5e8d72ea4a440c"></a><!-- doxytag: member="Util::Array::Array" ref="af9474cac29f3177edf5e8d72ea4a440c" args="()" -->
+<a class="anchor" id="afebcbd322d16507b686ac0b1152410a4"></a><!-- doxytag: member="Util::Array::Array" ref="afebcbd322d16507b686ac0b1152410a4" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classUtil_1_1Array.html">Array</a> </td>
+          <td class="memname"><a class="el" href="classUtil_1_1Array.html">Util::Array</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1Array.html">Array</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [protected]</code></td>
@@ -150,12 +154,14 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a104736719cd4e5f21c25705c77064dde"></a><!-- doxytag: member="Util::Array::capacity" ref="a104736719cd4e5f21c25705c77064dde" args="() const " -->
+<a class="anchor" id="a013a928470d09a8dd11937c1b28a3d38"></a><!-- doxytag: member="Util::Array::capacity" ref="a013a928470d09a8dd11937c1b28a3d38" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int capacity </td>
+          <td class="memname">int <a class="el" href="classUtil_1_1Array.html">Util::Array</a>&lt; Data &gt;::capacity </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -169,16 +175,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Array_8h_source.html#l00146">146</a> of file <a class="el" href="Array_8h_source.html">Array.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DRaggedMatrix_8h_source.html#l00165">DRaggedMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="ArraySet_8h_source.html#l00235">ArraySet&lt; Data &gt;::allocate()</a>, <a class="el" href="RArray_8h_source.html#l00083">RArray&lt; Atom &gt;::associate()</a>, <a class="el" href="Distribution_8cpp_source.html#l00035">Distribution::Distribution()</a>, <a class="el" href="IntDistribution_8cpp_source.html#l00034">IntDistribution::IntDistribution()</a>, <a class="el" href="IntDistribution_8cpp_source.html#l00061">IntDistribution::operator=()</a>, <a class="el" href="Distribution_8cpp_source.html#l00061">Distribution::operator=()</a>, <a class="el" href="DArray_8h_source.html#l00194">DArray&lt; Data &gt;::operator=()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">NvtIntegrator::setup()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00055">NveVvIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">NveIntegrator::setup()</a>, and <a class="el" href="NphIntegrator_8cpp_source.html#l00064">NphIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="DRaggedMatrix_8h_source.html#l00165">Util::DRaggedMatrix&lt; Data &gt;::allocate()</a>, <a class="el" href="ArraySet_8h_source.html#l00235">Util::ArraySet&lt; Data &gt;::allocate()</a>, <a class="el" href="RArray_8h_source.html#l00083">Util::RArray&lt; Atom &gt;::associate()</a>, <a class="el" href="Distribution_8cpp_source.html#l00035">Util::Distribution::Distribution()</a>, <a class="el" href="IntDistribution_8cpp_source.html#l00034">Util::IntDistribution::IntDistribution()</a>, <a class="el" href="IntDistribution_8cpp_source.html#l00061">Util::IntDistribution::operator=()</a>, <a class="el" href="Distribution_8cpp_source.html#l00061">Util::Distribution::operator=()</a>, <a class="el" href="DArray_8h_source.html#l00194">Util::DArray&lt; Data &gt;::operator=()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveVvIntegrator_8cpp_source.html#l00055">McMd::NveVvIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="NphIntegrator_8cpp_source.html#l00064">McMd::NphIntegrator::setup()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a172d51d4c65bb6c22e459b5a4c9d79f6"></a><!-- doxytag: member="Util::Array::begin" ref="a172d51d4c65bb6c22e459b5a4c9d79f6" args="(ArrayIterator&lt; Data &gt; &amp;iterator)" -->
+<a class="anchor" id="aab6a0fd78f093c72eb3d9fadc10e975f"></a><!-- doxytag: member="Util::Array::begin" ref="aab6a0fd78f093c72eb3d9fadc10e975f" args="(ArrayIterator&lt; Data &gt; &amp;iterator)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void begin </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1Array.html">Util::Array</a>&lt; Data &gt;::begin </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1ArrayIterator.html">ArrayIterator</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>iterator</em></td><td>)</td>
@@ -198,16 +206,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Array_8h_source.html#l00155">155</a> of file <a class="el" href="Array_8h_source.html">Array.h</a>.</p>
 
-<p>References <a class="el" href="ArrayIterator_8h_source.html#l00059">ArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="ArrayIterator_8h_source.html#l00067">ArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
+<p>References <a class="el" href="ArrayIterator_8h_source.html#l00059">Util::ArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="ArrayIterator_8h_source.html#l00067">Util::ArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aeafeff76c665316e581605a2ad765d5c"></a><!-- doxytag: member="Util::Array::begin" ref="aeafeff76c665316e581605a2ad765d5c" args="(ConstArrayIterator&lt; Data &gt; &amp;iterator) const " -->
+<a class="anchor" id="a214ec92407796a9217a9a9124cbe7ac3"></a><!-- doxytag: member="Util::Array::begin" ref="a214ec92407796a9217a9a9124cbe7ac3" args="(ConstArrayIterator&lt; Data &gt; &amp;iterator) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void begin </td>
+          <td class="memname">void <a class="el" href="classUtil_1_1Array.html">Util::Array</a>&lt; Data &gt;::begin </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1ConstArrayIterator.html">ConstArrayIterator</a>&lt; Data &gt; &amp;&#160;</td>
           <td class="paramname"><em>iterator</em></td><td>)</td>
@@ -227,16 +237,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Array_8h_source.html#l00169">169</a> of file <a class="el" href="Array_8h_source.html">Array.h</a>.</p>
 
-<p>References <a class="el" href="ConstArrayIterator_8h_source.html#l00060">ConstArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="ConstArrayIterator_8h_source.html#l00068">ConstArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
+<p>References <a class="el" href="ConstArrayIterator_8h_source.html#l00060">Util::ConstArrayIterator&lt; Data &gt;::setCurrent()</a>, and <a class="el" href="ConstArrayIterator_8h_source.html#l00068">Util::ConstArrayIterator&lt; Data &gt;::setEnd()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a8cc8b5696ce4a17c06360e7f41f95096"></a><!-- doxytag: member="Util::Array::operator[]" ref="a8cc8b5696ce4a17c06360e7f41f95096" args="(int i)" -->
+<a class="anchor" id="ab90b22d68aa6336afbd6d512f048a23e"></a><!-- doxytag: member="Util::Array::operator[]" ref="ab90b22d68aa6336afbd6d512f048a23e" args="(int i)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data &amp; operator[] </td>
+          <td class="memname">Data &amp; <a class="el" href="classUtil_1_1Array.html">Util::Array</a>&lt; Data &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -259,12 +271,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6ec4b9cb529f024cd28e96290a4ca410"></a><!-- doxytag: member="Util::Array::operator[]" ref="a6ec4b9cb529f024cd28e96290a4ca410" args="(int i) const " -->
+<a class="anchor" id="a94c11eb1ec25fe405a91eb928b53b39b"></a><!-- doxytag: member="Util::Array::operator[]" ref="a94c11eb1ec25fe405a91eb928b53b39b" args="(int i) const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Data &amp; operator[] </td>
+          <td class="memname">const Data &amp; <a class="el" href="classUtil_1_1Array.html">Util::Array</a>&lt; Data &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>i</em></td><td>)</td>
@@ -287,12 +301,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a49de76f0008a14dde82feb573976075b"></a><!-- doxytag: member="Util::Array::cArray" ref="a49de76f0008a14dde82feb573976075b" args="()" -->
+<a class="anchor" id="a2d8d82e1f566c5787ef21951cf7f2859"></a><!-- doxytag: member="Util::Array::cArray" ref="a2d8d82e1f566c5787ef21951cf7f2859" args="()" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data * cArray </td>
+          <td class="memname">Data * <a class="el" href="classUtil_1_1Array.html">Util::Array</a>&lt; Data &gt;::cArray </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [inline]</code></td>
@@ -305,16 +321,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Array_8h_source.html#l00211">211</a> of file <a class="el" href="Array_8h_source.html">Array.h</a>.</p>
 
-<p>Referenced by <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">DCDTrajectoryIo::readFrame()</a>.</p>
+<p>Referenced by <a class="el" href="DCDTrajectoryIo_8cpp_source.html#l00099">McMd::DCDTrajectoryIo::readFrame()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a99e78da852bf0c7f5605c0a590a96c7a"></a><!-- doxytag: member="Util::Array::cArray" ref="a99e78da852bf0c7f5605c0a590a96c7a" args="() const " -->
+<a class="anchor" id="a4f7f902722126e0bbaf892bedb5a9c2b"></a><!-- doxytag: member="Util::Array::cArray" ref="a4f7f902722126e0bbaf892bedb5a9c2b" args="() const " -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const Data * cArray </td>
+          <td class="memname">const Data * <a class="el" href="classUtil_1_1Array.html">Util::Array</a>&lt; Data &gt;::cArray </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -330,12 +348,14 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Data Documentation</h2>
-<a class="anchor" id="a51a8255a7ec647fc0e77a41589bd4a0e"></a><!-- doxytag: member="Util::Array::data_" ref="a51a8255a7ec647fc0e77a41589bd4a0e" args="" -->
+<a class="anchor" id="a3e7b24fc0708bb01cfd053bc15d2fcad"></a><!-- doxytag: member="Util::Array::data_" ref="a3e7b24fc0708bb01cfd053bc15d2fcad" args="" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Data* <a class="el" href="classUtil_1_1Array.html#a51a8255a7ec647fc0e77a41589bd4a0e">data_</a><code> [protected]</code></td>
+          <td class="memname">Data* <a class="el" href="classUtil_1_1Array.html">Util::Array</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1Array.html#a3e7b24fc0708bb01cfd053bc15d2fcad">data_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -345,16 +365,18 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Array_8h_source.html#l00094">94</a> of file <a class="el" href="Array_8h_source.html">Array.h</a>.</p>
 
-<p>Referenced by <a class="el" href="RArray_8h_source.html#l00083">RArray&lt; Atom &gt;::associate()</a>, <a class="el" href="DArray_8h_source.html#l00156">DArray&lt; Data &gt;::DArray()</a>, and <a class="el" href="RArray_8h_source.html#l00068">RArray&lt; Atom &gt;::RArray()</a>.</p>
+<p>Referenced by <a class="el" href="RArray_8h_source.html#l00083">Util::RArray&lt; Atom &gt;::associate()</a>, <a class="el" href="DArray_8h_source.html#l00156">Util::DArray&lt; Data &gt;::DArray()</a>, and <a class="el" href="RArray_8h_source.html#l00068">Util::RArray&lt; Atom &gt;::RArray()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9e2616fdebc24bf4bfa139964780d6dd"></a><!-- doxytag: member="Util::Array::capacity_" ref="a9e2616fdebc24bf4bfa139964780d6dd" args="" -->
+<a class="anchor" id="af41ed573abecee2abb3745a26128c9a8"></a><!-- doxytag: member="Util::Array::capacity_" ref="af41ed573abecee2abb3745a26128c9a8" args="" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classUtil_1_1Array.html#a9e2616fdebc24bf4bfa139964780d6dd">capacity_</a><code> [protected]</code></td>
+          <td class="memname">int <a class="el" href="classUtil_1_1Array.html">Util::Array</a>&lt; Data &gt;::<a class="el" href="classUtil_1_1Array.html#af41ed573abecee2abb3745a26128c9a8">capacity_</a><code> [protected]</code></td>
         </tr>
       </table>
 </div>
@@ -364,7 +386,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Array_8h_source.html#l00097">97</a> of file <a class="el" href="Array_8h_source.html">Array.h</a>.</p>
 
-<p>Referenced by <a class="el" href="RArray_8h_source.html#l00083">RArray&lt; Atom &gt;::associate()</a>, <a class="el" href="DArray_8h_source.html#l00156">DArray&lt; Data &gt;::DArray()</a>, <a class="el" href="DArray_8h_source.html#l00194">DArray&lt; Data &gt;::operator=()</a>, and <a class="el" href="RArray_8h_source.html#l00068">RArray&lt; Atom &gt;::RArray()</a>.</p>
+<p>Referenced by <a class="el" href="RArray_8h_source.html#l00083">Util::RArray&lt; Atom &gt;::associate()</a>, <a class="el" href="DArray_8h_source.html#l00156">Util::DArray&lt; Data &gt;::DArray()</a>, <a class="el" href="DArray_8h_source.html#l00194">Util::DArray&lt; Data &gt;::operator=()</a>, and <a class="el" href="RArray_8h_source.html#l00068">Util::RArray&lt; Atom &gt;::RArray()</a>.</p>
 
 </div>
 </div>
@@ -372,7 +394,7 @@ Protected Attributes</h2></td></tr>
 <li><a class="el" href="Array_8h_source.html">Array.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

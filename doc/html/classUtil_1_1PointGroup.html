@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: PointGroup Class Reference</title>
+<title>Simpatico: Util::PointGroup Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -50,7 +50,7 @@
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#friends">Friends</a>  </div>
   <div class="headertitle">
-<h1>PointGroup Class Reference<div class="ingroups"><a class="el" href="group__Crystal__Module.html">Crystal</a></div></h1>  </div>
+<h1>Util::PointGroup Class Reference<div class="ingroups"><a class="el" href="group__Crystal__Module.html">Crystal</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="Util::PointGroup" --><!-- doxytag: inherits="SymmetryGroup&lt; PointSymmetry &gt;" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -60,12 +60,12 @@
 </div>
 <p><code>#include &lt;<a class="el" href="PointGroup_8h_source.html">PointGroup.h</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for PointGroup:</div>
+Inheritance diagram for Util::PointGroup:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classUtil_1_1PointGroup.png" usemap="#PointGroup_map" alt=""/>
-  <map id="PointGroup_map" name="PointGroup_map">
-<area href="classUtil_1_1SymmetryGroup.html" alt="SymmetryGroup&lt; PointSymmetry &gt;" shape="rect" coords="0,0,209,24"/>
+  <img src="classUtil_1_1PointGroup.png" usemap="#Util::PointGroup_map" alt=""/>
+  <map id="Util::PointGroup_map" name="Util::PointGroup_map">
+<area href="classUtil_1_1SymmetryGroup.html" alt="Util::SymmetryGroup&lt; PointSymmetry &gt;" shape="rect" coords="0,0,232,24"/>
 </map>
  </div></div>
 
@@ -74,20 +74,22 @@ Inheritance diagram for PointGroup:</div>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;int N&gt; </td></tr>
-<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1PointGroup.html#ad1162ba473af0a6f90a0118820eeb295">makeStar</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;root, <a class="el" href="classUtil_1_1FSArray.html">FSArray</a>&lt; <a class="el" href="classUtil_1_1IntVector.html">IntVector</a>, N &gt; &amp;star)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a set of reciprocal vectors that are related by symmetry.  <a href="#ad1162ba473af0a6f90a0118820eeb295"></a><br/></td></tr>
+<tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1PointGroup.html#acbf787fd55ab2dce6f5d2fbaf28c5e3f">makeStar</a> (const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;root, <a class="el" href="classUtil_1_1FSArray.html">FSArray</a>&lt; <a class="el" href="classUtil_1_1IntVector.html">IntVector</a>, N &gt; &amp;star)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a set of reciprocal vectors that are related by symmetry.  <a href="#acbf787fd55ab2dce6f5d2fbaf28c5e3f"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="friends"></a>
 Friends</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1PointGroup.html#a11ec9d2135b5e69119ffa3b8c16cda1f">operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="classUtil_1_1PointGroup.html">PointGroup</a> &amp;A)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output stream inserter operator writing a <a class="el" href="classUtil_1_1PointGroup.html" title="Group of crystal symmetries with no translations.">PointGroup</a> to stream.  <a href="#a11ec9d2135b5e69119ffa3b8c16cda1f"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="ad1162ba473af0a6f90a0118820eeb295"></a><!-- doxytag: member="Util::PointGroup::makeStar" ref="ad1162ba473af0a6f90a0118820eeb295" args="(const IntVector &amp;root, FSArray&lt; IntVector, N &gt; &amp;star)" -->
+<a class="anchor" id="acbf787fd55ab2dce6f5d2fbaf28c5e3f"></a><!-- doxytag: member="Util::PointGroup::makeStar" ref="acbf787fd55ab2dce6f5d2fbaf28c5e3f" args="(const IntVector &amp;root, FSArray&lt; IntVector, N &gt; &amp;star)" -->
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;int N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void makeStar </td>
+          <td class="memname">void Util::PointGroup::makeStar </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td>
           <td class="paramname"><em>root</em>, </td>
@@ -118,9 +120,9 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="PointGroup_8h_source.html#l00047">47</a> of file <a class="el" href="PointGroup_8h_source.html">PointGroup.h</a>.</p>
 
-<p>References <a class="el" href="FSArray_8h_source.html#l00258">FSArray&lt; Data, Capacity &gt;::append()</a>, <a class="el" href="FSArray_8h_source.html#l00200">FSArray&lt; Data, Capacity &gt;::capacity()</a>, <a class="el" href="FSArray_8h_source.html#l00271">FSArray&lt; Data, Capacity &gt;::clear()</a>, <a class="el" href="FSArray_8h_source.html#l00207">FSArray&lt; Data, Capacity &gt;::size()</a>, <a class="el" href="classUtil_1_1SymmetryGroup.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">SymmetryGroup&lt; PointSymmetry &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="FSArray_8h_source.html#l00258">Util::FSArray&lt; Data, Capacity &gt;::append()</a>, <a class="el" href="FSArray_8h_source.html#l00200">Util::FSArray&lt; Data, Capacity &gt;::capacity()</a>, <a class="el" href="FSArray_8h_source.html#l00271">Util::FSArray&lt; Data, Capacity &gt;::clear()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, <a class="el" href="classUtil_1_1SymmetryGroup.html#a715613decb8f5ce477562764146d1dd8">Util::SymmetryGroup&lt; PointSymmetry &gt;::size()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00035">StructureFactorPGrid::readParam()</a>, and <a class="el" href="StructureFactorGrid_8cpp_source.html#l00036">StructureFactorGrid::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="StructureFactorPGrid_8cpp_source.html#l00035">McMd::StructureFactorPGrid::readParam()</a>, and <a class="el" href="StructureFactorGrid_8cpp_source.html#l00036">McMd::StructureFactorGrid::readParam()</a>.</p>
 
 </div>
 </div>
@@ -160,7 +162,7 @@ Friends</h2></td></tr>
 <li><a class="el" href="PointGroup_8h_source.html">PointGroup.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:58 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

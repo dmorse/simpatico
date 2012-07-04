@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -83,15 +83,15 @@
 <a name="l00064"></a>00064 
 <a name="l00068"></a>00068       <span class="keyword">virtual</span> ~<a class="code" href="classMcMd_1_1Diagnostic.html" title="Abstract base for periodic output and/or analysis actions.">Diagnostic</a>();
 <a name="l00069"></a>00069 
-<a name="l00081"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a43128fa8695ca9394ba69cd759d04b99">00081</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> setup()
+<a name="l00081"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a93c5a174f073b2587a484999ca550829">00081</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> setup()
 <a name="l00082"></a>00082       {}
 <a name="l00083"></a>00083 
 <a name="l00087"></a>00087       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00088"></a>00088       <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00088"></a>00088       <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00089"></a>00089 
 <a name="l00099"></a>00099       <span class="keyword">virtual</span> <span class="keywordtype">void</span> sample(<span class="keywordtype">long</span> iStep) = 0;
 <a name="l00100"></a>00100 
-<a name="l00106"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a209e4a470fcdeb3d5b87da3dd6960def">00106</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> output()
+<a name="l00106"></a><a class="code" href="classMcMd_1_1Diagnostic.html#ac5481c8016af4c70d19d59905261c0bf">00106</a>       <span class="keyword">virtual</span> <span class="keywordtype">void</span> output()
 <a name="l00107"></a>00107       {}
 <a name="l00108"></a>00108 
 <a name="l00114"></a>00114       <span class="keyword">virtual</span> <span class="keywordtype">void</span> save(<a class="code" href="classUtil_1_1BinaryFileOArchive.html" title="Saving archive for binary ostream.">Serializable::OArchiveType</a>&amp; ar);
@@ -104,9 +104,9 @@
 <a name="l00134"></a>00134 
 <a name="l00135"></a>00135       <span class="comment">// Static members</span>
 <a name="l00136"></a>00136 
-<a name="l00140"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5">00140</a>       <span class="keyword">static</span> <span class="keywordtype">long</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a124343c75def66517309bad572d5adc5" title="The interval for a Diagnostic must be a multiple of baseInterval.">baseInterval</a>;
+<a name="l00140"></a><a class="code" href="classMcMd_1_1Diagnostic.html#aef06aaaf90f35aa625d668dd83cb4416">00140</a>       <span class="keyword">static</span> <span class="keywordtype">long</span> <a class="code" href="classMcMd_1_1Diagnostic.html#aef06aaaf90f35aa625d668dd83cb4416" title="The interval for a Diagnostic must be a multiple of baseInterval.">baseInterval</a>;
 <a name="l00141"></a>00141 
-<a name="l00145"></a>00145       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a608e10d093425c9228f10ed3c4994598" title="Guarantee initialization of all static class members in Util namespace.">initStatic</a>();
+<a name="l00145"></a>00145       <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#ae378e26a0d525f0cdeb424f208724608" title="Guarantee initialization of all static class members in Util namespace.">initStatic</a>();
 <a name="l00146"></a>00146 
 <a name="l00147"></a>00147    <span class="keyword">protected</span>:
 <a name="l00148"></a>00148 
@@ -137,25 +137,25 @@
 <a name="l00204"></a>00204    <span class="comment">/*</span>
 <a name="l00205"></a>00205 <span class="comment">   * Return interval value.</span>
 <a name="l00206"></a>00206 <span class="comment">   */</span>
-<a name="l00207"></a><a class="code" href="classMcMd_1_1Diagnostic.html#afe5b7de87b935531edcd3d15fbd92166">00207</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Diagnostic.html#afe5b7de87b935531edcd3d15fbd92166" title="Get interval value.">Diagnostic::interval</a>()<span class="keyword"> const</span>
+<a name="l00207"></a><a class="code" href="classMcMd_1_1Diagnostic.html#ad399e6c8cf5acab10360278dc964b4f4">00207</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classMcMd_1_1Diagnostic.html#ad399e6c8cf5acab10360278dc964b4f4" title="Get interval value.">Diagnostic::interval</a>()<span class="keyword"> const</span>
 <a name="l00208"></a>00208 <span class="keyword">   </span>{  <span class="keywordflow">return</span> interval_; }
 <a name="l00209"></a>00209 
 <a name="l00210"></a>00210    <span class="comment">/*</span>
 <a name="l00211"></a>00211 <span class="comment">   * Return true iff the counter parameter is a multiple of the interval.</span>
 <a name="l00212"></a>00212 <span class="comment">   */</span>
-<a name="l00213"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a56d6fc996d1e17d408288f86b6d9b4e7">00213</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a56d6fc996d1e17d408288f86b6d9b4e7" title="Return true iff counter is a multiple of the interval.">Diagnostic::isAtInterval</a>(<span class="keywordtype">long</span> counter)<span class="keyword"> const</span>
+<a name="l00213"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a6f9a95c770f5afc1a1efc65df7b9bea2">00213</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a6f9a95c770f5afc1a1efc65df7b9bea2" title="Return true iff counter is a multiple of the interval.">Diagnostic::isAtInterval</a>(<span class="keywordtype">long</span> counter)<span class="keyword"> const</span>
 <a name="l00214"></a>00214 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (counter%interval_ == 0); }
 <a name="l00215"></a>00215 
 <a name="l00216"></a>00216    <span class="comment">/*</span>
 <a name="l00217"></a>00217 <span class="comment">   * Get the outputFileName string.</span>
 <a name="l00218"></a>00218 <span class="comment">   */</span>
-<a name="l00219"></a><a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5">00219</a>    <span class="keyword">inline</span> <span class="keyword">const</span> std::string&amp; <a class="code" href="classMcMd_1_1Diagnostic.html#aa2f9962afe9282aa2cb84a50068c9be5" title="Return outputFileName string.">Diagnostic::outputFileName</a>()<span class="keyword"> const</span>
+<a name="l00219"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37">00219</a>    <span class="keyword">inline</span> <span class="keyword">const</span> std::string&amp; <a class="code" href="classMcMd_1_1Diagnostic.html#a3212bee85a045831f3d475a2212bfe37" title="Return outputFileName string.">Diagnostic::outputFileName</a>()<span class="keyword"> const</span>
 <a name="l00220"></a>00220 <span class="keyword">   </span>{  <span class="keywordflow">return</span> outputFileName_; }
 <a name="l00221"></a>00221 
 <a name="l00222"></a>00222    <span class="comment">// Method template</span>
 <a name="l00223"></a>00223 
 <a name="l00227"></a>00227    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00228"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a6765e839ab267e4959384e35a4112451">00228</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a6765e839ab267e4959384e35a4112451" title="Serialize to/from an archive.">Diagnostic::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00228"></a><a class="code" href="classMcMd_1_1Diagnostic.html#a6056717b367040d8605f67794a7e2ebc">00228</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1Diagnostic.html#a6056717b367040d8605f67794a7e2ebc" title="Serialize to/from an archive.">Diagnostic::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00229"></a>00229    {}
 <a name="l00230"></a>00230 
 <a name="l00231"></a>00231 
@@ -163,7 +163,7 @@
 <a name="l00233"></a>00233 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

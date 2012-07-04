@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -107,7 +107,7 @@
 <a name="l00158"></a>00158       <span class="keywordtype">void</span> readRestart(<span class="keyword">const</span> std::string&amp; filename);
 <a name="l00159"></a>00159 
 <a name="l00166"></a>00166       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00167"></a>00167       <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#a2518d806d3fe56fcc4f71eb7b8e35df9" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00167"></a>00167       <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#af9a860e1bc8eea0959fd8c3f4f60b86c" title="Load a std::string from a BinaryFileIArchive.">serialize</a>(Archive&amp; ar, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00168"></a>00168 
 <a name="l00172"></a>00172       <a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; system();
 <a name="l00173"></a>00173 
@@ -142,19 +142,19 @@
 <a name="l00220"></a>00220    <span class="comment">/* </span>
 <a name="l00221"></a>00221 <span class="comment">   * Get the McSystem.</span>
 <a name="l00222"></a>00222 <span class="comment">   */</span>
-<a name="l00223"></a><a class="code" href="classMcMd_1_1McSimulation.html#a332d034adbe18b9e8dc187ada84b5b29">00223</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; <a class="code" href="classMcMd_1_1McSimulation.html#a332d034adbe18b9e8dc187ada84b5b29" title="Get the McSystem by reference.">McSimulation::system</a>()
+<a name="l00223"></a><a class="code" href="classMcMd_1_1McSimulation.html#a5660a84f876baadc941c26786d8b16b4">00223</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; <a class="code" href="classMcMd_1_1McSimulation.html#a5660a84f876baadc941c26786d8b16b4" title="Get the McSystem by reference.">McSimulation::system</a>()
 <a name="l00224"></a>00224    { <span class="keywordflow">return</span> system_; }
 <a name="l00225"></a>00225 
 <a name="l00226"></a>00226    <span class="comment">/* </span>
 <a name="l00227"></a>00227 <span class="comment">   * Get a const ref to the McSystem.</span>
 <a name="l00228"></a>00228 <span class="comment">   */</span>
-<a name="l00229"></a><a class="code" href="classMcMd_1_1McSimulation.html#aeb745afd02b0f0ecd6b47397e5fc5927">00229</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; <a class="code" href="classMcMd_1_1McSimulation.html#a332d034adbe18b9e8dc187ada84b5b29" title="Get the McSystem by reference.">McSimulation::system</a>()<span class="keyword"> const</span>
+<a name="l00229"></a><a class="code" href="classMcMd_1_1McSimulation.html#a357c4f10cde4d73667703eca6ea453d0">00229</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classMcMd_1_1McSystem.html" title="A System for use in a Markov chain Monte Carlo simulation.">McSystem</a>&amp; <a class="code" href="classMcMd_1_1McSimulation.html#a5660a84f876baadc941c26786d8b16b4" title="Get the McSystem by reference.">McSimulation::system</a>()<span class="keyword"> const</span>
 <a name="l00230"></a>00230 <span class="keyword">   </span>{ <span class="keywordflow">return</span> system_; }
 <a name="l00231"></a>00231 
 <a name="l00232"></a>00232    <span class="comment">/* </span>
 <a name="l00233"></a>00233 <span class="comment">   * Get the McMoveManager (protected).</span>
 <a name="l00234"></a>00234 <span class="comment">   */</span>
-<a name="l00235"></a><a class="code" href="classMcMd_1_1McSimulation.html#a011337f3914761184d82d072c07359e6">00235</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1McMoveManager.html" title="Manager for a set of McMove objects.">McMoveManager</a>&amp; <a class="code" href="classMcMd_1_1McSimulation.html#a011337f3914761184d82d072c07359e6" title="Get the McMoveManager by reference.">McSimulation::mcMoveManager</a>()
+<a name="l00235"></a><a class="code" href="classMcMd_1_1McSimulation.html#ad896cf0290f903dd3a02afb7543fffd2">00235</a>    <span class="keyword">inline</span> <a class="code" href="classMcMd_1_1McMoveManager.html" title="Manager for a set of McMove objects.">McMoveManager</a>&amp; <a class="code" href="classMcMd_1_1McSimulation.html#ad896cf0290f903dd3a02afb7543fffd2" title="Get the McMoveManager by reference.">McSimulation::mcMoveManager</a>()
 <a name="l00236"></a>00236    {
 <a name="l00237"></a>00237       assert(mcMoveManagerPtr_);  
 <a name="l00238"></a>00238       <span class="keywordflow">return</span> *mcMoveManagerPtr_; 
@@ -164,7 +164,7 @@
 <a name="l00242"></a>00242 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, Jian Qin and David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, Jian Qin and David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -75,8 +75,8 @@
 <a name="l00023"></a>00023    <span class="comment">/* </span>
 <a name="l00024"></a>00024 <span class="comment">   * Constructor.</span>
 <a name="l00025"></a>00025 <span class="comment">   */</span>
-<a name="l00026"></a>00026    <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a7a302fab12d6e6b104269250a93b3e46" title="Constructor.">CfbRebridgeBase::CfbRebridgeBase</a>(McSystem&amp; system) : 
-<a name="l00027"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a7a302fab12d6e6b104269250a93b3e46">00027</a>       <a class="code" href="classMcMd_1_1CfbEndBase.html" title="Base class for configuration bias end regrowth moves.">CfbEndBase</a>(system),
+<a name="l00026"></a>00026    <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#aaa9889ee705107e0c3b82ae67f61b3d9" title="Constructor.">CfbRebridgeBase::CfbRebridgeBase</a>(McSystem&amp; system) : 
+<a name="l00027"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#aaa9889ee705107e0c3b82ae67f61b3d9">00027</a>       <a class="code" href="classMcMd_1_1CfbEndBase.html" title="Base class for configuration bias end regrowth moves.">CfbEndBase</a>(system),
 <a name="l00028"></a>00028       length21_(1.0),
 <a name="l00029"></a>00029       length10_(1.0),
 <a name="l00030"></a>00030       kappa10_(0.0)
@@ -88,14 +88,14 @@
 <a name="l00036"></a>00036    <span class="comment">/* </span>
 <a name="l00037"></a>00037 <span class="comment">   * Destructor.</span>
 <a name="l00038"></a>00038 <span class="comment">   */</span>
-<a name="l00039"></a>00039    <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a5bab67c28089f6497ea078b5f0522f90" title="Destructor.">CfbRebridgeBase::~CfbRebridgeBase</a>() 
-<a name="l00040"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a5bab67c28089f6497ea078b5f0522f90">00040</a>    {} 
+<a name="l00039"></a>00039    <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a86917008cf5e136e18fe0a94e673b034" title="Destructor.">CfbRebridgeBase::~CfbRebridgeBase</a>() 
+<a name="l00040"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a86917008cf5e136e18fe0a94e673b034">00040</a>    {} 
 <a name="l00041"></a>00041    
 <a name="l00042"></a>00042    <span class="comment">/* </span>
 <a name="l00043"></a>00043 <span class="comment">   * </span>
 <a name="l00044"></a>00044 <span class="comment">   */</span>
-<a name="l00045"></a>00045    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#ab5421d3c9175985c9acbf723e5392075" title="Read species type, nTrial, and parameters needed to evaluate the orientation bias.">CfbRebridgeBase::readParam</a>(std::istream&amp; in) 
-<a name="l00046"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#ab5421d3c9175985c9acbf723e5392075">00046</a>    {
+<a name="l00045"></a>00045    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a8e87f778ba49f26898825f5cfdfaa99e" title="Read species type, nTrial, and parameters needed to evaluate the orientation bias.">CfbRebridgeBase::readParam</a>(std::istream&amp; in) 
+<a name="l00046"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a8e87f778ba49f26898825f5cfdfaa99e">00046</a>    {
 <a name="l00047"></a>00047       <span class="comment">// Number of trial configuration bias attempts.</span>
 <a name="l00048"></a>00048       read&lt;int&gt;(in, <span class="stringliteral">&quot;nTrial&quot;</span>, nTrial_);
 <a name="l00049"></a>00049       <span class="keywordflow">if</span> (nTrial_ &lt;=0 || nTrial_ &gt; MaxTrial_) {
@@ -111,8 +111,8 @@
 <a name="l00059"></a>00059    <span class="comment">/* </span>
 <a name="l00060"></a>00060 <span class="comment">   * Initialize tables for spring constants and normalizations.</span>
 <a name="l00061"></a>00061 <span class="comment">   */</span>
-<a name="l00062"></a>00062    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a4fc01d736fe50cf5b977f755b675f11d" title="Initialize the arrays for preferential angle, effective spring constant and normalization factor...">CfbRebridgeBase::setup</a>()
-<a name="l00063"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a4fc01d736fe50cf5b977f755b675f11d">00063</a>    {
+<a name="l00062"></a>00062    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a920f56272701e2d4c7c69a31b43f3391" title="Initialize the arrays for preferential angle, effective spring constant and normalization factor...">CfbRebridgeBase::setup</a>()
+<a name="l00063"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a920f56272701e2d4c7c69a31b43f3391">00063</a>    {
 <a name="l00064"></a>00064       <span class="keywordtype">double</span> l20;
 <a name="l00065"></a>00065       <span class="keywordtype">double</span> lmin, lmax, del, pi;
 <a name="l00066"></a>00066       <span class="keywordtype">int</span>    i;
@@ -170,14 +170,14 @@
 <a name="l00118"></a>00118 <span class="comment">   * position if necessary. This is similar to the implementation of</span>
 <a name="l00119"></a>00119 <span class="comment">   * CfbEndBase::deleteEndAtom.</span>
 <a name="l00120"></a>00120 <span class="comment">   */</span>
-<a name="l00121"></a>00121    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a4d6c8d825ee85158a151cf217500c094" title="Configuration bias algorithm for deleting a particle between two monomers and compute the correspondi...">CfbRebridgeBase::deleteMiddleAtom</a>(
-<a name="l00122"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a4d6c8d825ee85158a151cf217500c094">00122</a>                 <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* partPtr, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* prevPtr, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* nextPtr,
+<a name="l00121"></a>00121    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a85091b76e04676ebb679004f66adc9b7" title="Configuration bias algorithm for deleting a particle between two monomers and compute the correspondi...">CfbRebridgeBase::deleteMiddleAtom</a>(
+<a name="l00122"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a85091b76e04676ebb679004f66adc9b7">00122</a>                 <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* partPtr, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* prevPtr, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* nextPtr,
 <a name="l00123"></a>00123                 <span class="keywordtype">int</span> prevBType, <span class="keywordtype">int</span> nextBType,
 <a name="l00124"></a>00124                 <span class="keywordtype">double</span> &amp;rosenbluth, <span class="keywordtype">double</span> &amp;energy)
 <a name="l00125"></a>00125    {
-<a name="l00126"></a>00126       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  prevPos = prevPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00127"></a>00127       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  nextPos = nextPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00128"></a>00128       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  partPos = partPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00126"></a>00126       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  prevPos = prevPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00127"></a>00127       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  nextPos = nextPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00128"></a>00128       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  partPos = partPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00129"></a>00129       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  bondVec, trialPos, u_20, u_21;
 <a name="l00130"></a>00130       <span class="keywordtype">double</span>  trialEnergy, bondEnergy, wExt, length, lengthSq;
 <a name="l00131"></a>00131       <span class="keywordtype">double</span>  l_20, l_21, l_10, bias;
@@ -240,7 +240,7 @@
 <a name="l00188"></a>00188          <span class="keywordflow">while</span> (!ready) {
 <a name="l00189"></a>00189             random().unitVector(bondVec);
 <a name="l00190"></a>00190             bondVec *= length;
-<a name="l00191"></a>00191             trialPos.<a class="code" href="classUtil_1_1Vector.html#aebaf961fa5120510548d94987edbcc0f" title="Add vectors v1 and v2.">add</a>(prevPos, bondVec);
+<a name="l00191"></a>00191             trialPos.<a class="code" href="classUtil_1_1Vector.html#a5cbed49c2710da766a8fa04ecab61ad0" title="Add vectors v1 and v2.">add</a>(prevPos, bondVec);
 <a name="l00192"></a>00192             boundary().shift(trialPos);
 <a name="l00193"></a>00193    
 <a name="l00194"></a>00194             lengthSq = boundary().distanceSq(trialPos, prevPos, u_21);
@@ -257,7 +257,7 @@
 <a name="l00205"></a>00205          <span class="comment">// Bond 1-0 potential energy</span>
 <a name="l00206"></a>00206          lengthSq   = boundary().distanceSq(trialPos, nextPos);
 <a name="l00207"></a>00207          bondEnergy = system().bondPotential().energy(lengthSq, nextBType);
-<a name="l00208"></a>00208          partPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = trialPos;
+<a name="l00208"></a>00208          partPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = trialPos;
 <a name="l00209"></a>00209 <span class="preprocessor">         #ifndef INTER_NOPAIR</span>
 <a name="l00210"></a>00210 <span class="preprocessor"></span>         trialEnergy = system().pairPotential().atomEnergy(*partPtr);
 <a name="l00211"></a>00211 <span class="preprocessor">         #else</span>
@@ -288,13 +288,13 @@
 <a name="l00236"></a>00236 <span class="comment">   * Configuration bias algorithm for adding the last particle of an interior</span>
 <a name="l00237"></a>00237 <span class="comment">   * bridge. </span>
 <a name="l00238"></a>00238 <span class="comment">   */</span>
-<a name="l00239"></a>00239    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#aa3363f3af7e0f57ed6ec89b35b8ab2db" title="Configuration bias algorithm for adding the last particle with special bias in favor of closing the b...">CfbRebridgeBase::addMiddleAtom</a>(
-<a name="l00240"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#aa3363f3af7e0f57ed6ec89b35b8ab2db">00240</a>                  <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* partPtr, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* prevPtr, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* nextPtr,
+<a name="l00239"></a>00239    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#abb794cc36c2d1a3148f63b97208484ab" title="Configuration bias algorithm for adding the last particle with special bias in favor of closing the b...">CfbRebridgeBase::addMiddleAtom</a>(
+<a name="l00240"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#abb794cc36c2d1a3148f63b97208484ab">00240</a>                  <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* partPtr, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* prevPtr, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* nextPtr,
 <a name="l00241"></a>00241                  <span class="keywordtype">int</span> prevBType, <span class="keywordtype">int</span> nextBType,
 <a name="l00242"></a>00242                  <span class="keywordtype">double</span> &amp;rosenbluth, <span class="keywordtype">double</span> &amp;energy)
 <a name="l00243"></a>00243    {
-<a name="l00244"></a>00244       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  prevPos = prevPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00245"></a>00245       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  nextPos = nextPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
+<a name="l00244"></a>00244       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  prevPos = prevPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00245"></a>00245       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  nextPos = nextPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
 <a name="l00246"></a>00246       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  u_20, u_21, bondVec;
 <a name="l00247"></a>00247       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>  trialPos[MaxTrial_];
 <a name="l00248"></a>00248       <span class="keywordtype">double</span>  trialEnergy[MaxTrial_], bondEnergy[MaxTrial_];
@@ -329,7 +329,7 @@
 <a name="l00277"></a>00277          <span class="keywordflow">while</span> (!ready) {
 <a name="l00278"></a>00278             random().unitVector(bondVec);
 <a name="l00279"></a>00279             bondVec *= length;
-<a name="l00280"></a>00280             trialPos[iTrial].<a class="code" href="classUtil_1_1Vector.html#aebaf961fa5120510548d94987edbcc0f" title="Add vectors v1 and v2.">add</a>(prevPos, bondVec);
+<a name="l00280"></a>00280             trialPos[iTrial].<a class="code" href="classUtil_1_1Vector.html#a5cbed49c2710da766a8fa04ecab61ad0" title="Add vectors v1 and v2.">add</a>(prevPos, bondVec);
 <a name="l00281"></a>00281             boundary().shift(trialPos[iTrial]);
 <a name="l00282"></a>00282    
 <a name="l00283"></a>00283             lengthSq = boundary().distanceSq(trialPos[iTrial], prevPos, u_21);
@@ -347,7 +347,7 @@
 <a name="l00295"></a>00295          lengthSq = boundary().distanceSq(trialPos[iTrial], nextPos);
 <a name="l00296"></a>00296          bondEnergy[iTrial] = 
 <a name="l00297"></a>00297             system().bondPotential().energy(lengthSq, nextBType);
-<a name="l00298"></a>00298          partPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = trialPos[iTrial];
+<a name="l00298"></a>00298          partPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = trialPos[iTrial];
 <a name="l00299"></a>00299 
 <a name="l00300"></a>00300 <span class="preprocessor">         #ifndef INTER_NOPAIR</span>
 <a name="l00301"></a>00301 <span class="preprocessor"></span>         trialEnergy[iTrial] = system().pairPotential().atomEnergy(*partPtr);
@@ -389,7 +389,7 @@
 <a name="l00337"></a>00337       energy += bondEnergy[iTrial];
 <a name="l00338"></a>00338       
 <a name="l00339"></a>00339       <span class="comment">// Copy trial position to newPos</span>
-<a name="l00340"></a>00340       partPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() = trialPos[iTrial];
+<a name="l00340"></a>00340       partPtr-&gt;<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() = trialPos[iTrial];
 <a name="l00341"></a>00341    
 <a name="l00342"></a>00342       <span class="comment">// update Rosenbluth weight and remove the orientation bias</span>
 <a name="l00343"></a>00343       rosenbluth = wExt * normConst / bias[iTrial];
@@ -399,8 +399,8 @@
 <a name="l00347"></a>00347    <span class="comment">/* </span>
 <a name="l00348"></a>00348 <span class="comment">   * Delete a consequtive sequence of atoms.</span>
 <a name="l00349"></a>00349 <span class="comment">   */</span>
-<a name="l00350"></a>00350    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a67245390ed4544e4f9eebe557663dc2f" title="Configuration bias algorithm for deleting a consequtive sequence of atoms.">CfbRebridgeBase::deleteSequence</a>(<span class="keywordtype">int</span> nActive, <span class="keywordtype">int</span> sign, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* endPtr,
-<a name="l00351"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a67245390ed4544e4f9eebe557663dc2f">00351</a>               <span class="keywordtype">int</span> *bonds, <span class="keywordtype">double</span> &amp;rosenbluth, <span class="keywordtype">double</span> &amp;energy)
+<a name="l00350"></a>00350    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#aeedb1526f46e216a03448f5e2a430a93" title="Configuration bias algorithm for deleting a consequtive sequence of atoms.">CfbRebridgeBase::deleteSequence</a>(<span class="keywordtype">int</span> nActive, <span class="keywordtype">int</span> sign, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* endPtr,
+<a name="l00351"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#aeedb1526f46e216a03448f5e2a430a93">00351</a>               <span class="keywordtype">int</span> *bonds, <span class="keywordtype">double</span> &amp;rosenbluth, <span class="keywordtype">double</span> &amp;energy)
 <a name="l00352"></a>00352    {
 <a name="l00353"></a>00353       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>   *thisPtr;
 <a name="l00354"></a>00354       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>   *prevPtr;
@@ -450,8 +450,8 @@
 <a name="l00398"></a>00398    <span class="comment">/* </span>
 <a name="l00399"></a>00399 <span class="comment">   * Add a consequtive sequence of atoms.</span>
 <a name="l00400"></a>00400 <span class="comment">   */</span>
-<a name="l00401"></a>00401    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a8d84713424d8fc577fe7780a45099b05" title="Configuration bias algorithm for adding a consequtive sequence of atoms.">CfbRebridgeBase::addSequence</a>(<span class="keywordtype">int</span> nActive, <span class="keywordtype">int</span> sign, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* beginPtr,
-<a name="l00402"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a8d84713424d8fc577fe7780a45099b05">00402</a>               <span class="keywordtype">int</span> *bonds, <span class="keywordtype">double</span> &amp;rosenbluth, <span class="keywordtype">double</span> &amp;energy)
+<a name="l00401"></a>00401    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a47d218704a9d71efec4fa9b6f9948066" title="Configuration bias algorithm for adding a consequtive sequence of atoms.">CfbRebridgeBase::addSequence</a>(<span class="keywordtype">int</span> nActive, <span class="keywordtype">int</span> sign, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>* beginPtr,
+<a name="l00402"></a><a class="code" href="classMcMd_1_1CfbRebridgeBase.html#a47d218704a9d71efec4fa9b6f9948066">00402</a>               <span class="keywordtype">int</span> *bonds, <span class="keywordtype">double</span> &amp;rosenbluth, <span class="keywordtype">double</span> &amp;energy)
 <a name="l00403"></a>00403    {
 <a name="l00404"></a>00404       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>   *thisPtr;
 <a name="l00405"></a>00405       <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>   *prevPtr;
@@ -587,7 +587,7 @@
 <a name="l00535"></a>00535 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

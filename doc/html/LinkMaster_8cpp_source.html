@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -56,7 +56,7 @@
 <a name="l00005"></a>00005 <span class="comment">/*</span>
 <a name="l00006"></a>00006 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00007"></a>00007 <span class="comment">*</span>
-<a name="l00008"></a>00008 <span class="comment">* Copyright 2010, Veronica Chappa and David Morse (morse@cems.umn.edu)</span>
+<a name="l00008"></a>00008 <span class="comment">* Copyright 2010 - 2012, Veronica Chappa and David Morse (morse012@umn.edu)</span>
 <a name="l00009"></a>00009 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00010"></a>00010 <span class="comment">*/</span>
 <a name="l00011"></a>00011 
@@ -72,13 +72,13 @@
 <a name="l00021"></a>00021    <span class="comment">/*</span>
 <a name="l00022"></a>00022 <span class="comment">   * Constructor.</span>
 <a name="l00023"></a>00023 <span class="comment">   */</span>
-<a name="l00024"></a>00024    <a class="code" href="classMcMd_1_1LinkMaster.html#aee7e8bf4e63d8625966ee281622eb039" title="Constructor.">LinkMaster::LinkMaster</a>()
-<a name="l00025"></a><a class="code" href="classMcMd_1_1LinkMaster.html#aee7e8bf4e63d8625966ee281622eb039">00025</a>     : linkCapacity_(0),
+<a name="l00024"></a>00024    <a class="code" href="classMcMd_1_1LinkMaster.html#aa0ddcc05096ae845fa88769a05dedf3a" title="Constructor.">LinkMaster::LinkMaster</a>()
+<a name="l00025"></a><a class="code" href="classMcMd_1_1LinkMaster.html#aa0ddcc05096ae845fa88769a05dedf3a">00025</a>     : linkCapacity_(0),
 <a name="l00026"></a>00026       atomCapacity_(0)
 <a name="l00027"></a>00027    {}
 <a name="l00028"></a>00028 
-<a name="l00032"></a>00032    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#ab5421d3c9175985c9acbf723e5392075" title="Read linkCapacity and allocate.">LinkMaster::readParam</a>(std::istream&amp; in)
-<a name="l00033"></a><a class="code" href="classMcMd_1_1LinkMaster.html#ab5421d3c9175985c9acbf723e5392075">00033</a>    {
+<a name="l00032"></a>00032    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a6d7bfb7557f5f55553f5f28eabcff003" title="Read linkCapacity and allocate.">LinkMaster::readParam</a>(std::istream&amp; in)
+<a name="l00033"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a6d7bfb7557f5f55553f5f28eabcff003">00033</a>    {
 <a name="l00034"></a>00034       readBegin(in, <span class="stringliteral">&quot;LinkMaster&quot;</span>);
 <a name="l00035"></a>00035       read&lt;int&gt;(in, <span class="stringliteral">&quot;linkCapacity&quot;</span>, linkCapacity_); 
 <a name="l00036"></a>00036       read&lt;int&gt;(in, <span class="stringliteral">&quot;atomCapacity&quot;</span>, atomCapacity_); 
@@ -87,21 +87,21 @@
 <a name="l00039"></a>00039       allocate();
 <a name="l00040"></a>00040    }
 <a name="l00041"></a>00041 
-<a name="l00045"></a>00045    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#ac818627ff5e13e79e7e7bcfccd7c6c48" title="Add a link betwen two specific Atoms.">LinkMaster::addLink</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom0, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom1, <span class="keywordtype">int</span> typeId)
-<a name="l00046"></a><a class="code" href="classMcMd_1_1LinkMaster.html#ac818627ff5e13e79e7e7bcfccd7c6c48">00046</a>    {
+<a name="l00045"></a>00045    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a042a6537ef0e57306f9e312d07fcf453" title="Add a link betwen two specific Atoms.">LinkMaster::addLink</a>(<a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom0, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom1, <span class="keywordtype">int</span> typeId)
+<a name="l00046"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a042a6537ef0e57306f9e312d07fcf453">00046</a>    {
 <a name="l00047"></a>00047       <a class="code" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>* linkPtr;
-<a name="l00048"></a>00048       <span class="keywordtype">int</span>   atom0Id = atom0.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
-<a name="l00049"></a>00049       <span class="keywordtype">int</span>   atom1Id = atom1.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00048"></a>00048       <span class="keywordtype">int</span>   atom0Id = atom0.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00049"></a>00049       <span class="keywordtype">int</span>   atom1Id = atom1.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00050"></a>00050 
 <a name="l00051"></a>00051       <span class="comment">// Check preconditions</span>
 <a name="l00052"></a>00052       <span class="keywordflow">if</span> (atom0Id &lt; 0 || atom0Id &gt;= atomCapacity_) {
-<a name="l00053"></a>00053          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Atom0Id       = &quot;</span> &lt;&lt; atom0Id &lt;&lt; std::endl;
-<a name="l00054"></a>00054          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
+<a name="l00053"></a>00053          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Atom0Id       = &quot;</span> &lt;&lt; atom0Id &lt;&lt; std::endl;
+<a name="l00054"></a>00054          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
 <a name="l00055"></a>00055          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atom0 id&quot;</span>);
 <a name="l00056"></a>00056       }
 <a name="l00057"></a>00057       <span class="keywordflow">if</span> (atom1Id &lt; 0 || atom1Id &gt;= atomCapacity_) {
-<a name="l00058"></a>00058          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Atom1Id       = &quot;</span> &lt;&lt; atom1Id &lt;&lt; std::endl;
-<a name="l00059"></a>00059          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
+<a name="l00058"></a>00058          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Atom1Id       = &quot;</span> &lt;&lt; atom1Id &lt;&lt; std::endl;
+<a name="l00059"></a>00059          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
 <a name="l00060"></a>00060          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atom1 id&quot;</span>);
 <a name="l00061"></a>00061       }
 <a name="l00062"></a>00062 
@@ -112,18 +112,18 @@
 <a name="l00067"></a>00067       <span class="comment">// Initialize the link, and add its address to linkPtrs_[atomId]</span>
 <a name="l00068"></a>00068       linkPtr-&gt;setAtoms(atom0,atom1);
 <a name="l00069"></a>00069       linkPtr-&gt;setTypeId(typeId);
-<a name="l00070"></a>00070       linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#aaba3086ff72f894fcafd8b74014592bd" title="Activate or deactivate the Link.">setIsActive</a>(<span class="keyword">true</span>);
+<a name="l00070"></a>00070       linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#ad0c7022e96fcbce81c087e2cbeec32dc" title="Activate or deactivate the Link.">setIsActive</a>(<span class="keyword">true</span>);
 <a name="l00071"></a>00071       atomLinkSets_[atom0Id].append(*linkPtr);
 <a name="l00072"></a>00072       atomLinkSets_[atom1Id].append(*linkPtr);
 <a name="l00073"></a>00073 
 <a name="l00074"></a>00074       <span class="comment">// Notify observers of addition of this Link.</span>
 <a name="l00075"></a>00075       <a class="code" href="classMcMd_1_1LinkAddEvent.html" title="Event signalling addition of Link to the LinkMaster.">LinkAddEvent</a> event(linkPtr);
-<a name="l00076"></a>00076       <a class="code" href="classUtil_1_1Notifier.html#ae5bd92cde9fe9871521a787b9d7f1b37" title="Notify the list of observers about an Event.">Notifier&lt;LinkAddEvent&gt;::notifyObservers</a>(event);
+<a name="l00076"></a>00076       <a class="code" href="classUtil_1_1Notifier.html#a789c7fe0ee38d5f6d5c675c4ded96c8c" title="Notify the list of observers about an Event.">Notifier&lt;LinkAddEvent&gt;::notifyObservers</a>(event);
 <a name="l00077"></a>00077    }
 <a name="l00078"></a>00078 
 <a name="l00079"></a>00079 
-<a name="l00083"></a>00083    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#abaea76b9780354ba3da3cc4d6e769543" title="Remove a Link.">LinkMaster::removeLink</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
-<a name="l00084"></a><a class="code" href="classMcMd_1_1LinkMaster.html#abaea76b9780354ba3da3cc4d6e769543">00084</a>    {
+<a name="l00083"></a>00083    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a8022436e664560a8b25df4f6d43f8753" title="Remove a Link.">LinkMaster::removeLink</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
+<a name="l00084"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a8022436e664560a8b25df4f6d43f8753">00084</a>    {
 <a name="l00085"></a>00085       <a class="code" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>* linkPtr = &amp;link(<span class="keywordtype">id</span>);
 <a name="l00086"></a>00086       <span class="keywordtype">int</span>  atom0Id;
 <a name="l00087"></a>00087       <span class="keywordtype">int</span>  atom1Id;
@@ -131,8 +131,8 @@
 <a name="l00089"></a>00089       <span class="keywordflow">if</span> (!link(<span class="keywordtype">id</span>).isActive()) {
 <a name="l00090"></a>00090         <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to remove a nonactive link&quot;</span>);
 <a name="l00091"></a>00091       }
-<a name="l00092"></a>00092       atom0Id = linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#a2b99ab5c23cb616c936a455df3d1e579" title="Get Atom0 connected to a Link.">atom0</a>().<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
-<a name="l00093"></a>00093       atom1Id = linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#a5a413723b2f1bfa14cca504f6c650b23" title="Get Atom1 connected to a Link.">atom1</a>().<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00092"></a>00092       atom0Id = linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#a14d15f5a16b26ce7bc96893f078a60a1" title="Get Atom0 connected to a Link.">atom0</a>().<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00093"></a>00093       atom1Id = linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#af638a0ca7c5ec545d7af4ea976d61e18" title="Get Atom1 connected to a Link.">atom1</a>().<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00094"></a>00094       <span class="comment">// Remove link from atom0 and atom1 link sets</span>
 <a name="l00095"></a>00095       <span class="keywordflow">if</span> (!atomLinkSets_[atom0Id].isElement(*linkPtr)) {
 <a name="l00096"></a>00096         <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Link is not in atomLinkSets of atom0&quot;</span>);
@@ -146,7 +146,7 @@
 <a name="l00104"></a>00104       <span class="comment">// Notify observers of removal of this Link.</span>
 <a name="l00105"></a>00105       <span class="comment">// Notify before clearing Link so atomPtrs and typeId are available.</span>
 <a name="l00106"></a>00106       <a class="code" href="structMcMd_1_1LinkRemoveEvent.html" title="Event signalling removal of a Link from the LinkMaster.">LinkRemoveEvent</a> event(linkPtr);
-<a name="l00107"></a>00107       <a class="code" href="classUtil_1_1Notifier.html#ae5bd92cde9fe9871521a787b9d7f1b37" title="Notify the list of observers about an Event.">Notifier&lt;LinkRemoveEvent&gt;::notifyObservers</a>(event);
+<a name="l00107"></a>00107       <a class="code" href="classUtil_1_1Notifier.html#a789c7fe0ee38d5f6d5c675c4ded96c8c" title="Notify the list of observers about an Event.">Notifier&lt;LinkRemoveEvent&gt;::notifyObservers</a>(event);
 <a name="l00108"></a>00108 
 <a name="l00109"></a>00109       <span class="comment">// Clear the link: nullify atomPtrs, set typeId = -1, isActive = false</span>
 <a name="l00110"></a>00110       linkPtr-&gt;clear();
@@ -160,25 +160,25 @@
 <a name="l00118"></a>00118    <span class="comment">/*</span>
 <a name="l00119"></a>00119 <span class="comment">   * Modify the atoms attached to a link</span>
 <a name="l00120"></a>00120 <span class="comment">   */</span>
-<a name="l00121"></a>00121    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a4f85c4d6275b338c8231a660874ff742" title="Modify the atoms attached to a link.">LinkMaster::reSetAtoms</a>(<a class="code" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>&amp; link, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom0, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom1)
-<a name="l00122"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a4f85c4d6275b338c8231a660874ff742">00122</a>    {
-<a name="l00123"></a>00123       <span class="keywordtype">int</span>   atom0Id = atom0.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
-<a name="l00124"></a>00124       <span class="keywordtype">int</span>   atom1Id = atom1.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
-<a name="l00125"></a>00125       <span class="keywordtype">int</span>   oldAtom0Id = link.<a class="code" href="classMcMd_1_1Link.html#a2b99ab5c23cb616c936a455df3d1e579" title="Get Atom0 connected to a Link.">atom0</a>().<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
-<a name="l00126"></a>00126       <span class="keywordtype">int</span>   oldAtom1Id = link.<a class="code" href="classMcMd_1_1Link.html#a5a413723b2f1bfa14cca504f6c650b23" title="Get Atom1 connected to a Link.">atom1</a>().<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00121"></a>00121    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a602433329c072a988595bfdc0dca8fe9" title="Modify the atoms attached to a link.">LinkMaster::reSetAtoms</a>(<a class="code" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>&amp; link, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom0, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom1)
+<a name="l00122"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a602433329c072a988595bfdc0dca8fe9">00122</a>    {
+<a name="l00123"></a>00123       <span class="keywordtype">int</span>   atom0Id = atom0.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00124"></a>00124       <span class="keywordtype">int</span>   atom1Id = atom1.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00125"></a>00125       <span class="keywordtype">int</span>   oldAtom0Id = link.<a class="code" href="classMcMd_1_1Link.html#a14d15f5a16b26ce7bc96893f078a60a1" title="Get Atom0 connected to a Link.">atom0</a>().<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00126"></a>00126       <span class="keywordtype">int</span>   oldAtom1Id = link.<a class="code" href="classMcMd_1_1Link.html#af638a0ca7c5ec545d7af4ea976d61e18" title="Get Atom1 connected to a Link.">atom1</a>().<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00127"></a>00127      
 <a name="l00128"></a>00128       <span class="comment">// Check preconditions    </span>
-<a name="l00129"></a>00129       <span class="keywordflow">if</span> (!link.<a class="code" href="classMcMd_1_1Link.html#a22761609071413dcce0632885c820e87" title="Is this Link active?">isActive</a>()) {
+<a name="l00129"></a>00129       <span class="keywordflow">if</span> (!link.<a class="code" href="classMcMd_1_1Link.html#af53a80bb55901d510b3d8ebe6e9a0aeb" title="Is this Link active?">isActive</a>()) {
 <a name="l00130"></a>00130         <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to reset atoms for a nonactive link&quot;</span>);
 <a name="l00131"></a>00131       } 
 <a name="l00132"></a>00132       <span class="keywordflow">if</span> (atom0Id &lt; 0 || atom0Id &gt;= atomCapacity_) {
-<a name="l00133"></a>00133          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Atom0Id       = &quot;</span> &lt;&lt; atom0Id &lt;&lt; std::endl;
-<a name="l00134"></a>00134          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
+<a name="l00133"></a>00133          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Atom0Id       = &quot;</span> &lt;&lt; atom0Id &lt;&lt; std::endl;
+<a name="l00134"></a>00134          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
 <a name="l00135"></a>00135          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atom0 id&quot;</span>);
 <a name="l00136"></a>00136       }
 <a name="l00137"></a>00137       <span class="keywordflow">if</span> (atom1Id &lt; 0 || atom1Id &gt;= atomCapacity_) {
-<a name="l00138"></a>00138          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Atom1Id       = &quot;</span> &lt;&lt; atom1Id &lt;&lt; std::endl;
-<a name="l00139"></a>00139          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
+<a name="l00138"></a>00138          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Atom1Id       = &quot;</span> &lt;&lt; atom1Id &lt;&lt; std::endl;
+<a name="l00139"></a>00139          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
 <a name="l00140"></a>00140          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atom1 id&quot;</span>);
 <a name="l00141"></a>00141       }
 <a name="l00142"></a>00142 
@@ -198,32 +198,32 @@
 <a name="l00156"></a>00156       atomLinkSets_[atom1Id].append(link);
 <a name="l00157"></a>00157       
 <a name="l00158"></a>00158       <a class="code" href="classMcMd_1_1LinkResetEvent.html" title="Event signalling reset of Link to the LinkMaster.">LinkResetEvent</a> event(&amp;link);
-<a name="l00159"></a>00159       <a class="code" href="classUtil_1_1Notifier.html#ae5bd92cde9fe9871521a787b9d7f1b37" title="Notify the list of observers about an Event.">Notifier&lt;LinkResetEvent&gt;::notifyObservers</a>(event);      
+<a name="l00159"></a>00159       <a class="code" href="classUtil_1_1Notifier.html#a789c7fe0ee38d5f6d5c675c4ded96c8c" title="Notify the list of observers about an Event.">Notifier&lt;LinkResetEvent&gt;::notifyObservers</a>(event);      
 <a name="l00160"></a>00160  
 <a name="l00161"></a>00161    }
 <a name="l00162"></a>00162    
 <a name="l00163"></a>00163   <span class="comment">/*</span>
 <a name="l00164"></a>00164 <span class="comment">   * Modify one atom attached to a link</span>
 <a name="l00165"></a>00165 <span class="comment">   */</span>
-<a name="l00166"></a>00166    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a184e5625aa5503835d210ac6b7714896" title="Modify one atom attached to a link.">LinkMaster::reSetAtom</a>(<a class="code" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>&amp; link, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom, <span class="keywordtype">int</span> endId)
-<a name="l00167"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a184e5625aa5503835d210ac6b7714896">00167</a>    {     
-<a name="l00168"></a>00168       <span class="keywordtype">int</span>   atomId = atom.<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00166"></a>00166    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a380c5eacace6543ee327ec3cbdebed08" title="Modify one atom attached to a link.">LinkMaster::reSetAtom</a>(<a class="code" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>&amp; link, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom, <span class="keywordtype">int</span> endId)
+<a name="l00167"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a380c5eacace6543ee327ec3cbdebed08">00167</a>    {     
+<a name="l00168"></a>00168       <span class="keywordtype">int</span>   atomId = atom.<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00169"></a>00169       <span class="keywordtype">int</span>   oldAtomId;
 <a name="l00170"></a>00170       
 <a name="l00171"></a>00171       <span class="keywordflow">if</span> (endId==0){
-<a name="l00172"></a>00172         oldAtomId = link.<a class="code" href="classMcMd_1_1Link.html#a2b99ab5c23cb616c936a455df3d1e579" title="Get Atom0 connected to a Link.">atom0</a>().<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00172"></a>00172         oldAtomId = link.<a class="code" href="classMcMd_1_1Link.html#a14d15f5a16b26ce7bc96893f078a60a1" title="Get Atom0 connected to a Link.">atom0</a>().<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00173"></a>00173       }
 <a name="l00174"></a>00174       <span class="keywordflow">else</span> {
-<a name="l00175"></a>00175         oldAtomId = link.<a class="code" href="classMcMd_1_1Link.html#a5a413723b2f1bfa14cca504f6c650b23" title="Get Atom1 connected to a Link.">atom1</a>().<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>();
+<a name="l00175"></a>00175         oldAtomId = link.<a class="code" href="classMcMd_1_1Link.html#af638a0ca7c5ec545d7af4ea976d61e18" title="Get Atom1 connected to a Link.">atom1</a>().<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>();
 <a name="l00176"></a>00176       }
 <a name="l00177"></a>00177       
 <a name="l00178"></a>00178       <span class="comment">// Check preconditions    </span>
-<a name="l00179"></a>00179       <span class="keywordflow">if</span> (!link.<a class="code" href="classMcMd_1_1Link.html#a22761609071413dcce0632885c820e87" title="Is this Link active?">isActive</a>()) {
+<a name="l00179"></a>00179       <span class="keywordflow">if</span> (!link.<a class="code" href="classMcMd_1_1Link.html#af53a80bb55901d510b3d8ebe6e9a0aeb" title="Is this Link active?">isActive</a>()) {
 <a name="l00180"></a>00180         <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to reset an atom for a nonactive link&quot;</span>);
 <a name="l00181"></a>00181       } 
 <a name="l00182"></a>00182       <span class="keywordflow">if</span> (atomId &lt; 0 || atomId &gt;= atomCapacity_) {
-<a name="l00183"></a>00183          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;AtomId       = &quot;</span> &lt;&lt; atomId &lt;&lt; std::endl;
-<a name="l00184"></a>00184          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
+<a name="l00183"></a>00183          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;AtomId       = &quot;</span> &lt;&lt; atomId &lt;&lt; std::endl;
+<a name="l00184"></a>00184          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;atomCapacity = &quot;</span> &lt;&lt; atomCapacity_ &lt;&lt; std::endl;
 <a name="l00185"></a>00185          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Invalid atom id&quot;</span>);
 <a name="l00186"></a>00186       }
 <a name="l00187"></a>00187  
@@ -235,28 +235,28 @@
 <a name="l00193"></a>00193 
 <a name="l00194"></a>00194       <span class="comment">// Change the atom      </span>
 <a name="l00195"></a>00195       <span class="keywordflow">if</span> (endId==0){      
-<a name="l00196"></a>00196         link.setAtoms(atom,link.<a class="code" href="classMcMd_1_1Link.html#a5a413723b2f1bfa14cca504f6c650b23" title="Get Atom1 connected to a Link.">atom1</a>());
+<a name="l00196"></a>00196         link.setAtoms(atom,link.<a class="code" href="classMcMd_1_1Link.html#af638a0ca7c5ec545d7af4ea976d61e18" title="Get Atom1 connected to a Link.">atom1</a>());
 <a name="l00197"></a>00197       }
 <a name="l00198"></a>00198       <span class="keywordflow">else</span> {
-<a name="l00199"></a>00199    link.setAtoms(link.<a class="code" href="classMcMd_1_1Link.html#a2b99ab5c23cb616c936a455df3d1e579" title="Get Atom0 connected to a Link.">atom0</a>(),atom);
+<a name="l00199"></a>00199    link.setAtoms(link.<a class="code" href="classMcMd_1_1Link.html#a14d15f5a16b26ce7bc96893f078a60a1" title="Get Atom0 connected to a Link.">atom0</a>(),atom);
 <a name="l00200"></a>00200       }
 <a name="l00201"></a>00201       atomLinkSets_[atomId].append(link);
 <a name="l00202"></a>00202       
 <a name="l00203"></a>00203       <a class="code" href="structMcMd_1_1ReSetAtomEvent.html" title="Event signalling the reset of an atom from the LinkMaster.">ReSetAtomEvent</a> event(&amp;link, endId);
-<a name="l00204"></a>00204       <a class="code" href="classUtil_1_1Notifier.html#ae5bd92cde9fe9871521a787b9d7f1b37" title="Notify the list of observers about an Event.">Notifier&lt;ReSetAtomEvent&gt;::notifyObservers</a>(event);     
+<a name="l00204"></a>00204       <a class="code" href="classUtil_1_1Notifier.html#a789c7fe0ee38d5f6d5c675c4ded96c8c" title="Notify the list of observers about an Event.">Notifier&lt;ReSetAtomEvent&gt;::notifyObservers</a>(event);     
 <a name="l00205"></a>00205  
 <a name="l00206"></a>00206    }      
 <a name="l00207"></a>00207    
 <a name="l00208"></a>00208    <span class="comment">/* </span>
 <a name="l00209"></a>00209 <span class="comment">   * Get a randomly chosen link of a specified Species.</span>
 <a name="l00210"></a>00210 <span class="comment">   */</span>
-<a name="l00211"></a>00211    <a class="code" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>&amp; <a class="code" href="classMcMd_1_1LinkMaster.html#aa5ed512553c5a557664824d0818c0f39" title="Get a randomly chosen link by reference.">LinkMaster::randomLink</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; random)
-<a name="l00212"></a><a class="code" href="classMcMd_1_1LinkMaster.html#aa5ed512553c5a557664824d0818c0f39">00212</a>    {
+<a name="l00211"></a>00211    <a class="code" href="classMcMd_1_1Link.html" title="A Link represents a crosslink between two Atoms.">Link</a>&amp; <a class="code" href="classMcMd_1_1LinkMaster.html#aec00794d9942f9c7b63dc097771946d9" title="Get a randomly chosen link by reference.">LinkMaster::randomLink</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; random)
+<a name="l00212"></a><a class="code" href="classMcMd_1_1LinkMaster.html#aec00794d9942f9c7b63dc097771946d9">00212</a>    {
 <a name="l00213"></a>00213       <span class="keywordtype">int</span> n = nLink(); 
 <a name="l00214"></a>00214       <span class="keywordflow">if</span> (n &lt;= 0) {
 <a name="l00215"></a>00215          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Number of links in species &lt;= 0&quot;</span>);
 <a name="l00216"></a>00216       }
-<a name="l00217"></a>00217       <span class="keywordtype">int</span> <span class="keywordtype">id</span> = random.<a class="code" href="classUtil_1_1Random.html#aa2342a71482b4b3e020773bd2ac15640" title="Return random long int x uniformly distributed in range1 &amp;lt;= x &amp;lt; range2.">uniformInt</a>(0, n);
+<a name="l00217"></a>00217       <span class="keywordtype">int</span> <span class="keywordtype">id</span> = random.<a class="code" href="classUtil_1_1Random.html#a2a7f4c20d13a3ea0bc532c224aecc40e" title="Return random long int x uniformly distributed in range1 &amp;lt;= x &amp;lt; range2.">uniformInt</a>(0, n);
 <a name="l00218"></a>00218       <span class="keywordflow">return</span> linkSet_[id]; 
 <a name="l00219"></a>00219    }
 <a name="l00220"></a>00220 
@@ -287,8 +287,8 @@
 <a name="l00248"></a>00248    <span class="comment">/*</span>
 <a name="l00249"></a>00249 <span class="comment">   * Return true if this LinkMaster is valid, or throw an Exception.</span>
 <a name="l00250"></a>00250 <span class="comment">   */</span>
-<a name="l00251"></a>00251    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1LinkMaster.html#aac1b70a2ed67ead038c4d3f5ac4d8a81" title="Return true if this LinkMaster is valid, or throw an Exception.">LinkMaster::isValid</a>()<span class="keyword"> const </span>
-<a name="l00252"></a><a class="code" href="classMcMd_1_1LinkMaster.html#aac1b70a2ed67ead038c4d3f5ac4d8a81">00252</a> <span class="keyword">   </span>{
+<a name="l00251"></a>00251    <span class="keywordtype">bool</span> <a class="code" href="classMcMd_1_1LinkMaster.html#a529c6e5ebeafa633106d39abeb7e8a84" title="Return true if this LinkMaster is valid, or throw an Exception.">LinkMaster::isValid</a>()<span class="keyword"> const </span>
+<a name="l00252"></a><a class="code" href="classMcMd_1_1LinkMaster.html#a529c6e5ebeafa633106d39abeb7e8a84">00252</a> <span class="keyword">   </span>{
 <a name="l00253"></a>00253 
 <a name="l00254"></a>00254       <span class="keywordflow">if</span> (links_.isAllocated()) {
 <a name="l00255"></a>00255 
@@ -307,8 +307,8 @@
 <a name="l00268"></a>00268          <span class="keywordflow">for</span> (i = 0; i &lt; linkSet_.size(); ++i) {
 <a name="l00269"></a>00269 
 <a name="l00270"></a>00270             linkPtr = &amp;(linkSet_[i]); 
-<a name="l00271"></a>00271             atom0Ptr = &amp;(linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#a2b99ab5c23cb616c936a455df3d1e579" title="Get Atom0 connected to a Link.">atom0</a>());
-<a name="l00272"></a>00272             atom1Ptr = &amp;(linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#a5a413723b2f1bfa14cca504f6c650b23" title="Get Atom1 connected to a Link.">atom1</a>());
+<a name="l00271"></a>00271             atom0Ptr = &amp;(linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#a14d15f5a16b26ce7bc96893f078a60a1" title="Get Atom0 connected to a Link.">atom0</a>());
+<a name="l00272"></a>00272             atom1Ptr = &amp;(linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#af638a0ca7c5ec545d7af4ea976d61e18" title="Get Atom1 connected to a Link.">atom1</a>());
 <a name="l00273"></a>00273 
 <a name="l00274"></a>00274             <span class="comment">// Check: </span>
 <a name="l00275"></a>00275 
@@ -323,15 +323,15 @@
 <a name="l00284"></a>00284             }
 <a name="l00285"></a>00285 
 <a name="l00286"></a>00286             <span class="comment">// that the link is active</span>
-<a name="l00287"></a>00287             <span class="keywordflow">if</span> (!linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#a22761609071413dcce0632885c820e87" title="Is this Link active?">isActive</a>()) {
+<a name="l00287"></a>00287             <span class="keywordflow">if</span> (!linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#af53a80bb55901d510b3d8ebe6e9a0aeb" title="Is this Link active?">isActive</a>()) {
 <a name="l00288"></a>00288                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Link in linkSet is not Active&quot;</span>);
 <a name="l00289"></a>00289             }
 <a name="l00290"></a>00290 
 <a name="l00291"></a>00291             <span class="comment">// that the Link is in the AtomLinkSet of atom0 and of atom1</span>
-<a name="l00292"></a>00292             <span class="keywordflow">if</span> (!atomLinkSets_[atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>()].isElement(*linkPtr)) {
+<a name="l00292"></a>00292             <span class="keywordflow">if</span> (!atomLinkSets_[atom0Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>()].isElement(*linkPtr)) {
 <a name="l00293"></a>00293                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Link is not in atomLinkSets of atom0&quot;</span>);
 <a name="l00294"></a>00294             }
-<a name="l00295"></a>00295             <span class="keywordflow">if</span> (!atomLinkSets_[atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#ae0c063cfb2479f614be43b9d2f92ba63" title="Get global index for this Atom within the Simulation.">id</a>()].isElement(*linkPtr)) {
+<a name="l00295"></a>00295             <span class="keywordflow">if</span> (!atomLinkSets_[atom1Ptr-&gt;<a class="code" href="classMcMd_1_1Atom.html#a71c29d3d43fb70bce630cc3203b2c125" title="Get global index for this Atom within the Simulation.">id</a>()].isElement(*linkPtr)) {
 <a name="l00296"></a>00296                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Link is not in atomLinkSets of atom1&quot;</span>);
 <a name="l00297"></a>00297             }
 <a name="l00298"></a>00298 
@@ -341,7 +341,7 @@
 <a name="l00302"></a>00302          <span class="keywordtype">int</span> nCount = 0;
 <a name="l00303"></a>00303          <span class="keywordflow">for</span> (i = 0; i &lt; linkCapacity_; ++i) {
 <a name="l00304"></a>00304             linkPtr = &amp;links_[i]; 
-<a name="l00305"></a>00305             <span class="keywordflow">if</span> (linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#a22761609071413dcce0632885c820e87" title="Is this Link active?">isActive</a>()) {
+<a name="l00305"></a>00305             <span class="keywordflow">if</span> (linkPtr-&gt;<a class="code" href="classMcMd_1_1Link.html#af53a80bb55901d510b3d8ebe6e9a0aeb" title="Is this Link active?">isActive</a>()) {
 <a name="l00306"></a>00306                ++nCount;
 <a name="l00307"></a>00307             }
 <a name="l00308"></a>00308          }
@@ -363,8 +363,8 @@
 <a name="l00324"></a>00324       <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00325"></a>00325    }
 <a name="l00326"></a>00326 
-<a name="l00330"></a>00330    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#ac8bb3912a3ce86b15842e79d0b421204" title="Clear LinkMaster.">LinkMaster::clear</a>() 
-<a name="l00331"></a><a class="code" href="classMcMd_1_1LinkMaster.html#ac8bb3912a3ce86b15842e79d0b421204">00331</a>    {
+<a name="l00330"></a>00330    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1LinkMaster.html#ade75a16154327c183a7d258ae06e3885" title="Clear LinkMaster.">LinkMaster::clear</a>() 
+<a name="l00331"></a><a class="code" href="classMcMd_1_1LinkMaster.html#ade75a16154327c183a7d258ae06e3885">00331</a>    {
 <a name="l00332"></a>00332       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> <span class="keywordtype">id</span> = nLink()-1; <span class="keywordtype">id</span> &gt;= 0; <span class="keywordtype">id</span>--) {
 <a name="l00333"></a>00333          removeLink(<span class="keywordtype">id</span>);
 <a name="l00334"></a>00334       }
@@ -375,7 +375,7 @@
 <a name="l00339"></a>00339 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

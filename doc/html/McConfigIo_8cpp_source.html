@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -70,36 +70,36 @@
 <a name="l00019"></a>00019    <span class="comment">/*</span>
 <a name="l00020"></a>00020 <span class="comment">   * Constructor. </span>
 <a name="l00021"></a>00021 <span class="comment">   */</span>
-<a name="l00022"></a><a class="code" href="classMcMd_1_1McConfigIo.html#afe9227c14c43f6f56a9891a38ee77ba8">00022</a>    <a class="code" href="classMcMd_1_1McConfigIo.html#afe9227c14c43f6f56a9891a38ee77ba8" title="Constructor.">McConfigIo::McConfigIo</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)
+<a name="l00022"></a><a class="code" href="classMcMd_1_1McConfigIo.html#ad11cc74358100cb5a6d3eb024ede89ea">00022</a>    <a class="code" href="classMcMd_1_1McConfigIo.html#ad11cc74358100cb5a6d3eb024ede89ea" title="Constructor.">McConfigIo::McConfigIo</a>(<a class="code" href="classMcMd_1_1System.html" title="A set of interacting Molecules enclosed by a Boundary.">System</a>&amp; system)
 <a name="l00023"></a>00023     : <a class="code" href="classMcMd_1_1McMdConfigIo.html" title="Base class for default Mc and Md configIos.">McMdConfigIo</a>(system)
 <a name="l00024"></a>00024    {}
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026    <span class="comment">/* </span>
 <a name="l00027"></a>00027 <span class="comment">   * Destructor.   </span>
 <a name="l00028"></a>00028 <span class="comment">   */</span>
-<a name="l00029"></a><a class="code" href="classMcMd_1_1McConfigIo.html#a5886cebe1cd3111930c7835a36fc4134">00029</a>    <a class="code" href="classMcMd_1_1McConfigIo.html#a5886cebe1cd3111930c7835a36fc4134" title="Destructor.">McConfigIo::~McConfigIo</a>() 
+<a name="l00029"></a><a class="code" href="classMcMd_1_1McConfigIo.html#a4f36692dcf15bf2bdcd41ba3b9a79a83">00029</a>    <a class="code" href="classMcMd_1_1McConfigIo.html#a4f36692dcf15bf2bdcd41ba3b9a79a83" title="Destructor.">McConfigIo::~McConfigIo</a>() 
 <a name="l00030"></a>00030    {}
 <a name="l00031"></a>00031  
 <a name="l00032"></a>00032    <span class="comment">/* </span>
 <a name="l00033"></a>00033 <span class="comment">   * Read data for one atom.</span>
 <a name="l00034"></a>00034 <span class="comment">   */</span>
-<a name="l00035"></a><a class="code" href="classMcMd_1_1McConfigIo.html#a78120138d173889d33989f61d5cc16f7">00035</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McConfigIo.html#a78120138d173889d33989f61d5cc16f7" title="Read data for one atom.">McConfigIo::readAtom</a>(std::istream &amp;in, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)
+<a name="l00035"></a><a class="code" href="classMcMd_1_1McConfigIo.html#ae7938c2ad743cad817965f0a929d4ccd">00035</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McConfigIo.html#ae7938c2ad743cad817965f0a929d4ccd" title="Read data for one atom.">McConfigIo::readAtom</a>(std::istream &amp;in, <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)
 <a name="l00036"></a>00036    {  
-<a name="l00037"></a>00037       in &gt;&gt; atom.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>();
-<a name="l00038"></a>00038       <a class="code" href="classMcMd_1_1ConfigIo.html#a81f23e720d23ad05f41e966ca5d76553" title="Get the Boundary.">boundary</a>().shift(atom.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>());
+<a name="l00037"></a>00037       in &gt;&gt; atom.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>();
+<a name="l00038"></a>00038       <a class="code" href="classMcMd_1_1ConfigIo.html#ab7939cdcfe6174017d8f6689a70230e6" title="Get the Boundary.">boundary</a>().shift(atom.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>());
 <a name="l00039"></a>00039    }
 <a name="l00040"></a>00040 
 <a name="l00041"></a>00041    <span class="comment">/* </span>
 <a name="l00042"></a>00042 <span class="comment">   * Write data for one atom.</span>
 <a name="l00043"></a>00043 <span class="comment">   */</span>
-<a name="l00044"></a><a class="code" href="classMcMd_1_1McConfigIo.html#ab0375f598b8ededaa1e98c2e1cca77b8">00044</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McConfigIo.html#ab0375f598b8ededaa1e98c2e1cca77b8" title="Write data for one atom.">McConfigIo::writeAtom</a>(std::ostream &amp;out, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)
-<a name="l00045"></a>00045    {  out &lt;&lt; atom.<a class="code" href="classMcMd_1_1Atom.html#ab9185395797b37f678e8a48e4361d523" title="Get the position Vector by const reference.">position</a>() &lt;&lt; std::endl; }
+<a name="l00044"></a><a class="code" href="classMcMd_1_1McConfigIo.html#a1868569360543c4663d1359a36a09021">00044</a>    <span class="keywordtype">void</span> <a class="code" href="classMcMd_1_1McConfigIo.html#a1868569360543c4663d1359a36a09021" title="Write data for one atom.">McConfigIo::writeAtom</a>(std::ostream &amp;out, <span class="keyword">const</span> <a class="code" href="classMcMd_1_1Atom.html" title="A point particle within a Molecule.">Atom</a>&amp; atom)
+<a name="l00045"></a>00045    {  out &lt;&lt; atom.<a class="code" href="classMcMd_1_1Atom.html#abf58b0a56a92b8b6de70326dbbbffcfd" title="Get the position Vector by const reference.">position</a>() &lt;&lt; std::endl; }
 <a name="l00046"></a>00046 
 <a name="l00047"></a>00047 } 
 <a name="l00048"></a>00048 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:49 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

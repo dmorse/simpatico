@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -72,44 +72,44 @@
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032    <span class="keyword">public</span>:
 <a name="l00033"></a>00033 
-<a name="l00037"></a>00037       <a class="code" href="classUtil_1_1DSArray.html#a23f872058c0ac15b31e8f7374b6a6f1a" title="Constructor.">DSArray</a>();
+<a name="l00037"></a>00037       <a class="code" href="classUtil_1_1DSArray.html#ad64cd3de2cab760298f47b02053d996d" title="Constructor.">DSArray</a>();
 <a name="l00038"></a>00038 
-<a name="l00044"></a>00044       <a class="code" href="classUtil_1_1DSArray.html#a23f872058c0ac15b31e8f7374b6a6f1a" title="Constructor.">DSArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt; Data &gt;</a>&amp; other);
+<a name="l00044"></a>00044       <a class="code" href="classUtil_1_1DSArray.html#ad64cd3de2cab760298f47b02053d996d" title="Constructor.">DSArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt; Data &gt;</a>&amp; other);
 <a name="l00045"></a>00045    
-<a name="l00053"></a>00053       <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1DSArray.html#a4590756ff7b3c2b0a3bd94d84e63851d" title="Assignment, element by element.">operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt;Data&gt;</a>&amp; other);
+<a name="l00053"></a>00053       <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1DSArray.html#a181e369c3a69ee9321097bb91dbe0696" title="Assignment, element by element.">operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt;Data&gt;</a>&amp; other);
 <a name="l00054"></a>00054 
-<a name="l00058"></a>00058       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1DSArray.html#a74fc196afae5181800210abe8be5e7f7" title="Destructor.">~DSArray</a>();
+<a name="l00058"></a>00058       <span class="keyword">virtual</span> <a class="code" href="classUtil_1_1DSArray.html#a190de23863bbf1fbf3376f184aa1acc0" title="Destructor.">~DSArray</a>();
 <a name="l00059"></a>00059 
-<a name="l00068"></a>00068       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocates the underlying C array.">allocate</a>(<span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#a104736719cd4e5f21c25705c77064dde" title="Return physical capacity of array.">capacity</a>);
+<a name="l00068"></a>00068       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#ad9e1548874eb6705e42b88d457da9d6b" title="Allocates the underlying C array.">allocate</a>(<span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#a1a1cf465553d6150c596eeaf8b3bc846" title="Return physical capacity of array.">capacity</a>);
 <a name="l00069"></a>00069 
-<a name="l00073"></a>00073       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#ac8bb3912a3ce86b15842e79d0b421204" title="Set logical size to zero.">clear</a>();
+<a name="l00073"></a>00073       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a604a0b36a322430157c415ca16b5355c" title="Set logical size to zero.">clear</a>();
 <a name="l00074"></a>00074 
 <a name="l00081"></a>00081       <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00082"></a>00082       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a6765e839ab267e4959384e35a4112451" title="Serialize a DSArray to/from an Archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
+<a name="l00082"></a>00082       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a3a84f59a701faf98035441d1e8e7d31f" title="Serialize a DSArray to/from an Archive.">serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version);
 <a name="l00083"></a>00083 
-<a name="l00089"></a>00089       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator);
+<a name="l00089"></a>00089       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a20d31a303e4f8747d30955fc232ffce4" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator);
 <a name="l00090"></a>00090 
-<a name="l00096"></a>00096       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator) <span class="keyword">const</span>;
+<a name="l00096"></a>00096       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a20d31a303e4f8747d30955fc232ffce4" title="Set an ArrayIterator to the beginning of this Array.">begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator) <span class="keyword">const</span>;
 <a name="l00097"></a>00097 
-<a name="l00104"></a>00104       Data&amp; <a class="code" href="classUtil_1_1DSArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i);
+<a name="l00104"></a>00104       Data&amp; <a class="code" href="classUtil_1_1DSArray.html#a64d57aff171ea7fd76f1e1466481360c" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i);
 <a name="l00105"></a>00105 
-<a name="l00112"></a>00112       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1DSArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;
+<a name="l00112"></a>00112       <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1DSArray.html#a64d57aff171ea7fd76f1e1466481360c" title="Mimic C array subscripting.">operator[] </a>(<span class="keywordtype">int</span> i) <span class="keyword">const</span>;
 <a name="l00113"></a>00113 
-<a name="l00119"></a>00119       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a578e50675e1ec828c5a5a92737ad4cf7" title="Append data to the end of the array.">append</a>(<span class="keyword">const</span> Data &amp;data);
+<a name="l00119"></a>00119       <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a4ac821902ea29016412aaf7d545e3fd7" title="Append data to the end of the array.">append</a>(<span class="keyword">const</span> Data &amp;data);
 <a name="l00120"></a>00120 
-<a name="l00124"></a>00124       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#a104736719cd4e5f21c25705c77064dde" title="Return physical capacity of array.">capacity</a>() <span class="keyword">const</span>;
+<a name="l00124"></a>00124       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#a1a1cf465553d6150c596eeaf8b3bc846" title="Return physical capacity of array.">capacity</a>() <span class="keyword">const</span>;
 <a name="l00125"></a>00125 
-<a name="l00129"></a>00129       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">size</a>() <span class="keyword">const</span>;
+<a name="l00129"></a>00129       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#aed270880ce8307d7f1e3e320da9d3157" title="Return logical size of this array (i.e., number of elements).">size</a>() <span class="keyword">const</span>;
 <a name="l00130"></a>00130 
-<a name="l00134"></a>00134       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1DSArray.html#a0bcdab3616db481dd211594529479f94" title="Return true if the DSArray has been allocated, false otherwise.">isAllocated</a>() <span class="keyword">const</span>;
+<a name="l00134"></a>00134       <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1DSArray.html#af72a500afe024c17997853f6237c5831" title="Return true if the DSArray has been allocated, false otherwise.">isAllocated</a>() <span class="keyword">const</span>;
 <a name="l00135"></a>00135 
 <a name="l00136"></a>00136    <span class="keyword">protected</span>:
 <a name="l00137"></a>00137 
-<a name="l00139"></a><a class="code" href="classUtil_1_1DSArray.html#a51a8255a7ec647fc0e77a41589bd4a0e">00139</a>       Data *<a class="code" href="classUtil_1_1DSArray.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Array of Data elements.">data_</a>;
+<a name="l00139"></a><a class="code" href="classUtil_1_1DSArray.html#a59fab10a4eea7d2e3565bf8d8c112894">00139</a>       Data *<a class="code" href="classUtil_1_1DSArray.html#a59fab10a4eea7d2e3565bf8d8c112894" title="Array of Data elements.">data_</a>;
 <a name="l00140"></a>00140 
-<a name="l00142"></a><a class="code" href="classUtil_1_1DSArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80">00142</a>       <span class="keywordtype">int</span>  <a class="code" href="classUtil_1_1DSArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>;
+<a name="l00142"></a><a class="code" href="classUtil_1_1DSArray.html#acecc67e62224b979dac5532f6e1e6505">00142</a>       <span class="keywordtype">int</span>  <a class="code" href="classUtil_1_1DSArray.html#acecc67e62224b979dac5532f6e1e6505" title="Logical size of array (number of elements used).">size_</a>;
 <a name="l00143"></a>00143 
-<a name="l00145"></a><a class="code" href="classUtil_1_1DSArray.html#a9e2616fdebc24bf4bfa139964780d6dd">00145</a>       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#a9e2616fdebc24bf4bfa139964780d6dd" title="Maxium size of array.">capacity_</a>;
+<a name="l00145"></a><a class="code" href="classUtil_1_1DSArray.html#ae965fbda8c2b0eaa0e71ce6fc0a9bd36">00145</a>       <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#ae965fbda8c2b0eaa0e71ce6fc0a9bd36" title="Maxium size of array.">capacity_</a>;
 <a name="l00146"></a>00146    };
 <a name="l00147"></a>00147 
 <a name="l00148"></a>00148    <span class="comment">// Method definitions</span>
@@ -118,7 +118,7 @@
 <a name="l00151"></a>00151 <span class="comment">   * Constructor.</span>
 <a name="l00152"></a>00152 <span class="comment">   */</span>
 <a name="l00153"></a>00153    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00154"></a><a class="code" href="classUtil_1_1DSArray.html#a23f872058c0ac15b31e8f7374b6a6f1a">00154</a>    <a class="code" href="classUtil_1_1DSArray.html#a23f872058c0ac15b31e8f7374b6a6f1a" title="Constructor.">DSArray&lt;Data&gt;::DSArray</a>()
+<a name="l00154"></a><a class="code" href="classUtil_1_1DSArray.html#ad64cd3de2cab760298f47b02053d996d">00154</a>    <a class="code" href="classUtil_1_1DSArray.html#ad64cd3de2cab760298f47b02053d996d" title="Constructor.">DSArray&lt;Data&gt;::DSArray</a>()
 <a name="l00155"></a>00155     : data_(0),
 <a name="l00156"></a>00156       size_(0),
 <a name="l00157"></a>00157       capacity_(0)
@@ -128,26 +128,26 @@
 <a name="l00161"></a>00161 <span class="comment">   * Copy constructor.</span>
 <a name="l00162"></a>00162 <span class="comment">   */</span>
 <a name="l00163"></a>00163    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00164"></a><a class="code" href="classUtil_1_1DSArray.html#ac08c839d9f4d1414011bc333cd084406">00164</a>    <a class="code" href="classUtil_1_1DSArray.html#a23f872058c0ac15b31e8f7374b6a6f1a" title="Constructor.">DSArray&lt;Data&gt;::DSArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt; Data &gt;</a>&amp; other) 
+<a name="l00164"></a><a class="code" href="classUtil_1_1DSArray.html#abe1f06b9a3a067685f22b820d19649d6">00164</a>    <a class="code" href="classUtil_1_1DSArray.html#ad64cd3de2cab760298f47b02053d996d" title="Constructor.">DSArray&lt;Data&gt;::DSArray</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt; Data &gt;</a>&amp; other) 
 <a name="l00165"></a>00165    {
 <a name="l00166"></a>00166       <span class="comment">// Precondition</span>
-<a name="l00167"></a>00167       <span class="keywordflow">if</span> (!other.<a class="code" href="classUtil_1_1DSArray.html#a0bcdab3616db481dd211594529479f94" title="Return true if the DSArray has been allocated, false otherwise.">isAllocated</a>()) {
+<a name="l00167"></a>00167       <span class="keywordflow">if</span> (!other.<a class="code" href="classUtil_1_1DSArray.html#af72a500afe024c17997853f6237c5831" title="Return true if the DSArray has been allocated, false otherwise.">isAllocated</a>()) {
 <a name="l00168"></a>00168          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Other DSArray must be allocated.&quot;</span>);
 <a name="l00169"></a>00169        }
 <a name="l00170"></a>00170 
-<a name="l00171"></a>00171       data_     = <span class="keyword">new</span> Data[other.<a class="code" href="classUtil_1_1DSArray.html#a9e2616fdebc24bf4bfa139964780d6dd" title="Maxium size of array.">capacity_</a>];
-<a name="l00172"></a>00172       size_     = other.<a class="code" href="classUtil_1_1DSArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>;
-<a name="l00173"></a>00173       capacity_ = other.<a class="code" href="classUtil_1_1DSArray.html#a9e2616fdebc24bf4bfa139964780d6dd" title="Maxium size of array.">capacity_</a>;
+<a name="l00171"></a>00171       data_     = <span class="keyword">new</span> Data[other.<a class="code" href="classUtil_1_1DSArray.html#ae965fbda8c2b0eaa0e71ce6fc0a9bd36" title="Maxium size of array.">capacity_</a>];
+<a name="l00172"></a>00172       size_     = other.<a class="code" href="classUtil_1_1DSArray.html#acecc67e62224b979dac5532f6e1e6505" title="Logical size of array (number of elements used).">size_</a>;
+<a name="l00173"></a>00173       capacity_ = other.<a class="code" href="classUtil_1_1DSArray.html#ae965fbda8c2b0eaa0e71ce6fc0a9bd36" title="Maxium size of array.">capacity_</a>;
 <a name="l00174"></a>00174       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; size_; ++i) {
-<a name="l00175"></a>00175          data_[i] = other.<a class="code" href="classUtil_1_1DSArray.html#a51a8255a7ec647fc0e77a41589bd4a0e" title="Array of Data elements.">data_</a>[i];
+<a name="l00175"></a>00175          data_[i] = other.<a class="code" href="classUtil_1_1DSArray.html#a59fab10a4eea7d2e3565bf8d8c112894" title="Array of Data elements.">data_</a>[i];
 <a name="l00176"></a>00176       }
 <a name="l00177"></a>00177    }
 <a name="l00178"></a>00178    
 <a name="l00186"></a>00186    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00187"></a><a class="code" href="classUtil_1_1DSArray.html#a4590756ff7b3c2b0a3bd94d84e63851d">00187</a>    <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1DSArray.html#a4590756ff7b3c2b0a3bd94d84e63851d" title="Assignment, element by element.">DSArray&lt;Data&gt;::operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt;Data&gt;</a>&amp; other) 
+<a name="l00187"></a><a class="code" href="classUtil_1_1DSArray.html#a181e369c3a69ee9321097bb91dbe0696">00187</a>    <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt;Data&gt;</a>&amp; <a class="code" href="classUtil_1_1DSArray.html#a181e369c3a69ee9321097bb91dbe0696" title="Assignment, element by element.">DSArray&lt;Data&gt;::operator=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1DSArray.html" title="Dynamically allocated array with variable logical size.">DSArray&lt;Data&gt;</a>&amp; other) 
 <a name="l00188"></a>00188    {
 <a name="l00189"></a>00189       <span class="comment">// Precondition</span>
-<a name="l00190"></a>00190       <span class="keywordflow">if</span> (!other.<a class="code" href="classUtil_1_1DSArray.html#a0bcdab3616db481dd211594529479f94" title="Return true if the DSArray has been allocated, false otherwise.">isAllocated</a>()) {
+<a name="l00190"></a>00190       <span class="keywordflow">if</span> (!other.<a class="code" href="classUtil_1_1DSArray.html#af72a500afe024c17997853f6237c5831" title="Return true if the DSArray has been allocated, false otherwise.">isAllocated</a>()) {
 <a name="l00191"></a>00191          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Other DSArray must be allocated.&quot;</span>);
 <a name="l00192"></a>00192       }
 <a name="l00193"></a>00193 
@@ -155,8 +155,8 @@
 <a name="l00195"></a>00195       <span class="keywordflow">if</span> (<span class="keyword">this</span> == &amp;other) <span class="keywordflow">return</span> *<span class="keyword">this</span>;
 <a name="l00196"></a>00196 
 <a name="l00197"></a>00197       <span class="keywordflow">if</span> (!isAllocated()) {
-<a name="l00198"></a>00198          allocate(other.<a class="code" href="classUtil_1_1DSArray.html#a9e2616fdebc24bf4bfa139964780d6dd" title="Maxium size of array.">capacity_</a>);
-<a name="l00199"></a>00199       } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (capacity_ != other.<a class="code" href="classUtil_1_1DSArray.html#a9e2616fdebc24bf4bfa139964780d6dd" title="Maxium size of array.">capacity_</a>) {
+<a name="l00198"></a>00198          allocate(other.<a class="code" href="classUtil_1_1DSArray.html#ae965fbda8c2b0eaa0e71ce6fc0a9bd36" title="Maxium size of array.">capacity_</a>);
+<a name="l00199"></a>00199       } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (capacity_ != other.<a class="code" href="classUtil_1_1DSArray.html#ae965fbda8c2b0eaa0e71ce6fc0a9bd36" title="Maxium size of array.">capacity_</a>) {
 <a name="l00200"></a>00200          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Cannot assign DSArrays of unequal capacity&quot;</span>);
 <a name="l00201"></a>00201       }
 <a name="l00202"></a>00202 
@@ -164,7 +164,7 @@
 <a name="l00204"></a>00204       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; size_; ++i) {
 <a name="l00205"></a>00205          data_[i] = other[i];
 <a name="l00206"></a>00206       }
-<a name="l00207"></a>00207       size = other.<a class="code" href="classUtil_1_1DSArray.html#a6947fa5d6ba628dd62d59ffbad8b8d80" title="Logical size of array (number of elements used).">size_</a>;
+<a name="l00207"></a>00207       size = other.<a class="code" href="classUtil_1_1DSArray.html#acecc67e62224b979dac5532f6e1e6505" title="Logical size of array (number of elements used).">size_</a>;
 <a name="l00208"></a>00208 
 <a name="l00209"></a>00209       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
 <a name="l00210"></a>00210    }
@@ -173,7 +173,7 @@
 <a name="l00213"></a>00213 <span class="comment">   * Destructor.</span>
 <a name="l00214"></a>00214 <span class="comment">   */</span>
 <a name="l00215"></a>00215    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00216"></a><a class="code" href="classUtil_1_1DSArray.html#a74fc196afae5181800210abe8be5e7f7">00216</a>    <a class="code" href="classUtil_1_1DSArray.html#a74fc196afae5181800210abe8be5e7f7" title="Destructor.">DSArray&lt;Data&gt;::~DSArray</a>()
+<a name="l00216"></a><a class="code" href="classUtil_1_1DSArray.html#a190de23863bbf1fbf3376f184aa1acc0">00216</a>    <a class="code" href="classUtil_1_1DSArray.html#a190de23863bbf1fbf3376f184aa1acc0" title="Destructor.">DSArray&lt;Data&gt;::~DSArray</a>()
 <a name="l00217"></a>00217    {
 <a name="l00218"></a>00218        <span class="keywordflow">if</span> (data_) {
 <a name="l00219"></a>00219           <span class="keyword">delete</span> [] data_;
@@ -184,7 +184,7 @@
 <a name="l00224"></a>00224 <span class="comment">   * Allocates the underlying C array.</span>
 <a name="l00225"></a>00225 <span class="comment">   */</span>
 <a name="l00226"></a>00226    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00227"></a><a class="code" href="classUtil_1_1DSArray.html#a1be38a6eb2f04de4d9457d506f948321">00227</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a1be38a6eb2f04de4d9457d506f948321" title="Allocates the underlying C array.">DSArray&lt;Data&gt;::allocate</a>(<span class="keywordtype">int</span> capacity)
+<a name="l00227"></a><a class="code" href="classUtil_1_1DSArray.html#ad9e1548874eb6705e42b88d457da9d6b">00227</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#ad9e1548874eb6705e42b88d457da9d6b" title="Allocates the underlying C array.">DSArray&lt;Data&gt;::allocate</a>(<span class="keywordtype">int</span> capacity)
 <a name="l00228"></a>00228    {
 <a name="l00229"></a>00229       <span class="keywordflow">if</span> (data_) {
 <a name="l00230"></a>00230          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Cannot re-allocate a DSArray&quot;</span>);
@@ -201,7 +201,7 @@
 <a name="l00241"></a>00241 <span class="comment">   */</span>
 <a name="l00242"></a>00242    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
 <a name="l00243"></a>00243    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Archive&gt;
-<a name="l00244"></a><a class="code" href="classUtil_1_1DSArray.html#a6765e839ab267e4959384e35a4112451">00244</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a6765e839ab267e4959384e35a4112451" title="Serialize a DSArray to/from an Archive.">DSArray&lt;Data&gt;::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
+<a name="l00244"></a><a class="code" href="classUtil_1_1DSArray.html#a3a84f59a701faf98035441d1e8e7d31f">00244</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a3a84f59a701faf98035441d1e8e7d31f" title="Serialize a DSArray to/from an Archive.">DSArray&lt;Data&gt;::serialize</a>(Archive&amp; ar, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> version)
 <a name="l00245"></a>00245    {
 <a name="l00246"></a>00246       <span class="keywordtype">int</span> capacity;
 <a name="l00247"></a>00247       <span class="keywordflow">if</span> (Archive::is_saving()) {
@@ -227,10 +227,10 @@
 <a name="l00267"></a>00267 
 <a name="l00273"></a>00273    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
 <a name="l00274"></a>00274    <span class="keyword">inline</span>
-<a name="l00275"></a><a class="code" href="classUtil_1_1DSArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6">00275</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">DSArray&lt;Data&gt;::begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator)
+<a name="l00275"></a><a class="code" href="classUtil_1_1DSArray.html#a20d31a303e4f8747d30955fc232ffce4">00275</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a20d31a303e4f8747d30955fc232ffce4" title="Set an ArrayIterator to the beginning of this Array.">DSArray&lt;Data&gt;::begin</a>(<a class="code" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator&lt;Data&gt;</a> &amp;iterator)
 <a name="l00276"></a>00276    {
-<a name="l00277"></a>00277       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#ac96801e7ef37aabe6156ae3ba508524b" title="Set the current pointer value.">setCurrent</a>(data_);
-<a name="l00278"></a>00278       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#a0e8ab752dbe9a6f922fb3d19018fda1d" title="Set the value of the end pointer.">setEnd</a>(data_ + size_);
+<a name="l00277"></a>00277       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#ac208690b94d1be77cad9c51eb1cfcdb8" title="Set the current pointer value.">setCurrent</a>(data_);
+<a name="l00278"></a>00278       iterator.<a class="code" href="classUtil_1_1ArrayIterator.html#a5527ef0f4bdae08eeacd11025b91a971" title="Set the value of the end pointer.">setEnd</a>(data_ + size_);
 <a name="l00279"></a>00279    }
 <a name="l00280"></a>00280 
 <a name="l00281"></a>00281    <span class="comment">/*</span>
@@ -238,17 +238,17 @@
 <a name="l00283"></a>00283 <span class="comment">   */</span>
 <a name="l00284"></a>00284    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
 <a name="l00285"></a>00285    <span class="keyword">inline</span> 
-<a name="l00286"></a><a class="code" href="classUtil_1_1DSArray.html#aeafeff76c665316e581605a2ad765d5c">00286</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a172d51d4c65bb6c22e459b5a4c9d79f6" title="Set an ArrayIterator to the beginning of this Array.">DSArray&lt;Data&gt;::begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator)<span class="keyword"> const</span>
+<a name="l00286"></a><a class="code" href="classUtil_1_1DSArray.html#a24caf429b82c24cd6c9bb24d36c624b7">00286</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a20d31a303e4f8747d30955fc232ffce4" title="Set an ArrayIterator to the beginning of this Array.">DSArray&lt;Data&gt;::begin</a>(<a class="code" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator&lt;Data&gt;</a> &amp;iterator)<span class="keyword"> const</span>
 <a name="l00287"></a>00287 <span class="keyword">   </span>{
-<a name="l00288"></a>00288       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#ac96801e7ef37aabe6156ae3ba508524b" title="Set the current pointer value.">setCurrent</a>(data_);
-<a name="l00289"></a>00289       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#a0e8ab752dbe9a6f922fb3d19018fda1d" title="Set the value of the end pointer.">setEnd</a>(data_ + size_);
+<a name="l00288"></a>00288       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#a39735f67c57df14be6ce7f40e1f2646f" title="Set the current pointer value.">setCurrent</a>(data_);
+<a name="l00289"></a>00289       iterator.<a class="code" href="classUtil_1_1ConstArrayIterator.html#a1b06236f546d1046bb6e8e4a56d19d74" title="Set the value of the end pointer.">setEnd</a>(data_ + size_);
 <a name="l00290"></a>00290    }
 <a name="l00291"></a>00291 
 <a name="l00292"></a>00292    <span class="comment">/*</span>
 <a name="l00293"></a>00293 <span class="comment">   * Mimic C array subscripting.</span>
 <a name="l00294"></a>00294 <span class="comment">   */</span>
 <a name="l00295"></a>00295    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00296"></a><a class="code" href="classUtil_1_1DSArray.html#a8cc8b5696ce4a17c06360e7f41f95096">00296</a>    <span class="keyword">inline</span> Data&amp; <a class="code" href="classUtil_1_1DSArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">DSArray&lt;Data&gt;::operator[] </a>(<span class="keywordtype">int</span> i)
+<a name="l00296"></a><a class="code" href="classUtil_1_1DSArray.html#a64d57aff171ea7fd76f1e1466481360c">00296</a>    <span class="keyword">inline</span> Data&amp; <a class="code" href="classUtil_1_1DSArray.html#a64d57aff171ea7fd76f1e1466481360c" title="Mimic C array subscripting.">DSArray&lt;Data&gt;::operator[] </a>(<span class="keywordtype">int</span> i)
 <a name="l00297"></a>00297    {
 <a name="l00298"></a>00298       assert(i &lt; size_);
 <a name="l00299"></a>00299       assert(i &gt;= 0);
@@ -259,7 +259,7 @@
 <a name="l00304"></a>00304 <span class="comment">   * Mimic C array subscripting.</span>
 <a name="l00305"></a>00305 <span class="comment">   */</span>
 <a name="l00306"></a>00306    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00307"></a><a class="code" href="classUtil_1_1DSArray.html#a6ec4b9cb529f024cd28e96290a4ca410">00307</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1DSArray.html#a8cc8b5696ce4a17c06360e7f41f95096" title="Mimic C array subscripting.">DSArray&lt;Data&gt;::operator[] </a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00307"></a><a class="code" href="classUtil_1_1DSArray.html#aba0738c363ecf794907bc2c305234ede">00307</a>    <span class="keyword">inline</span> <span class="keyword">const</span> Data&amp; <a class="code" href="classUtil_1_1DSArray.html#a64d57aff171ea7fd76f1e1466481360c" title="Mimic C array subscripting.">DSArray&lt;Data&gt;::operator[] </a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
 <a name="l00308"></a>00308 <span class="keyword">   </span>{
 <a name="l00309"></a>00309       assert(i &lt; size_);
 <a name="l00310"></a>00310       assert(i &gt;= 0 );
@@ -267,7 +267,7 @@
 <a name="l00312"></a>00312    }
 <a name="l00313"></a>00313 
 <a name="l00319"></a>00319    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00320"></a><a class="code" href="classUtil_1_1DSArray.html#a578e50675e1ec828c5a5a92737ad4cf7">00320</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a578e50675e1ec828c5a5a92737ad4cf7" title="Append data to the end of the array.">DSArray&lt;Data&gt;::append</a>(<span class="keyword">const</span> Data &amp;data) 
+<a name="l00320"></a><a class="code" href="classUtil_1_1DSArray.html#a4ac821902ea29016412aaf7d545e3fd7">00320</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a4ac821902ea29016412aaf7d545e3fd7" title="Append data to the end of the array.">DSArray&lt;Data&gt;::append</a>(<span class="keyword">const</span> Data &amp;data) 
 <a name="l00321"></a>00321    {
 <a name="l00322"></a>00322       <span class="keywordflow">if</span> (size_ == capacity_) {
 <a name="l00323"></a>00323          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Attempt to add to full DSArray&quot;</span>);
@@ -277,35 +277,35 @@
 <a name="l00327"></a>00327    }
 <a name="l00328"></a>00328 
 <a name="l00332"></a>00332    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00333"></a><a class="code" href="classUtil_1_1DSArray.html#ac8bb3912a3ce86b15842e79d0b421204">00333</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#ac8bb3912a3ce86b15842e79d0b421204" title="Set logical size to zero.">DSArray&lt;Data&gt;::clear</a>() 
+<a name="l00333"></a><a class="code" href="classUtil_1_1DSArray.html#a604a0b36a322430157c415ca16b5355c">00333</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1DSArray.html#a604a0b36a322430157c415ca16b5355c" title="Set logical size to zero.">DSArray&lt;Data&gt;::clear</a>() 
 <a name="l00334"></a>00334    { size_ = 0; }
 <a name="l00335"></a>00335 
 <a name="l00336"></a>00336    <span class="comment">/*</span>
 <a name="l00337"></a>00337 <span class="comment">   * Return physical capacity of array.</span>
 <a name="l00338"></a>00338 <span class="comment">   */</span>
 <a name="l00339"></a>00339    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00340"></a><a class="code" href="classUtil_1_1DSArray.html#a104736719cd4e5f21c25705c77064dde">00340</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#a104736719cd4e5f21c25705c77064dde" title="Return physical capacity of array.">DSArray&lt;Data&gt;::capacity</a>()<span class="keyword"> const</span>
+<a name="l00340"></a><a class="code" href="classUtil_1_1DSArray.html#a1a1cf465553d6150c596eeaf8b3bc846">00340</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#a1a1cf465553d6150c596eeaf8b3bc846" title="Return physical capacity of array.">DSArray&lt;Data&gt;::capacity</a>()<span class="keyword"> const</span>
 <a name="l00341"></a>00341 <span class="keyword">   </span>{ <span class="keywordflow">return</span> capacity_; }
 <a name="l00342"></a>00342 
 <a name="l00343"></a>00343    <span class="comment">/*</span>
 <a name="l00344"></a>00344 <span class="comment">   * Return logical size of this array (i.e., number of elements).</span>
 <a name="l00345"></a>00345 <span class="comment">   */</span>
 <a name="l00346"></a>00346    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00347"></a><a class="code" href="classUtil_1_1DSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b">00347</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#ab8e4e3e2a7bf18888b71bdf9dda0770b" title="Return logical size of this array (i.e., number of elements).">DSArray&lt;Data&gt;::size</a>()<span class="keyword"> const</span>
+<a name="l00347"></a><a class="code" href="classUtil_1_1DSArray.html#aed270880ce8307d7f1e3e320da9d3157">00347</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1DSArray.html#aed270880ce8307d7f1e3e320da9d3157" title="Return logical size of this array (i.e., number of elements).">DSArray&lt;Data&gt;::size</a>()<span class="keyword"> const</span>
 <a name="l00348"></a>00348 <span class="keyword">   </span>{ <span class="keywordflow">return</span> size_; }
 <a name="l00349"></a>00349 
 <a name="l00350"></a>00350    <span class="comment">/*</span>
 <a name="l00351"></a>00351 <span class="comment">   * Return true if the DSArray has been allocated, false otherwise.</span>
 <a name="l00352"></a>00352 <span class="comment">   */</span>
 <a name="l00353"></a>00353    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Data&gt;
-<a name="l00354"></a><a class="code" href="classUtil_1_1DSArray.html#a0bcdab3616db481dd211594529479f94">00354</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1DSArray.html#a0bcdab3616db481dd211594529479f94" title="Return true if the DSArray has been allocated, false otherwise.">DSArray&lt;Data&gt;::isAllocated</a>()<span class="keyword"> const</span>
+<a name="l00354"></a><a class="code" href="classUtil_1_1DSArray.html#af72a500afe024c17997853f6237c5831">00354</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1DSArray.html#af72a500afe024c17997853f6237c5831" title="Return true if the DSArray has been allocated, false otherwise.">DSArray&lt;Data&gt;::isAllocated</a>()<span class="keyword"> const</span>
 <a name="l00355"></a>00355 <span class="keyword">   </span>{  <span class="keywordflow">return</span> !(data_ == 0); }
 <a name="l00356"></a>00356 
 <a name="l00357"></a>00357 } 
 <a name="l00358"></a>00358 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:48 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

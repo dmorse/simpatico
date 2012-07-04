@@ -14,7 +14,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Simpatico&#160;<span id="projectnumber">v0.8</span></div>
+   <div id="projectname">Simpatico&#160;<span id="projectnumber">v1.0</span></div>
   </td>
  </tr>
  </tbody>
@@ -55,7 +55,7 @@
 <a name="l00004"></a>00004 <span class="comment">/*</span>
 <a name="l00005"></a>00005 <span class="comment">* Simpatico - Simulation Package for Polymeric and Molecular Liquids</span>
 <a name="l00006"></a>00006 <span class="comment">*</span>
-<a name="l00007"></a>00007 <span class="comment">* Copyright 2010, David Morse (morse@cems.umn.edu)</span>
+<a name="l00007"></a>00007 <span class="comment">* Copyright 2010 - 2012, David Morse (morse012@umn.edu)</span>
 <a name="l00008"></a>00008 <span class="comment">* Distributed under the terms of the GNU General Public License.</span>
 <a name="l00009"></a>00009 <span class="comment">*/</span>
 <a name="l00010"></a>00010 
@@ -124,9 +124,9 @@
 <a name="l00073"></a>00073 <span class="comment">   * Constructor.</span>
 <a name="l00074"></a>00074 <span class="comment">   */</span>
 <a name="l00075"></a>00075 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00076"></a>00076 <span class="preprocessor"></span>   <a class="code" href="classDdMd_1_1Simulation.html#a2e359c534f363837d52e05e27f3be28e" title="Default constructor.">Simulation::Simulation</a>(MPI::Intracomm&amp; communicator)
-<a name="l00077"></a><a class="code" href="classDdMd_1_1Simulation.html#a2e359c534f363837d52e05e27f3be28e">00077</a>    <span class="preprocessor">#else</span>
-<a name="l00078"></a>00078 <span class="preprocessor"></span>   <a class="code" href="classDdMd_1_1Simulation.html#a2e359c534f363837d52e05e27f3be28e" title="Default constructor.">Simulation::Simulation</a>() 
+<a name="l00076"></a>00076 <span class="preprocessor"></span>   <a class="code" href="classDdMd_1_1Simulation.html#a0e5546137dca89bb96077da6e2af3103" title="Default constructor.">Simulation::Simulation</a>(MPI::Intracomm&amp; communicator)
+<a name="l00077"></a><a class="code" href="classDdMd_1_1Simulation.html#a0e5546137dca89bb96077da6e2af3103">00077</a>    <span class="preprocessor">#else</span>
+<a name="l00078"></a>00078 <span class="preprocessor"></span>   <a class="code" href="classDdMd_1_1Simulation.html#a0e5546137dca89bb96077da6e2af3103" title="Default constructor.">Simulation::Simulation</a>() 
 <a name="l00079"></a>00079    <span class="preprocessor">#endif</span>
 <a name="l00080"></a>00080 <span class="preprocessor"></span>    : atomStorage_(),
 <a name="l00081"></a>00081       bondStorage_(),
@@ -202,15 +202,15 @@
 <a name="l00151"></a>00151 <span class="preprocessor">      #endif</span>
 <a name="l00152"></a>00152 <span class="preprocessor"></span>      maskedPairPolicy_(MaskBonded)
 <a name="l00153"></a>00153    {
-<a name="l00154"></a>00154       <a class="code" href="namespaceUtil.html#a608e10d093425c9228f10ed3c4994598" title="Guarantee initialization of all static class members in Util namespace.">Util::initStatic</a>();
+<a name="l00154"></a>00154       <a class="code" href="namespaceUtil.html#ae378e26a0d525f0cdeb424f208724608" title="Guarantee initialization of all static class members in Util namespace.">Util::initStatic</a>();
 <a name="l00155"></a>00155 
 <a name="l00156"></a>00156 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00157"></a>00157 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (!MPI::Is_initialized()) {
 <a name="l00158"></a>00158          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;MPI is not initialized&quot;</span>);
 <a name="l00159"></a>00159       }
-<a name="l00160"></a>00160       <a class="code" href="classUtil_1_1Vector.html#a8170d98ea8b055e49ef256d15cfbc5af" title="Commit MPI datatype MpiTraits&amp;lt;Vector&amp;gt;::type.">Util::Vector::commitMpiType</a>();
-<a name="l00161"></a>00161       <a class="code" href="classUtil_1_1IntVector.html#a8170d98ea8b055e49ef256d15cfbc5af" title="Commit MPI datatype MpiTraits&amp;lt;IntVector&amp;gt;::type.">Util::IntVector::commitMpiType</a>();
-<a name="l00162"></a>00162       <a class="code" href="classDdMd_1_1AtomType.html#a608e10d093425c9228f10ed3c4994598" title="Call this to guarantee initialization of static data.">AtomType::initStatic</a>();
+<a name="l00160"></a>00160       <a class="code" href="classUtil_1_1Vector.html#a318292420f45f49eb52592c0d74610dc" title="Commit MPI datatype MpiTraits&amp;lt;Vector&amp;gt;::type.">Util::Vector::commitMpiType</a>();
+<a name="l00161"></a>00161       <a class="code" href="classUtil_1_1IntVector.html#ad54c107285d35edd9dc957b1f77324a1" title="Commit MPI datatype MpiTraits&amp;lt;IntVector&amp;gt;::type.">Util::IntVector::commitMpiType</a>();
+<a name="l00162"></a>00162       <a class="code" href="classDdMd_1_1AtomType.html#a4ca212565c76960568a0b9126071e495" title="Call this to guarantee initialization of static data.">AtomType::initStatic</a>();
 <a name="l00163"></a>00163 
 <a name="l00164"></a>00164       setParamCommunicator(communicator);
 <a name="l00165"></a>00165       domain_.setGridCommunicator(communicator);
@@ -237,8 +237,8 @@
 <a name="l00186"></a>00186    <span class="comment">/*</span>
 <a name="l00187"></a>00187 <span class="comment">   * Destructor.</span>
 <a name="l00188"></a>00188 <span class="comment">   */</span>
-<a name="l00189"></a>00189    <a class="code" href="classDdMd_1_1Simulation.html#a64bd15ebce28bcb42aaa0231780933fe" title="Destructor.">Simulation::~Simulation</a>()
-<a name="l00190"></a><a class="code" href="classDdMd_1_1Simulation.html#a64bd15ebce28bcb42aaa0231780933fe">00190</a>    {
+<a name="l00189"></a>00189    <a class="code" href="classDdMd_1_1Simulation.html#a2a3bc93d0f5586bbde035256520d45bd" title="Destructor.">Simulation::~Simulation</a>()
+<a name="l00190"></a><a class="code" href="classDdMd_1_1Simulation.html#a2a3bc93d0f5586bbde035256520d45bd">00190</a>    {
 <a name="l00191"></a>00191       <span class="keywordflow">if</span> (pairPotentialPtr_) {
 <a name="l00192"></a>00192          <span class="keyword">delete</span> pairPotentialPtr_;
 <a name="l00193"></a>00193       }
@@ -316,8 +316,8 @@
 <a name="l00265"></a>00265    <span class="comment">/*</span>
 <a name="l00266"></a>00266 <span class="comment">   * Process command line options.</span>
 <a name="l00267"></a>00267 <span class="comment">   */</span>
-<a name="l00268"></a>00268    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a4384bd78719fb12cae61a83d02b5ec66" title="Process command line options.">Simulation::setOptions</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)
-<a name="l00269"></a><a class="code" href="classDdMd_1_1Simulation.html#a4384bd78719fb12cae61a83d02b5ec66">00269</a>    {
+<a name="l00268"></a>00268    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#aca76be0b3b11bd4c3499b5513102cbfc" title="Process command line options.">Simulation::setOptions</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv)
+<a name="l00269"></a><a class="code" href="classDdMd_1_1Simulation.html#aca76be0b3b11bd4c3499b5513102cbfc">00269</a>    {
 <a name="l00270"></a>00270       <span class="keywordtype">bool</span>  eflag  = <span class="keyword">false</span>;
 <a name="l00271"></a>00271    
 <a name="l00272"></a>00272       <span class="comment">// Read command-line arguments</span>
@@ -335,12 +335,12 @@
 <a name="l00284"></a>00284    
 <a name="l00285"></a>00285       <span class="keywordflow">if</span> (eflag) {
 <a name="l00286"></a>00286          <span class="comment">// Enable echoing of parameters to log file as they are read.</span>
-<a name="l00287"></a>00287          <a class="code" href="classUtil_1_1ParamComponent.html#aa6a79147fc967b562e62963e96d22b4a" title="Set echo parameter to true enable echoing, or false to disable.">Util::ParamComponent::setEcho</a>(<span class="keyword">true</span>);
+<a name="l00287"></a>00287          <a class="code" href="classUtil_1_1ParamComponent.html#add72ad7add98e0b90979ee2638c7468d" title="Set echo parameter to true enable echoing, or false to disable.">Util::ParamComponent::setEcho</a>(<span class="keyword">true</span>);
 <a name="l00288"></a>00288       }
 <a name="l00289"></a>00289    }
 <a name="l00290"></a>00290 
-<a name="l00294"></a>00294    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#ab5421d3c9175985c9acbf723e5392075" title="Read parameters, allocate memory and initialize.">Simulation::readParam</a>(std::istream&amp; in)
-<a name="l00295"></a><a class="code" href="classDdMd_1_1Simulation.html#ab5421d3c9175985c9acbf723e5392075">00295</a>    {
+<a name="l00294"></a>00294    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a24277545642a0b701181ffea85613b57" title="Read parameters, allocate memory and initialize.">Simulation::readParam</a>(std::istream&amp; in)
+<a name="l00295"></a><a class="code" href="classDdMd_1_1Simulation.html#a24277545642a0b701181ffea85613b57">00295</a>    {
 <a name="l00296"></a>00296       <span class="comment">// Preconditions</span>
 <a name="l00297"></a>00297       assert(pairPotentialPtr_ == 0);
 <a name="l00298"></a>00298       assert(bondPotentialPtr_ == 0);
@@ -462,8 +462,8 @@
 <a name="l00414"></a>00414       readEnd(in);
 <a name="l00415"></a>00415    }
 <a name="l00416"></a>00416 
-<a name="l00420"></a>00420    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a29cb9ccd6e27b8c44c0e35476cb9414a" title="Read the FileMaster.">Simulation::readFileMaster</a>(std::istream &amp;in)
-<a name="l00421"></a><a class="code" href="classDdMd_1_1Simulation.html#a29cb9ccd6e27b8c44c0e35476cb9414a">00421</a>    {
+<a name="l00420"></a>00420    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#aeb091178ff7457e841eb208be068ed64" title="Read the FileMaster.">Simulation::readFileMaster</a>(std::istream &amp;in)
+<a name="l00421"></a><a class="code" href="classDdMd_1_1Simulation.html#aeb091178ff7457e841eb208be068ed64">00421</a>    {
 <a name="l00422"></a>00422       <span class="comment">// Create FileMaster if necessary</span>
 <a name="l00423"></a>00423       <span class="keywordflow">if</span> (!fileMasterPtr_) {
 <a name="l00424"></a>00424          fileMasterPtr_ = <span class="keyword">new</span> <a class="code" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>();
@@ -471,8 +471,8 @@
 <a name="l00426"></a>00426       }
 <a name="l00427"></a>00427    }
 <a name="l00428"></a>00428 
-<a name="l00432"></a>00432    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#ada500231e17bfb7f1b9097caca487f15" title="Read potential styles and maskedPairPolicy.">Simulation::readPotentialStyles</a>(std::istream &amp;in)
-<a name="l00433"></a><a class="code" href="classDdMd_1_1Simulation.html#ada500231e17bfb7f1b9097caca487f15">00433</a>    {
+<a name="l00432"></a>00432    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#ac28e2495b88ebf03b2833187f5034bb3" title="Read potential styles and maskedPairPolicy.">Simulation::readPotentialStyles</a>(std::istream &amp;in)
+<a name="l00433"></a><a class="code" href="classDdMd_1_1Simulation.html#ac28e2495b88ebf03b2833187f5034bb3">00433</a>    {
 <a name="l00434"></a>00434 <span class="preprocessor">      #ifndef DDMD_NOPAIR</span>
 <a name="l00435"></a>00435 <span class="preprocessor"></span>      read&lt;std::string&gt;(in, <span class="stringliteral">&quot;pairStyle&quot;</span>, pairStyle_);
 <a name="l00436"></a>00436 <span class="preprocessor">      #endif</span>
@@ -501,8 +501,8 @@
 <a name="l00459"></a>00459    <span class="comment">/*</span>
 <a name="l00460"></a>00460 <span class="comment">   * Read EnergyEnsemble and BoundaryEnsemble</span>
 <a name="l00461"></a>00461 <span class="comment">   */</span>
-<a name="l00462"></a>00462    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a7e4f36650a5fa0818045413f37e9bd9a" title="Read energy and boundary ensembles.">Simulation::readEnsembles</a>(std::istream &amp;in)
-<a name="l00463"></a><a class="code" href="classDdMd_1_1Simulation.html#a7e4f36650a5fa0818045413f37e9bd9a">00463</a>    {
+<a name="l00462"></a>00462    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#ac6951f28a65d6e9e985f3dc511afb025" title="Read energy and boundary ensembles.">Simulation::readEnsembles</a>(std::istream &amp;in)
+<a name="l00463"></a><a class="code" href="classDdMd_1_1Simulation.html#ac6951f28a65d6e9e985f3dc511afb025">00463</a>    {
 <a name="l00464"></a>00464       readParamComposite(in, *energyEnsemblePtr_);
 <a name="l00465"></a>00465       readParamComposite(in, *boundaryEnsemblePtr_);
 <a name="l00466"></a>00466    }
@@ -510,7 +510,7 @@
 <a name="l00468"></a>00468    <span class="comment">/*</span>
 <a name="l00469"></a>00469 <span class="comment">   * Read and implement commands in an input script.</span>
 <a name="l00470"></a>00470 <span class="comment">   */</span>
-<a name="l00471"></a>00471    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#ab2474de57ea9de1def29ca73c9d66686" title="Read and execute commands from the default command file.">Simulation::readCommands</a>(std::istream &amp;in)
+<a name="l00471"></a>00471    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a58f73ad42249ca9d08aea965ec0140a3" title="Read and execute commands from the default command file.">Simulation::readCommands</a>(std::istream &amp;in)
 <a name="l00472"></a>00472    {
 <a name="l00473"></a>00473       std::string   command;
 <a name="l00474"></a>00474       std::string   filename;
@@ -529,8 +529,8 @@
 <a name="l00487"></a>00487 
 <a name="l00488"></a>00488 <span class="preprocessor">         #ifdef UTIL_MPI</span>
 <a name="l00489"></a>00489 <span class="preprocessor"></span>         <span class="keywordflow">if</span> (!hasParamCommunicator() || isParamIoProcessor()) {
-<a name="l00490"></a>00490             <a class="code" href="namespaceUtil.html#ac5c1fafb02ebe4c2ddbf0857e106860d" title="Get the next non-empty line of input, skipping any empty lines.">getNextLine</a>(in, line);
-<a name="l00491"></a>00491             <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; line &lt;&lt; std::endl;
+<a name="l00490"></a>00490             <a class="code" href="namespaceUtil.html#a2b72e5bac25f33d81b15d6d4ee2465a1" title="Get the next non-empty line of input, skipping any empty lines.">getNextLine</a>(in, line);
+<a name="l00491"></a>00491             <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; line &lt;&lt; std::endl;
 <a name="l00492"></a>00492          } 
 <a name="l00493"></a>00493          <span class="keywordflow">if</span> (hasParamCommunicator()) {
 <a name="l00494"></a>00494             bcast&lt;std::string&gt;(domain_.communicator(), line, 0);
@@ -579,7 +579,7 @@
 <a name="l00537"></a>00537          <span class="keywordflow">if</span> (command == <span class="stringliteral">&quot;FINISH&quot;</span>) {
 <a name="l00538"></a>00538             readNext = <span class="keyword">false</span>;
 <a name="l00539"></a>00539          } <span class="keywordflow">else</span> {
-<a name="l00540"></a>00540             <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Error: Unknown command  &quot;</span> &lt;&lt; std::endl;
+<a name="l00540"></a>00540             <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; <span class="stringliteral">&quot;Error: Unknown command  &quot;</span> &lt;&lt; std::endl;
 <a name="l00541"></a>00541             readNext = <span class="keyword">false</span>;
 <a name="l00542"></a>00542          }
 <a name="l00543"></a>00543 
@@ -589,21 +589,21 @@
 <a name="l00547"></a>00547    <span class="comment">/*</span>
 <a name="l00548"></a>00548 <span class="comment">   * Read and implement commands from the default command file.</span>
 <a name="l00549"></a>00549 <span class="comment">   */</span>
-<a name="l00550"></a>00550    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#ab2474de57ea9de1def29ca73c9d66686" title="Read and execute commands from the default command file.">Simulation::readCommands</a>()
-<a name="l00551"></a><a class="code" href="classDdMd_1_1Simulation.html#ab2474de57ea9de1def29ca73c9d66686">00551</a>    {  readCommands(fileMaster().commandFile()); }
+<a name="l00550"></a>00550    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a58f73ad42249ca9d08aea965ec0140a3" title="Read and execute commands from the default command file.">Simulation::readCommands</a>()
+<a name="l00551"></a><a class="code" href="classDdMd_1_1Simulation.html#a58f73ad42249ca9d08aea965ec0140a3">00551</a>    {  readCommands(fileMaster().commandFile()); }
 <a name="l00552"></a>00552 
 <a name="l00553"></a>00553    <span class="comment">/*</span>
 <a name="l00554"></a>00554 <span class="comment">   * Choose velocities from a Boltzmann distribution.</span>
 <a name="l00555"></a>00555 <span class="comment">   */</span>
-<a name="l00556"></a>00556    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a0e463234fddc9f35cf6b3fb2ad5e380b" title="Set random velocities chosen from Boltzmann distribution.">Simulation::setBoltzmannVelocities</a>(<span class="keywordtype">double</span> temperature)
-<a name="l00557"></a><a class="code" href="classDdMd_1_1Simulation.html#a0e463234fddc9f35cf6b3fb2ad5e380b">00557</a>    {
+<a name="l00556"></a>00556    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#ae04aeb46428f975caea76e1c2df873db" title="Set random velocities chosen from Boltzmann distribution.">Simulation::setBoltzmannVelocities</a>(<span class="keywordtype">double</span> temperature)
+<a name="l00557"></a><a class="code" href="classDdMd_1_1Simulation.html#ae04aeb46428f975caea76e1c2df873db">00557</a>    {
 <a name="l00558"></a>00558       <span class="keywordtype">double</span> scale = sqrt(temperature);
 <a name="l00559"></a>00559       <a class="code" href="classDdMd_1_1AtomIterator.html" title="Iterator for all atoms owned by an AtomStorage.">AtomIterator</a> atomIter;
 <a name="l00560"></a>00560       <span class="keywordtype">int</span> i;
 <a name="l00561"></a>00561 
 <a name="l00562"></a>00562       atomStorage_.begin(atomIter); 
-<a name="l00563"></a>00563       <span class="keywordflow">for</span>( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter){
-<a name="l00564"></a>00564          <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga727ca0103c14a6e65aede427fd58a2a7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00563"></a>00563       <span class="keywordflow">for</span>( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter){
+<a name="l00564"></a>00564          <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
 <a name="l00565"></a>00565             atomIter-&gt;velocity()[i] = scale*random_.gaussian();
 <a name="l00566"></a>00566          }
 <a name="l00567"></a>00567       }
@@ -612,11 +612,11 @@
 <a name="l00570"></a>00570    <span class="comment">/*</span>
 <a name="l00571"></a>00571 <span class="comment">   * Set forces on all local atoms to zero.</span>
 <a name="l00572"></a>00572 <span class="comment">   */</span>
-<a name="l00573"></a>00573    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a60373e339e2adf8daeba20e5440fac11" title="Set forces for all local atoms to zero.">Simulation::zeroForces</a>()
-<a name="l00574"></a><a class="code" href="classDdMd_1_1Simulation.html#a60373e339e2adf8daeba20e5440fac11">00574</a>    {
+<a name="l00573"></a>00573    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#ad29214d7595ff51e6fc0172e681f606a" title="Set forces for all local atoms to zero.">Simulation::zeroForces</a>()
+<a name="l00574"></a><a class="code" href="classDdMd_1_1Simulation.html#ad29214d7595ff51e6fc0172e681f606a">00574</a>    {
 <a name="l00575"></a>00575       <a class="code" href="classDdMd_1_1AtomIterator.html" title="Iterator for all atoms owned by an AtomStorage.">AtomIterator</a> atomIter;
 <a name="l00576"></a>00576       atomStorage_.begin(atomIter); 
-<a name="l00577"></a>00577       <span class="keywordflow">for</span>( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter){
+<a name="l00577"></a>00577       <span class="keywordflow">for</span>( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter){
 <a name="l00578"></a>00578          atomIter-&gt;force().zero();
 <a name="l00579"></a>00579       }
 <a name="l00580"></a>00580    }
@@ -624,8 +624,8 @@
 <a name="l00582"></a>00582    <span class="comment">/*</span>
 <a name="l00583"></a>00583 <span class="comment">   * Set forces on all local atoms to zero.</span>
 <a name="l00584"></a>00584 <span class="comment">   */</span>
-<a name="l00585"></a>00585    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a572d3d87d67757b60819e7ace0285437" title="Compute forces for all local atoms.">Simulation::computeForces</a>()
-<a name="l00586"></a><a class="code" href="classDdMd_1_1Simulation.html#a572d3d87d67757b60819e7ace0285437">00586</a>    {
+<a name="l00585"></a>00585    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a2983b5e88ce2bbf7b0f247921037f26f" title="Compute forces for all local atoms.">Simulation::computeForces</a>()
+<a name="l00586"></a><a class="code" href="classDdMd_1_1Simulation.html#a2983b5e88ce2bbf7b0f247921037f26f">00586</a>    {
 <a name="l00587"></a>00587       zeroForces();
 <a name="l00588"></a>00588       pairPotential().addForces();
 <a name="l00589"></a>00589       bondPotential().addForces();
@@ -649,17 +649,17 @@
 <a name="l00607"></a>00607    <span class="comment">/*</span>
 <a name="l00608"></a>00608 <span class="comment">   * Integrate.</span>
 <a name="l00609"></a>00609 <span class="comment">   */</span>
-<a name="l00610"></a>00610    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#aaf4cedda6653cf870c97001af7881c2a" title="Integrate equations of motion.">Simulation::simulate</a>(<span class="keywordtype">int</span> nStep)
-<a name="l00611"></a><a class="code" href="classDdMd_1_1Simulation.html#aaf4cedda6653cf870c97001af7881c2a">00611</a>    {
+<a name="l00610"></a>00610    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#abbd769765ed0e640232b475a9cc3baab" title="Integrate equations of motion.">Simulation::simulate</a>(<span class="keywordtype">int</span> nStep)
+<a name="l00611"></a><a class="code" href="classDdMd_1_1Simulation.html#abbd769765ed0e640232b475a9cc3baab">00611</a>    {
 <a name="l00612"></a>00612       <span class="comment">// Preconditions</span>
 <a name="l00613"></a>00613       assert(integratorPtr_);
 <a name="l00614"></a>00614 
 <a name="l00615"></a>00615       <span class="keywordflow">if</span> (domain_.isMaster()) {
-<a name="l00616"></a>00616          <a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; std::endl;
+<a name="l00616"></a>00616          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; std::endl;
 <a name="l00617"></a>00617       }
 <a name="l00618"></a>00618 
 <a name="l00619"></a>00619       integratorPtr_-&gt;run(nStep);
-<a name="l00620"></a>00620       integratorPtr_-&gt;outputStatistics(<a class="code" href="classUtil_1_1Log.html#a1957f2bc5b6c26002b209633d5ce6155" title="Get log ostream by reference.">Log::file</a>());
+<a name="l00620"></a>00620       integratorPtr_-&gt;outputStatistics(<a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>());
 <a name="l00621"></a>00621    }
 <a name="l00622"></a>00622 
 <a name="l00623"></a>00623    <span class="comment">/*</span>
@@ -667,8 +667,8 @@
 <a name="l00625"></a>00625 <span class="comment">   *</span>
 <a name="l00626"></a>00626 <span class="comment">   * Call on all processors. </span>
 <a name="l00627"></a>00627 <span class="comment">   */</span>
-<a name="l00628"></a>00628    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a092706453835069b92f41a413760a980" title="Compute total kinetic energy.">Simulation::computeKineticEnergy</a>()
-<a name="l00629"></a><a class="code" href="classDdMd_1_1Simulation.html#a092706453835069b92f41a413760a980">00629</a>    {
+<a name="l00628"></a>00628    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a8589034d49d77db29774fe9bc67287cb" title="Compute total kinetic energy.">Simulation::computeKineticEnergy</a>()
+<a name="l00629"></a><a class="code" href="classDdMd_1_1Simulation.html#a8589034d49d77db29774fe9bc67287cb">00629</a>    {
 <a name="l00630"></a>00630       <span class="keywordtype">double</span> energy = 0.0;
 <a name="l00631"></a>00631       <span class="keywordtype">double</span> mass;
 <a name="l00632"></a>00632       <span class="keywordtype">int</span> typeId;
@@ -676,7 +676,7 @@
 <a name="l00634"></a>00634       <span class="comment">// Add kinetic energies of local atoms on this processor</span>
 <a name="l00635"></a>00635       <a class="code" href="classDdMd_1_1AtomIterator.html" title="Iterator for all atoms owned by an AtomStorage.">AtomIterator</a> atomIter;
 <a name="l00636"></a>00636       atomStorage_.begin(atomIter); 
-<a name="l00637"></a>00637       <span class="keywordflow">for</span>( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#acf66f57fcd15c0f1ba36e4470589c816" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter){
+<a name="l00637"></a>00637       <span class="keywordflow">for</span>( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter){
 <a name="l00638"></a>00638          typeId = atomIter-&gt;typeId();
 <a name="l00639"></a>00639          mass   = atomTypes_[typeId].mass();
 <a name="l00640"></a>00640          energy += mass*(atomIter-&gt;velocity().square());
@@ -698,16 +698,16 @@
 <a name="l00656"></a>00656 <span class="comment">   * </span>
 <a name="l00657"></a>00657 <span class="comment">   * Called only on master processor.</span>
 <a name="l00658"></a>00658 <span class="comment">   */</span>
-<a name="l00659"></a>00659    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1Simulation.html#a0139efc90de1d0e9b0488a18a651dfdb" title="Compute precomputed total kinetic energy.">Simulation::kineticEnergy</a>()
-<a name="l00660"></a><a class="code" href="classDdMd_1_1Simulation.html#a0139efc90de1d0e9b0488a18a651dfdb">00660</a>    {  <span class="keywordflow">return</span> kineticEnergy_; }
+<a name="l00659"></a>00659    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1Simulation.html#a10c17ef9707e9c64b0295b19089ad6e4" title="Compute precomputed total kinetic energy.">Simulation::kineticEnergy</a>()
+<a name="l00660"></a><a class="code" href="classDdMd_1_1Simulation.html#a10c17ef9707e9c64b0295b19089ad6e4">00660</a>    {  <span class="keywordflow">return</span> kineticEnergy_; }
 <a name="l00661"></a>00661 
 <a name="l00662"></a>00662 <span class="preprocessor">   #ifdef UTIL_MPI</span>
 <a name="l00663"></a>00663 <span class="preprocessor"></span>
 <a name="l00664"></a>00664    <span class="comment">/*</span>
 <a name="l00665"></a>00665 <span class="comment">   * Compute all potential energy contributions.</span>
 <a name="l00666"></a>00666 <span class="comment">   */</span>
-<a name="l00667"></a>00667    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a7253cca3bfaaba9bad4a8b8741ec59b2" title="Calculate total potential energy on all processors.">Simulation::computePotentialEnergies</a>() 
-<a name="l00668"></a><a class="code" href="classDdMd_1_1Simulation.html#a7253cca3bfaaba9bad4a8b8741ec59b2">00668</a>    {
+<a name="l00667"></a>00667    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#abd33378ad2f63ff05d667915be115926" title="Calculate total potential energy on all processors.">Simulation::computePotentialEnergies</a>() 
+<a name="l00668"></a><a class="code" href="classDdMd_1_1Simulation.html#abd33378ad2f63ff05d667915be115926">00668</a>    {
 <a name="l00669"></a>00669       pairPotential().computeEnergy(domain_.communicator());
 <a name="l00670"></a>00670       bondPotential().computeEnergy(domain_.communicator());
 <a name="l00671"></a>00671 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
@@ -732,7 +732,7 @@
 <a name="l00690"></a>00690    <span class="comment">/*</span>
 <a name="l00691"></a>00691 <span class="comment">   * Compute all potential energy contributions.</span>
 <a name="l00692"></a>00692 <span class="comment">   */</span>
-<a name="l00693"></a>00693    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a7253cca3bfaaba9bad4a8b8741ec59b2" title="Calculate total potential energy on all processors.">Simulation::computePotentialEnergies</a>() 
+<a name="l00693"></a>00693    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#abd33378ad2f63ff05d667915be115926" title="Calculate total potential energy on all processors.">Simulation::computePotentialEnergies</a>() 
 <a name="l00694"></a>00694    {
 <a name="l00695"></a>00695       pairPotential().computeEnergy();
 <a name="l00696"></a>00696       bondPotential().computeEnergy();
@@ -758,8 +758,8 @@
 <a name="l00716"></a>00716    <span class="comment">/*</span>
 <a name="l00717"></a>00717 <span class="comment">   * Compute all potential energy contributions.</span>
 <a name="l00718"></a>00718 <span class="comment">   */</span>
-<a name="l00719"></a>00719    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1Simulation.html#a3b69eed28747f5c7af55bc3ef911da53" title="Return precomputed total potential energy.">Simulation::potentialEnergy</a>() 
-<a name="l00720"></a><a class="code" href="classDdMd_1_1Simulation.html#a3b69eed28747f5c7af55bc3ef911da53">00720</a>    {
+<a name="l00719"></a>00719    <span class="keywordtype">double</span> <a class="code" href="classDdMd_1_1Simulation.html#a37a102d9d4fad341b53e8a08bab1d7f0" title="Return precomputed total potential energy.">Simulation::potentialEnergy</a>() 
+<a name="l00720"></a><a class="code" href="classDdMd_1_1Simulation.html#a37a102d9d4fad341b53e8a08bab1d7f0">00720</a>    {
 <a name="l00721"></a>00721       <span class="keywordtype">double</span> energy = 0.0;
 <a name="l00722"></a>00722       energy += pairPotential().energy();
 <a name="l00723"></a>00723       energy += bondPotential().energy();
@@ -784,8 +784,8 @@
 <a name="l00742"></a>00742    <span class="comment">/*</span>
 <a name="l00743"></a>00743 <span class="comment">   * Read configuration file on master and distribute atoms.</span>
 <a name="l00744"></a>00744 <span class="comment">   */</span>
-<a name="l00745"></a>00745    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a9160e671ca2963da84a4932568432095" title="Read configuration file on master and distribute atoms.">Simulation::readConfig</a>(<span class="keyword">const</span> std::string&amp; filename)
-<a name="l00746"></a><a class="code" href="classDdMd_1_1Simulation.html#a9160e671ca2963da84a4932568432095">00746</a>    {
+<a name="l00745"></a>00745    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#ab9b92083e998d136df9df75cb8677667" title="Read configuration file on master and distribute atoms.">Simulation::readConfig</a>(<span class="keyword">const</span> std::string&amp; filename)
+<a name="l00746"></a><a class="code" href="classDdMd_1_1Simulation.html#ab9b92083e998d136df9df75cb8677667">00746</a>    {
 <a name="l00747"></a>00747       std::ifstream inputFile;
 <a name="l00748"></a>00748       <span class="keywordflow">if</span> (domain_.isMaster()) {
 <a name="l00749"></a>00749          fileMaster().openInputFile(filename, inputFile);
@@ -813,8 +813,8 @@
 <a name="l00771"></a>00771    <span class="comment">/*</span>
 <a name="l00772"></a>00772 <span class="comment">   * Write configuration file on master.</span>
 <a name="l00773"></a>00773 <span class="comment">   */</span>
-<a name="l00774"></a>00774    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#a08dbe976cc87f72e3a1ca9775b0d494d" title="Write configuration file.">Simulation::writeConfig</a>(<span class="keyword">const</span> std::string&amp; filename)
-<a name="l00775"></a><a class="code" href="classDdMd_1_1Simulation.html#a08dbe976cc87f72e3a1ca9775b0d494d">00775</a>    {
+<a name="l00774"></a>00774    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#afda8eea88c0e81663b145a47d1d90588" title="Write configuration file.">Simulation::writeConfig</a>(<span class="keyword">const</span> std::string&amp; filename)
+<a name="l00775"></a><a class="code" href="classDdMd_1_1Simulation.html#afda8eea88c0e81663b145a47d1d90588">00775</a>    {
 <a name="l00776"></a>00776       std::ofstream outputFile;
 <a name="l00777"></a>00777       <span class="keywordflow">if</span> (domain_.isMaster()) {
 <a name="l00778"></a>00778          fileMaster().openOutputFile(filename, outputFile);
@@ -842,8 +842,8 @@
 <a name="l00800"></a>00800 <span class="preprocessor"></span>   <span class="comment">/*</span>
 <a name="l00801"></a>00801 <span class="comment">   * Return the PairFactory by reference.</span>
 <a name="l00802"></a>00802 <span class="comment">   */</span>
-<a name="l00803"></a>00803    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;PairPotential&gt;</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a5dd7e39a86b01cf70d08220bf5253a80" title="Get the Factory&amp;lt;PairPotential&amp;gt; by reference.">Simulation::pairFactory</a>()
-<a name="l00804"></a><a class="code" href="classDdMd_1_1Simulation.html#a5dd7e39a86b01cf70d08220bf5253a80">00804</a>    {
+<a name="l00803"></a>00803    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;PairPotential&gt;</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#ab48939227b9e29f5f8cf935ec92868e2" title="Get the Factory&amp;lt;PairPotential&amp;gt; by reference.">Simulation::pairFactory</a>()
+<a name="l00804"></a><a class="code" href="classDdMd_1_1Simulation.html#ab48939227b9e29f5f8cf935ec92868e2">00804</a>    {
 <a name="l00805"></a>00805       <span class="keywordflow">if</span> (!pairFactoryPtr_) {
 <a name="l00806"></a>00806          pairFactoryPtr_ = <span class="keyword">new</span> <a class="code" href="classDdMd_1_1PairFactory.html" title="Factory for PairPotential objects.">PairFactory</a>(*<span class="keyword">this</span>);
 <a name="l00807"></a>00807       }
@@ -854,15 +854,15 @@
 <a name="l00812"></a>00812    <span class="comment">/*</span>
 <a name="l00813"></a>00813 <span class="comment">   * Get the pair style string.</span>
 <a name="l00814"></a>00814 <span class="comment">   */</span>
-<a name="l00815"></a>00815    std::string <a class="code" href="classDdMd_1_1Simulation.html#ab5df9a80f1bd3006eb704724ca8e2def" title="Return nonbonded pair style string.">Simulation::pairStyle</a>()<span class="keyword"> const</span>
-<a name="l00816"></a><a class="code" href="classDdMd_1_1Simulation.html#ab5df9a80f1bd3006eb704724ca8e2def">00816</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> pairStyle_;  }
+<a name="l00815"></a>00815    std::string <a class="code" href="classDdMd_1_1Simulation.html#a3f59d4cda8e4dd1c3f5a4a4ca902cf0a" title="Return nonbonded pair style string.">Simulation::pairStyle</a>()<span class="keyword"> const</span>
+<a name="l00816"></a><a class="code" href="classDdMd_1_1Simulation.html#a3f59d4cda8e4dd1c3f5a4a4ca902cf0a">00816</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> pairStyle_;  }
 <a name="l00817"></a>00817 <span class="preprocessor">   #endif</span>
 <a name="l00818"></a>00818 <span class="preprocessor"></span>
 <a name="l00819"></a>00819    <span class="comment">/*</span>
 <a name="l00820"></a>00820 <span class="comment">   * Return the BondFactory by reference.</span>
 <a name="l00821"></a>00821 <span class="comment">   */</span>
-<a name="l00822"></a>00822    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;BondPotential&gt;</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#ac5eaa682a9e4dd7bf3b166071e1d69a8" title="Get the associated Factory&amp;lt;BondPotential&amp;gt; by reference.">Simulation::bondFactory</a>()
-<a name="l00823"></a><a class="code" href="classDdMd_1_1Simulation.html#ac5eaa682a9e4dd7bf3b166071e1d69a8">00823</a>    {
+<a name="l00822"></a>00822    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;BondPotential&gt;</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a4127ff1f0bd3458414d496e0c76df4e4" title="Get the associated Factory&amp;lt;BondPotential&amp;gt; by reference.">Simulation::bondFactory</a>()
+<a name="l00823"></a><a class="code" href="classDdMd_1_1Simulation.html#a4127ff1f0bd3458414d496e0c76df4e4">00823</a>    {
 <a name="l00824"></a>00824       <span class="keywordflow">if</span> (!bondFactoryPtr_) {
 <a name="l00825"></a>00825          bondFactoryPtr_ = <span class="keyword">new</span> <a class="code" href="classDdMd_1_1BondFactory.html" title="Factory for BondPotential objects.">BondFactory</a>(*<span class="keyword">this</span>);
 <a name="l00826"></a>00826       }
@@ -873,8 +873,8 @@
 <a name="l00831"></a>00831    <span class="comment">/*</span>
 <a name="l00832"></a>00832 <span class="comment">   * Get the bond style string.</span>
 <a name="l00833"></a>00833 <span class="comment">   */</span>
-<a name="l00834"></a>00834    std::string <a class="code" href="classDdMd_1_1Simulation.html#a4d83d946cf31b1ac66aece56b7133683" title="Return covalent bond style string.">Simulation::bondStyle</a>()<span class="keyword"> const</span>
-<a name="l00835"></a><a class="code" href="classDdMd_1_1Simulation.html#a4d83d946cf31b1ac66aece56b7133683">00835</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> bondStyle_;  }
+<a name="l00834"></a>00834    std::string <a class="code" href="classDdMd_1_1Simulation.html#a434fa4a57478f1941d924446a41627b3" title="Return covalent bond style string.">Simulation::bondStyle</a>()<span class="keyword"> const</span>
+<a name="l00835"></a><a class="code" href="classDdMd_1_1Simulation.html#a434fa4a57478f1941d924446a41627b3">00835</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> bondStyle_;  }
 <a name="l00836"></a>00836 
 <a name="l00837"></a>00837 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
 <a name="l00838"></a>00838 <span class="preprocessor"></span>   <span class="comment">/*</span>
@@ -920,8 +920,8 @@
 <a name="l00878"></a>00878 <span class="preprocessor"></span>   <span class="comment">/*</span>
 <a name="l00879"></a>00879 <span class="comment">   * Return the ExternalFactory by reference.</span>
 <a name="l00880"></a>00880 <span class="comment">   */</span>
-<a name="l00881"></a>00881    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;ExternalPotential&gt;</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#affe41c37893b4fb65b5aabb705b4271c" title="Get the associated External Factory by reference.">Simulation::externalFactory</a>()
-<a name="l00882"></a><a class="code" href="classDdMd_1_1Simulation.html#affe41c37893b4fb65b5aabb705b4271c">00882</a>    {
+<a name="l00881"></a>00881    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;ExternalPotential&gt;</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#aa502eac2282707b7a8e6898f21cbf1ca" title="Get the associated External Factory by reference.">Simulation::externalFactory</a>()
+<a name="l00882"></a><a class="code" href="classDdMd_1_1Simulation.html#aa502eac2282707b7a8e6898f21cbf1ca">00882</a>    {
 <a name="l00883"></a>00883       <span class="keywordflow">if</span> (externalFactoryPtr_ == 0) {
 <a name="l00884"></a>00884          externalFactoryPtr_ = <span class="keyword">new</span> <a class="code" href="classDdMd_1_1ExternalFactory.html" title="Factory for ExternalPotential objects.">ExternalFactory</a>(*<span class="keyword">this</span>);
 <a name="l00885"></a>00885       }
@@ -932,15 +932,15 @@
 <a name="l00890"></a>00890    <span class="comment">/*</span>
 <a name="l00891"></a>00891 <span class="comment">   * Get the external style string.</span>
 <a name="l00892"></a>00892 <span class="comment">   */</span>
-<a name="l00893"></a>00893    std::string <a class="code" href="classDdMd_1_1Simulation.html#a70125de9a41d1ad0aa7c002e69fd9af6" title="Return external potential style string.">Simulation::externalStyle</a>()<span class="keyword"> const</span>
-<a name="l00894"></a><a class="code" href="classDdMd_1_1Simulation.html#a70125de9a41d1ad0aa7c002e69fd9af6">00894</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> externalStyle_;  }
+<a name="l00893"></a>00893    std::string <a class="code" href="classDdMd_1_1Simulation.html#aefa0323fdb3cab7a38db0b7f547c2c10" title="Return external potential style string.">Simulation::externalStyle</a>()<span class="keyword"> const</span>
+<a name="l00894"></a><a class="code" href="classDdMd_1_1Simulation.html#aefa0323fdb3cab7a38db0b7f547c2c10">00894</a> <span class="keyword">   </span>{  <span class="keywordflow">return</span> externalStyle_;  }
 <a name="l00895"></a>00895 <span class="preprocessor">   #endif</span>
 <a name="l00896"></a>00896 <span class="preprocessor"></span>
 <a name="l00897"></a>00897    <span class="comment">/*</span>
 <a name="l00898"></a>00898 <span class="comment">   * Return the IntegratorFactory by reference.</span>
 <a name="l00899"></a>00899 <span class="comment">   */</span>
-<a name="l00900"></a>00900    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;Integrator&gt;</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#af5c28a7cf119c9491af8679ee8ca5cda" title="Get the Md integrator factory by reference.">Simulation::integratorFactory</a>()
-<a name="l00901"></a><a class="code" href="classDdMd_1_1Simulation.html#af5c28a7cf119c9491af8679ee8ca5cda">00901</a>    {
+<a name="l00900"></a>00900    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;Integrator&gt;</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a1466f5ccbcd070b984cf8602a5b8bb43" title="Get the Md integrator factory by reference.">Simulation::integratorFactory</a>()
+<a name="l00901"></a><a class="code" href="classDdMd_1_1Simulation.html#a1466f5ccbcd070b984cf8602a5b8bb43">00901</a>    {
 <a name="l00902"></a>00902       <span class="keywordflow">if</span> (integratorFactoryPtr_ == 0) {
 <a name="l00903"></a>00903          integratorFactoryPtr_ = <span class="keyword">new</span> <a class="code" href="classDdMd_1_1IntegratorFactory.html" title="Factory for subclasses of Integrator (i.e., MD integrators).">IntegratorFactory</a>(*<span class="keyword">this</span>);
 <a name="l00904"></a>00904       }
@@ -953,8 +953,8 @@
 <a name="l00911"></a>00911    <span class="comment">/*</span>
 <a name="l00912"></a>00912 <span class="comment">   * Return the ConfigIoFactory by reference.</span>
 <a name="l00913"></a>00913 <span class="comment">   */</span>
-<a name="l00914"></a>00914    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;ConfigIo&gt;</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#adf809dd00e6e980c6230becc119b5429" title="Get the configuration file reader/writer factory by reference.">Simulation::configIoFactory</a>()
-<a name="l00915"></a><a class="code" href="classDdMd_1_1Simulation.html#adf809dd00e6e980c6230becc119b5429">00915</a>    {
+<a name="l00914"></a>00914    <a class="code" href="classUtil_1_1Factory.html">Factory&lt;ConfigIo&gt;</a>&amp; <a class="code" href="classDdMd_1_1Simulation.html#a7e41cb8e89401e39a90f4942a51c88d2" title="Get the configuration file reader/writer factory by reference.">Simulation::configIoFactory</a>()
+<a name="l00915"></a><a class="code" href="classDdMd_1_1Simulation.html#a7e41cb8e89401e39a90f4942a51c88d2">00915</a>    {
 <a name="l00916"></a>00916       <span class="keywordflow">if</span> (configIoFactoryPtr_ == 0) {
 <a name="l00917"></a>00917          configIoFactoryPtr_ = <span class="keyword">new</span> <a class="code" href="classDdMd_1_1ConfigIoFactory.html" title="Default Factory for subclasses of ConfigIo.">ConfigIoFactory</a>(*<span class="keyword">this</span>);
 <a name="l00918"></a>00918       }
@@ -965,8 +965,8 @@
 <a name="l00923"></a>00923    <span class="comment">/*</span>
 <a name="l00924"></a>00924 <span class="comment">   * Set the ConfigIo, identified by subclass name.</span>
 <a name="l00925"></a>00925 <span class="comment">   */</span>
-<a name="l00926"></a>00926    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#ad05e4313ced6e3e8b84e6de6a9c796c7" title="Create a new configuration file reader/writer.">Simulation::setConfigIo</a>(std::string&amp; classname)
-<a name="l00927"></a><a class="code" href="classDdMd_1_1Simulation.html#ad05e4313ced6e3e8b84e6de6a9c796c7">00927</a>    {
+<a name="l00926"></a>00926    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Simulation.html#aefaea5d3fe48d50291e0dbfcd4956737" title="Create a new configuration file reader/writer.">Simulation::setConfigIo</a>(std::string&amp; classname)
+<a name="l00927"></a><a class="code" href="classDdMd_1_1Simulation.html#aefaea5d3fe48d50291e0dbfcd4956737">00927</a>    {
 <a name="l00928"></a>00928       <a class="code" href="classDdMd_1_1ConfigIo.html" title="Class to read and write configuration files.">ConfigIo</a>* ptr = configIoFactory().factory(classname);
 <a name="l00929"></a>00929       <span class="keywordflow">if</span> (!ptr) {
 <a name="l00930"></a>00930          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Unrecognized ConfigIo subclass name&quot;</span>);
@@ -975,7 +975,7 @@
 <a name="l00933"></a>00933          <span class="keyword">delete</span> configIoPtr_;
 <a name="l00934"></a>00934       }
 <a name="l00935"></a>00935       configIoPtr_ = ptr;
-<a name="l00936"></a>00936       configIoPtr_-&gt;<a class="code" href="classDdMd_1_1ConfigIo.html#ad25bfa92e599efa4705f10d1c537dec2" title="Associate with related objects.">associate</a>(domain_, boundary_,
+<a name="l00936"></a>00936       configIoPtr_-&gt;<a class="code" href="classDdMd_1_1ConfigIo.html#a36fdd33b4d149bc67aaf1ac3fede6a8f" title="Associate with related objects.">associate</a>(domain_, boundary_,
 <a name="l00937"></a>00937                               atomStorage_, bondStorage_, 
 <a name="l00938"></a>00938                               #ifdef INTER_ANGLE
 <a name="l00939"></a>00939                               angleStorage_,
@@ -987,8 +987,8 @@
 <a name="l00945"></a>00945       configIoPtr_-&gt;initialize();
 <a name="l00946"></a>00946    }
 <a name="l00947"></a>00947 
-<a name="l00951"></a>00951    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Simulation.html#afe93e17ac89cd97917811068ba2af214" title="Return true if this Simulation is valid, or throw an Exception.">Simulation::isValid</a>()
-<a name="l00952"></a><a class="code" href="classDdMd_1_1Simulation.html#afe93e17ac89cd97917811068ba2af214">00952</a>    {
+<a name="l00951"></a>00951    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Simulation.html#ae1fec95c5c1fa9948ab3e7e5425e35c2" title="Return true if this Simulation is valid, or throw an Exception.">Simulation::isValid</a>()
+<a name="l00952"></a><a class="code" href="classDdMd_1_1Simulation.html#ae1fec95c5c1fa9948ab3e7e5425e35c2">00952</a>    {
 <a name="l00953"></a>00953       atomStorage_.isValid();
 <a name="l00954"></a>00954 
 <a name="l00955"></a>00955       <span class="comment">// Determine if there are any ghosts on any processor</span>
@@ -1041,7 +1041,7 @@
 <a name="l01002"></a>01002 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Jun 17 2012 08:44:50 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>
