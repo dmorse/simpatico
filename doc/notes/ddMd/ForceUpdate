@@ -1,52 +1,181 @@
 In order to get reverse communication working:
 
-1) Add methods to Buffer to pack and unpack forces
+---------------------------------------------------------------------------
+1) Add methods to Buffer to pack and unpack forces.
+
+   Added FORCE value to enum Buffer::BlockDataType
+   Added packForce(Atom& ) and unpackForce(Atom&)
+
+   unpackForce method increments force;
+
+   Status: Compiles, not tested.
+
+   TODO: Add test methods to BufferTest
+---------------------------------------------------------------------------
+2) class Cell
+
+   Pass forceCommFlag as an argument to Cell::getNeighbors, with
+   a default value of false. Atoms in a neighboring cell should be 
+   included in the array of neighbors according to condition:
+
+   If forceCommFlag is true, include neighbors with higher cell ids.
+   If forceCommFlag is false, also include ghost cells, as well as above.
+
+   if (cellId > cellIdSelf || (forceCommFlag && isGhost)) { ... }
+
+   Comment: For this to be correct, we must know that the relative
+   order of any two cells is the same on all processors.  We are
+   interested only in pairs of cells for which one is a local cell
+   and the other is a ghost cell. Since each cell is owned by one
+   processor, the same pair will appear on two processors. Given
+   a pair of cells A and B, the difference id(A) - id(B) will be
+   the same on both of these processors, since this difference is
+   determined by the IntVector separation between the cells. 
+   Therefore, each such pair will only be included on one of these
+   two processors.
+
+   Comment: This flag be passed by PairList::build, which calls 
+   Cell::getNeighbors (Done, see below). It also needs to be called
+   by methods of PairPotentialImpl that use the CellList directly
+   (not done, see below).
+
+   Status: Compiles, but not tested.
+
+   TESTING: Count pairs both ways, assigning 1 for each local atom.
+
+---------------------------------------------------------------------------
+3) Modify PairList::build behavior to depend on flag.
+
+   Add bool forceCommFlag argument to PairList::build(CellList&, bool)
+   Pass flag to CellList::getNeighbors to build neighbors array of pointers.
+
+   In PairList.h, make forceCommFlag = true by default.
+
+   Comment: The construction of the pair list is based on the list of
+   neighbors obtained from CellList::getNeighbors(), which depends on
+   the rules for which cells to include that are imposed there. The
+   resulting pair list will thus include only those neighboring cells
+   included in the algorithm for CellList::getNeighbors.
+
+   TESTING: Count pairs both ways, assigning 1 for each local atom.
+
+---------------------------------------------------------------------------
+4) Modify PairPotential class.
+
+   Add bool forceCommFlag_ member to PairPotential. 
+   Initialize to false in constructor.
+
+   Add void PairPotential::setForceCommFlag(bool ) setter method.
+   Add bool PairPotential::forceCommFlag() getter method.
+
+   In readPairListParam, call pairList_.build(cellList_, forceCommFlag());
 
    Status: Done, not tested.
 
-2) Add Exchanger::forceUpdate() method to send all forces back along 
+   TODO: PairPotential::findNeighbors to pass forceCommFlag argument to 
+   PairList::build.
+
+   TESTING: Trivial, test implementation below.
+---------------------------------------------------------------------------
+5) Modify PairPotentialImpl.h.
+
+   Modify private energyList and addForcesList methods (which calculate
+   energy and forces using a pair list), and energyCell and addForcesCell
+   methods.
+
+   -----------------
+   PairList Methods:
+
+   If forceCommFlag():
+
+      In energyList, include total energy even second atom is a ghost.
+      In addForcesList, increment force on second atom even if it is a ghost.
+
+   Status: Looks correct, compiles, but not tested.
+
+   Not well optimized: Test of forceCommandFlag() should be outer test,
+   even at the cost of duplicating some code. 
+
+   ----------------
+   CellList method:
+
+      TODO: Pass forceCommFlag() to getNeighbors() method within energyCell
+            and addForceCell methods. THIS IS NOT DONE YET.
+
+      In energyCell, include total energy for all neighbors.
+      In addForcesCell, increment both forces for all neighbors.
+
+   TODO: energyCell and addForces cell DO NOT look corrrect. Fix.
+
+   ----------------
+   NSq  method:
+
+      TODO: Either throw exceptions if forceCommFlag(), or devise a
+      way to assign pairs of particles to processors without reference
+      to a cell list. 
+
+   TESTING: Compare all three methods, with and without forceCommFlag.
+            Start with initial configuration.
+
+   TESTING: Energy methods can be tested without forceUpdate communication.
+            To test forces, must modify exchanger test to do forceUpdate().
+
+---------------------------------------------------------------------------
+6) Exchanger class
+
+   Add Exchanger::forceUpdate() method to send all forces back along 
    reverse path.
 
-   Status: Done, not tested.
+   // Loop over i and j in reverse order
+   for (i = Dimension - 1; i>= 0; --i) {
+      for (j =1; j>= 0; --j) {
 
-3) Pass forceUpdateFlag as an argument to Cell::getNeighbors, with
-   a default value of false. Atoms in a neighboring cell should be 
-   included in the array of neighbors if:
+         if (multiProcessorDimension_[i]) {
+            Packs forces from atoms in recvArray_(i, j);
+            Reverses source and dest ranks;
+            Unpacks forces from atoms in recvArray_(i, j);
+         } else {
+            Use forces in recvArray_ atoms to increment those
+            in sendArray_ atoms
+         }
+      }
+   }
 
-   if (cellId > cellIdSelf || (forceUpdateFlag && isGhost)) { ... }
+   Add new values to timer enumeration.
 
-   Status: Done, not tested.
+   Status: Compiles, not tested.
 
-4) Pass bool variable forceUpdateFlag to PairList::build, which
-   calls Cell::getNeighbors. 
+   TESTING: Test together with PairPotentialImpl.
+            Is there any way to test this in isolation?
 
-   Status: Done, not tested.
+---------------------------------------------------------------------------
+7) MdIntegrator class
 
-5) Add bool forceUpdateFlag_ member to PairPotential. Pass value
-   to Cell::getNeighbors within PairPotential::findNeighbors().
+   add bool member forceCommFlag_ to MdIntegrator. Add setter and getter.
 
-   Status: Done, not tested.
+   Modify subclasses so as to call Exchanger::forceUpdate after 
+   calculating forces.
 
-6) Modify PairPotentialImpl.h so as to always add forces to both
-   atoms if forceUpdateFlag.
+   Possible alternatives: 
 
-   Status: Done, not tested.
+   1) Make forceCommFlag_ a local variable of the run method, copied from the 
+   parent Simulation.
 
-   Possible alternative: Pass forceUpdateFlag as an argument to the 
-   findNeighbors and addForces methods.
+   2) Query the pair-potential for the value of the forceCommFlag_
 
-7) Add bool member forceUpdate_ to MdIntegrator.  Modify subclasses 
-   so as to call forceUpdate method after calculating forces.
+   3) Use a pointer for value of flag in both MdIntegrator and PairPotential.
+   Then set a global value somewhere else (i.e,. in DdMd::Simulation).
 
-   Possible alternative: Make forceUpdate_ a local variable of the
-   run method, copied from the parent Simulation.
+-------------------------------------------------------------------------
+8) Simulation class
 
-8) Add bool forceUpdateFlag to DdMd::Simulation. Make setter function 
+   Add bool forceCommFlag to DdMd::Simulation. Make setter function 
    sets values for Integrator and PairPotential.
 
-9) Modify DdMd::Simulation::zeroForces so as to zero ghost forces iff
-   Simulation::forceUpdateFlag is set.
+   Modify DdMd::Simulation::zeroForces so as to zero ghost forces iff
+   Simulation::forceCommFlag is set.
 
+-----------------------------------------------------------------------
 
 Stage #1: Use reverse communication for pair forces, and nothing else.
 ---------
@@ -85,4 +214,3 @@ Stage #4: Reverse communication for bonded forces (if desired)
     Group, if forceCommFlag.
 
   - Send only necesary bonded ghosts.
-
