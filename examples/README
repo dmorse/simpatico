@@ -1,11 +1,33 @@
-This directory contains examples of input files for a variety of simple polymer 
-systems. The examples in the flexible/ subdirectory, which contain systems with
-flexible linear polymers, are designed to work with the default version of the 
-code, in which only pair and bond potentials are enabled. 
+This directory contains examples of input files for a variety of simple systems.
+Most of the examples involve polymer liquids or networks. 
 
-See the end of this file for a discussion of what preprocessor macros must be 
-defined in order to compile versions of the code with the features needed to
-run the examples in other subdirectories.
+-------------------------------------------------------------------------------
+Subdirectories: 
+
+Examples in different directories use versions of the code compiled with 
+different options enabled. Only the examples in the bond/ subdirectory are
+designed to work with the default version of the code, in which only pair
+and bond potentials.
+
+bond:     These examples use default executables named mdSim and mcSim, which 
+          have only pair and bond potentials (no angle, dihedral, or external
+          potentials). These examples include examples of various systems of
+          flexible bead spring polymers (including homopolymers, diblock
+          copolymers, and blends), dimers and atomic systems.
+
+angle:    These examples use executables mdSim_a and mcSim_a, with angle 
+          potentials but no dihedral, link or external potentials. These 
+          must be compiled with INTER_ANGLE defined in src/inter/defines.mk.  
+          These examples are melts of short wormlike chains.
+
+external: These examples use executables named mdSim_e and mdSim_e with an
+          external one body potential, but no angle, dihedral potentials.
+          They are compiled with INTER_EXTERNAL defined in src/inter/defines.mk. 
+
+link:     These examples use executables named mdSim_l and mdSim_l with links
+          (i.e., mutable bonds) but no angle, dihedral, or external potentials. 
+          These are compiled with MCMD_LINK defined in src/mcMd/defines.mk. 
+          These examples are crosslinked networks of linear polymers. 
 
 -------------------------------------------------------------------------------
 Example Directory Structure:
@@ -53,29 +75,4 @@ bonds), or _e for external potentials. Each of the features that is required
 to run examples can be enabled by setting one of the makefile flag variables 
 in the src/mcMd/defines.mk file or (to enable parallel operation), choosing 
 an mpi compiler in the src/compiler.mk file, and recompiling the program.
-
--------------------------------------------------------------------------------
-Subdirectories: 
-
-Examples in different directories use versions of the code compiled with 
-different options enabled.
-
-flexible: These examples use default executables named mdSim and mcSim, which 
-          have only pair and bond potentials (no angle, dihedral, link, 
-          external, etc.) 
-
-wormlike: These examples use executables mdSim_a and mcSim_a, with angle 
-          potentials but no dihedral, link or external potentials. These 
-          must be compiled with INTER_ANGLE defined in src/inter/defines.mk.  
-          The examples are melts of short wormlike chains.
-
-network:  These examples use executables named mdSim_l and mdSim_l with a link 
-          potential, but no angle, dihedral, or external potentials. These are 
-          compiled with MCMD_LINK defined in src/mcMd/defines.mk. These 
-          examples are crosslinked networks of linear polymers. 
-
-external: These examples use executables named mdSim_e and mdSim_e with 
-          an external one body potential, but no angle, dihedral, or link 
-          potentials. They are compiled with INTER_EXTERNAL defined in 
-          src/inter/defines.mk. 
 

@@ -5,16 +5,18 @@ namespace McMd
 
 The src/test/ directory contain source code for a simple unit test framework.
 This framework can be used to test MPI parallel programs as well as single
-processor classes and programs.  Documentation for the test framework, 
-including examples, is in the the src/test/ directory. 
+processor classes and programs.  Documentation for the test framework is
+provided within the header files in the src/test directory, and in several 
+examples in the src/test/examples directory.
 
-The unit test class for each class (if any) is generally located in a 
-subdirectory named "tests/" of the directory containing the class header 
-and source files. Unit tests are not compiled by the makefile system that 
+Actual unit tests are located in the simpatico/tests/ directory. This contains
+a directory treee analogous to that of the src/ directory, in which the test 
+for each class is located in a position analogous to that of the source files
+in the src/ directory.  Unit tests are not compiled by the makefile system that 
 is used to compile the classes needed for simulation. Tests may be compiled
-separately by invoking "make all" from any tests/ directory. This generally
-creates an executable named "Test" that runs all of the tests in one test
-directory. 
+separately by invoking "make all" from the subdirectory containing a particular
+test. This generally creates an executable named "Test" that runs all of the 
+tests in that directory.
 
 <ul>
  <li> \ref make_page        (Previous)    </li>

@@ -12,9 +12,8 @@ Contents:
    <li> \subpage cfgfile_page     "Configuration File"</li>
    <li> \subpage examples_page    "Examples"</li>
    <li> \subpage analysis_page    "Data Analysis"</li>
-   <li> \subpage restart_page     "Restarting a simulation"</li>
-   <li> \subpage parallel_page    "Parallel Operation" </li>
-   <li> \subpage perturb_page     "Free Energy Perturbation" </li>
+   <li> \subpage restart_page     "Restarting"</li>
+   <li> \subpage parallel_page    "Multi-system simulations" </li>
    </ul>
 
 Navigation: 

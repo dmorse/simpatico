@@ -107,8 +107,8 @@ make all
 \endcode 
 After this you should have an executable called <b> mcSim_h</b> in the 
 bin/ directory (or, e.g. mcSim_m_f_h, if you defined Replica Exchange 
-and Free energy perturbation support in src/mcMd/defines.mk (See pages
-about \ref parallel_page and \ref perturb_page).
+and Free energy perturbation support in src/mcMd/defines.mk (See page
+about \ref parallel_page).
 
 \section using_hoomd_integration_sec Using Hoomd-blue integration
 
