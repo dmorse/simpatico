@@ -89,6 +89,13 @@ namespace DdMd
       */
       void setForceCommFlag(bool forceCommFlag);
 
+      /**
+      * Set id to specify algorithm for energy, force calculations.
+      *
+      * \param methodId algorithm id: 0=pair list, 1=cell list, 2=N^2 loop.
+      */
+      void setMethodId(int methodId);
+
       /// \name Interaction interface
       //@{
 
@@ -139,16 +146,23 @@ namespace DdMd
       virtual void addForces() = 0;
 
       /**
-      * Calculate total pair potential on this processor
+      * Calculate total pair potential on all processors.
+      *
+      * This method must be called on all processors. The result is
+      * stored on the master processor, and may be retrieved by 
+      * calling energy() on this processor.
       */
       #ifdef UTIL_MPI
       virtual void computeEnergy(MPI::Intracomm& communicator) = 0;
       #else
-      virtual void computeEnergy();
+      virtual void computeEnergy() = 0;
       #endif
 
       /**
-      * Calculate total pair potential.
+      * Return the total pair potential, on all processors.
+      *
+      * This method should only be called on the master (rank 0) processor,
+      * after a previous call to computeEnergy.
       */
       virtual double energy() = 0;
 
@@ -196,6 +210,30 @@ namespace DdMd
       void findNeighbors(const Vector& lower, const Vector& upper);
 
       /**
+      * Compute twice the number of pairs within force cutoff, on all processors.
+      *  
+      * This method must be called on all processors.
+      *
+      * This method add +1 for each atom in such a pair, or +2 for a complete
+      * pair. The method for distributing pairs among processors is the same
+      * as is used to distribute the energy, and depends on the value of 
+      * forceCommFlag().
+      */
+      #ifdef UTIL_MPI
+      void computeNPair(MPI::Intracomm& communicator);
+      #else
+      void computeNPair();
+      #endif
+
+      /**
+      * Return twice the number of pairs within the specified force cutoff.
+      * 
+      * This method should only be called on the rank 0 processor. The
+      * return value is computed by a previous call to computeNPair.
+      */
+      int nPair() const;
+
+      /**
       * Get the CellList by reference.
       */
       CellList& cellList();
@@ -221,6 +259,11 @@ namespace DdMd
       * Is reverse force communication enabled?
       */
       bool forceCommFlag() const;
+
+      /**
+      * Return integer id for algorithm (0=PAIR, 1=CELL, 2=NSQ)
+      */
+      int methodId() const;
 
       /**
       * Return internal timer by reference
@@ -296,8 +339,19 @@ namespace DdMd
       /// Timer
       DdTimer timer_;
 
+      /// Index for method used to calculate forces / energies.
+      int methodId_;
+
+      /// Number of pairs within specified cutoff.
+      int nPair_;
+
       /// Is reverse force communication enabled?
       bool forceCommFlag_;
+
+      // Private methods used to compute number of pairs
+      int nPairList(double cutoffSq);
+      int nPairCell(double cutoffSq);
+      int nPairNSq(double cutoffSq);
 
    };
 
@@ -334,6 +388,12 @@ namespace DdMd
       timer_.stamp(timeId);
       #endif
    }
+
+   inline void PairPotential::setMethodId(int methodId)
+   {  methodId_ = methodId; }
+
+   inline int PairPotential::methodId() const
+   {  return methodId_; }
 
 }
 #endif

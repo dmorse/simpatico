@@ -39,7 +39,6 @@ public:
    void testReadParam()
    {  
       printMethod(TEST_FUNC); 
-      std::cout << std::endl;
    
       Grid grid;
       Boundary  boundary;
@@ -56,6 +55,7 @@ public:
       #if 0
       MpiLogger logger;
       logger.begin();
+      std::cout << std::endl;
       std::cout << "Processor " << mpiRank() 
                 << ",  isIoProcessor " << isIoProcessor() 
                 << ",  isFileOpen "    << file().is_open()
@@ -130,7 +130,6 @@ public:
    void testPing()
    {  
       printMethod(TEST_FUNC); 
-      std::cout << std::endl;
  
       Boundary boundary; 
       MPI::Request request[2]; 
@@ -141,6 +140,8 @@ public:
       openFile("in/Domain"); 
       object().readParam(file()); 
 
+      //std::cout << std::endl;
+      
       int i, j, d, s, myRank, rr;
       myRank = object().gridRank();
       for (i = 0; i < Dimension; ++i) {

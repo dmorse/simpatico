@@ -50,13 +50,6 @@ namespace DdMd
       virtual ~PairPotentialImpl();
 
       /**
-      * Set integer id to specify algorithm.
-      *
-      * \param methodId algorithm id: 0=pair list, 1=cell list, 2=N^2 loop.
-      */
-      void setMethodId(int methodId);
-  
-      /**
       * Read pair potential interaction and pair list blocks.
       * 
       * This method reads the maxBoundary, PairList and pair potential 
@@ -189,9 +182,6 @@ namespace DdMd
       */ 
       Interaction* interactionPtr_;
 
-      // Index for method used to calculate forces / energies.
-      int methodId_;
-
       /**
       * Calculate atomic pair energy, using PairList.
       */
@@ -260,8 +250,7 @@ namespace DdMd
    template <class Interaction>
    PairPotentialImpl<Interaction>::PairPotentialImpl(Simulation& simulation)
     : PairPotential(simulation),
-      interactionPtr_(0),
-      methodId_(0)
+      interactionPtr_(0)
    {  interactionPtr_ = new Interaction; }
  
    /* 
@@ -270,8 +259,7 @@ namespace DdMd
    template <class Interaction>
    PairPotentialImpl<Interaction>::PairPotentialImpl()
     : PairPotential(),
-      interactionPtr_(0),
-      methodId_(0)
+      interactionPtr_(0)
    {  interactionPtr_ = new Interaction; }
  
    /* 
@@ -285,13 +273,6 @@ namespace DdMd
          interactionPtr_ = 0;
       }
    }
-
-   /*
-   * Set parameter to determine which method to use to calculate forces.
-   */
-   template <class Interaction>
-   void PairPotentialImpl<Interaction>::setMethodId(int methodId)
-   {  methodId_ = methodId; }
 
    template <class Interaction>
    void PairPotentialImpl<Interaction>::readParam(std::istream& in)
@@ -347,10 +328,10 @@ namespace DdMd
    void PairPotentialImpl<Interaction>::addForces()
    {  
        stamp(PairPotential::START);
-       if (methodId_ == 0) {
+       if (methodId() == 0) {
           addForcesList(); 
        } else
-       if (methodId_ == 1) {
+       if (methodId() == 1) {
           addForcesCell(); 
        } else {
           addForcesNSq(); 
@@ -370,10 +351,10 @@ namespace DdMd
    #endif
    { 
       double localEnergy = 0; 
-      if (methodId_ == 0) {
+      if (methodId() == 0) {
          localEnergy = energyList(); 
       } else 
-      if (methodId_ == 1) {
+      if (methodId() == 1) {
          localEnergy = energyCell(); 
       } else {
          localEnergy = energyNSq(); 
@@ -649,7 +630,7 @@ namespace DdMd
          storage().begin(ghostIter);
          if (forceCommFlag()) {
             for ( ; ghostIter.notEnd(); ++ghostIter) {
-               id1 = atomIter1->id();
+               id1 = ghostIter->id();
                if (id0 < id1) {
                   if (!atomIter0->mask().isMasked(id1)) {
                      f.subtract(atomIter0->position(), ghostIter->position());
@@ -661,7 +642,7 @@ namespace DdMd
             }
          } else {
             for ( ; ghostIter.notEnd(); ++ghostIter) {
-               id1 = atomIter1->id();
+               id1 = ghostIter->id();
                if (!atomIter0->mask().isMasked(id1)) {
                   f.subtract(atomIter0->position(), ghostIter->position());
                   rsq = f.square();
