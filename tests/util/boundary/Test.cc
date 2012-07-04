@@ -1,9 +1,11 @@
-
-#include "BoundaryTestComposite.h"
+//#include "BoundaryTestComposite.h"
+#include "MonoclinicBoundaryTest.h"
 
 int main() 
 {
-   BoundaryTestComposite runner;
+   //BoundaryTestComposite runner;
+   TEST_RUNNER(MonoclinicBoundaryTest) runner;
    runner.run();
 
+   return 0;
 }
