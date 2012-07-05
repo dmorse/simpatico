@@ -149,7 +149,8 @@ namespace DdMd
       #ifdef INTER_EXTERNAL
       hasExternal_(false),
       #endif
-      maskedPairPolicy_(MaskBonded)
+      maskedPairPolicy_(MaskBonded),
+      forceCommFlag_(false)
    {
       Util::initStatic();
 
@@ -344,6 +345,7 @@ namespace DdMd
       pairPotentialPtr_ = pairFactory().factory(pairStyle());
       pairPotentialPtr_->setNAtomType(nAtomType_);
       readParamComposite(in, *pairPotentialPtr_);
+      pairPotentialPtr_->setForceCommFlag(forceCommFlag_);
       #endif
 
       // Bond Potential
@@ -394,20 +396,6 @@ namespace DdMd
       readParamComposite(in, random_);
       readParamComposite(in, *diagnosticManagerPtr_);
 
-      #if 0
-      configIoPtr_ = new DdMdConfigIo();  
-      configIoPtr_->associate(domain_, boundary_,
-                              atomStorage_, bondStorage_, 
-                              #ifdef INTER_ANGLE
-                              angleStorage_,
-                              #endif
-                              #ifdef INTER_DIHEDRAL
-                              dihedralStorage_,
-                              #endif
-                              buffer_);
-      configIoPtr_->initialize();
-      #endif
-
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
 
@@ -453,7 +441,12 @@ namespace DdMd
       }
       #endif
 
+      // Read policy regarding whether to excluded pair interactions
+      // between covalently bonded pairs.
       read<MaskPolicy>(in, "maskedPairPolicy", maskedPairPolicy_);
+
+      // Reverse force communication (true) or not (false)?
+      read<bool>(in, "forceCommFlag", forceCommFlag_);
    }
 
    /*
@@ -569,18 +562,29 @@ namespace DdMd
 
    /*
    * Set forces on all local atoms to zero.
+   * If forceCommFlag(), also zero ghost atom forces.
    */
    void Simulation::zeroForces()
    {
+      // Zero local atoms
       AtomIterator atomIter;
       atomStorage_.begin(atomIter); 
       for( ; atomIter.notEnd(); ++atomIter){
          atomIter->force().zero();
       }
+
+      // If using reverse communication, zero ghost atoms
+      if (forceCommFlag_) {
+         GhostIterator ghostIter;
+         atomStorage_.begin(ghostIter); 
+         for( ; ghostIter.notEnd(); ++ghostIter){
+            ghostIter->force().zero();
+         }
+      }
    }
 
    /*
-   * Set forces on all local atoms to zero.
+   * Compute forces for all atoms.
    */
    void Simulation::computeForces()
    {
@@ -602,6 +606,12 @@ namespace DdMd
          externalPotential().addForces();
       }
       #endif
+
+      // Reverse communication (if any)
+      if (forceCommFlag_) {
+         exchanger_.updateForces();
+      }
+
    }
 
    /*
@@ -996,6 +1006,17 @@ namespace DdMd
       #endif // ifdef UTIL_MPI
 
       return true; 
+   }
+
+   /*
+   * Set flag to specify if reverse force communication is enabled.
+   */
+   void Simulation::setForceCommFlag(bool forceCommFlag)
+   {  
+      forceCommFlag_ = forceCommFlag; 
+      if (pairPotentialPtr_) {
+         pairPotentialPtr_->setForceCommFlag(forceCommFlag);
+      }
    }
 
 }

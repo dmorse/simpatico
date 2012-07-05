@@ -1156,6 +1156,71 @@ namespace DdMd
       } // Cartesian direction i = 0, ..., Dimension - 1
 
    }
+
+   /*
+   * Update ghost atom forces.
+   *
+   * Call on time steps for which no reneighboring is required,
+   * if force communication is enabled.
+   */
+   void Exchanger::updateForces()
+   {
+      stamp(START);
+      Vector lengths = boundaryPtr_->lengths();
+      Atom*  atomPtr;
+      int    i, j, k, source, dest, size, shift;
+
+      for (i = Dimension - 1; i >= 0; --i) {
+         for (j = 1; j >= 0; --j) {
+
+            if (multiProcessorDirection_[i]) {
+
+               // Pack ghost forces for sending
+               bufferPtr_->clearSendBuffer();
+               bufferPtr_->beginSendBlock(Buffer::FORCE);
+               size = recvArray_(i, j).size();
+               for (k = 0; k < size; ++k) {
+                  bufferPtr_->packForce(recvArray_(i, j)[k]);
+               }
+               bufferPtr_->endSendBlock();
+               stamp(PACK_FORCE);
+  
+               // Send and receive buffers (reverse direction)
+               source  = domainPtr_->destRank(i, j);
+               dest    = domainPtr_->sourceRank(i, j);
+               bufferPtr_->sendRecv(domainPtr_->communicator(), 
+                                    source, dest);
+               stamp(SEND_RECV_FORCE);
+   
+               // Unpack ghost forces
+               bufferPtr_->beginRecvBlock();
+               size = sendArray_(i, j).size();
+               for (k = 0; k < size; ++k) {
+                  atomPtr = &sendArray_(i, j)[k];
+                  bufferPtr_->unpackForce(*atomPtr);
+               }
+               stamp(UNPACK_FORCE);
+
+            } else {
+
+               // If grid().dimension(i) == 1, then copy forces of atoms
+               // listed in sendArray to those listed in the recvArray.
+
+               size = recvArray_(i, j).size();
+               assert(size == sendArray_(i, j).size());
+               for (k = 0; k < size; ++k) {
+                  atomPtr = &sendArray_(i, j)[k];
+                  atomPtr->force() += recvArray_(i, j)[k].force();
+               }
+               stamp(LOCAL_FORCE);
+
+            }
+
+         } // transmit direction j = 1 or 0 
+
+      } // Cartesian direction i 
+
+   }
    #endif
 
 }

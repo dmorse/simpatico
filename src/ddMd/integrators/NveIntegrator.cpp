@@ -54,12 +54,7 @@ namespace DdMd
 
    void NveIntegrator::setup()
    {
-      atomStorage().clearSnapshot();
-      exchanger().exchange();
-      atomStorage().makeSnapshot();
-      pairPotential().findNeighbors();
-      simulation().computeForces();
-
+      // Set prefactors for acceleration
       double dtHalf = 0.5*dt_;
       double mass;
       int nAtomType = prefactors_.capacity();
@@ -67,6 +62,12 @@ namespace DdMd
          mass = simulation().atomType(i).mass();
          prefactors_[i] = dtHalf/mass;
       }
+
+      atomStorage().clearSnapshot();
+      exchanger().exchange();
+      atomStorage().makeSnapshot();
+      pairPotential().findNeighbors();
+      simulation().computeForces();
    }
 
    /*
@@ -74,11 +75,9 @@ namespace DdMd
    */
    void NveIntegrator::run(int nStep)
    {
-      if(domain().isMaster()) {
-         Log::file() << std::endl;
-      }
       nStep_ = nStep;
 
+      #if 0
       // Set prefactor_[i] = 0.5*dt/mass for each atom type i.
       double mass;
       int nAtomType = prefactors_.capacity();
@@ -92,7 +91,9 @@ namespace DdMd
       atomStorage().makeSnapshot();
       pairPotential().findNeighbors();
       simulation().computeForces();
+      #endif
 
+      setup();
       simulation().diagnosticManager().setup();
 
       Vector        dv;

@@ -310,6 +310,7 @@ namespace DdMd
          }
       }
 
+      // Check validity of GroupStorage containers
       bool hasGhosts = false;
 
       if (bondStorage().capacity()) {

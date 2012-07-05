@@ -22,9 +22,9 @@ BondStorage{
   totalCapacity       150
 }
 PairPotential{
-  epsilon          5.0
-  sigma            1.0
-  skin             0.2
+  epsilon          1.00
+  sigma            1.00
+  skin             0.25
   pairCapacity     4000
   maxBoundary      orthorhombic   6.0   3.0   9.0
 }

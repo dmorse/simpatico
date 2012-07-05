@@ -13,17 +13,17 @@ TESTS_DIR=$(ROOT_DIR)/tests
 include sources.mk
 
 all: $(tests_ddMd_communicate_OBJS) BufferTest DomainTest PlanTest \
-     AtomDistributorTest GroupDistributorTest \
-     ExchangerTest ExchangerForceTest \
-     AtomCollectorTest BondCollectorTest Test
+        AtomDistributorTest GroupDistributorTest \
+        ExchangerTest ExchangerForceTest \
+        AtomCollectorTest BondCollectorTest Test
 
 clean:
 	rm -f $(tests_ddMd_communicate_OBJS) \
-        BufferTest DomainTest PlanTest \
-        AtomDistributorTest GroupDistributorTest \
-        ExchangerTest ExchangerForceTest \
-        AtomCollectorTest BondCollectorTest Test \
-        $(tests_ddMd_communicate_OBJS:.o=.d)
+              BufferTest DomainTest PlanTest \
+              AtomDistributorTest GroupDistributorTest \
+              ExchangerTest ExchangerForceTest \
+              AtomCollectorTest BondCollectorTest Test \
+              $(tests_ddMd_communicate_OBJS:.o=.d)
 
 clean-deps:
 	rm -f $(tests_ddMd_communicate_OBJS:.o=.d)

@@ -66,20 +66,22 @@ private:
    #endif
    ConfigIo configIo;
    Random random;
-   int atomCount;
+   int  atomCount;
+   bool forceCommFlag;
 
    DArray<Vector> forces;
 
    PairPotentialImpl<DpdPair>        pairPotential;
-
    #ifdef FORCE_BOND
    BondPotentialImpl<HarmonicL0Bond> bondPotential;
    #endif
 
-
 public:
 
    void setUp()
+   {}
+
+   void initialize()
    {
 
       // Set connections between atomDistributors
@@ -103,6 +105,7 @@ public:
 
       pairPotential.setNAtomType(1);
       pairPotential.associate(domain, boundary, atomStorage);
+      pairPotential.setForceCommFlag(forceCommFlag);
 
       bondPotential.setNBondType(1);
       bondPotential.associate(boundary, bondStorage);
@@ -174,9 +177,9 @@ public:
    {
       double min = -max;
       AtomIterator atomIter;
-      for(int i = 0; i < 3; i++) {
-         atomStorage.begin(atomIter);
-         for ( ; atomIter.notEnd(); ++atomIter) {
+      atomStorage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         for(int i = 0; i < 3; i++) {
             atomIter->position()[i] += random.uniform(min, max);
          }
       }
@@ -184,21 +187,19 @@ public:
 
    void zeroForces()
    {
-      AtomIterator  atomIter;
-      GhostIterator ghostIter;
-
       // Zero atom forces
+      AtomIterator  atomIter;
       atomStorage.begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          atomIter->force().zero();
       }
 
       // Zero ghost forces
+      GhostIterator ghostIter;
       atomStorage.begin(ghostIter);
       for ( ; ghostIter.notEnd(); ++ghostIter) {
          ghostIter->force().zero();
       }
-
    }
 
    void writeForces()
@@ -245,17 +246,26 @@ public:
       #endif
    }
 
+   void testGhostUpdateF() {
+      printMethod(TEST_FUNC);
+      forceCommFlag = false;
+      testGhostUpdate();
+   }
+
+   void testGhostUpdateR() {
+      printMethod(TEST_FUNC);
+      forceCommFlag = true;
+      testGhostUpdate();
+   }
+
    void testGhostUpdate()
    {
-      printMethod(TEST_FUNC);
+      initialize();
 
       int  nAtom  = 0;    // Number of atoms on this processor.
       int  nGhost = 0;    // Number of ghosts on this processor.
       int  nAtomAll  = 0; // Number received on all processors.
       int  myRank = domain.gridRank();
-
-      AtomIterator   atomIter;
-      GhostIterator  ghostIter;
 
       double range = 0.4;
       displaceAtoms(range);
@@ -282,12 +292,14 @@ public:
       }
 
       // Check that all atoms are within the processor domain.
+      AtomIterator   atomIter;
       atomStorage.begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
       // Check that all ghosts are outside the processor domain.
+      GhostIterator  ghostIter;
       atomStorage.begin(ghostIter);
       for ( ; ghostIter.notEnd(); ++ghostIter) {
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
@@ -307,9 +319,21 @@ public:
 
    }
 
+   void testGhostUpdateCycleF() {
+      printMethod(TEST_FUNC);
+      forceCommFlag = false;
+      testGhostUpdateCycle();
+   }
+
+   void testGhostUpdateCycleR() {
+      printMethod(TEST_FUNC);
+      forceCommFlag = true;
+      testGhostUpdateCycle();
+   }
+
    void testGhostUpdateCycle()
    {
-      printMethod(TEST_FUNC);
+      initialize();
 
       int  nAtom  = 0;    // Number of atoms on this processor.
       int  nGhost = 0;    // Number of ghosts on this processor.
@@ -383,16 +407,31 @@ public:
 
    }
 
+   void testInitialForcesF() {
+      printMethod(TEST_FUNC);
+      forceCommFlag = false;
+      testInitialForces();
+   }
+
+   void testInitialForcesR() {
+      printMethod(TEST_FUNC);
+      forceCommFlag = true;
+      testInitialForces();
+   }
+
    void testInitialForces()
    {
-      printMethod(TEST_FUNC);
+      initialize();
 
       int  nAtom  = 0;    // Number of atoms on this processor.
       int  nGhost = 0;    // Number of ghosts on this processor.
 
       //double range = 0.1;
       //displaceAtoms(range);
+
+      atomStorage.clearSnapshot();
       object().exchange();
+      atomStorage.makeSnapshot();
 
       // Record number of atoms and ghosts after exchange
       nAtom = atomStorage.nAtom();
@@ -443,36 +482,62 @@ public:
                   domain.communicator(), true));
       #endif
 
-      // Check that reverse force communication is off (by default)
-      // TEST_ASSERT(!pairPotential.forceCommFlag());
+      TEST_ASSERT(pairPotential.forceCommFlag() == forceCommFlag);
+
       pairPotential.findNeighbors();
 
+      // Compute forces etc. with N^2 loop
+      pairPotential.setMethodId(2); 
       zeroForces();
-      pairPotential.setMethodId(2); // N^2 loop
       pairPotential.addForces();
-      bondPotential.addForces();
+      //bondPotential.addForces();
+      if (forceCommFlag) {
+         object().updateForces();
+      }
       saveForces();
+      double energyNSq;
+      pairPotential.computeEnergy(domain.communicator());
+      if (domain.communicator().Get_rank() == 0) {
+         energyNSq = pairPotential.energy();
+      }
+      int nPairNSq;
+      pairPotential.computeNPair(domain.communicator());
+      if (domain.communicator().Get_rank() == 0) {
+         nPairNSq = pairPotential.nPair();
+      }
 
-      zeroForces();
+      // Compute forces etc. with pair list
       pairPotential.setMethodId(0); // PairList
+      zeroForces();
       pairPotential.addForces();
-      bondPotential.addForces();
+      //bondPotential.addForces();
+      if (forceCommFlag) {
+         object().updateForces();
+      }
+      double energyList;
+      pairPotential.computeEnergy(domain.communicator());
+      if (domain.communicator().Get_rank() == 0) {
+         energyList = pairPotential.energy();
+      }
+      int nPairList;
+      pairPotential.computeNPair(domain.communicator());
+      if (domain.communicator().Get_rank() == 0) {
+         nPairList = pairPotential.nPair();
+      }
+
+      if (domain.communicator().Get_rank() == 0) {
+         TEST_ASSERT(nPairNSq == nPairList);
+         TEST_ASSERT(eq(energyNSq, energyList));
+      }
 
       //std::cout << std::endl;
 
-      // Check that total force is zero
       Vector totForce;
       Vector nodeForce;
-      nodeForce.zero();
-      communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator().Get_rank() == 0) {
-         //std::cout << "Total force = " << totForce; 
-         TEST_ASSERT(eq(totForce[0], 0.0));
-         TEST_ASSERT(eq(totForce[1], 0.0));
-         TEST_ASSERT(eq(totForce[2], 0.0));
-      }
-
       int id;
+
+      // Check that force are equal, increment total
+      nodeForce.zero();
       atomStorage.begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          id = atomIter->id();
@@ -485,15 +550,38 @@ public:
          nodeForce += atomIter->force();
       }
 
+      // Check that total force is zero (on master node)
+      communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator().Get_rank() == 0) {
+         //std::cout << "Total force = " << totForce; 
+         TEST_ASSERT(eq(totForce[0], 0.0));
+         TEST_ASSERT(eq(totForce[1], 0.0));
+         TEST_ASSERT(eq(totForce[2], 0.0));
+      }
+
+   }
+
+   void testForceCycleF() {
+      printMethod(TEST_FUNC);
+      forceCommFlag = true;
+      testForceCycle();
+   }
+
+   void testForceCycleR() {
+      printMethod(TEST_FUNC);
+      forceCommFlag = false;
+      testForceCycle();
    }
 
    void testForceCycle()
    {
-      printMethod(TEST_FUNC);
+      initialize();
 
       int  nAtom  = 0;    // Number of atoms on this processor.
       int  nGhost = 0;    // Number of ghosts on this processor.
       bool needExchange;
+
+      TEST_ASSERT(pairPotential.forceCommFlag() == forceCommFlag);
 
       // double range = 0.1;
       // displaceAtoms(range);
@@ -501,6 +589,8 @@ public:
       atomStorage.clearSnapshot();
       object().exchange();
       atomStorage.makeSnapshot();
+      pairPotential.findNeighbors();
+
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
 
@@ -522,15 +612,23 @@ public:
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   true));
 
-      pairPotential.setMethodId(0); // PairList
-      pairPotential.findNeighbors();
+      // Calculate forces with PairList
       zeroForces();
+      pairPotential.setMethodId(0); // PairList
       pairPotential.addForces();
-      bondPotential.addForces();
+      //bondPotential.addForces();
+      if (forceCommFlag) {
+         object().updateForces();
+      }
 
-      #if 1
-      double range = 0.1;
-      for (int i=0; i < 10; ++i) {
+      double energyNSq, energyList, energyF;
+      int    nPairNSq, nPairList, nPairF;
+
+      double range = 0.02;
+
+      int i = 0;  // step counter
+      int j = 0;  // exchange counter
+      for ( ; i < 100; ++i) {
 
          displaceAtoms(range);
    
@@ -538,28 +636,42 @@ public:
          needExchange = atomStorage.needExchange(domain.communicator(), 
                                                  pairPotential.skin());
          if (needExchange) {
+            //if (domain.isMaster()) {
+            //   std::cout << "Step " << i << ",  exchange " << j << std::endl;
+            //}
             atomStorage.clearSnapshot();
             object().exchange();
             atomStorage.makeSnapshot();
             pairPotential.findNeighbors();
+
+            // Confirm that all atoms are within the processor domain.
+            atomStorage.begin(atomIter);
+            for ( ; atomIter.notEnd(); ++atomIter) {
+               TEST_ASSERT(domain.isInDomain(atomIter->position()));
+            }
+   
+            // Confirm that all ghosts are outside the processor domain.
+            atomStorage.begin(ghostIter);
+            for ( ; ghostIter.notEnd(); ++ghostIter) {
+               TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
+            }
+
+            //if (domain.isMaster()) {
+            //   std::cout << "Finished exchange" << std::endl;
+            //}
+            ++j;
+
          } else {
+
+            //if (domain.isMaster()) {
+            //   std::cout << "Step " << i << ",  update" << std::endl;
+            //}
+            
             object().update();
          }
    
          nAtom  = atomStorage.nAtom();
          nGhost = atomStorage.nGhost();
-
-         // Check that all atoms are within the processor domain.
-         atomStorage.begin(atomIter);
-         for ( ; atomIter.notEnd(); ++atomIter) {
-            TEST_ASSERT(domain.isInDomain(atomIter->position()));
-         }
-
-         // Check that all ghosts are outside the processor domain.
-         atomStorage.begin(ghostIter);
-         for ( ; ghostIter.notEnd(); ++ghostIter) {
-            TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
-         }
 
          TEST_ASSERT(atomStorage.isValid());
          TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
@@ -573,20 +685,41 @@ public:
                      domain.communicator(), true));
          #endif
 
-
-         // Calculate Forces by N^2 loop.
+         // Calculate forces etc. by N^2 loop.
          zeroForces();
          pairPotential.setMethodId(2); // N^2 loop
          pairPotential.addForces();
-         bondPotential.addForces();
+         //bondPotential.addForces();
+         if (forceCommFlag) {
+            object().updateForces();
+         }
          saveForces();
+         pairPotential.computeEnergy(domain.communicator());
+         if (domain.communicator().Get_rank() == 0) {
+            energyNSq = pairPotential.energy();
+         }
+         pairPotential.computeNPair(domain.communicator());
+         if (domain.communicator().Get_rank() == 0) {
+            nPairNSq = pairPotential.nPair();
+         }
 
-         // Calculate forces via pair list.   
+         // Calculate forces etc. via pair list.   
          zeroForces();
          pairPotential.setMethodId(0); // PairList
          pairPotential.addForces();
-         bondPotential.addForces();
-   
+         //bondPotential.addForces();
+         if (forceCommFlag) {
+            object().updateForces();
+         }
+         pairPotential.computeEnergy(domain.communicator());
+         if (domain.communicator().Get_rank() == 0) {
+            energyList = pairPotential.energy();
+         }
+         pairPotential.computeNPair(domain.communicator());
+         if (domain.communicator().Get_rank() == 0) {
+            nPairList = pairPotential.nPair();
+         }
+      
          Vector nodeForce;
          nodeForce.zero();
          int id;
@@ -599,15 +732,63 @@ public:
             nodeForce += atomIter->force();
          }
    
-         // Check that total force is zero
+         // Check that total force is zero, different methods agree.
          Vector totForce;
          communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI::DOUBLE, MPI::SUM, 0);
          if (communicator().Get_rank() == 0) {
             TEST_ASSERT(eq(totForce[0], 0.0));
             TEST_ASSERT(eq(totForce[1], 0.0));
             TEST_ASSERT(eq(totForce[2], 0.0));
+            TEST_ASSERT(nPairNSq == nPairList);
+            TEST_ASSERT(eq(energyNSq, energyList));
          }
 
+         if (forceCommFlag && needExchange) {
+
+            // Calculate forces via pair list, without reverse communication
+            zeroForces();
+            pairPotential.setForceCommFlag(false); 
+            pairPotential.findNeighbors(); 
+            pairPotential.setMethodId(0);    
+            pairPotential.addForces();
+            //bondPotential.addForces();
+            saveForces();
+            pairPotential.computeEnergy(domain.communicator());
+            if (domain.communicator().Get_rank() == 0) {
+               energyF = pairPotential.energy();
+            }
+            pairPotential.computeNPair(domain.communicator());
+            if (domain.communicator().Get_rank() == 0) {
+               nPairF = pairPotential.nPair();
+            }
+   
+            // Compare values for atom forces
+            atomStorage.begin(atomIter);
+            for ( ; atomIter.notEnd(); ++atomIter) {
+               id = atomIter->id();
+               TEST_ASSERT(eq(forces[id][0], atomIter->force()[0]));
+               TEST_ASSERT(eq(forces[id][1], atomIter->force()[1]));
+               TEST_ASSERT(eq(forces[id][2], atomIter->force()[2]));
+            }
+
+            // Compare energy and nPair
+            if (communicator().Get_rank() == 0) {
+               TEST_ASSERT(nPairF == nPairList);
+               TEST_ASSERT(eq(energyF, energyList));
+            }
+
+            // Reset: Recompute neighbor list for use with reverse communication
+            pairPotential.setForceCommFlag(true); 
+            pairPotential.findNeighbors(); 
+
+         }
+
+      }
+
+      #if 0
+      if (domain.isMaster()) {
+         std::cout << std::endl;
+         std::cout << "Step " << i << ",  exchange " << j << std::endl;
       }
       #endif
 
@@ -616,10 +797,14 @@ public:
 };
 
 TEST_BEGIN(ExchangerForceTest)
-//TEST_ADD(ExchangerForceTest, testGhostUpdate)
-//TEST_ADD(ExchangerForceTest, testGhostUpdateCycle)
-TEST_ADD(ExchangerForceTest, testInitialForces)
-TEST_ADD(ExchangerForceTest, testForceCycle)
+TEST_ADD(ExchangerForceTest, testGhostUpdateF)
+TEST_ADD(ExchangerForceTest, testGhostUpdateR)
+TEST_ADD(ExchangerForceTest, testGhostUpdateCycleF)
+TEST_ADD(ExchangerForceTest, testGhostUpdateCycleR)
+TEST_ADD(ExchangerForceTest, testInitialForcesF)
+TEST_ADD(ExchangerForceTest, testInitialForcesR)
+TEST_ADD(ExchangerForceTest, testForceCycleF)
+TEST_ADD(ExchangerForceTest, testForceCycleR)
 TEST_END(ExchangerForceTest)
 
 #endif /* EXCHANGER_TEST_H */

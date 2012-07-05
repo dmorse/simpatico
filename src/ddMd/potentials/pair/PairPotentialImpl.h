@@ -50,13 +50,6 @@ namespace DdMd
       virtual ~PairPotentialImpl();
 
       /**
-      * Set integer id to specify algorithm.
-      *
-      * \param methodId algorithm id: 0=pair list, 1=cell list, 2=N^2 loop.
-      */
-      void setMethodId(int methodId);
-  
-      /**
       * Read pair potential interaction and pair list blocks.
       * 
       * This method reads the maxBoundary, PairList and pair potential 
@@ -189,9 +182,6 @@ namespace DdMd
       */ 
       Interaction* interactionPtr_;
 
-      // Index for method used to calculate forces / energies.
-      int methodId_;
-
       /**
       * Calculate atomic pair energy, using PairList.
       */
@@ -260,8 +250,7 @@ namespace DdMd
    template <class Interaction>
    PairPotentialImpl<Interaction>::PairPotentialImpl(Simulation& simulation)
     : PairPotential(simulation),
-      interactionPtr_(0),
-      methodId_(0)
+      interactionPtr_(0)
    {  interactionPtr_ = new Interaction; }
  
    /* 
@@ -270,8 +259,7 @@ namespace DdMd
    template <class Interaction>
    PairPotentialImpl<Interaction>::PairPotentialImpl()
     : PairPotential(),
-      interactionPtr_(0),
-      methodId_(0)
+      interactionPtr_(0)
    {  interactionPtr_ = new Interaction; }
  
    /* 
@@ -285,13 +273,6 @@ namespace DdMd
          interactionPtr_ = 0;
       }
    }
-
-   /*
-   * Set parameter to determine which method to use to calculate forces.
-   */
-   template <class Interaction>
-   void PairPotentialImpl<Interaction>::setMethodId(int methodId)
-   {  methodId_ = methodId; }
 
    template <class Interaction>
    void PairPotentialImpl<Interaction>::readParam(std::istream& in)
@@ -347,10 +328,10 @@ namespace DdMd
    void PairPotentialImpl<Interaction>::addForces()
    {  
        stamp(PairPotential::START);
-       if (methodId_ == 0) {
+       if (methodId() == 0) {
           addForcesList(); 
        } else
-       if (methodId_ == 1) {
+       if (methodId() == 1) {
           addForcesCell(); 
        } else {
           addForcesNSq(); 
@@ -370,10 +351,10 @@ namespace DdMd
    #endif
    { 
       double localEnergy = 0; 
-      if (methodId_ == 0) {
+      if (methodId() == 0) {
          localEnergy = energyList(); 
       } else 
-      if (methodId_ == 1) {
+      if (methodId() == 1) {
          localEnergy = energyCell(); 
       } else {
          localEnergy = energyNSq(); 
@@ -407,21 +388,33 @@ namespace DdMd
       Atom*  atom0Ptr;
       Atom*  atom1Ptr;
       int    type0, type1;
-      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
-         iter.getPair(atom0Ptr, atom1Ptr);
-         type0 = atom0Ptr->typeId();
-         type1 = atom1Ptr->typeId();
-         f.subtract(atom0Ptr->position(), atom1Ptr->position());
-         rsq = f.square();
-         if (!atom1Ptr->isGhost()) {
+      if (forceCommFlag()) {
+         for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+            iter.getPair(atom0Ptr, atom1Ptr);
+            assert(!atom0Ptr->isGhost());
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            f.subtract(atom0Ptr->position(), atom1Ptr->position());
+            rsq = f.square();
             energy += interactionPtr_->energy(rsq, type0, type1);
-         } else {
-            energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
+         }
+      } else {
+         for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+            iter.getPair(atom0Ptr, atom1Ptr);
+            assert(!atom0Ptr->isGhost());
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            f.subtract(atom0Ptr->position(), atom1Ptr->position());
+            rsq = f.square();
+            if (!atom1Ptr->isGhost()) {
+               energy += interactionPtr_->energy(rsq, type0, type1);
+            } else {
+               energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
+            }
          }
       }
       return energy;
    }
-
 
    /*
    * Increment atomic forces and/or pair energy (private).
@@ -435,17 +428,35 @@ namespace DdMd
       Atom*  atom0Ptr;
       Atom*  atom1Ptr;
       int    type0, type1;
-      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
-         iter.getPair(atom0Ptr, atom1Ptr);
-         f.subtract(atom0Ptr->position(), atom1Ptr->position());
-         rsq = f.square();
-         type0 = atom0Ptr->typeId();
-         type1 = atom1Ptr->typeId();
-         f *= interactionPtr_->forceOverR(rsq, type0, type1);
-         atom0Ptr->force() += f;
-         if (!atom1Ptr->isGhost()) {
+
+      if (forceCommFlag()) {
+
+         for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+            iter.getPair(atom0Ptr, atom1Ptr);
+            f.subtract(atom0Ptr->position(), atom1Ptr->position());
+            rsq = f.square();
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            f *= interactionPtr_->forceOverR(rsq, type0, type1);
+            atom0Ptr->force() += f;
             atom1Ptr->force() -= f;
          }
+
+      } else {
+
+         for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+            iter.getPair(atom0Ptr, atom1Ptr);
+            f.subtract(atom0Ptr->position(), atom1Ptr->position());
+            rsq = f.square();
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            f *= interactionPtr_->forceOverR(rsq, type0, type1);
+            atom0Ptr->force() += f;
+            if (!atom1Ptr->isGhost()) {
+               atom1Ptr->force() -= f;
+            }
+         }
+
       }
    }
 
@@ -468,12 +479,13 @@ namespace DdMd
       // Iterate over linked list of local cells.
       cellPtr = cellList_.begin();
       while (cellPtr) {
-         cellPtr->getNeighbors(neighbors);
+         cellPtr->getNeighbors(neighbors, forceCommFlag());
          na = cellPtr->nAtom();
          nn = neighbors.size();
          for (i = 0; i < na; ++i) {
             atomPtr0 = neighbors[i];
             type0 = atomPtr0->typeId();
+
             // Loop over atoms in this cell
             for (j = 0; j < na; ++j) {
                atomPtr1 = neighbors[j];
@@ -484,18 +496,30 @@ namespace DdMd
                   energy += interactionPtr_->energy(rsq, type0, type1);
                }
             }
+
             // Loop over atoms in neighboring cells.
-            for (j = na; j < nn; ++j) {
-               atomPtr1 = neighbors[j];
-               type1 = atomPtr1->typeId();
-               f.subtract(atomPtr0->position(), atomPtr1->position());
-               rsq = f.square();
-               if (!atomPtr1->isGhost()) {
+            if (forceCommFlag()) {
+               for (j = na; j < nn; ++j) {
+                  atomPtr1 = neighbors[j];
+                  type1 = atomPtr1->typeId();
+                  f.subtract(atomPtr0->position(), atomPtr1->position());
+                  rsq = f.square();
                   energy += interactionPtr_->energy(rsq, type0, type1);
-               } else {
-                  energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
+               }
+            } else {
+               for (j = na; j < nn; ++j) {
+                  atomPtr1 = neighbors[j];
+                  type1 = atomPtr1->typeId();
+                  f.subtract(atomPtr0->position(), atomPtr1->position());
+                  rsq = f.square();
+                  if (!atomPtr1->isGhost()) {
+                     energy += interactionPtr_->energy(rsq, type0, type1);
+                  } else {
+                     energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
+                  }
                }
             }
+
          }
          cellPtr = cellPtr->nextCellPtr();
       } // while (cellPtr) 
@@ -538,18 +562,32 @@ namespace DdMd
                   atomPtr1->force() -= f;
                }
             }
+
             // Loop over atoms in neighboring cells.
-            for (j = na; j < nn; ++j) {
-               atomPtr1 = neighbors[j];
-               type1 = atomPtr1->typeId();
-               f.subtract(atomPtr0->position(), atomPtr1->position());
-               rsq = f.square();
-               f *= interactionPtr_->forceOverR(rsq, type0, type1);
-               atomPtr0->force() += f;
-               if (!atomPtr1->isGhost()) {
+            if (forceCommFlag()) {
+               for (j = na; j < nn; ++j) {
+                  atomPtr1 = neighbors[j];
+                  type1 = atomPtr1->typeId();
+                  f.subtract(atomPtr0->position(), atomPtr1->position());
+                  rsq = f.square();
+                  f *= interactionPtr_->forceOverR(rsq, type0, type1);
+                  atomPtr0->force() += f;
                   atomPtr1->force() -= f;
                }
+            } else {
+               for (j = na; j < nn; ++j) {
+                  atomPtr1 = neighbors[j];
+                  type1 = atomPtr1->typeId();
+                  f.subtract(atomPtr0->position(), atomPtr1->position());
+                  rsq = f.square();
+                  f *= interactionPtr_->forceOverR(rsq, type0, type1);
+                  atomPtr0->force() += f;
+                  if (!atomPtr1->isGhost()) {
+                     atomPtr1->force() -= f;
+                  }
+               }
             }
+
          }
          cellPtr = cellPtr->nextCellPtr();
       } // while (cellPtr) 
@@ -566,30 +604,54 @@ namespace DdMd
       double energy = 0.0;
       AtomIterator  atomIter0, atomIter1;
       GhostIterator ghostIter;
-      int           type0, type1;
+      int id0, id1, type0, type1;
 
       // Iterate over local atom 0
       storage().begin(atomIter0);
       for ( ; atomIter0.notEnd(); ++atomIter0) {
+         id0 = atomIter0->id();
          type0 = atomIter0->typeId();
+
          // Iterate over local atom 1
          storage().begin(atomIter1);
          for ( ; atomIter1.notEnd(); ++atomIter1) {
-            type1 = atomIter1->typeId();
-            if (atomIter0->id() < atomIter1->id()) {
-               f.subtract(atomIter0->position(), atomIter1->position());
-               rsq = f.square();
-               energy += interactionPtr_->energy(rsq, type0, type1);
+            id1 = atomIter1->id();
+            if (id0 < id1) {
+               if (!atomIter0->mask().isMasked(id1)) {
+                  f.subtract(atomIter0->position(), atomIter1->position());
+                  rsq = f.square();
+                  type1 = atomIter1->typeId();
+                  energy += interactionPtr_->energy(rsq, type0, type1);
+               }
             }
          }
+
          // Iterate over ghost atoms
          storage().begin(ghostIter);
-         for ( ; ghostIter.notEnd(); ++ghostIter) {
-            type1 = ghostIter->typeId();
-            f.subtract(atomIter0->position(), ghostIter->position());
-            rsq = f.square();
-            energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
+         if (forceCommFlag()) {
+            for ( ; ghostIter.notEnd(); ++ghostIter) {
+               id1 = ghostIter->id();
+               if (id0 < id1) {
+                  if (!atomIter0->mask().isMasked(id1)) {
+                     f.subtract(atomIter0->position(), ghostIter->position());
+                     rsq = f.square();
+                     type1 = ghostIter->typeId();
+                     energy += interactionPtr_->energy(rsq, type0, type1);
+                  }
+               }
+            }
+         } else {
+            for ( ; ghostIter.notEnd(); ++ghostIter) {
+               id1 = ghostIter->id();
+               if (!atomIter0->mask().isMasked(id1)) {
+                  f.subtract(atomIter0->position(), ghostIter->position());
+                  rsq = f.square();
+                  type1 = ghostIter->typeId();
+                  energy += 0.5*interactionPtr_->energy(rsq, type0, type1);
+               }
+            }
          }
+
       }
       return energy;
    }
@@ -612,16 +674,16 @@ namespace DdMd
          id0 = atomIter0->id();
          type0 = atomIter0->typeId();
 
-         // Iterate over atom 1
+         // Iterate over local atom 1
          storage().begin(atomIter1);
          for ( ; atomIter1.notEnd(); ++atomIter1) {
-            type1 = atomIter1->typeId();
-            id1 =   atomIter1->id();
+            id1 = atomIter1->id();
             if (id0 < id1) {
                if (!atomIter0->mask().isMasked(id1)) {
                   // Set f = r0 - r1, separation between atoms
                   f.subtract(atomIter0->position(), atomIter1->position());
                   rsq = f.square();
+                  type1 = atomIter1->typeId();
                   // Set vector force = (r0-r1)*(forceOverR)
                   f *= interactionPtr_->forceOverR(rsq, type0, type1);
                   atomIter0->force() += f;
@@ -632,17 +694,41 @@ namespace DdMd
 
          // Iterate over ghosts
          storage().begin(ghostIter);
-         for ( ; ghostIter.notEnd(); ++ghostIter) {
-            id1 = ghostIter->id();
-            type1 = ghostIter->typeId();
-            if (!atomIter0->mask().isMasked(id1)) {
-               // Set f = r0 - r1, separation between atoms
-               f.subtract(atomIter0->position(), ghostIter->position());
-               rsq = f.square();
-               // force = (r0-r1)*(forceOverR)
-               f *= interactionPtr_->forceOverR(rsq, type0, type1);
-               atomIter0->force() += f;
+         if (forceCommFlag()) {
+
+            for ( ; ghostIter.notEnd(); ++ghostIter) {
+               id1 = ghostIter->id();
+               if (id0 < id1) {
+                  if (!atomIter0->mask().isMasked(id1)) {
+                     // Set f = r0 - r1, separation between atoms
+                     f.subtract(atomIter0->position(), ghostIter->position());
+                     rsq = f.square();
+                     type1 = ghostIter->typeId();
+                     // force = (r0-r1)*(forceOverR)
+                     f *= interactionPtr_->forceOverR(rsq, type0, type1);
+                     atomIter0->force() += f;
+                     ghostIter->force() -= f;
+                     // Note: If forceCommFlag, increment ghost force 
+                  }
+               }
             }
+
+         } else {
+
+            for ( ; ghostIter.notEnd(); ++ghostIter) {
+               id1 = ghostIter->id();
+               if (!atomIter0->mask().isMasked(id1)) {
+                  // Set f = r0 - r1, separation between atoms
+                  f.subtract(atomIter0->position(), ghostIter->position());
+                  rsq = f.square();
+                  type1 = ghostIter->typeId();
+                  // force = (r0-r1)*(forceOverR)
+                  f *= interactionPtr_->forceOverR(rsq, type0, type1);
+                  atomIter0->force() += f;
+                  // Note: If !forceCommFlag, do not increment ghost force 
+               }
+            }
+
          }
 
       }
