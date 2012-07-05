@@ -4,6 +4,8 @@
 #include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
+#include <ddMd/potentials/pair/PairPotential.h>
+#include <ddMd/integrators/Integrator.h>
 #include <util/random/Random.h>
 #include <util/format/Dbl.h>
 #include <util/mpi/MpiLogger.h>
@@ -64,15 +66,17 @@ inline void SimulationTest::testReadConfig()
    openFile("in/param1"); 
    object().readParam(file()); 
 
-   Domain&  domain  = object().domain();
+   Domain& domain = object().domain();
    AtomStorage& storage = object().atomStorage();
 
-   std::string filename("in/config1");
+   std::string filename("config1");
    object().readConfig(filename);
 
-   int nAtomAll = object().nAtomTotal();
+   int nAtomAll;
    int myRank = domain.gridRank();
+   storage.computeNAtomTotal(domain.communicator());
    if (myRank == 0) {
+      nAtomAll = storage.nAtomTotal();
       //std::cout << "Total atom count = " << nAtomAll << std::endl;
       TEST_ASSERT(nAtomAll == 100);
    }
@@ -129,7 +133,7 @@ inline void SimulationTest::testExchangeAtoms()
    AtomStorage& storage = object().atomStorage();
    Random&  random = object().random();
 
-   std::string filename("in/config1");
+   std::string filename("config1");
    object().readConfig(filename);
 
    // Range of random increments for the atom positions.
@@ -149,10 +153,12 @@ inline void SimulationTest::testExchangeAtoms()
    object().exchanger().exchangeAtoms();
 
    // Check that all atoms are accounted for after exchange.
+   int nAtomAll;
    int myRank   = domain.gridRank();
-   int nAtomAll = object().nAtomTotal();
+   storage.computeNAtomTotal(domain.communicator());
    if (myRank == 0) {
-      // std::cout << "Total atom count = " << nAtomAll << std::endl;
+      nAtomAll = storage.nAtomTotal();
+      //std::cout << "Total atom count = " << nAtomAll << std::endl;
       TEST_ASSERT(nAtomAll == 100);
    }
 
@@ -178,7 +184,7 @@ inline void SimulationTest::testExchange()
    AtomStorage& storage = object().atomStorage();
    Random&  random = object().random();
 
-   std::string filename("in/config1");
+   std::string filename("config1");
    object().readConfig(filename);
 
    // Range of random increments for the atom positions.
@@ -198,9 +204,12 @@ inline void SimulationTest::testExchange()
    object().exchanger().exchange();
 
    // Check that all atoms are accounted for after exchange.
-   int myRank   = domain.gridRank();
-   int nAtomAll = object().nAtomTotal();
+   int nAtomAll;
+   int myRank = domain.gridRank();
+   storage.computeNAtomTotal(domain.communicator());
    if (myRank == 0) {
+      nAtomAll = storage.nAtomTotal();
+      //std::cout << "Total atom count = " << nAtomAll << std::endl;
       TEST_ASSERT(nAtomAll == 100);
    }
 
@@ -221,10 +230,12 @@ inline void SimulationTest::testExchange()
       TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
    }
 
+   #if 0
    int nGhostAll = object().nGhostTotal();
    if (myRank == 0) {
       std::cout << "Total ghost count = " << nGhostAll << std::endl;
    }
+   #endif
 
 }
 
@@ -239,7 +250,7 @@ inline void SimulationTest::testUpdate()
    AtomStorage& storage = object().atomStorage();
    Random&  random  = object().random();
 
-   std::string filename("in/config1");
+   std::string filename("config1");
    object().readConfig(filename);
 
    // Add a random increment to atom positions
@@ -257,11 +268,15 @@ inline void SimulationTest::testUpdate()
    object().exchanger().exchange();
 
    // Check that all atoms are accounted for after exchange.
-   int myRank   = domain.gridRank();
-   int nAtomAll = object().nAtomTotal();
+   int nAtomAll;
+   int myRank = domain.gridRank();
+   storage.computeNAtomTotal(domain.communicator());
    if (myRank == 0) {
+      nAtomAll = storage.nAtomTotal();
+      //std::cout << "Total atom count = " << nAtomAll << std::endl;
       TEST_ASSERT(nAtomAll == 100);
    }
+
 
    // Check that all atoms are within the processor domain.
    int j = 0;
@@ -280,10 +295,13 @@ inline void SimulationTest::testUpdate()
       TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
    }
 
+   #if 0
    int nGhostAll = object().nGhostTotal();
    if (myRank == 0) {
+      nGhostAll = object().nGhostTotal();
       std::cout << "Total ghost count = " << nGhostAll << std::endl;
    }
+   #endif
 
    #if 0
    //Print number of atoms on each processor after the ghost exchange.
@@ -327,14 +345,14 @@ inline void SimulationTest::testCalculateForces()
    AtomStorage& storage = object().atomStorage();
    int myRank = domain.gridRank();
 
-   std::string filename("in/config1");
+   std::string filename("config1");
    object().readConfig(filename);
 
    // Exchange ghosts among processsors
    object().exchanger().exchange();
-   object().interaction().findNeighbors();
+   object().pairPotential().findNeighbors();
 
-   object().interaction().calculateForces();
+   object().computeForces();
 
    Vector f(0.0); // total force on processor
    Vector t(0.0); // total force on all processors
@@ -374,15 +392,15 @@ inline void SimulationTest::testIntegrate1()
    object().readConfig(filename);
    object().exchanger().exchange();
 
-   //object().interaction().setMethodId(0);
-   object().interaction().findNeighbors();
+   //object().pairPotential().setMethodId(0);
+   object().pairPotential().findNeighbors();
 
    double temperature = 1.0;
    object().setBoltzmannVelocities(temperature);
 
    // Calculate energies before integration
    double kinetic   = object().kineticEnergy();
-   double potential = object().pairPotentialEnergy();
+   double potential = object().pairPotential().energy();
    if (myRank == 0) {
       std::cout << Dbl(kinetic) << Dbl(potential) 
                 << Dbl(kinetic + potential) << std::endl;
@@ -390,12 +408,14 @@ inline void SimulationTest::testIntegrate1()
 
    for (int i = 0; i < 3; ++i ) {
 
-      object().integrate(500);
+      object().integrator().run(500);
 
       // Calculate energies after integration
-      kinetic   = object().kineticEnergy();
-      potential = object().pairPotentialEnergy();
+      object().computeKineticEnergy();
+      object().computePotentialEnergies();
       if (myRank == 0) {
+         kinetic = object().kineticEnergy();
+         potential = object().potentialEnergy();
          std::cout << Dbl(kinetic) << Dbl(potential) 
                    << Dbl(kinetic + potential) << std::endl;
       }
@@ -409,11 +429,11 @@ inline void SimulationTest::testIntegrate1()
 TEST_BEGIN(SimulationTest)
 TEST_ADD(SimulationTest, testReadParam)
 TEST_ADD(SimulationTest, testReadConfig)
-TEST_ADD(SimulationTest, testExchangeAtoms)
-TEST_ADD(SimulationTest, testExchange)
-TEST_ADD(SimulationTest, testUpdate)
-TEST_ADD(SimulationTest, testCalculateForces)
-TEST_ADD(SimulationTest, testIntegrate1)
+//TEST_ADD(SimulationTest, testExchangeAtoms)
+//TEST_ADD(SimulationTest, testExchange)
+//TEST_ADD(SimulationTest, testUpdate)
+//TEST_ADD(SimulationTest, testCalculateForces)
+//TEST_ADD(SimulationTest, testIntegrate1)
 TEST_END(SimulationTest)
 
 #endif

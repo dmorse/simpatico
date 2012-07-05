@@ -216,9 +216,11 @@ namespace DdMd
       * neighboring local cells with a cell id greater than this->id(), and 
       * from neighboring ghost cells.
       *
-      * \param neighbors array of pointers to neighbor Atoms
+      * \param neighbors       array of pointers to neighbor Atoms
+      * \param forceCommFlag is reverse force communication is enabled?
       */
-      void getNeighbors(NeighborArray& neighbors) const;
+      void getNeighbors(NeighborArray& neighbors, 
+                        bool forceCommFlag = false) const;
 
    private:
 

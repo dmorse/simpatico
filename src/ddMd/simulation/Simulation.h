@@ -145,49 +145,21 @@ namespace DdMd
       void zeroForces();
 
       /**
-      * Compute forces for all local atoms.
-      */
-      void computeForces();
-
-      /**
-      * Compute total kinetic energy.
-      * 
-      * Reduce operation: Must be called on all nodes.
-      */
-      void computeKineticEnergy();
-
-      /**
-      * Compute precomputed total kinetic energy.
-      * 
-      * Call only on master node. 
+      * Set flag to identify if force communication is enabled.
       *
-      * \return total kinetic energy for all nodes on master.
+      * \param forceCommFlag true if force communication is enabled.
       */
-      double kineticEnergy();
-
-      /**
-      * Calculate total potential energy on all processors.
-      * 
-      * Reduce operation: Must be called on all nodes .
-      *
-      * \return total pair potential for all nodes on master, 0.0 otherwise.
-      */
-      void computePotentialEnergies();
-
-      /**
-      * Return precomputed total potential energy.
-      *
-      * Call only on master processor.
-      * 
-      * \return total potential energy (call only on master node).
-      */
-      double potentialEnergy();
+      void setForceCommFlag(bool forceCommFlag);
 
       /// \name Config File IO
       //@{
 
       /**
       * Read configuration file on master and distribute atoms.
+      *
+      * Upon return, all processors should have all atoms and
+      * groups, and a full set of ghost atoms, but values for
+      * the atomic forces are undefined.
       *
       * \param filename name of configuration file.
       */
@@ -214,6 +186,57 @@ namespace DdMd
       * \param classname name of desired ConfigIo subclass.
       */
       void setConfigIo(std::string& classname);
+
+      //@}
+      /// \name Force and Energy calculators
+      //@{
+      
+      /**
+      * Compute forces for all local atoms.
+      *
+      * Upon return, forces are correct for all local atoms. Values of
+      * the forces on ghost atoms are undefined.
+      *
+      * This method zeros all forces, adds forces from all potential
+      * energies, and carries out reverse force communication only if
+      * required (i.e., if forceCommFlag is true). 
+      */
+      void computeForces();
+
+      /**
+      * Compute total kinetic energy.
+      * 
+      * Reduce operation: Must be called on all processors.
+      * Value is returned by calling kineticEnergy on master.
+      */
+      void computeKineticEnergy();
+
+      /**
+      * Return precomputed total kinetic energy.
+      * 
+      * Call only on master node. 
+      *
+      * \return total kinetic energy for all nodes on master.
+      */
+      double kineticEnergy();
+
+      /**
+      * Calculate and store total potential energy on all processors.
+      * 
+      * Reduce operation: Must be called on all nodes.
+      *
+      * \return total pair potential for all nodes on master, 0.0 otherwise.
+      */
+      void computePotentialEnergies();
+
+      /**
+      * Return precomputed total potential energy.
+      *
+      * Call only on master processor, after computePotentialEnergies.
+      * 
+      * \return total potential energy (only correct on master node).
+      */
+      double potentialEnergy();
 
       //@}
       /// \name Potential Energy Factories and Styles
@@ -278,7 +301,7 @@ namespace DdMd
       #endif
 
       //@}
-      /// \name Accessors (Miscellaneous)
+      /// \name Accessors (return members by reference)
       //@{
 
       /**
@@ -347,6 +370,13 @@ namespace DdMd
       #endif
    
       /**
+      * Get an AtomType descriptor by reference.
+      *
+      * \param i index of desired atom type.
+      */
+      AtomType& atomType(int i);
+
+      /**
       * Get the Integrator by reference.
       */
       Integrator& integrator();
@@ -385,6 +415,10 @@ namespace DdMd
       */
       DiagnosticManager& diagnosticManager();
 
+      //@}
+      /// \name Accessors (return by value)
+      //@{
+      
       /**
       * Get maximum number of atom types.
       */
@@ -417,14 +451,14 @@ namespace DdMd
       #endif
 
       /**
-      * Get an AtomType descriptor by reference.
-      */
-      AtomType& atomType(int i);
-
-      /**
       * Return the value of the mask policy (MaskNone or MaskBonded).
       */
       MaskPolicy maskedPairPolicy() const;
+
+      /**
+      * Is reverse force communication enabled?
+      */
+      bool forceCommFlag() const;
 
       //@}
 
@@ -532,13 +566,13 @@ namespace DdMd
       #endif
 
       /// Pointer to MD integrator.
-      Integrator*   integratorPtr_;
+      Integrator*  integratorPtr_;
 
       /// Pointer to an EnergyEnsemble.
-      EnergyEnsemble*   energyEnsemblePtr_;
+      EnergyEnsemble*  energyEnsemblePtr_;
 
       /// Pointer to an BoundaryEnsemble.
-      BoundaryEnsemble* boundaryEnsemblePtr_;
+      BoundaryEnsemble*  boundaryEnsemblePtr_;
 
       /// Pointer to a FileMaster.
       FileMaster*         fileMasterPtr_;
@@ -573,7 +607,7 @@ namespace DdMd
       #endif
 
       /// Pointer to MD integrator factory.
-      Factory<Integrator>* integratorFactoryPtr_;
+      Factory<Integrator>*  integratorFactoryPtr_;
 
       /// Pointer to a configuration reader/writer factory.
       Factory<ConfigIo>* configIoFactoryPtr_;
@@ -631,6 +665,9 @@ namespace DdMd
       *  - MaskBonded:  mask pair interaction between bonded atoms
       */
       MaskPolicy  maskedPairPolicy_;
+
+      /// Is reverse force communication enabled?
+      bool forceCommFlag_;
 
    // friends:
 
@@ -802,6 +839,9 @@ namespace DdMd
 
    inline MaskPolicy Simulation::maskedPairPolicy() const
    {  return maskedPairPolicy_; }
+
+   inline bool Simulation::forceCommFlag() const
+   {  return forceCommFlag_; }
 
 }
 #endif

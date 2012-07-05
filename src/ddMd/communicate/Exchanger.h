@@ -107,6 +107,16 @@ namespace DdMd
       void update();
 
       /**
+      * Update ghost atom forces.
+      * 
+      * This method reverse the communication pattern used to communicate
+      * ghost atom positions in update() to reverse communicate forces
+      * acting on ghost atoms. It should be called iff reverse force
+      * communication on every time step for which update() is called.
+      */
+      void updateForces();
+
+      /**
       * Return internal timer by reference
       */
       DdTimer& timer()
@@ -121,7 +131,8 @@ namespace DdMd
                    FINISH_GROUP_PLAN, INIT_SEND_ARRAYS, PACK_GHOSTS, 
                    SEND_RECV_GHOSTS, UNPACK_GHOSTS, FIND_GROUP_GHOSTS, 
                    PACK_UPDATE, SEND_RECV_UPDATE, UNPACK_UPDATE, 
-                   LOCAL_UPDATE, NTime};
+                   LOCAL_UPDATE, PACK_FORCE, SEND_RECV_FORCE, 
+                   UNPACK_FORCE, LOCAL_FORCE, NTime};
 
    private:
 

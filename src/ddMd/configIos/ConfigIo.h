@@ -98,7 +98,14 @@ namespace DdMd
       * Read configuration file.
       *
       * This routine opens and reads a file on the master, and distributes
-      * atom data among the processors.
+      * atoms and groups among the processors. Upon return:
+      *
+      *   - Each processor should own all atoms in its domain, and no others.
+      *
+      *   - Each processor should have every group that contains atoms 
+      *     that it owns, and no others.
+      *
+      *   - There should be no ghost atoms on any processor.
       *
       * \param file input file stream
       * \param maskPolicy MaskPolicy to be used in setting atom masks

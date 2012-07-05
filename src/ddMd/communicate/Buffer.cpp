@@ -426,7 +426,7 @@ namespace DdMd
    }
 
    /*
-   * Pack data required to update a ghost atom.
+   * Pack updates ghost atom position.
    */
    void Buffer::packUpdate(Atom& atom)
    {
@@ -444,7 +444,7 @@ namespace DdMd
    }
 
    /**
-   * Unpack data required for a ghost Atom.
+   * Pack updated ghost atom position.
    */
    void Buffer::unpackUpdate(Atom& atom)
    {
@@ -455,6 +455,43 @@ namespace DdMd
          UTIL_THROW("Attempt to unpack empty receive buffer");
       }
       unpack<Vector>(atom.position());
+      
+      //Decrement number of atoms in recv buffer to be unpacked by 1
+      recvSize_--;
+   }
+
+   /*
+   * Pack ghost atom force.
+   */
+   void Buffer::packForce(Atom& atom)
+   {
+      // Preconditions
+      if (sendType_ != FORCE) {
+         UTIL_THROW("Send type is not FORCE");
+      }
+      if (sendSize_ >= ghostCapacity_) {
+         UTIL_THROW("Attempt to overpack buffer: sendSize> >= ghostCapacity_");
+      }
+      pack<Vector>(atom.force());
+
+      //Increment number of atom forces in send buffer by 1
+      sendSize_++;
+   }
+
+   /**
+   * Unpack data ghost Atom force, and add to atom on this processor.
+   */
+   void Buffer::unpackForce(Atom& atom)
+   {
+      if (recvType_ != (int)FORCE) {
+         UTIL_THROW("Receive type is not FORCE");
+      }
+      if (recvSize_ <= 0) {
+         UTIL_THROW("Attempt to unpack empty receive buffer");
+      }
+      Vector f;
+      unpack<Vector>(f);
+      atom.force() += f;
       
       //Decrement number of atoms in recv buffer to be unpacked by 1
       recvSize_--;

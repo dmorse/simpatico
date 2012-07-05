@@ -1,7 +1,9 @@
 Constant Pressure:
 ------------------
 
-- Add vFlag and eFlag to Simulation, and as an argument to addForce() 
+- Finish and test methods to evaluate stress.
+
+- Add vFlag and eFlag to Simulation, and as arguments to addForce() 
   method of each potential.
 
 - Port NPH integrator.
@@ -9,33 +11,35 @@ Constant Pressure:
 - Write a reversible NPT integrator.
 
 
-Reverse Communication
+Reverse Communication 
 ---------------------
 
-- Write and test reverse_update() method.
+- Working on this in reverseComm branch. See doc/notes/ddMd/ForceUpdate
 
-- Add bool reverseCommunicate_ accessor and setter to Simulation.
+Hybrid MD
+----------
 
-- Modify potentials, Exchanger, etc. to accomodate reverseCommunicate.
+- Add arriving_ and departing_ pointer arrays to storage classes.
+
+- Add lists of old atom positions to AtomStorage.
+
+- Add methods to commit or revert the state of each storage.
 
 
 Cell List and Pair List:
 ------------------------
 
-- Make AtomTag struct a public class, add an IntVector
-  of micro-cell indices to CellTag, to allow fast rejection
-  of most pairs.
+- Make AtomTag struct a public class, add an IntVector of
+  micro-cell indices to CellTag, to allow fast rejection of 
+  most pairs.
 
-- Modify neighbors method to pass pack a list of AtomTag objects,
-  rather than an array of pointers. Provide a CellList isInPair 
+- Modify Cell::getNeighbors method to pass back a list of AtomTag 
+  objects, rather than an array of pointers. Provide a CellList 
   method to decide if a particular pair is within the cutoff.
 
-- Consider how neighbor list would be built if we used Newton's
-  law (to evaluate each force only once).
-
-- Improve testing of PairList - provide method to count number of pairs
-  that are currently within the cutoff, and check that it doesn't change.
-
+- Improve testing of PairList - check that number of inner pairs doesn't
+  change upon reneighboring, in unit tests and as optional test in main
+  loop.
 
 Configuration File IO
 ---------------------
@@ -49,8 +53,8 @@ Buffer:
 - Add memory statistics for Buffer.
 
 - Figure out how to make pack/unpack methods of the atom class, so 
-  that they can use private information.
-
+  that they can use private information. Would also simplify the 
+  introduction of new Atom class variants (e.g., a dipolar Atom).
 
 Single Processor Operation
 --------------------------
@@ -58,16 +62,6 @@ Single Processor Operation
 - Modify Distributor, Collector, ConfigIo, and Exchanger classes
   to work ifndef UTIL_MPI, continue with other classes, to enable 
   single processor operation with no MPI.
-
-
-Hybrid MD
-----------
-
-- Add lists of old positions to AtomStorage.
-
-- Add arriving_ and departing_ pointer arrays to storage classes.
-
-- Add methods to commit or revert the state of each storage.
 
 
 Atom Class Implementation

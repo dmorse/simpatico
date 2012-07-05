@@ -1,6 +1,6 @@
 Simulation{
   Domain{
-    gridDimensions    2    2    2
+    gridDimensions    2    1    3
   }
   FileMaster{
     commandFileName commands
@@ -26,6 +26,7 @@ Simulation{
   pairStyle          LJPair
   bondStyle          HarmonicBond
   maskedPairPolicy   maskBonded
+  forceCommFlag      0
   PairPotential{
     epsilon          1.0
     sigma            1.0

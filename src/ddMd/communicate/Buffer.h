@@ -29,7 +29,7 @@ namespace DdMd
 
    public:
 
-      enum BlockDataType {NONE, ATOM, GHOST, UPDATE, GROUP};
+      enum BlockDataType {NONE, ATOM, GHOST, UPDATE, FORCE, GROUP};
 
       /**
       * Constructor.
@@ -183,6 +183,20 @@ namespace DdMd
       * \param atom ghost Atom object.
       */
       void unpackUpdate(Atom& atom);
+
+      /**
+      * Pack update of ghost Atom force into send buffer.
+      *
+      * \param atom ghost Atom for which force should be sent.
+      */
+      void packForce(Atom& atom);
+
+      /**
+      * Unpack updated position of ghost Atom from recv buffer.
+      *
+      * \param atom ghost Atom object.
+      */
+      void unpackForce(Atom& atom);
 
       /**
       * Pack a Group for sending.
