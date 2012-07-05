@@ -51,7 +51,7 @@ public:
       TEST_ASSERT(boundary.isValid());
 
       // Verbose output
-      if (verbose() > 1) {
+/*      if (verbose() > 1) {
          printf("Boundary.minima_: %lf %lf %lf\n", 
                  boundary.minima_[0], boundary.minima_[1], boundary.minima_[2]);
          printf("Boundary.maxima_: %lf %lf %lf\n", 
@@ -59,7 +59,7 @@ public:
          printf("Boundary.L   tilt: %lf %lf %lf %lf\n", 
                  boundary.lengths_[0], boundary.lengths_[1], boundary.lengths_[2], tilt);
       }
-
+*/
       std::cout << std::endl;
       std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
       std::cout << "BravaisBasis(2)   " << boundary.bravaisBasisVector(2) << std::endl;

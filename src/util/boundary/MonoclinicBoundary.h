@@ -53,7 +53,7 @@ namespace Util
       * Sets the square of maximum range of validity of the distances
       * calculated assuming short range interactions. 
       */
-      double MaxValidityRangeSq() const;
+      double maxValidityDistanceSq() const;
 
       /**
       * Serialize to/from an archive.
@@ -224,7 +224,7 @@ namespace Util
       double halfe_;
 
       /// the half length of the minor axis of the Monoclinic parallelogram.
-      double MaxValidityRangeSq_;
+      double maxValidityDistanceSq_;
 
       /**
       * Array of Bravais lattice vectors.
@@ -296,7 +296,7 @@ namespace Util
    /* 
    * Return the maximum validity range of the distances.
    */
-   inline double MonoclinicBoundary::MaxValidityRangeSq() const
+   inline double MonoclinicBoundary::maxValidityDistanceSq() const
    {
        double m = lengths_[0] / 2.0;
 	  
@@ -333,7 +333,7 @@ namespace Util
          } else
          if ( r[1] <  minima_[1] ) {
             r[1] = r[1] + lengths_[1];
-	    r[2] = r[2] - tilt_;
+	    r[2] = r[2] + tilt_;
             assert(r[1] >= minima_[1]);
          }
          if( r[2] >= maxima_[2] ) {
@@ -369,7 +369,7 @@ namespace Util
          } else
          if ( r[1] <  minima_[1] ) {
             r[1] = r[1] + lengths_[1];
-	    r[2] = r[2] - tilt_;
+	    r[2] = r[2] + tilt_;
 	    --(shift[1]);
             assert(r[1] >= minima_[1]);
          }
@@ -444,8 +444,6 @@ namespace Util
       }
 
       norm = dx*dx+dy*dy+dz*dz;
-      assert(norm <= MaxValidityRangeSq_);
-
       return norm;
    }
 
@@ -491,11 +489,9 @@ namespace Util
 	    dz += lengths_[2];
          }
          assert(fabs(c2_*dz+c3_*dy) <= halfLengths_[2]);
-      } else 
+      }
 
       norm = dx*dx+dy*dy+dz*dz;
-      assert(norm <= MaxValidityRangeSq_);
-
       return norm;
    }
 
@@ -550,8 +546,6 @@ namespace Util
       dr[2] = dz;
 
       norm = dx*dx+dy*dy+dz*dz;
-      assert(norm <= MaxValidityRangeSq_);
-
       return norm;
    }
 

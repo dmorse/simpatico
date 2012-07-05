@@ -50,7 +50,7 @@ namespace Util
 	 MonoclinicBoundary::c2_ = 1.0;
 	 MonoclinicBoundary::c3_ = 0.0;
 	 MonoclinicBoundary::halfe_ = 0.5;
-	 MonoclinicBoundary::MaxValidityRangeSq_ = 0.5;
+	 MonoclinicBoundary::maxValidityDistanceSq_ = 0.5;
    }
 
    /* 
@@ -85,7 +85,7 @@ namespace Util
 	 c1_ = sqrt(lengths_[1]*lengths_[1]+tilt_*tilt_) / lengths_[1];
 	 c2_ = 1.0;
 	 c3_ = -tilt_/(lengths_[1]);
-	 MaxValidityRangeSq_ = MaxValidityRangeSq();
+	 maxValidityDistanceSq_ = maxValidityDistanceSq();
    }
 
    /* 

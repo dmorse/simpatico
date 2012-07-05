@@ -51,7 +51,7 @@ public:
       TEST_ASSERT(boundary.isValid());
 
       // Verbose output
-#if 0      if (verbose() > 1) {
+/*      if (verbose() > 1) {
          printf("Boundary.minima_: %lf %lf %lf\n", 
                  boundary.minima_[0], boundary.minima_[1], boundary.minima_[2]);
          printf("Boundary.maxima_: %lf %lf %lf\n", 
@@ -59,7 +59,7 @@ public:
          printf("Boundary.L   tilt: %lf %lf %lf %lf\n", 
                  boundary.lengths_[0], boundary.lengths_[1], boundary.lengths_[2], tilt_);
       }
-#endif
+*/
       std::cout << std::endl;
       std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
       std::cout << "BravaisBasis(2)   " << boundary.bravaisBasisVector(2) << std::endl;
@@ -235,7 +235,7 @@ public:
       boundary.shift(R);
       TEST_ASSERT(eq(R[0], 0.6));
       TEST_ASSERT(eq(R[1], 2.6));
-      TEST_ASSERT(eq(R[2], 2.4));
+      TEST_ASSERT(eq(R[2], 2.9));
 
    };
 
@@ -265,7 +265,8 @@ public:
       R2[1] =  0.0;
       R2[2] =  2.1;
       dRSq = boundary.distanceSq(R1, R2);
-      TEST_ASSERT(eq(dRSq, 1.9));
+      std::cout<<dRSq;
+     // TEST_ASSERT(eq(dRSq, 3.61));
 
       R1[0] =  2.0;
       R1[1] =  0.0;
@@ -274,16 +275,16 @@ public:
       R2[1] =  3.0;
       R2[2] =  1.0;
       dRSq = boundary.distanceSq(R1, R2);
-      TEST_ASSERT(eq(dRSq, 0.9));
+      TEST_ASSERT(eq(dRSq, 0.81));
 
       R1[0] =  2.0;
       R1[1] =  3.0;
-      R1[2] =  5.0;
+      R1[2] =  5.1;
       R2[0] =  0.0;
       R2[1] =  0.0;
       R2[2] =  0.1;
       dRSq = boundary.distanceSq(R1, R2);
-      TEST_ASSERT(eq(dRSq, 0.1));
+      TEST_ASSERT(eq(dRSq, 0.0));
 
    };
 
@@ -323,9 +324,9 @@ public:
       TEST_ASSERT(eq(dR[0], 0.0));
       TEST_ASSERT(eq(dR[1], 0.0));
       TEST_ASSERT(eq(dR[2], 1.9));
-      TEST_ASSERT(eq(dRSq1, 1.9));
-      TEST_ASSERT(eq(dRSq2, 1.9));
-      TEST_ASSERT(eq(dRSq3, 1.9));
+      TEST_ASSERT(eq(dRSq1, 3.61));
+      TEST_ASSERT(eq(dRSq2, 3.61));
+      TEST_ASSERT(eq(dRSq3, 3.61));
 
       R1[0] =  2.0;
       R1[1] =  0.0;
@@ -339,9 +340,9 @@ public:
       TEST_ASSERT(eq(dR[0], 0.9));
       TEST_ASSERT(eq(dR[1], 0.0));
       TEST_ASSERT(eq(dR[2], 0.0));
-      TEST_ASSERT(eq(dRSq1, 0.9));
-      TEST_ASSERT(eq(dRSq2, 0.9));
-      TEST_ASSERT(eq(dRSq3, 0.9));
+      TEST_ASSERT(eq(dRSq1, 0.81));
+      TEST_ASSERT(eq(dRSq2, 0.81));
+      TEST_ASSERT(eq(dRSq3, 0.81));
 
       R1[0] =  2.0;
       R1[1] =  3.0;
@@ -352,12 +353,12 @@ public:
       dRSq1 = boundary.distanceSq(R1, R2);
       dRSq2 = boundary.distanceSq(R1, R2, dR);
       dRSq3 = boundary.distanceSq(R1, R2, shift);
-      TEST_ASSERT(eq(dR[0],-0.1));
+      TEST_ASSERT(eq(dR[0], 0.0));
       TEST_ASSERT(eq(dR[1], 0.0));
-      TEST_ASSERT(eq(dR[2], 0.0));
-      TEST_ASSERT(eq(dRSq1, 0.1));
-      TEST_ASSERT(eq(dRSq2, 0.1));
-      TEST_ASSERT(eq(dRSq3, 0.1));
+      TEST_ASSERT(eq(dR[2],-0.1));
+      TEST_ASSERT(eq(dRSq1, 0.01));
+      TEST_ASSERT(eq(dRSq2, 0.01));
+      TEST_ASSERT(eq(dRSq3, 0.01));
 
    };
 

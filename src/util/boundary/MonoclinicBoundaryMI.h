@@ -384,7 +384,7 @@ namespace Util
       translate[2] = 0;
 
       if ( fabs(dx) > halfLengths_[0] ) {
-         if (dr > 0.0) {
+         if (dx > 0.0) {
             dx -= lengths_[0];
             translate[0] += -1;
          } else {
@@ -401,19 +401,19 @@ namespace Util
       
       while(done){
 
-	 h1 = (dy*length_[1]+dz*tilt) / e;
-         if ( fabs(h) > halfe_ ) {
+	 h1 = (dy*lengths_[1]+dz*tilt_) / e_;
+         if ( fabs(h1) > halfe_ ) {
 	    done = true;
-            if (h > 0.0) {
+            if (h1 > 0.0) {
                dy -= lengths_[1];
-	       dz -= tilt;
+	       dz -= tilt_;
                translate[1] += -1;
             } else {
                dy += lengths_[1];
-	       dz += tilt;
+	       dz += tilt_;
                translate[1] += +1;
             }
-            assert(fabs(dy*length_[1]+dz*tilt) / e <= halfe_);
+            assert(fabs(dy*length_[1]+dz*tilt) / e_ <= halfe_);
          } else {
 	    done = false;
          }
@@ -473,11 +473,11 @@ namespace Util
 	    done = false;
          }
       }
+      }
 
       norm = dx*dx+dy*dy+dz*dz;
       return norm;
    }
-
 
    inline 
    double MonoclinicBoundaryMI::distanceSq(const Vector &r1, const Vector &r2) const
@@ -488,7 +488,7 @@ namespace Util
       double norm = 0.0;
 
       if ( fabs(dx) > halfLengths_[0] ) {
-         if (dr > 0.0) {
+         if (dx > 0.0) {
             dx -= lengths_[0];
          } else {
             dx += lengths_[0];
@@ -503,17 +503,17 @@ namespace Util
       
       while(done){
 
-	 h1 = (dy*length_[1]+dz*tilt) / e;
-         if ( fabs(h) > halfe_ ) {
+	 h1 = (dy*lengths_[1]+dz*tilt_) / e_;
+         if ( fabs(h1) > halfe_ ) {
 	    done = true;
-            if (h > 0.0) {
+            if (h1 > 0.0) {
                dy -= lengths_[1];
-	       dz -= tilt;
+	       dz -= tilt_;
             } else {
                dy += lengths_[1];
-	       dz += tilt;
+	       dz += tilt_;
             }
-            assert(fabs(dy*length_[1]+dz*tilt) / e <= halfe_);
+            assert(fabs(dy*lengths_[1]+dz*tilt_) / e_ <= halfe_);
          } else {
 	    done = false;
          }
@@ -562,6 +562,7 @@ namespace Util
          } else {
 	    done = false;
          }
+      }
       }
 
       norm = dx*dx+dy*dy+dz*dz;
@@ -578,12 +579,10 @@ namespace Util
       double norm = 0.0;
 
       if ( fabs(dx) > halfLengths_[0] ) {
-         if (dr > 0.0) {
+         if (dx > 0.0) {
             dx -= lengths_[0];
-            translate[0] += -1;
          } else {
             dx += lengths_[0];
-            translate[0] += +1;
          }
          assert(fabs(dx) <= halfLengths_[0]);
       }
@@ -595,17 +594,17 @@ namespace Util
       
       while(done){
 
-	 h1 = (dy*length_[1]+dz*tilt) / e;
-         if ( fabs(h) > halfe_ ) {
+	 h1 = (dy*lengths_[1]+dz*tilt_) / e_;
+         if ( fabs(h1) > halfe_ ) {
 	    done = true;
-            if (h > 0.0) {
+            if (h1 > 0.0) {
                dy -= lengths_[1];
-	       dz -= tilt;
+	       dz -= tilt_;
             } else {
                dy += lengths_[1];
-	       dz += tilt;
+	       dz += tilt_;
             }
-            assert(fabs(dy*length_[1]+dz*tilt) / e <= halfe_);
+            assert(fabs(dy*lengths_[1]+dz*tilt_) / e_ <= halfe_);
          } else {
 	    done = false;
          }
@@ -655,10 +654,11 @@ namespace Util
 	    done = false;
          }
       }
+      }
 
-      r[0]= dx;
-      r[1]= dy;
-      r[2]= dz;
+      dr[0]= dx;
+      dr[1]= dy;
+      dr[2]= dz;
 
       norm = dx*dx+dy*dy+dz*dz;
       return norm;
