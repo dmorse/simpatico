@@ -8,7 +8,7 @@ In order to get reverse communication working:
 
    unpackForce method increments force;
 
-   Status: Done, compiles, not tested.
+   Status: Done, compiles, tested indirectly (force update works)
 
    TODO: Add test methods to BufferTest
 ---------------------------------------------------------------------------
@@ -39,9 +39,8 @@ In order to get reverse communication working:
    by methods of PairPotentialImpl that use the CellList directly
    (not done, see below).
 
-   Status: Compiles, but not tested.
+   Status:  Done and tested. 
 
-   TESTING: Count pairs both ways, assigning 1 for each local atom.
 ---------------------------------------------------------------------------
 3) Modify PairList::build behavior to depend on flag.
 
@@ -56,7 +55,7 @@ In order to get reverse communication working:
    resulting pair list will thus include only those neighboring cells
    included in the algorithm for CellList::getNeighbors.
 
-   TESTING: Count pairs both ways, assigning 1 for each local atom.
+   TESTING: Done and tested.
 ---------------------------------------------------------------------------
 4) Modify PairPotential class.
 
@@ -69,11 +68,7 @@ In order to get reverse communication working:
    In readPairListParam, call pairList_.build(cellList_, forceCommFlag());
    In findNeighbors, pass forceCommFlag to Cell::findNeighbors.
 
-   Status: Done, not tested.
-
-   TODO: Add virtual int nInnerPair() method.
-
-   TESTING: Trivial, test implementation below.
+   Status: Done, tested.
 ---------------------------------------------------------------------------
 5) Modify PairPotentialImpl.h.
 
@@ -89,10 +84,10 @@ In order to get reverse communication working:
       In energyList, include total energy even if second atom is a ghost.
       In addForcesList, increment force on second atom even if it is a ghost.
 
-   Status: Looks correct, compiles, but not tested.
+   Status: Done, tested.
 
    ----------------
-   CellList method:
+   CellList methods:
 
       Pass forceCommFlag() to getNeighbors in energyCell and addForceCell.
       If forceCommFlag():
@@ -100,7 +95,6 @@ In order to get reverse communication working:
          Increment both atom forces for all pairs in addForcesCell
 
    Status: Looks correct, compiles, but not tested.
-
    ----------------
    NSq  method:
 
@@ -109,14 +103,7 @@ In order to get reverse communication working:
          Include total energy for all such pairs in energyNSq
          Increment both forces for all such pairs in addForcesNSq
  
-   TODO: Add nInnerPair methods with list, cellist, NSq implementations.
-
-   TESTING: Test countPairs method first (no forceUpdate required).
-            Then energies, using initial configuration (no forceUpdate).
-            Forces, initial configuration (add forceUpdate to test)
-            Forces, cycle.
-        
-
+   Status: Done, tested.
 ---------------------------------------------------------------------------
 6) Exchanger class
 
@@ -140,42 +127,27 @@ In order to get reverse communication working:
 
    Add new values to timer enumeration.
 
-   Status: Compiles, not tested.
-
-   TESTING: Test together with PairPotentialImpl.
-            Is there any way to test this in isolation?
-
+   Status: Tested, by comparing methods of calculating forces.
 ---------------------------------------------------------------------------
 7) MdIntegrator class
 
-   add bool member forceCommFlag_ to MdIntegrator. Add setter and getter.
-
-   Modify subclasses so as to call Exchanger::forceUpdate after 
+   Uses computeForces() methods that call Exchanger::forceUpdate after
    calculating forces.
 
-   Possible alternatives: 
+   Has access to forceCommFlag by inheritance from Simulation Access.
 
-   1) Make forceCommFlag_ a local variable of the run method, copied from the 
-   parent Simulation.
-
-   2) Query the pair-potential for the value of the forceCommFlag_
-
-   3) Use a pointer for value of flag in both MdIntegrator and PairPotential.
-   Then set a global value somewhere else (i.e,. in DdMd::Simulation).
-
-   Status: Not done
-
+   Status: Done, compiles, tested by running examples. Unit test?
 -------------------------------------------------------------------------
 8) Simulation class
 
-   Add bool forceCommFlag to DdMd::Simulation. Make setter function 
-   sets values for Integrator and PairPotential.
+   Add bool forceCommFlag to DdMd::Simulation. 
+
+   Make setter function sets values for Integrator and PairPotential.
 
    Modify DdMd::Simulation::zeroForces so as to zero ghost forces iff
    Simulation::forceCommFlag is set.
 
-   Status: Not done
-
+   Status: Done, tested by running example. Unit test?
 -----------------------------------------------------------------------
 
 Stage #1: Use reverse communication for pair forces, and nothing else.
@@ -189,29 +161,35 @@ Stage #1: Use reverse communication for pair forces, and nothing else.
    interactions.
 
  - Unit test by adding tests that involves the pair potential to 
-   ddMd/communicate/tests/ExchangerTest.h
+   ddMd/communicate/tests/ExchangerForceTest.h
+
+   Done, tested.
 
 Stage #2:
 --------
 
- - Add velocityCommunicateFlag, and allow for possible forward
-   communication of velocities.
+ - Add velocityCommFlag, and allow for possible forward communication 
+   of velocities.
 
  - Test DPD integrator
 
-Stage #3:
---------
+   Status: Not begun.
+
+Stage #3: Reverse communication for bonded forces (if desired)
+---------
+
+ - Modify exchanger to keep covalent groups only on one processor.
+   The group migrates with the "owner" atom.
+
+ - Modify covalent potentials to calculate forces for all atoms in 
+   Group, if forceCommFlag.
+
+  Status: Not begun.
+
+Stage #4:
+---------
 
  - Suppress communication of (some) unnecesary nonbonded ghosts.
 
+   Status: Not begun.
 
-Stage #4: Reverse communication for bonded forces (if desired)
----------
-
-  - Modify exchanger to keep covalent groups only on one processor.
-    The group migrates with the "owner" atom.
-
-  - Modify covalent potentials to calculate forces for all atoms in 
-    Group, if forceCommFlag.
-
-  - Send only necesary bonded ghosts.

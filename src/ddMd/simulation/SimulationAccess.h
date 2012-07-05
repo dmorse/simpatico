@@ -167,6 +167,9 @@ namespace DdMd
       /// Return the value of the mask policy (MaskNone or MaskBonded).
       MaskPolicy maskedPairPolicy() const;
 
+      /// Are forces evaluated by reverse communication (true) or not (false)?
+      bool forceCommFlag() const;
+
       //@}
 
    private:
@@ -266,6 +269,11 @@ namespace DdMd
       */
       MaskPolicy  maskedPairPolicy_;
 
+      /**
+      * Force evaluated using reverse communication (true) or not (false).
+      */
+      bool forceCommFlag_;
+
    };
 
    // Inline method definitions
@@ -357,6 +365,9 @@ namespace DdMd
 
    inline MaskPolicy SimulationAccess::maskedPairPolicy() const
    {  return maskedPairPolicy_; }
+
+   inline bool SimulationAccess::forceCommFlag() const
+   {  return forceCommFlag_; }
 
 }
 #endif

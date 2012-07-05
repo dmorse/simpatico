@@ -7,6 +7,16 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
+#include <ddMd/potentials/bond/BondPotential.h>
+#ifdef INTER_ANGLE
+#include <ddMd/potentials/angle/AnglePotential.h>
+#endif
+#ifdef INTER_DIHEDRAL
+#include <ddMd/potentials/dihedral/DihedralPotential.h>
+#endif
+#ifdef INTER_EXTERNAL
+#include <ddMd/potentials/external/ExternalPotential.h>
+#endif
 
 #include <util/format/Dbl.h>
 #include <util/format/Int.h>
@@ -39,6 +49,36 @@ namespace DdMd
    */
    Integrator::~Integrator()
    {}
+
+   /*
+   * Compute forces for all atoms.
+   */
+   void Integrator::computeForces()
+   {
+      simulation().zeroForces();
+      pairPotential().addForces();
+      bondPotential().addForces();
+      #ifdef INTER_ANGLE
+      if (nAngleType()) {
+         anglePotential().addForces();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType()) {
+         dihedralPotential().addForces();
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      if (hasExternal()) {
+         externalPotential().addForces();
+      }
+      #endif
+
+      // Reverse communication (if any)
+      if (forceCommFlag()) {
+         exchanger().updateForces();
+      }
+   }
 
    /*
    * Output statistics.

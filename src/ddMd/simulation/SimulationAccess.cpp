@@ -58,7 +58,8 @@ namespace DdMd
       #ifdef INTER_EXTERNAL
       hasExternal_(simulation.hasExternal_),
       #endif
-      maskedPairPolicy_(simulation.maskedPairPolicy_)
+      maskedPairPolicy_(simulation.maskedPairPolicy_),
+      forceCommFlag_(simulation.forceCommFlag_)
    {
       atomTypes_.associate(simulation.atomTypes_); 
       // RArray atomsTypes_ wraps the same C array as that

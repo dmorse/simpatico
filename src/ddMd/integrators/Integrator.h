@@ -64,7 +64,16 @@ namespace DdMd
 
       /// Return the timer by reference.
       DdTimer& timer()
-      { return timer_; }
+      {  return timer_; }
+
+      /**
+      * Compute forces for all local atoms, with timing.
+      *
+      * Identical to Simulation::forceCompute(), with added timing.
+      * Upon return, forces are correct for all local atoms. Values
+      * of the forces on ghost atoms are undefined.
+      */
+      void computeForces();
 
       /// Total number of steps
       int   nStep_;
@@ -74,10 +83,10 @@ namespace DdMd
 
    private:
 
+      // Performance timer
       DdTimer timer_;
 
    };
-
 
 }
 #endif
