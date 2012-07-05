@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -69,7 +69,8 @@ namespace DdMd
       void initialize(int atomCapacity, int ghostCapacity,
                     int totalAtomCapacity);
 
-      // Atom Mutators
+      /// \name Local Atom Management
+      //@{
 
       /**
       * Returns pointer an address available for a new Atom.
@@ -134,7 +135,9 @@ namespace DdMd
       */
       void removeAtom(Atom* atomPtr); 
 
-      // Ghost Atom Mutators
+      //@}
+      /// \name Ghost Atom Management
+      //@{
 
       /**
       * Returns pointer an address available for a new ghost Atom.
@@ -201,7 +204,9 @@ namespace DdMd
       */
       void clearGhosts(); 
 
-      // Snapshots.
+      //@}
+      /// \name Displacement Measurement
+      //@{
 
       /**
       * Record current positions of all local atoms.
@@ -260,7 +265,9 @@ namespace DdMd
 
       #endif
 
-      // Accessors (iterators)
+      //@}
+      /// \name Iterator interface
+      //@{
 
       /**
       * Set iterator to beginning of the set of atoms.
@@ -290,7 +297,9 @@ namespace DdMd
       */
       void begin(ConstGhostIterator& iterator) const;
 
-      // Accessors (miscellaneous)
+      //@}
+      /// \name Accessors 
+      //@{
 
       /**
       * Return pointer to Atom with specified id.
@@ -395,6 +404,8 @@ namespace DdMd
       */
       bool isValid() const;
 
+      //@}
+      
    private:
 
       // Array that holds all available local Atom objects.

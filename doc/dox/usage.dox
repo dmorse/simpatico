@@ -106,7 +106,7 @@ The -e echo option causes each parameter in the parameter file to be echoed to s
 The -r (restart) option takes a required parameter "filename". This is the base name of three input files required to restart a simulation, which have filename suffixes *.prm, *.rst, and *.cmd. 
 This option is discussed in more detail \ref restart_page "here".
 
-The -p (perturbation) option enables the definition of a free energy perturbation, for use with thermodynamic integration and replica exchange algorithms. This is generally only useful when used with a version of mcSim or mdSim that is compiled for use on multiple processors.  This option is discussed in more detail \ref perturb_page "here".  
+The -p (perturbation) option enables the definition of a free energy perturbation, for use with thermodynamic integration and replica exchange algorithms. This is generally only useful when used with a version of mcSim or mdSim that is compiled for use on multiple processors.  This option is discussed in more detail \ref parallel_page "here".  
 
 The only valid option for the ddSim parallel program is the "-e" (echo) option, which has the same effect in all programs.
 

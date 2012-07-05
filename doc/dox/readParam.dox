@@ -108,7 +108,7 @@ if the expected label is not found.
 
 <ul>
  <li> \ref test_page   (Prev) </li>
- <li> \ref guide_page  (Up)   </li>
+ <li> \ref developer_page  (Up)   </li>
  <li> \ref data_page   (Next) </li>
 </ul>
 

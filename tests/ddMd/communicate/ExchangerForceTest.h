@@ -16,13 +16,21 @@
 #include <ddMd/storage/DihedralStorage.h>
 #endif
 #include <ddMd/chemistry/MaskPolicy.h>
-#include <ddMd/potentials/pair/PairPotentialImpl.h>
-
-#include <inter/pair/DpdPair.h>
 
 #include <util/random/Random.h>
 #include <util/containers/DArray.h>
 #include <util/space/Vector.h>
+
+#include <ddMd/potentials/pair/PairPotentialImpl.h>
+#include <inter/pair/DpdPair.h>
+
+#define FORCE_BOND
+
+#ifdef FORCE_BOND
+#include <ddMd/potentials/bond/BondPotentialImpl.h>
+#include <inter/bond/HarmonicL0Bond.h>
+#endif 
+
 
 #include <util/mpi/MpiLogger.h>
 
@@ -58,12 +66,16 @@ private:
    #endif
    ConfigIo configIo;
    Random random;
-
-   PairPotentialImpl<DpdPair> pairPotential;
+   int atomCount;
 
    DArray<Vector> forces;
 
-   int atomCount;
+   PairPotentialImpl<DpdPair>        pairPotential;
+
+   #ifdef FORCE_BOND
+   BondPotentialImpl<HarmonicL0Bond> bondPotential;
+   #endif
+
 
 public:
 
@@ -92,6 +104,9 @@ public:
       pairPotential.setNAtomType(1);
       pairPotential.associate(domain, boundary, atomStorage);
 
+      bondPotential.setNBondType(1);
+      bondPotential.associate(boundary, bondStorage);
+
       #ifdef UTIL_MPI
       // Set communicators
       domain.setGridCommunicator(communicator());
@@ -108,6 +123,7 @@ public:
       configIo.setParamCommunicator(communicator());
       random.setParamCommunicator(communicator());
       pairPotential.setParamCommunicator(communicator());
+      bondPotential.setParamCommunicator(communicator());
       #else
       domain.setRank(0);
       #endif
@@ -127,6 +143,7 @@ public:
       dihedralStorage.readParam(file());
       #endif
       pairPotential.readParam(file());
+      bondPotential.readParam(file());
       closeFile();
 
       object().setPairCutoff(pairPotential.cutoff());
@@ -300,7 +317,7 @@ public:
       AtomIterator   atomIter;
       GhostIterator  ghostIter;
 
-      double range = 0.4;
+      double range = 0.1;
       displaceAtoms(range);
 
       object().exchange();
@@ -324,7 +341,7 @@ public:
                   true));
 
       range = 0.1;
-      for (int i=0; i < 3; ++i) {
+      for (int i=0; i < 8; ++i) {
 
          displaceAtoms(range);
 
@@ -373,10 +390,7 @@ public:
       int  nAtom  = 0;    // Number of atoms on this processor.
       int  nGhost = 0;    // Number of ghosts on this processor.
 
-      AtomIterator   atomIter;
-      GhostIterator  ghostIter;
-
-      //double range = 0.4;
+      //double range = 0.1;
       //displaceAtoms(range);
       object().exchange();
 
@@ -384,14 +398,12 @@ public:
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
 
-      #if 0
       // Update ghost positions
       object().update();
 
       // Check number of atoms and ghosts on each processor is unchanged.
       TEST_ASSERT(nAtom == atomStorage.nAtom());
       TEST_ASSERT(nGhost == atomStorage.nGhost());
-      #endif
 
       // Check that all atoms are accounted for after atom and ghost exchanges.
       nAtom = atomStorage.nAtom();
@@ -405,12 +417,14 @@ public:
       }
 
       // Check that all atoms are within the processor domain.
+      AtomIterator  atomIter;
       atomStorage.begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
       // Check that all ghosts are outside the processor domain.
+      GhostIterator ghostIter;
       atomStorage.begin(ghostIter);
       for ( ; ghostIter.notEnd(); ++ghostIter) {
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
@@ -419,6 +433,7 @@ public:
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   true));
+
       #ifdef INTER_ANGLE
       TEST_ASSERT(angleStorage.isValid(atomStorage, 
                   domain.communicator(), true));
@@ -435,16 +450,28 @@ public:
       zeroForces();
       pairPotential.setMethodId(2); // N^2 loop
       pairPotential.addForces();
+      bondPotential.addForces();
       saveForces();
 
       zeroForces();
       pairPotential.setMethodId(0); // PairList
       pairPotential.addForces();
+      bondPotential.addForces();
 
-      std::cout << std::endl;
+      //std::cout << std::endl;
 
+      // Check that total force is zero
+      Vector totForce;
       Vector nodeForce;
       nodeForce.zero();
+      communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator().Get_rank() == 0) {
+         //std::cout << "Total force = " << totForce; 
+         TEST_ASSERT(eq(totForce[0], 0.0));
+         TEST_ASSERT(eq(totForce[1], 0.0));
+         TEST_ASSERT(eq(totForce[2], 0.0));
+      }
+
       int id;
       atomStorage.begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
@@ -458,16 +485,6 @@ public:
          nodeForce += atomIter->force();
       }
 
-      // Check that total force is zero
-      Vector totForce;
-      communicator().Reduce(&nodeForce[0], &totForce[0], 3, MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator().Get_rank() == 0) {
-         std::cout << "Total force = " << totForce; 
-         TEST_ASSERT(eq(totForce[0], 0.0));
-         TEST_ASSERT(eq(totForce[1], 0.0));
-         TEST_ASSERT(eq(totForce[2], 0.0));
-      }
-
    }
 
    void testForceCycle()
@@ -478,10 +495,7 @@ public:
       int  nGhost = 0;    // Number of ghosts on this processor.
       bool needExchange;
 
-      AtomIterator   atomIter;
-      GhostIterator  ghostIter;
-
-      // double range = 0.4;
+      // double range = 0.1;
       // displaceAtoms(range);
 
       atomStorage.clearSnapshot();
@@ -491,12 +505,14 @@ public:
       nGhost = atomStorage.nGhost();
 
       // Assert that all atoms are within the processor domain.
+      AtomIterator   atomIter;
       atomStorage.begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
       // Assert that all ghosts are outside the processor domain.
+      GhostIterator  ghostIter;
       atomStorage.begin(ghostIter);
       for ( ; ghostIter.notEnd(); ++ghostIter) {
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
@@ -510,9 +526,11 @@ public:
       pairPotential.findNeighbors();
       zeroForces();
       pairPotential.addForces();
+      bondPotential.addForces();
 
+      #if 1
       double range = 0.1;
-      for (int i=0; i < 1000; ++i) {
+      for (int i=0; i < 10; ++i) {
 
          displaceAtoms(range);
    
@@ -560,12 +578,14 @@ public:
          zeroForces();
          pairPotential.setMethodId(2); // N^2 loop
          pairPotential.addForces();
+         bondPotential.addForces();
          saveForces();
 
          // Calculate forces via pair list.   
          zeroForces();
          pairPotential.setMethodId(0); // PairList
          pairPotential.addForces();
+         bondPotential.addForces();
    
          Vector nodeForce;
          nodeForce.zero();
@@ -589,14 +609,15 @@ public:
          }
 
       }
+      #endif
 
    }
 
 };
 
 TEST_BEGIN(ExchangerForceTest)
-TEST_ADD(ExchangerForceTest, testGhostUpdate)
-TEST_ADD(ExchangerForceTest, testGhostUpdateCycle)
+//TEST_ADD(ExchangerForceTest, testGhostUpdate)
+//TEST_ADD(ExchangerForceTest, testGhostUpdateCycle)
 TEST_ADD(ExchangerForceTest, testInitialForces)
 TEST_ADD(ExchangerForceTest, testForceCycle)
 TEST_END(ExchangerForceTest)

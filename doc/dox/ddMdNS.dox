@@ -36,51 +36,29 @@ this processor in order to calculate forces for local atoms with
 which it interacts. The "Atom::isGhost()" method returns a boolean 
 true if an atom is a ghost and false if it is a local atom.
 
-The Group < int N > class template is a class template for objects 
-that represent a small group of N covalently interacting atoms. 
-Specializations with N=2, 3, and 4 are used to represent 2-body 
-covalent bonds, 3-body angle interaction groups, and 4-body dihedral 
-interaction groups, respectively. A DdMd::Group < N > object has 
-an array of N integer ids for N interacting Atom objects, a 
-corresponding array of N pointers to these objects, for a set of 
-atoms that interact via an N-body covalent interaction. A group
-also has an integer group type id for the group.
+The Group < int N > class template is a class template for objects that represent a small group of N covalently interacting atoms.  Specializations with N=2, 3, and 4 are used to represent 2-body covalent bonds, 3-body angle interaction groups, and 4-body dihedral interaction groups, respectively. A DdMd::Group < N > object has an array of N integer ids for N interacting Atom objects, a corresponding array of N pointers to these objects, for a set of atoms that interact via an N-body covalent interaction. A group also has an integer group type id for the group.
 
-In a domain decomposition algorithm, atoms may migrate between
-processors as a result of changes in position. When ownwership
-of an atom is transferred from one processor to another, all of
-the Group<N> objects to which the atom belongs are also sent to
-the new owner. The atom ids and group type id that are stored 
-in a Group<N> are permanent identifiers, which are sent between 
-processors when the Group migrates. The pointers to atoms must
-be reset after each Group is received.
+In a domain decomposition algorithm, atoms may migrate between processors as a result of changes in position. When ownwership of an atom is transferred from one processor to another, all of the Group < N > objects to which the atom belongs are also sent to the new owner. The atom ids and group type id that are stored in a Group < N > are permanent identifiers, which are sent between processors when the Group migrates. The pointers to atoms must be reset after each Group is received.
 
-Each Atom may be owned by only one processor, but may appear as 
-a ghost on or more processors. Each Group<N> object is "owned" 
-by every processor that owns one or more of its consituent 
-atoms, and thus could conceivably be owned by up to N processors.
-
-The code in the DdMd namespace does not involve any concept of a 
-molecule, or of a molecular species. The topology of each molecule 
-is defined implicitly by a set of Group objects.  Correspondingly, 
-there is no Molecule or Species class in this namespace. 
+Each Atom may be owned by only one processor, but may appear as a ghost on or more processors. Each Group < N > object is "owned" by every processor that owns one or more of its consituent atoms, and thus could conceivably be owned by up to N processors.
+  
+The code in the DdMd namespace does not involve any concept of a molecule, or of a molecular species. The topology of each molecule is defined implicitly by a set of Group objects.  Correspondingly, there is no Molecule or Species class in this namespace.  
 
 See also: \ref DdMd_Chemistry_Module "Chemistry Module"
 
 \section storage_sec Storage Classes
 
-Storage classes are classes that manage and provide access 
-to sets of Atom<N> and Group<N> objects that are owned by 
+Storage classes are classes that manage and provide access to sets of Atom < N > and Group < N > objects that are owned by 
 a processor. The AtomStorage class manages separate sets of
 local and ghost Atom objects for one processor. The 
-GroupStorage<int N> class manages the set of Group<N> objects 
+GroupStorage<int N> class manages the set of Group < N > objects 
 (i.e., bonds, angles, or dihedrals) that are currently owned 
 by this processor. 
 
 Each of the storage classes provides two services:
 
   - Object access: A storage maintains a set of pointers 
-    to Atom or Group<N> objects on this processor, and can 
+    to Atom or Group < N > objects on this processor, and can 
     provide an iterator for each such set.
     
   - Memory management: A storage provides an interface to 
@@ -94,6 +72,8 @@ of an unused location in the memory pool, and that removes
 tha object from an internally mainted list of unused locations. 
 When an object is deleted, the associated memory is returned 
 to this "reservoir" of unused memory locations.
+
+See also: \ref DdMd_Storage_Module "Storage Module"
 
 \section potential_sec Potential Energies
 
@@ -132,7 +112,7 @@ a PairPotential* base class pointer.
 
 The implementation of each covalent potential energy 
 class uses an associated storage class to provide iterators 
-for all Group<N> objects of the required type. The 
+for all Group < N > objects of the required type. The 
 implementation of the PairPotential uses an internal PairList 
 object, which contains a Verlet pair list. 
 
@@ -155,7 +135,7 @@ update positions of ghosts.
 
 The Exchanger class implements the main domain decomposition communication algorithms. The exchange() method is called only on time steps when the pair list must be rebuilt, to exchange ownership of atoms and groups. The update() method is called every time step that exchange() is not called, and updates the positions of ghost atoms.
 
-The AtomDistributor, AtomCollector classes, and the GroupDistributor <N> and GroupCollector <N> class templates are used by the ConfigIo objects that read and write configuration files. The "Distributor" classes distribute atoms and groups from a master processor that reads configuration files to the processors that own these objects. The "Collector" classes collect atoms and groups from all processors and send them to a master processor, in order to allow the master processor to write atom coordinates and topology information to a file.  Configuration files are always written and read by the master processor.
+The AtomDistributor, AtomCollector classes, and the GroupDistributor < N > and GroupCollector < N > class templates are used by the ConfigIo objects that read and write configuration files. The "Distributor" classes distribute atoms and groups from a master processor that reads configuration files to the processors that own these objects. The "Collector" classes collect atoms and groups from all processors and send them to a master processor, in order to allow the master processor to write atom coordinates and topology information to a file.  Configuration files are always written and read by the master processor.
 
 The Buffer class provides an interface to blocks of memory that are used for MPI communication, and is used by all of the other communication classes discussed above.
 
@@ -165,7 +145,7 @@ A DdMd::Simulation object is the top level object in a DdMd simulation.  There i
  
    - An DdMd::AtomStorage.
     
-   - A set of DdMd::GroupStorage <N> objects with N=2 and (optionally) N=3 and 4 for bond,
+   - A set of DdMd::GroupStorage < N > objects with N=2 and (optionally) N=3 and 4 for bond,
      angle and dihedral objects. 
 
    - A set of potential energy classes for pair and bond potentials, and (optionally) 

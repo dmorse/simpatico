@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -65,15 +65,8 @@ namespace DdMd
       */
       void initialize(int capacity, int totalCapacity);
 
-      /**
-      * Set value for total number of distinct groups on all processors.
-      *
-      * This value is used by the isValid() method, and should be set only 
-      * on the master processor.
-      */
-      void setNTotal(int nTotal);
-
-      // Mutators
+      /// \name Group Management
+      //@{
 
       /**
       * Returns pointer to an address available for a new Group.
@@ -150,28 +143,56 @@ namespace DdMd
       */
       void remove(Group<N>* groupPtr); 
 
+      //@}
+      /// \name Iterator Interface
+      //@{
+      
       /**
-      * Add to set of incomplete groups.
+      * Set iterator to beginning of the set of groups.
       *
-      * \throw Exception if groupPtr is not address of a local Group.
-      *
-      * \param groupPtr pointer to the group to be added to set.
+      * \param iterator iterator for all groups.
       */
-      void addIncomplete(Group<N>* groupPtr); 
+      void begin(GroupIterator<N>& iterator);
+ 
+      /**
+      * Set iterator to beginning of the set of groups.
+      *
+      * \param iterator iterator for all groups.
+      */
+      void begin(ConstGroupIterator<N>& iterator) const;
+
+      //@}
+      /// \name Accessors
+      //@{
 
       /**
-      * Remove from set of incomplete groups.
-      *
-      * \throw Exception if groupPtr is not address of a Group.
-      *
-      * \param groupPtr pointer to the group to be removed
+      * Find local Group<N> indexed by global id.
+      * 
+      * \return pointer to Group<N> object, or null pointer if absent.
       */
-      void removeIncomplete(Group<N>* groupPtr); 
+      Group<N>* find(int id) const;
 
       /**
-      * Clear the set of incomplete groups.
+      * Return current number of groups on this processor.
       */
-      void clearIncompleteSet(); 
+      int size() const;
+
+      /**
+      * Return capacity for groups on this processor.
+      */
+      int capacity() const;
+
+      /**
+      * Return maximum allowable number of groups on all processors.
+      *
+      * Note: Group ids must be in range 0, ..., totalCapacity-1
+      */
+      int totalCapacity() const;
+
+      /**
+      * Return total number of distinct groups on all processors.
+      */
+      int nTotal() const;
 
       /**
       * Compute and store the number of distinct groups on all processors.
@@ -189,65 +210,6 @@ namespace DdMd
       void computeNTotal();
       #endif
    
-      // Accessors
-
-      /**
-      * Find local Group<N> indexed by global id.
-      * 
-      * \return pointer to Group<N> object, or null pointer if absent.
-      */
-      Group<N>* find(int id) const;
-
-      /**
-      * Set iterator to beginning of the set of groups.
-      *
-      * \param iterator iterator for all groups.
-      */
-      void begin(GroupIterator<N>& iterator);
- 
-      /**
-      * Set iterator to beginning of the set of groups.
-      *
-      * \param iterator iterator for all groups.
-      */
-      void begin(ConstGroupIterator<N>& iterator) const;
- 
-      /**
-      * Set iterator to beginning of the set of incomplete groups.
-      *
-      * \param iterator iterator for all incomplete groups.
-      */
-      void begin(IncompleteGroupIterator<N>& iterator);
- 
-      /**
-      * Set const iterator to beginning of the set of incomplete groups.
-      *
-      * \param iterator iterator for all incomplete groups.
-      */
-      void begin(ConstIncompleteGroupIterator<N>& iterator) const;
- 
-      /**
-      * Return current number of groups on this processor.
-      */
-      int size() const;
-
-      /**
-      * Return capacity for groups on this processor.
-      */
-      int capacity() const;
-
-      /**
-      * Return maximum number of groups on all processors.
-      *
-      * Group ids are labelled from 0, ..., totalCapacity-1
-      */
-      int totalCapacity() const;
-
-      /**
-      * Return total number of distinct groups on all processors.
-      */
-      int nTotal() const;
-
       /**
       * Return true if the container is valid, or throw an Exception.
       */
@@ -272,6 +234,8 @@ namespace DdMd
       bool isValid(AtomStorage& atomStorage, bool hasGhosts);
       #endif
 
+      //@}
+      
    private:
 
       // Array that holds all available group objects.
@@ -279,9 +243,6 @@ namespace DdMd
 
       // Set of pointers to local groups.
       ArraySet< Group<N> >   groupSet_;
-
-      // Set of pointers to incomplete local groups.
-      ArraySet< Group<N> >   incompleteGroupSet_;
 
       // Stack of pointers to unused local Group objects.
       ArrayStack< Group<N> > reservoir_;
@@ -373,13 +334,6 @@ namespace DdMd
    }
 
    /*
-   * Set total number of distinct groups on all processors.
-   */
-   template <int N>
-   void GroupStorage<N>::setNTotal(int nTotal)
-   {  nTotal_ = nTotal; }
-
-   /*
    * Allocate and initialize all containers (private).
    */
    template <int N>
@@ -388,7 +342,6 @@ namespace DdMd
       groups_.allocate(capacity_);
       reservoir_.allocate(capacity_);
       groupSet_.allocate(groups_);
-      incompleteGroupSet_.allocate(groups_);
       groupPtrs_.allocate(totalCapacity_);
 
       // Push all groups onto reservoir stack, in reverse order.
@@ -495,39 +448,6 @@ namespace DdMd
       groupPtr->setId(-1);
    }
 
-   /*
-   * Add to set of incomplete groups.
-   */
-   template <int N>
-   void GroupStorage<N>::addIncomplete(Group<N>* groupPtr)
-   {
-      int id = groupPtr->id();
-      if (groupPtrs_[id] == 0) {
-         UTIL_THROW("Ptr does not point to local group");
-      }
-      incompleteGroupSet_.append(*groupPtr);
-   }
-
-   /*
-   * Remove from set of incomplete groups.
-   */
-   template <int N>
-   void GroupStorage<N>::removeIncomplete(Group<N>* groupPtr)
-   {
-      int id = groupPtr->id();
-      if (groupPtrs_[id] == 0) {
-         UTIL_THROW("Ptr does not point to local group");
-      }
-      incompleteGroupSet_.remove(*groupPtr);
-   }
-
-   /*
-   * Clear incomplete group set (remove all).
-   */
-   template <int N>
-   void GroupStorage<N>::clearIncompleteSet()
-   {  incompleteGroupSet_.clear(); }
-
    // Accessors
 
    /*
@@ -550,21 +470,7 @@ namespace DdMd
    template <int N>
    void GroupStorage<N>::begin(ConstGroupIterator<N>& iterator) const
    {  groupSet_.begin(iterator); }
- 
-   /*
-   * Set iterator to beginning of the set of incomplete local groups.
-   */
-   template <int N>
-   void GroupStorage<N>::begin(IncompleteGroupIterator<N>& iterator)
-   {  incompleteGroupSet_.begin(iterator); }
- 
-   /*
-   * Set const iterator to beginning of the set of incomplete local groups.
-   */
-   template <int N>
-   void GroupStorage<N>::begin(ConstIncompleteGroupIterator<N>& iterator) const
-   {  incompleteGroupSet_.begin(iterator); }
- 
+
    /*
    * Check validity of this GroupStorage.
    *
