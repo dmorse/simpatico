@@ -2,6 +2,14 @@ Simulation{
   Domain{
     gridDimensions    2    1     3
   }
+  FileMaster{
+     commandFileName   commands
+     inputPrefix       in/
+     oututPrefix       out/
+  }
+  nAtomType           1
+  nBondType           1
+  atomTypes           A   1.0
   AtomStorage{
     atomCapacity       8000
     ghostCapacity     20000
@@ -11,27 +19,43 @@ Simulation{
     capacity        8000
     totalCapacity  20000
   }
-  nAtomType           1
-  LJPair{
+  Buffer{
+    atomCapacity      4000
+    ghostCapacity     4000
+  }
+  pairStyle  LJPair
+  bondStyle  HarmonicBond
+  PairPotential{
     epsilon         1.0
     sigma           1.0
     cutoff          1.122462048
-  }
-  Interaction{
     skin             0.3
     pairCapacity   60000
     maxBoundary     orthorhombic   30.0   30.0   30.0
   }
-  Integrator{
+  BondPotential{
+    kappa     400.0
+    length      1.0
+  }
+  EnergyEnsemble{
+    type        adiabatic
+  }
+  BoundaryEnsemble{
+    type        rigid
+  }
+  NveIntegrator{
     dt           0.004
   }
   Random{
     seed        8012457890
   }
-  Buffer{
-    atomCapacity      4000
-    ghostCapacity     4000
+  DiagnosticManager{
+    baseInterval 10
+
   }
+}
+
+
   ConfigIo{
     atomCacheCapacity 2000
     bondCacheCapacity 2000

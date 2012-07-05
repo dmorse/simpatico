@@ -24,13 +24,12 @@
 #include <ddMd/potentials/pair/PairPotentialImpl.h>
 #include <inter/pair/DpdPair.h>
 
-#define FORCE_BOND
+#define TEST_EXCHANGER_FORCE_BOND
 
-#ifdef FORCE_BOND
+#ifdef TEST_EXCHANGER_FORCE_BOND
 #include <ddMd/potentials/bond/BondPotentialImpl.h>
 #include <inter/bond/HarmonicL0Bond.h>
 #endif 
-
 
 #include <util/mpi/MpiLogger.h>
 
@@ -72,7 +71,7 @@ private:
    DArray<Vector> forces;
 
    PairPotentialImpl<DpdPair>        pairPotential;
-   #ifdef FORCE_BOND
+   #ifdef TEST_EXCHANGER_FORCE_BOND
    BondPotentialImpl<HarmonicL0Bond> bondPotential;
    #endif
 
@@ -107,8 +106,10 @@ public:
       pairPotential.associate(domain, boundary, atomStorage);
       pairPotential.setForceCommFlag(forceCommFlag);
 
+      #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.setNBondType(1);
       bondPotential.associate(boundary, bondStorage);
+      #endif
 
       #ifdef UTIL_MPI
       // Set communicators
@@ -126,7 +127,9 @@ public:
       configIo.setParamCommunicator(communicator());
       random.setParamCommunicator(communicator());
       pairPotential.setParamCommunicator(communicator());
+      #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.setParamCommunicator(communicator());
+      #endif
       #else
       domain.setRank(0);
       #endif
@@ -146,7 +149,9 @@ public:
       dihedralStorage.readParam(file());
       #endif
       pairPotential.readParam(file());
+      #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.readParam(file());
+      #endif
       closeFile();
 
       object().setPairCutoff(pairPotential.cutoff());
@@ -490,7 +495,9 @@ public:
       pairPotential.setMethodId(2); 
       zeroForces();
       pairPotential.addForces();
-      //bondPotential.addForces();
+      #ifdef TEST_EXCHANGER_FORCE_BOND
+      bondPotential.addForces();
+      #endif
       if (forceCommFlag) {
          object().updateForces();
       }
@@ -510,7 +517,9 @@ public:
       pairPotential.setMethodId(0); // PairList
       zeroForces();
       pairPotential.addForces();
-      //bondPotential.addForces();
+      #ifdef TEST_EXCHANGER_FORCE_BOND
+      bondPotential.addForces();
+      #endif
       if (forceCommFlag) {
          object().updateForces();
       }
@@ -616,7 +625,9 @@ public:
       zeroForces();
       pairPotential.setMethodId(0); // PairList
       pairPotential.addForces();
-      //bondPotential.addForces();
+      #ifdef TEST_EXCHANGER_FORCE_BOND
+      bondPotential.addForces();
+      #endif
       if (forceCommFlag) {
          object().updateForces();
       }
@@ -689,7 +700,9 @@ public:
          zeroForces();
          pairPotential.setMethodId(2); // N^2 loop
          pairPotential.addForces();
-         //bondPotential.addForces();
+         #ifdef TEST_EXCHANGER_FORCE_BOND
+         bondPotential.addForces();
+         #endif
          if (forceCommFlag) {
             object().updateForces();
          }
@@ -707,7 +720,9 @@ public:
          zeroForces();
          pairPotential.setMethodId(0); // PairList
          pairPotential.addForces();
-         //bondPotential.addForces();
+         #ifdef TEST_EXCHANGER_FORCE_BOND
+         bondPotential.addForces();
+         #endif
          if (forceCommFlag) {
             object().updateForces();
          }
@@ -751,7 +766,9 @@ public:
             pairPotential.findNeighbors(); 
             pairPotential.setMethodId(0);    
             pairPotential.addForces();
-            //bondPotential.addForces();
+            #ifdef TEST_EXCHANGER_FORCE_BOND
+            bondPotential.addForces();
+            #endif
             saveForces();
             pairPotential.computeEnergy(domain.communicator());
             if (domain.communicator().Get_rank() == 0) {
