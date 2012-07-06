@@ -319,7 +319,7 @@ namespace Util
          } else
          if ( r[1] <  minima_[1] ) {
             r[1] = r[1] + lengths_[1];
-	    r[2] = r[2] - tilt_;
+	    r[2] = r[2] + tilt_;
             assert(r[1] >= minima_[1]);
          }
          if( r[2] >= maxima_[2] ) {
@@ -355,7 +355,7 @@ namespace Util
          } else
          if ( r[1] <  minima_[1] ) {
             r[1] = r[1] + lengths_[1];
-	    r[2] = r[2] - tilt_;
+	    r[2] = r[2] + tilt_;
 	    --(shift[1]);
             assert(r[1] >= minima_[1]);
          }

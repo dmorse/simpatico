@@ -46,9 +46,13 @@ namespace Util
 	 MonoclinicBoundaryMI::tilt_ = 0.0;
 	 MonoclinicBoundaryMI::volume_ = 1.0;
 	 
-	 MonoclinicBoundaryMI::c1 = 1.0;
-	 MonoclinicBoundaryMI::c2 = 1.0;
-	 MonoclinicBoundaryMI::c3 = 0.0;
+	 MonoclinicBoundaryMI::c1_ = 1.0;
+	 MonoclinicBoundaryMI::c2_ = 1.0;
+	 MonoclinicBoundaryMI::c3_ = 0.0;
+
+	 MonoclinicBoundaryMI::e_ = 1.0;
+	 MonoclinicBoundaryMI::halfe_ = 0.5;
+	 MonoclinicBoundaryMI::d1_ = 1.0;	
    }
 
    /* 
@@ -79,12 +83,12 @@ namespace Util
 
          volume_ = lengths_[0] * lengths_[1] * lengths_[2];
 
-	 e = sqrt(lengths_[1]*lengths_[1]+tilt_*tilt_); 
-	 halfe = e / 2.0; 	 
-	 d1 = sqrt(lengths_[1]*lengths_[1]+(tilt_-lengths_[2])*(tilt_-lengths_[2])); 
-	 halfd1 = d1 / 2.0; 
-	 d2 = sqrt(lengths_[1]*lengths_[1]+(tilt_+lengths_[2])*(tilt_+lengths_[2])); 
-	 halfd2 = d2 / 2.0; 
+	 e_ = sqrt(lengths_[1]*lengths_[1]+tilt_*tilt_); 
+	 halfe_ = e_ / 2.0; 	 
+	 d1_ = sqrt(lengths_[1]*lengths_[1]+(tilt_-lengths_[2])*(tilt_-lengths_[2])); 
+	 halfd1_ = d1_ / 2.0; 
+	 d2_ = sqrt(lengths_[1]*lengths_[1]+(tilt_+lengths_[2])*(tilt_+lengths_[2])); 
+	 halfd2_ = d2_ / 2.0; 
    }
 
    /* 

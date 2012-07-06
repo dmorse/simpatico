@@ -61,12 +61,12 @@ public:
       }
 */
       std::cout << std::endl;
-      std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
-      std::cout << "BravaisBasis(2)   " << boundary.bravaisBasisVector(2) << std::endl;
-      std::cout << "BravaisBasis(3)   " << boundary.bravaisBasisVector(3) << std::endl;
-      std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(1) << std::endl;
-      std::cout << "ReciprocalBasis(2)" << boundary.reciprocalBasisVector(2) << std::endl;
-      std::cout << "ReciprocalBasis(3)" << boundary.reciprocalBasisVector(3) << std::endl;
+      std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(0) << std::endl;
+      std::cout << "BravaisBasis(2)   " << boundary.bravaisBasisVector(1) << std::endl;
+      std::cout << "BravaisBasis(3)   " << boundary.bravaisBasisVector(2) << std::endl;
+      std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(0) << std::endl;
+      std::cout << "ReciprocalBasis(2)" << boundary.reciprocalBasisVector(1) << std::endl;
+      std::cout << "ReciprocalBasis(3)" << boundary.reciprocalBasisVector(2) << std::endl;
 
    }
 
@@ -235,7 +235,7 @@ public:
       boundary.shift(R);
       TEST_ASSERT(eq(R[0], 0.6));
       TEST_ASSERT(eq(R[1], 2.6));
-      TEST_ASSERT(eq(R[2], 2.4));
+      TEST_ASSERT(eq(R[2], 2.9));
 
    };
 
@@ -265,7 +265,7 @@ public:
       R2[1] =  0.0;
       R2[2] =  2.1;
       dRSq = boundary.distanceSq(R1, R2);
-      TEST_ASSERT(eq(dRSq, 1.9));
+      TEST_ASSERT(eq(dRSq, 3.61));
 
       R1[0] =  2.0;
       R1[1] =  0.0;
@@ -274,7 +274,7 @@ public:
       R2[1] =  3.0;
       R2[2] =  1.0;
       dRSq = boundary.distanceSq(R1, R2);
-      TEST_ASSERT(eq(dRSq, 0.9));
+      TEST_ASSERT(eq(dRSq, 0.81));
 
       R1[0] =  2.0;
       R1[1] =  3.0;
@@ -283,7 +283,7 @@ public:
       R2[1] =  0.0;
       R2[2] =  0.1;
       dRSq = boundary.distanceSq(R1, R2);
-      TEST_ASSERT(eq(dRSq, 0.1));
+      TEST_ASSERT(eq(dRSq, 0.01));
 
    };
 
@@ -323,9 +323,9 @@ public:
       TEST_ASSERT(eq(dR[0], 0.0));
       TEST_ASSERT(eq(dR[1], 0.0));
       TEST_ASSERT(eq(dR[2], 1.9));
-      TEST_ASSERT(eq(dRSq1, 1.9));
-      TEST_ASSERT(eq(dRSq2, 1.9));
-      TEST_ASSERT(eq(dRSq3, 1.9));
+      TEST_ASSERT(eq(dRSq1, 3.61));
+      TEST_ASSERT(eq(dRSq2, 3.61));
+      TEST_ASSERT(eq(dRSq3, 3.61));
 
       R1[0] =  2.0;
       R1[1] =  0.0;
@@ -339,25 +339,25 @@ public:
       TEST_ASSERT(eq(dR[0], 0.9));
       TEST_ASSERT(eq(dR[1], 0.0));
       TEST_ASSERT(eq(dR[2], 0.0));
-      TEST_ASSERT(eq(dRSq1, 0.9));
-      TEST_ASSERT(eq(dRSq2, 0.9));
-      TEST_ASSERT(eq(dRSq3, 0.9));
+      TEST_ASSERT(eq(dRSq1, 0.81));
+      TEST_ASSERT(eq(dRSq2, 0.81));
+      TEST_ASSERT(eq(dRSq3, 0.81));
 
-      R1[0] =  2.0;
+      R1[0] =  2.2;
       R1[1] =  3.0;
-      R1[2] =  5.0;
-      R2[0] =  0.0;
+      R1[2] =  5.1;
+      R2[0] =  0.2;
       R2[1] =  0.0;
       R2[2] =  0.1;
       dRSq1 = boundary.distanceSq(R1, R2);
       dRSq2 = boundary.distanceSq(R1, R2, dR);
       dRSq3 = boundary.distanceSq(R1, R2, shift);
-      TEST_ASSERT(eq(dR[0],-0.1));
+      TEST_ASSERT(eq(dR[0], 0.0));
       TEST_ASSERT(eq(dR[1], 0.0));
       TEST_ASSERT(eq(dR[2], 0.0));
-      TEST_ASSERT(eq(dRSq1, 0.1));
-      TEST_ASSERT(eq(dRSq2, 0.1));
-      TEST_ASSERT(eq(dRSq3, 0.1));
+      TEST_ASSERT(eq(dRSq1, 0.0));
+      TEST_ASSERT(eq(dRSq2, 0.0));
+      TEST_ASSERT(eq(dRSq3, 0.0));
 
       R1[0] =  2.0;
       R1[1] = -0.1;

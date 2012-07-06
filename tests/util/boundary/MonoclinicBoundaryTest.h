@@ -61,12 +61,12 @@ public:
       }
 */
       std::cout << std::endl;
-      std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(1) << std::endl;
-      std::cout << "BravaisBasis(2)   " << boundary.bravaisBasisVector(2) << std::endl;
-      std::cout << "BravaisBasis(3)   " << boundary.bravaisBasisVector(3) << std::endl;
-      std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(1) << std::endl;
-      std::cout << "ReciprocalBasis(2)" << boundary.reciprocalBasisVector(2) << std::endl;
-      std::cout << "ReciprocalBasis(3)" << boundary.reciprocalBasisVector(3) << std::endl;
+      std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(0) << std::endl;
+      std::cout << "BravaisBasis(2)   " << boundary.bravaisBasisVector(1) << std::endl;
+      std::cout << "BravaisBasis(3)   " << boundary.bravaisBasisVector(2) << std::endl;
+      std::cout << "ReciprocalBasis(1)" << boundary.reciprocalBasisVector(0) << std::endl;
+      std::cout << "ReciprocalBasis(2)" << boundary.reciprocalBasisVector(1) << std::endl;
+      std::cout << "ReciprocalBasis(3)" << boundary.reciprocalBasisVector(2) << std::endl;
 
    }
 
