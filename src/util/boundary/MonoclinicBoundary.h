@@ -74,7 +74,7 @@ namespace Util
       * so as to lie within the range minima_[i] < r[i] < maxima_[i].
       *
       * Precondition: The algorithm assumes that on input, for each i=0,..,2,
-      * minima_[i] - lengths_[i] < r[i] < maxima_[i] + lengths_[i]
+      * minima_[i] - boxLengths_[i] < r[i] < maxima_[i] + boxLengths_[i]
       *
       * \param r Vector of coordinates
       */
@@ -218,16 +218,19 @@ namespace Util
       /// Maximum coordinates: Require r[i] <  maxima_[i].
       Vector maxima_;
 
-      /// Box lengths:  lengths_[i] = maxima_[i] - minima_[i].
-      Vector lengths_;
+      /// Box lengths:  boxLengths_[i] = maxima_[i] - minima_[i].
+      Vector boxLengths_;
 
       /// Box tilt_ in Monoclinic Box. tilt_ is in the z-direction.
       double tilt_;
 
-      /// Half region lengths: halfLengths_[i] = 0.5*lengths_[i].
-      Vector halfLengths_;
+      /// Half region lengths: halfBoxLengths_[i] = 0.5*boxLengths_[i].
+      Vector halfBoxLengths_;
 
-      /// Volume: V = lengths_[0]*lengths_[1]*lengths_[2].
+      /// lengths of the box projected in the unit reciprocal Bravais vectors.
+      Vector lengths_;
+
+      /// Volume: V = boxLengths_[0]*boxLengths_[1]*boxLengths_[2].
       double volume_;
 
       /// constants used for distancing: u1=c1_*dy.
@@ -289,13 +292,13 @@ namespace Util
    * Return Vector of lengths by const reference.
    */
    inline const Vector& MonoclinicBoundary::lengths() const 
-   {  return lengths_; }
+   {  return boxLengths_; }
 
    /* 
    * Get length = maximum - minimum in direction i.
    */
    inline double MonoclinicBoundary::length(int i) const 
-   {  return lengths_[i]; }
+   {  return boxLengths_[i]; }
 
    /* 
    * Return region volume.
@@ -320,16 +323,16 @@ namespace Util
    */
    inline double MonoclinicBoundary::maxValidityDistanceSq() const
    {
-       double m = lengths_[0] / 2.0;
+       double m = boxLengths_[0] / 2.0;
 	  
-          if( m > (lengths_[1] / 2.0) )
+          if( m > (boxLengths_[1] / 2.0) )
 	  {
-             m = lengths_[1] / 2.0;
+             m = boxLengths_[1] / 2.0;
 	  }
 
-          if( m > (lengths_[1]*lengths_[2] / (2.0 * sqrt(tilt_*tilt_+lengths_[1]*lengths_[1]))) )
+          if( m > (boxLengths_[1]*boxLengths_[2] / (2.0 * sqrt(tilt_*tilt_+boxLengths_[1]*boxLengths_[1]))) )
           {
-             m = lengths_[1]*lengths_[2] / (2.0 * sqrt(tilt_*tilt_+lengths_[1]*lengths_[1]));
+             m = boxLengths_[1]*boxLengths_[2] / (2.0 * sqrt(tilt_*tilt_+boxLengths_[1]*boxLengths_[1]));
           }
 
        return m*m; 
@@ -341,29 +344,29 @@ namespace Util
    inline void MonoclinicBoundary::shift(Vector& r) const
    {
          if( r[0] >= maxima_[0] ) {
-            r[0] = r[0] - lengths_[0];
+            r[0] = r[0] - boxLengths_[0];
             assert(r[0] < maxima_[0]);
          } else
          if ( r[0] <  minima_[0] ) {
-            r[0] = r[0] + lengths_[0];
+            r[0] = r[0] + boxLengths_[0];
             assert(r[0] >= minima_[0]);
          }
          if( (c1_*r[1]) >= e_ ) {
-            r[1] = r[1] - lengths_[1];
+            r[1] = r[1] - boxLengths_[1];
 	    r[2] = r[2] - tilt_;
             assert((c1_*r[1]) < e_);
          } else
          if ( (c1_*r[1]) <  minima_[1] ) {
-            r[1] = r[1] + lengths_[1];
+            r[1] = r[1] + boxLengths_[1];
 	    r[2] = r[2] + tilt_;
             assert((c1_*r[1]) >= minima_[1]);
          }
          if( (c2_*r[2]+c3_*r[1]) >= maxima_[2] ) {
-            r[2] = r[2] - lengths_[2];
+            r[2] = r[2] - boxLengths_[2];
             assert(r[2] < maxima_[2]);
          } else
          if ( (c2_*r[2]+c3_*r[1]) <  minima_[2] ) {
-            r[2] = r[2] + lengths_[2];
+            r[2] = r[2] + boxLengths_[2];
             assert((c2_*r[2]+c3_*r[1]) >= minima_[2]);
          }
    }
@@ -374,34 +377,34 @@ namespace Util
    inline void MonoclinicBoundary::shift(Vector& r, IntVector& shift) const
    {
          if( r[0] >= maxima_[0] ) {
-            r[0] = r[0] - lengths_[0];
+            r[0] = r[0] - boxLengths_[0];
 	    ++(shift[0]);
             assert(r[0] < maxima_[0]);
          } else
          if ( r[0] <  minima_[0] ) {
-            r[0] = r[0] + lengths_[0];
+            r[0] = r[0] + boxLengths_[0];
 	    --(shift[0]);
             assert(r[0] >= minima_[0]);
          }
          if( (c1_*r[1]) >= e_ ) {
-            r[1] = r[1] - lengths_[1];
+            r[1] = r[1] - boxLengths_[1];
 	    r[2] = r[2] - tilt_;
 	    ++(shift[1]);
             assert((c1_*r[1]) < e_);
          } else
          if ( (c1_*r[1]) <  minima_[1] ) {
-            r[1] = r[1] + lengths_[1];
+            r[1] = r[1] + boxLengths_[1];
 	    r[2] = r[2] + tilt_;
 	    --(shift[1]);
             assert((c1_*r[1]) >= minima_[1]);
          }
          if( (c2_*r[2]+c3_*r[1]) >= maxima_[2] ) {
-            r[2] = r[2] - lengths_[2];
+            r[2] = r[2] - boxLengths_[2];
             assert(r[2] < maxima_[2]);
 	    ++(shift[2]);
          } else
          if ( (c2_*r[2]+c3_*r[1]) <  minima_[2] ) {
-            r[2] = r[2] + lengths_[2];
+            r[2] = r[2] + boxLengths_[2];
             assert((c2_*r[2]+c3_*r[1]) >= minima_[2]);
 	    --(shift[2]);
          }
@@ -420,15 +423,15 @@ namespace Util
       double norm = 0.0;
 
       dx = r1[0] - r2[0];
-      if ( fabs(dx) > halfLengths_[0] ) {
+      if ( fabs(dx) > halfBoxLengths_[0] ) {
          if (dx > 0.0) {
-            dx -= lengths_[0];
+            dx -= boxLengths_[0];
             translate[0] = -1;
          } else {
-            dx += lengths_[0];
+            dx += boxLengths_[0];
             translate[0] = +1;
          }
-         assert(fabs(dx) <= halfLengths_[0]);
+         assert(fabs(dx) <= halfBoxLengths_[0]);
       } else {
          translate[0] = 0;
       }
@@ -438,11 +441,11 @@ namespace Util
 
       if ( fabs(c1_*dy) > halfe_ ) {
          if (dy > 0.0) {
-            dy -= lengths_[1];
+            dy -= boxLengths_[1];
 	    dz -= tilt_;
             translate[1] = -1;
          } else {
-            dy += lengths_[1];
+            dy += boxLengths_[1];
 	    dz += tilt_;
             translate[1] = +1;
          }
@@ -451,15 +454,15 @@ namespace Util
          translate[1] = 0;
       }
 
-      if ( fabs(c2_*dz+c3_*dy) >  halfLengths_[2]) {
+      if ( fabs(c2_*dz+c3_*dy) >  halfBoxLengths_[2]) {
          if (c2_*dz+c3_*dy > 0.0) {
-	    dz -= lengths_[2];
+	    dz -= boxLengths_[2];
             translate[2] = -1;
          } else {
-	    dz += lengths_[2];
+	    dz += boxLengths_[2];
             translate[2] = +1;
          }
-         assert(fabs(c2_*dz+c3_*dy) <= halfLengths_[2]);
+         assert(fabs(c2_*dz+c3_*dy) <= halfBoxLengths_[2]);
       } else {
          translate[2] = 0;
       }
@@ -480,13 +483,13 @@ namespace Util
       double norm = 0.0;
 
       dx = r1[0] - r2[0];
-      if ( fabs(dx) > halfLengths_[0] ) {
+      if ( fabs(dx) > halfBoxLengths_[0] ) {
          if (dx > 0.0) {
-            dx -= lengths_[0];
+            dx -= boxLengths_[0];
          } else {
-            dx += lengths_[0];
+            dx += boxLengths_[0];
          }
-         assert(fabs(dx) <= halfLengths_[0]);
+         assert(fabs(dx) <= halfBoxLengths_[0]);
       }
 
       dy = r1[1] - r2[1];
@@ -494,22 +497,22 @@ namespace Util
 
       if ( fabs(c1_*dy) > halfe_ ) {
          if (dy > 0.0) {
-            dy -= lengths_[1];
+            dy -= boxLengths_[1];
 	    dz -= tilt_;
          } else {
-            dy += lengths_[1];
+            dy += boxLengths_[1];
 	    dz += tilt_;
          }
          assert(fabs(c1_*dy) <= halfe_);
       }
 
-      if ( fabs(c2_*dz+c3_*dy) >  halfLengths_[2]) {
+      if ( fabs(c2_*dz+c3_*dy) >  halfBoxLengths_[2]) {
          if (c2_*dz+c3_*dy > 0.0) {
-	    dz -= lengths_[2];
+	    dz -= boxLengths_[2];
          } else {
-	    dz += lengths_[2];
+	    dz += boxLengths_[2];
          }
-         assert(fabs(c2_*dz+c3_*dy) <= halfLengths_[2]);
+         assert(fabs(c2_*dz+c3_*dy) <= halfBoxLengths_[2]);
       }
 
       norm = dx*dx+dy*dy+dz*dz;
@@ -530,13 +533,13 @@ namespace Util
       double norm = 0.0;
 
       dx = r1[0] - r2[0];
-      if ( fabs(dx) > halfLengths_[0] ) {
+      if ( fabs(dx) > halfBoxLengths_[0] ) {
          if (dx > 0.0) {
-            dx -= lengths_[0];
+            dx -= boxLengths_[0];
          } else {
-            dx += lengths_[0];
+            dx += boxLengths_[0];
          }
-         assert(fabs(dx) <= halfLengths_[0]);
+         assert(fabs(dx) <= halfBoxLengths_[0]);
       }
 
       dy = r1[1] - r2[1];
@@ -544,22 +547,22 @@ namespace Util
 
       if ( fabs(c1_*dy) > halfe_ ) {
          if (dy > 0.0) {
-            dy -= lengths_[1];
+            dy -= boxLengths_[1];
 	    dz -= tilt_;
          } else {
-            dy += lengths_[1];
+            dy += boxLengths_[1];
 	    dz += tilt_;
          }
          assert(fabs(c1_*dy) <= halfe_);
       }
 
-      if ( fabs(c2_*dz+c3_*dy) >  halfLengths_[2]) {
+      if ( fabs(c2_*dz+c3_*dy) >  halfBoxLengths_[2]) {
          if (c2_*dz+c3_*dy > 0.0) {
-	    dz -= lengths_[2];
+	    dz -= boxLengths_[2];
          } else {
-	    dz += lengths_[2];
+	    dz += boxLengths_[2];
          }
-         assert(fabs(c2_*dz+c3_*dy) <= halfLengths_[2]);
+         assert(fabs(c2_*dz+c3_*dy) <= halfBoxLengths_[2]);
       }
 
       dr[0] = dx;
@@ -598,13 +601,13 @@ namespace Util
    inline 
    void MonoclinicBoundary::transformCartToGen(const Vector& Rc, Vector& Rg) const
    {
-      Rg[0] = Rc[0] / lengths_[0];
+      Rg[0] = Rc[0] / boxLengths_[0];
       assert(fabs(Rg[0]) < 1);
       
       Rg[1] = c1_ * Rc[1] / e_;
       assert(fabs(Rg[1]) < 1);
 
-      Rg[2] = (c2_ * Rc[2] + c3_ *Rc[1]) / lengths_[2];
+      Rg[2] = (c2_ * Rc[2] + c3_ *Rc[1]) / boxLengths_[2];
       assert(fabs(Rg[2]) < 1);
    }
       
@@ -614,14 +617,14 @@ namespace Util
    inline 
    void MonoclinicBoundary::transformGenToCart(const Vector& Rg, Vector& Rc) const
    {
-      Rc[0] = Rg[0] * lengths_[0];
-      assert(fabs(Rc[0]) < lengths_[0]);
+      Rc[0] = Rg[0] * boxLengths_[0];
+      assert(fabs(Rc[0]) < boxLengths_[0]);
       
       Rc[1] = e_ * Rg[1] / c1_;
       assert(fabs(Rc[1]) < e_);
 
-      Rc[2] = (Rg[2] * lengths_[2] / c2_ - Rg[1] * c3_ * e_ / (c1_ * c2_));
-      assert(fabs(Rc[2]) < lengths_[2]);
+      Rc[2] = (Rg[2] * boxLengths_[2] / c2_ - Rg[1] * c3_ * e_ / (c1_ * c2_));
+      assert(fabs(Rc[2]) < boxLengths_[2]);
    }
 
 

@@ -31,17 +31,18 @@ namespace Util
 	 MonoclinicBoundary::minima_[i] = 0.0;
 	 MonoclinicBoundary::maxima_[i] = 1.0;
 	 MonoclinicBoundary::lengths_[i] = 1.0;
-	 MonoclinicBoundary::halfLengths_[i] = 0.5;
+	 MonoclinicBoundary::boxLengths_[i] = 1.0;
+	 MonoclinicBoundary::halfBoxLengths_[i] = 0.5;
 
          bravaisBasisVectors_.append(Vector::Zero);
-         bravaisBasisVectors_[i][i] = lengths_[i];
+         bravaisBasisVectors_[i][i] = boxLengths_[i];
          reciprocalBasisVectors_.append(Vector::Zero);
-         reciprocalBasisVectors_[i][i] = 2.0 * Constants::Pi / lengths_[i];
+         reciprocalBasisVectors_[i][i] = 2.0 * Constants::Pi / boxLengths_[i];
 
       }
 
 	 bravaisBasisVectors_[1][2] = MonoclinicBoundary::tilt_;
-         reciprocalBasisVectors_[2][1] = -2.0 * Constants::Pi*(MonoclinicBoundary::tilt_/(lengths_[1]*lengths_[2]));
+         reciprocalBasisVectors_[2][1] = -2.0 * Constants::Pi*(MonoclinicBoundary::tilt_/(boxLengths_[1]*boxLengths_[2]));
 
 	 MonoclinicBoundary::tilt_ = 0.0;
 	 MonoclinicBoundary::volume_ = 1.0;
@@ -72,21 +73,25 @@ namespace Util
    {
       for (int i = 0; i < Dimension; ++i) {
 	 assert(maxima_[i] > minima_[i]);
-         lengths_[i] = maxima_[i] - minima_[i];
-         halfLengths_[i] = 0.5*lengths_[i];
-         bravaisBasisVectors_[i][i] = lengths_[i];
-         reciprocalBasisVectors_[i][i] = 2.0*Constants::Pi/lengths_[i];
+         boxLengths_[i] = maxima_[i] - minima_[i];
+         halfBoxLengths_[i] = 0.5*boxLengths_[i];
+         bravaisBasisVectors_[i][i] = boxLengths_[i];
+         reciprocalBasisVectors_[i][i] = 2.0*Constants::Pi/boxLengths_[i];
       }
 	 bravaisBasisVectors_[1][2] = MonoclinicBoundary::tilt_;
-         reciprocalBasisVectors_[2][1] = -2.0*Constants::Pi*(MonoclinicBoundary::tilt_/(lengths_[1]*lengths_[2]));
+         reciprocalBasisVectors_[2][1] = -2.0*Constants::Pi*(MonoclinicBoundary::tilt_/(boxLengths_[1]*boxLengths_[2]));
 
-         volume_ = lengths_[0] * lengths_[1] * lengths_[2];
+         volume_ = boxLengths_[0] * boxLengths_[1] * boxLengths_[2];
 
-	 e_ = sqrt(lengths_[1]*lengths_[1]+tilt_*tilt_); 	 
-	 halfe_ = sqrt(lengths_[1]*lengths_[1]+tilt_*tilt_) / 2.0; 	 
-	 c1_ = sqrt(lengths_[1]*lengths_[1]+tilt_*tilt_) / lengths_[1];
+         lengths_[0] = boxLengths_[0];
+         lengths_[1] = boxLengths_[1];
+         lengths_[2] = boxLengths_[2] / sqrt(1 + (tilt_ / boxLengths_[1])*(tilt_ / boxLengths_[1]));
+
+	 e_ = sqrt(boxLengths_[1]*boxLengths_[1]+tilt_*tilt_); 	 
+	 halfe_ = sqrt(boxLengths_[1]*boxLengths_[1]+tilt_*tilt_) / 2.0; 	 
+	 c1_ = sqrt(boxLengths_[1]*boxLengths_[1]+tilt_*tilt_) / boxLengths_[1];
 	 c2_ = 1.0;
-	 c3_ = -tilt_/(lengths_[1]);
+	 c3_ = -tilt_/(boxLengths_[1]);
 	 maxValidityDistanceSq_ = maxValidityDistanceSq();
    }
 
@@ -111,15 +116,15 @@ namespace Util
       for (int i = 0; i < Dimension; ++i) {
          if (maxima_[i] <= minima_[i])   
             UTIL_THROW("maxima_[i] <= minima_[i]");
-         if (!feq(lengths_[i], maxima_[i] - minima_[i]))
-            UTIL_THROW("lengths_[i] != maxima_[i] - minima_[i]");
-         if (!feq(halfLengths_[i], 0.5*lengths_[i]))
-            UTIL_THROW("halfLengths_[i] != 0.5*lengths_[i]");
+         if (!feq(boxLengths_[i], maxima_[i] - minima_[i]))
+            UTIL_THROW("boxLengths_[i] != maxima_[i] - minima_[i]");
+         if (!feq(halfBoxLengths_[i], 0.5*boxLengths_[i]))
+            UTIL_THROW("halfBoxLengths_[i] != 0.5*boxLengths_[i]");
          if (!feq(minima_[i], 0.0))
             UTIL_THROW("minima_[i] != 0");
       }
-      if (!feq(volume_, lengths_[0]*lengths_[1]*lengths_[2]))
-         UTIL_THROW("volume_ != product of lengths_");
+      if (!feq(volume_, boxLengths_[0]*boxLengths_[1]*boxLengths_[2]))
+         UTIL_THROW("volume_ != product of boxLengths_");
       return true;
    }
 
@@ -148,7 +153,7 @@ namespace Util
    {
       out << boundary.lattice_ << "   ";
       if (boundary.lattice_ == Monoclinic) {
-         out << boundary.lengths_;
+         out << boundary.boxLengths_;
       } 
 
       return out;
