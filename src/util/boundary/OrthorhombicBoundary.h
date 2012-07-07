@@ -199,6 +199,24 @@ namespace Util
       */
       bool isValid();
 
+      /**
+      * Returns the Generalized coordinates of the corresponding atomic
+      *
+      * position given by the Methods first argument and returns the
+      *
+      * generalized coordinate in the second argument.
+      */
+      void transformCartToGen(const Vector& Rc, Vector& Rg) const;
+
+      /**
+      * Returns the Cartesian coordinates of the corresponding atomic
+      *
+      * position given by the Methods first argument and returns the
+      *
+      * Cartesian coordinate in the second argument.
+      */
+      void transformGenToCart(const Vector& Rg, Vector& Rc) const;
+
       //@}
 
    private:
@@ -403,6 +421,30 @@ namespace Util
    */
    inline LatticeSystem OrthorhombicBoundary::latticeSystem()
    { return lattice_; }
+
+   /**
+   * Returns the Generalized coordinates of Rc in Rg.
+   */
+   inline 
+   void OrthorhombicBoundary::transformCartToGen(const Vector& Rc, Vector& Rg) const
+   {
+      for (int i = 0; i < Dimension; ++i) {
+            Rg[i] = Rc[i] / lengths_[i];
+            assert(fabs(Rg[i]) < 1);
+         }
+   }
+      
+   /**
+   * Returns the Generalized coordinates of Rc in Rg.
+   */
+   inline 
+   void OrthorhombicBoundary::transformGenToCart(const Vector& Rg, Vector& Rc) const
+   {
+      for (int i = 0; i < Dimension; ++i) {
+            Rc[i] = Rg[i] * lengths_[i];
+            assert(fabs(Rg[i]) < lengths_[i]);
+         }
+   }
 
 }
  

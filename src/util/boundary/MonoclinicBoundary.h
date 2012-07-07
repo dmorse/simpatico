@@ -189,6 +189,25 @@ namespace Util
       */
       bool isValid();
 
+      /**
+      * Returns the Generalized coordinates of the corresponding atomic
+      *
+      * position given by the Methods first argument and returns the
+      *
+      * generalized coordinate in the second argument.
+      */
+      void transformCartToGen(const Vector& Rc, Vector& Rg) const;
+
+      /**
+      * Returns the Cartesian coordinates of the corresponding atomic
+      *
+      * position given by the Methods first argument and returns the
+      *
+      * Cartesian coordinate in the second argument.
+      */
+      void transformGenToCart(const Vector& Rg, Vector& Rc) const;
+
+
       //@}
 
    private:
@@ -219,6 +238,9 @@ namespace Util
 
       /// constants used for distancing: u2=c2_*dz+c3_*dy.
       double c3_;
+
+      /// the half length of the minor axis of the Monoclinic parallelogram.
+      double e_;
 
       /// the half length of the minor axis of the Monoclinic parallelogram.
       double halfe_;
@@ -326,23 +348,23 @@ namespace Util
             r[0] = r[0] + lengths_[0];
             assert(r[0] >= minima_[0]);
          }
-         if( r[1] >= maxima_[1] ) {
+         if( (c1_*r[1]) >= e_ ) {
             r[1] = r[1] - lengths_[1];
 	    r[2] = r[2] - tilt_;
-            assert(r[1] < maxima_[1]);
+            assert((c1_*r[1]) < e_);
          } else
-         if ( r[1] <  minima_[1] ) {
+         if ( (c1_*r[1]) <  minima_[1] ) {
             r[1] = r[1] + lengths_[1];
 	    r[2] = r[2] + tilt_;
-            assert(r[1] >= minima_[1]);
+            assert((c1_*r[1]) >= minima_[1]);
          }
-         if( r[2] >= maxima_[2] ) {
+         if( (c2_*r[2]+c3_*r[1]) >= maxima_[2] ) {
             r[2] = r[2] - lengths_[2];
             assert(r[2] < maxima_[2]);
          } else
-         if ( r[2] <  minima_[2] ) {
+         if ( (c2_*r[2]+c3_*r[1]) <  minima_[2] ) {
             r[2] = r[2] + lengths_[2];
-            assert(r[2] >= minima_[2]);
+            assert((c2_*r[2]+c3_*r[1]) >= minima_[2]);
          }
    }
 
@@ -361,30 +383,29 @@ namespace Util
 	    --(shift[0]);
             assert(r[0] >= minima_[0]);
          }
-         if( r[1] >= maxima_[1] ) {
+         if( (c1_*r[1]) >= e_ ) {
             r[1] = r[1] - lengths_[1];
 	    r[2] = r[2] - tilt_;
 	    ++(shift[1]);
-            assert(r[1] < maxima_[1]);
+            assert((c1_*r[1]) < e_);
          } else
-         if ( r[1] <  minima_[1] ) {
+         if ( (c1_*r[1]) <  minima_[1] ) {
             r[1] = r[1] + lengths_[1];
 	    r[2] = r[2] + tilt_;
 	    --(shift[1]);
-            assert(r[1] >= minima_[1]);
+            assert((c1_*r[1]) >= minima_[1]);
          }
-         if( r[2] >= maxima_[2] ) {
+         if( (c2_*r[2]+c3_*r[1]) >= maxima_[2] ) {
             r[2] = r[2] - lengths_[2];
             assert(r[2] < maxima_[2]);
 	    ++(shift[2]);
          } else
-         if ( r[2] <  minima_[2] ) {
+         if ( (c2_*r[2]+c3_*r[1]) <  minima_[2] ) {
             r[2] = r[2] + lengths_[2];
-            assert(r[2] >= minima_[2]);
+            assert((c2_*r[2]+c3_*r[1]) >= minima_[2]);
 	    --(shift[2]);
          }
    }
-
 
    /* 
    * Calculate squared distance by half-parallelogram convention.
@@ -573,6 +594,36 @@ namespace Util
    */
    inline LatticeSystem MonoclinicBoundary::latticeSystem()
    { return lattice_; }
+
+   inline 
+   void MonoclinicBoundary::transformCartToGen(const Vector& Rc, Vector& Rg) const
+   {
+      Rg[0] = Rc[0] / lengths_[0];
+      assert(fabs(Rg[0]) < 1);
+      
+      Rg[1] = c1_ * Rc[1] / e_;
+      assert(fabs(Rg[1]) < 1);
+
+      Rg[2] = (c2_ * Rc[2] + c3_ *Rc[1]) / lengths_[2];
+      assert(fabs(Rg[2]) < 1);
+   }
+      
+   /**
+   * Returns the Generalized coordinates of Rc in Rg.
+   */
+   inline 
+   void MonoclinicBoundary::transformGenToCart(const Vector& Rg, Vector& Rc) const
+   {
+      Rc[0] = Rg[0] * lengths_[0];
+      assert(fabs(Rc[0]) < lengths_[0]);
+      
+      Rc[1] = e_ * Rg[1] / c1_;
+      assert(fabs(Rc[1]) < e_);
+
+      Rc[2] = (Rg[2] * lengths_[2] / c2_ - Rg[1] * c3_ * e_ / (c1_ * c2_));
+      assert(fabs(Rc[2]) < lengths_[2]);
+   }
+
 
 }
  

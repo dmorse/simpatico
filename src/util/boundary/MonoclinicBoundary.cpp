@@ -49,6 +49,7 @@ namespace Util
 	 MonoclinicBoundary::c1_ = 1.0;
 	 MonoclinicBoundary::c2_ = 1.0;
 	 MonoclinicBoundary::c3_ = 0.0;
+	 MonoclinicBoundary::e_ = 1.0;
 	 MonoclinicBoundary::halfe_ = 0.5;
 	 MonoclinicBoundary::maxValidityDistanceSq_ = 0.5;
    }
@@ -81,6 +82,7 @@ namespace Util
 
          volume_ = lengths_[0] * lengths_[1] * lengths_[2];
 
+	 e_ = sqrt(lengths_[1]*lengths_[1]+tilt_*tilt_); 	 
 	 halfe_ = sqrt(lengths_[1]*lengths_[1]+tilt_*tilt_) / 2.0; 	 
 	 c1_ = sqrt(lengths_[1]*lengths_[1]+tilt_*tilt_) / lengths_[1];
 	 c2_ = 1.0;
