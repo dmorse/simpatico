@@ -150,7 +150,7 @@ inline void SimulationTest::testExchangeAtoms()
    }
 
    // Exchange atoms among processors
-   object().exchanger().exchangeAtoms();
+   object().exchanger().exchange();
 
    // Check that all atoms are accounted for after exchange.
    int nAtomAll;
@@ -218,7 +218,7 @@ inline void SimulationTest::testExchange()
    storage.begin(atomIter);
    for ( ; atomIter.notEnd(); ++atomIter) {
       j++;
-      TEST_ASSERT( domain.isInDomain( atomIter->position() ) );
+      TEST_ASSERT(domain.isInDomain( atomIter->position()));
    }
    TEST_ASSERT(j == storage.nAtom());
    int nAtom = storage.nAtom();
@@ -371,6 +371,7 @@ inline void SimulationTest::testCalculateForces()
                                  MPI::DOUBLE, MPI::SUM, 0);
 
    if (myRank == 0) {
+     std::cout << std::endl;
      std::cout << t << std::endl;
    }
    #endif
@@ -388,10 +389,9 @@ inline void SimulationTest::testIntegrate1()
    AtomStorage& storage = object().atomStorage();
    int myRank = domain.gridRank();
 
-   std::string filename("in/config2");
+   std::string filename("config2");
    object().readConfig(filename);
-   object().exchanger().exchange();
-
+   //object().exchanger().exchange();
    //object().pairPotential().setMethodId(0);
    object().pairPotential().findNeighbors();
 
@@ -399,14 +399,19 @@ inline void SimulationTest::testIntegrate1()
    object().setBoltzmannVelocities(temperature);
 
    // Calculate energies before integration
-   double kinetic   = object().kineticEnergy();
-   double potential = object().pairPotential().energy();
+   double kinetic ;
+   double potential;
+   object().computeKineticEnergy();
+   object().computePotentialEnergies();
    if (myRank == 0) {
+      kinetic = object().kineticEnergy();
+      potential = object().potentialEnergy();
+      std::cout << std::endl;
       std::cout << Dbl(kinetic) << Dbl(potential) 
                 << Dbl(kinetic + potential) << std::endl;
    }
 
-   for (int i = 0; i < 3; ++i ) {
+   for (int i = 0; i < 10; ++i ) {
 
       object().integrator().run(500);
 
@@ -429,11 +434,11 @@ inline void SimulationTest::testIntegrate1()
 TEST_BEGIN(SimulationTest)
 TEST_ADD(SimulationTest, testReadParam)
 TEST_ADD(SimulationTest, testReadConfig)
-//TEST_ADD(SimulationTest, testExchangeAtoms)
-//TEST_ADD(SimulationTest, testExchange)
-//TEST_ADD(SimulationTest, testUpdate)
-//TEST_ADD(SimulationTest, testCalculateForces)
-//TEST_ADD(SimulationTest, testIntegrate1)
+TEST_ADD(SimulationTest, testExchangeAtoms)
+TEST_ADD(SimulationTest, testExchange)
+TEST_ADD(SimulationTest, testUpdate)
+TEST_ADD(SimulationTest, testCalculateForces)
+TEST_ADD(SimulationTest, testIntegrate1)
 TEST_END(SimulationTest)
 
 #endif

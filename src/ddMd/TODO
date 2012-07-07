@@ -1,3 +1,23 @@
+Small Things
+------------
+ 
+- In Simulation, call Integrator::setup separately from run().
+  Follow the same usage in the tests.
+
+- Rename forceCommFlag something like reverseUpdateFlag.
+
+- Rename Exchanger::updateForces as Exchanger::reverseUpdate
+
+- Add timed computeForces method to DdMd::Integrator.
+
+Testing
+-------
+
+- More exhaustive testing of simulation, with and without reverse 
+  force communication
+
+- Test conservation of energy with dihedrals.
+
 Constant Pressure:
 ------------------
 
@@ -6,15 +26,23 @@ Constant Pressure:
 - Add vFlag and eFlag to Simulation, and as arguments to addForce() 
   method of each potential.
 
+- More sophisticated version of snapshot test.
+
 - Port NPH integrator.
 
 - Write a reversible NPT integrator.
 
 
-Reverse Communication 
----------------------
+Nonorthogonal Boundaries
+------------------------
 
-- Working on this in reverseComm branch. See doc/notes/ddMd/ForceUpdate
+- Modify exchanger algorithm so as to use generalized coordinates throughout.
+
+- Separate CellList from PairList. Use generalized coordinates in cell list.
+
+- Consider moving CellList and PairList outside of PairPotential. They could be
+  associated objects. 
+
 
 Hybrid MD
 ----------
@@ -29,17 +57,17 @@ Hybrid MD
 Cell List and Pair List:
 ------------------------
 
-- Make AtomTag struct a public class, add an IntVector of
-  micro-cell indices to CellTag, to allow fast rejection of 
-  most pairs.
+- Make AtomTag struct a public class, add an IntVector of micro-cell 
+  indices to CellTag, to allow fast rejection of most pairs.
 
-- Modify Cell::getNeighbors method to pass back a list of AtomTag 
-  objects, rather than an array of pointers. Provide a CellList 
-  method to decide if a particular pair is within the cutoff.
+- Modify Cell::getNeighbors method to pass back a list of AtomTag objects, 
+  rather than an array of pointers. Provide a CellList method to decide if 
+  a particular pair is within the cutoff.
 
 - Improve testing of PairList - check that number of inner pairs doesn't
   change upon reneighboring, in unit tests and as optional test in main
   loop.
+
 
 Configuration File IO
 ---------------------
@@ -81,18 +109,3 @@ Restart
 - Add restart capability.
 
 
-Integer Types
--------------
-
-- Introduce typedefs for integer names in global.h.
-
-  Try uint4 for all integers except those which must be of either sign.
-  Where are there integers that can have a sign, other than in IntVector?
-
-- Make typeId and id for atoms and groups type index throughout the code. 
-
-
-Testing
--------
-
-- Test conservation of energy with dihedrals.
