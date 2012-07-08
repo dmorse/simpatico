@@ -32,7 +32,7 @@ public:
    void tearDown()
    {}
 
-   void testSetCellsAxis()
+   void testMakeGrid()
    {
       printMethod(TEST_FUNC);
       double cutoff  = 1.2;
@@ -42,19 +42,15 @@ public:
       Lin[1] =  3.0;
       Lin[2] =  4.0;
       boundary.setLengths(Lin);  
+      cellList.makeGrid(boundary, cutoff);
 
-      cellList.setCellsAxis(boundary, 0, cutoff);
-      TEST_ASSERT(cellList.numCells_[0] == 1);
-
-      cellList.setCellsAxis(boundary, 1,cutoff);
-      TEST_ASSERT(cellList.numCells_[1] == 2);
-
-      cellList.setCellsAxis(boundary, 2,cutoff);
-      TEST_ASSERT(cellList.numCells_[2] == 3);
+      TEST_ASSERT(cellList.gridDimension(0) == 1);
+      TEST_ASSERT(cellList.gridDimension(1) == 2);
+      TEST_ASSERT(cellList.gridDimension(2) == 3);
 
       //printf("\n");
       //printf("CellList.numCells: %i %i %i \n", 
-      //cellList.numCells_[0],cellList.numCells_[1],cellList.numCells_[2]);
+      //cellList.gridDimension(0),cellList.gridDimension(1),cellList.gridDimension(2));
    }
 
    void testShiftCellCoordAxis(){
@@ -123,16 +119,16 @@ public:
       cellList.makeGrid(boundary, cutoff);
 
       TEST_ASSERT(cellList.totCells_ == 6);
-      TEST_ASSERT(cellList.numCells_[0] == 1);
-      TEST_ASSERT(cellList.numCells_[1] == 2);
-      TEST_ASSERT(cellList.numCells_[2] == 3);
-      TEST_ASSERT(eq(cellList.cellWidth_[0], 2.0));
-      TEST_ASSERT(eq(cellList.cellWidth_[1], 1.5));
-      TEST_ASSERT(eq(cellList.cellWidth_[2], (4.0/3.0)));
+      TEST_ASSERT(cellList.gridDimension(0) == 1);
+      TEST_ASSERT(cellList.gridDimension(1) == 2);
+      TEST_ASSERT(cellList.gridDimension(2) == 3);
+      TEST_ASSERT(eq(cellList.invCellWidths_[0], (1.0/2.0)));
+      TEST_ASSERT(eq(cellList.invCellWidths_[1], (1.0/1.5)));
+      TEST_ASSERT(eq(cellList.invCellWidths_[2], (3.0/4.0)));
 
       //printf("\n");
       //printf("CellList.numCells: %i %i %i \n", 
-      //cellList.numCells_[0],cellList.numCells_[1],cellList.numCells_[2]);
+      //cellList.gridDimension(0),cellList.gridDimension(1),cellList.gridDimension(2));
 
    }
 
@@ -150,9 +146,9 @@ public:
       cellList.allocate(10, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 
-      TEST_ASSERT(cellList.numCells_[0] == 2);
-      TEST_ASSERT(cellList.numCells_[1] == 2);
-      TEST_ASSERT(cellList.numCells_[2] == 3);
+      TEST_ASSERT(cellList.gridDimension(0) == 2);
+      TEST_ASSERT(cellList.gridDimension(1) == 2);
+      TEST_ASSERT(cellList.gridDimension(2) == 3);
       TEST_ASSERT(cellList.YZCells_ == 6);
 
       r = Vector(1.3, 1.3, 2.5);
@@ -588,17 +584,17 @@ public:
    void writeCellConfiguration()
    {
       printf("numCells: %i %i %i \n", 
-          cellList.numCells_[0], cellList.numCells_[1], cellList.numCells_[2]);
+          cellList.gridDimension(0), cellList.gridDimension(1), cellList.gridDimension(2));
       printf("YZCells, totCells: %i %i \n", 
           cellList.YZCells_, cellList.totCells_);
       printf("cellWidth: %10f %10f %10f \n", 
-          cellList.cellWidth_[0],cellList.cellWidth_[1],cellList.cellWidth_[2]);
+          cellList.invCellWidths_[0],cellList.invCellWidths_[1],cellList.invCellWidths_[2]);
    }
 
 };
 
 TEST_BEGIN(CellListTest)
-TEST_ADD(CellListTest, testSetCellsAxis)
+TEST_ADD(CellListTest, testMakeGrid)
 TEST_ADD(CellListTest, testShiftCellCoordAxis)
 TEST_ADD(CellListTest, testCellIndexCoord)
 TEST_ADD(CellListTest, testInitialize)

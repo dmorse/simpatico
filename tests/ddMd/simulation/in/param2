@@ -5,7 +5,7 @@ Simulation{
   FileMaster{
      commandFileName   commands
      inputPrefix       in/
-     oututPrefix       out/
+     outputPrefix      out/
   }
   nAtomType           1
   nBondType           1
@@ -23,8 +23,10 @@ Simulation{
     atomCapacity      4000
     ghostCapacity     4000
   }
-  pairStyle  LJPair
-  bondStyle  HarmonicBond
+  pairStyle         LJPair
+  bondStyle         HarmonicBond
+  maskedPairPolicy  MaskBonded
+  forceCommFlag     1
   PairPotential{
     epsilon         1.0
     sigma           1.0
@@ -44,7 +46,7 @@ Simulation{
     type        rigid
   }
   NveIntegrator{
-    dt           0.004
+    dt           0.002
   }
   Random{
     seed        8012457890

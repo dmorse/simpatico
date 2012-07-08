@@ -201,6 +201,13 @@ namespace McMd
       getCellNeighbors(int ic, NeighborArray &neighbors, int &nInCell) const;
 
       /**
+      * Number of cells along axis i.
+      *
+      * \param i index for axis (direction).
+      */
+      int gridDimension(int i) const;
+
+      /**
       * Get total number of cells in this CellList.
       */
       int totCells() const;
@@ -234,15 +241,18 @@ namespace McMd
       /// Array of CellTag objects for quick retrieval
       DArray<CellTag> cellTags_;
 
-      Vector lengths_;      ///<  boundary lengths in each direction
-      double cellWidth_[3]; ///<  dimensions of each Cell in CellList grid
-      int    numCells_[3];  ///<  Number of cells in each direction
-      int    minCells_[3];  ///<  Min index of cell for each axis = 0
-      int    maxCells_[3];  ///<  Max index of cell for each axis = numCells - 1
-      int    minDel_[3];    ///<  Min difference along each axis (usually -1)
-      int    maxDel_[3];    ///<  Max difference along each axis (usually +1)
-      int    YZCells_;      ///<  numCells_[1]*numCells_[2]
-      int    totCells_;     ///<  total number of cells in CellList
+      Vector lengths_;         ///<  boundary lengths in each direction
+      Vector invCellWidths_;   ///<  dimensions of each Cell in CellList grid
+      int    minDel_[3];       ///<  Min difference along each axis (usually -1)
+      int    maxDel_[3];       ///<  Max difference along each axis (usually +1)
+      int    numCells_[3];     ///<  Number of cells in each direction
+      int    minCells_[3];     ///<  Min index of cell for each axis = 0
+      int    maxCells_[3];     ///<  Max cell index for each axis = numCells - 1
+      int    YZCells_;         ///<  numCells_[1]*numCells_[2]
+      int    totCells_;        ///<  total number of cells in CellList
+
+      /// Pointer to associated Boundary (set in makeGrid).
+      const Boundary* boundaryPtr_; 
 
       /**
       * Returns the number of cells required along a single Cartesian axis.
@@ -311,9 +321,9 @@ namespace McMd
    inline int CellList::cellIndexFromPosition(const Vector &pos) const
    {
       int cx, cy, cz;
-      cx = int(pos[0]/cellWidth_[0]);
-      cy = int(pos[1]/cellWidth_[1]);
-      cz = int(pos[2]/cellWidth_[2]);
+      cx = int(pos[0]*invCellWidths_[0]);
+      cy = int(pos[1]*invCellWidths_[1]);
+      cz = int(pos[2]*invCellWidths_[2]);
 
       // need to handle case where wrong particle bin is assigned
       // to particles close to the boundary due to roundoff error
@@ -322,16 +332,23 @@ namespace McMd
             UTIL_THROW("Particle left boundary.");
          cx = numCells_[0] - 1;
       }
+      assert(cx >= 0);
+      assert(cx < numCells_[0]);
       if (cy == numCells_[1]) {
          if (pos[1] >= lengths_[1])
             UTIL_THROW("Particle left boundary.");
          cy = numCells_[1] - 1;
       }
+      assert(cy >= 0);
+      assert(cy < numCells_[1]);
       if (cz == numCells_[2]) {
          if (pos[2] >= lengths_[2])
             UTIL_THROW("Particle left boundary.");
          cz = numCells_[2] - 1;
       }
+      assert(cz >= 0);
+      assert(cz < numCells_[2]);
+
       return cz + cy*numCells_[2] + cx*YZCells_;
    }
 
@@ -417,6 +434,9 @@ namespace McMd
       cy = (int)(i / numCells_[2]);
       cz = i - cy*numCells_[2];
    }
+
+   inline int CellList::gridDimension(int i) const
+   {  return numCells_[i]; }
 
    inline bool CellList::isAllocated() const
    {  return (cells_.capacity() > 0); }
