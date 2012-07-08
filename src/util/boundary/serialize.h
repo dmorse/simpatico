@@ -53,7 +53,9 @@ namespace Util
       ar & minima_;
       ar & maxima_;
       ar & lengths_;
-      ar & halfLengths_;
+      ar & tilt_;
+      ar & boxLengths_;
+      ar & halfBoxLengths_;
       ar & volume_;
       serializeEnum(ar, lattice_, version);
       reset();

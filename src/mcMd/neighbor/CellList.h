@@ -321,10 +321,20 @@ namespace McMd
    inline int CellList::cellIndexFromPosition(const Vector &pos) const
    {
       int cx, cy, cz;
-      cx = int(pos[0]*invCellWidths_[0]);
-      cy = int(pos[1]*invCellWidths_[1]);
-      cz = int(pos[2]*invCellWidths_[2]);
 
+      if (UTIL_ORTHOGONAL) {
+         cx = int(pos[0]*invCellWidths_[0]);
+         cy = int(pos[1]*invCellWidths_[1]);
+         cz = int(pos[2]*invCellWidths_[2]);
+      } else {
+         Vector posG;
+         boundaryPtr_->transformCartToGen(pos, posG);
+         cx = int(posG[0]*invCellWidths_[0]);
+         cy = int(posG[1]*invCellWidths_[1]);
+         cz = int(posG[2]*invCellWidths_[2]);
+      }
+
+      #if 0
       // need to handle case where wrong particle bin is assigned
       // to particles close to the boundary due to roundoff error
       if (cx == numCells_[0]) {
@@ -332,20 +342,22 @@ namespace McMd
             UTIL_THROW("Particle left boundary.");
          cx = numCells_[0] - 1;
       }
-      assert(cx >= 0);
-      assert(cx < numCells_[0]);
       if (cy == numCells_[1]) {
          if (pos[1] >= lengths_[1])
             UTIL_THROW("Particle left boundary.");
          cy = numCells_[1] - 1;
       }
-      assert(cy >= 0);
-      assert(cy < numCells_[1]);
       if (cz == numCells_[2]) {
          if (pos[2] >= lengths_[2])
             UTIL_THROW("Particle left boundary.");
          cz = numCells_[2] - 1;
       }
+      #endif
+
+      assert(cx >= 0);
+      assert(cx < numCells_[0]);
+      assert(cy >= 0);
+      assert(cy < numCells_[1]);
       assert(cz >= 0);
       assert(cz < numCells_[2]);
 

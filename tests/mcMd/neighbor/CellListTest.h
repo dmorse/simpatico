@@ -5,7 +5,7 @@
 #include <test/UnitTestRunner.h>
 
 #include <mcMd/neighbor/CellList.h>
-#include <util/boundary/Boundary.h>
+#include <util/boundary/OrthorhombicBoundary.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/space/Vector.h>
 #include <util/random/Random.h>
@@ -22,7 +22,7 @@ class CellListTest : public UnitTest
 private:
 
    CellList  cellList;
-   Boundary  boundary;
+   OrthorhombicBoundary  boundary;
 
 public:
 
@@ -122,9 +122,15 @@ public:
       TEST_ASSERT(cellList.gridDimension(0) == 1);
       TEST_ASSERT(cellList.gridDimension(1) == 2);
       TEST_ASSERT(cellList.gridDimension(2) == 3);
-      TEST_ASSERT(eq(cellList.invCellWidths_[0], (1.0/2.0)));
-      TEST_ASSERT(eq(cellList.invCellWidths_[1], (1.0/1.5)));
-      TEST_ASSERT(eq(cellList.invCellWidths_[2], (3.0/4.0)));
+      if (UTIL_ORTHOGONAL) {
+         TEST_ASSERT(eq(cellList.invCellWidths_[0], (1.0/2.0)));
+         TEST_ASSERT(eq(cellList.invCellWidths_[1], (1.0/1.5)));
+         TEST_ASSERT(eq(cellList.invCellWidths_[2], (3.0/4.0)));
+      } else {
+         TEST_ASSERT(eq(cellList.invCellWidths_[0], 1.0));
+         TEST_ASSERT(eq(cellList.invCellWidths_[1], 2.0));
+         TEST_ASSERT(eq(cellList.invCellWidths_[2], 3.0));
+      }
 
       //printf("\n");
       //printf("CellList.numCells: %i %i %i \n", 
@@ -172,7 +178,7 @@ public:
 
       printMethod(TEST_FUNC);
 
-      // Create a Boundary
+      // Create a OrthorhombicBoundary
       Vector Lin(2.0, 3.3, 2.5);
       //Lin[0] =  2.0;  // 1 cell,  x=0
       //Lin[1] =  3.3;  // 2 cells, y=0
@@ -216,7 +222,7 @@ public:
       const int    maxNAtom = 10;
       const double cutoff   = 1.2;
 
-      // Create a Boundary
+      // Create a OrthorhombicBoundary
       Vector Lin(2.0, 3.0, 2.5);
       //Lin[0] =  2.0;  // 1 cell,  x = 0
       //Lin[1] =  3.0;  // 2 cells, y = 1
@@ -268,7 +274,7 @@ public:
 
       printMethod(TEST_FUNC);
 
-      // Initialize a Boundary and CellList geometry
+      // Initialize an OrthorhombicBoundary and CellList geometry
       Vector Lin(2.0, 3.0, 4.0);
       //Lin[0] =  2.0;  // 1 cell,   x1=0 x2=0
       //Lin[1] =  3.0;  // 2 cells,  x1=2 x2=2
