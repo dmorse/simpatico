@@ -73,6 +73,7 @@ namespace DdMd
 
    void NvtIntegrator::setup()
    {
+      // Calculate prefactors for acceleration
       double dtHalf = 0.5*dt_;
       double mass;
       int nAtomType = prefactors_.capacity();
@@ -102,25 +103,20 @@ namespace DdMd
       bcast(domain().communicator(), xiDot_, 0);
       #endif
       xi_ = 0.0;
+
+      simulation().diagnosticManager().setup();
    }
 
    /*
    * Integrate Nose-Hoover.
    *
    * This implements a reversible Velocity-Verlet MD NVT integrator step.
+   * The user must call setup() before run(). 
    *
    * Reference: Winkler, Kraus, and Reineker, J. Chem. Phys. 102, 9018 (1995).
    */
    void NvtIntegrator::run(int nStep)
    {
-      nStep_ = nStep;
-      if (domain().isMaster()) {
-         Log::file() << std::endl;
-      }
-
-      setup();
-      simulation().diagnosticManager().setup();
-
       Vector dv;
       Vector dr;
       double prefactor; // = 0.5*dt/mass
@@ -128,7 +124,7 @@ namespace DdMd
       double factor;
       AtomIterator atomIter;
       bool needExchange;
-
+      nStep_ = nStep;
 
       // Main MD loop
       timer().start();
@@ -157,9 +153,7 @@ namespace DdMd
          }
          timer().stamp(INTEGRATE1);
    
-   
          // Check if exchange and reneighboring is necessary
-         //needExchange = simulation().needExchange();
          needExchange = atomStorage().needExchange(domain().communicator(), 
                                                    pairPotential().skin());
          timer().stamp(Integrator::CHECK);
@@ -207,7 +201,6 @@ namespace DdMd
       }
       exchanger().timer().stop();
       timer().stop();
-
    }
 
 }

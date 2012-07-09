@@ -89,7 +89,7 @@ namespace DdMd
    /*
    * Build the PairList, i.e., populate it with atom pairs.
    */
-   void PairList::build(CellList& cellList, bool forceCommFlag)
+   void PairList::build(CellList& cellList, bool reverseUpdateFlag)
    {
       // Precondition
       assert(isAllocated());
@@ -117,7 +117,7 @@ namespace DdMd
       // Find all neighbors (cell list)
       cellPtr = cellList.begin();
       while (cellPtr) {
-         cellPtr->getNeighbors(neighbors, forceCommFlag);
+         cellPtr->getNeighbors(neighbors, reverseUpdateFlag);
          na = cellPtr->nAtom();
          nn = neighbors.size();
          for (i = 0; i < na; ++i) {

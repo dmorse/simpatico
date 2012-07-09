@@ -46,10 +46,10 @@ namespace DdMd
    * are the atoms in this cell.
    *
    * \param neighbors array of pointers to neighbor Atoms
-   * \param force if true, use reverse force communication
+   * \param force if true, use reverse communication
    */
    void Cell::getNeighbors(NeighborArray &neighbors, 
-                           bool forceCommFlag) const
+                           bool reverseUpdateFlag) const
    {
 
       // Preconditions
@@ -62,7 +62,7 @@ namespace DdMd
       neighbors.clear();
       nc = offsetsPtr_->size();
 
-      if (forceCommFlag) {
+      if (reverseUpdateFlag) {
          for (int ic = 0; ic < nc; ++ic) {
             cellPtr = this + (*offsetsPtr_)[ic];
             if (cellPtr->id() >= id_) {

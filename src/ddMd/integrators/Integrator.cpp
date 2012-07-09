@@ -75,8 +75,8 @@ namespace DdMd
       #endif
 
       // Reverse communication (if any)
-      if (forceCommFlag()) {
-         exchanger().updateForces();
+      if (reverseUpdateFlag()) {
+         exchanger().reverseUpdate();
       }
    }
 

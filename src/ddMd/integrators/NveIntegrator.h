@@ -45,6 +45,8 @@ namespace DdMd
 
       /**
       * Setup state just before integration.
+      * 
+      * Must be called before run() method.
       */
       void setup();
 

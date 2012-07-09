@@ -83,11 +83,11 @@ namespace DdMd
                       double skin, int pairCapacity);
 
       /**
-      * Set flag to identify if force communication is enabled.
+      * Set flag to identify if reverse communication is enabled.
       *
-      * \param forceCommFlag true if force communication is enabled.
+      * \param reverseUpdateFlag true if reverse communication is enabled.
       */
-      void setForceCommFlag(bool forceCommFlag);
+      void setForceCommFlag(bool reverseUpdateFlag);
 
       /**
       * Set id to specify algorithm for energy, force calculations.
@@ -217,7 +217,7 @@ namespace DdMd
       * This method add +1 for each atom in such a pair, or +2 for a complete
       * pair. The method for distributing pairs among processors is the same
       * as is used to distribute the energy, and depends on the value of 
-      * forceCommFlag().
+      * reverseUpdateFlag().
       */
       #ifdef UTIL_MPI
       void computeNPair(MPI::Intracomm& communicator);
@@ -256,9 +256,9 @@ namespace DdMd
       double cutoff() const;
 
       /**
-      * Is reverse force communication enabled?
+      * Is reverse communication enabled?
       */
-      bool forceCommFlag() const;
+      bool reverseUpdateFlag() const;
 
       /**
       * Return integer id for algorithm (0=PAIR, 1=CELL, 2=NSQ)
@@ -345,8 +345,8 @@ namespace DdMd
       /// Number of pairs within specified cutoff.
       int nPair_;
 
-      /// Is reverse force communication enabled?
-      bool forceCommFlag_;
+      /// Is reverse communication enabled?
+      bool reverseUpdateFlag_;
 
       // Private methods used to compute number of pairs
       int nPairList(double cutoffSq);
@@ -367,8 +367,8 @@ namespace DdMd
    inline double PairPotential::cutoff() const
    {  return cutoff_; }
 
-   inline bool PairPotential::forceCommFlag() const
-   {  return forceCommFlag_; }
+   inline bool PairPotential::reverseUpdateFlag() const
+   {  return reverseUpdateFlag_; }
 
    inline Boundary& PairPotential::boundary() 
    {  return *boundaryPtr_; }

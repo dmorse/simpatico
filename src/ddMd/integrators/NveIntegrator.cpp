@@ -68,33 +68,18 @@ namespace DdMd
       atomStorage().makeSnapshot();
       pairPotential().findNeighbors();
       simulation().computeForces();
+
+      simulation().diagnosticManager().setup();
    }
 
    /*
    * Integrate.
+   * 
+   * User must call setup() before run.
    */
    void NveIntegrator::run(int nStep)
    {
-      nStep_ = nStep;
-
-      #if 0
-      // Set prefactor_[i] = 0.5*dt/mass for each atom type i.
-      double mass;
-      int nAtomType = prefactors_.capacity();
-      for (int i = 0; i < nAtomType; ++i) {
-         mass = simulation().atomType(i).mass();
-         prefactors_[i] = 0.5*dt_/mass;
-      }
-
-      atomStorage().clearSnapshot();
-      exchanger().exchange();
-      atomStorage().makeSnapshot();
-      pairPotential().findNeighbors();
-      simulation().computeForces();
-      #endif
-
-      setup();
-      simulation().diagnosticManager().setup();
+      //setup();
 
       Vector        dv;
       Vector        dr;
@@ -103,6 +88,7 @@ namespace DdMd
       bool          needExchange;
 
       // Main MD loop
+      nStep_ = nStep;
       timer().start();
       exchanger().timer().start();
       pairPotential().timer().start();

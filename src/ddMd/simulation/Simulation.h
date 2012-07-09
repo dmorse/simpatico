@@ -145,11 +145,11 @@ namespace DdMd
       void zeroForces();
 
       /**
-      * Set flag to identify if force communication is enabled.
+      * Set flag to identify if reverse communication is enabled.
       *
-      * \param forceCommFlag true if force communication is enabled.
+      * \param reverseUpdateFlag true if reverse communication is enabled.
       */
-      void setForceCommFlag(bool forceCommFlag);
+      void setForceCommFlag(bool reverseUpdateFlag);
 
       /// \name Config File IO
       //@{
@@ -198,8 +198,8 @@ namespace DdMd
       * the forces on ghost atoms are undefined.
       *
       * This method zeros all forces, adds forces from all potential
-      * energies, and carries out reverse force communication only if
-      * required (i.e., if forceCommFlag is true). 
+      * energies, and carries out reverse communication only if
+      * required (i.e., if reverseUpdateFlag is true). 
       */
       void computeForces();
 
@@ -456,9 +456,9 @@ namespace DdMd
       MaskPolicy maskedPairPolicy() const;
 
       /**
-      * Is reverse force communication enabled?
+      * Is reverse communication enabled?
       */
-      bool forceCommFlag() const;
+      bool reverseUpdateFlag() const;
 
       //@}
 
@@ -666,8 +666,8 @@ namespace DdMd
       */
       MaskPolicy  maskedPairPolicy_;
 
-      /// Is reverse force communication enabled?
-      bool forceCommFlag_;
+      /// Is reverse communication enabled?
+      bool reverseUpdateFlag_;
 
    // friends:
 
@@ -840,8 +840,8 @@ namespace DdMd
    inline MaskPolicy Simulation::maskedPairPolicy() const
    {  return maskedPairPolicy_; }
 
-   inline bool Simulation::forceCommFlag() const
-   {  return forceCommFlag_; }
+   inline bool Simulation::reverseUpdateFlag() const
+   {  return reverseUpdateFlag_; }
 
 }
 #endif
