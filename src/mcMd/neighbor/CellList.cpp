@@ -23,15 +23,15 @@ namespace McMd
    CellList::CellList()
    {
       for (int i = 0; i < Dimension; ++i) {
-         cellWidth_[i] = 0.0;
-         numCells_[i]  = 0;
-         minCells_[i]  = 0;
-         maxCells_[i]  = 0;
-         minDel_[i]    = 0;
-         maxDel_[i]    = 0;
+         invCellWidths_[i] = 0.0;
+         numCells_[i] = 0;
+         minCells_[i] = 0;
+         maxCells_[i] = 0;
+         minDel_[i] = 0;
+         maxDel_[i] = 0;
       }
-      YZCells_       = 0;
-      totCells_      = 0;
+      YZCells_ = 0;
+      totCells_ = 0;
    }
 
    /*
@@ -74,10 +74,14 @@ namespace McMd
       if (numCells_[axis] < 1) {
          numCells_[axis] = 1;
       }
-      cellWidth_[axis] = lengths_[axis]/(double)numCells_[axis];
+      if (UTIL_ORTHOGONAL) {
+         invCellWidths_[axis] = ((double)numCells_[axis])/lengths_[axis];
+      } else {
+         invCellWidths_[axis] = (double)numCells_[axis];
+      }
 
       minCells_[axis]  = 0;
-      maxCells_[axis]  = numCells_[axis]-1;	
+      maxCells_[axis]  = numCells_[axis]-1;
 
       if (numCells_[axis] > 2) {
          minDel_[axis] = -1;
@@ -138,6 +142,7 @@ namespace McMd
       * to be allocated for a maximum boundary during initialization.
       */
 
+      boundaryPtr_ = &boundary;
    }
 
    /*

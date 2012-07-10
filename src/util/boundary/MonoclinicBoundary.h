@@ -20,6 +20,8 @@
 
 class MonoclinicBoundaryTest;
 
+#define UTIL_ORTHOGONAL 0
+
 namespace Util
 {
 
