@@ -114,7 +114,7 @@ namespace DdMd
       * acting on ghost atoms. It should be called iff reverse force
       * communication on every time step for which update() is called.
       */
-      void updateForces();
+      void reverseUpdate();
 
       /**
       * Return internal timer by reference

@@ -388,7 +388,7 @@ namespace DdMd
       Atom*  atom0Ptr;
       Atom*  atom1Ptr;
       int    type0, type1;
-      if (forceCommFlag()) {
+      if (reverseUpdateFlag()) {
          for (pairList_.begin(iter); iter.notEnd(); ++iter) {
             iter.getPair(atom0Ptr, atom1Ptr);
             assert(!atom0Ptr->isGhost());
@@ -429,7 +429,7 @@ namespace DdMd
       Atom*  atom1Ptr;
       int    type0, type1;
 
-      if (forceCommFlag()) {
+      if (reverseUpdateFlag()) {
 
          for (pairList_.begin(iter); iter.notEnd(); ++iter) {
             iter.getPair(atom0Ptr, atom1Ptr);
@@ -479,7 +479,7 @@ namespace DdMd
       // Iterate over linked list of local cells.
       cellPtr = cellList_.begin();
       while (cellPtr) {
-         cellPtr->getNeighbors(neighbors, forceCommFlag());
+         cellPtr->getNeighbors(neighbors, reverseUpdateFlag());
          na = cellPtr->nAtom();
          nn = neighbors.size();
          for (i = 0; i < na; ++i) {
@@ -498,7 +498,7 @@ namespace DdMd
             }
 
             // Loop over atoms in neighboring cells.
-            if (forceCommFlag()) {
+            if (reverseUpdateFlag()) {
                for (j = na; j < nn; ++j) {
                   atomPtr1 = neighbors[j];
                   type1 = atomPtr1->typeId();
@@ -564,7 +564,7 @@ namespace DdMd
             }
 
             // Loop over atoms in neighboring cells.
-            if (forceCommFlag()) {
+            if (reverseUpdateFlag()) {
                for (j = na; j < nn; ++j) {
                   atomPtr1 = neighbors[j];
                   type1 = atomPtr1->typeId();
@@ -628,7 +628,7 @@ namespace DdMd
 
          // Iterate over ghost atoms
          storage().begin(ghostIter);
-         if (forceCommFlag()) {
+         if (reverseUpdateFlag()) {
             for ( ; ghostIter.notEnd(); ++ghostIter) {
                id1 = ghostIter->id();
                if (id0 < id1) {
@@ -694,7 +694,7 @@ namespace DdMd
 
          // Iterate over ghosts
          storage().begin(ghostIter);
-         if (forceCommFlag()) {
+         if (reverseUpdateFlag()) {
 
             for ( ; ghostIter.notEnd(); ++ghostIter) {
                id1 = ghostIter->id();
@@ -708,7 +708,7 @@ namespace DdMd
                      f *= interactionPtr_->forceOverR(rsq, type0, type1);
                      atomIter0->force() += f;
                      ghostIter->force() -= f;
-                     // Note: If forceCommFlag, increment ghost force 
+                     // Note: If reverseUpdateFlag, increment ghost force 
                   }
                }
             }
@@ -725,7 +725,7 @@ namespace DdMd
                   // force = (r0-r1)*(forceOverR)
                   f *= interactionPtr_->forceOverR(rsq, type0, type1);
                   atomIter0->force() += f;
-                  // Note: If !forceCommFlag, do not increment ghost force 
+                  // Note: If !reverseUpdateFlag, do not increment ghost force 
                }
             }
 

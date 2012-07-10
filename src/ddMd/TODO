@@ -1,22 +1,17 @@
 Small Things
 ------------
  
-- In Simulation, call Integrator::setup separately from run().
-  Follow the same usage in the tests.
-
-- Rename forceCommFlag something like reverseUpdateFlag.
-
-- Rename Exchanger::updateForces as Exchanger::reverseUpdate
-
 - Add timed computeForces method to DdMd::Integrator.
+
 
 Testing
 -------
 
-- More exhaustive testing of simulation, with and without reverse 
-  force communication
+- More exhaustive testing of DdMd::Simulation, with and without reverse force 
+  communication.
 
 - Test conservation of energy with dihedrals.
+
 
 Constant Pressure:
 ------------------

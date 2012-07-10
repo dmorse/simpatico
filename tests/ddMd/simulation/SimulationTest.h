@@ -391,8 +391,6 @@ inline void SimulationTest::testIntegrate1()
 
    std::string filename("config2");
    object().readConfig(filename);
-   //object().exchanger().exchange();
-   //object().pairPotential().setMethodId(0);
    object().pairPotential().findNeighbors();
 
    double temperature = 1.0;
@@ -411,6 +409,7 @@ inline void SimulationTest::testIntegrate1()
                 << Dbl(kinetic + potential) << std::endl;
    }
 
+   object().integrator().setup();
    for (int i = 0; i < 10; ++i ) {
 
       object().integrator().run(500);
@@ -424,9 +423,8 @@ inline void SimulationTest::testIntegrate1()
          std::cout << Dbl(kinetic) << Dbl(potential) 
                    << Dbl(kinetic + potential) << std::endl;
       }
-  
-      TEST_ASSERT(object().isValid());
 
+      TEST_ASSERT(object().isValid());
    }
 
 }

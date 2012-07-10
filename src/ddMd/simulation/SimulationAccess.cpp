@@ -59,7 +59,7 @@ namespace DdMd
       hasExternal_(simulation.hasExternal_),
       #endif
       maskedPairPolicy_(simulation.maskedPairPolicy_),
-      forceCommFlag_(simulation.forceCommFlag_)
+      reverseUpdateFlag_(simulation.reverseUpdateFlag_)
    {
       atomTypes_.associate(simulation.atomTypes_); 
       // RArray atomsTypes_ wraps the same C array as that
