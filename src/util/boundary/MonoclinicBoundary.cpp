@@ -26,33 +26,31 @@ namespace Util
    MonoclinicBoundary::MonoclinicBoundary() 
     : lattice_(Monoclinic)
    {
+      double twoPi = 2.0*Constants::Pi;
       for (int i = 0; i < Dimension; ++i) {
-
-	 MonoclinicBoundary::minima_[i] = 0.0;
-	 MonoclinicBoundary::maxima_[i] = 1.0;
-	 MonoclinicBoundary::lengths_[i] = 1.0;
-	 MonoclinicBoundary::boxLengths_[i] = 1.0;
-	 MonoclinicBoundary::halfBoxLengths_[i] = 0.5;
+         minima_[i] = 0.0;
+         maxima_[i] = 1.0;
+         lengths_[i] = 1.0;
+         l_[i] = 1.0;
+         halfL_[i] = 0.5;
 
          bravaisBasisVectors_.append(Vector::Zero);
-         bravaisBasisVectors_[i][i] = boxLengths_[i];
+         bravaisBasisVectors_[i][i] = l_[i];
          reciprocalBasisVectors_.append(Vector::Zero);
-         reciprocalBasisVectors_[i][i] = 2.0 * Constants::Pi / boxLengths_[i];
-
+         reciprocalBasisVectors_[i][i] = twoPi / l_[i];
       }
 
-	 bravaisBasisVectors_[1][2] = MonoclinicBoundary::tilt_;
-         reciprocalBasisVectors_[2][1] = -2.0 * Constants::Pi*(MonoclinicBoundary::tilt_/(boxLengths_[1]*boxLengths_[2]));
+      bravaisBasisVectors_[1][2] = tilt_;
+      reciprocalBasisVectors_[2][1] = -twoPi*tilt_/(l_[1]*l_[2]);
 
-	 MonoclinicBoundary::tilt_ = 0.0;
-	 MonoclinicBoundary::volume_ = 1.0;
-	 
-	 MonoclinicBoundary::c1_ = 1.0;
-	 MonoclinicBoundary::c2_ = 1.0;
-	 MonoclinicBoundary::c3_ = 0.0;
-	 MonoclinicBoundary::e_ = 1.0;
-	 MonoclinicBoundary::halfe_ = 0.5;
-	 MonoclinicBoundary::maxValidityDistanceSq_ = 0.5;
+      tilt_ = 0.0;
+      volume_ = 1.0;
+         
+      c1_ = 1.0;
+      c3_ = 0.0;
+      e_ = 1.0;
+      halfe_ = 0.5;
+      maxValidityDistanceSq_ = 0.5;
    }
 
    /* 
@@ -71,28 +69,28 @@ namespace Util
    */
    void MonoclinicBoundary::reset()
    {
+      double twoPi = 2.0*Constants::Pi;
       for (int i = 0; i < Dimension; ++i) {
-	 assert(maxima_[i] > minima_[i]);
-         boxLengths_[i] = maxima_[i] - minima_[i];
-         halfBoxLengths_[i] = 0.5*boxLengths_[i];
-         bravaisBasisVectors_[i][i] = boxLengths_[i];
-         reciprocalBasisVectors_[i][i] = 2.0*Constants::Pi/boxLengths_[i];
+         assert(maxima_[i] > minima_[i]);
+         l_[i] = maxima_[i] - minima_[i];
+         halfL_[i] = 0.5*l_[i];
+         bravaisBasisVectors_[i][i] = l_[i];
+         reciprocalBasisVectors_[i][i] = twoPi/l_[i];
       }
-	 bravaisBasisVectors_[1][2] = MonoclinicBoundary::tilt_;
-         reciprocalBasisVectors_[2][1] = -2.0*Constants::Pi*(MonoclinicBoundary::tilt_/(boxLengths_[1]*boxLengths_[2]));
+      bravaisBasisVectors_[1][2] = tilt_;
+      reciprocalBasisVectors_[2][1] = -twoPi*tilt_/(l_[1]*l_[2]);
 
-         volume_ = boxLengths_[0] * boxLengths_[1] * boxLengths_[2];
+      volume_ = l_[0] * l_[1] * l_[2];
 
-         lengths_[0] = boxLengths_[0];
-         lengths_[1] = boxLengths_[1];
-         lengths_[2] = boxLengths_[2] / sqrt(1 + (tilt_ / boxLengths_[1])*(tilt_ / boxLengths_[1]));
+      e_ = sqrt(l_[1]*l_[1] + tilt_*tilt_);          
+      halfe_ = e_ / 2.0;          
+      c1_ =  e_ / l_[1];
+      c3_ = -tilt_/l_[1];
+      lengths_[0] = l_[0];
+      lengths_[1] = l_[1];
+      lengths_[2] = l_[2] / sqrt(1 + c3_*c3_);
 
-	 e_ = sqrt(boxLengths_[1]*boxLengths_[1]+tilt_*tilt_); 	 
-	 halfe_ = sqrt(boxLengths_[1]*boxLengths_[1]+tilt_*tilt_) / 2.0; 	 
-	 c1_ = sqrt(boxLengths_[1]*boxLengths_[1]+tilt_*tilt_) / boxLengths_[1];
-	 c2_ = 1.0;
-	 c3_ = -tilt_/(boxLengths_[1]);
-	 maxValidityDistanceSq_ = maxValidityDistanceSq();
+      maxValidityDistanceSq_ = maxValidityDistanceSq();
    }
 
    /* 
@@ -116,15 +114,15 @@ namespace Util
       for (int i = 0; i < Dimension; ++i) {
          if (maxima_[i] <= minima_[i])   
             UTIL_THROW("maxima_[i] <= minima_[i]");
-         if (!feq(boxLengths_[i], maxima_[i] - minima_[i]))
-            UTIL_THROW("boxLengths_[i] != maxima_[i] - minima_[i]");
-         if (!feq(halfBoxLengths_[i], 0.5*boxLengths_[i]))
-            UTIL_THROW("halfBoxLengths_[i] != 0.5*boxLengths_[i]");
+         if (!feq(l_[i], maxima_[i] - minima_[i]))
+            UTIL_THROW("l_[i] != maxima_[i] - minima_[i]");
+         if (!feq(halfL_[i], 0.5*l_[i]))
+            UTIL_THROW("halfL_[i] != 0.5*l_[i]");
          if (!feq(minima_[i], 0.0))
             UTIL_THROW("minima_[i] != 0");
       }
-      if (!feq(volume_, boxLengths_[0]*boxLengths_[1]*boxLengths_[2]))
-         UTIL_THROW("volume_ != product of boxLengths_");
+      if (!feq(volume_, l_[0]*l_[1]*l_[2]))
+         UTIL_THROW("volume_ != product of l_");
       return true;
    }
 
@@ -153,7 +151,7 @@ namespace Util
    {
       out << boundary.lattice_ << "   ";
       if (boundary.lattice_ == Monoclinic) {
-         out << boundary.boxLengths_;
+         out << boundary.l_;
       } 
 
       return out;

@@ -227,7 +227,15 @@ public:
       boundary.shift(R);
       TEST_ASSERT(eq(R[0], 1.6));
       TEST_ASSERT(eq(R[1], 2.4));
-      TEST_ASSERT(eq(R[2], 0.1));
+      TEST_ASSERT(eq(R[2], 4.1));
+
+      R[0] = 1.6;
+      R[1] = 1.5;
+      R[2] = 4.6;
+      boundary.shift(R);
+      TEST_ASSERT(eq(R[0], 1.6));
+      TEST_ASSERT(eq(R[1], 1.5));
+      TEST_ASSERT(eq(R[2], 0.6));
 
       R[0] =  0.6;
       R[1] = -0.4;
