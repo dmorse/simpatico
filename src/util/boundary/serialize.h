@@ -50,10 +50,8 @@ namespace Util
    void 
    MonoclinicBoundary::serialize(Archive& ar, const unsigned int version)
    {
-      ar & minima_;
-      ar & maxima_;
+      ar & l_;
       ar & tilt_;
-      serializeEnum(ar, lattice_, version);
       if (Archive::is_loading()) {
          reset();
          isValid();

@@ -43,15 +43,15 @@ public:
       L[2] = 4.0;
       d = 1.0;
 
-      boundary.setLengths(L,d);
+      boundary.set(L,d);
       Lp = boundary.lengths();
-
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
 
       // Verbose output
-/*      if (verbose() > 1) {
+      #if 0
+      if (verbose() > 1) {
          printf("Boundary.minima_: %lf %lf %lf\n", 
                  boundary.minima_[0], boundary.minima_[1], boundary.minima_[2]);
          printf("Boundary.maxima_: %lf %lf %lf\n", 
@@ -59,7 +59,8 @@ public:
          printf("Boundary.L   tilt: %lf %lf %lf %lf\n", 
                  boundary.lengths_[0], boundary.lengths_[1], boundary.lengths_[2], tilt_);
       }
-*/
+      #endif
+
       std::cout << std::endl;
       std::cout << "BravaisBasis(1)   " << boundary.bravaisBasisVector(0) << std::endl;
       std::cout << "BravaisBasis(2)   " << boundary.bravaisBasisVector(1) << std::endl;
@@ -89,73 +90,16 @@ public:
       TEST_ASSERT(boundary.isValid());
       for (i = 0; i < 3; i++) {
          TEST_ASSERT(eq(boundary.minima_[i], 0.0));
-         TEST_ASSERT(eq(boundary.maxima_[i], boundary.lengths_[i]));
          TEST_ASSERT(boundary.lengths_[i] > 1.0E-8);
       }
+      TEST_ASSERT(eq(boundary.maxima_[0], boundary.lengths_[0]));
+      TEST_ASSERT(eq(boundary.maxima_[1], boundary.lengths_[1]));
 
       // Verbose output
       if (verbose() > 1) {
          std::cout << boundary << std::endl;
       }
 
-   }
-
-   void testStreamIO2() 
-   {
-      printMethod(TEST_FUNC);
-
-      int i;
-
-      // Read parameters from file
-      std::ifstream in;
-      openInputFile("in/MonoclinicBoundary", in);
-     
-      in >> boundary;
-
-      std::cout << std::endl;
-      std::cout << boundary << std::endl;
-
-      // Assertions
-      TEST_ASSERT(boundary.isValid());
-      for (i = 0; i < 3; i++) {
-         TEST_ASSERT(eq(boundary.minima_[i], 0.0));
-         TEST_ASSERT(eq(boundary.maxima_[i], boundary.lengths_[i]));
-         TEST_ASSERT(boundary.lengths_[i] > 1.0E-8);
-      }
-
-      // Verbose output
-      if (verbose() > 1) {
-         std::cout << boundary << std::endl;
-      }
-
-   }
-
-   void testStreamIO3() 
-   {
-      printMethod(TEST_FUNC);
-
-      int i;
-
-      // Read parameters from file
-      std::ifstream in;
-      openInputFile("in/MonoclinicBoundary", in);
-     
-      in >> boundary;
-
-      std::cout << std::endl;
-      std::cout << boundary << std::endl;
-
-      // Assertions
-      for (i = 0; i < 3; i++) {
-         TEST_ASSERT(eq(boundary.minima_[i], 0.0));
-         TEST_ASSERT(eq(boundary.maxima_[i], boundary.lengths_[i]));
-         TEST_ASSERT(boundary.lengths_[i] > 1.0E-8);
-      }
-
-      // Verbose output
-      if (verbose() > 1) {
-         std::cout << boundary << std::endl;
-      }
    }
    
    void testSerialize() 
@@ -186,7 +130,7 @@ public:
       TEST_ASSERT(boundary.isValid());
       for (i = 0; i < Dimension; i++) {
          TEST_ASSERT(eq(clone.minima_[i], 0.0));
-         TEST_ASSERT(eq(clone.maxima_[i], clone.lengths_[i]));
+         TEST_ASSERT(eq(clone.maxima_[i], clone.maxima_[i]));
          TEST_ASSERT(eq(clone.lengths_[i], boundary.lengths_[i]));
          TEST_ASSERT(eq(clone.volume(), boundary.volume()));
          TEST_ASSERT(clone.lengths_[i] > 1.0E-8);
@@ -211,7 +155,7 @@ public:
       L[1] = 3.0;
       L[2] = 4.0;
       d = 1.0;
-      boundary.setLengths(L,d);
+      boundary.set(L, d);
 
       R[0] = 2.6;
       R[1] = -0.4;
@@ -247,6 +191,71 @@ public:
 
    };
 
+   void testShift2()
+   {
+      printMethod(TEST_FUNC);
+
+      Vector    R, L;
+      IntVector t;
+      double d;
+
+      // Setup Boundary
+      L[0] = 2.0;
+      L[1] = 3.0;
+      L[2] = 4.0;
+      d = 1.0;
+      boundary.set(L, d);
+
+      R[0] = 2.6;
+      R[1] = -0.4;
+      R[2] = 2.1;
+      t.zero();
+      boundary.shift(R, t);
+      TEST_ASSERT(eq(R[0], 0.6));
+      TEST_ASSERT(eq(R[1], 2.6));
+      TEST_ASSERT(eq(R[2], 3.1));
+      TEST_ASSERT(t[0] == 1);
+      TEST_ASSERT(t[1] == -1);
+      TEST_ASSERT(t[2] == 0);
+
+      R[0] = 1.6;
+      R[1] = 2.4;
+      R[2] = 4.1;
+      t.zero();
+      boundary.shift(R, t);
+      TEST_ASSERT(eq(R[0], 1.6));
+      TEST_ASSERT(eq(R[1], 2.4));
+      TEST_ASSERT(eq(R[2], 4.1));
+      TEST_ASSERT(t[0] == 0);
+      TEST_ASSERT(t[1] == 0);
+      TEST_ASSERT(t[2] == 0);
+
+      R[0] = 1.6;
+      R[1] = 1.5;
+      R[2] = 4.6;
+      t.zero();
+      boundary.shift(R, t);
+      TEST_ASSERT(eq(R[0], 1.6));
+      TEST_ASSERT(eq(R[1], 1.5));
+      TEST_ASSERT(eq(R[2], 0.6));
+      TEST_ASSERT(t[0] == 0);
+      TEST_ASSERT(t[1] == 0);
+      TEST_ASSERT(t[2] == 1);
+
+      R[0] =  0.6;
+      R[1] = -0.4;
+      R[2] = -2.1;
+      t.zero();
+      boundary.shift(R, t);
+      TEST_ASSERT(eq(R[0], 0.6));
+      TEST_ASSERT(eq(R[1], 2.6));
+      TEST_ASSERT(eq(R[2], 2.9));
+      TEST_ASSERT(t[0] ==  0);
+      TEST_ASSERT(t[1] == -1);
+      TEST_ASSERT(t[2] == -1);
+
+   };
+
    void testDistanceSq1()
    {
       printMethod(TEST_FUNC);
@@ -264,7 +273,7 @@ public:
       L[2] = 4.0;
       d = 1.0;
 
-      boundary.setLengths(L,d);
+      boundary.set(L,d);
 
       R1[0] =  0.0;
       R1[1] =  0.0;
@@ -316,7 +325,7 @@ public:
       L[2] = 4.0;
       d = 1.0;
 
-      boundary.setLengths(L,d);
+      boundary.set(L,d);
 
       R1[0] =  0.0;
       R1[1] =  0.0;
@@ -327,8 +336,6 @@ public:
       dRSq1 = boundary.distanceSq(R1, R2);
       dRSq2 = boundary.distanceSq(R1, R2, dR);
       dRSq3 = boundary.distanceSq(R1, R2, shift);
- 
-
       TEST_ASSERT(eq(dR[0], 0.0));
       TEST_ASSERT(eq(dR[1], 0.0));
       TEST_ASSERT(eq(dR[2], 1.9));
@@ -375,10 +382,9 @@ public:
 TEST_BEGIN(MonoclinicBoundaryTest)
 TEST_ADD(MonoclinicBoundaryTest, testInitialize)
 TEST_ADD(MonoclinicBoundaryTest, testStreamIO1)
-TEST_ADD(MonoclinicBoundaryTest, testStreamIO2)
-TEST_ADD(MonoclinicBoundaryTest, testStreamIO3)
 TEST_ADD(MonoclinicBoundaryTest, testSerialize)
 TEST_ADD(MonoclinicBoundaryTest, testShift)
+TEST_ADD(MonoclinicBoundaryTest, testShift2)
 TEST_ADD(MonoclinicBoundaryTest, testDistanceSq1)
 TEST_ADD(MonoclinicBoundaryTest, testDistanceSq2)
 

@@ -21,7 +21,9 @@
 
 class OrthorhombicBoundaryTest;
 
+#ifndef UTIL_ORTHOGONAL
 #define UTIL_ORTHOGONAL 1
+#endif
 
 namespace Util
 {

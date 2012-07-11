@@ -20,7 +20,9 @@
 
 class MonoclinicBoundaryTest;
 
+#ifndef UTIL_ORTHOGONAL
 #define UTIL_ORTHOGONAL 0
+#endif
 
 namespace Util
 {
@@ -49,7 +51,7 @@ namespace Util
       *
       * \param lengths  Vector of unit cell lengths
       */
-      void setLengths(const Vector &lengths, const double d);
+      void set(const Vector &lengths, const double d);
 
       /**
       * Sets the square of maximum range of validity of the distances
@@ -72,11 +74,8 @@ namespace Util
       /**
       * Shift Vector r to its image within the primary unit cell.
       *
-      * One output, each coordinate r[i] is shifted by a multiple of length[i]
-      * so as to lie within the range minima_[i] < r[i] < maxima_[i].
-      *
-      * Precondition: The algorithm assumes that on input, for each i=0,..,2,
-      * minima_[i] - l_[i] < r[i] < maxima_[i] + l_[i]
+      * On output the vector r is shifted its image in the primary 
+      * unit cell.
       *
       * \param r Vector of coordinates
       */
@@ -85,10 +84,12 @@ namespace Util
       /**
       * Shift Vector r to its image within the primary unit cell.
       *
-      * This method maps an atomic position to lie in the primary cell, 
-      * and also increments the atomic shift IntVector:
+      * This method shifts a vector to its image in the primary unit cell, 
+      * and also increments a corresponding shift IntVector:
       *
-      * If r[i] -> r[i] - t*length_[i], then shift[i] -> shift[i] + t.
+      * If the Vector r is shifted by r -> r - \sum_i t[i]*a[i], then
+      * the IntVector shift is shifted by  shift -> shift + t, where
+      * t is an IntVector shift.
       *
       * \sa Atom:shift()
       *
@@ -146,12 +147,18 @@ namespace Util
       LatticeSystem latticeSystem();
 
       /**
-      * Get Vector of lengths by const reference.
+      * Get Vector of distances between faces of primitive cell. 
+      *
+      * Each component of this vector is projection of a Bravais lattice unit
+      * vector onto a line parallel to the corresponding reciprocal lattice
+      * basis vector.  The resulting distances are distances between faces
+      * faces of the primitive unit cell, which are normal to the reciprocal
+      * lattice unit vectors. 
       */
       const Vector& lengths() const;
 
       /**
-      * Get length in Cartesian direction i.
+      * Get distance across primitive cell parallel to reciprocal axis i.
       *
       * \param i index of Cartesian direction, 0 <= i < Dimension
       */
@@ -233,17 +240,11 @@ namespace Util
       /// Volume: V = l_[0]*l_[1]*l_[2].
       double volume_;
 
-      /// constants used for distancing: u1=c1_*dy.
-      double c1_;
-
-      /// constants used for distancing: u2=dz+c3_*dy.
+      /// constants used for distancing: u2 = dz + c3_*dy.
       double c3_;
 
-      /// the half length of the minor axis of the Monoclinic parallelogram.
+      /// Length of bravais lattice unit vector 1 (tilted).
       double e_;
-
-      /// the half length of the minor axis of the Monoclinic parallelogram.
-      double halfe_;
 
       /// the half length of the minor axis of the Monoclinic parallelogram.
       double maxValidityDistanceSq_;
@@ -276,6 +277,17 @@ namespace Util
       friend std::ostream& operator << (std::ostream& out, 
                                         const MonoclinicBoundary& boundary);
 
+      #ifdef UTIL_MPI
+      friend template <>
+      void recv<Util::MonoclinicBoundary>(MPI::Intracomm& comm, 
+                                          Util::MonoclinicBoundary& data, 
+                                           int tag);
+      friend template <>
+      void bcast<Util::MonoclinicBoundary>(MPI::Intracomm& comm, 
+                                           Util::MonoclinicBoundary& data, 
+                                           int root);
+      #endif
+
       /**
       * Reset all quantities that depend upon lengths.
       */ 
@@ -289,13 +301,13 @@ namespace Util
    * Return Vector of lengths by const reference.
    */
    inline const Vector& MonoclinicBoundary::lengths() const 
-   {  return l_; }
+   {  return lengths_; }
 
    /* 
    * Get length = maximum - minimum in direction i.
    */
    inline double MonoclinicBoundary::length(int i) const 
-   {  return l_[i]; }
+   {  return lengths_[i]; }
 
    /* 
    * Return region volume.
@@ -340,30 +352,31 @@ namespace Util
    */
    inline void MonoclinicBoundary::shift(Vector& r) const
    {
-       if( r[0] >= maxima_[0] ) {
-          r[0] = r[0] - l_[0];
+       if(r[0] >= maxima_[0]) {
+          r[0] -= l_[0];
           assert(r[0] < maxima_[0]);
        } else
-       if ( r[0] <  minima_[0] ) {
-          r[0] = r[0] + l_[0];
+       if (r[0] <  minima_[0]) {
+          r[0] += l_[0];
           assert(r[0] >= minima_[0]);
        }
-       if( r[1] >= l_[1] ) {
-          r[1] = r[1] - l_[1];
-	    r[2] = r[2] - tilt_;
+       if(r[1] >= maxima_[1]) {
+          r[1] -= l_[1];
+          r[2] -= tilt_;
           assert(r[1] < l_[1]);
        } else
        if (r[1] <  minima_[1]) {
-          r[1] = r[1] + l_[1];
-	    r[2] = r[2] + tilt_;
+          r[1] += l_[1];
+          r[2] += tilt_;
           assert(r[1] >= minima_[1]);
        }
-       if( r[2]+c3_*r[1] >= maxima_[2] ) {
-          r[2] = r[2] - l_[2];
+       double u2 = r[2] + c3_*r[1];
+       if(u2 >= maxima_[2]) {
+          r[2] -= l_[2];
           assert(r[2] + c3_*r[1] >= minima_[2]);
        } else
-       if ( r[2]+c3_*r[1] <  minima_[2] ) {
-          r[2] = r[2] + l_[2];
+       if (u2 <  minima_[2]) {
+          r[2] += l_[2];
           assert(r[2] + c3_*r[1] >= minima_[2]);
        }
    }
@@ -373,36 +386,37 @@ namespace Util
    */
    inline void MonoclinicBoundary::shift(Vector& r, IntVector& shift) const
    {
-       if( r[0] >= maxima_[0] ) {
-          r[0] = r[0] - l_[0];
-	    ++(shift[0]);
+       if(r[0] >= maxima_[0]) {
+          r[0] -= l_[0];
+          ++(shift[0]);
           assert(r[0] < maxima_[0]);
        } else
-       if ( r[0] <  minima_[0] ) {
-          r[0] = r[0] + l_[0];
-	    --(shift[0]);
+       if (r[0] <  minima_[0]) {
+          r[0] += l_[0];
+          --(shift[0]);
           assert(r[0] >= minima_[0]);
        }
-       if( r[1] >= l_[1] ) {
-          r[1] = r[1] - l_[1];
-	    r[2] = r[2] - tilt_;
-	    ++(shift[1]);
+       if (r[1] >= maxima_[1]) {
+          r[1] -= l_[1];
+          r[2] -= tilt_;
+          ++(shift[1]);
           assert(r[1] < l_[1]);
        } else
-       if ( r[1] <  minima_[1] ) {
-          r[1] = r[1] + l_[1];
-	    r[2] = r[2] + tilt_;
-	    --(shift[1]);
+       if (r[1] <  minima_[1]) {
+          r[1] += l_[1];
+          r[2] += tilt_;
+          --(shift[1]);
           assert(r[1] >= minima_[1]);
        }
-       if( r[2] + c3_*r[1] >= maxima_[2] ) {
-          r[2] = r[2] - l_[2];
-	    ++(shift[2]);
+       double u2 = r[2] + c3_*r[1];
+       if (u2 >= maxima_[2]) {
+          r[2] -= l_[2];
+          ++(shift[2]);
           assert(r[2] + c3_*r[1] < maxima_[2]);
        } else
-       if ( r[2] + c3_*r[1] <  minima_[2] ) {
-          r[2] = r[2] + l_[2];
-	    --(shift[2]);
+       if (u2 <  minima_[2]) {
+          r[2] += l_[2];
+          --(shift[2]);
           assert(r[2] + c3_*r[1] >= minima_[2]);
        }
    }
@@ -414,12 +428,8 @@ namespace Util
    double MonoclinicBoundary::distanceSq(const Vector &r1, const Vector &r2, 
                                IntVector& translate) const
    {
-      double dx;
-      double dy;
-      double dz;
-      double norm = 0.0;
 
-      dx = r1[0] - r2[0];
+      double dx = r1[0] - r2[0];
       if ( fabs(dx) > halfL_[0] ) {
          if (dx > 0.0) {
             dx -= l_[0];
@@ -433,53 +443,48 @@ namespace Util
          translate[0] = 0;
       }
 
-      dy = r1[1] - r2[1];
-      dz = r1[2] - r2[2];
-
-      if ( fabs(c1_*dy) > halfe_ ) {
+      double dy = r1[1] - r2[1];
+      double dz = r1[2] - r2[2];
+      double u2 = dz + c3_*dy;
+      if ( fabs(dy) > halfL_[1] ) {
          if (dy > 0.0) {
             dy -= l_[1];
-	    dz -= tilt_;
+            dz -= tilt_;
             translate[1] = -1;
          } else {
             dy += l_[1];
-	    dz += tilt_;
+            dz += tilt_;
             translate[1] = +1;
          }
-         assert(fabs(c1_*dy) <= halfe_);
+         assert(fabs(dy) <= halfL_[1]);
       } else {
          translate[1] = 0;
       }
 
-      if ( fabs(dz+c3_*dy) >  halfL_[2]) {
-         if (dz+c3_*dy > 0.0) {
-	    dz -= l_[2];
+      if ( fabs(u2) >  halfL_[2]) {
+         if (u2 > 0.0) {
+            dz -= l_[2];
             translate[2] = -1;
          } else {
-	    dz += l_[2];
+            dz += l_[2];
             translate[2] = +1;
          }
-         assert(fabs(dz+c3_*dy) <= halfL_[2]);
+         assert(fabs(dz + c3_*dy) <= halfL_[2]);
       } else {
          translate[2] = 0;
       }
-
-      norm = dx*dx+dy*dy+dz*dz;
-      return norm;
+      return dx*dx+dy*dy+dz*dz;
    }
 
    /* 
    * Return squared distance and separation by half-parallelogram convention.
    */
    inline 
-   double MonoclinicBoundary::distanceSq(const Vector &r1, const Vector &r2) const
+   double MonoclinicBoundary::distanceSq(const Vector &r1, 
+                                         const Vector &r2) const
    {
-      double dx;
-      double dy;
-      double dz;
-      double norm = 0.0;
 
-      dx = r1[0] - r2[0];
+      double dx = r1[0] - r2[0];
       if ( fabs(dx) > halfL_[0] ) {
          if (dx > 0.0) {
             dx -= l_[0];
@@ -489,31 +494,30 @@ namespace Util
          assert(fabs(dx) <= halfL_[0]);
       }
 
-      dy = r1[1] - r2[1];
-      dz = r1[2] - r2[2];
-
-      if ( fabs(c1_*dy) > halfe_ ) {
+      double dy = r1[1] - r2[1];
+      double dz = r1[2] - r2[2];
+      double u2 = dz + c3_*dy;
+      if ( fabs(dy) > halfL_[1] ) {
          if (dy > 0.0) {
             dy -= l_[1];
-	    dz -= tilt_;
+            dz -= tilt_;
          } else {
             dy += l_[1];
-	    dz += tilt_;
+            dz += tilt_;
          }
-         assert(fabs(c1_*dy) <= halfe_);
+         assert(fabs(dy) <= halfL_[1]);
       }
 
-      if ( fabs(dz+c3_*dy) >  halfL_[2]) {
-         if (dz+c3_*dy > 0.0) {
-	    dz -= l_[2];
+      if ( fabs(u2) >  halfL_[2]) {
+         if (u2 > 0.0) {
+            dz -= l_[2];
          } else {
-	    dz += l_[2];
+            dz += l_[2];
          }
          assert(fabs(dz+c3_*dy) <= halfL_[2]);
       }
 
-      norm = dx*dx+dy*dy+dz*dz;
-      return norm;
+      return dx*dx+dy*dy+dz*dz;
    }
 
    /* 
@@ -522,15 +526,11 @@ namespace Util
    */
    inline 
    double MonoclinicBoundary::distanceSq(const Vector &r1, const Vector &r2, 
-                                          Vector &dr) const
+                                         Vector &dr) const
    {
-      double dx;
-      double dy;
-      double dz;
-      double norm = 0.0;
 
-      dx = r1[0] - r2[0];
-      if ( fabs(dx) > halfL_[0] ) {
+      double dx = r1[0] - r2[0];
+      if (fabs(dx) > halfL_[0]) {
          if (dx > 0.0) {
             dx -= l_[0];
          } else {
@@ -539,23 +539,24 @@ namespace Util
          assert(fabs(dx) <= halfL_[0]);
       }
 
-      dy = r1[1] - r2[1];
-      dz = r1[2] - r2[2];
+      double dy = r1[1] - r2[1];
+      double dz = r1[2] - r2[2];
+      double u2 = dz + c3_*dy;
 
-      if ( fabs(c1_*dy) > halfe_ ) {
+      if (fabs(dy) > halfL_[1]) {
          if (dy > 0.0) {
             dy -= l_[1];
-	    dz -= tilt_;
+            dz -= tilt_;
          } else {
             dy += l_[1];
-	    dz += tilt_;
+            dz += tilt_;
          }
-         assert(fabs(c1_*dy) <= halfe_);
+         assert(fabs(dy) <= halfL_[1]);
       }
 
-      if ( fabs(dz+c3_*dy) >  halfL_[2]) {
-         if (dz+c3_*dy > 0.0) {
-	    dz -= l_[2];
+      if (fabs(u2) >  halfL_[2]) {
+         if (u2 > 0.0) {
+            dz -= l_[2];
          } else {
 	    dz += l_[2];
          }
@@ -566,8 +567,7 @@ namespace Util
       dr[1] = dy;
       dr[2] = dz;
 
-      norm = dx*dx+dy*dy+dz*dz;
-      return norm;
+      return (dx*dx + dy*dy + dz*dz);
    }
 
    /**
@@ -609,11 +609,10 @@ namespace Util
    inline 
    void MonoclinicBoundary::transformGenToCart(const Vector& Rg, Vector& Rc) const
    {
-      Rc[0] = Rg[0] * l_[0];
-      Rc[1] = Rg[1] * l_[1];
-      Rc[2] = Rg[2] * l_[2] + Rg[1] * tilt_;
+      Rc[0] = Rg[0]*l_[0];
+      Rc[1] = Rg[1]*l_[1];
+      Rc[2] = Rg[2]*l_[2] + Rg[1]*tilt_;
    }
-
 
 }
  
@@ -658,4 +657,4 @@ namespace Util
 
 }
 #endif // ifdef  UTIL_MPI
-#endif // ifndef MONOCLINIC_BOUNDARY_H
+#endif // ifndef UTIL_MONOCLINIC_BOUNDARY_H
