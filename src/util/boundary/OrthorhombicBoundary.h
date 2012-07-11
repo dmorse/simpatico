@@ -1,5 +1,5 @@
-#ifndef ORTHORHOMBIC_BOUNDARY_H
-#define ORTHORHOMBIC_BOUNDARY_H
+#ifndef UTIL_ORTHORHOMBIC_BOUNDARY_H
+#define UTIL_ORTHORHOMBIC_BOUNDARY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
