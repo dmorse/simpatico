@@ -181,8 +181,8 @@ namespace Util
    void send<Util::MonoclinicBoundary>(MPI::Comm& comm, 
              Util::MonoclinicBoundary& data, int dest, int tag)
    {
-      send<Vector>(comm, l_, dest, tag);
-      send<double>(comm, t_, dest, tag + 386);
+      send<Vector>(comm, data.l_, dest, tag);
+      send<double>(comm, data.tilt_, dest, tag + 386);
    }
 
    template <>
@@ -193,7 +193,7 @@ namespace Util
       double tilt;
       recv<Vector>(comm, l, source, tag);
       recv<double>(comm, tilt, source, tag + 386);
-      data.setLengths(l, tilt);
+      data.set(l, tilt);
    }
 
    template <>
@@ -205,12 +205,12 @@ namespace Util
       int rank = comm.Get_rank();
       if (rank == root) {
          l = data.l_;
-         tilt = data.t_;
+         tilt = data.tilt_;
       }
       bcast<Vector>(comm, l, root);
       bcast<double>(comm, tilt, root);
       if (rank != root) {
-         data.setLengths(l, tilt);
+         data.set(l, tilt);
       }
    }
 
