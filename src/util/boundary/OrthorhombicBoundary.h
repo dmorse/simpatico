@@ -21,6 +21,10 @@
 
 class OrthorhombicBoundaryTest;
 
+#ifndef UTIL_ORTHOGONAL
+#define UTIL_ORTHOGONAL 1
+#endif
+
 namespace Util
 {
 
@@ -143,6 +147,29 @@ namespace Util
       double distanceSq(const Vector &r1, const Vector &r2, Vector &dr) const;
 
       //@}
+      ///\name Coordinate Transformations
+      //@{
+
+      /**
+      * Transform Cartesian Vector to generalized coordinates.
+      *
+      * Generalized coordinates range from 0.0 < Rg[i] < 1.0 within the
+      * primitive cell, for i=0,..,2.
+      *
+      * \param Rc Vector of Cartesian coordinates (input)
+      * \param Rg Vector of generalized coordinates (output)
+      */
+      void transformCartToGen(const Vector& Rc, Vector& Rg) const;
+
+      /**
+      * Transform Vector of generalized coordinates to Cartesian Vector.
+      *
+      * \param Rg Vector of generalized coordinates (input)
+      * \param Rc Vector of Cartesian coordinates (output)
+      */
+      void transformGenToCart(const Vector& Rg, Vector& Rc) const;
+
+      //@}
       ///\name Accessors
       //@{
 
@@ -154,7 +181,7 @@ namespace Util
       LatticeSystem latticeSystem();
 
       /**
-      * Get Vector of lengths by const reference.
+      * Get Vector of unit cell lengths by const reference.
       */
       const Vector& lengths() const;
 
@@ -164,6 +191,11 @@ namespace Util
       * \param i index of Cartesian direction, 0 <= i < Dimension
       */
       double length(int i) const;
+
+      /**
+      * Get minimum length across primitive unit cell.
+      */
+      double minLength() const;
 
       /**
       * Return unit cell volume.
@@ -214,6 +246,16 @@ namespace Util
       FSArray<Vector, Dimension>  reciprocalBasisVectors_;
 
       /**
+      * Vector of inverse box dimensions.
+      */
+      Vector invLengths_;
+
+      /**
+      * Minimum distance across the unit cell.
+      */
+      double minLength_;
+
+      /**
       * Actual lattice system (Orthorhombic, Tetragonal, or Cubic)
       */
       LatticeSystem lattice_;
@@ -251,6 +293,12 @@ namespace Util
    */
    inline double OrthorhombicBoundary::length(int i) const 
    {  return lengths_[i]; }
+
+   /* 
+   * Return the maximum validity range of the distances.
+   */
+   inline double OrthorhombicBoundary::minLength() const
+   {  return minLength_; }
 
    /* 
    * Return region volume.
@@ -403,6 +451,30 @@ namespace Util
    */
    inline LatticeSystem OrthorhombicBoundary::latticeSystem()
    { return lattice_; }
+
+   /*
+   * Transform Cartesian Vector Rc to generalized Vector Rg.
+   */
+   inline void 
+   OrthorhombicBoundary::transformCartToGen(const Vector& Rc, Vector& Rg) 
+   const
+   {
+      for (int i = 0; i < Dimension; ++i) {
+         Rg[i] = Rc[i] * invLengths_[i];
+      }
+   }
+      
+   /*
+   * Transform Cartesian Vector Rc to generalized Vector Rg.
+   */
+   inline void 
+   OrthorhombicBoundary::transformGenToCart(const Vector& Rg, Vector& Rc) 
+   const
+   {
+      for (int i = 0; i < Dimension; ++i) {
+         Rc[i] = Rg[i] * lengths_[i];
+      }
+   }
 
 }
  

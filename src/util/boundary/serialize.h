@@ -10,6 +10,7 @@
 
 #include "OrthoRegion.h"  
 #include "OrthorhombicBoundary.h"  
+#include "MonoclinicBoundary.h"  
 
 namespace Util
 {
@@ -36,8 +37,23 @@ namespace Util
    {
       OrthoRegion::serialize(ar, version);
       serializeEnum(ar, lattice_, version);
-      reset();
       if (Archive::is_loading()) {
+         reset();
+         isValid();
+      }
+   }
+
+   /*
+   * Serialize an OrthorhombicBoundary to/from an archive.
+   */
+   template <class Archive>
+   void 
+   MonoclinicBoundary::serialize(Archive& ar, const unsigned int version)
+   {
+      ar & l_;
+      ar & tilt_;
+      if (Archive::is_loading()) {
+         reset();
          isValid();
       }
    }

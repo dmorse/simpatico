@@ -74,7 +74,11 @@ namespace McMd
       if (numCells_[axis] < 1) {
          numCells_[axis] = 1;
       }
-      invCellWidths_[axis] = ((double)numCells_[axis])/lengths_[axis];
+      if (UTIL_ORTHOGONAL) {
+         invCellWidths_[axis] = ((double)numCells_[axis])/lengths_[axis];
+      } else {
+         invCellWidths_[axis] = (double)numCells_[axis];
+      }
 
       minCells_[axis]  = 0;
       maxCells_[axis]  = numCells_[axis]-1;
