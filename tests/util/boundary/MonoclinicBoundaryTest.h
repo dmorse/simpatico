@@ -128,6 +128,7 @@ public:
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
+      TEST_ASSERT(clone.isValid());
       for (i = 0; i < Dimension; i++) {
          TEST_ASSERT(eq(clone.minima_[i], 0.0));
          TEST_ASSERT(eq(clone.maxima_[i], clone.maxima_[i]));
@@ -147,7 +148,7 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      Vector R, L;
+      Vector R, L, Rg, Rn;
       double d;
 
       // Setup Boundary
@@ -165,6 +166,14 @@ public:
       TEST_ASSERT(eq(R[1], 2.6));
       TEST_ASSERT(eq(R[2], 3.1));
 
+      boundary.transformCartToGen(R, Rg);
+      boundary.transformGenToCart(Rg, Rn);
+      for (int i = 0; i < Dimension; ++i) {
+         TEST_ASSERT(Rg[i] >= 0.0);
+         TEST_ASSERT(Rg[i] <  1.0);
+         TEST_ASSERT(eq(R[i], Rn[i]));
+      }
+
       R[0] = 1.6;
       R[1] = 2.4;
       R[2] = 4.1;
@@ -172,6 +181,14 @@ public:
       TEST_ASSERT(eq(R[0], 1.6));
       TEST_ASSERT(eq(R[1], 2.4));
       TEST_ASSERT(eq(R[2], 4.1));
+
+      boundary.transformCartToGen(R, Rg);
+      boundary.transformGenToCart(Rg, Rn);
+      for (int i = 0; i < Dimension; ++i) {
+         TEST_ASSERT(Rg[i] >= 0.0);
+         TEST_ASSERT(Rg[i] <  1.0);
+         TEST_ASSERT(eq(R[i], Rn[i]));
+      }
 
       R[0] = 1.6;
       R[1] = 1.5;
@@ -181,6 +198,14 @@ public:
       TEST_ASSERT(eq(R[1], 1.5));
       TEST_ASSERT(eq(R[2], 0.6));
 
+      boundary.transformCartToGen(R, Rg);
+      boundary.transformGenToCart(Rg, Rn);
+      for (int i = 0; i < Dimension; ++i) {
+         TEST_ASSERT(Rg[i] >= 0.0);
+         TEST_ASSERT(Rg[i] <  1.0);
+         TEST_ASSERT(eq(R[i], Rn[i]));
+      }
+
       R[0] =  0.6;
       R[1] = -0.4;
       R[2] = -2.1;
@@ -188,6 +213,14 @@ public:
       TEST_ASSERT(eq(R[0], 0.6));
       TEST_ASSERT(eq(R[1], 2.6));
       TEST_ASSERT(eq(R[2], 2.9));
+
+      boundary.transformCartToGen(R, Rg);
+      boundary.transformGenToCart(Rg, Rn);
+      for (int i = 0; i < Dimension; ++i) {
+         TEST_ASSERT(Rg[i] >= 0.0);
+         TEST_ASSERT(Rg[i] <  1.0);
+         TEST_ASSERT(eq(R[i], Rn[i]));
+      }
 
    };
 

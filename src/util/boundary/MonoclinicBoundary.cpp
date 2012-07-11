@@ -31,6 +31,7 @@ namespace Util
          minima_[i] = 0.0;
          maxima_[i] = 1.0;
          l_[i] = 1.0;
+         invL_[i] = 1.0;
          halfL_[i] = 0.5;
          lengths_[i] = 1.0;
          bravaisBasisVectors_.append(Vector::Zero);
@@ -43,7 +44,7 @@ namespace Util
          
       c3_ = 0.0;
       e_ = 1.0;
-      maxValidityDistanceSq_ = 0.5;
+      minLength_ = 1.0;
    }
 
    /* 
@@ -66,6 +67,7 @@ namespace Util
          minima_[i] = 0.0;
          maxima_[i] = l_[i];
          halfL_[i] = 0.5*l_[i];
+         invL_[i] = 1.0/l_[i];
          bravaisBasisVectors_[i][i] = l_[i];
          reciprocalBasisVectors_[i][i] = twoPi/l_[i];
       }
@@ -75,11 +77,17 @@ namespace Util
       volume_ = l_[0] * l_[1] * l_[2];
       e_ = sqrt(l_[1]*l_[1] + tilt_*tilt_);          
       c3_ = -tilt_/l_[1];
+
       lengths_[0] = l_[0];
       lengths_[1] = l_[1];
       lengths_[2] = l_[2] / sqrt(1.0 + c3_*c3_);
 
-      maxValidityDistanceSq_ = maxValidityDistanceSq();
+      minLength_ = lengths_[0];
+      for (int i = 1; i < Dimension; ++i) {
+         if (lengths_[i] < minLength_) {
+            minLength_ = lengths_[i];
+         }
+      }
    }
 
    /* 
@@ -102,18 +110,41 @@ namespace Util
    */
    bool MonoclinicBoundary::isValid() 
    {  
-      for (int i = 0; i < Dimension; ++i) {
-         if (maxima_[i] <= minima_[i])   
+      double dot;
+      double twoPi = 2.0*Constants::Pi;
+      int i, j;
+      for (i = 0; i < Dimension; ++i) {
+         if (maxima_[i] <= minima_[i]) {
             UTIL_THROW("maxima_[i] <= minima_[i]");
-         if (!feq(l_[i], maxima_[i] - minima_[i]))
+         }
+         if (!feq(l_[i], maxima_[i] - minima_[i])) {
             UTIL_THROW("l_[i] != maxima_[i] - minima_[i]");
-         if (!feq(halfL_[i], 0.5*l_[i]))
+         }
+         if (!feq(halfL_[i], 0.5*l_[i])) {
             UTIL_THROW("halfL_[i] != 0.5*l_[i]");
-         if (!feq(minima_[i], 0.0))
+         }
+         if (!feq(minima_[i], 0.0)) {
             UTIL_THROW("minima_[i] != 0");
+         }
+         if (!feq(l_[i]*invL_[i], 1.0)) {
+            UTIL_THROW("invL_[i]*l_[i] != 1.0");
+         }
+         for (j = 0; j < Dimension; ++j) {
+            dot = bravaisBasisVectors_[i].dot(reciprocalBasisVectors_[j]);
+            if (i == j) {
+               if (!feq(dot, twoPi)) {
+                  UTIL_THROW("a[i].b[i] != twoPi");
+               } 
+            } else {
+               if (!feq(dot, 0.0)) {
+                  UTIL_THROW("a[i].b[j] != 0 for i != j");
+               }
+            }
+         }
       }
-      if (!feq(volume_, l_[0]*l_[1]*l_[2]))
+      if (!feq(volume_, l_[0]*l_[1]*l_[2])) {
          UTIL_THROW("volume_ != product of l_");
+      }
       return true;
    }
 

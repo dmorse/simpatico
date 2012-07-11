@@ -217,6 +217,15 @@ public:
       TEST_ASSERT(eq(R[1], 2.6));
       TEST_ASSERT(eq(R[2], 2.1));
 
+      Vector Rg, Rn;
+      boundary.transformCartToGen(R, Rg);
+      boundary.transformGenToCart(Rg, Rn);
+      for (int i = 0; i < Dimension; ++i) {
+         TEST_ASSERT(Rg[i] >= 0.0);
+         TEST_ASSERT(Rg[i] <  1.0);
+         TEST_ASSERT(eq(R[i], Rn[i]));
+      }
+
    };
 
    void testDistanceSq1()
@@ -245,7 +254,6 @@ public:
 
    };
 
-
    void testDistanceSq2()
    {
       Vector    L;
@@ -272,7 +280,6 @@ public:
       dRSq1 = boundary.distanceSq(R1, R2);
       dRSq2 = boundary.distanceSq(R1, R2, dR);
       dRSq3 = boundary.distanceSq(R1, R2, shift);
- 
 
       TEST_ASSERT(eq(dR[0], 0.4));
       TEST_ASSERT(eq(dR[1], 1.0));

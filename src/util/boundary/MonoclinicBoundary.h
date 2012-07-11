@@ -49,15 +49,10 @@ namespace Util
       *
       * Also sets all related lengths and volume.
       *
-      * \param lengths  Vector of unit cell lengths
+      * \param lengths  Vector of unit cell dimensions, orthogonal box.
+      * \param t        displacement along z axis.
       */
       void set(const Vector &lengths, const double d);
-
-      /**
-      * Sets the square of maximum range of validity of the distances
-      * calculated assuming short range interactions. 
-      */
-      double maxValidityDistanceSq() const;
 
       /**
       * Serialize to/from an archive.
@@ -136,6 +131,29 @@ namespace Util
       double distanceSq(const Vector &r1, const Vector &r2, Vector &dr) const;
 
       //@}
+      ///\name Coordinate Transformations
+      //@{
+
+      /**
+      * Transform Cartesian Vector to generalized coordinates.
+      *
+      * Generalized coordinates range from 0.0 <= Rg[i] < 1.0 within the
+      * primitive cell, for i = 0,..,2.
+      *
+      * \param Rc Vector of Cartesian coordinates (input)
+      * \param Rg Vector of generalized coordinates (output)
+      */
+      void transformCartToGen(const Vector& Rc, Vector& Rg) const;
+
+      /**
+      * Transform Vector of generalized coordinates to Cartesian coordinates.
+      *
+      * \param Rg Vector of generalized coordinates (input)
+      * \param Rc Vector of Cartesian coordinates (output)
+      */
+      void transformGenToCart(const Vector& Rg, Vector& Rc) const;
+
+      //@}
       ///\name Accessors
       //@{
 
@@ -163,6 +181,11 @@ namespace Util
       * \param i index of Cartesian direction, 0 <= i < Dimension
       */
       double length(int i) const;
+
+      /**
+      * Get minimum length across primitive unit cell.
+      */
+      double minLength() const;
 
       /**
       * Return unit cell volume.
@@ -198,43 +221,29 @@ namespace Util
       */
       bool isValid();
 
-      /**
-      * Transform Cartesian Vector to generalized coordinates.
-      *
-      * Generalized coordinates range from 0.0 < Rg[i] < 1.0 within
-      * the primitive cell, for i=0,..,2.
-      *
-      */
-      void transformCartToGen(const Vector& Rc, Vector& Rg) const;
-
-      /**
-      * Transforms Vector of generalized coordinates to Cartesian coordinates.
-      *
-      * \param Rg Vector of generalized coordinates (input)
-      * \param Rc Vector of Cartesian coordinates (output)
-      */
-      void transformGenToCart(const Vector& Rg, Vector& Rc) const;
-
       //@}
 
    private:
 
-      /// Minimum coordinates: Require r[i] >= minima_[i].
+      /// Minimum coordinates for orthogonal unit cell
       Vector minima_;
 
-      /// Maximum coordinates: Require r[i] <  maxima_[i].
+      /// Maximum coordinates for orthogonal unit cell
       Vector maxima_;
 
-      /// Box lengths:  l_[i] = maxima_[i] - minima_[i].
+      /// Lengthsof orthogonal unit cell:  l_[i] = maxima_[i] - minima_[i].
       Vector l_;
 
-      /// Box tilt_ in Monoclinic Box. tilt_ is in the z-direction.
+      /// Displacement (tilt) of primitive cell in the z-direction.
       double tilt_;
 
       /// Half region lengths: halfL_[i] = 0.5*l_[i].
       Vector halfL_;
 
-      /// lengths of the box projected in the unit reciprocal Bravais vectors.
+      /// Half region lengths: invL_[i] = 1.0/l_[i].
+      Vector invL_;
+
+      /// Lengths of the primitive projected along reciprocal basis vectors.
       Vector lengths_;
 
       /// Volume: V = l_[0]*l_[1]*l_[2].
@@ -243,11 +252,11 @@ namespace Util
       /// constants used for distancing: u2 = dz + c3_*dy.
       double c3_;
 
-      /// Length of bravais lattice unit vector 1 (tilted).
+      /// Length of bravais basis vector 1 (tilted).
       double e_;
 
-      /// the half length of the minor axis of the Monoclinic parallelogram.
-      double maxValidityDistanceSq_;
+      /// Minimum distance across the unit cell.
+      double minLength_;
 
       /**
       * Array of Bravais lattice vectors.
@@ -330,22 +339,8 @@ namespace Util
    /* 
    * Return the maximum validity range of the distances.
    */
-   inline double MonoclinicBoundary::maxValidityDistanceSq() const
-   {
-       double m = l_[0] / 2.0;
-	  
-          if( m > (l_[1] / 2.0) )
-	  {
-             m = l_[1] / 2.0;
-	  }
-
-          if( m > (l_[1]*l_[2] / (2.0 * sqrt(tilt_*tilt_+l_[1]*l_[1]))) )
-          {
-             m = l_[1]*l_[2] / (2.0 * sqrt(tilt_*tilt_+l_[1]*l_[1]));
-          }
-
-       return m*m; 
-   }
+   inline double MonoclinicBoundary::minLength() const
+   {  return minLength_; }
 
    /* 
    * Shift Vector r to periodic cell, R[axis] < r[axis] < maxima_[axis].
@@ -596,18 +591,20 @@ namespace Util
    { return lattice_; }
 
    inline 
-   void MonoclinicBoundary::transformCartToGen(const Vector& Rc, Vector& Rg) const
+   void MonoclinicBoundary::transformCartToGen(const Vector& Rc, Vector& Rg) 
+   const
    {
-      Rg[0] = Rc[0] / l_[0];
-      Rg[1] = Rc[1] / l_[1];
-      Rg[2] = (Rc[2] + c3_ *Rc[1]) / l_[2];
+      Rg[0] = Rc[0] * invL_[0];
+      Rg[1] = Rc[1] * invL_[1];
+      Rg[2] = (Rc[2] + c3_ *Rc[1]) * invL_[2];
    }
       
    /**
    * Returns the Generalized coordinates of Rc in Rg.
    */
    inline 
-   void MonoclinicBoundary::transformGenToCart(const Vector& Rg, Vector& Rc) const
+   void MonoclinicBoundary::transformGenToCart(const Vector& Rg, Vector& Rc) 
+   const
    {
       Rc[0] = Rg[0]*l_[0];
       Rc[1] = Rg[1]*l_[1];
