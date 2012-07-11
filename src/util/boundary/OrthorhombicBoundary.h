@@ -29,9 +29,6 @@ namespace Util
 {
 
    class Random;
-   template <class T> void send(MPI::Comm& comm, T& data, int dest, int tag);
-   template <class T> void recv(MPI::Comm& comm, T& data, int source, int tag);
-   template <class T> void bcast(MPI::Intracomm& comm, T& data, int root);
 
    /**
    * An orthorhombic periodic unit cell.
