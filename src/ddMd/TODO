@@ -4,14 +4,38 @@ Small Things
 - Add timed computeForces method to DdMd::Integrator.
 
 
+Non-orthogonal Boundaries
+-------------------------
+
+- Go through Exchanger and Domain classes with Taher. Make sure that 
+  everything can be done with generalized coordinates. 
+
+- Search for other uses of Domain::domainBound outside Exchanger.
+  Consider changing to use of generalized coordinates for domainBound
+  throughout.
+
+- Separate buildCellList and buildPairList in PairPotential, to make 
+  change in coordinate more explicit.
+
+- Add transformCartToGen() and transformGenToCart() methods
+  to AtomStorage. Test them.
+
+
 Testing
 -------
 
-- More exhaustive testing of DdMd::Simulation, with and without reverse force 
-  communication.
+- More exhaustive testing of DdMd::Simulation, with and without reverse 
+  force communication.
+
+- Add test that number of inner neighbors is unchanged upon reneighboring.
 
 - Test conservation of energy with dihedrals.
 
+Flexible Unit Cells:
+--------------------
+
+- Generalize snapShot and needsExchange methods in AtomStorage to allow
+  for deforming boundaries. 
 
 Constant Pressure:
 ------------------
