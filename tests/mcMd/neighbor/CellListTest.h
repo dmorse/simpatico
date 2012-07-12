@@ -5,7 +5,7 @@
 #include <test/UnitTestRunner.h>
 
 #include <mcMd/neighbor/CellList.h>
-#include <util/boundary/OrthorhombicBoundary.h>
+#include <util/boundary/Boundary.h>
 #include <mcMd/chemistry/Atom.h>
 #include <util/space/Vector.h>
 #include <util/random/Random.h>
@@ -16,13 +16,14 @@
 using namespace Util;
 using namespace McMd;
 
+
 class CellListTest : public UnitTest 
 {
 
 private:
 
-   CellList  cellList;
-   OrthorhombicBoundary  boundary;
+   CellList cellList;
+   Boundary boundary;
 
 public:
 
@@ -41,7 +42,7 @@ public:
       Lin[0] =  2.0;
       Lin[1] =  3.0;
       Lin[2] =  4.0;
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.makeGrid(boundary, cutoff);
 
       TEST_ASSERT(cellList.gridDimension(0) == 1);
@@ -63,7 +64,7 @@ public:
       Lin[0] =  2.0;  // 1 cell
       Lin[1] =  3.0;  // 2 cells
       Lin[2] =  4.0;  // 3 cells
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.allocate(10, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 
@@ -85,7 +86,7 @@ public:
       Lin[0] =  2.0;
       Lin[1] =  3.0;
       Lin[2] =  4.0;
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.allocate(10, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 
@@ -114,7 +115,7 @@ public:
       Lin[0] = 2.0;
       Lin[1] = 3.0;
       Lin[2] = 4.0;
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.allocate(10, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 
@@ -127,8 +128,8 @@ public:
          TEST_ASSERT(eq(cellList.invCellWidths_[1], (2.0/3.0)));
          TEST_ASSERT(eq(cellList.invCellWidths_[2], (3.0/4.0)));
       } else {
-         std::cout << std::endl;
-         std::cout << "UTIL_ORTHOGONAL is note defined" << std::endl;
+         // std::cout << std::endl;
+         // std::cout << "UTIL_ORTHOGONAL is note defined" << std::endl;
          TEST_ASSERT(eq(cellList.invCellWidths_[0], 1.0));
          TEST_ASSERT(eq(cellList.invCellWidths_[1], 2.0));
          TEST_ASSERT(eq(cellList.invCellWidths_[2], 3.0));
@@ -150,7 +151,7 @@ public:
       Lin[0] =  2.8; // 2 cell
       Lin[1] =  3.0; // 2 cells
       Lin[2] =  4.0; // 3 cells
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.allocate(10, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 
@@ -180,12 +181,12 @@ public:
 
       printMethod(TEST_FUNC);
 
-      // Create a OrthorhombicBoundary
+      // Create a Boundary
       Vector Lin(2.0, 3.3, 2.5);
       //Lin[0] =  2.0;  // 1 cell,  x=0
       //Lin[1] =  3.3;  // 2 cells, y=0
       //Lin[2] =  2.5;  // 2 cells, z=1, icell=1
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.allocate(maxNAtom, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 
@@ -229,7 +230,7 @@ public:
       //Lin[0] =  2.0;  // 1 cell,  x = 0
       //Lin[1] =  3.0;  // 2 cells, y = 1
       //Lin[2] =  2.5;  // 2 cells, z = 1
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.allocate(maxNAtom, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 
@@ -281,7 +282,7 @@ public:
       //Lin[0] =  2.0;  // 1 cell,   x1=0 x2=0
       //Lin[1] =  3.0;  // 2 cells,  x1=2 x2=2
       //Lin[2] =  4.0;  // 3 cells,  x1=0 x2=0
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.allocate(N_PART, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 
@@ -364,7 +365,7 @@ public:
 
       // Setup CellList
       Vector Lin(2.0, 3.0, 4.0);
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.allocate(nAtom, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 
@@ -414,7 +415,7 @@ public:
 
       // Setup CellList
       Vector Lin(2.0, 3.0, 4.0);
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.allocate(nAtom, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 
@@ -469,7 +470,7 @@ public:
 
       // Setup CellList
       Vector Lin(2.0, 3.0, 4.0);
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.allocate(nAtom, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 
@@ -529,7 +530,7 @@ public:
 
       // Set up CellList
       Vector Lin(2.0, 3.0, 4.0);
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
       cellList.allocate(nAtom, boundary, cutoff);
       cellList.makeGrid(boundary, cutoff);
 

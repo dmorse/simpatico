@@ -45,7 +45,7 @@ namespace McMd
       // Read and set dimensions of simulation Boundary.
       Vector lengths;
       in >> Label("BoxLengths") >> lengths;
-      setLengths<Boundary>(boundary(), lengths);
+      boundary().setOrthorhombic(lengths);
 
       // Read total number of atoms (or particles)
       int nAtom, nSpecies;
@@ -120,15 +120,6 @@ namespace McMd
          }
       }
    }
-
-   template <class BoundaryType>
-   void PmcConfigIo::setLengths(BoundaryType& boundary, const Vector& lengths)
-   {  UTIL_THROW("Boundary type must be Orthorhombic for PmcConfigIo"); }
- 
-   template <>
-   void PmcConfigIo::setLengths<OrthorhombicBoundary>(OrthorhombicBoundary& boundary, 
-                                                      const Vector& lengths)
-   {  boundary.setLengths(lengths);  }
  
 } 
 #endif

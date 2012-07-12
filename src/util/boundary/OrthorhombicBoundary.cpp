@@ -45,7 +45,7 @@ namespace Util
    /* 
    * Set box lengths and then call reset.
    */
-   void OrthorhombicBoundary::setLengths(const Vector &lengths) 
+   void OrthorhombicBoundary::setOrthorhombic(const Vector &lengths) 
    {  
       maxima_  = lengths; 
       lattice_ = Orthorhombic;
@@ -55,7 +55,7 @@ namespace Util
    /* 
    * Set box lengths and then call reset.
    */
-   void OrthorhombicBoundary::setTetragonalLengths(double ab, double c) 
+   void OrthorhombicBoundary::setTetragonal(double ab, double c) 
    {  
       maxima_[0] = ab;
       maxima_[1] = ab;
@@ -67,7 +67,7 @@ namespace Util
    /* 
    * Set box lengths and call reset.
    */
-   void OrthorhombicBoundary::setCubicLengths(double a) 
+   void OrthorhombicBoundary::setCubic(double a) 
    {  
       maxima_[0] = a;
       maxima_[1] = a;
@@ -209,7 +209,7 @@ namespace Util
    {
       Vector lengths;
       recv<Vector>(comm, lengths, source, tag);
-      data.setLengths(lengths);
+      data.setOrthorhombic(lengths);
    }
 
    template <>
@@ -222,7 +222,7 @@ namespace Util
          lengths = data.lengths();
       bcast<Vector>(comm, lengths, root);
       if (rank != root) 
-         data.setLengths(lengths);
+         data.setOrthorhombic(lengths);
    }
 
    /*

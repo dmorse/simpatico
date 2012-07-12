@@ -48,9 +48,9 @@ namespace Util
    }
 
    /* 
-   * Set box lengths and then call reset.
+   * Set unit cell parameters and then call reset.
    */
-   void MonoclinicBoundary::set(const Vector &lengths, const double d) 
+   void MonoclinicBoundary::setMonoclinic(const Vector &lengths, const double d) 
    {
       l_ = lengths;
       tilt_ = d;
@@ -58,11 +58,13 @@ namespace Util
    }
 
    /* 
-   * Set box lengths and then call reset.
+   * Setup orthorhombic unit cell.
    */
-   void MonoclinicBoundary::setLengths(const Vector &lengths) 
+   void MonoclinicBoundary::setOrthorhombic(const Vector &lengths) 
    {
-      UTIL_THROW("Error: setLengths is valid only for OrthorhombicBoundary");
+      l_ = lengths;
+      tilt_ = 0.0;
+      reset(); 
    }
 
    /* 

@@ -262,7 +262,7 @@ namespace McMd
          // read back new boundary
          box = particleDataSPtr_->getBox();
          lengths_ = newLengths;
-         system().boundary().setLengths(lengths_);
+         system().boundary().setOrthorhombic(lengths_);
          
          // read back integrated positions
          ArrayHandle<Scalar4> h_pos(particleDataSPtr_->getPositions(), access_location::host, access_mode::read);

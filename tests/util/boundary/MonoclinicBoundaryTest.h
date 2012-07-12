@@ -43,7 +43,7 @@ public:
       L[2] = 4.0;
       d = 1.0;
 
-      boundary.set(L,d);
+      boundary.setMonoclinic(L, d);
       Lp = boundary.lengths();
 
       // Assertions
@@ -156,7 +156,7 @@ public:
       L[1] = 3.0;
       L[2] = 4.0;
       d = 1.0;
-      boundary.set(L, d);
+      boundary.setMonoclinic(L,  d);
 
       R[0] = 2.6;
       R[1] = -0.4;
@@ -237,7 +237,7 @@ public:
       L[1] = 3.0;
       L[2] = 4.0;
       d = 1.0;
-      boundary.set(L, d);
+      boundary.setMonoclinic(L, d);
 
       R[0] = 2.6;
       R[1] = -0.4;
@@ -306,7 +306,7 @@ public:
       L[2] = 4.0;
       d = 1.0;
 
-      boundary.set(L,d);
+      boundary.setMonoclinic(L, d);
 
       R1[0] =  0.0;
       R1[1] =  0.0;
@@ -358,7 +358,7 @@ public:
       L[2] = 4.0;
       d = 1.0;
 
-      boundary.set(L,d);
+      boundary.setMonoclinic(L, d);
 
       R1[0] =  0.0;
       R1[1] =  0.0;

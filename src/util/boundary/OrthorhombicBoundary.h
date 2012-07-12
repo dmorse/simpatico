@@ -52,7 +52,7 @@ namespace Util
       *
       * \param lengths  Vector of unit cell lengths
       */
-      void setLengths(const Vector &lengths);
+      void setOrthorhombic(const Vector &lengths);
 
       /**
       * Set unit cell dimensions for tetragonal boundary.
@@ -60,14 +60,14 @@ namespace Util
       * \param ab unit cell dimensions in x and y directions
       * \param c  unit cell length in z direction
       */
-      void setTetragonalLengths(double ab, double c);
+      void setTetragonal(double ab, double c);
 
       /**
       * Set unit cell dimensions for a cubic boundary.
       *
       * \param a unit cell length in x, y, and z directions.
       */
-      void setCubicLengths(double a);
+      void setCubic(double a);
 
       /**
       * Serialize to/from an archive.

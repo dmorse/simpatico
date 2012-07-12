@@ -170,7 +170,7 @@ namespace McMd
       } else {
          
          // Restore old boundary lengths
-         system().boundary().setLengths(oldLengths);
+         system().boundary().setOrthorhombic(oldLengths);
 
          // Restore old atom positions
          for (iSpec = 0; iSpec < nSpec; ++iSpec) {

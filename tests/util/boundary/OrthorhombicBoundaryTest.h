@@ -40,7 +40,7 @@ public:
       L[0] = 2.0;
       L[1] = 3.0;
       L[2] = 4.0;
-      boundary.setLengths(L);
+      boundary.setOrthorhombic(L);
       Lp = boundary.lengths();
 
 
@@ -207,7 +207,7 @@ public:
       L[0] = 2.0;
       L[1] = 3.0;
       L[2] = 4.0;
-      boundary.setLengths(L);
+      boundary.setOrthorhombic(L);
 
       R[0] =  2.6;
       R[1] = -0.4;
@@ -241,7 +241,7 @@ public:
       L[0] = 2.0;
       L[1] = 3.0;
       L[2] = 4.0;
-      boundary.setLengths(L);
+      boundary.setOrthorhombic(L);
 
       R1[0] =  1.6;
       R1[1] =  0.4;
@@ -269,7 +269,7 @@ public:
       L[0] = 2.0;
       L[1] = 3.0;
       L[2] = 4.0;
-      boundary.setLengths(L);
+      boundary.setOrthorhombic(L);
 
       R1[0] =  1.6;
       R1[1] =  0.4;
@@ -312,7 +312,7 @@ public:
 
       Vector Lp;
 
-      boundary.setCubicLengths(2.0);
+      boundary.setCubic(2.0);
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
@@ -367,7 +367,7 @@ public:
       Vector R;
 
       // Setup Boundary
-      boundary.setCubicLengths(2.0);
+      boundary.setCubic(2.0);
 
       R[0] =  1.6;
       R[1] = -0.6;
@@ -388,7 +388,7 @@ public:
       double dRSq, result;
 
       // Setup Boundary
-      boundary.setCubicLengths(2.0);
+      boundary.setCubic(2.0);
 
       R1[0] =  1.6;
       R1[1] =  0.4;
@@ -414,7 +414,7 @@ public:
       printMethod(TEST_FUNC);
 
       // Setup Boundary
-      boundary.setCubicLengths(2.0);
+      boundary.setCubic(2.0);
 
       R1[0] =  1.6;
       R1[1] =  0.4;
@@ -452,7 +452,7 @@ public:
 
       Vector Lp;
 
-      boundary.setTetragonalLengths(2.0, 3.0);
+      boundary.setTetragonal(2.0, 3.0);
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
@@ -534,7 +534,7 @@ public:
       Vector R;
 
       // Setup Boundary
-      boundary.setTetragonalLengths(2.0, 3.0);
+      boundary.setTetragonal(2.0, 3.0);
 
       R[0] =  1.6;
       R[1] = -0.6;
@@ -559,7 +559,7 @@ public:
       L[0] = 2.0;
       L[1] = 2.0;
       L[2] = 3.0;
-      boundary.setTetragonalLengths(2.0, 3.0);
+      boundary.setTetragonal(2.0, 3.0);
 
       R1[0] =  1.6;
       R1[1] =  0.4;
@@ -589,7 +589,7 @@ public:
       L[0] = 2.0;
       L[1] = 2.0;
       L[2] = 3.0;
-      boundary.setTetragonalLengths(2.0, 3.0);
+      boundary.setTetragonal(2.0, 3.0);
 
       R1[0] =  1.6;
       R1[1] =  0.4;

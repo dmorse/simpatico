@@ -86,7 +86,7 @@ namespace DdMd
       read<Boundary>(in, "maxBoundary", maxBoundary_);
 
       // Set upper and lower bound of the processor domain.
-      boundary().setLengths(maxBoundary_.lengths());
+      boundary().setOrthorhombic(maxBoundary_.lengths());
       Vector lower;
       Vector upper;
       for (int i = 0; i < Dimension; ++i) {

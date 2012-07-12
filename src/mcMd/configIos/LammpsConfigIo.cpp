@@ -111,7 +111,7 @@ namespace McMd
       in >> min[1] >> max[1] >> Label("ylo") >> Label("yhi");
       in >> min[2] >> max[2] >> Label("zlo") >> Label("zhi");
       lengths.subtract(max, min);
-      boundary().setLengths(lengths);
+      boundary().setOrthorhombic(lengths);
 
       // Read particle masses (discard values)
       double mass;
