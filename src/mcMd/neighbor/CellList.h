@@ -261,11 +261,10 @@ namespace McMd
       * is greater than or equal to parameter cutoff. The pointer member
       * boundary must point to a valid Boundary object.
       *
-      * \param boundary  Boundary object containing system dimensions
       * \param axis      index of a Cartesian direction. Values: 0, 1, or 2
       * \param cutoff    minimum allowed dimension for a cell
       */
-      void setCellsAxis(const Boundary &boundary, int axis, double cutoff);
+      void setCellsAxis(int axis, double cutoff);
 
       /**
       * Return shifted integer cell coordinate x for axis i.
@@ -321,6 +320,13 @@ namespace McMd
    inline int CellList::cellIndexFromPosition(const Vector &pos) const
    {
       int cx, cy, cz;
+
+      /* 
+      * Elements of invCellWidths_ are inverses of the widths of a single
+      * cell. They are defined in makeGrid. If (UTIL_ORTHOGONAL), these
+      * are given in Cartesian coordinates, or otherwise in dimensionless
+      * generalized coordinates.
+      */
 
       if (UTIL_ORTHOGONAL) {
          cx = int(pos[0]*invCellWidths_[0]);

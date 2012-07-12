@@ -217,7 +217,7 @@ namespace McMd
          for (int iAttempt = 0; iAttempt< maxPlacementAttempts_; iAttempt++) {
             // Place first atom
             Vector pos;
-            boundary.randomPosition(system.simulation().random(),pos);
+            system.boundary().randomPosition(system.simulation().random(),pos);
             Atom &thisAtom = newMolecule.atom(0);
  
             // check if the first atom can be placed at the new position
@@ -228,8 +228,8 @@ namespace McMd
             for (int j = 0; j < nNeighbor; ++j) {
                Atom *jAtomPtr = neighbors[j];
          
-               double r = sqrt(boundary.distanceSq(
-                  jAtomPtr->position(), pos));
+               double r = sqrt(system.boundary().distanceSq(
+                                        jAtomPtr->position(), pos));
                if (r < (exclusionRadius[thisAtom.typeId()] +
                   exclusionRadius[jAtomPtr->typeId()])) {
                   canBePlaced = false;
@@ -242,7 +242,7 @@ namespace McMd
 
                // Try to recursively place other atoms
                if (tryPlaceAtom(newMolecule, 0, exclusionRadius, system,
-                  cellList, bondPotentialPtr, boundary)) {
+                  cellList, bondPotentialPtr, system.boundary())) {
                   moleculeHasBeenPlaced = true;
                   break;
               } else {
@@ -256,11 +256,9 @@ namespace McMd
            UTIL_THROW(oss.str().c_str());
          }
 
-         // Finally, update the system Boundary
-         system.boundary().setLengths(boundary.lengths());
       }
 
-/***
+      #if 0
       // Check
       for (int iMol =0; iMol < nMolecule; ++iMol) {
          Molecule::AtomIterator atomIter;
@@ -283,7 +281,8 @@ namespace McMd
             }
          }
       }
-***/
+      #endif
+
    } 
    
 }

@@ -336,34 +336,40 @@ namespace McMd
                outputFile.close();
             } else 
             if (command == "GENERATE_MOLECULES") {
-               double boxL;
-               DArray<double> exclusionRadius;
-               DArray<int> nMolecule;
-               exclusionRadius.allocate(nAtomType());
-               nMolecule.allocate(nSpecies());
-               inBuffer >> boxL;
-               Log::file() << "  " << boxL;
+               DArray<double> ExclusionRadii;
+               DArray<int>    capacities;
+               ExclusionRadii.allocate(nAtomType());
+               capacities.allocate(nSpecies());
+
+               // Parse command
+               inBuffer >> system().boundary();
+               Log::file() << "  " << system().boundary();
+               Label capacityLabel("Capacities:");
+               inBuffer >> capacityLabel;
                for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
-                  inBuffer >> nMolecule[iSpecies];
-                  Log::file() << "  " << nMolecule[iSpecies];
+                  inBuffer >> capacities[iSpecies];
+                  Log::file() << "  " << capacities[iSpecies];
                }
+               Label radiusLabel("Radii:");
+               inBuffer >> radiusLabel;
                for (int iType=0; iType < nAtomType(); iType++) {
-                  inBuffer >> exclusionRadius[iType];
-                  Log::file() << "  " << exclusionRadius[iType];
+                  inBuffer >> ExclusionRadii[iType];
+                  Log::file() << "  " << ExclusionRadii[iType];
                }
                Log::file() << std::endl;
-               Boundary boundary;
-               boundary.setCubicLengths(boxL);
+
                for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
                   species(iSpecies).generateMolecules(
-                     nMolecule[iSpecies], exclusionRadius, system(),
+                     capacities[iSpecies], ExclusionRadii, system(),
                      &system().bondPotential(),
-                     boundary);   
+                     system().boundary());   
                }
+
                #ifndef INTER_NOPAIR 
                // Generate cell list
                system().pairPotential().buildCellList();
                #endif
+
             } else
             #ifndef UTIL_MPI
             if (command == "SET_PAIR") {

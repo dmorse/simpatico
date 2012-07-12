@@ -61,6 +61,13 @@ namespace Util
       void set(const Vector &lengths, const double d);
 
       /**
+      * Invalid function for monoclinic - throws Exception.
+      *
+      * \param lengths  Vector of unit cell dimensions, orthogonal box.
+      */
+      void setLengths(const Vector &lengths);
+
+      /**
       * Serialize to/from an archive.
       * 
       * \param ar       saving or loading archive

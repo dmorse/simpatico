@@ -58,6 +58,14 @@ namespace Util
    }
 
    /* 
+   * Set box lengths and then call reset.
+   */
+   void MonoclinicBoundary::setLengths(const Vector &lengths) 
+   {
+      UTIL_THROW("Error: setLengths is valid only for OrthorhombicBoundary");
+   }
+
+   /* 
    * Reset all quantities that depend on unit cell lengths.
    */
    void MonoclinicBoundary::reset()

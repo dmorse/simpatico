@@ -67,9 +67,8 @@ namespace McMd
    * Set number of cells and width for one axis (x,y, or z)
    */
    void 
-   CellList::setCellsAxis(const Boundary &boundary, int axis, double cutoff)
+   CellList::setCellsAxis(int axis, double cutoff)
    {
-      lengths_ = boundary.lengths();
       numCells_[axis] = (int)(lengths_[axis]/cutoff);
       if (numCells_[axis] < 1) {
          numCells_[axis] = 1;
@@ -122,9 +121,10 @@ namespace McMd
    */
    void CellList::makeGrid(const Boundary &boundary, double cutoff)
    {
-      setCellsAxis(boundary, 0, cutoff);
-      setCellsAxis(boundary, 1, cutoff);
-      setCellsAxis(boundary, 2, cutoff);
+      lengths_ = boundary.lengths();
+      setCellsAxis(0, cutoff);
+      setCellsAxis(1, cutoff);
+      setCellsAxis(2, cutoff);
       YZCells_   = numCells_[1]*numCells_[2];
       totCells_  = YZCells_*numCells_[0];
 
