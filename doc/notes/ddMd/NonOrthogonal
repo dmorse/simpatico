@@ -1,0 +1,98 @@
+DdMd::Domain
+
+     1) Change domainBound to return generalized coordinates.
+
+     2) Change ownerRank(Vector& ) to use generalized coordinates
+
+     3) Remove association with Boundary ? (Unnecessary?)
+
+     4) Update unit tests and test
+
+
+DdMd::AtomStorage
+
+     1) Add methods
+
+     void transformCartToGen(const Boundary& boundary);
+     void transformGenToCart(const Boundary& boundary);
+
+     2) Add bool member and accessor to mark state and method 
+  
+     bool coordinatesAreCartesian() const;
+     bool coordinatesAreCartesion_;
+
+     Initialize to false. Can be changed to true only by transformGenToCart.
+     Assume that when added, coordinates are always generalized.
+
+     3) Method to clear storage should sets coordinatesAreCartesian_ false.
+
+DdMd::Distributor
+
+     Use generalized coordinates.
+     Change addAtom to use generalized coordinates
+    
+     1) Change shift to shift by unity (no need for Boundary)
+     2) Remove association with boundary (no longer needed)
+
+
+DdMd::ConfigIo
+
+     Policies:
+
+     1) Coordinates in file are Cartesian
+        Motivation: Allows format more similiar to single processor codes.
+
+     2) Coordinates will be generalized upon exit from readConfigIo.
+        Motivation: Allows a CelList to be built immediately after reading.
+                    Leaves coordinates in form used internally
+                    Delay transformation to Cartesian until needed.
+
+     3) Coordinates will be Cartesian throughout writeConfigIo.
+        Motivation: Coordinates will be Cartesian throughout most time steps.
+                    Cartesian coordinates are needed in output file.
+
+     Changes:
+
+     1) In readConfig, transform positions to generalized coordinates 
+     immediately after reading.
+
+     2) In writeConfig, call transformToGeneralized on each atom before 
+     adding each atom position to Collector (?) or transform back and
+     forth for entire storage.
+
+
+DdMd::Exchanger:
+
+     Change to generalized coordinates throughout
+
+     1) Within loop over i:
+        Define local variable  length = boundary.length()[i];
+        Define local variable  cut = cutoff_/length
+        Define inner_ and outer_ as bound +- cut
+    
+     2) Wherever particle positions are shifted, use generalized shift:
+
+        double rshift = 1.0*shift
+        position = position + rshift 
+
+     3) Update ExchangerTest and retest.
+
+DdMd::Collector
+
+     Need to look at this more carefully.
+
+
+CellList:
+
+     Use generalized coordinates internally throughout.
+
+     1) Use a Vector of cutoff lengths in allocate method. Each should
+     be defined externally as cutoff_/boundary.length()[i].
+
+     No association with Boundary should be needed.
+
+PairPotential:
+
+     1) Separate buildCellList and buildPairList methods.
+     Use generalized coordinates throughout buildCellList and 
+     Cartesian throughout buildPairList.
