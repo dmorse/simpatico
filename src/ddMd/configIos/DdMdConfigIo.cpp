@@ -119,7 +119,8 @@ namespace DdMd
          #endif
 
          // Read atoms
-         Atom* atomPtr;
+         Vector r;
+         Atom*  atomPtr;
          int id;
          int typeId;
          int rank;
@@ -134,7 +135,12 @@ namespace DdMd
             }
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
-            file >> atomPtr->position();
+            file >> r;
+            if (UTIL_ORTHOGONAL) {
+               atomPtr->position() = r;
+            } else {
+               boundary().transformCartToGen(r, atomPtr->position());
+            }
             file >> atomPtr->velocity();
 
             // Add atom to list for sending.

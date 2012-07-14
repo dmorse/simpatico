@@ -4,6 +4,8 @@ Util::Boundary
      1) Add method shiftGen(Vector&) and shiftGen(Vector& , intVector&)
        to shift generalized coordinate vectors.
 
+     Status: Done
+
 ------------------------------------------------------------------------
 DdMd::Domain:
 
@@ -26,6 +28,7 @@ DdMd::Domain:
      5) IF we move to consistent use of generalized coordinates in Domain,
         then remove boundaryPtr_ (Used only in above functions)
 
+     Status: Changed functions, have not changed tests or retested.
 ------------------------------------------------------------------------
 DdMd::AtomStorage
 
@@ -47,11 +50,7 @@ DdMd::AtomStorage
         isCartesian_ = true,
         #endif
 
-        Can be changed only by transform and clear methods.
-
-     3) Add method clear(). Should clear all atoms and ghosts, and set
-     isCartesian_ to its initial value. 
-
+     Status: Done, but not tested
 ------------------------------------------------------------------------
 DdMd::Distributor
 
@@ -82,10 +81,10 @@ DdMd::ConfigIo
 
      Changes, in readConfig:
 
-     1) Clear AtomStorage before reading
      2) If (!UTIL_ORTHOGONAL) transform each position to generalized 
         coordinates immediately after reading.
 
+     Status: Done, haven't tested compilation or function.
 ------------------------------------------------------------------------
 DdMd::Exchanger:
 

@@ -76,7 +76,7 @@ namespace Util
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
 
-      ///\name Periodic Boundary Conditions
+      ///\name Periodic Boundary Conditions - Primitive Cell
       //@{
 
       /**
@@ -105,6 +105,38 @@ namespace Util
       * \param shift integer shifts required to obtain "true" coordinates.
       */
       void shift(Vector &r, IntVector& shift) const;
+
+      /**
+      * Shift generalized Vector r to its image within the primary unit cell.
+      *
+      * One output, each coordinate r[i] is shifted by an integer, so as to
+      * lie within the range 0 < r[i] < 1.0
+      *
+      * Precondition: The algorithm assumes that on input, for each i=0,..,2,
+      * -1.0 < r[i] < 2.0, and throws an Exception otherwise.
+      *
+      * \param r Vector of generalized coordinates
+      */
+      void shiftGen(Vector &r) const;
+
+      /**
+      * Shift generalized Vector r to its image within the primary unit cell.
+      *
+      * This method maps a vector of generalized coordinates to lie in the 
+      * primary cell, and also increments the atomic shift IntVector:
+      *
+      * If r[i] -> r[i] - t, then shift[i] -> shift[i] + t.
+      *
+      * \sa Atom:shift()
+      *
+      * \param r     Vector of generalized coordinates  (in/out)
+      * \param shift integer shifts, modified on output (in/out)
+      */
+      void shiftGen(Vector &r, IntVector& shift) const;
+
+      //@}
+      ///\name Periodic Boundary Conditions - Minimum Image Separations
+      //@{
 
       /**
       * Return square distance between positions r1 and r2, using the nearest
@@ -427,6 +459,43 @@ namespace Util
           --(shift[2]);
           assert(r[2] + c3_*r[1] >= minima_[2]);
        }
+   }
+
+   /* 
+   * Shift generalized Vector r to primitive unit cell.
+   */
+   inline void MonoclinicBoundary::shiftGen(Vector& r) const
+   {
+      for (int i = 0; i < Dimension; ++i) {
+         if( r[i] >= 1.0 ) {
+            r[i] = r[i] - 1.0;
+            assert(r[i] < 1.0);
+         } else
+         if ( r[i] <  0.0 ) {
+            r[i] = r[i] + 1.0;
+            assert(r[i] >= 0.0);
+         }
+      }
+   }
+
+   /* 
+   * Shift generalized Vector r to primitive cell, 0 < r[axis] < 1.0.
+   */
+   inline 
+   void MonoclinicBoundary::shiftGen(Vector& r, IntVector& shift) const
+   {
+      for (int i = 0; i < Dimension; ++i) {
+         if (r[i] >= 1.0) {
+            r[i] = r[i] - 1.0;
+            ++(shift[i]);
+            assert(r[i] < 1.0);
+         } else
+         if (r[i] <  0.0) {
+            r[i] = r[i] + 1.0;
+            --(shift[i]);
+            assert(r[i] >= 0.0);
+         }
+      }
    }
 
    /* 
