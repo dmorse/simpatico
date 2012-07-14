@@ -1,14 +1,25 @@
-DdMd::Domain
+------------------------------------------------------------------------
+Util::Boundary
 
-     1) Change domainBound to return generalized coordinates.
+    1) Add methods shiftGen(Vector&) and shiftGen(Vector& , intVector&)
+       to shift generalized coordinate vectors.
 
-     2) Change ownerRank(Vector& ) to use generalized coordinates
+------------------------------------------------------------------------
+DdMd::Domain:
 
-     3) Remove association with Boundary ? (Unnecessary?)
+     if (UTIL_ORTHOGONAL) {
+        1) Change domainBound to return generalized coordinates.
+        2) Change ownerRank(Vector& ) to use generalized coordinates
+        3) Change isInDomain(Vector& ) to use generalized coordinates.
+     }
+     Requires new definition of dL in each.
 
      4) Update unit tests and test
 
+     5) IF we go to consistent use of generalized coordinates in Domain,
+        then remove boundaryPtr_ (Used only in above functions)
 
+------------------------------------------------------------------------
 DdMd::AtomStorage
 
      1) Add methods
@@ -21,20 +32,26 @@ DdMd::AtomStorage
      bool coordinatesAreCartesian() const;
      bool coordinatesAreCartesion_;
 
-     Initialize to false. Can be changed to true only by transformGenToCart.
-     Assume that when added, coordinates are always generalized.
+     3) #ifdef UTIL_ORTHOGONAL initialize coordinatesAreCartesian_ = false
+        #else initialize to true
+     Can be changed only by transform and clear methods.
 
-     3) Method to clear storage should sets coordinatesAreCartesian_ false.
+     3) Method to clear storage should set coordinatesAreCartesian_ to its
+     initial value. 
 
+------------------------------------------------------------------------
 DdMd::Distributor
 
-     Use generalized coordinates.
+     #ifdef (UTIL_ORTHOGONAL) -> use generalized coordinates throughout.
      Change addAtom to use generalized coordinates
-    
-     1) Change shift to shift by unity (no need for Boundary)
-     2) Remove association with boundary (no longer needed)
+   
+     #ifdef (UTIL_ORTHOGONAL) { 
+        1) In addAtom, call shiftGen rather than Shift.
+        2) Call domainPtr_->ownerRank unchanged.
+     #endif
 
 
+------------------------------------------------------------------------
 DdMd::ConfigIo
 
      Policies:
@@ -51,48 +68,69 @@ DdMd::ConfigIo
         Motivation: Coordinates will be Cartesian throughout most time steps.
                     Cartesian coordinates are needed in output file.
 
-     Changes:
+     Changes, in readConfig:
 
-     1) In readConfig, transform positions to generalized coordinates 
-     immediately after reading.
+     1) clear AtomStorage
+     2) if (!UTIL_ORTHOGONAL) transform positions to 
+     generalized coordinates immediately after reading.
 
-     2) In writeConfig, call transformToGeneralized on each atom before 
-     adding each atom position to Collector (?) or transform back and
-     forth for entire storage.
-
-
+------------------------------------------------------------------------
 DdMd::Exchanger:
 
-     Change to generalized coordinates throughout
+     if (UTIL_ORTHOGONAL) use generalized coordinates throughout:
 
-     1) Within loop over i:
+     1) Within loop over i to define limiting coordinate values:
         Define local variable  length = boundary.length()[i];
         Define local variable  cut = cutoff_/length
         Define inner_ and outer_ as bound +- cut
     
-     2) Wherever particle positions are shifted, use generalized shift:
+     2) Wherever particle positions are shifted, if (!UTIL_ORTHOGONAL)
+        use generalized coordinate shift:
 
         double rshift = 1.0*shift
         position = position + rshift 
 
      3) Update ExchangerTest and retest.
 
+------------------------------------------------------------------------
 DdMd::Collector
 
-     Need to look at this more carefully.
+     Appears to be completely unchanged -> particles are sent to
+     master processor without using information about positions.
 
-
+------------------------------------------------------------------------
 CellList:
 
-     Use generalized coordinates internally throughout.
+     if (UTIL_ORTHOGONAL) use generalized coordinates throughout:
 
-     1) Use a Vector of cutoff lengths in allocate method. Each should
-     be defined externally as cutoff_/boundary.length()[i].
+     1) Define allocate and makeGrid method that takes a Vector of 
+     cutoff lengths. Each should be defined externally as a ratio
+     cutoff_/boundary.length()[i].
 
-     No association with Boundary should be needed.
+     2) If we decide on consistent use of generalized coordinates,
+     remove boundaryPtr_ (unnecessary).
 
+------------------------------------------------------------------------
 PairPotential:
 
      1) Separate buildCellList and buildPairList methods.
-     Use generalized coordinates throughout buildCellList and 
-     Cartesian throughout buildPairList.
+
+     2) If (UTIL_ORTHOGONAL) use generalized coordinates throughout 
+     buildCellList and Cartesian throughout buildPairList.
+
+------------------------------------------------------------------------
+Integrators:
+
+     1) Invoke methods to transform atomic coordinate systems.
+     2) Call buildCellList and buildPairList separately.
+
+     if (!UTIL_ORTHOGONAL) {
+        atomStoragePtr_->.transformCartToGen(boundary()); 
+     }
+     exchangerPtr_->exchange();
+     pairPotentialPtr_->buildCellList();
+     if (!UTIL_ORTHOGONAL) {
+        atomStoragePtr_->.transformGenToCart(boundary()); 
+     }
+     pairPotentialPtr_->buildPairList();
+     
