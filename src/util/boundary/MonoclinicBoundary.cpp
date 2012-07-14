@@ -203,7 +203,7 @@ namespace Util
       double tilt;
       recv<Vector>(comm, l, source, tag);
       recv<double>(comm, tilt, source, tag + 386);
-      data.set(l, tilt);
+      data.setMonoclinic(l, tilt);
    }
 
    template <>
@@ -220,7 +220,7 @@ namespace Util
       bcast<Vector>(comm, l, root);
       bcast<double>(comm, tilt, root);
       if (rank != root) {
-         data.set(l, tilt);
+         data.setMonoclinic(l, tilt);
       }
    }
 
