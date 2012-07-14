@@ -181,7 +181,7 @@ namespace McMd
       }
          
       // update simulation box 
-      system().boundary().setLengths(lengthsFinal); 
+      system().boundary().setOrthorhombic(lengthsFinal); 
 
       
       // update particles

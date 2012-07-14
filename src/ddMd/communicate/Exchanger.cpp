@@ -1161,9 +1161,9 @@ namespace DdMd
    * Update ghost atom forces.
    *
    * Call on time steps for which no reneighboring is required,
-   * if force communication is enabled.
+   * if reverse communication is enabled.
    */
-   void Exchanger::updateForces()
+   void Exchanger::reverseUpdate()
    {
       stamp(START);
       Vector lengths = boundaryPtr_->lengths();

@@ -135,7 +135,7 @@ namespace McMd
       lengths[0]=lx;
       lengths[1]=ly;
       lengths[2]=lz;
-      boundary().setLengths(lengths);
+      boundary().setOrthorhombic(lengths);
 
       // Read frame data
       int blockSize;

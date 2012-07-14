@@ -58,7 +58,7 @@ namespace Util
    /* 
    * Set box lengths and then call reset.
    */
-   void MonoclinicBoundaryMI::setLengths(const Vector &lengths, const double d) 
+   void MonoclinicBoundaryMI::setOrthorhombic(const Vector &lengths, const double d) 
    {  
       maxima_  = lengths; 
       tilt_ = d;
@@ -170,7 +170,7 @@ namespace Util
    {
       Vector lengths;
       recv<Vector>(comm, lengths, source, tag);
-      data.setLengths(lengths);
+      data.setOrthorhombic(lengths);
    }
 
    template <>
@@ -183,7 +183,7 @@ namespace Util
          lengths = data.lengths();
       bcast<Vector>(comm, lengths, root);
       if (rank != root) 
-         data.setLengths(lengths);
+         data.setOrthorhombic(lengths);
    }
 
    /*

@@ -28,20 +28,24 @@ namespace Util
       lattice_(Orthorhombic)
    {
       for (int i = 0; i < Dimension; ++i) {
-
+         invLengths_[i] = 1.0/lengths_[i];
          bravaisBasisVectors_.append(Vector::Zero);
          bravaisBasisVectors_[i][i] = lengths_[i];
-
          reciprocalBasisVectors_.append(Vector::Zero);
          reciprocalBasisVectors_[i][i] = 2.0*Constants::Pi/lengths_[i];
-
+      }
+      minLength_ = lengths_[0];
+      for (int i = 1; i < Dimension; ++i) {
+         if (lengths_[i] < minLength_) {
+            minLength_ = lengths_[i];
+         }
       }
    }
 
    /* 
    * Set box lengths and then call reset.
    */
-   void OrthorhombicBoundary::setLengths(const Vector &lengths) 
+   void OrthorhombicBoundary::setOrthorhombic(const Vector &lengths) 
    {  
       maxima_  = lengths; 
       lattice_ = Orthorhombic;
@@ -51,7 +55,7 @@ namespace Util
    /* 
    * Set box lengths and then call reset.
    */
-   void OrthorhombicBoundary::setTetragonalLengths(double ab, double c) 
+   void OrthorhombicBoundary::setTetragonal(double ab, double c) 
    {  
       maxima_[0] = ab;
       maxima_[1] = ab;
@@ -63,7 +67,7 @@ namespace Util
    /* 
    * Set box lengths and call reset.
    */
-   void OrthorhombicBoundary::setCubicLengths(double a) 
+   void OrthorhombicBoundary::setCubic(double a) 
    {  
       maxima_[0] = a;
       maxima_[1] = a;
@@ -79,9 +83,18 @@ namespace Util
    {
       resetRegion();
       for (int i = 0; i < Dimension; ++i) {
+         invLengths_[i] = 1.0/lengths_[i];
          bravaisBasisVectors_[i][i] = lengths_[i];
          reciprocalBasisVectors_[i][i] = 2.0*Constants::Pi/lengths_[i];
       }
+
+      minLength_ = lengths_[0];
+      for (int i = 1; i < Dimension; ++i) {
+         if (lengths_[i] < minLength_) {
+            minLength_ = lengths_[i];
+         }
+      }
+
    }
 
    /* 
@@ -102,10 +115,30 @@ namespace Util
    */
    bool OrthorhombicBoundary::isValid() 
    {  
+      double dot;
+      double twoPi = 2.0*Constants::Pi;
+      int i, j;
+
       OrthoRegion::isValid(); 
-      for (int i = 0; i < Dimension; ++i) {
-         if (!feq(minima_[i], 0.0))
+      for (i = 0; i < Dimension; ++i) {
+         if (!feq(minima_[i], 0.0)) {
             UTIL_THROW("minima_[i] != 0");
+         }
+         if (!feq(lengths_[i]*invLengths_[i], 1.0)) {
+            UTIL_THROW("invLengths_[i]*lengths_[i] != 1.0");
+         }
+         for (j = 0; j < Dimension; ++j) {
+            dot = bravaisBasisVectors_[i].dot(reciprocalBasisVectors_[j]);
+            if (i == j) {
+               if (!feq(dot, twoPi)) {
+                  UTIL_THROW("a[i].b[i] != twoPi");
+               } 
+            } else {
+               if (!feq(dot, 0.0)) {
+                  UTIL_THROW("a[i].b[j] != 0 for i != j");
+               }
+            }
+         }
       }
       return true;
    }
@@ -176,7 +209,7 @@ namespace Util
    {
       Vector lengths;
       recv<Vector>(comm, lengths, source, tag);
-      data.setLengths(lengths);
+      data.setOrthorhombic(lengths);
    }
 
    template <>
@@ -189,7 +222,7 @@ namespace Util
          lengths = data.lengths();
       bcast<Vector>(comm, lengths, root);
       if (rank != root) 
-         data.setLengths(lengths);
+         data.setOrthorhombic(lengths);
    }
 
    /*

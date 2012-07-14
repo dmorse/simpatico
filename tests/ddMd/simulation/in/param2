@@ -7,26 +7,26 @@ Simulation{
      inputPrefix       in/
      outputPrefix      out/
   }
-  nAtomType           1
-  nBondType           1
-  atomTypes           A   1.0
+  nAtomType            1
+  nBondType            1
+  atomTypes            A   1.0
   AtomStorage{
     atomCapacity       8000
-    ghostCapacity     20000
-    totalAtomCapacity 20000
+    ghostCapacity      20000
+    totalAtomCapacity  20000
   }
   BondStorage{
-    capacity        8000
-    totalCapacity  20000
+    capacity           8000
+    totalCapacity      20000
   }
   Buffer{
-    atomCapacity      4000
-    ghostCapacity     4000
+    atomCapacity       4000
+    ghostCapacity      4000
   }
-  pairStyle         LJPair
-  bondStyle         HarmonicBond
-  maskedPairPolicy  MaskBonded
-  forceCommFlag     1
+  pairStyle            LJPair
+  bondStyle            HarmonicBond
+  maskedPairPolicy     MaskBonded
+  reverseUpdateFlag    1
   PairPotential{
     epsilon         1.0
     sigma           1.0

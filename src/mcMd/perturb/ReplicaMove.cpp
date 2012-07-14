@@ -253,7 +253,7 @@ namespace McMd
       request[0].Wait();
       request[1].Wait();
              
-      system().boundary().setLengths(ptBoundary);
+      system().boundary().setOrthorhombic(ptBoundary);
 
       // Pack atomic positions and types.
       iA = 0;

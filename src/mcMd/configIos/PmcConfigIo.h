@@ -54,16 +54,7 @@ namespace McMd
       */
       void write(std::ostream &out);
 
-   private:
-
-      template <class BoundaryType>
-      void setLengths(BoundaryType& boundary, const Vector& lengths);
- 
    }; 
-
-   template <>
-   void PmcConfigIo::setLengths<Util::OrthorhombicBoundary>(Util::OrthorhombicBoundary& boundary, 
-                                                            const Vector& lengths);
  
 } 
 #endif

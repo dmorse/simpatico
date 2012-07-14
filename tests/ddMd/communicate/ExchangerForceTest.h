@@ -66,7 +66,7 @@ private:
    ConfigIo configIo;
    Random random;
    int  atomCount;
-   bool forceCommFlag;
+   bool reverseUpdateFlag;
 
    DArray<Vector> forces;
 
@@ -104,7 +104,7 @@ public:
 
       pairPotential.setNAtomType(1);
       pairPotential.associate(domain, boundary, atomStorage);
-      pairPotential.setForceCommFlag(forceCommFlag);
+      pairPotential.setForceCommFlag(reverseUpdateFlag);
 
       #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.setNBondType(1);
@@ -253,13 +253,13 @@ public:
 
    void testGhostUpdateF() {
       printMethod(TEST_FUNC);
-      forceCommFlag = false;
+      reverseUpdateFlag = false;
       testGhostUpdate();
    }
 
    void testGhostUpdateR() {
       printMethod(TEST_FUNC);
-      forceCommFlag = true;
+      reverseUpdateFlag = true;
       testGhostUpdate();
    }
 
@@ -326,13 +326,13 @@ public:
 
    void testGhostUpdateCycleF() {
       printMethod(TEST_FUNC);
-      forceCommFlag = false;
+      reverseUpdateFlag = false;
       testGhostUpdateCycle();
    }
 
    void testGhostUpdateCycleR() {
       printMethod(TEST_FUNC);
-      forceCommFlag = true;
+      reverseUpdateFlag = true;
       testGhostUpdateCycle();
    }
 
@@ -414,13 +414,13 @@ public:
 
    void testInitialForcesF() {
       printMethod(TEST_FUNC);
-      forceCommFlag = false;
+      reverseUpdateFlag = false;
       testInitialForces();
    }
 
    void testInitialForcesR() {
       printMethod(TEST_FUNC);
-      forceCommFlag = true;
+      reverseUpdateFlag = true;
       testInitialForces();
    }
 
@@ -487,7 +487,7 @@ public:
                   domain.communicator(), true));
       #endif
 
-      TEST_ASSERT(pairPotential.forceCommFlag() == forceCommFlag);
+      TEST_ASSERT(pairPotential.reverseUpdateFlag() == reverseUpdateFlag);
 
       pairPotential.findNeighbors();
 
@@ -498,8 +498,8 @@ public:
       #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.addForces();
       #endif
-      if (forceCommFlag) {
-         object().updateForces();
+      if (reverseUpdateFlag) {
+         object().reverseUpdate();
       }
       saveForces();
       double energyNSq;
@@ -520,8 +520,8 @@ public:
       #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.addForces();
       #endif
-      if (forceCommFlag) {
-         object().updateForces();
+      if (reverseUpdateFlag) {
+         object().reverseUpdate();
       }
       double energyList;
       pairPotential.computeEnergy(domain.communicator());
@@ -572,13 +572,13 @@ public:
 
    void testForceCycleF() {
       printMethod(TEST_FUNC);
-      forceCommFlag = true;
+      reverseUpdateFlag = true;
       testForceCycle();
    }
 
    void testForceCycleR() {
       printMethod(TEST_FUNC);
-      forceCommFlag = false;
+      reverseUpdateFlag = false;
       testForceCycle();
    }
 
@@ -590,7 +590,7 @@ public:
       int  nGhost = 0;    // Number of ghosts on this processor.
       bool needExchange;
 
-      TEST_ASSERT(pairPotential.forceCommFlag() == forceCommFlag);
+      TEST_ASSERT(pairPotential.reverseUpdateFlag() == reverseUpdateFlag);
 
       // double range = 0.1;
       // displaceAtoms(range);
@@ -628,8 +628,8 @@ public:
       #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.addForces();
       #endif
-      if (forceCommFlag) {
-         object().updateForces();
+      if (reverseUpdateFlag) {
+         object().reverseUpdate();
       }
 
       double energyNSq, energyList, energyF;
@@ -703,8 +703,8 @@ public:
          #ifdef TEST_EXCHANGER_FORCE_BOND
          bondPotential.addForces();
          #endif
-         if (forceCommFlag) {
-            object().updateForces();
+         if (reverseUpdateFlag) {
+            object().reverseUpdate();
          }
          saveForces();
          pairPotential.computeEnergy(domain.communicator());
@@ -723,8 +723,8 @@ public:
          #ifdef TEST_EXCHANGER_FORCE_BOND
          bondPotential.addForces();
          #endif
-         if (forceCommFlag) {
-            object().updateForces();
+         if (reverseUpdateFlag) {
+            object().reverseUpdate();
          }
          pairPotential.computeEnergy(domain.communicator());
          if (domain.communicator().Get_rank() == 0) {
@@ -758,7 +758,7 @@ public:
             TEST_ASSERT(eq(energyNSq, energyList));
          }
 
-         if (forceCommFlag && needExchange) {
+         if (reverseUpdateFlag && needExchange) {
 
             // Calculate forces via pair list, without reverse communication
             zeroForces();

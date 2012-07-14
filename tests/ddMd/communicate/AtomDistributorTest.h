@@ -84,7 +84,7 @@ public:
       closeFile();
 
       Vector boundarylength(6.0, 3.0, 9.0);
-      boundary.setLengths(boundarylength);
+      boundary.setOrthorhombic(boundarylength);
 
       int atomCount = 0; // Number to be distributed by master
       int myRank    = domain.gridRank();

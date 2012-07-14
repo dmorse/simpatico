@@ -198,7 +198,7 @@ public:
       //}
 
       std::ifstream in;
-      openInputFile("in/binary", in);
+      openInputFile("binary", in);
       BinaryFileIArchive iar;
       iar.setStream(in);
   

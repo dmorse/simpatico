@@ -47,7 +47,7 @@ namespace Util
       *
       * \param lengths  Vector of unit cell lengths
       */
-      void setLengths(const Vector &lengths, const double d);
+      void setOrthorhombic(const Vector &lengths, const double d);
 
       /**
       * Serialize to/from an archive.

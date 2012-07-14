@@ -76,9 +76,9 @@ namespace DdMd
       * Use a CellList to build a new PairList.
       *
       * \param cellList      a CellList object that was just built.
-      * \param forceCommFlag is reverse force communication enabled?
+      * \param reverseUpdateFlag is reverse communication enabled?
       */
-      void build(CellList& cellList, bool forceCommFlag = false);
+      void build(CellList& cellList, bool reverseUpdateFlag = false);
 
       //@}
       /// \name Accessors (miscellaneous)

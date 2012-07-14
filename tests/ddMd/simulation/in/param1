@@ -26,7 +26,7 @@ Simulation{
   pairStyle           LJPair
   bondStyle           HarmonicBond
   maskedPairPolicy    MaskBonded
-  forceCommFlag       0
+  reverseUpdateFlag   0
   PairPotential{
     epsilon         1.0
     sigma           1.0

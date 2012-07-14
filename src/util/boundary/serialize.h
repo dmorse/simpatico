@@ -37,8 +37,8 @@ namespace Util
    {
       OrthoRegion::serialize(ar, version);
       serializeEnum(ar, lattice_, version);
-      reset();
       if (Archive::is_loading()) {
+         reset();
          isValid();
       }
    }
@@ -50,16 +50,10 @@ namespace Util
    void 
    MonoclinicBoundary::serialize(Archive& ar, const unsigned int version)
    {
-      ar & minima_;
-      ar & maxima_;
-      ar & lengths_;
+      ar & l_;
       ar & tilt_;
-      ar & boxLengths_;
-      ar & halfBoxLengths_;
-      ar & volume_;
-      serializeEnum(ar, lattice_, version);
-      reset();
       if (Archive::is_loading()) {
+         reset();
          isValid();
       }
    }

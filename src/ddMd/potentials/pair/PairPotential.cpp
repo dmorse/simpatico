@@ -37,7 +37,7 @@ namespace DdMd
       timer_(PairPotential::NTime),
       methodId_(0),
       nPair_(0),
-      forceCommFlag_(false)
+      reverseUpdateFlag_(false)
    {} 
 
    /*
@@ -53,7 +53,7 @@ namespace DdMd
       timer_(PairPotential::NTime),
       methodId_(0),
       nPair_(0),
-      forceCommFlag_(false)
+      reverseUpdateFlag_(false)
    {}
 
    /*
@@ -74,10 +74,10 @@ namespace DdMd
    {}
 
    /*
-   * Set flag to specify if reverse force communication is enabled.
+   * Set flag to specify if reverse communication is enabled.
    */
-   void PairPotential::setForceCommFlag(bool forceCommFlag)
-   {  forceCommFlag_ = forceCommFlag; }
+   void PairPotential::setForceCommFlag(bool reverseUpdateFlag)
+   {  reverseUpdateFlag_ = reverseUpdateFlag; }
 
    void PairPotential::readPairListParam(std::istream& in)
    {
@@ -86,7 +86,7 @@ namespace DdMd
       read<Boundary>(in, "maxBoundary", maxBoundary_);
 
       // Set upper and lower bound of the processor domain.
-      boundary().setLengths(maxBoundary_.lengths());
+      boundary().setOrthorhombic(maxBoundary_.lengths());
       Vector lower;
       Vector upper;
       for (int i = 0; i < Dimension; ++i) {
@@ -146,7 +146,7 @@ namespace DdMd
       assert(cellList_.nAtom() + cellList_.nReject() == storage().nAtom() + storage().nGhost());
       stamp(PairPotential::BUILD_CELL_LIST);
 
-      pairList_.build(cellList_, forceCommFlag());
+      pairList_.build(cellList_, reverseUpdateFlag());
       stamp(PairPotential::BUILD_PAIR_LIST);
    }
 
@@ -213,7 +213,7 @@ namespace DdMd
       Atom*  atom0Ptr;
       Atom*  atom1Ptr;
       int count = 0; // atom counter
-      if (forceCommFlag()) {
+      if (reverseUpdateFlag()) {
          for (pairList_.begin(iter); iter.notEnd(); ++iter) {
             iter.getPair(atom0Ptr, atom1Ptr);
             assert(!atom0Ptr->isGhost());
@@ -259,7 +259,7 @@ namespace DdMd
       // Iterate over linked list of local cells.
       cellPtr = cellList_.begin();
       while (cellPtr) {
-         cellPtr->getNeighbors(neighbors, forceCommFlag());
+         cellPtr->getNeighbors(neighbors, reverseUpdateFlag());
          na = cellPtr->nAtom();
          nn = neighbors.size();
          for (i = 0; i < na; ++i) {
@@ -278,7 +278,7 @@ namespace DdMd
             }
 
             // Loop over atoms in neighboring cells.
-            if (forceCommFlag()) {
+            if (reverseUpdateFlag()) {
                for (j = na; j < nn; ++j) {
                   atomPtr1 = neighbors[j];
                   f.subtract(atomPtr0->position(), atomPtr1->position());
@@ -342,7 +342,7 @@ namespace DdMd
 
          // Iterate over ghost atoms
          storage().begin(ghostIter);
-         if (forceCommFlag()) {
+         if (reverseUpdateFlag()) {
             for ( ; ghostIter.notEnd(); ++ghostIter) {
                id1 = ghostIter->id();
                if (id0 < id1) {

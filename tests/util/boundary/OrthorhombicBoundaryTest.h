@@ -40,7 +40,7 @@ public:
       L[0] = 2.0;
       L[1] = 3.0;
       L[2] = 4.0;
-      boundary.setLengths(L);
+      boundary.setOrthorhombic(L);
       Lp = boundary.lengths();
 
 
@@ -207,7 +207,7 @@ public:
       L[0] = 2.0;
       L[1] = 3.0;
       L[2] = 4.0;
-      boundary.setLengths(L);
+      boundary.setOrthorhombic(L);
 
       R[0] =  2.6;
       R[1] = -0.4;
@@ -216,6 +216,15 @@ public:
       TEST_ASSERT(eq(R[0], 0.6));
       TEST_ASSERT(eq(R[1], 2.6));
       TEST_ASSERT(eq(R[2], 2.1));
+
+      Vector Rg, Rn;
+      boundary.transformCartToGen(R, Rg);
+      boundary.transformGenToCart(Rg, Rn);
+      for (int i = 0; i < Dimension; ++i) {
+         TEST_ASSERT(Rg[i] >= 0.0);
+         TEST_ASSERT(Rg[i] <  1.0);
+         TEST_ASSERT(eq(R[i], Rn[i]));
+      }
 
    };
 
@@ -232,7 +241,7 @@ public:
       L[0] = 2.0;
       L[1] = 3.0;
       L[2] = 4.0;
-      boundary.setLengths(L);
+      boundary.setOrthorhombic(L);
 
       R1[0] =  1.6;
       R1[1] =  0.4;
@@ -244,7 +253,6 @@ public:
       TEST_ASSERT(eq(dRSq, 1.97));
 
    };
-
 
    void testDistanceSq2()
    {
@@ -261,7 +269,7 @@ public:
       L[0] = 2.0;
       L[1] = 3.0;
       L[2] = 4.0;
-      boundary.setLengths(L);
+      boundary.setOrthorhombic(L);
 
       R1[0] =  1.6;
       R1[1] =  0.4;
@@ -272,7 +280,6 @@ public:
       dRSq1 = boundary.distanceSq(R1, R2);
       dRSq2 = boundary.distanceSq(R1, R2, dR);
       dRSq3 = boundary.distanceSq(R1, R2, shift);
- 
 
       TEST_ASSERT(eq(dR[0], 0.4));
       TEST_ASSERT(eq(dR[1], 1.0));
@@ -305,7 +312,7 @@ public:
 
       Vector Lp;
 
-      boundary.setCubicLengths(2.0);
+      boundary.setCubic(2.0);
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
@@ -360,7 +367,7 @@ public:
       Vector R;
 
       // Setup Boundary
-      boundary.setCubicLengths(2.0);
+      boundary.setCubic(2.0);
 
       R[0] =  1.6;
       R[1] = -0.6;
@@ -381,7 +388,7 @@ public:
       double dRSq, result;
 
       // Setup Boundary
-      boundary.setCubicLengths(2.0);
+      boundary.setCubic(2.0);
 
       R1[0] =  1.6;
       R1[1] =  0.4;
@@ -407,7 +414,7 @@ public:
       printMethod(TEST_FUNC);
 
       // Setup Boundary
-      boundary.setCubicLengths(2.0);
+      boundary.setCubic(2.0);
 
       R1[0] =  1.6;
       R1[1] =  0.4;
@@ -445,7 +452,7 @@ public:
 
       Vector Lp;
 
-      boundary.setTetragonalLengths(2.0, 3.0);
+      boundary.setTetragonal(2.0, 3.0);
 
       // Assertions
       TEST_ASSERT(boundary.isValid());
@@ -527,7 +534,7 @@ public:
       Vector R;
 
       // Setup Boundary
-      boundary.setTetragonalLengths(2.0, 3.0);
+      boundary.setTetragonal(2.0, 3.0);
 
       R[0] =  1.6;
       R[1] = -0.6;
@@ -552,7 +559,7 @@ public:
       L[0] = 2.0;
       L[1] = 2.0;
       L[2] = 3.0;
-      boundary.setTetragonalLengths(2.0, 3.0);
+      boundary.setTetragonal(2.0, 3.0);
 
       R1[0] =  1.6;
       R1[1] =  0.4;
@@ -582,7 +589,7 @@ public:
       L[0] = 2.0;
       L[1] = 2.0;
       L[2] = 3.0;
-      boundary.setTetragonalLengths(2.0, 3.0);
+      boundary.setTetragonal(2.0, 3.0);
 
       R1[0] =  1.6;
       R1[1] =  0.4;

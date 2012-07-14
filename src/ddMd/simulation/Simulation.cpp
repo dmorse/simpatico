@@ -150,7 +150,7 @@ namespace DdMd
       hasExternal_(false),
       #endif
       maskedPairPolicy_(MaskBonded),
-      forceCommFlag_(false)
+      reverseUpdateFlag_(false)
    {
       Util::initStatic();
 
@@ -345,7 +345,7 @@ namespace DdMd
       pairPotentialPtr_ = pairFactory().factory(pairStyle());
       pairPotentialPtr_->setNAtomType(nAtomType_);
       readParamComposite(in, *pairPotentialPtr_);
-      pairPotentialPtr_->setForceCommFlag(forceCommFlag_);
+      pairPotentialPtr_->setForceCommFlag(reverseUpdateFlag_);
       #endif
 
       // Bond Potential
@@ -445,8 +445,8 @@ namespace DdMd
       // between covalently bonded pairs.
       read<MaskPolicy>(in, "maskedPairPolicy", maskedPairPolicy_);
 
-      // Reverse force communication (true) or not (false)?
-      read<bool>(in, "forceCommFlag", forceCommFlag_);
+      // Reverse communication (true) or not (false)?
+      read<bool>(in, "reverseUpdateFlag", reverseUpdateFlag_);
    }
 
    /*
@@ -562,7 +562,7 @@ namespace DdMd
 
    /*
    * Set forces on all local atoms to zero.
-   * If forceCommFlag(), also zero ghost atom forces.
+   * If reverseUpdateFlag(), also zero ghost atom forces.
    */
    void Simulation::zeroForces()
    {
@@ -574,7 +574,7 @@ namespace DdMd
       }
 
       // If using reverse communication, zero ghost atoms
-      if (forceCommFlag_) {
+      if (reverseUpdateFlag_) {
          GhostIterator ghostIter;
          atomStorage_.begin(ghostIter); 
          for( ; ghostIter.notEnd(); ++ghostIter){
@@ -608,8 +608,8 @@ namespace DdMd
       #endif
 
       // Reverse communication (if any)
-      if (forceCommFlag_) {
-         exchanger_.updateForces();
+      if (reverseUpdateFlag_) {
+         exchanger_.reverseUpdate();
       }
 
    }
@@ -626,6 +626,7 @@ namespace DdMd
          Log::file() << std::endl;
       }
 
+      integratorPtr_->setup();
       integratorPtr_->run(nStep);
       integratorPtr_->outputStatistics(Log::file());
    }
@@ -1009,13 +1010,13 @@ namespace DdMd
    }
 
    /*
-   * Set flag to specify if reverse force communication is enabled.
+   * Set flag to specify if reverse communication is enabled.
    */
-   void Simulation::setForceCommFlag(bool forceCommFlag)
+   void Simulation::setForceCommFlag(bool reverseUpdateFlag)
    {  
-      forceCommFlag_ = forceCommFlag; 
+      reverseUpdateFlag_ = reverseUpdateFlag; 
       if (pairPotentialPtr_) {
-         pairPotentialPtr_->setForceCommFlag(forceCommFlag);
+         pairPotentialPtr_->setForceCommFlag(reverseUpdateFlag);
       }
    }
 

@@ -38,7 +38,7 @@ public:
 
       // Set up PairList
       Vector Lin(2.0, 3.0, 4.0);
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
 
       std::ifstream in;
       openInputFile("in/PairList", in);
@@ -70,7 +70,7 @@ public:
 
       // Initialize Boundary
       Vector Lin(2.0, 3.0, 4.0);
-      boundary.setLengths(Lin);  
+      boundary.setOrthorhombic(Lin);  
 
       // Initialize PairList
       std::ifstream in;

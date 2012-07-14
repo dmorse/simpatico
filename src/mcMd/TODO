@@ -1,3 +1,26 @@
+Non-Orthorhombic Boundaries
+---------------------------
+
+- Add tests for CellList specifically for Monoclinic Boundary.
+
+- Add addShift() method to Boundary classes, use in
+  MSD diagnostic classes.
+
+- Add bool isOrthorhombic() method to Boundary classes.
+  Use to test other classes that call Boundary::lengths().
+
+- Find other uses of Boundary::lengths in McMd namespace.
+  Add tests to cause crash before misuse, as needed.
+
+- Make an example in a Monoclinic cell and try running it
+  with mdSim and mcSim.
+
+Non-rigid Boundaries
+--------------------
+
+- Generalize snapShot and obsolete pair list methods to
+  deal correctly with MD in deforming boundaries.
+
 Angles and Dihedrals
 --------------------
 

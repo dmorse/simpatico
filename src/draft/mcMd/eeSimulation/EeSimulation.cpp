@@ -274,7 +274,7 @@ namespace McMd
                }
                Log::file() << std::endl;
                Boundary boundary;
-               boundary.setCubicLengths(boxL);
+               boundary.setCubic(boxL);
                for (int iSpecies = 0; iSpecies < nSpecies(); ++iSpecies) {
                   species(iSpecies).generateMolecules(
                      nMolecule[iSpecies], exclusionRadius, system(),

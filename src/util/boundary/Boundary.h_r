@@ -1,5 +1,5 @@
-#ifndef BOUNDARY_H
-#define BOUNDARY_H
+#ifndef UTIL_BOUNDARY_H
+#define UTIL_BOUNDARY_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
