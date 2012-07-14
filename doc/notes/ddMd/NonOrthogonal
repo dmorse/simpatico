@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------
 Util::Boundary
 
-    1) Add methods shiftGen(Vector&) and shiftGen(Vector& , intVector&)
+     1) Add method shiftGen(Vector&) and shiftGen(Vector& , intVector&)
        to shift generalized coordinate vectors.
 
 ------------------------------------------------------------------------
@@ -11,12 +11,19 @@ DdMd::Domain:
         1) Change domainBound to return generalized coordinates.
         2) Change ownerRank(Vector& ) to use generalized coordinates
         3) Change isInDomain(Vector& ) to use generalized coordinates.
+
+        In each method, change line defining dL to following:
+
+        if (UTIL_ORTHOGONAL) {
+           dL = boundaryPtr_->length(i) / double(gridDimensions_[i]);
+        } else {
+           dL = 1.0 / double(gridDimensions_[i]);
+        }
      }
-     Requires new definition of dL in each.
 
      4) Update unit tests and test
 
-     5) IF we go to consistent use of generalized coordinates in Domain,
+     5) IF we move to consistent use of generalized coordinates in Domain,
         then remove boundaryPtr_ (Used only in above functions)
 
 ------------------------------------------------------------------------
@@ -29,15 +36,21 @@ DdMd::AtomStorage
 
      2) Add bool member and accessor to mark state and method 
   
-     bool coordinatesAreCartesian() const;
-     bool coordinatesAreCartesion_;
+     bool isCartesian() const;
+     bool isCartesion_;
 
-     3) #ifdef UTIL_ORTHOGONAL initialize coordinatesAreCartesian_ = false
-        #else initialize to true
-     Can be changed only by transform and clear methods.
+     3) In initializer list of constructor:
 
-     3) Method to clear storage should set coordinatesAreCartesian_ to its
-     initial value. 
+        #ifdef UTIL_ORTHOGONAL 
+        isCartesian_ = false,
+        #else
+        isCartesian_ = true,
+        #endif
+
+        Can be changed only by transform and clear methods.
+
+     3) Add method clear(). Should clear all atoms and ghosts, and set
+     isCartesian_ to its initial value. 
 
 ------------------------------------------------------------------------
 DdMd::Distributor
@@ -47,19 +60,18 @@ DdMd::Distributor
    
      #ifdef (UTIL_ORTHOGONAL) { 
         1) In addAtom, call shiftGen rather than Shift.
-        2) Call domainPtr_->ownerRank unchanged.
+        2) Call of domainPtr_->ownerRank unchanged.
+     }
      #endif
-
-
 ------------------------------------------------------------------------
 DdMd::ConfigIo
 
-     Policies:
+     Policies / Decisions:
 
-     1) Coordinates in file are Cartesian
+     1) Coordinates in file will be Cartesian
         Motivation: Allows format more similiar to single processor codes.
 
-     2) Coordinates will be generalized upon exit from readConfigIo.
+     2) Atom coordinates will be generalized upon exit from readConfigIo.
         Motivation: Allows a CelList to be built immediately after reading.
                     Leaves coordinates in form used internally
                     Delay transformation to Cartesian until needed.
@@ -70,9 +82,9 @@ DdMd::ConfigIo
 
      Changes, in readConfig:
 
-     1) clear AtomStorage
-     2) if (!UTIL_ORTHOGONAL) transform positions to 
-     generalized coordinates immediately after reading.
+     1) Clear AtomStorage before reading
+     2) If (!UTIL_ORTHOGONAL) transform each position to generalized 
+        coordinates immediately after reading.
 
 ------------------------------------------------------------------------
 DdMd::Exchanger:
@@ -84,31 +96,51 @@ DdMd::Exchanger:
         Define local variable  cut = cutoff_/length
         Define inner_ and outer_ as bound +- cut
     
-     2) Wherever particle positions are shifted, if (!UTIL_ORTHOGONAL)
-        use generalized coordinate shift:
+     2) In exchangeAtoms, exchangeGhosts, update, wherever particle 
+        positions are shifted, if (!UTIL_ORTHOGONAL) use generalized 
+        coordinate shift. In each of these methods:
 
-        double rshift = 1.0*shift
-        position = position + rshift 
+        a) Outside loop over i and j, add variable declaration:
+
+        double rshift;
+
+        b) Within each loop over i, j, inside the j loop, define:
+
+        if (UTIL_ORTHOGONAL) {
+           rshift = shift*boundaryPtr_->lengths()[i];
+        } else {
+           rshift = 1.0;
+        }
+
+        c) Change shift execution for each atom:
+
+        if (shift) {
+           coordinate += rshift 
+        }
 
      3) Update ExchangerTest and retest.
+
+        Tests should also have if (UTIL_ORTHOGONAL) { ... } blocks so 
+        that they work correctly in either mode.
 
 ------------------------------------------------------------------------
 DdMd::Collector
 
-     Appears to be completely unchanged -> particles are sent to
-     master processor without using information about positions.
+     Algorithm to be completely unchanged: All particles are sent to
+     the master processor without using information about positions.
 
 ------------------------------------------------------------------------
 CellList:
 
      if (UTIL_ORTHOGONAL) use generalized coordinates throughout:
 
-     1) Define allocate and makeGrid method that takes a Vector of 
+     1) Define allocate and makeGrid methods that takes a Vector of 
      cutoff lengths. Each should be defined externally as a ratio
-     cutoff_/boundary.length()[i].
+     cutoff_/boundary.length()[i] for generalized coordinates or
+     cutoff_ for Cartesian coordinates.
 
-     2) If we decide on consistent use of generalized coordinates,
-     remove boundaryPtr_ (unnecessary).
+     2) If we later decide on consistent use of generalized coordinates, 
+     remove boundaryPtr_ (it will have become unnecessary).
 
 ------------------------------------------------------------------------
 PairPotential:
@@ -133,4 +165,3 @@ Integrators:
         atomStoragePtr_->.transformGenToCart(boundary()); 
      }
      pairPotentialPtr_->buildPairList();
-     
