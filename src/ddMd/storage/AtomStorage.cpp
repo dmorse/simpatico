@@ -38,7 +38,12 @@ namespace DdMd
       ghostCapacity_(0),
       totalAtomCapacity_(0),
       locked_(false),
-      isInitialized_(false)
+      isInitialized_(false),
+      #if UTIL_ORTHOGONAL
+      isCartesian_(true)
+      #else
+      isCartesian_(false)
+      #endif
    {}
  
    /*
@@ -387,6 +392,73 @@ namespace DdMd
    void AtomStorage::begin(ConstGhostIterator& iterator) const
    {  ghostSet_.begin(iterator); }
 
+   /**
+   * Transform all atomic coordinates from Cartesian to generalized.
+   */
+   void AtomStorage::transformCartToGen(const Boundary& boundary) 
+   {
+      if (!isCartesian_) {
+         UTIL_THROW("Coordinates not Cartesian on entry");
+      }
+      Vector r;
+      if (nAtom()) {
+         AtomIterator  iter;
+         for (begin(iter); iter.notEnd(); ++iter) {
+            r = iter->position();
+            boundary.transformCartToGen(r, iter->position());
+         }
+      }
+      if (nGhost()) {
+         GhostIterator  iter;
+         for (begin(iter); iter.notEnd(); ++iter) {
+            r = iter->position();
+            boundary.transformCartToGen(r, iter->position());
+         }
+      }
+      isCartesian_ = false;
+   }
+
+   /**
+   * Transform all atomic coordinates from generalized to Cartesian.
+   */
+   void AtomStorage::transformGenToCart(const Boundary& boundary) 
+   {
+      if (isCartesian_) {
+         UTIL_THROW("Coordinates already Cartesian on entry");
+      }
+      Vector r;
+      if (nAtom()) {
+         AtomIterator iter;
+         for (begin(iter); iter.notEnd(); ++iter) {
+            r = iter->position();
+            boundary.transformGenToCart(r, iter->position());
+         }
+      }
+      if (nGhost()) {
+         GhostIterator iter;
+         for (begin(iter); iter.notEnd(); ++iter) {
+            r = iter->position();
+            boundary.transformGenToCart(r, iter->position());
+         }
+      }
+      isCartesian_ = true;
+   }
+
+   #ifdef UTIL_MPI
+   /**
+   * Compute, store and return total number of atoms on all processors.
+   */
+   void AtomStorage::computeNAtomTotal(MPI::Intracomm& communicator)
+   {
+      int nAtomLocal = nAtom();
+      communicator.Reduce(&nAtomLocal, &nAtomTotal_, 1, 
+                          MPI::INT, MPI::SUM, 0);
+      if (communicator.Get_rank() !=0) {
+         nAtomTotal_ = -1;
+      }
+   }
+   #endif
+
    /*
    * Check validity of this AtomStorage.
    *
@@ -447,21 +519,6 @@ namespace DdMd
 
       return true;
    }
-
-   #ifdef UTIL_MPI
-   /**
-   * Compute, store and return total number of atoms on all processors.
-   */
-   void AtomStorage::computeNAtomTotal(MPI::Intracomm& communicator)
-   {
-      int nAtomLocal = nAtom();
-      communicator.Reduce(&nAtomLocal, &nAtomTotal_, 1, 
-                          MPI::INT, MPI::SUM, 0);
-      if (communicator.Get_rank() !=0) {
-         nAtomTotal_ = -1;
-      }
-   }
-   #endif
 
 }
 #endif

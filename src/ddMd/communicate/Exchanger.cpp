@@ -404,8 +404,8 @@ namespace DdMd
    {
       stamp(START);
       Vector lengths = boundaryPtr_->lengths();
-      double bound, inner;
-      double coordinate;
+      double bound, inner, slabWidth;
+      double coordinate, rshift;
       AtomIterator atomIter;
       Atom* atomPtr;
       Plan* planPtr;
@@ -416,17 +416,22 @@ namespace DdMd
 
       // Set domain and slab boundaries
       for (i = 0; i < Dimension; ++i) {
+         if (UTIL_ORTHOGONAL) {
+            slabWidth = pairCutoff_;
+         } else {
+            slabWidth = pairCutoff_/lengths[i];
+         }
          for (j = 0; j < 2; ++j) {
             // j = 0 sends to lower coordinate i, bound is minimum
             // j = 1 sends to higher coordinate i, bound is maximum
             bound = domainPtr_->domainBound(i, j);
             bound_(i, j) = bound;
             if (j == 0) { // Communicate with lower index
-               inner_(i,j) = bound + pairCutoff_;
-               outer_(i, j)= bound - pairCutoff_;
+               inner_(i,j) = bound + slabWidth;
+               outer_(i, j)= bound - slabWidth;
             } else { // j == 1, communicate with upper index
-               inner_(i, j) = bound - pairCutoff_;
-               outer_(i, j) = bound + pairCutoff_;
+               inner_(i, j) = bound - slabWidth;
+               outer_(i, j) = bound + slabWidth;
             }
             sendArray_(i, j).clear();
          }
@@ -576,8 +581,13 @@ namespace DdMd
             source = domainPtr_->sourceRank(i, j); // rank to receive from
             dest = domainPtr_->destRank(i, j);     // rank to send to
             bound = domainPtr_->domainBound(i, j); // bound for send
-            inner = inner_(i, jc);             // inner bound upon receipt 
-            shift = domainPtr_->shift(i, j);   // shift for periodic b.c.
+            inner = inner_(i, jc);                 // inner bound upon receipt 
+            shift = domainPtr_->shift(i, j);       // shift for periodic b.c.
+            if (UTIL_ORTHOGONAL) {
+               rshift = lengths[i]*shift;
+            } else {
+               rshift = 1.0*shift;
+            }
 
             #ifdef UTIL_MPI
             if (multiProcessorDirection_[i]) {
@@ -616,7 +626,8 @@ namespace DdMd
 
                      // Shift position if required by periodic b.c.
                      if (shift) {
-                        atomIter->position()[i] += shift * lengths[i];
+                        //atomIter->position()[i] += shift * lengths[i];
+                        atomPtr->position()[i] += rshift;
                      }
                      assert(atomIter->position()[i] 
                             > domainPtr_->domainBound(i, 0));
@@ -697,7 +708,8 @@ namespace DdMd
                   atomStoragePtr_->addNewAtom();
 
                   if (shift) {
-                     atomPtr->position()[i] += shift * lengths[i];
+                     //atomPtr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += rshift;
                   }
                   assert(atomPtr->position()[i] 
                          > domainPtr_->domainBound(i, 0));
@@ -848,7 +860,7 @@ namespace DdMd
       }
 
       Vector  lengths = boundaryPtr_->lengths();
-      double  bound, inner;
+      double  bound, inner, rshift;
       Atom* atomPtr;
       Atom* sendPtr;
       int i, j, jc, ip, jp, k, source, dest, shift, size;
@@ -927,6 +939,11 @@ namespace DdMd
        
             // Shift on receiving node for periodic b.c.s
             shift = domainPtr_->shift(i, j);
+            if (UTIL_ORTHOGONAL) {
+               rshift = lengths[i]*shift;
+            } else {
+               rshift = 1.0*shift;
+            }
 
             #ifdef UTIL_MPI
             if (multiProcessorDirection_[i]) {
@@ -959,7 +976,8 @@ namespace DdMd
                   atomPtr->plan().setFlags(sendPtr->plan().flags());
                   atomPtr->position() = sendPtr->position();
                   if (shift) {
-                     atomPtr->position()[i] += shift * lengths[i];
+                     //atomPtr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += rshift;
                   }
                   atomStoragePtr_->addNewGhost();
 
@@ -1010,7 +1028,8 @@ namespace DdMd
                   atomPtr = atomStoragePtr_->newGhostPtr();
                   bufferPtr_->unpackGhost(*atomPtr);
                   if (shift) {
-                     atomPtr->position()[i] += shift * lengths[i];
+                     //atomPtr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += rshift;
                   }
                   recvArray_(i, j).append(*atomPtr);
                   atomStoragePtr_->addNewGhost();
@@ -1094,6 +1113,7 @@ namespace DdMd
    {
       stamp(START);
       Vector lengths = boundaryPtr_->lengths();
+      double rshift;
       Atom*  atomPtr;
       int    i, j, k, source, dest, size, shift;
 
@@ -1102,6 +1122,11 @@ namespace DdMd
 
             // Shift on receiving processor for periodic boundary conditions
             shift = domainPtr_->shift(i, j);
+            if (UTIL_ORTHOGONAL) {
+               rshift = lengths[i]*shift;
+            } else {
+               rshift = 1.0*shift;
+            }
 
             if (multiProcessorDirection_[i]) {
 
@@ -1128,7 +1153,8 @@ namespace DdMd
                   atomPtr = &recvArray_(i, j)[k];
                   bufferPtr_->unpackUpdate(*atomPtr);
                   if (shift) {
-                     atomPtr->position()[i] += shift * lengths[i];
+                     //atomPtr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += rshift;
                   }
                }
                stamp(UNPACK_UPDATE);
@@ -1144,7 +1170,8 @@ namespace DdMd
                   atomPtr = &recvArray_(i, j)[k];
                   atomPtr->position() = sendArray_(i, j)[k].position();
                   if (shift) {
-                     atomPtr->position()[i] += shift * lengths[i];
+                     //atomPtr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += rshift;
                   }
                }
                stamp(LOCAL_UPDATE);
@@ -1168,7 +1195,7 @@ namespace DdMd
       stamp(START);
       Vector lengths = boundaryPtr_->lengths();
       Atom*  atomPtr;
-      int    i, j, k, source, dest, size, shift;
+      int    i, j, k, source, dest, size;
 
       for (i = Dimension - 1; i >= 0; --i) {
          for (j = 1; j >= 0; --j) {

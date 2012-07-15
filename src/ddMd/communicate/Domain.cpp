@@ -168,7 +168,12 @@ namespace DdMd
       assert(j >= 0);
       assert(j <= 1);
 
-      double dL = boundaryPtr_->length(i) / double(gridDimensions_[i]);
+      double dL;
+      if (UTIL_ORTHOGONAL) {
+         dL = boundaryPtr_->length(i) / double(gridDimensions_[i]);
+      } else {
+         dL = 1.0 / double(gridDimensions_[i]);
+      }
       return (gridCoordinates_[i] + j)*dL;
    }
 
@@ -184,7 +189,11 @@ namespace DdMd
       double dL;
       IntVector r;
       for (int i = 0; i < Dimension; ++i) {
-         dL = boundaryPtr_->length(i) / double(gridDimensions_[i]);
+         if (UTIL_ORTHOGONAL) {
+            dL = boundaryPtr_->length(i) / double(gridDimensions_[i]);
+         } else {
+            dL = 1.0 / double(gridDimensions_[i]);
+         }
          r[i] = int(position[i] / dL);
       }
       return grid_.rank(r);
@@ -202,7 +211,11 @@ namespace DdMd
       double dL;
       bool isIn = true;
       for (int i = 0; i < Dimension; ++i) {  
-         dL = boundaryPtr_->length(i) / double(gridDimensions_[i]);
+         if (UTIL_ORTHOGONAL) {
+            dL = boundaryPtr_->length(i) / double(gridDimensions_[i]);
+         } else {
+            dL = 1.0 / double(gridDimensions_[i]);
+         }
          if (position[i] <   gridCoordinates_[i]*dL)      isIn = false;
          if (position[i] >= (gridCoordinates_[i] + 1)*dL) isIn = false;
       }

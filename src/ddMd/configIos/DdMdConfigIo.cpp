@@ -91,6 +91,22 @@ namespace DdMd
    */
    void DdMdConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
    {
+      // Precondition
+      if (atomStorage().nAtom()) {
+         UTIL_THROW("Atom storage is not empty (has local atoms)");
+      }
+      if (atomStorage().nGhost()) {
+         UTIL_THROW("Atom storage is not empty (has ghost atoms)");
+      }
+      if (UTIL_ORTHOGONAL) {
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atom storage must use Cartesian coordinates");
+         }
+      } else {
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Atom storage must use generalized coordinates");
+         }
+      }
 
       // Read and broadcast boundary
       if (domain().isMaster()) {  
@@ -119,7 +135,8 @@ namespace DdMd
          #endif
 
          // Read atoms
-         Atom* atomPtr;
+         Vector r;
+         Atom*  atomPtr;
          int id;
          int typeId;
          int rank;
@@ -134,7 +151,12 @@ namespace DdMd
             }
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
-            file >> atomPtr->position();
+            file >> r;
+            if (UTIL_ORTHOGONAL) {
+               atomPtr->position() = r;
+            } else {
+               boundary().transformCartToGen(r, atomPtr->position());
+            }
             file >> atomPtr->velocity();
 
             // Add atom to list for sending.

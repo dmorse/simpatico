@@ -14,6 +14,7 @@
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
+#include <util/boundary/Boundary.h>      // typedef
 #include <util/global.h>
 
 namespace DdMd
@@ -203,6 +204,33 @@ namespace DdMd
       * Clear all ghost atoms.
       */
       void clearGhosts(); 
+
+      //@}
+      /// \name Coordinate Systems
+      //@{
+
+      /**
+      * Transform all atomic positions from Cartesian to generalized coordinates.
+      *
+      * Transforms coordinates of local and ghost atoms.
+      *
+      * \param boundary periodic boundary conditions
+      */
+      void transformCartToGen(const Boundary& boundary);
+ 
+      /**
+      * Transform all atomic positions from generalized to Cartesian coordinates.
+      *
+      * Transforms coordinates of local and ghost atoms.
+      *
+      * \param boundary periodic boundary conditions
+      */
+      void transformGenToCart(const Boundary& boundary);
+
+      /*
+      * Are atomic coordinates Cartesian (true) or generalized (false)?
+      */
+      bool isCartesian() const;
 
       //@}
       /// \name Displacement Measurement
@@ -457,6 +485,9 @@ namespace DdMd
       // Is this object initialized (has memory been allocated?).
       bool isInitialized_;
 
+      // Are atomic coordinates Cartesian (true) or generalized (false)?
+      bool isCartesian_;
+
       /*
       * Allocate and initialize all private containers.
       */
@@ -480,6 +511,9 @@ namespace DdMd
 
    inline int AtomStorage::totalAtomCapacity() const
    { return totalAtomCapacity_; }
+
+   inline bool AtomStorage::isCartesian() const
+   { return isCartesian_; }
 
    /*
    * On master processor (rank=0), stored value of total number of atoms.
