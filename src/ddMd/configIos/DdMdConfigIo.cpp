@@ -91,6 +91,22 @@ namespace DdMd
    */
    void DdMdConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
    {
+      // Precondition
+      if (atomStorage().nAtom()) {
+         UTIL_THROW("Atom storage is not empty (has local atoms)");
+      }
+      if (atomStorage().nGhost()) {
+         UTIL_THROW("Atom storage is not empty (has ghost atoms)");
+      }
+      if (UTIL_ORTHOGONAL) {
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atom storage must use Cartesian coordinates");
+         }
+      } else {
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Atom storage must use generalized coordinates");
+         }
+      }
 
       // Read and broadcast boundary
       if (domain().isMaster()) {  
