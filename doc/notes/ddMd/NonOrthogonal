@@ -122,11 +122,12 @@ DdMd::Exchanger:
         Tests should also have if (UTIL_ORTHOGONAL) { ... } blocks so 
         that they work correctly in either mode.
 
+     Status: Changes made, but no tests written.
 ------------------------------------------------------------------------
 DdMd::Collector
 
-     Algorithm to be completely unchanged: All particles are sent to
-     the master processor without using information about positions.
+     Algorithm appears to be completely unchanged: All particles are sent
+     to the master processor without using information about positions.
 
 ------------------------------------------------------------------------
 CellList:
@@ -141,6 +142,7 @@ CellList:
      2) If we later decide on consistent use of generalized coordinates, 
      remove boundaryPtr_ (it will have become unnecessary).
 
+    Status: Not started
 ------------------------------------------------------------------------
 PairPotential:
 
@@ -149,6 +151,7 @@ PairPotential:
      2) If (UTIL_ORTHOGONAL) use generalized coordinates throughout 
      buildCellList and Cartesian throughout buildPairList.
 
+     Status: Not started
 ------------------------------------------------------------------------
 Integrators:
 
@@ -164,3 +167,5 @@ Integrators:
         atomStoragePtr_->.transformGenToCart(boundary()); 
      }
      pairPotentialPtr_->buildPairList();
+
+     Status: Not started
