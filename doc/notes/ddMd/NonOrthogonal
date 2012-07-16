@@ -169,3 +169,168 @@ Integrators:
      pairPotentialPtr_->buildPairList();
 
      Status: Not started
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+I am adding wherever I have found something that seems to need change:
+
+first a thought:
+why don't we add a gencoordinate to each atom which get generated according to
+the boundary type of specified in the simulation. then the only thing to do is
+to replace the positions and other coordinate related things with their gener-
+alized forms.
+
+	position------->gposition
+        lengths_------->glengths
+
+and so forth.
+------------------------------------------------------------------------
+Domain.h
+
+inline int Domain::shift(int i, int j)
+
+seems to need change.
+------------------------------------------------------------------------
+Domain.h
+
+bool Domain::isInDomain(const Vector& position) const
+
+seems also needs change.
+------------------------------------------------------------------------
+CellList.h
+
+inline int CellList::cellIndexFromPosition(const Vector &pos)
+
+also needs to be considered for change.
+------------------------------------------------------------------------
+CellList.h
+
+inline void CellList::addAtom(Atom &atom)
+
+need also change due to use of position in it.
+------------------------------------------------------------------------
+CellList.h
+
+CellList::getNeighbors(const Vector &pos, NeighborArray &neighbors) const
+
+will change correctly if the:
+
+inline int CellList::cellIndexFromPosition(const Vector &pos)
+
+be changed properly.
+------------------------------------------------------------------------
+CellList.cpp
+
+CellList::setCellsAxis(const Boundary &boundary, int axis, double cutoff)
+
+needs to be considered both due to implement the right cutoff since now,
+the coordinates are tilted and also formely since now we ae in tilted
+coordinates.
+------------------------------------------------------------------------
+Atom.h(mcMd)
+
+in line 223 there was a dictation error (shfits---->shifts) in the docu-
+ments I fixed it.
+------------------------------------------------------------------------
+the readParamComposite also requires change to take the tilt in for the
+MonoclinicBoundary.
+------------------------------------------------------------------------
+McSimulation.cpp
+
+the command "GENERATE_MOLECULES" in the readCommads method only impliments
+for the cubic Box. I am not sure if it is intended to be like.
+------------------------------------------------------------------------
+MdSimulation.cpp
+
+the command "GENERATE_MOLECULES" in the readCommads method only impliments
+for the cubic Box. I am not sure if it is intended to be like.
+------------------------------------------------------------------------
+there is one method call in the Mdsimulation to the:
+
+in line 424:
+system.shiftAtoms()
+
+I assumed to keep this as place which might need modification also, to 
+included the MonoclinicBoundary.
+------------------------------------------------------------------------
+in PairPotential.h(ddMd)
+
+in line 118
+virtual double maxPairCutoff() const=0;
+
+we have to modify for the MonoclinicBoundary. I am not sure how to find 
+which inherited class implementation of the maxPairCutoff will be used
+instead. I added previously the maxvalidityRange to the Monoclinic,
+but I guess it is cleared now.
+
+I guess MonclinicBoundary must also modify for returning this.
+------------------------------------------------------------------------
+Pairpotential.cpp
+
+void PairPotential::readPairListParam(std::istream& in)
+
+in line 72:
+
+reads maxBoundary I mention this to check the Consistency for the Monoc-
+linic case and also in line 75 there is a mention of the maxBoundary_.-
+lengths().
+------------------------------------------------------------------------ 
+Exchanger.cpp
+
+here I am just mentioning the places the coordinate is named and also other 
+coordinate related parameters.
+
+in all 
+atomPtr->position()[i]
+callings
+
+if we add the generalized coordinate as a data member to atom, I guess there 
+will be very little changes required.
+
+the inner_ and outer_ variables also need consideration to implement the generalized
+coordinates.
+
+in line 406 is also a mention of the boundaryPtr->lengths();
+which needs to be reconsidered.
+-------------------------------------------------------------------------
+Exchanger.cpp
+
+in line 619:
+shift must be modified as talked before. which you did it. I am just mentioning 
+it for the sake of completeness(hopefully!!!).
+-------------------------------------------------------------------------
+Exchanger.cpp
+
+in line 700:
+again use of shift.
+
+in line 850:
+boundaryPtr_->lengths();
+
+also need consideration.
+-------------------------------------------------------------------------
+Exchanger.cpp
+
+there was an omition in line 868 you had specified in comments I did it.
+-------------------------------------------------------------------------
+Exchanger.cpp
+
+in line 962 in my old printings, 
+the use of shift that is suppose to be changed.
+
+also bound_(i,j) must be changed for the generalized coordinates.
+and also the atomPtr->position()[i]. must be changed to generalized coor-
+dinates.
+
+and another shift call which must be modified was in the line 1013.
+------------------------------------------------------------------------
+Exchanger.cpp
+
+the domainPtr_->shift(i,j) must also be reconsidered for the Monoclinic-
+Boundary.
+------------------------------------------------------------------------
+Exchanger.cpp
+
+and another use of the shift in line 1131.
+------------------------------------------------------------------------
+ 
+

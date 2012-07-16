@@ -865,7 +865,7 @@ namespace DdMd
       Atom* sendPtr;
       int i, j, jc, ip, jp, k, source, dest, shift, size;
 
-      // Clear all send and receive arrays
+      // Clear all receive arrays
       for (i = 0; i < Dimension; ++i) {
          for (j = 0; j < 2; ++j) {
             recvArray_(i, j).clear();

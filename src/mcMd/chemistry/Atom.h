@@ -220,7 +220,7 @@ namespace McMd
 
       #ifdef MCMD_SHIFT
 
-      // Array of boundary condition shfits
+      // Array of boundary condition shifts
       static  IntVector*  shifts_;
 
       #endif
