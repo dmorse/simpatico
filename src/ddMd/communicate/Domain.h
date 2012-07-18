@@ -141,12 +141,10 @@ namespace DdMd
       int shift(int i, int j) const;
 
       #if UTIL_MPI
-
       /**
       * Return Cartesian communicator by reference.
       */
       MPI::Intracomm& communicator() const;
-
       #endif
 
       /**

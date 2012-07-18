@@ -22,7 +22,7 @@
 #include <algorithm>
 #include <string>
 
-//#define EXCHANGER_DEBUG
+#define EXCHANGER_DEBUG
 #define EXCHANGER_GHOST
 
 namespace DdMd
@@ -584,9 +584,9 @@ namespace DdMd
             inner = inner_(i, jc);                 // inner bound upon receipt 
             shift = domainPtr_->shift(i, j);       // shift for periodic b.c.
             if (UTIL_ORTHOGONAL) {
-               rshift = lengths[i]*shift;
+               rshift = lengths[i]*double(shift);
             } else {
-               rshift = 1.0*shift;
+               rshift = double(shift);
             }
 
             #ifdef UTIL_MPI
@@ -603,12 +603,15 @@ namespace DdMd
 
                #ifdef UTIL_DEBUG
                #ifdef EXCHANGER_DEBUG
-               if (j == 0) {
-                  choose = (atomIter->position()[i] < bound);
-               } else {
-                  choose = (atomIter->position()[i] > bound);
+               {
+                  bool choose;
+                  if (j == 0) {
+                     choose = (atomIter->position()[i] < bound);
+                  } else {
+                     choose = (atomIter->position()[i] > bound);
+                  }
+                  assert(choose == atomIter->plan().exchange(i, j));
                }
-               assert(choose == atomIter->plan().exchange(i, j));
                #endif
                #endif
 
@@ -624,15 +627,25 @@ namespace DdMd
                   #endif
                   {
 
+                     #ifdef UTIL_DEBUG
+                     #ifdef EXCHANGER_DEBUG 
+                     assert(shift);
+                     double coord = atomIter->position()[i];
+                     assert(coord > -1.0*fabs(rshift));
+                     assert(coord <  2.0*fabs(rshift));
+                     #endif
+                     #endif
+
                      // Shift position if required by periodic b.c.
                      if (shift) {
                         //atomIter->position()[i] += shift * lengths[i];
-                        atomPtr->position()[i] += rshift;
+                        atomIter->position()[i] += rshift;
                      }
-                     assert(atomIter->position()[i] 
-                            > domainPtr_->domainBound(i, 0));
-                     assert(atomIter->position()[i] 
-                            < domainPtr_->domainBound(i, 1));
+
+                     #ifdef UTIL_DEBUG
+                     assert (atomIter->position()[i] >= domainPtr_->domainBound(i, 0));
+                     assert (atomIter->position()[i] < domainPtr_->domainBound(i, 1));
+                     #endif
 
                      // For gridDimension==1, only nonbonded ghosts exist.
                      // The following assertion applies to these.

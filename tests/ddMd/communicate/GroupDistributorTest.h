@@ -36,8 +36,6 @@ public:
    virtual void setUp()
    {}
 
-
-
    void testDistribute()
    {
       printMethod(TEST_FUNC);
@@ -91,7 +89,6 @@ public:
       #else // ifndef UTIL_MPI
       domain.setRank(0);
       #endif
-      int myRank = domain.gridRank();
 
       // Open and read parameter file
       #ifdef UTIL_MPI
@@ -127,6 +124,7 @@ public:
       closeFile();
 
       // If I am the master processor.
+      int myRank = domain.gridRank();
       if (myRank == 0) {
          configFile.open("in/config");
          configFile >> Label("BOUNDARY");
@@ -310,7 +308,6 @@ public:
       #else // ifndef UTIL_MPI
       domain.setRank(0);
       #endif
-      int myRank = domain.gridRank();
 
       // Open and read parameter file
       #ifdef UTIL_MPI
@@ -346,6 +343,7 @@ public:
       closeFile();
 
       // If I am the master processor.
+      int myRank = domain.gridRank();
       if (myRank == 0) {
          configFile.open("in2/config");
          configFile >> Label("BOUNDARY");

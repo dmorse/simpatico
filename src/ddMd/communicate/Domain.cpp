@@ -195,6 +195,9 @@ namespace DdMd
             dL = 1.0 / double(gridDimensions_[i]);
          }
          r[i] = int(position[i] / dL);
+         if (r[i] < 0 || r[i] >= gridDimensions_[i]) {
+            UTIL_THROW("Invalid grid coordinate");
+         }
       }
       return grid_.rank(r);
    }
