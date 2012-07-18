@@ -118,7 +118,6 @@ public:
             configFile >> id >> typeId;
             ptr->setId(id);
             ptr->setTypeId(typeId);
-            configFile >> ptr->position();
 
             // Read a position from file.
             if (UTIL_ORTHOGONAL) {
@@ -129,8 +128,7 @@ public:
                boundary.transformCartToGen(r, ptr->position());
             }
 
-            ptr->velocity() = ptr->position();
-
+            configFile >> ptr->velocity();
             atomDistributor.addAtom();
 
          }

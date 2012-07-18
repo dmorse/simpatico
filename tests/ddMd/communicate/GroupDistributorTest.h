@@ -165,7 +165,6 @@ public:
             }
 
             configFile >> ptr->velocity();
-            ptr->velocity() = ptr->position();
 
             atomDistributor.addAtom();
 
