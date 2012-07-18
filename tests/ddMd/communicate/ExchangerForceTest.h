@@ -1,7 +1,7 @@
 #ifndef DDMD_EXCHANGER_FORCE_TEST_H
 #define DDMD_EXCHANGER_FORCE_TEST_H
 
-#include <ddMd/configIos/ConfigIo.h>
+#include <ddMd/configIos/DdMdConfigIo.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/communicate/Exchanger.h>
@@ -63,7 +63,7 @@ private:
    #ifdef INTER_DIHEDRAL
    DihedralStorage dihedralStorage;
    #endif
-   ConfigIo configIo;
+   DdMdConfigIo configIo;
    Random random;
    int  atomCount;
    bool reverseUpdateFlag;
@@ -178,6 +178,7 @@ public:
 
    }
 
+   #if 0
    void displaceAtoms(double max)
    {
       double min = -max;
@@ -189,6 +190,32 @@ public:
          }
       }
    }
+   #endif
+
+   void displaceAtoms(double range)
+   {
+      Vector ranges;
+      double min, max;
+      if (UTIL_ORTHOGONAL) {
+         for (int i = 0; i < Dimension; ++i) {
+            ranges[i] = range;
+         }
+      } else {
+         for (int i = 0; i < Dimension; ++i) {
+            ranges[i] = range/boundary.length(i);
+         }
+      }
+      AtomIterator atomIter;
+      for(int i = 0; i < Dimension; ++i) {
+         max = ranges[i];
+         min = -max;
+         atomStorage.begin(atomIter);
+         for ( ; atomIter.notEnd(); ++atomIter) {
+            atomIter->position()[i] += random.uniform(min, max);
+         }
+      }
+   }
+
 
    void zeroForces()
    {

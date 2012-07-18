@@ -96,7 +96,16 @@ public:
             ptr = distributor.newAtomPtr();
             ptr->setId(i);
             ptr->setTypeId(0);
-            atomposfile >> ptr->position();
+
+            // Read a position from file.
+            if (UTIL_ORTHOGONAL) {
+               atomposfile >> ptr->position();
+            } else {
+               Vector r;
+               atomposfile >> r;
+               boundary.transformCartToGen(r, ptr->position());
+            }
+
             //Use position vector for velocity
             ptr->velocity() = ptr->position();
             distributor.addAtom();

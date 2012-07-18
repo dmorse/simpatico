@@ -119,7 +119,16 @@ public:
             ptr->setId(id);
             ptr->setTypeId(typeId);
             configFile >> ptr->position();
-            configFile >> ptr->velocity();
+
+            // Read a position from file.
+            if (UTIL_ORTHOGONAL) {
+               configFile >> ptr->position();
+            } else {
+               Vector r;
+               configFile >> r;
+               boundary.transformCartToGen(r, ptr->position());
+            }
+
             ptr->velocity() = ptr->position();
 
             atomDistributor.addAtom();

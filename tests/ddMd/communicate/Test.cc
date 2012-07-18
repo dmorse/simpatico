@@ -29,8 +29,8 @@ int main()
    TEST_RUNNER(ExchangerTest) runner5;
    runner5.run();
 
-   TEST_RUNNER(ExchangerForceTest) runner6;
-   runner6.run();
+   //TEST_RUNNER(ExchangerForceTest) runner6;
+   //runner6.run();
 
    TEST_RUNNER(AtomCollectorTest) runner7;
    runner7.run();

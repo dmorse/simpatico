@@ -1,7 +1,7 @@
 #ifndef DDMD_EXCHANGER_TEST_H
 #define DDMD_EXCHANGER_TEST_H
 
-#include <ddMd/configIos/ConfigIo.h>
+#include <ddMd/configIos/DdMdConfigIo.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/communicate/Exchanger.h>
@@ -15,6 +15,7 @@
 #ifdef INTER_DIHEDRAL
 #include <ddMd/storage/DihedralStorage.h>
 #endif
+#include <util/boundary/Boundary.h>
 #include <ddMd/chemistry/MaskPolicy.h>
 #include <util/random/Random.h>
 #include <util/mpi/MpiLogger.h>
@@ -47,7 +48,7 @@ private:
    #ifdef INTER_DIHEDRAL
    DihedralStorage dihedralStorage;
    #endif
-   ConfigIo configIo;
+   DdMdConfigIo configIo;
    Random random;
    int atomCount;
 
@@ -135,11 +136,23 @@ public:
 
    }
 
-   void displaceAtoms(double max)
+   void displaceAtoms(double range)
    {
-      double min = -max;
+      Vector ranges;
+      double min, max;
+      if (UTIL_ORTHOGONAL) {
+         for (int i = 0; i < Dimension; ++i) {
+            ranges[i] = range;
+         }
+      } else {
+         for (int i = 0; i < Dimension; ++i) {
+            ranges[i] = range/boundary.length(i);
+         }
+      }
       AtomIterator atomIter;
-      for(int i = 0; i < 3; i++) {
+      for(int i = 0; i < Dimension; ++i) {
+         max = ranges[i];
+         min = -max;
          atomStorage.begin(atomIter);
          for ( ; atomIter.notEnd(); ++atomIter) {
             atomIter->position()[i] += random.uniform(min, max);
@@ -182,6 +195,7 @@ public:
 
       double range = 0.4;
       displaceAtoms(range);
+
       object().exchangeAtoms();
 
       // Check that all atoms are accounted for after exchange.
