@@ -118,12 +118,15 @@ namespace DdMd
          // Check if exchange and reneighboring is necessary
          //needExchange = simulation().needExchange();
          needExchange = atomStorage().needExchange(domain().communicator(), 
-                                                 pairPotential().skin());
+                                                   pairPotential().skin());
          timer().stamp(Integrator::CHECK);
 
          // Exchange atoms if necessary
          if (needExchange) {
             atomStorage().clearSnapshot();
+            if (atomStorage().isCartesian()) {
+               atomStorage().transformCartToGen(boundary());
+            }
             exchanger().exchange();
             timer().stamp(Integrator::EXCHANGE);
             atomStorage().makeSnapshot();

@@ -623,9 +623,14 @@ public:
       // displaceAtoms(range);
 
       atomStorage.clearSnapshot();
+      if (!UTIL_ORTHOGONAL) {
+         TEST_ASSERT(!atomStorage.isCartesian());
+         if (atomStorage.isCartesian()) {
+            atomStorage.transformCartToGen(boundary);
+         }
+      }
       object().exchange();
       atomStorage.makeSnapshot();
-      pairPotential.findNeighbors();
 
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
@@ -650,6 +655,10 @@ public:
 
       // Calculate forces with PairList
       zeroForces();
+      TEST_ASSERT(!atomStorage.isCartesian());
+      pairPotential.findNeighbors();
+      TEST_ASSERT(atomStorage.isCartesian());
+
       pairPotential.setMethodId(0); // PairList
       pairPotential.addForces();
       #ifdef TEST_EXCHANGER_FORCE_BOND
@@ -678,9 +687,16 @@ public:
             //   std::cout << "Step " << i << ",  exchange " << j << std::endl;
             //}
             atomStorage.clearSnapshot();
+            TEST_ASSERT(atomStorage.isCartesian());
+            if (!UTIL_ORTHOGONAL) {
+               if (atomStorage.isCartesian()) {
+                  atomStorage.transformCartToGen(boundary);
+               }
+            }
+            TEST_ASSERT(!atomStorage.isCartesian());
+
             object().exchange();
             atomStorage.makeSnapshot();
-            pairPotential.findNeighbors();
 
             // Confirm that all atoms are within the processor domain.
             atomStorage.begin(atomIter);
@@ -693,6 +709,10 @@ public:
             for ( ; ghostIter.notEnd(); ++ghostIter) {
                TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
             }
+
+            TEST_ASSERT(!atomStorage.isCartesian());
+            pairPotential.findNeighbors();
+            TEST_ASSERT(atomStorage.isCartesian());
 
             //if (domain.isMaster()) {
             //   std::cout << "Finished exchange" << std::endl;
@@ -790,7 +810,11 @@ public:
             // Calculate forces via pair list, without reverse communication
             zeroForces();
             pairPotential.setForceCommFlag(false); 
+            TEST_ASSERT(atomStorage.isCartesian());
+            atomStorage.transformCartToGen(boundary);
+            TEST_ASSERT(!atomStorage.isCartesian());
             pairPotential.findNeighbors(); 
+            TEST_ASSERT(atomStorage.isCartesian());
             pairPotential.setMethodId(0);    
             pairPotential.addForces();
             #ifdef TEST_EXCHANGER_FORCE_BOND
@@ -823,6 +847,9 @@ public:
 
             // Reset: Recompute neighbor list for use with reverse communication
             pairPotential.setForceCommFlag(true); 
+            TEST_ASSERT(atomStorage.isCartesian());
+            atomStorage.transformCartToGen(boundary);
+            TEST_ASSERT(!atomStorage.isCartesian());
             pairPotential.findNeighbors(); 
 
          }
@@ -845,10 +872,10 @@ TEST_ADD(ExchangerForceTest, testGhostUpdateF)
 TEST_ADD(ExchangerForceTest, testGhostUpdateR)
 TEST_ADD(ExchangerForceTest, testGhostUpdateCycleF)
 TEST_ADD(ExchangerForceTest, testGhostUpdateCycleR)
-//TEST_ADD(ExchangerForceTest, testInitialForcesF)
-//TEST_ADD(ExchangerForceTest, testInitialForcesR)
-//TEST_ADD(ExchangerForceTest, testForceCycleF)
-//TEST_ADD(ExchangerForceTest, testForceCycleR)
+TEST_ADD(ExchangerForceTest, testInitialForcesF)
+TEST_ADD(ExchangerForceTest, testInitialForcesR)
+TEST_ADD(ExchangerForceTest, testForceCycleF)
+TEST_ADD(ExchangerForceTest, testForceCycleR)
 TEST_END(ExchangerForceTest)
 
 #endif /* EXCHANGER_TEST_H */

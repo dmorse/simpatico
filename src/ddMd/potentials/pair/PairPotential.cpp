@@ -84,37 +84,54 @@ namespace DdMd
       read<double>(in, "skin", skin_);
       read<int>(in, "pairCapacity", pairCapacity_);
       read<Boundary>(in, "maxBoundary", maxBoundary_);
+      cutoff_ = maxPairCutoff() + skin_;
 
       // Set upper and lower bound of the processor domain.
       boundary().setOrthorhombic(maxBoundary_.lengths());
       Vector lower;
       Vector upper;
+      Vector cutoffs;
       for (int i = 0; i < Dimension; ++i) {
          lower[i] = domain().domainBound(i, 0);
          upper[i] = domain().domainBound(i, 1);
+         if (UTIL_ORTHOGONAL) {
+            cutoffs[i] = cutoff_;
+         } else {
+            cutoffs[i] = cutoff_/maxBoundary_.length(i);
+         }
       }
 
       // Allocate CellList and PairList
-      int atomCapacity = storage().atomCapacity() + storage().atomCapacity();
-      cutoff_ = maxPairCutoff() + skin_;
-      cellList_.allocate(atomCapacity, lower, upper, cutoff_);
-      pairList_.allocate(atomCapacity, pairCapacity_, cutoff_);
+      int localCapacity = storage().atomCapacity();
+      int totalCapacity = localCapacity + storage().ghostCapacity();
+      cellList_.allocate(totalCapacity, lower, upper, cutoffs);
+      pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
    }
 
    /*
    * Allocate memory for the cell list.
    */
    void PairPotential::initialize(const Vector& lower, const Vector& upper, 
-                                double skin, int pairCapacity)
+                                  const Boundary& boundary, double skin, 
+                                  int pairCapacity)
    {
       skin_ = skin;
       pairCapacity_ = pairCapacity;
-
       cutoff_ = maxPairCutoff() + skin;
-      int atomCapacity = storage().atomCapacity();
 
-      cellList_.allocate(atomCapacity, lower, upper, cutoff_);
-      pairList_.allocate(atomCapacity, pairCapacity_, cutoff_);
+      Vector cutoffs;
+      for (int i = 0; i < Dimension; ++i) {
+         if (UTIL_ORTHOGONAL) {
+            cutoffs[i] = cutoff_;
+         } else {
+            cutoffs[i] = cutoff_/boundary.length(i);
+         }
+      }
+
+      int localCapacity = storage().atomCapacity();
+      int totalCapacity = localCapacity + storage().ghostCapacity();
+      cellList_.allocate(totalCapacity, lower, upper, cutoffs);
+      pairList_.allocate(localCapacity, pairCapacity_, cutoff_);
    }
 
    /*
@@ -123,8 +140,26 @@ namespace DdMd
    void PairPotential::findNeighbors(const Vector& lower, const Vector& upper)
    {
       stamp(PairPotential::START);
+ 
+      if (UTIL_ORTHOGONAL) {
+         if (!storage().isCartesian()) {
+            UTIL_THROW("Coordinates not Cartesian entering findNeighbors");
+         }
+      } else {
+         if (storage().isCartesian()) {
+            UTIL_THROW("Coordinates are Cartesian entering findNeighbors");
+         }
+      }
 
-      cellList_.makeGrid(lower, upper, cutoff_);
+      Vector cutoffs;
+      for (int i = 0; i < Dimension; ++i) {
+         if (UTIL_ORTHOGONAL) {
+            cutoffs[i] = cutoff_;
+         } else {
+            cutoffs[i] = cutoff_/boundaryPtr_->length(i);
+         }
+      }
+      cellList_.makeGrid(lower, upper, cutoffs);
       cellList_.clear();
      
       // Add all atoms to the cell list. 
@@ -146,6 +181,9 @@ namespace DdMd
       assert(cellList_.nAtom() + cellList_.nReject() == storage().nAtom() + storage().nGhost());
       stamp(PairPotential::BUILD_CELL_LIST);
 
+      if (!UTIL_ORTHOGONAL) {
+         storage().transformGenToCart(*boundaryPtr_);
+      }
       pairList_.build(cellList_, reverseUpdateFlag());
       stamp(PairPotential::BUILD_PAIR_LIST);
    }

@@ -25,33 +25,42 @@ namespace DdMd
    *
    * An CellList divides the domain owned by a processor, plus a frame
    * containing ghost particles, into a grid of cells, such that the length
-   * of each cell in each of Cartesian direction is greater than a specified 
-   * cutoff distance. 
+   * of each cell in each direction is greater than a specified cutoff
+   * distance. The algorithm works with either generalized or Cartesian
+   * coordinates, if used consistently.
    *
    * All operations of this class are local (no MPI).
    *
-   * Building a CellList (usage):
+   * Building a CellList (Cartesian coordinates);
    * \code
    *
    *    AtomStorage storage;
    *    CellList cellList;
    *    Vector   lower;        // Vector of lower bounds (local atoms)
    *    Vector   upper;        // Vector of upper bounds (local atoms)
+   *    Vector   cutoffs;      // Vector of cutoff lengths for each axis.
    *    double   cutoff;       // minimum cell dimension
    *    int      atomCapacity  // max number of atoms on this processor
    *
-   *    // Bounds on lower and upper used here to allocate memory.
-   *    cellList.allocate(atomCapacity, lower, upper, cutoff);
-   *  
-   *    // Make the actual grid.
-   *    cellList.makeGrid(lower, upper, cutoff);
+   *    // Set elements of cutoffs vector to same value
+   *    for (int i = 0; i < Dimension; ++i) {
+   *       cutoffs[i] = cutoff;
+   *    } 
    *
-   *    // Place all atoms and ghosts
+   *    // Bounds on lower and upper used here to allocate memory.
+   *    cellList.allocate(atomCapacity, lower, upper, cutoffs);
+   *  
+   *    // Make the actual grid and clear it.
+   *    cellList.makeGrid(lower, upper, cutoffs);
    *    cellList.clear();
+   *
+   *    // Place all local atoms.
    *    AtomStorage::AtomIterator  atomIter;
    *    for (storage.begin(atomIter); atomIter.notEnd(); ++atomIter) {
    *       cellList.placeAtom(*atomIter);
    *    }
+   *
+   *    // Place all ghost atoms
    *    AtomStorage::GhostIterator ghostIter;
    *    for (storage.begin(ghostIter); ghostIter.notEnd(); ++ghostIter){
    *       cellList.placeAtom(*ghostIter);
@@ -66,6 +75,13 @@ namespace DdMd
    * The atomCapacity parameter should be set equal to the sum of atomCapacity 
    * and the ghostCapacity of the associated atomStorage, which is the maximum 
    * total number of atoms that can exist on this processor.
+   *
+   * If the upper and lower bounds and atom coordinates are all expressed in
+   * generalized coordinates, which span 0.0 - 1.0 over the primitive periodic
+   * cell in each direction, each element of the cutoffs vector is given by a
+   * ratio cutoffs[i] = cutoff/length[i], where length[i] is the Cartesian
+   * distance across the unit cell along a direciton parallel to reciprocal 
+   * basis vector i. 
    *
    * See Cell documentation for an example of how to iterate over local cells 
    * and neighboring atom pairs. 

@@ -74,13 +74,14 @@ namespace DdMd
       * of cells required for the specified upper and lower coordinate bounds, 
       * with the specified cutoff. 
       *
-      * \param lower        lower dimension of the largest expected domain
-      * \param upper        upper dimension of the largest expected domain
-      * \param skin         pair list skin length
+      * \param lower     lower coordinates for this domain with max boundary.
+      * \param upper     upper coordinates for this domain with max boundary.
+      * \param boundary  largest expected boundary    
+      * \param skin      pair list skin length
       * \param pairCapacity maximum number of pairs per processor
       */
       void initialize(const Vector& lower, const Vector& upper,
-                      double skin, int pairCapacity);
+                      const Boundary& boundary, double skin, int pairCapacity);
 
       /**
       * Set flag to identify if reverse communication is enabled.

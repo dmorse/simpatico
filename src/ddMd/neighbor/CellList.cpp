@@ -72,7 +72,7 @@ namespace DdMd
    }
 
    /*
-   * Calculate dimensions of grid of cells.
+   * Calculate number of cells in each direction of grid.
    */
    void CellList::setGridDimensions(const Vector& lower, const Vector& upper, 
                                     const Vector& cutoffs)
