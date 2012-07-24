@@ -516,7 +516,12 @@ public:
 
       TEST_ASSERT(pairPotential.reverseUpdateFlag() == reverseUpdateFlag);
 
-      pairPotential.findNeighbors();
+      //pairPotential.findNeighbors();
+      pairPotential.buildCellList();
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage.transformGenToCart(boundary);
+      }
+      pairPotential.buildPairList();
 
       // Compute forces etc. with N^2 loop
       pairPotential.setMethodId(2); 
@@ -656,7 +661,13 @@ public:
       // Calculate forces with PairList
       zeroForces();
       TEST_ASSERT(!atomStorage.isCartesian());
-      pairPotential.findNeighbors();
+      //pairPotential.findNeighbors();
+      pairPotential.buildCellList();
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage.transformGenToCart(boundary);
+      }
+      TEST_ASSERT(atomStorage.isCartesian());
+      pairPotential.buildPairList();
       TEST_ASSERT(atomStorage.isCartesian());
 
       pairPotential.setMethodId(0); // PairList
@@ -711,7 +722,12 @@ public:
             }
 
             TEST_ASSERT(!atomStorage.isCartesian());
-            pairPotential.findNeighbors();
+            //pairPotential.findNeighbors();
+            pairPotential.buildCellList();
+            if (!UTIL_ORTHOGONAL) {
+               atomStorage.transformGenToCart(boundary);
+            }
+            pairPotential.buildPairList();
             TEST_ASSERT(atomStorage.isCartesian());
 
             //if (domain.isMaster()) {
@@ -813,7 +829,12 @@ public:
             TEST_ASSERT(atomStorage.isCartesian());
             atomStorage.transformCartToGen(boundary);
             TEST_ASSERT(!atomStorage.isCartesian());
-            pairPotential.findNeighbors(); 
+            //pairPotential.findNeighbors(); 
+            pairPotential.buildCellList();
+            if (!UTIL_ORTHOGONAL) {
+               atomStorage.transformGenToCart(boundary);
+            }
+            pairPotential.buildPairList();
             TEST_ASSERT(atomStorage.isCartesian());
             pairPotential.setMethodId(0);    
             pairPotential.addForces();
@@ -850,7 +871,12 @@ public:
             TEST_ASSERT(atomStorage.isCartesian());
             atomStorage.transformCartToGen(boundary);
             TEST_ASSERT(!atomStorage.isCartesian());
-            pairPotential.findNeighbors(); 
+            //pairPotential.findNeighbors(); 
+            pairPotential.buildCellList();
+            if (!UTIL_ORTHOGONAL) {
+               atomStorage.transformGenToCart(boundary);
+            }
+            pairPotential.buildPairList();
 
          }
 

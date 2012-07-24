@@ -85,7 +85,11 @@ namespace DdMd
       atomStorage().clearSnapshot();
       exchanger().exchange();
       atomStorage().makeSnapshot();
-      pairPotential().findNeighbors();
+      pairPotential().buildCellList();
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage().transformGenToCart(boundary());
+      }
+      pairPotential().buildPairList();
       simulation().computeForces();
 
       // Initialize nAtom_, xiDot_, xi_
@@ -164,7 +168,11 @@ namespace DdMd
             exchanger().exchange();
             timer().stamp(EXCHANGE);
             atomStorage().makeSnapshot();
-            pairPotential().findNeighbors();
+            pairPotential().buildCellList();
+            if (!UTIL_ORTHOGONAL) {
+               atomStorage().transformGenToCart(boundary());
+            }
+            pairPotential().buildPairList();
             timer().stamp(NEIGHBOR);
          } else {
             exchanger().update();

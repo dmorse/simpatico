@@ -26,8 +26,9 @@ class SimulationTest : public ParamFileTest<Simulation>
 public:
 
    virtual void setUp()
-   {  
-   }
+   {}
+
+   void displaceAtoms(AtomStorage& storage, const Boundary& boundary, Random& random, double range);
 
    void testReadParam();
 
@@ -44,6 +45,32 @@ public:
    void testIntegrate1();
 
 };
+
+
+inline void SimulationTest::displaceAtoms(AtomStorage& storage, const Boundary& boundary, 
+                                          Random& random, double range)
+{
+   Vector ranges;
+   double min, max;
+   if (UTIL_ORTHOGONAL) {
+      for (int i = 0; i < Dimension; ++i) {
+         ranges[i] = range;
+      }
+   } else {
+      for (int i = 0; i < Dimension; ++i) {
+         ranges[i] = range/boundary.length(i);
+      }
+   }
+   AtomIterator atomIter;
+   for(int i = 0; i < Dimension; ++i) {
+      max = ranges[i];
+      min = -max;
+      storage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         atomIter->position()[i] += random.uniform(min, max);
+      }
+   }
+}
 
 inline void SimulationTest::testReadParam()
 {  
@@ -67,6 +94,7 @@ inline void SimulationTest::testReadConfig()
    object().readParam(file()); 
 
    Domain& domain = object().domain();
+   Boundary& boundary = object().boundary();
    AtomStorage& storage = object().atomStorage();
 
    std::string filename("config1");
@@ -129,13 +157,17 @@ inline void SimulationTest::testExchangeAtoms()
    openFile("in/param1"); 
    object().readParam(file()); 
 
-   Domain&  domain  = object().domain();
+   Domain&   domain = object().domain();
+   Boundary& boundary = object().boundary();
    AtomStorage& storage = object().atomStorage();
    Random&  random = object().random();
 
    std::string filename("config1");
    object().readConfig(filename);
 
+   displaceAtoms(storage, boundary, random, 0.8);
+ 
+   #if 0
    // Range of random increments for the atom positions.
    double range1 = double(-0.8);
    double range2 = double(0.8);
@@ -148,6 +180,7 @@ inline void SimulationTest::testExchangeAtoms()
         atomIter->position()[i] += random.uniform(range1, range2);
      }
    }
+   #endif
 
    // Exchange atoms among processors
    object().exchanger().exchange();
@@ -164,6 +197,7 @@ inline void SimulationTest::testExchangeAtoms()
 
    // Check that all atoms are within the processor domain.
    int j = 0;
+   AtomIterator atomIter;
    storage.begin(atomIter);
    for ( ; atomIter.notEnd(); ++atomIter) {
       j++;
@@ -181,12 +215,16 @@ inline void SimulationTest::testExchange()
    object().readParam(file()); 
 
    Domain&  domain  = object().domain();
+   Boundary& boundary = object().boundary();
    AtomStorage& storage = object().atomStorage();
    Random&  random = object().random();
 
    std::string filename("config1");
    object().readConfig(filename);
 
+   displaceAtoms(storage, boundary, random, 0.8);
+
+   #if 0
    // Range of random increments for the atom positions.
    double range1 = double(-0.8);
    double range2 = double(0.8);
@@ -199,6 +237,7 @@ inline void SimulationTest::testExchange()
         atomIter->position()[i] += random.uniform(range1, range2);
      }
    }
+   #endif
 
    // Exchange atoms among processors
    object().exchanger().exchange();
@@ -214,6 +253,7 @@ inline void SimulationTest::testExchange()
    }
 
    // Check that all atoms are within the processor domain.
+   AtomIterator atomIter;
    int j = 0;
    storage.begin(atomIter);
    for ( ; atomIter.notEnd(); ++atomIter) {
@@ -247,12 +287,16 @@ inline void SimulationTest::testUpdate()
    object().readParam(file()); 
 
    Domain&  domain  = object().domain();
+   Boundary& boundary = object().boundary();
    AtomStorage& storage = object().atomStorage();
    Random&  random  = object().random();
 
    std::string filename("config1");
    object().readConfig(filename);
 
+   displaceAtoms(storage, boundary, random, 0.8);
+
+   #if 0
    // Add a random increment to atom positions
    double range1 = double(-0.8);
    double range2 = double(0.8);
@@ -263,6 +307,7 @@ inline void SimulationTest::testUpdate()
         atomIter->position()[i] += random.uniform(range1, range2);
      }
    }
+   #endif
 
    // Exchange atoms among processors
    object().exchanger().exchange();
@@ -280,6 +325,7 @@ inline void SimulationTest::testUpdate()
 
    // Check that all atoms are within the processor domain.
    int j = 0;
+   AtomIterator atomIter;
    storage.begin(atomIter);
    for ( ; atomIter.notEnd(); ++atomIter) {
       j++;
@@ -320,6 +366,9 @@ inline void SimulationTest::testUpdate()
    logger.end();
    #endif
 
+   displaceAtoms(storage, boundary, random, 0.1);
+
+   #if 0
    // Add a random increment to atom positions
    range1 = double(-0.1);
    range2 = double(+0.1);
@@ -329,6 +378,7 @@ inline void SimulationTest::testUpdate()
          atomIter->position()[i] += random.uniform(range1, range2);
       }
    }
+   #endif
 
    object().exchanger().update();
 
@@ -342,16 +392,20 @@ inline void SimulationTest::testCalculateForces()
    object().readParam(file()); 
 
    Domain&  domain  = object().domain();
+   Boundary& boundary = object().boundary();
    AtomStorage& storage = object().atomStorage();
    int myRank = domain.gridRank();
 
    std::string filename("config1");
    object().readConfig(filename);
+   //object().exchanger().exchange();
 
-   // Exchange ghosts among processsors
-   object().exchanger().exchange();
-   object().pairPotential().findNeighbors();
-
+   // Compute forces.
+   object().pairPotential().buildCellList();
+   if (!UTIL_ORTHOGONAL) {
+      storage.transformGenToCart(object().boundary());
+   }
+   object().pairPotential().buildPairList();
    object().computeForces();
 
    Vector f(0.0); // total force on processor
@@ -385,36 +439,32 @@ inline void SimulationTest::testIntegrate1()
    openFile("in/param2"); 
    object().readParam(file()); 
 
-   Domain&  domain  = object().domain();
+   Domain& domain = object().domain();
+   Boundary& boundary = object().boundary();
    AtomStorage& storage = object().atomStorage();
    int myRank = domain.gridRank();
 
+   // Read configuration file
    std::string filename("config2");
    object().readConfig(filename);
-   object().pairPotential().findNeighbors();
 
+   // Set random velocities
    double temperature = 1.0;
    object().setBoltzmannVelocities(temperature);
 
-   // Calculate energies before integration
-   double kinetic ;
-   double potential;
-   object().computeKineticEnergy();
-   object().computePotentialEnergies();
    if (myRank == 0) {
-      kinetic = object().kineticEnergy();
-      potential = object().potentialEnergy();
       std::cout << std::endl;
-      std::cout << Dbl(kinetic) << Dbl(potential) 
-                << Dbl(kinetic + potential) << std::endl;
    }
 
+   // Setup the integrator
    object().integrator().setup();
+   TEST_ASSERT(object().isValid());
+
+   double kinetic;
+   double potential;
    for (int i = 0; i < 10; ++i ) {
 
-      object().integrator().run(500);
-
-      // Calculate energies after integration
+      // Calculate energies
       object().computeKineticEnergy();
       object().computePotentialEnergies();
       if (myRank == 0) {
@@ -424,6 +474,7 @@ inline void SimulationTest::testIntegrate1()
                    << Dbl(kinetic + potential) << std::endl;
       }
 
+      object().integrator().run(500);
       TEST_ASSERT(object().isValid());
    }
 

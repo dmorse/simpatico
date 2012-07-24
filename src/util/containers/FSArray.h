@@ -178,11 +178,10 @@ namespace Util
       if (this == &other) return *this;
 
       // Copy elements
+      size_ = other.size_;
       for (int i = 0; i < size_; ++i) {
          data_[i] = other[i];
       }
-      size = other.size_;
-
       return *this;
    }
 

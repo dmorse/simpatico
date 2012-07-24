@@ -141,6 +141,12 @@ namespace DdMd
    */
    void Exchanger::exchange()
    {
+      if (UTIL_ORTHOGONAL && !atomStoragePtr_->isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian on entry to exchange");
+      } 
+      if (!UTIL_ORTHOGONAL && atomStoragePtr_->isCartesian()) {
+         UTIL_THROW("Error: Coordinates are Cartesian on entry to exchange");
+      } 
       exchangeAtoms();
       exchangeGhosts();
    }

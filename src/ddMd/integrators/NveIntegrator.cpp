@@ -66,7 +66,11 @@ namespace DdMd
       atomStorage().clearSnapshot();
       exchanger().exchange();
       atomStorage().makeSnapshot();
-      pairPotential().findNeighbors();
+      pairPotential().buildCellList();
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage().transformGenToCart(boundary());
+      }
+      pairPotential().buildPairList();
       simulation().computeForces();
 
       simulation().diagnosticManager().setup();
@@ -130,7 +134,11 @@ namespace DdMd
             exchanger().exchange();
             timer().stamp(Integrator::EXCHANGE);
             atomStorage().makeSnapshot();
-            pairPotential().findNeighbors();
+            pairPotential().buildCellList();
+            if (!UTIL_ORTHOGONAL) {
+               atomStorage().transformGenToCart(boundary());
+            }
+            pairPotential().buildPairList();
             timer().stamp(Integrator::NEIGHBOR);
          } else {
             exchanger().update();
