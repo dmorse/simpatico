@@ -54,6 +54,18 @@ namespace DdMd
 
    void NveIntegrator::setup()
    {
+      atomStorage().clearSnapshot();
+      exchanger().exchange();
+      pairPotential().buildCellList();
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage().transformGenToCart(boundary());
+      }
+      atomStorage().makeSnapshot();
+      pairPotential().buildPairList();
+      simulation().computeForces();
+
+      simulation().diagnosticManager().setup();
+
       // Set prefactors for acceleration
       double dtHalf = 0.5*dt_;
       double mass;
@@ -62,18 +74,6 @@ namespace DdMd
          mass = simulation().atomType(i).mass();
          prefactors_[i] = dtHalf/mass;
       }
-
-      atomStorage().clearSnapshot();
-      exchanger().exchange();
-      atomStorage().makeSnapshot();
-      pairPotential().buildCellList();
-      if (!UTIL_ORTHOGONAL) {
-         atomStorage().transformGenToCart(boundary());
-      }
-      pairPotential().buildPairList();
-      simulation().computeForces();
-
-      simulation().diagnosticManager().setup();
    }
 
    /*
@@ -128,16 +128,16 @@ namespace DdMd
          // Exchange atoms if necessary
          if (needExchange) {
             atomStorage().clearSnapshot();
-            if (atomStorage().isCartesian()) {
+            if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {
                atomStorage().transformCartToGen(boundary());
             }
             exchanger().exchange();
             timer().stamp(Integrator::EXCHANGE);
-            atomStorage().makeSnapshot();
             pairPotential().buildCellList();
             if (!UTIL_ORTHOGONAL) {
                atomStorage().transformGenToCart(boundary());
             }
+            atomStorage().makeSnapshot();
             pairPotential().buildPairList();
             timer().stamp(Integrator::NEIGHBOR);
          } else {

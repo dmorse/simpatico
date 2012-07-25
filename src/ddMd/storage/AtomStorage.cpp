@@ -287,6 +287,11 @@ namespace DdMd
    */
    void AtomStorage::makeSnapshot()
    {
+      // Precondition
+      if (!isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian in makeSnapshot");
+      }
+ 
       AtomIterator iter;
       int i = 0;
       for (begin(iter); iter.notEnd(); ++iter) {
@@ -303,10 +308,13 @@ namespace DdMd
    {  locked_ = false; }
 
    /**
-   * Return maximum squared displacement on this processor since last snapshot.
+   * Return max. sq. displacement of local atoms on this node since snapshot.
    */
    double AtomStorage::maxSqDisplacement()
    {
+      if (!isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian in maxSqDisplacement");
+      } 
       Vector dr;
       double norm;
       double max = 0;
@@ -328,6 +336,11 @@ namespace DdMd
    */
    bool AtomStorage::needExchange(MPI::Intracomm& communicator, double skin) 
    {
+     
+      if (!isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian in needExchange");
+      } 
+
       // Calculate maximum square displacment among along nodes
       double maxSqDisp = maxSqDisplacement(); // maximum on node
       double maxSqDispAll;                    // global maximum
@@ -397,8 +410,8 @@ namespace DdMd
    */
    void AtomStorage::transformCartToGen(const Boundary& boundary) 
    {
-      if (!isCartesian_) {
-         UTIL_THROW("Coordinates not Cartesian on entry");
+      if (!isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian on entry");
       }
       Vector r;
       if (nAtom()) {
@@ -423,8 +436,8 @@ namespace DdMd
    */
    void AtomStorage::transformGenToCart(const Boundary& boundary) 
    {
-      if (isCartesian_) {
-         UTIL_THROW("Coordinates already Cartesian on entry");
+      if (isCartesian()) {
+         UTIL_THROW("Error: Coordinates are Cartesian on entry");
       }
       Vector r;
       if (nAtom()) {
@@ -491,31 +504,39 @@ namespace DdMd
       // if (nGhost() + nAtom() != j) 
       //   UTIL_THROW("nGhost + nAtom != j"); 
 
-      // Count local atoms on this processor.
+      // Iterate over, count and find local atoms on this processor.
       ConstAtomIterator localIter;
       j = 0;
       for (begin(localIter); localIter.notEnd(); ++localIter) {
          ++j;
          ptr = find(localIter->id());
-         if (ptr == 0)
+         if (ptr == 0) {
             UTIL_THROW("Unable to find local atom returned by iterator"); 
-         if (ptr != localIter.get())
+         }
+         if (ptr != localIter.get()) {
             UTIL_THROW("Inconsistent find(localIter->id()"); 
+         }
       }
-      if (j != nAtom())
+      if (j != nAtom()) {
          UTIL_THROW("Number from localIterator != nAtom()"); 
+      }
 
-      // Count ghost atoms
+      // Iterate over, count and find ghost atoms
       ConstGhostIterator ghostIter;
       j = 0;
       for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
          ++j;
          ptr = find(ghostIter->id());
-         if (ptr == 0)
-            UTIL_THROW("find(ghostIter->id() == 0"); 
+         if (ptr == 0) {
+            UTIL_THROW("find(ghostIter->id()) == 0"); 
+         }
+         if (ptr != ghostIter.get()) {
+            UTIL_THROW("Inconsistent find(ghostIter->id()"); 
+         }
       }
-      if (j != nGhost())
+      if (j != nGhost()) {
          UTIL_THROW("Number from ghostIterator != nGhost()"); 
+      }
 
       return true;
    }

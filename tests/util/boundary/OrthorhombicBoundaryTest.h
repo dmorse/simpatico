@@ -8,6 +8,7 @@
 #include <util/boundary/serialize.h>
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
+#include <util/random/Random.h>
 
 #include <util/archives/MemoryOArchive.h>
 #include <util/archives/MemoryIArchive.h>
@@ -303,6 +304,40 @@ public:
       TEST_ASSERT(eq(dRSq1, 1.97));
       TEST_ASSERT(eq(dRSq2, 1.97));
       TEST_ASSERT(eq(dRSq3, 1.97));
+
+   };
+
+   void testTransforms()
+   {
+      printMethod(TEST_FUNC);
+
+      Vector R, L;
+
+      // Setup Boundary
+      L[0] = 2.0;
+      L[1] = 3.0;
+      L[2] = 4.0;
+      boundary.setOrthorhombic(L);
+
+      Random random;
+      Vector Rg;
+      Vector Rc;
+      Vector Rg2;
+      int i, j;
+      random.setSeed(279346718238937);
+      for (i = 0; i < 1000; ++i) {
+         for (j=0; j < Dimension; ++j) {
+            Rg[j] = random.uniform(-0.5, 1.5);
+         }
+      }
+      boundary.transformGenToCart(Rg, Rc);
+      boundary.transformCartToGen(Rc, Rg2);
+      
+      for (int i = 0; i < Dimension; ++i) {
+         TEST_ASSERT(Rg[i] >= 0.0);
+         TEST_ASSERT(Rg[i] <  1.0);
+         TEST_ASSERT(eq(Rg[i], Rg2[i]));
+      }
 
    };
 

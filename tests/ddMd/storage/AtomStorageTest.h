@@ -10,6 +10,8 @@
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/chemistry/Atom.h>
 #include <util/containers/DPArray.h>
+#include <util/containers/DArray.h>
+#include <util/random/Random.h>
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>
@@ -43,6 +45,8 @@ public:
    void testIterators();
 
    void testSnapshot();
+
+   void testTransforms();
 
 };
 
@@ -291,6 +295,21 @@ void AtomStorageTest::testSnapshot()
    ptr->position()[1] = 8.8;
    ptr->position()[2] = 3.7;
 
+   
+   OrthorhombicBoundary boundary;
+   Vector L(2.0, 5.0, 4.0);
+   boundary.setOrthorhombic(L);
+
+   // Transform too and from generalized coordinates.
+   // This simply marks the coordinate system as Cartesian.
+   AtomIterator iter;
+   Vector Rg;
+   for (object().begin(iter); iter.notEnd(); ++iter) {
+      boundary.transformCartToGen(iter->position(), Rg);
+      iter->position() = Rg; 
+   }
+   object().transformGenToCart(boundary);
+
    object().makeSnapshot();
    TEST_ASSERT( eq(object().maxSqDisplacement(), 0.0));
    object().clearSnapshot();
@@ -315,11 +334,101 @@ void AtomStorageTest::testSnapshot()
    //std::cout << std::endl;
    //std::cout << object().maxSqDisplacement();
 
-   TEST_ASSERT( eq(object().maxSqDisplacement(), 0.1325));
+   TEST_ASSERT(eq(object().maxSqDisplacement(), 0.1325));
    object().clearSnapshot();
 
 }
  
+void AtomStorageTest::testTransforms()
+{
+   printMethod(TEST_FUNC);
+
+   DPArray<Atom>  localAtoms;
+   DPArray<Atom>  ghostAtoms;
+   DArray<Vector> gPositions;
+   DArray<Vector> cPositions;
+   Random        random;
+
+   localAtoms.allocate(object().atomCapacity());
+   ghostAtoms.allocate(object().ghostCapacity());
+   int totalCapacity = object().atomCapacity() + object().ghostCapacity();
+   gPositions.allocate(totalCapacity); 
+   cPositions.allocate(totalCapacity);
+   random.setSeed(274454136);
+
+   // Add local atoms
+   localAtoms.append(*object().addAtom(53));
+   localAtoms.append(*object().addAtom(18));
+   localAtoms.append(*object().addAtom(44));
+   localAtoms.append(*object().addAtom(82));
+   localAtoms.append(*object().addAtom(39));
+   localAtoms.append(*object().addAtom(21));
+   localAtoms.append(*object().addAtom(76));
+
+   // Add ghosts
+   ghostAtoms.append(*object().addGhost(35));
+   ghostAtoms.append(*object().addGhost(17));
+   ghostAtoms.append(*object().addGhost(92));
+   ghostAtoms.append(*object().addGhost(28));
+   ghostAtoms.append(*object().addGhost(73));
+
+   TEST_ASSERT(object().isValid());
+ 
+   AtomIterator localIter;
+   int nLocal = 0; 
+   int i = 0;
+   int j;
+   for (object().begin(localIter); localIter.notEnd(); ++localIter) {
+      for (j = 0; j < Dimension; ++j) {
+         localIter->position()[j] = random.uniform(-0.5, 1.5);
+      }
+      gPositions[i] = localIter->position();
+      ++nLocal;
+      ++i;
+   }
+   TEST_ASSERT(nLocal == object().nAtom());
+   TEST_ASSERT(nLocal == 7);
+
+   GhostIterator ghostIter;
+   int nGhost = 0; 
+   for (object().begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
+      for (j = 0; j < Dimension; ++j) {
+         ghostIter->position()[j] = random.uniform(-0.5, 1.5);
+      }
+      gPositions[i] = ghostIter->position();
+      ++nGhost;
+      ++i;
+   }
+   TEST_ASSERT(nGhost == object().nGhost());
+   TEST_ASSERT(nGhost == 5);
+
+   OrthorhombicBoundary boundary;
+   Vector L(2.0, 3.0, 4.0);
+   boundary.setOrthorhombic(L);
+
+   TEST_ASSERT(!object().isCartesian());
+   object().transformGenToCart(boundary);
+   TEST_ASSERT(object().isCartesian());
+   object().transformCartToGen(boundary);
+   TEST_ASSERT(!object().isCartesian());
+
+   // Check against stored positions
+   i = 0;
+   for (object().begin(localIter); localIter.notEnd(); ++localIter) {
+      for (j = 0; j < Dimension; ++j) {
+         TEST_ASSERT(eq(localIter->position()[j], gPositions[i][j]));
+      }
+      ++i;
+   }
+   for (object().begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
+      for (j = 0; j < Dimension; ++j) {
+         TEST_ASSERT(eq(ghostIter->position()[j], gPositions[i][j]));
+      }
+      ++i;
+   }
+
+}
+
 TEST_BEGIN(AtomStorageTest)
 TEST_ADD(AtomStorageTest, testReadParam)
 TEST_ADD(AtomStorageTest, testAddAtoms)
@@ -327,6 +436,7 @@ TEST_ADD(AtomStorageTest, testAddRemoveAtoms)
 TEST_ADD(AtomStorageTest, testClearGhosts)
 TEST_ADD(AtomStorageTest, testIterators)
 TEST_ADD(AtomStorageTest, testSnapshot)
+TEST_ADD(AtomStorageTest, testTransforms)
 TEST_END(AtomStorageTest)
 
 #endif

@@ -672,6 +672,9 @@ namespace Util
    inline LatticeSystem MonoclinicBoundary::latticeSystem()
    { return lattice_; }
 
+   /**
+   * Returns the generalized coordinates of Cartesian input Rc in output Rg.
+   */
    inline 
    void MonoclinicBoundary::transformCartToGen(const Vector& Rc, Vector& Rg) 
    const
@@ -682,7 +685,7 @@ namespace Util
    }
       
    /**
-   * Returns the Generalized coordinates of Rc in Rg.
+   * Returns the Cartesian coordinates of input Rg in output Rc.
    */
    inline 
    void MonoclinicBoundary::transformGenToCart(const Vector& Rg, Vector& Rc) 

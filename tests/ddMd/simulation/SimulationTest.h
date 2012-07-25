@@ -477,6 +477,7 @@ inline void SimulationTest::testIntegrate1()
       object().integrator().run(500);
       TEST_ASSERT(object().isValid());
    }
+   object().integrator().outputStatistics(std::cout);
 
 }
 
