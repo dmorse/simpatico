@@ -114,12 +114,12 @@ public:
       // Finish reading parameter file
       closeFile();
 
+      object().setPairCutoff(0.5);
+      object().allocate();
+
       MaskPolicy policy = MaskBonded;
       std::ifstream configFile("in/config");
       configIo.readConfig(configFile, policy);
-
-      object().allocate();
-      object().setPairCutoff(0.5);
 
       int  nAtom = 0;     // Number received on this processor.
       int  nAtomAll  = 0; // Number received on all processors.
@@ -140,7 +140,7 @@ public:
    {
       Vector ranges;
       double min, max;
-      if (UTIL_ORTHOGONAL) {
+      if (UTIL_ORTHOGONAL || atomStorage.isCartesian()) {
          for (int i = 0; i < Dimension; ++i) {
             ranges[i] = range;
          }
@@ -297,7 +297,6 @@ public:
 
    }
 
-
    void testGhostUpdate()
    {
       printMethod(TEST_FUNC);
@@ -437,6 +436,113 @@ public:
 
    }
 
+   void testExchangeUpdateCycle()
+   {
+      printMethod(TEST_FUNC);
+
+      int  nAtom  = 0;    // Number of atoms on this processor.
+      int  nGhost = 0;    // Number of ghosts on this processor.
+
+      AtomIterator   atomIter;
+      GhostIterator  ghostIter;
+
+      double range = 0.4;
+      displaceAtoms(range);
+
+      atomStorage.clearSnapshot();
+      object().exchange();
+
+      nAtom = atomStorage.nAtom();
+      nGhost = atomStorage.nGhost();
+
+      // Assert that all atoms are within the processor domain.
+      atomStorage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         TEST_ASSERT(domain.isInDomain(atomIter->position()));
+      }
+
+      // Assert that all ghosts are outside the processor domain.
+      atomStorage.begin(ghostIter);
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
+         TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
+      }
+
+      TEST_ASSERT(atomStorage.isValid());
+      TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
+                  true));
+
+      if (!UTIL_ORTHOGONAL) {
+         TEST_ASSERT(!atomStorage.isCartesian());
+         atomStorage.transformGenToCart(boundary);
+      }
+      TEST_ASSERT(atomStorage.isCartesian());
+      atomStorage.makeSnapshot();
+
+      range = 0.02;
+      double skin = 0.2;
+      int  nExchange = 0;
+      int  nUpdate = 0;
+      bool  needExchange;
+      for (int i=0; i < 200; ++i) {
+
+         TEST_ASSERT(atomStorage.isCartesian());
+         displaceAtoms(range);
+
+         needExchange = atomStorage.needExchange(domain.communicator(), skin);
+         if (needExchange) {
+            atomStorage.clearSnapshot();
+            if (!UTIL_ORTHOGONAL) {
+               atomStorage.transformCartToGen(boundary);
+            }
+            object().exchange();
+
+            nAtom  = atomStorage.nAtom();
+            nGhost = atomStorage.nGhost();
+   
+            // Check that all atoms are within the processor domain.
+            atomStorage.begin(atomIter);
+            for ( ; atomIter.notEnd(); ++atomIter) {
+               TEST_ASSERT(domain.isInDomain(atomIter->position()));
+            }
+   
+            // Check that all ghosts are outside the processor domain.
+            atomStorage.begin(ghostIter);
+            for ( ; ghostIter.notEnd(); ++ghostIter) {
+               TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
+            }
+   
+            TEST_ASSERT(atomStorage.isValid());
+            TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
+                                            true)); 
+            #ifdef INTER_ANGLE
+            TEST_ASSERT(angleStorage.isValid(atomStorage, 
+                        domain.communicator(), true));
+            #endif
+            #ifdef INTER_DIHEDRAL
+            TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
+                        domain.communicator(), true));
+            #endif
+
+            if (!UTIL_ORTHOGONAL) {
+               atomStorage.transformGenToCart(boundary);
+            }
+            atomStorage.makeSnapshot();
+            ++nExchange;
+
+         } else {
+
+            object().update();
+            ++ nUpdate;
+
+         }
+      }
+      if (domain.gridRank() == 0) {
+         std::cout << "nExchange = " << nExchange << std::endl;
+         std::cout << "nUpdate   = " << nUpdate << std::endl;
+      }
+
+   }
+
 };
 
 TEST_BEGIN(ExchangerTest)
@@ -445,6 +551,7 @@ TEST_ADD(ExchangerTest, testAtomExchange)
 TEST_ADD(ExchangerTest, testExchange)
 TEST_ADD(ExchangerTest, testGhostUpdate)
 TEST_ADD(ExchangerTest, testGhostUpdateCycle)
+TEST_ADD(ExchangerTest, testExchangeUpdateCycle)
 TEST_END(ExchangerTest)
 
 #endif /* EXCHANGER_TEST_H */

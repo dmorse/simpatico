@@ -530,9 +530,10 @@ namespace DdMd
          if (ptr == 0) {
             UTIL_THROW("find(ghostIter->id()) == 0"); 
          }
-         if (ptr != ghostIter.get()) {
-            UTIL_THROW("Inconsistent find(ghostIter->id()"); 
-         }
+         // We do NOT test if ptr == ghostIter.get(), because it is possible
+         // to have multiple ghosts with the same id on one processor. One to 
+         // one correspondence of ids and pointers is guaranteed only for 
+         // local atoms.
       }
       if (j != nGhost()) {
          UTIL_THROW("Number from ghostIterator != nGhost()"); 

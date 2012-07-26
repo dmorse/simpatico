@@ -156,7 +156,6 @@ public:
 
       object().setPairCutoff(pairPotential.cutoff());
       object().allocate();
-
       forces.allocate(atomStorage.totalAtomCapacity());
 
       MaskPolicy policy = MaskBonded;
