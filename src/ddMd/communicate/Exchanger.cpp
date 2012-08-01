@@ -185,7 +185,7 @@ namespace DdMd
                               if (coordinate < inner_(i, j)) {
                                  ++nOut;
                                  if (coordinate < bound_(i, j)) {
-                                    ++nEx[j];
+                                    nEx[j] += 1;
                                  }
                               }
                               if (coordinate > outer_(i, j)) {
@@ -196,7 +196,7 @@ namespace DdMd
                               if (coordinate > inner_(i, j)) {
                                  ++nOut;
                                  if (coordinate > bound_(i, j)) {
-                                    ++nEx[j];
+                                    nEx[j] += 1;
                                  }
                               }
                               if (coordinate < outer_(i, j)) {
@@ -206,7 +206,7 @@ namespace DdMd
                         } else { 
                            if (atomPtr->plan().exchange(i, j)) {
                               ++nOut;
-                              ++nEx[j];
+                              nEx[j] += 1;
                            } else {
                               ++nIn;
                            }
@@ -232,7 +232,7 @@ namespace DdMd
                }
                #endif
 
-            }
+            } // end if multiProcessorDirection
          } // end for i
 
          // Clear pointers to all ghost atoms in group

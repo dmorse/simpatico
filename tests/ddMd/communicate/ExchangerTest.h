@@ -314,13 +314,23 @@ public:
       GhostIterator  ghostIter;
       DArray<Vector> ghostPositions;
 
-      double range = 0.4;
+      double range = 0.1;
       displaceAtoms(range);
+
+      atomStorage.clearSnapshot();
       object().exchange();
 
       // Record number of atoms and ghosts after exchange
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
+
+      // Transform to Cartesian coordinates
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage.transformGenToCart(boundary);
+      }
+      atomStorage.makeSnapshot();
+
+      //displaceAtoms(range);
 
       // Update ghost positions
       object().update();
@@ -330,12 +340,16 @@ public:
       TEST_ASSERT(nGhost == atomStorage.nGhost());
 
       // Check that all atoms are accounted for after atom and ghost exchanges.
-      nAtom = atomStorage.nAtom();
       communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
       if (myRank == 0) {
          // std::cout << "Total atom count (post ghost exchange) = " 
          //           << nAtomAll << std::endl;
          TEST_ASSERT(nAtomAll == atomCount);
+      }
+
+      // Transform back to generalized coordinates
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage.transformCartToGen(boundary);
       }
 
       // Check that all atoms are within the processor domain.
@@ -361,6 +375,7 @@ public:
       TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                   domain.communicator(), true));
       #endif
+
 
    }
 
@@ -397,6 +412,11 @@ public:
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   true));
 
+      // Transform to Cartesian coordinates
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage.transformGenToCart(boundary);
+      }
+
       range = 0.1;
       for (int i=0; i < 3; ++i) {
 
@@ -407,6 +427,11 @@ public:
             TEST_ASSERT(nGhost == atomStorage.nGhost());
             TEST_ASSERT(nAtom == atomStorage.nAtom());
             displaceAtoms(range);
+         }
+
+         // Transform to Cartesian coordinates
+         if (!UTIL_ORTHOGONAL) {
+            atomStorage.transformCartToGen(boundary);
          }
 
          object().exchange();
@@ -436,6 +461,12 @@ public:
          TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                      domain.communicator(), true));
          #endif
+
+         // Transform to Cartesian coordinates
+         if (!UTIL_ORTHOGONAL) {
+            atomStorage.transformGenToCart(boundary);
+         }
+
       }
 
    }
