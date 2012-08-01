@@ -166,7 +166,7 @@ namespace DdMd
       assert(i >= 0);
       assert(i < Dimension);
       assert(j >= 0);
-      assert(j <= 1);
+      assert(j < 2);
 
       double dL;
       if (UTIL_ORTHOGONAL) {
@@ -219,8 +219,12 @@ namespace DdMd
          } else {
             dL = 1.0 / double(gridDimensions_[i]);
          }
-         if (position[i] <   gridCoordinates_[i]*dL)      isIn = false;
-         if (position[i] >= (gridCoordinates_[i] + 1)*dL) isIn = false;
+         if (position[i] <   gridCoordinates_[i]*dL) {
+            isIn = false;
+         }
+         if (position[i] >= (gridCoordinates_[i] + 1)*dL) {
+            isIn = false;
+         }
       }
       return isIn;
    }

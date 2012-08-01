@@ -139,7 +139,8 @@ public:
    void displaceAtoms(double range)
    {
       Vector ranges;
-      double min, max;
+
+      // Set ranges for random diplacements in each direction.
       if (UTIL_ORTHOGONAL || atomStorage.isCartesian()) {
          for (int i = 0; i < Dimension; ++i) {
             ranges[i] = range;
@@ -149,15 +150,18 @@ public:
             ranges[i] = range/boundary.length(i);
          }
       }
+
+      // Iterate over atoms, adding random displacements.
+      double min, max;
       AtomIterator atomIter;
-      for(int i = 0; i < Dimension; ++i) {
-         max = ranges[i];
-         min = -max;
-         atomStorage.begin(atomIter);
-         for ( ; atomIter.notEnd(); ++atomIter) {
+      for (atomStorage.begin(atomIter); atomIter.notEnd(); ++atomIter) {
+         for (int i = 0; i < Dimension; ++i) {
+            max = ranges[i];
+            min = -max;
             atomIter->position()[i] += random.uniform(min, max);
          }
       }
+
    }
 
    virtual void testDistribute()
@@ -446,8 +450,12 @@ public:
       AtomIterator   atomIter;
       GhostIterator  ghostIter;
 
-      double range = 0.4;
+      double range = 0.2;
+
+      #if 0
+      atomStorage.makeSnapshot();
       displaceAtoms(range);
+      #endif
 
       atomStorage.clearSnapshot();
       object().exchange();
@@ -467,9 +475,18 @@ public:
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
       }
 
+      // Check Atom and Group Storage containers
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   true));
+      #ifdef INTER_ANGLE
+      TEST_ASSERT(angleStorage.isValid(atomStorage, 
+                  domain.communicator(), true));
+      #endif
+      #ifdef INTER_DIHEDRAL
+      TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
+                  domain.communicator(), true));
+      #endif
 
       if (!UTIL_ORTHOGONAL) {
          TEST_ASSERT(!atomStorage.isCartesian());
@@ -478,18 +495,35 @@ public:
       TEST_ASSERT(atomStorage.isCartesian());
       atomStorage.makeSnapshot();
 
+      #if 0
+      if (domain.gridRank() == 0) {
+         std::cout << std::endl;
+      }
+      #endif
+
       range = 0.02;
-      double skin = 0.2;
+      double skin = 0.10;
       int  nExchange = 0;
       int  nUpdate = 0;
+      int  i, j;
       bool  needExchange;
-      for (int i=0; i < 200; ++i) {
+
+      j = 0;
+      for (i=0; i < 200; ++i) {
 
          TEST_ASSERT(atomStorage.isCartesian());
          displaceAtoms(range);
+         ++j;
 
          needExchange = atomStorage.needExchange(domain.communicator(), skin);
-         if (needExchange) {
+         if (needExchange || j > 10) {
+
+            #if 0
+            if (domain.gridRank() == 0) {
+               std::cout << "step i = " << i << "  E" << std::endl;
+            }
+            #endif
+
             atomStorage.clearSnapshot();
             if (!UTIL_ORTHOGONAL) {
                atomStorage.transformCartToGen(boundary);
@@ -510,33 +544,46 @@ public:
             for ( ; ghostIter.notEnd(); ++ghostIter) {
                TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
             }
-   
-            TEST_ASSERT(atomStorage.isValid());
-            TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
-                                            true)); 
-            #ifdef INTER_ANGLE
-            TEST_ASSERT(angleStorage.isValid(atomStorage, 
-                        domain.communicator(), true));
-            #endif
-            #ifdef INTER_DIHEDRAL
-            TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
-                        domain.communicator(), true));
-            #endif
 
             if (!UTIL_ORTHOGONAL) {
                atomStorage.transformGenToCart(boundary);
             }
             atomStorage.makeSnapshot();
             ++nExchange;
+            j = 0;
 
          } else {
 
             object().update();
+
+            TEST_ASSERT(nGhost == atomStorage.nGhost());
+            TEST_ASSERT(nAtom == atomStorage.nAtom());
+
             ++ nUpdate;
+ 
+            #if 0
+            if (domain.gridRank() == 0) {
+               std::cout << "step i = " << i << "  U" << std::endl;
+            }
+            #endif
 
          }
+   
+         TEST_ASSERT(atomStorage.isValid());
+         TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(),
+                                         true)); 
+         #ifdef INTER_ANGLE
+         TEST_ASSERT(angleStorage.isValid(atomStorage, 
+                     domain.communicator(), true));
+         #endif
+         #ifdef INTER_DIHEDRAL
+         TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
+                     domain.communicator(), true));
+         #endif
+
       }
       if (domain.gridRank() == 0) {
+         std::cout << std::endl;
          std::cout << "nExchange = " << nExchange << std::endl;
          std::cout << "nUpdate   = " << nUpdate << std::endl;
       }

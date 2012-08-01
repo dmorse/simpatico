@@ -77,7 +77,7 @@ namespace DdMd
       allocate();
    }
 
-   /**
+   /*
    * Allocate and initialize all containers (private).
    */
    void AtomStorage::allocate()
@@ -282,8 +282,8 @@ namespace DdMd
 
    // Snapshot functions
 
-   /**
-   * Record current positions of all local atoms.
+   /*
+   * Record current positions of all local atoms and lock storage.
    */
    void AtomStorage::makeSnapshot()
    {
@@ -301,13 +301,15 @@ namespace DdMd
       locked_ = true;
    }
 
-   /**
+   /*
    * Clear snapshot of local atom positions.
    */
    void AtomStorage::clearSnapshot()
-   {  locked_ = false; }
+   {
+      locked_ = false; 
+   }
 
-   /**
+   /*
    * Return max. sq. displacement of local atoms on this node since snapshot.
    */
    double AtomStorage::maxSqDisplacement()
@@ -315,15 +317,20 @@ namespace DdMd
       if (!isCartesian()) {
          UTIL_THROW("Error: Coordinates not Cartesian in maxSqDisplacement");
       } 
+      if (!locked_) {
+         UTIL_THROW("Error: AtomStorage not locked in maxSqDisplacement");
+      } 
       Vector dr;
       double norm;
-      double max = 0;
+      double max = 0.0;
       AtomIterator iter;
       int i = 0;
       for (begin(iter); iter.notEnd(); ++iter) {
          dr.subtract(iter->position(), snapshot_[i]);
          norm = dr.square();
-         if (norm > max) max = norm;
+         if (norm > max) {
+            max = norm;
+         }
          ++i;
       }
       return max;
@@ -405,7 +412,7 @@ namespace DdMd
    void AtomStorage::begin(ConstGhostIterator& iterator) const
    {  ghostSet_.begin(iterator); }
 
-   /**
+   /*
    * Transform all atomic coordinates from Cartesian to generalized.
    */
    void AtomStorage::transformCartToGen(const Boundary& boundary) 
@@ -415,23 +422,23 @@ namespace DdMd
       }
       Vector r;
       if (nAtom()) {
-         AtomIterator  iter;
-         for (begin(iter); iter.notEnd(); ++iter) {
-            r = iter->position();
-            boundary.transformCartToGen(r, iter->position());
+         AtomIterator  atomIter;
+         for (begin(atomIter); atomIter.notEnd(); ++atomIter) {
+            r = atomIter->position();
+            boundary.transformCartToGen(r, atomIter->position());
          }
       }
       if (nGhost()) {
-         GhostIterator  iter;
-         for (begin(iter); iter.notEnd(); ++iter) {
-            r = iter->position();
-            boundary.transformCartToGen(r, iter->position());
+         GhostIterator  ghostIter;
+         for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
+            r = ghostIter->position();
+            boundary.transformCartToGen(r, ghostIter->position());
          }
       }
       isCartesian_ = false;
    }
 
-   /**
+   /*
    * Transform all atomic coordinates from generalized to Cartesian.
    */
    void AtomStorage::transformGenToCart(const Boundary& boundary) 
@@ -441,24 +448,24 @@ namespace DdMd
       }
       Vector r;
       if (nAtom()) {
-         AtomIterator iter;
-         for (begin(iter); iter.notEnd(); ++iter) {
-            r = iter->position();
-            boundary.transformGenToCart(r, iter->position());
+         AtomIterator atomIter;
+         for (begin(atomIter); atomIter.notEnd(); ++atomIter) {
+            r = atomIter->position();
+            boundary.transformGenToCart(r, atomIter->position());
          }
       }
       if (nGhost()) {
-         GhostIterator iter;
-         for (begin(iter); iter.notEnd(); ++iter) {
-            r = iter->position();
-            boundary.transformGenToCart(r, iter->position());
+         GhostIterator ghostIter;
+         for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
+            r = ghostIter->position();
+            boundary.transformGenToCart(r, ghostIter->position());
          }
       }
       isCartesian_ = true;
    }
 
    #ifdef UTIL_MPI
-   /**
+   /*
    * Compute, store and return total number of atoms on all processors.
    */
    void AtomStorage::computeNAtomTotal(MPI::Intracomm& communicator)

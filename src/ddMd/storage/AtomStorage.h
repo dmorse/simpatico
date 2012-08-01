@@ -237,18 +237,19 @@ namespace DdMd
       //@{
 
       /**
-      * Record current positions of all local atoms.
+      * Record current positions of all local atoms and lock storage.
       * 
-      * This method also locks the storage, prohibiting addition
-      * or removal of atoms or ghosts until clearSnapshot is called.
+      * This method stores positions of local atoms and locks the storage, 
+      * prohibiting addition or removal of atoms or ghosts until clearSnapshot 
+      * is called.
       */
       void makeSnapshot();
 
       /**
       * Clear previous snapshot.
       *
-      * This method removes the lock imposed by a previous call
-      * to takeSnapshot(), allowing changes to atom and ghost sets.
+      * This method removes the lock imposed by a previous call to
+      * makeSnapshot(), allowing changes to atom and ghost sets.
       */
       void clearSnapshot();
 
@@ -263,7 +264,6 @@ namespace DdMd
       double maxSqDisplacement();
 
       #ifdef UTIL_MPI
-
       /**
       * Is exchange of atoms among processors needed?
       *
@@ -290,7 +290,6 @@ namespace DdMd
       * \return true if reneighboring is necessary
       */
       bool needExchange(double skin);
-
       #endif
 
       //@}

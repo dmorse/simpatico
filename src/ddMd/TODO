@@ -3,23 +3,10 @@ Small Things
  
 - Add timed computeForces method to DdMd::Integrator.
 
-
 Non-orthogonal Boundaries
 -------------------------
 
-- Go through Exchanger and Domain classes with Taher. Make sure that 
-  everything can be done with generalized coordinates. 
-
-- Search for other uses of Domain::domainBound outside Exchanger.
-  Consider changing to use of generalized coordinates for domainBound
-  throughout.
-
-- Separate buildCellList and buildPairList in PairPotential, to make 
-  change in coordinate more explicit.
-
-- Add transformCartToGen() and transformGenToCart() methods
-  to AtomStorage. Test them.
-
+- Diagnose and fix bug in completing bonds after exchanging ghosts.
 
 Testing
 -------
@@ -34,7 +21,7 @@ Testing
 Flexible Unit Cells:
 --------------------
 
-- Generalize snapShot and needsExchange methods in AtomStorage to allow
+- Generalize makeSnapShot and needsExchange methods in AtomStorage to allow
   for deforming boundaries. 
 
 Constant Pressure:
@@ -42,25 +29,12 @@ Constant Pressure:
 
 - Finish and test methods to evaluate stress.
 
-- Add vFlag and eFlag to Simulation, and as arguments to addForce() 
-  method of each potential.
-
-- More sophisticated version of snapshot test.
+- Add vFlag and eFlag to Simulation, and as arguments to addForce() method 
+  of each potential.
 
 - Port NPH integrator.
 
 - Write a reversible NPT integrator.
-
-
-Nonorthogonal Boundaries
-------------------------
-
-- Modify exchanger algorithm so as to use generalized coordinates throughout.
-
-- Separate CellList from PairList. Use generalized coordinates in cell list.
-
-- Consider moving CellList and PairList outside of PairPotential. They could be
-  associated objects. 
 
 
 Hybrid MD

@@ -157,6 +157,7 @@ namespace DdMd
       double coordinate;
       GroupIterator<N> groupIter;
       Atom* atomPtr;
+      int nEx[2];
       int nIn;
       int nOut;
       int i, j, k;
@@ -173,21 +174,30 @@ namespace DdMd
                   choose = false;
                   nIn = 0;
                   nOut = 0;
+                  nEx[j] = 0;
                   for (k = 0; k < N; ++k) {
                      atomPtr = groupIter->atomPtr(k);
                      if (atomPtr) {
                         coordinate = atomPtr->position()[i];
                         if (atomPtr->isGhost()) {
                            if (j == 0) {
+                              assert(inner_(i, j) > bound_(i, j));
                               if (coordinate < inner_(i, j)) {
                                  ++nOut;
+                                 if (coordinate < bound_(i, j)) {
+                                    ++nEx[j];
+                                 }
                               }
                               if (coordinate > outer_(i, j)) {
                                  ++nIn;
                               }
                            } else {
+                              assert(inner_(i, j) < bound_(i, j));
                               if (coordinate > inner_(i, j)) {
                                  ++nOut;
+                                 if (coordinate > bound_(i, j)) {
+                                    ++nEx[j];
+                                 }
                               }
                               if (coordinate < outer_(i, j)) {
                                  ++nIn;
@@ -196,6 +206,7 @@ namespace DdMd
                         } else { 
                            if (atomPtr->plan().exchange(i, j)) {
                               ++nOut;
+                              ++nEx[j];
                            } else {
                               ++nIn;
                            }
@@ -214,6 +225,13 @@ namespace DdMd
                      groupIter->plan().clearGhost(i, j);
                   }
                } // end for j
+
+               #if 0
+               if (nEx[0] > 0 && nEx[1] > 0) {
+                  UTIL_THROW("Group spanning 3 nodes");  
+               }
+               #endif
+
             }
          } // end for i
 
@@ -1131,6 +1149,10 @@ namespace DdMd
    void Exchanger::update()
    {
       stamp(START);
+      if (!atomStoragePtr_->isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian on entry to update");
+      } 
+
       Vector lengths = boundaryPtr_->lengths();
       double rshift;
       Atom*  atomPtr;
@@ -1141,11 +1163,9 @@ namespace DdMd
 
             // Shift on receiving processor for periodic boundary conditions
             shift = domainPtr_->shift(i, j);
-            if (UTIL_ORTHOGONAL) {
-               rshift = lengths[i]*shift;
-            } else {
-               rshift = 1.0*shift;
-            }
+
+            // Shift in Cartesian coordinate i (Cartesian throughout update)
+            rshift = lengths[i]*shift;
 
             if (multiProcessorDirection_[i]) {
 
@@ -1172,7 +1192,6 @@ namespace DdMd
                   atomPtr = &recvArray_(i, j)[k];
                   bufferPtr_->unpackUpdate(*atomPtr);
                   if (shift) {
-                     //atomPtr->position()[i] += shift * lengths[i];
                      atomPtr->position()[i] += rshift;
                   }
                }
