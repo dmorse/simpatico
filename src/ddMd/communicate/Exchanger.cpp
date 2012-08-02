@@ -250,7 +250,7 @@ namespace DdMd
 
    #ifdef UTIL_MPI
    /*
-   * Pack bonds that contain postmarked atoms.
+   * Pack groups that contain postmarked atoms.
    */
    template <int N>
    void Exchanger::packGroups(int i, int j, 
@@ -290,7 +290,7 @@ namespace DdMd
    }
 
    /*
-   * Remove empty bonds from GroupStorage<N>.
+   * Remove empty groups from GroupStorage<N>.
    */
    template <int N>
    void Exchanger::removeEmptyGroups(GroupStorage<N>& storage,
@@ -317,20 +317,22 @@ namespace DdMd
       }
    }
 
-   // Unpack bonds into bondStorage.
+   /*
+   * Unpack groups into bondStorage.
+   */
    template <int N>
    void Exchanger::unpackGroups(GroupStorage<N>& storage)
    {
       Group<N>* newGroupPtr;
       Group<N>* oldGroupPtr;
-      int bondId;
+      int groupId;
 
       bufferPtr_->beginRecvBlock();
       while (bufferPtr_->recvSize() > 0) {
          newGroupPtr = storage.newPtr();
          bufferPtr_->unpackGroup<N>(*newGroupPtr);
-         bondId = newGroupPtr->id();
-         oldGroupPtr = storage.find(bondId);
+         groupId = newGroupPtr->id();
+         oldGroupPtr = storage.find(groupId);
          if (oldGroupPtr) {
             storage.returnPtr();
             atomStoragePtr_->findGroupAtoms(*oldGroupPtr);
@@ -343,6 +345,9 @@ namespace DdMd
    }
    #endif
 
+   /*
+   * Set ghost communication flags for all atoms in incomplete groups.
+   */
    template <int N>
    void Exchanger::finishGroupGhostPlan(GroupStorage<N>& storage)
    {
@@ -351,12 +356,13 @@ namespace DdMd
       Plan* planPtr;
       int i, j, k, nAtom;
 
-      // Set ghost communication flags for atoms in incomplete bonds
+      // Loop over groups
       storage.begin(groupIter);
       for ( ; groupIter.notEnd(); ++groupIter) {
 
          #ifdef UTIL_DEBUG
          #ifdef EXCHANGER_DEBUG
+         // Validate group
          int atomId;
          nAtom  = 0;
          for (k = 0; k < N; ++k) {
@@ -387,7 +393,7 @@ namespace DdMd
          #endif
          #endif
 
-         // Set communication flags for atoms in incomplete groups
+         // If this group is incomplete, set ghost flags for atoms 
          nAtom = groupIter->nPtr();
          if (nAtom < N) {
             for (i = 0; i < Dimension; ++i) {
@@ -465,14 +471,6 @@ namespace DdMd
             multiProcessorDirection_[i] = 0;
          }
       }
-
-      /**
-      * In this function:
-      *  - sendArray_ is filled with ptrs to ghosts for transfer
-      *  - recvArray_ is filled with ptrs to local atoms for removal
-      * In exchangeGhosts(), recvArray is cleared, and then refilled 
-      * with pointers to ghosts as they are received (hence the name).
-      */
 
       // Compute communication plan for every local atom
       atomStoragePtr_->begin(atomIter);
@@ -626,13 +624,14 @@ namespace DdMd
             for ( ; atomIter.notEnd(); ++atomIter) {
 
                #ifdef UTIL_DEBUG
+               coordinate = atomIter->position()[i];
                #ifdef EXCHANGER_DEBUG
                {
                   bool choose;
                   if (j == 0) {
-                     choose = (atomIter->position()[i] < bound);
+                     choose = (coordinate < bound);
                   } else {
-                     choose = (atomIter->position()[i] > bound);
+                     choose = (coordinate > bound);
                   }
                   assert(choose == atomIter->plan().exchange(i, j));
                }
@@ -654,21 +653,19 @@ namespace DdMd
                      #ifdef UTIL_DEBUG
                      #ifdef EXCHANGER_DEBUG 
                      assert(shift);
-                     double coord = atomIter->position()[i];
-                     assert(coord > -1.0*fabs(rshift));
-                     assert(coord <  2.0*fabs(rshift));
+                     assert(coordinate > -1.0*fabs(rshift));
+                     assert(coordinate <  2.0*fabs(rshift));
                      #endif
                      #endif
 
                      // Shift position if required by periodic b.c.
                      if (shift) {
-                        //atomIter->position()[i] += shift * lengths[i];
                         atomIter->position()[i] += rshift;
                      }
 
                      #ifdef UTIL_DEBUG
-                     assert (atomIter->position()[i] >= domainPtr_->domainBound(i, 0));
-                     assert (atomIter->position()[i] < domainPtr_->domainBound(i, 1));
+                     assert (coordinate >= domainPtr_->domainBound(i, 0));
+                     assert (coordinate < domainPtr_->domainBound(i, 1));
                      #endif
 
                      // For gridDimension==1, only nonbonded ghosts exist.
@@ -698,7 +695,7 @@ namespace DdMd
                // End atom send block
                bufferPtr_->endSendBlock();
 
-               // Pack bonds that contain postmarked atoms.
+               // Pack groups that contain postmarked atoms.
                packGroups<2>(i, j, *bondStoragePtr_, emptyBonds_);
                #ifdef INTER_ANGLE
                packGroups<3>(i, j, *angleStoragePtr_, emptyAngles_);
@@ -721,7 +718,7 @@ namespace DdMd
                }
                stamp(REMOVE_ATOMS);
      
-               // Remove empty bonds from bondStorage.
+               // Remove empty groups
                removeEmptyGroups<2>(*bondStoragePtr_, emptyBonds_);
                #ifdef INTER_ANGLE
                removeEmptyGroups<3>(*angleStoragePtr_, emptyAngles_);
@@ -799,7 +796,7 @@ namespace DdMd
                assert(bufferPtr_->recvSize() == 0);
                stamp(UNPACK_ATOMS);
 
-               // Unpack bonds into bondStorage.
+               // Unpack groups
                unpackGroups<2>(*bondStoragePtr_);
                #ifdef INTER_ANGLE
                unpackGroups<3>(*angleStoragePtr_);
