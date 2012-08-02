@@ -23,7 +23,6 @@
 #include <string>
 
 #define EXCHANGER_DEBUG
-#define EXCHANGER_GHOST
 
 namespace DdMd
 {
@@ -404,15 +403,11 @@ namespace DdMd
                            atomPtr = groupIter->atomPtr(k);
                            if (atomPtr) {
                               assert(!atomPtr->isGhost());
-                              #ifdef EXCHANGER_GHOST
                               planPtr = &atomPtr->plan();
                               if (!planPtr->ghost(i, j)) { 
                                  planPtr->setGhost(i, j);
                                  sendArray_(i,j).append(*atomPtr);
                               }
-                              #else
-                              atomPtr->plan().setGhost(i, j);
-                              #endif
                            }
                         }
                      }
@@ -499,11 +494,9 @@ namespace DdMd
                if (j == 0) { // Communicate with lower index
                   if (coordinate < bound_(i, j)) {
                      planPtr->setExchange(i, j);
-                     #ifdef EXCHANGER_GHOST
                      if (multiProcessorDirection_[i]) {
                         isHome = false;
                      }
-                     #endif
                      if (coordinate > outer_(i, j)) {
                         planPtr->setGhost(i, jc);
                         isGhost = true;
@@ -517,11 +510,9 @@ namespace DdMd
                } else { // j == 1, communicate with upper index
                   if (coordinate > bound_(i, j)) {
                      planPtr->setExchange(i, j);
-                     #ifdef EXCHANGER_GHOST
                      if (multiProcessorDirection_[i]) {
                         isHome = false;
                      }
-                     #endif
                      if (coordinate < outer_(i, j)) {
                         planPtr->setGhost(i, jc);
                         isGhost = true;
@@ -537,7 +528,6 @@ namespace DdMd
             } // end for j
          } // end for i
 
-         #ifdef EXCHANGER_GHOST
          // Add atoms that will be retained by this processor,
          // but will be communicated as ghosts to sendArray_
          if (isGhost && isHome) {
@@ -549,7 +539,6 @@ namespace DdMd
                }
             }
          }
-         #endif
 
       } // end atom loop, end compute plan
       stamp(ATOM_PLAN);
@@ -761,7 +750,6 @@ namespace DdMd
                   }
                   #endif
 
-                  #ifdef EXCHANGER_GHOST
                   // Determine if new atom will stay on this processor.
                   isHome = true;
                   if (i < Dimension - 1) {
@@ -776,7 +764,7 @@ namespace DdMd
                     }
                   }
 
-                  // If atom will stay, add to ghost sendArrays
+                  // If atom will stay, add to sendArrays for ghosts
                   if (isHome) {
                      for (ip = 0; ip < Dimension; ++ip) {
                         for (jp = 0; jp < 2; ++jp) {
@@ -786,7 +774,6 @@ namespace DdMd
                         }
                      }
                   }
-                  #endif
 
                }
                assert(bufferPtr_->recvSize() == 0);
@@ -901,20 +888,6 @@ namespace DdMd
             recvArray_(i, j).clear();
          }
       }
-
-      #ifndef EXCHANGER_GHOST
-      AtomIterator  localIter;
-      atomStoragePtr_->begin(localIter);
-      for ( ; localIter.notEnd(); ++localIter) {
-         for (i = 0; i < Dimension; ++i) {
-            for (j = 0; j < 2; ++j) {
-               if (localIter->plan().ghost(i, j)) {
-                   sendArray_(i, j).append(*localIter);
-               }
-            }
-         }
-      }
-      #endif
 
       #ifdef UTIL_DEBUG
       double coordinate;

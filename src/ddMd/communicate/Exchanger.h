@@ -15,7 +15,7 @@
 #include <util/containers/FMatrix.h>
 #include <util/containers/APArray.h>
 
-#define DDMD_EXCHANGER_TIMER
+//#define DDMD_EXCHANGER_TIMER
 
 namespace DdMd
 {

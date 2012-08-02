@@ -5,6 +5,9 @@ Testing
 
 - Test conservation of energy with dihedrals.
 
+- Improve testing of PairList - check that number of inner pairs doesn't
+  change upon reneighboring, in unit tests and as optional test in integrator.
+
 Flexible Unit Cells:
 --------------------
 
@@ -42,10 +45,6 @@ Cell List and Pair List:
 - Modify Cell::getNeighbors method to pass back a list of AtomTag objects, 
   rather than an array of pointers. Provide a CellList method to decide if 
   a particular pair is within the cutoff.
-
-- Improve testing of PairList - check that number of inner pairs doesn't
-  change upon reneighboring, in unit tests and as optional test in main
-  loop.
 
 
 Configuration File IO
@@ -86,5 +85,4 @@ Restart
 -------
 
 - Add restart capability.
-
 
