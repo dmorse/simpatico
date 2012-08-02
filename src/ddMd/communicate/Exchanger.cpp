@@ -1129,7 +1129,6 @@ namespace DdMd
       } 
 
       Vector lengths = boundaryPtr_->lengths();
-      double rshift;
       Atom*  atomPtr;
       int    i, j, k, source, dest, size, shift;
 
@@ -1138,9 +1137,6 @@ namespace DdMd
 
             // Shift on receiving processor for periodic boundary conditions
             shift = domainPtr_->shift(i, j);
-
-            // Shift in Cartesian coordinate i (Cartesian throughout update)
-            rshift = lengths[i]*shift;
 
             if (multiProcessorDirection_[i]) {
 
@@ -1167,7 +1163,7 @@ namespace DdMd
                   atomPtr = &recvArray_(i, j)[k];
                   bufferPtr_->unpackUpdate(*atomPtr);
                   if (shift) {
-                     atomPtr->position()[i] += rshift;
+                     boundaryPtr_->applyShift(atomPtr->position(), i, shift);
                   }
                }
                stamp(UNPACK_UPDATE);
@@ -1183,7 +1179,7 @@ namespace DdMd
                   atomPtr = &recvArray_(i, j)[k];
                   atomPtr->position() = sendArray_(i, j)[k].position();
                   if (shift) {
-                     atomPtr->position()[i] += rshift;
+                     boundaryPtr_->applyShift(atomPtr->position(), i, shift);
                   }
                }
                stamp(LOCAL_UPDATE);

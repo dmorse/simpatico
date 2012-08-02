@@ -82,7 +82,7 @@ namespace Util
       //@{
 
       /**
-      * Shift Cartesian Vector r to its image within the primary unit cell.
+      * Shift Cartesian Vector r to its primary image.
       *
       * One output, each coordinate r[i] is shifted by a multiple of length[i]
       * so as to lie within the range minima_[i] < r[i] < maxima_[i].
@@ -95,12 +95,13 @@ namespace Util
       void shift(Vector &r) const;
 
       /**
-      * Shift Cartesian Vector r to its image within the primary unit cell.
+      * Shift Cartesian Vector r to its primary image.
       *
-      * This method maps an atomic position to lie in the primary cell, 
-      * and also increments the atomic shift IntVector:
+      * This method maps an atomic position to its primary image, and
+      * also increments the atomic shift IntVector:
       *
-      * If r[i] -> r[i] - t*length_[i], then shift[i] -> shift[i] + t.
+      * If    r[i]     ->  r[i] - t*length_[i], 
+      * then  shift[i] ->  shift[i] + t.
       *
       * \sa Atom:shift()
       *
@@ -110,7 +111,22 @@ namespace Util
       void shift(Vector &r, IntVector& shift) const;
 
       /**
-      * Shift generalized Vector r to its image within the primary unit cell.
+      * Shift Cartesian Vector r by multiple t of a Bravais lattice vector.
+      *
+      * This method shifts the Vector r by a specified amount:
+      *
+      *   r ->  r + t*a'[i]
+      *
+      * where a[i] is Bravais lattice vector number i.
+      *
+      * \param r Cartesian position Vector 
+      * \param i direction index
+      * \param t multiple of Bravais lattice vector i
+      */
+      void applyShift(Vector &r, int i, int t) const;
+
+      /**
+      * Shift generalized Vector r to its primary image.
       *
       * One output, each coordinate r[i] is shifted by an integer, so as to
       * lie within the range 0 < r[i] < 1.0
@@ -385,6 +401,12 @@ namespace Util
          }
       }
    }
+
+   /*
+   * Shift Cartesian Vector r by multiple t of a Bravais lattice vector.
+   */
+   inline void OrthorhombicBoundary::applyShift(Vector &r, int i, int t) const
+   {  r[i] += t*lengths_[i]; }
 
    /* 
    * Shift generalized Vector r to primitive unit cell.

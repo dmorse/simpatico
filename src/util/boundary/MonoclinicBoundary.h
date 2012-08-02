@@ -107,6 +107,22 @@ namespace Util
       void shift(Vector &r, IntVector& shift) const;
 
       /**
+      * Shift Cartesian Vector r by multiple t of a Bravais lattice vector.
+      *
+      * This method shifts the Vector r by a specified amount:
+      *
+      *   r ->  r + t*a'[i]
+      *
+      * where a[i] is Bravais lattice vector number i.
+      *
+      * \param r Cartesian position Vector 
+      * \param i direction index
+      * \param t multiple of Bravais lattice vector i
+      */
+      void applyShift(Vector &r, int i, int t) const;
+
+
+      /**
       * Shift generalized Vector r to its image within the primary unit cell.
       *
       * One output, each coordinate r[i] is shifted by an integer, so as to
@@ -426,7 +442,7 @@ namespace Util
    */
    inline void MonoclinicBoundary::shift(Vector& r, IntVector& shift) const
    {
-       if(r[0] >= maxima_[0]) {
+       if (r[0] >= maxima_[0]) {
           r[0] -= l_[0];
           ++(shift[0]);
           assert(r[0] < maxima_[0]);
@@ -461,6 +477,25 @@ namespace Util
        }
    }
 
+   /*
+   * Shift Cartesian Vector r by multiple t of a Bravais lattice vector.
+   */
+   inline void MonoclinicBoundary::applyShift(Vector &r, int i, int t) const
+   { 
+      switch (i) {
+      case 0: 
+         r[0] += t*l_[0];
+         break;
+      case 1: 
+         r[1] += t*l_[1];
+         r[2] += t*tilt_;
+         break;
+      case 2: 
+         r[2] += t*l_[2];
+         break;
+      }
+   }
+   
    /* 
    * Shift generalized Vector r to primitive unit cell.
    */
