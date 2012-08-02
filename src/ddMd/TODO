@@ -1,18 +1,5 @@
-Small Things
-------------
- 
-- Add timed computeForces method to DdMd::Integrator.
-
-Non-orthogonal Boundaries
--------------------------
-
-- Diagnose and fix bug in completing bonds after exchanging ghosts.
-
 Testing
 -------
-
-- More exhaustive testing of DdMd::Simulation, with and without reverse 
-  force communication.
 
 - Add test that number of inner neighbors is unchanged upon reneighboring.
 
@@ -35,7 +22,6 @@ Constant Pressure:
 - Port NPH integrator.
 
 - Write a reversible NPT integrator.
-
 
 Hybrid MD
 ----------

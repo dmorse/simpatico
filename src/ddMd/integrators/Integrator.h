@@ -59,8 +59,10 @@ namespace DdMd
    protected:
 
       /// Timestamps for loop timing.
-      enum TimeId {DIAGNOSTIC, INTEGRATE1, CHECK, EXCHANGE, NEIGHBOR, 
-                   UPDATE, FORCE, INTEGRATE2, NTime};
+      enum TimeId {DIAGNOSTIC, INTEGRATE1, CHECK, TRANSFORM_F, EXCHANGE, 
+                   CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, PAIR_FORCE, 
+                   BOND_FORCE, ANGLE_FORCE, DIHEDRAL_FORCE,
+                   INTEGRATE2, NTime};
 
       /// Return the timer by reference.
       DdTimer& timer()

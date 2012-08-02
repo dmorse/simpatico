@@ -95,7 +95,6 @@ namespace DdMd
       nStep_ = nStep;
       timer().start();
       exchanger().timer().start();
-      pairPotential().timer().start();
       for (iStep_ = 0; iStep_ < nStep; ++iStep_) {
 
          if (Diagnostic::baseInterval > 0) {
@@ -120,7 +119,6 @@ namespace DdMd
          timer().stamp(Integrator::INTEGRATE1);
    
          // Check if exchange and reneighboring is necessary
-         //needExchange = simulation().needExchange();
          needExchange = atomStorage().needExchange(domain().communicator(), 
                                                    pairPotential().skin());
          timer().stamp(Integrator::CHECK);
@@ -130,24 +128,26 @@ namespace DdMd
             atomStorage().clearSnapshot();
             if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {
                atomStorage().transformCartToGen(boundary());
+               timer().stamp(Integrator::TRANSFORM_F);
             }
             exchanger().exchange();
             timer().stamp(Integrator::EXCHANGE);
             pairPotential().buildCellList();
+            timer().stamp(Integrator::CELLLIST);
             if (!UTIL_ORTHOGONAL) {
                atomStorage().transformGenToCart(boundary());
+               timer().stamp(Integrator::TRANSFORM_R);
             }
             atomStorage().makeSnapshot();
             pairPotential().buildPairList();
-            timer().stamp(Integrator::NEIGHBOR);
+            timer().stamp(Integrator::PAIRLIST);
          } else {
             exchanger().update();
             timer().stamp(Integrator::UPDATE);
          }
    
          // Calculate new forces for all local atoms
-         simulation().computeForces();
-         timer().stamp(Integrator::FORCE);
+         computeForces();
    
          // 2nd half of velocity Verlet
          atomStorage().begin(atomIter);
@@ -161,7 +161,6 @@ namespace DdMd
       }
       timer().stop();
       exchanger().timer().stop();
-      pairPotential().timer().stop();
    }
 
 }
