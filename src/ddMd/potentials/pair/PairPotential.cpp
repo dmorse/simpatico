@@ -34,7 +34,6 @@ namespace DdMd
       domainPtr_(0),
       boundaryPtr_(0),
       storagePtr_(0),
-      timer_(PairPotential::NTime),
       methodId_(0),
       nPair_(0),
       reverseUpdateFlag_(false)
@@ -50,7 +49,6 @@ namespace DdMd
       domainPtr_(&simulation.domain()),
       boundaryPtr_(&simulation.boundary()),
       storagePtr_(&simulation.atomStorage()),
-      timer_(PairPotential::NTime),
       methodId_(0),
       nPair_(0),
       reverseUpdateFlag_(false)
@@ -149,8 +147,6 @@ namespace DdMd
    */
    void PairPotential::buildCellList()
    {
-      stamp(PairPotential::START);
- 
       if (UTIL_ORTHOGONAL) {
          if (!storage().isCartesian()) {
             UTIL_THROW("Coordinates not Cartesian entering buildCellList");
@@ -202,7 +198,6 @@ namespace DdMd
          UTIL_THROW("Coordinates are Cartesian exiting buildCellList");
       }
 
-      stamp(PairPotential::BUILD_CELL_LIST);
    }
 
    /*
@@ -210,13 +205,11 @@ namespace DdMd
    */
    void PairPotential::buildPairList()
    {
-      stamp(PairPotential::START);
- 
       if (!storage().isCartesian()) {
          UTIL_THROW("Coordinates not Cartesian entering buildPairList");
       }
+
       pairList_.build(cellList_, reverseUpdateFlag());
-      stamp(PairPotential::BUILD_PAIR_LIST);
    }
 
    #if 0
@@ -225,7 +218,6 @@ namespace DdMd
    */
    void PairPotential::findNeighbors(const Vector& lower, const Vector& upper)
    {
-      stamp(PairPotential::START);
  
       if (UTIL_ORTHOGONAL) {
          if (!storage().isCartesian()) {
@@ -265,13 +257,11 @@ namespace DdMd
       cellList_.build();
       assert(cellList_.isValid());
       assert(cellList_.nAtom() + cellList_.nReject() == storage().nAtom() + storage().nGhost());
-      stamp(PairPotential::BUILD_CELL_LIST);
 
       if (!UTIL_ORTHOGONAL) {
          storage().transformGenToCart(*boundaryPtr_);
       }
       pairList_.build(cellList_, reverseUpdateFlag());
-      stamp(PairPotential::BUILD_PAIR_LIST);
    }
 
    /*

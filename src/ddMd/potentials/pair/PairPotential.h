@@ -287,17 +287,6 @@ namespace DdMd
       */
       int methodId() const;
 
-      /**
-      * Return internal timer by reference
-      */
-      DdTimer& timer();
-
-      /**
-      * Enumeration of time stamp identifiers.
-      */
-      enum TimeId {START, BUILD_CELL_LIST, BUILD_PAIR_LIST, 
-                   FORCES, NTime};
-
    protected:
 
       // CellList to construct PairList or calculate nonbonded pair forces.
@@ -342,11 +331,6 @@ namespace DdMd
       */
       AtomStorage& storage();
 
-      /**
-      * Stamp timer with int/enum TimeId.
-      */
-      void stamp(unsigned int timeId);
-
    private:
 
       // Pointer to associated Domain object.
@@ -357,9 +341,6 @@ namespace DdMd
 
       // Pointer to associated AtomStorage object.
       AtomStorage* storagePtr_;
-
-      /// Timer
-      DdTimer timer_;
 
       /// Index for method used to calculate forces / energies.
       int methodId_;
@@ -400,16 +381,6 @@ namespace DdMd
 
    inline AtomStorage& PairPotential::storage()
    {  return *storagePtr_; }
-
-   inline DdTimer& PairPotential::timer()
-   {  return timer_; }
-
-   inline void PairPotential::stamp(unsigned int timeId) 
-   {
-      #ifdef DDMD_PAIR_POTENTIAL_TIMER
-      timer_.stamp(timeId);
-      #endif
-   }
 
    inline void PairPotential::setMethodId(int methodId)
    {  methodId_ = methodId; }
