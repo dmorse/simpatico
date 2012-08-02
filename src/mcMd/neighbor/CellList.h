@@ -110,7 +110,7 @@ namespace McMd
       void allocate(int atomCapacity, const Boundary &boundary, double cutoff);
 
       /**
-      * Initialize grid geometry.
+      * Initialize grid geometry and set pointer to Boundary.
       *
       * The number of cells in each direction is chosen such that the dimension
       * of each cell in each direction is greater than or equal to the cutoff
@@ -241,17 +241,55 @@ namespace McMd
       /// Array of CellTag objects for quick retrieval
       DArray<CellTag> cellTags_;
 
-      Vector lengths_;         ///<  boundary lengths in each direction
-      Vector invCellWidths_;   ///<  dimensions of each Cell in CellList grid
-      int    minDel_[3];       ///<  Min difference along each axis (usually -1)
-      int    maxDel_[3];       ///<  Max difference along each axis (usually +1)
-      int    numCells_[3];     ///<  Number of cells in each direction
-      int    minCells_[3];     ///<  Min index of cell for each axis = 0
-      int    maxCells_[3];     ///<  Max cell index for each axis = numCells - 1
-      int    YZCells_;         ///<  numCells_[1]*numCells_[2]
-      int    totCells_;        ///<  total number of cells in CellList
+      /**
+      * Lengths of Boundary in each direction.
+      *
+      * For orthogonal (orthorhombic, tetragonal or cubic) boundaries these
+      * are simply the lengths of the unit cell along x, y, and z directions.
+      * For non-orthogonal boundaries, each length is defined as a distance 
+      * between faces of the primitive unit cell, which is measured along a
+      * line parallel to the corresponding reciprocal lattice vector. 
+      */
+      Vector lengths_;      
 
-      /// Pointer to associated Boundary (set in makeGrid).
+      /**
+      * Inverse dimensions of each cell in a grid, in each direction.
+      *
+      * When the boundary is orthogonal and UTIL_ORTHOGONAL is true (1),
+      * the inverse lengths are expressed in Cartesian coordinates, and 
+      * invCellWidth_[i] = numCells_[i]/lengths_[i].
+      * 
+      * When UTIL_ORTHOGONAL is false (0), the inverse cell widths are 
+      * expressed in generalized coordinates, with 0.0 <= x, y, z < 1.0,
+      * for which invCellWidth_[i] = numCells_[i].
+      *
+      * The value of UTIL_ORTHOGONAL is defined in the header file for
+      * the Boundary class.
+      */
+      Vector invCellWidths_;   
+
+      /// Minimum differences of grid coordinates for neighbors (usually -1)
+      int  minDel_[3];       
+
+      /// Maximum difference of grid coordinates for neighbors (usually +1)
+      int  maxDel_[3];       
+
+      /// Number of cells in each direction
+      int  numCells_[3];     
+
+      /// Minimum cell coordinate for each axis == 0
+      int    minCells_[3]; 
+
+      ///  Maximum index coordinate for each axis = numCells - 1
+      int    maxCells_[3]; 
+
+      /// Number of cells yz plane = numCells_[1]*numCells_[2]
+      int    YZCells_;        
+ 
+      /// Total number of cells in grid.
+      int    totCells_;        
+
+      /// Pointer to associated Boundary (set in makeGrid)
       const Boundary* boundaryPtr_; 
 
       /**
