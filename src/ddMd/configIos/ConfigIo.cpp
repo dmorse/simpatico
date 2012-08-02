@@ -230,6 +230,7 @@ namespace DdMd
       return nGroup;
    }
 
+   #if 0
    /*
    * Read a configuration file.
    */
@@ -338,6 +339,7 @@ namespace DdMd
       #endif
 
    }
+   #endif
 
    /*
    * Private method to write Group<N> objects.
@@ -369,6 +371,7 @@ namespace DdMd
       return nGroup;
    }
 
+   #if 0
    /* 
    * Write the configuration file.
    */
@@ -421,6 +424,7 @@ namespace DdMd
       #endif
 
    }
+   #endif
  
    void ConfigIo::setAtomMasks() 
    {

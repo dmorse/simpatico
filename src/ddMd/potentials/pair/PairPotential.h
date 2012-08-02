@@ -67,20 +67,18 @@ namespace DdMd
       /**
       * Set parameters and allocate memory.
       *
-      * Required if this was created with default constructor PairPotential().
-      * The associate method must be called before setParam. This method sets 
-      * the skin and cutoff length parameters, and allocates the internal
-      * CellList and a PairList. The CellList allocates memory for the number
-      * of cells required for the specified upper and lower coordinate bounds, 
-      * with the specified cutoff. 
+      * This method sets values for the same member as readPairListParam.
+      * Either method must be called after associate. This method sets the
+      * skin and cutoff length parameters, and allocates memory for the 
+      * internal CellList and a PairList. It uses the maximum boundary and
+      * the cutoff to calculate the how many cells to allocate.
       *
-      * \param lower        lower dimension of the largest expected domain
-      * \param upper        upper dimension of the largest expected domain
+      * \param maxBoundary  largest expected Boundary (used for allocation)
       * \param skin         pair list skin length
       * \param pairCapacity maximum number of pairs per processor
       */
-      void initialize(const Vector& lower, const Vector& upper,
-                      double skin, int pairCapacity);
+      void 
+      initialize(const Boundary& maxBoundary, double skin, int pairCapacity);
 
       /**
       * Set flag to identify if reverse communication is enabled.
@@ -194,6 +192,29 @@ namespace DdMd
       //@{
 
       /**
+      * Build a cell list.
+      *
+      * This method adds all local and ghost atoms to a cell list that is
+      * used in buildPairList() to build a Verlet pair list. On entry to
+      * this method, atomic positions must Cartesian if UTIL_ORTHOGONAL
+      * is true and generalized coordinates if UTIL_ORTHOGONAL is false.
+      * If UTIL_ORTHOGONAL is false, this method should be followed by a 
+      * call to AtomStorage::transformGenToCart(Boundary& ) to transform
+      * all positions back to Cartesian coordinates.
+      */
+      void buildCellList();
+
+      /**
+      * Build the Verlet Pair list.
+      *
+      * Preconditions:
+      *  - Cell List must have been built, by PairPotential::buildCellList.
+      *  - Atomic positions must be expressed in Cartesian coordinates.
+      */
+      void buildPairList();
+
+      #if 0
+      /**
       * Build the cell and pair lists. 
       *
       * Use with objects created with PairPotential(Simulation&). Makes a
@@ -208,6 +229,7 @@ namespace DdMd
       * \param upper Vector of upper coordinate bounds for this processor.
       */
       void findNeighbors(const Vector& lower, const Vector& upper);
+      #endif
 
       /**
       * Compute twice the number of pairs within force cutoff, on all processors.
@@ -265,17 +287,6 @@ namespace DdMd
       */
       int methodId() const;
 
-      /**
-      * Return internal timer by reference
-      */
-      DdTimer& timer();
-
-      /**
-      * Enumeration of time stamp identifiers.
-      */
-      enum TimeId {START, BUILD_CELL_LIST, BUILD_PAIR_LIST, 
-                   FORCES, NTime};
-
    protected:
 
       // CellList to construct PairList or calculate nonbonded pair forces.
@@ -320,11 +331,6 @@ namespace DdMd
       */
       AtomStorage& storage();
 
-      /**
-      * Stamp timer with int/enum TimeId.
-      */
-      void stamp(unsigned int timeId);
-
    private:
 
       // Pointer to associated Domain object.
@@ -335,9 +341,6 @@ namespace DdMd
 
       // Pointer to associated AtomStorage object.
       AtomStorage* storagePtr_;
-
-      /// Timer
-      DdTimer timer_;
 
       /// Index for method used to calculate forces / energies.
       int methodId_;
@@ -378,16 +381,6 @@ namespace DdMd
 
    inline AtomStorage& PairPotential::storage()
    {  return *storagePtr_; }
-
-   inline DdTimer& PairPotential::timer()
-   {  return timer_; }
-
-   inline void PairPotential::stamp(unsigned int timeId) 
-   {
-      #ifdef DDMD_PAIR_POTENTIAL_TIMER
-      timer_.stamp(timeId);
-      #endif
-   }
 
    inline void PairPotential::setMethodId(int methodId)
    {  methodId_ = methodId; }

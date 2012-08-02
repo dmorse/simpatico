@@ -91,6 +91,22 @@ namespace DdMd
    */
    void DdMdConfigIo::readConfig(std::istream& file, MaskPolicy maskPolicy)
    {
+      // Precondition
+      if (atomStorage().nAtom()) {
+         UTIL_THROW("Atom storage is not empty (has local atoms)");
+      }
+      if (atomStorage().nGhost()) {
+         UTIL_THROW("Atom storage is not empty (has ghost atoms)");
+      }
+      if (UTIL_ORTHOGONAL) {
+         if (!atomStorage().isCartesian()) {
+            UTIL_THROW("Atom storage must use Cartesian coordinates");
+         }
+      } else {
+         if (atomStorage().isCartesian()) {
+            UTIL_THROW("Atom storage must use generalized coordinates");
+         }
+      }
 
       // Read and broadcast boundary
       if (domain().isMaster()) {  
@@ -119,7 +135,8 @@ namespace DdMd
          #endif
 
          // Read atoms
-         Atom* atomPtr;
+         Vector r;
+         Atom*  atomPtr;
          int id;
          int typeId;
          int rank;
@@ -134,7 +151,12 @@ namespace DdMd
             }
             atomPtr->setId(id);
             atomPtr->setTypeId(typeId);
-            file >> atomPtr->position();
+            file >> r;
+            if (UTIL_ORTHOGONAL) {
+               atomPtr->position() = r;
+            } else {
+               boundary().transformCartToGen(r, atomPtr->position());
+            }
             file >> atomPtr->velocity();
 
             // Add atom to list for sending.
@@ -171,8 +193,7 @@ namespace DdMd
       if (bondStorage().capacity()) {
          readGroups<2>(file, "BONDS", "nBond", bondDistributor());
          bondStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
-         // Set atom "masks" to suppress pair interactions
-         // between covalently bonded atoms.
+         // Set atom "mask" values
          if (maskPolicy == MaskBonded) {
             setAtomMasks();
          }
@@ -181,14 +202,16 @@ namespace DdMd
       #ifdef INTER_ANGLE
       if (angleStorage().capacity()) {
          readGroups<3>(file, "ANGLES", "nAngle", angleDistributor());
-         angleStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+         angleStorage().isValid(atomStorage(), domain().communicator(), 
+                                hasGhosts);
       }
       #endif
 
       #ifdef INTER_DIHEDRAL
       if (dihedralStorage().capacity()) {
          readGroups<4>(file, "DIHEDRALS", "nDihedral", dihedralDistributor());
-         dihedralStorage().isValid(atomStorage(), domain().communicator(), hasGhosts);
+         dihedralStorage().isValid(atomStorage(), domain().communicator(), 
+                                   hasGhosts);
       }
       #endif
 

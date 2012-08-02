@@ -57,15 +57,19 @@ namespace DdMd
    {
       simulation().zeroForces();
       pairPotential().addForces();
+      timer_.stamp(PAIR_FORCE);
       bondPotential().addForces();
+      timer_.stamp(BOND_FORCE);
       #ifdef INTER_ANGLE
       if (nAngleType()) {
          anglePotential().addForces();
+         timer_.stamp(ANGLE_FORCE);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType()) {
          dihedralPotential().addForces();
+         timer_.stamp(DIHEDRAL_FORCE);
       }
       #endif
       #ifdef INTER_EXTERNAL
@@ -114,14 +118,18 @@ namespace DdMd
 
          double ratio = double(nProc)/double(nStep_*nAtomTot);
 
-         double diagnosticT =  timer().time(DIAGNOSTIC);
-         double integrate1T =  timer().time(INTEGRATE1);
+         double diagnosticT = timer().time(DIAGNOSTIC);
+         double integrate1T = timer().time(INTEGRATE1);
          double checkT =  timer().time(CHECK);
-         double exchangeT =  timer().time(EXCHANGE);
-         double neighborT =  timer().time(NEIGHBOR);
-         double updateT =  timer().time(UPDATE);
-         double forceT =  timer().time(FORCE);
-         double integrate2T =  timer().time(INTEGRATE2);
+         double transformFT = timer().time(TRANSFORM_F);
+         double exchangeT = timer().time(EXCHANGE);
+         double cellListT = timer().time(CELLLIST);
+         double transformRT = timer().time(TRANSFORM_R);
+         double pairListT = timer().time(PAIRLIST);
+         double updateT = timer().time(UPDATE);
+         double pairForceT = timer().time(PAIR_FORCE);
+         double bondForceT = timer().time(BOND_FORCE);
+         double integrate2T = timer().time(INTEGRATE2);
 
          out << std::endl;
          out << "time * nproc / (nStep*nAtom):" << std::endl;
@@ -133,14 +141,24 @@ namespace DdMd
              << " sec   " << Dbl(integrate1T/time, 12, 6, true) << std::endl;
          out << "Check                " << Dbl(checkT*ratio, 12, 6)
              << " sec   " << Dbl(checkT/time, 12, 6, true) << std::endl;
+         if (!UTIL_ORTHOGONAL) 
+         out << "Transform (forward)  " << Dbl(transformFT*ratio, 12, 6)
+             << " sec   " << Dbl(transformFT/time, 12, 6, true) << std::endl;
          out << "Exchange             " << Dbl(exchangeT*ratio, 12, 6)
              << " sec   " << Dbl(exchangeT/time, 12, 6, true) << std::endl;
-         out << "Neighbor             " << Dbl(neighborT*ratio, 12, 6)
-             << " sec   " << Dbl(neighborT/time, 12, 6, true) << std::endl;
+         out << "CellList             " << Dbl(cellListT*ratio, 12, 6)
+             << " sec   " << Dbl(cellListT/time, 12, 6, true) << std::endl;
+         if (!UTIL_ORTHOGONAL) 
+         out << "Transform (reverse)  " << Dbl(transformRT*ratio, 12, 6)
+             << " sec   " << Dbl(transformRT/time, 12, 6, true) << std::endl;
+         out << "PairList             " << Dbl(pairListT*ratio, 12, 6)
+             << " sec   " << Dbl(pairListT/time, 12, 6, true) << std::endl;
          out << "Update               " << Dbl(updateT*ratio, 12, 6)
              << " sec   " << Dbl(updateT/time, 12, 6, true) << std::endl;
-         out << "Force                " << Dbl(forceT*ratio, 12, 6)
-             << " sec   " << Dbl(forceT/time, 12 , 6, true) << std::endl;
+         out << "Pair Forces          " << Dbl(pairForceT*ratio, 12, 6)
+             << " sec   " << Dbl(pairForceT/time, 12 , 6, true) << std::endl;
+         out << "Bond Forces          " << Dbl(bondForceT*ratio, 12, 6)
+             << " sec   " << Dbl(bondForceT/time, 12 , 6, true) << std::endl;
          out << "Integrate2           " << Dbl(integrate2T*ratio, 12, 6) 
              << " sec   " << Dbl(integrate2T/time, 12, 6, true) << std::endl;
          out << std::endl;
@@ -207,20 +225,6 @@ namespace DdMd
          double LocalUpdateT =  exchanger().timer().time(Exchanger::LOCAL_UPDATE);
          out << "LocalUpdate           " << Dbl(LocalUpdateT*ratio, 12, 6)
              << " sec   " << Dbl(LocalUpdateT/time, 12, 6, true) << std::endl;
-         out << std::endl;
-         out << std::endl;
-         #endif
-
-         #ifdef DDMD_PAIR_POTENTIAL_TIMER
-         double BuildCellListT = pairPotential().timer().time(PairPotential::BUILD_CELL_LIST);
-         out << "BuildCellList         " << Dbl(BuildCellListT*ratio, 12, 6)
-             << " sec   " << Dbl(BuildCellListT/time, 12, 6, true) << std::endl;
-         double BuildPairListT = pairPotential().timer().time(PairPotential::BUILD_PAIR_LIST);
-         out << "BuildPairList         " << Dbl(BuildPairListT*ratio, 12, 6)
-             << " sec   " << Dbl(BuildPairListT/time, 12, 6, true) << std::endl;
-         double PairForcesT = pairPotential().timer().time(PairPotential::FORCES);
-         out << "PairForces            " << Dbl(PairForcesT*ratio, 12, 6)
-             << " sec   " << Dbl(PairForcesT/time, 12, 6, true) << std::endl;
          out << std::endl;
          out << std::endl;
          #endif

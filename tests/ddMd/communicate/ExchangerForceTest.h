@@ -1,7 +1,7 @@
 #ifndef DDMD_EXCHANGER_FORCE_TEST_H
 #define DDMD_EXCHANGER_FORCE_TEST_H
 
-#include <ddMd/configIos/ConfigIo.h>
+#include <ddMd/configIos/DdMdConfigIo.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/communicate/Exchanger.h>
@@ -63,7 +63,7 @@ private:
    #ifdef INTER_DIHEDRAL
    DihedralStorage dihedralStorage;
    #endif
-   ConfigIo configIo;
+   DdMdConfigIo configIo;
    Random random;
    int  atomCount;
    bool reverseUpdateFlag;
@@ -156,7 +156,6 @@ public:
 
       object().setPairCutoff(pairPotential.cutoff());
       object().allocate();
-
       forces.allocate(atomStorage.totalAtomCapacity());
 
       MaskPolicy policy = MaskBonded;
@@ -178,17 +177,35 @@ public:
 
    }
 
-   void displaceAtoms(double max)
+   void displaceAtoms(double range)
    {
-      double min = -max;
+
+      // Set displacement ranges in appropriate coordinate system
+      Vector ranges;
+      if (UTIL_ORTHOGONAL || atomStorage.isCartesian()) {
+         for (int i = 0; i < Dimension; ++i) {
+            ranges[i] = range;
+         }
+      } else {
+         for (int i = 0; i < Dimension; ++i) {
+            ranges[i] = range/boundary.length(i);
+         }
+      }
+  
+      // Displace local atoms
       AtomIterator atomIter;
-      atomStorage.begin(atomIter);
-      for ( ; atomIter.notEnd(); ++atomIter) {
-         for(int i = 0; i < 3; i++) {
+      double min, max;
+      for(int i = 0; i < Dimension; ++i) {
+         max = ranges[i];
+         min = -max;
+         atomStorage.begin(atomIter);
+         for ( ; atomIter.notEnd(); ++atomIter) {
             atomIter->position()[i] += random.uniform(min, max);
          }
       }
+
    }
+
 
    void zeroForces()
    {
@@ -200,10 +217,12 @@ public:
       }
 
       // Zero ghost forces
-      GhostIterator ghostIter;
-      atomStorage.begin(ghostIter);
-      for ( ; ghostIter.notEnd(); ++ghostIter) {
-         ghostIter->force().zero();
+      if (atomStorage.nGhost()) {
+         GhostIterator ghostIter;
+         atomStorage.begin(ghostIter);
+         for ( ; ghostIter.notEnd(); ++ghostIter) {
+            ghostIter->force().zero();
+         }
       }
    }
 
@@ -280,6 +299,11 @@ public:
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
 
+      // Transform to Cartesian coordinates
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage.transformGenToCart(boundary);
+      }
+
       // Update ghost positions
       object().update();
 
@@ -294,6 +318,11 @@ public:
          // std::cout << "Total atom count (post ghost exchange) = " 
          //           << nAtomAll << std::endl;
          TEST_ASSERT(nAtomAll == atomCount);
+      }
+
+      // Transform to generalized coordinates
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage.transformCartToGen(boundary);
       }
 
       // Check that all atoms are within the processor domain.
@@ -346,8 +375,8 @@ public:
       AtomIterator   atomIter;
       GhostIterator  ghostIter;
 
-      double range = 0.1;
-      displaceAtoms(range);
+      double range = 0.05;
+      //displaceAtoms(range);
 
       object().exchange();
       nAtom = atomStorage.nAtom();
@@ -369,19 +398,32 @@ public:
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   true));
 
-      range = 0.1;
-      for (int i=0; i < 8; ++i) {
+      // Transform to Cartesian coordinates
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage.transformGenToCart(boundary);
+      }
 
+      range = 0.05;
+      for (int i=0; i < 4; ++i) {
+
+         TEST_ASSERT(atomStorage.isCartesian());
          displaceAtoms(range);
 
-         for (int j=0; j < 3; ++j) {
+         for (int j=0; j < 2; ++j) {
             object().update();
             TEST_ASSERT(nGhost == atomStorage.nGhost());
             TEST_ASSERT(nAtom == atomStorage.nAtom());
             displaceAtoms(range);
          }
 
+         // Transform to generalized coordinates
+         if (!UTIL_ORTHOGONAL) {
+            atomStorage.transformCartToGen(boundary);
+         }
+
+         atomStorage.clearSnapshot();
          object().exchange();
+
          nAtom  = atomStorage.nAtom();
          nGhost = atomStorage.nGhost();
 
@@ -408,6 +450,12 @@ public:
          TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                      domain.communicator(), true));
          #endif
+
+         // Transform to Cartesian coordinates
+         if (!UTIL_ORTHOGONAL) {
+            atomStorage.transformGenToCart(boundary);
+         }
+
       }
 
    }
@@ -436,11 +484,32 @@ public:
 
       atomStorage.clearSnapshot();
       object().exchange();
-      atomStorage.makeSnapshot();
 
       // Record number of atoms and ghosts after exchange
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
+
+      // Check that all atoms are within the processor domain.
+      AtomIterator  atomIter;
+      atomStorage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         TEST_ASSERT(domain.isInDomain(atomIter->position()));
+      }
+
+      // Check that all ghosts are outside the processor domain.
+      GhostIterator ghostIter;
+      atomStorage.begin(ghostIter);
+      for ( ; ghostIter.notEnd(); ++ghostIter) {
+         TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
+      }
+
+      //pairPotential.findNeighbors();
+      pairPotential.buildCellList();
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage.transformGenToCart(boundary);
+      }
+      pairPotential.buildPairList();
+      atomStorage.makeSnapshot();
 
       // Update ghost positions
       object().update();
@@ -460,20 +529,6 @@ public:
          TEST_ASSERT(nAtomAll == atomCount);
       }
 
-      // Check that all atoms are within the processor domain.
-      AtomIterator  atomIter;
-      atomStorage.begin(atomIter);
-      for ( ; atomIter.notEnd(); ++atomIter) {
-         TEST_ASSERT(domain.isInDomain(atomIter->position()));
-      }
-
-      // Check that all ghosts are outside the processor domain.
-      GhostIterator ghostIter;
-      atomStorage.begin(ghostIter);
-      for ( ; ghostIter.notEnd(); ++ghostIter) {
-         TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
-      }
-
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   true));
@@ -488,8 +543,6 @@ public:
       #endif
 
       TEST_ASSERT(pairPotential.reverseUpdateFlag() == reverseUpdateFlag);
-
-      pairPotential.findNeighbors();
 
       // Compute forces etc. with N^2 loop
       pairPotential.setMethodId(2); 
@@ -596,9 +649,10 @@ public:
       // displaceAtoms(range);
 
       atomStorage.clearSnapshot();
+      if (!UTIL_ORTHOGONAL) {
+         TEST_ASSERT(!atomStorage.isCartesian());
+      }
       object().exchange();
-      atomStorage.makeSnapshot();
-      pairPotential.findNeighbors();
 
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
@@ -622,8 +676,19 @@ public:
                   true));
 
       // Calculate forces with PairList
-      zeroForces();
+      TEST_ASSERT(!atomStorage.isCartesian());
+      //pairPotential.findNeighbors();
+      pairPotential.buildCellList();
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage.transformGenToCart(boundary);
+      }
+      TEST_ASSERT(atomStorage.isCartesian());
+      pairPotential.buildPairList();
+      atomStorage.makeSnapshot();
+      TEST_ASSERT(atomStorage.isCartesian());
+
       pairPotential.setMethodId(0); // PairList
+      zeroForces();
       pairPotential.addForces();
       #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.addForces();
@@ -641,6 +706,7 @@ public:
       int j = 0;  // exchange counter
       for ( ; i < 100; ++i) {
 
+         TEST_ASSERT(atomStorage.isCartesian());
          displaceAtoms(range);
    
          // Check if exchange and reneighboring is necessary
@@ -651,9 +717,13 @@ public:
             //   std::cout << "Step " << i << ",  exchange " << j << std::endl;
             //}
             atomStorage.clearSnapshot();
+            TEST_ASSERT(atomStorage.isCartesian());
+            if (!UTIL_ORTHOGONAL) {
+               atomStorage.transformCartToGen(boundary);
+               TEST_ASSERT(!atomStorage.isCartesian());
+            }
+
             object().exchange();
-            atomStorage.makeSnapshot();
-            pairPotential.findNeighbors();
 
             // Confirm that all atoms are within the processor domain.
             atomStorage.begin(atomIter);
@@ -667,9 +737,17 @@ public:
                TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
             }
 
-            //if (domain.isMaster()) {
-            //   std::cout << "Finished exchange" << std::endl;
-            //}
+            pairPotential.buildCellList();
+            if (!UTIL_ORTHOGONAL) {
+               TEST_ASSERT(!atomStorage.isCartesian());
+               atomStorage.transformGenToCart(boundary);
+            } else {
+               TEST_ASSERT(atomStorage.isCartesian());
+            }
+            pairPotential.buildPairList();
+            atomStorage.makeSnapshot();
+            TEST_ASSERT(atomStorage.isCartesian());
+
             ++j;
 
          } else {
@@ -763,7 +841,17 @@ public:
             // Calculate forces via pair list, without reverse communication
             zeroForces();
             pairPotential.setForceCommFlag(false); 
-            pairPotential.findNeighbors(); 
+            TEST_ASSERT(atomStorage.isCartesian());
+            if (!UTIL_ORTHOGONAL) {
+               atomStorage.transformCartToGen(boundary);
+            }
+            TEST_ASSERT(!atomStorage.isCartesian());
+            pairPotential.buildCellList();
+            if (!UTIL_ORTHOGONAL) {
+               atomStorage.transformGenToCart(boundary);
+            }
+            pairPotential.buildPairList();
+            TEST_ASSERT(atomStorage.isCartesian());
             pairPotential.setMethodId(0);    
             pairPotential.addForces();
             #ifdef TEST_EXCHANGER_FORCE_BOND
@@ -796,7 +884,15 @@ public:
 
             // Reset: Recompute neighbor list for use with reverse communication
             pairPotential.setForceCommFlag(true); 
-            pairPotential.findNeighbors(); 
+            TEST_ASSERT(atomStorage.isCartesian());
+            atomStorage.transformCartToGen(boundary);
+            TEST_ASSERT(!atomStorage.isCartesian());
+            //pairPotential.findNeighbors(); 
+            pairPotential.buildCellList();
+            if (!UTIL_ORTHOGONAL) {
+               atomStorage.transformGenToCart(boundary);
+            }
+            pairPotential.buildPairList();
 
          }
 

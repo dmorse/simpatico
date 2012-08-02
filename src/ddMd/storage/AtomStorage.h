@@ -14,6 +14,7 @@
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
+#include <util/boundary/Boundary.h>      // typedef
 #include <util/global.h>
 
 namespace DdMd
@@ -205,22 +206,50 @@ namespace DdMd
       void clearGhosts(); 
 
       //@}
+      /// \name Coordinate Systems
+      //@{
+
+      /**
+      * Transform all atomic positions from Cartesian to generalized coordinates.
+      *
+      * Transforms coordinates of local and ghost atoms.
+      *
+      * \param boundary periodic boundary conditions
+      */
+      void transformCartToGen(const Boundary& boundary);
+ 
+      /**
+      * Transform all atomic positions from generalized to Cartesian coordinates.
+      *
+      * Transforms coordinates of local and ghost atoms.
+      *
+      * \param boundary periodic boundary conditions
+      */
+      void transformGenToCart(const Boundary& boundary);
+
+      /*
+      * Are atomic coordinates Cartesian (true) or generalized (false)?
+      */
+      bool isCartesian() const;
+
+      //@}
       /// \name Displacement Measurement
       //@{
 
       /**
-      * Record current positions of all local atoms.
+      * Record current positions of all local atoms and lock storage.
       * 
-      * This method also locks the storage, prohibiting addition
-      * or removal of atoms or ghosts until clearSnapshot is called.
+      * This method stores positions of local atoms and locks the storage, 
+      * prohibiting addition or removal of atoms or ghosts until clearSnapshot 
+      * is called.
       */
       void makeSnapshot();
 
       /**
       * Clear previous snapshot.
       *
-      * This method removes the lock imposed by a previous call
-      * to takeSnapshot(), allowing changes to atom and ghost sets.
+      * This method removes the lock imposed by a previous call to
+      * makeSnapshot(), allowing changes to atom and ghost sets.
       */
       void clearSnapshot();
 
@@ -235,7 +264,6 @@ namespace DdMd
       double maxSqDisplacement();
 
       #ifdef UTIL_MPI
-
       /**
       * Is exchange of atoms among processors needed?
       *
@@ -262,7 +290,6 @@ namespace DdMd
       * \return true if reneighboring is necessary
       */
       bool needExchange(double skin);
-
       #endif
 
       //@}
@@ -457,6 +484,9 @@ namespace DdMd
       // Is this object initialized (has memory been allocated?).
       bool isInitialized_;
 
+      // Are atomic coordinates Cartesian (true) or generalized (false)?
+      bool isCartesian_;
+
       /*
       * Allocate and initialize all private containers.
       */
@@ -480,6 +510,9 @@ namespace DdMd
 
    inline int AtomStorage::totalAtomCapacity() const
    { return totalAtomCapacity_; }
+
+   inline bool AtomStorage::isCartesian() const
+   { return isCartesian_; }
 
    /*
    * On master processor (rank=0), stored value of total number of atoms.

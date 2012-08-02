@@ -25,33 +25,42 @@ namespace DdMd
    *
    * An CellList divides the domain owned by a processor, plus a frame
    * containing ghost particles, into a grid of cells, such that the length
-   * of each cell in each of Cartesian direction is greater than a specified 
-   * cutoff distance. 
+   * of each cell in each direction is greater than a specified cutoff
+   * distance. The algorithm works with either generalized or Cartesian
+   * coordinates, if used consistently.
    *
    * All operations of this class are local (no MPI).
    *
-   * Building a CellList (usage):
+   * Building a CellList (Cartesian coordinates);
    * \code
    *
    *    AtomStorage storage;
    *    CellList cellList;
    *    Vector   lower;        // Vector of lower bounds (local atoms)
    *    Vector   upper;        // Vector of upper bounds (local atoms)
+   *    Vector   cutoffs;      // Vector of cutoff lengths for each axis.
    *    double   cutoff;       // minimum cell dimension
    *    int      atomCapacity  // max number of atoms on this processor
    *
-   *    // Bounds on lower and upper used here to allocate memory.
-   *    cellList.allocate(atomCapacity, lower, upper, cutoff);
-   *  
-   *    // Make the actual grid.
-   *    cellList.makeGrid(lower, upper, cutoff);
+   *    // Set elements of cutoffs vector to same value
+   *    for (int i = 0; i < Dimension; ++i) {
+   *       cutoffs[i] = cutoff;
+   *    } 
    *
-   *    // Place all atoms and ghosts
+   *    // Bounds on lower and upper used here to allocate memory.
+   *    cellList.allocate(atomCapacity, lower, upper, cutoffs);
+   *  
+   *    // Make the actual grid and clear it.
+   *    cellList.makeGrid(lower, upper, cutoffs);
    *    cellList.clear();
+   *
+   *    // Place all local atoms.
    *    AtomStorage::AtomIterator  atomIter;
    *    for (storage.begin(atomIter); atomIter.notEnd(); ++atomIter) {
    *       cellList.placeAtom(*atomIter);
    *    }
+   *
+   *    // Place all ghost atoms
    *    AtomStorage::GhostIterator ghostIter;
    *    for (storage.begin(ghostIter); ghostIter.notEnd(); ++ghostIter){
    *       cellList.placeAtom(*ghostIter);
@@ -66,6 +75,13 @@ namespace DdMd
    * The atomCapacity parameter should be set equal to the sum of atomCapacity 
    * and the ghostCapacity of the associated atomStorage, which is the maximum 
    * total number of atoms that can exist on this processor.
+   *
+   * If the upper and lower bounds and atom coordinates are all expressed in
+   * generalized coordinates, which span 0.0 - 1.0 over the primitive periodic
+   * cell in each direction, each element of the cutoffs vector is given by a
+   * ratio cutoffs[i] = cutoff/length[i], where length[i] is the Cartesian
+   * distance across the unit cell along a direciton parallel to reciprocal 
+   * basis vector i. 
    *
    * See Cell documentation for an example of how to iterate over local cells 
    * and neighboring atom pairs. 
@@ -92,7 +108,7 @@ namespace DdMd
       virtual ~CellList();
 
       /**
-      * Allocate memory for this CellList.
+      * Allocate memory for this CellList (generalized coordinates).
       *
       * This function:
       *
@@ -100,22 +116,72 @@ namespace DdMd
       *   - Allocates an array of atomCapacity Atom* objects.
       *   - Allocates an array of Cell objects sized for this boundary.
       *
+      * The elements of the lower, upper, and cutoffs parameters should 
+      * contain the lower and upper coordinate bounds for this processor, 
+      * and cutoff values in each direction, for a boundary was chosen to
+      * be larger than any that will be encountered during the simulation
+      * These parameters are used only to allocate memory.
+      *
+      * This version of the function is designed for use with generalized
+      * coordinates. See the makeGrid() method for a discussion of the
+      * parameter values in generalized coordinates.
+      *
       * \param atomCapacity dimension of global array of atoms
-      * \param lower        lower bound used to allocate array of cells.
-      * \param upper        upper bound used to allocate array of cells.
+      * \param lower        lower coordinate bounds for this processor
+      * \param upper        upper coordinate bounds for this processor
+      * \param cutoffs      minimum dimensions of a cell in each direction
+      */
+      void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
+                    const Vector& cutoffs);
+
+      /**
+      * Allocate memory for this CellList (Cartesian coordinates).
+      *
+      * This function is designed for use with Cartesian coordinates, for which
+      * the lower, upper and cutoff parameters all have dimensions of length.
+      * The function calls the allocate() method with a Vector of cutoffs
+      * internally, after setting every element of the Vector to the same value.
+      *
+      * \param atomCapacity dimension of global array of atoms
+      * \param lower        lower bound for this processor in maximum boundary
+      * \param upper        upper bound for this processor in maximum boundary
       * \param cutoff       minimum dimension of a cell in any direction
       */
       void allocate(int atomCapacity, const Vector& lower, const Vector& upper, 
                     double cutoff);
 
       /**
-      * Make the cell grid.
+      * Make the cell grid (using generalized coordinates).
       *
-      * The number of cells in each direction is chosen such that the dimension
-      * of each cell in each direction is greater than or equal to the cutoff
-      * parameter. To calculate nonbonded pair interaction energies, the cutoff
-      * parameter should thus be equal to or greater than the maximum range of
-      * nonbonded interactions.
+      * This method makes a Cell grid in which the number of cells in each
+      * direction i is chosen such that the dimension of each cell that 
+      * direction is greater than or equal to cutoff[i].
+      *
+      * The elements of lower and upper should be upper and lower bounds 
+      * for coordinates of local atoms on this processor, in generalized
+      * coordinates in which the entire periodic unit cell spans 0.0 to 1.0.
+      * On input, each element of cutoff[i] should be equal to the minimum
+      * cell length in direction i in generalized coordinates. This is given
+      * by the ratio cutoff[i] = pairCutoff/length[i], where pairCutoff is 
+      * the maximum range of nonbonded interactions, and length[i] is the 
+      * distance across the primitive unit cell along the direction parallel 
+      * to reciprocal lattice basis vector i.
+      *
+      * \param lower    lower bound of local atom coordinates.
+      * \param upper    upper bound of local atom coordinates.
+      * \param cutoffs  minimum dimension of cell in each direction
+      */
+      void 
+      makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs);
+
+      /**
+      * Make the cell grid (Cartesian coordinates).
+      *
+      * This function is designed for use with orthogonal unit cells and Cartesian 
+      * coordinates, for which the lower, upper and cutoff parameters all have 
+      * dimensions of length. The function calls the allocate() method with a 
+      * Vector of cutoffs internally, after setting every element of the cutoffs
+      * Vector to the same cutoff value.
       *
       * \param lower    lower bound of local atom coordinates.
       * \param upper    upper bound of local atom coordinates.
@@ -126,10 +192,11 @@ namespace DdMd
       /**
       * Determine the appropriate cell for an Atom, based on its position.
       *
-      * This method does not place the atom in a cell, but retains a record
-      * of the cell index that is used to place atoms in the build() method.
+      * This method does not place the atom in a cell, but calculates a cell
+      * index and retains the value, which is used to place atoms in the build() 
+      * method.
       *
-      * This method quietly does nothing if the atom is outside the expanded 
+      * The method quietly does nothing if the atom is outside the expanded 
       * domain for nonbonded ghosts, which extends one cutoff length beyond
       * the domain boundaries the domain boundaries in each direction.
       *
@@ -291,12 +358,12 @@ namespace DdMd
       * Called internally by allocate and makeGrid. Does not link cells or
       * calculate offsets to neighbors.
       *
-      * \param lower    lower bound used to allocate array of cells.
-      * \param uppper   upper bound used to allocate array of cells.
-      * \param cutoff   minimum dimension of a cell in any direction
+      * \param lower   lower bound used to allocate array of cells.
+      * \param uppper  upper bound used to allocate array of cells.
+      * \param cutoffs minimum dimension of a cell in any direction
       */
       void setGridDimensions(const Vector& lower, const Vector& upper, 
-                             double cutoff);
+                             const Vector& cutoffs);
 
       /**
       * Return true if atomId is valid, i.e., if 0 <= 0 < atomCapacity.

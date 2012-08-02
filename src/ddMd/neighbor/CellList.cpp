@@ -37,10 +37,10 @@ namespace DdMd
    {}
 
    /*
-   * Allocate memory for this CellList.
+   * Allocate memory for this CellList (generalized coordinates).
    */
    void CellList::allocate(int atomCapacity, const Vector& lower, 
-                           const Vector& upper, double cutoff)
+                           const Vector& upper, const Vector& cutoffs)
    {
 
       // Allocate arrays of tag and handle objects
@@ -48,7 +48,7 @@ namespace DdMd
       handles_.allocate(atomCapacity);
 
       // Allocate array of Cell objects
-      setGridDimensions(lower, upper, cutoff);
+      setGridDimensions(lower, upper, cutoffs);
       cells_.allocate(grid_.size());
 
       for (int i = 0; i < grid_.size(); ++i) {
@@ -59,10 +59,23 @@ namespace DdMd
    }
 
    /*
-   * Calculate dimensions of grid of cells.
+   * Allocate memory for this CellList.
+   */
+   void CellList::allocate(int atomCapacity, const Vector& lower, 
+                           const Vector& upper, double cutoff)
+   {
+      Vector cutoffs;
+      for (int i = 0; i < Dimension; ++i) {
+         cutoffs[i] = cutoff;
+      }
+      allocate(atomCapacity, lower, upper, cutoffs);
+   }
+
+   /*
+   * Calculate number of cells in each direction of grid.
    */
    void CellList::setGridDimensions(const Vector& lower, const Vector& upper, 
-                                    double cutoff)
+                                    const Vector& cutoffs)
    {
       Vector    lengths;
       IntVector gridDimensions;
@@ -73,7 +86,7 @@ namespace DdMd
 
          lengths[i] = upper_[i] - lower_[i];
          assert(lengths[i] > 0.0);
-         gridDimensions[i] = int( lengths[i] / cutoff );
+         gridDimensions[i] = int(lengths[i]/cutoffs[i]);
          if (gridDimensions[i] < 1) {
             gridDimensions[i] = 1;
          }
@@ -97,11 +110,11 @@ namespace DdMd
    /*
    * Construct grid of cells, build linked list and identify neighbors.
    */
-   void CellList::makeGrid(const Vector& lower, const Vector& upper, double cutoff)
+   void CellList::makeGrid(const Vector& lower, const Vector& upper, const Vector& cutoffs)
    {
 
       // Calculate required grid dimensions
-      setGridDimensions(lower, upper, cutoff);
+      setGridDimensions(lower, upper, cutoffs);
 
       if (grid_.size() > cells_.capacity()) {
          UTIL_THROW("Insufficient memory was allocated for this grid");
@@ -169,6 +182,18 @@ namespace DdMd
          }
       }
 
+   }
+
+   /*
+   * Construct grid of cells, build linked list and identify neighbors (Cartesian).
+   */
+   void CellList::makeGrid(const Vector& lower, const Vector& upper, double cutoff)
+   {
+      Vector cutoffs;
+      for (int i = 0; i < Dimension; ++i) {
+         cutoffs[i] = cutoff;
+      }
+      makeGrid(lower, upper, cutoffs);
    }
 
    /*

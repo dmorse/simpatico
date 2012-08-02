@@ -22,7 +22,7 @@
 #include <algorithm>
 #include <string>
 
-//#define EXCHANGER_DEBUG
+#define EXCHANGER_DEBUG
 #define EXCHANGER_GHOST
 
 namespace DdMd
@@ -141,6 +141,12 @@ namespace DdMd
    */
    void Exchanger::exchange()
    {
+      if (UTIL_ORTHOGONAL && !atomStoragePtr_->isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian on entry to exchange");
+      } 
+      if (!UTIL_ORTHOGONAL && atomStoragePtr_->isCartesian()) {
+         UTIL_THROW("Error: Coordinates are Cartesian on entry to exchange");
+      } 
       exchangeAtoms();
       exchangeGhosts();
    }
@@ -151,6 +157,7 @@ namespace DdMd
       double coordinate;
       GroupIterator<N> groupIter;
       Atom* atomPtr;
+      int nEx[2];
       int nIn;
       int nOut;
       int i, j, k;
@@ -167,21 +174,30 @@ namespace DdMd
                   choose = false;
                   nIn = 0;
                   nOut = 0;
+                  nEx[j] = 0;
                   for (k = 0; k < N; ++k) {
                      atomPtr = groupIter->atomPtr(k);
                      if (atomPtr) {
                         coordinate = atomPtr->position()[i];
                         if (atomPtr->isGhost()) {
                            if (j == 0) {
+                              assert(inner_(i, j) > bound_(i, j));
                               if (coordinate < inner_(i, j)) {
                                  ++nOut;
+                                 if (coordinate < bound_(i, j)) {
+                                    nEx[j] += 1;
+                                 }
                               }
                               if (coordinate > outer_(i, j)) {
                                  ++nIn;
                               }
                            } else {
+                              assert(inner_(i, j) < bound_(i, j));
                               if (coordinate > inner_(i, j)) {
                                  ++nOut;
+                                 if (coordinate > bound_(i, j)) {
+                                    nEx[j] += 1;
+                                 }
                               }
                               if (coordinate < outer_(i, j)) {
                                  ++nIn;
@@ -190,6 +206,7 @@ namespace DdMd
                         } else { 
                            if (atomPtr->plan().exchange(i, j)) {
                               ++nOut;
+                              nEx[j] += 1;
                            } else {
                               ++nIn;
                            }
@@ -208,7 +225,14 @@ namespace DdMd
                      groupIter->plan().clearGhost(i, j);
                   }
                } // end for j
-            }
+
+               #if 0
+               if (nEx[0] > 0 && nEx[1] > 0) {
+                  UTIL_THROW("Group spanning 3 nodes");  
+               }
+               #endif
+
+            } // end if multiProcessorDirection
          } // end for i
 
          // Clear pointers to all ghost atoms in group
@@ -226,7 +250,7 @@ namespace DdMd
 
    #ifdef UTIL_MPI
    /*
-   * Pack bonds that contain postmarked atoms.
+   * Pack groups that contain postmarked atoms.
    */
    template <int N>
    void Exchanger::packGroups(int i, int j, 
@@ -266,7 +290,7 @@ namespace DdMd
    }
 
    /*
-   * Remove empty bonds from GroupStorage<N>.
+   * Remove empty groups from GroupStorage<N>.
    */
    template <int N>
    void Exchanger::removeEmptyGroups(GroupStorage<N>& storage,
@@ -293,20 +317,22 @@ namespace DdMd
       }
    }
 
-   // Unpack bonds into bondStorage.
+   /*
+   * Unpack groups into bondStorage.
+   */
    template <int N>
    void Exchanger::unpackGroups(GroupStorage<N>& storage)
    {
       Group<N>* newGroupPtr;
       Group<N>* oldGroupPtr;
-      int bondId;
+      int groupId;
 
       bufferPtr_->beginRecvBlock();
       while (bufferPtr_->recvSize() > 0) {
          newGroupPtr = storage.newPtr();
          bufferPtr_->unpackGroup<N>(*newGroupPtr);
-         bondId = newGroupPtr->id();
-         oldGroupPtr = storage.find(bondId);
+         groupId = newGroupPtr->id();
+         oldGroupPtr = storage.find(groupId);
          if (oldGroupPtr) {
             storage.returnPtr();
             atomStoragePtr_->findGroupAtoms(*oldGroupPtr);
@@ -319,6 +345,9 @@ namespace DdMd
    }
    #endif
 
+   /*
+   * Set ghost communication flags for all atoms in incomplete groups.
+   */
    template <int N>
    void Exchanger::finishGroupGhostPlan(GroupStorage<N>& storage)
    {
@@ -327,12 +356,13 @@ namespace DdMd
       Plan* planPtr;
       int i, j, k, nAtom;
 
-      // Set ghost communication flags for atoms in incomplete bonds
+      // Loop over groups
       storage.begin(groupIter);
       for ( ; groupIter.notEnd(); ++groupIter) {
 
          #ifdef UTIL_DEBUG
          #ifdef EXCHANGER_DEBUG
+         // Validate group
          int atomId;
          nAtom  = 0;
          for (k = 0; k < N; ++k) {
@@ -363,7 +393,7 @@ namespace DdMd
          #endif
          #endif
 
-         // Set communication flags for atoms in incomplete groups
+         // If this group is incomplete, set ghost flags for atoms 
          nAtom = groupIter->nPtr();
          if (nAtom < N) {
             for (i = 0; i < Dimension; ++i) {
@@ -404,8 +434,8 @@ namespace DdMd
    {
       stamp(START);
       Vector lengths = boundaryPtr_->lengths();
-      double bound, inner;
-      double coordinate;
+      double bound, inner, slabWidth;
+      double coordinate, rshift;
       AtomIterator atomIter;
       Atom* atomPtr;
       Plan* planPtr;
@@ -416,17 +446,22 @@ namespace DdMd
 
       // Set domain and slab boundaries
       for (i = 0; i < Dimension; ++i) {
+         if (UTIL_ORTHOGONAL) {
+            slabWidth = pairCutoff_;
+         } else {
+            slabWidth = pairCutoff_/lengths[i];
+         }
          for (j = 0; j < 2; ++j) {
             // j = 0 sends to lower coordinate i, bound is minimum
             // j = 1 sends to higher coordinate i, bound is maximum
             bound = domainPtr_->domainBound(i, j);
             bound_(i, j) = bound;
             if (j == 0) { // Communicate with lower index
-               inner_(i,j) = bound + pairCutoff_;
-               outer_(i, j)= bound - pairCutoff_;
+               inner_(i,j) = bound + slabWidth;
+               outer_(i, j)= bound - slabWidth;
             } else { // j == 1, communicate with upper index
-               inner_(i, j) = bound - pairCutoff_;
-               outer_(i, j) = bound + pairCutoff_;
+               inner_(i, j) = bound - slabWidth;
+               outer_(i, j) = bound + slabWidth;
             }
             sendArray_(i, j).clear();
          }
@@ -436,14 +471,6 @@ namespace DdMd
             multiProcessorDirection_[i] = 0;
          }
       }
-
-      /**
-      * In this function:
-      *  - sendArray_ is filled with ptrs to ghosts for transfer
-      *  - recvArray_ is filled with ptrs to local atoms for removal
-      * In exchangeGhosts(), recvArray is cleared, and then refilled 
-      * with pointers to ghosts as they are received (hence the name).
-      */
 
       // Compute communication plan for every local atom
       atomStoragePtr_->begin(atomIter);
@@ -576,8 +603,13 @@ namespace DdMd
             source = domainPtr_->sourceRank(i, j); // rank to receive from
             dest = domainPtr_->destRank(i, j);     // rank to send to
             bound = domainPtr_->domainBound(i, j); // bound for send
-            inner = inner_(i, jc);             // inner bound upon receipt 
-            shift = domainPtr_->shift(i, j);   // shift for periodic b.c.
+            inner = inner_(i, jc);                 // inner bound upon receipt 
+            shift = domainPtr_->shift(i, j);       // shift for periodic b.c.
+            if (UTIL_ORTHOGONAL) {
+               rshift = lengths[i]*double(shift);
+            } else {
+               rshift = double(shift);
+            }
 
             #ifdef UTIL_MPI
             if (multiProcessorDirection_[i]) {
@@ -592,13 +624,17 @@ namespace DdMd
             for ( ; atomIter.notEnd(); ++atomIter) {
 
                #ifdef UTIL_DEBUG
+               coordinate = atomIter->position()[i];
                #ifdef EXCHANGER_DEBUG
-               if (j == 0) {
-                  choose = (atomIter->position()[i] < bound);
-               } else {
-                  choose = (atomIter->position()[i] > bound);
+               {
+                  bool choose;
+                  if (j == 0) {
+                     choose = (coordinate < bound);
+                  } else {
+                     choose = (coordinate > bound);
+                  }
+                  assert(choose == atomIter->plan().exchange(i, j));
                }
-               assert(choose == atomIter->plan().exchange(i, j));
                #endif
                #endif
 
@@ -614,14 +650,24 @@ namespace DdMd
                   #endif
                   {
 
+                     #ifdef UTIL_DEBUG
+                     #ifdef EXCHANGER_DEBUG 
+                     assert(shift);
+                     assert(coordinate > -1.0*fabs(rshift));
+                     assert(coordinate <  2.0*fabs(rshift));
+                     #endif
+                     #endif
+
                      // Shift position if required by periodic b.c.
                      if (shift) {
-                        atomIter->position()[i] += shift * lengths[i];
+                        atomIter->position()[i] += rshift;
                      }
-                     assert(atomIter->position()[i] 
-                            > domainPtr_->domainBound(i, 0));
-                     assert(atomIter->position()[i] 
-                            < domainPtr_->domainBound(i, 1));
+
+                     #ifdef UTIL_DEBUG
+                     coordinate = atomIter->position()[i];
+                     assert(coordinate >= domainPtr_->domainBound(i, 0));
+                     assert(coordinate < domainPtr_->domainBound(i, 1));
+                     #endif
 
                      // For gridDimension==1, only nonbonded ghosts exist.
                      // The following assertion applies to these.
@@ -650,7 +696,7 @@ namespace DdMd
                // End atom send block
                bufferPtr_->endSendBlock();
 
-               // Pack bonds that contain postmarked atoms.
+               // Pack groups that contain postmarked atoms.
                packGroups<2>(i, j, *bondStoragePtr_, emptyBonds_);
                #ifdef INTER_ANGLE
                packGroups<3>(i, j, *angleStoragePtr_, emptyAngles_);
@@ -661,9 +707,8 @@ namespace DdMd
                stamp(PACK_GROUPS);
 
                /*
-               * Note: Removal cannot be done within the above loops over 
-               * atoms and groups because element removal invalidates a
-               * PArray iterator.
+               * Note: Removal cannot be done within above loops over atoms
+               * and groups because element removal invalidates the iterators.
                */
 
                // Remove chosen atoms (listed in recvArray) from atomStorage
@@ -673,7 +718,7 @@ namespace DdMd
                }
                stamp(REMOVE_ATOMS);
      
-               // Remove empty bonds from bondStorage.
+               // Remove empty groups
                removeEmptyGroups<2>(*bondStoragePtr_, emptyBonds_);
                #ifdef INTER_ANGLE
                removeEmptyGroups<3>(*angleStoragePtr_, emptyAngles_);
@@ -693,33 +738,30 @@ namespace DdMd
                while (bufferPtr_->recvSize() > 0) {
 
                   atomPtr = atomStoragePtr_->newAtomPtr();
+                  planPtr = &atomPtr->plan();
                   bufferPtr_->unpackAtom(*atomPtr);
                   atomStoragePtr_->addNewAtom();
 
                   if (shift) {
-                     atomPtr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += rshift;
                   }
-                  assert(atomPtr->position()[i] 
-                         > domainPtr_->domainBound(i, 0));
-                  assert(atomPtr->position()[i] 
-                         < domainPtr_->domainBound(i, 1));
-
 
                   #ifdef UTIL_DEBUG
+                  // Check bounds on atom coordinate
+                  coordinate = atomPtr->position()[i];
+                  assert(coordinate > domainPtr_->domainBound(i, 0));
+                  assert(coordinate < domainPtr_->domainBound(i, 1));
+
                   // Check ghost plan
-                  assert(!atomPtr->plan().ghost(i, j));
+                  assert(!planPtr->ghost(i, j));
                   if (j == 0) {
-                     assert( atomPtr->plan().ghost(i, 1)
-                             == (atomPtr->position()[i] > inner) );
+                     assert(planPtr->ghost(i, 1) == (coordinate > inner) );
                   } else {
-                     assert( atomPtr->plan().ghost(i, 0)
-                             == (atomPtr->position()[i] < inner) );
+                     assert(planPtr->ghost(i, 0) == (coordinate < inner) );
                   }
                   #endif
 
                   #ifdef EXCHANGER_GHOST
-                  planPtr = &atomPtr->plan();
-
                   // Determine if new atom will stay on this processor.
                   isHome = true;
                   if (i < Dimension - 1) {
@@ -750,7 +792,7 @@ namespace DdMd
                assert(bufferPtr_->recvSize() == 0);
                stamp(UNPACK_ATOMS);
 
-               // Unpack bonds into bondStorage.
+               // Unpack groups
                unpackGroups<2>(*bondStoragePtr_);
                #ifdef INTER_ANGLE
                unpackGroups<3>(*angleStoragePtr_);
@@ -848,12 +890,12 @@ namespace DdMd
       }
 
       Vector  lengths = boundaryPtr_->lengths();
-      double  bound, inner;
+      double  rshift;
       Atom* atomPtr;
       Atom* sendPtr;
       int i, j, jc, ip, jp, k, source, dest, shift, size;
 
-      // Clear all send and receive arrays
+      // Clear all receive arrays
       for (i = 0; i < Dimension; ++i) {
          for (j = 0; j < 2; ++j) {
             recvArray_(i, j).clear();
@@ -872,11 +914,14 @@ namespace DdMd
             }
          }
       }
-      #else
+      #endif
+
       #ifdef UTIL_DEBUG
+      double coordinate;
       #ifdef EXCHANGER_DEBUG
-      // Add local atoms to all appropriate send arrays
+      // Check send arrays
       {
+         // Count local atoms marked for sending as ghosts.
          FMatrix<int, Dimension, 2> sendCounter;
          for (i = 0; i < Dimension; ++i) {
             for (j = 0; j < 2; ++j) {
@@ -896,6 +941,7 @@ namespace DdMd
                }
             }
          }
+         // Check consistency of counts with sendArray sizes.
          for (i = 0; i < Dimension; ++i) {
             for (j = 0; j < 2; ++j) {
                if (sendCounter(i, j) != sendArray_(i, j).size()) {
@@ -904,7 +950,6 @@ namespace DdMd
             }
          }
       }
-      #endif
       #endif
       #endif
       stamp(INIT_SEND_ARRAYS);
@@ -922,11 +967,13 @@ namespace DdMd
             if (j == 0) jc = 1;
             if (j == 1) jc = 0;
 
-            bound = bound_(i, j);
-            inner = inner_(i, j);
-       
             // Shift on receiving node for periodic b.c.s
             shift = domainPtr_->shift(i, j);
+            if (UTIL_ORTHOGONAL) {
+               rshift = lengths[i]*shift;
+            } else {
+               rshift = 1.0*shift;
+            }
 
             #ifdef UTIL_MPI
             if (multiProcessorDirection_[i]) {
@@ -959,23 +1006,20 @@ namespace DdMd
                   atomPtr->plan().setFlags(sendPtr->plan().flags());
                   atomPtr->position() = sendPtr->position();
                   if (shift) {
-                     atomPtr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += rshift;
                   }
                   atomStoragePtr_->addNewGhost();
 
                   #ifdef UTIL_DEBUG
                   // Validate shifted ghost coordinate 
+                  coordinate = atomPtr->position()[i];
                   if (j == 0) {
-                     assert(atomPtr->position()[i] > bound_(i, 1));
+                     assert(coordinate > bound_(i, 1));
                   } else {
-                     assert(atomPtr->position()[i] < bound_(i, 0));
+                     assert(coordinate < bound_(i, 0));
                   }
                   #endif
 
-                  // Prevent ghost copy from being re-copied within
-                  // following loop over ghosts on same processor.
-                  // atomPtr->plan().clearGhost(i, j);
- 
                   // Add to send arrays for any remaining directions
                   if (i < Dimension - 1) {
                      for (ip = i + 1; ip < Dimension; ++ip) {
@@ -1010,7 +1054,7 @@ namespace DdMd
                   atomPtr = atomStoragePtr_->newGhostPtr();
                   bufferPtr_->unpackGhost(*atomPtr);
                   if (shift) {
-                     atomPtr->position()[i] += shift * lengths[i];
+                     atomPtr->position()[i] += rshift;
                   }
                   recvArray_(i, j).append(*atomPtr);
                   atomStoragePtr_->addNewGhost();
@@ -1033,24 +1077,11 @@ namespace DdMd
 
                   #ifdef UTIL_DEBUG
                   // Validate ghost coordinate on the receiving processor.
+                  coordinate = atomPtr->position()[i];
                   if (j == 0) {
-                     if (atomPtr->position()[i] < bound_(i, 1)) {
-                        std::cout << i << "  " << j 
-                                  << "  " << atomPtr->plan()
-                                  << "  " << atomPtr->position()[i]
-                                  << "  " << bound_(i, 0)
-                                  << std::endl;
-                     }
-                     //assert(atomPtr->position()[i] > bound_(i, 1));
+                     assert(coordinate > bound_(i, 1));
                   } else {
-                     if (atomPtr->position()[i] > bound_(i, 0)) {
-                        std::cout << i << "  " << j 
-                                  << "  " << atomPtr->plan()
-                                  << "  " << atomPtr->position()[i]
-                                  << "  " << bound_(i, 0)
-                                  << std::endl;
-                     }
-                     //assert(atomPtr->position()[i] < bound_(i, 0));
+                     assert(coordinate < bound_(i, 0));
                   }
                   #endif
 
@@ -1093,6 +1124,10 @@ namespace DdMd
    void Exchanger::update()
    {
       stamp(START);
+      if (!atomStoragePtr_->isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian on entry to update");
+      } 
+
       Vector lengths = boundaryPtr_->lengths();
       Atom*  atomPtr;
       int    i, j, k, source, dest, size, shift;
@@ -1128,7 +1163,7 @@ namespace DdMd
                   atomPtr = &recvArray_(i, j)[k];
                   bufferPtr_->unpackUpdate(*atomPtr);
                   if (shift) {
-                     atomPtr->position()[i] += shift * lengths[i];
+                     boundaryPtr_->applyShift(atomPtr->position(), i, shift);
                   }
                }
                stamp(UNPACK_UPDATE);
@@ -1144,7 +1179,7 @@ namespace DdMd
                   atomPtr = &recvArray_(i, j)[k];
                   atomPtr->position() = sendArray_(i, j)[k].position();
                   if (shift) {
-                     atomPtr->position()[i] += shift * lengths[i];
+                     boundaryPtr_->applyShift(atomPtr->position(), i, shift);
                   }
                }
                stamp(LOCAL_UPDATE);
@@ -1168,7 +1203,7 @@ namespace DdMd
       stamp(START);
       Vector lengths = boundaryPtr_->lengths();
       Atom*  atomPtr;
-      int    i, j, k, source, dest, size, shift;
+      int    i, j, k, source, dest, size;
 
       for (i = Dimension - 1; i >= 0; --i) {
          for (j = 1; j >= 0; --j) {

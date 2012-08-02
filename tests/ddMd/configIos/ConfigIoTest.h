@@ -1,7 +1,7 @@
 #ifndef DDMD_CONFIG_IO_TEST_H
 #define DDMD_CONFIG_IO_TEST_H
 
-#include <ddMd/configIos/ConfigIo.h>
+#include <ddMd/configIos/DdMdConfigIo.h>
 #include <ddMd/communicate/Domain.h>
 #include <ddMd/communicate/Buffer.h>
 #include <ddMd/storage/AtomStorage.h>
@@ -24,7 +24,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class ConfigIoTest: public ParamFileTest<ConfigIo>
+class ConfigIoTest: public ParamFileTest<DdMdConfigIo>
 {
 public:
 
@@ -35,7 +35,7 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      ConfigIo configIo;
+      DdMdConfigIo configIo;
       Boundary boundary;
       Domain   domain;
       Buffer   buffer;
@@ -103,7 +103,7 @@ public:
    {
       printMethod(TEST_FUNC);
 
-      ConfigIo configIo;
+      DdMdConfigIo configIo;
       Boundary boundary;
       Domain   domain;
       Buffer   buffer;

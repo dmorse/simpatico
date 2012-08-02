@@ -242,7 +242,11 @@ namespace DdMd
       }
 
       // Shift position to lie within boundary.
-      boundaryPtr_->shift(newPtr_->position());
+      if (UTIL_ORTHOGONAL) {
+         boundaryPtr_->shift(newPtr_->position());
+      } else {
+         boundaryPtr_->shiftGen(newPtr_->position());
+      }
 
       #ifdef UTIL_MPI
       // Identify rank of processor that owns this atom.

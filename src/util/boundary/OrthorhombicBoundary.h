@@ -78,11 +78,11 @@ namespace Util
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
 
-      ///\name Periodic Boundary Conditions
+      ///\name Periodic Boundary Conditions - Primitive Cell
       //@{
 
       /**
-      * Shift Vector r to its image within the primary unit cell.
+      * Shift Cartesian Vector r to its primary image.
       *
       * One output, each coordinate r[i] is shifted by a multiple of length[i]
       * so as to lie within the range minima_[i] < r[i] < maxima_[i].
@@ -95,19 +95,67 @@ namespace Util
       void shift(Vector &r) const;
 
       /**
-      * Shift Vector r to its image within the primary unit cell.
+      * Shift Cartesian Vector r to its primary image.
       *
-      * This method maps an atomic position to lie in the primary cell, 
-      * and also increments the atomic shift IntVector:
+      * This method maps an atomic position to its primary image, and
+      * also increments the atomic shift IntVector:
       *
-      * If r[i] -> r[i] - t*length_[i], then shift[i] -> shift[i] + t.
+      * If    r[i]     ->  r[i] - t*length_[i], 
+      * then  shift[i] ->  shift[i] + t.
       *
       * \sa Atom:shift()
       *
-      * \param r     Vector of coordinates
+      * \param r     Vector of Cartesian coordinates
       * \param shift integer shifts required to obtain "true" coordinates.
       */
       void shift(Vector &r, IntVector& shift) const;
+
+      /**
+      * Shift Cartesian Vector r by multiple t of a Bravais lattice vector.
+      *
+      * This method shifts the Vector r by a specified amount:
+      *
+      *   r ->  r + t*a'[i]
+      *
+      * where a[i] is Bravais lattice vector number i.
+      *
+      * \param r Cartesian position Vector 
+      * \param i direction index
+      * \param t multiple of Bravais lattice vector i
+      */
+      void applyShift(Vector &r, int i, int t) const;
+
+      /**
+      * Shift generalized Vector r to its primary image.
+      *
+      * One output, each coordinate r[i] is shifted by an integer, so as to
+      * lie within the range 0 < r[i] < 1.0
+      *
+      * Precondition: The algorithm assumes that on input, for each i=0,..,2,
+      * -1.0 < r[i] < 2.0
+      *
+      * \param r Vector of generalized coordinates
+      */
+      void shiftGen(Vector &r) const;
+
+      /**
+      * Shift generalized Vector r to its image within the primary unit cell.
+      *
+      * This method maps a vector of generalized coordinates to lie in the 
+      * primary cell, and also increments the atomic shift IntVector:
+      *
+      * If r[i] -> r[i] - t, then shift[i] -> shift[i] + t.
+      *
+      * \sa Atom:shift()
+      *
+      * \param r     Vector of generalized coordinates  (in/out)
+      * \param shift integer shifts, modified on output (in/out)
+      */
+      void shiftGen(Vector &r, IntVector& shift) const;
+
+      //@}
+      ///\name Periodic Boundary Conditions - Minimum Image Separations
+      //@{
 
       /**
       * Return square distance between positions r1 and r2, using the nearest
@@ -319,7 +367,7 @@ namespace Util
    {  return reciprocalBasisVectors_[i]; }
 
    /* 
-   * Shift Vector r to periodic cell, R[axis] < r[axis] < maxima_[axis].
+   * Shift Cartesian Vector r to primitive unit cell.
    */
    inline void OrthorhombicBoundary::shift(Vector& r) const
    {
@@ -350,6 +398,49 @@ namespace Util
             r[i] = r[i] + lengths_[i];
             --(shift[i]);
             assert(r[i] >= minima_[i]);
+         }
+      }
+   }
+
+   /*
+   * Shift Cartesian Vector r by multiple t of a Bravais lattice vector.
+   */
+   inline void OrthorhombicBoundary::applyShift(Vector &r, int i, int t) const
+   {  r[i] += t*lengths_[i]; }
+
+   /* 
+   * Shift generalized Vector r to primitive unit cell.
+   */
+   inline void OrthorhombicBoundary::shiftGen(Vector& r) const
+   {
+      for (int i = 0; i < Dimension; ++i) {
+         if( r[i] >= 1.0 ) {
+            r[i] = r[i] - 1.0;
+            assert(r[i] < 1.0);
+         } else
+         if ( r[i] <  0.0 ) {
+            r[i] = r[i] + 1.0;
+            assert(r[i] >= 0.0);
+         }
+      }
+   }
+
+   /* 
+   * Shift generalized Vector r to primitive cell, 0 < r[axis] < 1.0.
+   */
+   inline 
+   void OrthorhombicBoundary::shiftGen(Vector& r, IntVector& shift) const
+   {
+      for (int i = 0; i < Dimension; ++i) {
+         if (r[i] >= 1.0) {
+            r[i] = r[i] - 1.0;
+            ++(shift[i]);
+            assert(r[i] < 1.0);
+         } else
+         if (r[i] <  0.0) {
+            r[i] = r[i] + 1.0;
+            --(shift[i]);
+            assert(r[i] >= 0.0);
          }
       }
    }

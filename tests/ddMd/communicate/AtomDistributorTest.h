@@ -114,8 +114,14 @@ public:
             ptr->setId(i);
             ptr->setTypeId(0);
 
-            //Assign a random position within the boundary for the atom.
-            atomposfile >> ptr->position();
+            // Read a position from file.
+            if (UTIL_ORTHOGONAL) {
+               atomposfile >> ptr->position();
+            } else {
+               Vector r;
+               atomposfile >> r;
+               boundary.transformCartToGen(r, ptr->position());
+            }
 
             //Use position vector for velocity for now
             ptr->velocity() = ptr->position();

@@ -76,7 +76,7 @@ namespace Util
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
 
-      ///\name Periodic Boundary Conditions
+      ///\name Periodic Boundary Conditions - Primitive Cell
       //@{
 
       /**
@@ -105,6 +105,54 @@ namespace Util
       * \param shift integer shifts required to obtain "true" coordinates.
       */
       void shift(Vector &r, IntVector& shift) const;
+
+      /**
+      * Shift Cartesian Vector r by multiple t of a Bravais lattice vector.
+      *
+      * This method shifts the Vector r by a specified amount:
+      *
+      *   r ->  r + t*a'[i]
+      *
+      * where a[i] is Bravais lattice vector number i.
+      *
+      * \param r Cartesian position Vector 
+      * \param i direction index
+      * \param t multiple of Bravais lattice vector i
+      */
+      void applyShift(Vector &r, int i, int t) const;
+
+
+      /**
+      * Shift generalized Vector r to its image within the primary unit cell.
+      *
+      * One output, each coordinate r[i] is shifted by an integer, so as to
+      * lie within the range 0 < r[i] < 1.0
+      *
+      * Precondition: The algorithm assumes that on input, for each i=0,..,2,
+      * -1.0 < r[i] < 2.0, and throws an Exception otherwise.
+      *
+      * \param r Vector of generalized coordinates
+      */
+      void shiftGen(Vector &r) const;
+
+      /**
+      * Shift generalized Vector r to its image within the primary unit cell.
+      *
+      * This method maps a vector of generalized coordinates to lie in the 
+      * primary cell, and also increments the atomic shift IntVector:
+      *
+      * If r[i] -> r[i] - t, then shift[i] -> shift[i] + t.
+      *
+      * \sa Atom:shift()
+      *
+      * \param r     Vector of generalized coordinates  (in/out)
+      * \param shift integer shifts, modified on output (in/out)
+      */
+      void shiftGen(Vector &r, IntVector& shift) const;
+
+      //@}
+      ///\name Periodic Boundary Conditions - Minimum Image Separations
+      //@{
 
       /**
       * Return square distance between positions r1 and r2, using the nearest
@@ -394,7 +442,7 @@ namespace Util
    */
    inline void MonoclinicBoundary::shift(Vector& r, IntVector& shift) const
    {
-       if(r[0] >= maxima_[0]) {
+       if (r[0] >= maxima_[0]) {
           r[0] -= l_[0];
           ++(shift[0]);
           assert(r[0] < maxima_[0]);
@@ -427,6 +475,62 @@ namespace Util
           --(shift[2]);
           assert(r[2] + c3_*r[1] >= minima_[2]);
        }
+   }
+
+   /*
+   * Shift Cartesian Vector r by multiple t of a Bravais lattice vector.
+   */
+   inline void MonoclinicBoundary::applyShift(Vector &r, int i, int t) const
+   { 
+      switch (i) {
+      case 0: 
+         r[0] += t*l_[0];
+         break;
+      case 1: 
+         r[1] += t*l_[1];
+         r[2] += t*tilt_;
+         break;
+      case 2: 
+         r[2] += t*l_[2];
+         break;
+      }
+   }
+   
+   /* 
+   * Shift generalized Vector r to primitive unit cell.
+   */
+   inline void MonoclinicBoundary::shiftGen(Vector& r) const
+   {
+      for (int i = 0; i < Dimension; ++i) {
+         if( r[i] >= 1.0 ) {
+            r[i] = r[i] - 1.0;
+            assert(r[i] < 1.0);
+         } else
+         if ( r[i] <  0.0 ) {
+            r[i] = r[i] + 1.0;
+            assert(r[i] >= 0.0);
+         }
+      }
+   }
+
+   /* 
+   * Shift generalized Vector r to primitive cell, 0 < r[axis] < 1.0.
+   */
+   inline 
+   void MonoclinicBoundary::shiftGen(Vector& r, IntVector& shift) const
+   {
+      for (int i = 0; i < Dimension; ++i) {
+         if (r[i] >= 1.0) {
+            r[i] = r[i] - 1.0;
+            ++(shift[i]);
+            assert(r[i] < 1.0);
+         } else
+         if (r[i] <  0.0) {
+            r[i] = r[i] + 1.0;
+            --(shift[i]);
+            assert(r[i] >= 0.0);
+         }
+      }
    }
 
    /* 
@@ -603,6 +707,9 @@ namespace Util
    inline LatticeSystem MonoclinicBoundary::latticeSystem()
    { return lattice_; }
 
+   /**
+   * Returns the generalized coordinates of Cartesian input Rc in output Rg.
+   */
    inline 
    void MonoclinicBoundary::transformCartToGen(const Vector& Rc, Vector& Rg) 
    const
@@ -613,7 +720,7 @@ namespace Util
    }
       
    /**
-   * Returns the Generalized coordinates of Rc in Rg.
+   * Returns the Cartesian coordinates of input Rg in output Rc.
    */
    inline 
    void MonoclinicBoundary::transformGenToCart(const Vector& Rg, Vector& Rc) 

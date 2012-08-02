@@ -38,7 +38,12 @@ namespace DdMd
       ghostCapacity_(0),
       totalAtomCapacity_(0),
       locked_(false),
-      isInitialized_(false)
+      isInitialized_(false),
+      #if UTIL_ORTHOGONAL
+      isCartesian_(true)
+      #else
+      isCartesian_(false)
+      #endif
    {}
  
    /*
@@ -72,7 +77,7 @@ namespace DdMd
       allocate();
    }
 
-   /**
+   /*
    * Allocate and initialize all containers (private).
    */
    void AtomStorage::allocate()
@@ -277,11 +282,16 @@ namespace DdMd
 
    // Snapshot functions
 
-   /**
-   * Record current positions of all local atoms.
+   /*
+   * Record current positions of all local atoms and lock storage.
    */
    void AtomStorage::makeSnapshot()
    {
+      // Precondition
+      if (!isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian in makeSnapshot");
+      }
+ 
       AtomIterator iter;
       int i = 0;
       for (begin(iter); iter.notEnd(); ++iter) {
@@ -291,26 +301,36 @@ namespace DdMd
       locked_ = true;
    }
 
-   /**
+   /*
    * Clear snapshot of local atom positions.
    */
    void AtomStorage::clearSnapshot()
-   {  locked_ = false; }
+   {
+      locked_ = false; 
+   }
 
-   /**
-   * Return maximum squared displacement on this processor since last snapshot.
+   /*
+   * Return max. sq. displacement of local atoms on this node since snapshot.
    */
    double AtomStorage::maxSqDisplacement()
    {
+      if (!isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian in maxSqDisplacement");
+      } 
+      if (!locked_) {
+         UTIL_THROW("Error: AtomStorage not locked in maxSqDisplacement");
+      } 
       Vector dr;
       double norm;
-      double max = 0;
+      double max = 0.0;
       AtomIterator iter;
       int i = 0;
       for (begin(iter); iter.notEnd(); ++iter) {
          dr.subtract(iter->position(), snapshot_[i]);
          norm = dr.square();
-         if (norm > max) max = norm;
+         if (norm > max) {
+            max = norm;
+         }
          ++i;
       }
       return max;
@@ -323,6 +343,11 @@ namespace DdMd
    */
    bool AtomStorage::needExchange(MPI::Intracomm& communicator, double skin) 
    {
+     
+      if (!isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian in needExchange");
+      } 
+
       // Calculate maximum square displacment among along nodes
       double maxSqDisp = maxSqDisplacement(); // maximum on node
       double maxSqDispAll;                    // global maximum
@@ -388,6 +413,73 @@ namespace DdMd
    {  ghostSet_.begin(iterator); }
 
    /*
+   * Transform all atomic coordinates from Cartesian to generalized.
+   */
+   void AtomStorage::transformCartToGen(const Boundary& boundary) 
+   {
+      if (!isCartesian()) {
+         UTIL_THROW("Error: Coordinates not Cartesian on entry");
+      }
+      Vector r;
+      if (nAtom()) {
+         AtomIterator  atomIter;
+         for (begin(atomIter); atomIter.notEnd(); ++atomIter) {
+            r = atomIter->position();
+            boundary.transformCartToGen(r, atomIter->position());
+         }
+      }
+      if (nGhost()) {
+         GhostIterator  ghostIter;
+         for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
+            r = ghostIter->position();
+            boundary.transformCartToGen(r, ghostIter->position());
+         }
+      }
+      isCartesian_ = false;
+   }
+
+   /*
+   * Transform all atomic coordinates from generalized to Cartesian.
+   */
+   void AtomStorage::transformGenToCart(const Boundary& boundary) 
+   {
+      if (isCartesian()) {
+         UTIL_THROW("Error: Coordinates are Cartesian on entry");
+      }
+      Vector r;
+      if (nAtom()) {
+         AtomIterator atomIter;
+         for (begin(atomIter); atomIter.notEnd(); ++atomIter) {
+            r = atomIter->position();
+            boundary.transformGenToCart(r, atomIter->position());
+         }
+      }
+      if (nGhost()) {
+         GhostIterator ghostIter;
+         for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
+            r = ghostIter->position();
+            boundary.transformGenToCart(r, ghostIter->position());
+         }
+      }
+      isCartesian_ = true;
+   }
+
+   #ifdef UTIL_MPI
+   /*
+   * Compute, store and return total number of atoms on all processors.
+   */
+   void AtomStorage::computeNAtomTotal(MPI::Intracomm& communicator)
+   {
+      int nAtomLocal = nAtom();
+      communicator.Reduce(&nAtomLocal, &nAtomTotal_, 1, 
+                          MPI::INT, MPI::SUM, 0);
+      if (communicator.Get_rank() !=0) {
+         nAtomTotal_ = -1;
+      }
+   }
+   #endif
+
+   /*
    * Check validity of this AtomStorage.
    *
    * Returns true if all is ok, or throws an Exception.
@@ -419,49 +511,43 @@ namespace DdMd
       // if (nGhost() + nAtom() != j) 
       //   UTIL_THROW("nGhost + nAtom != j"); 
 
-      // Count local atoms on this processor.
+      // Iterate over, count and find local atoms on this processor.
       ConstAtomIterator localIter;
       j = 0;
       for (begin(localIter); localIter.notEnd(); ++localIter) {
          ++j;
          ptr = find(localIter->id());
-         if (ptr == 0)
+         if (ptr == 0) {
             UTIL_THROW("Unable to find local atom returned by iterator"); 
-         if (ptr != localIter.get())
+         }
+         if (ptr != localIter.get()) {
             UTIL_THROW("Inconsistent find(localIter->id()"); 
+         }
       }
-      if (j != nAtom())
+      if (j != nAtom()) {
          UTIL_THROW("Number from localIterator != nAtom()"); 
+      }
 
-      // Count ghost atoms
+      // Iterate over, count and find ghost atoms
       ConstGhostIterator ghostIter;
       j = 0;
       for (begin(ghostIter); ghostIter.notEnd(); ++ghostIter) {
          ++j;
          ptr = find(ghostIter->id());
-         if (ptr == 0)
-            UTIL_THROW("find(ghostIter->id() == 0"); 
+         if (ptr == 0) {
+            UTIL_THROW("find(ghostIter->id()) == 0"); 
+         }
+         // We do NOT test if ptr == ghostIter.get(), because it is possible
+         // to have multiple ghosts with the same id on one processor. One to 
+         // one correspondence of ids and pointers is guaranteed only for 
+         // local atoms.
       }
-      if (j != nGhost())
+      if (j != nGhost()) {
          UTIL_THROW("Number from ghostIterator != nGhost()"); 
+      }
 
       return true;
    }
-
-   #ifdef UTIL_MPI
-   /**
-   * Compute, store and return total number of atoms on all processors.
-   */
-   void AtomStorage::computeNAtomTotal(MPI::Intracomm& communicator)
-   {
-      int nAtomLocal = nAtom();
-      communicator.Reduce(&nAtomLocal, &nAtomTotal_, 1, 
-                          MPI::INT, MPI::SUM, 0);
-      if (communicator.Get_rank() !=0) {
-         nAtomTotal_ = -1;
-      }
-   }
-   #endif
 
 }
 #endif
