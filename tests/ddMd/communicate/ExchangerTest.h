@@ -128,9 +128,6 @@ public:
       nAtom = atomStorage.nAtom();
       communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
       if (domain.gridRank() == 0) {
-         //std::cout << std::endl;
-         // std::cout << "Total atom count (post-distribute) = " 
-         //          << nAtomAll << std::endl;
          atomCount = nAtomAll;
       }
 
@@ -184,19 +181,11 @@ public:
          TEST_ASSERT(domain.isInDomain(atomIter->position()));
       }
 
-      MpiLogger logger;
-
-      #if 0
-      logger.begin();
-      std::cout << "Processor: " << myRank << ", Post-distribute nAtom = "
-                << atomStorage.nAtom() << std::endl;
-      logger.end();
-      #endif
-
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   false));
 
+      TEST_ASSERT(!atomStorage.isCartesian());
       double range = 0.4;
       displaceAtoms(range);
 
@@ -206,8 +195,6 @@ public:
       nAtom = atomStorage.nAtom();
       communicator().Reduce(&nAtom, &nAtomAll, 1, MPI::INT, MPI::SUM, 0);
       if (myRank == 0) {
-         //std::cout << "Total atom count (post atom exchange) = " 
-         //<< nAtomAll << std::endl;
          TEST_ASSERT(nAtomAll == atomCount);
       }
 
@@ -220,14 +207,6 @@ public:
       TEST_ASSERT(atomStorage.isValid());
       TEST_ASSERT(bondStorage.isValid(atomStorage, domain.communicator(), 
                   false));
-
-      #if 0
-      //Print the number of atoms with each processor after the exchange.
-      logger.begin();
-      std::cout << "Processor " << myRank << " : Post-exchange Atoms count = "
-                << atomStorage.nAtom() << std::endl;
-      logger.end();
-      #endif
 
    }
 
@@ -279,24 +258,6 @@ public:
       #ifdef INTER_DIHEDRAL
       TEST_ASSERT(dihedralStorage.isValid(atomStorage, 
                   domain.communicator(), true));
-      #endif
-
-      #if 0
-      MpiLogger logger;
-
-      //Print number of atoms on each processor after the ghost exchange.
-      logger.begin();
-      std::cout << "Processor " << myRank 
-                << " : Post-ghost exchange Atom  count = "
-                << atomStorage.nAtom() << std::endl;
-      logger.end();
-
-      // Print number of ghosts on each processor after the exchange.
-      logger.begin();
-      std::cout << "Processor " << myRank 
-                << " : Post-ghost exchange Ghost count = "
-                << atomStorage.nGhost() << std::endl;
-      logger.end();
       #endif
 
    }

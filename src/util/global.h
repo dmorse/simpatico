@@ -68,4 +68,13 @@
   #endif
 #endif
 
+/**
+* Assertion macro suitable for use in parallel code.
+*/
+#ifdef NDEBUG
+#define UTIL_ASSERT(condition) {}
+#else
+#define UTIL_ASSERT(condition) if (!(condition)) { UTIL_THROW("Failed assertion: " #condition); }
+#endif
+
 #endif

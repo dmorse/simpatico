@@ -58,12 +58,21 @@ public:
       }
    }
 
+   void testAssert() 
+   {
+      printMethod(TEST_FUNC);
+      printEndl();
+
+      UTIL_ASSERT(1 == 2);
+   }
+
 };
 
 TEST_BEGIN(ExceptionTest)
 TEST_ADD(ExceptionTest, testConstructor)
 TEST_ADD(ExceptionTest, testThrow1)
 TEST_ADD(ExceptionTest, testThrow2)
+//TEST_ADD(ExceptionTest, testAssert)
 TEST_END(ExceptionTest)
 
 #endif

@@ -33,10 +33,10 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * Class to read and write configuration files.
+   * Abstract reader/writer for configuration files.
    *
-   * ConfigIo is a polymorphic class with a default implementation that
-   * encodes the default DdMd configuration file format.
+   * Each concrete subclass of ConfigIo implements a specific file format
+   * by implementing the readConfig and writeConfig methods. 
    *
    * \ingroup DdMd_ConfigIo_Module
    */
@@ -95,17 +95,24 @@ namespace DdMd
                               );
 
       /**
-      * Read configuration file.
+      * Read a configuration file.
       *
-      * This routine opens and reads a file on the master, and distributes
-      * atoms and groups among the processors. Upon return:
+      * This reads a configuration file from the master processor, and 
+      * distributes atoms and groups among the processors. Upon entry,
+      * the file must be open for reading. Upon return:
       *
-      *   - Each processor should own all atoms in its domain, and no others.
+      *   - Each processor owns all atoms in its domain, and no others.
+      *     Each atom is owned by one and only one processor.
       *
-      *   - Each processor should have every group that contains atoms 
-      *     that it owns, and no others.
+      *   - Each processor owns every group that contains one or more
+      *     of the atoms that it owns, and no others. Each group may
+      *     be owned by more than one processor.
       *
-      *   - There should be no ghost atoms on any processor.
+      *   - All Atom positions are expressed in generalized coordinates.
+      *
+      *   - All Atom Mask data is set correctly for specified maskPolicy.
+      *
+      *   - There are no ghost atoms on any processor.
       *
       * \param file input file stream
       * \param maskPolicy MaskPolicy to be used in setting atom masks
@@ -115,8 +122,11 @@ namespace DdMd
       /**
       * Write configuration file.
       *
-      * This routine opens and writes a file on the master,
-      * collecting atom data from all processors.
+      * This routine opens and writes a file on the master, collecting atom
+      * and group data from all processors. Many file formats allow atom and
+      * groups to be written in arbitrary order. Atomic positions may be 
+      * written in Cartesian or generalized coordinates, depending on the
+      * file format.
       *
       * \param file output file stream
       */
@@ -125,7 +135,7 @@ namespace DdMd
    protected:
 
       /**
-      * Set masks on all atoms.
+      * Set Mask data on all atoms.
       */
       void setAtomMasks();
 
