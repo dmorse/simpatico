@@ -1,0 +1,10 @@
+Boundary classes
+----------------
+
+- Add applyShift(Vector& r, IntVector &t) to boundary classes.
+
+- Add minimumDeformRatio method to Boundary classes.
+
+- Add bool isOrthorhombic() method to Boundary classes.
+  Use to test other classes that call Boundary::lengths().
+

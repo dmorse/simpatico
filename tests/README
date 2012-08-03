@@ -1,0 +1,14 @@
+This directory contains a simple unit test framework and a set 
+of unit tests for the simpatico source code.
+
+Directories:
+
+   test/    - unit test framework
+   util/    - unit tests for Util namespace
+   inter/   - unit tests for Inter namespace
+   mcMd/    - unit tests for McMd namespace
+   ddMd/    - unit tests for DdMd namespace
+
+For documentation of the unit test framework, see the class
+documentation for classes in the test/ directory, and the
+examples in the test/examples directory.

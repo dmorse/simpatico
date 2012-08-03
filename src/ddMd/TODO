@@ -24,6 +24,13 @@ Constant Pressure:
 
 - Write a reversible NPT integrator.
 
+Configuration File IO
+---------------------
+
+- Add option for ordered output of atoms.
+
+- Add LammpsConfigIo class
+
 Hybrid MD
 ----------
 
@@ -32,7 +39,6 @@ Hybrid MD
 - Add lists of old atom positions to AtomStorage.
 
 - Add methods to commit or revert the state of each storage.
-
 
 Cell List and Pair List:
 ------------------------
@@ -43,15 +49,6 @@ Cell List and Pair List:
 - Modify Cell::getNeighbors method to pass back a list of AtomTag objects, 
   rather than an array of pointers. Provide a CellList method to decide if 
   a particular pair is within the cutoff.
-
-
-Configuration File IO
----------------------
-
-- Add option for ordered output of atoms.
-
-- Add LammpsConfigIo class
-
 
 Buffer:
 -------
@@ -69,12 +66,10 @@ Single Processor Operation
   to work ifndef UTIL_MPI, continue with other classes, to enable 
   single processor operation with no MPI.
 
-
 Atom Class Implementation
 --------------------------
 
 - see doc/notes/ddMd/Atom file
-
 
 Files
 -----
@@ -85,4 +80,3 @@ Restart
 -------
 
 - Add restart capability.
-
