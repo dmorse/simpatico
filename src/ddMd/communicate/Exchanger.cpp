@@ -419,11 +419,61 @@ namespace DdMd
       }
    }
 
-   /**
-   * Exchange ownership of local atoms.
+   /*
+   * Exchange ownership of local atoms and groups, set ghost plan.
    *
-   * This method should be called before rebuilding the neighbor list on
-   * each processor, to exchange ownership of local atoms.
+   * Atomic coordinates must be in generalized coordinates on entry and 
+   * exit if not UTIL_ORTHOGONAL, and Cartesian if UTIL_ORTHOGONAL.
+   *
+   * Algorithm:
+   *
+   *    - Loop over local atoms, set exchange and ghost communication 
+   *      flags for those beyond or near boundaries. 
+   *
+   *    - Add local atoms that will be retained by this processor but 
+   *      sent as ghosts to appropriate send arrays.
+   *
+   *    - Loop over groups, set ghost communication flags for groups
+   *      that span boundaries are have atoms near boundaries.
+   *
+   *    - Clear ghosts.
+   *
+   *      For each transfer directions (i and j) {
+   *  
+   *         for each local atom {
+   *            if marked for exchange(i, j) {
+   *               if gridDimension[i] > 1 {
+   *                  - add to sendAtoms array for removal
+   *                  - pack into send buffer
+   *               } else {
+   *                  - make ghost copy
+   *               }
+   *            }
+   *         }
+   *
+   *         if gridDimension[i] > 1 {
+   *            - Pack groups containing atoms to be sent
+   *            - Remove exchanged atoms and empty groups
+   *            - Send and receive data
+   *            for each atom in receive buffer {
+   *               - Unpack atom into storage
+   *               - shift periodic boundary conditions
+   *               - Determine if this is new home (or way station)
+   *               - If atom is home, add to appropriate ghost arrays.
+   *            }
+   *         }
+   * 
+   *      } 
+   *
+   *    - Loop over groups, identify incomplete groups. For each
+   *      atom in an incomplete groups, set all ghost communication
+   *      flags that are set for the group, and add to send arrays.
+   *
+   *  Upon return, each processor owns all atoms in its domain, 
+   *  and all groups that contain one or more such atoms, all
+   *  ghost flags are set for local atoms, send arrays contain
+   *  all local atoms that are marked for sending as ghosts, 
+   *  and there are no ghosts.
    */
    void Exchanger::exchangeAtoms()
    {
