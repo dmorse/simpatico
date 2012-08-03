@@ -1,4 +1,3 @@
-
 all:
 	cd stochastic; make all
 	cd unit; make all

@@ -1,13 +1,13 @@
 SRC_DIR_REL =../../src
 
 include $(SRC_DIR_REL)/compiler.mk
-include $(SRC_DIR_REL)/util/defines.mk
-include $(SRC_DIR_REL)/inter/defines.mk
-include $(SRC_DIR_REL)/mcMd/defines.mk
-include $(SRC_DIR_REL)/mcMd/patterns.mk
-include $(SRC_DIR_REL)/util/sources.mk
-include $(SRC_DIR_REL)/inter/sources.mk
-include $(SRC_DIR_REL)/mcMd/sources.mk
+include $(SRC_DIR)/util/defines.mk
+include $(SRC_DIR)/inter/defines.mk
+include $(SRC_DIR)/mcMd/defines.mk
+include $(TESTS_DIR)/mcMd/patterns.mk
+include $(SRC_DIR)/util/sources.mk
+include $(SRC_DIR)/inter/sources.mk
+include $(SRC_DIR)/mcMd/sources.mk
 
 #-----------------------------------------------------------------------
 # Variable definitions
@@ -15,7 +15,7 @@ include $(SRC_DIR_REL)/mcMd/sources.mk
 #-----------------------------------------------------------------------
 
 
-TESTS_DIR=$(ROOT_DIR)/tests
+
 
 all:  Test
 

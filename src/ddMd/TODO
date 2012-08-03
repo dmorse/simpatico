@@ -1,12 +1,10 @@
 Testing
 -------
 
-- Add test that number of inner neighbors is unchanged upon reneighboring.
-
-- Test conservation of energy with dihedrals.
-
 - Improve testing of PairList - check that number of inner pairs doesn't
   change upon reneighboring, in unit tests and as optional test in integrator.
+
+- Test conservation of energy with dihedrals.
 
 Flexible Unit Cells:
 --------------------
@@ -49,6 +47,8 @@ Cell List and Pair List:
 
 Configuration File IO
 ---------------------
+
+- Add option for ordered output of atoms.
 
 - Add LammpsConfigIo class
 

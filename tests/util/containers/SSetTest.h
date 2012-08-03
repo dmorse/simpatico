@@ -136,7 +136,7 @@ void SSetTest::testIterator()
    TEST_ASSERT(*iterator == array[3]);
    ++iterator;
 
-   TEST_ASSERT(iterator.atEnd());
+   TEST_ASSERT(iterator.isEnd());
 
 }
 

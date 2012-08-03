@@ -31,3 +31,15 @@ ifdef MAKEDEP
                $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) $(DDMD_ALLDEPS) $<
 endif
 
+# Rule to compile *.cc main programs for unit tests. 
+%.o:%.cc
+	$(CXX) $(CPPFLAGS) $(TESTFLAGS) $(INCLUDES) \
+               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) -c -o $@ $<
+ifdef MAKEDEP
+	$(MAKEDEP) $(INCLUDES) \
+               $(UTIL_DEFS) $(INTER_DEFS) $(DDMD_DEFS) $(DDMD_ALLDEPS) $<
+endif
+
+# Note: The main program files for unit tests must use a file suffix *.cc,
+# while all other source files must use *.cpp. 
+

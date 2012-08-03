@@ -31,6 +31,7 @@ ROOT_DIR=PWD
 SRC_DIR=$(ROOT_DIR)/src
 BIN_DIR=$(ROOT_DIR)/bin
 LIB_DIR=$(ROOT_DIR)/lib
+TESTS_DIR=$(ROOT_DIR)/tests
 
 #-----------------------------------------------------------------------
 # Automatic dependency generation:

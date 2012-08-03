@@ -109,7 +109,7 @@ void FPArrayTest::testIterator()
    TEST_ASSERT(*iterator == array[5]);
    ++iterator;
 
-   TEST_ASSERT(iterator.atEnd());
+   TEST_ASSERT(iterator.isEnd());
 
 }
 
@@ -143,7 +143,7 @@ void FPArrayTest::testConstIterator()
    TEST_ASSERT(*constIterator == array[5]);
    ++constIterator;
 
-   TEST_ASSERT(constIterator.atEnd());
+   TEST_ASSERT(constIterator.isEnd());
 
 }
 

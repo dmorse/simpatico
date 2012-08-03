@@ -109,7 +109,7 @@ void FArrayTest::testIterator()
    TEST_ASSERT(it.notEnd());
    TEST_ASSERT(*it == 5 );
    ++it;
-   TEST_ASSERT(it.atEnd());
+   TEST_ASSERT(it.isEnd());
 } 
 
 #if 1

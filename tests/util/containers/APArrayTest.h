@@ -137,7 +137,7 @@ void APArrayTest::testIterator()
    printMethod(TEST_FUNC);
 
    parray.begin(iterator);
-   TEST_ASSERT(iterator.atEnd());
+   TEST_ASSERT(iterator.isEnd());
    TEST_ASSERT(!iterator.notEnd());
 
    parray.reserve(2);
@@ -149,31 +149,31 @@ void APArrayTest::testIterator()
 
    parray.begin(iterator);
 
-   TEST_ASSERT(!iterator.atEnd());
+   TEST_ASSERT(!iterator.isEnd());
    TEST_ASSERT(iterator.notEnd());
    TEST_ASSERT(*iterator == array[8]);
    TEST_ASSERT(iterator.get() == &array[8]);
    TEST_ASSERT(&(*iterator) == &array[8]);
    ++iterator;
 
-   TEST_ASSERT(!iterator.atEnd());
+   TEST_ASSERT(!iterator.isEnd());
    TEST_ASSERT(iterator.notEnd());
    TEST_ASSERT(*iterator == array[4]);
    TEST_ASSERT(iterator.get() == &array[4]);
    TEST_ASSERT(&(*iterator) == &array[4]);
    ++iterator;
 
-   TEST_ASSERT(!iterator.atEnd());
+   TEST_ASSERT(!iterator.isEnd());
    TEST_ASSERT(iterator.notEnd());
    TEST_ASSERT(*iterator == array[3]);
    ++iterator;
 
-   TEST_ASSERT(!iterator.atEnd());
+   TEST_ASSERT(!iterator.isEnd());
    TEST_ASSERT(iterator.notEnd());
    TEST_ASSERT(*iterator == array[5]);
    ++iterator;
 
-   TEST_ASSERT(iterator.atEnd());
+   TEST_ASSERT(iterator.isEnd());
    TEST_ASSERT(!iterator.notEnd());
 
 }

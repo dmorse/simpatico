@@ -82,16 +82,16 @@ void DArrayTest::testIterator()
    ArrayIterator<Data> it;
    v.begin(it);
    TEST_ASSERT(imag(*it) == 10.1 );
-   TEST_ASSERT(!it.atEnd());
+   TEST_ASSERT(!it.isEnd());
    TEST_ASSERT(it.notEnd());
    ++it;
    TEST_ASSERT(real(*it) == 20 );
-   TEST_ASSERT(!it.atEnd());
+   TEST_ASSERT(!it.isEnd());
    TEST_ASSERT(it.notEnd());
    ++it;
    TEST_ASSERT(imag(*it) == 30.1 );
    ++it;
-   TEST_ASSERT(it.atEnd());
+   TEST_ASSERT(it.isEnd());
    TEST_ASSERT(!it.notEnd());
 } 
 
