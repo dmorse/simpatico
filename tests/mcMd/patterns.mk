@@ -11,7 +11,7 @@
 # Compilation pattern rules
 
 # Path(s) to search for header files.
-INCLUDES= -I$(SRC_DIR)
+INCLUDES= -I$(SRC_DIR) -I$(TESTS_DIR)
 
 # Dependencies of source files on makefile fragments
 MCMD_ALLDEPS= -A$(SRC_DIR)/compiler.mk

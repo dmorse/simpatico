@@ -14,7 +14,7 @@
 # Compilation pattern rules
 
 # Path(s) to search for header files. 
-INCLUDES= -I$(SRC_DIR)
+INCLUDES= -I$(SRC_DIR) -I$(TESTS_DIR)
 
 # Extra dependencies for all source files
 DDMD_ALLDEPS= -A$(SRC_DIR)/compiler.mk
