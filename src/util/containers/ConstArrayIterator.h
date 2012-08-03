@@ -24,8 +24,8 @@ namespace Util
    * ++ operator increments the current pointer by one array element.
    *
    * Unlike an STL const forward iterator, an ConstArrayIterator contains the 
-   * address of the end of the array. The atEnd() method can be used to test 
-   * for termination of a for or while loop. When atEnd() is true, the current
+   * address of the end of the array. The isEnd() method can be used to test 
+   * for termination of a for or while loop. When isEnd() is true, the current
    * pointer is one past the end of the array, and thus the iterator has no
    * current value.
    *
@@ -73,7 +73,7 @@ namespace Util
       *
       * \return true if at end, false otherwise.
       */
-      bool atEnd() const
+      bool isEnd() const
       {  return (current_ == end_); }
 
       /**

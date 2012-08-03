@@ -244,7 +244,7 @@ namespace DdMd
 
          // Pack buffer with groups
          int recvArraySize_ = 0;
-         isComplete_ = iterator_.atEnd();
+         isComplete_ = iterator_.isEnd();
          bufferPtr_->clearSendBuffer();
          bufferPtr_->beginSendBlock(Buffer::GROUP, N);
          while (recvArraySize_ < bufferCapacity && !isComplete_) {
@@ -258,7 +258,7 @@ namespace DdMd
                }
             }
             ++iterator_;
-            isComplete_ = iterator_.atEnd();
+            isComplete_ = iterator_.isEnd();
          }
          bufferPtr_->endSendBlock(isComplete_);
 

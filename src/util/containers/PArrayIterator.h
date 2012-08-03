@@ -20,9 +20,9 @@ namespace Util
    * operator increments the current pointer by one array element.
    *
    * Unlike an STL forward iterator, an PArrayIterator contains the address 
-   * of the end of the array. The atEnd() method can be used to test for
-   * termination of a for or while loop. When atEnd() is true, the iterator
-   * has no current value, and cannot be incremented further. The atEnd()
+   * of the end of the array. The isEnd() method can be used to test for
+   * termination of a for or while loop. When isEnd() is true, the iterator
+   * has no current value, and cannot be incremented further. The isEnd()
    * method returns true either if the iterator: i) has already been 
    * incremented one past the end of an associated PArray, or ii) is in a
    * null state that is produced by the constructor and the clear() method. 
@@ -81,7 +81,7 @@ namespace Util
       *
       * \return true if at end, false otherwise.
       */
-      bool atEnd() const
+      bool isEnd() const
       {  return (current_ == end_); }
 
       /**

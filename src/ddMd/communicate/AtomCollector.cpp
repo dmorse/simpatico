@@ -209,14 +209,14 @@ namespace DdMd
 
          // Pack buffer with atoms
          int recvArraySize_ = 0;
-         isComplete_ = iterator_.atEnd();
+         isComplete_ = iterator_.isEnd();
          bufferPtr_->clearSendBuffer();
          bufferPtr_->beginSendBlock(Buffer::ATOM);
          while (recvArraySize_ < bufferPtr_->atomCapacity() && !isComplete_) {
             bufferPtr_->packAtom(*iterator_);
             ++recvArraySize_;
             ++iterator_;
-            isComplete_ = iterator_.atEnd();
+            isComplete_ = iterator_.isEnd();
          }
          bufferPtr_->endSendBlock(isComplete_);
 

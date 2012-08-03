@@ -1,9 +1,20 @@
+Improve Extensibility
+---------------------
+
+* Make main programs configurable (make _r versions)
+
+* Make modules more convenient by adding protected methods
+  to add subfactories.
+
+
 Non-Orthorhombic Boundaries
 ---------------------------
 
-- Add tests for CellList specifically for Monoclinic Boundary.
+- Add applyShift(Vector& r, IntVector &t) to boundary class.
 
-- Use apply shift method in MSD diagnostic classes.
+- Use applyShift method in MSD diagnostic classes.
+
+- Add tests for CellList specifically for Monoclinic Boundary.
 
 - Add bool isOrthorhombic() method to Boundary classes.
   Use to test other classes that call Boundary::lengths().
@@ -67,6 +78,8 @@ Python File Tools:
 Testing
 -------
 
+- Test SET commands in command script.
+
 - Add capacity for regression tests, using comparison to old files.
 
 - More thorough tests of dihedral potentials.
@@ -79,11 +92,14 @@ Interface changes:
   * If possible, remove moleculeId() and molecule(speciesId, moleculeId)
     methods of System.
 
-  * Change iterator.atEnd() to iterator.isEnd()
+File organization:
+------------------
 
-- Source file names and locations:
+  * Move directory util/util to util/misc
 
   * Separate directories for observer, string, error, timer, misc
+
+  * Move test code framework to tests directory
 
 
 SubSystem base classes:
@@ -103,8 +119,8 @@ SubSystem base classes:
 - Remove replace system().typePotential() by typePotential() in mdIntegrators
 
 
-Design Changes
---------------
+Interactions (Design Changes)
+-----------------------------
 
 Interactions:
 

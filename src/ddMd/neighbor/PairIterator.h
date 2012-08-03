@@ -78,15 +78,15 @@ namespace DdMd
       /** 
       * Return true if at end of PairList.
       *
-      * When atEnd() is true, the current pair is already one past past
+      * When isEnd() is true, the current pair is already one past past
       * the end of the pairlist, and is thus invalid.
       */
-      bool atEnd() const;
+      bool isEnd() const;
    
       /** 
       * Return true if not at end of PairList.
       *
-      * If notEnd(), continue iteration loop.  Equivalent to not atEnd().
+      * If notEnd(), continue iteration loop.  Equivalent to not isEnd().
       */
       bool notEnd() const;
    
@@ -185,7 +185,7 @@ namespace DdMd
    /*
    * Return true if past last pair in list.
    */
-   inline bool PairIterator::atEnd() const
+   inline bool PairIterator::isEnd() const
    { return (atom2Id_ == nAtom2_); }
    
    /*

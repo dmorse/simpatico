@@ -215,8 +215,8 @@ namespace McMd
             // Pack atomic positions and types.
             iA = 0;
             for (int iSpec=0; iSpec < system().simulation().nSpecies(); ++iSpec){
-               for (system().begin(iSpec, molIter); !molIter.atEnd(); ++molIter){
-                  for (molIter->begin(atomPtr); !atomPtr.atEnd(); ++atomPtr) {
+               for (system().begin(iSpec, molIter); !molIter.isEnd(); ++molIter){
+                  for (molIter->begin(atomPtr); !atomPtr.isEnd(); ++atomPtr) {
                      myPositionPtr_[iA] = atomPtr->position();
                      iA++;
                   }
@@ -237,8 +237,8 @@ namespace McMd
             // Adopt the new atomic positions.
             iA = 0;
             for (int iSpec=0; iSpec < system().simulation().nSpecies(); ++iSpec){
-               for (system().begin(iSpec, molIter); !molIter.atEnd(); ++molIter){
-                  for (molIter->begin(atomPtr); !atomPtr.atEnd(); ++atomPtr) {
+               for (system().begin(iSpec, molIter); !molIter.isEnd(); ++molIter){
+                  for (molIter->begin(atomPtr); !atomPtr.isEnd(); ++atomPtr) {
                      atomPtr->position() = ptPositionPtr_[iA];
                      ++iA;
                   }

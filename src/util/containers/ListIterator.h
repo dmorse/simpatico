@@ -16,8 +16,8 @@ namespace Util
    * a reference to an associated Data object.  The ++ and -- operators 
    * change the current pointer to the next or prev element in a list. 
    *
-   * The atEnd() method returns true if either end of the list has already
-   * been passed by a previous ++ or -- operation. When atEnd() is true, the 
+   * The isEnd() method returns true if either end of the list has already
+   * been passed by a previous ++ or -- operation. When isEnd() is true, the 
    * iterator is no longer usable, since it no longer points to a Node and
    * cannot be incremented or decremented.
    *
@@ -32,7 +32,7 @@ namespace Util
       /**
       * Default constructor.
       *
-      * Creates a "dead" iterator, for which atEnd()==true. Before it
+      * Creates a "dead" iterator, for which isEnd()==true. Before it
       * can be used, such an iterator must be initialized by either the
       * ListIterator<Data>::setCurrent() method or the List<Data>::begin() 
       * method of an associated List.
@@ -69,7 +69,7 @@ namespace Util
       *
       * \return true if current node is null, false otherwise.
       */
-      bool atEnd() const
+      bool isEnd() const
       { return (current_ == 0); }
 
       /**
@@ -129,7 +129,7 @@ namespace Util
       * This method assigns the current pointer to the address of the
       * next Node in the list, and then returns *this. If there is no
       * next Node, the current pointer is set null, and any subsequent
-      * call to atEnd() will return true. 
+      * call to isEnd() will return true. 
       *
       * \return this ListIterator, after modification.
       */
