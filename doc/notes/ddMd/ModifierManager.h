@@ -1,5 +1,5 @@
-#ifndef DDMD_MODIFIER_MANAGER_H
-#define DDMD_MODIFIER_MANAGER_H
+#ifndef DDMD_ACTION_MANAGER_H
+#define DDMD_ACTION_MANAGER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Modifier.h"               // template parameter
-#include <util/param/Manager.h>     // base class template
+#include "Action.h"               // template parameter
+#include <util/param/Manager.h>   // base class template
 
 namespace DdMd
 {
@@ -19,11 +19,11 @@ namespace DdMd
    class Simulation;
 
    /**
-   * Manager for a list of Modifier objects.
+   * Manager for a list of Action objects.
    *
    * \ingroup DdMd_Manager_Module
    */
-   class ModifierManager : public Manager<Modifier>
+   class ActionManager : public Manager<Action>
    {
 
    public:
@@ -31,12 +31,12 @@ namespace DdMd
       /**
       * Constructor.
       */
-      ModifierManager(Simulation& simulation);
+      ActionManager(Simulation& simulation);
 
       /**
       * Destructor.
       */
-      ~ModifierManager();
+      ~ActionManager();
 
       /**
       * Read parameter file. 
@@ -50,7 +50,6 @@ namespace DdMd
       void setupPostExchange();
       void setupPostNeighbor();
       void setupPostForce();
-      void setupEnd();
    
       // Integration
       void preIntegrate(long iStep);
@@ -66,26 +65,52 @@ namespace DdMd
    
       void preForce(long iStep);
       void postForce(long iStep);
-      void postFinalIntegrate(long iStep);
+      void endOfStep(long iStep);
    
       // Communication
-      void pack_exchange(Buffer& buffer);
-      void unpack_exchange(Buffer& buffer);
-      void pack_update(Buffer& buffer);
-      void unpack_update(Buffer& buffer);
-      void pack_reverseUpdate(Buffer& buffer);
-      void unpack_reverseUpdate(Buffer& buffer);
+      void packExchange(Buffer& buffer);
+      void unpackExchange(Buffer& buffer);
+      void packUpdate(Buffer& buffer);
+      void unpackUpdate(Buffer& buffer);
+      void packReverseUpdate(Buffer& buffer);
+      void unpackReverseUpdate(Buffer& buffer);
 
       /**
       * Return pointer to a new default factory.
       */
-      Factory<Modifier>* newDefaultFactory() const;
+      Factory<Action>* newDefaultFactory() const;
 
    private:
 
       /// Pointer to parent Simulation.
       Simulation* simulationPtr_;
- 
+
+      // Arrays of actions with setup methods 
+      std::vector<Action*> actionsSetupPostExchange_;
+      std::vector<Action*> actionsSetupPostNeighbor_;
+      std::vector<Action*> actionsSetupPostForce_;
+
+      // Arrays of actions with integrate methods 
+      std::vector<Action*> actionsPreIntegrate_;
+      std::vector<Action*> actionsPostIntegrate_;
+      std::vector<Action*> actionsPreTransform_;
+      std::vector<Action*> actionsPreExchange_;
+      std::vector<Action*> actionsPostExchange_;
+      std::vector<Action*> actionsPostNeighbor_;
+      std::vector<Action*> actionsPreUpdate_;
+      std::vector<Action*> actionsPostUpdate_;
+      std::vector<Action*> actionsPreForce_;
+      std::vector<Action*> actionsPostForce_;
+      std::vector<Action*> actionsEndOfStep_;
+
+      // Arrays of actions with communication methods 
+      std::vector<Action*> actionsPackExchange_;
+      std::vector<Action*> actionsUnpackExchange_;
+      std::vector<Action*> actionsPackUpdate_;
+      std::vector<Action*> actionsUnpackUpdate_;
+      std::vector<Action*> actionsPackreverseUpdate_;
+      std::vector<Action*> actionsUnpackreverseUpdate_;
+
    };
 
 }

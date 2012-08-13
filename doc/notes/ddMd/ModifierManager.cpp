@@ -1,5 +1,5 @@
-#ifndef DDMD_MODIFIER_MANAGER_CPP
-#define DDMD_MODIFIER_MANAGER_CPP
+#ifndef DDMD_ACTION_MANAGER_CPP
+#define DDMD_ACTION_MANAGER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ModifierManager.h" 
-//#include "ModifierFactory.h" 
+#include "ActionManager.h" 
+//#include "ActionFactory.h" 
 
 namespace DdMd
 {
@@ -19,15 +19,15 @@ namespace DdMd
    /*
    * Constructor.
    */
-   ModifierManager::ModifierManager(Simulation& simulation)
-   : Manager<Modifier>(),
+   ActionManager::ActionManager(Simulation& simulation)
+   : Manager<Action>(),
      simulationPtr_(&simulation)
    {}
 
    /*
    * Destructor.
    */
-   ModifierManager::~ModifierManager()
+   ActionManager::~ActionManager()
    {} 
 
    /*
@@ -35,72 +35,136 @@ namespace DdMd
    *
    * \param in input parameter file stream.
    */
-   void ModifierManager::readParam(std::istream &in)
+   void ActionManager::readParam(std::istream &in)
    {
-      readBegin(in, "ModifierManager");
-      Manager<Modifier>::readParam(in);
+      readBegin(in, "ActionManager");
+      Manager<Action>::readParam(in);
+
+      Action* ptr;
+      if (int i = 0; i < size(); ++i) {
+         ptr = &(*this)[i];
+         if (ptr->hasSetupPostExchange()) { 
+            actionsSetupPostExchange_.push_back(ptr); 
+         }
+         if (ptr->hasSetupPostNeighbor()) { 
+            actionsSetupPostNeighbor_.push_back(ptr); 
+         }
+         if (ptr->hasSetupPostForce()) { 
+            actionsSetupPostForce_.push_back(ptr); 
+         }
+         if (ptr->hasPreIntegrate()) { 
+            actionsPreIntegrate_.push_back(ptr); 
+         }
+         if (ptr->hasPostIntegrate()) { 
+            actionsPostIntegrate_.push_back(ptr); 
+         }
+         if (ptr->hasPreTransform()) { 
+            actionsPreTransform_.push_back(ptr); 
+         }
+         if (ptr->hasPreExchange()) { 
+            actionsPreExchange_.push_back(ptr); 
+         }
+         if (ptr->hasPostExchange()) { 
+            actionsPostExchange_.push_back(ptr); 
+         }
+         if (ptr->hasPostNeighbor()) { 
+            actionsPostNeighbor_.push_back(ptr); 
+         }
+         if (ptr->hasPreUpdate()) { 
+            actionsPreUpdate_.push_back(ptr); 
+         }
+         if (ptr->hasPostUpdate()) { 
+            actionsPostUpdate_.push_back(ptr); 
+         }
+         if (ptr->hasPreForce()) { 
+            actionsPreForce_.push_back(ptr); 
+         }
+         if (ptr->hasPostForce()) { 
+            actionsPostForce_.push_back(ptr); 
+         }
+         if (ptr->hasEndOfStep()) { 
+            actionsEndOfStep_.push_back(ptr); 
+         }
+         if (ptr->hasPackExchange()) { 
+            actionsUnpackExchange_.push_back(ptr); 
+         }
+         if (ptr->hasPackUpdate()) { 
+            actionsUnpackUpdate_.push_back(ptr); 
+         }
+         if (ptr->hasPackreverseUpdate()) { 
+            actionsUnpackreverseUpdate_.push_back(ptr); 
+         }
+      }
    }
 
    // Setup
 
-   void ModifierManager::setupPostExchange() 
+   void ActionManager::setupPostExchange() 
    {
-      for (int i = 0; i < size(); ++i) {
-         (*this)[i].setupPostExchange();
+      Action* ptr;
+      int size = actionsSetupPostExchange_.size();
+      for (int i = 0; i < size; ++i) {
+         actionsSetupPostExchange_[i]->setupPostExchange();
       }
    }
  
-   void ModifierManager::setupPostNeighbor();
-   void ModifierManager::setupPostForce();
-   void ModifierManager::setupEnd();
+   void ActionManager::setupPostNeighbor();
+   {
+      Action* ptr;
+      int size = actionsSetupPostNeighbor_.size();
+      for (int i = 0; i < size; ++i) {
+         actionsSetupPostNeighbor_[i]->setupPostNeighbor();
+      }
+   }
+
+   void ActionManager::setupPostForce();
+   {
+      Action* ptr;
+      int size = actionsSetupPostForce_.size();
+      for (int i = 0; i < size; ++i) {
+         actionsSetupPostForce_[i]->setupPostForce();
+      }
+   }
 
    // Integration
 
-   void ModifierManager::sample(long iStep) 
+   void ActionManager::preIntegrate(long iStep);
    {
-      for (int i=0; i < size(); ++i) {
-         if ((*this)[i].isAtInterval(iStep)) {
-            (*this)[i].preIntegrate();
+      Action* ptr;
+      int size = actionsPreIntegrate_.size();
+      for (int i = 0; i < size; ++i) {
+         ptr = actionsPreIntegrate_[i];
+         if (ptr->isAtInterval(iStep)) {
+            ptr->preIntegrate();
          }
-      } 
-   }
- 
-   void ModifierManager::preIntegrate(long iStep);
-   void ModifierManager::postIntegrate(long iStep);
-
-   void ModifierManager::preTransform(long iStep);
-   void ModifierManager::preExchange(long iStep);
-   void ModifierManager::postExchange(long iStep);
-   void ModifierManager::postNeighbor(long iStep);
-
-   void ModifierManager::preUpdate(long iStep);
-   void ModifierManager::postUpdate(long iStep);
-
-   void ModifierManager::preForce(long iStep);
-   void ModifierManager::postForce(long iStep);
-   void ModifierManager::endOfStep(long iStep);
-
-   void ModifierManager::postRun() 
-   {
-      for (int i=0; i < size(); ++i) {
-         (*this)[i].postRun();
       }
    }
+ 
+   void ActionManager::postIntegrate(long iStep){}
+   void ActionManager::preTransform(long iStep){}
+   void ActionManager::preExchange(long iStep){}
+   void ActionManager::postExchange(long iStep){}
+   void ActionManager::postNeighbor(long iStep){}
+   void ActionManager::preUpdate(long iStep){}
+   void ActionManager::postUpdate(long iStep){}
+   void ActionManager::preForce(long iStep){}
+   void ActionManager::postForce(long iStep){}
+   void ActionManager::endOfStep(long iStep){}
 
    // Communication
-   void ModifierManager::pack_exchange(Buffer& buffer);
-   void ModifierManager::unpack_exchange(Buffer& buffer);
-   void ModifierManager::pack_update(Buffer& buffer);
-   void ModifierManager::unpack_update(Buffer& buffer);
-   void ModifierManager::pack_reverseUpdate(Buffer& buffer);
-   void ModifierManager::unpack_reverseUpdate(Buffer& buffer);
+   void ActionManager::packExchange(Buffer& buffer, long iStep){}
+   void ActionManager::unpackExchange(Buffer& buffer, long iStep){}
+   void ActionManager::packUpdate(Buffer& buffer, long iStep){}
+   void ActionManager::unpackUpdate(Buffer& buffer, long iStep){}
+   void ActionManager::packReverseUpdate(Buffer& buffer, long iStep){}
+   void ActionManager::unpackReverseUpdate(Buffer& buffer, long iStep){}
 
    /*
    * Return pointer to default factory.
    */
-   Factory<Modifier>* ModifierManager::newDefaultFactory() const
+   Factory<Action>* ActionManager::newDefaultFactory() const
    {
-      return new ModifierFactory(*simulationPtr_);
+      return new ActionFactory(*simulationPtr_);
    }
  
 }

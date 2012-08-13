@@ -1,5 +1,5 @@
-#ifndef DDMD_MODIFIER_H
-#define DDMD_MODIFIER_H
+#ifndef DDMD_ACTION_H
+#define DDMD_ACTION_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -21,9 +21,9 @@ namespace DdMd
    /**
    * Abstract base for classes that can modify the integration loop.
    *
-   * \ingroup DdMd_Modifier_Module
+   * \ingroup DdMd_Action_Module
    */
-   class Modifier : public ParamComposite
+   class Action : public ParamComposite
    {
 
    public:
@@ -31,12 +31,12 @@ namespace DdMd
       /**
       * Default constructor.
       */
-      Modifier(Simulation& simulation);
+      Action(Simulation& simulation);
 
       /**
       * Destructor.
       */
-      virtual ~Modifier();
+      virtual ~Action();
 
       /**
       * Get interval value.
@@ -55,7 +55,6 @@ namespace DdMd
       virtual void setupPostExchange(){};
       virtual void setupPostNeighbor(){};
       virtual void setupPostForce(){};
-      virtual void setupEnd(){};
    
       // Integration
 
@@ -76,12 +75,35 @@ namespace DdMd
    
       // Communication
    
-      virtual void pack_exchange(Buffer& buffer) {};
-      virtual void unpack_exchange(Buffer& buffer) {};
-      virtual void pack_update(Buffer& buffer) {};
-      virtual void unpack_update(Buffer& buffer) {};
-      virtual void pack_reverseUpdate(Buffer& buffer) {};
-      virtual void unpack_reverseUpdate(Buffer& buffer) {};
+      virtual void packExchange(Buffer& buffer) {};
+      virtual void unpackExchange(Buffer& buffer) {};
+      virtual void packUpdate(Buffer& buffer) {};
+      virtual void unpackUpdate(Buffer& buffer) {};
+      virtual void packreverseUpdate(Buffer& buffer) {};
+      virtual void unpackreverseUpdate(Buffer& buffer) {};
+
+      // Boolean accessors
+
+      bool hasSetupPostExchange();
+      bool hasSetupPostNeighbor();
+      bool hasSetupPostForce();
+      bool hasPreIntegrate();
+      bool hasPostIntegrate();
+      bool hasPreTransform();
+      bool hasPreExchange();
+      bool hasPostExchange();
+      bool hasPostNeighbor();
+      bool hasPreUpdate();
+      bool hasPostUpdate();
+      bool hasPreForce();
+      bool hasPostForce();
+      bool hasEndOfStep();
+      bool hasPackExchange();
+      bool hasUnpackExchange();
+      bool hasPackUpdate();
+      bool hasUnpackUpdate();
+      bool hasPackreverseUpdate();
+      bool hasUnpackreverseUpdate();
 
    protected:
 
@@ -89,7 +111,7 @@ namespace DdMd
       * Read parameter interval from file.
       *
       * This function throws an exception if the value of interval
-      * is not a multiple of Modifier::baseInterval, or if
+      * is not a multiple of Action::baseInterval, or if
       * baseInterval has not been set to a nonzero positive value.
       *
       * \param in input parameter file stream.
@@ -101,13 +123,36 @@ namespace DdMd
       */
       Simulation& simulation();
 
+      /// Number of simulation steps between subsequent actions.
+      long  interval_;
+
+      // Boolean flag members
+
+      bool hasSetupPostExchange_;
+      bool hasSetupPostNeighbor_;
+      bool hasSetupPostForce_;
+      bool hasPreIntegrate_;
+      bool hasPostIntegrate_;
+      bool hasPreTransform_;
+      bool hasPreExchange_;
+      bool hasPostExchange_;
+      bool hasPostNeighbor_;
+      bool hasPreUpdate_;
+      bool hasPostUpdate_;
+      bool hasPreForce_;
+      bool hasPostForce_;
+      bool hasEndOfStep_;
+      bool hasPackExchange_;
+      bool hasUnpackExchange_;
+      bool hasPackUpdate_;
+      bool hasUnpackUpdate_;
+      bool hasPackreverseUpdate_;
+      bool hasUnpackreverseUpdate_;
+
    private:
 
       /// Pointer to parent Simulation
       Simulation* simulationPtr_;
-
-      /// Number of simulation steps between subsequent actions.
-      long  interval_;
 
    };
 
@@ -116,20 +161,71 @@ namespace DdMd
    /*
    * Return interval value.
    */
-   inline int Modifier::interval() const
+   inline int Action::interval() const
    {  return interval_; }
 
    /*
    * Return true iff the iStep is a multiple of the interval.
    */
-   inline bool Modifier::isAtInterval(long iStep) const
+   inline bool Action::isAtInterval(long iStep) const
    {  return (iStep%interval_ == 0); }
 
    /*
    * Get the parent Simulation by reference.
    */
-   inline Simulation& Modifier::simulation()
+   inline Simulation& Action::simulation()
    {  return *simulationPtr_; }
+
+   inline bool hasSetupPostExchange()
+   {  return hasSetupPostExchange_; }
+
+   inline bool hasSetupPostNeighbor()
+   {  return hasSetupPostNeighbor_; }
+
+   inline bool hasSetupPostForce()
+   {  return hasSetupPostForce_; }
+
+   inline bool hasPreIntegrate()
+   {  return hasPreIntegrate_; }
+
+   inline bool hasPostIntegrate()
+   {  return hasPostIntegrate_; }
+
+   inline bool hasPreTransform()
+   {  return hasPreTransform_; }
+
+   inline bool hasPreExchange()
+   {  return hasPreExchange_; }
+
+   inline bool hasPostExchange()
+   {  return hasPostExchange_; }
+
+   inline bool hasPostNeighbor()
+   {  return hasPostNeighbor_; }
+
+   inline bool hasPreUpdate()
+   {  return hasPreUpdate_; }
+
+   inline bool hasPostUpdate()
+   {  return hasPostUpdate_; }
+
+   inline bool hasPreForce()
+   {  return hasPreForce_; }
+
+   inline bool hasPostForce()
+   {  return hasPostForce_; }
+
+   inline bool hasEndOfStep()
+   {  return hasEndOfStep_; }
+
+   inline bool hasPackExchange()
+   {  return hasUnpackExchange_; }
+
+   inline bool hasPackUpdate()
+   {  return hasUnpackUpdate_; }
+
+   inline bool hasPackreverseUpdate()
+   {  return hasUnpackreverseUpdate_; }
 
 }
 #endif
