@@ -9,7 +9,7 @@
 */
 
 #include "ActionManager.h" 
-//#include "ActionFactory.h" 
+#include "ActionFactory.h" 
 
 namespace DdMd
 {
@@ -332,15 +332,11 @@ namespace DdMd
       }
    }
 
-   #if 0
    /*
    * Return pointer to default factory.
    */
    Factory<Action>* ActionManager::newDefaultFactory() const
-   {
-      return new ActionFactory(*simulationPtr_);
-   }
-   #endif
+   {  return new ActionFactory(*simulationPtr_); }
  
 }
 #endif

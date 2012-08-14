@@ -88,6 +88,8 @@ namespace DdMd
 
       /**
       * Return pointer to a new default factory.
+      *
+      * Virtual, inherited from Manager<Action>.
       */
       Factory<Action>* newDefaultFactory() const;
 
