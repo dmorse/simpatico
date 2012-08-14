@@ -39,7 +39,7 @@ namespace Util
          reciprocalBasisVectors_.append(Vector::Zero);
          reciprocalBasisVectors_[i][i] = twoPi / l_[i];
       }
-      tilt_ = 0.0;
+      d_ = 0.0;
       volume_ = 1.0;
          
       c3_ = 0.0;
@@ -53,7 +53,7 @@ namespace Util
    void MonoclinicBoundary::setMonoclinic(const Vector &lengths, const double d) 
    {
       l_ = lengths;
-      tilt_ = d;
+      d_ = d;
       reset(); 
    }
 
@@ -63,7 +63,7 @@ namespace Util
    void MonoclinicBoundary::setOrthorhombic(const Vector &lengths) 
    {
       l_ = lengths;
-      tilt_ = 0.0;
+      d_ = 0.0;
       reset(); 
    }
 
@@ -81,12 +81,12 @@ namespace Util
          bravaisBasisVectors_[i][i] = l_[i];
          reciprocalBasisVectors_[i][i] = twoPi/l_[i];
       }
-      bravaisBasisVectors_[1][2] = tilt_;
-      reciprocalBasisVectors_[2][1] = -twoPi*tilt_/(l_[1]*l_[2]);
+      bravaisBasisVectors_[1][2] = d_;
+      reciprocalBasisVectors_[2][1] = -twoPi*d_/(l_[1]*l_[2]);
 
       volume_ = l_[0] * l_[1] * l_[2];
-      e_ = sqrt(l_[1]*l_[1] + tilt_*tilt_);          
-      c3_ = -tilt_/l_[1];
+      e_ = sqrt(l_[1]*l_[1] + d_*d_);          
+      c3_ = -d_/l_[1];
 
       lengths_[0] = l_[0];
       lengths_[1] = l_[1];
@@ -169,7 +169,7 @@ namespace Util
          UTIL_THROW("Lattice must be Monoclinic");
       }
       in >> boundary.l_;
-      in >> boundary.tilt_;
+      in >> boundary.d_;
       boundary.reset();
       return in;
    }
@@ -182,7 +182,7 @@ namespace Util
    {
       out << boundary.lattice_ << "   ";
       out << boundary.l_ << "   ";
-      out << boundary.tilt_;
+      out << boundary.d_;
       return out;
    }
  
@@ -192,7 +192,7 @@ namespace Util
              Util::MonoclinicBoundary& data, int dest, int tag)
    {
       send<Vector>(comm, data.l_, dest, tag);
-      send<double>(comm, data.tilt_, dest, tag + 386);
+      send<double>(comm, data.d_, dest, tag + 386);
    }
 
    template <>
@@ -200,10 +200,10 @@ namespace Util
              Util::MonoclinicBoundary& data, int source, int tag)
    {
       Vector l;
-      double tilt;
+      double d;
       recv<Vector>(comm, l, source, tag);
-      recv<double>(comm, tilt, source, tag + 386);
-      data.setMonoclinic(l, tilt);
+      recv<double>(comm, d, source, tag + 386);
+      data.setMonoclinic(l, d);
    }
 
    template <>
@@ -211,16 +211,16 @@ namespace Util
               Util::MonoclinicBoundary& data, int root)
    {
       Vector l; 
-      double tilt;
+      double d;
       int rank = comm.Get_rank();
       if (rank == root) {
          l = data.l_;
-         tilt = data.tilt_;
+         d = data.d_;
       }
       bcast<Vector>(comm, l, root);
-      bcast<double>(comm, tilt, root);
+      bcast<double>(comm, d, root);
       if (rank != root) {
-         data.setMonoclinic(l, tilt);
+         data.setMonoclinic(l, d);
       }
    }
 

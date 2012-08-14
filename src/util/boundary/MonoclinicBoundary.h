@@ -56,7 +56,7 @@ namespace Util
       * Also sets all related lengths and volume.
       *
       * \param lengths  Vector of unit cell dimensions, orthogonal box.
-      * \param t        displacement along z axis.
+      * \param d        displacement along z axis.
       */
       void setMonoclinic(const Vector &lengths, const double d);
 
@@ -76,7 +76,7 @@ namespace Util
       template <class Archive>
       void serialize(Archive& ar, const unsigned int version);
 
-      ///\name Periodic Boundary Conditions - Primitive Cell
+      ///\name Periodic Boundary Conditions - Coordinate Shifting
       //@{
 
       /**
@@ -101,29 +101,13 @@ namespace Util
       *
       * \sa Atom:shift()
       *
-      * \param r     Vector of coordinates
+      * \param r     Vector of Cartesian coordinates
       * \param shift integer shifts required to obtain "true" coordinates.
       */
       void shift(Vector &r, IntVector& shift) const;
 
       /**
-      * Shift Cartesian Vector r by multiple t of a Bravais lattice vector.
-      *
-      * This method shifts the Vector r by a specified amount:
-      *
-      *   r ->  r + t*a'[i]
-      *
-      * where a[i] is Bravais lattice vector number i.
-      *
-      * \param r Cartesian position Vector 
-      * \param i direction index
-      * \param t multiple of Bravais lattice vector i
-      */
-      void applyShift(Vector &r, int i, int t) const;
-
-
-      /**
-      * Shift generalized Vector r to its image within the primary unit cell.
+      * Shift generalized Vector r to its primary image.
       *
       * One output, each coordinate r[i] is shifted by an integer, so as to
       * lie within the range 0 < r[i] < 1.0
@@ -136,7 +120,7 @@ namespace Util
       void shiftGen(Vector &r) const;
 
       /**
-      * Shift generalized Vector r to its image within the primary unit cell.
+      * Shift generalized Vector r to its primary image.
       *
       * This method maps a vector of generalized coordinates to lie in the 
       * primary cell, and also increments the atomic shift IntVector:
@@ -149,6 +133,21 @@ namespace Util
       * \param shift integer shifts, modified on output (in/out)
       */
       void shiftGen(Vector &r, IntVector& shift) const;
+
+      /**
+      * Shift Cartesian Vector r by multiple t of a Bravais lattice vector.
+      *
+      * This method shifts the Vector r by a specified amount:
+      *
+      *   r ->  r + t*a_i
+      *
+      * where a_i is Bravais lattice basis vector number i.
+      *
+      * \param r Vector of Cartesian coordinates 
+      * \param i index for direction (basis vector) of shift
+      * \param t multiple added of Bravais basis vector a_i
+      */
+      void applyShift(Vector &r, int i, int t) const;
 
       //@}
       ///\name Periodic Boundary Conditions - Minimum Image Separations
@@ -187,7 +186,7 @@ namespace Util
       * \param r1  first position Vector
       * \param r2  second position Vector
       * \param dr  separation Vector (upon return)
-      * \return square of separation Vector dr
+      * \return    square of separation dr
       */
       double distanceSq(const Vector &r1, const Vector &r2, Vector &dr) const;
 
@@ -221,7 +220,7 @@ namespace Util
       /**
       * Return actual lattice system.
       *
-      * Value is Monoclinic.
+      * Return value for this class is Monoclinic.
       */
       LatticeSystem latticeSystem();
 
@@ -292,28 +291,28 @@ namespace Util
       /// Maximum coordinates for orthogonal unit cell
       Vector maxima_;
 
-      /// Lengthsof orthogonal unit cell:  l_[i] = maxima_[i] - minima_[i].
+      /// Lengths of orthogonal unit cell:  l_[i] = maxima_[i] - minima_[i].
       Vector l_;
 
-      /// Displacement (tilt) of primitive cell in the z-direction.
-      double tilt_;
+      /// Displacement (tilt) of primitive cell in the 2/z direction.
+      double d_;
 
-      /// Half region lengths: halfL_[i] = 0.5*l_[i].
+      /// Half orthogonal cell lengths: halfL_[i] = 0.5*l_[i].
       Vector halfL_;
 
-      /// Half region lengths: invL_[i] = 1.0/l_[i].
+      /// Inverse orthogonal cell lengths: invL_[i] = 1.0/l_[i].
       Vector invL_;
 
-      /// Lengths of the primitive projected along reciprocal basis vectors.
+      /// Lengths across cell along lines parallel to reciprocal basis vectors.
       Vector lengths_;
 
       /// Volume: V = l_[0]*l_[1]*l_[2].
       double volume_;
 
-      /// constants used for distancing: u2 = dz + c3_*dy.
+      /// Internal constant, used to calculate u2 = dz + c3_*dy.
       double c3_;
 
-      /// Length of bravais basis vector 1 (tilted).
+      /// Length of Bravais basis vector 1 (the tilted one).
       double e_;
 
       /// Minimum distance across the unit cell.
@@ -418,12 +417,12 @@ namespace Util
        }
        if(r[1] >= maxima_[1]) {
           r[1] -= l_[1];
-          r[2] -= tilt_;
+          r[2] -= d_;
           assert(r[1] < l_[1]);
        } else
        if (r[1] <  minima_[1]) {
           r[1] += l_[1];
-          r[2] += tilt_;
+          r[2] += d_;
           assert(r[1] >= minima_[1]);
        }
        double u2 = r[2] + c3_*r[1];
@@ -454,13 +453,13 @@ namespace Util
        }
        if (r[1] >= maxima_[1]) {
           r[1] -= l_[1];
-          r[2] -= tilt_;
+          r[2] -= d_;
           ++(shift[1]);
           assert(r[1] < l_[1]);
        } else
        if (r[1] <  minima_[1]) {
           r[1] += l_[1];
-          r[2] += tilt_;
+          r[2] += d_;
           --(shift[1]);
           assert(r[1] >= minima_[1]);
        }
@@ -488,7 +487,7 @@ namespace Util
          break;
       case 1: 
          r[1] += t*l_[1];
-         r[2] += t*tilt_;
+         r[2] += t*d_;
          break;
       case 2: 
          r[2] += t*l_[2];
@@ -534,11 +533,11 @@ namespace Util
    }
 
    /* 
-   * Calculate squared distance by half-parallelogram convention.
+   * Calculate minimum-image squared distance.
    */
    inline 
    double MonoclinicBoundary::distanceSq(const Vector &r1, const Vector &r2, 
-                               IntVector& translate) const
+                                         IntVector& translate) const
    {
 
       double dx = r1[0] - r2[0];
@@ -561,11 +560,11 @@ namespace Util
       if ( fabs(dy) > halfL_[1] ) {
          if (dy > 0.0) {
             dy -= l_[1];
-            dz -= tilt_;
+            dz -= d_;
             translate[1] = -1;
          } else {
             dy += l_[1];
-            dz += tilt_;
+            dz += d_;
             translate[1] = +1;
          }
          assert(fabs(dy) <= halfL_[1]);
@@ -589,7 +588,7 @@ namespace Util
    }
 
    /* 
-   * Return squared distance and separation by half-parallelogram convention.
+   * Compute minimum image squared distance and separation.
    */
    inline 
    double MonoclinicBoundary::distanceSq(const Vector &r1, 
@@ -612,10 +611,10 @@ namespace Util
       if ( fabs(dy) > halfL_[1] ) {
          if (dy > 0.0) {
             dy -= l_[1];
-            dz -= tilt_;
+            dz -= d_;
          } else {
             dy += l_[1];
-            dz += tilt_;
+            dz += d_;
          }
          assert(fabs(dy) <= halfL_[1]);
       }
@@ -633,8 +632,7 @@ namespace Util
    }
 
    /* 
-   * Calculate squared distance between two positions, and separation vector,
-   * by half-parallelogram convention.
+   * Calculate squared distance and separation vector by mininum convention.
    */
    inline 
    double MonoclinicBoundary::distanceSq(const Vector &r1, const Vector &r2, 
@@ -658,10 +656,10 @@ namespace Util
       if (fabs(dy) > halfL_[1]) {
          if (dy > 0.0) {
             dy -= l_[1];
-            dz -= tilt_;
+            dz -= d_;
          } else {
             dy += l_[1];
-            dz += tilt_;
+            dz += d_;
          }
          assert(fabs(dy) <= halfL_[1]);
       }
@@ -728,7 +726,7 @@ namespace Util
    {
       Rc[0] = Rg[0]*l_[0];
       Rc[1] = Rg[1]*l_[1];
-      Rc[2] = Rg[2]*l_[2] + Rg[1]*tilt_;
+      Rc[2] = Rg[2]*l_[2] + Rg[1]*d_;
    }
 
 }
