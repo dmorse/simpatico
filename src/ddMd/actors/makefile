@@ -10,13 +10,13 @@ include $(SRC_DIR_REL)/inter/sources.mk
 include $(SRC_DIR_REL)/ddMd/sources.mk
 include sources.mk
 
-all: $(draft_ddMd_OBJS)
+all: $(ddMd_actors_OBJS)
 
 clean:
-	rm -f $(draft_ddMd_OBJS) $(draft_ddMd_OBJS:.o=.d)
+	rm -f $(ddMd_actors_OBJS) $(ddMd_actors_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(draft_ddMd_OBJS:.o=.d)
+	rm -f $(ddMd_actors_OBJS:.o=.d)
 
--include $(draft_ddMd_OBJS:.o=.d)
+-include $(ddMd_actors_OBJS:.o=.d)
 
