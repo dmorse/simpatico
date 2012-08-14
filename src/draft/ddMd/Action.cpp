@@ -17,8 +17,7 @@ namespace DdMd
 
    // Constructor.
    Action::Action(Simulation& simulation)
-    : simulationPtr_(&simulation),
-      interval_(1),
+    : interval_(1),
       hasSetupPostExchange_(false),
       hasSetupPostNeighbor_(false),
       hasSetupPostForce_(false),
@@ -37,13 +36,14 @@ namespace DdMd
       hasUnpackExchange_(false),
       hasPackUpdate_(false),
       hasUnpackUpdate_(false),
-      hasPackreverseUpdate_(false),
-      hasUnpackreverseUpdate_(false)
+      hasPackReverseUpdate_(false),
+      hasUnpackReverseUpdate_(false),
+      simulationPtr_(&simulation)
    {}
 
    // Destructor.
-   virtual ~Action()
-   {};
+   Action::~Action()
+   {}
 
 }
 #endif

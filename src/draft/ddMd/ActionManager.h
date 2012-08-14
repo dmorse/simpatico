@@ -19,7 +19,11 @@ namespace DdMd
    class Simulation;
 
    /**
-   * Manager for a list of Action objects.
+   * Manager for a set of Action objects.
+   *
+   * An ActionManager maintains a list of Action objects and 
+   * provides methods to execute specified actions at various 
+   * points before and during the main integration loop. 
    *
    * \ingroup DdMd_Manager_Module
    */
@@ -46,9 +50,14 @@ namespace DdMd
       void readParam(std::istream &in);
 
       // Setup
-   
+ 
+      /// Execute all re-implemented setupPostExchange() methods.
       void setupPostExchange();
+
+      /// Execute all re-implemented setupPostNeighbor() methods.
       void setupPostNeighbor();
+
+      /// Execute all re-implemented setupPostForce() methods.
       void setupPostForce();
    
       // Integration
@@ -68,12 +77,14 @@ namespace DdMd
       void endOfStep(long iStep);
    
       // Communication
-      void packExchange(Buffer& buffer);
-      void unpackExchange(Buffer& buffer);
-      void packUpdate(Buffer& buffer);
-      void unpackUpdate(Buffer& buffer);
-      void packReverseUpdate(Buffer& buffer);
-      void unpackReverseUpdate(Buffer& buffer);
+      void packExchange(Buffer& buffer, long iStep);
+      void unpackExchange(Buffer& buffer, long iStep);
+
+      void packUpdate(Buffer& buffer, long iStep);
+      void unpackUpdate(Buffer& buffer, long iStep);
+
+      void packReverseUpdate(Buffer& buffer, long iStep);
+      void unpackReverseUpdate(Buffer& buffer, long iStep);
 
       /**
       * Return pointer to a new default factory.
@@ -108,8 +119,8 @@ namespace DdMd
       std::vector<Action*> actionsUnpackExchange_;
       std::vector<Action*> actionsPackUpdate_;
       std::vector<Action*> actionsUnpackUpdate_;
-      std::vector<Action*> actionsPackreverseUpdate_;
-      std::vector<Action*> actionsUnpackreverseUpdate_;
+      std::vector<Action*> actionsPackReverseUpdate_;
+      std::vector<Action*> actionsUnpackReverseUpdate_;
 
    };
 

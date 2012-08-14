@@ -17,11 +17,38 @@ namespace DdMd
 
    using namespace Util;
    class Simulation;
+   class Buffer;
 
    /**
-   * Abstract base for classes that can modify the integration loop.
+   * ABC for actins during integration loop.
    *
-   * \ingroup DdMd_Action_Module
+   * Subclasses of Action implement actions that should be executed
+   * at specified points in the main integration loop. Each subclass
+   * of action should overload one or more of the virtual methods 
+   * with empty default implementations to execute actions during 
+   * setup, integration, or communication, for which the name of 
+   * the method indicates where the corresponding action should be 
+   * executed.  For each such re-implemented method, the constructor 
+   * of the subclass must also set the corresponding protected bool 
+   * variable to true.
+   *
+   * For example, to implement an action should be executed 
+   * immediately after all forces are evaluated, a developer must
+   * create a subcalss of Action that:
+   *
+   * (1) Re-implements the virtual postForce() method so as to 
+   * execute the desired action, and 
+   *
+   * (2) Reinitializes the protected variable hasPostForce_ to 
+   * true in the constructor for that subclass. 
+   * 
+   * Each of the re-implemented methods of an Action are executed
+   * only if the corresponding bool variable is also set to true,
+   * and only on time steps that are multiples of an associated
+   * interval. A single interval is defined for the entire class, 
+   * rather than for each re-implemented method. The value of the
+   * interval should set by the readParam method, by calling the
+   * protected readInterval method. 
    */
    class Action : public ParamComposite
    {
@@ -50,13 +77,13 @@ namespace DdMd
       */
       bool isAtInterval(long iStep) const;
 
-      // Setup
+      // Setup (called before main loop)
    
       virtual void setupPostExchange(){};
       virtual void setupPostNeighbor(){};
       virtual void setupPostForce(){};
    
-      // Integration
+      // Integration (called within the main loop)
 
       virtual void preIntegrate() {};
       virtual void postIntegrate() {};
@@ -73,20 +100,21 @@ namespace DdMd
       virtual void postForce() {};
       virtual void endOfStep() {};
    
-      // Communication
+      // Communication (called within methods of Exchanger)
    
       virtual void packExchange(Buffer& buffer) {};
       virtual void unpackExchange(Buffer& buffer) {};
       virtual void packUpdate(Buffer& buffer) {};
       virtual void unpackUpdate(Buffer& buffer) {};
-      virtual void packreverseUpdate(Buffer& buffer) {};
-      virtual void unpackreverseUpdate(Buffer& buffer) {};
+      virtual void packReverseUpdate(Buffer& buffer) {};
+      virtual void unpackReverseUpdate(Buffer& buffer) {};
 
       // Boolean accessors
 
       bool hasSetupPostExchange();
       bool hasSetupPostNeighbor();
       bool hasSetupPostForce();
+
       bool hasPreIntegrate();
       bool hasPostIntegrate();
       bool hasPreTransform();
@@ -98,12 +126,13 @@ namespace DdMd
       bool hasPreForce();
       bool hasPostForce();
       bool hasEndOfStep();
+
       bool hasPackExchange();
       bool hasUnpackExchange();
       bool hasPackUpdate();
       bool hasUnpackUpdate();
-      bool hasPackreverseUpdate();
-      bool hasUnpackreverseUpdate();
+      bool hasPackReverseUpdate();
+      bool hasUnpackReverseUpdate();
 
    protected:
 
@@ -146,8 +175,8 @@ namespace DdMd
       bool hasUnpackExchange_;
       bool hasPackUpdate_;
       bool hasUnpackUpdate_;
-      bool hasPackreverseUpdate_;
-      bool hasUnpackreverseUpdate_;
+      bool hasPackReverseUpdate_;
+      bool hasUnpackReverseUpdate_;
 
    private:
 
@@ -176,56 +205,65 @@ namespace DdMd
    inline Simulation& Action::simulation()
    {  return *simulationPtr_; }
 
-   inline bool hasSetupPostExchange()
+   inline bool Action::hasSetupPostExchange()
    {  return hasSetupPostExchange_; }
 
-   inline bool hasSetupPostNeighbor()
+   inline bool Action::hasSetupPostNeighbor()
    {  return hasSetupPostNeighbor_; }
 
-   inline bool hasSetupPostForce()
+   inline bool Action::hasSetupPostForce()
    {  return hasSetupPostForce_; }
 
-   inline bool hasPreIntegrate()
+   inline bool Action::hasPreIntegrate()
    {  return hasPreIntegrate_; }
 
-   inline bool hasPostIntegrate()
+   inline bool Action::hasPostIntegrate()
    {  return hasPostIntegrate_; }
 
-   inline bool hasPreTransform()
+   inline bool Action::hasPreTransform()
    {  return hasPreTransform_; }
 
-   inline bool hasPreExchange()
+   inline bool Action::hasPreExchange()
    {  return hasPreExchange_; }
 
-   inline bool hasPostExchange()
+   inline bool Action::hasPostExchange()
    {  return hasPostExchange_; }
 
-   inline bool hasPostNeighbor()
+   inline bool Action::hasPostNeighbor()
    {  return hasPostNeighbor_; }
 
-   inline bool hasPreUpdate()
+   inline bool Action::hasPreUpdate()
    {  return hasPreUpdate_; }
 
-   inline bool hasPostUpdate()
+   inline bool Action::hasPostUpdate()
    {  return hasPostUpdate_; }
 
-   inline bool hasPreForce()
+   inline bool Action::hasPreForce()
    {  return hasPreForce_; }
 
-   inline bool hasPostForce()
+   inline bool Action::hasPostForce()
    {  return hasPostForce_; }
 
-   inline bool hasEndOfStep()
+   inline bool Action::hasEndOfStep()
    {  return hasEndOfStep_; }
 
-   inline bool hasPackExchange()
+   inline bool Action::hasPackExchange()
+   {  return hasPackExchange_; }
+
+   inline bool Action::hasUnpackExchange()
    {  return hasUnpackExchange_; }
 
-   inline bool hasPackUpdate()
+   inline bool Action::hasPackUpdate()
+   {  return hasPackUpdate_; }
+
+   inline bool Action::hasUnpackUpdate()
    {  return hasUnpackUpdate_; }
 
-   inline bool hasPackreverseUpdate()
-   {  return hasUnpackreverseUpdate_; }
+   inline bool Action::hasPackReverseUpdate()
+   {  return hasPackReverseUpdate_; }
+
+   inline bool Action::hasUnpackReverseUpdate()
+   {  return hasUnpackReverseUpdate_; }
 
 }
 #endif
