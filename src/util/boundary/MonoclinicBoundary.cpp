@@ -188,16 +188,16 @@ namespace Util
  
    #ifdef UTIL_MPI
    template <>
-   void send<Util::MonoclinicBoundary>(MPI::Comm& comm, 
-             Util::MonoclinicBoundary& data, int dest, int tag)
+   void send<MonoclinicBoundary>(MPI::Comm& comm, 
+             MonoclinicBoundary& data, int dest, int tag)
    {
       send<Vector>(comm, data.l_, dest, tag);
       send<double>(comm, data.tilt_, dest, tag + 386);
    }
 
    template <>
-   void recv<Util::MonoclinicBoundary>(MPI::Comm& comm, 
-             Util::MonoclinicBoundary& data, int source, int tag)
+   void recv<MonoclinicBoundary>(MPI::Comm& comm, 
+             MonoclinicBoundary& data, int source, int tag)
    {
       Vector l;
       double tilt;
@@ -207,8 +207,8 @@ namespace Util
    }
 
    template <>
-   void bcast<Util::MonoclinicBoundary>(MPI::Intracomm& comm, 
-              Util::MonoclinicBoundary& data, int root)
+   void bcast<MonoclinicBoundary>(MPI::Intracomm& comm, 
+              MonoclinicBoundary& data, int root)
    {
       Vector l; 
       double tilt;
@@ -227,8 +227,8 @@ namespace Util
    /*
    * Initialize MPI Datatype.
    */
-   MPI::Datatype MpiTraits<Util::MonoclinicBoundary>::type = MPI::BYTE;
-   bool MpiTraits<Util::MonoclinicBoundary>::hasType = false;
+   MPI::Datatype MpiTraits<MonoclinicBoundary>::type = MPI::BYTE;
+   bool MpiTraits<MonoclinicBoundary>::hasType = false;
    #endif
 
 }
