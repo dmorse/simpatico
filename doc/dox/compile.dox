@@ -153,9 +153,9 @@ The dependency list for every *.o file contains the files src/compiler.mk and on
 
 \section compile_doc_section Documentation
 The html documentation you are reading was generated using the <a href=http://www.doxygen.org> doxygen </a> documentation utility.  If dOxygen is installed on your machine, you can regenerate all of the html documentation by changing the working directory to the doc/ directory and entering 
-<code> 
+\code
 > make html 
-</endcode>
+\endcode
 The resulting html documentation is deposited in the doc/html/ directory. To read the documentation, open the file index.html in a browser to open the main page, or open any other html file and follow the link to the main page. 
 
 The text of the page you are reading now, along with other web pages that are not extracted from the C++ header files, are in files in the doc/dox directory. These are written in plain text, and so can also be read with a text editor.  Documentation for each C++ class is instead extracted from documentation blocks in the class header file. 

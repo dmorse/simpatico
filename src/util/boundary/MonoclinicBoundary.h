@@ -93,11 +93,11 @@ namespace Util
       * Shift Vector r to its image within the primary unit cell.
       *
       * This method shifts a vector to its image in the primary unit cell, 
-      * and also increments a corresponding shift IntVector:
+      * and also increments a corresponding atomic shift IntVector:
       *
-      * If the Vector r is shifted by r -> r - \sum_i t[i]*a[i], then
-      * the IntVector shift is shifted by  shift -> shift + t, where
-      * t is an IntVector shift.
+      * If the Vector r is shifted by r -> r - sum_i t[i]*a_i, then the 
+      * IntVector shift parameter is incremented by  shift -> shift + t, 
+      * where t is an IntVector and a_i is Bravais basis vector number i.
       *
       * \sa Atom:shift()
       *
@@ -154,8 +154,7 @@ namespace Util
       //@{
 
       /**
-      * Return square distance between positions r1 and r2, using the nearest
-      * the nearest image convention for the separation Vector.
+      * Return square distance between r1 and r2, with minimum image convention.
       *
       * \param r1  first position Vector
       * \param r2  second position Vector
@@ -164,8 +163,7 @@ namespace Util
       double distanceSq(const Vector &r1, const Vector &r2) const;
 
       /**
-      * Return square distance between positions r1 and r2, using the nearest
-      * the nearest image convention for the separation Vector.
+      * Return square distance between r1 and r2, with minimum image convention.
       *
       * \param r1    first position Vector
       * \param r2    second position Vector
@@ -176,8 +174,7 @@ namespace Util
       const;
 
       /**
-      * Return the squared distance between positions r1 and r2, using the
-      * nearest image convention, and calculate the separation Vector.
+      * Return square distance between r1 and r2, with minimum image convention.
       *
       * Upon return, Vector dr contains the separation r1 - r2, using
       * the nearest image convention. Returns the square of the absolute
@@ -195,7 +192,7 @@ namespace Util
       //@{
 
       /**
-      * Transform Cartesian Vector to generalized coordinates.
+      * Transform Vector of Cartesian coordinates to generalized coordinates.
       *
       * Generalized coordinates range from 0.0 <= Rg[i] < 1.0 within the
       * primitive cell, for i = 0,..,2.
@@ -230,13 +227,13 @@ namespace Util
       * Each component of this vector is projection of a Bravais lattice unit
       * vector onto a line parallel to the corresponding reciprocal lattice
       * basis vector.  The resulting distances are distances between faces
-      * faces of the primitive unit cell, which are normal to the reciprocal
-      * lattice unit vectors. 
+      * of the primitive unit cell, which are normal to the reciprocal lattice
+      * unit vectors. 
       */
       const Vector& lengths() const;
 
       /**
-      * Get distance across primitive cell parallel to reciprocal axis i.
+      * Get distance across primitive cell along reciprocal basis vector i.
       *
       * \param i index of Cartesian direction, 0 <= i < Dimension
       */
@@ -267,12 +264,10 @@ namespace Util
       const Vector& reciprocalBasisVector(int i) const;
 
       /**
-      * Generate random position within the primary unit cell.
-      *
-      * Generates Vector r[i], i=1,..,3 with minima_[i] < r[i] < maxima_[i].
+      * Generate random Cartesian position within the primary unit cell.
       *
       * \param random random number generator object
-      * \param r      Vector of random coordinates (upon return)
+      * \param r      Vector of random Cartesian coordinates (upon return)
       */
       void randomPosition(Random &random, Vector &r) const;
 
