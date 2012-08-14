@@ -1,5 +1,5 @@
-#ifndef ACTION_FACTORY
-#define ACTION_FACTORY
+#ifndef DDMD_ACTOR_FACTORY_CPP
+#define DDMD_ACTOR_FACTORY_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,9 +8,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ActionFactory.h" // Class header
+#include "ActorFactory.h" // Class header
 
-// Actions 
+// Actors 
 // #include "WriteConfig.h"
 // #include "OutputEnergy.h"
 
@@ -22,23 +22,23 @@ namespace DdMd
    /*
    * Constructor.
    */
-   ActionFactory::ActionFactory(Simulation& simulation)
+   ActorFactory::ActorFactory(Simulation& simulation)
     : simulationPtr_(&simulation)
    {}
 
    /* 
-   * Return a pointer to an instance of Action subclass className.
+   * Return a pointer to an instance of Actor subclass className.
    */
-   Action* ActionFactory::factory(const std::string &className) const
+   Actor* ActorFactory::factory(const std::string &className) const
    {
-      Action* ptr = 0;
+      Actor* ptr = 0;
 
       // Try subfactories first (if any)
       ptr = trySubfactories(className);
       if (ptr) return ptr;
 
       #if 0
-      // Simulation Actions
+      // Simulation Actors
       if (className == "WriteConfig") {
          ptr = new WriteConfig(simulation());
       } // else 

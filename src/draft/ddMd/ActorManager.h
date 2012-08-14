@@ -1,5 +1,5 @@
-#ifndef DDMD_ACTION_MANAGER_H
-#define DDMD_ACTION_MANAGER_H
+#ifndef DDMD_ACTOR_MANAGER_H
+#define DDMD_ACTOR_MANAGER_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Action.h"               // template parameter
+#include "Actor.h"               // template parameter
 #include <util/param/Manager.h>   // base class template
 
 namespace DdMd
@@ -19,15 +19,15 @@ namespace DdMd
    class Simulation;
 
    /**
-   * Manager for a set of Action objects.
+   * Manager for a set of Actor objects.
    *
-   * An ActionManager maintains a list of Action objects and 
+   * An ActorManager maintains a list of Actor objects and 
    * provides methods to execute specified actions at various 
    * points before and during the main integration loop. 
    *
    * \ingroup DdMd_Manager_Module
    */
-   class ActionManager : public Manager<Action>
+   class ActorManager : public Manager<Actor>
    {
 
    public:
@@ -35,12 +35,12 @@ namespace DdMd
       /**
       * Constructor.
       */
-      ActionManager(Simulation& simulation);
+      ActorManager(Simulation& simulation);
 
       /**
       * Destructor.
       */
-      ~ActionManager();
+      ~ActorManager();
 
       /**
       * Read parameter file. 
@@ -77,21 +77,21 @@ namespace DdMd
       void endOfStep(long iStep);
    
       // Communication
-      void packExchange(Buffer& buffer, long iStep);
-      void unpackExchange(Buffer& buffer, long iStep);
+      void packExchange(long iStep);
+      void unpackExchange(long iStep);
 
-      void packUpdate(Buffer& buffer, long iStep);
-      void unpackUpdate(Buffer& buffer, long iStep);
+      void packUpdate(long iStep);
+      void unpackUpdate(long iStep);
 
-      void packReverseUpdate(Buffer& buffer, long iStep);
-      void unpackReverseUpdate(Buffer& buffer, long iStep);
+      void packReverseUpdate(long iStep);
+      void unpackReverseUpdate(long iStep);
 
       /**
       * Return pointer to a new default factory.
       *
-      * Virtual, inherited from Manager<Action>.
+      * Virtual, inherited from Manager<Actor>.
       */
-      Factory<Action>* newDefaultFactory() const;
+      Factory<Actor>* newDefaultFactory() const;
 
    private:
 
@@ -99,30 +99,30 @@ namespace DdMd
       Simulation* simulationPtr_;
 
       // Arrays of actions with setup methods 
-      std::vector<Action*> actionsSetupPostExchange_;
-      std::vector<Action*> actionsSetupPostNeighbor_;
-      std::vector<Action*> actionsSetupPostForce_;
+      std::vector<Actor*> actionsSetupPostExchange_;
+      std::vector<Actor*> actionsSetupPostNeighbor_;
+      std::vector<Actor*> actionsSetupPostForce_;
 
       // Arrays of actions with integrate methods 
-      std::vector<Action*> actionsPreIntegrate_;
-      std::vector<Action*> actionsPostIntegrate_;
-      std::vector<Action*> actionsPreTransform_;
-      std::vector<Action*> actionsPreExchange_;
-      std::vector<Action*> actionsPostExchange_;
-      std::vector<Action*> actionsPostNeighbor_;
-      std::vector<Action*> actionsPreUpdate_;
-      std::vector<Action*> actionsPostUpdate_;
-      std::vector<Action*> actionsPreForce_;
-      std::vector<Action*> actionsPostForce_;
-      std::vector<Action*> actionsEndOfStep_;
+      std::vector<Actor*> actionsPreIntegrate_;
+      std::vector<Actor*> actionsPostIntegrate_;
+      std::vector<Actor*> actionsPreTransform_;
+      std::vector<Actor*> actionsPreExchange_;
+      std::vector<Actor*> actionsPostExchange_;
+      std::vector<Actor*> actionsPostNeighbor_;
+      std::vector<Actor*> actionsPreUpdate_;
+      std::vector<Actor*> actionsPostUpdate_;
+      std::vector<Actor*> actionsPreForce_;
+      std::vector<Actor*> actionsPostForce_;
+      std::vector<Actor*> actionsEndOfStep_;
 
       // Arrays of actions with communication methods 
-      std::vector<Action*> actionsPackExchange_;
-      std::vector<Action*> actionsUnpackExchange_;
-      std::vector<Action*> actionsPackUpdate_;
-      std::vector<Action*> actionsUnpackUpdate_;
-      std::vector<Action*> actionsPackReverseUpdate_;
-      std::vector<Action*> actionsUnpackReverseUpdate_;
+      std::vector<Actor*> actionsPackExchange_;
+      std::vector<Actor*> actionsUnpackExchange_;
+      std::vector<Actor*> actionsPackUpdate_;
+      std::vector<Actor*> actionsUnpackUpdate_;
+      std::vector<Actor*> actionsPackReverseUpdate_;
+      std::vector<Actor*> actionsUnpackReverseUpdate_;
 
    };
 

@@ -1,5 +1,5 @@
-#ifndef DDMD_ACTION_MANAGER_CPP
-#define DDMD_ACTION_MANAGER_CPP
+#ifndef DDMD_ACTOR_MANAGER_CPP
+#define DDMD_ACTOR_MANAGER_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,8 +8,8 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "ActionManager.h" 
-#include "ActionFactory.h" 
+#include "ActorManager.h" 
+#include "ActorFactory.h" 
 
 namespace DdMd
 {
@@ -19,15 +19,15 @@ namespace DdMd
    /*
    * Constructor.
    */
-   ActionManager::ActionManager(Simulation& simulation)
-   : Manager<Action>(),
+   ActorManager::ActorManager(Simulation& simulation)
+   : Manager<Actor>(),
      simulationPtr_(&simulation)
    {}
 
    /*
    * Destructor.
    */
-   ActionManager::~ActionManager()
+   ActorManager::~ActorManager()
    {} 
 
    /*
@@ -35,12 +35,12 @@ namespace DdMd
    *
    * \param in input parameter file stream.
    */
-   void ActionManager::readParam(std::istream &in)
+   void ActorManager::readParam(std::istream &in)
    {
-      readBegin(in, "ActionManager");
-      Manager<Action>::readParam(in);
+      readBegin(in, "ActorManager");
+      Manager<Actor>::readParam(in);
 
-      Action* ptr;
+      Actor* ptr;
       for  (int i = 0; i < size(); ++i) {
          ptr = &(*this)[i];
          if (ptr->hasSetupPostExchange()) { 
@@ -99,7 +99,7 @@ namespace DdMd
 
    // Setup
 
-   void ActionManager::setupPostExchange() 
+   void ActorManager::setupPostExchange() 
    {
       int n = actionsSetupPostExchange_.size();
       for (int i = 0; i < n; ++i) {
@@ -107,7 +107,7 @@ namespace DdMd
       }
    }
  
-   void ActionManager::setupPostNeighbor()
+   void ActorManager::setupPostNeighbor()
    {
       int n = actionsSetupPostNeighbor_.size();
       for (int i = 0; i < n; ++i) {
@@ -115,7 +115,7 @@ namespace DdMd
       }
    }
 
-   void ActionManager::setupPostForce()
+   void ActorManager::setupPostForce()
    {
       int n = actionsSetupPostForce_.size();
       for (int i = 0; i < n; ++i) {
@@ -125,9 +125,9 @@ namespace DdMd
 
    // Integration
 
-   void ActionManager::preIntegrate(long iStep)
+   void ActorManager::preIntegrate(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPreIntegrate_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPreIntegrate_[i];
@@ -137,9 +137,9 @@ namespace DdMd
       }
    }
  
-   void ActionManager::postIntegrate(long iStep)
+   void ActorManager::postIntegrate(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPostIntegrate_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPostIntegrate_[i];
@@ -149,9 +149,9 @@ namespace DdMd
       }
    }
  
-   void ActionManager::preTransform(long iStep)
+   void ActorManager::preTransform(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPreTransform_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPreTransform_[i];
@@ -161,9 +161,9 @@ namespace DdMd
       }
    }
  
-   void ActionManager::preExchange(long iStep)
+   void ActorManager::preExchange(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPreExchange_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPreExchange_[i];
@@ -173,9 +173,9 @@ namespace DdMd
       }
    }
  
-   void ActionManager::postExchange(long iStep)
+   void ActorManager::postExchange(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPostExchange_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPostExchange_[i];
@@ -185,9 +185,9 @@ namespace DdMd
       }
    }
  
-   void ActionManager::postNeighbor(long iStep)
+   void ActorManager::postNeighbor(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPostNeighbor_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPostNeighbor_[i];
@@ -197,9 +197,9 @@ namespace DdMd
       }
    }
  
-   void ActionManager::preUpdate(long iStep)
+   void ActorManager::preUpdate(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPreUpdate_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPreUpdate_[i];
@@ -209,9 +209,9 @@ namespace DdMd
       }
    }
  
-   void ActionManager::postUpdate(long iStep)
+   void ActorManager::postUpdate(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPostUpdate_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPostUpdate_[i];
@@ -221,9 +221,9 @@ namespace DdMd
       }
    }
  
-   void ActionManager::preForce(long iStep)
+   void ActorManager::preForce(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPreForce_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPreForce_[i];
@@ -233,9 +233,9 @@ namespace DdMd
       }
    }
  
-   void ActionManager::postForce(long iStep)
+   void ActorManager::postForce(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPostForce_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPostForce_[i];
@@ -245,9 +245,9 @@ namespace DdMd
       }
    }
  
-   void ActionManager::endOfStep(long iStep)
+   void ActorManager::endOfStep(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsEndOfStep_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsEndOfStep_[i];
@@ -260,83 +260,83 @@ namespace DdMd
 
    // Communication
 
-   void ActionManager::packExchange(Buffer& buffer, long iStep)
+   void ActorManager::packExchange(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPackExchange_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPackExchange_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->packExchange(buffer);
+            ptr->packExchange();
          }
       }
    }
  
-   void ActionManager::unpackExchange(Buffer& buffer, long iStep)
+   void ActorManager::unpackExchange(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsUnpackExchange_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsUnpackExchange_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->unpackExchange(buffer);
+            ptr->unpackExchange();
          }
       }
    }
  
-   void ActionManager::packUpdate(Buffer& buffer, long iStep)
+   void ActorManager::packUpdate(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPackUpdate_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPackUpdate_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->packUpdate(buffer);
+            ptr->packUpdate();
          }
       }
    }
  
-   void ActionManager::unpackUpdate(Buffer& buffer, long iStep)
+   void ActorManager::unpackUpdate(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsUnpackUpdate_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsUnpackUpdate_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->unpackUpdate(buffer);
+            ptr->unpackUpdate();
          }
       }
    }
 
-   void ActionManager::packReverseUpdate(Buffer& buffer, long iStep)
+   void ActorManager::packReverseUpdate(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsPackReverseUpdate_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsPackReverseUpdate_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->packReverseUpdate(buffer);
+            ptr->packReverseUpdate();
          }
       }
    }
  
-   void ActionManager::unpackReverseUpdate(Buffer& buffer, long iStep)
+   void ActorManager::unpackReverseUpdate(long iStep)
    {
-      Action* ptr;
+      Actor* ptr;
       int n = actionsUnpackReverseUpdate_.size();
       for (int i = 0; i < n; ++i) {
          ptr = actionsUnpackReverseUpdate_[i];
          if (ptr->isAtInterval(iStep)) {
-            ptr->unpackReverseUpdate(buffer);
+            ptr->unpackReverseUpdate();
          }
       }
    }
 
    /*
-   * Return pointer to default factory.
+   * Return pointer to default Actor factory.
    */
-   Factory<Action>* ActionManager::newDefaultFactory() const
-   {  return new ActionFactory(*simulationPtr_); }
+   Factory<Actor>* ActorManager::newDefaultFactory() const
+   {  return new ActorFactory(*simulationPtr_); }
  
 }
 #endif

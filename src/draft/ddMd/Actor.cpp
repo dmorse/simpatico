@@ -1,5 +1,5 @@
-#ifndef DDMD_ACTION_CPP
-#define DDMD_ACTION_CPP
+#ifndef DDMD_ACTOR_CPP
+#define DDMD_ACTOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "Action.h"
+#include "Actor.h"
 
 namespace DdMd
 {
@@ -16,7 +16,7 @@ namespace DdMd
    using namespace Util;
 
    // Constructor.
-   Action::Action(Simulation& simulation)
+   Actor::Actor(Simulation& simulation)
     : interval_(1),
       hasSetupPostExchange_(false),
       hasSetupPostNeighbor_(false),
@@ -42,7 +42,7 @@ namespace DdMd
    {}
 
    // Destructor.
-   Action::~Action()
+   Actor::~Actor()
    {}
 
 }
