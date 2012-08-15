@@ -51,7 +51,7 @@ namespace Util
    MonoclinicBoundary::serialize(Archive& ar, const unsigned int version)
    {
       ar & l_;
-      ar & tilt_;
+      ar & d_;
       if (Archive::is_loading()) {
          reset();
          isValid();

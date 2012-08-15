@@ -1,3 +1,3 @@
 subDirectories =
-pathFromSrc = tests/mcMd/chemistry
+pathFromSrc = tests/util/archives
 pathToSrc = ../../..

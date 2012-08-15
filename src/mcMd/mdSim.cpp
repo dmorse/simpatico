@@ -1,19 +1,27 @@
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
+
 #include <mcMd/mdSimulation/MdSimulation.h>
 
 /**
-* Main program for Molecular Dynamics simulation.
+* Program for molecular dynamics simulation.
 *
-* Options:
+* Command line options:
 *
-*   -e  Enable echoing of the parameter file to the log file as it
-*       is read.
+*   -e  
+*    Enable echoing of the parameter file as it is read.
 *
-*   -p  Enable use of a free energy perturbation. 
+*   -p  
+*    Enable use of a free energy perturbation. 
 *
-*   -r filename
-*      Restart a simulation. The required parameter "filename" is 
-*      the base name for 3 input files: filename.prm, filename.rst, 
-*      and filename.cmd.
+*   -r filename. 
+*    Restart a simulation. The parameter "filename" is the base
+*    name for the 3 restart files, named filename.prm, 
+*    filename.rst, and filename.cmd.
 *
 * Files:
 *

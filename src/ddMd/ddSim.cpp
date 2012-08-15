@@ -1,16 +1,20 @@
-#ifndef DDMD_DDSIM_CPP
-#define DDMD_DDSIM_CPP
+/*
+* Simpatico - Simulation Package for Polymeric and Molecular Liquids
+*
+* Copyright 2010 - 2012, David Morse (morse@cems.umn.edu)
+* Distributed under the terms of the GNU General Public License.
+*/
 
 #include <ddMd/simulation/Simulation.h>
 #include <util/param/ParamComponent.h>
 
 /**
-* Main program for paralel domain-decomposition MD simulations.
+* Program for parallel domain-decomposition molecular dynamics simulation.
 *
-* Options:
+* Command line options:
 *
-*   -e  Enable echoing of the parameter file to the log file as it
-*       is read.
+*   -e  
+*    Enable echoing of parameter file to log file as it is read.
 */
 int main(int argc, char **argv)
 {
@@ -22,7 +26,7 @@ int main(int argc, char **argv)
    DdMd::Simulation simulation();
    #endif
 
-   // Read parameter file from standard input (read on master).
+   // Read command line options (read on master).
    simulation.setOptions(argc, argv); 
 
    // Read parameter file from standard input (read on master).
@@ -35,6 +39,5 @@ int main(int argc, char **argv)
    MPI::Finalize();
    #endif
 
-   return 0; // normal completion
+   return 0;
 }
-#endif

@@ -1,8 +1,6 @@
 Improve Extensibility
 ---------------------
 
-- Make main programs configurable (make _r versions)
-
 - Make factory *.cpp files configurable (make _r versions)
 
 - In modules, add protected methods to add subfactories.
