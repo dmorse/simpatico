@@ -1,3 +1,3 @@
 subDirectories =
-pathFromSrc = mcMd/tethers/tests
+pathFromSrc = tests/mcMd/tethers
 pathToSrc = ../../..

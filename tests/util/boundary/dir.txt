@@ -1,3 +1,3 @@
 subDirectories =
-pathFromSrc = mcMd/boundary/tests
+pathFromSrc = tests/mcMd/boundary
 pathToSrc = ../../..
