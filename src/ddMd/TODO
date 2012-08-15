@@ -50,21 +50,52 @@ Cell List and Pair List:
   rather than an array of pointers. Provide a CellList method to decide if 
   a particular pair is within the cutoff.
 
+Distributor and Collector
+-------------------------
+
+- Remove association with Domain, remove explicit use of domain communicator.
+
+- Require that setup method be called on all processors, and that it take
+  as a parameters a communicator, a rank for the root processor, and ranks
+  begin and end for processors that represent spatial domains, which lie 
+  in the range begin <= rank < end.
+
 Buffer:
 -------
 
+- Change envelope sent with block to contain:
+
+  sendSize_
+  sendTimeSize_
+  sendItemType_
+  isComplete_
+
+  For groups, add enumerations BOND, ANGLE, DIHEDRAL and
+  use Type = Buffer::BOND + N - 2 in templates for Group<N>. 
+
+- In beginSendBlock() method, add parametr itemSize and
+  remove parameter groupSize.
+
+- Make pack/unpack methods public. 
+
+- Add public methods to endPackItem() and endUnpackItem(), to
+  increment counters. These can check cursor against expected 
+  position, based on itemSize and item counters.
+
+- Check cursor against end of block in unpack method template.
+
+- Move pack/unpack methods to methods of Atom and Group classes.
+
 - Add memory statistics for Buffer.
 
-- Figure out how to make pack/unpack methods of the atom class, so 
-  that they can use private information. Would also simplify the 
-  introduction of new Atom class variants (e.g., a dipolar Atom).
+- Add values INT, DOUBLE, VECTOR to enumeration of types.
 
 Single Processor Operation
 --------------------------
 
-- Modify Distributor, Collector, ConfigIo, and Exchanger classes
-  to work ifndef UTIL_MPI, continue with other classes, to enable 
-  single processor operation with no MPI.
+- Modify Distributor, Collector, ConfigIo, and Exchanger classes to work 
+  ifndef UTIL_MPI, continue with other classes, to enable single processor 
+  operation with no MPI.
 
 Atom Class Implementation
 --------------------------

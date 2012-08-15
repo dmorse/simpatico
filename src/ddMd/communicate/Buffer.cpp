@@ -243,7 +243,7 @@ namespace DdMd
          UTIL_THROW("Error: Previous receive block not completely unpacked");
       }
 
-      // Extract the number packed atoms and type from the receive buffer
+      // Extract the number packed items and item type from the receive buffer
       int* recvBuffPtr = (int *)recvPtr_;
       recvSize_  = *recvBuffPtr;
       recvType_  = *(recvBuffPtr + 1);
@@ -554,7 +554,7 @@ namespace DdMd
          UTIL_THROW("Destination rank out of bounds");
       }
       if (dest == myRank) {
-         UTIL_THROW("Source and desination identical");
+         UTIL_THROW("Source and destination identical");
       }
 
       sendBytes = sendPtr_ - sendBufferBegin_;
@@ -576,7 +576,7 @@ namespace DdMd
          UTIL_THROW("Source rank out of bounds");
       }
       if (source == myRank) {
-         UTIL_THROW("Source and desination identical");
+         UTIL_THROW("Source and destination identical");
       }
 
       request = comm.Irecv(recvBufferBegin_, bufferCapacity_, 
