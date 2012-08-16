@@ -728,10 +728,14 @@ namespace DdMd
    }
 
    /*
-   * Compute stress tensor.
+   * Compute total pair stress (Call on all processors).
    */
    template <class Interaction>
+   #ifdef UTIL_MPI
+   void PairPotentialImpl<Interaction>::computeStress(MPI::Intracomm& communicator)
+   #else
    void PairPotentialImpl<Interaction>::computeStress()
+   #endif
    {
       Tensor localStress;
       Vector dr;
