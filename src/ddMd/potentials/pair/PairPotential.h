@@ -19,6 +19,9 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
+namespace Util
+{  class Tensor; }
+
 namespace DdMd
 {
 
@@ -159,33 +162,31 @@ namespace DdMd
       /**
       * Return the total pair potential, on all processors.
       *
-      * This method should only be called on the master (rank 0) processor,
-      * after a previous call to computeEnergy.
+      * This method should only be called on the master (rank 0) 
+      * processor, after a previous call to computeEnergy.
       */
       virtual double energy() = 0;
 
-      #if 0
       /**
-      * Compute total bond pressure.
+      * Calculate total pair stress on all processors.
       *
-      * \param stress (output) pressure.
+      * This method must be called on all processors. The result 
+      * is stored on the master processor, and may be retrieved 
+      * by calling energy() on this processor.
       */
-      virtual void computeStress(double& stress) const = 0;
-
-      /**
-      * Compute x, y, z bond pressure components.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const = 0;
-
-      /**
-      * Compute bond stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const = 0;
+      #ifdef UTIL_MPI
+      virtual void computeStress(MPI::Intracomm& communicator) = 0;
+      #else
+      virtual void computeStress() = 0;
       #endif
+
+      /**
+      * Return the total pair stress, on all processors.
+      *
+      * This method should only be called on the master (rank 0) 
+      * processor, after a previous call to computeStress.
+      */
+      virtual Util::Tensor stress() = 0;
 
       //@}
       /// \name Pair and Cell Lists.

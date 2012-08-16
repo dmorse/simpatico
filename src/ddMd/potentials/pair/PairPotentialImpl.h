@@ -9,12 +9,12 @@
 */
 
 #include <ddMd/potentials/pair/PairPotential.h>
+#include <util/space/Tensor.h>
 #include <util/global.h>
 
-namespace Util {
-   class Vector;
-   class Tensor;
-}
+//namespace Util {
+//   class Vector;
+//}
 
 namespace DdMd
 {
@@ -139,38 +139,38 @@ namespace DdMd
       #endif
 
       /**
-      * Get the total energy calculated previously by computeEnergy().
+      * Get the pair energy calculated previously by computeEnergy().
       *
       * Call only on master. 
       */
       virtual double energy();
 
-      #if 0 
       /**
-      * Compute total nonbonded pressure
-      *
-      * \param stress (output) pressure.
+      * Compute the total nonBonded stress for all processors
+      * 
+      * Call on all processors.
       */
-      virtual void computeStress(double& stress) const;
-
-      /**
-      * Compute x, y, z nonbonded pressures.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const;
-
-      /**
-      * Compute nonbonded stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const;
+      #ifdef UTIL_MPI
+      virtual void computeStress(MPI::Intracomm& communicator);
+      #else
+      virtual void computeStress();
       #endif
+
+      /**
+      * Get the pair stress calculated previously by computeStress().
+      *
+      * Call only on master. 
+      */
+      virtual Tensor stress();
 
       //@}
 
    private:
+
+      /**
+      * Pointer to pair interaction object.
+      */ 
+      Interaction* interactionPtr_;
 
       /**
       * Total pair energy on all processors (valid only on master).
@@ -178,10 +178,10 @@ namespace DdMd
       double energy_;
  
       /**
-      * Pointer to pair interaction object.
-      */ 
-      Interaction* interactionPtr_;
-
+      * Total stress on all processors (valid only on master).
+      */
+      Tensor stress_;
+ 
       /**
       * Calculate atomic pair energy, using PairList.
       */
@@ -214,11 +214,6 @@ namespace DdMd
       */
       void addForcesNSq();
 
-      #if 0 
-      template <typename T>
-      void computeStressImpl(T& stress) const;
-      #endif
-
    };
 
 }
@@ -230,10 +225,10 @@ namespace DdMd
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/neighbor/PairIterator.h>
 #include <ddMd/communicate/Domain.h>
+#include <ddMd/potentials/stress.h>
 
 #include <util/space/Dimension.h>
-//#include <util/space/Vector.h>
-#include <util/space/Tensor.h>
+#include <util/space/Vector.h>
 #include <util/accumulators/setToZero.h>
 #include <util/global.h>
 
@@ -732,56 +727,72 @@ namespace DdMd
       }
    }
 
-   #if 0
-   /* 
-   * Add nonBonded pair forces to atomic forces.
+   /*
+   * Compute stress tensor.
    */
    template <class Interaction>
-   template <typename T>
-   void PairPotentialImpl<Interaction>::computeStressImpl(T& stress) const
+   void PairPotentialImpl<Interaction>::computeStress()
    {
-
-      Vector       dr;
-      Vector       force;
-      double       rsq;
+      Tensor localStress;
+      Vector dr;
+      Vector f;
+      double rsq;
       PairIterator iter;
-      Atom        *atom1Ptr;
-      Atom        *atom0Ptr;
+      Atom*  atom0Ptr;
+      Atom*  atom1Ptr;
+      int    type0, type1;
 
-      setToZero(stress);
+      localStress.zero();
+      if (reverseUpdateFlag()) {
 
-      // Loop over nonbonded neighbor pairs
-      for (pairList_.begin(iter); iter.notEnd(); ++iter) {
-         iter.getPair(atom0Ptr, atom1Ptr);
-         rsq = boundary().
-               distanceSq(atom0Ptr->position(), atom1Ptr->position(), dr);
-         force  = dr;
-         force *= interaction().
-                  forceOverR(rsq, atom0Ptr->typeId(), atom1Ptr->typeId());
-         incrementPairStress(force, dr, stress);
+         for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+            iter.getPair(atom0Ptr, atom1Ptr);
+            dr.subtract(atom0Ptr->position(), atom1Ptr->position());
+            rsq = dr.square();
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            f = dr;
+            f *= interactionPtr_->forceOverR(rsq, type0, type1);
+            incrementPairStress(f, dr, localStress);
+         }
+
+      } else {
+
+         for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+            iter.getPair(atom0Ptr, atom1Ptr);
+            dr.subtract(atom0Ptr->position(), atom1Ptr->position());
+            rsq = dr.square();
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            f = dr;
+            f *= interactionPtr_->forceOverR(rsq, type0, type1);
+            if (!atom1Ptr->isGhost()) {
+               f *= 0.5;
+            }
+            incrementPairStress(f, dr, localStress);
+         }
+
       }
 
       // Normalize by volume 
-      stress /= boundary().volume();
-      normalizeStress(stress);
+      localStress /= boundary().volume();
+      normalizeStress(localStress);
+
+      #ifdef UTIL_MPI
+      communicator.Reduce(&localStress, &stress_, 6, 
+                          MPI::DOUBLE, MPI::SUM, 0);
+      #else
+      stress_ = localStress;
+      #endif
 
    }
 
+   /*
+   * Return total pair stress from all processors.
+   */
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::computeStress(double& stress) 
-        const
-   {  computeStressImpl(stress); }
-
-   template <class Interaction>
-   void PairPotentialImpl<Interaction>::computeStress(Util::Vector& stress)
-        const
-   {  computeStressImpl(stress); }
-
-   template <class Interaction>
-   void PairPotentialImpl<Interaction>::computeStress(Util::Tensor& stress)
-        const
-   {  computeStressImpl(stress); }
-   #endif
+   Tensor PairPotentialImpl<Interaction>::stress()
+   {  return stress_; } 
 
 }
 #endif
