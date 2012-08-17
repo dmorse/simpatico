@@ -9,7 +9,6 @@
 */
 
 #include "AnglePotential.h" // base class
-#include <util/global.h>
 
 namespace Util
 {
@@ -74,7 +73,7 @@ namespace DdMd
       * \param cosTheta  cosine of the bend angle.
       * \param type      type of bend angle.
       */
-      double energy(double cosTheta, int type) const;
+      double angleEnergy(double cosTheta, int type) const;
  
       /**
       * Returns forces along two bonds at the angle, for use in MD and stress
@@ -86,8 +85,8 @@ namespace DdMd
       * \param F2     return force along R2 direction.
       * \param type   type of angle.
       */
-      void force(const Vector& R1, const Vector& R2,
-                       Vector& F1, Vector& F2, int type) const;
+      void angleForce(const Vector& R1, const Vector& R2,
+                      Vector& F1, Vector& F2, int type) const;
 
       #if 0
       /**
@@ -132,44 +131,20 @@ namespace DdMd
       #endif
 
       /**
-      * Get the total angle energy, computed previously by computeEnergy().
-      *
-      * Call only on master. 
+      * Compute the covalent bond stress.
+      * 
+      * Call on all processors.
       */
-      virtual double energy();
-
-      #if 0
-      /**
-      * Compute total angle pressure.
-      *
-      * \param stress (output) pressure.
-      */
-      virtual void computeStress(double& stress) const;
-
-      /**
-      * Compute x, y, z angle pressure components.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const;
-
-      /**
-      * Compute angle stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const;
+      #ifdef UTIL_MPI
+      virtual void computeStress(MPI::Intracomm& communicator);
+      #else
+      virtual void computeStress();
+      #endif
 
       //@}
-      #endif
 
    private:
 
-      /**
-      * Total angle energy on all processors.
-      */
-      double energy_;
- 
       /**
       * Pointer to Interaction (evaluates the angle potential function).
       */ 
@@ -182,28 +157,20 @@ namespace DdMd
       */
       double addForces(bool needForce, bool needEnergy);
 
-      #if 0 
-      template <typename T>
-      void computeStressImpl(T& stress) const;
-      #endif
-
    };
 
 }
 
 #include "AnglePotential.h"
 #include <ddMd/simulation/Simulation.h>
-//#include <mcMd/simulation/stress.h>
 #include <ddMd/storage/GroupStorage.h>
 #include <ddMd/storage/GroupIterator.h>
-#include <util/boundary/Boundary.h>
-#include <util/space/Vector.h>
-#include <util/global.h>
 
+#include <util/boundary/Boundary.h>
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>
-//#include <util/space/Tensor.h>
-//#include <util/accumulators/setToZero.h>
+#include <util/space/Tensor.h>
+#include <util/global.h>
 
 #include <fstream>
 
@@ -266,16 +233,18 @@ namespace DdMd
    */
    template <class Interaction>
    double 
-   AnglePotentialImpl<Interaction>::energy(double cosTheta, int angleTypeId) 
+   AnglePotentialImpl<Interaction>::angleEnergy(double cosTheta, int angleTypeId) 
       const
    {  return interaction().energy(cosTheta, angleTypeId); }
 
    /*
    * Return forces for a single angle.
    */
-   template <class Interaction>
-   void AnglePotentialImpl<Interaction>::force(const Vector& R1, const Vector& R2, 
-                                          Vector& F1, Vector& F2, int typeId) const
+   template <class Interaction> void 
+   AnglePotentialImpl<Interaction>::angleForce(const Vector& R1, 
+                                               const Vector& R2, 
+                                               Vector& F1, Vector& F2, 
+                                               int typeId) const
    {  interaction().force(R1, R2, F1, F2, typeId); }
 
    #if 0
@@ -325,23 +294,21 @@ namespace DdMd
    #else
    void AnglePotentialImpl<Interaction>::computeEnergy()
    #endif
-   { 
-      double localEnergy = 0; 
+   {
+      double localEnergy = 0.0; 
+      double totalEnergy = 0.0; 
       localEnergy = addForces(false, true); 
       #ifdef UTIL_MPI
-      communicator.Reduce(&localEnergy, &energy_, 1, 
+      communicator.Reduce(&localEnergy, &totalEnergy, 1, 
                           MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator.Get_rank() != 0) {
+         totalEnergy = 0.0;
+      }
+      setEnergy(totalEnergy);
       #else
-      energy_ = localEnergy;
+      setEnergy(localEnergy);
       #endif
    }
-
-   /*
-   * Return total pair energy from all processors.
-   */
-   template <class Interaction>
-   double AnglePotentialImpl<Interaction>::energy()
-   {  return energy_; } 
 
    /*
    * Increment atomic forces and/or pair energy (private).
@@ -350,7 +317,7 @@ namespace DdMd
    AnglePotentialImpl<Interaction>::addForces(bool needForce, bool needEnergy)
    {
       // Preconditions
-      //if (!storagePtr_->isInitialized()) {
+      //if (!storage().isInitialized()) {
       //   UTIL_THROW("AtomStorage must be initialized");
       //}
 
@@ -368,7 +335,7 @@ namespace DdMd
       Atom* atom2Ptr;
       int   type, isLocal0, isLocal1, isLocal2;
 
-      storagePtr_->begin(iter);
+      storage().begin(iter);
       for ( ; iter.notEnd(); ++iter) {
          type = iter->typeId();
          atom0Ptr = iter->atomPtr(0);
@@ -378,9 +345,9 @@ namespace DdMd
          isLocal1 = !(atom1Ptr->isGhost());
          isLocal2 = !(atom2Ptr->isGhost());
          // Calculate minimimum image separations
-         rsq1 = boundaryPtr_->distanceSq(atom1Ptr->position(),
+         rsq1 = boundary().distanceSq(atom1Ptr->position(),
                                          atom0Ptr->position(), dr1);
-         rsq2 = boundaryPtr_->distanceSq(atom2Ptr->position(),
+         rsq2 = boundary().distanceSq(atom2Ptr->position(),
                                          atom1Ptr->position(), dr2);
          if (needEnergy) {
             cosTheta = dr1.dot(dr2) / sqrt(rsq1 * rsq2);
@@ -405,59 +372,73 @@ namespace DdMd
       return energy;
    }
 
-   #if 0
-   /* 
-   * Compute angle contribution to stress.
+   /*
+   * Compute total pair stress (Call on all processors).
    */
    template <class Interaction>
-   template <typename T>
-   void AnglePotentialImpl<Interaction>::computeStressImpl(T& stress) const
+   #ifdef UTIL_MPI
+   void AnglePotentialImpl<Interaction>::computeStress(MPI::Intracomm& communicator)
+   #else
+   void AnglePotentialImpl<Interaction>::computeStress()
+   #endif
    {
-      Vector dr1, dr2, f1, f2;
-      const Atom *atom0Ptr, *atom1Ptr, *atom2Ptr;
+      Tensor localStress;
+      Vector dr1, dr2;
+      Vector f1, f2;
+      double factor;
+      double prefactor = -1.0/3.0;
+      GroupIterator<3> iter;
+      Atom*  atom0Ptr;
+      Atom*  atom1Ptr;
+      Atom*  atom2Ptr;
+      int    type;
+      int    isLocal0, isLocal1, isLocal2;
 
-      setToZero(stress);
-
-      // Iterate over all angles in System.
-      storagePtr_->begin(iter);
-      for ( ; iter.notEnd(); ++iter){
-         atom0Ptr = &(iter->atom(0));
-         atom1Ptr = &(iter->atom(1));
-         atom2Ptr = &(iter->atom(2));
-
+      localStress.zero();
+      // Iterate over bonds
+      storage().begin(iter);
+      for ( ; iter.notEnd(); ++iter) {
+         atom0Ptr = iter->atomPtr(0);
+         atom1Ptr = iter->atomPtr(1);
+         atom2Ptr = iter->atomPtr(2);
+         type = iter->typeId();
+         isLocal0 = !(atom0Ptr->isGhost());
+         isLocal1 = !(atom1Ptr->isGhost());
+         isLocal2 = !(atom2Ptr->isGhost());
          boundary().distanceSq(atom1Ptr->position(),
-                               atom0Ptr->position(), dr1);
+                                  atom0Ptr->position(), dr1);
          boundary().distanceSq(atom2Ptr->position(),
-                               atom1Ptr->position(), dr2);
+                                  atom1Ptr->position(), dr2);
 
          // f1 -- along dr1; f2 -- along dr2.
-         interaction().force(dr1, dr2,
-                           f1, f2, iter->typeId());
+         interaction().force(dr1, dr2, f1, f2, type);
 
-         dr1 *= -1.0;
-         dr2 *= -1.0;
-         incrementPairStress(f1, dr1, stress);
-         incrementPairStress(f2, dr2, stress);
+         factor = prefactor*(isLocal0 + isLocal1 + isLocal2);
+         dr1 *= factor;
+         dr2 *= factor;
+         incrementPairStress(f1, dr1, localStress);
+         incrementPairStress(f2, dr2, localStress);
+
       }
 
-      stress /= boundary().volume();
-      normalizeStress(stress);
+      // Normalize by volume 
+      localStress /= boundary().volume();
+
+      #ifdef UTIL_MPI
+      // Reduce results from all processors
+      Tensor totalStress;
+      int    root = 0;
+      communicator.Reduce(&localStress(0, 0), &totalStress(0, 0), 
+                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, root);
+      if (communicator.Get_rank() != root) {
+         totalStress.zero();
+      }
+      setStress(totalStress);
+      #else
+      setStress(localStress);
+      #endif
+
    }
-
-   template <class Interaction>
-   void AnglePotentialImpl<Interaction>::computeStress(double& stress) const
-   {  computeStressImpl(stress); }
-
-   template <class Interaction>
-   void AnglePotentialImpl<Interaction>::computeStress(Util::Vector& stress) 
-        const
-   {  computeStressImpl(stress); }
-
-   template <class Interaction>
-   void AnglePotentialImpl<Interaction>::computeStress(Util::Tensor& stress) 
-        const
-   {  computeStressImpl(stress); }
-   #endif
 
 }
 #endif

@@ -1,7 +1,7 @@
 #ifndef DDMD_ANGLE_POTENTIAL_H
 #define DDMD_ANGLE_POTENTIAL_H
 
-#include <util/param/ParamComposite.h>        // base class
+#include <ddMd/potentials/Potential.h>        // base class
 #include <util/boundary/Boundary.h>           // typedef
 
 #include <iostream>
@@ -26,7 +26,7 @@ namespace DdMd
    *
    * All operations in this class are local (no MPI).
    */
-   class AnglePotential  : public ParamComposite
+   class AnglePotential  : public Potential
    {
 
    public:
@@ -60,7 +60,7 @@ namespace DdMd
       //@{
 
       /**
-      * Set the maximum number of atom types.
+      * Set the maximum number of angle types.
       */
       virtual void setNAngleType(int nAngleType) = 0;
   
@@ -70,11 +70,10 @@ namespace DdMd
       * \param cosTheta  cosine of the bend angle.
       * \param type      type of bend angle.
       */
-      double energy(double cosTheta, int type) const;
+      double angleEnergy(double cosTheta, int type) const;
  
       /**
-      * Returns forces along two bonds at the angle, for use in MD and stress
-      * calculation.
+      * Computes forces along two bonds within the angle.
       *
       * \param R1     bond vector from atom 1 to 2.
       * \param R2     bond vector from atom 2 to 3.
@@ -82,7 +81,7 @@ namespace DdMd
       * \param F2     return force along R2 direction.
       * \param type   type of angle.
       */
-      void force(const Vector& R1, const Vector& R2,
+      void angleForce(const Vector& R1, const Vector& R2,
                        Vector& F1, Vector& F2, int type) const;
 
       #if 0
@@ -93,63 +92,20 @@ namespace DdMd
       #endif
 
       //@}
-      /// \name Total Energy, Force and Stress 
-      //@{
-
-      /**
-      * Add the angle forces for all atoms.
-      */
-      virtual void addForces() = 0;
-
-      /**
-      * Add pair forces to atom forces, and compute energy.
-      */
-      virtual void addForces(double& energy) = 0;
-
-      /**
-      * Calculate total angle potential.
-      *
-      * Must be call on all processors (MPI reduce operation).
-      */
-      #ifdef UTIL_MPI
-      virtual void computeEnergy(MPI::Intracomm& communicator) = 0;
-      #else
-      virtual void computeEnergy() = 0;
-      #endif
-
-      /**
-      * Get total angle potential, computed previously by computeEnergy().
-      *
-      * Call only on master processor, result otherwise invalid.
-      */
-      virtual double energy() = 0;
-
-      #if 0
-      /**
-      * Compute total angle pressure.
-      *
-      * \param stress (output) pressure.
-      */
-      virtual void computeStress(double& stress) const;
-
-      /**
-      * Compute x, y, z angle pressure components.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const;
-
-      /**
-      * Compute angle stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const;
-
-      //@}
-      #endif
 
    protected:
+
+      /**
+      *  Return boundary by reference.   
+      */
+      Boundary& boundary() const;
+
+      /**
+      *  Return bond storage by reference.   
+      */
+      GroupStorage<3>& storage() const;
+
+   private:
 
       // Pointer to associated Boundary object.
       Boundary* boundaryPtr_;
@@ -158,6 +114,14 @@ namespace DdMd
       GroupStorage<3>* storagePtr_;
 
    };
+
+   // Get boundary by reference.
+   inline Boundary& AnglePotential::boundary() const
+   { return *boundaryPtr_; }
+
+   // Get bond storage by reference.
+   inline GroupStorage<3>& AnglePotential::storage() const
+   { return *storagePtr_; }
 
 }
 #endif

@@ -1,14 +1,7 @@
-Potentials
-----------
-
-- Add computeStress method for BondPotential.
-
-- Make BondPotential a subclass of Potential.
-
-- Test stress methods.
-
 Testing
 -------
+
+- Test stress methods.
 
 - Improve testing of PairList - check that number of inner pairs doesn't
   change upon reneighboring, in unit tests and as optional test in integrator.

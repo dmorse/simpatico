@@ -2,7 +2,7 @@
 #define DDMD_POTENTIAL_H
 
 #include <util/param/ParamComposite.h>  // base class
-#include <util/util/Nullable.h>         // template for member
+#include <util/util/Setable.h>          // template for members
 #include <util/space/Tensor.h>          // parameter for member
 
 /*
@@ -11,9 +11,6 @@
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
-
-namespace Util
-{  class Tensor; }
 
 namespace DdMd
 {
@@ -127,23 +124,28 @@ namespace DdMd
       */
       void unsetEnergy();
 
-      /*
+      /**
       * Set a value for the total stress.
       */
       void setStress(const Tensor& stress);
 
-      /*
+      /**
       * Mark the stress as unknown (nullify).
       */
       void unsetStress();
 
+      /*
+      * Add a pair contribution to the stress tensor.
+      */
+      void incrementPairStress(const Vector& f, const Vector& dr, 
+                               Tensor& stress) const;
    private:
 
       /// Total stress.
-      Nullable<Tensor> stress_;
+      Setable<Tensor> stress_;
 
       /// Total energy.
-      Nullable<double> energy_;
+      Setable<double> energy_;
 
       /// Is reverse update communication enabled?
       bool reverseUpdateFlag_;
@@ -152,6 +154,21 @@ namespace DdMd
 
    inline bool Potential::reverseUpdateFlag() const
    {  return reverseUpdateFlag_; }
+
+   /*
+   * Add a pair contribution to the virial tensor (protected).
+   */
+   inline void 
+   Potential::incrementPairStress(const Vector& f, const Vector& dr, 
+                                  Tensor& stress) const
+   {
+      int i, j;
+      for (i = 0; i < Dimension; ++i) {
+         for (j = 0; j < Dimension; ++j) {
+            stress(i, j) += f[i]*dr[j];
+         }
+      }
+   }
 
 }
 #endif

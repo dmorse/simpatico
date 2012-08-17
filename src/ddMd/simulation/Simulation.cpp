@@ -761,12 +761,12 @@ namespace DdMd
       bondPotential().computeStress(domain_.communicator());
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         anglePotential().computeStress(domain_.communicator());
+         //anglePotential().computeStress(domain_.communicator());
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         dihedralPotential().computeStress(domain_.communicator());
+         //dihedralPotential().computeStress(domain_.communicator());
       }
       #endif
    }
@@ -782,12 +782,12 @@ namespace DdMd
       bondPotential().computeStress();
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         anglePotential().computeStress();
+         //anglePotential().computeStress();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         dihedralPotential().computeStress();
+         //dihedralPotential().computeStress();
       }
       #endif
    }
@@ -804,12 +804,12 @@ namespace DdMd
       stress += bondPotential().stress();
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         stress += anglePotential().stress();
+         //stress += anglePotential().stress();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         stress += dihedralPotential().stress();
+         //stress += dihedralPotential().stress();
       }
       #endif
       return stress;
@@ -826,12 +826,12 @@ namespace DdMd
       pressure += bondPotential().pressure();
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         pressure += anglePotential().pressure();
+         //pressure += anglePotential().pressure();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         pressure += dihedralPotential().pressure();
+         //pressure += dihedralPotential().pressure();
       }
       #endif
       return pressure;

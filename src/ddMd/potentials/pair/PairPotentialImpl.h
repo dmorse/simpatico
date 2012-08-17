@@ -200,7 +200,6 @@ namespace DdMd
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/neighbor/PairIterator.h>
 #include <ddMd/communicate/Domain.h>
-#include <ddMd/potentials/stress.h>
 
 #include <util/space/Dimension.h>
 #include <util/space/Vector.h>

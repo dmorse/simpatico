@@ -152,7 +152,6 @@ namespace DdMd
 
 #include "BondPotential.h"
 #include <ddMd/simulation/Simulation.h>
-#include <ddMd/potentials/stress.h>
 #include <ddMd/storage/GroupStorage.h>
 #include <ddMd/storage/GroupIterator.h>
 #include <util/boundary/Boundary.h>

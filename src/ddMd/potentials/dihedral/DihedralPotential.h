@@ -1,8 +1,8 @@
 #ifndef DDMD_DIHEDRAL_POTENTIAL_H
 #define DDMD_DIHEDRAL_POTENTIAL_H
 
-#include <util/param/ParamComposite.h>        // base class
-#include <util/boundary/Boundary.h>           // typedef
+#include <ddMd/potentials/Potential.h>       // base class
+#include <util/boundary/Boundary.h>          // typedef
 
 #include <iostream>
 
@@ -26,7 +26,7 @@ namespace DdMd
    *
    * All operations in this class are local (no MPI).
    */
-   class DihedralPotential  : public ParamComposite
+   class DihedralPotential  : public Potential
    {
 
    public:
@@ -78,9 +78,9 @@ namespace DdMd
       * \param R3     bond vector from atom 2 to 3
       * \param type   type of dihedral
       */
-      virtual
-      double energy(const Vector& R1, const Vector& R2, const Vector& R3,
-                    int type) const = 0;
+      virtual double 
+      dihedralEnergy(const Vector& R1, const Vector& R2, const Vector& R3,
+                     int type) const = 0;
  
       /**
       * Returns derivatives of energy with respect to bond vectors forming the
@@ -94,9 +94,9 @@ namespace DdMd
       * \param F3     force along R2 direction (upon return)
       * \param type   type of dihedral
       */
-      virtual
-      void force(const Vector& R1, const Vector& R2, const Vector& R3,
-                 Vector& F1, Vector& F2, Vector& F3, int type) const = 0;
+      virtual void 
+      dihedralForce(const Vector& R1, const Vector& R2, const Vector& R3,
+                    Vector& F1, Vector& F2, Vector& F3, int type) const = 0;
 
       #if 0
       /**
@@ -106,63 +106,20 @@ namespace DdMd
       #endif
 
       //@}
-      /// \name Total Energy, Force and Stress 
-      //@{
-
-      /**
-      * Add the dihedral forces for all atoms.
-      */
-      virtual void addForces() = 0;
-
-      /**
-      * Add pair forces to atom forces, and compute energy.
-      */
-      virtual void addForces(double& energy) = 0;
-
-      /**
-      * Calculate total dihedral potential.
-      *
-      * Must be call on all processors (MPI reduce operation).
-      */
-      #ifdef UTIL_MPI
-      virtual void computeEnergy(MPI::Intracomm& communicator) = 0;
-      #else
-      virtual void computeEnergy() = 0;
-      #endif
-
-      /**
-      * Get total dihedral potential, computed previously by computeEnergy().
-      *
-      * Call only on master processor, result otherwise invalid.
-      */
-      virtual double energy() = 0;
-
-      #if 0
-      /**
-      * Compute total dihedral pressure.
-      *
-      * \param stress (output) pressure.
-      */
-      virtual void computeStress(double& stress) const;
-
-      /**
-      * Compute x, y, z dihedral pressure components.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const;
-
-      /**
-      * Compute dihedral stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const;
-
-      //@}
-      #endif
 
    protected:
+
+      /**
+      *  Return boundary by reference.   
+      */
+      Boundary& boundary() const;
+
+      /**
+      *  Return bond storage by reference.   
+      */
+      GroupStorage<4>& storage() const;
+
+   private:
 
       // Pointer to associated Boundary object.
       Boundary* boundaryPtr_;
@@ -171,6 +128,15 @@ namespace DdMd
       GroupStorage<4>* storagePtr_;
 
    };
+
+   // Get boundary by reference.
+   inline Boundary& DihedralPotential::boundary() const
+   { return *boundaryPtr_; }
+
+   // Get bond storage by reference.
+   inline GroupStorage<4>& DihedralPotential::storage() const
+   { return *storagePtr_; }
+
 
 }
 #endif

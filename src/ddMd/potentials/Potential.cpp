@@ -46,13 +46,13 @@ namespace DdMd
    * Set a value for the total energy.
    */
    void Potential::setEnergy(double energy)
-   {  energy_ = energy; }
+   {  energy_.set(energy); }
 
    /*
    * Mark the energy as unknown. 
    */
    void Potential::unsetEnergy()
-   {  energy_.setNull(); }
+   {  energy_.unset(); }
 
    /*
    * Set a value for the total stress.
@@ -76,13 +76,13 @@ namespace DdMd
    * Set a value for the total stress.
    */
    void Potential::setStress(const Tensor& stress)
-   {  stress_ = stress; }
+   {  stress_.set(stress); }
 
    /*
    * Mark the stress as unknown. 
    */
    void Potential::unsetStress()
-   {  stress_.setNull(); }
+   {  stress_.unset(); }
 
 }
 #endif
