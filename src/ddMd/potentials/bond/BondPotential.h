@@ -24,7 +24,7 @@ namespace DdMd
    /**
    * An BondPotential calculates bond forces and energies for a parent Simulation.
    *
-   * All operations in this class are local (no MPI).
+   * \ingroup DdMd_Bond_Module
    */
    class BondPotential  : public Potential
    {

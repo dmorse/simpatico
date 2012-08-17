@@ -82,7 +82,7 @@ namespace DdMd
       * This method should only be called on the master (rank 0) 
       * processor, after a previous call to computeEnergy.
       */
-      double energy();
+      double energy() const;
 
       /**
       * Compute stress on all processors.
@@ -98,12 +98,20 @@ namespace DdMd
       #endif
 
       /**
-      * Return the total stress, from all processors.
+      * Return the stress tensor.
       *
       * This method should only be called on the master (rank 0) 
       * processor, after a previous call to computeStress.
       */
-      Util::Tensor stress();
+      Util::Tensor stress() const;
+
+      /**
+      * Return the pressure. 
+      *
+      * This method should only be called on the master (rank 0) 
+      * processor, after a previous call to computeStress.
+      */
+      double pressure() const;
 
       //@}
 

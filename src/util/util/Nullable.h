@@ -83,13 +83,13 @@ namespace Util
       /**
       * Is this object null (is the value unknown)?
       */
-      bool isNull()
+      bool isNull() const
       {  return isNull_; }
 
       /**
       * Return value (if not null)
       */
-      T& value()
+      const T& value() const
       {
          if (isNull_) {
             UTIL_THROW("Attempt to return null value.");

@@ -11,12 +11,6 @@
 #include "BondPotential.h" // base class
 #include <util/global.h>
 
-namespace Util
-{
-   class Vector;
-   class Tensor;
-}
-
 namespace DdMd
 {
 
@@ -130,6 +124,8 @@ namespace DdMd
       #else
       virtual void computeStress();
       #endif
+
+      //@}
 
    private:
 

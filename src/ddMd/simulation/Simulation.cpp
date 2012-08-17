@@ -50,6 +50,7 @@
 #include <util/ensembles/BoundaryEnsemble.h>
 #include <util/space/Vector.h>
 #include <util/space/IntVector.h>
+#include <util/space/Tensor.h>
 #include <util/param/Factory.h>
 #include <util/util/Log.h>
 #include <util/mpi/MpiSendRecv.h>
@@ -748,6 +749,92 @@ namespace DdMd
       }
       #endif
       return energy;
+   }
+
+   #ifdef UTIL_MPI
+   /*
+   * Compute all potential energy contributions.
+   */
+   void Simulation::computeVirialStress() 
+   {
+      pairPotential().computeStress(domain_.communicator());
+      bondPotential().computeStress(domain_.communicator());
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         anglePotential().computeStress(domain_.communicator());
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         dihedralPotential().computeStress(domain_.communicator());
+      }
+      #endif
+   }
+
+   #else
+
+   /*
+   * Compute all potential energy contributions.
+   */
+   void Simulation::computeVirialStress() 
+   {
+      pairPotential().computeStress();
+      bondPotential().computeStress();
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         anglePotential().computeStress();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         dihedralPotential().computeStress();
+      }
+      #endif
+   }
+   #endif
+
+   /*
+   * Compute all potential stress contributions.
+   */
+   Tensor Simulation::virialStress() 
+   {
+      Tensor stress;
+      stress.zero();
+      stress += pairPotential().stress();
+      stress += bondPotential().stress();
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         stress += anglePotential().stress();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         stress += dihedralPotential().stress();
+      }
+      #endif
+      return stress;
+   }
+
+   /*
+   * Return total virial pressure contribution.
+   */
+   double Simulation::virialPressure() 
+   {
+      double pressure;
+      pressure = 0;
+      pressure += pairPotential().pressure();
+      pressure += bondPotential().pressure();
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         pressure += anglePotential().pressure();
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         pressure += dihedralPotential().pressure();
+      }
+      #endif
+      return pressure;
    }
 
    /*

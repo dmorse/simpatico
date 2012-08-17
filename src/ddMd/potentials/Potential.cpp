@@ -39,7 +39,7 @@ namespace DdMd
    /*
    * Set a value for the total energy.
    */
-   double Potential::energy()
+   double Potential::energy() const
    {  return energy_.value(); }
 
    /*
@@ -57,8 +57,20 @@ namespace DdMd
    /*
    * Set a value for the total stress.
    */
-   Tensor Potential::stress()
+   Tensor Potential::stress() const
    {  return stress_.value(); }
+
+   /*
+   * Set a value for the pressure.
+   */
+   double Potential::pressure() const
+   {  
+      double p = 0.0;
+      for (int i = 0; i < Dimension; ++i) {
+         p += stress_.value()(i, i);
+      }
+      return p;
+   }
 
    /*
    * Set a value for the total stress.

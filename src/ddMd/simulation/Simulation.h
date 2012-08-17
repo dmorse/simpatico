@@ -27,6 +27,7 @@ namespace Util {
    template <typename T> class Factory; 
    class EnergyEnsemble;
    class BoundaryEnsemble;
+   class Tensor;
 }
 namespace McMd { 
    class McSimulation; 
@@ -224,8 +225,6 @@ namespace DdMd
       * Calculate and store total potential energy on all processors.
       * 
       * Reduce operation: Must be called on all nodes.
-      *
-      * \return total pair potential for all nodes on master, 0.0 otherwise.
       */
       void computePotentialEnergies();
 
@@ -237,6 +236,31 @@ namespace DdMd
       * \return total potential energy (only correct on master node).
       */
       double potentialEnergy();
+
+      /**
+      * Calculate and store virial stress.
+      * 
+      * Reduce operation: Must be called on all nodes.
+      */
+      void computeVirialStress();
+
+      /**
+      * Return total virial stress.
+      *
+      * Call only on master processor, after computeVirialStress.
+      * 
+      * \return total virial stress (only correct on master node).
+      */
+      Tensor virialStress();
+
+      /**
+      * Return total virial pressure.
+      *
+      * Call only on master processor, after computeVirialStress.
+      * 
+      * \return total virial pressure only correct on master node).
+      */
+      double virialPressure();
 
       //@}
       /// \name Potential Energy Factories and Styles
