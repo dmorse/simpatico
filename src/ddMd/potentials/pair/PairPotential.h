@@ -1,7 +1,7 @@
 #ifndef DDMD_PAIR_POTENTIAL_H
 #define DDMD_PAIR_POTENTIAL_H
 
-#include <util/param/ParamComposite.h>  // base class
+#include <ddMd/potentials/Potential.h>  // base class
 #include <ddMd/neighbor/CellList.h>     // member
 #include <ddMd/neighbor/PairList.h>     // member
 #include <ddMd/util/DdTimer.h>          // member
@@ -36,7 +36,7 @@ namespace DdMd
    * A PairPotential has a private CellList and PairList which it
    * uses to calculate nonbonded pair forces. 
    */
-   class PairPotential : public ParamComposite
+   class PairPotential : public Potential
    {
 
    public:
@@ -84,13 +84,6 @@ namespace DdMd
       initialize(const Boundary& maxBoundary, double skin, int pairCapacity);
 
       /**
-      * Set flag to identify if reverse communication is enabled.
-      *
-      * \param reverseUpdateFlag true if reverse communication is enabled.
-      */
-      void setForceCommFlag(bool reverseUpdateFlag);
-
-      /**
       * Set id to specify algorithm for energy, force calculations.
       *
       * \param methodId algorithm id: 0=pair list, 1=cell list, 2=N^2 loop.
@@ -104,9 +97,9 @@ namespace DdMd
       * Set the maximum number of atom types.
       */
       virtual void setNAtomType(int nAtomType) = 0;
-  
+ 
       /**
-      * Return pair energy for a single pair.
+      * Return energy for a single pair.
       * 
       * \param rsq       square distance between atoms in pair
       * \param iAtomType atom type index of 1st atom
@@ -114,7 +107,7 @@ namespace DdMd
       * \return energy of pair
       */
       virtual 
-      double energy(double rsq, int iAtomType, int jAtomType) const = 0;
+      double pairEnergy(double rsq, int iAtomType, int jAtomType) const = 0;
 
       /**
       * Return force / separation for a single pair.
@@ -125,7 +118,7 @@ namespace DdMd
       * \return repulsive force (< 0 if attractive) over distance
       */
       virtual 
-      double forceOverR(double rsq, int iAtomType, int jAtomType) const = 0;
+      double pairForceOverR(double rsq, int iAtomType, int jAtomType) const = 0;
 
       /**
       * Return maximum cutoff.
@@ -136,57 +129,6 @@ namespace DdMd
       * Return pair interaction class name (e.g., "LJPair").
       */
       virtual std::string interactionClassName() const = 0;
-
-      //@}
-      /// \name Total Energy, Force and Stress 
-      //@{
-
-      /**
-      * Add pair forces to atom forces.
-      */
-      virtual void addForces() = 0;
-
-      /**
-      * Calculate total pair potential on all processors.
-      *
-      * This method must be called on all processors. The result is
-      * stored on the master processor, and may be retrieved by 
-      * calling energy() on this processor.
-      */
-      #ifdef UTIL_MPI
-      virtual void computeEnergy(MPI::Intracomm& communicator) = 0;
-      #else
-      virtual void computeEnergy() = 0;
-      #endif
-
-      /**
-      * Return the total pair potential, on all processors.
-      *
-      * This method should only be called on the master (rank 0) 
-      * processor, after a previous call to computeEnergy.
-      */
-      virtual double energy() = 0;
-
-      /**
-      * Calculate total pair stress on all processors.
-      *
-      * This method must be called on all processors. The result 
-      * is stored on the master processor, and may be retrieved 
-      * by calling energy() on this processor.
-      */
-      #ifdef UTIL_MPI
-      virtual void computeStress(MPI::Intracomm& communicator) = 0;
-      #else
-      virtual void computeStress() = 0;
-      #endif
-
-      /**
-      * Return the total pair stress, on all processors.
-      *
-      * This method should only be called on the master (rank 0) 
-      * processor, after a previous call to computeStress.
-      */
-      virtual Util::Tensor stress() = 0;
 
       //@}
       /// \name Pair and Cell Lists.
@@ -214,33 +156,14 @@ namespace DdMd
       */
       void buildPairList();
 
-      #if 0
       /**
-      * Build the cell and pair lists. 
-      *
-      * Use with objects created with PairPotential(Simulation&). Makes a
-      * CellList grid for the region defined by the associated Domain. 
-      */
-      void findNeighbors();
-
-      /**
-      * Build the cell and pair lists. 
-      *
-      * \param lower Vector of lower coordinate bounds for this processor.
-      * \param upper Vector of upper coordinate bounds for this processor.
-      */
-      void findNeighbors(const Vector& lower, const Vector& upper);
-      #endif
-
-      /**
-      * Compute twice the number of pairs within force cutoff, on all processors.
+      * Compute twice the number of pairs within the force cutoff.
       *  
       * This method must be called on all processors.
       *
-      * This method add +1 for each atom in such a pair, or +2 for a complete
-      * pair. The method for distributing pairs among processors is the same
-      * as is used to distribute the energy, and depends on the value of 
-      * reverseUpdateFlag().
+      * The method for distributing pairs among processors is the same
+      * as is used to distribute the energy, and depends on the value
+      * of reverseUpdateFlag().
       */
       #ifdef UTIL_MPI
       void computeNPair(MPI::Intracomm& communicator);
@@ -279,11 +202,6 @@ namespace DdMd
       double cutoff() const;
 
       /**
-      * Is reverse communication enabled?
-      */
-      bool reverseUpdateFlag() const;
-
-      /**
       * Return integer id for algorithm (0=PAIR, 1=CELL, 2=NSQ)
       */
       int methodId() const;
@@ -311,7 +229,7 @@ namespace DdMd
       /**
       * Read parameters and allocate memory for PairList.
       *
-      * Use iff this object was instantiated with PairPotential(Simulation&).
+      * Use iff this was instantiated with PairPotential(Simulation&).
       *
       * \param in input parameter stream.
       */
@@ -349,9 +267,6 @@ namespace DdMd
       /// Number of pairs within specified cutoff.
       int nPair_;
 
-      /// Is reverse communication enabled?
-      bool reverseUpdateFlag_;
-
       // Private methods used to compute number of pairs
       int nPairList(double cutoffSq);
       int nPairCell(double cutoffSq);
@@ -370,9 +285,6 @@ namespace DdMd
 
    inline double PairPotential::cutoff() const
    {  return cutoff_; }
-
-   inline bool PairPotential::reverseUpdateFlag() const
-   {  return reverseUpdateFlag_; }
 
    inline Boundary& PairPotential::boundary() 
    {  return *boundaryPtr_; }

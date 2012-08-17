@@ -70,7 +70,7 @@ namespace DdMd
       virtual void setNAtomType(int nAtomType);
   
       /**
-      * Return pair energy for a single pair.
+      * Return energy for a single pair.
       * 
       * \param rsq       square distance between atoms in pair
       * \param iAtomType atom type index of 1st atom
@@ -78,7 +78,7 @@ namespace DdMd
       * \return energy of pair
       */
       virtual 
-      double energy(double rsq, int iAtomType, int jAtomType) const;
+      double pairEnergy(double rsq, int iAtomType, int jAtomType) const;
 
       /**
       * Return force / separation for a single pair.
@@ -89,7 +89,7 @@ namespace DdMd
       * \return repulsive force (< 0 if attractive) over distance
       */
       virtual 
-      double forceOverR(double rsq, int iAtomType, int jAtomType) const;
+      double pairForceOverR(double rsq, int iAtomType, int jAtomType) const;
 
       /**
       * Return maximum cutoff.
@@ -139,13 +139,6 @@ namespace DdMd
       #endif
 
       /**
-      * Get the pair energy calculated previously by computeEnergy().
-      *
-      * Call only on master. 
-      */
-      virtual double energy();
-
-      /**
       * Compute the total nonBonded stress for all processors
       * 
       * Call on all processors.
@@ -156,13 +149,6 @@ namespace DdMd
       virtual void computeStress();
       #endif
 
-      /**
-      * Get the pair stress calculated previously by computeStress().
-      *
-      * Call only on master. 
-      */
-      virtual Tensor stress();
-
       //@}
 
    private:
@@ -172,16 +158,6 @@ namespace DdMd
       */ 
       Interaction* interactionPtr_;
 
-      /**
-      * Total pair energy on all processors (valid only on master).
-      */
-      double energy_;
- 
-      /**
-      * Total stress on all processors (valid only on master).
-      */
-      Tensor stress_;
- 
       /**
       * Calculate atomic pair energy, using PairList.
       */
@@ -219,7 +195,6 @@ namespace DdMd
 }
 
 #include <ddMd/simulation/Simulation.h>
-//#include <ddMd/simulation/stress.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
@@ -290,7 +265,7 @@ namespace DdMd
    * Return pair energy for a single pair.
    */
    template <class Interaction> double 
-   PairPotentialImpl<Interaction>::energy(double rsq, 
+   PairPotentialImpl<Interaction>::pairEnergy(double rsq, 
                                         int iAtomType, int jAtomType) const
    { return interaction().energy(rsq, iAtomType, jAtomType); }
 
@@ -298,7 +273,7 @@ namespace DdMd
    * Return force / separation for a single pair.
    */
    template <class Interaction> double 
-   PairPotentialImpl<Interaction>::forceOverR(double rsq, 
+   PairPotentialImpl<Interaction>::pairForceOverR(double rsq, 
                                         int iAtomType, int jAtomType) const
    { return interaction().forceOverR(rsq, iAtomType, jAtomType); }
 
@@ -343,7 +318,7 @@ namespace DdMd
    void PairPotentialImpl<Interaction>::computeEnergy()
    #endif
    { 
-      double localEnergy = 0; 
+      double localEnergy = 0.0; 
       if (methodId() == 0) {
          localEnergy = energyList(); 
       } else 
@@ -354,19 +329,14 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
-      communicator.Reduce(&localEnergy, &energy_, 1, 
+      double totalEnergy = 0.0; 
+      communicator.Reduce(&localEnergy, &totalEnergy, 1, 
                           MPI::DOUBLE, MPI::SUM, 0);
+      setEnergy(totalEnergy);
       #else
-      energy_ = localEnergy;
+      setEnergy(localEnergy);
       #endif
    }
-
-   /*
-   * Return total pair energy from all processors.
-   */
-   template <class Interaction>
-   double PairPotentialImpl<Interaction>::energy()
-   {  return energy_; } 
 
    /*
    * Increment atomic forces and/or pair energy (private).
@@ -740,7 +710,7 @@ namespace DdMd
       Tensor localStress;
       Vector dr;
       Vector f;
-      double rsq;
+      double rsq, forceOverR;
       PairIterator iter;
       Atom*  atom0Ptr;
       Atom*  atom1Ptr;
@@ -769,10 +739,11 @@ namespace DdMd
             type0 = atom0Ptr->typeId();
             type1 = atom1Ptr->typeId();
             f = dr;
-            f *= interactionPtr_->forceOverR(rsq, type0, type1);
+            forceOverR = interactionPtr_->forceOverR(rsq, type0, type1);
             if (!atom1Ptr->isGhost()) {
-               f *= 0.5;
+               forceOverR *= 0.5;
             }
+            f *= forceOverR;
             incrementPairStress(f, dr, localStress);
          }
 
@@ -780,23 +751,21 @@ namespace DdMd
 
       // Normalize by volume 
       localStress /= boundary().volume();
-      normalizeStress(localStress);
 
       #ifdef UTIL_MPI
-      communicator.Reduce(&localStress, &stress_, 6, 
-                          MPI::DOUBLE, MPI::SUM, 0);
+      Tensor totalStress;
+      communicator.Reduce(&localStress(0,0), &totalStress(0,0), 
+                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator.Get_rank() == 0) {
+         setStress(totalStress);
+      } else {
+         unsetStress();
+      }
       #else
-      stress_ = localStress;
+      setStress(localStress);
       #endif
 
    }
-
-   /*
-   * Return total pair stress from all processors.
-   */
-   template <class Interaction>
-   Tensor PairPotentialImpl<Interaction>::stress()
-   {  return stress_; } 
 
 }
 #endif

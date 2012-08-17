@@ -1,7 +1,7 @@
 #ifndef DDMD_BOND_POTENTIAL_H
 #define DDMD_BOND_POTENTIAL_H
 
-#include <util/param/ParamComposite.h>        // base class
+#include <ddMd/potentials/Potential.h>        // base class
 #include <util/boundary/Boundary.h>           // typedef
 
 #include <iostream>
@@ -26,7 +26,7 @@ namespace DdMd
    *
    * All operations in this class are local (no MPI).
    */
-   class BondPotential  : public ParamComposite
+   class BondPotential  : public Potential
    {
 
    public:
@@ -67,12 +67,12 @@ namespace DdMd
       /**
       * Return pair energy for a single pair.
       */
-      virtual double energy(double rsq, int bondTypeId) const = 0;
+      virtual double bondEnergy(double rsq, int bondTypeId) const = 0;
 
       /**
       * Return force / separation for a single pair.
       */
-      virtual double forceOverR(double rsq, int bondTypeId) const = 0;
+      virtual double bondForceOverR(double rsq, int bondTypeId) const = 0;
 
       /**
       * Return force / separation for a single pair.
@@ -89,63 +89,19 @@ namespace DdMd
 
       //@}
 
-      /// \name Total Energy, Force and Stress 
-      //@{
-
-      /**
-      * Add the bond forces for all atoms.
-      */
-      virtual void addForces() = 0;
-
-      /**
-      * Add pair forces to atom forces, and compute energy.
-      */
-      virtual void addForces(double& energy) = 0;
-
-      /**
-      * Calculate total bond potential.
-      *
-      * Must be call on all processors (MPI reduce operation).
-      */
-      #ifdef UTIL_MPI
-      virtual void computeEnergy(MPI::Intracomm& communicator) = 0;
-      #else
-      virtual void computeEnergy() = 0;
-      #endif
-
-      /**
-      * Get total bond potential, computed previously by computeEnergy().
-      *
-      * Call only on master processor, result otherwise invalid.
-      */
-      virtual double energy() = 0;
-
-      #if 0
-      /**
-      * Compute total bond pressure.
-      *
-      * \param stress (output) pressure.
-      */
-      virtual void computeStress(double& stress) const;
-
-      /**
-      * Compute x, y, z bond pressure components.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Vector& stress) const;
-
-      /**
-      * Compute bond stress tensor.
-      *
-      * \param stress (output) pressures.
-      */
-      virtual void computeStress(Util::Tensor& stress) const;
-
-      //@}
-      #endif
-
    protected:
+
+      /**
+      *  Return boundary by reference.   
+      */
+      Boundary& boundary() const;
+
+      /**
+      *  Return bond storage by reference.   
+      */
+      GroupStorage<2>& storage() const;
+
+   private:
 
       // Pointer to associated Boundary object.
       Boundary* boundaryPtr_;
@@ -154,6 +110,12 @@ namespace DdMd
       GroupStorage<2>* storagePtr_;
 
    };
+
+   inline Boundary& BondPotential::boundary() const
+   { return *boundaryPtr_; }
+
+   inline GroupStorage<2>& BondPotential::storage() const
+   { return *storagePtr_; }
 
 }
 #endif

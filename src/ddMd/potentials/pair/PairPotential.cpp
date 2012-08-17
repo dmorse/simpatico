@@ -35,8 +35,8 @@ namespace DdMd
       boundaryPtr_(0),
       storagePtr_(0),
       methodId_(0),
-      nPair_(0),
-      reverseUpdateFlag_(false)
+      nPair_(0)
+      //reverseUpdateFlag_(false)
    {} 
 
    /*
@@ -50,8 +50,8 @@ namespace DdMd
       boundaryPtr_(&simulation.boundary()),
       storagePtr_(&simulation.atomStorage()),
       methodId_(0),
-      nPair_(0),
-      reverseUpdateFlag_(false)
+      nPair_(0)
+      //reverseUpdateFlag_(false)
    {}
 
    /*
@@ -71,11 +71,13 @@ namespace DdMd
    PairPotential::~PairPotential()
    {}
 
+   #if 0
    /*
    * Set flag to specify if reverse communication is enabled.
    */
-   void PairPotential::setForceCommFlag(bool reverseUpdateFlag)
+   void PairPotential::setReverseUpdateFlag(bool reverseUpdateFlag)
    {  reverseUpdateFlag_ = reverseUpdateFlag; }
+   #endif
 
    void PairPotential::readPairListParam(std::istream& in)
    {

@@ -104,7 +104,7 @@ public:
 
       pairPotential.setNAtomType(1);
       pairPotential.associate(domain, boundary, atomStorage);
-      pairPotential.setForceCommFlag(reverseUpdateFlag);
+      pairPotential.setReverseUpdateFlag(reverseUpdateFlag);
 
       #ifdef TEST_EXCHANGER_FORCE_BOND
       bondPotential.setNBondType(1);
@@ -840,7 +840,7 @@ public:
 
             // Calculate forces via pair list, without reverse communication
             zeroForces();
-            pairPotential.setForceCommFlag(false); 
+            pairPotential.setReverseUpdateFlag(false); 
             TEST_ASSERT(atomStorage.isCartesian());
             if (!UTIL_ORTHOGONAL) {
                atomStorage.transformCartToGen(boundary);
@@ -883,7 +883,7 @@ public:
             }
 
             // Reset: Recompute neighbor list for use with reverse communication
-            pairPotential.setForceCommFlag(true); 
+            pairPotential.setReverseUpdateFlag(true); 
             TEST_ASSERT(atomStorage.isCartesian());
             atomStorage.transformCartToGen(boundary);
             TEST_ASSERT(!atomStorage.isCartesian());

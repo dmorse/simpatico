@@ -1,3 +1,12 @@
+Potentials
+----------
+
+- Add computeStress method for BondPotential.
+
+- Make BondPotential a subclass of Potential.
+
+- Test stress methods.
+
 Testing
 -------
 
@@ -15,14 +24,12 @@ Flexible Unit Cells:
 Constant Pressure:
 ------------------
 
-- Finish and test methods to evaluate stress.
-
-- Add vFlag and eFlag to Simulation, and as arguments to addForce() method 
-  of each potential.
+- Add vFlag to Simulation, and as argument to addForce() method of each 
+  potential.
 
 - Port NPH integrator.
 
-- Write a reversible NPT integrator.
+- Port reversible NPT integrator.
 
 Configuration File IO
 ---------------------

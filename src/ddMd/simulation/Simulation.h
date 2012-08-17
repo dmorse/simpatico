@@ -149,7 +149,7 @@ namespace DdMd
       *
       * \param reverseUpdateFlag true if reverse communication is enabled.
       */
-      void setForceCommFlag(bool reverseUpdateFlag);
+      void setReverseUpdateFlag(bool reverseUpdateFlag);
 
       /// \name Config File IO
       //@{

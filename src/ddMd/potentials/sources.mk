@@ -2,9 +2,10 @@ include $(SRC_DIR)/ddMd/potentials/pair/sources.mk
 include $(SRC_DIR)/ddMd/potentials/bond/sources.mk
 
 ddMd_potentials_SRCS=\
+    $(SRC_DIR)/ddMd/potentials/Potential.cpp\
     $(ddMd_potentials_pair_SRCS) \
     $(ddMd_potentials_bond_SRCS) \
-    $(ddMd_potentials_external_SRCS) 
+    $(ddMd_potentials_external_SRCS)
 
 ifdef INTER_ANGLE
 include $(SRC_DIR)/ddMd/potentials/angle/sources.mk

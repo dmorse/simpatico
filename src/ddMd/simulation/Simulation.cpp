@@ -345,7 +345,7 @@ namespace DdMd
       pairPotentialPtr_ = pairFactory().factory(pairStyle());
       pairPotentialPtr_->setNAtomType(nAtomType_);
       readParamComposite(in, *pairPotentialPtr_);
-      pairPotentialPtr_->setForceCommFlag(reverseUpdateFlag_);
+      pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag_);
       #endif
 
       // Bond Potential
@@ -1012,11 +1012,11 @@ namespace DdMd
    /*
    * Set flag to specify if reverse communication is enabled.
    */
-   void Simulation::setForceCommFlag(bool reverseUpdateFlag)
+   void Simulation::setReverseUpdateFlag(bool reverseUpdateFlag)
    {  
       reverseUpdateFlag_ = reverseUpdateFlag; 
       if (pairPotentialPtr_) {
-         pairPotentialPtr_->setForceCommFlag(reverseUpdateFlag);
+         pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag);
       }
    }
 
