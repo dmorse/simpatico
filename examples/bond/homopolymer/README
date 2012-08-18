@@ -1,8 +1,8 @@
 Examples of bead spring homopolymer melts:
 
-L8   100 Chains of 8  beads 
-L32  588 Chains of 32 beads 
-L100 320 Chains of 100 beads 
+N8   100 Chains of 8  beads 
+N32  588 Chains of 32 beads 
+N100 320 Chains of 100 beads 
 
 The L100 example uses the input file provided with LAMMPS for the Kremer-Grest 
 benchmark, and uses the LAMMPS data file format. 

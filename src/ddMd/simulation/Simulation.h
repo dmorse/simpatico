@@ -16,12 +16,14 @@
 #include <ddMd/storage/BondStorage.h>            // member 
 #include <ddMd/storage/AngleStorage.h>           // member 
 #include <ddMd/storage/DihedralStorage.h>        // member 
-#include <ddMd/chemistry/AtomType.h>             // member
+#include <ddMd/chemistry/AtomType.h>             // member (template param)
 #include <ddMd/chemistry/MaskPolicy.h>           // member
 #include <ddMd/diagnostics/DiagnosticManager.h>  // member
-#include <util/boundary/Boundary.h>              // member 
 #include <util/random/Random.h>                  // member 
-#include <util/containers/DArray.h>              // member 
+#include <util/boundary/Boundary.h>              // member 
+#include <util/space/Tensor.h>                   // member (template param)
+#include <util/containers/DArray.h>              // member (template)
+#include <util/util/Setable.h>                   // member (template)
 
 namespace Util { 
    template <typename T> class Factory; 
@@ -189,18 +191,18 @@ namespace DdMd
       void setConfigIo(std::string& classname);
 
       //@}
-      /// \name Force and Energy calculators
+      /// \name Force, energy and stress calculators
       //@{
       
       /**
       * Compute forces for all local atoms.
       *
-      * Upon return, forces are correct for all local atoms. Values of
-      * the forces on ghost atoms are undefined.
+      * Upon return, forces are correct for all local atoms. Values 
+      * of the forces on ghost atoms are undefined.
       *
       * This method zeros all forces, adds forces from all potential
-      * energies, and carries out reverse communication only if
-      * required (i.e., if reverseUpdateFlag is true). 
+      * energies, and carries out reverse communication if required 
+      * (i.e., if reverseUpdateFlag is true). 
       */
       void computeForces();
 
@@ -235,7 +237,32 @@ namespace DdMd
       * 
       * \return total potential energy (only correct on master node).
       */
-      double potentialEnergy();
+      double potentialEnergy() const;
+
+      /**
+      * Calculate and store kinetic stress.
+      * 
+      * Reduce operation: Must be called on all nodes.
+      */
+      void computeKineticStress();
+
+      /**
+      * Return total kinetic stress.
+      *
+      * Call only on master processor, after computeKineticStress.
+      * 
+      * \return total kinetic stress (only correct on master node).
+      */
+      Tensor kineticStress() const;
+
+      /**
+      * Return total kinetic pressure.
+      *
+      * Call only on master processor, after computeKineticStress.
+      * 
+      * \return total kinetic pressure only correct on master node).
+      */
+      double kineticPressure() const;
 
       /**
       * Calculate and store virial stress.
@@ -251,16 +278,16 @@ namespace DdMd
       * 
       * \return total virial stress (only correct on master node).
       */
-      Tensor virialStress();
+      Tensor virialStress() const;
 
       /**
       * Return total virial pressure.
       *
       * Call only on master processor, after computeVirialStress.
       * 
-      * \return total virial pressure only correct on master node).
+      * \return total virial pressure (only correct on master node).
       */
-      double virialPressure();
+      double virialPressure() const;
 
       //@}
       /// \name Potential Energy Factories and Styles
@@ -529,44 +556,47 @@ namespace DdMd
    private:
 
       /// Container for all atoms and ghosts.
-      AtomStorage   atomStorage_;
+      AtomStorage atomStorage_;
 
       /// Container for bonds.
-      BondStorage   bondStorage_;
+      BondStorage bondStorage_;
 
       #ifdef INTER_ANGLE
       /// Container for angles.
-      AngleStorage  angleStorage_;
+      AngleStorage angleStorage_;
       #endif
 
       #ifdef INTER_DIHEDRAL
       /// Container for dihedrals.
-      DihedralStorage  dihedralStorage_;
+      DihedralStorage dihedralStorage_;
       #endif
 
       /// Periodic system boundary.
-      Boundary      boundary_;
+      Boundary boundary_;
 
       /// Array of AtomType objects for all atoms in a simulation.
       DArray<AtomType> atomTypes_;
 
       /// Processor grid.
-      Domain        domain_;
+      Domain domain_;
 
       /// Communication buffer for sending atoms.
-      Buffer        buffer_;
+      Buffer buffer_;
 
       /// Exchanges atoms and ghosts for domain decomposition algorithm.
-      Exchanger     exchanger_;
+      Exchanger exchanger_;
 
       /// Random number generator.
-      Random        random_;
+      Random random_;
 
       /// Maximum boundary (used to allocate memory for the cell list).
-      Boundary      maxBoundary_;
+      Boundary maxBoundary_;
 
-      // Value of total kinetic energy, for all processors.
-      double  kineticEnergy_;
+      // Value of kinetic energy. Only valid on master.
+      Setable<double> kineticEnergy_;
+
+      // Value of kinetic stress. Only valid on master.
+      Setable<Tensor> kineticStress_;
 
       /// Pointer to force/energy evaluator.
       PairPotential* pairPotentialPtr_;
@@ -590,26 +620,26 @@ namespace DdMd
       #endif
 
       /// Pointer to MD integrator.
-      Integrator*  integratorPtr_;
+      Integrator* integratorPtr_;
 
       /// Pointer to an EnergyEnsemble.
-      EnergyEnsemble*  energyEnsemblePtr_;
+      EnergyEnsemble* energyEnsemblePtr_;
 
       /// Pointer to an BoundaryEnsemble.
-      BoundaryEnsemble*  boundaryEnsemblePtr_;
+      BoundaryEnsemble* boundaryEnsemblePtr_;
 
       /// Pointer to a FileMaster.
-      FileMaster*         fileMasterPtr_;
+      FileMaster* fileMasterPtr_;
 
       /// Pointer to a configuration reader/writer.
-      ConfigIo*         configIoPtr_;
+      ConfigIo* configIoPtr_;
    
       /// DiagnosticManager
-      DiagnosticManager*  diagnosticManagerPtr_;
+      DiagnosticManager* diagnosticManagerPtr_;
 
       #ifndef INTER_NOPAIR
       /// Pointer to a PairPotential factory.
-      Factory<PairPotential>*  pairFactoryPtr_;
+      Factory<PairPotential>* pairFactoryPtr_;
       #endif
 
       /// Pointer to a Factory<BondPotential>.
@@ -631,7 +661,7 @@ namespace DdMd
       #endif
 
       /// Pointer to MD integrator factory.
-      Factory<Integrator>*  integratorFactoryPtr_;
+      Factory<Integrator>* integratorFactoryPtr_;
 
       /// Pointer to a configuration reader/writer factory.
       Factory<ConfigIo>* configIoFactoryPtr_;
@@ -688,7 +718,7 @@ namespace DdMd
       *  - MaskNone:   no masked pairs
       *  - MaskBonded:  mask pair interaction between bonded atoms
       */
-      MaskPolicy  maskedPairPolicy_;
+      MaskPolicy maskedPairPolicy_;
 
       /// Is reverse communication enabled?
       bool reverseUpdateFlag_;
@@ -823,7 +853,7 @@ namespace DdMd
    * Get maximum number of atom types.
    */
    inline int Simulation::nAtomType()
-   {   return nAtomType_; }
+   {  return nAtomType_; }
 
    /*
    * Get maximum number of bond types.

@@ -59,13 +59,14 @@ namespace DdMd
       if (isAtInterval(iStep))  {
          Simulation& sys = simulation();
          sys.computeVirialStress();
-         //sys.computeKineticStress();
+         sys.computeKineticStress();
          if (sys.domain().isMaster()) {
-            double virial = sys.virialPressure();
+            double virial  = sys.virialPressure();
+            double kinetic = sys.kineticPressure();
             std::cout << Int(iStep, 10)
-                      //<< Dbl(kinetic, 20)
+                      << Dbl(kinetic, 20)
                       << Dbl(virial, 20)
-                      //<< Dbl(kinetic + virial, 20)
+                      << Dbl(kinetic + virial, 20)
                       << std::endl;
          }
 

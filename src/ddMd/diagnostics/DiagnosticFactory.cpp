@@ -15,6 +15,7 @@
 // Diagnostics 
 #include "WriteConfig.h"
 #include "OutputEnergy.h"
+#include "OutputPressure.h"
 
 namespace DdMd
 {
@@ -45,6 +46,9 @@ namespace DdMd
       } else 
       if (className == "OutputEnergy") {
          ptr = new OutputEnergy(simulation());
+      } else 
+      if (className == "OutputPressure") {
+         ptr = new OutputPressure(simulation());
       }
       return ptr;
    }

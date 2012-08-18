@@ -69,6 +69,7 @@ namespace DdMd
       for (int i = 0; i < Dimension; ++i) {
          p += stress_.value()(i, i);
       }
+      p /= 3.0;
       return p;
    }
 

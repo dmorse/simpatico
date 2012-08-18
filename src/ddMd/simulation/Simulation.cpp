@@ -639,7 +639,7 @@ namespace DdMd
    */
    void Simulation::computeKineticEnergy()
    {
-      double energy = 0.0;
+      double localEnergy = 0.0;
       double mass;
       int typeId;
 
@@ -649,27 +649,94 @@ namespace DdMd
       for( ; atomIter.notEnd(); ++atomIter){
          typeId = atomIter->typeId();
          mass   = atomTypes_[typeId].mass();
-         energy += mass*(atomIter->velocity().square());
+         localEnergy += mass*(atomIter->velocity().square());
       }
-      energy = 0.5*energy;
+      localEnergy = 0.5*localEnergy;
 
       #ifdef UTIL_MPI
       // Sum values from all processors.
-      domain_.communicator().Reduce(&energy, &kineticEnergy_, 1, 
+      double totalEnergy = 0.0;
+      domain_.communicator().Reduce(&localEnergy, &totalEnergy, 1, 
                                     MPI::DOUBLE, MPI::SUM, 0);
+      if (domain_.communicator().Get_rank() != 0) {
+         totalEnergy = 0.0;
+      }
+      kineticEnergy_.set(totalEnergy);
       #else
-      kineticEnergy_ = energy;
+      kineticEnergy_.set(localEnergy);
       #endif
-
    }
 
    /*
    * Return total kinetic energy (on master processor).
    * 
-   * Called only on master processor.
+   * Call only on master processor.
    */
    double Simulation::kineticEnergy()
-   {  return kineticEnergy_; }
+   {  return kineticEnergy_.value(); }
+
+   /*
+   * Compute total kinetic stress, store on master proc.
+   *
+   * Call on all processors. 
+   */
+   void Simulation::computeKineticStress()
+   {
+      Tensor localStress;
+      double  mass;
+      Vector  velocity;
+      int typeId, i, j;
+
+      localStress.zero();
+
+      // For each local atoms on this processor, stress(i, j) += m*v[i]*v[j].
+      AtomIterator atomIter;
+      atomStorage_.begin(atomIter); 
+      for( ; atomIter.notEnd(); ++atomIter){
+         typeId = atomIter->typeId();
+         velocity = atomIter->velocity();
+         mass = atomTypes_[typeId].mass();
+         for (i = 0; i < Dimension; ++i) {
+            for (j = 0; j < Dimension; ++j) {
+               localStress(i, j) += mass*velocity[i]*velocity[j];
+            }
+         }
+      }
+
+      localStress /= boundary().volume();
+
+      #ifdef UTIL_MPI
+      // Sum values from all processors.
+      Tensor totalStress;
+      domain_.communicator().Reduce(&localStress(0, 0), &totalStress(0, 0), 
+                                    Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
+      if (domain_.communicator().Get_rank() != 0) {
+         totalStress.zero();
+      }
+      kineticStress_.set(totalStress);
+      #else
+      kineticStress_.set(localStress);
+      #endif
+   }
+
+   /*
+   * Return total kinetic stress (on master processor).
+   */
+   Tensor Simulation::kineticStress() const
+   {  return kineticStress_.value(); }
+
+   /*
+   * Return total kinetic pressure (on master processor).
+   */
+   double Simulation::kineticPressure() const
+   {
+      double pressure = 0.0;
+      for (int i = 0; i < Dimension; ++i) {
+         pressure += kineticStress_.value()(i, i);
+      }
+      pressure /= 3.0;
+      return pressure;
+   }
 
    #ifdef UTIL_MPI
 
@@ -728,14 +795,14 @@ namespace DdMd
    /*
    * Compute all potential energy contributions.
    */
-   double Simulation::potentialEnergy() 
+   double Simulation::potentialEnergy() const
    {
       double energy = 0.0;
-      energy += pairPotential().energy();
-      energy += bondPotential().energy();
+      energy += pairPotentialPtr_->energy();
+      energy += bondPotentialPtr_->energy();
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         energy += anglePotential().energy();
+         energy += anglePotentialPtr_->energy();
       }
       #endif
       #ifdef INTER_DIHEDRAL
@@ -753,7 +820,7 @@ namespace DdMd
 
    #ifdef UTIL_MPI
    /*
-   * Compute all potential energy contributions.
+   * Compute all virial stress contributions.
    */
    void Simulation::computeVirialStress() 
    {
@@ -774,7 +841,7 @@ namespace DdMd
    #else
 
    /*
-   * Compute all potential energy contributions.
+   * Return stored value of virial stress (call only on master).
    */
    void Simulation::computeVirialStress() 
    {
@@ -796,20 +863,20 @@ namespace DdMd
    /*
    * Compute all potential stress contributions.
    */
-   Tensor Simulation::virialStress() 
+   Tensor Simulation::virialStress() const
    {
       Tensor stress;
       stress.zero();
-      stress += pairPotential().stress();
-      stress += bondPotential().stress();
+      stress += pairPotentialPtr_->stress();
+      stress += bondPotentialPtr_->stress();
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         //stress += anglePotential().stress();
+         stress += anglePotentialPtr_->stress();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         //stress += dihedralPotential().stress();
+         stress += dihedralPotentialPtr_->stress();
       }
       #endif
       return stress;
@@ -818,20 +885,20 @@ namespace DdMd
    /*
    * Return total virial pressure contribution.
    */
-   double Simulation::virialPressure() 
+   double Simulation::virialPressure() const
    {
       double pressure;
       pressure = 0;
-      pressure += pairPotential().pressure();
-      pressure += bondPotential().pressure();
+      pressure += pairPotentialPtr_->pressure();
+      pressure += bondPotentialPtr_->pressure();
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         //pressure += anglePotential().pressure();
+         pressure += anglePotentialPtr_->pressure();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         //pressure += dihedralPotential().pressure();
+         pressure += dihedralPotentialPtr_->pressure();
       }
       #endif
       return pressure;
