@@ -45,10 +45,10 @@ namespace DdMd
    */
    void OutputPressure::setup() 
    {  
-       nSample_ = 0; 
-      //std::string filename;
-      //filename  = outputFileName();
-      //simulation().fileMaster().openOutputFile(filename, outputFile_);
+      nSample_ = 0; 
+      std::string filename;
+      filename  = outputFileName();
+      simulation().fileMaster().openOutputFile(filename, outputFile_);
    }
 
    /*
@@ -63,11 +63,11 @@ namespace DdMd
          if (sys.domain().isMaster()) {
             double virial  = sys.virialPressure();
             double kinetic = sys.kineticPressure();
-            std::cout << Int(iStep, 10)
-                      << Dbl(kinetic, 20)
-                      << Dbl(virial, 20)
-                      << Dbl(kinetic + virial, 20)
-                      << std::endl;
+            outputFile_ << Int(iStep, 10)
+                        << Dbl(kinetic, 20)
+                        << Dbl(virial, 20)
+                        << Dbl(kinetic + virial, 20)
+                        << std::endl;
          }
 
          ++nSample_;

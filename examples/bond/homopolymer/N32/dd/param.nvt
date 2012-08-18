@@ -54,12 +54,18 @@ Simulation{
     seed              8012457890
   }
   DiagnosticManager{
-     baseInterval     1000
+     baseInterval     100
 
      OutputEnergy{
         interval         1000
         outputFileName   energy
      }
+
+     OutputPressure{
+        interval         200
+        outputFileName   pressure
+     }
+
   }
 }
 

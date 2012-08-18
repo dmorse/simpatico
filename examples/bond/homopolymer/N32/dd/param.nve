@@ -58,6 +58,12 @@ Simulation{
         interval        1000
         outputFileName  energy
      }
+
+     OutputPressure{
+        interval        1000
+        outputFileName  pressure
+     }
+
   }
 }
 
