@@ -739,7 +739,8 @@ namespace DdMd
             type1 = atom1Ptr->typeId();
             f = dr;
             forceOverR = interactionPtr_->forceOverR(rsq, type0, type1);
-            if (!atom1Ptr->isGhost()) {
+            assert(!atom0Ptr->isGhost());
+            if (atom1Ptr->isGhost()) {
                forceOverR *= 0.5;
             }
             f *= forceOverR;

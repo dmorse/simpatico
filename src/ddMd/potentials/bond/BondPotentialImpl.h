@@ -369,44 +369,29 @@ namespace DdMd
       int    isLocal0, isLocal1;
 
       localStress.zero();
-      if (reverseUpdateFlag()) {
 
-         // Iterate over bonds
-         storage().begin(iter);
-         for ( ; iter.notEnd(); ++iter) {
-            atom0Ptr = iter->atomPtr(0);
-            atom1Ptr = iter->atomPtr(1);
-            type = iter->typeId();
-            rsq = boundary().distanceSq(atom0Ptr->position(), 
-                                           atom1Ptr->position(), dr);
-            f = dr;
-            f *= interactionPtr_->forceOverR(rsq, type);
-            incrementPairStress(f, dr, localStress);
+      // Iterate over bonds
+      storage().begin(iter);
+      for ( ; iter.notEnd(); ++iter) {
+         type = iter->typeId();
+         atom0Ptr = iter->atomPtr(0);
+         atom1Ptr = iter->atomPtr(1);
+         isLocal0 = !(atom0Ptr->isGhost());
+         isLocal1 = !(atom1Ptr->isGhost());
+         rsq = boundary().distanceSq(atom0Ptr->position(), 
+                                        atom1Ptr->position(), dr);
+         f = dr;
+         assert(isLocal0 || isLocal1);
+         if (isLocal0 && isLocal1) {
+            forceOverR = interactionPtr_->forceOverR(rsq, type);
+         } else {
+            forceOverR = 0.5*interactionPtr_->forceOverR(rsq, type);
          }
-
-      } else {
-
-         // Iterate over bonds
-         storage().begin(iter);
-         for ( ; iter.notEnd(); ++iter) {
-            type = iter->typeId();
-            atom0Ptr = iter->atomPtr(0);
-            atom1Ptr = iter->atomPtr(1);
-            isLocal0 = !(atom0Ptr->isGhost());
-            isLocal1 = !(atom1Ptr->isGhost());
-            rsq = boundary().distanceSq(atom0Ptr->position(), 
-                                           atom1Ptr->position(), dr);
-            f = dr;
-            if (isLocal0 && isLocal1) {
-               forceOverR = interactionPtr_->forceOverR(rsq, type);
-            } else {
-               forceOverR = 0.5*interactionPtr_->forceOverR(rsq, type);
-            }
-            f *= interactionPtr_->forceOverR(rsq, type);
-            incrementPairStress(f, dr, localStress);
-         }
-
+         f *= forceOverR;
+         incrementPairStress(f, dr, localStress);
       }
+
+      // if (reverseUpdateFlag()) { } else { } 
 
       // Normalize by volume 
       localStress /= boundary().volume();
@@ -416,11 +401,10 @@ namespace DdMd
       Tensor totalStress;
       communicator.Reduce(&localStress(0, 0), &totalStress(0, 0), 
                           Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator.Get_rank() == 0) {
-         setStress(totalStress);
-      } else {
-         unsetStress();
+      if (communicator.Get_rank() != 0) {
+         totalStress.zero();
       }
+      setStress(totalStress);
       #else
       setStress(localStress);
       #endif
