@@ -79,6 +79,13 @@ namespace DdMd
       {  return timer_; }
 
       /**
+      * Setup state of atoms just before integration.
+      * 
+      * Should be called in all subclass setup methods.
+      */
+      void setupAtoms();
+
+      /**
       * Compute forces for all local atoms, with timing.
       *
       * Identical to Simulation::forceCompute(), with added timing.

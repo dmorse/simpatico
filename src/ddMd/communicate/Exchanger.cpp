@@ -1358,7 +1358,6 @@ namespace DdMd
          out << "LocalUpdate           " << Dbl(LocalUpdateT*ratio, 12, 6)
              << " sec   " << Dbl(LocalUpdateT/time, 12, 6, true) << std::endl;
          out << std::endl;
-         out << std::endl;
 
       }
 

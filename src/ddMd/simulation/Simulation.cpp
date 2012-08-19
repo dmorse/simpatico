@@ -637,7 +637,6 @@ namespace DdMd
 
       integratorPtr_->setup();
       integratorPtr_->run(nStep);
-      integratorPtr_->outputStatistics(Log::file());
    }
 
    /*

@@ -1,14 +1,14 @@
 #ifndef DDMD_NVE_INTEGRATOR_H
 #define DDMD_NVE_INTEGRATOR_H
 
-#include "Integrator.h"
-
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
 * Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
+
+#include "TwoStepIntegrator.h"      // base class
 
 namespace DdMd
 {
@@ -21,7 +21,7 @@ namespace DdMd
    *
    * \ingroup DdMd_Integrator_Module
    */
-   class NveIntegrator : public Integrator
+   class NveIntegrator : public TwoStepIntegrator
    {
 
    public:
@@ -50,12 +50,17 @@ namespace DdMd
       */
       void setup();
 
+   protected:
+
       /**
-      * Run a simulation.
-      *
-      * \param nStep number of steps
+      * Execute first step of two-step integrator.
       */
-      void run(int nStep);
+      virtual void integrateStep1();
+
+      /**
+      * Execute secodn step of two-step integrator.
+      */
+      virtual void integrateStep2();
 
    private:
 

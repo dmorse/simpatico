@@ -1,35 +1,25 @@
 Testing
 -------
 
-- Test stress methods.
-
 - Improve testing of PairList - check that number of inner pairs doesn't
   change upon reneighboring, in unit tests and as optional test in integrator.
 
-- Test conservation of energy with dihedrals.
+- Test conservation of energy and stress methods for angles and dihedrals.
 
 Flexible Unit Cells:
 --------------------
 
 - Generalize makeSnapShot and needsExchange methods in AtomStorage to allow
-  for deforming boundaries. 
+  for deforming boundaries (requires further changes to Boundary).
 
 Constant Pressure:
 ------------------
 
-- Add vFlag to Simulation, and as argument to addForce() method of each 
-  potential.
+- Port NPH integrator (Jens)
 
-- Port NPH integrator.
+- Port reversible NPT integrator (Jens)
 
-- Port reversible NPT integrator.
-
-Configuration File IO
----------------------
-
-- Add option for ordered output of atoms.
-
-- Add LammpsConfigIo class
+- Add vFlag to Simulation, and as argument to addForce() method of potentials.
 
 Hybrid MD
 ----------
@@ -49,6 +39,13 @@ Cell List and Pair List:
 - Modify Cell::getNeighbors method to pass back a list of AtomTag objects, 
   rather than an array of pointers. Provide a CellList method to decide if 
   a particular pair is within the cutoff.
+
+Configuration File IO
+---------------------
+
+- Add option for ordered output of atoms.
+
+- Add LammpsConfigIo class
 
 Distributor and Collector
 -------------------------

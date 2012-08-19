@@ -1,7 +1,7 @@
 #ifndef DDMD_NVT_INTEGRATOR_H
 #define DDMD_NVT_INTEGRATOR_H
 
-#include "Integrator.h"
+#include "TwoStepIntegrator.h"
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -17,11 +17,11 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * A velocity-Verlet constant energy integrator.
+   * A Nose-Hoover constant temperature, constant volume integrator.
    *
    * \ingroup DdMd_Integrator_Module
    */
-   class NvtIntegrator : public Integrator
+   class NvtIntegrator : public TwoStepIntegrator
    {
 
    public:
@@ -38,8 +38,6 @@ namespace DdMd
 
       /**
       * Read required parameters.
-      *
-      * For velocity-verlet algorithm, reads the time step dt.
       */
       void readParam(std::istream& in);
 
@@ -48,17 +46,17 @@ namespace DdMd
       */
       void setup();
 
-      /**
-      * Implement one MD step.
-      */
-      void step();
+   protected:
 
       /**
-      * Run a simulation.
-      *
-      * \param iStep number of steps.
+      * Execute first step of two-step integrator.
       */
-      void run(int iStep);
+      virtual void integrateStep1();
+
+      /**
+      * Execute secodn step of two-step integrator.
+      */
+      virtual void integrateStep2();
 
    private:
 
@@ -67,7 +65,7 @@ namespace DdMd
 
       /// Time step.
       double  dt_;
-   
+
       /// Target temperature
       double T_target_;
 

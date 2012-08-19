@@ -27,7 +27,7 @@ namespace DdMd
    * Constructor.
    */
    NveIntegrator::NveIntegrator(Simulation& simulation)
-    : Integrator(simulation)
+    : TwoStepIntegrator(simulation)
    {}
 
    /*
@@ -54,6 +54,7 @@ namespace DdMd
 
    void NveIntegrator::setup()
    {
+      #if 0
       atomStorage().clearSnapshot();
       exchanger().exchange();
       pairPotential().buildCellList();
@@ -63,6 +64,9 @@ namespace DdMd
       atomStorage().makeSnapshot();
       pairPotential().buildPairList();
       simulation().computeForces();
+      #endif
+      // Exchange atoms, build pair list, compute forces.
+      setupAtoms();
 
       simulation().diagnosticManager().setup();
 
@@ -76,101 +80,39 @@ namespace DdMd
       }
    }
 
-   /*
-   * Integrate.
-   * 
-   * User must call setup() before run.
-   */
-   void NveIntegrator::run(int nStep)
+   void NveIntegrator::integrateStep1()
    {
-      //setup();
+      Vector dv;
+      Vector dr;
+      double prefactor; // = 0.5*dt/mass
+      AtomIterator atomIter;
 
-      Vector        dv;
-      Vector        dr;
-      double        prefactor; // = 0.5*dt/mass
-      AtomIterator  atomIter;
-      bool          needExchange;
+      // 1st half of velocity Verlet.
+      atomStorage().begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         prefactor = prefactors_[atomIter->typeId()];
 
-      // Main MD loop
-      nStep_ = nStep;
-      timer().start();
-      exchanger().timer().start();
-      for (iStep_ = 0; iStep_ < nStep; ++iStep_) {
+         dv.multiply(atomIter->force(), prefactor);
+         atomIter->velocity() += dv;
 
-         if (Diagnostic::baseInterval > 0) {
-            if (iStep_ % Diagnostic::baseInterval == 0) {
-               simulation().diagnosticManager().sample(iStep_);
-            }
-         }
-         timer().stamp(Integrator::DIAGNOSTIC);
-
-         // 1st half of velocity Verlet.
-         atomStorage().begin(atomIter);
-         for ( ; atomIter.notEnd(); ++atomIter) {
-            prefactor = prefactors_[atomIter->typeId()];
-   
-            dv.multiply(atomIter->force(), prefactor);
-            atomIter->velocity() += dv;
-   
-            dr.multiply(atomIter->velocity(), dt_);
-            atomIter->position() += dr;
-    
-         }
-         timer().stamp(Integrator::INTEGRATE1);
-   
-         // Check if exchange and reneighboring is necessary
-         needExchange = atomStorage().needExchange(domain().communicator(), 
-                                                   pairPotential().skin());
-         timer().stamp(Integrator::CHECK);
-
-         // Exchange atoms if necessary
-         if (needExchange) {
-            atomStorage().clearSnapshot();
-            if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {
-               atomStorage().transformCartToGen(boundary());
-               timer().stamp(Integrator::TRANSFORM_F);
-            }
-            exchanger().exchange();
-            timer().stamp(Integrator::EXCHANGE);
-            pairPotential().buildCellList();
-            timer().stamp(Integrator::CELLLIST);
-            if (!UTIL_ORTHOGONAL) {
-               atomStorage().transformGenToCart(boundary());
-               timer().stamp(Integrator::TRANSFORM_R);
-            }
-            atomStorage().makeSnapshot();
-            pairPotential().buildPairList();
-            timer().stamp(Integrator::PAIRLIST);
-         } else {
-            exchanger().update();
-            timer().stamp(Integrator::UPDATE);
-         }
-   
-         // Calculate new forces for all local atoms
-         computeForces();
-   
-         // 2nd half of velocity Verlet
-         atomStorage().begin(atomIter);
-         for ( ; atomIter.notEnd(); ++atomIter) {
-            prefactor = prefactors_[atomIter->typeId()];
-            dv.multiply(atomIter->force(), prefactor);
-            atomIter->velocity() += dv;
-         }
-         timer().stamp(Integrator::INTEGRATE2);
-   
+         dr.multiply(atomIter->velocity(), dt_);
+         atomIter->position() += dr;
       }
-      timer().stop();
-      exchanger().timer().stop();
+   }
 
-      // Compute and reduce statistics for run.
-      #ifdef UTIL_MPI
-      timer().reduce(domain().communicator());
-      exchanger().timer().reduce(domain().communicator());
-      pairPotential().pairList().computeStatistics(domain().communicator());
-      atomStorage().computeNAtomTotal(domain().communicator());
-      #else
-      pairPotential().pairList().computeStatistics();
-      #endif
+   void NveIntegrator::integrateStep2()
+   {
+      Vector dv;
+      double prefactor; // = 0.5*dt/mass
+      AtomIterator atomIter;
+
+      // 2nd half of velocity Verlet
+      atomStorage().begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         prefactor = prefactors_[atomIter->typeId()];
+         dv.multiply(atomIter->force(), prefactor);
+         atomIter->velocity() += dv;
+      }
 
    }
 

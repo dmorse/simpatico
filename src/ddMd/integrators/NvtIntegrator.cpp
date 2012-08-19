@@ -29,7 +29,7 @@ namespace DdMd
    * Constructor.
    */
    NvtIntegrator::NvtIntegrator(Simulation& simulation)
-    : Integrator(simulation),
+    : TwoStepIntegrator(simulation),
       prefactors_(),
       T_target_(1.0),
       T_kinetic_(1.0),
@@ -73,15 +73,7 @@ namespace DdMd
 
    void NvtIntegrator::setup()
    {
-      // Calculate prefactors for acceleration
-      double dtHalf = 0.5*dt_;
-      double mass;
-      int nAtomType = prefactors_.capacity();
-      for (int i = 0; i < nAtomType; ++i) {
-         mass = simulation().atomType(i).mass();
-         prefactors_[i] = dtHalf/mass;
-      }
-
+      #if 0
       atomStorage().clearSnapshot();
       exchanger().exchange();
       pairPotential().buildCellList();
@@ -91,6 +83,21 @@ namespace DdMd
       pairPotential().buildPairList();
       atomStorage().makeSnapshot();
       simulation().computeForces();
+      #endif
+
+      // Exchange atoms, build pair list, compute forces.
+      setupAtoms();
+
+      simulation().diagnosticManager().setup();
+
+      // Calculate prefactors for acceleration
+      double dtHalf = 0.5*dt_;
+      double mass;
+      int nAtomType = prefactors_.capacity();
+      for (int i = 0; i < nAtomType; ++i) {
+         mass = simulation().atomType(i).mass();
+         prefactors_[i] = dtHalf/mass;
+      }
 
       // Initialize nAtom_, xiDot_, xi_
       simulation().computeKineticEnergy();
@@ -108,18 +115,9 @@ namespace DdMd
       #endif
       xi_ = 0.0;
 
-      simulation().diagnosticManager().setup();
    }
 
-   /*
-   * Integrate Nose-Hoover.
-   *
-   * This implements a reversible Velocity-Verlet MD NVT integrator step.
-   * The user must call setup() before run(). 
-   *
-   * Reference: Winkler, Kraus, and Reineker, J. Chem. Phys. 102, 9018 (1995).
-   */
-   void NvtIntegrator::run(int nStep)
+   void NvtIntegrator::integrateStep1()
    {
       Vector dv;
       Vector dr;
@@ -127,102 +125,54 @@ namespace DdMd
       double dtHalf = 0.5*dt_;
       double factor;
       AtomIterator atomIter;
-      bool needExchange;
-      nStep_ = nStep;
 
-      // Main MD loop
-      timer().start();
-      exchanger().timer().start();
-      for (iStep_ = 0; iStep_ < nStep_; ++iStep_) {
+   
+      T_target_ = simulation().energyEnsemble().temperature();
+      factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
 
-         if (Diagnostic::baseInterval > 0) {
-            if (iStep_ % Diagnostic::baseInterval == 0) {
-               simulation().diagnosticManager().sample(iStep_);
-            }
-         }
-         timer().stamp(DIAGNOSTIC);
-   
-         T_target_ = simulation().energyEnsemble().temperature();
-         factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
-   
-         // 1st half of velocity Verlet.
-         atomStorage().begin(atomIter);
-         for ( ; atomIter.notEnd(); ++atomIter) {
-            atomIter->velocity() *= factor;
-            prefactor = prefactors_[atomIter->typeId()];
-            dv.multiply(atomIter->force(), prefactor);
-            atomIter->velocity() += dv;
-            dr.multiply(atomIter->velocity(), dt_);
-            atomIter->position() += dr;
-         }
-         timer().stamp(INTEGRATE1);
-   
-         // Check if exchange and reneighboring is necessary
-         needExchange = atomStorage().needExchange(domain().communicator(), 
-                                                   pairPotential().skin());
-         timer().stamp(Integrator::CHECK);
-
-         // Exchange atoms if necessary
-         if (needExchange) {
-            atomStorage().clearSnapshot();
-            if (!UTIL_ORTHOGONAL && atomStorage().isCartesian()) {
-               atomStorage().transformCartToGen(boundary());
-               timer().stamp(Integrator::TRANSFORM_F);
-            }
-            exchanger().exchange();
-            timer().stamp(Integrator::EXCHANGE);
-            pairPotential().buildCellList();
-            timer().stamp(Integrator::CELLLIST);
-            if (!UTIL_ORTHOGONAL) {
-               atomStorage().transformGenToCart(boundary());
-               timer().stamp(Integrator::TRANSFORM_R);
-            }
-            atomStorage().makeSnapshot();
-            pairPotential().buildPairList();
-            timer().stamp(Integrator::PAIRLIST);
-         } else {
-            exchanger().update();
-            timer().stamp(UPDATE);
-         }
-   
-         // Calculate new forces for all local atoms
-         computeForces();
-   
-         // 2nd half of velocity Verlet
-         atomStorage().begin(atomIter);
-         for ( ; atomIter.notEnd(); ++atomIter) {
-            prefactor = prefactors_[atomIter->typeId()];
-            dv.multiply(atomIter->force(), prefactor);
-            atomIter->velocity() += dv;
-            atomIter->velocity() *=factor;
-         }
-   
-         // Update xiDot_ and xi_
-         simulation().computeKineticEnergy();
-         if (domain().isMaster()) {
-            xi_ += xiDot_*dtHalf;
-            T_kinetic_ = simulation().kineticEnergy()*2.0/double(3*nAtom_);
-            xiDot_ = (T_kinetic_/T_target_  - 1.0)*nuT_*nuT_;
-            xi_ += xiDot_*dtHalf;
-         }
-         #ifdef UTIL_MPI
-         bcast(domain().communicator(), xiDot_, 0);
-         bcast(domain().communicator(), xi_, 0);
-         #endif
-         timer().stamp(INTEGRATE2);
-   
+      // 1st half of velocity Verlet.
+      atomStorage().begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         atomIter->velocity() *= factor;
+         prefactor = prefactors_[atomIter->typeId()];
+         dv.multiply(atomIter->force(), prefactor);
+         atomIter->velocity() += dv;
+         dr.multiply(atomIter->velocity(), dt_);
+         atomIter->position() += dr;
       }
-      exchanger().timer().stop();
-      timer().stop();
+   }
 
-      // Compute and reduce statistics for run
+   void NvtIntegrator::integrateStep2()
+   {
+      Vector dv;
+      double prefactor; // = 0.5*dt/mass
+      double dtHalf = 0.5*dt_;
+      double factor;
+      AtomIterator atomIter;
+
+      T_target_ = simulation().energyEnsemble().temperature();
+      factor = exp(-dtHalf*(xi_ + xiDot_*dtHalf));
+
+      // 2nd half of velocity Verlet
+      atomStorage().begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         prefactor = prefactors_[atomIter->typeId()];
+         dv.multiply(atomIter->force(), prefactor);
+         atomIter->velocity() += dv;
+         atomIter->velocity() *=factor;
+      }
+
+      // Update xiDot_ and xi_
+      simulation().computeKineticEnergy();
+      if (domain().isMaster()) {
+         xi_ += xiDot_*dtHalf;
+         T_kinetic_ = simulation().kineticEnergy()*2.0/double(3*nAtom_);
+         xiDot_ = (T_kinetic_/T_target_  - 1.0)*nuT_*nuT_;
+         xi_ += xiDot_*dtHalf;
+      }
       #ifdef UTIL_MPI
-      timer().reduce(domain().communicator());
-      exchanger().timer().reduce(domain().communicator());
-      pairPotential().pairList().computeStatistics(domain().communicator());
-      atomStorage().computeNAtomTotal(domain().communicator());
-      #else
-      pairPotential().pairList().computeStatistics();
+      bcast(domain().communicator(), xiDot_, 0);
+      bcast(domain().communicator(), xi_, 0);
       #endif
 
    }

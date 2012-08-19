@@ -50,6 +50,19 @@ namespace DdMd
    Integrator::~Integrator()
    {}
 
+   void Integrator::setupAtoms()
+   {
+      atomStorage().clearSnapshot();
+      exchanger().exchange();
+      pairPotential().buildCellList();
+      if (!UTIL_ORTHOGONAL) {
+         atomStorage().transformGenToCart(boundary());
+      }
+      atomStorage().makeSnapshot();
+      pairPotential().buildPairList();
+      simulation().computeForces();
+   }
+
    /*
    * Compute forces for all atoms.
    */
@@ -164,9 +177,7 @@ namespace DdMd
          out << "Integrate2           " << Dbl(integrate2T*ratio, 12, 6) 
              << " sec   " << Dbl(integrate2T/time, 12, 6, true) << std::endl;
          out << std::endl;
-         out << std::endl;
 
-         //pairPotential().pairList().outputStatistics(out);
          out << "PairList Statistics" << std::endl;
          out << "maxNPair, capacity " 
                      << Int(pairPotential().pairList().maxNPair(), 10)
@@ -183,7 +194,6 @@ namespace DdMd
                      << double(nStep_)/double(pairPotential().pairList().buildCounter())
                      << std::endl;
          out << std::endl;
-
       }
 
    }
