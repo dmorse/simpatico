@@ -161,6 +161,17 @@ namespace DdMd
       }
       timer().stop();
       exchanger().timer().stop();
+
+      // Compute and reduce statistics for run.
+      #ifdef UTIL_MPI
+      timer().reduce(domain().communicator());
+      exchanger().timer().reduce(domain().communicator());
+      pairPotential().pairList().computeStatistics(domain().communicator());
+      atomStorage().computeNAtomTotal(domain().communicator());
+      #else
+      pairPotential().pairList().computeStatistics();
+      #endif
+
    }
 
 }

@@ -29,8 +29,8 @@ namespace DdMd {
       void start();
       void stamp(int id);
       void stop();
-      double time(int id);
-      double time();
+      double time(int id) const;
+      double time() const;
 
       #ifdef UTIL_MPI
       void reduce(MPI::Intracomm& communicator);

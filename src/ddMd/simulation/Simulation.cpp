@@ -513,6 +513,14 @@ namespace DdMd
             inBuffer >> endStep;
             simulate(endStep);
          } else
+         if (command == "OUTPUT_INTEGRATOR_STATS") {
+            integratorPtr_->outputStatistics(Log::file());
+         } else
+         if (command == "OUTPUT_EXCHANGER_STATS") {
+            int    nStep = integratorPtr_->nStep();
+            double time  = integratorPtr_->time();
+            exchanger_.outputStatistics(Log::file(), time, nStep);
+         } else
          if (command == "WRITE_CONFIG") {
             inBuffer >> filename;
             writeConfig(filename);

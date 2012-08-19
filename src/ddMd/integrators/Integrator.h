@@ -56,6 +56,16 @@ namespace DdMd
       */
       virtual void outputStatistics(std::ostream& out);
 
+      /**
+      * Get time per processor of previous run.  
+      */
+      double time() const;
+
+      /**
+      * Get number of steps in last run.
+      */ 
+      int nStep() const;
+
    protected:
 
       /// Timestamps for loop timing.

@@ -63,10 +63,10 @@ namespace DdMd
    }
    #endif
 
-   double DdTimer::time(int id)
+   double DdTimer::time(int id) const
    {  return times_[id]; }
 
-   double DdTimer::time()
+   double DdTimer::time() const
    {  return time_; }
 
 }

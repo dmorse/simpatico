@@ -15,7 +15,6 @@
 #include <util/containers/FMatrix.h>
 #include <util/containers/APArray.h>
 
-//#define DDMD_EXCHANGER_TIMER
 
 namespace DdMd
 {
@@ -115,6 +114,11 @@ namespace DdMd
       * communication on every time step for which update() is called.
       */
       void reverseUpdate();
+
+      /**
+      * Output statistics.
+      */
+      void outputStatistics(std::ostream& out, double time, int nStep);
 
       /**
       * Return internal timer by reference
@@ -266,11 +270,8 @@ namespace DdMd
       template <int N>
       void findGroupGhosts(GroupStorage<N>& storage);
 
-      void stamp(unsigned int timeId) {
-         #ifdef DDMD_EXCHANGER_TIMER
-         timer_.stamp(timeId);
-         #endif
-      }
+      void stamp(unsigned int timeId) 
+      {  timer_.stamp(timeId); }
 
    };
 
