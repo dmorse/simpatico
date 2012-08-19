@@ -1,0 +1,44 @@
+To Storage for (T=Atom or T=Group<N>):
+
+Data Members:
+
+   std::vector<T*> additions_
+   std::vector<T*> removals_
+
+   bool inTransaction_;
+
+New Methods:
+
+   void enableRollback();
+   void disableRollback();
+   bool isRollbackEnabled();
+   void rollback();
+   void commit();
+
+On finalizing addition:
+
+   If (isRollbackEnabled()) {
+      Add to additions_;
+   }
+
+On removal:
+
+   If (isRollbackEnabled()) {
+      Add to removals_;
+   } else {
+      return to reservoir
+   }
+
+   // Because they are not returned to reservoir, parting
+   objects will not be overwritten until they are committed.
+
+Commit:
+
+   Add all removals_ to reservoir.
+   Clear all additions and removals.
+
+Rollback:
+
+   Remove all additions, return pointers to reservoir.
+   Add all removals, taking pointers from reservoir.
+
