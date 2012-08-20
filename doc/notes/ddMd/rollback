@@ -5,31 +5,33 @@ Data Members:
    std::vector<T*> additions_
    std::vector<T*> removals_
 
-   bool inTransaction_;
+   bool isTransaction_;
 
 New Methods:
 
-   void enableRollback();
-   void disableRollback();
-   bool isRollbackEnabled();
+   void beginTranscation();
    void rollback();
    void commit();
 
-On finalizing addition:
+-----------------------------------------------
+AtomStorage:
 
-   If (isRollbackEnabled()) {
+On final addition of local atom:
+
+   If (isTransaction()) {
       Add to additions_;
-   }
+   } 
 
-On removal:
+On removal of local atom.
 
-   If (isRollbackEnabled()) {
+   If (isTransaction()) {
       Add to removals_;
    } else {
+      set isGhost and id to default values
       return to reservoir
    }
 
-   // Because they are not returned to reservoir, parting
+   Note: Because they are not returned to reservoir, parting
    objects will not be overwritten until they are committed.
 
 Commit:
@@ -41,4 +43,25 @@ Rollback:
 
    Remove all additions, return pointers to reservoir.
    Add all removals, taking pointers from reservoir.
+   Clear all additions and removals.
+   clear all ghosts.
 
+   Restore old positions, velocities, types.
+   Use private class AtomState = {position, velocity, typeId, id}
+
+The transaction methods for AtomStorage will only keep track of local 
+atoms, and must be followed by a call to Exchanger::exchange() to
+recreate ghost lists.
+
+GroupStorage<N>:
+
+Basic algorithm is similar for GroupStorage. For the moment, the 
+algorithm will assume that group ids remain unchanged during a 
+transaction.
+
+All atom pointers must be found again after rollback, because atoms
+may have moved. 
+
+Note: The rollback move can be somewhat expensive - it need only
+be much less expensive then the cost of generating an HMC move
+of order 100 steps. 
