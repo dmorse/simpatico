@@ -258,18 +258,28 @@ namespace DdMd
       #endif
    }
 
-   /**
-   * Output pairlist statistics.
+   /*
+   * Output statistics.
    */
-   void PairList::outputStatistics(std::ostream& out) {
-      out << "Maximum number of pairs, pair capacity"
-          << Int(maxNPair_, 10) 
-          << Int(pairCapacity_, 10) 
-          << std::endl;
-      out << "Maximum number of atoms, atom capacity"
-          << Int(maxNAtom_, 10) 
-          << Int(atomCapacity_, 10) 
-          << std::endl;
+   void PairList::outputStatistics(std::ostream& out, int nStep)
+   {
+
+      out << std::endl;
+      out << "maxNPair, capacity " 
+                  << Int(maxNPair_, 10)
+                  << Int(pairCapacity_, 10)
+                  << std::endl;
+      out << "maxNAtom, capacity " 
+                  << Int(maxNAtom_, 10)
+                  << Int(atomCapacity_, 10)
+                  << std::endl;
+      out << "buildCounter       " 
+                  << Int(buildCounter_, 10)
+                  << std::endl;
+      out << "steps / build      "
+                  << double(nStep)/double(buildCounter_)
+                  << std::endl;
+      out << std::endl;
    }
 
    #if 0

@@ -521,6 +521,10 @@ namespace DdMd
             double time  = integratorPtr_->time();
             exchanger_.outputStatistics(Log::file(), time, nStep);
          } else
+         if (command == "OUTPUT_PAIRLIST_STATS") {
+            int    nStep = integratorPtr_->nStep();
+            pairPotential().pairList().outputStatistics(Log::file(), nStep);
+         } else
          if (command == "WRITE_CONFIG") {
             inBuffer >> filename;
             writeConfig(filename);

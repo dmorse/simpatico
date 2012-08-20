@@ -178,6 +178,7 @@ namespace DdMd
              << " sec   " << Dbl(integrate2T/time, 12, 6, true) << std::endl;
          out << std::endl;
 
+         #if 0
          out << "PairList Statistics" << std::endl;
          out << "maxNPair, capacity " 
                      << Int(pairPotential().pairList().maxNPair(), 10)
@@ -193,6 +194,8 @@ namespace DdMd
          out << "steps / build      "
                      << double(nStep_)/double(pairPotential().pairList().buildCounter())
                      << std::endl;
+         #endif
+
          out << std::endl;
       }
 

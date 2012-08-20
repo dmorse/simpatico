@@ -133,17 +133,6 @@ namespace DdMd
       void clearStatistics();
 
       /**
-      * Compute statistics (reduce from all processors).
-      * 
-      * Call on all processors.
-      */
-      #ifdef UTIL_MPI
-      virtual void computeStatistics(MPI::Intracomm& communicator);
-      #else
-      virtual void computeStatistics();
-      #endif
-
-      /**
       * Get the maximum number of primary atoms encountered thus far.
       *
       * Call only on master.
@@ -163,11 +152,25 @@ namespace DdMd
       int buildCounter() const;
 
       /**
+      * Compute statistics (reduce from all processors).
+      * 
+      * Call on all processors.
+      */
+      #ifdef UTIL_MPI
+      virtual void computeStatistics(MPI::Intracomm& communicator);
+      #else
+      virtual void computeStatistics();
+      #endif
+
+      /**
       * Output statistics.
       *
       * Call on master, after calling computeStatistics on all procs.
+      *
+      * \param out   output stream
+      * \param nStep number of time steps in previous run
       */
-      void outputStatistics(std::ostream& out);
+      void outputStatistics(std::ostream& out, int nStep);
 
       //@}
 
