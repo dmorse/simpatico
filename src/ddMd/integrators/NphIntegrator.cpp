@@ -1,5 +1,5 @@
-#ifndef DDMD_NPT_INTEGRATOR_CPP
-#define DDMD_NPT_INTEGRATOR_CPP
+#ifndef DDMD_NPH_INTEGRATOR_CPP
+#define DDMD_NPH_INTEGRATOR_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -8,7 +8,7 @@
 * Distributed under the terms of the GNU General Public License.
 */
 
-#include "NptIntegrator.h"
+#include "NphIntegrator.h"
 #include <ddMd/simulation/Simulation.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
@@ -29,24 +29,23 @@ namespace DdMd
    /*
    * Constructor.
    */
-   NptIntegrator::NptIntegrator(Simulation& simulation)
+   NphIntegrator::NphIntegrator(Simulation& simulation)
     : TwoStepIntegrator(simulation)
    {}
 
    /*
    * Destructor.
    */
-   NptIntegrator::~NptIntegrator()
+   NphIntegrator::~NphIntegrator()
    {}
 
    /*
    * Read time step dt.
    */
-   void NptIntegrator::readParam(std::istream& in)
+   void NphIntegrator::readParam(std::istream& in)
    {
       read<double>(in, "dt", dt_);
-      read<double>(in, "tauT", tauT_);
-      read<double>(in, "tauP", tauP_);
+      read<double>(in, "W", W_);
       read<LatticeSystem>(in, "mode", mode_);
 
       int nAtomType = simulation().nAtomType();
@@ -56,7 +55,7 @@ namespace DdMd
 
    }
 
-   void NptIntegrator::setup()
+   void NphIntegrator::setup()
    {
       // Exchange atoms, build pair list, compute forces.
       setupAtoms();
@@ -72,8 +71,6 @@ namespace DdMd
          prefactors_[i] = dtHalf/mass;
       }
 
-      xi_ = 0.0;
-      eta_ = 0.0;
       nu_ = Vector(0.0,0.0,0.0);
 
       simulation().computeKineticEnergy();
@@ -90,7 +87,7 @@ namespace DdMd
       #endif
    }
 
-   void NptIntegrator::integrateStep1()
+   void NphIntegrator::integrateStep1()
    {
       Vector dv;
       double prefactor; // = 0.5*dt/mass
@@ -102,8 +99,6 @@ namespace DdMd
       sys.computeKineticStress();
       sys.computeKineticEnergy();
 
-      double xi_prime;
-
       if (sys.domain().isMaster()) {
          T_target_ = sys.energyEnsemble().temperature();
          P_target_ = simulation().boundaryEnsemble().pressure();
@@ -114,33 +109,26 @@ namespace DdMd
          P_curr_diag_ = Vector(stress(0, 0), stress(1,1), stress(2,2));
          double P_curr = (1.0/3.0)*stress.trace();
 
-         double W = (1.0/2.0)*ndof_*T_target_*tauP_*tauP_;
-         double mtk_term = (1.0/2.0)*dt_*T_kinetic_/W;
+         double mtk_term = (1.0/2.0)*dt_*T_kinetic_/W_;
 
          // advance barostat
          double V = sys.boundary().volume();
          if (mode_ == Cubic) {
-            nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr - P_target_) + mtk_term;
+            nu_[0] += (1.0/2.0)*dt_*V/W_*(P_curr - P_target_) + mtk_term;
             nu_[1] = nu_[2] = nu_[0];
          } else if (mode_ == Tetragonal) {
-            nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[0] - P_target_) + mtk_term;
-            nu_[1] += (1.0/2.0)*dt_*V/W*((1.0/2.0)*(P_curr_diag_[1]+P_curr_diag_[2]) - P_target_) + mtk_term;
+            nu_[0] += (1.0/2.0)*dt_*V/W_*(P_curr_diag_[0] - P_target_) + mtk_term;
+            nu_[1] += (1.0/2.0)*dt_*V/W_*((1.0/2.0)*(P_curr_diag_[1]+P_curr_diag_[2]) - P_target_) + mtk_term;
             nu_[2] = nu_[1];
          } else if (mode_  == Orthorhombic) {
-            nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[0] - P_target_) + mtk_term;
-            nu_[1] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[1] - P_target_) + mtk_term;
-            nu_[2] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[2] - P_target_) + mtk_term;
+            nu_[0] += (1.0/2.0)*dt_*V/W_*(P_curr_diag_[0] - P_target_) + mtk_term;
+            nu_[1] += (1.0/2.0)*dt_*V/W_*(P_curr_diag_[1] - P_target_) + mtk_term;
+            nu_[2] += (1.0/2.0)*dt_*V/W_*(P_curr_diag_[2] - P_target_) + mtk_term;
          }
 
-         // advance thermostat
-         xi_prime = xi_ + (1.0/4.0)*dt_/tauT_/tauT_*(T_kinetic_/T_target_ - 1.0);
-         xi_ = xi_prime + (1.0/4.0)*dt_/tauT_/tauT_*(T_kinetic_/T_target_*exp(-xi_prime*dt_) - 1.0);
-         eta_ += (1.0/2.0)*xi_prime*dt_;
       }
 
       #ifdef UTIL_MPI
-      bcast(domain().communicator(), xi_,0);
-      bcast(domain().communicator(), xi_prime,0);
       bcast(domain().communicator(), nu_,0);
       #endif
 
@@ -152,9 +140,9 @@ namespace DdMd
       exp_v_fac_ = Vector(exp(-v_fac[0]*dt_),
                           exp(-v_fac[1]*dt_),
                           exp(-v_fac[2]*dt_));
-      Vector exp_v_fac_2 = Vector(exp(-(2.0*v_fac[0]+(1.0/2.0)*xi_prime)*dt_),
-                                  exp(-(2.0*v_fac[1]+(1.0/2.0)*xi_prime)*dt_),
-                                  exp(-(2.0*v_fac[2]+(1.0/2.0)*xi_prime)*dt_));
+      Vector exp_v_fac_2 = Vector(exp(-(2.0*v_fac[0])*dt_),
+                                  exp(-(2.0*v_fac[1])*dt_),
+                                  exp(-(2.0*v_fac[2])*dt_));
       Vector r_fac = Vector((1.0/2.0)*nu_[0],
                             (1.0/2.0)*nu_[1],
                             (1.0/2.0)*nu_[2]);
@@ -189,7 +177,7 @@ namespace DdMd
                          term_r[2] * arg_r[2] * arg_r[2]);
          }
 
-      // 1st half of NPT
+      // 1st half of NPH
       atomStorage().begin(atomIter);
       Vector vtmp;
       for ( ; atomIter.notEnd(); ++atomIter) {
@@ -229,7 +217,7 @@ namespace DdMd
       sys.boundary().setOrthorhombic(L);
    }
 
-   void NptIntegrator::integrateStep2()
+   void NphIntegrator::integrateStep2()
    {
       Vector dv;
       double prefactor; // = 0.5*dt/mass
@@ -242,9 +230,7 @@ namespace DdMd
                                  exp(-v_fac_2[1]*dt_),
                                  exp(-v_fac_2[2]*dt_));
 
-      double v2_sum = 0.0;
-
-      // 2nd half of NPT
+      // 2nd half of NPH
       atomStorage().begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          prefactor = prefactors_[atomIter->typeId()];
@@ -257,37 +243,6 @@ namespace DdMd
          v[0] = v[0] * exp_v_fac_2[0] + dv[0];
          v[1] = v[1] * exp_v_fac_2[1] + dv[1];
          v[2] = v[2] * exp_v_fac_2[2] + dv[2];
-
-         // total up 2*kinetic energy
-         double mass = simulation().atomType(atomIter->typeId()).mass();
-         v2_sum += v.dot(v)*mass;
-      }
-
-      // Advance thermostat half a timestep
-      double T_prime;
-      double xi_prime;
-      #ifdef UTIL_MPI
-      //reduce vs_sum
-      domain().communicator().Reduce(&v2_sum, &T_prime, 1, MPI::DOUBLE, MPI::SUM,0);
-      #endif
-
-
-      if (domain().isMaster()) {
-         T_prime /= ndof_;
-         xi_prime = xi_ + (1.0/4.0)*dt_/tauT_/tauT_*(T_prime/T_target_ - 1.0);
-         xi_ = xi_prime + (1.0/4.0)*dt_/tauT_/tauT_*(T_prime/T_target_*exp(-xi_prime*dt_) - 1.0);
-         eta_ += (1.0/2.0)*xi_prime*dt_;
-      }
-
-      #ifdef UTIL_MPI
-      bcast(domain().communicator(), xi_prime,0);
-      #endif
-
-      // rescale velocities
-      double exp_v_fac_thermo = exp(-(1.0/2.0)*xi_prime*dt_);
-      atomStorage().begin(atomIter);
-      for ( ; atomIter.notEnd(); ++atomIter) {
-         atomIter->velocity().multiply(atomIter->velocity(), exp_v_fac_thermo);
       }
 
       Simulation& sys = simulation();
@@ -303,22 +258,21 @@ namespace DdMd
          P_curr_diag_ = Vector(stress(0,0), stress(1,1), stress(2,2));
          double P_curr = (1.0/3.0)*stress.trace();
 
-         double W = (1.0/2.0)*ndof_*T_target_*tauP_*tauP_;
-         double mtk_term = (1.0/2.0)*dt_*T_kinetic_/W;
+         double mtk_term = (1.0/2.0)*dt_*T_kinetic_/W_;
 
          // advance barostat
          double V = sys.boundary().volume();
          if (mode_ == Cubic) {
-            nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr - P_target_) + mtk_term;
+            nu_[0] += (1.0/2.0)*dt_*V/W_*(P_curr - P_target_) + mtk_term;
             nu_[1] = nu_[2] = nu_[0];
          } else if (mode_ == Tetragonal) {
-            nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[0] - P_target_) + mtk_term;
-            nu_[1] += (1.0/2.0)*dt_*V/W*((1.0/2.0)*(P_curr_diag_[1]+P_curr_diag_[2]) - P_target_) + mtk_term;
+            nu_[0] += (1.0/2.0)*dt_*V/W_*(P_curr_diag_[0] - P_target_) + mtk_term;
+            nu_[1] += (1.0/2.0)*dt_*V/W_*((1.0/2.0)*(P_curr_diag_[1]+P_curr_diag_[2]) - P_target_) + mtk_term;
             nu_[2] = nu_[1];
          } else if (mode_  == Orthorhombic) {
-            nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[0] - P_target_) + mtk_term;
-            nu_[1] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[1] - P_target_) + mtk_term;
-            nu_[2] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[2] - P_target_) + mtk_term;
+            nu_[0] += (1.0/2.0)*dt_*V/W_*(P_curr_diag_[0] - P_target_) + mtk_term;
+            nu_[1] += (1.0/2.0)*dt_*V/W_*(P_curr_diag_[1] - P_target_) + mtk_term;
+            nu_[2] += (1.0/2.0)*dt_*V/W_*(P_curr_diag_[2] - P_target_) + mtk_term;
          }
       }
 #if 0
@@ -327,25 +281,21 @@ namespace DdMd
       sys.computePotentialEnergies();
       if (sys.domain().isMaster()) {
          std::ofstream file;
-         file.open("NPT.log", std::ios::out | std::ios::app);
-         double thermostat_energy = ndof_ * T_target_ * (eta_ + tauT_*tauT_*xi_*xi_/2.0);
-         double W = (1.0/2.0)*ndof_*T_target_*tauP_*tauP_;
+         file.open("NPH.log", std::ios::out | std::ios::app);
          double V = sys.boundary().volume();
-         double barostat_energy = W*(nu_[0]*nu_[0]+ nu_[1]*nu_[1] + nu_[2]*nu_[2]);
+         double barostat_energy = W_*(nu_[0]*nu_[0]+ nu_[1]*nu_[1] + nu_[2]*nu_[2]);
          double pe = sys.potentialEnergy();
          double ke = sys.kineticEnergy();
          file << Dbl(V,20)
               << Dbl(pe,20)
               << Dbl(ke,20)
               << Dbl(barostat_energy,20)
-              << Dbl(thermostat_energy,20)
               << std::endl;
          file.close();
       }
 #endif
 
       #ifdef UTIL_MPI
-      bcast(domain().communicator(), xi_,0);
       bcast(domain().communicator(), nu_,0);
       #endif
 

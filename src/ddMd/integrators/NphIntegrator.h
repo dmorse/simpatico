@@ -1,5 +1,5 @@
-#ifndef DDMD_NPT_INTEGRATOR_H
-#define DDMD_NPT_INTEGRATOR_H
+#ifndef DDMD_NPH_INTEGRATOR_H
+#define DDMD_NPH_INTEGRATOR_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
@@ -21,7 +21,7 @@ namespace DdMd
    *
    * \ingroup DdMd_Integrator_Module
    */
-   class NptIntegrator : public TwoStepIntegrator
+   class NphIntegrator : public TwoStepIntegrator
    {
 
    public:
@@ -29,12 +29,12 @@ namespace DdMd
       /**
       * Constructor.
       */
-      NptIntegrator(Simulation& simulation);
+      NphIntegrator(Simulation& simulation);
 
       /**
       * Destructor.
       */
-      ~NptIntegrator();
+      ~NphIntegrator();
 
       /**
       * Read required parameters.
@@ -63,12 +63,9 @@ namespace DdMd
       virtual void integrateStep2();
 
    private:
-      double xi_;
-      double eta_;
       Vector nu_;
       double  dt_;
-      double tauT_;
-      double tauP_;
+      double W_;
       double T_target_;
       double P_target_;
       double T_kinetic_;
