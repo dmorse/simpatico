@@ -6,7 +6,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010, David Morse (morse@cems.umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -57,7 +57,8 @@ namespace McMd
       myFermi_(0.0),
       lowerFermi_(0.0),
       upperFermi_(0.0),
-      outputFile_()
+      outputFile_(),
+      isInitialized_(false)
    {  
       communicatorPtr_ = &(system.simulation().communicator());
       myId_   = communicatorPtr_->Get_rank();
@@ -104,14 +105,25 @@ namespace McMd
       myAccumulator_.setNSamplePerBlock(nSamplePerBlock_);
       upperAccumulator_.setNSamplePerBlock(nSamplePerBlock_);
 
+      //If nSamplePerBlock != 0, open an output file for block averages.
+      if (myAccumulator_.nSamplePerBlock()) {
+         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+      }
+
+      isInitialized_ = true;
    }
     
    void BennettsMethod::setup()
    { 
+      if (!isInitialized_) UTIL_THROW("Object is not initialized");
+
       communicatorPtr_->Bcast((void*)&shifts_[0], nProcs_, MPI::DOUBLE, 0);
       if ( myId_ != 0 ) {
          lowerShift_ = shifts_[lowerId_];
       } else {}
+
+      myAccumulator_.clear();
+      upperAccumulator_.clear();
    }
 
    void BennettsMethod::sample(long iStep) 
@@ -124,6 +136,7 @@ namespace McMd
 
       // Exchange perturbation parameters and differences
       if (myId_ != 0 && myId_ != nProcs_ - 1) {
+
          myPort = myId_%2;
          upperPort = upperId_%2;
 
@@ -132,7 +145,7 @@ namespace McMd
             lowerParam_[i] = system().perturbation().parameter(i,lowerId_);
             upperParam_[i] = system().perturbation().parameter(i,upperId_);
          }
-         
+
          myArg_ = system().perturbation().difference(upperParam_);
          lowerArg_ = system().perturbation().difference(lowerParam_);
 
@@ -154,6 +167,9 @@ namespace McMd
 
          upperAccumulator_.sample(upperFermi_);
          myAccumulator_.sample(myFermi_);
+
+         outputFile_ << Dbl(myFermi_) << "    " << Dbl(upperFermi_) << "    ";
+         outputFile_ << std::endl;
  
          } else if (myId_ == 0) {
             
@@ -178,6 +194,9 @@ namespace McMd
             
             upperAccumulator_.sample(upperFermi_);
             myAccumulator_.sample(myFermi_);
+            
+            outputFile_ << Dbl(myFermi_) << "    " << Dbl(upperFermi_) << "    ";
+            outputFile_ << std::endl;
 
          } else if (myId_ == nProcs_ - 1) {
             
@@ -214,7 +233,6 @@ namespace McMd
             
          shifts_[myId_] = improvedShift; 
          shift_ = improvedShift; 
-    
       } else {}
    
    }
@@ -223,12 +241,27 @@ namespace McMd
    // Output results to file after simulation is completed.
    void BennettsMethod::output() 
    {
+      if (myAccumulator_.nSamplePerBlock()) {
+         outputFile_.close();
+      }
+
+      fileMaster().openOutputFile(outputFileName(".ave"), outputFile_);
+      if (myId_ != nProcs_ - 1) {
+         myAccumulator_.output(outputFile_);
+         outputFile_ << std::endl;
+         outputFile_ << std::endl;
+         upperAccumulator_.output(outputFile_);
+         outputFile_ << std::endl;
+         outputFile_ << std::endl;
+      }
+      outputFile_.close();
+
       analyze(); 
 
       communicatorPtr_->Gather((const void *) &shift_, 1, MPI::DOUBLE, (void *) &shifts_[0], 1, MPI::DOUBLE, 0);
       int i;
       if (myId_ == 0) {
-         fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+         fileMaster().openOutputFile(outputFileName("_all.dat"), outputFile_);
          for (i = 0; i < nProcs_-1; ++i) {
             outputFile_ << Dbl(shifts_[i]);
             outputFile_ << std::endl;
