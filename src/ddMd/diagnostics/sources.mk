@@ -4,6 +4,8 @@ ddMd_diagnostics_SRCS=\
      $(SRC_DIR)/ddMd/diagnostics/DiagnosticFactory.cpp\
      $(SRC_DIR)/ddMd/diagnostics/WriteConfig.cpp\
      $(SRC_DIR)/ddMd/diagnostics/OutputEnergy.cpp\
-     $(SRC_DIR)/ddMd/diagnostics/OutputPressure.cpp
+     $(SRC_DIR)/ddMd/diagnostics/OutputPressure.cpp\
+     $(SRC_DIR)/ddMd/diagnostics/OutputBoxdim.cpp \
+     $(SRC_DIR)/ddMd/diagnostics/OutputTemperature.cpp
 
 ddMd_diagnostics_OBJS=$(ddMd_diagnostics_SRCS:.cpp=.o)
