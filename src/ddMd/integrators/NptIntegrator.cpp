@@ -18,6 +18,7 @@
 #include <util/global.h>
 #include <util/ensembles/EnergyEnsemble.h>
 #include <util/ensembles/BoundaryEnsemble.h>
+#include <util/format/Dbl.h>
 
 #include <iostream>
 
@@ -140,7 +141,6 @@ namespace DdMd
       #ifdef UTIL_MPI
       bcast(domain().communicator(), xi_,0);
       bcast(domain().communicator(), xi_prime,0);
-      bcast(domain().communicator(), eta_,0);
       bcast(domain().communicator(), nu_,0);
       #endif
 
@@ -293,6 +293,7 @@ namespace DdMd
       Simulation& sys = simulation();
       sys.computeVirialStress();
       sys.computeKineticStress();
+      sys.computeKineticEnergy();
 
       if (sys.domain().isMaster()) {
          T_kinetic_ = sys.kineticEnergy()*2.0/ndof_;
@@ -319,16 +320,36 @@ namespace DdMd
             nu_[1] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[1] - P_target_) + mtk_term;
             nu_[2] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[2] - P_target_) + mtk_term;
          }
-
       }
+#if 0
+      // output conserved quantity
+
+      sys.computePotentialEnergies();
+      if (sys.domain().isMaster()) {
+         std::ofstream file;
+         file.open("H.log", std::ios::out | std::ios::app);
+         double thermostat_energy = ndof_ * T_target_ * (eta_ + tauT_*tauT_*xi_*xi_/2.0);
+         double W = (1.0/2.0)*ndof_*T_target_*tauP_*tauP_;
+         double V = sys.boundary().volume();
+         double barostat_energy = W*(nu_[0]*nu_[0]+ nu_[1]*nu_[1] + nu_[2]*nu_[2]);
+         double pe = sys.potentialEnergy();
+         double ke = sys.kineticEnergy();
+         file << Dbl(V,20)
+              << Dbl(pe,20)
+              << Dbl(ke,20)
+              << Dbl(barostat_energy,20)
+              << Dbl(thermostat_energy,20)
+              << std::endl;
+         file.close();
+      }
+#endif
 
       #ifdef UTIL_MPI
       bcast(domain().communicator(), xi_,0);
-      bcast(domain().communicator(), eta_,0);
       bcast(domain().communicator(), nu_,0);
       #endif
 
-   }
+  }
 
 }
 #endif
