@@ -17,7 +17,8 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * A velocity-Verlet constant energy integrator.
+   * An NPH integrator based on Martyna,Tobias and Klein (J. Chem. Phys.
+   * 101, 4177-4189, 1994).
    *
    * \ingroup DdMd_Integrator_Module
    */
