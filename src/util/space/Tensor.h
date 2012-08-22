@@ -455,7 +455,7 @@ namespace Util
    void Tensor::operator+=(const Tensor& dt)
    {
       for (int i = 0; i < DimensionSq; ++i) {
-         elem_[i] -= dt.elem_[i]; 
+         elem_[i] += dt.elem_[i];
       }
    }
 

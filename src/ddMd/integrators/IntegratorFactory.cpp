@@ -13,6 +13,7 @@
 // Subclasses of Integrator 
 #include "NveIntegrator.h"
 #include "NvtIntegrator.h"
+#include "NptIntegrator.h"
 //#include "NvtDpdVvIntegrator.h"
 //#include "NphIntegrator.h"
 
@@ -45,7 +46,11 @@ namespace DdMd
       } else
       if (className == "NvtIntegrator") {
          ptr = new NvtIntegrator(*simulationPtr_);
-      } // else
+      }
+      if (className == "NptIntegrator") {
+         ptr = new NptIntegrator(*simulationPtr_);
+      }
+      // else
       //if (className == "NvtDpdVvIntegrator") {
       //   ptr = new NvtDpdVvIntegrator(*simulationPtr_);
       //}
