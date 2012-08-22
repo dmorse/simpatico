@@ -4,7 +4,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010, David Morse (morse@cems.umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -85,10 +85,6 @@ namespace McMd
          }
       }
 
-      for (i=0; i < Samples; ++i) {
-         maximumValue_[i] = 0.0;
-      }
-
       nSample_ = 0;
    }
  
@@ -96,6 +92,7 @@ namespace McMd
    void StructureFactor::sample(long iStep) 
    {
       if (isAtInterval(iStep))  {
+         maximumValue_[nSample_] = 0.0;
 
          Vector  position;
          std::complex<double>  expFactor;
@@ -145,12 +142,12 @@ namespace McMd
          for (i = 0; i < nWave_; ++i) {
             for (j = 0; j < nMode_; ++j) {
                norm = std::norm(fourierModes_(i, j));
-               structureFactors_(i, j) += norm/volume;
-               if (structureFactors_(i,j) >= maximumValue_[nSample_]) {
-                  maximumValue_[nSample_] = structureFactors_(i,j);
+               if (norm/volume >= maximumValue_[nSample_]) {
+                  maximumValue_[nSample_] = norm/volume;
                   maximumWaveIntVector_[nSample_] = waveIntVectors_[i];
                   maximumQ_[nSample_] = waveVectors_[i].abs();
                }
+               structureFactors_(i, j) += norm/volume;
             }
          }
 

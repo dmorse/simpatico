@@ -6,7 +6,7 @@
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
+* Copyright 2010, David Morse (morse@cems.umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
@@ -151,7 +151,10 @@ namespace McMd
       
       /// Sampling interval.
       long interval_;
-  
+ 
+      /// Has readParam been called?
+      bool  isInitialized_;
+      
       /**
       * Estimate free energy difference between two states (replicas) 
       * from accumulators of two states.
