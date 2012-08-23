@@ -14,7 +14,7 @@ namespace Util
 {
 
    /**
-   * Interface for functor that wraps a function with one argument (abstract).
+   * Interface for functor that wraps a void function with one argument (abstract).
    */
    template <typename T=void>
    class IFunctor {
@@ -33,7 +33,7 @@ namespace Util
    // Functor for functions with no arguments.
 
    /**
-   * Interface for functor for a function with no arguments (abstract).
+   * Interface for functor that wraps a void function with no arguments (abstract).
    *
    * The operator (const T&) invokes the associated zero-parameter function.
    */
