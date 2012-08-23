@@ -3,8 +3,8 @@
 
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
-#include <util/functor/MethodFunctor.h>
-#include <util/functor/Signal.h>
+#include <util/signal/MethodFunctor.h>
+#include <util/signal/Signal.h>
 #include <util/global.h>
 
 using namespace Util;

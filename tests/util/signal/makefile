@@ -5,17 +5,17 @@ include $(TESTS_DIR)/util/patterns.mk
 include $(SRC_DIR)/util/sources.mk
 include sources.mk
 
-all: $(tests_util_functor_OBJS) Test
+all: $(tests_util_signal_OBJS) Test
 
 clean:
-	rm -f $(tests_util_functor_OBJS) Test $(tests_util_functor_OBJS:.o=.d)
+	rm -f $(tests_util_signal_OBJS) Test $(tests_util_signal_OBJS:.o=.d)
 
 clean-deps:
-	rm -f $(tests_util_functor_OBJS:.o=.d)
+	rm -f $(tests_util_signal_OBJS:.o=.d)
 
 Test: Test.o $(util_LIB)
 	$(CXX) $(LDFLAGS) $(INCLUDES) $(DEFINES) -o Test Test.o \
 	       $(util_LIB)
 
--include $(tests_util_functor_OBJS:.o=.d)
+-include $(tests_util_signal_OBJS:.o=.d)
 
