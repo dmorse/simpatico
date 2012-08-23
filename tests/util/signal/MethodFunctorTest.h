@@ -66,7 +66,7 @@ public:
    {
       printMethod(TEST_FUNC);
       Observer1        observer;
-      MethodFunctor<Observer1, int>  functor(&observer, &Observer1::update);
+      MethodFunctor<Observer1, int>  functor(observer, &Observer1::update);
       IFunctor<int>* functorPtr = &functor;
 
       TEST_ASSERT(!observer.isNotified());
@@ -84,7 +84,7 @@ public:
       printMethod(TEST_FUNC);
 
       Observer0 observer;
-      MethodFunctor<Observer0>  functor(&observer, &Observer0::update);
+      MethodFunctor<Observer0>  functor(observer, &Observer0::update);
       IFunctor<>* functorPtr = &functor;
 
       TEST_ASSERT(!observer.isNotified());

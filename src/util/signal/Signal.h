@@ -18,6 +18,7 @@ namespace Util
 
    using std::list;
 
+   // -----------------------------------------------------------------
    // Signal with one argument.
 
    /**
@@ -46,12 +47,22 @@ namespace Util
       */
       template <class Observer>
       void addObserver(Observer& observer, void (Observer::*methodPtr)(const T&));
+
+      /**
+      * Clear all observerse from list.
+      */
+      void clear();   
+
+      /**
+      * Get number of registered observers.
+      */
+      int nObserver() const;
    
       /**
       * Notify all observers.
       */
       void notify(const T& t);
-   
+
    private:
    
       /// A linked list of functors associated with member functions.
@@ -65,7 +76,7 @@ namespace Util
    template <typename T>
    template <class Observer> void 
    Signal<T>::addObserver(Observer& observer, void (Observer::*methodPtr)(const T&))
-   {  functorPtrs_.push_back(new MethodFunctor<Observer, T>(&observer, methodPtr)); }
+   {  functorPtrs_.push_back(new MethodFunctor<Observer, T>(observer, methodPtr)); }
 
    /* 
    * Notify observers (call associated methods).
@@ -82,6 +93,33 @@ namespace Util
       }
    }
 
+   /* 
+   * Clear all observers.
+   *
+   * Destroy associated functors.
+   */
+   template <typename T>
+   void Signal<T>::clear()
+   {
+      typename std::list< IFunctor<T>* >::iterator pos;
+      pos = functorPtrs_.begin();
+      while (pos != functorPtrs_.end())
+      {
+         delete *pos;
+         ++pos;
+      }
+      functorPtrs_.clear();
+   }
+
+   /* 
+   * Get number of registered observers.
+   */
+   template <typename T>
+   int Signal<T>::nObserver() const
+   { return functorPtrs_.size(); }
+
+
+   // -----------------------------------------------------------------
    // Signal with no arguments.
 
    /**
@@ -112,6 +150,16 @@ namespace Util
       void addObserver(Observer& observer, void (Observer::*methodPtr)());
    
       /**
+      * Clear all observerse from list.
+      */
+      void clear();   
+
+      /**
+      * Get number of registered observers.
+      */
+      int nObserver() const;
+
+      /**
       * Notify all observers.
       */
       void notify();
@@ -128,7 +176,7 @@ namespace Util
    */
    template <class Observer> void 
    Signal<>::addObserver(Observer& observer, void (Observer::*methodPtr)())
-   {  functorPtrs_.push_back(new MethodFunctor<Observer>(&observer, methodPtr)); }
+   {  functorPtrs_.push_back(new MethodFunctor<Observer>(observer, methodPtr)); }
 
    /* 
    * Notify observers (call associated methods).
@@ -143,6 +191,27 @@ namespace Util
          ++pos;
       }
    }
+
+   /* 
+   * Notify observers (call associated methods).
+   */
+   void Signal<>::clear()
+   {
+      typename std::list< IFunctor<>* >::iterator pos;
+      pos = functorPtrs_.begin();
+      while (pos != functorPtrs_.end())
+      {
+         delete *pos;
+         ++pos;
+      }
+      functorPtrs_.clear();
+   }
+
+   /* 
+   * Get number of registered observers.
+   */
+   int Signal<>::nObserver() const
+   { return functorPtrs_.size(); }
 
 }
 #endif 

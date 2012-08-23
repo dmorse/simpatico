@@ -69,7 +69,10 @@ public:
       Signal<int> signal;
       Observer1 observerA;
       Observer1 observerB;
+
+      TEST_ASSERT(signal.nObserver() == 0);
       signal.addObserver(observerA, &Observer1::update);
+      TEST_ASSERT(signal.nObserver() == 1);
 
       TEST_ASSERT(!observerA.isNotified());
       TEST_ASSERT(observerA.value() == 0);
@@ -87,6 +90,7 @@ public:
       TEST_ASSERT(observerB.value() == 0);
 
       signal.addObserver(observerB, &Observer1::update);
+      TEST_ASSERT(signal.nObserver() == 2);
 
       value = 4;
       signal.notify(value);
@@ -94,6 +98,14 @@ public:
       TEST_ASSERT(observerA.isNotified());
       TEST_ASSERT(observerA.value() == 4);
 
+      TEST_ASSERT(observerB.isNotified());
+      TEST_ASSERT(observerB.value() == 4);
+
+      signal.clear();
+      TEST_ASSERT(signal.nObserver() == 0);
+
+      TEST_ASSERT(observerA.isNotified());
+      TEST_ASSERT(observerA.value() == 4);
       TEST_ASSERT(observerB.isNotified());
       TEST_ASSERT(observerB.value() == 4);
 
@@ -105,7 +117,10 @@ public:
       Signal<> signal;
       Observer0 observerA;
       Observer0 observerB;
+
+      TEST_ASSERT(signal.nObserver() == 0);
       signal.addObserver(observerA, &Observer0::update);
+      TEST_ASSERT(signal.nObserver() == 1);
 
       TEST_ASSERT(!observerA.isNotified());
       TEST_ASSERT(!observerB.isNotified());
@@ -116,8 +131,15 @@ public:
       TEST_ASSERT(!observerB.isNotified());
 
       signal.addObserver(observerB, &Observer0::update);
+      TEST_ASSERT(signal.nObserver() == 2);
 
       signal.notify();
+
+      TEST_ASSERT(observerA.isNotified());
+      TEST_ASSERT(observerB.isNotified());
+
+      signal.clear();
+      TEST_ASSERT(signal.nObserver() == 0);
 
       TEST_ASSERT(observerA.isNotified());
       TEST_ASSERT(observerB.isNotified());

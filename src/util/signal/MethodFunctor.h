@@ -30,13 +30,18 @@ namespace Util
       /**
       * Constructor.
       *
-      * \param objectPtr pointer to invoking object
+      * \param object    invoking object
       * \param methodPtr pointer to member function
       */
-      MethodFunctor(Object* objectPtr, Method1Ptr methodPtr) 
-       : objectPtr_(objectPtr),
+      MethodFunctor(Object& object, Method1Ptr methodPtr) 
+       : objectPtr_(&object),
          methodPtr_(methodPtr)
       {}
+
+      /**
+      * Destructor.
+      */
+      virtual ~MethodFunctor(){}
 
       virtual void operator () (const T& t)
       {  (objectPtr_->*methodPtr_)(t); }
@@ -61,13 +66,18 @@ namespace Util
       /**
       * Constructor.
       *
-      * \param objectPtr pointer to invoking object
+      * \param object    invoking object
       * \param methodPtr pointer to member function
       */
-      MethodFunctor(Object* objectPtr, Method0Ptr methodPtr) 
-       : objectPtr_(objectPtr),
+      MethodFunctor(Object& object, Method0Ptr methodPtr) 
+       : objectPtr_(&object),
          methodPtr_(methodPtr)
       {}
+
+      /**
+      * Destructor.
+      */
+      virtual ~MethodFunctor(){}
 
       virtual void operator () ()
       {  (objectPtr_->*methodPtr_)(); }

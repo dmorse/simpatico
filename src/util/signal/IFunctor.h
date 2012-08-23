@@ -22,6 +22,11 @@ namespace Util
    public:
 
       /**
+      * Destructor (virtual)
+      */
+      virtual ~IFunctor(){}
+
+      /**
       * Call the associated function.
       *
       * \param t parameter value passed to associated function.
@@ -41,6 +46,11 @@ namespace Util
    class IFunctor<void> {
 
    public: 
+
+      /**
+      * Destructor (virtual)
+      */
+      virtual ~IFunctor(){}
 
       /**
       * Call a specific member function with one parameter.
