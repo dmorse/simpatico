@@ -62,7 +62,7 @@ public:
    void tearDown()
    {};
 
-   void testMethod1() 
+   void testObserver1() 
    {
       printMethod(TEST_FUNC);
       Observer1        observer;
@@ -79,7 +79,7 @@ public:
       TEST_ASSERT(observer.value() == 3);
    }
 
-   void testMethod0() 
+   void testObserver0() 
    {
       printMethod(TEST_FUNC);
 
@@ -95,8 +95,8 @@ public:
 };
 
 TEST_BEGIN(MethodFunctorTest)
-TEST_ADD(MethodFunctorTest, testMethod1)
-TEST_ADD(MethodFunctorTest, testMethod0)
+TEST_ADD(MethodFunctorTest, testObserver1)
+TEST_ADD(MethodFunctorTest, testObserver0)
 TEST_END(MethodFunctorTest)
 
 #endif
