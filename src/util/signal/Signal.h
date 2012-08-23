@@ -37,7 +37,15 @@ namespace Util
 
       // Compiler default constructor.
 
-      // Compiler destructor.
+      /**
+      * Default constructor.
+      */
+      Signal(){};
+  
+      /**
+      * Destructor.
+      */
+      ~Signal();
   
       /**
       * Register an observer.
@@ -68,7 +76,20 @@ namespace Util
       /// A linked list of functors associated with member functions.
       std::list<IFunctor<T>*> functorPtrs_;
 
+      /// Copy constructor - private to prevent copying.
+      Signal(const Signal<T>& other);
+
+      /// Assignment operator - private to prevent assignment.
+      Signal<T>& operator = (const Signal<T>& other);
+
    };
+
+   /*
+   * Destructor.
+   */
+   template <typename T>
+   Signal<T>::~Signal()
+   {  clear(); }
 
    /* 
    * Register an observer (add to list).
@@ -136,9 +157,15 @@ namespace Util
    
    public:
 
-      // Compiler default constructor.
+      /**
+      * Default constructor.
+      */
+      Signal(){};
 
-      // Compiler destructor.
+      /**
+      * Destructor.
+      */
+      ~Signal();
   
       /**
       * Register an observer.
@@ -169,7 +196,19 @@ namespace Util
       /// A linked list of functors associated with member functions.
       std::list<IFunctor<>*> functorPtrs_;
 
+      /// Copy constructor - private to prevent copying.
+      Signal(const Signal<>& other);
+
+      /// Assignment operator - private to prevent assignment.
+      Signal<>& operator = (const Signal<>& other);
+
    };
+
+   /*
+   * Destructor.
+   */
+   Signal<>::~Signal()
+   {  clear(); }
 
    /* 
    * Register an observer (add to list).
