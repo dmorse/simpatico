@@ -24,6 +24,7 @@
 #include <util/space/Tensor.h>                   // member (template param)
 #include <util/containers/DArray.h>              // member (template)
 #include <util/util/Setable.h>                   // member (template)
+#include <util/signals/Signal.h>                  // members
 
 namespace Util { 
    template <typename T> class Factory; 
@@ -224,6 +225,11 @@ namespace DdMd
       double kineticEnergy();
 
       /**
+      * Mark kinetic energy as unknown.
+      */
+      void unsetKineticEnergy();
+
+      /**
       * Calculate and store total potential energy on all processors.
       * 
       * Reduce operation: Must be called on all nodes.
@@ -238,6 +244,11 @@ namespace DdMd
       * \return total potential energy (only correct on master node).
       */
       double potentialEnergy() const;
+
+      /**
+      * Mark all potential energies as unknown.
+      */
+      void unsetPotentialEnergies();
 
       /**
       * Calculate and store kinetic stress.
@@ -265,9 +276,15 @@ namespace DdMd
       double kineticPressure() const;
 
       /**
-      * Calculate and store virial stress.
-      * 
-      * Reduce operation: Must be called on all nodes.
+      * Mark kinetic stress as unknown.
+      */
+      void unsetKineticStress();
+
+      /**
+      * Calculate and store all virial stress contributions.
+      *
+      * Reduce operation: Must be called on all nodes. This
+      * method calls computeStress for each potential.
       */
       void computeVirialStress();
 
@@ -275,6 +292,7 @@ namespace DdMd
       * Return total virial stress.
       *
       * Call only on master processor, after computeVirialStress.
+      * This method computes result by adding pair, bond, etc.
       * 
       * \return total virial stress (only correct on master node).
       */
@@ -284,10 +302,18 @@ namespace DdMd
       * Return total virial pressure.
       *
       * Call only on master processor, after computeVirialStress.
+      * This method computes result by adding pair, bond, etc.
       * 
       * \return total virial pressure (only correct on master node).
       */
       double virialPressure() const;
+
+      /**
+      * Mark all virial stress contributions as unknown.
+      *
+      * This method calls unsetStress for each potential energy.
+      */
+      void unsetVirialStress();
 
       //@}
       /// \name Potential Energy Factories and Styles
@@ -512,7 +538,23 @@ namespace DdMd
       bool reverseUpdateFlag() const;
 
       //@}
+      /// \name Signals
+      //@{ 
+      
+      /// Signal to indicate change in atomic positions.
+      Signal<>& positionSignal();
 
+      /// Signal to indicate change in atomic velocities.
+      Signal<>& velocitySignal();
+
+      /// Signal to indicate change in atomic forces.
+      Signal<>& forceSignal();
+
+      /// Signal to force unsetting of all computed quantities.
+      Signal<>& modifySignal();
+
+      //@}
+      
       /**
       * Return true if this Simulation is valid, or throw an Exception.
       */
@@ -723,6 +765,18 @@ namespace DdMd
       /// Is reverse communication enabled?
       bool reverseUpdateFlag_;
 
+      /// Signal to indicate change in atomic positions.
+      Signal<>  positionSignal_;
+
+      /// Signal to indicate change in atomic velocities.
+      Signal<>  velocitySignal_;
+
+      /// Signal to indicate change in atomic forces.
+      Signal<>  forceSignal_;
+
+      /// Signal to force clearing of all computed quantities.
+      Signal<>  clearAllSignal_;
+
    // friends:
 
       friend class SimulationAccess;
@@ -896,6 +950,22 @@ namespace DdMd
 
    inline bool Simulation::reverseUpdateFlag() const
    {  return reverseUpdateFlag_; }
+
+   /// Signal to force unsetting of all computed quantities.
+   inline Signal<>& modifySignal();
+   {  return modifySignal_; }
+
+   /// Signal to indicate change in atomic positions.
+   inline Signal<>& positionSignal();
+   { return positionSignal_; }
+
+   /// Signal to indicate change in atomic velocities.
+   inline Signal<>& velocitySignal()
+   { return velocitySignal_; }
+
+   /// Signal to indicate change in atomic forces.
+   inline Signal<>& forceSignal()
+   {  return forceSignal_; }
 
 }
 #endif

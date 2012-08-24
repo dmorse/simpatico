@@ -749,6 +749,18 @@ namespace DdMd
       return pressure;
    }
 
+   /*
+   * Mark kinetic energy as unknown.
+   */
+   void Simulation::unsetKineticEnergy()
+   {  kineticEnergy_.unset(); }
+
+   /*
+   * Mark kinetic stress as unknown.
+   */
+   void Simulation::unsetKineticStress()
+   {  kineticStress_.unset(); }
+
    #ifdef UTIL_MPI
 
    /*
@@ -827,6 +839,24 @@ namespace DdMd
       }
       #endif
       return energy;
+   }
+
+   /*
+   * Mark all potential energies as unknown.
+   */
+   void Simulation::unsetPotentialEnergies()
+   {
+      pairPotential().unsetEnergy();
+      bondPotential().unsetEnergy();
+      #ifdef INTER_ANGLE
+      anglePotential().unsetEnergy();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotential().unsetEnergy();
+      #endif
+      #ifdef INTER_EXTERNAL
+      externalPotential().unsetEnergy();
+      #endif
    }
 
    #ifdef UTIL_MPI
@@ -913,6 +943,24 @@ namespace DdMd
       }
       #endif
       return pressure;
+   }
+
+   /*
+   * Mark all potential energies as unknown.
+   */
+   void Simulation::unsetVirialStress()
+   {
+      pairPotential().unsetStress();
+      bondPotential().unsetStress();
+      #ifdef INTER_ANGLE
+      anglePotential().unsetStress();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotential().unsetStress();
+      #endif
+      #ifdef INTER_EXTERNAL
+      externalPotential().unsetStress();
+      #endif
    }
 
    /*
