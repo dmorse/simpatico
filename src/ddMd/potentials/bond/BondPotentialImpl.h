@@ -284,7 +284,7 @@ namespace DdMd
    #endif
    { 
 
-      // Compute only if energy is not set.
+      // Do nothing and return if energy is already set.
       if (isEnergySet()) return;
  
       double localEnergy = 0.0; 
@@ -365,7 +365,7 @@ namespace DdMd
    void BondPotentialImpl<Interaction>::computeStress()
    #endif
    {
-      // Compute only if necessary
+      // Do nothing and return if stress is already set.
       if (isStressSet()) return;
  
       Tensor localStress;

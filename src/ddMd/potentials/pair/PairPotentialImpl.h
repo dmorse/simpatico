@@ -317,7 +317,7 @@ namespace DdMd
    void PairPotentialImpl<Interaction>::computeEnergy()
    #endif
    {
-      // Compute only if energy is not set.
+      // Do nothing (return) if energy is already set.
       if (isEnergySet()) return;
  
       double localEnergy = 0.0; 
@@ -712,7 +712,7 @@ namespace DdMd
    void PairPotentialImpl<Interaction>::computeStress()
    #endif
    {
-      // Compute only if stress is not set.
+      // Do nothing if stress is already set.
       if (isStressSet()) return;
  
       Tensor localStress;

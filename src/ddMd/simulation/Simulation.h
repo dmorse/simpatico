@@ -541,6 +541,9 @@ namespace DdMd
       /// \name Signals
       //@{ 
       
+      /// Signal to force unsetting of all computed quantities.
+      Signal<>& modifySignal();
+
       /// Signal to indicate change in atomic positions.
       Signal<>& positionSignal();
 
@@ -549,9 +552,6 @@ namespace DdMd
 
       /// Signal to indicate change in atomic forces.
       Signal<>& forceSignal();
-
-      /// Signal to force unsetting of all computed quantities.
-      Signal<>& modifySignal();
 
       //@}
       

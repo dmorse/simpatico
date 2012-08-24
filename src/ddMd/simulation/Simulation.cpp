@@ -569,6 +569,17 @@ namespace DdMd
    {  readCommands(fileMaster().commandFile()); }
 
    /*
+   * Set flag to specify if reverse communication is enabled.
+   */
+   void Simulation::setReverseUpdateFlag(bool reverseUpdateFlag)
+   {  
+      reverseUpdateFlag_ = reverseUpdateFlag; 
+      if (pairPotentialPtr_) {
+         pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag);
+      }
+   }
+
+   /*
    * Choose velocities from a Boltzmann distribution.
    */
    void Simulation::setBoltzmannVelocities(double temperature)
@@ -583,6 +594,7 @@ namespace DdMd
             atomIter->velocity()[i] = scale*random_.gaussian();
          }
       }
+      velocitySignal().notify();
    }
 
    /*
@@ -655,14 +667,14 @@ namespace DdMd
       integratorPtr_->run(nStep);
    }
 
+   // Kinetic Energy methods ------------------------------------------------------
+
    /*
-   * Calculate total kinetic energy
-   *
-   * Call on all processors. 
+   * Calculate total kinetic energy (call on all processors).
    */
    void Simulation::computeKineticEnergy()
    {
-      // Evaluate only if necesary.
+      // Do nothing if kinetic energy is already set.
       if (kineticEnergy_.isSet()) return;
 
       double localEnergy = 0.0;
@@ -702,6 +714,14 @@ namespace DdMd
    {  return kineticEnergy_.value(); }
 
    /*
+   * Mark kinetic energy as unknown.
+   */
+   void Simulation::unsetKineticEnergy()
+   {  kineticEnergy_.unset(); }
+
+   // Kinetic Stress methods ------------------------------------------------------
+   
+   /*
    * Compute total kinetic stress, store on master proc.
    *
    * Call on all processors. 
@@ -709,7 +729,7 @@ namespace DdMd
    void Simulation::computeKineticStress()
    {
 
-      // Evaluate only if necesary.
+      // Do nothing and return if kinetic stress is already set
       if (kineticStress_.isSet()) return;
 
       Tensor localStress;
@@ -719,7 +739,7 @@ namespace DdMd
 
       localStress.zero();
 
-      // For each local atoms on this processor, stress(i, j) += m*v[i]*v[j].
+      // For each local atoms on this processor, stress(i, j) += m*v[i]*v[j]
       AtomIterator atomIter;
       atomStorage_.begin(atomIter); 
       for( ; atomIter.notEnd(); ++atomIter){
@@ -733,10 +753,11 @@ namespace DdMd
          }
       }
 
+      // Divide dyad sum by system volume
       localStress /= boundary().volume();
 
       #ifdef UTIL_MPI
-      // Sum values from all processors.
+      // Sum values from all processors
       Tensor totalStress;
       domain_.communicator().Reduce(&localStress(0, 0), &totalStress(0, 0), 
                                     Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
@@ -769,17 +790,13 @@ namespace DdMd
    }
 
    /*
-   * Mark kinetic energy as unknown.
-   */
-   void Simulation::unsetKineticEnergy()
-   {  kineticEnergy_.unset(); }
-
-   /*
    * Mark kinetic stress as unknown.
    */
    void Simulation::unsetKineticStress()
    {  kineticStress_.unset(); }
 
+   // Potential Energy Methods ------------------------------------------------------
+   
    #ifdef UTIL_MPI
 
    /*
@@ -835,6 +852,16 @@ namespace DdMd
    #endif
 
    /*
+   * Methods computePotentialEnergies and computeStress rely on use
+   * of lazy (as-needed) evaluation within the compute methods of 
+   * each of the potential energy classes: Each potential energy or
+   * virial contribution is actually computed only if it has been
+   * unset since the last evaluation. Lazy evaluation is implemented
+   * explicitly in the Simulation class only for the kinetic energy
+   * and kinetic stress, which are stored as members of Simulation.
+   */ 
+
+   /*
    * Compute all potential energy contributions.
    */
    double Simulation::potentialEnergy() const
@@ -849,15 +876,18 @@ namespace DdMd
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         energy += dihedralPotential().energy();
+         energy += dihedralPotentialPtr_->energy();
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
-         energy += externalPotential().energy();
+         energy += externalPotentialPtr_->energy();
       }
       #endif
       return energy;
+
+      // Note: Pointers used above because ...Potential()) accessors 
+      // return non-const references, which violate the method const.
    }
 
    /*
@@ -878,6 +908,8 @@ namespace DdMd
       #endif
    }
 
+   // Virial Stress Methods ------------------------------------------------------
+   
    #ifdef UTIL_MPI
    /*
    * Compute all virial stress contributions.
@@ -979,6 +1011,8 @@ namespace DdMd
       #endif
    }
 
+   // Config File Read and Write -------------------------------------
+
    /*
    * Read configuration file on master and distribute atoms.
    */
@@ -1036,6 +1070,8 @@ namespace DdMd
       }
    }
 
+   // Potential Factories and Styles -------------------------------------
+   
    #ifndef DDMD_NOPAIR
    /*
    * Return the PairFactory by reference.
@@ -1134,6 +1170,8 @@ namespace DdMd
    {  return externalStyle_;  }
    #endif
 
+   // Integrator and ConfigIo Management -------------------------------
+   
    /*
    * Return the IntegratorFactory by reference.
    */
@@ -1145,8 +1183,6 @@ namespace DdMd
       assert(integratorFactoryPtr_);
       return *integratorFactoryPtr_;
    }
-
-   // ConfigIoIo Management
 
    /*
    * Return the ConfigIoFactory by reference.
@@ -1185,6 +1221,8 @@ namespace DdMd
       configIoPtr_->initialize();
    }
 
+   // Validation ------------------------------------------------------
+   
    /**
    * Return true if this Simulation is valid, or throw an Exception.
    */
@@ -1236,17 +1274,6 @@ namespace DdMd
       #endif // ifdef UTIL_MPI
 
       return true; 
-   }
-
-   /*
-   * Set flag to specify if reverse communication is enabled.
-   */
-   void Simulation::setReverseUpdateFlag(bool reverseUpdateFlag)
-   {  
-      reverseUpdateFlag_ = reverseUpdateFlag; 
-      if (pairPotentialPtr_) {
-         pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag);
-      }
    }
 
 }

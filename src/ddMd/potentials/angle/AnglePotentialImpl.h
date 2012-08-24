@@ -295,6 +295,10 @@ namespace DdMd
    void AnglePotentialImpl<Interaction>::computeEnergy()
    #endif
    {
+
+      // Do nothing and return if energy is already set.
+      if (isEnergySet()) return;
+ 
       double localEnergy = 0.0; 
       double totalEnergy = 0.0; 
       localEnergy = addForces(false, true); 
@@ -382,6 +386,9 @@ namespace DdMd
    void AnglePotentialImpl<Interaction>::computeStress()
    #endif
    {
+      // Do nothing and return if stress is already set.
+      if (isStressSet()) return;
+ 
       Tensor localStress;
       Vector dr1, dr2;
       Vector f1, f2;
@@ -427,7 +434,7 @@ namespace DdMd
       #ifdef UTIL_MPI
       // Reduce results from all processors
       Tensor totalStress;
-      int    root = 0;
+      int root = 0;
       communicator.Reduce(&localStress(0, 0), &totalStress(0, 0), 
                           Dimension*Dimension, MPI::DOUBLE, MPI::SUM, root);
       if (communicator.Get_rank() != root) {

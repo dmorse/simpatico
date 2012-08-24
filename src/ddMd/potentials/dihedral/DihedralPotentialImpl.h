@@ -307,6 +307,10 @@ namespace DdMd
    void DihedralPotentialImpl<Interaction>::computeEnergy()
    #endif
    { 
+
+      // Do nothing and return if energy is already set.
+      if (isEnergySet()) return;
+ 
       double localEnergy = 0.0; 
       localEnergy = addForces(false, true); 
       #ifdef UTIL_MPI
@@ -402,6 +406,10 @@ namespace DdMd
    void DihedralPotentialImpl<Interaction>::computeStress()
    #endif
    {
+      // Do nothing and return if stress is already set.
+      if (isStressSet()) return;
+ 
+
       Tensor localStress;
       Vector dr1, dr2, dr3;
       Vector f1,  f2, f3;
@@ -439,11 +447,10 @@ namespace DdMd
       Tensor totalStress;
       communicator.Reduce(&localStress(0, 0), &totalStress(0, 0), 
                           Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator.Get_rank() == 0) {
-         setStress(totalStress);
-      } else {
-         unsetStress();
+      if (communicator.Get_rank() != 0) {
+         totalStress.zero();
       }
+      setStress(totalStress);
       #else
       setStress(localStress);
       #endif

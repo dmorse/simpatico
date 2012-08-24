@@ -41,6 +41,9 @@ namespace DdMd
       bool needExchange;
       nStep_ = nStep;
 
+      // Clear all stored computations.
+      simulation().modifySignal().notify();
+
       // Main MD loop
       timer().start();
       exchanger().timer().start();
@@ -86,9 +89,8 @@ namespace DdMd
             timer().stamp(UPDATE);
          }
    
-         // Calculate new forces for all local atoms
+         // Calculate new forces for all local atoms (sends force signal).
          computeForces();
-         simulation().forceSignal().notify();
 
          // 2nd step of integration: Finish velocity update.
          integrateStep2();
