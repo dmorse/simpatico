@@ -16,6 +16,8 @@
 #include "WriteConfig.h"
 #include "OutputEnergy.h"
 #include "OutputPressure.h"
+#include "OutputBoxdim.h"
+#include "OutputTemperature.h"
 
 namespace DdMd
 {
@@ -49,6 +51,12 @@ namespace DdMd
       } else 
       if (className == "OutputPressure") {
          ptr = new OutputPressure(simulation());
+      } else
+      if (className == "OutputBoxdim") {
+         ptr = new OutputBoxdim(simulation());
+      }
+      if (className == "OutputTemperature") {
+         ptr = new OutputTemperature(simulation());
       }
       return ptr;
    }
