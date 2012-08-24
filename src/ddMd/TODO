@@ -1,3 +1,28 @@
+Memory reporting
+----------------
+
+- Add memory statistics for Buffer.
+- Add memory statistics for AtomStorage and GroupStorage.
+- Improve pair statistics for PairList.
+
+Event Handling
+--------------
+
+- Modify Notifier / Observer code to allow for signals with 
+
+  1) Signals with no event object
+  2) Registration of arbitrary method as update method.
+  3) Notifiers and observers as members rather than base classes.
+
+- Create notifiers for basic actions in integration loop. 
+
+Dynamic Resizing
+----------------
+
+- Allow for dynamic resizing of Storage classes.
+
+- Allow for dynamic resizing of Buffer class.
+
 Testing
 -------
 
@@ -24,11 +49,9 @@ Constant Pressure:
 Hybrid MD
 ----------
 
-- Add arriving_ and departing_ pointer arrays to storage classes.
+- Finish and test transactions in AtomStorage (in branch).
 
-- Add lists of old atom positions to AtomStorage.
-
-- Add methods to commit or revert the state of each storage.
+- Add transactions to GroupStorage (in branch).
 
 Cell List and Pair List:
 ------------------------
@@ -82,8 +105,6 @@ Buffer:
 - Check cursor against end of block in unpack method template.
 
 - Move pack/unpack methods to methods of Atom and Group classes.
-
-- Add memory statistics for Buffer.
 
 - Add values INT, DOUBLE, VECTOR to enumeration of types.
 
