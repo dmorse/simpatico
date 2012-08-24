@@ -55,6 +55,12 @@ namespace DdMd
    {  energy_.unset(); }
 
    /*
+   * Is the energy set?
+   */
+   bool Potential::isEnergySet() const
+   {  return energy_.isSet(); }
+
+   /*
    * Set a value for the total stress.
    */
    Tensor Potential::stress() const
@@ -84,6 +90,12 @@ namespace DdMd
    */
    void Potential::unsetStress()
    {  stress_.unset(); }
+
+   /*
+   * Is the stress set?
+   */
+   bool Potential::isStressSet() const
+   {  return stress_.isSet(); }
 
 }
 #endif

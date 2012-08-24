@@ -24,7 +24,7 @@
 #include <util/space/Tensor.h>                   // member (template param)
 #include <util/containers/DArray.h>              // member (template)
 #include <util/util/Setable.h>                   // member (template)
-#include <util/signals/Signal.h>                  // members
+#include <util/signal/Signal.h>                  // members
 
 namespace Util { 
    template <typename T> class Factory; 
@@ -765,6 +765,9 @@ namespace DdMd
       /// Is reverse communication enabled?
       bool reverseUpdateFlag_;
 
+      /// Signal to force clearing of all computed quantities.
+      Signal<>  modifySignal_;
+
       /// Signal to indicate change in atomic positions.
       Signal<>  positionSignal_;
 
@@ -773,9 +776,6 @@ namespace DdMd
 
       /// Signal to indicate change in atomic forces.
       Signal<>  forceSignal_;
-
-      /// Signal to force clearing of all computed quantities.
-      Signal<>  clearAllSignal_;
 
    // friends:
 
@@ -952,19 +952,19 @@ namespace DdMd
    {  return reverseUpdateFlag_; }
 
    /// Signal to force unsetting of all computed quantities.
-   inline Signal<>& modifySignal();
+   inline Signal<>& Simulation::modifySignal()
    {  return modifySignal_; }
 
    /// Signal to indicate change in atomic positions.
-   inline Signal<>& positionSignal();
+   inline Signal<>& Simulation::positionSignal()
    { return positionSignal_; }
 
    /// Signal to indicate change in atomic velocities.
-   inline Signal<>& velocitySignal()
+   inline Signal<>& Simulation::velocitySignal()
    { return velocitySignal_; }
 
    /// Signal to indicate change in atomic forces.
-   inline Signal<>& forceSignal()
+   inline Signal<>& Simulation::forceSignal()
    {  return forceSignal_; }
 
 }

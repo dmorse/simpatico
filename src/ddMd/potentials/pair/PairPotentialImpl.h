@@ -316,7 +316,10 @@ namespace DdMd
    #else
    void PairPotentialImpl<Interaction>::computeEnergy()
    #endif
-   { 
+   {
+      // Compute only if energy is not set.
+      if (isEnergySet()) return;
+ 
       double localEnergy = 0.0; 
       if (methodId() == 0) {
          localEnergy = energyList(); 
@@ -331,6 +334,9 @@ namespace DdMd
       double totalEnergy = 0.0; 
       communicator.Reduce(&localEnergy, &totalEnergy, 1, 
                           MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator.Get_rank() != 0) {
+         totalEnergy = 0.0;
+      }
       setEnergy(totalEnergy);
       #else
       setEnergy(localEnergy);
@@ -706,6 +712,9 @@ namespace DdMd
    void PairPotentialImpl<Interaction>::computeStress()
    #endif
    {
+      // Compute only if stress is not set.
+      if (isStressSet()) return;
+ 
       Tensor localStress;
       Vector dr;
       Vector f;
@@ -756,11 +765,10 @@ namespace DdMd
       Tensor totalStress;
       communicator.Reduce(&localStress(0,0), &totalStress(0,0), 
                           Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator.Get_rank() == 0) {
-         setStress(totalStress);
-      } else {
-         unsetStress();
+      if (communicator.Get_rank() != 0) {
+         totalStress.zero();
       }
+      setStress(totalStress);
       #else
       setStress(localStress);
       #endif

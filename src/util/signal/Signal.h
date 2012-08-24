@@ -204,53 +204,12 @@ namespace Util
 
    };
 
-   /*
-   * Destructor.
-   */
-   Signal<>::~Signal()
-   {  clear(); }
-
    /* 
    * Register an observer (add to list).
    */
    template <class Observer> void 
    Signal<>::addObserver(Observer& observer, void (Observer::*methodPtr)())
    {  functorPtrs_.push_back(new MethodFunctor<Observer>(observer, methodPtr)); }
-
-   /* 
-   * Notify observers (call associated methods).
-   */
-   void Signal<>::notify()
-   {
-      typename std::list< IFunctor<>* >::iterator pos;
-      pos = functorPtrs_.begin();
-      while (pos != functorPtrs_.end())
-      {
-         (**pos)();
-         ++pos;
-      }
-   }
-
-   /* 
-   * Notify observers (call associated methods).
-   */
-   void Signal<>::clear()
-   {
-      typename std::list< IFunctor<>* >::iterator pos;
-      pos = functorPtrs_.begin();
-      while (pos != functorPtrs_.end())
-      {
-         delete *pos;
-         ++pos;
-      }
-      functorPtrs_.clear();
-   }
-
-   /* 
-   * Get number of registered observers.
-   */
-   int Signal<>::nObserver() const
-   { return functorPtrs_.size(); }
 
 }
 #endif 

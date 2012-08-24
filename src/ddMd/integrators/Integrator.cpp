@@ -95,6 +95,9 @@ namespace DdMd
       if (reverseUpdateFlag()) {
          exchanger().reverseUpdate();
       }
+
+      // Send signal indicating change in atomic forces
+      simulation().forceSignal().notify();
    }
 
    /*

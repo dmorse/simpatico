@@ -400,6 +400,18 @@ namespace DdMd
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
 
+      // Set signals
+      modifySignal().addObserver(*this, &Simulation::unsetKineticEnergy );
+      modifySignal().addObserver(*this, &Simulation::unsetKineticStress );
+      modifySignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
+      modifySignal().addObserver(*this, &Simulation::unsetVirialStress );
+
+      velocitySignal().addObserver(*this, &Simulation::unsetKineticEnergy );
+      velocitySignal().addObserver(*this, &Simulation::unsetKineticStress );
+
+      positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
+      positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
+
       readEnd(in);
    }
 
@@ -650,6 +662,9 @@ namespace DdMd
    */
    void Simulation::computeKineticEnergy()
    {
+      // Evaluate only if necesary.
+      if (kineticEnergy_.isSet()) return;
+
       double localEnergy = 0.0;
       double mass;
       int typeId;
@@ -693,6 +708,10 @@ namespace DdMd
    */
    void Simulation::computeKineticStress()
    {
+
+      // Evaluate only if necesary.
+      if (kineticStress_.isSet()) return;
+
       Tensor localStress;
       double  mass;
       Vector  velocity;
@@ -957,9 +976,6 @@ namespace DdMd
       #endif
       #ifdef INTER_DIHEDRAL
       dihedralPotential().unsetStress();
-      #endif
-      #ifdef INTER_EXTERNAL
-      externalPotential().unsetStress();
       #endif
    }
 

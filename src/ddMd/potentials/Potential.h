@@ -89,6 +89,11 @@ namespace DdMd
       void unsetEnergy();
 
       /**
+      * Is the energy set (known)?
+      */
+      bool isEnergySet() const;
+
+      /**
       * Compute stress on all processors.
       *
       * This method must be called on all processors. The result 
@@ -123,6 +128,11 @@ namespace DdMd
       * This should be called whenever atom positions or boundary changes.
       */
       void unsetStress();
+
+      /**
+      * Is the stress set (known)?
+      */
+      bool isStressSet() const;
 
       //@}
 

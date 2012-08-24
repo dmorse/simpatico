@@ -55,6 +55,7 @@ namespace DdMd
  
          // First step of integration: Update positions, half velocity 
          integrateStep1();
+         simulation().modifySignal().notify();
          timer().stamp(INTEGRATE1);
    
          // Check if exchange and reneighboring is necessary
@@ -87,9 +88,11 @@ namespace DdMd
    
          // Calculate new forces for all local atoms
          computeForces();
+         simulation().forceSignal().notify();
 
          // 2nd step of integration: Finish velocity update.
          integrateStep2();
+         simulation().velocitySignal().notify();
          timer().stamp(INTEGRATE2);
    
       }

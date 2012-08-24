@@ -283,12 +283,19 @@ namespace DdMd
    void BondPotentialImpl<Interaction>::computeEnergy()
    #endif
    { 
+
+      // Compute only if energy is not set.
+      if (isEnergySet()) return;
+ 
       double localEnergy = 0.0; 
       localEnergy = addForces(false, true); 
       #ifdef UTIL_MPI
       double totalEnergy = 0.0; 
       communicator.Reduce(&localEnergy, &totalEnergy, 1, 
                           MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator.Get_rank() != 0) {
+         totalEnergy = 0.0;
+      }
       setEnergy(totalEnergy);
       #else
       setEnergy(localEnergy);
@@ -358,6 +365,9 @@ namespace DdMd
    void BondPotentialImpl<Interaction>::computeStress()
    #endif
    {
+      // Compute only if necessary
+      if (isStressSet()) return;
+ 
       Tensor localStress;
       Vector dr;
       Vector f;
