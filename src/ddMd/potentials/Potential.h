@@ -82,6 +82,13 @@ namespace DdMd
       double energy() const;
 
       /**
+      * Mark the energy as unknown (nullify).
+      *
+      * This should be called whenever atom positions or boundary changes.
+      */
+      void unsetEnergy();
+
+      /**
       * Compute stress on all processors.
       *
       * This method must be called on all processors. The result 
@@ -110,6 +117,13 @@ namespace DdMd
       */
       double pressure() const;
 
+      /**
+      * Mark the stress as unknown (nullify).
+      *
+      * This should be called whenever atom positions or boundary changes.
+      */
+      void unsetStress();
+
       //@}
 
    protected:
@@ -120,19 +134,9 @@ namespace DdMd
       void setEnergy(double energy);
 
       /**
-      * Mark the energy as unknown (nullify).
-      */
-      void unsetEnergy();
-
-      /**
       * Set a value for the total stress.
       */
       void setStress(const Tensor& stress);
-
-      /**
-      * Mark the stress as unknown (nullify).
-      */
-      void unsetStress();
 
       /*
       * Add a pair contribution to the stress tensor.

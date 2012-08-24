@@ -1,0 +1,28 @@
+
+Main loop events (Integrator or Simulation?)
+
+    Signal<>   positionSignal; -> Potential Energies, Virial Stresses
+    Signal<>   velocitySignal; -> Kinetic Energy, Kinetic Stress
+    Signal<>   forceSignal;    -> Kinetic Energy, Kinetic Stress
+
+Boundary:
+
+    Signal<>   modifySignal  -> Stresses, Potential Energies
+
+
+PairPotential:
+
+    Signal<>   modifySignal; -> pair potential and stress (internal)
+
+similar for all other potentials.
+
+------------------------------------------------------------------------------------
+When to addObservers:
+
+    Internal observers can be added during construction:
+       Simulation::Simulation velocitySignal -> kinetic energy and stress
+       Potential::Potential:  modifySignal   -> potential energy and virial stresses
+
+    Simulation::readParam::   positionSignal  -> potentialEnergies and virial stresses
+                              boundary.modify -> all stresses and energies
+       
