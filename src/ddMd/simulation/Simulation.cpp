@@ -517,13 +517,15 @@ namespace DdMd
             integratorPtr_->outputStatistics(Log::file());
          } else
          if (command == "OUTPUT_EXCHANGER_STATS") {
-            int    nStep = integratorPtr_->nStep();
+            int nStep = integratorPtr_->nStep();
             double time  = integratorPtr_->time();
             exchanger_.outputStatistics(Log::file(), time, nStep);
          } else
          if (command == "OUTPUT_PAIRLIST_STATS") {
-            int    nStep = integratorPtr_->nStep();
-            pairPotential().pairList().outputStatistics(Log::file(), nStep);
+            int nStep = integratorPtr_->nStep();
+            if (domain_.isMaster()) {
+               pairPotential().pairList().outputStatistics(Log::file(), nStep);
+            }
          } else
          if (command == "WRITE_CONFIG") {
             inBuffer >> filename;
