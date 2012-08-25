@@ -99,11 +99,6 @@ namespace DdMd
       virtual void addForces();
 
       /**
-      * Add the bond forces for all atoms and compute energy.
-      */
-      virtual void addForces(double& energy);
-
-      /**
       * Compute the total bond energy for all processors
       * 
       * Call on all processors (MPI reduce operation).
@@ -138,13 +133,6 @@ namespace DdMd
       * Pointer to Interaction (evaluates the bond potential function).
       */ 
       Interaction* interactionPtr_;
-
-      /*
-      * Compute forces and/or energy.
-      *
-      * Return energy if energy is computed.
-      */
-      double addForces(bool needForce, bool needEnergy);
 
    };
 
@@ -263,65 +251,13 @@ namespace DdMd
    */
    template <class Interaction>
    void BondPotentialImpl<Interaction>::addForces()
-   {  addForces(true, false);  }
-
-   /*
-   * Increment atomic forces and compute pair energy for this processor.
-   */
-   template <class Interaction>
-   void BondPotentialImpl<Interaction>::addForces(double& energy)
-   {  energy = addForces(true, true);  }
-
-   /*
-   * Compute total bond energy on all processors.
-   */
-   template <class Interaction>
-   #ifdef UTIL_MPI
-   void 
-   BondPotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
-   #else
-   void BondPotentialImpl<Interaction>::computeEnergy()
-   #endif
-   { 
-
-      // Do nothing and return if energy is already set.
-      if (isEnergySet()) return;
- 
-      double localEnergy = 0.0; 
-      localEnergy = addForces(false, true); 
-      #ifdef UTIL_MPI
-      double totalEnergy = 0.0; 
-      communicator.Reduce(&localEnergy, &totalEnergy, 1, 
-                          MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator.Get_rank() != 0) {
-         totalEnergy = 0.0;
-      }
-      setEnergy(totalEnergy);
-      #else
-      setEnergy(localEnergy);
-      #endif
-   }
-
-   /*
-   * Increment atomic forces and/or pair energy (private).
-   */
-   template <class Interaction> double 
-   BondPotentialImpl<Interaction>::addForces(bool needForce, bool needEnergy)
-   {
-      // Preconditions
-      //if (!storage().isInitialized()) {
-      //   UTIL_THROW("BondStorage must be initialized");
-      //}
-
+   {  
       Vector f;
       double rsq;
-      double bondEnergy;
-      double energy = 0.0;
       GroupIterator<2> iter;
       Atom* atom0Ptr;
       Atom* atom1Ptr;
-      int type;
-      int isLocal0, isLocal1;
+      int type, isLocal0, isLocal1;
 
       storage().begin(iter);
       for ( ; iter.notEnd(); ++iter) {
@@ -332,27 +268,76 @@ namespace DdMd
          isLocal1 = !(atom1Ptr->isGhost());
          // Set f = r0 - r1, minimum image separation between atoms
          rsq = boundary().distanceSq(atom0Ptr->position(), 
-                                        atom1Ptr->position(), f);
-         if (needEnergy) {
-            bondEnergy = interactionPtr_->energy(rsq, type);
-            if (isLocal0 && isLocal1) {
-               energy += bondEnergy;
-            } else {
-               energy += 0.5*bondEnergy;
-            }
+                                     atom1Ptr->position(), f);
+         // Set force = (r0-r1)*(forceOverR)
+         f *= interactionPtr_->forceOverR(rsq, type);
+         if (isLocal0) {
+            atom0Ptr->force() += f;
          }
-         if (needForce) {
-            // Set force = (r0-r1)*(forceOverR)
-            f *= interactionPtr_->forceOverR(rsq, type);
-            if (isLocal0) {
-               atom0Ptr->force() += f;
-            }
-            if (isLocal1) {
-               atom1Ptr->force() -= f;
-            }
+         if (isLocal1) {
+            atom1Ptr->force() -= f;
          }
       }
-      return energy;
+   }
+
+   /*
+   * Compute total bond energy on all processors, store result on master.
+   */
+   template <class Interaction>
+   #ifdef UTIL_MPI
+   void 
+   BondPotentialImpl<Interaction>::computeEnergy(MPI::Intracomm& communicator)
+   #else
+   void BondPotentialImpl<Interaction>::computeEnergy()
+   #endif
+   { 
+
+      // If energy is already set, do nothing and return.
+      if (isEnergySet()) return;
+
+      Vector f;
+      double rsq;
+      double bondEnergy;
+      double localEnergy = 0.0;
+      GroupIterator<2> iter;
+      Atom* atom0Ptr;
+      Atom* atom1Ptr;
+      int type, isLocal0, isLocal1;
+
+      // Loop over bonds to compute localEnergy on this processor.
+      storage().begin(iter);
+      for ( ; iter.notEnd(); ++iter) {
+         type = iter->typeId();
+         atom0Ptr = iter->atomPtr(0);
+         atom1Ptr = iter->atomPtr(1);
+
+         // Calculate minimum image square distance between atoms
+         rsq = boundary().distanceSq(atom0Ptr->position(), 
+                                     atom1Ptr->position());
+         bondEnergy = interactionPtr_->energy(rsq, type);
+
+         isLocal0 = !(atom0Ptr->isGhost());
+         isLocal1 = !(atom1Ptr->isGhost());
+         if (isLocal0 && isLocal1) {
+            localEnergy += bondEnergy;
+         } else {
+            assert(isLocal0 || isLocal1);
+            localEnergy += 0.5*bondEnergy;
+         }
+      }
+
+      #ifdef UTIL_MPI
+      // Reduce bond energies from all processors.
+      double totalEnergy = 0.0; 
+      communicator.Reduce(&localEnergy, &totalEnergy, 1, 
+                          MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator.Get_rank() != 0) {
+         totalEnergy = 0.0;
+      }
+      setEnergy(totalEnergy);
+      #else
+      setEnergy(localEnergy);
+      #endif
    }
 
    /*
@@ -420,6 +405,61 @@ namespace DdMd
       #endif
 
    }
+
+   #if 0
+   /*
+   * Increment atomic forces and/or pair energy (private).
+   */
+   template <class Interaction> double 
+   BondPotentialImpl<Interaction>::addForces(bool needForce, bool needEnergy)
+   {
+      // Preconditions
+      //if (!storage().isInitialized()) {
+      //   UTIL_THROW("BondStorage must be initialized");
+      //}
+
+      Vector f;
+      double rsq;
+      double bondEnergy;
+      double energy = 0.0;
+      GroupIterator<2> iter;
+      Atom* atom0Ptr;
+      Atom* atom1Ptr;
+      int type;
+      int isLocal0, isLocal1;
+
+      storage().begin(iter);
+      for ( ; iter.notEnd(); ++iter) {
+         type = iter->typeId();
+         atom0Ptr = iter->atomPtr(0);
+         atom1Ptr = iter->atomPtr(1);
+         isLocal0 = !(atom0Ptr->isGhost());
+         isLocal1 = !(atom1Ptr->isGhost());
+         // Set f = r0 - r1, minimum image separation between atoms
+         rsq = boundary().distanceSq(atom0Ptr->position(), 
+                                        atom1Ptr->position(), f);
+         if (needEnergy) {
+            bondEnergy = interactionPtr_->energy(rsq, type);
+            if (isLocal0 && isLocal1) {
+               energy += bondEnergy;
+            } else {
+               energy += 0.5*bondEnergy;
+            }
+         }
+         if (needForce) {
+            // Set force = (r0-r1)*(forceOverR)
+            f *= interactionPtr_->forceOverR(rsq, type);
+            if (isLocal0) {
+               atom0Ptr->force() += f;
+            }
+            if (isLocal1) {
+               atom1Ptr->force() -= f;
+            }
+         }
+      }
+      return energy;
+   }
+   #endif
 
 }
 #endif
