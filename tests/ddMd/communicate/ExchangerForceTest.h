@@ -547,9 +547,9 @@ public:
       // Compute forces etc. with N^2 loop
       pairPotential.setMethodId(2); 
       zeroForces();
-      pairPotential.addForces();
+      pairPotential.computeForces();
       #ifdef TEST_EXCHANGER_FORCE_BOND
-      bondPotential.addForces();
+      bondPotential.computeForces();
       #endif
       if (reverseUpdateFlag) {
          object().reverseUpdate();
@@ -569,9 +569,9 @@ public:
       // Compute forces etc. with pair list
       pairPotential.setMethodId(0); // PairList
       zeroForces();
-      pairPotential.addForces();
+      pairPotential.computeForces();
       #ifdef TEST_EXCHANGER_FORCE_BOND
-      bondPotential.addForces();
+      bondPotential.computeForces();
       #endif
       if (reverseUpdateFlag) {
          object().reverseUpdate();
@@ -689,9 +689,9 @@ public:
 
       pairPotential.setMethodId(0); // PairList
       zeroForces();
-      pairPotential.addForces();
+      pairPotential.computeForces();
       #ifdef TEST_EXCHANGER_FORCE_BOND
-      bondPotential.addForces();
+      bondPotential.computeForces();
       #endif
       if (reverseUpdateFlag) {
          object().reverseUpdate();
@@ -777,9 +777,9 @@ public:
          // Calculate forces etc. by N^2 loop.
          zeroForces();
          pairPotential.setMethodId(2); // N^2 loop
-         pairPotential.addForces();
+         pairPotential.computeForces();
          #ifdef TEST_EXCHANGER_FORCE_BOND
-         bondPotential.addForces();
+         bondPotential.computeForces();
          #endif
          if (reverseUpdateFlag) {
             object().reverseUpdate();
@@ -797,9 +797,9 @@ public:
          // Calculate forces etc. via pair list.   
          zeroForces();
          pairPotential.setMethodId(0); // PairList
-         pairPotential.addForces();
+         pairPotential.computeForces();
          #ifdef TEST_EXCHANGER_FORCE_BOND
-         bondPotential.addForces();
+         bondPotential.computeForces();
          #endif
          if (reverseUpdateFlag) {
             object().reverseUpdate();
@@ -853,9 +853,9 @@ public:
             pairPotential.buildPairList();
             TEST_ASSERT(atomStorage.isCartesian());
             pairPotential.setMethodId(0);    
-            pairPotential.addForces();
+            pairPotential.computeForces();
             #ifdef TEST_EXCHANGER_FORCE_BOND
-            bondPotential.addForces();
+            bondPotential.computeForces();
             #endif
             saveForces();
             pairPotential.computeEnergy(domain.communicator());

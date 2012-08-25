@@ -118,14 +118,14 @@ namespace DdMd
       /**
       * Calculate external forces for all atoms in this Simulation.
       */
-      virtual void addForces();
+      virtual void computeForces();
 
       /**
       * Add external forces to atom forces, and compute energy.
       *
       * \param energy on output, contains energy for this processor.
       */
-      virtual void addForces(double& energy);
+      virtual void computeForces(double& energy);
 
       /**
       * Compute the total external energy for all processors
@@ -185,7 +185,7 @@ namespace DdMd
       /**
       * Calculate external forces and/or energy.
       */
-      double addForces(bool needForce, bool needEnergy);
+      double computeForces(bool needForce, bool needEnergy);
 
       #if 0 
       template <typename T>
@@ -324,18 +324,18 @@ namespace DdMd
    * Increment atomic forces, without calculating energy.
    */
    template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::addForces()
+   void ExternalPotentialImpl<Interaction>::computeForces()
    {  
-      addForces(true, false); 
+      computeForces(true, false); 
    }
 
    /*
    * Increment atomic forces, and compute total external energy.
    */
    template <class Interaction>
-   void ExternalPotentialImpl<Interaction>::addForces(double& energy)
+   void ExternalPotentialImpl<Interaction>::computeForces(double& energy)
    {  
-      energy = addForces(true, true); 
+      energy = computeForces(true, true); 
    }
 
    /*
@@ -350,7 +350,7 @@ namespace DdMd
    #endif
    { 
       double localEnergy = 0; 
-      localEnergy = addForces(false, true); 
+      localEnergy = computeForces(false, true); 
 
       #ifdef UTIL_MPI
       communicator.Reduce(&localEnergy, &energy_, 1, 
@@ -372,7 +372,7 @@ namespace DdMd
    */
    template <class Interaction>
    double 
-   ExternalPotentialImpl<Interaction>::addForces(bool needForce, 
+   ExternalPotentialImpl<Interaction>::computeForces(bool needForce, 
                                                  bool needEnergy)
    {
       // Preconditions

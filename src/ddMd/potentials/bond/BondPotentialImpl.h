@@ -96,7 +96,7 @@ namespace DdMd
       /**
       * Add the bond forces for all atoms.
       */
-      virtual void addForces();
+      virtual void computeForces();
 
       /**
       * Compute the total bond energy for all processors
@@ -250,7 +250,7 @@ namespace DdMd
    * Increment atomic forces, without calculating energy.
    */
    template <class Interaction>
-   void BondPotentialImpl<Interaction>::addForces()
+   void BondPotentialImpl<Interaction>::computeForces()
    {  
       Vector f;
       double rsq;
@@ -411,7 +411,7 @@ namespace DdMd
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction> double 
-   BondPotentialImpl<Interaction>::addForces(bool needForce, bool needEnergy)
+   BondPotentialImpl<Interaction>::computeForces(bool needForce, bool needEnergy)
    {
       // Preconditions
       //if (!storage().isInitialized()) {

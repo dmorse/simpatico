@@ -5,6 +5,12 @@
 #include <ddMd/chemistry/Atom.h>
 #include <util/space/Vector.h>
 
+#ifdef UTIL_MPI
+#ifndef TEST_MPI
+#define TEST_MPI
+#endif
+#endif
+
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 

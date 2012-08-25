@@ -11,7 +11,9 @@
 #include <util/mpi/MpiLogger.h>
 
 #ifdef UTIL_MPI
+#ifndef TEST_MPI
 #define TEST_MPI
+#endif
 #endif
 
 #include <test/ParamFileTest.h>

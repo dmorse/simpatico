@@ -14,6 +14,10 @@ Dynamic Resizing
 Testing
 -------
 
+- Fix CellTest 
+
+- Fix obsolete PairPotentialTest (change interface for PairPotential)
+
 - Improve testing of PairList - check that number of inner pairs doesn't
   change upon reneighboring, in unit tests and as optional test in integrator.
 
@@ -28,7 +32,12 @@ Flexible Unit Cells:
 Constant Pressure:
 ------------------
 
-- Add vFlag as argument of addForce() method of potentials.
+- Add computeForcesAndStress() methods to potentials.
+
+- Add requiresStress_ member, setter and accessor to Integrator.
+
+- In TwoStepIntegrator, if (requiresStress), call computeForceAndStress().
+
 
 Hybrid MD
 ----------

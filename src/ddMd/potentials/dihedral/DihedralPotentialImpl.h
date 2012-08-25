@@ -126,7 +126,7 @@ namespace DdMd
       /**
       * Add the dihedral forces for all atoms.
       */
-      virtual void addForces();
+      virtual void computeForces();
 
       /**
       * Compute the total dihedral energy for all processors
@@ -164,7 +164,7 @@ namespace DdMd
       *
       * Return energy if energy is computed.
       */
-      double addForces(bool needForce, bool needEnergy);
+      double computeForces(bool needForce, bool needEnergy);
 
    };
 
@@ -284,16 +284,16 @@ namespace DdMd
    * Increment atomic forces, without calculating energy.
    */
    template <class Interaction>
-   void DihedralPotentialImpl<Interaction>::addForces()
-   {  addForces(true, false);  }
+   void DihedralPotentialImpl<Interaction>::computeForces()
+   {  computeForces(true, false);  }
 
    #if 0
    /*
    * Increment atomic forces and compute pair energy for this processor.
    */
    template <class Interaction>
-   void DihedralPotentialImpl<Interaction>::addForces(double& energy)
-   {  energy = addForces(true, true);  }
+   void DihedralPotentialImpl<Interaction>::computeForces(double& energy)
+   {  energy = computeForces(true, true);  }
    #endif
 
    /*
@@ -312,7 +312,7 @@ namespace DdMd
       if (isEnergySet()) return;
  
       double localEnergy = 0.0; 
-      localEnergy = addForces(false, true); 
+      localEnergy = computeForces(false, true); 
       #ifdef UTIL_MPI
       double totalEnergy = 0.0;
       communicator.Reduce(&localEnergy, &totalEnergy, 1, 
@@ -330,7 +330,7 @@ namespace DdMd
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction> double 
-   DihedralPotentialImpl<Interaction>::addForces(bool needForce, bool needEnergy)
+   DihedralPotentialImpl<Interaction>::computeForces(bool needForce, bool needEnergy)
    {
       // Preconditions
       //if (!storage().isInitialized()) {

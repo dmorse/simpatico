@@ -58,7 +58,7 @@ namespace DdMd
       /**
       * Add force contributions to all atomic forces.
       */
-      virtual void addForces() = 0;
+      virtual void computeForces() = 0;
 
       /**
       * Compute potential energy on all processors.

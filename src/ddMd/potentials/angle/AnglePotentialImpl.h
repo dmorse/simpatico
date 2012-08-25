@@ -112,12 +112,12 @@ namespace DdMd
       /**
       * Add the angle forces for all atoms.
       */
-      virtual void addForces();
+      virtual void computeForces();
 
       /**
       * Add the angle forces for all atoms and compute energy.
       */
-      virtual void addForces(double& energy);
+      virtual void computeForces(double& energy);
 
       /**
       * Compute the total angle energy for all processors
@@ -155,7 +155,7 @@ namespace DdMd
       *
       * Return energy if energy is computed.
       */
-      double addForces(bool needForce, bool needEnergy);
+      double computeForces(bool needForce, bool needEnergy);
 
    };
 
@@ -274,15 +274,15 @@ namespace DdMd
    * Increment atomic forces, without calculating energy.
    */
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::addForces()
-   {  addForces(true, false);  }
+   void AnglePotentialImpl<Interaction>::computeForces()
+   {  computeForces(true, false);  }
 
    /*
    * Increment atomic forces and compute pair energy for this processor.
    */
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::addForces(double& energy)
-   {  energy = addForces(true, true);  }
+   void AnglePotentialImpl<Interaction>::computeForces(double& energy)
+   {  energy = computeForces(true, true);  }
 
    /*
    * Compute total angle energy on all processors.
@@ -301,7 +301,7 @@ namespace DdMd
  
       double localEnergy = 0.0; 
       double totalEnergy = 0.0; 
-      localEnergy = addForces(false, true); 
+      localEnergy = computeForces(false, true); 
       #ifdef UTIL_MPI
       communicator.Reduce(&localEnergy, &totalEnergy, 1, 
                           MPI::DOUBLE, MPI::SUM, 0);
@@ -318,7 +318,7 @@ namespace DdMd
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction> double 
-   AnglePotentialImpl<Interaction>::addForces(bool needForce, bool needEnergy)
+   AnglePotentialImpl<Interaction>::computeForces(bool needForce, bool needEnergy)
    {
       // Preconditions
       //if (!storage().isInitialized()) {

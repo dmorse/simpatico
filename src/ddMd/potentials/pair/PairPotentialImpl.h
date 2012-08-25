@@ -125,7 +125,7 @@ namespace DdMd
       * forces, the method checks if the pair list is current, and
       * rebuilds it if necessary.
       */
-      virtual void addForces();
+      virtual void computeForces();
 
       /**
       * Compute the total nonBonded pair energy for all processors
@@ -166,7 +166,7 @@ namespace DdMd
       /**
       * Calculate atomic pair forces, using PairList.
       */
-      void addForcesList();
+      void computeForcesList();
 
       /**
       * Calculate atomic pair forces and/or pair potential energy.
@@ -176,7 +176,7 @@ namespace DdMd
       /**
       * Calculate atomic pair forces and/or pair potential energy.
       */
-      void addForcesCell();
+      void computeForcesCell();
 
       /**
       * Calculate atomic pair energy, using N^2 loop.
@@ -188,7 +188,7 @@ namespace DdMd
       /**
       * Calculate atomic pair forces, using N^2 loop.
       */
-      void addForcesNSq();
+      void computeForcesNSq();
 
    };
 
@@ -294,15 +294,15 @@ namespace DdMd
    * Increment atomic forces, without calculating energy.
    */
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::addForces()
+   void PairPotentialImpl<Interaction>::computeForces()
    {  
        if (methodId() == 0) {
-          addForcesList(); 
+          computeForcesList(); 
        } else
        if (methodId() == 1) {
-          addForcesCell(); 
+          computeForcesCell(); 
        } else {
-          addForcesNSq(); 
+          computeForcesNSq(); 
        }
    }
 
@@ -388,7 +388,7 @@ namespace DdMd
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::addForcesList()
+   void PairPotentialImpl<Interaction>::computeForcesList()
    {
       Vector f;
       double rsq;
@@ -498,7 +498,7 @@ namespace DdMd
    * Increment atomic forces using Cell List (private).
    */
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::addForcesCell()
+   void PairPotentialImpl<Interaction>::computeForcesCell()
    {
       // Find all neighbors (cell list)
       Cell::NeighborArray neighbors;
@@ -628,7 +628,7 @@ namespace DdMd
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::addForcesNSq()
+   void PairPotentialImpl<Interaction>::computeForcesNSq()
    {
       Vector f;
       double rsq;

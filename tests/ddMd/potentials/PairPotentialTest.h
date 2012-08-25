@@ -14,6 +14,12 @@
 
 #include <util/random/Random.h>
 
+#ifdef UTIL_MPI
+#ifndef TEST_MPI
+#define TEST_MPI
+#endif
+#endif
+
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 #include <test/ParamFileTest.h>
@@ -201,7 +207,7 @@ public:
       }      
 
       object().setMethodId(2); // N^2 loop
-      object().addForces();
+      object().computeForces();
 
       std::cout << std::endl;
       storage.begin(iter);
@@ -226,17 +232,17 @@ public:
 
       zeroForces();
       object().setMethodId(0);
-      object().addForces();
+      object().computeForces();
       writeForces();
  
       zeroForces();
       object().setMethodId(1);
-      object().addForces();
+      object().computeForces();
       writeForces();
 
       zeroForces();
       object().setMethodId(2);
-      object().addForces();
+      object().computeForces();
       writeForces();
 
    }

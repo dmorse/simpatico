@@ -629,21 +629,21 @@ namespace DdMd
    void Simulation::computeForces()
    {
       zeroForces();
-      pairPotential().addForces();
-      bondPotential().addForces();
+      pairPotential().computeForces();
+      bondPotential().computeForces();
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         anglePotential().addForces();
+         anglePotential().computeForces();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         dihedralPotential().addForces();
+         dihedralPotential().computeForces();
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
-         externalPotential().addForces();
+         externalPotential().computeForces();
       }
       #endif
 

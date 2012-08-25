@@ -1,9 +1,6 @@
 #ifndef DDMD_PAIR_LIST_TEST_H
 #define DDMD_PAIR_LIST_TEST_H
 
-#include <test/UnitTest.h>
-#include <test/UnitTestRunner.h>
-
 #include <ddMd/neighbor/PairList.h>
 #include <ddMd/neighbor/CellList.h>
 #include <ddMd/neighbor/PairIterator.h>
@@ -13,6 +10,15 @@
 #include <util/space/Vector.h>
 #include <util/random/Random.h>
 #include <util/format/Int.h>
+
+#ifdef UTIL_MPI
+#ifndef TEST_MPI
+#define TEST_MPI
+#endif
+#endif
+
+#include <test/UnitTest.h>
+#include <test/UnitTestRunner.h>
 
 #include <iostream>
 
