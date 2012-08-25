@@ -1,11 +1,17 @@
 #ifndef IO_UTIL_TEST_H
 #define IO_UTIL_TEST_H
 
-#include <test/UnitTest.h>
-#include <test/UnitTestRunner.h>
-
 #include <util/util/ioUtil.h>
 #include <util/global.h>
+
+#ifdef UTIL_MPI
+#ifndef TEST_MPI
+#define TEST_MPI
+#endif
+#endif
+
+#include <test/UnitTest.h>
+#include <test/UnitTestRunner.h>
 
 using namespace Util;
 

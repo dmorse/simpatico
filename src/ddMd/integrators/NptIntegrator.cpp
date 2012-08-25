@@ -96,7 +96,6 @@ namespace DdMd
       double prefactor; // = 0.5*dt/mass
       AtomIterator atomIter;
 
-
       Simulation& sys = simulation();
       sys.computeVirialStress();
       sys.computeKineticStress();
@@ -117,7 +116,7 @@ namespace DdMd
          double W = (1.0/2.0)*ndof_*T_target_*tauP_*tauP_;
          double mtk_term = (1.0/2.0)*dt_*T_kinetic_/W;
 
-         // advance barostat
+         // Advance barostat (first half of update)
          double V = sys.boundary().volume();
          if (mode_ == Cubic) {
             nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr - P_target_) + mtk_term;
@@ -132,7 +131,7 @@ namespace DdMd
             nu_[2] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[2] - P_target_) + mtk_term;
          }
 
-         // advance thermostat
+         // Advance thermostat
          xi_prime = xi_ + (1.0/4.0)*dt_/tauT_/tauT_*(T_kinetic_/T_target_ - 1.0);
          xi_ = xi_prime + (1.0/4.0)*dt_/tauT_/tauT_*(T_kinetic_/T_target_*exp(-xi_prime*dt_) - 1.0);
          eta_ += (1.0/2.0)*xi_prime*dt_;
@@ -144,7 +143,7 @@ namespace DdMd
       bcast(domain().communicator(), nu_,0);
       #endif
 
-      // precompute loop invariant quantities
+      // Precompute loop invariant quantities
       mtk_term_2_ = (nu_[0]+nu_[1]+nu_[2])/ndof_;
       Vector v_fac = Vector((1.0/4.0)*(nu_[0]+mtk_term_2_),
                             (1.0/4.0)*(nu_[1]+mtk_term_2_),
@@ -163,16 +162,17 @@ namespace DdMd
                                 exp(r_fac[2]*dt_));
 
       //Coefficients of sinh(x)/x = a_0 + a_2 * x^2 + a_4 * x^4 + a_6 * x^6 + a_8 * x^8 + a_10 * x^10
-      const double a[] = {double(1.0), double(1.0/6.0), double(1.0/120.0), double(1.0/5040.0), double(1.0/362880.0), double(1.0/39916800.0)};
+      const double a[] = { double(1.0), double(1.0/6.0), double(1.0/120.0), 
+                           double(1.0/5040.0), double(1.0/362880.0), double(1.0/39916800.0)};
 
       Vector arg_v = Vector(v_fac[0]*dt_, v_fac[1]*dt_, v_fac[2]*dt_);
       Vector arg_r = Vector(r_fac[0]*dt_, r_fac[1]*dt_, r_fac[2]*dt_);
 
-      sinhx_fac_v_ = Vector(0.0,0.0,0.0);
-      Vector sinhx_fac_r = Vector(0.0,0.0,0.0);
+      sinhx_fac_v_ = Vector(0.0, 0.0, 0.0);
+      Vector sinhx_fac_r = Vector(0.0, 0.0, 0.0);
 
-      Vector term_v = Vector(1.0,1.0,1.0);
-      Vector term_r = Vector(1.0,1.0,1.0);
+      Vector term_v = Vector(1.0, 1.0, 1.0);
+      Vector term_r = Vector(1.0, 1.0, 1.0);
 
       for (unsigned int i = 0; i < 6; i++) {
          sinhx_fac_v_ += Vector(a[0]*term_v[0],
@@ -187,11 +187,11 @@ namespace DdMd
          term_r = Vector(term_r[0] * arg_r[0] * arg_r[0],
                          term_r[1] * arg_r[1] * arg_r[1],
                          term_r[2] * arg_r[2] * arg_r[2]);
-         }
+      }
 
       // 1st half of NPT
-      atomStorage().begin(atomIter);
       Vector vtmp;
+      atomStorage().begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
          prefactor = prefactors_[atomIter->typeId()];
 
@@ -213,9 +213,9 @@ namespace DdMd
          r[0] = r[0]*exp_r_fac[0]*exp_r_fac[0] + vtmp[0]*dt_;
          r[1] = r[1]*exp_r_fac[1]*exp_r_fac[1] + vtmp[1]*dt_;
          r[2] = r[2]*exp_r_fac[2]*exp_r_fac[2] + vtmp[2]*dt_;
-         }
+      }
 
-      // advance box lengths
+      // Advance box lengths
       Vector box_len_scale = Vector(exp(nu_[0]*dt_),
                                     exp(nu_[1]*dt_),
                                     exp(nu_[2]*dt_));
@@ -225,7 +225,7 @@ namespace DdMd
       L[1] *= box_len_scale[1];
       L[2] *= box_len_scale[2];
 
-      // update box lengths
+      // Update box lengths
       sys.boundary().setOrthorhombic(L);
    }
 
@@ -262,15 +262,14 @@ namespace DdMd
          double mass = simulation().atomType(atomIter->typeId()).mass();
          v2_sum += v.dot(v)*mass;
       }
-
-      // Advance thermostat half a timestep
+     
+      // Advance thermostat (second half of update)
       double T_prime;
       double xi_prime;
       #ifdef UTIL_MPI
       //reduce vs_sum
       domain().communicator().Reduce(&v2_sum, &T_prime, 1, MPI::DOUBLE, MPI::SUM,0);
       #endif
-
 
       if (domain().isMaster()) {
          T_prime /= ndof_;
@@ -283,7 +282,7 @@ namespace DdMd
       bcast(domain().communicator(), xi_prime,0);
       #endif
 
-      // rescale velocities
+      // Rescale velocities
       double exp_v_fac_thermo = exp(-(1.0/2.0)*xi_prime*dt_);
       atomStorage().begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
@@ -291,10 +290,12 @@ namespace DdMd
       }
 
       Simulation& sys = simulation();
-      sys.computeVirialStress();
-      sys.computeKineticStress();
-      sys.computeKineticEnergy();
+      sys.velocitySignal().notify();
+      sys.computeKineticStress(); 
+      sys.computeKineticEnergy(); 
+      sys.computeVirialStress(); 
 
+      // Advance barostat
       if (sys.domain().isMaster()) {
          T_kinetic_ = sys.kineticEnergy()*2.0/ndof_;
          Tensor stress = sys.virialStress();
@@ -306,7 +307,6 @@ namespace DdMd
          double W = (1.0/2.0)*ndof_*T_target_*tauP_*tauP_;
          double mtk_term = (1.0/2.0)*dt_*T_kinetic_/W;
 
-         // advance barostat
          double V = sys.boundary().volume();
          if (mode_ == Cubic) {
             nu_[0] += (1.0/2.0)*dt_*V/W*(P_curr - P_target_) + mtk_term;
@@ -321,9 +321,9 @@ namespace DdMd
             nu_[2] += (1.0/2.0)*dt_*V/W*(P_curr_diag_[2] - P_target_) + mtk_term;
          }
       }
-#if 0
-      // output conserved quantity
 
+      #if 0
+      // Output conserved quantity
       sys.computePotentialEnergies();
       if (sys.domain().isMaster()) {
          std::ofstream file;
@@ -342,11 +342,12 @@ namespace DdMd
               << std::endl;
          file.close();
       }
-#endif
+      #endif
 
       #ifdef UTIL_MPI
-      bcast(domain().communicator(), xi_,0);
-      bcast(domain().communicator(), nu_,0);
+      // Broadcast barostat and thermostat state variables
+      bcast(domain().communicator(), xi_, 0);
+      bcast(domain().communicator(), nu_, 0);
       #endif
 
   }

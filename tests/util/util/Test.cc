@@ -9,8 +9,10 @@ int main()
    MPI::Init();
    #endif
 
+   #ifndef UTIL_MPI
    TEST_RUNNER(ExceptionTest) test1;
    test1.run();
+   #endif
 
    TEST_RUNNER(ioUtilTest) test2;
    test2.run();

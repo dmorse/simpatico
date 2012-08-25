@@ -55,11 +55,11 @@ namespace DdMd
       bool isMaster = bool(rank == 0);
       double sum;
       for (int i = 0; i < size_; i++) {
-         communicator.Reduce(&times_[i], &sum, 1, MPI::DOUBLE, MPI::SUM, 0);
-         if (isMaster) times_[i] = sum/double(procs);
+         communicator.Allreduce(&times_[i], &sum, 1, MPI::DOUBLE, MPI::SUM);
+         times_[i] = sum/double(procs);
       }
-      communicator.Reduce(&time_, &sum, 1, MPI::DOUBLE, MPI::SUM, 0);
-      if (isMaster) time_ = sum/double(procs);
+      communicator.Allreduce(&time_, &sum, 1, MPI::DOUBLE, MPI::SUM);
+      time_ = sum/double(procs);
    }
    #endif
 

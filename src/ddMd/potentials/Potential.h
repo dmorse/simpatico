@@ -134,6 +134,18 @@ namespace DdMd
       */
       bool isStressSet() const;
 
+      #ifdef UTIL_MPI
+      /**
+      * Is the potential in a valid internal state?
+      *
+      * Return true if valid, or throws an Exception.
+      * Must be called on all processors.
+      *
+      * \param communicator domain communicator for all domain procs
+      */
+      virtual bool isValid(MPI::Intracomm& communicator) const;
+      #endif
+
       //@}
 
    protected:

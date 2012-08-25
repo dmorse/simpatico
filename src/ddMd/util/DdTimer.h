@@ -25,14 +25,41 @@ namespace DdMd {
    
       DdTimer(int size = 0);
       ~DdTimer();
+
+      /**
+      *  Clear all time statistics.
+      */ 
       void clear();
+
+      /**
+      * Clear statistics, mark a start time.
+      */ 
       void start();
+
+      /**
+      * Mark end of interval id.
+      */ 
       void stamp(int id);
+
+      /**
+      * Stop total time accumulation.
+      */ 
       void stop();
+
+      /**
+      * Get accumulated time for interval i.
+      */ 
       double time(int id) const;
+
+      /**
+      * Get total time since start time.
+      */ 
       double time() const;
 
       #ifdef UTIL_MPI
+      /**
+      * Upon return, times on every processor replaced by average over procs.
+      */
       void reduce(MPI::Intracomm& communicator);
       #endif
    

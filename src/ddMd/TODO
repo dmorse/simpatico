@@ -3,18 +3,6 @@ Memory reporting
 
 - Add memory statistics for Buffer.
 - Add memory statistics for AtomStorage and GroupStorage.
-- Improve pair statistics for PairList.
-
-Event Handling
---------------
-
-- Modify Notifier / Observer code to allow for signals with 
-
-  1) Signals with no event object
-  2) Registration of arbitrary method as update method.
-  3) Notifiers and observers as members rather than base classes.
-
-- Create notifiers for basic actions in integration loop. 
 
 Dynamic Resizing
 ----------------
@@ -40,11 +28,7 @@ Flexible Unit Cells:
 Constant Pressure:
 ------------------
 
-- Port NPH integrator (Jens)
-
-- Port reversible NPT integrator (Jens)
-
-- Add vFlag to Simulation, and as argument to addForce() method of potentials.
+- Add vFlag as argument of addForce() method of potentials.
 
 Hybrid MD
 ----------

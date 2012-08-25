@@ -534,8 +534,9 @@ namespace DdMd
             exchanger_.outputStatistics(Log::file(), time, nStep);
          } else
          if (command == "OUTPUT_PAIRLIST_STATS") {
-            int nStep = integratorPtr_->nStep();
+            pairPotential().pairList().computeStatistics(domain_.communicator());
             if (domain_.isMaster()) {
+               int nStep = integratorPtr_->nStep();
                pairPotential().pairList().outputStatistics(Log::file(), nStep);
             }
          } else
@@ -1230,7 +1231,11 @@ namespace DdMd
    */
    bool Simulation::isValid()
    {
+      #ifdef UTIL_MPI
+      atomStorage_.isValid(domain_.communicator());
+      #else
       atomStorage_.isValid();
+      #endif
 
       // Determine if there are any ghosts on any processor
       int nGhost = atomStorage_.nGhost();
@@ -1244,8 +1249,8 @@ namespace DdMd
       #endif
       bool hasGhosts = bool(nGhostAll);
 
+      // Test Group storage containers
       #ifdef UTIL_MPI
-
       bondStorage_.isValid(atomStorage_, domain_.communicator(), hasGhosts);
       #ifdef INTER_ANGLE
       if (nAngleType_) {
@@ -1258,9 +1263,7 @@ namespace DdMd
                                   hasGhosts);
       }
       #endif
-
-      #else
-
+      #else // ifdef UTIL_MPI
       bondStorage_.isValid(atomStorage_, hasGhosts);
       #ifdef INTER_ANGLE
       if (nAngleType_) {
@@ -1272,7 +1275,18 @@ namespace DdMd
          dihedralStorage_.isValid(atomStorage_, hasGhosts);
       }
       #endif
+      #endif // ifdef UTIL_MPI
 
+      // Test consistency of computed potential energies and stresses
+      #ifdef UTIL_MPI
+      pairPotentialPtr_->isValid(domain_.communicator());
+      bondPotentialPtr_->isValid(domain_.communicator());
+      #ifdef INTER_ANGLE
+      anglePotentialPtr_->isValid(domain_.communicator());
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotentialPtr_->isValid(domain_.communicator());
+      #endif
       #endif // ifdef UTIL_MPI
 
       return true; 

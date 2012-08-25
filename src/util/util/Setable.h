@@ -108,19 +108,15 @@ namespace Util
          return value_; 
       }
 
-      #if 0
+      #ifdef UTIL_MPI
       /**
-      * Conversion to T value, if not null.
+      * Test consistency of states on different processors.  
       *
-      * Throws an exception if this object is null.
+      * If valid, return true, else throws an Exception.
+      * The state is valid if the value of isSet is the 
+      * same on all processors.
       */
-      operator T ()
-      {
-         if (!isSet_) {
-            UTIL_THROW("Attempted conversion of unknown value");
-         }
-         return value_;
-      }
+      bool isValid(MPI::Intracomm& communicator) const;
       #endif
 
    private:
@@ -132,6 +128,25 @@ namespace Util
       bool isSet_;
 
    };
+
+   #ifdef UTIL_MPI
+   template <typename T>
+   bool Setable<T>::isValid(MPI::Intracomm& communicator) const
+   {
+       int isSet = (int)isSet_;
+       int total = 0;
+       communicator.Allreduce(&isSet, &total, 1, MPI::INT, MPI::SUM);
+       // int rank  = communicator.Get_rank();
+       int nproc = communicator.Get_size();
+       if (isSet_ && total != nproc) {
+          UTIL_THROW("Inconsistent settings");
+       }
+       if ((!isSet_) && total != 0) {
+          UTIL_THROW("Inconsistent settings");
+       }
+       return true;
+   }
+   #endif
 
 } 
 #endif

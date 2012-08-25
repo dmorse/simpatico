@@ -97,5 +97,17 @@ namespace DdMd
    bool Potential::isStressSet() const
    {  return stress_.isSet(); }
 
+   #ifdef UTIL_MPI
+   /*
+   * Is the potential in a valid internal state?
+   */
+   bool Potential::isValid(MPI::Intracomm& communicator) const
+   {
+      energy_.isValid(communicator);
+      stress_.isValid(communicator);
+      return true;
+   }
+   #endif
+
 }
 #endif

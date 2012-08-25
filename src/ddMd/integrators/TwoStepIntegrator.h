@@ -47,11 +47,18 @@ namespace DdMd
 
       /**
       * Execute first step of two-step integrator.
+      *
+      * The function simulation().modifySignal().notify() is called
+      * immediately after this function in the run method, so this 
+      * function need not send this signal.
       */
       virtual void integrateStep1() = 0;
 
       /**
       * Execute secodn step of two-step integrator.
+      *
+      * This method must call simulation().velocitySignal().notify() if
+      * it modifies the velocities.
       */
       virtual void integrateStep2() = 0;
 
