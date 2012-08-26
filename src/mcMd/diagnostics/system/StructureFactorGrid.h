@@ -115,9 +115,6 @@ namespace McMd
       /// Array of star sizes.
       DArray<int>  starSizes_;
 
-      /// Minimum Miller index of wavevectors in grid.
-      int   hMin_;
-
       /// Maximum Miller index of wavevectors in grid.
       int   hMax_;
 

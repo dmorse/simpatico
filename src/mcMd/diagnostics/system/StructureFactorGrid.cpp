@@ -25,7 +25,6 @@ namespace McMd
    /// Constructor.
    StructureFactorGrid::StructureFactorGrid(System& system) 
     : StructureFactor(system),
-      hMin_(0),
       hMax_(0),
       nStar_(0),
       lattice_(Triclinic),
@@ -44,16 +43,11 @@ namespace McMd
       read<int>(in, "nMode", nMode_);
       modes_.allocate(nMode_, nAtomType_);
       readDMatrix<double>(in, "modes", modes_, nMode_, nAtomType_);
-      read<int>(in, "hMin", hMin_);
       read<int>(in, "hMax", hMax_);
       read<Util::LatticeSystem>(in, "lattice", lattice_);
 
       // Allocate wavevectors arrays
-      if (hMin_ != 0) {
-         nWave_     = (2*(hMax_ - hMin_ + 1) + 1 )*(2*(hMax_ - hMin_ + 1) + 1)*(2*(hMax_ - hMin_ + 1) + 1);
-      } else {
-         nWave_     = (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1);
-      }
+      nWave_     = (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1);
       waveIntVectors_.allocate(nWave_);
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
@@ -65,7 +59,7 @@ namespace McMd
       // Cubic Symmetry
       if (lattice_ == Cubic) {
 
-         nStar_ = (hMax_ - hMin_ + 1 )*(hMax_ - hMin_ + 2)*(hMax_ - hMin_ + 3)/6;
+         nStar_ = (hMax_ + 1 )*(hMax_ + 2)*(hMax_ + 3)/6;
          starIds_.allocate(nStar_);
          starSizes_.allocate(nStar_);
    
@@ -94,11 +88,11 @@ namespace McMd
          FSArray<IntVector, 48> star;
          i = 0;
          j = 0;
-         for (h = hMin_; h <= hMax_; ++h) {
+         for (h = 0; h <= hMax_; ++h) {
             g[0] = h;
-            for (k = hMin_; k <= h; ++k) {
+            for (k = 0; k <= h; ++k) {
                g[1] = k;
-               for (l = hMin_; l <= k; ++l) {
+               for (l = 0; l <= k; ++l) {
                   g[2] = l;
                   starIds_[i] = j;
                   group.makeStar(g, star);
@@ -119,7 +113,7 @@ namespace McMd
          } 
       } else if (lattice_ == Tetragonal) {
 
-         nStar_ = (hMax_ - hMin_ + 1 )*(hMax_ - hMin_ + 1)*(hMax_ - hMin_ + 2)/2;
+         nStar_ = (hMax_ + 1 )*(hMax_ + 1)*(hMax_ + 2)/2;
          starIds_.allocate(nStar_);
          starSizes_.allocate(nStar_);
          // Create tetragonal point group
@@ -147,11 +141,11 @@ namespace McMd
          FSArray<IntVector, 16> star;
          i = 0;
          j = 0;
-         for (h = hMin_; h <= hMax_; ++h) {
+         for (h = 0; h <= hMax_; ++h) {
             g[0] = h;
-            for (k = hMin_; k <= hMax_; ++k) {
+            for (k = 0; k <= hMax_; ++k) {
                g[1] = k;
-               for (l = hMin_; l <= k; ++l) {
+               for (l = 0; l <= k; ++l) {
                   g[2] = l;
                   starIds_[i] = j;
                   group.makeStar(g, star);
