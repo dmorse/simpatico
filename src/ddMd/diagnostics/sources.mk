@@ -6,6 +6,9 @@ ddMd_diagnostics_SRCS=\
      $(SRC_DIR)/ddMd/diagnostics/OutputEnergy.cpp\
      $(SRC_DIR)/ddMd/diagnostics/OutputPressure.cpp\
      $(SRC_DIR)/ddMd/diagnostics/OutputBoxdim.cpp \
-     $(SRC_DIR)/ddMd/diagnostics/OutputTemperature.cpp
+     $(SRC_DIR)/ddMd/diagnostics/OutputTemperature.cpp \
+     $(SRC_DIR)/ddMd/diagnostics/OutputPairEnergies.cpp \
+     $(SRC_DIR)/ddMd/diagnostics/StructureFactor.cpp \
+     $(SRC_DIR)/ddMd/diagnostics/StructureFactorGrid.cpp 
 
 ddMd_diagnostics_OBJS=$(ddMd_diagnostics_SRCS:.cpp=.o)
