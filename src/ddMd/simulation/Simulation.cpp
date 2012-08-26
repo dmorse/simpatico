@@ -917,6 +917,41 @@ namespace DdMd
       return pressure;
    }
 
+   #ifdef UTIL_MPI
+
+   /*
+   * Compute all pair energy contributions.
+   */
+   void Simulation::computePairEnergies()
+   {
+      pairPotential().computePairEnergies(domain_.communicator());
+   }
+
+   #else
+
+   /*
+   * Compute all pair energy contributions.
+   */
+   void Simulation::computePairEnergies()
+   {
+      pairPotential().computePairEnergies();
+   }
+
+   #endif
+
+   /*
+   * Return pair energies contributions.
+   */
+   DArray<double> Simulation::pairEnergies() const
+   {
+      DArray<double> pairEnergies;
+      int nPairEnergies = nAtomType_*nAtomType_;
+      pairEnergies.allocate(nPairEnergies);
+      pairEnergies = pairPotentialPtr_->pairEnergies();
+      return pairEnergies;
+   }
+
+
    /*
    * Read configuration file on master and distribute atoms.
    */

@@ -35,7 +35,9 @@ namespace DdMd
       boundaryPtr_(0),
       storagePtr_(0),
       methodId_(0),
-      nPair_(0)
+      nPair_(0),
+      pairEnergies_()
+
       //reverseUpdateFlag_(false)
    {} 
 
@@ -50,7 +52,8 @@ namespace DdMd
       boundaryPtr_(&simulation.boundary()),
       storagePtr_(&simulation.atomStorage()),
       methodId_(0),
-      nPair_(0)
+      nPair_(0),
+      pairEnergies_()
       //reverseUpdateFlag_(false)
    {}
 
@@ -281,6 +284,24 @@ namespace DdMd
       findNeighbors(lower, upper);
    }
    #endif
+
+   /*
+   * Return value of pair energies.
+   */
+   DArray<double> PairPotential::pairEnergies() const
+   {  return pairEnergies_.value(); }
+
+   /*
+   * Set a value for pair energies.
+   */
+   void PairPotential::setPairEnergies(DArray<double> pairEnergies)
+   {  pairEnergies_.set(pairEnergies); }
+
+   /*
+   * Mark pair energies as unknown. 
+   */
+   void PairPotential::unsetPairEnergies()
+   {  pairEnergies_.unset(); }
 
    /*
    * Compute total pair nPair on all processors.

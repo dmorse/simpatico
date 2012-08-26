@@ -289,6 +289,23 @@ namespace DdMd
       */
       double virialPressure() const;
 
+      /**
+      * Calculate and store pair energy 
+      * (or pair energies, depending on nAtomType) on all processors.
+      * 
+      * Reduce operation: Must be called on all nodes.
+      */
+      void computePairEnergies();
+
+      /**
+      * Return precomputed pair energy (or pair energies).
+      *
+      * Call only on master processor, after computePairEnergies.
+      * 
+      * \return total pair energies (only correct on master node).
+      */
+      DArray<double> pairEnergies() const;
+
       //@}
       /// \name Potential Energy Factories and Styles
       //@{

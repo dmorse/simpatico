@@ -18,6 +18,9 @@
 #include "OutputPressure.h"
 #include "OutputBoxdim.h"
 #include "OutputTemperature.h"
+#include "OutputPairEnergies.h"
+#include "StructureFactor.h"
+#include "StructureFactorGrid.h"
 
 namespace DdMd
 {
@@ -54,9 +57,18 @@ namespace DdMd
       } else
       if (className == "OutputBoxdim") {
          ptr = new OutputBoxdim(simulation());
-      }
+      } else
       if (className == "OutputTemperature") {
          ptr = new OutputTemperature(simulation());
+      } else
+      if (className == "OutputPairEnergies") {
+         ptr = new OutputPairEnergies(simulation());
+      } else
+      if (className == "StructureFactor") {
+         ptr = new StructureFactor(simulation());
+      } else
+      if (className == "StructureFactorGrid") {
+         ptr = new StructureFactorGrid(simulation());
       }
       return ptr;
    }
