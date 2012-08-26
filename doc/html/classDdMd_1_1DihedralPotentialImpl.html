@@ -67,7 +67,8 @@ Inheritance diagram for DdMd::DihedralPotentialImpl&lt; Interaction &gt;:</div>
  <div class="center">
   <img src="classDdMd_1_1DihedralPotentialImpl.png" usemap="#DdMd::DihedralPotentialImpl&lt; Interaction &gt;_map" alt=""/>
   <map id="DdMd::DihedralPotentialImpl&lt; Interaction &gt;_map" name="DdMd::DihedralPotentialImpl&lt; Interaction &gt;_map">
-<area href="classDdMd_1_1DihedralPotential.html" alt="DdMd::DihedralPotential" shape="rect" coords="0,112,253,136"/>
+<area href="classDdMd_1_1DihedralPotential.html" alt="DdMd::DihedralPotential" shape="rect" coords="0,168,253,192"/>
+<area href="classDdMd_1_1Potential.html" alt="DdMd::Potential" shape="rect" coords="0,112,253,136"/>
 <area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,253,80"/>
 <area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,253,24"/>
 </map>
@@ -88,24 +89,21 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Interaction interface</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#a2b3e3f8f15c205f3d355e003674ecc28">setNDihedralType</a> (int nAtomType)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum number of atom types.  <a href="#a2b3e3f8f15c205f3d355e003674ecc28"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#a1a606a3035c1d87c311b9a0138df1c41">energy</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R2, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R3, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns potential energy for one dihedral.  <a href="#a1a606a3035c1d87c311b9a0138df1c41"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#aa9ded5725149a23c96c6d5f8d9854eb6">force</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R2, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R3, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F1, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F2, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F3, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns derivatives of energy with respect to bond vectors forming the dihedral group.  <a href="#aa9ded5725149a23c96c6d5f8d9854eb6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#a74fd80d3990c4f15cda343ba6b9332a0">dihedralEnergy</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R2, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R3, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns potential energy for one dihedral.  <a href="#a74fd80d3990c4f15cda343ba6b9332a0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#aecc0d55107b8c4549719a410978a2673">dihedralForce</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R2, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R3, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F1, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F2, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F3, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns derivatives of energy with respect to bond vectors forming the dihedral group.  <a href="#aecc0d55107b8c4549719a410978a2673"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const Interaction &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#a403562c5124cc4282d0e7db068de6806">interaction</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return dihedral interaction by const reference.  <a href="#a403562c5124cc4282d0e7db068de6806"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">Interaction &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#af3a78dba1181167b051caca9cd92c82d">interaction</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return dihedral interaction by reference.  <a href="#af3a78dba1181167b051caca9cd92c82d"></a><br/></td></tr>
-<tr><td colspan="2"><h2><a name="member-group"></a>
-Total Energy, Force and Stress</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Total Energy, Force and Stress</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#a93b71f4575e4c1dc3f90474f0152c545">addForces</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the dihedral forces for all atoms.  <a href="#a93b71f4575e4c1dc3f90474f0152c545"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#acc1f9eccf79ddfb7df5c9c710b3431a3">addForces</a> (double &amp;energy)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the dihedral forces for all atoms and compute energy.  <a href="#acc1f9eccf79ddfb7df5c9c710b3431a3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#ac6762e06d34a231953196ed27cadf03f">computeEnergy</a> (MPI::Intracomm &amp;communicator)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the total dihedral energy for all processors.  <a href="#ac6762e06d34a231953196ed27cadf03f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#a3468efcbd8ce49acbef4d6cf8a407f19">energy</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total dihedral energy, computed previously by <a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#ac6762e06d34a231953196ed27cadf03f" title="Compute the total dihedral energy for all processors.">computeEnergy()</a>.  <a href="#a3468efcbd8ce49acbef4d6cf8a407f19"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#ae53881e6720af438ed85852295c3144b">computeStress</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the covalent dihedral stress.  <a href="#ae53881e6720af438ed85852295c3144b"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a7d66ea1b5e8908ded13bfbacc43d2d25"></a><!-- doxytag: member="DdMd::DihedralPotentialImpl::DihedralPotentialImpl" ref="a7d66ea1b5e8908ded13bfbacc43d2d25" args="(Simulation &amp;simulation)" -->
@@ -127,7 +125,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00232">232</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00197">197</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -149,7 +147,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Default constructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00241">241</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00206">206</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -171,7 +169,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00250">250</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00215">215</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -198,7 +196,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00269">269</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00234">234</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -223,18 +221,18 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1DihedralPotential.html#ad8aca3aaeb9bf294dca9387df553144e">DdMd::DihedralPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00262">262</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00227">227</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1a606a3035c1d87c311b9a0138df1c41"></a><!-- doxytag: member="DdMd::DihedralPotentialImpl::energy" ref="a1a606a3035c1d87c311b9a0138df1c41" args="(const Vector &amp;R1, const Vector &amp;R2, const Vector &amp;R3, int type) const " -->
+<a class="anchor" id="a74fd80d3990c4f15cda343ba6b9332a0"></a><!-- doxytag: member="DdMd::DihedralPotentialImpl::dihedralEnergy" ref="a74fd80d3990c4f15cda343ba6b9332a0" args="(const Vector &amp;R1, const Vector &amp;R2, const Vector &amp;R3, int type) const " -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="classDdMd_1_1DihedralPotentialImpl.html">DdMd::DihedralPotentialImpl</a>&lt; Interaction &gt;::energy </td>
+          <td class="memname">double <a class="el" href="classDdMd_1_1DihedralPotentialImpl.html">DdMd::DihedralPotentialImpl</a>&lt; Interaction &gt;::dihedralEnergy </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>R1</em>, </td>
@@ -278,20 +276,20 @@ template&lt;class Interaction &gt; </div>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classDdMd_1_1DihedralPotential.html#ac13ad351849ac5605cd65136f0c64468">DdMd::DihedralPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1DihedralPotential.html#aaabd700dd39207bbec6b9b1b7eec2132">DdMd::DihedralPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00282">282</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00247">247</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa9ded5725149a23c96c6d5f8d9854eb6"></a><!-- doxytag: member="DdMd::DihedralPotentialImpl::force" ref="aa9ded5725149a23c96c6d5f8d9854eb6" args="(const Vector &amp;R1, const Vector &amp;R2, const Vector &amp;R3, Vector &amp;F1, Vector &amp;F2, Vector &amp;F3, int type) const " -->
+<a class="anchor" id="aecc0d55107b8c4549719a410978a2673"></a><!-- doxytag: member="DdMd::DihedralPotentialImpl::dihedralForce" ref="aecc0d55107b8c4549719a410978a2673" args="(const Vector &amp;R1, const Vector &amp;R2, const Vector &amp;R3, Vector &amp;F1, Vector &amp;F2, Vector &amp;F3, int type) const " -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classDdMd_1_1DihedralPotentialImpl.html">DdMd::DihedralPotentialImpl</a>&lt; Interaction &gt;::force </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1DihedralPotentialImpl.html">DdMd::DihedralPotentialImpl</a>&lt; Interaction &gt;::dihedralForce </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>R1</em>, </td>
@@ -355,9 +353,9 @@ template&lt;class Interaction &gt; </div>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classDdMd_1_1DihedralPotential.html#aff5a9a99762470d90ee3276e09b4c95b">DdMd::DihedralPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1DihedralPotential.html#a39ff717178d2323dfd772e381614cfaa">DdMd::DihedralPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00290">290</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00256">256</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -380,7 +378,7 @@ template&lt;class Interaction &gt; </div>
 <p>Return dihedral interaction by const reference. </p>
 <p>Get Interaction by const reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00314">314</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00280">280</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -403,7 +401,7 @@ template&lt;class Interaction &gt; </div>
 <p>Return dihedral interaction by reference. </p>
 <p>Get Interaction by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00307">307</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00273">273</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -425,34 +423,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Add the dihedral forces for all atoms. </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1DihedralPotential.html#a09cf0e56338dc885fef31dc32c11d84a">DdMd::DihedralPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Potential.html#a3b07e1cf5fe1a2fad433cf945cea5af1">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00321">321</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="acc1f9eccf79ddfb7df5c9c710b3431a3"></a><!-- doxytag: member="DdMd::DihedralPotentialImpl::addForces" ref="acc1f9eccf79ddfb7df5c9c710b3431a3" args="(double &amp;energy)" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class Interaction &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classDdMd_1_1DihedralPotentialImpl.html">DdMd::DihedralPotentialImpl</a>&lt; Interaction &gt;::addForces </td>
-          <td>(</td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>energy</em></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Add the dihedral forces for all atoms and compute energy. </p>
-
-<p>Implements <a class="el" href="classDdMd_1_1DihedralPotential.html#a4324258c56bcd6a019b587a6253ec162">DdMd::DihedralPotential</a>.</p>
-
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00328">328</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00287">287</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -476,34 +449,37 @@ template&lt;class Interaction &gt; </div>
 <p>Compute the total dihedral energy for all processors. </p>
 <p>Call on all processors (MPI reduce operation). </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1DihedralPotential.html#afdb1e6ff4a836d5bd2bad2af04746f6c">DdMd::DihedralPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Potential.html#a4e88eaa5bfc37822ae1132c0f157ddfd">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00337">337</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00305">305</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3468efcbd8ce49acbef4d6cf8a407f19"></a><!-- doxytag: member="DdMd::DihedralPotentialImpl::energy" ref="a3468efcbd8ce49acbef4d6cf8a407f19" args="()" -->
+<a class="anchor" id="ae53881e6720af438ed85852295c3144b"></a><!-- doxytag: member="DdMd::DihedralPotentialImpl::computeStress" ref="ae53881e6720af438ed85852295c3144b" args="(MPI::Intracomm &amp;communicator)" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="classDdMd_1_1DihedralPotentialImpl.html">DdMd::DihedralPotentialImpl</a>&lt; Interaction &gt;::energy </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1DihedralPotentialImpl.html">DdMd::DihedralPotentialImpl</a>&lt; Interaction &gt;::computeStress </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
+          <td class="paramname"><em>communicator</em></td><td>)</td>
           <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Get the total dihedral energy, computed previously by <a class="el" href="classDdMd_1_1DihedralPotentialImpl.html#ac6762e06d34a231953196ed27cadf03f" title="Compute the total dihedral energy for all processors.">computeEnergy()</a>. </p>
-<p>Call only on master. </p>
+<p>Compute the covalent dihedral stress. </p>
+<p>Call on all processors. </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1DihedralPotential.html#aa03ad871793d7d0e0e2c79cd3ffca30b">DdMd::DihedralPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Potential.html#a504660ddcbb47afbe9b505150dfad607">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00356">356</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00400">400</a> of file <a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, and <a class="el" href="Tensor_8h_source.html#l00416">Util::Tensor::zero()</a>.</p>
 
 </div>
 </div>
@@ -511,7 +487,7 @@ template&lt;class Interaction &gt; </div>
 <li><a class="el" href="ddMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html">ddMd/potentials/dihedral/DihedralPotentialImpl.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

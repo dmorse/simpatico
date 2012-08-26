@@ -56,7 +56,7 @@
 <!-- doxytag: class="DdMd::Exchanger" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Class for exchanging Atoms, Ghosts and Groups between processors. </p>
 
-<p>Definition at line <a class="el" href="Exchanger_8h_source.html#l00035">35</a> of file <a class="el" href="Exchanger_8h_source.html">Exchanger.h</a>.</p>
+<p>Definition at line <a class="el" href="Exchanger_8h_source.html#l00034">34</a> of file <a class="el" href="Exchanger_8h_source.html">Exchanger.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="Exchanger_8h_source.html">Exchanger.h</a>&gt;</code></p>
 
@@ -85,6 +85,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Exchange ownership of local atoms.  <a href="#a78ea705d22e1ae501b935d2a7bb3d752"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Exchanger.html#a5eea17290db43900437e0bcb7ed6f173">update</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update ghost atom coordinates.  <a href="#a5eea17290db43900437e0bcb7ed6f173"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Exchanger.html#a1780e9ad95d937625ad874b12ecea1e7">reverseUpdate</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update ghost atom forces.  <a href="#a1780e9ad95d937625ad874b12ecea1e7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Exchanger.html#a3d82ca4102e81b8d28c2142237592d9b">outputStatistics</a> (std::ostream &amp;out, double time, int nStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output statistics.  <a href="#a3d82ca4102e81b8d28c2142237592d9b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1DdTimer.html">DdTimer</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Exchanger.html#a54a80e2d6d77871fd15056ebb9e145dc">timer</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return internal timer by reference.  <a href="#a54a80e2d6d77871fd15056ebb9e145dc"></a><br/></td></tr>
 </table>
@@ -102,7 +106,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Enumeration of time stamp identifiers. </p>
 
-<p>Definition at line <a class="el" href="Exchanger_8h_source.html#l00118">118</a> of file <a class="el" href="Exchanger_8h_source.html">Exchanger.h</a>.</p>
+<p>Definition at line <a class="el" href="Exchanger_8h_source.html#l00132">132</a> of file <a class="el" href="Exchanger_8h_source.html">Exchanger.h</a>.</p>
 
 </div>
 </div>
@@ -266,9 +270,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="Exchanger_8cpp_source.html#l00142">142</a> of file <a class="el" href="Exchanger_8cpp_source.html">Exchanger.cpp</a>.</p>
 
-<p>References <a class="el" href="Exchanger_8cpp_source.html#l00403">exchangeAtoms()</a>.</p>
+<p>References <a class="el" href="Exchanger_8cpp_source.html#l00479">exchangeAtoms()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00039">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -287,19 +291,11 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Exchange ownership of local atoms. </p>
-<p>This method exchanges ownershp of local atoms, and calculates communication plan for ghost atoms, but but does not actually exchange ghost atoms.</p>
-<p>This method should be called before rebuilding the neighbor list on each processor, to exchange ownership of local atoms. </p>
+<p>This method exchanges ownershp of local atoms, and calculates communication plan for ghost atoms, but but does not actually exchange ghost atoms. </p>
 
-<p><p>In this function:</p>
-<ul>
-<li>sendArray_ is filled with ptrs to ghosts for transfer</li>
-<li>recvArray_ is filled with ptrs to local atoms for removal In exchangeGhosts(), recvArray is cleared, and then refilled with pointers to ghosts as they are received (hence the name).</li>
-</ul>
-</p>
+<p>Definition at line <a class="el" href="Exchanger_8cpp_source.html#l00479">479</a> of file <a class="el" href="Exchanger_8cpp_source.html">Exchanger.cpp</a>.</p>
 
-<p>Definition at line <a class="el" href="Exchanger_8cpp_source.html#l00403">403</a> of file <a class="el" href="Exchanger_8cpp_source.html">Exchanger.cpp</a>.</p>
-
-<p>References <a class="el" href="AtomStorage_8cpp_source.html#l00137">DdMd::AtomStorage::addNewAtom()</a>, <a class="el" href="APArray_8h_source.html#l00217">Util::APArray&lt; Data &gt;::append()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00373">DdMd::AtomStorage::begin()</a>, <a class="el" href="Buffer_8cpp_source.html#l00239">DdMd::Buffer::beginRecvBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00189">DdMd::Buffer::beginSendBlock()</a>, <a class="el" href="APArray_8h_source.html#l00240">Util::APArray&lt; Data &gt;::clear()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00258">DdMd::AtomStorage::clearGhosts()</a>, <a class="el" href="Buffer_8cpp_source.html#l00178">DdMd::Buffer::clearSendBuffer()</a>, <a class="el" href="Domain_8h_source.html#l00237">DdMd::Domain::communicator()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00459">DdMd::AtomStorage::computeNAtomTotal()</a>, <a class="el" href="Domain_8h_source.html#l00311">DdMd::Domain::destRank()</a>, <a class="el" href="Grid_8h_source.html#l00144">Util::Grid::dimension()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="Domain_8cpp_source.html#l00161">DdMd::Domain::domainBound()</a>, <a class="el" href="Buffer_8cpp_source.html#l00215">DdMd::Buffer::endSendBlock()</a>, <a class="el" href="Domain_8h_source.html#l00248">DdMd::Domain::grid()</a>, <a class="el" href="Domain_8h_source.html#l00284">DdMd::Domain::gridRank()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00399">DdMd::AtomStorage::isValid()</a>, <a class="el" href="AtomStorage_8h_source.html#l00487">DdMd::AtomStorage::nAtomTotal()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00119">DdMd::AtomStorage::newAtomPtr()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Buffer_8cpp_source.html#l00263">DdMd::Buffer::packAtom()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">DdMd::Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="Buffer_8cpp_source.html#l00589">DdMd::Buffer::recvSize()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00174">DdMd::AtomStorage::removeAtom()</a>, <a class="el" href="Buffer_8cpp_source.html#l00466">DdMd::Buffer::sendRecv()</a>, <a class="el" href="Domain_8h_source.html#l00320">DdMd::Domain::shift()</a>, <a class="el" href="PArray_8h_source.html#l00137">Util::PArray&lt; Data &gt;::size()</a>, <a class="el" href="Domain_8h_source.html#l00302">DdMd::Domain::sourceRank()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00293">DdMd::Buffer::unpackAtom()</a>.</p>
+<p>References <a class="el" href="AtomStorage_8cpp_source.html#l00142">DdMd::AtomStorage::addNewAtom()</a>, <a class="el" href="APArray_8h_source.html#l00217">Util::APArray&lt; Data &gt;::append()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00398">DdMd::AtomStorage::begin()</a>, <a class="el" href="Buffer_8cpp_source.html#l00239">DdMd::Buffer::beginRecvBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00189">DdMd::Buffer::beginSendBlock()</a>, <a class="el" href="APArray_8h_source.html#l00240">Util::APArray&lt; Data &gt;::clear()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00263">DdMd::AtomStorage::clearGhosts()</a>, <a class="el" href="Buffer_8cpp_source.html#l00178">DdMd::Buffer::clearSendBuffer()</a>, <a class="el" href="Domain_8h_source.html#l00235">DdMd::Domain::communicator()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00475">DdMd::AtomStorage::computeNAtomTotal()</a>, <a class="el" href="Domain_8h_source.html#l00309">DdMd::Domain::destRank()</a>, <a class="el" href="Grid_8h_source.html#l00144">Util::Grid::dimension()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="Domain_8cpp_source.html#l00161">DdMd::Domain::domainBound()</a>, <a class="el" href="Buffer_8cpp_source.html#l00215">DdMd::Buffer::endSendBlock()</a>, <a class="el" href="Domain_8h_source.html#l00246">DdMd::Domain::grid()</a>, <a class="el" href="Domain_8h_source.html#l00282">DdMd::Domain::gridRank()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00491">DdMd::AtomStorage::isValid()</a>, <a class="el" href="AtomStorage_8h_source.html#l00520">DdMd::AtomStorage::nAtomTotal()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00124">DdMd::AtomStorage::newAtomPtr()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, <a class="el" href="Buffer_8cpp_source.html#l00263">DdMd::Buffer::packAtom()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00217">DdMd::Atom::plan()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="Buffer_8cpp_source.html#l00626">DdMd::Buffer::recvSize()</a>, <a class="el" href="AtomStorage_8cpp_source.html#l00179">DdMd::AtomStorage::removeAtom()</a>, <a class="el" href="Buffer_8cpp_source.html#l00503">DdMd::Buffer::sendRecv()</a>, <a class="el" href="Domain_8h_source.html#l00318">DdMd::Domain::shift()</a>, <a class="el" href="PArray_8h_source.html#l00137">Util::PArray&lt; Data &gt;::size()</a>, <a class="el" href="Domain_8h_source.html#l00300">DdMd::Domain::sourceRank()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00293">DdMd::Buffer::unpackAtom()</a>.</p>
 
 <p>Referenced by <a class="el" href="Exchanger_8cpp_source.html#l00142">exchange()</a>.</p>
 
@@ -322,11 +318,75 @@ Public Member Functions</h2></td></tr>
 <p>Update ghost atom coordinates. </p>
 <p>This method should be called every time step for which there is no exhange of atom ownership. It communicates ghost coordinates for the same ghosts as those sent by the most recent call to the exchangeGhosts() methods. </p>
 
-<p>Definition at line <a class="el" href="Exchanger_8cpp_source.html#l01093">1093</a> of file <a class="el" href="Exchanger_8cpp_source.html">Exchanger.cpp</a>.</p>
+<p>Definition at line <a class="el" href="Exchanger_8cpp_source.html#l01148">1148</a> of file <a class="el" href="Exchanger_8cpp_source.html">Exchanger.cpp</a>.</p>
 
-<p>References <a class="el" href="Buffer_8cpp_source.html#l00239">DdMd::Buffer::beginRecvBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00189">DdMd::Buffer::beginSendBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00178">DdMd::Buffer::clearSendBuffer()</a>, <a class="el" href="Domain_8h_source.html#l00237">DdMd::Domain::communicator()</a>, <a class="el" href="Domain_8h_source.html#l00311">DdMd::Domain::destRank()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="Buffer_8cpp_source.html#l00215">DdMd::Buffer::endSendBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00431">DdMd::Buffer::packUpdate()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="Buffer_8cpp_source.html#l00466">DdMd::Buffer::sendRecv()</a>, <a class="el" href="Domain_8h_source.html#l00320">DdMd::Domain::shift()</a>, <a class="el" href="Domain_8h_source.html#l00302">DdMd::Domain::sourceRank()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00449">DdMd::Buffer::unpackUpdate()</a>.</p>
+<p>References <a class="el" href="Buffer_8cpp_source.html#l00239">DdMd::Buffer::beginRecvBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00189">DdMd::Buffer::beginSendBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00178">DdMd::Buffer::clearSendBuffer()</a>, <a class="el" href="Domain_8h_source.html#l00235">DdMd::Domain::communicator()</a>, <a class="el" href="Domain_8h_source.html#l00309">DdMd::Domain::destRank()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="Buffer_8cpp_source.html#l00215">DdMd::Buffer::endSendBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00431">DdMd::Buffer::packUpdate()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="Buffer_8cpp_source.html#l00503">DdMd::Buffer::sendRecv()</a>, <a class="el" href="Domain_8h_source.html#l00318">DdMd::Domain::shift()</a>, <a class="el" href="Domain_8h_source.html#l00300">DdMd::Domain::sourceRank()</a>, <a class="el" href="Buffer_8cpp_source.html#l00449">DdMd::Buffer::unpackUpdate()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00039">DdMd::TwoStepIntegrator::run()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1780e9ad95d937625ad874b12ecea1e7"></a><!-- doxytag: member="DdMd::Exchanger::reverseUpdate" ref="a1780e9ad95d937625ad874b12ecea1e7" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::Exchanger::reverseUpdate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Update ghost atom forces. </p>
+<p>This method reverse the communication pattern used to communicate ghost atom positions in <a class="el" href="classDdMd_1_1Exchanger.html#a5eea17290db43900437e0bcb7ed6f173" title="Update ghost atom coordinates.">update()</a> to reverse communicate forces acting on ghost atoms. It should be called iff reverse force communication on every time step for which <a class="el" href="classDdMd_1_1Exchanger.html#a5eea17290db43900437e0bcb7ed6f173" title="Update ghost atom coordinates.">update()</a> is called. </p>
+
+<p>Definition at line <a class="el" href="Exchanger_8cpp_source.html#l01225">1225</a> of file <a class="el" href="Exchanger_8cpp_source.html">Exchanger.cpp</a>.</p>
+
+<p>References <a class="el" href="Buffer_8cpp_source.html#l00239">DdMd::Buffer::beginRecvBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00189">DdMd::Buffer::beginSendBlock()</a>, <a class="el" href="Buffer_8cpp_source.html#l00178">DdMd::Buffer::clearSendBuffer()</a>, <a class="el" href="Domain_8h_source.html#l00235">DdMd::Domain::communicator()</a>, <a class="el" href="Domain_8h_source.html#l00309">DdMd::Domain::destRank()</a>, <a class="el" href="Buffer_8cpp_source.html#l00215">DdMd::Buffer::endSendBlock()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00229">DdMd::Atom::force()</a>, <a class="el" href="Buffer_8cpp_source.html#l00466">DdMd::Buffer::packForce()</a>, <a class="el" href="Buffer_8cpp_source.html#l00503">DdMd::Buffer::sendRecv()</a>, <a class="el" href="Domain_8h_source.html#l00300">DdMd::Domain::sourceRank()</a>, and <a class="el" href="Buffer_8cpp_source.html#l00484">DdMd::Buffer::unpackForce()</a>.</p>
+
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00070">DdMd::Integrator::computeForces()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3d82ca4102e81b8d28c2142237592d9b"></a><!-- doxytag: member="DdMd::Exchanger::outputStatistics" ref="a3d82ca4102e81b8d28c2142237592d9b" args="(std::ostream &amp;out, double time, int nStep)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::Exchanger::outputStatistics </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nStep</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Output statistics. </p>
+
+<p>Definition at line <a class="el" href="Exchanger_8cpp_source.html#l01287">1287</a> of file <a class="el" href="Exchanger_8cpp_source.html">Exchanger.cpp</a>.</p>
+
+<p>References <a class="el" href="Domain_8h_source.html#l00235">DdMd::Domain::communicator()</a>, <a class="el" href="Domain_8h_source.html#l00291">DdMd::Domain::isMaster()</a>, and <a class="el" href="AtomStorage_8h_source.html#l00520">DdMd::AtomStorage::nAtomTotal()</a>.</p>
 
 </div>
 </div>
@@ -346,9 +406,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Return internal timer by reference. </p>
 
-<p>Definition at line <a class="el" href="Exchanger_8h_source.html#l00112">112</a> of file <a class="el" href="Exchanger_8h_source.html">Exchanger.h</a>.</p>
+<p>Definition at line <a class="el" href="Exchanger_8h_source.html#l00126">126</a> of file <a class="el" href="Exchanger_8h_source.html">Exchanger.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00039">DdMd::TwoStepIntegrator::run()</a>.</p>
 
 </div>
 </div>
@@ -357,7 +417,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="Exchanger_8cpp_source.html">Exchanger.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

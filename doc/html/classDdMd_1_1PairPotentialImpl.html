@@ -67,7 +67,8 @@ Inheritance diagram for DdMd::PairPotentialImpl&lt; Interaction &gt;:</div>
  <div class="center">
   <img src="classDdMd_1_1PairPotentialImpl.png" usemap="#DdMd::PairPotentialImpl&lt; Interaction &gt;_map" alt=""/>
   <map id="DdMd::PairPotentialImpl&lt; Interaction &gt;_map" name="DdMd::PairPotentialImpl&lt; Interaction &gt;_map">
-<area href="classDdMd_1_1PairPotential.html" alt="DdMd::PairPotential" shape="rect" coords="0,112,228,136"/>
+<area href="classDdMd_1_1PairPotential.html" alt="DdMd::PairPotential" shape="rect" coords="0,168,228,192"/>
+<area href="classDdMd_1_1Potential.html" alt="DdMd::Potential" shape="rect" coords="0,112,228,136"/>
 <area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,228,80"/>
 <area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,228,24"/>
 </map>
@@ -83,17 +84,15 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor (for unit testing).  <a href="#a30714e5b06c9be87b52acca45fcd8fdb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#af7999a7ea6603ee1672174ed85c91bd9">~PairPotentialImpl</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#af7999a7ea6603ee1672174ed85c91bd9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#a19443b247fc254c4998e8aa6072d0129">setMethodId</a> (int methodId)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set integer id to specify algorithm.  <a href="#a19443b247fc254c4998e8aa6072d0129"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#adaf394a9cd6fb62851b02d31b56d7029">readParam</a> (std::istream &amp;in)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read pair potential interaction and pair list blocks.  <a href="#adaf394a9cd6fb62851b02d31b56d7029"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Interaction interface</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#a177033328cfaca12b876c8fd93d1bd93">setNAtomType</a> (int nAtomType)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum number of atom types.  <a href="#a177033328cfaca12b876c8fd93d1bd93"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#a4f0f004fa5a318cab37d06c576e3ee43">energy</a> (double rsq, int iAtomType, int jAtomType) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pair energy for a single pair.  <a href="#a4f0f004fa5a318cab37d06c576e3ee43"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#a691f1cc066c3e3d23e2a65e48f8f2562">forceOverR</a> (double rsq, int iAtomType, int jAtomType) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return force / separation for a single pair.  <a href="#a691f1cc066c3e3d23e2a65e48f8f2562"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#a2c0a5b4b74775bd79b88198c88167d14">pairEnergy</a> (double rsq, int iAtomType, int jAtomType) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return energy for a single pair.  <a href="#a2c0a5b4b74775bd79b88198c88167d14"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#af123298382bf3b474b71aa580cfe06aa">pairForceOverR</a> (double rsq, int iAtomType, int jAtomType) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return force / separation for a single pair.  <a href="#af123298382bf3b474b71aa580cfe06aa"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#a76646e22089db0c8729942c7999959c0">maxPairCutoff</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return maximum cutoff.  <a href="#a76646e22089db0c8729942c7999959c0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#acd2bd6a1fa5eed8300a554e26d0bd051">interactionClassName</a> () const </td></tr>
@@ -107,8 +106,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate non-bonded pair forces for all atoms in this <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>.  <a href="#a4e748f0f5186ef6add79bc8ba31dc6d4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#aa1d2270153baddea8e4a9b77b57bd3b0">computeEnergy</a> (MPI::Intracomm &amp;communicator)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the total nonBonded pair energy for all processors.  <a href="#aa1d2270153baddea8e4a9b77b57bd3b0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#a3e65fd8e7f01df967db3d3be628be478">energy</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total energy calculated previously by <a class="el" href="classDdMd_1_1PairPotentialImpl.html#aa1d2270153baddea8e4a9b77b57bd3b0" title="Compute the total nonBonded pair energy for all processors.">computeEnergy()</a>.  <a href="#a3e65fd8e7f01df967db3d3be628be478"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairPotentialImpl.html#aed15420fd7f3dc637aa156a41cef2976">computeStress</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the total nonBonded stress for all processors.  <a href="#aed15420fd7f3dc637aa156a41cef2976"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="af728959693f7125ae5be8b268606683b"></a><!-- doxytag: member="DdMd::PairPotentialImpl::PairPotentialImpl" ref="af728959693f7125ae5be8b268606683b" args="(Simulation &amp;simulation)" -->
@@ -130,7 +129,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00261">261</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00220">220</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -152,7 +151,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Default constructor (for unit testing). </p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00271">271</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00229">229</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -174,40 +173,11 @@ template&lt;class Interaction &gt; </div>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00281">281</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00238">238</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a19443b247fc254c4998e8aa6072d0129"></a><!-- doxytag: member="DdMd::PairPotentialImpl::setMethodId" ref="a19443b247fc254c4998e8aa6072d0129" args="(int methodId)" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class Interaction &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classDdMd_1_1PairPotentialImpl.html">DdMd::PairPotentialImpl</a>&lt; Interaction &gt;::setMethodId </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>methodId</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Set integer id to specify algorithm. </p>
-<dl><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">methodId</td><td>algorithm id: 0=pair list, 1=cell list, 2=N^2 loop. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00293">293</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="adaf394a9cd6fb62851b02d31b56d7029"></a><!-- doxytag: member="DdMd::PairPotentialImpl::readParam" ref="adaf394a9cd6fb62851b02d31b56d7029" args="(std::istream &amp;in)" -->
 <div class="memitem">
 <div class="memproto">
@@ -236,7 +206,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00297">297</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00247">247</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -261,18 +231,18 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a0df5d6195d10bbcba48f89db827829d2">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00310">310</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00260">260</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4f0f004fa5a318cab37d06c576e3ee43"></a><!-- doxytag: member="DdMd::PairPotentialImpl::energy" ref="a4f0f004fa5a318cab37d06c576e3ee43" args="(double rsq, int iAtomType, int jAtomType) const " -->
+<a class="anchor" id="a2c0a5b4b74775bd79b88198c88167d14"></a><!-- doxytag: member="DdMd::PairPotentialImpl::pairEnergy" ref="a2c0a5b4b74775bd79b88198c88167d14" args="(double rsq, int iAtomType, int jAtomType) const " -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="classDdMd_1_1PairPotentialImpl.html">DdMd::PairPotentialImpl</a>&lt; Interaction &gt;::energy </td>
+          <td class="memname">double <a class="el" href="classDdMd_1_1PairPotentialImpl.html">DdMd::PairPotentialImpl</a>&lt; Interaction &gt;::pairEnergy </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rsq</em>, </td>
@@ -298,7 +268,7 @@ template&lt;class Interaction &gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Return pair energy for a single pair. </p>
+<p>Return energy for a single pair. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">rsq</td><td>square distance between atoms in pair </td></tr>
@@ -309,20 +279,20 @@ template&lt;class Interaction &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>energy of pair </dd></dl>
 
-<p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#ad4ed75974a9e3157fa8645b4afbb76c7">DdMd::PairPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a7adf1715b0ad1a6612a2d2e8805c0e56">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00317">317</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00267">267</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a691f1cc066c3e3d23e2a65e48f8f2562"></a><!-- doxytag: member="DdMd::PairPotentialImpl::forceOverR" ref="a691f1cc066c3e3d23e2a65e48f8f2562" args="(double rsq, int iAtomType, int jAtomType) const " -->
+<a class="anchor" id="af123298382bf3b474b71aa580cfe06aa"></a><!-- doxytag: member="DdMd::PairPotentialImpl::pairForceOverR" ref="af123298382bf3b474b71aa580cfe06aa" args="(double rsq, int iAtomType, int jAtomType) const " -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="classDdMd_1_1PairPotentialImpl.html">DdMd::PairPotentialImpl</a>&lt; Interaction &gt;::forceOverR </td>
+          <td class="memname">double <a class="el" href="classDdMd_1_1PairPotentialImpl.html">DdMd::PairPotentialImpl</a>&lt; Interaction &gt;::pairForceOverR </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rsq</em>, </td>
@@ -359,9 +329,9 @@ template&lt;class Interaction &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>repulsive force (&lt; 0 if attractive) over distance </dd></dl>
 
-<p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a679dfdb17945ef9ccfa8be9ff4a65ee6">DdMd::PairPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a66dd4138d4772b8c679d20d9b6fb95ea">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00325">325</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00275">275</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -385,7 +355,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#ac39c9346bb1e8274760a95c4c5c45753">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00333">333</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00283">283</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -409,7 +379,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a4f5d3e589103d432697d34065cd5417b">DdMd::PairPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00340">340</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00290">290</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -431,7 +401,7 @@ template&lt;class Interaction&gt; </div>
 
 <p>Return underlying pair interaction object by const reference. </p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00114">114</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00107">107</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -453,7 +423,7 @@ template&lt;class Interaction&gt; </div>
 
 <p>Return underlying pair interaction object by reference. </p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00120">120</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00113">113</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -476,9 +446,9 @@ template&lt;class Interaction &gt; </div>
 <p>Calculate non-bonded pair forces for all atoms in this <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>. </p>
 <p>Adds non-bonded pair forces to the current values of the forces for all atoms in this simulation. Before calculating forces, the method checks if the pair list is current, and rebuilds it if necessary. </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#acddbd92d63e3d1ab85e2aa9a56b1ecce">DdMd::PairPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Potential.html#a3b07e1cf5fe1a2fad433cf945cea5af1">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00347">347</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00297">297</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -502,34 +472,37 @@ template&lt;class Interaction &gt; </div>
 <p>Compute the total nonBonded pair energy for all processors. </p>
 <p>Call on all processors. </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a57b10c7d3388a4723427eefd72497893">DdMd::PairPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Potential.html#a4e88eaa5bfc37822ae1132c0f157ddfd">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00367">367</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00315">315</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3e65fd8e7f01df967db3d3be628be478"></a><!-- doxytag: member="DdMd::PairPotentialImpl::energy" ref="a3e65fd8e7f01df967db3d3be628be478" args="()" -->
+<a class="anchor" id="aed15420fd7f3dc637aa156a41cef2976"></a><!-- doxytag: member="DdMd::PairPotentialImpl::computeStress" ref="aed15420fd7f3dc637aa156a41cef2976" args="(MPI::Intracomm &amp;communicator)" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="classDdMd_1_1PairPotentialImpl.html">DdMd::PairPotentialImpl</a>&lt; Interaction &gt;::energy </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1PairPotentialImpl.html">DdMd::PairPotentialImpl</a>&lt; Interaction &gt;::computeStress </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
+          <td class="paramname"><em>communicator</em></td><td>)</td>
           <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Get the total energy calculated previously by <a class="el" href="classDdMd_1_1PairPotentialImpl.html#aa1d2270153baddea8e4a9b77b57bd3b0" title="Compute the total nonBonded pair energy for all processors.">computeEnergy()</a>. </p>
-<p>Call only on master. </p>
+<p>Compute the total nonBonded stress for all processors. </p>
+<p>Call on all processors. </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1PairPotential.html#a09b3a18ea3596663a14493ccbc5fc82c">DdMd::PairPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Potential.html#a504660ddcbb47afbe9b505150dfad607">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00394">394</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="PairPotentialImpl_8h_source.html#l00704">704</a> of file <a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00160">DdMd::PairIterator::getPair()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00195">DdMd::PairIterator::notEnd()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="Vector_8h_source.html#l00588">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00644">Util::Vector::subtract()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00209">DdMd::Atom::typeId()</a>, and <a class="el" href="Tensor_8h_source.html#l00416">Util::Tensor::zero()</a>.</p>
 
 </div>
 </div>
@@ -537,7 +510,7 @@ template&lt;class Interaction &gt; </div>
 <li><a class="el" href="PairPotentialImpl_8h_source.html">PairPotentialImpl.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:22 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

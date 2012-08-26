@@ -120,163 +120,162 @@
 <a name="l00142"></a>00142 
 <a name="l00143"></a>00143 <span class="preprocessor">      #if UTIL_MPI</span>
 <a name="l00144"></a>00144 <span class="preprocessor"></span>
-<a name="l00148"></a>00148       MPI::Intracomm&amp; communicator() <span class="keyword">const</span>;
-<a name="l00149"></a>00149 
-<a name="l00150"></a>00150 <span class="preprocessor">      #endif</span>
-<a name="l00151"></a>00151 <span class="preprocessor"></span>
-<a name="l00163"></a>00163       <span class="keywordtype">double</span> domainBound(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) <span class="keyword">const</span>;
-<a name="l00164"></a>00164 
-<a name="l00171"></a>00171       <span class="keywordtype">int</span> ownerRank(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position) <span class="keyword">const</span>;
-<a name="l00172"></a>00172 
-<a name="l00179"></a>00179       <span class="keywordtype">bool</span> isInDomain(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position) <span class="keyword">const</span>;
-<a name="l00180"></a>00180 
-<a name="l00184"></a>00184       <span class="keywordtype">bool</span> isInitialized() <span class="keyword">const</span>;
-<a name="l00185"></a>00185 
-<a name="l00189"></a>00189       <span class="keywordtype">bool</span> hasBoundary() <span class="keyword">const</span>;
+<a name="l00147"></a>00147       MPI::Intracomm&amp; communicator() <span class="keyword">const</span>;
+<a name="l00148"></a>00148 <span class="preprocessor">      #endif</span>
+<a name="l00149"></a>00149 <span class="preprocessor"></span>
+<a name="l00161"></a>00161       <span class="keywordtype">double</span> domainBound(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j) <span class="keyword">const</span>;
+<a name="l00162"></a>00162 
+<a name="l00169"></a>00169       <span class="keywordtype">int</span> ownerRank(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position) <span class="keyword">const</span>;
+<a name="l00170"></a>00170 
+<a name="l00177"></a>00177       <span class="keywordtype">bool</span> isInDomain(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; position) <span class="keyword">const</span>;
+<a name="l00178"></a>00178 
+<a name="l00182"></a>00182       <span class="keywordtype">bool</span> isInitialized() <span class="keyword">const</span>;
+<a name="l00183"></a>00183 
+<a name="l00187"></a>00187       <span class="keywordtype">bool</span> hasBoundary() <span class="keyword">const</span>;
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189    <span class="keyword">private</span>:
 <a name="l00190"></a>00190 
-<a name="l00191"></a>00191    <span class="keyword">private</span>:
-<a name="l00192"></a>00192 
-<a name="l00193"></a>00193       <span class="comment">// Ranks of sending (source) processor for each shift.</span>
-<a name="l00194"></a>00194       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt;int, Dimension, 2&gt;</a>  sourceRanks_;
-<a name="l00195"></a>00195 
-<a name="l00196"></a>00196       <span class="comment">// Ranks of receiving (destination) processor for each shift.</span>
-<a name="l00197"></a>00197       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt;int, Dimension, 2&gt;</a>  destRanks_;
-<a name="l00198"></a>00198 
-<a name="l00199"></a>00199       <span class="comment">// Shifts due to periodic boundary conditions in each send direction.</span>
-<a name="l00200"></a>00200       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt;int, Dimension, 2&gt;</a>  shift_;
-<a name="l00201"></a>00201 
-<a name="l00202"></a>00202       <span class="comment">// Grid object with dimensions given by gridDimensions_.</span>
-<a name="l00203"></a>00203       <a class="code" href="classUtil_1_1Grid.html" title="A grid of points indexed by integer coordinates.">Grid</a> grid_;
-<a name="l00204"></a>00204 
-<a name="l00205"></a>00205       <span class="comment">// Number of processors in each direction.</span>
-<a name="l00206"></a>00206       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> gridDimensions_;
-<a name="l00207"></a>00207 
-<a name="l00208"></a>00208       <span class="comment">// Coordinates of this domain in processor grid.</span>
-<a name="l00209"></a>00209       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> gridCoordinates_;
-<a name="l00210"></a>00210 
-<a name="l00211"></a>00211       <span class="comment">// Rank of this processor in Cartesian communicator.</span>
-<a name="l00212"></a>00212       <span class="keywordtype">int</span> gridRank_;
-<a name="l00213"></a>00213 
-<a name="l00214"></a>00214       <span class="comment">// Is each direction periodic (1 = true, 0 = false).</span>
-<a name="l00215"></a>00215       <a class="code" href="classUtil_1_1FArray.html">FArray&lt;bool, Dimension&gt;</a> gridIsPeriodic_;
-<a name="l00216"></a>00216 
-<a name="l00217"></a>00217 <span class="preprocessor">      #if UTIL_MPI</span>
-<a name="l00218"></a>00218 <span class="preprocessor"></span>
-<a name="l00219"></a>00219       <span class="comment">// Pointer to Intracommunicator.</span>
-<a name="l00220"></a>00220       MPI::Intracomm* intracommPtr_;
-<a name="l00221"></a>00221 
-<a name="l00222"></a>00222 <span class="preprocessor">      #endif</span>
-<a name="l00223"></a>00223 <span class="preprocessor"></span>
-<a name="l00224"></a>00224       <span class="comment">// Pointer to associated Boundary object.</span>
-<a name="l00225"></a>00225       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>* boundaryPtr_;
-<a name="l00226"></a>00226 
-<a name="l00227"></a>00227       <span class="comment">// Is this object initialized (Has a grid been set?)</span>
-<a name="l00228"></a>00228       <span class="keywordtype">bool</span> isInitialized_;
+<a name="l00191"></a>00191       <span class="comment">// Ranks of sending (source) processor for each shift.</span>
+<a name="l00192"></a>00192       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt;int, Dimension, 2&gt;</a>  sourceRanks_;
+<a name="l00193"></a>00193 
+<a name="l00194"></a>00194       <span class="comment">// Ranks of receiving (destination) processor for each shift.</span>
+<a name="l00195"></a>00195       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt;int, Dimension, 2&gt;</a>  destRanks_;
+<a name="l00196"></a>00196 
+<a name="l00197"></a>00197       <span class="comment">// Shifts due to periodic boundary conditions in each send direction.</span>
+<a name="l00198"></a>00198       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt;int, Dimension, 2&gt;</a>  shift_;
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200       <span class="comment">// Grid object with dimensions given by gridDimensions_.</span>
+<a name="l00201"></a>00201       <a class="code" href="classUtil_1_1Grid.html" title="A grid of points indexed by integer coordinates.">Grid</a> grid_;
+<a name="l00202"></a>00202 
+<a name="l00203"></a>00203       <span class="comment">// Number of processors in each direction.</span>
+<a name="l00204"></a>00204       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> gridDimensions_;
+<a name="l00205"></a>00205 
+<a name="l00206"></a>00206       <span class="comment">// Coordinates of this domain in processor grid.</span>
+<a name="l00207"></a>00207       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> gridCoordinates_;
+<a name="l00208"></a>00208 
+<a name="l00209"></a>00209       <span class="comment">// Rank of this processor in Cartesian communicator.</span>
+<a name="l00210"></a>00210       <span class="keywordtype">int</span> gridRank_;
+<a name="l00211"></a>00211 
+<a name="l00212"></a>00212       <span class="comment">// Is each direction periodic (1 = true, 0 = false).</span>
+<a name="l00213"></a>00213       <a class="code" href="classUtil_1_1FArray.html">FArray&lt;bool, Dimension&gt;</a> gridIsPeriodic_;
+<a name="l00214"></a>00214 
+<a name="l00215"></a>00215 <span class="preprocessor">      #if UTIL_MPI</span>
+<a name="l00216"></a>00216 <span class="preprocessor"></span>
+<a name="l00217"></a>00217       <span class="comment">// Pointer to Intracommunicator.</span>
+<a name="l00218"></a>00218       MPI::Intracomm* intracommPtr_;
+<a name="l00219"></a>00219 
+<a name="l00220"></a>00220 <span class="preprocessor">      #endif</span>
+<a name="l00221"></a>00221 <span class="preprocessor"></span>
+<a name="l00222"></a>00222       <span class="comment">// Pointer to associated Boundary object.</span>
+<a name="l00223"></a>00223       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>* boundaryPtr_;
+<a name="l00224"></a>00224 
+<a name="l00225"></a>00225       <span class="comment">// Is this object initialized (Has a grid been set?)</span>
+<a name="l00226"></a>00226       <span class="keywordtype">bool</span> isInitialized_;
+<a name="l00227"></a>00227 
+<a name="l00228"></a>00228    };
 <a name="l00229"></a>00229 
-<a name="l00230"></a>00230    };
-<a name="l00231"></a>00231 
-<a name="l00232"></a>00232 <span class="preprocessor">   #if UTIL_MPI</span>
-<a name="l00233"></a>00233 <span class="preprocessor"></span>
-<a name="l00237"></a><a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b">00237</a>    <span class="keyword">inline</span> MPI::Intracomm&amp; <a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">Domain::communicator</a>()<span class="keyword"> const</span>
-<a name="l00238"></a>00238 <span class="keyword">   </span>{
-<a name="l00239"></a>00239       assert(intracommPtr_);
-<a name="l00240"></a>00240       <span class="keywordflow">return</span> *intracommPtr_; 
-<a name="l00241"></a>00241    }
-<a name="l00242"></a>00242 
-<a name="l00243"></a>00243 <span class="preprocessor">   #endif</span>
-<a name="l00244"></a>00244 <span class="preprocessor"></span>
-<a name="l00245"></a>00245    <span class="comment">/*</span>
-<a name="l00246"></a>00246 <span class="comment">   * Return processor Grid by const reference.</span>
-<a name="l00247"></a>00247 <span class="comment">   */</span>
-<a name="l00248"></a><a class="code" href="classDdMd_1_1Domain.html#a890695ed2d3be89420649be7befe01e1">00248</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classUtil_1_1Grid.html" title="A grid of points indexed by integer coordinates.">Grid</a>&amp; <a class="code" href="classDdMd_1_1Domain.html#a890695ed2d3be89420649be7befe01e1" title="Return processor Grid by const reference.">Domain::grid</a>()<span class="keyword"> const</span>
-<a name="l00249"></a>00249 <span class="keyword">   </span>{  
-<a name="l00250"></a>00250       assert(isInitialized_);
-<a name="l00251"></a>00251       <span class="keywordflow">return</span> grid_; 
-<a name="l00252"></a>00252    }
-<a name="l00253"></a>00253 
-<a name="l00254"></a>00254    <span class="comment">/*</span>
-<a name="l00255"></a>00255 <span class="comment">   * Return a coordinate of this processor within grid.</span>
-<a name="l00256"></a>00256 <span class="comment">   */</span>
-<a name="l00257"></a><a class="code" href="classDdMd_1_1Domain.html#a491610388d9f4ead22c62e132c55e271">00257</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a491610388d9f4ead22c62e132c55e271" title="Get coordinate of processor within grid in specified direction.">Domain::gridCoordinate</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
-<a name="l00258"></a>00258 <span class="keyword">   </span>{  
-<a name="l00259"></a>00259       assert(isInitialized_);
-<a name="l00260"></a>00260       <span class="keywordflow">return</span> gridCoordinates_[i]; 
-<a name="l00261"></a>00261    }
-<a name="l00262"></a>00262 
-<a name="l00266"></a><a class="code" href="classDdMd_1_1Domain.html#a6c9f4eb2018c33cf008957c711f0a5e9">00266</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a6c9f4eb2018c33cf008957c711f0a5e9" title="Get dimension of processor grid in specified direction.">Domain::gridDimension</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
-<a name="l00267"></a>00267 <span class="keyword">   </span>{  
-<a name="l00268"></a>00268       assert(isInitialized_);
-<a name="l00269"></a>00269       <span class="keywordflow">return</span> gridDimensions_[i]; 
-<a name="l00270"></a>00270    }
-<a name="l00271"></a>00271 
-<a name="l00275"></a><a class="code" href="classDdMd_1_1Domain.html#ac1f88b3e0b9b3bf6a064b9c736496c07">00275</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Domain.html#ac1f88b3e0b9b3bf6a064b9c736496c07" title="Is the grid periodic in the specified direction?">Domain::gridIsPeriodic</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
-<a name="l00276"></a>00276 <span class="keyword">   </span>{  
-<a name="l00277"></a>00277       assert(isInitialized_);
-<a name="l00278"></a>00278       <span class="keywordflow">return</span> gridIsPeriodic_[i]; 
-<a name="l00279"></a>00279    }
-<a name="l00280"></a>00280 
-<a name="l00281"></a>00281    <span class="comment">/*</span>
-<a name="l00282"></a>00282 <span class="comment">   * Rank of this processor in Cartesian communicator.</span>
-<a name="l00283"></a>00283 <span class="comment">   */</span>
-<a name="l00284"></a><a class="code" href="classDdMd_1_1Domain.html#a46aef8d7cbc72226576a940d335114ba">00284</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a46aef8d7cbc72226576a940d335114ba" title="Get rank of this processor in the processor grid.">Domain::gridRank</a>()<span class="keyword"> const</span>
-<a name="l00285"></a>00285 <span class="keyword">   </span>{  
-<a name="l00286"></a>00286       assert(isInitialized_);
-<a name="l00287"></a>00287       <span class="keywordflow">return</span> gridRank_; 
-<a name="l00288"></a>00288    }
-<a name="l00289"></a>00289 
-<a name="l00290"></a>00290    <span class="comment">/*</span>
-<a name="l00291"></a>00291 <span class="comment">   * Is this the master processor (gridRank == 0)?</span>
-<a name="l00292"></a>00292 <span class="comment">   */</span>
-<a name="l00293"></a><a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb">00293</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">Domain::isMaster</a>()<span class="keyword"> const</span>
-<a name="l00294"></a>00294 <span class="keyword">   </span>{  
-<a name="l00295"></a>00295       assert(isInitialized_);
-<a name="l00296"></a>00296       <span class="keywordflow">return</span> bool(gridRank_ == 0); 
-<a name="l00297"></a>00297    }
-<a name="l00298"></a>00298 
-<a name="l00299"></a>00299    <span class="comment">/*</span>
-<a name="l00300"></a>00300 <span class="comment">   * Rank of the processor from which to receive in transfer (i, j).</span>
-<a name="l00301"></a>00301 <span class="comment">   */</span>
-<a name="l00302"></a><a class="code" href="classDdMd_1_1Domain.html#a24b5b11ad61459c17f2e43d2b0e283f4">00302</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a24b5b11ad61459c17f2e43d2b0e283f4" title="Rank of the processor from which to receive for transfer (i, j).">Domain::sourceRank</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
-<a name="l00303"></a>00303 <span class="keyword">   </span>{  
-<a name="l00304"></a>00304       assert(isInitialized_);
-<a name="l00305"></a>00305       <span class="keywordflow">return</span> sourceRanks_(i, j); 
-<a name="l00306"></a>00306    }
-<a name="l00307"></a>00307 
-<a name="l00308"></a>00308    <span class="comment">/*</span>
-<a name="l00309"></a>00309 <span class="comment">   * Rank of the processor to which to send in transfer (i, j).</span>
-<a name="l00310"></a>00310 <span class="comment">   */</span>
-<a name="l00311"></a><a class="code" href="classDdMd_1_1Domain.html#a7656f6549a0881e89cd7e31791de9de5">00311</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a7656f6549a0881e89cd7e31791de9de5" title="Rank of the processor to which to send for transfer (i, j).">Domain::destRank</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
-<a name="l00312"></a>00312 <span class="keyword">   </span>{  
-<a name="l00313"></a>00313       assert(isInitialized_);
-<a name="l00314"></a>00314       <span class="keywordflow">return</span> destRanks_(i,j); 
-<a name="l00315"></a>00315    }
-<a name="l00316"></a>00316 
-<a name="l00317"></a>00317    <span class="comment">/*</span>
-<a name="l00318"></a>00318 <span class="comment">   * Shift applied in direction i for transfer (i, j)</span>
-<a name="l00319"></a>00319 <span class="comment">   */</span>
-<a name="l00320"></a><a class="code" href="classDdMd_1_1Domain.html#a50ef6077bf25f06b7a24796602e592ed">00320</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a50ef6077bf25f06b7a24796602e592ed" title="Shift to be applied to sent coordinates in transfer (i, j).">Domain::shift</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
-<a name="l00321"></a>00321 <span class="keyword">   </span>{  
-<a name="l00322"></a>00322       assert(isInitialized_);
-<a name="l00323"></a>00323       <span class="keywordflow">return</span> shift_(i, j);  
-<a name="l00324"></a>00324    }
-<a name="l00325"></a>00325 
-<a name="l00326"></a>00326    <span class="comment">/*</span>
-<a name="l00327"></a>00327 <span class="comment">   * Has this Domain been initialized by calling readParam?</span>
-<a name="l00328"></a>00328 <span class="comment">   */</span>
-<a name="l00329"></a><a class="code" href="classDdMd_1_1Domain.html#a06fb7e618207f58603b5cda77fb4fc59">00329</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Domain.html#a06fb7e618207f58603b5cda77fb4fc59" title="Has this Domain been initialized by calling readParam?">Domain::isInitialized</a>()<span class="keyword"> const</span>
-<a name="l00330"></a>00330 <span class="keyword">   </span>{  <span class="keywordflow">return</span> isInitialized_;  }
-<a name="l00331"></a>00331 
-<a name="l00332"></a>00332    <span class="comment">/*</span>
-<a name="l00333"></a>00333 <span class="comment">   * Has an associated Boundary been set ?</span>
-<a name="l00334"></a>00334 <span class="comment">   */</span>
-<a name="l00335"></a><a class="code" href="classDdMd_1_1Domain.html#aaaed02d71cabab686b3097c56541e17b">00335</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Domain.html#aaaed02d71cabab686b3097c56541e17b" title="Has an associated Boundary been set?">Domain::hasBoundary</a>()<span class="keyword"> const</span>
-<a name="l00336"></a>00336 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (boundaryPtr_ != 0);  }
-<a name="l00337"></a>00337 
-<a name="l00338"></a>00338 }
-<a name="l00339"></a>00339 <span class="preprocessor">#endif</span>
+<a name="l00230"></a>00230 <span class="preprocessor">   #if UTIL_MPI</span>
+<a name="l00231"></a>00231 <span class="preprocessor"></span>
+<a name="l00235"></a><a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b">00235</a>    <span class="keyword">inline</span> MPI::Intracomm&amp; <a class="code" href="classDdMd_1_1Domain.html#a49eecec2924f7a811747406c85fff62b" title="Return Cartesian communicator by reference.">Domain::communicator</a>()<span class="keyword"> const</span>
+<a name="l00236"></a>00236 <span class="keyword">   </span>{
+<a name="l00237"></a>00237       assert(intracommPtr_);
+<a name="l00238"></a>00238       <span class="keywordflow">return</span> *intracommPtr_; 
+<a name="l00239"></a>00239    }
+<a name="l00240"></a>00240 
+<a name="l00241"></a>00241 <span class="preprocessor">   #endif</span>
+<a name="l00242"></a>00242 <span class="preprocessor"></span>
+<a name="l00243"></a>00243    <span class="comment">/*</span>
+<a name="l00244"></a>00244 <span class="comment">   * Return processor Grid by const reference.</span>
+<a name="l00245"></a>00245 <span class="comment">   */</span>
+<a name="l00246"></a><a class="code" href="classDdMd_1_1Domain.html#a890695ed2d3be89420649be7befe01e1">00246</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classUtil_1_1Grid.html" title="A grid of points indexed by integer coordinates.">Grid</a>&amp; <a class="code" href="classDdMd_1_1Domain.html#a890695ed2d3be89420649be7befe01e1" title="Return processor Grid by const reference.">Domain::grid</a>()<span class="keyword"> const</span>
+<a name="l00247"></a>00247 <span class="keyword">   </span>{  
+<a name="l00248"></a>00248       assert(isInitialized_);
+<a name="l00249"></a>00249       <span class="keywordflow">return</span> grid_; 
+<a name="l00250"></a>00250    }
+<a name="l00251"></a>00251 
+<a name="l00252"></a>00252    <span class="comment">/*</span>
+<a name="l00253"></a>00253 <span class="comment">   * Return a coordinate of this processor within grid.</span>
+<a name="l00254"></a>00254 <span class="comment">   */</span>
+<a name="l00255"></a><a class="code" href="classDdMd_1_1Domain.html#a491610388d9f4ead22c62e132c55e271">00255</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a491610388d9f4ead22c62e132c55e271" title="Get coordinate of processor within grid in specified direction.">Domain::gridCoordinate</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00256"></a>00256 <span class="keyword">   </span>{  
+<a name="l00257"></a>00257       assert(isInitialized_);
+<a name="l00258"></a>00258       <span class="keywordflow">return</span> gridCoordinates_[i]; 
+<a name="l00259"></a>00259    }
+<a name="l00260"></a>00260 
+<a name="l00264"></a><a class="code" href="classDdMd_1_1Domain.html#a6c9f4eb2018c33cf008957c711f0a5e9">00264</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a6c9f4eb2018c33cf008957c711f0a5e9" title="Get dimension of processor grid in specified direction.">Domain::gridDimension</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00265"></a>00265 <span class="keyword">   </span>{  
+<a name="l00266"></a>00266       assert(isInitialized_);
+<a name="l00267"></a>00267       <span class="keywordflow">return</span> gridDimensions_[i]; 
+<a name="l00268"></a>00268    }
+<a name="l00269"></a>00269 
+<a name="l00273"></a><a class="code" href="classDdMd_1_1Domain.html#ac1f88b3e0b9b3bf6a064b9c736496c07">00273</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Domain.html#ac1f88b3e0b9b3bf6a064b9c736496c07" title="Is the grid periodic in the specified direction?">Domain::gridIsPeriodic</a>(<span class="keywordtype">int</span> i)<span class="keyword"> const</span>
+<a name="l00274"></a>00274 <span class="keyword">   </span>{  
+<a name="l00275"></a>00275       assert(isInitialized_);
+<a name="l00276"></a>00276       <span class="keywordflow">return</span> gridIsPeriodic_[i]; 
+<a name="l00277"></a>00277    }
+<a name="l00278"></a>00278 
+<a name="l00279"></a>00279    <span class="comment">/*</span>
+<a name="l00280"></a>00280 <span class="comment">   * Rank of this processor in Cartesian communicator.</span>
+<a name="l00281"></a>00281 <span class="comment">   */</span>
+<a name="l00282"></a><a class="code" href="classDdMd_1_1Domain.html#a46aef8d7cbc72226576a940d335114ba">00282</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a46aef8d7cbc72226576a940d335114ba" title="Get rank of this processor in the processor grid.">Domain::gridRank</a>()<span class="keyword"> const</span>
+<a name="l00283"></a>00283 <span class="keyword">   </span>{  
+<a name="l00284"></a>00284       assert(isInitialized_);
+<a name="l00285"></a>00285       <span class="keywordflow">return</span> gridRank_; 
+<a name="l00286"></a>00286    }
+<a name="l00287"></a>00287 
+<a name="l00288"></a>00288    <span class="comment">/*</span>
+<a name="l00289"></a>00289 <span class="comment">   * Is this the master processor (gridRank == 0)?</span>
+<a name="l00290"></a>00290 <span class="comment">   */</span>
+<a name="l00291"></a><a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb">00291</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Domain.html#aac3570d874af4b74634198100cb1c4bb" title="Is this the master processor (gridRank == 0) ?">Domain::isMaster</a>()<span class="keyword"> const</span>
+<a name="l00292"></a>00292 <span class="keyword">   </span>{  
+<a name="l00293"></a>00293       assert(isInitialized_);
+<a name="l00294"></a>00294       <span class="keywordflow">return</span> bool(gridRank_ == 0); 
+<a name="l00295"></a>00295    }
+<a name="l00296"></a>00296 
+<a name="l00297"></a>00297    <span class="comment">/*</span>
+<a name="l00298"></a>00298 <span class="comment">   * Rank of the processor from which to receive in transfer (i, j).</span>
+<a name="l00299"></a>00299 <span class="comment">   */</span>
+<a name="l00300"></a><a class="code" href="classDdMd_1_1Domain.html#a24b5b11ad61459c17f2e43d2b0e283f4">00300</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a24b5b11ad61459c17f2e43d2b0e283f4" title="Rank of the processor from which to receive for transfer (i, j).">Domain::sourceRank</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00301"></a>00301 <span class="keyword">   </span>{  
+<a name="l00302"></a>00302       assert(isInitialized_);
+<a name="l00303"></a>00303       <span class="keywordflow">return</span> sourceRanks_(i, j); 
+<a name="l00304"></a>00304    }
+<a name="l00305"></a>00305 
+<a name="l00306"></a>00306    <span class="comment">/*</span>
+<a name="l00307"></a>00307 <span class="comment">   * Rank of the processor to which to send in transfer (i, j).</span>
+<a name="l00308"></a>00308 <span class="comment">   */</span>
+<a name="l00309"></a><a class="code" href="classDdMd_1_1Domain.html#a7656f6549a0881e89cd7e31791de9de5">00309</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a7656f6549a0881e89cd7e31791de9de5" title="Rank of the processor to which to send for transfer (i, j).">Domain::destRank</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00310"></a>00310 <span class="keyword">   </span>{  
+<a name="l00311"></a>00311       assert(isInitialized_);
+<a name="l00312"></a>00312       <span class="keywordflow">return</span> destRanks_(i,j); 
+<a name="l00313"></a>00313    }
+<a name="l00314"></a>00314 
+<a name="l00315"></a>00315    <span class="comment">/*</span>
+<a name="l00316"></a>00316 <span class="comment">   * Shift applied in direction i for transfer (i, j)</span>
+<a name="l00317"></a>00317 <span class="comment">   */</span>
+<a name="l00318"></a><a class="code" href="classDdMd_1_1Domain.html#a50ef6077bf25f06b7a24796602e592ed">00318</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Domain.html#a50ef6077bf25f06b7a24796602e592ed" title="Shift to be applied to sent coordinates in transfer (i, j).">Domain::shift</a>(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j)<span class="keyword"> const</span>
+<a name="l00319"></a>00319 <span class="keyword">   </span>{  
+<a name="l00320"></a>00320       assert(isInitialized_);
+<a name="l00321"></a>00321       <span class="keywordflow">return</span> shift_(i, j);  
+<a name="l00322"></a>00322    }
+<a name="l00323"></a>00323 
+<a name="l00324"></a>00324    <span class="comment">/*</span>
+<a name="l00325"></a>00325 <span class="comment">   * Has this Domain been initialized by calling readParam?</span>
+<a name="l00326"></a>00326 <span class="comment">   */</span>
+<a name="l00327"></a><a class="code" href="classDdMd_1_1Domain.html#a06fb7e618207f58603b5cda77fb4fc59">00327</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Domain.html#a06fb7e618207f58603b5cda77fb4fc59" title="Has this Domain been initialized by calling readParam?">Domain::isInitialized</a>()<span class="keyword"> const</span>
+<a name="l00328"></a>00328 <span class="keyword">   </span>{  <span class="keywordflow">return</span> isInitialized_;  }
+<a name="l00329"></a>00329 
+<a name="l00330"></a>00330    <span class="comment">/*</span>
+<a name="l00331"></a>00331 <span class="comment">   * Has an associated Boundary been set ?</span>
+<a name="l00332"></a>00332 <span class="comment">   */</span>
+<a name="l00333"></a><a class="code" href="classDdMd_1_1Domain.html#aaaed02d71cabab686b3097c56541e17b">00333</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Domain.html#aaaed02d71cabab686b3097c56541e17b" title="Has an associated Boundary been set?">Domain::hasBoundary</a>()<span class="keyword"> const</span>
+<a name="l00334"></a>00334 <span class="keyword">   </span>{  <span class="keywordflow">return</span> (boundaryPtr_ != 0);  }
+<a name="l00335"></a>00335 
+<a name="l00336"></a>00336 }
+<a name="l00337"></a>00337 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -293,206 +293,210 @@
 <a name="l00242"></a>00242       }
 <a name="l00243"></a>00243 
 <a name="l00244"></a>00244       <span class="comment">// Shift position to lie within boundary.</span>
-<a name="l00245"></a>00245       boundaryPtr_-&gt;shift(newPtr_-&gt;position());
-<a name="l00246"></a>00246 
-<a name="l00247"></a>00247 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00248"></a>00248 <span class="preprocessor"></span>      <span class="comment">// Identify rank of processor that owns this atom.</span>
-<a name="l00249"></a>00249       <span class="keywordtype">int</span> rank = domainPtr_-&gt;ownerRank(newPtr_-&gt;position());
-<a name="l00250"></a>00250 <span class="preprocessor">      #else</span>
-<a name="l00251"></a>00251 <span class="preprocessor"></span>      <span class="keywordtype">int</span> rank = 0;
-<a name="l00252"></a>00252 <span class="preprocessor">      #endif</span>
-<a name="l00253"></a>00253 <span class="preprocessor"></span>
-<a name="l00254"></a>00254       <span class="comment">// If not owned by the master, queue this atom for sending.</span>
-<a name="l00255"></a>00255       <span class="keywordflow">if</span> (rank == 0) {
-<a name="l00256"></a>00256 
-<a name="l00257"></a>00257          <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* ptr = storagePtr_-&gt;newAtomPtr();
-<a name="l00258"></a>00258          *ptr = *newPtr_;
-<a name="l00259"></a>00259          storagePtr_-&gt;addNewAtom();
+<a name="l00245"></a>00245       <span class="keywordflow">if</span> (UTIL_ORTHOGONAL) {
+<a name="l00246"></a>00246          boundaryPtr_-&gt;shift(newPtr_-&gt;position());
+<a name="l00247"></a>00247       } <span class="keywordflow">else</span> {
+<a name="l00248"></a>00248          boundaryPtr_-&gt;shiftGen(newPtr_-&gt;position());
+<a name="l00249"></a>00249       }
+<a name="l00250"></a>00250 
+<a name="l00251"></a>00251 <span class="preprocessor">      #ifdef UTIL_MPI</span>
+<a name="l00252"></a>00252 <span class="preprocessor"></span>      <span class="comment">// Identify rank of processor that owns this atom.</span>
+<a name="l00253"></a>00253       <span class="keywordtype">int</span> rank = domainPtr_-&gt;ownerRank(newPtr_-&gt;position());
+<a name="l00254"></a>00254 <span class="preprocessor">      #else</span>
+<a name="l00255"></a>00255 <span class="preprocessor"></span>      <span class="keywordtype">int</span> rank = 0;
+<a name="l00256"></a>00256 <span class="preprocessor">      #endif</span>
+<a name="l00257"></a>00257 <span class="preprocessor"></span>
+<a name="l00258"></a>00258       <span class="comment">// If not owned by the master, queue this atom for sending.</span>
+<a name="l00259"></a>00259       <span class="keywordflow">if</span> (rank == 0) {
 <a name="l00260"></a>00260 
-<a name="l00261"></a>00261          reservoir_.push(*newPtr_); 
-<a name="l00262"></a>00262 
-<a name="l00263"></a>00263       }
-<a name="l00264"></a>00264 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00265"></a>00265 <span class="preprocessor"></span>      <span class="keywordflow">else</span> { <span class="comment">// if rank !=0</span>
+<a name="l00261"></a>00261          <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* ptr = storagePtr_-&gt;newAtomPtr();
+<a name="l00262"></a>00262          *ptr = *newPtr_;
+<a name="l00263"></a>00263          storagePtr_-&gt;addNewAtom();
+<a name="l00264"></a>00264 
+<a name="l00265"></a>00265          reservoir_.push(*newPtr_); 
 <a name="l00266"></a>00266 
-<a name="l00267"></a>00267          <span class="comment">// Add newPtr_ to array of pointers for processor rank.</span>
-<a name="l00268"></a>00268          assert(sendSizes_[rank] &lt; sendCapacity_);
-<a name="l00269"></a>00269          sendArrays_(rank, sendSizes_[rank]) = newPtr_;
-<a name="l00270"></a>00270          ++sendSizes_[rank];
-<a name="l00271"></a>00271          ++nCachedTotal_;
-<a name="l00272"></a>00272 
-<a name="l00273"></a>00273          <span class="comment">// Check if sendSize for this rank is the largest.</span>
-<a name="l00274"></a>00274          <span class="keywordflow">if</span> (rank != rankMaxSendSize_) {
-<a name="l00275"></a>00275             <span class="keywordflow">if</span> (sendSizes_[rank] &gt; sendSizes_[rankMaxSendSize_]) {
-<a name="l00276"></a>00276                rankMaxSendSize_ = rank;
-<a name="l00277"></a>00277             }
-<a name="l00278"></a>00278          }
-<a name="l00279"></a>00279  
-<a name="l00280"></a>00280          <span class="comment">// If buffer for the relevant processor is full, send it now.</span>
-<a name="l00281"></a>00281          <span class="keywordflow">if</span> (sendSizes_[rank] == sendCapacity_) {
-<a name="l00282"></a>00282 
-<a name="l00283"></a>00283             <span class="comment">// Pack atoms into buffer, and return pointers for reuse.</span>
-<a name="l00284"></a>00284             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; sendCapacity_; ++i) {
-<a name="l00285"></a>00285                bufferPtr_-&gt;packAtom(*sendArrays_(rank, i));
+<a name="l00267"></a>00267       }
+<a name="l00268"></a>00268 <span class="preprocessor">      #ifdef UTIL_MPI</span>
+<a name="l00269"></a>00269 <span class="preprocessor"></span>      <span class="keywordflow">else</span> { <span class="comment">// if rank !=0</span>
+<a name="l00270"></a>00270 
+<a name="l00271"></a>00271          <span class="comment">// Add newPtr_ to array of pointers for processor rank.</span>
+<a name="l00272"></a>00272          assert(sendSizes_[rank] &lt; sendCapacity_);
+<a name="l00273"></a>00273          sendArrays_(rank, sendSizes_[rank]) = newPtr_;
+<a name="l00274"></a>00274          ++sendSizes_[rank];
+<a name="l00275"></a>00275          ++nCachedTotal_;
+<a name="l00276"></a>00276 
+<a name="l00277"></a>00277          <span class="comment">// Check if sendSize for this rank is the largest.</span>
+<a name="l00278"></a>00278          <span class="keywordflow">if</span> (rank != rankMaxSendSize_) {
+<a name="l00279"></a>00279             <span class="keywordflow">if</span> (sendSizes_[rank] &gt; sendSizes_[rankMaxSendSize_]) {
+<a name="l00280"></a>00280                rankMaxSendSize_ = rank;
+<a name="l00281"></a>00281             }
+<a name="l00282"></a>00282          }
+<a name="l00283"></a>00283  
+<a name="l00284"></a>00284          <span class="comment">// If buffer for the relevant processor is full, send it now.</span>
+<a name="l00285"></a>00285          <span class="keywordflow">if</span> (sendSizes_[rank] == sendCapacity_) {
 <a name="l00286"></a>00286 
-<a name="l00287"></a>00287                <span class="comment">// Push pointer onto reservoir and remove it from sendArrays_.</span>
-<a name="l00288"></a>00288                reservoir_.push(*sendArrays_(rank, i));
-<a name="l00289"></a>00289                sendArrays_(rank, i) = 0;
-<a name="l00290"></a>00290             }
-<a name="l00291"></a>00291             <span class="keywordtype">bool</span> isComplete = <span class="keyword">false</span>;
-<a name="l00292"></a>00292             bufferPtr_-&gt;endSendBlock(isComplete);
-<a name="l00293"></a>00293             nSentTotal_ += sendCapacity_;
-<a name="l00294"></a>00294             sendSizes_[rank] = 0;
-<a name="l00295"></a>00295 
-<a name="l00296"></a>00296             <span class="comment">// Send the buffer</span>
-<a name="l00297"></a>00297             bufferPtr_-&gt;send(domainPtr_-&gt;communicator(), rank);
-<a name="l00298"></a>00298 
-<a name="l00299"></a>00299             <span class="comment">// Reinitialize the send buffer for reuse.</span>
-<a name="l00300"></a>00300             bufferPtr_-&gt;clearSendBuffer();
-<a name="l00301"></a>00301             bufferPtr_-&gt;beginSendBlock(Buffer::ATOM);
-<a name="l00302"></a>00302          }
-<a name="l00303"></a>00303 
-<a name="l00304"></a>00304       }
-<a name="l00305"></a>00305 <span class="preprocessor">      #endif</span>
-<a name="l00306"></a>00306 <span class="preprocessor"></span>
-<a name="l00307"></a>00307       <span class="comment">// Nullify newPtr_ to release for reuse.</span>
-<a name="l00308"></a>00308       newPtr_ = 0;
-<a name="l00309"></a>00309 
-<a name="l00310"></a>00310       <span class="comment">// Return rank of processor that owns this atom.</span>
-<a name="l00311"></a>00311       <span class="keywordflow">return</span> rank;
-<a name="l00312"></a>00312 
-<a name="l00313"></a>00313    }
-<a name="l00314"></a>00314 
-<a name="l00315"></a>00315 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00316"></a>00316 <span class="preprocessor"></span>   <span class="comment">/*</span>
-<a name="l00317"></a>00317 <span class="comment">   * Send any atoms that have not be sent previously.</span>
-<a name="l00318"></a>00318 <span class="comment">   *</span>
-<a name="l00319"></a>00319 <span class="comment">   * This method should be called only by the master processor.</span>
-<a name="l00320"></a>00320 <span class="comment">   */</span>
-<a name="l00321"></a>00321    <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#ab89acd97fcb3b5b862cf5d3d3411c701" title="Send a single T value.">AtomDistributor::send</a>()
-<a name="l00322"></a><a class="code" href="classDdMd_1_1AtomDistributor.html#a7db868b432bda314ff90fe779154e607">00322</a>    {
-<a name="l00323"></a>00323 
-<a name="l00324"></a>00324       <span class="comment">// Preconditions</span>
-<a name="l00325"></a>00325       <span class="keywordflow">if</span> (domainPtr_ == 0) {
-<a name="l00326"></a>00326          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomDistributor is not initialized&quot;</span>);
-<a name="l00327"></a>00327       }
-<a name="l00328"></a>00328       <span class="keywordflow">if</span> (boundaryPtr_ == 0) {
-<a name="l00329"></a>00329          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomDistributor is not initialized&quot;</span>);
-<a name="l00330"></a>00330       }
-<a name="l00331"></a>00331       <span class="keywordflow">if</span> (!domainPtr_-&gt;isInitialized() != 0) {
-<a name="l00332"></a>00332          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Domain is not initialized&quot;</span>);
-<a name="l00333"></a>00333       }
-<a name="l00334"></a>00334       <span class="keywordflow">if</span> (domainPtr_-&gt;gridRank() != 0) {
-<a name="l00335"></a>00335          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;This is not the master processor&quot;</span>);
-<a name="l00336"></a>00336       }
-<a name="l00337"></a>00337       <span class="keywordflow">if</span> (newPtr_ != 0) {
-<a name="l00338"></a>00338          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;A newPtr_ is still active&quot;</span>);
-<a name="l00339"></a>00339       }
-<a name="l00340"></a>00340 
-<a name="l00341"></a>00341       <span class="keywordtype">int</span> gridSize = domainPtr_-&gt;grid().size();
-<a name="l00342"></a>00342       <span class="keywordtype">int</span> i, j;
-<a name="l00343"></a>00343       <span class="keywordtype">bool</span> isComplete = <span class="keyword">true</span>;
-<a name="l00344"></a>00344       <span class="keywordflow">for</span> (i = 1; i &lt; gridSize; ++i) {
-<a name="l00345"></a>00345 
-<a name="l00346"></a>00346          <span class="comment">// Pack all remaining atoms for this processor</span>
-<a name="l00347"></a>00347          <span class="keywordflow">for</span> (j = 0; j &lt; sendSizes_[i]; ++j) {
-<a name="l00348"></a>00348             bufferPtr_-&gt;packAtom(*sendArrays_(i, j));
+<a name="l00287"></a>00287             <span class="comment">// Pack atoms into buffer, and return pointers for reuse.</span>
+<a name="l00288"></a>00288             <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; sendCapacity_; ++i) {
+<a name="l00289"></a>00289                bufferPtr_-&gt;packAtom(*sendArrays_(rank, i));
+<a name="l00290"></a>00290 
+<a name="l00291"></a>00291                <span class="comment">// Push pointer onto reservoir and remove it from sendArrays_.</span>
+<a name="l00292"></a>00292                reservoir_.push(*sendArrays_(rank, i));
+<a name="l00293"></a>00293                sendArrays_(rank, i) = 0;
+<a name="l00294"></a>00294             }
+<a name="l00295"></a>00295             <span class="keywordtype">bool</span> isComplete = <span class="keyword">false</span>;
+<a name="l00296"></a>00296             bufferPtr_-&gt;endSendBlock(isComplete);
+<a name="l00297"></a>00297             nSentTotal_ += sendCapacity_;
+<a name="l00298"></a>00298             sendSizes_[rank] = 0;
+<a name="l00299"></a>00299 
+<a name="l00300"></a>00300             <span class="comment">// Send the buffer</span>
+<a name="l00301"></a>00301             bufferPtr_-&gt;send(domainPtr_-&gt;communicator(), rank);
+<a name="l00302"></a>00302 
+<a name="l00303"></a>00303             <span class="comment">// Reinitialize the send buffer for reuse.</span>
+<a name="l00304"></a>00304             bufferPtr_-&gt;clearSendBuffer();
+<a name="l00305"></a>00305             bufferPtr_-&gt;beginSendBlock(Buffer::ATOM);
+<a name="l00306"></a>00306          }
+<a name="l00307"></a>00307 
+<a name="l00308"></a>00308       }
+<a name="l00309"></a>00309 <span class="preprocessor">      #endif</span>
+<a name="l00310"></a>00310 <span class="preprocessor"></span>
+<a name="l00311"></a>00311       <span class="comment">// Nullify newPtr_ to release for reuse.</span>
+<a name="l00312"></a>00312       newPtr_ = 0;
+<a name="l00313"></a>00313 
+<a name="l00314"></a>00314       <span class="comment">// Return rank of processor that owns this atom.</span>
+<a name="l00315"></a>00315       <span class="keywordflow">return</span> rank;
+<a name="l00316"></a>00316 
+<a name="l00317"></a>00317    }
+<a name="l00318"></a>00318 
+<a name="l00319"></a>00319 <span class="preprocessor">   #ifdef UTIL_MPI</span>
+<a name="l00320"></a>00320 <span class="preprocessor"></span>   <span class="comment">/*</span>
+<a name="l00321"></a>00321 <span class="comment">   * Send any atoms that have not be sent previously.</span>
+<a name="l00322"></a>00322 <span class="comment">   *</span>
+<a name="l00323"></a>00323 <span class="comment">   * This method should be called only by the master processor.</span>
+<a name="l00324"></a>00324 <span class="comment">   */</span>
+<a name="l00325"></a>00325    <span class="keywordtype">void</span> <a class="code" href="namespaceUtil.html#ab260560a954c580c111bc43889c7b02d" title="Send a C-array of T values.">AtomDistributor::send</a>()
+<a name="l00326"></a><a class="code" href="classDdMd_1_1AtomDistributor.html#a7db868b432bda314ff90fe779154e607">00326</a>    {
+<a name="l00327"></a>00327 
+<a name="l00328"></a>00328       <span class="comment">// Preconditions</span>
+<a name="l00329"></a>00329       <span class="keywordflow">if</span> (domainPtr_ == 0) {
+<a name="l00330"></a>00330          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomDistributor is not initialized&quot;</span>);
+<a name="l00331"></a>00331       }
+<a name="l00332"></a>00332       <span class="keywordflow">if</span> (boundaryPtr_ == 0) {
+<a name="l00333"></a>00333          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomDistributor is not initialized&quot;</span>);
+<a name="l00334"></a>00334       }
+<a name="l00335"></a>00335       <span class="keywordflow">if</span> (!domainPtr_-&gt;isInitialized() != 0) {
+<a name="l00336"></a>00336          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Domain is not initialized&quot;</span>);
+<a name="l00337"></a>00337       }
+<a name="l00338"></a>00338       <span class="keywordflow">if</span> (domainPtr_-&gt;gridRank() != 0) {
+<a name="l00339"></a>00339          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;This is not the master processor&quot;</span>);
+<a name="l00340"></a>00340       }
+<a name="l00341"></a>00341       <span class="keywordflow">if</span> (newPtr_ != 0) {
+<a name="l00342"></a>00342          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;A newPtr_ is still active&quot;</span>);
+<a name="l00343"></a>00343       }
+<a name="l00344"></a>00344 
+<a name="l00345"></a>00345       <span class="keywordtype">int</span> gridSize = domainPtr_-&gt;grid().size();
+<a name="l00346"></a>00346       <span class="keywordtype">int</span> i, j;
+<a name="l00347"></a>00347       <span class="keywordtype">bool</span> isComplete = <span class="keyword">true</span>;
+<a name="l00348"></a>00348       <span class="keywordflow">for</span> (i = 1; i &lt; gridSize; ++i) {
 <a name="l00349"></a>00349 
-<a name="l00350"></a>00350             <span class="comment">// Return pointer to atom to the reservoir.</span>
-<a name="l00351"></a>00351             reservoir_.push(*sendArrays_(i, j));
-<a name="l00352"></a>00352 
-<a name="l00353"></a>00353          }
-<a name="l00354"></a>00354          bufferPtr_-&gt;endSendBlock(isComplete);
-<a name="l00355"></a>00355          nSentTotal_ += sendSizes_[i];
+<a name="l00350"></a>00350          <span class="comment">// Pack all remaining atoms for this processor</span>
+<a name="l00351"></a>00351          <span class="keywordflow">for</span> (j = 0; j &lt; sendSizes_[i]; ++j) {
+<a name="l00352"></a>00352             bufferPtr_-&gt;packAtom(*sendArrays_(i, j));
+<a name="l00353"></a>00353 
+<a name="l00354"></a>00354             <span class="comment">// Return pointer to atom to the reservoir.</span>
+<a name="l00355"></a>00355             reservoir_.push(*sendArrays_(i, j));
 <a name="l00356"></a>00356 
-<a name="l00357"></a>00357          <span class="comment">// Send buffer, with isComplete flag as true.</span>
-<a name="l00358"></a>00358          bufferPtr_-&gt;send(domainPtr_-&gt;communicator(), i);
-<a name="l00359"></a>00359 
-<a name="l00360"></a>00360          <span class="comment">// Clear buffer and initialize for resending.</span>
-<a name="l00361"></a>00361          bufferPtr_-&gt;clearSendBuffer();
-<a name="l00362"></a>00362          <span class="keywordflow">if</span> (i &lt; gridSize - 1) {
-<a name="l00363"></a>00363             bufferPtr_-&gt;beginSendBlock(Buffer::ATOM);
-<a name="l00364"></a>00364          }
-<a name="l00365"></a>00365 
-<a name="l00366"></a>00366          <span class="comment">// Reset send arrays to empty state.</span>
-<a name="l00367"></a>00367          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; sendCapacity_; ++j) {
-<a name="l00368"></a>00368             sendArrays_(i, j) = 0;
-<a name="l00369"></a>00369          }
-<a name="l00370"></a>00370          sendSizes_[i] = 0;
-<a name="l00371"></a>00371       }
-<a name="l00372"></a>00372 
-<a name="l00373"></a>00373       <span class="comment">// Compute total number of atoms on all processors.</span>
-<a name="l00374"></a>00374       storagePtr_-&gt;computeNAtomTotal(domainPtr_-&gt;communicator());
-<a name="l00375"></a>00375 
-<a name="l00376"></a>00376       <span class="comment">// Postconditions</span>
-<a name="l00377"></a>00377       <span class="keywordflow">if</span> (reservoir_.size() != reservoir_.capacity()) {
-<a name="l00378"></a>00378          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;atomReservoir not empty after final send&quot;</span>);
-<a name="l00379"></a>00379       }
-<a name="l00380"></a>00380       <span class="keywordflow">if</span> (nCachedTotal_ != nSentTotal_) {
-<a name="l00381"></a>00381          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Number cached atoms != number sent&quot;</span>);
-<a name="l00382"></a>00382       }
-<a name="l00383"></a>00383       <span class="keywordflow">if</span> (storagePtr_-&gt;nAtomTotal() != nSentTotal_ + storagePtr_-&gt;nAtom()) {
-<a name="l00384"></a>00384          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Number atoms received != number sent + nAtom on master&quot;</span>);
-<a name="l00385"></a>00385       }
-<a name="l00386"></a>00386 
-<a name="l00387"></a>00387       nCachedTotal_ = 0;
-<a name="l00388"></a>00388       nSentTotal_   = 0;
-<a name="l00389"></a>00389    }
-<a name="l00390"></a>00390 <span class="preprocessor">   #endif</span>
-<a name="l00391"></a>00391 <span class="preprocessor"></span>
-<a name="l00392"></a>00392 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00393"></a>00393 <span class="preprocessor"></span>   <span class="comment">/*</span>
-<a name="l00394"></a>00394 <span class="comment">   * Receive all atoms sent by the master processor.</span>
-<a name="l00395"></a>00395 <span class="comment">   *</span>
-<a name="l00396"></a>00396 <span class="comment">   * Called by all processors except the master.</span>
-<a name="l00397"></a>00397 <span class="comment">   */</span> 
-<a name="l00398"></a>00398    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomDistributor.html#a02d76d4f40c4a3d92f05aaea082f001b" title="Receive all atoms sent by master processor.">AtomDistributor::receive</a>()
-<a name="l00399"></a><a class="code" href="classDdMd_1_1AtomDistributor.html#a02d76d4f40c4a3d92f05aaea082f001b">00399</a>    {
-<a name="l00400"></a>00400       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* ptr;                 <span class="comment">// Ptr to atom for storage</span>
-<a name="l00401"></a>00401       <span class="keywordtype">int</span>   rank;                <span class="comment">// Rank of this processor</span>
-<a name="l00402"></a>00402       <span class="keyword">const</span> <span class="keywordtype">int</span> source = 0;      <span class="comment">// Rank of source processor</span>
-<a name="l00403"></a>00403       <span class="keywordtype">bool</span>  isComplete = <span class="keyword">false</span>;  <span class="comment">// Have all atoms been received?</span>
-<a name="l00404"></a>00404 
-<a name="l00405"></a>00405       <span class="comment">// Preconditions</span>
-<a name="l00406"></a>00406       <span class="keywordflow">if</span> (domainPtr_ == 0) {
-<a name="l00407"></a>00407          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomDistributor is not initialized&quot;</span>);
-<a name="l00408"></a>00408       }
-<a name="l00409"></a>00409       <span class="keywordflow">if</span> (!domainPtr_-&gt;isInitialized() != 0) {
-<a name="l00410"></a>00410          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Domain is not initialized&quot;</span>);
-<a name="l00411"></a>00411       }
-<a name="l00412"></a>00412       rank = domainPtr_-&gt;gridRank();
-<a name="l00413"></a>00413       <span class="keywordflow">if</span> (rank == 0) {
-<a name="l00414"></a>00414          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomDistributor::receive() called on master processor&quot;</span>);
+<a name="l00357"></a>00357          }
+<a name="l00358"></a>00358          bufferPtr_-&gt;endSendBlock(isComplete);
+<a name="l00359"></a>00359          nSentTotal_ += sendSizes_[i];
+<a name="l00360"></a>00360 
+<a name="l00361"></a>00361          <span class="comment">// Send buffer, with isComplete flag as true.</span>
+<a name="l00362"></a>00362          bufferPtr_-&gt;send(domainPtr_-&gt;communicator(), i);
+<a name="l00363"></a>00363 
+<a name="l00364"></a>00364          <span class="comment">// Clear buffer and initialize for resending.</span>
+<a name="l00365"></a>00365          bufferPtr_-&gt;clearSendBuffer();
+<a name="l00366"></a>00366          <span class="keywordflow">if</span> (i &lt; gridSize - 1) {
+<a name="l00367"></a>00367             bufferPtr_-&gt;beginSendBlock(Buffer::ATOM);
+<a name="l00368"></a>00368          }
+<a name="l00369"></a>00369 
+<a name="l00370"></a>00370          <span class="comment">// Reset send arrays to empty state.</span>
+<a name="l00371"></a>00371          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; sendCapacity_; ++j) {
+<a name="l00372"></a>00372             sendArrays_(i, j) = 0;
+<a name="l00373"></a>00373          }
+<a name="l00374"></a>00374          sendSizes_[i] = 0;
+<a name="l00375"></a>00375       }
+<a name="l00376"></a>00376 
+<a name="l00377"></a>00377       <span class="comment">// Compute total number of atoms on all processors.</span>
+<a name="l00378"></a>00378       storagePtr_-&gt;computeNAtomTotal(domainPtr_-&gt;communicator());
+<a name="l00379"></a>00379 
+<a name="l00380"></a>00380       <span class="comment">// Postconditions</span>
+<a name="l00381"></a>00381       <span class="keywordflow">if</span> (reservoir_.size() != reservoir_.capacity()) {
+<a name="l00382"></a>00382          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;atomReservoir not empty after final send&quot;</span>);
+<a name="l00383"></a>00383       }
+<a name="l00384"></a>00384       <span class="keywordflow">if</span> (nCachedTotal_ != nSentTotal_) {
+<a name="l00385"></a>00385          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Number cached atoms != number sent&quot;</span>);
+<a name="l00386"></a>00386       }
+<a name="l00387"></a>00387       <span class="keywordflow">if</span> (storagePtr_-&gt;nAtomTotal() != nSentTotal_ + storagePtr_-&gt;nAtom()) {
+<a name="l00388"></a>00388          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Number atoms received != number sent + nAtom on master&quot;</span>);
+<a name="l00389"></a>00389       }
+<a name="l00390"></a>00390 
+<a name="l00391"></a>00391       nCachedTotal_ = 0;
+<a name="l00392"></a>00392       nSentTotal_   = 0;
+<a name="l00393"></a>00393    }
+<a name="l00394"></a>00394 <span class="preprocessor">   #endif</span>
+<a name="l00395"></a>00395 <span class="preprocessor"></span>
+<a name="l00396"></a>00396 <span class="preprocessor">   #ifdef UTIL_MPI</span>
+<a name="l00397"></a>00397 <span class="preprocessor"></span>   <span class="comment">/*</span>
+<a name="l00398"></a>00398 <span class="comment">   * Receive all atoms sent by the master processor.</span>
+<a name="l00399"></a>00399 <span class="comment">   *</span>
+<a name="l00400"></a>00400 <span class="comment">   * Called by all processors except the master.</span>
+<a name="l00401"></a>00401 <span class="comment">   */</span> 
+<a name="l00402"></a>00402    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1AtomDistributor.html#a02d76d4f40c4a3d92f05aaea082f001b" title="Receive all atoms sent by master processor.">AtomDistributor::receive</a>()
+<a name="l00403"></a><a class="code" href="classDdMd_1_1AtomDistributor.html#a02d76d4f40c4a3d92f05aaea082f001b">00403</a>    {
+<a name="l00404"></a>00404       <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>* ptr;                 <span class="comment">// Ptr to atom for storage</span>
+<a name="l00405"></a>00405       <span class="keywordtype">int</span>   rank;                <span class="comment">// Rank of this processor</span>
+<a name="l00406"></a>00406       <span class="keyword">const</span> <span class="keywordtype">int</span> source = 0;      <span class="comment">// Rank of source processor</span>
+<a name="l00407"></a>00407       <span class="keywordtype">bool</span>  isComplete = <span class="keyword">false</span>;  <span class="comment">// Have all atoms been received?</span>
+<a name="l00408"></a>00408 
+<a name="l00409"></a>00409       <span class="comment">// Preconditions</span>
+<a name="l00410"></a>00410       <span class="keywordflow">if</span> (domainPtr_ == 0) {
+<a name="l00411"></a>00411          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomDistributor is not initialized&quot;</span>);
+<a name="l00412"></a>00412       }
+<a name="l00413"></a>00413       <span class="keywordflow">if</span> (!domainPtr_-&gt;isInitialized() != 0) {
+<a name="l00414"></a>00414          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Domain is not initialized&quot;</span>);
 <a name="l00415"></a>00415       }
-<a name="l00416"></a>00416 
-<a name="l00417"></a>00417       <span class="keywordflow">while</span> (!isComplete) {
-<a name="l00418"></a>00418 
-<a name="l00419"></a>00419          <span class="comment">// Receive a buffer</span>
-<a name="l00420"></a>00420          bufferPtr_-&gt;recv(domainPtr_-&gt;communicator(), source);
-<a name="l00421"></a>00421 
-<a name="l00422"></a>00422          <span class="comment">// Unpack the buffer</span>
-<a name="l00423"></a>00423          isComplete = bufferPtr_-&gt;beginRecvBlock();
-<a name="l00424"></a>00424          <span class="keywordflow">while</span> (bufferPtr_-&gt;recvSize() &gt; 0) {
-<a name="l00425"></a>00425             ptr = storagePtr_-&gt;newAtomPtr();
-<a name="l00426"></a>00426             bufferPtr_-&gt;unpackAtom(*ptr);
-<a name="l00427"></a>00427             storagePtr_-&gt;addNewAtom();
-<a name="l00428"></a>00428             <span class="keywordflow">if</span> (domainPtr_-&gt;ownerRank(ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>()) != rank) {
-<a name="l00429"></a>00429                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: Atom on wrong processor&quot;</span>);
-<a name="l00430"></a>00430             }
-<a name="l00431"></a>00431          }
-<a name="l00432"></a>00432 
-<a name="l00433"></a>00433       }
-<a name="l00434"></a>00434 
-<a name="l00435"></a>00435       <span class="comment">// Compute total number of atoms on all processors.</span>
-<a name="l00436"></a>00436       storagePtr_-&gt;computeNAtomTotal(domainPtr_-&gt;communicator());
-<a name="l00437"></a>00437    }
-<a name="l00438"></a>00438 <span class="preprocessor">   #endif</span>
-<a name="l00439"></a>00439 <span class="preprocessor"></span>
-<a name="l00440"></a>00440 }
-<a name="l00441"></a>00441 <span class="preprocessor">#endif</span>
+<a name="l00416"></a>00416       rank = domainPtr_-&gt;gridRank();
+<a name="l00417"></a>00417       <span class="keywordflow">if</span> (rank == 0) {
+<a name="l00418"></a>00418          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;AtomDistributor::receive() called on master processor&quot;</span>);
+<a name="l00419"></a>00419       }
+<a name="l00420"></a>00420 
+<a name="l00421"></a>00421       <span class="keywordflow">while</span> (!isComplete) {
+<a name="l00422"></a>00422 
+<a name="l00423"></a>00423          <span class="comment">// Receive a buffer</span>
+<a name="l00424"></a>00424          bufferPtr_-&gt;recv(domainPtr_-&gt;communicator(), source);
+<a name="l00425"></a>00425 
+<a name="l00426"></a>00426          <span class="comment">// Unpack the buffer</span>
+<a name="l00427"></a>00427          isComplete = bufferPtr_-&gt;beginRecvBlock();
+<a name="l00428"></a>00428          <span class="keywordflow">while</span> (bufferPtr_-&gt;recvSize() &gt; 0) {
+<a name="l00429"></a>00429             ptr = storagePtr_-&gt;newAtomPtr();
+<a name="l00430"></a>00430             bufferPtr_-&gt;unpackAtom(*ptr);
+<a name="l00431"></a>00431             storagePtr_-&gt;addNewAtom();
+<a name="l00432"></a>00432             <span class="keywordflow">if</span> (domainPtr_-&gt;ownerRank(ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#a650f92ee66462d054bcdbee78293df34" title="Get position Vector by reference.">position</a>()) != rank) {
+<a name="l00433"></a>00433                <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Error: Atom on wrong processor&quot;</span>);
+<a name="l00434"></a>00434             }
+<a name="l00435"></a>00435          }
+<a name="l00436"></a>00436 
+<a name="l00437"></a>00437       }
+<a name="l00438"></a>00438 
+<a name="l00439"></a>00439       <span class="comment">// Compute total number of atoms on all processors.</span>
+<a name="l00440"></a>00440       storagePtr_-&gt;computeNAtomTotal(domainPtr_-&gt;communicator());
+<a name="l00441"></a>00441    }
+<a name="l00442"></a>00442 <span class="preprocessor">   #endif</span>
+<a name="l00443"></a>00443 <span class="preprocessor"></span>
+<a name="l00444"></a>00444 }
+<a name="l00445"></a>00445 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:18 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

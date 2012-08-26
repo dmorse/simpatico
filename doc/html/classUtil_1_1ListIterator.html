@@ -58,7 +58,7 @@
 
 <p>Bidirectional iterator for a <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>. </p>
 <p>A <a class="el" href="classUtil_1_1ListIterator.html" title="Bidirectional iterator for a List.">ListIterator</a> provides bidirectional input/output access to a linked list, similar to an STL bidirectional iterator. An * operator returns a reference to an associated Data object. The ++ and -- operators change the current pointer to the next or prev element in a list.</p>
-<p>The <a class="el" href="classUtil_1_1ListIterator.html#a1b669bfa67e0d1c4454b718340cf804f" title="Has the end of the list been reached?">atEnd()</a> method returns true if either end of the list has already been passed by a previous ++ or -- operation. When <a class="el" href="classUtil_1_1ListIterator.html#a1b669bfa67e0d1c4454b718340cf804f" title="Has the end of the list been reached?">atEnd()</a> is true, the iterator is no longer usable, since it no longer points to a <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> and cannot be incremented or decremented. </p>
+<p>The <a class="el" href="classUtil_1_1ListIterator.html#ad3476b718599e4807cfbf133bf9f24e3" title="Has the end of the list been reached?">isEnd()</a> method returns true if either end of the list has already been passed by a previous ++ or -- operation. When <a class="el" href="classUtil_1_1ListIterator.html#ad3476b718599e4807cfbf133bf9f24e3" title="Has the end of the list been reached?">isEnd()</a> is true, the iterator is no longer usable, since it no longer points to a <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> and cannot be incremented or decremented. </p>
 
 <p>Definition at line <a class="el" href="ListIterator_8h_source.html#l00027">27</a> of file <a class="el" href="ListIterator_8h_source.html">ListIterator.h</a>.</p>
 </div>
@@ -74,8 +74,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for initialized iterator.  <a href="#a06ddffe30c132da25dbab32fea4e2d4f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a8afe69f441472010f8902e00cc343329">setCurrent</a> (<a class="el" href="classUtil_1_1Node.html">Node</a>&lt; Data &gt; *nodePtr)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Point the iterator at a <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a>.  <a href="#a8afe69f441472010f8902e00cc343329"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a1b669bfa67e0d1c4454b718340cf804f">atEnd</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has the end of the list been reached?  <a href="#a1b669bfa67e0d1c4454b718340cf804f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#ad3476b718599e4807cfbf133bf9f24e3">isEnd</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has the end of the list been reached?  <a href="#ad3476b718599e4807cfbf133bf9f24e3"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#ac1f107c526a78ced34934e30f9ad1888">isBack</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this the back of the <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>?  <a href="#ac1f107c526a78ced34934e30f9ad1888"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ListIterator.html#a41a9eee5d3ece2e685cd2c223ebb5f2c">isFront</a> () const </td></tr>
@@ -112,7 +112,7 @@ template&lt;typename Data&gt; </div>
 <div class="memdoc">
 
 <p>Default constructor. </p>
-<p>Creates a "dead" iterator, for which <a class="el" href="classUtil_1_1ListIterator.html#a1b669bfa67e0d1c4454b718340cf804f" title="Has the end of the list been reached?">atEnd()</a>==true. Before it can be used, such an iterator must be initialized by either the <a class="el" href="classUtil_1_1ListIterator.html#a8afe69f441472010f8902e00cc343329" title="Point the iterator at a Node.">ListIterator&lt;Data&gt;::setCurrent()</a> method or the <a class="el" href="classUtil_1_1List.html#a0721103985550baedc28959cd6766c28" title="Set an iterator to the front of this List.">List&lt;Data&gt;::begin()</a> method of an associated <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>. </p>
+<p>Creates a "dead" iterator, for which <a class="el" href="classUtil_1_1ListIterator.html#ad3476b718599e4807cfbf133bf9f24e3" title="Has the end of the list been reached?">isEnd()</a>==true. Before it can be used, such an iterator must be initialized by either the <a class="el" href="classUtil_1_1ListIterator.html#a8afe69f441472010f8902e00cc343329" title="Point the iterator at a Node.">ListIterator&lt;Data&gt;::setCurrent()</a> method or the <a class="el" href="classUtil_1_1List.html#a0721103985550baedc28959cd6766c28" title="Set an iterator to the front of this List.">List&lt;Data&gt;::begin()</a> method of an associated <a class="el" href="classUtil_1_1List.html" title="Linked list class template.">List</a>. </p>
 
 <p>Definition at line <a class="el" href="ListIterator_8h_source.html#l00040">40</a> of file <a class="el" href="ListIterator_8h_source.html">ListIterator.h</a>.</p>
 
@@ -182,14 +182,14 @@ template&lt;typename Data&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a1b669bfa67e0d1c4454b718340cf804f"></a><!-- doxytag: member="Util::ListIterator::atEnd" ref="a1b669bfa67e0d1c4454b718340cf804f" args="() const " -->
+<a class="anchor" id="ad3476b718599e4807cfbf133bf9f24e3"></a><!-- doxytag: member="Util::ListIterator::isEnd" ref="ad3476b718599e4807cfbf133bf9f24e3" args="() const " -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::atEnd </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1ListIterator.html">Util::ListIterator</a>&lt; Data &gt;::isEnd </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -361,7 +361,7 @@ template&lt;typename Data&gt; </div>
 <div class="memdoc">
 
 <p>Go to the next element in a linked list. </p>
-<p>This method assigns the current pointer to the address of the next <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> in the list, and then returns *this. If there is no next <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a>, the current pointer is set null, and any subsequent call to <a class="el" href="classUtil_1_1ListIterator.html#a1b669bfa67e0d1c4454b718340cf804f" title="Has the end of the list been reached?">atEnd()</a> will return true.</p>
+<p>This method assigns the current pointer to the address of the next <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a> in the list, and then returns *this. If there is no next <a class="el" href="classUtil_1_1Node.html" title="Linked List Node, class template.">Node</a>, the current pointer is set null, and any subsequent call to <a class="el" href="classUtil_1_1ListIterator.html#ad3476b718599e4807cfbf133bf9f24e3" title="Has the end of the list been reached?">isEnd()</a> will return true.</p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>this <a class="el" href="classUtil_1_1ListIterator.html" title="Bidirectional iterator for a List.">ListIterator</a>, after modification. </dd></dl>
 
 <p>Definition at line <a class="el" href="ListIterator_8h_source.html#l00136">136</a> of file <a class="el" href="ListIterator_8h_source.html">ListIterator.h</a>.</p>
@@ -396,7 +396,7 @@ template&lt;typename Data&gt; </div>
 <li><a class="el" href="ListIterator_8h_source.html">ListIterator.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:31 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -97,37 +97,50 @@
 <a name="l00046"></a>00046 <span class="comment">   * are the atoms in this cell.</span>
 <a name="l00047"></a>00047 <span class="comment">   *</span>
 <a name="l00048"></a>00048 <span class="comment">   * \param neighbors array of pointers to neighbor Atoms</span>
-<a name="l00049"></a>00049 <span class="comment">   */</span>
-<a name="l00050"></a>00050    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Cell.html#a5161d4d39b76bed275d5327ca4f8337f" title="Fill an array with pointers to atoms in a cell and neighboring cells.">Cell::getNeighbors</a>(NeighborArray &amp;neighbors)<span class="keyword"> const</span>
-<a name="l00051"></a><a class="code" href="classDdMd_1_1Cell.html#a5161d4d39b76bed275d5327ca4f8337f">00051</a> <span class="keyword">   </span>{
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053       <span class="comment">// Preconditions</span>
-<a name="l00054"></a>00054       assert(offsetsPtr_);
-<a name="l00055"></a>00055       assert(!isGhostCell_);
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a>* cellPtr;
-<a name="l00058"></a>00058       <span class="keywordtype">int</span>   ia, nc, na;
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060       neighbors.<a class="code" href="classDdMd_1_1Cell.html#a62f748bcdccc1dda85966e6c981aa863" title="Reset to empty before incrementing capacity.">clear</a>();
+<a name="l00049"></a>00049 <span class="comment">   * \param force if true, use reverse communication</span>
+<a name="l00050"></a>00050 <span class="comment">   */</span>
+<a name="l00051"></a>00051    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Cell.html#a8c92f17d314e3c35b81bdc9107794fe5" title="Fill an array with pointers to atoms in a cell and neighboring cells.">Cell::getNeighbors</a>(NeighborArray &amp;neighbors, 
+<a name="l00052"></a><a class="code" href="classDdMd_1_1Cell.html#a8c92f17d314e3c35b81bdc9107794fe5">00052</a>                            <span class="keywordtype">bool</span> reverseUpdateFlag)<span class="keyword"> const</span>
+<a name="l00053"></a>00053 <span class="keyword">   </span>{
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055       <span class="comment">// Preconditions</span>
+<a name="l00056"></a>00056       assert(offsetsPtr_);
+<a name="l00057"></a>00057       assert(!isGhostCell_);
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a>* cellPtr;
+<a name="l00060"></a>00060       <span class="keywordtype">int</span>   ia, nc, na;
 <a name="l00061"></a>00061 
-<a name="l00062"></a>00062       nc = offsetsPtr_-&gt;size();
-<a name="l00063"></a>00063       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ic = 0; ic &lt; nc; ++ic) {
-<a name="l00064"></a>00064          cellPtr = <span class="keyword">this</span> + (*offsetsPtr_)[ic];
-<a name="l00065"></a>00065          <span class="keywordflow">if</span> (cellPtr-&gt;id() &gt;= id_ || cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#afc08197fde54f29ece0734e72600fd52" title="Is this a ghost cell?">isGhostCell</a>()) {
-<a name="l00066"></a>00066             na = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#ac5ba44f6436e965590f7abb08f117f18" title="Number of atoms in cell.">nAtom</a>();
-<a name="l00067"></a>00067             <span class="keywordflow">for</span> (ia = 0; ia &lt; na; ++ia) {
-<a name="l00068"></a>00068                neighbors.append(cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#af9d7230404893f8aba828373ef4ee970" title="Return a pointer to atom i.">atomPtr</a>(ia));
-<a name="l00069"></a>00069             }
-<a name="l00070"></a>00070          }
-<a name="l00071"></a>00071       }
-<a name="l00072"></a>00072    }
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075 }
-<a name="l00076"></a>00076 <span class="preprocessor">#endif</span>
+<a name="l00062"></a>00062       neighbors.<a class="code" href="classDdMd_1_1Cell.html#a62f748bcdccc1dda85966e6c981aa863" title="Reset to empty before incrementing capacity.">clear</a>();
+<a name="l00063"></a>00063       nc = offsetsPtr_-&gt;size();
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065       <span class="keywordflow">if</span> (reverseUpdateFlag) {
+<a name="l00066"></a>00066          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ic = 0; ic &lt; nc; ++ic) {
+<a name="l00067"></a>00067             cellPtr = <span class="keyword">this</span> + (*offsetsPtr_)[ic];
+<a name="l00068"></a>00068             <span class="keywordflow">if</span> (cellPtr-&gt;id() &gt;= id_) {
+<a name="l00069"></a>00069                na = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#ac5ba44f6436e965590f7abb08f117f18" title="Number of atoms in cell.">nAtom</a>();
+<a name="l00070"></a>00070                <span class="keywordflow">for</span> (ia = 0; ia &lt; na; ++ia) {
+<a name="l00071"></a>00071                   neighbors.append(cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#af9d7230404893f8aba828373ef4ee970" title="Return a pointer to atom i.">atomPtr</a>(ia));
+<a name="l00072"></a>00072                }
+<a name="l00073"></a>00073             }
+<a name="l00074"></a>00074          }
+<a name="l00075"></a>00075       } <span class="keywordflow">else</span> {
+<a name="l00076"></a>00076          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> ic = 0; ic &lt; nc; ++ic) {
+<a name="l00077"></a>00077             cellPtr = <span class="keyword">this</span> + (*offsetsPtr_)[ic];
+<a name="l00078"></a>00078             <span class="keywordflow">if</span> (cellPtr-&gt;id() &gt;= id_ || cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#afc08197fde54f29ece0734e72600fd52" title="Is this a ghost cell?">isGhostCell</a>()) {
+<a name="l00079"></a>00079                na = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#ac5ba44f6436e965590f7abb08f117f18" title="Number of atoms in cell.">nAtom</a>();
+<a name="l00080"></a>00080                <span class="keywordflow">for</span> (ia = 0; ia &lt; na; ++ia) {
+<a name="l00081"></a>00081                   neighbors.append(cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#af9d7230404893f8aba828373ef4ee970" title="Return a pointer to atom i.">atomPtr</a>(ia));
+<a name="l00082"></a>00082                }
+<a name="l00083"></a>00083             }
+<a name="l00084"></a>00084          }
+<a name="l00085"></a>00085       }
+<a name="l00086"></a>00086    }
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088 }
+<a name="l00089"></a>00089 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

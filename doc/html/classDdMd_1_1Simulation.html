@@ -57,7 +57,7 @@
 <div class="textblock"><p>Main object for a domain-decomposition MD simulation. </p>
 <p>A <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">DdMd::Simulation</a> contains and coordinates all the components of a parallel MD simulation. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00064">64</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00067">67</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">Simulation.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -93,16 +93,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set random velocities chosen from Boltzmann distribution.  <a href="#ae04aeb46428f975caea76e1c2df873db"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ad29214d7595ff51e6fc0172e681f606a">zeroForces</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set forces for all local atoms to zero.  <a href="#ad29214d7595ff51e6fc0172e681f606a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a2983b5e88ce2bbf7b0f247921037f26f">computeForces</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute forces for all local atoms.  <a href="#a2983b5e88ce2bbf7b0f247921037f26f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a8589034d49d77db29774fe9bc67287cb">computeKineticEnergy</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total kinetic energy.  <a href="#a8589034d49d77db29774fe9bc67287cb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a10c17ef9707e9c64b0295b19089ad6e4">kineticEnergy</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute precomputed total kinetic energy.  <a href="#a10c17ef9707e9c64b0295b19089ad6e4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#abd33378ad2f63ff05d667915be115926">computePotentialEnergies</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total potential energy on all processors.  <a href="#abd33378ad2f63ff05d667915be115926"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a37a102d9d4fad341b53e8a08bab1d7f0">potentialEnergy</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return precomputed total potential energy.  <a href="#a37a102d9d4fad341b53e8a08bab1d7f0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#acc8bf12d5a2bd965405e2673458c8655">setReverseUpdateFlag</a> (bool reverseUpdateFlag)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set flag to identify if reverse communication is enabled.  <a href="#acc8bf12d5a2bd965405e2673458c8655"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ae1fec95c5c1fa9948ab3e7e5425e35c2">isValid</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if this <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> is valid, or throw an Exception.  <a href="#ae1fec95c5c1fa9948ab3e7e5425e35c2"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Config File IO</div></td></tr>
@@ -114,6 +106,29 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the configuration file reader/writer factory by reference.  <a href="#a7e41cb8e89401e39a90f4942a51c88d2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aefaea5d3fe48d50291e0dbfcd4956737">setConfigIo</a> (std::string &amp;classname)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new configuration file reader/writer.  <a href="#aefaea5d3fe48d50291e0dbfcd4956737"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Force, energy and stress calculators</div></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a2983b5e88ce2bbf7b0f247921037f26f">computeForces</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute forces for all local atoms.  <a href="#a2983b5e88ce2bbf7b0f247921037f26f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a8589034d49d77db29774fe9bc67287cb">computeKineticEnergy</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute total kinetic energy.  <a href="#a8589034d49d77db29774fe9bc67287cb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a10c17ef9707e9c64b0295b19089ad6e4">kineticEnergy</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return precomputed total kinetic energy.  <a href="#a10c17ef9707e9c64b0295b19089ad6e4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#abd33378ad2f63ff05d667915be115926">computePotentialEnergies</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate and store total potential energy on all processors.  <a href="#abd33378ad2f63ff05d667915be115926"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#af5343ea084c10df1bdec06fdb67e6c83">potentialEnergy</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return precomputed total potential energy.  <a href="#af5343ea084c10df1bdec06fdb67e6c83"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a0f7aabdc04a4129057f7c538546a4852">computeKineticStress</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate and store kinetic stress.  <a href="#a0f7aabdc04a4129057f7c538546a4852"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ac2e933f62ec4aad35d17a52cccf5a551">kineticStress</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total kinetic stress.  <a href="#ac2e933f62ec4aad35d17a52cccf5a551"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aaa7d076b9b314accc75cf6606bf4b09a">kineticPressure</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total kinetic pressure.  <a href="#aaa7d076b9b314accc75cf6606bf4b09a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aae0238576c11211daa22185a1a809c30">computeVirialStress</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate and store virial stress.  <a href="#aae0238576c11211daa22185a1a809c30"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a378a34edda1d0b00c881df2193de14bc">virialStress</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total virial stress.  <a href="#a378a34edda1d0b00c881df2193de14bc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a73754ae7a5c4578e5c0c39c06d19612e">virialPressure</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return total virial pressure.  <a href="#a73754ae7a5c4578e5c0c39c06d19612e"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Potential Energy Factories and Styles</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1Factory.html">Factory</a>&lt; <a class="el" href="classDdMd_1_1PairPotential.html">PairPotential</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ab48939227b9e29f5f8cf935ec92868e2">pairFactory</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classUtil_1_1Factory.html">Factory&lt;PairPotential&gt;</a> by reference.  <a href="#ab48939227b9e29f5f8cf935ec92868e2"></a><br/></td></tr>
@@ -127,7 +142,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the associated External Factory by reference.  <a href="#aa502eac2282707b7a8e6898f21cbf1ca"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aefa0323fdb3cab7a38db0b7f547c2c10">externalStyle</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return external potential style string.  <a href="#aefa0323fdb3cab7a38db0b7f547c2c10"></a><br/></td></tr>
-<tr><td colspan="2"><div class="groupHeader">Accessors (Miscellaneous)</div></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Accessors (return members by reference)</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Domain.html">Domain</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a4bcb8e6e1482b6e825e54d71e93b9e6c">domain</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a> by reference.  <a href="#a4bcb8e6e1482b6e825e54d71e93b9e6c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomStorage.html">AtomStorage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a08b21df742e75449aa5d57a7c9fc9b5c">atomStorage</a> ()</td></tr>
@@ -142,6 +157,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a> by reference.  <a href="#ab32f9cba063db6d24f7e694067486a7d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1ExternalPotential.html">ExternalPotential</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aca6c5c7aa885faac51ad1a1075a261ef">externalPotential</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a> by reference.  <a href="#aca6c5c7aa885faac51ad1a1075a261ef"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomType.html">AtomType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#adb69f41e67ea48facaaeed0a94c7d218">atomType</a> (int i)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an <a class="el" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a> descriptor by reference.  <a href="#adb69f41e67ea48facaaeed0a94c7d218"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1Integrator.html">Integrator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#abdeb3c3c35c89fa92383442b09dd4ffe">integrator</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Integrator.html" title="An Integrator numerically integrates the equations of motion.">Integrator</a> by reference.  <a href="#abdeb3c3c35c89fa92383442b09dd4ffe"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classUtil_1_1EnergyEnsemble.html">EnergyEnsemble</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a4f0645169fdd0f0a6f0f2ae83feca18b">energyEnsemble</a> ()</td></tr>
@@ -160,16 +177,17 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a> by reference.  <a href="#a6c78802f0ee142f772aa7dd86679d4db"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1DiagnosticManager.html">DiagnosticManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a97078a43b926eba8fc79735d89adaa36">diagnosticManager</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return associated <a class="el" href="classDdMd_1_1DiagnosticManager.html" title="Manager for a list of Diagnostic objects.">DiagnosticManager</a> by reference.  <a href="#a97078a43b926eba8fc79735d89adaa36"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Accessors (return by value)</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a9988011a7dc2634badaa61dfb81f1a69">nAtomType</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get maximum number of atom types.  <a href="#a9988011a7dc2634badaa61dfb81f1a69"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aa6f40dc5a680c3e8e0b38fc88608f039">nBondType</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get maximum number of bond types.  <a href="#aa6f40dc5a680c3e8e0b38fc88608f039"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a87ad9927ead6d83f230d8635cf165609">hasExternal</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Does this simulation have an external potential?  <a href="#a87ad9927ead6d83f230d8635cf165609"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1AtomType.html">AtomType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#adb69f41e67ea48facaaeed0a94c7d218">atomType</a> (int i)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an <a class="el" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a> descriptor by reference.  <a href="#adb69f41e67ea48facaaeed0a94c7d218"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4">MaskPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#a3d42913c5edc53adbe6e200b7f5a9e1f">maskedPairPolicy</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the value of the mask policy (MaskNone or MaskBonded).  <a href="#a3d42913c5edc53adbe6e200b7f5a9e1f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#ac9ca0bcc0a2e02617dbb9b26096d6af2">reverseUpdateFlag</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is reverse communication enabled?  <a href="#ac9ca0bcc0a2e02617dbb9b26096d6af2"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Simulation.html#aeb091178ff7457e841eb208be068ed64">readFileMaster</a> (std::istream &amp;in)</td></tr>
@@ -203,7 +221,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00077">77</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00078">78</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 <p>References <a class="el" href="IntVector_8cpp_source.html#l00096">Util::IntVector::commitMpiType()</a>, <a class="el" href="Vector_8cpp_source.html#l00101">Util::Vector::commitMpiType()</a>, <a class="el" href="ddMd_2chemistry_2AtomType_8cpp_source.html#l00059">DdMd::AtomType::initStatic()</a>, <a class="el" href="initStatic_8cpp_source.html#l00029">Util::initStatic()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -261,7 +279,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00190">190</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00192">192</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -302,7 +320,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00269">269</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00271">271</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 <p>References <a class="el" href="ParamComponent_8cpp_source.html#l00079">Util::ParamComponent::setEcho()</a>.</p>
 
@@ -327,7 +345,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00295">295</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00297">297</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -349,7 +367,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Read and execute commands from the default command file. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00551">551</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00559">559</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -370,7 +388,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Integrate equations of motion. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00611">611</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00636">636</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 <p>References <a class="el" href="Log_8cpp_source.html#l00054">Util::Log::file()</a>.</p>
 
@@ -399,7 +417,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00557">557</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00565">565</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
 
@@ -421,128 +439,38 @@ Protected Member Functions</h2></td></tr>
 
 <p>Set forces for all local atoms to zero. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00574">574</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00583">583</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 <p>References <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
 
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00070">DdMd::Integrator::computeForces()</a>.</p>
+
 </div>
 </div>
-<a class="anchor" id="a2983b5e88ce2bbf7b0f247921037f26f"></a><!-- doxytag: member="DdMd::Simulation::computeForces" ref="a2983b5e88ce2bbf7b0f247921037f26f" args="()" -->
+<a class="anchor" id="acc8bf12d5a2bd965405e2673458c8655"></a><!-- doxytag: member="DdMd::Simulation::setReverseUpdateFlag" ref="acc8bf12d5a2bd965405e2673458c8655" args="(bool reverseUpdateFlag)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DdMd::Simulation::computeForces </td>
+          <td class="memname">void DdMd::Simulation::setReverseUpdateFlag </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reverseUpdateFlag</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Compute forces for all local atoms. </p>
+<p>Set flag to identify if reverse communication is enabled. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reverseUpdateFlag</td><td>true if reverse communication is enabled. </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00586">586</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
-
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a8589034d49d77db29774fe9bc67287cb"></a><!-- doxytag: member="DdMd::Simulation::computeKineticEnergy" ref="a8589034d49d77db29774fe9bc67287cb" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DdMd::Simulation::computeKineticEnergy </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Compute total kinetic energy. </p>
-<p>Reduce operation: Must be called on all nodes. </p>
-
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00629">629</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
-
-<p>References <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
-
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>, and <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a10c17ef9707e9c64b0295b19089ad6e4"></a><!-- doxytag: member="DdMd::Simulation::kineticEnergy" ref="a10c17ef9707e9c64b0295b19089ad6e4" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double DdMd::Simulation::kineticEnergy </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Compute precomputed total kinetic energy. </p>
-<p>Call only on master node.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>total kinetic energy for all nodes on master. </dd></dl>
-
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00660">660</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
-
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>, and <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="abd33378ad2f63ff05d667915be115926"></a><!-- doxytag: member="DdMd::Simulation::computePotentialEnergies" ref="abd33378ad2f63ff05d667915be115926" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DdMd::Simulation::computePotentialEnergies </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Calculate total potential energy on all processors. </p>
-<p>Reduce operation: Must be called on all nodes .</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>total pair potential for all nodes on master, 0.0 otherwise. </dd></dl>
-
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00668">668</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
-
-<p>Referenced by <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a37a102d9d4fad341b53e8a08bab1d7f0"></a><!-- doxytag: member="DdMd::Simulation::potentialEnergy" ref="a37a102d9d4fad341b53e8a08bab1d7f0" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double DdMd::Simulation::potentialEnergy </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return precomputed total potential energy. </p>
-<p>Call only on master processor.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>total potential energy (call only on master node). </dd></dl>
-
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00720">720</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
-
-<p>Referenced by <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01183">1183</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -562,6 +490,7 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Read configuration file on master and distribute atoms. </p>
+<p>Upon return, all processors should have all atoms and groups, and a full set of ghost atoms, but values for the atomic forces are undefined.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>name of configuration file. </td></tr>
@@ -569,7 +498,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00746">746</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00924">924</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -596,7 +525,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00775">775</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00953">953</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 <p>Referenced by <a class="el" href="WriteConfig_8cpp_source.html#l00050">DdMd::WriteConfig::sample()</a>.</p>
 
@@ -618,7 +547,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the configuration file reader/writer factory by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00915">915</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01093">1093</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -638,17 +567,285 @@ Protected Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Create a new configuration file reader/writer. </p>
-<p>This method creates a new instance of the specified subclass of <a class="el" href="classDdMd_1_1ConfigIo.html" title="Class to read and write configuration files.">ConfigIo</a>, and retains a pointer to the new object.</p>
+<p>This method creates a new instance of the specified subclass of <a class="el" href="classDdMd_1_1ConfigIo.html" title="Abstract reader/writer for configuration files.">ConfigIo</a>, and retains a pointer to the new object.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">classname</td><td>name of desired <a class="el" href="classDdMd_1_1ConfigIo.html" title="Class to read and write configuration files.">ConfigIo</a> subclass. </td></tr>
+    <tr><td class="paramname">classname</td><td>name of desired <a class="el" href="classDdMd_1_1ConfigIo.html" title="Abstract reader/writer for configuration files.">ConfigIo</a> subclass. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00927">927</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01105">1105</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 <p>References <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00107">DdMd::ConfigIo::associate()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a2983b5e88ce2bbf7b0f247921037f26f"></a><!-- doxytag: member="DdMd::Simulation::computeForces" ref="a2983b5e88ce2bbf7b0f247921037f26f" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::Simulation::computeForces </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Compute forces for all local atoms. </p>
+<p>Upon return, forces are correct for all local atoms. Values of the forces on ghost atoms are undefined.</p>
+<p>This method zeros all forces, adds forces from all potential energies, and carries out reverse communication if required (i.e., if reverseUpdateFlag is true). </p>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00605">605</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a8589034d49d77db29774fe9bc67287cb"></a><!-- doxytag: member="DdMd::Simulation::computeKineticEnergy" ref="a8589034d49d77db29774fe9bc67287cb" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::Simulation::computeKineticEnergy </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Compute total kinetic energy. </p>
+<p>Reduce operation: Must be called on all processors. Value is returned by calling kineticEnergy on master. </p>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00654">654</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+
+<p>References <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>.</p>
+
+<p>Referenced by <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00145">DdMd::NvtIntegrator::integrateStep2()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a10c17ef9707e9c64b0295b19089ad6e4"></a><!-- doxytag: member="DdMd::Simulation::kineticEnergy" ref="a10c17ef9707e9c64b0295b19089ad6e4" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double DdMd::Simulation::kineticEnergy </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return precomputed total kinetic energy. </p>
+<p>Call only on master node.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>total kinetic energy for all nodes on master. </dd></dl>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00689">689</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00145">DdMd::NvtIntegrator::integrateStep2()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>, and <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abd33378ad2f63ff05d667915be115926"></a><!-- doxytag: member="DdMd::Simulation::computePotentialEnergies" ref="abd33378ad2f63ff05d667915be115926" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::Simulation::computePotentialEnergies </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Calculate and store total potential energy on all processors. </p>
+<p>Reduce operation: Must be called on all nodes. </p>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00760">760</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af5343ea084c10df1bdec06fdb67e6c83"></a><!-- doxytag: member="DdMd::Simulation::potentialEnergy" ref="af5343ea084c10df1bdec06fdb67e6c83" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double DdMd::Simulation::potentialEnergy </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return precomputed total potential energy. </p>
+<p>Call only on master processor, after computePotentialEnergies.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>total potential energy (only correct on master node). </dd></dl>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00812">812</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0f7aabdc04a4129057f7c538546a4852"></a><!-- doxytag: member="DdMd::Simulation::computeKineticStress" ref="a0f7aabdc04a4129057f7c538546a4852" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::Simulation::computeKineticStress </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Calculate and store kinetic stress. </p>
+<p>Reduce operation: Must be called on all nodes. </p>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00697">697</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Data &gt;::notEnd()</a>, and <a class="el" href="Tensor_8h_source.html#l00416">Util::Tensor::zero()</a>.</p>
+
+<p>Referenced by <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00057">DdMd::OutputPressure::sample()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00057">DdMd::OutputBoxdim::sample()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac2e933f62ec4aad35d17a52cccf5a551"></a><!-- doxytag: member="DdMd::Simulation::kineticStress" ref="ac2e933f62ec4aad35d17a52cccf5a551" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> DdMd::Simulation::kineticStress </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return total kinetic stress. </p>
+<p>Call only on master processor, after computeKineticStress.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>total kinetic stress (only correct on master node). </dd></dl>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00739">739</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaa7d076b9b314accc75cf6606bf4b09a"></a><!-- doxytag: member="DdMd::Simulation::kineticPressure" ref="aaa7d076b9b314accc75cf6606bf4b09a" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double DdMd::Simulation::kineticPressure </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return total kinetic pressure. </p>
+<p>Call only on master processor, after computeKineticStress.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>total kinetic pressure only correct on master node). </dd></dl>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00745">745</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
+
+<p>Referenced by <a class="el" href="OutputPressure_8cpp_source.html#l00057">DdMd::OutputPressure::sample()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aae0238576c11211daa22185a1a809c30"></a><!-- doxytag: member="DdMd::Simulation::computeVirialStress" ref="aae0238576c11211daa22185a1a809c30" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::Simulation::computeVirialStress </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Calculate and store virial stress. </p>
+<p>Reduce operation: Must be called on all nodes. </p>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00839">839</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00057">DdMd::OutputPressure::sample()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00057">DdMd::OutputBoxdim::sample()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a378a34edda1d0b00c881df2193de14bc"></a><!-- doxytag: member="DdMd::Simulation::virialStress" ref="a378a34edda1d0b00c881df2193de14bc" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classUtil_1_1Tensor.html">Tensor</a> DdMd::Simulation::virialStress </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return total virial stress. </p>
+<p>Call only on master processor, after computeVirialStress.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>total virial stress (only correct on master node). </dd></dl>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00880">880</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+
+<p>References <a class="el" href="Tensor_8h_source.html#l00416">Util::Tensor::zero()</a>.</p>
+
+<p>Referenced by <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a73754ae7a5c4578e5c0c39c06d19612e"></a><!-- doxytag: member="DdMd::Simulation::virialPressure" ref="a73754ae7a5c4578e5c0c39c06d19612e" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double DdMd::Simulation::virialPressure </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return total virial pressure. </p>
+<p>Call only on master processor, after computeVirialStress.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>total virial pressure (only correct on master node). </dd></dl>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00902">902</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="OutputPressure_8cpp_source.html#l00057">DdMd::OutputPressure::sample()</a>.</p>
 
 </div>
 </div>
@@ -668,7 +865,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classUtil_1_1Factory.html">Factory&lt;PairPotential&gt;</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00804">804</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00982">982</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -688,7 +885,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return nonbonded pair style string. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00816">816</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00994">994</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -708,7 +905,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the associated <a class="el" href="classUtil_1_1Factory.html">Factory&lt;BondPotential&gt;</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00823">823</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01001">1001</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -728,7 +925,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return covalent bond style string. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00835">835</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01013">1013</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -748,7 +945,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the associated External Factory by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00882">882</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01060">1060</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -768,7 +965,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return external potential style string. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00894">894</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01072">1072</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -788,9 +985,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00646">646</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00737">737</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>, and <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00057">DdMd::OutputPressure::sample()</a>, <a class="el" href="OutputEnergy_8cpp_source.html#l00057">DdMd::OutputEnergy::sample()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00057">DdMd::OutputBoxdim::sample()</a>.</p>
 
 </div>
 </div>
@@ -810,9 +1007,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00649">649</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00740">740</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>, and <a class="el" href="OutputTemperature_8cpp_source.html#l00058">DdMd::OutputTemperature::sample()</a>.</p>
 
 </div>
 </div>
@@ -832,7 +1029,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00652">652</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00743">743</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
 <p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>.</p>
 
@@ -854,9 +1051,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the Boundary by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00643">643</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00734">734</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>, and <a class="el" href="ddMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00221">DdMd::ExternalPotentialImpl&lt; Interaction &gt;::ExternalPotentialImpl()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>, <a class="el" href="ddMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00221">DdMd::ExternalPotentialImpl&lt; Interaction &gt;::ExternalPotentialImpl()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00057">DdMd::OutputBoxdim::sample()</a>.</p>
 
 </div>
 </div>
@@ -876,7 +1073,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00671">671</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00762">762</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
 </div>
 </div>
@@ -896,7 +1093,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00677">677</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00768">768</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
 </div>
 </div>
@@ -916,7 +1113,36 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00706">706</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00797">797</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adb69f41e67ea48facaaeed0a94c7d218"></a><!-- doxytag: member="DdMd::Simulation::atomType" ref="adb69f41e67ea48facaaeed0a94c7d218" args="(int i)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classDdMd_1_1AtomType.html">AtomType</a> &amp; DdMd::Simulation::atomType </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get an <a class="el" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a> descriptor by reference. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>index of desired atom type. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00891">891</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+
+<p>Referenced by <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>.</p>
 
 </div>
 </div>
@@ -936,7 +1162,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1Integrator.html" title="An Integrator numerically integrates the equations of motion.">Integrator</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00716">716</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00807">807</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
 </div>
 </div>
@@ -956,9 +1182,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the EnergyEnsemble by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00728">728</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00819">819</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00031">DdMd::NvtIntegrator::NvtIntegrator()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, and <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00120">DdMd::NvtIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00145">DdMd::NvtIntegrator::integrateStep2()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00031">DdMd::NvtIntegrator::NvtIntegrator()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>.</p>
 
 </div>
 </div>
@@ -978,7 +1204,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the BoundaryEnsemble by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00737">737</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00828">828</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+
+<p>Referenced by <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>.</p>
 
 </div>
 </div>
@@ -998,7 +1226,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the associated <a class="el" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00746">746</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00837">837</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+
+<p>Referenced by <a class="el" href="OutputTemperature_8cpp_source.html#l00047">DdMd::OutputTemperature::setup()</a>, <a class="el" href="OutputPressure_8cpp_source.html#l00046">DdMd::OutputPressure::setup()</a>, and <a class="el" href="OutputBoxdim_8cpp_source.html#l00046">DdMd::OutputBoxdim::setup()</a>.</p>
 
 </div>
 </div>
@@ -1018,7 +1248,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the Md integrator factory by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00901">901</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01079">1079</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -1038,7 +1268,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the Random number generator by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00722">722</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00813">813</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
 </div>
 </div>
@@ -1058,7 +1288,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00665">665</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00756">756</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
 </div>
 </div>
@@ -1078,7 +1308,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00668">668</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00759">759</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
 <p>Referenced by <a class="el" href="ddMd_2configIos_2ConfigIo_8cpp_source.html#l00070">DdMd::ConfigIo::ConfigIo()</a>.</p>
 
@@ -1100,9 +1330,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return associated <a class="el" href="classDdMd_1_1DiagnosticManager.html" title="Manager for a list of Diagnostic objects.">DiagnosticManager</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00755">755</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00846">846</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>.</p>
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00039">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>.</p>
 
 </div>
 </div>
@@ -1122,9 +1352,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get maximum number of atom types. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00764">764</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00855">855</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00059">DdMd::NvtIntegrator::readParam()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00042">DdMd::NveIntegrator::readParam()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00059">DdMd::NvtIntegrator::readParam()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00042">DdMd::NveIntegrator::readParam()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00045">DdMd::NptIntegrator::readParam()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00045">DdMd::NphIntegrator::readParam()</a>.</p>
 
 </div>
 </div>
@@ -1144,7 +1374,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Get maximum number of bond types. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00770">770</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00861">861</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
 </div>
 </div>
@@ -1164,30 +1394,7 @@ Protected Member Functions</h2></td></tr>
 
 <p>Does this simulation have an external potential? </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00793">793</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="adb69f41e67ea48facaaeed0a94c7d218"></a><!-- doxytag: member="DdMd::Simulation::atomType" ref="adb69f41e67ea48facaaeed0a94c7d218" args="(int i)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classDdMd_1_1AtomType.html">AtomType</a> &amp; DdMd::Simulation::atomType </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>i</em></td><td>)</td>
-          <td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Get an <a class="el" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a> descriptor by reference. </p>
-
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00800">800</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
-
-<p>Referenced by <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00884">884</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
 </div>
 </div>
@@ -1207,7 +1414,27 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return the value of the mask policy (MaskNone or MaskBonded). </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00803">803</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00894">894</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ac9ca0bcc0a2e02617dbb9b26096d6af2"></a><!-- doxytag: member="DdMd::Simulation::reverseUpdateFlag" ref="ac9ca0bcc0a2e02617dbb9b26096d6af2" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DdMd::Simulation::reverseUpdateFlag </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Is reverse communication enabled? </p>
+
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00897">897</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html">ddMd/simulation/Simulation.h</a>.</p>
 
 </div>
 </div>
@@ -1227,9 +1454,9 @@ Protected Member Functions</h2></td></tr>
 
 <p>Return true if this <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> is valid, or throw an Exception. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00952">952</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l01130">1130</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
-<p>References <a class="el" href="MpiSendRecv_8h_source.html#l00133">Util::bcast()</a>.</p>
+<p>References <a class="el" href="MpiSendRecv_8h_source.html#l00206">Util::bcast()</a>.</p>
 
 </div>
 </div>
@@ -1257,7 +1484,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00421">421</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00410">410</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -1285,7 +1512,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00433">433</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00422">422</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -1312,7 +1539,7 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00463">463</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html#l00457">457</a> of file <a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a>.</p>
 
 </div>
 </div>
@@ -1321,7 +1548,7 @@ Protected Member Functions</h2></td></tr>
 <li><a class="el" href="ddMd_2simulation_2Simulation_8cpp_source.html">ddMd/simulation/Simulation.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:22 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:23 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

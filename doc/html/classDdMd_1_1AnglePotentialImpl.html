@@ -58,7 +58,7 @@
 
 <p>Implementation template for a <a class="el" href="classDdMd_1_1AnglePotential.html" title="An AnglePotential calculates angle forces and energies for a parent Simulation.">AnglePotential</a>. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00034">34</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00033">33</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">AnglePotentialImpl.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -67,7 +67,8 @@ Inheritance diagram for DdMd::AnglePotentialImpl&lt; Interaction &gt;:</div>
  <div class="center">
   <img src="classDdMd_1_1AnglePotentialImpl.png" usemap="#DdMd::AnglePotentialImpl&lt; Interaction &gt;_map" alt=""/>
   <map id="DdMd::AnglePotentialImpl&lt; Interaction &gt;_map" name="DdMd::AnglePotentialImpl&lt; Interaction &gt;_map">
-<area href="classDdMd_1_1AnglePotential.html" alt="DdMd::AnglePotential" shape="rect" coords="0,112,238,136"/>
+<area href="classDdMd_1_1AnglePotential.html" alt="DdMd::AnglePotential" shape="rect" coords="0,168,238,192"/>
+<area href="classDdMd_1_1Potential.html" alt="DdMd::Potential" shape="rect" coords="0,112,238,136"/>
 <area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,238,80"/>
 <area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,238,24"/>
 </map>
@@ -88,24 +89,23 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a5aa696f82519b6f949f262e783c02867">readParam</a> (std::istream &amp;in)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read potential energy parameters.  <a href="#a5aa696f82519b6f949f262e783c02867"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Interaction interface</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a4d6073ae3d174a9c23233ced72791e3a">energy</a> (double cosTheta, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns potential energy for one angle.  <a href="#a4d6073ae3d174a9c23233ced72791e3a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a041564877c7dd040fd3b394032fcbb78">force</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R2, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F1, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F2, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns forces along two bonds at the angle, for use in MD and stress calculation.  <a href="#a041564877c7dd040fd3b394032fcbb78"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a541e56041783abce9f1e1e4a9c9fc90a">angleEnergy</a> (double cosTheta, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns potential energy for one angle.  <a href="#a541e56041783abce9f1e1e4a9c9fc90a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a6d002003d405dbdbf21bd6ae958ae902">angleForce</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R2, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F1, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F2, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns forces along two bonds at the angle, for use in MD and stress calculation.  <a href="#a6d002003d405dbdbf21bd6ae958ae902"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const Interaction &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a66e52f33e233e00f4d5c63219df0286a">interaction</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return angle interaction by const reference.  <a href="#a66e52f33e233e00f4d5c63219df0286a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">Interaction &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#aa667787310191df3a3426574f91794b2">interaction</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return angle interaction by reference.  <a href="#aa667787310191df3a3426574f91794b2"></a><br/></td></tr>
-<tr><td colspan="2"><h2><a name="member-group"></a>
-Total Energy, Force and Stress</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Total Energy, Force and Stress</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a86c011c602a91dcf4d2509bbbb86419f">addForces</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the angle forces for all atoms.  <a href="#a86c011c602a91dcf4d2509bbbb86419f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#ac0e626f67beffefe340318035ee74428">addForces</a> (double &amp;energy)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the angle forces for all atoms and compute energy.  <a href="#ac0e626f67beffefe340318035ee74428"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#ade5a9ec00b5931a70e3f72be2cb3fd1e">computeEnergy</a> (MPI::Intracomm &amp;communicator)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the total angle energy for all processors.  <a href="#ade5a9ec00b5931a70e3f72be2cb3fd1e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a164554acebe7bf34adc6b5b4df643cf3">energy</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total angle energy, computed previously by <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#ade5a9ec00b5931a70e3f72be2cb3fd1e" title="Compute the total angle energy for all processors.">computeEnergy()</a>.  <a href="#a164554acebe7bf34adc6b5b4df643cf3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a8d7b783c8b0bc1b59652ac1dd409b416">computeStress</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the covalent bond stress.  <a href="#a8d7b783c8b0bc1b59652ac1dd409b416"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="af9156b2b86fd5d8445952f3a328b2402"></a><!-- doxytag: member="DdMd::AnglePotentialImpl::AnglePotentialImpl" ref="af9156b2b86fd5d8445952f3a328b2402" args="(Simulation &amp;simulation)" -->
@@ -127,7 +127,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00219">219</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00186">186</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -149,7 +149,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Default constructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00228">228</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00195">195</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -171,7 +171,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00237">237</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00204">204</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -197,7 +197,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1AnglePotential.html#a98b9fbef6ae3d08c0591d9803255ced5">DdMd::AnglePotential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00249">249</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00216">216</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -223,18 +223,18 @@ template&lt;class Interaction &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00256">256</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00223">223</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a4d6073ae3d174a9c23233ced72791e3a"></a><!-- doxytag: member="DdMd::AnglePotentialImpl::energy" ref="a4d6073ae3d174a9c23233ced72791e3a" args="(double cosTheta, int type) const " -->
+<a class="anchor" id="a541e56041783abce9f1e1e4a9c9fc90a"></a><!-- doxytag: member="DdMd::AnglePotentialImpl::angleEnergy" ref="a541e56041783abce9f1e1e4a9c9fc90a" args="(double cosTheta, int type) const " -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="classDdMd_1_1AnglePotentialImpl.html">DdMd::AnglePotentialImpl</a>&lt; Interaction &gt;::energy </td>
+          <td class="memname">double <a class="el" href="classDdMd_1_1AnglePotentialImpl.html">DdMd::AnglePotentialImpl</a>&lt; Interaction &gt;::angleEnergy </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>cosTheta</em>, </td>
@@ -263,20 +263,20 @@ template&lt;class Interaction &gt; </div>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classDdMd_1_1AnglePotential.html#aa8d86a1679a9e46b11be02482c0129b1">DdMd::AnglePotential</a>.</p>
+<p>Reimplemented from <a class="el" href="classDdMd_1_1AnglePotential.html#a39dcd26c9125c7cb7c2c12677813b98f">DdMd::AnglePotential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00269">269</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00236">236</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a041564877c7dd040fd3b394032fcbb78"></a><!-- doxytag: member="DdMd::AnglePotentialImpl::force" ref="a041564877c7dd040fd3b394032fcbb78" args="(const Vector &amp;R1, const Vector &amp;R2, Vector &amp;F1, Vector &amp;F2, int type) const " -->
+<a class="anchor" id="a6d002003d405dbdbf21bd6ae958ae902"></a><!-- doxytag: member="DdMd::AnglePotentialImpl::angleForce" ref="a6d002003d405dbdbf21bd6ae958ae902" args="(const Vector &amp;R1, const Vector &amp;R2, Vector &amp;F1, Vector &amp;F2, int type) const " -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classDdMd_1_1AnglePotentialImpl.html">DdMd::AnglePotentialImpl</a>&lt; Interaction &gt;::force </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1AnglePotentialImpl.html">DdMd::AnglePotentialImpl</a>&lt; Interaction &gt;::angleForce </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>R1</em>, </td>
@@ -326,9 +326,9 @@ template&lt;class Interaction &gt; </div>
   </dd>
 </dl>
 
-<p>Reimplemented from <a class="el" href="classDdMd_1_1AnglePotential.html#af0cf97922c23398017cfc70e8bd091ea">DdMd::AnglePotential</a>.</p>
+<p>Reimplemented from <a class="el" href="classDdMd_1_1AnglePotential.html#a7de1d97cb9ae2b54e5e509befab44cb2">DdMd::AnglePotential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00277">277</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00244">244</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -351,7 +351,7 @@ template&lt;class Interaction &gt; </div>
 <p>Return angle interaction by const reference. </p>
 <p>Get Interaction by const reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00301">301</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00270">270</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -374,7 +374,7 @@ template&lt;class Interaction &gt; </div>
 <p>Return angle interaction by reference. </p>
 <p>Get Interaction by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00294">294</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00263">263</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -396,9 +396,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Add the angle forces for all atoms. </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1AnglePotential.html#a1dba5e877920805688f2d61332fc0df4">DdMd::AnglePotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Potential.html#a3b07e1cf5fe1a2fad433cf945cea5af1">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00308">308</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00277">277</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -421,9 +421,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Add the angle forces for all atoms and compute energy. </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1AnglePotential.html#a3e4b71a695bd40d1cce93267dbbcf7e6">DdMd::AnglePotential</a>.</p>
-
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00315">315</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00284">284</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -447,34 +445,37 @@ template&lt;class Interaction &gt; </div>
 <p>Compute the total angle energy for all processors. </p>
 <p>Call on all processors (MPI reduce operation). </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1AnglePotential.html#a3a5bd969ede6d46a0d1b84d7b5d0826f">DdMd::AnglePotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Potential.html#a4e88eaa5bfc37822ae1132c0f157ddfd">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00324">324</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00293">293</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a164554acebe7bf34adc6b5b4df643cf3"></a><!-- doxytag: member="DdMd::AnglePotentialImpl::energy" ref="a164554acebe7bf34adc6b5b4df643cf3" args="()" -->
+<a class="anchor" id="a8d7b783c8b0bc1b59652ac1dd409b416"></a><!-- doxytag: member="DdMd::AnglePotentialImpl::computeStress" ref="a8d7b783c8b0bc1b59652ac1dd409b416" args="(MPI::Intracomm &amp;communicator)" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">double <a class="el" href="classDdMd_1_1AnglePotentialImpl.html">DdMd::AnglePotentialImpl</a>&lt; Interaction &gt;::energy </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1AnglePotentialImpl.html">DdMd::AnglePotentialImpl</a>&lt; Interaction &gt;::computeStress </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
+          <td class="paramname"><em>communicator</em></td><td>)</td>
           <td><code> [virtual]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Get the total angle energy, computed previously by <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#ade5a9ec00b5931a70e3f72be2cb3fd1e" title="Compute the total angle energy for all processors.">computeEnergy()</a>. </p>
-<p>Call only on master. </p>
+<p>Compute the covalent bond stress. </p>
+<p>Call on all processors. </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1AnglePotential.html#a499871d49991bb903ad0c4a0b76778d9">DdMd::AnglePotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Potential.html#a504660ddcbb47afbe9b505150dfad607">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00343">343</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00380">380</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, and <a class="el" href="Tensor_8h_source.html#l00416">Util::Tensor::zero()</a>.</p>
 
 </div>
 </div>
@@ -482,7 +483,7 @@ template&lt;class Interaction &gt; </div>
 <li><a class="el" href="ddMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html">ddMd/potentials/angle/AnglePotentialImpl.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

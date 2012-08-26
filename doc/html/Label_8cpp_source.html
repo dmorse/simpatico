@@ -98,7 +98,7 @@
 <a name="l00047"></a>00047    <span class="comment">/*</span>
 <a name="l00048"></a>00048 <span class="comment">   * Extract a label from an input stream.</span>
 <a name="l00049"></a>00049 <span class="comment">   */</span>
-<a name="l00050"></a>00050    std::istream&amp; <a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Label.html" title="A label string in a file format.">Label</a> label)
+<a name="l00050"></a>00050    std::istream&amp; <a class="code" href="namespaceUtil.html#a84a8e4c844fd5d302194294ce6cf1dda" title="istream extractor for a MonoclinicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Label.html" title="A label string in a file format.">Label</a> label)
 <a name="l00051"></a><a class="code" href="namespaceUtil.html#a8301f4a2bb0afc29b7bcac4604151d0b">00051</a>    {
 <a name="l00052"></a>00052       std::string actual;
 <a name="l00053"></a>00053       in &gt;&gt; actual;
@@ -114,7 +114,7 @@
 <a name="l00063"></a>00063    <span class="comment">/*</span>
 <a name="l00064"></a>00064 <span class="comment">   * Insert a Label into an output stream.</span>
 <a name="l00065"></a>00065 <span class="comment">   */</span>
-<a name="l00066"></a>00066    std::ostream&amp; <a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, Label label)
+<a name="l00066"></a>00066    std::ostream&amp; <a class="code" href="namespaceUtil.html#a10bcffa95685d7673ce01e7c634b0bf2" title="ostream inserter for an MonoclinicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, Label label)
 <a name="l00067"></a><a class="code" href="namespaceUtil.html#a6d08f531a2e938c6e63314a5812df02f">00067</a>    {
 <a name="l00068"></a>00068       out &lt;&lt; std::left &lt;&lt; std::setw(<a class="code" href="classUtil_1_1Label.html#a565ae6c808ea000faaf211615f3e5759" title="Width of label field in file format.">Label::LabelWidth</a>) 
 <a name="l00069"></a>00069           &lt;&lt; label.label_; 
@@ -126,7 +126,7 @@
 <a name="l00075"></a>00075 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

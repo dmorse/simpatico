@@ -66,153 +66,154 @@
 <a name="l00015"></a>00015 <span class="preprocessor">#include &lt;util/containers/FMatrix.h&gt;</span>
 <a name="l00016"></a>00016 <span class="preprocessor">#include &lt;util/containers/APArray.h&gt;</span>
 <a name="l00017"></a>00017 
-<a name="l00018"></a>00018 <span class="preprocessor">#define DDMD_EXCHANGER_TIMER</span>
-<a name="l00019"></a>00019 <span class="preprocessor"></span>
-<a name="l00020"></a>00020 <span class="keyword">namespace </span>DdMd
-<a name="l00021"></a>00021 {
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023    <span class="keyword">class </span>Domain;
-<a name="l00024"></a>00024    <span class="keyword">class </span>AtomStorage;
-<a name="l00025"></a>00025    <span class="keyword">class </span>Buffer;
-<a name="l00026"></a>00026    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt; <span class="keyword">class </span>GroupStorage;
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028    <span class="keyword">using namespace </span>Util;
-<a name="l00029"></a>00029 
-<a name="l00035"></a><a class="code" href="classDdMd_1_1Exchanger.html">00035</a>    <span class="keyword">class </span><a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>
-<a name="l00036"></a>00036    {
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038    <span class="keyword">public</span>:
-<a name="l00039"></a>00039 
-<a name="l00043"></a>00043       <a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>();
-<a name="l00044"></a>00044 
-<a name="l00048"></a>00048       ~<a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>();
-<a name="l00049"></a>00049 
-<a name="l00053"></a>00053       <span class="keywordtype">void</span> associate(<span class="keyword">const</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain, 
-<a name="l00054"></a>00054                      <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary, 
-<a name="l00055"></a>00055                      <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; atomStorage, 
-<a name="l00056"></a>00056                      <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;2&gt;</a>&amp; bondStorage, 
-<a name="l00057"></a>00057                      #ifdef INTER_ANGLE
-<a name="l00058"></a>00058                      <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;3&gt;</a>&amp; angleStorage, 
-<a name="l00059"></a>00059                      #endif
-<a name="l00060"></a>00060                      #ifdef INTER_DIHEDRAL
-<a name="l00061"></a>00061                      <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;4&gt;</a>&amp; dihedralStorage, 
-<a name="l00062"></a>00062                      #endif
-<a name="l00063"></a>00063                      <a class="code" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a>&amp; buffer);
-<a name="l00064"></a>00064 
-<a name="l00070"></a>00070       <span class="keywordtype">void</span> allocate();
-<a name="l00071"></a>00071 
-<a name="l00077"></a>00077       <span class="keywordtype">void</span> setPairCutoff(<span class="keywordtype">double</span> pairCutoff);
-<a name="l00078"></a>00078 
-<a name="l00088"></a>00088       <span class="keywordtype">void</span> exchange();
-<a name="l00089"></a>00089 
-<a name="l00097"></a>00097       <span class="keywordtype">void</span> exchangeAtoms();
-<a name="l00098"></a>00098 
-<a name="l00107"></a>00107       <span class="keywordtype">void</span> update();
-<a name="l00108"></a>00108 
-<a name="l00112"></a><a class="code" href="classDdMd_1_1Exchanger.html#a54a80e2d6d77871fd15056ebb9e145dc">00112</a>       <a class="code" href="classDdMd_1_1DdTimer.html" title="Class for measuring time intervals.">DdTimer</a>&amp; timer()
-<a name="l00113"></a>00113       {  <span class="keywordflow">return</span> timer_; }
-<a name="l00114"></a>00114 
-<a name="l00118"></a><a class="code" href="classDdMd_1_1Exchanger.html#a0cfcd11dc8793a81164a591ebf32eb9e">00118</a>       <span class="keyword">enum</span> <a class="code" href="classDdMd_1_1Exchanger.html#a0cfcd11dc8793a81164a591ebf32eb9e" title="Enumeration of time stamp identifiers.">timeId</a> {START, ATOM_PLAN, INIT_GROUP_PLAN, CLEAR_GHOSTS,
-<a name="l00119"></a>00119                    PACK_ATOMS, PACK_GROUPS, REMOVE_ATOMS, REMOVE_GROUPS,
-<a name="l00120"></a>00120                    SEND_RECV_ATOMS, UNPACK_ATOMS, UNPACK_GROUPS, 
-<a name="l00121"></a>00121                    FINISH_GROUP_PLAN, INIT_SEND_ARRAYS, PACK_GHOSTS, 
-<a name="l00122"></a>00122                    SEND_RECV_GHOSTS, UNPACK_GHOSTS, FIND_GROUP_GHOSTS, 
-<a name="l00123"></a>00123                    PACK_UPDATE, SEND_RECV_UPDATE, UNPACK_UPDATE, 
-<a name="l00124"></a>00124                    LOCAL_UPDATE, NTime};
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126    <span class="keyword">private</span>:
-<a name="l00127"></a>00127 
-<a name="l00138"></a>00138       <a class="code" href="classUtil_1_1FMatrix.html" title="Fixed Size Matrix.">FMatrix&lt; APArray&lt;Atom&gt;</a>, <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>, 2&gt;  sendArray_;
-<a name="l00139"></a>00139 
-<a name="l00150"></a>00150       <a class="code" href="classUtil_1_1FMatrix.html" title="Fixed Size Matrix.">FMatrix&lt; APArray&lt;Atom&gt;</a>, <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>, 2&gt;  recvArray_;
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00153"></a>00153 <span class="preprocessor"></span>
-<a name="l00158"></a>00158       <a class="code" href="classUtil_1_1APArray.html">APArray&lt;Atom&gt;</a> sentAtoms_;
-<a name="l00159"></a>00159 
-<a name="l00165"></a>00165       <a class="code" href="classUtil_1_1APArray.html" title="Automatically resizable PArray.">APArray&lt; Group&lt;2&gt;</a> &gt; emptyBonds_;
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019 <span class="keyword">namespace </span>DdMd
+<a name="l00020"></a>00020 {
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022    <span class="keyword">class </span>Domain;
+<a name="l00023"></a>00023    <span class="keyword">class </span>AtomStorage;
+<a name="l00024"></a>00024    <span class="keyword">class </span>Buffer;
+<a name="l00025"></a>00025    <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt; <span class="keyword">class </span>GroupStorage;
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027    <span class="keyword">using namespace </span>Util;
+<a name="l00028"></a>00028 
+<a name="l00034"></a><a class="code" href="classDdMd_1_1Exchanger.html">00034</a>    <span class="keyword">class </span><a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>
+<a name="l00035"></a>00035    {
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037    <span class="keyword">public</span>:
+<a name="l00038"></a>00038 
+<a name="l00042"></a>00042       <a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>();
+<a name="l00043"></a>00043 
+<a name="l00047"></a>00047       ~<a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>();
+<a name="l00048"></a>00048 
+<a name="l00052"></a>00052       <span class="keywordtype">void</span> associate(<span class="keyword">const</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; domain, 
+<a name="l00053"></a>00053                      <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; boundary, 
+<a name="l00054"></a>00054                      <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; atomStorage, 
+<a name="l00055"></a>00055                      <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;2&gt;</a>&amp; bondStorage, 
+<a name="l00056"></a>00056                      #ifdef INTER_ANGLE
+<a name="l00057"></a>00057                      <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;3&gt;</a>&amp; angleStorage, 
+<a name="l00058"></a>00058                      #endif
+<a name="l00059"></a>00059                      #ifdef INTER_DIHEDRAL
+<a name="l00060"></a>00060                      <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;4&gt;</a>&amp; dihedralStorage, 
+<a name="l00061"></a>00061                      #endif
+<a name="l00062"></a>00062                      <a class="code" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a>&amp; buffer);
+<a name="l00063"></a>00063 
+<a name="l00069"></a>00069       <span class="keywordtype">void</span> allocate();
+<a name="l00070"></a>00070 
+<a name="l00076"></a>00076       <span class="keywordtype">void</span> setPairCutoff(<span class="keywordtype">double</span> pairCutoff);
+<a name="l00077"></a>00077 
+<a name="l00087"></a>00087       <span class="keywordtype">void</span> exchange();
+<a name="l00088"></a>00088 
+<a name="l00096"></a>00096       <span class="keywordtype">void</span> exchangeAtoms();
+<a name="l00097"></a>00097 
+<a name="l00106"></a>00106       <span class="keywordtype">void</span> update();
+<a name="l00107"></a>00107 
+<a name="l00116"></a>00116       <span class="keywordtype">void</span> reverseUpdate();
+<a name="l00117"></a>00117 
+<a name="l00121"></a>00121       <span class="keywordtype">void</span> outputStatistics(std::ostream&amp; out, <span class="keywordtype">double</span> time, <span class="keywordtype">int</span> nStep);
+<a name="l00122"></a>00122 
+<a name="l00126"></a><a class="code" href="classDdMd_1_1Exchanger.html#a54a80e2d6d77871fd15056ebb9e145dc">00126</a>       <a class="code" href="classDdMd_1_1DdTimer.html" title="Class for measuring time intervals.">DdTimer</a>&amp; timer()
+<a name="l00127"></a>00127       {  <span class="keywordflow">return</span> timer_; }
+<a name="l00128"></a>00128 
+<a name="l00132"></a><a class="code" href="classDdMd_1_1Exchanger.html#a0cfcd11dc8793a81164a591ebf32eb9e">00132</a>       <span class="keyword">enum</span> <a class="code" href="classDdMd_1_1Exchanger.html#a0cfcd11dc8793a81164a591ebf32eb9e" title="Enumeration of time stamp identifiers.">timeId</a> {START, ATOM_PLAN, INIT_GROUP_PLAN, CLEAR_GHOSTS,
+<a name="l00133"></a>00133                    PACK_ATOMS, PACK_GROUPS, REMOVE_ATOMS, REMOVE_GROUPS,
+<a name="l00134"></a>00134                    SEND_RECV_ATOMS, UNPACK_ATOMS, UNPACK_GROUPS, 
+<a name="l00135"></a>00135                    FINISH_GROUP_PLAN, INIT_SEND_ARRAYS, PACK_GHOSTS, 
+<a name="l00136"></a>00136                    SEND_RECV_GHOSTS, UNPACK_GHOSTS, FIND_GROUP_GHOSTS, 
+<a name="l00137"></a>00137                    PACK_UPDATE, SEND_RECV_UPDATE, UNPACK_UPDATE, 
+<a name="l00138"></a>00138                    LOCAL_UPDATE, PACK_FORCE, SEND_RECV_FORCE, 
+<a name="l00139"></a>00139                    UNPACK_FORCE, LOCAL_FORCE, NTime};
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141    <span class="keyword">private</span>:
+<a name="l00142"></a>00142 
+<a name="l00153"></a>00153       <a class="code" href="classUtil_1_1FMatrix.html" title="Fixed Size Matrix.">FMatrix&lt; APArray&lt;Atom&gt;</a>, <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>, 2&gt;  sendArray_;
+<a name="l00154"></a>00154 
+<a name="l00165"></a>00165       <a class="code" href="classUtil_1_1FMatrix.html" title="Fixed Size Matrix.">FMatrix&lt; APArray&lt;Atom&gt;</a>, <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>, 2&gt;  recvArray_;
 <a name="l00166"></a>00166 
-<a name="l00167"></a>00167 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
+<a name="l00167"></a>00167 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00168"></a>00168 <span class="preprocessor"></span>
-<a name="l00171"></a>00171       <a class="code" href="classUtil_1_1APArray.html" title="Automatically resizable PArray.">APArray&lt; Group&lt;3&gt;</a> &gt; emptyAngles_;
-<a name="l00172"></a>00172 <span class="preprocessor">      #endif</span>
-<a name="l00173"></a>00173 <span class="preprocessor"></span>
-<a name="l00174"></a>00174 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
-<a name="l00175"></a>00175 <span class="preprocessor"></span>
-<a name="l00178"></a>00178       <a class="code" href="classUtil_1_1APArray.html" title="Automatically resizable PArray.">APArray&lt; Group&lt;4&gt;</a> &gt; emptyDihedrals_;
-<a name="l00179"></a>00179 <span class="preprocessor">      #endif</span>
-<a name="l00180"></a>00180 <span class="preprocessor"></span>
-<a name="l00181"></a>00181 <span class="preprocessor">      #endif // UTIL_MPI</span>
-<a name="l00182"></a>00182 <span class="preprocessor"></span>
-<a name="l00184"></a>00184       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt; double, Dimension, 2&gt;</a>  bound_;
-<a name="l00185"></a>00185 
-<a name="l00187"></a>00187       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt; double, Dimension, 2&gt;</a>  inner_;
-<a name="l00188"></a>00188 
-<a name="l00190"></a>00190       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt; double, Dimension, 2&gt;</a>  outer_;
-<a name="l00191"></a>00191 
-<a name="l00193"></a>00193       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> multiProcessorDirection_;
-<a name="l00194"></a>00194 
-<a name="l00196"></a>00196       <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>*  boundaryPtr_;
-<a name="l00197"></a>00197 
-<a name="l00199"></a>00199       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>*  domainPtr_;
+<a name="l00173"></a>00173       <a class="code" href="classUtil_1_1APArray.html">APArray&lt;Atom&gt;</a> sentAtoms_;
+<a name="l00174"></a>00174 
+<a name="l00180"></a>00180       <a class="code" href="classUtil_1_1APArray.html" title="Automatically resizable PArray.">APArray&lt; Group&lt;2&gt;</a> &gt; emptyBonds_;
+<a name="l00181"></a>00181 
+<a name="l00182"></a>00182 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
+<a name="l00183"></a>00183 <span class="preprocessor"></span>
+<a name="l00186"></a>00186       <a class="code" href="classUtil_1_1APArray.html" title="Automatically resizable PArray.">APArray&lt; Group&lt;3&gt;</a> &gt; emptyAngles_;
+<a name="l00187"></a>00187 <span class="preprocessor">      #endif</span>
+<a name="l00188"></a>00188 <span class="preprocessor"></span>
+<a name="l00189"></a>00189 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
+<a name="l00190"></a>00190 <span class="preprocessor"></span>
+<a name="l00193"></a>00193       <a class="code" href="classUtil_1_1APArray.html" title="Automatically resizable PArray.">APArray&lt; Group&lt;4&gt;</a> &gt; emptyDihedrals_;
+<a name="l00194"></a>00194 <span class="preprocessor">      #endif</span>
+<a name="l00195"></a>00195 <span class="preprocessor"></span>
+<a name="l00196"></a>00196 <span class="preprocessor">      #endif // UTIL_MPI</span>
+<a name="l00197"></a>00197 <span class="preprocessor"></span>
+<a name="l00199"></a>00199       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt; double, Dimension, 2&gt;</a>  bound_;
 <a name="l00200"></a>00200 
-<a name="l00202"></a>00202       <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>* atomStoragePtr_;
+<a name="l00202"></a>00202       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt; double, Dimension, 2&gt;</a>  inner_;
 <a name="l00203"></a>00203 
-<a name="l00205"></a>00205       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;2&gt;</a>* bondStoragePtr_;
+<a name="l00205"></a>00205       <a class="code" href="classUtil_1_1FMatrix.html">FMatrix&lt; double, Dimension, 2&gt;</a>  outer_;
 <a name="l00206"></a>00206 
-<a name="l00207"></a>00207 <span class="preprocessor">      #ifdef INTER_ANGLE </span>
-<a name="l00208"></a>00208 <span class="preprocessor"></span>
-<a name="l00209"></a>00209       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;3&gt;</a>* angleStoragePtr_;
-<a name="l00210"></a>00210 <span class="preprocessor">      #endif</span>
-<a name="l00211"></a>00211 <span class="preprocessor"></span>
-<a name="l00212"></a>00212 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
-<a name="l00213"></a>00213 <span class="preprocessor"></span>
-<a name="l00214"></a>00214       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;4&gt;</a>* dihedralStoragePtr_;
-<a name="l00215"></a>00215 <span class="preprocessor">      #endif</span>
-<a name="l00216"></a>00216 <span class="preprocessor"></span>
-<a name="l00218"></a>00218       <a class="code" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a>*  bufferPtr_;
-<a name="l00219"></a>00219 
-<a name="l00221"></a>00221       <span class="keywordtype">double</span> pairCutoff_;
-<a name="l00222"></a>00222 
-<a name="l00224"></a>00224       <a class="code" href="classDdMd_1_1DdTimer.html" title="Class for measuring time intervals.">DdTimer</a> timer_;
-<a name="l00225"></a>00225 
-<a name="l00234"></a>00234       <span class="keywordtype">void</span> exchangeGhosts();
-<a name="l00235"></a>00235 
-<a name="l00236"></a>00236       <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00237"></a>00237       <span class="keywordtype">void</span> initGroupGhostPlan(<a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage);
-<a name="l00238"></a>00238 
-<a name="l00239"></a>00239 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00240"></a>00240 <span class="preprocessor"></span>      <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00241"></a>00241       <span class="keywordtype">void</span> packGroups(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage, 
-<a name="l00242"></a>00242                                     <a class="code" href="classUtil_1_1APArray.html" title="Automatically resizable PArray.">APArray</a>&lt; <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a> &gt;&amp; emptyGroups);
-<a name="l00243"></a>00243 
-<a name="l00244"></a>00244       <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00245"></a>00245       <span class="keywordtype">void</span> removeEmptyGroups(<a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage,
-<a name="l00246"></a>00246                              <a class="code" href="classUtil_1_1APArray.html" title="Automatically resizable PArray.">APArray</a>&lt; <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a> &gt;&amp; emptyGroups);
-<a name="l00247"></a>00247 
-<a name="l00248"></a>00248       <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00249"></a>00249       <span class="keywordtype">void</span> unpackGroups(<a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage);
-<a name="l00250"></a>00250 <span class="preprocessor">      #endif</span>
-<a name="l00251"></a>00251 <span class="preprocessor"></span>
-<a name="l00252"></a>00252       <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00253"></a>00253       <span class="keywordtype">void</span> finishGroupGhostPlan(<a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage);
-<a name="l00254"></a>00254 
-<a name="l00255"></a>00255       <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
-<a name="l00256"></a>00256       <span class="keywordtype">void</span> findGroupGhosts(<a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage);
-<a name="l00257"></a>00257 
-<a name="l00258"></a>00258       <span class="keywordtype">void</span> stamp(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> timeId) {
-<a name="l00259"></a>00259 <span class="preprocessor">         #ifdef DDMD_EXCHANGER_TIMER</span>
-<a name="l00260"></a>00260 <span class="preprocessor"></span>         timer_.stamp(timeId);
-<a name="l00261"></a>00261 <span class="preprocessor">         #endif</span>
-<a name="l00262"></a>00262 <span class="preprocessor"></span>      }
-<a name="l00263"></a>00263 
-<a name="l00264"></a>00264    };
-<a name="l00265"></a>00265 
-<a name="l00266"></a>00266 }
-<a name="l00267"></a>00267 <span class="preprocessor">#endif</span>
+<a name="l00208"></a>00208       <a class="code" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a> multiProcessorDirection_;
+<a name="l00209"></a>00209 
+<a name="l00211"></a>00211       <span class="keyword">const</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>*  boundaryPtr_;
+<a name="l00212"></a>00212 
+<a name="l00214"></a>00214       <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>*  domainPtr_;
+<a name="l00215"></a>00215 
+<a name="l00217"></a>00217       <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>* atomStoragePtr_;
+<a name="l00218"></a>00218 
+<a name="l00220"></a>00220       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;2&gt;</a>* bondStoragePtr_;
+<a name="l00221"></a>00221 
+<a name="l00222"></a>00222 <span class="preprocessor">      #ifdef INTER_ANGLE </span>
+<a name="l00223"></a>00223 <span class="preprocessor"></span>
+<a name="l00224"></a>00224       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;3&gt;</a>* angleStoragePtr_;
+<a name="l00225"></a>00225 <span class="preprocessor">      #endif</span>
+<a name="l00226"></a>00226 <span class="preprocessor"></span>
+<a name="l00227"></a>00227 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
+<a name="l00228"></a>00228 <span class="preprocessor"></span>
+<a name="l00229"></a>00229       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;4&gt;</a>* dihedralStoragePtr_;
+<a name="l00230"></a>00230 <span class="preprocessor">      #endif</span>
+<a name="l00231"></a>00231 <span class="preprocessor"></span>
+<a name="l00233"></a>00233       <a class="code" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a>*  bufferPtr_;
+<a name="l00234"></a>00234 
+<a name="l00236"></a>00236       <span class="keywordtype">double</span> pairCutoff_;
+<a name="l00237"></a>00237 
+<a name="l00239"></a>00239       <a class="code" href="classDdMd_1_1DdTimer.html" title="Class for measuring time intervals.">DdTimer</a> timer_;
+<a name="l00240"></a>00240 
+<a name="l00249"></a>00249       <span class="keywordtype">void</span> exchangeGhosts();
+<a name="l00250"></a>00250 
+<a name="l00251"></a>00251       <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
+<a name="l00252"></a>00252       <span class="keywordtype">void</span> initGroupGhostPlan(<a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage);
+<a name="l00253"></a>00253 
+<a name="l00254"></a>00254 <span class="preprocessor">      #ifdef UTIL_MPI</span>
+<a name="l00255"></a>00255 <span class="preprocessor"></span>      <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
+<a name="l00256"></a>00256       <span class="keywordtype">void</span> packGroups(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j, <a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage, 
+<a name="l00257"></a>00257                                     <a class="code" href="classUtil_1_1APArray.html" title="Automatically resizable PArray.">APArray</a>&lt; <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a> &gt;&amp; emptyGroups);
+<a name="l00258"></a>00258 
+<a name="l00259"></a>00259       <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
+<a name="l00260"></a>00260       <span class="keywordtype">void</span> removeEmptyGroups(<a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage,
+<a name="l00261"></a>00261                              <a class="code" href="classUtil_1_1APArray.html" title="Automatically resizable PArray.">APArray</a>&lt; <a class="code" href="classDdMd_1_1Group.html" title="A group of covalently interacting atoms.">Group&lt;N&gt;</a> &gt;&amp; emptyGroups);
+<a name="l00262"></a>00262 
+<a name="l00263"></a>00263       <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
+<a name="l00264"></a>00264       <span class="keywordtype">void</span> unpackGroups(<a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage);
+<a name="l00265"></a>00265 <span class="preprocessor">      #endif</span>
+<a name="l00266"></a>00266 <span class="preprocessor"></span>
+<a name="l00267"></a>00267       <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
+<a name="l00268"></a>00268       <span class="keywordtype">void</span> finishGroupGhostPlan(<a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage);
+<a name="l00269"></a>00269 
+<a name="l00270"></a>00270       <span class="keyword">template</span> &lt;<span class="keywordtype">int</span> N&gt;
+<a name="l00271"></a>00271       <span class="keywordtype">void</span> findGroupGhosts(<a class="code" href="classDdMd_1_1GroupStorage.html" title="A container for all the Group&amp;lt;N&amp;gt; objects on this processor.">GroupStorage&lt;N&gt;</a>&amp; storage);
+<a name="l00272"></a>00272 
+<a name="l00273"></a>00273       <span class="keywordtype">void</span> stamp(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> timeId) 
+<a name="l00274"></a>00274       {  timer_.stamp(timeId); }
+<a name="l00275"></a>00275 
+<a name="l00276"></a>00276    };
+<a name="l00277"></a>00277 
+<a name="l00278"></a>00278 }
+<a name="l00279"></a>00279 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

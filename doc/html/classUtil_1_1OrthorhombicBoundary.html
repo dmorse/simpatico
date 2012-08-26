@@ -56,7 +56,7 @@
 <!-- doxytag: class="Util::OrthorhombicBoundary" --><!-- doxytag: inherits="Util::OrthoRegion" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>An orthorhombic periodic unit cell. </p>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00034">34</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00038">38</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -75,33 +75,47 @@ Inheritance diagram for Util::OrthorhombicBoundary:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#aeaee2db8a279d6b5f20dfea68296c5bb">OrthorhombicBoundary</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#aeaee2db8a279d6b5f20dfea68296c5bb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a6278066c995e1611bc91de0b8015992c">setLengths</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lengths)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set unit cell dimensions for orthorhombic boundary.  <a href="#a6278066c995e1611bc91de0b8015992c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a7b5b671dec23d061ad88600b06b93e00">setTetragonalLengths</a> (double ab, double c)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set unit cell dimensions for tetragonal boundary.  <a href="#a7b5b671dec23d061ad88600b06b93e00"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#afa187d28cb58061511adb919da076b41">setCubicLengths</a> (double a)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set unit cell dimensions for a cubic boundary.  <a href="#afa187d28cb58061511adb919da076b41"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a5dc5c64cfc7c39a03c9214927ec86858">setOrthorhombic</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lengths)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set unit cell dimensions for orthorhombic boundary.  <a href="#a5dc5c64cfc7c39a03c9214927ec86858"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a24ab2c0419a2a3192917c5a2b0711dd1">setTetragonal</a> (double ab, double c)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set unit cell dimensions for tetragonal boundary.  <a href="#a24ab2c0419a2a3192917c5a2b0711dd1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a69280f98cdded9d8409726c14fd93124">setCubic</a> (double a)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set unit cell dimensions for a cubic boundary.  <a href="#a69280f98cdded9d8409726c14fd93124"></a><br/></td></tr>
 <tr><td class="memTemplParams" colspan="2">template&lt;class Archive &gt; </td></tr>
 <tr><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#afc43e50ace9adb2fb601d49db3528519">serialize</a> (Archive &amp;ar, const unsigned int version)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize to/from an archive.  <a href="#afc43e50ace9adb2fb601d49db3528519"></a><br/></td></tr>
-<tr><td colspan="2"><div class="groupHeader">Periodic Boundary Conditions</div></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Periodic Boundary Conditions - Primitive Cell</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#aca92298f4ac913d09c0845db21e55712">shift</a> (<a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;r) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Shift <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its image within the primary unit cell.  <a href="#aca92298f4ac913d09c0845db21e55712"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Shift Cartesian <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its primary image.  <a href="#aca92298f4ac913d09c0845db21e55712"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#ad45e7333250260fba4ec552b4a17e05a">shift</a> (<a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;r, <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;shift) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Shift <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its image within the primary unit cell.  <a href="#ad45e7333250260fba4ec552b4a17e05a"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Shift Cartesian <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its primary image.  <a href="#ad45e7333250260fba4ec552b4a17e05a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#adf9d4b30f7ca623763b385056ab82ff9">applyShift</a> (<a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;r, int i, int t) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Shift Cartesian <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r by multiple t of a Bravais lattice vector.  <a href="#adf9d4b30f7ca623763b385056ab82ff9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#ad8ad58055aaff5c5497e2b1b69bf08d5">shiftGen</a> (<a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;r) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Shift generalized <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its primary image.  <a href="#ad8ad58055aaff5c5497e2b1b69bf08d5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a143f689650ee0e7acde0dc391e60f646">shiftGen</a> (<a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;r, <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;shift) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Shift generalized <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its image within the primary unit cell.  <a href="#a143f689650ee0e7acde0dc391e60f646"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Periodic Boundary Conditions - Minimum Image Separations</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#aa3177af26a71f7b36d2d4c67bc757e87">distanceSq</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;r1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;r2) const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return square distance between positions r1 and r2, using the nearest the nearest image convention for the separation <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>.  <a href="#aa3177af26a71f7b36d2d4c67bc757e87"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#ada8f6fc3c2da57d268145d29a79d02e2">distanceSq</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;r1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;r2, <a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;shift) const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return square distance between positions r1 and r2, using the nearest the nearest image convention for the separation <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>.  <a href="#ada8f6fc3c2da57d268145d29a79d02e2"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a4c38e3d96cba1b74a8487f4912856300">distanceSq</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;r1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;r2, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;dr) const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the squared distance between positions r1 and r2, using the nearest image convention, and calculate the separation <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>.  <a href="#a4c38e3d96cba1b74a8487f4912856300"></a><br/></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Coordinate Transformations</div></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#aa6bb641c219a9cdd943016dd94f5ccfc">transformCartToGen</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;Rc, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;Rg) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform Cartesian <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> to generalized coordinates.  <a href="#aa6bb641c219a9cdd943016dd94f5ccfc"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#ae532cf51445c23c26986a18ea4635069">transformGenToCart</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;Rg, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;Rc) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of generalized coordinates to Cartesian <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>.  <a href="#ae532cf51445c23c26986a18ea4635069"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Crystal__Module.html#gae791ac7b853a3532698da0763ae0741e">LatticeSystem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a5df249884cb832f34a98d8b9c64e31d9">latticeSystem</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return actual lattice system.  <a href="#a5df249884cb832f34a98d8b9c64e31d9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a46e76a04cdefce0f23e31c153077bc37">lengths</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of lengths by const reference.  <a href="#a46e76a04cdefce0f23e31c153077bc37"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of unit cell lengths by const reference.  <a href="#a46e76a04cdefce0f23e31c153077bc37"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a5a0e6c2dd29bcd8d3b57b88cf1852050">length</a> (int i) const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get length in Cartesian direction i.  <a href="#a5a0e6c2dd29bcd8d3b57b88cf1852050"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a1f9144b5edf24827f40184d92b76205c">minLength</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get minimum length across primitive unit cell.  <a href="#a1f9144b5edf24827f40184d92b76205c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#ac2d0f07c3757f5c32056d0fb2dbbc255">volume</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return unit cell volume.  <a href="#ac2d0f07c3757f5c32056d0fb2dbbc255"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1OrthorhombicBoundary.html#a7101b8ddff8fcb3b5960cb6aa127f6db">bravaisBasisVector</a> (int i) const </td></tr>
@@ -140,17 +154,17 @@ Friends</h2></td></tr>
 
 <p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00026">26</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
 
-<p>References <a class="el" href="FSArray_8h_source.html#l00258">Util::FSArray&lt; Data, Capacity &gt;::append()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>, <a class="el" href="Constants_8h_source.html#l00034">Util::Constants::Pi</a>, and <a class="el" href="Vector_8h_source.html#l00349">Util::Vector::Zero</a>.</p>
+<p>References <a class="el" href="FSArray_8h_source.html#l00257">Util::FSArray&lt; Data, Capacity &gt;::append()</a>, <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>, <a class="el" href="Constants_8h_source.html#l00034">Util::Constants::Pi</a>, and <a class="el" href="Vector_8h_source.html#l00349">Util::Vector::Zero</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a6278066c995e1611bc91de0b8015992c"></a><!-- doxytag: member="Util::OrthorhombicBoundary::setLengths" ref="a6278066c995e1611bc91de0b8015992c" args="(const Vector &amp;lengths)" -->
+<a class="anchor" id="a5dc5c64cfc7c39a03c9214927ec86858"></a><!-- doxytag: member="Util::OrthorhombicBoundary::setOrthorhombic" ref="a5dc5c64cfc7c39a03c9214927ec86858" args="(const Vector &amp;lengths)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Util::OrthorhombicBoundary::setLengths </td>
+          <td class="memname">void Util::OrthorhombicBoundary::setOrthorhombic </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>lengths</em></td><td>)</td>
@@ -169,18 +183,18 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00044">44</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00048">48</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
 
-<p>References <a class="el" href="OrthorhombicBoundary_8h_source.html#l00246">lengths()</a>, and <a class="el" href="OrthoRegion_8h_source.html#l00034">Util::OrthoRegion::maxima_</a>.</p>
+<p>References <a class="el" href="OrthorhombicBoundary_8h_source.html#l00336">lengths()</a>, and <a class="el" href="OrthoRegion_8h_source.html#l00034">Util::OrthoRegion::maxima_</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7b5b671dec23d061ad88600b06b93e00"></a><!-- doxytag: member="Util::OrthorhombicBoundary::setTetragonalLengths" ref="a7b5b671dec23d061ad88600b06b93e00" args="(double ab, double c)" -->
+<a class="anchor" id="a24ab2c0419a2a3192917c5a2b0711dd1"></a><!-- doxytag: member="Util::OrthorhombicBoundary::setTetragonal" ref="a24ab2c0419a2a3192917c5a2b0711dd1" args="(double ab, double c)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Util::OrthorhombicBoundary::setTetragonalLengths </td>
+          <td class="memname">void Util::OrthorhombicBoundary::setTetragonal </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>ab</em>, </td>
@@ -209,18 +223,18 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00054">54</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00058">58</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
 
 <p>References <a class="el" href="OrthoRegion_8h_source.html#l00034">Util::OrthoRegion::maxima_</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afa187d28cb58061511adb919da076b41"></a><!-- doxytag: member="Util::OrthorhombicBoundary::setCubicLengths" ref="afa187d28cb58061511adb919da076b41" args="(double a)" -->
+<a class="anchor" id="a69280f98cdded9d8409726c14fd93124"></a><!-- doxytag: member="Util::OrthorhombicBoundary::setCubic" ref="a69280f98cdded9d8409726c14fd93124" args="(double a)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Util::OrthorhombicBoundary::setCubicLengths </td>
+          <td class="memname">void Util::OrthorhombicBoundary::setCubic </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>a</em></td><td>)</td>
@@ -238,11 +252,9 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00066">66</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00070">70</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
 
 <p>References <a class="el" href="OrthoRegion_8h_source.html#l00034">Util::OrthoRegion::maxima_</a>.</p>
-
-<p>Referenced by <a class="el" href="MdSimulation_8cpp_source.html#l00191">McMd::MdSimulation::readCommands()</a>, and <a class="el" href="McSimulation_8cpp_source.html#l00225">McMd::McSimulation::readCommands()</a>.</p>
 
 </div>
 </div>
@@ -284,9 +296,9 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented from <a class="el" href="structUtil_1_1OrthoRegion.html#a30db3609d8f06dec33edd1c468702d2a">Util::OrthoRegion</a>.</p>
 
-<p>Definition at line <a class="el" href="util_2boundary_2serialize_8h_source.html#l00035">35</a> of file <a class="el" href="util_2boundary_2serialize_8h_source.html">util/boundary/serialize.h</a>.</p>
+<p>Definition at line <a class="el" href="util_2boundary_2serialize_8h_source.html#l00036">36</a> of file <a class="el" href="util_2boundary_2serialize_8h_source.html">util/boundary/serialize.h</a>.</p>
 
-<p>References <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00103">isValid()</a>, and <a class="el" href="util_2archives_2serialize_8h_source.html#l00038">Util::serializeEnum()</a>.</p>
+<p>References <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00116">isValid()</a>, and <a class="el" href="util_2archives_2serialize_8h_source.html#l00038">Util::serializeEnum()</a>.</p>
 
 </div>
 </div>
@@ -305,7 +317,7 @@ template&lt;class Archive &gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Shift <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its image within the primary unit cell. </p>
+<p>Shift Cartesian <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its primary image. </p>
 <p>One output, each coordinate r[i] is shifted by a multiple of length[i] so as to lie within the range minima_[i] &lt; r[i] &lt; maxima_[i].</p>
 <p>Precondition: The algorithm assumes that on input, for each i=0,..,2, minima_[i] - lengths_[i] &lt; r[i] &lt; maxima_[i] + lengths_[i]</p>
 <dl><dt><b>Parameters:</b></dt><dd>
@@ -315,7 +327,7 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00276">276</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00372">372</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>, <a class="el" href="OrthoRegion_8h_source.html#l00034">Util::OrthoRegion::maxima_</a>, and <a class="el" href="OrthoRegion_8h_source.html#l00031">Util::OrthoRegion::minima_</a>.</p>
 
@@ -346,21 +358,145 @@ template&lt;class Archive &gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Shift <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its image within the primary unit cell. </p>
-<p>This method maps an atomic position to lie in the primary cell, and also increments the atomic shift <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>:</p>
+<p>Shift Cartesian <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its primary image. </p>
+<p>This method maps an atomic position to its primary image, and also increments the atomic shift <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>:</p>
 <p>If r[i] -&gt; r[i] - t*length_[i], then shift[i] -&gt; shift[i] + t.</p>
-<dl class="see"><dt><b>See also:</b></dt><dd>Atom:<a class="el" href="classUtil_1_1OrthorhombicBoundary.html#aca92298f4ac913d09c0845db21e55712" title="Shift Vector r to its image within the primary unit cell.">shift()</a></dd></dl>
+<dl class="see"><dt><b>See also:</b></dt><dd>Atom:<a class="el" href="classUtil_1_1OrthorhombicBoundary.html#aca92298f4ac913d09c0845db21e55712" title="Shift Cartesian Vector r to its primary image.">shift()</a></dd></dl>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">r</td><td><a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of coordinates </td></tr>
+    <tr><td class="paramname">r</td><td><a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of Cartesian coordinates </td></tr>
     <tr><td class="paramname">shift</td><td>integer shifts required to obtain "true" coordinates. </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00293">293</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00389">389</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>, <a class="el" href="OrthoRegion_8h_source.html#l00034">Util::OrthoRegion::maxima_</a>, and <a class="el" href="OrthoRegion_8h_source.html#l00031">Util::OrthoRegion::minima_</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="adf9d4b30f7ca623763b385056ab82ff9"></a><!-- doxytag: member="Util::OrthorhombicBoundary::applyShift" ref="adf9d4b30f7ca623763b385056ab82ff9" args="(Vector &amp;r, int i, int t) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Util::OrthorhombicBoundary::applyShift </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Shift Cartesian <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r by multiple t of a Bravais lattice vector. </p>
+<p>This method shifts the <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r by a specified amount:</p>
+<p>r -&gt; r + t*a'[i]</p>
+<p>where a[i] is Bravais lattice vector number i.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>Cartesian position <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> </td></tr>
+    <tr><td class="paramname">i</td><td>direction index </td></tr>
+    <tr><td class="paramname">t</td><td>multiple of Bravais lattice vector i </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00408">408</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+
+<p>References <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad8ad58055aaff5c5497e2b1b69bf08d5"></a><!-- doxytag: member="Util::OrthorhombicBoundary::shiftGen" ref="ad8ad58055aaff5c5497e2b1b69bf08d5" args="(Vector &amp;r) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Util::OrthorhombicBoundary::shiftGen </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>r</em></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Shift generalized <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its primary image. </p>
+<p>One output, each coordinate r[i] is shifted by an integer, so as to lie within the range 0 &lt; r[i] &lt; 1.0</p>
+<p>Precondition: The algorithm assumes that on input, for each i=0,..,2, -1.0 &lt; r[i] &lt; 2.0</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td><a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of generalized coordinates </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00414">414</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a143f689650ee0e7acde0dc391e60f646"></a><!-- doxytag: member="Util::OrthorhombicBoundary::shiftGen" ref="a143f689650ee0e7acde0dc391e60f646" args="(Vector &amp;r, IntVector &amp;shift) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Util::OrthorhombicBoundary::shiftGen </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classUtil_1_1IntVector.html">IntVector</a> &amp;&#160;</td>
+          <td class="paramname"><em>shift</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Shift generalized <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> r to its image within the primary unit cell. </p>
+<p>This method maps a vector of generalized coordinates to lie in the primary cell, and also increments the atomic shift <a class="el" href="classUtil_1_1IntVector.html" title="An IntVector is an integer Cartesian vector.">IntVector</a>:</p>
+<p>If r[i] -&gt; r[i] - t, then shift[i] -&gt; shift[i] + t.</p>
+<dl class="see"><dt><b>See also:</b></dt><dd>Atom:<a class="el" href="classUtil_1_1OrthorhombicBoundary.html#aca92298f4ac913d09c0845db21e55712" title="Shift Cartesian Vector r to its primary image.">shift()</a></dd></dl>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td><a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of generalized coordinates (in/out) </td></tr>
+    <tr><td class="paramname">shift</td><td>integer shifts, modified on output (in/out) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00432">432</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
 </div>
 </div>
@@ -399,7 +535,7 @@ template&lt;class Archive &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>square of distance between r1 and r2, using nearest image. </dd></dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00341">341</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00480">480</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="OrthoRegion_8h_source.html#l00040">Util::OrthoRegion::halfLengths_</a>, and <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>.</p>
 
@@ -447,7 +583,7 @@ template&lt;class Archive &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>square of distance between r1 and r2, using nearest image. </dd></dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00313">313</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00452">452</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="OrthoRegion_8h_source.html#l00040">Util::OrthoRegion::halfLengths_</a>, and <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>.</p>
 
@@ -496,9 +632,90 @@ template&lt;class Archive &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>square of separation <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr </dd></dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00365">365</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00504">504</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="OrthoRegion_8h_source.html#l00040">Util::OrthoRegion::halfLengths_</a>, and <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa6bb641c219a9cdd943016dd94f5ccfc"></a><!-- doxytag: member="Util::OrthorhombicBoundary::transformCartToGen" ref="aa6bb641c219a9cdd943016dd94f5ccfc" args="(const Vector &amp;Rc, Vector &amp;Rg) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Util::OrthorhombicBoundary::transformCartToGen </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>Rc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>Rg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Transform Cartesian <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> to generalized coordinates. </p>
+<p>Generalized coordinates range from 0.0 &lt; Rg[i] &lt; 1.0 within the primitive cell, for i=0,..,2.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Rc</td><td><a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of Cartesian coordinates (input) </td></tr>
+    <tr><td class="paramname">Rg</td><td><a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of generalized coordinates (output) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00550">550</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae532cf51445c23c26986a18ea4635069"></a><!-- doxytag: member="Util::OrthorhombicBoundary::transformGenToCart" ref="ae532cf51445c23c26986a18ea4635069" args="(const Vector &amp;Rg, Vector &amp;Rc) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Util::OrthorhombicBoundary::transformGenToCart </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>Rg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>Rc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Transform <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of generalized coordinates to Cartesian <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Rg</td><td><a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of generalized coordinates (input) </td></tr>
+    <tr><td class="paramname">Rc</td><td><a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of Cartesian coordinates (output) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00562">562</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, and <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>.</p>
 
 </div>
 </div>
@@ -519,7 +736,7 @@ template&lt;class Archive &gt; </div>
 <p>Return actual lattice system. </p>
 <p>Value can be Cubic, Tetragonal, or Orthorhombic. </p>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00404">404</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00543">543</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 </div>
 </div>
@@ -537,13 +754,13 @@ template&lt;class Archive &gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Get <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of lengths by const reference. </p>
+<p>Get <a class="el" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> of unit cell lengths by const reference. </p>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00246">246</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00336">336</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 <p>References <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>.</p>
 
-<p>Referenced by <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00044">setLengths()</a>.</p>
+<p>Referenced by <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00048">setOrthorhombic()</a>.</p>
 
 </div>
 </div>
@@ -570,9 +787,29 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00252">252</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00342">342</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 <p>References <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1f9144b5edf24827f40184d92b76205c"></a><!-- doxytag: member="Util::OrthorhombicBoundary::minLength" ref="a1f9144b5edf24827f40184d92b76205c" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Util::OrthorhombicBoundary::minLength </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get minimum length across primitive unit cell. </p>
+
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00348">348</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 </div>
 </div>
@@ -592,7 +829,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Return unit cell volume. </p>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00258">258</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00354">354</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 <p>References <a class="el" href="OrthoRegion_8h_source.html#l00043">Util::OrthoRegion::volume_</a>.</p>
 
@@ -621,7 +858,7 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00264">264</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00360">360</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 </div>
 </div>
@@ -648,7 +885,7 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00270">270</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00366">366</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 </div>
 </div>
@@ -687,7 +924,7 @@ template&lt;class Archive &gt; </div>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00093">93</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00106">106</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="OrthoRegion_8h_source.html#l00034">Util::OrthoRegion::maxima_</a>, <a class="el" href="OrthoRegion_8h_source.html#l00031">Util::OrthoRegion::minima_</a>, and <a class="el" href="Random_8h_source.html#l00189">Util::Random::uniform()</a>.</p>
 
@@ -711,11 +948,11 @@ template&lt;class Archive &gt; </div>
 
 <p>Reimplemented from <a class="el" href="structUtil_1_1OrthoRegion.html#a1acf63226be63a7f9add19c8c782d509">Util::OrthoRegion</a>.</p>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00103">103</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00116">116</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="feq_8h_source.html#l00021">Util::feq()</a>, <a class="el" href="OrthoRegion_8h_source.html#l00031">Util::OrthoRegion::minima_</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="feq_8h_source.html#l00021">Util::feq()</a>, <a class="el" href="OrthoRegion_8h_source.html#l00037">Util::OrthoRegion::lengths_</a>, <a class="el" href="OrthoRegion_8h_source.html#l00031">Util::OrthoRegion::minima_</a>, <a class="el" href="Constants_8h_source.html#l00034">Util::Constants::Pi</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
-<p>Referenced by <a class="el" href="util_2boundary_2serialize_8h_source.html#l00035">serialize()</a>.</p>
+<p>Referenced by <a class="el" href="util_2boundary_2serialize_8h_source.html#l00036">serialize()</a>.</p>
 
 </div>
 </div>
@@ -733,7 +970,7 @@ template&lt;class Archive &gt; </div>
 
 <p>Unit test. </p>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00224">224</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8h_source.html#l00314">314</a> of file <a class="el" href="OrthorhombicBoundary_8h_source.html">OrthorhombicBoundary.h</a>.</p>
 
 </div>
 </div>
@@ -772,7 +1009,7 @@ template&lt;class Archive &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>modified input stream </dd></dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00116">116</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00149">149</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
 
 </div>
 </div>
@@ -811,7 +1048,7 @@ template&lt;class Archive &gt; </div>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>modified output stream </dd></dl>
 
-<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00148">148</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
+<p>Definition at line <a class="el" href="OrthorhombicBoundary_8cpp_source.html#l00181">181</a> of file <a class="el" href="OrthorhombicBoundary_8cpp_source.html">OrthorhombicBoundary.cpp</a>.</p>
 
 </div>
 </div>
@@ -821,7 +1058,7 @@ template&lt;class Archive &gt; </div>
 <li><a class="el" href="util_2boundary_2serialize_8h_source.html">util/boundary/serialize.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:30 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

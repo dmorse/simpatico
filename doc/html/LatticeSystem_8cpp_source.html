@@ -68,7 +68,7 @@
 <a name="l00017"></a>00017    <span class="comment">/* </span>
 <a name="l00018"></a>00018 <span class="comment">   * Extract a LatticeSystem from an istream as a string.</span>
 <a name="l00019"></a>00019 <span class="comment">   */</span>
-<a name="l00020"></a>00020    std::istream&amp; <a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="group__Crystal__Module.html#gae791ac7b853a3532698da0763ae0741e" title="Enumeration of the 7 possible Bravais lattice systems.">LatticeSystem</a>&amp; lattice)
+<a name="l00020"></a>00020    std::istream&amp; <a class="code" href="namespaceUtil.html#a84a8e4c844fd5d302194294ce6cf1dda" title="istream extractor for a MonoclinicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="group__Crystal__Module.html#gae791ac7b853a3532698da0763ae0741e" title="Enumeration of the 7 possible Bravais lattice systems.">LatticeSystem</a>&amp; lattice)
 <a name="l00021"></a><a class="code" href="namespaceUtil.html#ac9b90ba0db1f54aea117d56ef5763af8">00021</a>    {
 <a name="l00022"></a>00022       std::string buffer;
 <a name="l00023"></a>00023       in &gt;&gt; buffer;
@@ -104,7 +104,7 @@
 <a name="l00053"></a>00053    <span class="comment">/* </span>
 <a name="l00054"></a>00054 <span class="comment">   * Insert a LatticeSystem to an ostream as a string.</span>
 <a name="l00055"></a>00055 <span class="comment">   */</span>
-<a name="l00056"></a>00056    std::ostream&amp; <a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <a class="code" href="group__Crystal__Module.html#gae791ac7b853a3532698da0763ae0741e" title="Enumeration of the 7 possible Bravais lattice systems.">LatticeSystem</a> lattice) 
+<a name="l00056"></a>00056    std::ostream&amp; <a class="code" href="namespaceUtil.html#a10bcffa95685d7673ce01e7c634b0bf2" title="ostream inserter for an MonoclinicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <a class="code" href="group__Crystal__Module.html#gae791ac7b853a3532698da0763ae0741e" title="Enumeration of the 7 possible Bravais lattice systems.">LatticeSystem</a> lattice) 
 <a name="l00057"></a><a class="code" href="namespaceUtil.html#ac9695c175a8fe6fa1705d13d340432a3">00057</a>    {
 <a name="l00058"></a>00058       <span class="keywordflow">if</span> (lattice == Cubic) {
 <a name="l00059"></a>00059          out &lt;&lt; <span class="stringliteral">&quot;cubic&quot;</span>;
@@ -143,7 +143,7 @@
 <a name="l00095"></a>00095 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

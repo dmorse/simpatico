@@ -81,7 +81,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#a9bea78c1d93f2102ae793c3a377ff9f5">allocate</a> (int atomCapacity, const Boundary &amp;boundary, double cutoff)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory for this <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>.  <a href="#a9bea78c1d93f2102ae793c3a377ff9f5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#ae363f136446850f4920b2d2083b4bf46">makeGrid</a> (const Boundary &amp;boundary, double cutoff)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize grid geometry.  <a href="#ae363f136446850f4920b2d2083b4bf46"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize grid geometry and set pointer to Boundary.  <a href="#ae363f136446850f4920b2d2083b4bf46"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#a3377b5bae7ae8c760bddc2e87dc00d81">clear</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets all <a class="el" href="classMcMd_1_1Cell.html" title="A set of Atoms in a small region.">Cell</a> objects to empty state (no Atoms).  <a href="#a3377b5bae7ae8c760bddc2e87dc00d81"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#a362efc492b788debcbad2e11d0a782a6">cellIndexFromPosition</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;pos) const </td></tr>
@@ -96,6 +96,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill a NeighborArray with pointers to atoms near a specified position.  <a href="#a5170b4abd47e6070d447408b2e0e8b5d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#af17127e060f6a75699d92d55b5d89ad2">getCellNeighbors</a> (int ic, <a class="el" href="classUtil_1_1FSArray.html">NeighborArray</a> &amp;neighbors, int &amp;nInCell) const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill an array with pointers to atoms in a cell and neighboring cells.  <a href="#af17127e060f6a75699d92d55b5d89ad2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#a4830235fb4522616dbaedfcc6362ce7c">gridDimension</a> (int i) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of cells along axis i.  <a href="#a4830235fb4522616dbaedfcc6362ce7c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#afc404fadea4c7ea9587cd7a3ad15dc1c">totCells</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total number of cells in this <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>.  <a href="#afc404fadea4c7ea9587cd7a3ad15dc1c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1CellList.html#ad7d0c6c58497d971a6d0c226283364d9">nAtom</a> () const </td></tr>
@@ -206,7 +208,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00099">99</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00102">102</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -239,7 +241,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Initialize grid geometry. </p>
+<p>Initialize grid geometry and set pointer to Boundary. </p>
 <p>The number of cells in each direction is chosen such that the dimension of each cell in each direction is greater than or equal to the cutoff parameter. To calculate nonbonded pair interaction energies, the cutoff parameter should thus be equal to or greater than the maximum range of nonbonded interactions.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
@@ -249,7 +251,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00120">120</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00123">123</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -299,7 +301,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>index of cell that contains position pos[3] </dd></dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00311">311</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00358">358</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -328,7 +330,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00352">352</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00425">425</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 <p>References <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00267">McMd::Atom::position()</a>.</p>
 
@@ -359,7 +361,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00341">341</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00414">414</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 <p>References <a class="el" href="CellTag_8h_source.html#l00036">McMd::CellTag::cellId</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>.</p>
 
@@ -403,7 +405,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00364">364</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00437">437</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 <p>References <a class="el" href="CellTag_8h_source.html#l00036">McMd::CellTag::cellId</a>, and <a class="el" href="mcMd_2chemistry_2Atom_8h_source.html#l00259">McMd::Atom::id()</a>.</p>
 
@@ -444,7 +446,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00381">381</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00454">454</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 <p>Referenced by <a class="el" href="Linear_8cpp_source.html#l00187">McMd::Linear::generateMolecules()</a>, and <a class="el" href="RingOctaRebridgeMove_8cpp_source.html#l00162">McMd::RingOctaRebridgeMove::scanBridge()</a>.</p>
 
@@ -492,11 +494,38 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00148">148</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00153">153</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="mcMd_2neighbor_2Cell_8h_source.html#l00237">McMd::Cell::atomPtr()</a>, and <a class="el" href="mcMd_2neighbor_2Cell_8h_source.html#l00234">McMd::Cell::firstClearPos()</a>.</p>
 
 <p>Referenced by <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McMd::McPairEnergyAverage::sample()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4830235fb4522616dbaedfcc6362ce7c"></a><!-- doxytag: member="McMd::CellList::gridDimension" ref="a4830235fb4522616dbaedfcc6362ce7c" args="(int i) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int McMd::CellList::gridDimension </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>i</em></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Number of cells along axis i. </p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>index for axis (direction). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00494">494</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 </div>
 </div>
@@ -516,7 +545,7 @@ Friends</h2></td></tr>
 
 <p>Get total number of cells in this <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00305">305</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00352">352</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 <p>Referenced by <a class="el" href="McPairEnergyAverage_8cpp_source.html#l00072">McMd::McPairEnergyAverage::sample()</a>.</p>
 
@@ -538,7 +567,7 @@ Friends</h2></td></tr>
 
 <p>Get total number of atoms in this <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00217">217</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00222">222</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
@@ -558,7 +587,7 @@ Friends</h2></td></tr>
 
 <p>Has memory been allocated for this <a class="el" href="classMcMd_1_1CellList.html" title="A cell list for Atom objects in a periodic system boundary.">CellList</a>? </p>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00421">421</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00497">497</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 </div>
 </div>
@@ -587,7 +616,7 @@ Friends</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if valid, otherwise throw an Exception. </dd></dl>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00232">232</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html#l00237">237</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a>.</p>
 
 <p>References <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
@@ -607,7 +636,7 @@ Friends</h2></td></tr>
 
 <p>Grant access to unit test class. </p>
 
-<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00295">295</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html#l00342">342</a> of file <a class="el" href="mcMd_2neighbor_2CellList_8h_source.html">mcMd/neighbor/CellList.h</a>.</p>
 
 </div>
 </div>
@@ -635,7 +664,7 @@ Friends</h2></td></tr>
 <li><a class="el" href="mcMd_2neighbor_2CellList_8cpp_source.html">mcMd/neighbor/CellList.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:27 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:28 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

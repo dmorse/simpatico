@@ -79,7 +79,7 @@ Molecular Dynamics Integrators</h2>
 Interprocessor Communication</h2>
 <p>The src/ddMd/communicate directory contains a set of classes that are used to communicate between processors, to transfer ownership of atoms and groups between processors, and to update positions of ghosts.</p>
 <p>The <a class="el" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a> class implements the main domain decomposition communication algorithms. The exchange() method is called only on time steps when the pair list must be rebuilt, to exchange ownership of atoms and groups. The update() method is called every time step that exchange() is not called, and updates the positions of ghost atoms.</p>
-<p>The <a class="el" href="classDdMd_1_1AtomDistributor.html" title="Class for distributing Atoms among processors.">AtomDistributor</a>, <a class="el" href="classDdMd_1_1AtomCollector.html" title="Class for collecting Atoms from processors to master processor.">AtomCollector</a> classes, and the <a class="el" href="classDdMd_1_1GroupDistributor.html" title="Class template for distributing Group&lt;N&gt; objects among processors.">GroupDistributor</a> &lt; N &gt; and <a class="el" href="classDdMd_1_1GroupCollector.html" title="Class for collecting Groups from processors to master processor.">GroupCollector</a> &lt; N &gt; class templates are used by the <a class="el" href="classDdMd_1_1ConfigIo.html" title="Class to read and write configuration files.">ConfigIo</a> objects that read and write configuration files. The "Distributor" classes distribute atoms and groups from a master processor that reads configuration files to the processors that own these objects. The "Collector" classes collect atoms and groups from all processors and send them to a master processor, in order to allow the master processor to write atom coordinates and topology information to a file. Configuration files are always written and read by the master processor.</p>
+<p>The <a class="el" href="classDdMd_1_1AtomDistributor.html" title="Class for distributing Atoms among processors.">AtomDistributor</a>, <a class="el" href="classDdMd_1_1AtomCollector.html" title="Class for collecting Atoms from processors to master processor.">AtomCollector</a> classes, and the <a class="el" href="classDdMd_1_1GroupDistributor.html" title="Class template for distributing Group&lt;N&gt; objects among processors.">GroupDistributor</a> &lt; N &gt; and <a class="el" href="classDdMd_1_1GroupCollector.html" title="Class for collecting Groups from processors to master processor.">GroupCollector</a> &lt; N &gt; class templates are used by the <a class="el" href="classDdMd_1_1ConfigIo.html" title="Abstract reader/writer for configuration files.">ConfigIo</a> objects that read and write configuration files. The "Distributor" classes distribute atoms and groups from a master processor that reads configuration files to the processors that own these objects. The "Collector" classes collect atoms and groups from all processors and send them to a master processor, in order to allow the master processor to write atom coordinates and topology information to a file. Configuration files are always written and read by the master processor.</p>
 <p>The <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">Buffer</a> class provides an interface to blocks of memory that are used for MPI communication, and is used by all of the other communication classes discussed above.</p>
 <h2><a class="anchor" id="simulation_sec"></a>
 Simulation</h2>
@@ -112,7 +112,7 @@ Simulation</h2>
 <li>A <a class="el" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">DdMd::Exchanger</a> object to manage interprocessor communication.</li>
 </ul>
 <ul>
-<li>A <a class="el" href="classDdMd_1_1ConfigIo.html" title="Class to read and write configuration files.">DdMd::ConfigIo</a> to read and write configuration files.</li>
+<li>A <a class="el" href="classDdMd_1_1ConfigIo.html" title="Abstract reader/writer for configuration files.">DdMd::ConfigIo</a> to read and write configuration files.</li>
 </ul>
 <ul>
 <li>A <a class="el" href="classDdMd_1_1Buffer.html" title="Buffer for sending atoms and groups between processors.">DdMd::Buffer</a> to provide memory for communication.</li>
@@ -130,7 +130,7 @@ Simulation</h2>
 <a class="el" href="custom_page.html">Compilation Options</a> (Next)  </li>
 </ul>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

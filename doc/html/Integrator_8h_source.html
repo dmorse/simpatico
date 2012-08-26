@@ -87,30 +87,40 @@
 <a name="l00053"></a>00053 
 <a name="l00057"></a>00057       <span class="keyword">virtual</span> <span class="keywordtype">void</span> outputStatistics(std::ostream&amp; out);
 <a name="l00058"></a>00058 
-<a name="l00059"></a>00059    <span class="keyword">protected</span>:
-<a name="l00060"></a>00060 
-<a name="l00062"></a><a class="code" href="classDdMd_1_1Integrator.html#a988ddbcea34ca09ff2d218ee489c203d">00062</a>       <span class="keyword">enum</span> <a class="code" href="classDdMd_1_1Integrator.html#a988ddbcea34ca09ff2d218ee489c203d" title="Timestamps for loop timing.">TimeId</a> {DIAGNOSTIC, INTEGRATE1, CHECK, EXCHANGE, NEIGHBOR, 
-<a name="l00063"></a>00063                    UPDATE, FORCE, INTEGRATE2, NTime};
-<a name="l00064"></a>00064 
-<a name="l00066"></a><a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297">00066</a>       <a class="code" href="classDdMd_1_1DdTimer.html" title="Class for measuring time intervals.">DdTimer</a>&amp; timer()
-<a name="l00067"></a>00067       { <span class="keywordflow">return</span> timer_; }
+<a name="l00062"></a>00062       <span class="keywordtype">double</span> time() <span class="keyword">const</span>;
+<a name="l00063"></a>00063 
+<a name="l00067"></a>00067       <span class="keywordtype">int</span> nStep() <span class="keyword">const</span>;
 <a name="l00068"></a>00068 
-<a name="l00070"></a><a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077">00070</a>       <span class="keywordtype">int</span>   <a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a>;
-<a name="l00071"></a>00071 
-<a name="l00073"></a><a class="code" href="classDdMd_1_1Integrator.html#a3579b1c124337bbec98c515185187817">00073</a>       <span class="keywordtype">int</span>   <a class="code" href="classDdMd_1_1Integrator.html#a3579b1c124337bbec98c515185187817" title="Current step number.">iStep_</a>;
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075    <span class="keyword">private</span>:
+<a name="l00069"></a>00069    <span class="keyword">protected</span>:
+<a name="l00070"></a>00070 
+<a name="l00072"></a><a class="code" href="classDdMd_1_1Integrator.html#a988ddbcea34ca09ff2d218ee489c203d">00072</a>       <span class="keyword">enum</span> <a class="code" href="classDdMd_1_1Integrator.html#a988ddbcea34ca09ff2d218ee489c203d" title="Timestamps for loop timing.">TimeId</a> {DIAGNOSTIC, INTEGRATE1, CHECK, TRANSFORM_F, EXCHANGE, 
+<a name="l00073"></a>00073                    CELLLIST, TRANSFORM_R, PAIRLIST, UPDATE, PAIR_FORCE, 
+<a name="l00074"></a>00074                    BOND_FORCE, ANGLE_FORCE, DIHEDRAL_FORCE,
+<a name="l00075"></a>00075                    INTEGRATE2, NTime};
 <a name="l00076"></a>00076 
-<a name="l00077"></a>00077       <a class="code" href="classDdMd_1_1DdTimer.html" title="Class for measuring time intervals.">DdTimer</a> timer_;
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079    };
+<a name="l00078"></a><a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297">00078</a>       <a class="code" href="classDdMd_1_1DdTimer.html" title="Class for measuring time intervals.">DdTimer</a>&amp; timer()
+<a name="l00079"></a>00079       {  <span class="keywordflow">return</span> timer_; }
 <a name="l00080"></a>00080 
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082 }
-<a name="l00083"></a>00083 <span class="preprocessor">#endif</span>
+<a name="l00086"></a>00086       <span class="keywordtype">void</span> setupAtoms();
+<a name="l00087"></a>00087 
+<a name="l00095"></a>00095       <span class="keywordtype">void</span> computeForces();
+<a name="l00096"></a>00096 
+<a name="l00098"></a><a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077">00098</a>       <span class="keywordtype">int</span>   <a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a>;
+<a name="l00099"></a>00099 
+<a name="l00101"></a><a class="code" href="classDdMd_1_1Integrator.html#a3579b1c124337bbec98c515185187817">00101</a>       <span class="keywordtype">int</span>   <a class="code" href="classDdMd_1_1Integrator.html#a3579b1c124337bbec98c515185187817" title="Current step number.">iStep_</a>;
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103    <span class="keyword">private</span>:
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105       <span class="comment">// Performance timer</span>
+<a name="l00106"></a>00106       <a class="code" href="classDdMd_1_1DdTimer.html" title="Class for measuring time intervals.">DdTimer</a> timer_;
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108    };
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110 }
+<a name="l00111"></a>00111 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:19 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

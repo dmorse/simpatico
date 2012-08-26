@@ -85,8 +85,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializing constructor.  <a href="#a21c96ce614b75f17ebc87f4d5727701d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1PairIterator.html">PairIterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairIterator.html#a783691ee6242c7b66fd5a6d610cc20fb">operator++</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment to next pair.  <a href="#a783691ee6242c7b66fd5a6d610cc20fb"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairIterator.html#afc2e7cf5f040f2284aa4c86cf9ce6536">atEnd</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if at end of <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>.  <a href="#afc2e7cf5f040f2284aa4c86cf9ce6536"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairIterator.html#adb831e6e567ac391961c9481b770ec95">isEnd</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if at end of <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>.  <a href="#adb831e6e567ac391961c9481b770ec95"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairIterator.html#a44db1f6a672762320a4e9739a2f8f951">notEnd</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if not at end of <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>.  <a href="#a44db1f6a672762320a4e9739a2f8f951"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairIterator.html#aa92c439aa81f742e8c90f5b6d99c60be">getPair</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> *&amp;atom1Ptr, <a class="el" href="classDdMd_1_1Atom.html">Atom</a> *&amp;atom2Ptr) const </td></tr>
@@ -165,12 +165,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afc2e7cf5f040f2284aa4c86cf9ce6536"></a><!-- doxytag: member="DdMd::PairIterator::atEnd" ref="afc2e7cf5f040f2284aa4c86cf9ce6536" args="() const " -->
+<a class="anchor" id="adb831e6e567ac391961c9481b770ec95"></a><!-- doxytag: member="DdMd::PairIterator::isEnd" ref="adb831e6e567ac391961c9481b770ec95" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool DdMd::PairIterator::atEnd </td>
+          <td class="memname">bool DdMd::PairIterator::isEnd </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -180,7 +180,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Return true if at end of <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>. </p>
-<p>When <a class="el" href="classDdMd_1_1PairIterator.html#afc2e7cf5f040f2284aa4c86cf9ce6536" title="Return true if at end of PairList.">atEnd()</a> is true, the current pair is already one past past the end of the pairlist, and is thus invalid. </p>
+<p>When <a class="el" href="classDdMd_1_1PairIterator.html#adb831e6e567ac391961c9481b770ec95" title="Return true if at end of PairList.">isEnd()</a> is true, the current pair is already one past past the end of the pairlist, and is thus invalid. </p>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00189">189</a> of file <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html">ddMd/neighbor/PairIterator.h</a>.</p>
 
@@ -201,9 +201,11 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Return true if not at end of <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>. </p>
-<p>If <a class="el" href="classDdMd_1_1PairIterator.html#a44db1f6a672762320a4e9739a2f8f951" title="Return true if not at end of PairList.">notEnd()</a>, continue iteration loop. Equivalent to not <a class="el" href="classDdMd_1_1PairIterator.html#afc2e7cf5f040f2284aa4c86cf9ce6536" title="Return true if at end of PairList.">atEnd()</a>. </p>
+<p>If <a class="el" href="classDdMd_1_1PairIterator.html#a44db1f6a672762320a4e9739a2f8f951" title="Return true if not at end of PairList.">notEnd()</a>, continue iteration loop. Equivalent to not <a class="el" href="classDdMd_1_1PairIterator.html#adb831e6e567ac391961c9481b770ec95" title="Return true if at end of PairList.">isEnd()</a>. </p>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00195">195</a> of file <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html">ddMd/neighbor/PairIterator.h</a>.</p>
+
+<p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00704">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeStress()</a>.</p>
 
 </div>
 </div>
@@ -243,13 +245,15 @@ Public Member Functions</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html#l00160">160</a> of file <a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html">ddMd/neighbor/PairIterator.h</a>.</p>
 
+<p>Referenced by <a class="el" href="PairPotentialImpl_8h_source.html#l00704">DdMd::PairPotentialImpl&lt; Interaction &gt;::computeStress()</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="ddMd_2neighbor_2PairIterator_8h_source.html">ddMd/neighbor/PairIterator.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

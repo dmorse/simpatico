@@ -48,13 +48,13 @@ Potential Energy</h2>
 <li>nonbonded pair interactions</li>
 </ul>
 <ul>
-<li>covalent two-body bond, three-body angle and four-body dihedral potentials</li>
+<li>covalent bond (2 body), angle (3 body) and dihedral (4 body) potentials</li>
 </ul>
 <ul>
 <li>external one-body potentials</li>
 </ul>
-<p>Several different choices of potential energy function are provided for the nonbonded pair interaction and for each type of covalent interactions. Others are easily added. To simplify integration of MC and MD simulations, all programs are currently restricted to models with differentiation potentials (i.e., not hard spheres), with no explicit constraints on bond lengths or bond angles. The default version of the program currently includes only non-bonded pair interactions and two-body covalent bond interactions. Other types of interactions can be enabled when the program is compiled by setting appropriate flags.</p>
-<p>Source code for classes that represent particular potential energy functions, which we refer to as "interactions", are all in the src/inter directory, and are all defined in the "Inter" C++ namespace. The same set of such interaction classes is available in the mcSim, mdSim, and ddSim programs.</p>
+<p>Several different choices of potential energy function are provided for the nonbonded pair interaction and for each type of covalent interactions. Others are easily added. To simplify integration of MC and MD simulations, all programs are currently restricted to models with differentiable potentials (i.e., not hard spheres), with no constraints on bond lengths or bond angles. The default version of each program currently includes only non-bonded pair interactions and covalent bond interactions. Other types of interactions can be enabled by setting appropriate flags and recompiling.</p>
+<p>Classes that represent particular potential energy functions, such as a Lennard-Jones pair potential, are referred to in Simpatico as "interactions". The source files for all interactions are in src/inter directory, and they are all defined in the "Inter" C++ namespace. The same set of interaction classes is available in the mcSim, mdSim, and ddSim programs.</p>
 <p>Long-range electrostatic potentials have not yet been implemented in any of the programs. This is the most important missing feature required to make the package suitable for atomistic models.</p>
 <h2><a class="anchor" id="features_algorithms_sec"></a>
 Simulation Algorithms</h2>
@@ -65,7 +65,7 @@ NVE velocity Verlet  </li>
 <li>
 NVT Nose-Hoover  </li>
 <li>
-NVT dissipative particle dynamics  </li>
+NVT dissipative particle dynamics (DPD)  </li>
 <li>
 NPH Anderson barostat  </li>
 </ul>
@@ -90,19 +90,25 @@ End-swap move for linear heteropolymers (e.g., diblock copolymers)  </li>
 <li>
 Semi-grand canonical move (for, e.g., homopolymer blends)  </li>
 </ul>
-<p>For parallel Md simulations, DdSim thus far provides only two integrators: </p>
+<p>For parallel Md simulations, DdSim provides the following integrators: </p>
 <ul>
 <li>
 NVE velocity Verlet  </li>
 <li>
-NVT Nose-Hoover  </li>
+NVT Nose-Hoover thermostate  </li>
+<li>
+NPH Anderson barostat  </li>
+<li>
+NPT Nose-Hoover thermostat, Anderson barostat  </li>
 </ul>
+<p>All of the MD integrators excpect the DPD integrator use reversible, symplectic algorithms.</p>
 <h2><a class="anchor" id="features_hoomd_sec"></a>
 GPU Acceleration via integration with Hoomd</h2>
 <p>Simpatico provides an optional module that allows the use of the <a href="http://codeblue.umich.edu/hoomd-blue/">Hoomd-blue</a> code for MD on the GPU as a fast engine for hybrid MC simulations. In this mode, an instance of Hoomd-blue is used to implement a hybrid MC move within an mcSim simulation. Short NVE (for NVT ensemble) or NPH (for NPT ensembles) MD simulations are carried out on a GPU, while the main loop is implemented on the CPU, as are any other MC moves. Integration with Hoomd-blue provides a dramatic increase in the speed of MD and HMC simulations: We obtain a speed-up by approximately a factor of 30 for for bead-spring polymer melts with repulsive Lennard-Jones (i.e., Weeks-Chandler-Anderson) pair interactions.</p>
 <h2><a class="anchor" id="features_analysis_sec"></a>
 Data Analysis</h2>
-<p>Simpatico is distributed with a collection of classes for statistical analysis, for use with the single-processor mcSim and mdSim programs. These include classes to evaluate: </p>
+<p>Simpatico is distributed with a collection of classes for statistical analysis, referred to as "diagnostics".</p>
+<p>The diagnostic classes available for use with the single-processor mcSim and mdSim programs include classes to evaluate: </p>
 <ul>
 <li>
 Thermodynamic properties (energies and stress components)  </li>
@@ -124,8 +130,8 @@ Auto-correlation functions for vector separations of atom pairs.  </li>
 Intermediate scattering (van Hove) function S(k, t) .  </li>
 </ul>
 <p>All mcSim and mdSim data analysis classes can be used either on-the-fly, during a simulation, or for post-processing of a trajectory file or a sequence of configuration dump files. Postprocessing is done by the the mcSim and mdSim programs, by invoking a command that replaces the main simulation loop by a loop that reads a sequence of configurations from file.</p>
-<p>Thus far, very few data analyis or data output classes have been written for use on-the-fly with ddSim. MD trajectories from ddSim simulations can instead by post-processed by using mcSim or msSim as analysis tools.</p>
-<p>Simpatico currently provides a very convenient tool for running and analyzing simulations of coarse-grained models of polymer liquids. It is not yet suitable for use with atomistic models, because of the absence of an electrostatic potential, and the absence of MC conformation sampling algorithms designed specifically for use with stiff angle potentials.</p>
+<p>A smaller set of diagnostics is distributed for use on-the-fly with ddSim. Classes are available to evaluate thermodynamic properties (energy contributions and stress components) and structure factors. MD trajectories from ddSim simulations can also be post-processed by using mcSim or msSim as analysis tools.</p>
+<p>Simpatico is now a convenient tool for simulating and analyzing coarse-grained models of polymer liquids. It is not yet suitable for use with atomistic models, because of the absence of an electrostatic potential, and the absence of MC conformation sampling algorithms designed specifically for use with stiff angle potentials.</p>
 <p>Navigation: </p>
 <ul>
 <li>
@@ -136,7 +142,7 @@ Intermediate scattering (van Hove) function S(k, t) .  </li>
 <a class="el" href="contributors_page.html">Contributors</a> (Next)  </li>
 </ul>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

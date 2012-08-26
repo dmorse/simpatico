@@ -79,183 +79,216 @@
 <a name="l00028"></a>00028       lattice_(Orthorhombic)
 <a name="l00029"></a>00029    {
 <a name="l00030"></a>00030       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
-<a name="l00031"></a>00031 
+<a name="l00031"></a>00031          invLengths_[i] = 1.0/<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i];
 <a name="l00032"></a>00032          bravaisBasisVectors_.<a class="code" href="classUtil_1_1FSArray.html#a74ef93eabdb54ff1453a3252019984bc" title="Append data to the end of the array.">append</a>(<a class="code" href="classUtil_1_1Vector.html#a2b7442f15bc3e08a496e3dc3c684525b" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>);
 <a name="l00033"></a>00033          bravaisBasisVectors_[i][i] = <a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i];
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035          reciprocalBasisVectors_.<a class="code" href="classUtil_1_1FSArray.html#a74ef93eabdb54ff1453a3252019984bc" title="Append data to the end of the array.">append</a>(<a class="code" href="classUtil_1_1Vector.html#a2b7442f15bc3e08a496e3dc3c684525b" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>);
-<a name="l00036"></a>00036          reciprocalBasisVectors_[i][i] = 2.0*<a class="code" href="classUtil_1_1Constants.html#af179f207e0ab6b45d60f166ac9f1fad5" title="Trigonometric constant Pi.">Constants::Pi</a>/<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i];
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038       }
-<a name="l00039"></a>00039    }
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041    <span class="comment">/* </span>
-<a name="l00042"></a>00042 <span class="comment">   * Set box lengths and then call reset.</span>
-<a name="l00043"></a>00043 <span class="comment">   */</span>
-<a name="l00044"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a6278066c995e1611bc91de0b8015992c">00044</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a6278066c995e1611bc91de0b8015992c" title="Set unit cell dimensions for orthorhombic boundary.">OrthorhombicBoundary::setLengths</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;lengths) 
-<a name="l00045"></a>00045    {  
-<a name="l00046"></a>00046       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>  = <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a46e76a04cdefce0f23e31c153077bc37" title="Get Vector of lengths by const reference.">lengths</a>; 
-<a name="l00047"></a>00047       lattice_ = Orthorhombic;
-<a name="l00048"></a>00048       reset(); 
-<a name="l00049"></a>00049    }
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051    <span class="comment">/* </span>
-<a name="l00052"></a>00052 <span class="comment">   * Set box lengths and then call reset.</span>
-<a name="l00053"></a>00053 <span class="comment">   */</span>
-<a name="l00054"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a7b5b671dec23d061ad88600b06b93e00">00054</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a7b5b671dec23d061ad88600b06b93e00" title="Set unit cell dimensions for tetragonal boundary.">OrthorhombicBoundary::setTetragonalLengths</a>(<span class="keywordtype">double</span> ab, <span class="keywordtype">double</span> c) 
-<a name="l00055"></a>00055    {  
-<a name="l00056"></a>00056       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[0] = ab;
-<a name="l00057"></a>00057       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[1] = ab;
-<a name="l00058"></a>00058       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[2] = c;
-<a name="l00059"></a>00059       lattice_ = Tetragonal;
-<a name="l00060"></a>00060       reset(); 
-<a name="l00061"></a>00061    }
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063    <span class="comment">/* </span>
-<a name="l00064"></a>00064 <span class="comment">   * Set box lengths and call reset.</span>
-<a name="l00065"></a>00065 <span class="comment">   */</span>
-<a name="l00066"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#afa187d28cb58061511adb919da076b41">00066</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#afa187d28cb58061511adb919da076b41" title="Set unit cell dimensions for a cubic boundary.">OrthorhombicBoundary::setCubicLengths</a>(<span class="keywordtype">double</span> a) 
-<a name="l00067"></a>00067    {  
-<a name="l00068"></a>00068       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[0] = a;
-<a name="l00069"></a>00069       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[1] = a;
-<a name="l00070"></a>00070       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[2] = a;
-<a name="l00071"></a>00071       lattice_ = Cubic;
-<a name="l00072"></a>00072       reset(); 
-<a name="l00073"></a>00073    }
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075    <span class="comment">/* </span>
-<a name="l00076"></a>00076 <span class="comment">   * Reset all quantities that depend on unit cell lengths.</span>
-<a name="l00077"></a>00077 <span class="comment">   */</span>
-<a name="l00078"></a>00078    <span class="keywordtype">void</span> OrthorhombicBoundary::reset()
-<a name="l00079"></a>00079    {
-<a name="l00080"></a>00080       <a class="code" href="structUtil_1_1OrthoRegion.html#a44511ffbaf259eb59ad12044725a7082" title="Set lengths and volume to values consistent with minima and maxima.">resetRegion</a>();
-<a name="l00081"></a>00081       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
-<a name="l00082"></a>00082          bravaisBasisVectors_[i][i] = <a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i];
-<a name="l00083"></a>00083          reciprocalBasisVectors_[i][i] = 2.0*<a class="code" href="classUtil_1_1Constants.html#af179f207e0ab6b45d60f166ac9f1fad5" title="Trigonometric constant Pi.">Constants::Pi</a>/<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i];
-<a name="l00084"></a>00084       }
-<a name="l00085"></a>00085    }
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087    <span class="comment">/* </span>
-<a name="l00088"></a>00088 <span class="comment">   * Generate a random position within the box</span>
-<a name="l00089"></a>00089 <span class="comment">   *</span>
-<a name="l00090"></a>00090 <span class="comment">   * \param random random number generator object</span>
-<a name="l00091"></a>00091 <span class="comment">   * \param r      Vector of random coordinates</span>
-<a name="l00092"></a>00092 <span class="comment">   */</span>
-<a name="l00093"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a06a0321893c1c2916865c1d79161cf6e">00093</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a06a0321893c1c2916865c1d79161cf6e" title="Generate random position within the primary unit cell.">OrthorhombicBoundary::randomPosition</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a> &amp;random, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;r)<span class="keyword"> const </span>
-<a name="l00094"></a>00094 <span class="keyword">   </span>{
-<a name="l00095"></a>00095      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
-<a name="l00096"></a>00096         r[i] = random.<a class="code" href="classUtil_1_1Random.html#ae18b83cdfb994352aa0ac1efc451e6ae" title="Return a random floating point number x, uniformly distributed in the range 0 &amp;lt;= x &amp;lt; 1...">uniform</a>(<a class="code" href="structUtil_1_1OrthoRegion.html#aece7a5e154b5511a4b24d46c5c32ce21" title="Minimum coordinates: Require r[i] &amp;gt;= minima_[i].">minima_</a>[i], <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[i]);
-<a name="l00097"></a>00097      }
+<a name="l00034"></a>00034          reciprocalBasisVectors_.<a class="code" href="classUtil_1_1FSArray.html#a74ef93eabdb54ff1453a3252019984bc" title="Append data to the end of the array.">append</a>(<a class="code" href="classUtil_1_1Vector.html#a2b7442f15bc3e08a496e3dc3c684525b" title="Zero Vector = {0.0, 0.0, 0.0}.">Vector::Zero</a>);
+<a name="l00035"></a>00035          reciprocalBasisVectors_[i][i] = 2.0*<a class="code" href="classUtil_1_1Constants.html#af179f207e0ab6b45d60f166ac9f1fad5" title="Trigonometric constant Pi.">Constants::Pi</a>/<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i];
+<a name="l00036"></a>00036       }
+<a name="l00037"></a>00037       minLength_ = <a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[0];
+<a name="l00038"></a>00038       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00039"></a>00039          <span class="keywordflow">if</span> (<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i] &lt; minLength_) {
+<a name="l00040"></a>00040             minLength_ = <a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i];
+<a name="l00041"></a>00041          }
+<a name="l00042"></a>00042       }
+<a name="l00043"></a>00043    }
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045    <span class="comment">/* </span>
+<a name="l00046"></a>00046 <span class="comment">   * Set box lengths and then call reset.</span>
+<a name="l00047"></a>00047 <span class="comment">   */</span>
+<a name="l00048"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a5dc5c64cfc7c39a03c9214927ec86858">00048</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a5dc5c64cfc7c39a03c9214927ec86858" title="Set unit cell dimensions for orthorhombic boundary.">OrthorhombicBoundary::setOrthorhombic</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;lengths) 
+<a name="l00049"></a>00049    {  
+<a name="l00050"></a>00050       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>  = <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a46e76a04cdefce0f23e31c153077bc37" title="Get Vector of unit cell lengths by const reference.">lengths</a>; 
+<a name="l00051"></a>00051       lattice_ = Orthorhombic;
+<a name="l00052"></a>00052       reset(); 
+<a name="l00053"></a>00053    }
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055    <span class="comment">/* </span>
+<a name="l00056"></a>00056 <span class="comment">   * Set box lengths and then call reset.</span>
+<a name="l00057"></a>00057 <span class="comment">   */</span>
+<a name="l00058"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a24ab2c0419a2a3192917c5a2b0711dd1">00058</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a24ab2c0419a2a3192917c5a2b0711dd1" title="Set unit cell dimensions for tetragonal boundary.">OrthorhombicBoundary::setTetragonal</a>(<span class="keywordtype">double</span> ab, <span class="keywordtype">double</span> c) 
+<a name="l00059"></a>00059    {  
+<a name="l00060"></a>00060       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[0] = ab;
+<a name="l00061"></a>00061       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[1] = ab;
+<a name="l00062"></a>00062       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[2] = c;
+<a name="l00063"></a>00063       lattice_ = Tetragonal;
+<a name="l00064"></a>00064       reset(); 
+<a name="l00065"></a>00065    }
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067    <span class="comment">/* </span>
+<a name="l00068"></a>00068 <span class="comment">   * Set box lengths and call reset.</span>
+<a name="l00069"></a>00069 <span class="comment">   */</span>
+<a name="l00070"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a69280f98cdded9d8409726c14fd93124">00070</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a69280f98cdded9d8409726c14fd93124" title="Set unit cell dimensions for a cubic boundary.">OrthorhombicBoundary::setCubic</a>(<span class="keywordtype">double</span> a) 
+<a name="l00071"></a>00071    {  
+<a name="l00072"></a>00072       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[0] = a;
+<a name="l00073"></a>00073       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[1] = a;
+<a name="l00074"></a>00074       <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[2] = a;
+<a name="l00075"></a>00075       lattice_ = Cubic;
+<a name="l00076"></a>00076       reset(); 
+<a name="l00077"></a>00077    }
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079    <span class="comment">/* </span>
+<a name="l00080"></a>00080 <span class="comment">   * Reset all quantities that depend on unit cell lengths.</span>
+<a name="l00081"></a>00081 <span class="comment">   */</span>
+<a name="l00082"></a>00082    <span class="keywordtype">void</span> OrthorhombicBoundary::reset()
+<a name="l00083"></a>00083    {
+<a name="l00084"></a>00084       <a class="code" href="structUtil_1_1OrthoRegion.html#a44511ffbaf259eb59ad12044725a7082" title="Set lengths and volume to values consistent with minima and maxima.">resetRegion</a>();
+<a name="l00085"></a>00085       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00086"></a>00086          invLengths_[i] = 1.0/<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i];
+<a name="l00087"></a>00087          bravaisBasisVectors_[i][i] = <a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i];
+<a name="l00088"></a>00088          reciprocalBasisVectors_[i][i] = 2.0*<a class="code" href="classUtil_1_1Constants.html#af179f207e0ab6b45d60f166ac9f1fad5" title="Trigonometric constant Pi.">Constants::Pi</a>/<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i];
+<a name="l00089"></a>00089       }
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091       minLength_ = <a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[0];
+<a name="l00092"></a>00092       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00093"></a>00093          <span class="keywordflow">if</span> (<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i] &lt; minLength_) {
+<a name="l00094"></a>00094             minLength_ = <a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i];
+<a name="l00095"></a>00095          }
+<a name="l00096"></a>00096       }
+<a name="l00097"></a>00097 
 <a name="l00098"></a>00098    }
 <a name="l00099"></a>00099 
 <a name="l00100"></a>00100    <span class="comment">/* </span>
-<a name="l00101"></a>00101 <span class="comment">   * Check consistency of data.</span>
-<a name="l00102"></a>00102 <span class="comment">   */</span>
-<a name="l00103"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#ab0e3a5522a939d51a26bffcab4844bf6">00103</a>    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#ab0e3a5522a939d51a26bffcab4844bf6" title="Return true if valid, or throw Exception.">OrthorhombicBoundary::isValid</a>() 
-<a name="l00104"></a>00104    {  
-<a name="l00105"></a>00105       <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#ab0e3a5522a939d51a26bffcab4844bf6" title="Return true if valid, or throw Exception.">OrthoRegion::isValid</a>(); 
-<a name="l00106"></a>00106       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
-<a name="l00107"></a>00107          <span class="keywordflow">if</span> (!<a class="code" href="group__Math__Module.html#ga244b89fe3cc58d02d9f1527f4809b1cd" title="Are two floating point numbers equal to within round-off error?">feq</a>(<a class="code" href="structUtil_1_1OrthoRegion.html#aece7a5e154b5511a4b24d46c5c32ce21" title="Minimum coordinates: Require r[i] &amp;gt;= minima_[i].">minima_</a>[i], 0.0))
-<a name="l00108"></a>00108             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;minima_[i] != 0&quot;</span>);
-<a name="l00109"></a>00109       }
-<a name="l00110"></a>00110       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00101"></a>00101 <span class="comment">   * Generate a random position within the box</span>
+<a name="l00102"></a>00102 <span class="comment">   *</span>
+<a name="l00103"></a>00103 <span class="comment">   * \param random random number generator object</span>
+<a name="l00104"></a>00104 <span class="comment">   * \param r      Vector of random coordinates</span>
+<a name="l00105"></a>00105 <span class="comment">   */</span>
+<a name="l00106"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a06a0321893c1c2916865c1d79161cf6e">00106</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#a06a0321893c1c2916865c1d79161cf6e" title="Generate random position within the primary unit cell.">OrthorhombicBoundary::randomPosition</a>(<a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a> &amp;random, <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> &amp;r)<span class="keyword"> const </span>
+<a name="l00107"></a>00107 <span class="keyword">   </span>{
+<a name="l00108"></a>00108      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00109"></a>00109         r[i] = random.<a class="code" href="classUtil_1_1Random.html#ae18b83cdfb994352aa0ac1efc451e6ae" title="Return a random floating point number x, uniformly distributed in the range 0 &amp;lt;= x &amp;lt; 1...">uniform</a>(<a class="code" href="structUtil_1_1OrthoRegion.html#aece7a5e154b5511a4b24d46c5c32ce21" title="Minimum coordinates: Require r[i] &amp;gt;= minima_[i].">minima_</a>[i], <a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[i]);
+<a name="l00110"></a>00110      }
 <a name="l00111"></a>00111    }
 <a name="l00112"></a>00112 
 <a name="l00113"></a>00113    <span class="comment">/* </span>
-<a name="l00114"></a>00114 <span class="comment">   * Input a OrthorhombicBoundary from an istream, without line breaks.</span>
+<a name="l00114"></a>00114 <span class="comment">   * Check consistency of data.</span>
 <a name="l00115"></a>00115 <span class="comment">   */</span>
-<a name="l00116"></a><a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a">00116</a>    std::istream&amp; <a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">OrthorhombicBoundary</a> &amp;boundary)
-<a name="l00117"></a>00117    {
-<a name="l00118"></a>00118       <a class="code" href="group__Crystal__Module.html#gae791ac7b853a3532698da0763ae0741e" title="Enumeration of the 7 possible Bravais lattice systems.">LatticeSystem</a> lattice;
-<a name="l00119"></a>00119       in &gt;&gt; lattice;
-<a name="l00120"></a>00120       <span class="keywordflow">if</span> (lattice == Orthorhombic) {
-<a name="l00121"></a>00121          in &gt;&gt; boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>;
-<a name="l00122"></a>00122       } <span class="keywordflow">else</span>
-<a name="l00123"></a>00123       <span class="keywordflow">if</span> (lattice == Tetragonal) {
-<a name="l00124"></a>00124          <span class="keywordtype">double</span> ab, c;
-<a name="l00125"></a>00125          in &gt;&gt; ab &gt;&gt; c;
-<a name="l00126"></a>00126          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[0] = ab;
-<a name="l00127"></a>00127          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[1] = ab;
-<a name="l00128"></a>00128          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[2] = c;
-<a name="l00129"></a>00129       } <span class="keywordflow">else</span> 
-<a name="l00130"></a>00130       <span class="keywordflow">if</span> (lattice == Cubic) {
-<a name="l00131"></a>00131          <span class="keywordtype">double</span> a; 
-<a name="l00132"></a>00132          in &gt;&gt; a; 
-<a name="l00133"></a>00133          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[0] = a;
-<a name="l00134"></a>00134          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[1] = a;
-<a name="l00135"></a>00135          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[2] = a;
-<a name="l00136"></a>00136       } <span class="keywordflow">else</span> {
-<a name="l00137"></a>00137          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Lattice must be orthorhombic, tetragonal or cubic&quot;</span>);
-<a name="l00138"></a>00138       }
-<a name="l00139"></a>00139       boundary.lattice_ = lattice;
-<a name="l00140"></a>00140       boundary.reset();
-<a name="l00141"></a>00141       <span class="keywordflow">return</span> in;
-<a name="l00142"></a>00142    }
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144    <span class="comment">/* </span>
-<a name="l00145"></a>00145 <span class="comment">   * Output an OrthorhombicBoundary to an ostream, without line breaks.</span>
-<a name="l00146"></a>00146 <span class="comment">   */</span>
-<a name="l00147"></a>00147    std::ostream&amp; 
-<a name="l00148"></a><a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d">00148</a>    <a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">OrthorhombicBoundary</a> &amp;boundary) 
-<a name="l00149"></a>00149    {
-<a name="l00150"></a>00150       out &lt;&lt; boundary.lattice_ &lt;&lt; <span class="stringliteral">&quot;   &quot;</span>;
-<a name="l00151"></a>00151       <span class="keywordflow">if</span> (boundary.lattice_ == Orthorhombic) {
-<a name="l00152"></a>00152          out &lt;&lt; boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>;
-<a name="l00153"></a>00153       } <span class="keywordflow">else</span>
-<a name="l00154"></a>00154       <span class="keywordflow">if</span> (boundary.lattice_ == Tetragonal) {
-<a name="l00155"></a>00155          out &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[0]);
-<a name="l00156"></a>00156          out &lt;&lt; Dbl(boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[2]);
-<a name="l00157"></a>00157       } <span class="keywordflow">else</span> 
-<a name="l00158"></a>00158       <span class="keywordflow">if</span> (boundary.lattice_ == Cubic) {
-<a name="l00159"></a>00159          out &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[0]);
-<a name="l00160"></a>00160       }
-<a name="l00161"></a>00161       <span class="keywordflow">return</span> out;
-<a name="l00162"></a>00162    }
-<a name="l00163"></a>00163  
-<a name="l00164"></a>00164 <span class="preprocessor">   #ifdef UTIL_MPI</span>
-<a name="l00165"></a>00165 <span class="preprocessor"></span>   <span class="keyword">template</span> &lt;&gt;
-<a name="l00166"></a><a class="code" href="namespaceUtil.html#a2ffc1a6ad637259ba310740129d441e6">00166</a>    <span class="keywordtype">void</span> send&lt;Util::OrthorhombicBoundary&gt;(MPI::Comm&amp; comm, 
-<a name="l00167"></a>00167              <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">Util::OrthorhombicBoundary</a>&amp; data, <span class="keywordtype">int</span> dest, <span class="keywordtype">int</span> tag)
-<a name="l00168"></a>00168    {
-<a name="l00169"></a>00169       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> lengths = data.lengths();
-<a name="l00170"></a>00170       send&lt;Vector&gt;(comm, lengths, dest, tag);
-<a name="l00171"></a>00171    }
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173    <span class="keyword">template</span> &lt;&gt;
-<a name="l00174"></a><a class="code" href="namespaceUtil.html#ae6eceb4ed72ba597b64461ce16898fcc">00174</a>    <span class="keywordtype">void</span> recv&lt;Util::OrthorhombicBoundary&gt;(MPI::Comm&amp; comm, 
-<a name="l00175"></a>00175              <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">Util::OrthorhombicBoundary</a>&amp; data, <span class="keywordtype">int</span> source, <span class="keywordtype">int</span> tag)
-<a name="l00176"></a>00176    {
-<a name="l00177"></a>00177       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> lengths;
-<a name="l00178"></a>00178       recv&lt;Vector&gt;(comm, lengths, source, tag);
-<a name="l00179"></a>00179       data.setLengths(lengths);
-<a name="l00180"></a>00180    }
-<a name="l00181"></a>00181 
-<a name="l00182"></a>00182    <span class="keyword">template</span> &lt;&gt;
-<a name="l00183"></a><a class="code" href="namespaceUtil.html#acf171e2e32bf6111ca85a5c7e3f6de82">00183</a>    <span class="keywordtype">void</span> bcast&lt;Util::OrthorhombicBoundary&gt;(MPI::Intracomm&amp; comm, 
-<a name="l00184"></a>00184               <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">Util::OrthorhombicBoundary</a>&amp; data, <span class="keywordtype">int</span> root)
-<a name="l00185"></a>00185    {
-<a name="l00186"></a>00186       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> lengths; 
-<a name="l00187"></a>00187       <span class="keywordtype">int</span>    rank = comm.Get_rank();
-<a name="l00188"></a>00188       <span class="keywordflow">if</span> (rank == root) 
-<a name="l00189"></a>00189          lengths = data.lengths();
-<a name="l00190"></a>00190       bcast&lt;Vector&gt;(comm, lengths, root);
-<a name="l00191"></a>00191       <span class="keywordflow">if</span> (rank != root) 
-<a name="l00192"></a>00192          data.setLengths(lengths);
-<a name="l00193"></a>00193    }
-<a name="l00194"></a>00194 
-<a name="l00195"></a>00195    <span class="comment">/*</span>
-<a name="l00196"></a>00196 <span class="comment">   * Initialize MPI Datatype.</span>
-<a name="l00197"></a>00197 <span class="comment">   */</span>
-<a name="l00198"></a>00198    MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01Util_1_1OrthorhombicBoundary_01_4.html#a4c48606ddc00956964ccf932d2016d62" title="MPI Datatype.">MpiTraits&lt;Util::OrthorhombicBoundary&gt;::type</a> = MPI::BYTE;
-<a name="l00199"></a>00199    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01Util_1_1OrthorhombicBoundary_01_4.html#adac15835ff51a7e57500050fac68337d" title="Is the MPI type initialized?">MpiTraits&lt;Util::OrthorhombicBoundary&gt;::hasType</a> = <span class="keyword">false</span>;
-<a name="l00200"></a>00200 <span class="preprocessor">   #endif</span>
-<a name="l00201"></a>00201 <span class="preprocessor"></span>
-<a name="l00202"></a>00202 }
-<a name="l00203"></a>00203 
-<a name="l00204"></a>00204 <span class="preprocessor">#endif</span>
+<a name="l00116"></a><a class="code" href="classUtil_1_1OrthorhombicBoundary.html#ab0e3a5522a939d51a26bffcab4844bf6">00116</a>    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#ab0e3a5522a939d51a26bffcab4844bf6" title="Return true if valid, or throw Exception.">OrthorhombicBoundary::isValid</a>() 
+<a name="l00117"></a>00117    {  
+<a name="l00118"></a>00118       <span class="keywordtype">double</span> dot;
+<a name="l00119"></a>00119       <span class="keywordtype">double</span> twoPi = 2.0*<a class="code" href="classUtil_1_1Constants.html#af179f207e0ab6b45d60f166ac9f1fad5" title="Trigonometric constant Pi.">Constants::Pi</a>;
+<a name="l00120"></a>00120       <span class="keywordtype">int</span> i, j;
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122       <a class="code" href="classUtil_1_1OrthorhombicBoundary.html#ab0e3a5522a939d51a26bffcab4844bf6" title="Return true if valid, or throw Exception.">OrthoRegion::isValid</a>(); 
+<a name="l00123"></a>00123       <span class="keywordflow">for</span> (i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+<a name="l00124"></a>00124          <span class="keywordflow">if</span> (!<a class="code" href="group__Math__Module.html#ga244b89fe3cc58d02d9f1527f4809b1cd" title="Are two floating point numbers equal to within round-off error?">feq</a>(<a class="code" href="structUtil_1_1OrthoRegion.html#aece7a5e154b5511a4b24d46c5c32ce21" title="Minimum coordinates: Require r[i] &amp;gt;= minima_[i].">minima_</a>[i], 0.0)) {
+<a name="l00125"></a>00125             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;minima_[i] != 0&quot;</span>);
+<a name="l00126"></a>00126          }
+<a name="l00127"></a>00127          <span class="keywordflow">if</span> (!<a class="code" href="group__Math__Module.html#ga244b89fe3cc58d02d9f1527f4809b1cd" title="Are two floating point numbers equal to within round-off error?">feq</a>(<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[i]*invLengths_[i], 1.0)) {
+<a name="l00128"></a>00128             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;invLengths_[i]*lengths_[i] != 1.0&quot;</span>);
+<a name="l00129"></a>00129          }
+<a name="l00130"></a>00130          <span class="keywordflow">for</span> (j = 0; j &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++j) {
+<a name="l00131"></a>00131             dot = bravaisBasisVectors_[i].dot(reciprocalBasisVectors_[j]);
+<a name="l00132"></a>00132             <span class="keywordflow">if</span> (i == j) {
+<a name="l00133"></a>00133                <span class="keywordflow">if</span> (!<a class="code" href="group__Math__Module.html#ga244b89fe3cc58d02d9f1527f4809b1cd" title="Are two floating point numbers equal to within round-off error?">feq</a>(dot, twoPi)) {
+<a name="l00134"></a>00134                   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;a[i].b[i] != twoPi&quot;</span>);
+<a name="l00135"></a>00135                } 
+<a name="l00136"></a>00136             } <span class="keywordflow">else</span> {
+<a name="l00137"></a>00137                <span class="keywordflow">if</span> (!<a class="code" href="group__Math__Module.html#ga244b89fe3cc58d02d9f1527f4809b1cd" title="Are two floating point numbers equal to within round-off error?">feq</a>(dot, 0.0)) {
+<a name="l00138"></a>00138                   <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;a[i].b[j] != 0 for i != j&quot;</span>);
+<a name="l00139"></a>00139                }
+<a name="l00140"></a>00140             }
+<a name="l00141"></a>00141          }
+<a name="l00142"></a>00142       }
+<a name="l00143"></a>00143       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00144"></a>00144    }
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146    <span class="comment">/* </span>
+<a name="l00147"></a>00147 <span class="comment">   * Input a OrthorhombicBoundary from an istream, without line breaks.</span>
+<a name="l00148"></a>00148 <span class="comment">   */</span>
+<a name="l00149"></a><a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a">00149</a>    std::istream&amp; <a class="code" href="namespaceUtil.html#a84a8e4c844fd5d302194294ce6cf1dda" title="istream extractor for a MonoclinicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">OrthorhombicBoundary</a> &amp;boundary)
+<a name="l00150"></a>00150    {
+<a name="l00151"></a>00151       <a class="code" href="group__Crystal__Module.html#gae791ac7b853a3532698da0763ae0741e" title="Enumeration of the 7 possible Bravais lattice systems.">LatticeSystem</a> lattice;
+<a name="l00152"></a>00152       in &gt;&gt; lattice;
+<a name="l00153"></a>00153       <span class="keywordflow">if</span> (lattice == Orthorhombic) {
+<a name="l00154"></a>00154          in &gt;&gt; boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>;
+<a name="l00155"></a>00155       } <span class="keywordflow">else</span>
+<a name="l00156"></a>00156       <span class="keywordflow">if</span> (lattice == Tetragonal) {
+<a name="l00157"></a>00157          <span class="keywordtype">double</span> ab, c;
+<a name="l00158"></a>00158          in &gt;&gt; ab &gt;&gt; c;
+<a name="l00159"></a>00159          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[0] = ab;
+<a name="l00160"></a>00160          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[1] = ab;
+<a name="l00161"></a>00161          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[2] = c;
+<a name="l00162"></a>00162       } <span class="keywordflow">else</span> 
+<a name="l00163"></a>00163       <span class="keywordflow">if</span> (lattice == Cubic) {
+<a name="l00164"></a>00164          <span class="keywordtype">double</span> a; 
+<a name="l00165"></a>00165          in &gt;&gt; a; 
+<a name="l00166"></a>00166          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[0] = a;
+<a name="l00167"></a>00167          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[1] = a;
+<a name="l00168"></a>00168          boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#aa609c76de750afcb34d14b2c894ede12" title="Maximum coordinates: Require r[i] &amp;lt; maxima_[i].">maxima_</a>[2] = a;
+<a name="l00169"></a>00169       } <span class="keywordflow">else</span> {
+<a name="l00170"></a>00170          <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Lattice must be orthorhombic, tetragonal or cubic&quot;</span>);
+<a name="l00171"></a>00171       }
+<a name="l00172"></a>00172       boundary.lattice_ = lattice;
+<a name="l00173"></a>00173       boundary.reset();
+<a name="l00174"></a>00174       <span class="keywordflow">return</span> in;
+<a name="l00175"></a>00175    }
+<a name="l00176"></a>00176 
+<a name="l00177"></a>00177    <span class="comment">/* </span>
+<a name="l00178"></a>00178 <span class="comment">   * Output an OrthorhombicBoundary to an ostream, without line breaks.</span>
+<a name="l00179"></a>00179 <span class="comment">   */</span>
+<a name="l00180"></a>00180    std::ostream&amp; 
+<a name="l00181"></a><a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d">00181</a>    <a class="code" href="namespaceUtil.html#a10bcffa95685d7673ce01e7c634b0bf2" title="ostream inserter for an MonoclinicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">OrthorhombicBoundary</a> &amp;boundary) 
+<a name="l00182"></a>00182    {
+<a name="l00183"></a>00183       out &lt;&lt; boundary.lattice_ &lt;&lt; <span class="stringliteral">&quot;   &quot;</span>;
+<a name="l00184"></a>00184       <span class="keywordflow">if</span> (boundary.lattice_ == Orthorhombic) {
+<a name="l00185"></a>00185          out &lt;&lt; boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>;
+<a name="l00186"></a>00186       } <span class="keywordflow">else</span>
+<a name="l00187"></a>00187       <span class="keywordflow">if</span> (boundary.lattice_ == Tetragonal) {
+<a name="l00188"></a>00188          out &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[0]);
+<a name="l00189"></a>00189          out &lt;&lt; Dbl(boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[2]);
+<a name="l00190"></a>00190       } <span class="keywordflow">else</span> 
+<a name="l00191"></a>00191       <span class="keywordflow">if</span> (boundary.lattice_ == Cubic) {
+<a name="l00192"></a>00192          out &lt;&lt; <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a>(boundary.<a class="code" href="structUtil_1_1OrthoRegion.html#adf3bd5c25de50a83ae085d1ce30babc7" title="OrthoRegion lengths: lengths_[i] = maxima_[i] - minima_[i].">lengths_</a>[0]);
+<a name="l00193"></a>00193       }
+<a name="l00194"></a>00194       <span class="keywordflow">return</span> out;
+<a name="l00195"></a>00195    }
+<a name="l00196"></a>00196  
+<a name="l00197"></a>00197 <span class="preprocessor">   #ifdef UTIL_MPI</span>
+<a name="l00198"></a>00198 <span class="preprocessor"></span>   <span class="keyword">template</span> &lt;&gt;
+<a name="l00199"></a><a class="code" href="namespaceUtil.html#a2ffc1a6ad637259ba310740129d441e6">00199</a>    <span class="keywordtype">void</span> send&lt;Util::OrthorhombicBoundary&gt;(MPI::Comm&amp; comm, 
+<a name="l00200"></a>00200              <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">Util::OrthorhombicBoundary</a>&amp; data, <span class="keywordtype">int</span> dest, <span class="keywordtype">int</span> tag)
+<a name="l00201"></a>00201    {
+<a name="l00202"></a>00202       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> lengths = data.lengths();
+<a name="l00203"></a>00203       send&lt;Vector&gt;(comm, lengths, dest, tag);
+<a name="l00204"></a>00204    }
+<a name="l00205"></a>00205 
+<a name="l00206"></a>00206    <span class="keyword">template</span> &lt;&gt;
+<a name="l00207"></a><a class="code" href="namespaceUtil.html#ae6eceb4ed72ba597b64461ce16898fcc">00207</a>    <span class="keywordtype">void</span> recv&lt;Util::OrthorhombicBoundary&gt;(MPI::Comm&amp; comm, 
+<a name="l00208"></a>00208              <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">Util::OrthorhombicBoundary</a>&amp; data, <span class="keywordtype">int</span> source, <span class="keywordtype">int</span> tag)
+<a name="l00209"></a>00209    {
+<a name="l00210"></a>00210       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> lengths;
+<a name="l00211"></a>00211       recv&lt;Vector&gt;(comm, lengths, source, tag);
+<a name="l00212"></a>00212       data.setOrthorhombic(lengths);
+<a name="l00213"></a>00213    }
+<a name="l00214"></a>00214 
+<a name="l00215"></a>00215    <span class="keyword">template</span> &lt;&gt;
+<a name="l00216"></a><a class="code" href="namespaceUtil.html#acf171e2e32bf6111ca85a5c7e3f6de82">00216</a>    <span class="keywordtype">void</span> bcast&lt;Util::OrthorhombicBoundary&gt;(MPI::Intracomm&amp; comm, 
+<a name="l00217"></a>00217               <a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">Util::OrthorhombicBoundary</a>&amp; data, <span class="keywordtype">int</span> root)
+<a name="l00218"></a>00218    {
+<a name="l00219"></a>00219       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> lengths; 
+<a name="l00220"></a>00220       <span class="keywordtype">int</span>    rank = comm.Get_rank();
+<a name="l00221"></a>00221       <span class="keywordflow">if</span> (rank == root) 
+<a name="l00222"></a>00222          lengths = data.lengths();
+<a name="l00223"></a>00223       bcast&lt;Vector&gt;(comm, lengths, root);
+<a name="l00224"></a>00224       <span class="keywordflow">if</span> (rank != root) 
+<a name="l00225"></a>00225          data.setOrthorhombic(lengths);
+<a name="l00226"></a>00226    }
+<a name="l00227"></a>00227 
+<a name="l00228"></a>00228    <span class="comment">/*</span>
+<a name="l00229"></a>00229 <span class="comment">   * Initialize MPI Datatype.</span>
+<a name="l00230"></a>00230 <span class="comment">   */</span>
+<a name="l00231"></a>00231    MPI::Datatype <a class="code" href="classUtil_1_1MpiTraits_3_01Util_1_1OrthorhombicBoundary_01_4.html#a4c48606ddc00956964ccf932d2016d62" title="MPI Datatype.">MpiTraits&lt;Util::OrthorhombicBoundary&gt;::type</a> = MPI::BYTE;
+<a name="l00232"></a>00232    <span class="keywordtype">bool</span> <a class="code" href="classUtil_1_1MpiTraits_3_01Util_1_1OrthorhombicBoundary_01_4.html#adac15835ff51a7e57500050fac68337d" title="Is the MPI type initialized?">MpiTraits&lt;Util::OrthorhombicBoundary&gt;::hasType</a> = <span class="keyword">false</span>;
+<a name="l00233"></a>00233 <span class="preprocessor">   #endif</span>
+<a name="l00234"></a>00234 <span class="preprocessor"></span>
+<a name="l00235"></a>00235 }
+<a name="l00236"></a>00236 
+<a name="l00237"></a>00237 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

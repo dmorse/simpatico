@@ -55,28 +55,36 @@
 <div class="contents">
 <!-- doxytag: class="DdMd::CellList" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>A cell list used only to identify nearby atom pairs. </p>
-<p>An <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> divides the domain owned by a processor, plus a frame containing ghost particles, into a grid of cells, such that the length of each cell in each of Cartesian direction is greater than a specified cutoff distance.</p>
+<p>An <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> divides the domain owned by a processor, plus a frame containing ghost particles, into a grid of cells, such that the length of each cell in each direction is greater than a specified cutoff distance. The algorithm works with either generalized or Cartesian coordinates, if used consistently.</p>
 <p>All operations of this class are local (no MPI).</p>
-<p>Building a <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> (usage): </p>
+<p>Building a <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> (Cartesian coordinates); </p>
 <div class="fragment"><pre class="fragment">    AtomStorage storage;
     <a class="code" href="classDdMd_1_1CellList.html#a2aa58b0cd5493d2977245c77aeba3f1c" title="Constructor.">CellList</a> cellList;
     Vector   lower;        <span class="comment">// Vector of lower bounds (local atoms)</span>
     Vector   upper;        <span class="comment">// Vector of upper bounds (local atoms)</span>
+    Vector   cutoffs;      <span class="comment">// Vector of cutoff lengths for each axis.</span>
     <span class="keywordtype">double</span>   cutoff;       <span class="comment">// minimum cell dimension</span>
     <span class="keywordtype">int</span>      <a class="code" href="classDdMd_1_1CellList.html#af0d5f2d4a532c158b1c864001b3577a9" title="Maximum number of atoms for which space is allocated.">atomCapacity</a>  <span class="comment">// max number of atoms on this processor</span>
 
-    <span class="comment">// Bounds on lower and upper used here to allocate memory.</span>
-    cellList.allocate(<a class="code" href="classDdMd_1_1CellList.html#af0d5f2d4a532c158b1c864001b3577a9" title="Maximum number of atoms for which space is allocated.">atomCapacity</a>, lower, upper, cutoff);
-  
-    <span class="comment">// Make the actual grid.</span>
-    cellList.makeGrid(lower, upper, cutoff);
+    <span class="comment">// Set elements of cutoffs vector to same value</span>
+    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>; ++i) {
+       cutoffs[i] = cutoff;
+    } 
 
-    <span class="comment">// Place all atoms and ghosts</span>
+    <span class="comment">// Bounds on lower and upper used here to allocate memory.</span>
+    cellList.allocate(<a class="code" href="classDdMd_1_1CellList.html#af0d5f2d4a532c158b1c864001b3577a9" title="Maximum number of atoms for which space is allocated.">atomCapacity</a>, lower, upper, cutoffs);
+  
+    <span class="comment">// Make the actual grid and clear it.</span>
+    cellList.makeGrid(lower, upper, cutoffs);
     cellList.clear();
+
+    <span class="comment">// Place all local atoms.</span>
     AtomStorage::AtomIterator  atomIter;
     <span class="keywordflow">for</span> (storage.begin(atomIter); atomIter.notEnd(); ++atomIter) {
        cellList.placeAtom(*atomIter);
     }
+
+    <span class="comment">// Place all ghost atoms</span>
     AtomStorage::GhostIterator ghostIter;
     <span class="keywordflow">for</span> (storage.begin(ghostIter); ghostIter.notEnd(); ++ghostIter){
        cellList.placeAtom(*ghostIter);
@@ -85,9 +93,10 @@
     <span class="comment">// Build cell list</span>
     cellList.build();
 </pre></div><p>The atomCapacity parameter should be set equal to the sum of atomCapacity and the ghostCapacity of the associated atomStorage, which is the maximum total number of atoms that can exist on this processor.</p>
+<p>If the upper and lower bounds and atom coordinates are all expressed in generalized coordinates, which span 0.0 - 1.0 over the primitive periodic cell in each direction, each element of the cutoffs vector is given by a ratio cutoffs[i] = cutoff/length[i], where length[i] is the Cartesian distance across the unit cell along a direciton parallel to reciprocal basis vector i.</p>
 <p>See <a class="el" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a> documentation for an example of how to iterate over local cells and neighboring atom pairs. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00075">75</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00091">91</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">CellList.h</a>&gt;</code></p>
 
@@ -102,10 +111,14 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a2aa58b0cd5493d2977245c77aeba3f1c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#ab139bfdac19c3328607cee4e242952c8">~CellList</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor.  <a href="#ab139bfdac19c3328607cee4e242952c8"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#afb3de6609fceabfce5c481a978e2fffd">allocate</a> (int atomCapacity, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;cutoffs)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory for this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> (generalized coordinates).  <a href="#afb3de6609fceabfce5c481a978e2fffd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a3679f3de692b89c6a24d9a45d0f56744">allocate</a> (int atomCapacity, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper, double cutoff)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory for this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>.  <a href="#a3679f3de692b89c6a24d9a45d0f56744"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory for this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> (Cartesian coordinates).  <a href="#a3679f3de692b89c6a24d9a45d0f56744"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a208f2e0b64c5f7bd8b73d33873940c8f">makeGrid</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;cutoffs)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the cell grid (using generalized coordinates).  <a href="#a208f2e0b64c5f7bd8b73d33873940c8f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#ac2c80627afd5dfbd01e4cb3181f207c5">makeGrid</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;lower, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;upper, double cutoff)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the cell grid.  <a href="#ac2c80627afd5dfbd01e4cb3181f207c5"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the cell grid (Cartesian coordinates).  <a href="#ac2c80627afd5dfbd01e4cb3181f207c5"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#a86801f1caf32420a380c2885b08e2337">placeAtom</a> (<a class="el" href="classDdMd_1_1Atom.html">Atom</a> &amp;atom)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the appropriate cell for an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>, based on its position.  <a href="#a86801f1caf32420a380c2885b08e2337"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3">build</a> ()</td></tr>
@@ -182,6 +195,66 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="afb3de6609fceabfce5c481a978e2fffd"></a><!-- doxytag: member="DdMd::CellList::allocate" ref="afb3de6609fceabfce5c481a978e2fffd" args="(int atomCapacity, const Vector &amp;lower, const Vector &amp;upper, const Vector &amp;cutoffs)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::CellList::allocate </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>atomCapacity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>lower</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>upper</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>cutoffs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Allocate memory for this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> (generalized coordinates). </p>
+<p>This function:</p>
+<ul>
+<li>Allocates an array of atomCapacity Tag objects.</li>
+<li>Allocates an array of atomCapacity Atom* objects.</li>
+<li>Allocates an array of <a class="el" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a> objects sized for this boundary.</li>
+</ul>
+<p>The elements of the lower, upper, and cutoffs parameters should contain the lower and upper coordinate bounds for this processor, and cutoff values in each direction, for a boundary was chosen to be larger than any that will be encountered during the simulation These parameters are used only to allocate memory.</p>
+<p>This version of the function is designed for use with generalized coordinates. See the <a class="el" href="classDdMd_1_1CellList.html#a208f2e0b64c5f7bd8b73d33873940c8f" title="Make the cell grid (using generalized coordinates).">makeGrid()</a> method for a discussion of the parameter values in generalized coordinates.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">atomCapacity</td><td>dimension of global array of atoms </td></tr>
+    <tr><td class="paramname">lower</td><td>lower coordinate bounds for this processor </td></tr>
+    <tr><td class="paramname">upper</td><td>upper coordinate bounds for this processor </td></tr>
+    <tr><td class="paramname">cutoffs</td><td>minimum dimensions of a cell in each direction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00043">43</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a3679f3de692b89c6a24d9a45d0f56744"></a><!-- doxytag: member="DdMd::CellList::allocate" ref="a3679f3de692b89c6a24d9a45d0f56744" args="(int atomCapacity, const Vector &amp;lower, const Vector &amp;upper, double cutoff)" -->
 <div class="memitem">
 <div class="memproto">
@@ -219,24 +292,70 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Allocate memory for this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>. </p>
-<p>This function:</p>
-<ul>
-<li>Allocates an array of atomCapacity Tag objects.</li>
-<li>Allocates an array of atomCapacity Atom* objects.</li>
-<li>Allocates an array of <a class="el" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a> objects sized for this boundary.</li>
-</ul>
+<p>Allocate memory for this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> (Cartesian coordinates). </p>
+<p>This function is designed for use with Cartesian coordinates, for which the lower, upper and cutoff parameters all have dimensions of length. The function calls the <a class="el" href="classDdMd_1_1CellList.html#afb3de6609fceabfce5c481a978e2fffd" title="Allocate memory for this CellList (generalized coordinates).">allocate()</a> method with a Vector of cutoffs internally, after setting every element of the Vector to the same value.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">atomCapacity</td><td>dimension of global array of atoms </td></tr>
-    <tr><td class="paramname">lower</td><td>lower bound used to allocate array of cells. </td></tr>
-    <tr><td class="paramname">upper</td><td>upper bound used to allocate array of cells. </td></tr>
+    <tr><td class="paramname">lower</td><td>lower bound for this processor in maximum boundary </td></tr>
+    <tr><td class="paramname">upper</td><td>upper bound for this processor in maximum boundary </td></tr>
     <tr><td class="paramname">cutoff</td><td>minimum dimension of a cell in any direction </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00043">43</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00065">65</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a208f2e0b64c5f7bd8b73d33873940c8f"></a><!-- doxytag: member="DdMd::CellList::makeGrid" ref="a208f2e0b64c5f7bd8b73d33873940c8f" args="(const Vector &amp;lower, const Vector &amp;upper, const Vector &amp;cutoffs)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::CellList::makeGrid </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>lower</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>upper</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>cutoffs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Make the cell grid (using generalized coordinates). </p>
+<p>This method makes a <a class="el" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a> grid in which the number of cells in each direction i is chosen such that the dimension of each cell that direction is greater than or equal to cutoff[i].</p>
+<p>The elements of lower and upper should be upper and lower bounds for coordinates of local atoms on this processor, in generalized coordinates in which the entire periodic unit cell spans 0.0 to 1.0. On input, each element of cutoff[i] should be equal to the minimum cell length in direction i in generalized coordinates. This is given by the ratio cutoff[i] = pairCutoff/length[i], where pairCutoff is the maximum range of nonbonded interactions, and length[i] is the distance across the primitive unit cell along the direction parallel to reciprocal lattice basis vector i.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lower</td><td>lower bound of local atom coordinates. </td></tr>
+    <tr><td class="paramname">upper</td><td>upper bound of local atom coordinates. </td></tr>
+    <tr><td class="paramname">cutoffs</td><td>minimum dimension of cell in each direction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00114">114</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00033">DdMd::Cell::setIsGhostCell()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00039">DdMd::Cell::setLastCell()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00036">DdMd::Cell::setNextCell()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -271,8 +390,8 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Make the cell grid. </p>
-<p>The number of cells in each direction is chosen such that the dimension of each cell in each direction is greater than or equal to the cutoff parameter. To calculate nonbonded pair interaction energies, the cutoff parameter should thus be equal to or greater than the maximum range of nonbonded interactions.</p>
+<p>Make the cell grid (Cartesian coordinates). </p>
+<p>This function is designed for use with orthogonal unit cells and Cartesian coordinates, for which the lower, upper and cutoff parameters all have dimensions of length. The function calls the <a class="el" href="classDdMd_1_1CellList.html#afb3de6609fceabfce5c481a978e2fffd" title="Allocate memory for this CellList (generalized coordinates).">allocate()</a> method with a Vector of cutoffs internally, after setting every element of the cutoffs Vector to the same cutoff value.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">lower</td><td>lower bound of local atom coordinates. </td></tr>
@@ -282,9 +401,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00101">101</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00191">191</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
-<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00033">DdMd::Cell::setIsGhostCell()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00039">DdMd::Cell::setLastCell()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00036">DdMd::Cell::setNextCell()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
 </div>
 </div>
@@ -304,8 +423,8 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Determine the appropriate cell for an <a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>, based on its position. </p>
-<p>This method does not place the atom in a cell, but retains a record of the cell index that is used to place atoms in the <a class="el" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3" title="Build the cell list.">build()</a> method.</p>
-<p>This method quietly does nothing if the atom is outside the expanded domain for nonbonded ghosts, which extends one cutoff length beyond the domain boundaries the domain boundaries in each direction.</p>
+<p>This method does not place the atom in a cell, but calculates a cell index and retains the value, which is used to place atoms in the <a class="el" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3" title="Build the cell list.">build()</a> method.</p>
+<p>The method quietly does nothing if the atom is outside the expanded domain for nonbonded ghosts, which extends one cutoff length beyond the domain boundaries the domain boundaries in each direction.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">atom</td><td><a class="el" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a> object to be added. </td></tr>
@@ -313,7 +432,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00337">337</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00404">404</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
 <p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>.</p>
 
@@ -336,7 +455,7 @@ Public Member Functions</h2></td></tr>
 <p>Build the cell list. </p>
 <p>This method must be called after completing a loop over atoms, in which <a class="el" href="classDdMd_1_1CellList.html#a86801f1caf32420a380c2885b08e2337" title="Determine the appropriate cell for an Atom, based on its position.">placeAtom()</a> is called for each atom. The <a class="el" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3" title="Build the cell list.">build()</a> method uses information gathered in this loop to build and fill all of the cells. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00206">206</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00231">231</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
@@ -356,7 +475,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reset the cell list to its empty state (no Atoms). </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00178">178</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00203">203</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
@@ -376,7 +495,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return Grid object by const reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00353">353</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00420">420</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
 </div>
 </div>
@@ -403,7 +522,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00356">356</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00423">423</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
 </div>
 </div>
@@ -431,7 +550,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00314">314</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00381">381</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>.</p>
 
@@ -453,7 +572,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Return pointer to first local cell in linked list. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00362">362</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00429">429</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
 <p>Referenced by <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00093">DdMd::PairList::build()</a>.</p>
 
@@ -482,7 +601,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00359">359</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00426">426</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
 </div>
 </div>
@@ -502,7 +621,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get total number of atoms (local and ghost) in this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00227">227</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00252">252</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
@@ -522,7 +641,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get number of atoms that were rejected (not placed in cells) </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00233">233</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00258">258</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
@@ -542,7 +661,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Maximum number of atoms for which space is allocated. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00239">239</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00264">264</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
@@ -562,7 +681,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Number of cells for which space has been allocated. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00245">245</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00270">270</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
@@ -582,7 +701,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Has memory been allocated for this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>? </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00365">365</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00432">432</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html">ddMd/neighbor/CellList.h</a>.</p>
 
 </div>
 </div>
@@ -603,7 +722,7 @@ Public Member Functions</h2></td></tr>
 <p>Has this <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> been built? </p>
 <p>IsBuilt is set true by the <a class="el" href="classDdMd_1_1CellList.html#abefc5a59a0f035b7aa3d9545ef91dfa3" title="Build the cell list.">build()</a> method and false by <a class="el" href="classDdMd_1_1CellList.html#aae15fc4934318b9caad30c39d94f969f" title="Reset the cell list to its empty state (no Atoms).">clear()</a>. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00251">251</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00276">276</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
 </div>
 </div>
@@ -624,9 +743,9 @@ Public Member Functions</h2></td></tr>
 <p>Return true if valid, or throw Exception. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>true if valid, otherwise throw an Exception. </dd></dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00257">257</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00282">282</a> of file <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00321">DdMd::Cell::atomCapacity()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00291">DdMd::Cell::atomPtr()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00285">DdMd::Cell::nAtom()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00323">DdMd::Cell::atomCapacity()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00293">DdMd::Cell::atomPtr()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00287">DdMd::Cell::nAtom()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -635,7 +754,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html">ddMd/neighbor/CellList.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

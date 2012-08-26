@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>Simpatico: Boundary Conditions</title>
+<title>Simpatico: Unit Cell Type</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css"/>
 </head>
@@ -38,11 +38,11 @@
 </div>
 <div class="header">
   <div class="headertitle">
-<h1>Boundary Conditions </h1>  </div>
+<h1>Unit <a class="el" href="classMcMd_1_1Cell.html" title="A set of Atoms in a small region.">Cell</a> Type </h1>  </div>
 </div>
 <div class="contents">
-<div class="textblock"><p>The choice of lattice system for the periodic unit cell (i.e., cubic, tetragonal, or orthorombic) used by Simpatico is set by a typedef named Boundary. The typedef "Boundary" is defined in the file "src/mcMd/boundary/Boundary.h". By default, Boundary is defined to be a synonym for the "OrthorhombicBoundary" class. Throughout the source code, the class that represents the periodic boundary conditions is referred to throughout by the typedef "Boundary" rather than by the explict class name, such as "OrthorhombicBoundary". This is designed to make it relatively easy for users to change the unit cell symmetry by changing this typedef to refer to, for example, "CubicBoundary" or "TetragonalBoundary", and recompiling the program. For the moment, there is little reason to change from an orthorhombic cell a more restrictive cubic or tetragonal cell, since all three classes use the same implementation of the core algorithms. The main advantage of the use of a typedef is that it will make it implement a version of the program for non-orthogonal unit cells, as discussed below.</p>
-<p>We have chosen to use typedefs rather a polymorphic classes for the boundary conditions because of concerns about efficiency. The Boundary class provides methods that calculate separations using the minimum image convention, which are called repeatedly in the inner loops of both MD and MC simulations. The use of a polymorphic class with virtual functions would be the most flexible solution. This would allow the user to instantiate instances of subclasses that represent orthogonal or non-orthogonal boundary conditions at run time, but would also prevent inlining of the minimum image separation calculations. Instead, we plan to eventually enable non-orthogonal boundary condtions by providing a TriclinicBoundary class (not yet implemented) and allowing the user to change the typedef to compile versions of the program for triclinic and orthorhombic boundaries. Making the choice at compile time allows us to avoid the extra cost of the minimum-image calculations for a triclinic cell in simulations that use an orthorhombic cell.</p>
+<div class="textblock"><p>The choice of lattice system for the periodic unit cell (i.e., cubic, tetragonal, or orthorombic) used by Simpatico is set by a typedef named Boundary. The typedef "Boundary" is defined in the file "src/mcMd/boundary/Boundary.h". By default, Boundary is defined to be a synonym for the "OrthorhombicBoundary" class. Throughout the source code, the class that represents the periodic boundary conditions is referred to throughout by the typedef "Boundary" rather than by the explict class name, such as "OrthorhombicBoundary". This is designed to make it easy for users to change the unit cell type at compile time by changing this typedef to refer to, for example, "CubicBoundary" or "MonoclinicBoundary", and recompiling the program.</p>
+<p>We have chosen to use typedefs rather polymorphic classes for the boundary conditions because of concerns about efficiency. The Boundary class provides methods that calculate separations using the minimum image convention, which are called repeatedly in the inner loops of both MD and MC simulations. The use of a polymorphic class with virtual functions would be the most flexible solution. This would allow the user to instantiate instances of subclasses that represent orthogonal or non-orthogonal boundary conditions at run time, but would also prevent inlining of the minimum image separation calculations.</p>
 <ul>
 <li>
 <a class="el" href="preprocessor_page.html">Preprocessor macros</a> (Previous)  </li>
@@ -52,7 +52,7 @@
 <a class="el" href="extend_page.html">Extending Simpatico</a> (Next)  </li>
 </ul>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -66,9 +66,12 @@ Inheritance diagram for DdMd::SimulationAccess:</div>
  <div class="center">
   <img src="classDdMd_1_1SimulationAccess.png" usemap="#DdMd::SimulationAccess_map" alt=""/>
   <map id="DdMd::SimulationAccess_map" name="DdMd::SimulationAccess_map">
-<area href="classDdMd_1_1Integrator.html" alt="DdMd::Integrator" shape="rect" coords="80,56,231,80"/>
-<area href="classDdMd_1_1NveIntegrator.html" alt="DdMd::NveIntegrator" shape="rect" coords="0,112,151,136"/>
-<area href="classDdMd_1_1NvtIntegrator.html" alt="DdMd::NvtIntegrator" shape="rect" coords="161,112,312,136"/>
+<area href="classDdMd_1_1Integrator.html" alt="DdMd::Integrator" shape="rect" coords="246,56,400,80"/>
+<area href="classDdMd_1_1TwoStepIntegrator.html" alt="DdMd::TwoStepIntegrator" shape="rect" coords="246,112,400,136"/>
+<area href="classDdMd_1_1NphIntegrator.html" alt="DdMd::NphIntegrator" shape="rect" coords="0,168,154,192"/>
+<area href="classDdMd_1_1NptIntegrator.html" alt="DdMd::NptIntegrator" shape="rect" coords="164,168,318,192"/>
+<area href="classDdMd_1_1NveIntegrator.html" alt="DdMd::NveIntegrator" shape="rect" coords="328,168,482,192"/>
+<area href="classDdMd_1_1NvtIntegrator.html" alt="DdMd::NvtIntegrator" shape="rect" coords="492,168,646,192"/>
 </map>
  </div></div>
 
@@ -117,6 +120,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an <a class="el" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a> descriptor for atomtype i.  <a href="#aa068b27d7d2f1d4b3876ed49fb9c325d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4">MaskPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1SimulationAccess.html#ad84af4b70e4e03b319ed7593ac4df160">maskedPairPolicy</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the value of the mask policy (MaskNone or MaskBonded).  <a href="#ad84af4b70e4e03b319ed7593ac4df160"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1SimulationAccess.html#acfc6bd24e02c36a9ef6782d544d20e36">reverseUpdateFlag</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Are forces evaluated by reverse communication (true) or not (false)?  <a href="#acfc6bd24e02c36a9ef6782d544d20e36"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a5ac91e593036ec54bd98515c37347d50"></a><!-- doxytag: member="DdMd::SimulationAccess::SimulationAccess" ref="a5ac91e593036ec54bd98515c37347d50" args="(Simulation &amp;simulation)" -->
@@ -162,7 +167,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8cpp_source.html#l00072">72</a> of file <a class="el" href="SimulationAccess_8cpp_source.html">SimulationAccess.cpp</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8cpp_source.html#l00073">73</a> of file <a class="el" href="SimulationAccess_8cpp_source.html">SimulationAccess.cpp</a>.</p>
 
 </div>
 </div>
@@ -183,9 +188,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the parent simulation. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00273">273</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00281">281</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00059">DdMd::NvtIntegrator::readParam()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00042">DdMd::NveIntegrator::readParam()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00070">DdMd::Integrator::computeForces()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00120">DdMd::NvtIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00145">DdMd::NvtIntegrator::integrateStep2()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00059">DdMd::NvtIntegrator::readParam()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00042">DdMd::NveIntegrator::readParam()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00045">DdMd::NptIntegrator::readParam()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00045">DdMd::NphIntegrator::readParam()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00039">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -205,7 +210,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the Boundary. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00276">276</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00284">284</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00039">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -225,9 +232,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00279">279</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00287">287</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00120">DdMd::NvtIntegrator::integrateStep1()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00083">DdMd::NveIntegrator::integrateStep1()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00145">DdMd::NvtIntegrator::integrateStep2()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00103">DdMd::NveIntegrator::integrateStep2()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, <a class="el" href="Integrator_8cpp_source.html#l00116">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00039">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -247,7 +254,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1BondStorage.html" title="AtomStorage for bonds.">BondStorage</a>. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00282">282</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00290">290</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
 </div>
 </div>
@@ -267,9 +274,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a>. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00295">295</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00303">303</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00070">DdMd::Integrator::computeForces()</a>, <a class="el" href="Integrator_8cpp_source.html#l00116">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00039">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -289,7 +296,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a>. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00298">298</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00306">306</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00070">DdMd::Integrator::computeForces()</a>.</p>
 
 </div>
 </div>
@@ -309,7 +318,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a>. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00312">312</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00320">320</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00070">DdMd::Integrator::computeForces()</a>.</p>
 
 </div>
 </div>
@@ -329,7 +340,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the EnergyEnsemble. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00316">316</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00324">324</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
 </div>
 </div>
@@ -349,7 +360,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the BoundaryEnsemble. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00319">319</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00327">327</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
 </div>
 </div>
@@ -369,7 +380,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the Random number generator. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00322">322</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00330">330</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
 </div>
 </div>
@@ -389,9 +400,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00325">325</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00333">333</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, and <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="NptIntegrator_8cpp_source.html#l00093">DdMd::NptIntegrator::integrateStep1()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00090">DdMd::NphIntegrator::integrateStep1()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00145">DdMd::NvtIntegrator::integrateStep2()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00232">DdMd::NptIntegrator::integrateStep2()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00220">DdMd::NphIntegrator::integrateStep2()</a>, <a class="el" href="Integrator_8cpp_source.html#l00116">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00039">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>.</p>
 
 </div>
 </div>
@@ -411,9 +422,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00328">328</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00336">336</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00114">DdMd::NvtIntegrator::run()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00070">DdMd::Integrator::computeForces()</a>, <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00039">DdMd::TwoStepIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00054">DdMd::Integrator::setupAtoms()</a>.</p>
 
 </div>
 </div>
@@ -433,7 +444,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00331">331</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00339">339</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
 </div>
 </div>
@@ -453,9 +464,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Get maximum number of atom types. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00334">334</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00342">342</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
-<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00059">DdMd::NvtIntegrator::readParam()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00042">DdMd::NveIntegrator::readParam()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00075">DdMd::NveIntegrator::run()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, and <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>.</p>
+<p>Referenced by <a class="el" href="NvtIntegrator_8cpp_source.html#l00059">DdMd::NvtIntegrator::readParam()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00042">DdMd::NveIntegrator::readParam()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00045">DdMd::NptIntegrator::readParam()</a>, <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00045">DdMd::NphIntegrator::readParam()</a>, <a class="el" href="NvtIntegrator_8cpp_source.html#l00074">DdMd::NvtIntegrator::setup()</a>, <a class="el" href="NveIntegrator_8cpp_source.html#l00055">DdMd::NveIntegrator::setup()</a>, <a class="el" href="NptIntegrator_8cpp_source.html#l00059">DdMd::NptIntegrator::setup()</a>, and <a class="el" href="ddMd_2integrators_2NphIntegrator_8cpp_source.html#l00058">DdMd::NphIntegrator::setup()</a>.</p>
 
 </div>
 </div>
@@ -475,7 +486,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get maximum number of bond types. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00337">337</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00345">345</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
 </div>
 </div>
@@ -495,7 +506,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Does this simulation have an external potential? </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00351">351</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00359">359</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00070">DdMd::Integrator::computeForces()</a>.</p>
 
 </div>
 </div>
@@ -516,7 +529,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get an <a class="el" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a> descriptor for atomtype i. </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00355">355</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00363">363</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
 
 </div>
 </div>
@@ -536,7 +549,29 @@ Public Member Functions</h2></td></tr>
 
 <p>Return the value of the mask policy (MaskNone or MaskBonded). </p>
 
-<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00358">358</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00366">366</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acfc6bd24e02c36a9ef6782d544d20e36"></a><!-- doxytag: member="DdMd::SimulationAccess::reverseUpdateFlag" ref="acfc6bd24e02c36a9ef6782d544d20e36" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DdMd::SimulationAccess::reverseUpdateFlag </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Are forces evaluated by reverse communication (true) or not (false)? </p>
+
+<p>Definition at line <a class="el" href="SimulationAccess_8h_source.html#l00369">369</a> of file <a class="el" href="SimulationAccess_8h_source.html">SimulationAccess.h</a>.</p>
+
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00070">DdMd::Integrator::computeForces()</a>.</p>
 
 </div>
 </div>
@@ -545,7 +580,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="SimulationAccess_8cpp_source.html">SimulationAccess.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:22 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:23 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

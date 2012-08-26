@@ -58,7 +58,7 @@
 
 <p>Forward iterator for a <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a>. </p>
 <p>An <a class="el" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator</a> is an abstraction of a pointer, similar to an STL forward iterator. The * operator returns a reference to an associated Data object, the -&gt; operator returns a pointer to that object. The ++ operator increments the current pointer by one array element.</p>
-<p>Unlike an STL forward iterator, an <a class="el" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator</a> contains the address of the end of the array. The <a class="el" href="classUtil_1_1ConstPArrayIterator.html#a4fc560244a3256e8466fcca9d4c06ed7" title="Is the current pointer at the end of the array.">atEnd()</a> method can be used to test for termination of a for or while loop. When <a class="el" href="classUtil_1_1ConstPArrayIterator.html#a4fc560244a3256e8466fcca9d4c06ed7" title="Is the current pointer at the end of the array.">atEnd()</a> is true, the iterator has no current value, and cannot be incremented further. The <a class="el" href="classUtil_1_1ConstPArrayIterator.html#a4fc560244a3256e8466fcca9d4c06ed7" title="Is the current pointer at the end of the array.">atEnd()</a> method returns true either if the iterator: i) has already been incremented one past the end of an associated <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a>, or ii) is in a null state that is produced by the constructor and the clear() method. </p>
+<p>Unlike an STL forward iterator, an <a class="el" href="classUtil_1_1ConstPArrayIterator.html" title="Forward iterator for a PArray.">ConstPArrayIterator</a> contains the address of the end of the array. The <a class="el" href="classUtil_1_1ConstPArrayIterator.html#a4b4159a633fbde5d9a2503cad9cda4d7" title="Is the current pointer at the end of the array.">isEnd()</a> method can be used to test for termination of a for or while loop. When <a class="el" href="classUtil_1_1ConstPArrayIterator.html#a4b4159a633fbde5d9a2503cad9cda4d7" title="Is the current pointer at the end of the array.">isEnd()</a> is true, the iterator has no current value, and cannot be incremented further. The <a class="el" href="classUtil_1_1ConstPArrayIterator.html#a4b4159a633fbde5d9a2503cad9cda4d7" title="Is the current pointer at the end of the array.">isEnd()</a> method returns true either if the iterator: i) has already been incremented one past the end of an associated <a class="el" href="classUtil_1_1PArray.html" title="An array that only holds pointers to its elements.">PArray</a>, or ii) is in a null state that is produced by the constructor and the clear() method. </p>
 
 <p>Definition at line <a class="el" href="ConstPArrayIterator_8h_source.html#l00034">34</a> of file <a class="el" href="ConstPArrayIterator_8h_source.html">ConstPArrayIterator.h</a>.</p>
 </div>
@@ -76,8 +76,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of the end pointer.  <a href="#a0a8be86610173337dbb3c30adccb36d6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ConstPArrayIterator.html#aa288662fb8269962188b39aa31ad5a8d">setNull</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Nullify the iterator.  <a href="#aa288662fb8269962188b39aa31ad5a8d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ConstPArrayIterator.html#a4fc560244a3256e8466fcca9d4c06ed7">atEnd</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the current pointer at the end of the array.  <a href="#a4fc560244a3256e8466fcca9d4c06ed7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ConstPArrayIterator.html#a4b4159a633fbde5d9a2503cad9cda4d7">isEnd</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the current pointer at the end of the array.  <a href="#a4b4159a633fbde5d9a2503cad9cda4d7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ConstPArrayIterator.html#a7777ed8e777e44bc9ca01ad2f02043cc">notEnd</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the current pointer not at the end of the array?  <a href="#a7777ed8e777e44bc9ca01ad2f02043cc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ConstPArrayIterator.html#ae7e58a8e26e1e3e0608f712fed1c149d">get</a> () const </td></tr>
@@ -201,14 +201,14 @@ template&lt;typename Data&gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="a4fc560244a3256e8466fcca9d4c06ed7"></a><!-- doxytag: member="Util::ConstPArrayIterator::atEnd" ref="a4fc560244a3256e8466fcca9d4c06ed7" args="() const " -->
+<a class="anchor" id="a4b4159a633fbde5d9a2503cad9cda4d7"></a><!-- doxytag: member="Util::ConstPArrayIterator::isEnd" ref="a4b4159a633fbde5d9a2503cad9cda4d7" args="() const " -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classUtil_1_1ConstPArrayIterator.html">Util::ConstPArrayIterator</a>&lt; Data &gt;::atEnd </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1ConstPArrayIterator.html">Util::ConstPArrayIterator</a>&lt; Data &gt;::isEnd </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -245,7 +245,7 @@ template&lt;typename Data&gt; </div>
 
 <p>Definition at line <a class="el" href="ConstPArrayIterator_8h_source.html#l00092">92</a> of file <a class="el" href="ConstPArrayIterator_8h_source.html">ConstPArrayIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00226">McMd::ExternalPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00309">McMd::DihedralPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00296">McMd::BondPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00298">McMd::AnglePotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00546">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="VanHove_8cpp_source.html#l00081">McMd::VanHove::sample()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00088">McMd::StructureFactorP::sample()</a>, <a class="el" href="StructureFactor_8cpp_source.html#l00097">McMd::StructureFactor::sample()</a>, <a class="el" href="RDF_8cpp_source.html#l00061">McMd::RDF::sample()</a>, <a class="el" href="MigratingVanHove_8cpp_source.html#l00097">McMd::MigratingVanHove::sample()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00087">McMd::IntraStructureFactor::sample()</a>, <a class="el" href="IntraBondTensorAutoCorr__inc_8h_source.html#l00111">McMd::IntraBondTensorAutoCorr&lt; SystemType &gt;::sample()</a>, <a class="el" href="IntraBondStressAutoCorr__inc_8h_source.html#l00112">McMd::IntraBondStressAutoCorr&lt; SystemType &gt;::sample()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00091">McMd::CompositionProfile::sample()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMd::McMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00226">McMd::ExternalPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="mcMd_2potentials_2dihedral_2DihedralPotentialImpl_8h_source.html#l00309">McMd::DihedralPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00296">McMd::BondPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="mcMd_2potentials_2angle_2AnglePotentialImpl_8h_source.html#l00298">McMd::AnglePotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00546">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="VanHove_8cpp_source.html#l00081">McMd::VanHove::sample()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00088">McMd::StructureFactorP::sample()</a>, <a class="el" href="StructureFactor_8cpp_source.html#l00093">McMd::StructureFactor::sample()</a>, <a class="el" href="RDF_8cpp_source.html#l00061">McMd::RDF::sample()</a>, <a class="el" href="MigratingVanHove_8cpp_source.html#l00097">McMd::MigratingVanHove::sample()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00087">McMd::IntraStructureFactor::sample()</a>, <a class="el" href="IntraBondTensorAutoCorr__inc_8h_source.html#l00111">McMd::IntraBondTensorAutoCorr&lt; SystemType &gt;::sample()</a>, <a class="el" href="IntraBondStressAutoCorr__inc_8h_source.html#l00112">McMd::IntraBondStressAutoCorr&lt; SystemType &gt;::sample()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00091">McMd::CompositionProfile::sample()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMd::McMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
@@ -345,7 +345,7 @@ template&lt;typename Data&gt; </div>
 <li><a class="el" href="ConstPArrayIterator_8h_source.html">ConstPArrayIterator.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:31 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

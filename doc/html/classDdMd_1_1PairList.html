@@ -56,7 +56,7 @@
 <div class="textblock"><p>A Verlet nonbonded pair list. </p>
 <p>A <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> (or Verlet list) is a list of neighboring pairs of Atoms that are separated by a distance less than a specified cutoff.</p>
 <p>The <a class="el" href="classDdMd_1_1PairList.html#a6f4378807386780d0c0c84c56098ad2f" title="Allocate memory and set cutoff.">allocate()</a> method must be called once before use.</p>
-<p>To build or rebuild a <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>, after it has been allocated, one must first build the associated <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>, and then call <a class="el" href="classDdMd_1_1PairList.html#acb7798541b9fbd041becd9ddc2d6a0ed" title="Use a CellList to build a new PairList.">PairList::build()</a> to build the actual <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>.</p>
+<p>To build or rebuild a <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>, after it has been allocated, one must first build the associated <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>, and then call <a class="el" href="classDdMd_1_1PairList.html#ab22cf98d822f0af093485d921ff70def" title="Use a CellList to build a new PairList.">PairList::build()</a> to build the actual <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>.</p>
 <p>A <a class="el" href="classDdMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a> object must be used to iterate over all of the pairs in in completed <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> (see documentation of <a class="el" href="classDdMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a> for usage). </p>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00040">40</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
@@ -76,8 +76,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate memory and set cutoff.  <a href="#a6f4378807386780d0c0c84c56098ad2f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#aee3076ace9e9c31845cc1dcb5ebebe7d">clear</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset this to empty state.  <a href="#aee3076ace9e9c31845cc1dcb5ebebe7d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#acb7798541b9fbd041becd9ddc2d6a0ed">build</a> (<a class="el" href="classDdMd_1_1CellList.html">CellList</a> &amp;cellList)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Use a <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> to build a new <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>.  <a href="#acb7798541b9fbd041becd9ddc2d6a0ed"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#ab22cf98d822f0af093485d921ff70def">build</a> (<a class="el" href="classDdMd_1_1CellList.html">CellList</a> &amp;cellList, bool reverseUpdateFlag=false)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Use a <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> to build a new <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>.  <a href="#ab22cf98d822f0af093485d921ff70def"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Accessors (miscellaneous)</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#a890cfbc0e6d42695fefa7183f63359cc">begin</a> (<a class="el" href="classDdMd_1_1PairIterator.html">PairIterator</a> &amp;iterator) const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a <a class="el" href="classDdMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a>.  <a href="#a890cfbc0e6d42695fefa7183f63359cc"></a><br/></td></tr>
@@ -91,21 +91,19 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of primary atoms.  <a href="#a0e8ab3b5653f783660a612ae1d49fc24"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#aa12f449180795e01232f2285c6f43ac1">isAllocated</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has memory been allocated for this <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>?  <a href="#aa12f449180795e01232f2285c6f43ac1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#aeeeb83f5acfa65a99d52b4b9fc64f6d3">isValid</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if valid, or throw Exception.  <a href="#aeeeb83f5acfa65a99d52b4b9fc64f6d3"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Statistics</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#af5b606249c3c4ff509650aabfd03c029">clearStatistics</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear statistical accumulators (call on all processors).  <a href="#af5b606249c3c4ff509650aabfd03c029"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#a1ca7d08a1def05fae60c6551595ab53a">computeStatistics</a> (MPI::Intracomm &amp;communicator)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute statistics (reduce from all processors).  <a href="#a1ca7d08a1def05fae60c6551595ab53a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#a194e00574171ee00d4c8300d9d2cbf4b">maxNAtom</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of primary atoms encountered thus far.  <a href="#a194e00574171ee00d4c8300d9d2cbf4b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#a47c5391f60d98da4375b0008c0306483">maxNPair</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum number of pairs encountered thus far.  <a href="#a47c5391f60d98da4375b0008c0306483"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#afa98ce42e83384bf8cca4ec7edd55600">buildCounter</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return number of times the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> has been built thus far.  <a href="#afa98ce42e83384bf8cca4ec7edd55600"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#a6cf94e9c84005f984dd748b99bb2fc66">outputStatistics</a> (std::ostream &amp;out)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output statistics.  <a href="#a6cf94e9c84005f984dd748b99bb2fc66"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#a1ca7d08a1def05fae60c6551595ab53a">computeStatistics</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute statistics (reduce from all processors).  <a href="#a1ca7d08a1def05fae60c6551595ab53a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1PairList.html#aa2890c1afd070d872661748fc5e18afb">outputStatistics</a> (std::ostream &amp;out, int nStep)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Output statistics.  <a href="#aa2890c1afd070d872661748fc5e18afb"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="af803ec7a79b11d16e6c72d114e28d4fe"></a><!-- doxytag: member="DdMd::PairList::PairList" ref="af803ec7a79b11d16e6c72d114e28d4fe" args="()" -->
@@ -214,7 +212,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acb7798541b9fbd041becd9ddc2d6a0ed"></a><!-- doxytag: member="DdMd::PairList::build" ref="acb7798541b9fbd041becd9ddc2d6a0ed" args="(CellList &amp;cellList)" -->
+<a class="anchor" id="ab22cf98d822f0af093485d921ff70def"></a><!-- doxytag: member="DdMd::PairList::build" ref="ab22cf98d822f0af093485d921ff70def" args="(CellList &amp;cellList, bool reverseUpdateFlag=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -222,8 +220,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">void DdMd::PairList::build </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classDdMd_1_1CellList.html">CellList</a> &amp;&#160;</td>
-          <td class="paramname"><em>cellList</em></td><td>)</td>
+          <td class="paramname"><em>cellList</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reverseUpdateFlag</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
@@ -233,13 +241,14 @@ Public Member Functions</h2></td></tr>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">cellList</td><td>a <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a> object that was just built. </td></tr>
+    <tr><td class="paramname">reverseUpdateFlag</td><td>is reverse communication enabled? </td></tr>
   </table>
   </dd>
 </dl>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00093">93</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html">ddMd/neighbor/PairList.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00362">DdMd::CellList::begin()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00051">DdMd::Cell::getNeighbors()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00205">DdMd::Atom::id()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00088">DdMd::Mask::isMasked()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">DdMd::Atom::mask()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00285">DdMd::Cell::nAtom()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00318">DdMd::Cell::nextCellPtr()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="FSArray_8h_source.html#l00207">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, <a class="el" href="Vector_8h_source.html#l00588">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00644">Util::Vector::subtract()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
+<p>References <a class="el" href="ddMd_2neighbor_2CellList_8h_source.html#l00429">DdMd::CellList::begin()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00052">DdMd::Cell::getNeighbors()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00205">DdMd::Atom::id()</a>, <a class="el" href="ddMd_2chemistry_2Mask_8h_source.html#l00088">DdMd::Mask::isMasked()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00249">DdMd::Atom::mask()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00287">DdMd::Cell::nAtom()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00320">DdMd::Cell::nextCellPtr()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, <a class="el" href="FSArray_8h_source.html#l00206">Util::FSArray&lt; Data, Capacity &gt;::size()</a>, <a class="el" href="Vector_8h_source.html#l00588">Util::Vector::square()</a>, <a class="el" href="Vector_8h_source.html#l00644">Util::Vector::subtract()</a>, and <a class="el" href="global_8h_source.html#l00051">UTIL_THROW</a>.</p>
 
 </div>
 </div>
@@ -288,7 +297,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the number of primary atoms in the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00263">263</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00269">269</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
 
 </div>
 </div>
@@ -308,7 +317,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the number of pairs in the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00269">269</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00275">275</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
 
 </div>
 </div>
@@ -328,7 +337,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the maximum number of pairs. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00275">275</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00281">281</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
 
 </div>
 </div>
@@ -348,7 +357,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Get the maximum number of primary atoms. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00281">281</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00287">287</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
 
 </div>
 </div>
@@ -368,25 +377,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Has memory been allocated for this <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a>? </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00305">305</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="aeeeb83f5acfa65a99d52b4b9fc64f6d3"></a><!-- doxytag: member="DdMd::PairList::isValid" ref="aeeeb83f5acfa65a99d52b4b9fc64f6d3" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool DdMd::PairList::isValid </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Return true if valid, or throw Exception. </p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00311">311</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
 
 </div>
 </div>
@@ -410,30 +401,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a1ca7d08a1def05fae60c6551595ab53a"></a><!-- doxytag: member="DdMd::PairList::computeStatistics" ref="a1ca7d08a1def05fae60c6551595ab53a" args="(MPI::Intracomm &amp;communicator)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void DdMd::PairList::computeStatistics </td>
-          <td>(</td>
-          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
-          <td class="paramname"><em>communicator</em></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Compute statistics (reduce from all processors). </p>
-<p>Call on all processors. </p>
-
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00246">246</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html">ddMd/neighbor/PairList.cpp</a>.</p>
-
-<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00047">DdMd::Integrator::outputStatistics()</a>.</p>
-
-</div>
-</div>
 <a class="anchor" id="a194e00574171ee00d4c8300d9d2cbf4b"></a><!-- doxytag: member="DdMd::PairList::maxNAtom" ref="a194e00574171ee00d4c8300d9d2cbf4b" args="() const " -->
 <div class="memitem">
 <div class="memproto">
@@ -451,7 +418,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the maximum number of primary atoms encountered thus far. </p>
 <p>Call only on master. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00287">287</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00293">293</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
 
 </div>
 </div>
@@ -472,7 +439,7 @@ Public Member Functions</h2></td></tr>
 <p>Get the maximum number of pairs encountered thus far. </p>
 <p>Call only on master. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00293">293</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00299">299</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
 
 </div>
 </div>
@@ -492,11 +459,35 @@ Public Member Functions</h2></td></tr>
 
 <p>Return number of times the <a class="el" href="classDdMd_1_1PairList.html" title="A Verlet nonbonded pair list.">PairList</a> has been built thus far. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00299">299</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html#l00305">305</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8h_source.html">ddMd/neighbor/PairList.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a6cf94e9c84005f984dd748b99bb2fc66"></a><!-- doxytag: member="DdMd::PairList::outputStatistics" ref="a6cf94e9c84005f984dd748b99bb2fc66" args="(std::ostream &amp;out)" -->
+<a class="anchor" id="a1ca7d08a1def05fae60c6551595ab53a"></a><!-- doxytag: member="DdMd::PairList::computeStatistics" ref="a1ca7d08a1def05fae60c6551595ab53a" args="(MPI::Intracomm &amp;communicator)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::PairList::computeStatistics </td>
+          <td>(</td>
+          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
+          <td class="paramname"><em>communicator</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Compute statistics (reduce from all processors). </p>
+<p>Call on all processors. </p>
+
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00246">246</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html">ddMd/neighbor/PairList.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00039">DdMd::TwoStepIntegrator::run()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa2890c1afd070d872661748fc5e18afb"></a><!-- doxytag: member="DdMd::PairList::outputStatistics" ref="aa2890c1afd070d872661748fc5e18afb" args="(std::ostream &amp;out, int nStep)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -504,16 +495,32 @@ Public Member Functions</h2></td></tr>
           <td class="memname">void DdMd::PairList::outputStatistics </td>
           <td>(</td>
           <td class="paramtype">std::ostream &amp;&#160;</td>
-          <td class="paramname"><em>out</em></td><td>)</td>
+          <td class="paramname"><em>out</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nStep</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>Output statistics. </p>
-<p>Output pairlist statistics.</p>
-<p>Call on master, after calling computeStatistics on all procs. </p>
+<p>Call on master, after calling computeStatistics on all procs.</p>
+<dl><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out</td><td>output stream </td></tr>
+    <tr><td class="paramname">nStep</td><td>number of time steps in previous run </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00265">265</a> of file <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html">ddMd/neighbor/PairList.cpp</a>.</p>
 
@@ -524,7 +531,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html">ddMd/neighbor/PairList.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

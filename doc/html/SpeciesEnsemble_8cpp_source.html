@@ -93,7 +93,7 @@
 <a name="l00051"></a>00051    <span class="comment">/* </span>
 <a name="l00052"></a>00052 <span class="comment">   * Extract an SpeciesEnsemble::Type from an istream as a string.</span>
 <a name="l00053"></a>00053 <span class="comment">   */</span>
-<a name="l00054"></a>00054    std::istream&amp; <a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1SpeciesEnsemble.html#a851f3a091dd839c2663c49863b9f0dad" title="Enumeration of the allowed types of SpeciesEnsemble.">SpeciesEnsemble::Type</a> &amp;type)
+<a name="l00054"></a>00054    std::istream&amp; <a class="code" href="namespaceUtil.html#a84a8e4c844fd5d302194294ce6cf1dda" title="istream extractor for a MonoclinicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1SpeciesEnsemble.html#a851f3a091dd839c2663c49863b9f0dad" title="Enumeration of the allowed types of SpeciesEnsemble.">SpeciesEnsemble::Type</a> &amp;type)
 <a name="l00055"></a><a class="code" href="namespaceUtil.html#a43f3365fd7f3d2c9d595667aaee2aee7">00055</a>    {
 <a name="l00056"></a>00056       std::string buffer;
 <a name="l00057"></a>00057       in &gt;&gt; buffer;
@@ -111,7 +111,7 @@
 <a name="l00069"></a>00069    <span class="comment">/* </span>
 <a name="l00070"></a>00070 <span class="comment">   * Insert a SpeciesEnsemble::Type to an ostream as a string.</span>
 <a name="l00071"></a>00071 <span class="comment">   */</span>
-<a name="l00072"></a>00072    std::ostream&amp; <a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1SpeciesEnsemble.html#a851f3a091dd839c2663c49863b9f0dad" title="Enumeration of the allowed types of SpeciesEnsemble.">SpeciesEnsemble::Type</a> &amp;type) 
+<a name="l00072"></a>00072    std::ostream&amp; <a class="code" href="namespaceUtil.html#a10bcffa95685d7673ce01e7c634b0bf2" title="ostream inserter for an MonoclinicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1SpeciesEnsemble.html#a851f3a091dd839c2663c49863b9f0dad" title="Enumeration of the allowed types of SpeciesEnsemble.">SpeciesEnsemble::Type</a> &amp;type) 
 <a name="l00073"></a><a class="code" href="namespaceUtil.html#a4943b6f454b1b8585dda41cd3fd41b93">00073</a>    {
 <a name="l00074"></a>00074       <span class="keywordflow">if</span> (type == SpeciesEnsemble::CLOSED) {
 <a name="l00075"></a>00075          out &lt;&lt; <span class="stringliteral">&quot;closed&quot;</span>;
@@ -148,7 +148,7 @@
 <a name="l00114"></a>00114 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

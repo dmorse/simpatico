@@ -47,12 +47,13 @@
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
 <h1>DdMd::AnglePotential Class Reference</h1>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="DdMd::AnglePotential" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
+<!-- doxytag: class="DdMd::AnglePotential" --><!-- doxytag: inherits="DdMd::Potential" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>An <a class="el" href="classDdMd_1_1AnglePotential.html" title="An AnglePotential calculates angle forces and energies for a parent Simulation.">AnglePotential</a> calculates angle forces and energies for a parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>. </p>
 <p>All operations in this class are local (no MPI). </p>
 
@@ -65,9 +66,10 @@ Inheritance diagram for DdMd::AnglePotential:</div>
  <div class="center">
   <img src="classDdMd_1_1AnglePotential.png" usemap="#DdMd::AnglePotential_map" alt=""/>
   <map id="DdMd::AnglePotential_map" name="DdMd::AnglePotential_map">
+<area href="classDdMd_1_1Potential.html" alt="DdMd::Potential" shape="rect" coords="0,112,238,136"/>
 <area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,238,80"/>
 <area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,238,24"/>
-<area href="classDdMd_1_1AnglePotentialImpl.html" alt="DdMd::AnglePotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,168,238,192"/>
+<area href="classDdMd_1_1AnglePotentialImpl.html" alt="DdMd::AnglePotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,224,238,248"/>
 </map>
  </div></div>
 
@@ -85,25 +87,17 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Associate with related objects.  <a href="#a625a04f2963c1e673f8ec7dcd61938ec"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Interaction interface</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotential.html#a98b9fbef6ae3d08c0591d9803255ced5">setNAngleType</a> (int nAngleType)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum number of atom types.  <a href="#a98b9fbef6ae3d08c0591d9803255ced5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotential.html#aa8d86a1679a9e46b11be02482c0129b1">energy</a> (double cosTheta, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns potential energy for one angle.  <a href="#aa8d86a1679a9e46b11be02482c0129b1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotential.html#af0cf97922c23398017cfc70e8bd091ea">force</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R2, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F1, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F2, int type) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns forces along two bonds at the angle, for use in MD and stress calculation.  <a href="#af0cf97922c23398017cfc70e8bd091ea"></a><br/></td></tr>
-<tr><td colspan="2"><h2><a name="member-group"></a>
-Total Energy, Force and Stress</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a284fcc70479d35de82f313328435a8e1"></a><!-- doxytag: member="DdMd::AnglePotential::boundaryPtr_" ref="a284fcc70479d35de82f313328435a8e1" args="" -->
-Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee5d918df4522e25783b63bcaab77d23"></a><!-- doxytag: member="DdMd::AnglePotential::storagePtr_" ref="aee5d918df4522e25783b63bcaab77d23" args="" -->
-<a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a>&lt; 3 &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>storagePtr_</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotential.html#a1dba5e877920805688f2d61332fc0df4">addForces</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the angle forces for all atoms.  <a href="#a1dba5e877920805688f2d61332fc0df4"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotential.html#a3e4b71a695bd40d1cce93267dbbcf7e6">addForces</a> (double &amp;energy)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add pair forces to atom forces, and compute energy.  <a href="#a3e4b71a695bd40d1cce93267dbbcf7e6"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotential.html#a3a5bd969ede6d46a0d1b84d7b5d0826f">computeEnergy</a> (MPI::Intracomm &amp;communicator)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total angle potential.  <a href="#a3a5bd969ede6d46a0d1b84d7b5d0826f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotential.html#a499871d49991bb903ad0c4a0b76778d9">energy</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total angle potential, computed previously by <a class="el" href="classDdMd_1_1AnglePotential.html#a3a5bd969ede6d46a0d1b84d7b5d0826f" title="Calculate total angle potential.">computeEnergy()</a>.  <a href="#a499871d49991bb903ad0c4a0b76778d9"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum number of angle types.  <a href="#a98b9fbef6ae3d08c0591d9803255ced5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotential.html#a39dcd26c9125c7cb7c2c12677813b98f">angleEnergy</a> (double cosTheta, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns potential energy for one angle.  <a href="#a39dcd26c9125c7cb7c2c12677813b98f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotential.html#a7de1d97cb9ae2b54e5e509befab44cb2">angleForce</a> (const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R1, const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;R2, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F1, <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;F2, int type) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes forces along two bonds within the angle.  <a href="#a7de1d97cb9ae2b54e5e509befab44cb2"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotential.html#a7f324e81709d3572c8c993063d2d229a">boundary</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return boundary by reference.  <a href="#a7f324e81709d3572c8c993063d2d229a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a>&lt; 3 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1AnglePotential.html#a19e591d753b57e08251df18a23ef3459">storage</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return bond storage by reference.  <a href="#a19e591d753b57e08251df18a23ef3459"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a9491c51310938d90d00878f1aca252ad"></a><!-- doxytag: member="DdMd::AnglePotential::AnglePotential" ref="a9491c51310938d90d00878f1aca252ad" args="(Simulation &amp;simulation)" -->
@@ -222,18 +216,18 @@ Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b
 </div>
 <div class="memdoc">
 
-<p>Set the maximum number of atom types. </p>
+<p>Set the maximum number of angle types. </p>
 
 <p>Implemented in <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#ab647613f0976f8059f72dc3795b8e7b7">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aa8d86a1679a9e46b11be02482c0129b1"></a><!-- doxytag: member="DdMd::AnglePotential::energy" ref="aa8d86a1679a9e46b11be02482c0129b1" args="(double cosTheta, int type) const " -->
+<a class="anchor" id="a39dcd26c9125c7cb7c2c12677813b98f"></a><!-- doxytag: member="DdMd::AnglePotential::angleEnergy" ref="a39dcd26c9125c7cb7c2c12677813b98f" args="(double cosTheta, int type) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">double DdMd::AnglePotential::energy </td>
+          <td class="memname">double DdMd::AnglePotential::angleEnergy </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>cosTheta</em>, </td>
@@ -262,16 +256,16 @@ Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a4d6073ae3d174a9c23233ced72791e3a">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a541e56041783abce9f1e1e4a9c9fc90a">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="af0cf97922c23398017cfc70e8bd091ea"></a><!-- doxytag: member="DdMd::AnglePotential::force" ref="af0cf97922c23398017cfc70e8bd091ea" args="(const Vector &amp;R1, const Vector &amp;R2, Vector &amp;F1, Vector &amp;F2, int type) const " -->
+<a class="anchor" id="a7de1d97cb9ae2b54e5e509befab44cb2"></a><!-- doxytag: member="DdMd::AnglePotential::angleForce" ref="a7de1d97cb9ae2b54e5e509befab44cb2" args="(const Vector &amp;R1, const Vector &amp;R2, Vector &amp;F1, Vector &amp;F2, int type) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DdMd::AnglePotential::force </td>
+          <td class="memname">void DdMd::AnglePotential::angleForce </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classUtil_1_1Vector.html">Vector</a> &amp;&#160;</td>
           <td class="paramname"><em>R1</em>, </td>
@@ -309,7 +303,7 @@ Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b
 </div>
 <div class="memdoc">
 
-<p>Returns forces along two bonds at the angle, for use in MD and stress calculation. </p>
+<p>Computes forces along two bonds within the angle. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">R1</td><td>bond vector from atom 1 to 2. </td></tr>
@@ -321,91 +315,47 @@ Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a041564877c7dd040fd3b394032fcbb78">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Reimplemented in <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a6d002003d405dbdbf21bd6ae958ae902">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a1dba5e877920805688f2d61332fc0df4"></a><!-- doxytag: member="DdMd::AnglePotential::addForces" ref="a1dba5e877920805688f2d61332fc0df4" args="()=0" -->
+<a class="anchor" id="a7f324e81709d3572c8c993063d2d229a"></a><!-- doxytag: member="DdMd::AnglePotential::boundary" ref="a7f324e81709d3572c8c993063d2d229a" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void DdMd::AnglePotential::addForces </td>
+          <td class="memname">Boundary &amp; DdMd::AnglePotential::boundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
+          <td> const<code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Add the angle forces for all atoms. </p>
+<p>Return boundary by reference. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a86c011c602a91dcf4d2509bbbb86419f">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotential_8h_source.html#l00119">119</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotential_8h_source.html">ddMd/potentials/angle/AnglePotential.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a3e4b71a695bd40d1cce93267dbbcf7e6"></a><!-- doxytag: member="DdMd::AnglePotential::addForces" ref="a3e4b71a695bd40d1cce93267dbbcf7e6" args="(double &amp;energy)=0" -->
+<a class="anchor" id="a19e591d753b57e08251df18a23ef3459"></a><!-- doxytag: member="DdMd::AnglePotential::storage" ref="a19e591d753b57e08251df18a23ef3459" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void DdMd::AnglePotential::addForces </td>
-          <td>(</td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>energy</em></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Add pair forces to atom forces, and compute energy. </p>
-
-<p>Implemented in <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#ac0e626f67beffefe340318035ee74428">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a3a5bd969ede6d46a0d1b84d7b5d0826f"></a><!-- doxytag: member="DdMd::AnglePotential::computeEnergy" ref="a3a5bd969ede6d46a0d1b84d7b5d0826f" args="(MPI::Intracomm &amp;communicator)=0" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void DdMd::AnglePotential::computeEnergy </td>
-          <td>(</td>
-          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
-          <td class="paramname"><em>communicator</em></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Calculate total angle potential. </p>
-<p>Must be call on all processors (MPI reduce operation). </p>
-
-<p>Implemented in <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#ade5a9ec00b5931a70e3f72be2cb3fd1e">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a499871d49991bb903ad0c4a0b76778d9"></a><!-- doxytag: member="DdMd::AnglePotential::energy" ref="a499871d49991bb903ad0c4a0b76778d9" args="()=0" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual double DdMd::AnglePotential::energy </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a>&lt; 3 &gt; &amp; DdMd::AnglePotential::storage </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
+          <td> const<code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Get total angle potential, computed previously by <a class="el" href="classDdMd_1_1AnglePotential.html#a3a5bd969ede6d46a0d1b84d7b5d0826f" title="Calculate total angle potential.">computeEnergy()</a>. </p>
-<p>Call only on master processor, result otherwise invalid. </p>
+<p>Return bond storage by reference. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1AnglePotentialImpl.html#a164554acebe7bf34adc6b5b4df643cf3">DdMd::AnglePotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2angle_2AnglePotential_8h_source.html#l00123">123</a> of file <a class="el" href="ddMd_2potentials_2angle_2AnglePotential_8h_source.html">ddMd/potentials/angle/AnglePotential.h</a>.</p>
 
 </div>
 </div>
@@ -414,7 +364,7 @@ Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b
 <li><a class="el" href="AnglePotential_8cpp_source.html">AnglePotential.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

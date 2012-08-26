@@ -96,7 +96,7 @@
 <a name="l00045"></a>00045       <span class="comment">// Read and set dimensions of simulation Boundary.</span>
 <a name="l00046"></a>00046       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> lengths;
 <a name="l00047"></a>00047       in &gt;&gt; <a class="code" href="classUtil_1_1Label.html" title="A label string in a file format.">Label</a>(<span class="stringliteral">&quot;BoxLengths&quot;</span>) &gt;&gt; lengths;
-<a name="l00048"></a>00048       setLengths&lt;Boundary&gt;(boundary(), lengths);
+<a name="l00048"></a>00048       boundary().setOrthorhombic(lengths);
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050       <span class="comment">// Read total number of atoms (or particles)</span>
 <a name="l00051"></a>00051       <span class="keywordtype">int</span> nAtom, nSpecies;
@@ -171,21 +171,12 @@
 <a name="l00120"></a>00120          }
 <a name="l00121"></a>00121       }
 <a name="l00122"></a>00122    }
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124    <span class="keyword">template</span> &lt;<span class="keyword">class</span> BoundaryType&gt;
-<a name="l00125"></a>00125    <span class="keywordtype">void</span> PmcConfigIo::setLengths(BoundaryType&amp; boundary, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; lengths)
-<a name="l00126"></a>00126    {  <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Boundary type must be Orthorhombic for PmcConfigIo&quot;</span>); }
-<a name="l00127"></a>00127  
-<a name="l00128"></a>00128    <span class="keyword">template</span> &lt;&gt;
-<a name="l00129"></a>00129    <span class="keywordtype">void</span> PmcConfigIo::setLengths&lt;OrthorhombicBoundary&gt;(<a class="code" href="classUtil_1_1OrthorhombicBoundary.html" title="An orthorhombic periodic unit cell.">OrthorhombicBoundary</a>&amp; boundary, 
-<a name="l00130"></a>00130                                                       <span class="keyword">const</span> <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>&amp; lengths)
-<a name="l00131"></a>00131    {  boundary.setLengths(lengths);  }
-<a name="l00132"></a>00132  
-<a name="l00133"></a>00133 } 
-<a name="l00134"></a>00134 <span class="preprocessor">#endif</span>
+<a name="l00123"></a>00123  
+<a name="l00124"></a>00124 } 
+<a name="l00125"></a>00125 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -58,7 +58,7 @@
 <div class="textblock"><p>A single <a class="el" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a> in a <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>. </p>
 <p>An initialized <a class="el" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a> has an array of Atom* pointers, a pointer to the next <a class="el" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a> in a linked list, and a pointer to an array of integer offsets to neighboring cells.</p>
 <p>A linked list of cells is created by a parent <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>. The method <a class="el" href="classDdMd_1_1CellList.html#a4dc8d93e300ad81d7156680f31af9a1c" title="Return pointer to first local cell in linked list.">CellList::begin()</a> returns a pointer to the first <a class="el" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a> in the list. This linked list normally contains only the cells with local atoms, and excludes cells of ghost atoms.</p>
-<p>The method <a class="el" href="classDdMd_1_1Cell.html#a5161d4d39b76bed275d5327ca4f8337f" title="Fill an array with pointers to atoms in a cell and neighboring cells.">Cell::getNeighbors()</a> returns an array containing pointers to atoms in this cell and all neighboring cells, with the atoms in in this cell listed first.</p>
+<p>The method <a class="el" href="classDdMd_1_1Cell.html#a8c92f17d314e3c35b81bdc9107794fe5" title="Fill an array with pointers to atoms in a cell and neighboring cells.">Cell::getNeighbors()</a> returns an array containing pointers to atoms in this cell and all neighboring cells, with the atoms in in this cell listed first.</p>
 <p>Here is an example of code to iterate over all local cells in a <a class="el" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>, and over all pairs of neighboring atoms: </p>
 <div class="fragment"><pre class="fragment">   CellList cellList;                <span class="comment">// parent CellList</span>
    <a class="code" href="classDdMd_1_1Cell.html#a1c3ce7d79db18f1afd892e68f3853436" title="Static array for holding neighbors in a cell list.">Cell::NeighborArray</a> neighbors;    <span class="comment">// array of Atom* pointers</span>
@@ -134,8 +134,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this a ghost cell?  <a href="#afc08197fde54f29ece0734e72600fd52"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classDdMd_1_1Cell.html">Cell</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Cell.html#ae757cb254ec9698a6eea274c53a44112">neighborCellPtr</a> (int i) const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to neighbor cell i.  <a href="#ae757cb254ec9698a6eea274c53a44112"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Cell.html#a5161d4d39b76bed275d5327ca4f8337f">getNeighbors</a> (<a class="el" href="classUtil_1_1FSArray.html">NeighborArray</a> &amp;neighbors) const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill an array with pointers to atoms in a cell and neighboring cells.  <a href="#a5161d4d39b76bed275d5327ca4f8337f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Cell.html#a8c92f17d314e3c35b81bdc9107794fe5">getNeighbors</a> (<a class="el" href="classUtil_1_1FSArray.html">NeighborArray</a> &amp;neighbors, bool reverseUpdateFlag=false) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill an array with pointers to atoms in a cell and neighboring cells.  <a href="#a8c92f17d314e3c35b81bdc9107794fe5"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1Cell.html#a919f7ab3ff061912827488100ec992e3">MaxNeighborCell</a> = 27</td></tr>
@@ -236,7 +236,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00036">36</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html">ddMd/neighbor/Cell.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00101">DdMd::CellList::makeGrid()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00114">DdMd::CellList::makeGrid()</a>.</p>
 
 </div>
 </div>
@@ -258,7 +258,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00039">39</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html">ddMd/neighbor/Cell.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00101">DdMd::CellList::makeGrid()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00114">DdMd::CellList::makeGrid()</a>.</p>
 
 </div>
 </div>
@@ -278,7 +278,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Return a pointer to neighbor cell i. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00318">318</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00320">320</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
 
 <p>Referenced by <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00093">DdMd::PairList::build()</a>.</p>
 
@@ -324,7 +324,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00033">33</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html">ddMd/neighbor/Cell.cpp</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00101">DdMd::CellList::makeGrid()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00114">DdMd::CellList::makeGrid()</a>.</p>
 
 </div>
 </div>
@@ -345,9 +345,9 @@ Static Public Attributes</h2></td></tr>
 <p>Reset to empty before incrementing capacity. </p>
 <p>Does not nullify nextCell pointer is isGhostCell bool. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00257">257</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00259">259</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00051">getNeighbors()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00052">getNeighbors()</a>.</p>
 
 </div>
 </div>
@@ -368,7 +368,7 @@ Static Public Attributes</h2></td></tr>
 <p>Increment the capacity counter. </p>
 <p>This must be called within a loop over atoms, once per atom that belongs in this cell. This loop must completed before initialize is called. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00251">251</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00253">253</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
 
 </div>
 </div>
@@ -397,7 +397,7 @@ Static Public Attributes</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>end of array segment (element one past the end) </dd></dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00264">264</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00266">266</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
 
 </div>
 </div>
@@ -418,7 +418,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Append an Atom* pointer to an initialized cell. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00274">274</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00276">276</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
 
 </div>
 </div>
@@ -438,9 +438,9 @@ Static Public Attributes</h2></td></tr>
 
 <p>Number of atoms in cell. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00285">285</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00287">287</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00093">DdMd::PairList::build()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00051">getNeighbors()</a>, and <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00257">DdMd::CellList::isValid()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00093">DdMd::PairList::build()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00052">getNeighbors()</a>, and <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00282">DdMd::CellList::isValid()</a>.</p>
 
 </div>
 </div>
@@ -460,9 +460,9 @@ Static Public Attributes</h2></td></tr>
 
 <p>Capacity of array segment. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00321">321</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00323">323</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00257">DdMd::CellList::isValid()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00282">DdMd::CellList::isValid()</a>.</p>
 
 </div>
 </div>
@@ -483,9 +483,9 @@ Static Public Attributes</h2></td></tr>
 
 <p>Return a pointer to atom i. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00291">291</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00293">293</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00051">getNeighbors()</a>, and <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00257">DdMd::CellList::isValid()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00052">getNeighbors()</a>, and <a class="el" href="ddMd_2neighbor_2CellList_8cpp_source.html#l00282">DdMd::CellList::isValid()</a>.</p>
 
 </div>
 </div>
@@ -505,7 +505,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Return the number of neighboring cells. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00300">300</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00302">302</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
 
 </div>
 </div>
@@ -525,9 +525,9 @@ Static Public Attributes</h2></td></tr>
 
 <p>Is this a ghost cell? </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00327">327</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00329">329</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
 
-<p>Referenced by <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00051">getNeighbors()</a>.</p>
+<p>Referenced by <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00052">getNeighbors()</a>.</p>
 
 </div>
 </div>
@@ -548,11 +548,11 @@ Static Public Attributes</h2></td></tr>
 
 <p>Return a pointer to neighbor cell i. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00309">309</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00311">311</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html">ddMd/neighbor/Cell.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a5161d4d39b76bed275d5327ca4f8337f"></a><!-- doxytag: member="DdMd::Cell::getNeighbors" ref="a5161d4d39b76bed275d5327ca4f8337f" args="(NeighborArray &amp;neighbors) const " -->
+<a class="anchor" id="a8c92f17d314e3c35b81bdc9107794fe5"></a><!-- doxytag: member="DdMd::Cell::getNeighbors" ref="a8c92f17d314e3c35b81bdc9107794fe5" args="(NeighborArray &amp;neighbors, bool reverseUpdateFlag=false) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -560,8 +560,18 @@ Static Public Attributes</h2></td></tr>
           <td class="memname">void DdMd::Cell::getNeighbors </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classUtil_1_1FSArray.html">NeighborArray</a> &amp;&#160;</td>
-          <td class="paramname"><em>neighbors</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"><em>neighbors</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reverseUpdateFlag</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div>
@@ -572,14 +582,15 @@ Static Public Attributes</h2></td></tr>
 <p>To avoid double counting of pairs, the method only returns atoms from neighboring local cells with a cell id greater than this-&gt;id(), and from neighboring ghost cells.</p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">neighbors</td><td>array of pointers to neighbor Atoms </td></tr>
+    <tr><td class="paramname">neighbors</td><td>Array of pointers to neighbor Atoms </td></tr>
+    <tr><td class="paramname">reverseUpdateFlag</td><td>Is reverse communication enabled? </td></tr>
   </table>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00051">51</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html">ddMd/neighbor/Cell.cpp</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html#l00052">52</a> of file <a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html">ddMd/neighbor/Cell.cpp</a>.</p>
 
-<p>References <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00291">atomPtr()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00257">clear()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00327">isGhostCell()</a>, and <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00285">nAtom()</a>.</p>
+<p>References <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00293">atomPtr()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00259">clear()</a>, <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00329">isGhostCell()</a>, and <a class="el" href="ddMd_2neighbor_2Cell_8h_source.html#l00287">nAtom()</a>.</p>
 
 <p>Referenced by <a class="el" href="ddMd_2neighbor_2PairList_8cpp_source.html#l00093">DdMd::PairList::build()</a>.</p>
 
@@ -625,7 +636,7 @@ Static Public Attributes</h2></td></tr>
 <li><a class="el" href="ddMd_2neighbor_2Cell_8cpp_source.html">ddMd/neighbor/Cell.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

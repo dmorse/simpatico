@@ -140,8 +140,8 @@
 <a name="l00089"></a>00089    <span class="comment">/*</span>
 <a name="l00090"></a>00090 <span class="comment">   * Build the PairList, i.e., populate it with atom pairs.</span>
 <a name="l00091"></a>00091 <span class="comment">   */</span>
-<a name="l00092"></a>00092    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#acb7798541b9fbd041becd9ddc2d6a0ed" title="Use a CellList to build a new PairList.">PairList::build</a>(<a class="code" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>&amp; cellList)
-<a name="l00093"></a><a class="code" href="classDdMd_1_1PairList.html#acb7798541b9fbd041becd9ddc2d6a0ed">00093</a>    {
+<a name="l00092"></a>00092    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#ab22cf98d822f0af093485d921ff70def" title="Use a CellList to build a new PairList.">PairList::build</a>(<a class="code" href="classDdMd_1_1CellList.html" title="A cell list used only to identify nearby atom pairs.">CellList</a>&amp; cellList, <span class="keywordtype">bool</span> reverseUpdateFlag)
+<a name="l00093"></a><a class="code" href="classDdMd_1_1PairList.html#ab22cf98d822f0af093485d921ff70def">00093</a>    {
 <a name="l00094"></a>00094       <span class="comment">// Precondition</span>
 <a name="l00095"></a>00095       assert(isAllocated());
 <a name="l00096"></a>00096  
@@ -168,7 +168,7 @@
 <a name="l00117"></a>00117       <span class="comment">// Find all neighbors (cell list)</span>
 <a name="l00118"></a>00118       cellPtr = cellList.<a class="code" href="classDdMd_1_1CellList.html#a4dc8d93e300ad81d7156680f31af9a1c" title="Return pointer to first local cell in linked list.">begin</a>();
 <a name="l00119"></a>00119       <span class="keywordflow">while</span> (cellPtr) {
-<a name="l00120"></a>00120          cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a5161d4d39b76bed275d5327ca4f8337f" title="Fill an array with pointers to atoms in a cell and neighboring cells.">getNeighbors</a>(neighbors);
+<a name="l00120"></a>00120          cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#a8c92f17d314e3c35b81bdc9107794fe5" title="Fill an array with pointers to atoms in a cell and neighboring cells.">getNeighbors</a>(neighbors, reverseUpdateFlag);
 <a name="l00121"></a>00121          na = cellPtr-&gt;<a class="code" href="classDdMd_1_1Cell.html#ac5ba44f6436e965590f7abb08f117f18" title="Number of atoms in cell.">nAtom</a>();
 <a name="l00122"></a>00122          nn = neighbors.<a class="code" href="classUtil_1_1FSArray.html#a19dd0b719b8f82c11bc881e9a6c30813" title="Return logical size of this array (i.e., number of elements).">size</a>();
 <a name="l00123"></a>00123          <span class="keywordflow">for</span> (i = 0; i &lt; na; ++i) {
@@ -190,7 +190,7 @@
 <a name="l00139"></a>00139                            <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;Overflow: # pairs &gt; pairCapacity_&quot;</span>);
 <a name="l00140"></a>00140                         }
 <a name="l00141"></a>00141       
-<a name="l00142"></a>00142                         <span class="comment">// If first neighbor of atom1, record atom1 in atom1Ptrs_</span>
+<a name="l00142"></a>00142                         <span class="comment">// If first neighbor of atom1, add atom1 to atom1Ptrs_</span>
 <a name="l00143"></a>00143                         <span class="keywordflow">if</span> (!foundNeighbor) {
 <a name="l00144"></a>00144    
 <a name="l00145"></a>00145                            <span class="keywordflow">if</span> (nAtom1_ &gt;= atomCapacity_) {
@@ -202,7 +202,7 @@
 <a name="l00151"></a>00151                            foundNeighbor = <span class="keyword">true</span>;
 <a name="l00152"></a>00152                         }
 <a name="l00153"></a>00153       
-<a name="l00154"></a>00154                         <span class="comment">// Append pointer to 2nd atom to atom2Ptrs_[]</span>
+<a name="l00154"></a>00154                         <span class="comment">// Append 2nd atom to atom2Ptrs_[]</span>
 <a name="l00155"></a>00155                         atom2Ptrs_[nAtom2_] = atom2Ptr;
 <a name="l00156"></a>00156                         ++nAtom2_;
 <a name="l00157"></a>00157       
@@ -211,7 +211,7 @@
 <a name="l00160"></a>00160                }
 <a name="l00161"></a>00161             }
 <a name="l00162"></a>00162 
-<a name="l00163"></a>00163             <span class="comment">// Neighbors in the same cell as atom1</span>
+<a name="l00163"></a>00163             <span class="comment">// Atoms in neighboring cells</span>
 <a name="l00164"></a>00164             <span class="keywordflow">for</span> (j = na; j &lt; nn; ++j) {
 <a name="l00165"></a>00165                atom2Ptr = neighbors[j];
 <a name="l00166"></a>00166                atom2Id  = atom2Ptr-&gt;<a class="code" href="classDdMd_1_1Atom.html#aca106da4ff4a2a5428f013272060eaf8" title="Get unique global index.">id</a>();
@@ -309,48 +309,61 @@
 <a name="l00258"></a>00258 <span class="preprocessor">      #endif</span>
 <a name="l00259"></a>00259 <span class="preprocessor"></span>   }
 <a name="l00260"></a>00260 
-<a name="l00264"></a>00264    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#a6cf94e9c84005f984dd748b99bb2fc66" title="Output statistics.">PairList::outputStatistics</a>(std::ostream&amp; out) {
-<a name="l00265"></a><a class="code" href="classDdMd_1_1PairList.html#a6cf94e9c84005f984dd748b99bb2fc66">00265</a>       out &lt;&lt; <span class="stringliteral">&quot;Maximum number of pairs, pair capacity&quot;</span>
-<a name="l00266"></a>00266           &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(maxNPair_, 10) 
-<a name="l00267"></a>00267           &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(pairCapacity_, 10) 
-<a name="l00268"></a>00268           &lt;&lt; std::endl;
-<a name="l00269"></a>00269       out &lt;&lt; <span class="stringliteral">&quot;Maximum number of atoms, atom capacity&quot;</span>
-<a name="l00270"></a>00270           &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(maxNAtom_, 10) 
-<a name="l00271"></a>00271           &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(atomCapacity_, 10) 
-<a name="l00272"></a>00272           &lt;&lt; std::endl;
-<a name="l00273"></a>00273    }
-<a name="l00274"></a>00274 
-<a name="l00275"></a>00275 <span class="preprocessor">   #if 0</span>
-<a name="l00276"></a>00276 <span class="preprocessor"></span>   <span class="comment">/*</span>
-<a name="l00277"></a>00277 <span class="comment">   * Return true if valid, or throw Exception.</span>
-<a name="l00278"></a>00278 <span class="comment">   */</span>
-<a name="l00279"></a>00279    <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1PairList.html#aeeeb83f5acfa65a99d52b4b9fc64f6d3" title="Return true if valid, or throw Exception.">PairList::isValid</a>()<span class="keyword"> const</span>
-<a name="l00280"></a>00280 <span class="keyword">   </span>{
-<a name="l00281"></a>00281       <span class="keywordflow">if</span> (isAllocated()) {
-<a name="l00282"></a>00282 
-<a name="l00283"></a>00283          <span class="comment">// Check for null pointers to allocated arrays</span>
+<a name="l00261"></a>00261    <span class="comment">/*</span>
+<a name="l00262"></a>00262 <span class="comment">   * Output statistics.</span>
+<a name="l00263"></a>00263 <span class="comment">   */</span>
+<a name="l00264"></a>00264    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1PairList.html#aa2890c1afd070d872661748fc5e18afb" title="Output statistics.">PairList::outputStatistics</a>(std::ostream&amp; out, <span class="keywordtype">int</span> nStep)
+<a name="l00265"></a><a class="code" href="classDdMd_1_1PairList.html#aa2890c1afd070d872661748fc5e18afb">00265</a>    {
+<a name="l00266"></a>00266 
+<a name="l00267"></a>00267       out &lt;&lt; std::endl;
+<a name="l00268"></a>00268       out &lt;&lt; <span class="stringliteral">&quot;maxNPair, capacity &quot;</span> 
+<a name="l00269"></a>00269                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(maxNPair_, 10)
+<a name="l00270"></a>00270                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(pairCapacity_, 10)
+<a name="l00271"></a>00271                   &lt;&lt; std::endl;
+<a name="l00272"></a>00272       out &lt;&lt; <span class="stringliteral">&quot;maxNAtom, capacity &quot;</span> 
+<a name="l00273"></a>00273                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(maxNAtom_, 10)
+<a name="l00274"></a>00274                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(atomCapacity_, 10)
+<a name="l00275"></a>00275                   &lt;&lt; std::endl;
+<a name="l00276"></a>00276       out &lt;&lt; <span class="stringliteral">&quot;buildCounter       &quot;</span> 
+<a name="l00277"></a>00277                   &lt;&lt; <a class="code" href="classUtil_1_1Int.html" title="Wrapper for an int, for formatted ostream output.">Int</a>(buildCounter_, 10)
+<a name="l00278"></a>00278                   &lt;&lt; std::endl;
+<a name="l00279"></a>00279       out &lt;&lt; <span class="stringliteral">&quot;steps / build      &quot;</span>
+<a name="l00280"></a>00280                   &lt;&lt; double(nStep)/double(buildCounter_)
+<a name="l00281"></a>00281                   &lt;&lt; std::endl;
+<a name="l00282"></a>00282       out &lt;&lt; std::endl;
+<a name="l00283"></a>00283    }
 <a name="l00284"></a>00284 
-<a name="l00285"></a>00285          <span class="keywordflow">if</span> (atomCapacity_ &lt;= 0) <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;atomCapacity_ &lt;= 0&quot;</span>); 
-<a name="l00286"></a>00286          <span class="keywordflow">if</span> (pairCapacity_ &lt;= 0) <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;pairCapacity_ &lt;= 0&quot;</span>); 
-<a name="l00287"></a>00287 
-<a name="l00288"></a>00288          <span class="comment">//if (atom1Ptrs_ == 0)    UTIL_THROW(&quot;Null atom1Ptrs_&quot;); </span>
-<a name="l00289"></a>00289          <span class="comment">//if (atom2Ptrs_ == 0)    UTIL_THROW(&quot;Null atom2Ptrs_&quot;); </span>
-<a name="l00290"></a>00290          <span class="comment">//if (first_ == 0)        UTIL_THROW(&quot;Null first_&quot;); </span>
-<a name="l00291"></a>00291 
-<a name="l00292"></a>00292          <span class="keywordflow">if</span> (nAtom1_ &lt; 0) {
-<a name="l00293"></a>00293             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtom1_ &lt; 0&quot;</span>);
-<a name="l00294"></a>00294          }
-<a name="l00295"></a>00295       }
-<a name="l00296"></a>00296 
-<a name="l00297"></a>00297       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00298"></a>00298    }
-<a name="l00299"></a>00299 <span class="preprocessor">   #endif</span>
-<a name="l00300"></a>00300 <span class="preprocessor"></span>
-<a name="l00301"></a>00301 } 
-<a name="l00302"></a>00302 <span class="preprocessor">#endif</span>
+<a name="l00285"></a>00285 <span class="preprocessor">   #if 0</span>
+<a name="l00286"></a>00286 <span class="preprocessor"></span>   <span class="comment">/*</span>
+<a name="l00287"></a>00287 <span class="comment">   * Return true if valid, or throw Exception.</span>
+<a name="l00288"></a>00288 <span class="comment">   */</span>
+<a name="l00289"></a>00289    <span class="keywordtype">bool</span> PairList::isValid()<span class="keyword"> const</span>
+<a name="l00290"></a>00290 <span class="keyword">   </span>{
+<a name="l00291"></a>00291       <span class="keywordflow">if</span> (isAllocated()) {
+<a name="l00292"></a>00292 
+<a name="l00293"></a>00293          <span class="comment">// Check for null pointers to allocated arrays</span>
+<a name="l00294"></a>00294 
+<a name="l00295"></a>00295          <span class="keywordflow">if</span> (atomCapacity_ &lt;= 0) <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;atomCapacity_ &lt;= 0&quot;</span>); 
+<a name="l00296"></a>00296          <span class="keywordflow">if</span> (pairCapacity_ &lt;= 0) <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;pairCapacity_ &lt;= 0&quot;</span>); 
+<a name="l00297"></a>00297 
+<a name="l00298"></a>00298          <span class="comment">//if (atom1Ptrs_ == 0)    UTIL_THROW(&quot;Null atom1Ptrs_&quot;); </span>
+<a name="l00299"></a>00299          <span class="comment">//if (atom2Ptrs_ == 0)    UTIL_THROW(&quot;Null atom2Ptrs_&quot;); </span>
+<a name="l00300"></a>00300          <span class="comment">//if (first_ == 0)        UTIL_THROW(&quot;Null first_&quot;); </span>
+<a name="l00301"></a>00301 
+<a name="l00302"></a>00302          <span class="keywordflow">if</span> (nAtom1_ &lt; 0) {
+<a name="l00303"></a>00303             <a class="code" href="global_8h.html#ad2512f8bd062d41d66799cf900151487" title="Macro for throwing an Exception, reporting function, file and line number.">UTIL_THROW</a>(<span class="stringliteral">&quot;nAtom1_ &lt; 0&quot;</span>);
+<a name="l00304"></a>00304          }
+<a name="l00305"></a>00305       }
+<a name="l00306"></a>00306 
+<a name="l00307"></a>00307       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00308"></a>00308    }
+<a name="l00309"></a>00309 <span class="preprocessor">   #endif</span>
+<a name="l00310"></a>00310 <span class="preprocessor"></span>
+<a name="l00311"></a>00311 } 
+<a name="l00312"></a>00312 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

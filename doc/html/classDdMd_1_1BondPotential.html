@@ -47,14 +47,14 @@
 </div>
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a>  </div>
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a>  </div>
   <div class="headertitle">
-<h1>DdMd::BondPotential Class Reference</h1>  </div>
+<h1>DdMd::BondPotential Class Reference<div class="ingroups"><a class="el" href="group__DdMd__Bond__Module.html">Bond Potentials</a></div></h1>  </div>
 </div>
 <div class="contents">
-<!-- doxytag: class="DdMd::BondPotential" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
+<!-- doxytag: class="DdMd::BondPotential" --><!-- doxytag: inherits="DdMd::Potential" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>An <a class="el" href="classDdMd_1_1BondPotential.html" title="An BondPotential calculates bond forces and energies for a parent Simulation.">BondPotential</a> calculates bond forces and energies for a parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>. </p>
-<p>All operations in this class are local (no MPI). </p>
 
 <p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotential_8h_source.html#l00029">29</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotential_8h_source.html">ddMd/potentials/bond/BondPotential.h</a>.</p>
 </div>
@@ -65,9 +65,10 @@ Inheritance diagram for DdMd::BondPotential:</div>
  <div class="center">
   <img src="classDdMd_1_1BondPotential.png" usemap="#DdMd::BondPotential_map" alt=""/>
   <map id="DdMd::BondPotential_map" name="DdMd::BondPotential_map">
+<area href="classDdMd_1_1Potential.html" alt="DdMd::Potential" shape="rect" coords="0,112,234,136"/>
 <area href="classUtil_1_1ParamComposite.html" alt="Util::ParamComposite" shape="rect" coords="0,56,234,80"/>
 <area href="classUtil_1_1ParamComponent.html" alt="Util::ParamComponent" shape="rect" coords="0,0,234,24"/>
-<area href="classDdMd_1_1BondPotentialImpl.html" alt="DdMd::BondPotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,168,234,192"/>
+<area href="classDdMd_1_1BondPotentialImpl.html" alt="DdMd::BondPotentialImpl&lt; Interaction &gt;" shape="rect" coords="0,224,234,248"/>
 </map>
  </div></div>
 
@@ -86,26 +87,18 @@ Public Member Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Interaction interface</div></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#ab1cd1797ddd43df866735145b05ce09b">setNBondType</a> (int nBondType)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the maximum number of atom types.  <a href="#ab1cd1797ddd43df866735145b05ce09b"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#a42422933c850f20194da1dabb50d650e">energy</a> (double rsq, int bondTypeId) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pair energy for a single pair.  <a href="#a42422933c850f20194da1dabb50d650e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#a720fb0fec9ec59f8c4eec9d58a4108be">forceOverR</a> (double rsq, int bondTypeId) const =0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return force / separation for a single pair.  <a href="#a720fb0fec9ec59f8c4eec9d58a4108be"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#aaeb1cb798ffc2f1d256ff39e7664b42f">bondEnergy</a> (double rsq, int bondTypeId) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return pair energy for a single pair.  <a href="#aaeb1cb798ffc2f1d256ff39e7664b42f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#a39b06bf99cde37dab2cf8940536316b7">bondForceOverR</a> (double rsq, int bondTypeId) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return force / separation for a single pair.  <a href="#a39b06bf99cde37dab2cf8940536316b7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#ad6c4b2371205219c1152d84a4a200f6a">randomBondLength</a> (<a class="el" href="classUtil_1_1Random.html">Random</a> *random, double beta, int bondTypeId) const =0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return force / separation for a single pair.  <a href="#ad6c4b2371205219c1152d84a4a200f6a"></a><br/></td></tr>
-<tr><td colspan="2"><h2><a name="member-group"></a>
-Total Energy, Force and Stress</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9919ca4cb2f7e9aa75fef2a5208e983f"></a><!-- doxytag: member="DdMd::BondPotential::boundaryPtr_" ref="a9919ca4cb2f7e9aa75fef2a5208e983f" args="" -->
-Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac8084fdeca8796719c625941083518ba"></a><!-- doxytag: member="DdMd::BondPotential::storagePtr_" ref="ac8084fdeca8796719c625941083518ba" args="" -->
-<a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a>&lt; 2 &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>storagePtr_</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#a1d644b53f25f7452d1278ed5269a046d">addForces</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the bond forces for all atoms.  <a href="#a1d644b53f25f7452d1278ed5269a046d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#a7c58f92f6287a8dd1da0c2b951959126">addForces</a> (double &amp;energy)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add pair forces to atom forces, and compute energy.  <a href="#a7c58f92f6287a8dd1da0c2b951959126"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#a2c4c70339e8d06486fb74c43ac8cfa90">computeEnergy</a> (MPI::Intracomm &amp;communicator)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total bond potential.  <a href="#a2c4c70339e8d06486fb74c43ac8cfa90"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#ad8fc143ab7c4125979678722b6090725">energy</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total bond potential, computed previously by <a class="el" href="classDdMd_1_1BondPotential.html#a2c4c70339e8d06486fb74c43ac8cfa90" title="Calculate total bond potential.">computeEnergy()</a>.  <a href="#ad8fc143ab7c4125979678722b6090725"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Boundary &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#a8c2920232799788d1315e2c12efafd3c">boundary</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return boundary by reference.  <a href="#a8c2920232799788d1315e2c12efafd3c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a>&lt; 2 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotential.html#a9780e785de96fe0ed159bfb1087725df">storage</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return bond storage by reference.  <a href="#a9780e785de96fe0ed159bfb1087725df"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ac71383ead6c379d7a29fd1a337efcc5e"></a><!-- doxytag: member="DdMd::BondPotential::BondPotential" ref="ac71383ead6c379d7a29fd1a337efcc5e" args="(Simulation &amp;simulation)" -->
@@ -230,12 +223,12 @@ Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b
 
 </div>
 </div>
-<a class="anchor" id="a42422933c850f20194da1dabb50d650e"></a><!-- doxytag: member="DdMd::BondPotential::energy" ref="a42422933c850f20194da1dabb50d650e" args="(double rsq, int bondTypeId) const =0" -->
+<a class="anchor" id="aaeb1cb798ffc2f1d256ff39e7664b42f"></a><!-- doxytag: member="DdMd::BondPotential::bondEnergy" ref="aaeb1cb798ffc2f1d256ff39e7664b42f" args="(double rsq, int bondTypeId) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double DdMd::BondPotential::energy </td>
+          <td class="memname">virtual double DdMd::BondPotential::bondEnergy </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rsq</em>, </td>
@@ -257,16 +250,16 @@ Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b
 
 <p>Return pair energy for a single pair. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1BondPotentialImpl.html#a8e2afd7e5c48d25f59e218fb5e3137ac">DdMd::BondPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1BondPotentialImpl.html#a0d3a20ad3ab0dabd3648346d192e6cf1">DdMd::BondPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a720fb0fec9ec59f8c4eec9d58a4108be"></a><!-- doxytag: member="DdMd::BondPotential::forceOverR" ref="a720fb0fec9ec59f8c4eec9d58a4108be" args="(double rsq, int bondTypeId) const =0" -->
+<a class="anchor" id="a39b06bf99cde37dab2cf8940536316b7"></a><!-- doxytag: member="DdMd::BondPotential::bondForceOverR" ref="a39b06bf99cde37dab2cf8940536316b7" args="(double rsq, int bondTypeId) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual double DdMd::BondPotential::forceOverR </td>
+          <td class="memname">virtual double DdMd::BondPotential::bondForceOverR </td>
           <td>(</td>
           <td class="paramtype">double&#160;</td>
           <td class="paramname"><em>rsq</em>, </td>
@@ -288,7 +281,7 @@ Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b
 
 <p>Return force / separation for a single pair. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1BondPotentialImpl.html#a400a7f71b48d36b36e694fb60014ef7c">DdMd::BondPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1BondPotentialImpl.html#a8c41227c79fa2060f42a67833ad4601c">DdMd::BondPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
@@ -329,87 +322,43 @@ Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b
 
 </div>
 </div>
-<a class="anchor" id="a1d644b53f25f7452d1278ed5269a046d"></a><!-- doxytag: member="DdMd::BondPotential::addForces" ref="a1d644b53f25f7452d1278ed5269a046d" args="()=0" -->
+<a class="anchor" id="a8c2920232799788d1315e2c12efafd3c"></a><!-- doxytag: member="DdMd::BondPotential::boundary" ref="a8c2920232799788d1315e2c12efafd3c" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void DdMd::BondPotential::addForces </td>
+          <td class="memname">Boundary &amp; DdMd::BondPotential::boundary </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
+          <td> const<code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Add the bond forces for all atoms. </p>
+<p>Return boundary by reference. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1BondPotentialImpl.html#a63ce11a9ed6ee868cf4e869325390ca9">DdMd::BondPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotential_8h_source.html#l00114">114</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotential_8h_source.html">ddMd/potentials/bond/BondPotential.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a7c58f92f6287a8dd1da0c2b951959126"></a><!-- doxytag: member="DdMd::BondPotential::addForces" ref="a7c58f92f6287a8dd1da0c2b951959126" args="(double &amp;energy)=0" -->
+<a class="anchor" id="a9780e785de96fe0ed159bfb1087725df"></a><!-- doxytag: member="DdMd::BondPotential::storage" ref="a9780e785de96fe0ed159bfb1087725df" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void DdMd::BondPotential::addForces </td>
-          <td>(</td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>energy</em></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Add pair forces to atom forces, and compute energy. </p>
-
-<p>Implemented in <a class="el" href="classDdMd_1_1BondPotentialImpl.html#ac806efca2762ade5e4953e34b64133d3">DdMd::BondPotentialImpl&lt; Interaction &gt;</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="a2c4c70339e8d06486fb74c43ac8cfa90"></a><!-- doxytag: member="DdMd::BondPotential::computeEnergy" ref="a2c4c70339e8d06486fb74c43ac8cfa90" args="(MPI::Intracomm &amp;communicator)=0" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void DdMd::BondPotential::computeEnergy </td>
-          <td>(</td>
-          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
-          <td class="paramname"><em>communicator</em></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Calculate total bond potential. </p>
-<p>Must be call on all processors (MPI reduce operation). </p>
-
-<p>Implemented in <a class="el" href="classDdMd_1_1BondPotentialImpl.html#a6a6d0d2226a61f413f7e912d968dca65">DdMd::BondPotentialImpl&lt; Interaction &gt;</a>.</p>
-
-</div>
-</div>
-<a class="anchor" id="ad8fc143ab7c4125979678722b6090725"></a><!-- doxytag: member="DdMd::BondPotential::energy" ref="ad8fc143ab7c4125979678722b6090725" args="()=0" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual double DdMd::BondPotential::energy </td>
+          <td class="memname"><a class="el" href="classDdMd_1_1GroupStorage.html">GroupStorage</a>&lt; 2 &gt; &amp; DdMd::BondPotential::storage </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
+          <td> const<code> [inline, protected]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Get total bond potential, computed previously by <a class="el" href="classDdMd_1_1BondPotential.html#a2c4c70339e8d06486fb74c43ac8cfa90" title="Calculate total bond potential.">computeEnergy()</a>. </p>
-<p>Call only on master processor, result otherwise invalid. </p>
+<p>Return bond storage by reference. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1BondPotentialImpl.html#a44210bfc09187e55acc581ed02620baa">DdMd::BondPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotential_8h_source.html#l00117">117</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotential_8h_source.html">ddMd/potentials/bond/BondPotential.h</a>.</p>
 
 </div>
 </div>
@@ -418,7 +367,7 @@ Boundary *&#160;</td><td class="memItemRight" valign="bottom"><b>boundaryPtr_</b
 <li><a class="el" href="ddMd_2potentials_2bond_2BondPotential_8cpp_source.html">ddMd/potentials/bond/BondPotential.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:21 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

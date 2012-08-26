@@ -117,13 +117,13 @@
 <a name="l00066"></a>00066    <span class="keywordtype">int</span> <a class="code" href="classUtil_1_1Dbl.html#ad4cb4f724c4d8303f24832c4c3e583e6" title="Get floating point precision.">Dbl::precision</a>()
 <a name="l00067"></a><a class="code" href="classUtil_1_1Dbl.html#ad4cb4f724c4d8303f24832c4c3e583e6">00067</a>    { <span class="keywordflow">return</span> precision_; }
 <a name="l00068"></a>00068      
-<a name="l00076"></a>00076    std::istream&amp; <a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a" title="istream extractor for a OrthorhombicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a> &amp;<span class="keywordtype">object</span>)
+<a name="l00076"></a>00076    std::istream&amp; <a class="code" href="namespaceUtil.html#a84a8e4c844fd5d302194294ce6cf1dda" title="istream extractor for a MonoclinicBoundary.">operator&gt;&gt;</a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Dbl.html" title="Wrapper for a double precision number, for formatted ostream output.">Dbl</a> &amp;<span class="keywordtype">object</span>)
 <a name="l00077"></a><a class="code" href="namespaceUtil.html#a2b17c94b0ca72c25f5e760b17e1421fe">00077</a>    {
 <a name="l00078"></a>00078       in &gt;&gt; <span class="keywordtype">object</span>.value_;
 <a name="l00079"></a>00079       <span class="keywordflow">return</span> in;
 <a name="l00080"></a>00080    }
 <a name="l00081"></a>00081 
-<a name="l00089"></a>00089    std::ostream&amp; <a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d" title="ostream inserter for an OrthorhombicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> Dbl &amp;<span class="keywordtype">object</span>)
+<a name="l00089"></a>00089    std::ostream&amp; <a class="code" href="namespaceUtil.html#a10bcffa95685d7673ce01e7c634b0bf2" title="ostream inserter for an MonoclinicBoundary.">operator&lt;&lt;</a>(std::ostream&amp; out, <span class="keyword">const</span> Dbl &amp;<span class="keywordtype">object</span>)
 <a name="l00090"></a><a class="code" href="namespaceUtil.html#a4ecd3fb223b55f300aafa0cb36c7d285">00090</a>    {
 <a name="l00091"></a>00091       <span class="keywordflow">if</span> (<span class="keywordtype">object</span>.isFixed_) {
 <a name="l00092"></a>00092          out.setf(std::ios::fixed, std::ios::floatfield);
@@ -140,7 +140,7 @@
 <a name="l00103"></a>00103 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

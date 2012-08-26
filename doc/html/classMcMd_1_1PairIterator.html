@@ -85,8 +85,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializing constructor.  <a href="#a41ee6b567eb906a262191c5212595627"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="classMcMd_1_1PairIterator.html">PairIterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairIterator.html#a667e0398330ebbab5ea132add9750dab">operator++</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Increment to next pair.  <a href="#a667e0398330ebbab5ea132add9750dab"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairIterator.html#a2b60692a0b371a555d124e90f1ad87b7">atEnd</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if at end of <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>.  <a href="#a2b60692a0b371a555d124e90f1ad87b7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairIterator.html#aec977b9ac9bed0d6ac314c4fd6ebd8b9">isEnd</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if at end of <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>.  <a href="#aec977b9ac9bed0d6ac314c4fd6ebd8b9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairIterator.html#a2e8f0a1c15f393bf41a3291b412a48fb">notEnd</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return true if not at end of <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>.  <a href="#a2e8f0a1c15f393bf41a3291b412a48fb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMcMd_1_1PairIterator.html#a9e32868da3b5b47305269f8f5d60529a">getPair</a> (<a class="el" href="classMcMd_1_1Atom.html">Atom</a> *&amp;atom1Ptr, <a class="el" href="classMcMd_1_1Atom.html">Atom</a> *&amp;atom2Ptr) const </td></tr>
@@ -165,12 +165,12 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2b60692a0b371a555d124e90f1ad87b7"></a><!-- doxytag: member="McMd::PairIterator::atEnd" ref="a2b60692a0b371a555d124e90f1ad87b7" args="() const " -->
+<a class="anchor" id="aec977b9ac9bed0d6ac314c4fd6ebd8b9"></a><!-- doxytag: member="McMd::PairIterator::isEnd" ref="aec977b9ac9bed0d6ac314c4fd6ebd8b9" args="() const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool McMd::PairIterator::atEnd </td>
+          <td class="memname">bool McMd::PairIterator::isEnd </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -180,7 +180,7 @@ Public Member Functions</h2></td></tr>
 <div class="memdoc">
 
 <p>Return true if at end of <a class="el" href="classMcMd_1_1PairList.html" title="A Verlet neighbor list.">PairList</a>. </p>
-<p>When <a class="el" href="classMcMd_1_1PairIterator.html#a2b60692a0b371a555d124e90f1ad87b7" title="Return true if at end of PairList.">atEnd()</a> is true, the current pair is already one past past the end of the pairlist, and is thus invalid. </p>
+<p>When <a class="el" href="classMcMd_1_1PairIterator.html#aec977b9ac9bed0d6ac314c4fd6ebd8b9" title="Return true if at end of PairList.">isEnd()</a> is true, the current pair is already one past past the end of the pairlist, and is thus invalid. </p>
 
 <p>Definition at line <a class="el" href="mcMd_2neighbor_2PairIterator_8h_source.html#l00191">191</a> of file <a class="el" href="mcMd_2neighbor_2PairIterator_8h_source.html">mcMd/neighbor/PairIterator.h</a>.</p>
 
@@ -253,7 +253,7 @@ Public Member Functions</h2></td></tr>
 <li><a class="el" href="mcMd_2neighbor_2PairIterator_8h_source.html">mcMd/neighbor/PairIterator.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:27 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:28 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

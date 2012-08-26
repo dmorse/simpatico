@@ -58,7 +58,7 @@
 
 <p>Forward const iterator for an <a class="el" href="classUtil_1_1Array.html" title="Array container class template.">Array</a> or a C array. </p>
 <p>A <a class="el" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator</a> is a forward iterator for an array of const data. It is an abstraction of a pointer to const, similar to an STL const forward iterator. The * operator returns a const reference to an associated Data object the -&gt; operator returns a const pointer to that object. The ++ operator increments the current pointer by one array element.</p>
-<p>Unlike an STL const forward iterator, an <a class="el" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator</a> contains the address of the end of the array. The <a class="el" href="classUtil_1_1ConstArrayIterator.html#a86a9e137fb7ff0e3040330088db3100f" title="Has the end of the array been reached?">atEnd()</a> method can be used to test for termination of a for or while loop. When <a class="el" href="classUtil_1_1ConstArrayIterator.html#a86a9e137fb7ff0e3040330088db3100f" title="Has the end of the array been reached?">atEnd()</a> is true, the current pointer is one past the end of the array, and thus the iterator has no current value.</p>
+<p>Unlike an STL const forward iterator, an <a class="el" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator</a> contains the address of the end of the array. The <a class="el" href="classUtil_1_1ConstArrayIterator.html#ab6b32c9c495ac3dd086cf1dba4002f50" title="Has the end of the array been reached?">isEnd()</a> method can be used to test for termination of a for or while loop. When <a class="el" href="classUtil_1_1ConstArrayIterator.html#ab6b32c9c495ac3dd086cf1dba4002f50" title="Has the end of the array been reached?">isEnd()</a> is true, the current pointer is one past the end of the array, and thus the iterator has no current value.</p>
 <p>A <a class="el" href="classUtil_1_1ConstArrayIterator.html" title="Forward const iterator for an Array or a C array.">ConstArrayIterator</a> behave like a pointer to constant data, and provides read-only access to the object to which it points. Use an <a class="el" href="classUtil_1_1ArrayIterator.html" title="Forward iterator for an Array or a C array.">ArrayIterator</a> if you need read-write access. </p>
 
 <p>Definition at line <a class="el" href="ConstArrayIterator_8h_source.html#l00040">40</a> of file <a class="el" href="ConstArrayIterator_8h_source.html">ConstArrayIterator.h</a>.</p>
@@ -75,8 +75,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the current pointer value.  <a href="#a39735f67c57df14be6ce7f40e1f2646f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ConstArrayIterator.html#a1b06236f546d1046bb6e8e4a56d19d74">setEnd</a> (Data *ptr)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of the end pointer.  <a href="#a1b06236f546d1046bb6e8e4a56d19d74"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ConstArrayIterator.html#a86a9e137fb7ff0e3040330088db3100f">atEnd</a> () const </td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has the end of the array been reached?  <a href="#a86a9e137fb7ff0e3040330088db3100f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ConstArrayIterator.html#ab6b32c9c495ac3dd086cf1dba4002f50">isEnd</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Has the end of the array been reached?  <a href="#ab6b32c9c495ac3dd086cf1dba4002f50"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ConstArrayIterator.html#acb367b83901ed37a6cbedd49f3b3080d">notEnd</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is this not the end of the array?  <a href="#acb367b83901ed37a6cbedd49f3b3080d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const Data *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classUtil_1_1ConstArrayIterator.html#a7edf64fd9ac5e183b7f8fb6a8200f169">get</a> () const </td></tr>
@@ -141,7 +141,7 @@ template&lt;typename Data&gt; </div>
 
 <p>Definition at line <a class="el" href="ConstArrayIterator_8h_source.html#l00060">60</a> of file <a class="el" href="ConstArrayIterator_8h_source.html">ConstArrayIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="FSArray_8h_source.html#l00226">Util::FSArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="FArray_8h_source.html#l00224">Util::FArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="DSArray_8h_source.html#l00286">Util::DSArray&lt; Data &gt;::begin()</a>, and <a class="el" href="Array_8h_source.html#l00169">Util::Array&lt; Data &gt;::begin()</a>.</p>
+<p>Referenced by <a class="el" href="FSArray_8h_source.html#l00225">Util::FSArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="FArray_8h_source.html#l00224">Util::FArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="DSArray_8h_source.html#l00286">Util::DSArray&lt; Data &gt;::begin()</a>, and <a class="el" href="Array_8h_source.html#l00169">Util::Array&lt; Data &gt;::begin()</a>.</p>
 
 </div>
 </div>
@@ -172,18 +172,18 @@ template&lt;typename Data&gt; </div>
 
 <p>Definition at line <a class="el" href="ConstArrayIterator_8h_source.html#l00068">68</a> of file <a class="el" href="ConstArrayIterator_8h_source.html">ConstArrayIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="FSArray_8h_source.html#l00226">Util::FSArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="FArray_8h_source.html#l00224">Util::FArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="DSArray_8h_source.html#l00286">Util::DSArray&lt; Data &gt;::begin()</a>, and <a class="el" href="Array_8h_source.html#l00169">Util::Array&lt; Data &gt;::begin()</a>.</p>
+<p>Referenced by <a class="el" href="FSArray_8h_source.html#l00225">Util::FSArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="FArray_8h_source.html#l00224">Util::FArray&lt; Data, Capacity &gt;::begin()</a>, <a class="el" href="DSArray_8h_source.html#l00286">Util::DSArray&lt; Data &gt;::begin()</a>, and <a class="el" href="Array_8h_source.html#l00169">Util::Array&lt; Data &gt;::begin()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a86a9e137fb7ff0e3040330088db3100f"></a><!-- doxytag: member="Util::ConstArrayIterator::atEnd" ref="a86a9e137fb7ff0e3040330088db3100f" args="() const " -->
+<a class="anchor" id="ab6b32c9c495ac3dd086cf1dba4002f50"></a><!-- doxytag: member="Util::ConstArrayIterator::isEnd" ref="ab6b32c9c495ac3dd086cf1dba4002f50" args="() const " -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename Data&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classUtil_1_1ConstArrayIterator.html">Util::ConstArrayIterator</a>&lt; Data &gt;::atEnd </td>
+          <td class="memname">bool <a class="el" href="classUtil_1_1ConstArrayIterator.html">Util::ConstArrayIterator</a>&lt; Data &gt;::isEnd </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const<code> [inline]</code></td>
@@ -220,7 +220,7 @@ template&lt;typename Data&gt; </div>
 
 <p>Definition at line <a class="el" href="ConstArrayIterator_8h_source.html#l00084">84</a> of file <a class="el" href="ConstArrayIterator_8h_source.html">ConstArrayIterator.h</a>.</p>
 
-<p>Referenced by <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00226">McMd::ExternalPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00296">McMd::BondPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00546">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="VanHove_8cpp_source.html#l00081">McMd::VanHove::sample()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00088">McMd::StructureFactorP::sample()</a>, <a class="el" href="StructureFactor_8cpp_source.html#l00097">McMd::StructureFactor::sample()</a>, <a class="el" href="RDF_8cpp_source.html#l00061">McMd::RDF::sample()</a>, <a class="el" href="MigratingVanHove_8cpp_source.html#l00097">McMd::MigratingVanHove::sample()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">McMd::MdPairEnergyCoefficients::sample()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00087">McMd::IntraStructureFactor::sample()</a>, <a class="el" href="IntraBondTensorAutoCorr__inc_8h_source.html#l00111">McMd::IntraBondTensorAutoCorr&lt; SystemType &gt;::sample()</a>, <a class="el" href="IntraBondStressAutoCorr__inc_8h_source.html#l00112">McMd::IntraBondStressAutoCorr&lt; SystemType &gt;::sample()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00091">McMd::CompositionProfile::sample()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMd::McMdConfigIo::write()</a>.</p>
+<p>Referenced by <a class="el" href="mcMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00226">McMd::ExternalPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="mcMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00296">McMd::BondPotentialImpl&lt; Interaction &gt;::energy()</a>, <a class="el" href="MdSystem_8cpp_source.html#l00546">McMd::MdSystem::kineticEnergy()</a>, <a class="el" href="VanHove_8cpp_source.html#l00081">McMd::VanHove::sample()</a>, <a class="el" href="StructureFactorP_8cpp_source.html#l00088">McMd::StructureFactorP::sample()</a>, <a class="el" href="StructureFactor_8cpp_source.html#l00093">McMd::StructureFactor::sample()</a>, <a class="el" href="RDF_8cpp_source.html#l00061">McMd::RDF::sample()</a>, <a class="el" href="MigratingVanHove_8cpp_source.html#l00097">McMd::MigratingVanHove::sample()</a>, <a class="el" href="MdPairEnergyCoefficients_8cpp_source.html#l00096">McMd::MdPairEnergyCoefficients::sample()</a>, <a class="el" href="IntraStructureFactor_8cpp_source.html#l00087">McMd::IntraStructureFactor::sample()</a>, <a class="el" href="IntraBondTensorAutoCorr__inc_8h_source.html#l00111">McMd::IntraBondTensorAutoCorr&lt; SystemType &gt;::sample()</a>, <a class="el" href="IntraBondStressAutoCorr__inc_8h_source.html#l00112">McMd::IntraBondStressAutoCorr&lt; SystemType &gt;::sample()</a>, <a class="el" href="CompositionProfile_8cpp_source.html#l00091">McMd::CompositionProfile::sample()</a>, and <a class="el" href="McMdConfigIo_8cpp_source.html#l00186">McMd::McMdConfigIo::write()</a>.</p>
 
 </div>
 </div>
@@ -320,7 +320,7 @@ template&lt;typename Data&gt; </div>
 <li><a class="el" href="ConstArrayIterator_8h_source.html">ConstArrayIterator.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:30 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:31 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

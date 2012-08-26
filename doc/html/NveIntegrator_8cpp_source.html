@@ -78,7 +78,7 @@
 <a name="l00027"></a>00027 <span class="comment">   * Constructor.</span>
 <a name="l00028"></a>00028 <span class="comment">   */</span>
 <a name="l00029"></a><a class="code" href="classDdMd_1_1NveIntegrator.html#aacf8da52748a61312bf88d7ad406de90">00029</a>    <a class="code" href="classDdMd_1_1NveIntegrator.html#aacf8da52748a61312bf88d7ad406de90" title="Constructor.">NveIntegrator::NveIntegrator</a>(<a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; simulation)
-<a name="l00030"></a>00030     : <a class="code" href="classDdMd_1_1Integrator.html" title="An Integrator numerically integrates the equations of motion.">Integrator</a>(simulation)
+<a name="l00030"></a>00030     : <a class="code" href="classDdMd_1_1TwoStepIntegrator.html" title="A two-step velocity-Verlet style integrator.">TwoStepIntegrator</a>(simulation)
 <a name="l00031"></a>00031    {}
 <a name="l00032"></a>00032 
 <a name="l00033"></a>00033    <span class="comment">/*</span>
@@ -105,123 +105,73 @@
 <a name="l00054"></a>00054 
 <a name="l00055"></a><a class="code" href="classDdMd_1_1NveIntegrator.html#ab0642ad8c5048a0323a940a8a71944ee">00055</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1NveIntegrator.html#ab0642ad8c5048a0323a940a8a71944ee" title="Setup state just before integration.">NveIntegrator::setup</a>()
 <a name="l00056"></a>00056    {
-<a name="l00057"></a>00057       <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#ac456e424c1c2d2909293d6ffe4658f69" title="Clear previous snapshot.">clearSnapshot</a>();
-<a name="l00058"></a>00058       <a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d" title="Get the Exchanger.">exchanger</a>().<a class="code" href="classDdMd_1_1Exchanger.html#a554aa483259c29b4287d10f3d9fd63da" title="Exchange local atoms and ghosts.">exchange</a>();
-<a name="l00059"></a>00059       <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#a8bdb321770232e6f4bb1ba7413aa9509" title="Record current positions of all local atoms.">makeSnapshot</a>();
-<a name="l00060"></a>00060       <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().<a class="code" href="classDdMd_1_1PairPotential.html#ad88c1c7501f0222ce4a28cfd4deba7b7" title="Build the cell and pair lists.">findNeighbors</a>();
-<a name="l00061"></a>00061       <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a2983b5e88ce2bbf7b0f247921037f26f" title="Compute forces for all local atoms.">computeForces</a>();
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063       <span class="keywordtype">double</span> dtHalf = 0.5*dt_;
-<a name="l00064"></a>00064       <span class="keywordtype">double</span> mass;
-<a name="l00065"></a>00065       <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0" title="Get maximum number of atom types.">nAtomType</a> = prefactors_.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>();
-<a name="l00066"></a>00066       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0" title="Get maximum number of atom types.">nAtomType</a>; ++i) {
-<a name="l00067"></a>00067          mass = <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#adb69f41e67ea48facaaeed0a94c7d218" title="Get an AtomType descriptor by reference.">atomType</a>(i).<a class="code" href="classDdMd_1_1AtomType.html#aa1861be76920dce9345c53c924d15817" title="Get the mass.">mass</a>();
-<a name="l00068"></a>00068          prefactors_[i] = dtHalf/mass;
-<a name="l00069"></a>00069       }
-<a name="l00070"></a>00070    }
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072    <span class="comment">/*</span>
-<a name="l00073"></a>00073 <span class="comment">   * Integrate.</span>
-<a name="l00074"></a>00074 <span class="comment">   */</span>
-<a name="l00075"></a><a class="code" href="classDdMd_1_1NveIntegrator.html#a2ed6a04b0353739118fe46412e402264">00075</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1NveIntegrator.html#a2ed6a04b0353739118fe46412e402264" title="Run a simulation.">NveIntegrator::run</a>(<span class="keywordtype">int</span> nStep)
-<a name="l00076"></a>00076    {
-<a name="l00077"></a>00077       <span class="keywordflow">if</span>(<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().isMaster()) {
-<a name="l00078"></a>00078          <a class="code" href="classUtil_1_1Log.html#a7b86f7c53e482f8f4a1a8b756c162817" title="Get log ostream by reference.">Log::file</a>() &lt;&lt; std::endl;
-<a name="l00079"></a>00079       }
-<a name="l00080"></a>00080       <a class="code" href="classDdMd_1_1Integrator.html#aa57d90f9880ea40ed2d84df5482be077" title="Total number of steps.">nStep_</a> = nStep;
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082       <span class="comment">// Set prefactor_[i] = 0.5*dt/mass for each atom type i.</span>
-<a name="l00083"></a>00083       <span class="keywordtype">double</span> mass;
-<a name="l00084"></a>00084       <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0" title="Get maximum number of atom types.">nAtomType</a> = prefactors_.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>();
-<a name="l00085"></a>00085       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0" title="Get maximum number of atom types.">nAtomType</a>; ++i) {
-<a name="l00086"></a>00086          mass = <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#adb69f41e67ea48facaaeed0a94c7d218" title="Get an AtomType descriptor by reference.">atomType</a>(i).<a class="code" href="classDdMd_1_1AtomType.html#aa1861be76920dce9345c53c924d15817" title="Get the mass.">mass</a>();
-<a name="l00087"></a>00087          prefactors_[i] = 0.5*dt_/mass;
-<a name="l00088"></a>00088       }
+<a name="l00057"></a>00057 <span class="preprocessor">      #if 0</span>
+<a name="l00058"></a>00058 <span class="preprocessor"></span>      <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#ac456e424c1c2d2909293d6ffe4658f69" title="Clear previous snapshot.">clearSnapshot</a>();
+<a name="l00059"></a>00059       <a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d" title="Get the Exchanger.">exchanger</a>().<a class="code" href="classDdMd_1_1Exchanger.html#a554aa483259c29b4287d10f3d9fd63da" title="Exchange local atoms and ghosts.">exchange</a>();
+<a name="l00060"></a>00060       <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().<a class="code" href="classDdMd_1_1PairPotential.html#aaad166a41227c8766ef25189581f8add" title="Build a cell list.">buildCellList</a>();
+<a name="l00061"></a>00061       <span class="keywordflow">if</span> (!UTIL_ORTHOGONAL) {
+<a name="l00062"></a>00062          <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#a3b9c4110f28da5f6e2b680e41ddf0e83" title="Transform all atomic positions from generalized to Cartesian coordinates.">transformGenToCart</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#a61fedd33350995afa686293e1f28d9d3" title="Get the Boundary.">boundary</a>());
+<a name="l00063"></a>00063       }
+<a name="l00064"></a>00064       <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#a8bdb321770232e6f4bb1ba7413aa9509" title="Record current positions of all local atoms and lock storage.">makeSnapshot</a>();
+<a name="l00065"></a>00065       <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().<a class="code" href="classDdMd_1_1PairPotential.html#a34b7920abb87afe8e8dd40524ec15565" title="Build the Verlet Pair list.">buildPairList</a>();
+<a name="l00066"></a>00066       <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a2983b5e88ce2bbf7b0f247921037f26f" title="Compute forces for all local atoms.">computeForces</a>();
+<a name="l00067"></a>00067 <span class="preprocessor">      #endif</span>
+<a name="l00068"></a>00068 <span class="preprocessor"></span>      <span class="comment">// Exchange atoms, build pair list, compute forces.</span>
+<a name="l00069"></a>00069       <a class="code" href="classDdMd_1_1Integrator.html#a97317b34223ec99c2f60917a53faf4a0" title="Setup state of atoms just before integration.">setupAtoms</a>();
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071       <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a97078a43b926eba8fc79735d89adaa36" title="Return associated DiagnosticManager by reference.">diagnosticManager</a>().<a class="code" href="classDdMd_1_1DiagnosticManager.html#afb8f206e8d25691183d6d8a7a64d5793" title="Call setup method of each Diagnostic.">setup</a>();
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073       <span class="comment">// Set prefactors for acceleration</span>
+<a name="l00074"></a>00074       <span class="keywordtype">double</span> dtHalf = 0.5*dt_;
+<a name="l00075"></a>00075       <span class="keywordtype">double</span> mass;
+<a name="l00076"></a>00076       <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0" title="Get maximum number of atom types.">nAtomType</a> = prefactors_.<a class="code" href="classUtil_1_1Array.html#a013a928470d09a8dd11937c1b28a3d38" title="Return allocated size.">capacity</a>();
+<a name="l00077"></a>00077       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0" title="Get maximum number of atom types.">nAtomType</a>; ++i) {
+<a name="l00078"></a>00078          mass = <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#adb69f41e67ea48facaaeed0a94c7d218" title="Get an AtomType descriptor by reference.">atomType</a>(i).<a class="code" href="classDdMd_1_1AtomType.html#aa1861be76920dce9345c53c924d15817" title="Get the mass.">mass</a>();
+<a name="l00079"></a>00079          prefactors_[i] = dtHalf/mass;
+<a name="l00080"></a>00080       }
+<a name="l00081"></a>00081    }
+<a name="l00082"></a>00082 
+<a name="l00083"></a><a class="code" href="classDdMd_1_1NveIntegrator.html#a9ff544df43ce42f12ab8084deb15bf72">00083</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1NveIntegrator.html#a9ff544df43ce42f12ab8084deb15bf72" title="Execute first step of two-step integrator.">NveIntegrator::integrateStep1</a>()
+<a name="l00084"></a>00084    {
+<a name="l00085"></a>00085       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dv;
+<a name="l00086"></a>00086       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dr;
+<a name="l00087"></a>00087       <span class="keywordtype">double</span> prefactor; <span class="comment">// = 0.5*dt/mass</span>
+<a name="l00088"></a>00088       <a class="code" href="classDdMd_1_1AtomIterator.html" title="Iterator for all atoms owned by an AtomStorage.">AtomIterator</a> atomIter;
 <a name="l00089"></a>00089 
-<a name="l00090"></a>00090       <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#ac456e424c1c2d2909293d6ffe4658f69" title="Clear previous snapshot.">clearSnapshot</a>();
-<a name="l00091"></a>00091       <a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d" title="Get the Exchanger.">exchanger</a>().<a class="code" href="classDdMd_1_1Exchanger.html#a554aa483259c29b4287d10f3d9fd63da" title="Exchange local atoms and ghosts.">exchange</a>();
-<a name="l00092"></a>00092       <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#a8bdb321770232e6f4bb1ba7413aa9509" title="Record current positions of all local atoms.">makeSnapshot</a>();
-<a name="l00093"></a>00093       <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().<a class="code" href="classDdMd_1_1PairPotential.html#ad88c1c7501f0222ce4a28cfd4deba7b7" title="Build the cell and pair lists.">findNeighbors</a>();
-<a name="l00094"></a>00094       <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a2983b5e88ce2bbf7b0f247921037f26f" title="Compute forces for all local atoms.">computeForces</a>();
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096       <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a97078a43b926eba8fc79735d89adaa36" title="Return associated DiagnosticManager by reference.">diagnosticManager</a>().<a class="code" href="classDdMd_1_1DiagnosticManager.html#afb8f206e8d25691183d6d8a7a64d5793" title="Call setup method of each Diagnostic.">setup</a>();
+<a name="l00090"></a>00090       <span class="comment">// 1st half of velocity Verlet.</span>
+<a name="l00091"></a>00091       <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">begin</a>(atomIter);
+<a name="l00092"></a>00092       <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter) {
+<a name="l00093"></a>00093          prefactor = prefactors_[atomIter-&gt;typeId()];
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095          dv.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;force(), prefactor);
+<a name="l00096"></a>00096          atomIter-&gt;velocity() += dv;
 <a name="l00097"></a>00097 
-<a name="l00098"></a>00098       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>        dv;
-<a name="l00099"></a>00099       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a>        dr;
-<a name="l00100"></a>00100       <span class="keywordtype">double</span>        prefactor; <span class="comment">// = 0.5*dt/mass</span>
-<a name="l00101"></a>00101       <a class="code" href="classDdMd_1_1AtomIterator.html" title="Iterator for all atoms owned by an AtomStorage.">AtomIterator</a>  atomIter;
-<a name="l00102"></a>00102       <span class="keywordtype">bool</span>          needExchange;
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104       <span class="comment">// Main MD loop</span>
-<a name="l00105"></a>00105       <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().start();
-<a name="l00106"></a>00106       <a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d" title="Get the Exchanger.">exchanger</a>().<a class="code" href="classDdMd_1_1Exchanger.html#a54a80e2d6d77871fd15056ebb9e145dc" title="Return internal timer by reference.">timer</a>().start();
-<a name="l00107"></a>00107       <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().<a class="code" href="classDdMd_1_1PairPotential.html#a2b47b504ef548716b780df8e3395840c" title="Return internal timer by reference.">timer</a>().start();
-<a name="l00108"></a>00108       <span class="keywordflow">for</span> (<a class="code" href="classDdMd_1_1Integrator.html#a3579b1c124337bbec98c515185187817" title="Current step number.">iStep_</a> = 0; <a class="code" href="classDdMd_1_1Integrator.html#a3579b1c124337bbec98c515185187817" title="Current step number.">iStep_</a> &lt; nStep; ++<a class="code" href="classDdMd_1_1Integrator.html#a3579b1c124337bbec98c515185187817" title="Current step number.">iStep_</a>) {
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110          <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Diagnostic.html#ac195806b4a4f8c59b6f0664eef51e58f" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a> &gt; 0) {
-<a name="l00111"></a>00111             <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1Integrator.html#a3579b1c124337bbec98c515185187817" title="Current step number.">iStep_</a> % <a class="code" href="classDdMd_1_1Diagnostic.html#ac195806b4a4f8c59b6f0664eef51e58f" title="The interval for a Diagnostic must be a multiple of baseInterval.">Diagnostic::baseInterval</a> == 0) {
-<a name="l00112"></a>00112                <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a97078a43b926eba8fc79735d89adaa36" title="Return associated DiagnosticManager by reference.">diagnosticManager</a>().<a class="code" href="classDdMd_1_1DiagnosticManager.html#ac34147522286db7ac6b4eb90f7440479" title="Call sample method of each Diagnostic.">sample</a>(<a class="code" href="classDdMd_1_1Integrator.html#a3579b1c124337bbec98c515185187817" title="Current step number.">iStep_</a>);
-<a name="l00113"></a>00113             }
-<a name="l00114"></a>00114          }
-<a name="l00115"></a>00115          <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().stamp(Integrator::DIAGNOSTIC);
+<a name="l00098"></a>00098          dr.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;velocity(), dt_);
+<a name="l00099"></a>00099          atomIter-&gt;position() += dr;
+<a name="l00100"></a>00100       }
+<a name="l00101"></a>00101    }
+<a name="l00102"></a>00102 
+<a name="l00103"></a><a class="code" href="classDdMd_1_1NveIntegrator.html#aed32d90d056013fd9abe113cc8e08e2c">00103</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1NveIntegrator.html#aed32d90d056013fd9abe113cc8e08e2c" title="Execute secodn step of two-step integrator.">NveIntegrator::integrateStep2</a>()
+<a name="l00104"></a>00104    {
+<a name="l00105"></a>00105       <a class="code" href="classUtil_1_1Vector.html" title="A Vector is a Cartesian vector.">Vector</a> dv;
+<a name="l00106"></a>00106       <span class="keywordtype">double</span> prefactor; <span class="comment">// = 0.5*dt/mass</span>
+<a name="l00107"></a>00107       <a class="code" href="classDdMd_1_1AtomIterator.html" title="Iterator for all atoms owned by an AtomStorage.">AtomIterator</a> atomIter;
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109       <span class="comment">// 2nd half of velocity Verlet</span>
+<a name="l00110"></a>00110       <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">begin</a>(atomIter);
+<a name="l00111"></a>00111       <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter) {
+<a name="l00112"></a>00112          prefactor = prefactors_[atomIter-&gt;typeId()];
+<a name="l00113"></a>00113          dv.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;force(), prefactor);
+<a name="l00114"></a>00114          atomIter-&gt;velocity() += dv;
+<a name="l00115"></a>00115       }
 <a name="l00116"></a>00116 
-<a name="l00117"></a>00117          <span class="comment">// 1st half of velocity Verlet.</span>
-<a name="l00118"></a>00118          <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">begin</a>(atomIter);
-<a name="l00119"></a>00119          <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter) {
-<a name="l00120"></a>00120             prefactor = prefactors_[atomIter-&gt;typeId()];
-<a name="l00121"></a>00121    
-<a name="l00122"></a>00122             dv.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;force(), prefactor);
-<a name="l00123"></a>00123             atomIter-&gt;velocity() += dv;
-<a name="l00124"></a>00124    
-<a name="l00125"></a>00125             dr.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;velocity(), dt_);
-<a name="l00126"></a>00126             atomIter-&gt;position() += dr;
-<a name="l00127"></a>00127     
-<a name="l00128"></a>00128          }
-<a name="l00129"></a>00129          <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().stamp(Integrator::INTEGRATE1);
-<a name="l00130"></a>00130    
-<a name="l00131"></a>00131          <span class="comment">// Check if exchange and reneighboring is necessary</span>
-<a name="l00132"></a>00132          <span class="comment">//needExchange = simulation().needExchange();</span>
-<a name="l00133"></a>00133          needExchange = <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#a474306cc652bb66e0855406e2c3aca5a" title="Is exchange of atoms among processors needed?">needExchange</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().communicator(), 
-<a name="l00134"></a>00134                                                  <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().skin());
-<a name="l00135"></a>00135          <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().stamp(Integrator::CHECK);
-<a name="l00136"></a>00136 
-<a name="l00137"></a>00137          <span class="comment">// Exchange atoms if necessary</span>
-<a name="l00138"></a>00138          <span class="keywordflow">if</span> (needExchange) {
-<a name="l00139"></a>00139             <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#ac456e424c1c2d2909293d6ffe4658f69" title="Clear previous snapshot.">clearSnapshot</a>();
-<a name="l00140"></a>00140             <a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d" title="Get the Exchanger.">exchanger</a>().<a class="code" href="classDdMd_1_1Exchanger.html#a554aa483259c29b4287d10f3d9fd63da" title="Exchange local atoms and ghosts.">exchange</a>();
-<a name="l00141"></a>00141             <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().stamp(Integrator::EXCHANGE);
-<a name="l00142"></a>00142             <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#a8bdb321770232e6f4bb1ba7413aa9509" title="Record current positions of all local atoms.">makeSnapshot</a>();
-<a name="l00143"></a>00143             <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().<a class="code" href="classDdMd_1_1PairPotential.html#ad88c1c7501f0222ce4a28cfd4deba7b7" title="Build the cell and pair lists.">findNeighbors</a>();
-<a name="l00144"></a>00144             <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().stamp(Integrator::NEIGHBOR);
-<a name="l00145"></a>00145          } <span class="keywordflow">else</span> {
-<a name="l00146"></a>00146             <a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d" title="Get the Exchanger.">exchanger</a>().<a class="code" href="classDdMd_1_1Exchanger.html#a5eea17290db43900437e0bcb7ed6f173" title="Update ghost atom coordinates.">update</a>();
-<a name="l00147"></a>00147             <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().stamp(Integrator::UPDATE);
-<a name="l00148"></a>00148          }
-<a name="l00149"></a>00149    
-<a name="l00150"></a>00150          <span class="comment">// Calculate new forces for all local atoms</span>
-<a name="l00151"></a>00151          <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a2983b5e88ce2bbf7b0f247921037f26f" title="Compute forces for all local atoms.">computeForces</a>();
-<a name="l00152"></a>00152          <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().stamp(Integrator::FORCE);
-<a name="l00153"></a>00153    
-<a name="l00154"></a>00154          <span class="comment">// 2nd half of velocity Verlet</span>
-<a name="l00155"></a>00155          <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#aea01efeb15782a04a50f395bc2c8bae5" title="Set iterator to beginning of the set of atoms.">begin</a>(atomIter);
-<a name="l00156"></a>00156          <span class="keywordflow">for</span> ( ; atomIter.<a class="code" href="classUtil_1_1PArrayIterator.html#a9a108a1b20ef4c09353b96ad5b29cc4d" title="Is the current pointer not at the end of the PArray?">notEnd</a>(); ++atomIter) {
-<a name="l00157"></a>00157             prefactor = prefactors_[atomIter-&gt;typeId()];
-<a name="l00158"></a>00158             dv.<a class="code" href="classUtil_1_1Vector.html#a6841cd7fd279b44b58551b6c7ca18315" title="Multiply a vector v by a scalar s.">multiply</a>(atomIter-&gt;force(), prefactor);
-<a name="l00159"></a>00159             atomIter-&gt;velocity() += dv;
-<a name="l00160"></a>00160          }
-<a name="l00161"></a>00161          <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().stamp(Integrator::INTEGRATE2);
-<a name="l00162"></a>00162    
-<a name="l00163"></a>00163       }
-<a name="l00164"></a>00164       <a class="code" href="classDdMd_1_1Integrator.html#aea63b2daa313636e526bfb9c39982297" title="Return the timer by reference.">timer</a>().stop();
-<a name="l00165"></a>00165       <a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d" title="Get the Exchanger.">exchanger</a>().<a class="code" href="classDdMd_1_1Exchanger.html#a54a80e2d6d77871fd15056ebb9e145dc" title="Return internal timer by reference.">timer</a>().stop();
-<a name="l00166"></a>00166       <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">pairPotential</a>().<a class="code" href="classDdMd_1_1PairPotential.html#a2b47b504ef548716b780df8e3395840c" title="Return internal timer by reference.">timer</a>().stop();
-<a name="l00167"></a>00167    }
-<a name="l00168"></a>00168 
-<a name="l00169"></a>00169 }
-<a name="l00170"></a>00170 <span class="preprocessor">#endif</span>
+<a name="l00117"></a>00117    }
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119 }
+<a name="l00120"></a>00120 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

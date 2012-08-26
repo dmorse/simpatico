@@ -109,24 +109,25 @@
 <a name="l00058"></a>00058       #ifdef INTER_EXTERNAL
 <a name="l00059"></a>00059       hasExternal_(simulation.hasExternal_),
 <a name="l00060"></a>00060       #endif
-<a name="l00061"></a>00061       maskedPairPolicy_(simulation.maskedPairPolicy_)
-<a name="l00062"></a>00062    {
-<a name="l00063"></a>00063       atomTypes_.associate(simulation.atomTypes_); 
-<a name="l00064"></a>00064       <span class="comment">// RArray atomsTypes_ wraps the same C array as that</span>
-<a name="l00065"></a>00065       <span class="comment">// owned by atomTypes_ DArray in the parent Simulation.</span>
-<a name="l00066"></a>00066    }
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068    <span class="comment">/*</span>
-<a name="l00069"></a>00069 <span class="comment">   * Destructor.</span>
-<a name="l00070"></a>00070 <span class="comment">   */</span>
-<a name="l00071"></a>00071    <a class="code" href="classDdMd_1_1SimulationAccess.html#ac01896c934256df04179cc0aa2984872" title="Destructor.">SimulationAccess::~SimulationAccess</a>()
-<a name="l00072"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ac01896c934256df04179cc0aa2984872">00072</a>    {}
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074 }
-<a name="l00075"></a>00075 <span class="preprocessor">#endif</span>
+<a name="l00061"></a>00061       maskedPairPolicy_(simulation.maskedPairPolicy_),
+<a name="l00062"></a>00062       reverseUpdateFlag_(simulation.reverseUpdateFlag_)
+<a name="l00063"></a>00063    {
+<a name="l00064"></a>00064       atomTypes_.associate(simulation.atomTypes_); 
+<a name="l00065"></a>00065       <span class="comment">// RArray atomsTypes_ wraps the same C array as that</span>
+<a name="l00066"></a>00066       <span class="comment">// owned by atomTypes_ DArray in the parent Simulation.</span>
+<a name="l00067"></a>00067    }
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069    <span class="comment">/*</span>
+<a name="l00070"></a>00070 <span class="comment">   * Destructor.</span>
+<a name="l00071"></a>00071 <span class="comment">   */</span>
+<a name="l00072"></a>00072    <a class="code" href="classDdMd_1_1SimulationAccess.html#ac01896c934256df04179cc0aa2984872" title="Destructor.">SimulationAccess::~SimulationAccess</a>()
+<a name="l00073"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ac01896c934256df04179cc0aa2984872">00073</a>    {}
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075 }
+<a name="l00076"></a>00076 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

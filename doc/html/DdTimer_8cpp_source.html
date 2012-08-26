@@ -114,17 +114,17 @@
 <a name="l00063"></a>00063    }
 <a name="l00064"></a>00064 <span class="preprocessor">   #endif</span>
 <a name="l00065"></a>00065 <span class="preprocessor"></span>
-<a name="l00066"></a>00066    <span class="keywordtype">double</span> DdTimer::time(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)
-<a name="l00067"></a>00067    {  <span class="keywordflow">return</span> times_[id]; }
+<a name="l00066"></a>00066    <span class="keywordtype">double</span> DdTimer::time(<span class="keywordtype">int</span> <span class="keywordtype">id</span>)<span class="keyword"> const</span>
+<a name="l00067"></a>00067 <span class="keyword">   </span>{  <span class="keywordflow">return</span> times_[id]; }
 <a name="l00068"></a>00068 
-<a name="l00069"></a>00069    <span class="keywordtype">double</span> DdTimer::time()
-<a name="l00070"></a>00070    {  <span class="keywordflow">return</span> time_; }
+<a name="l00069"></a>00069    <span class="keywordtype">double</span> DdTimer::time()<span class="keyword"> const</span>
+<a name="l00070"></a>00070 <span class="keyword">   </span>{  <span class="keywordflow">return</span> time_; }
 <a name="l00071"></a>00071 
 <a name="l00072"></a>00072 }
 <a name="l00073"></a>00073 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

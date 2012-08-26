@@ -79,9 +79,9 @@
 <a name="l00028"></a>00028    <span class="comment">/* </span>
 <a name="l00029"></a>00029 <span class="comment">   * Return a pointer to a instance of ConfigIo subclass className.</span>
 <a name="l00030"></a>00030 <span class="comment">   */</span>
-<a name="l00031"></a>00031    <a class="code" href="classDdMd_1_1ConfigIo.html" title="Class to read and write configuration files.">ConfigIo</a>* <a class="code" href="classDdMd_1_1ConfigIoFactory.html#a5288a6c21661b7fe241bfc40073b9355" title="Method to create any species supplied with Simpatico.">ConfigIoFactory::factory</a>(<span class="keyword">const</span> std::string &amp;className)<span class="keyword"> const</span>
+<a name="l00031"></a>00031    <a class="code" href="classDdMd_1_1ConfigIo.html" title="Abstract reader/writer for configuration files.">ConfigIo</a>* <a class="code" href="classDdMd_1_1ConfigIoFactory.html#a5288a6c21661b7fe241bfc40073b9355" title="Method to create any species supplied with Simpatico.">ConfigIoFactory::factory</a>(<span class="keyword">const</span> std::string &amp;className)<span class="keyword"> const</span>
 <a name="l00032"></a>00032 <span class="keyword">   </span>{
-<a name="l00033"></a><a class="code" href="classDdMd_1_1ConfigIoFactory.html#a5288a6c21661b7fe241bfc40073b9355">00033</a>       <a class="code" href="classDdMd_1_1ConfigIo.html" title="Class to read and write configuration files.">ConfigIo</a> *ptr = 0;
+<a name="l00033"></a><a class="code" href="classDdMd_1_1ConfigIoFactory.html#a5288a6c21661b7fe241bfc40073b9355">00033</a>       <a class="code" href="classDdMd_1_1ConfigIo.html" title="Abstract reader/writer for configuration files.">ConfigIo</a> *ptr = 0;
 <a name="l00034"></a>00034 
 <a name="l00035"></a>00035       <span class="comment">// Try subfactories first.</span>
 <a name="l00036"></a>00036       ptr = trySubfactories(className);
@@ -98,7 +98,7 @@
 <a name="l00047"></a>00047 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:18 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:19 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

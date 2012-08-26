@@ -179,178 +179,185 @@
 <a name="l00166"></a>00166 
 <a name="l00168"></a>00168       <a class="code" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> maskedPairPolicy() <span class="keyword">const</span>;
 <a name="l00169"></a>00169 
-<a name="l00171"></a>00171 
-<a name="l00172"></a>00172    <span class="keyword">private</span>:
-<a name="l00173"></a>00173 
-<a name="l00175"></a>00175       <a class="code" href="classUtil_1_1RArray.html">RArray&lt;AtomType&gt;</a> atomTypes_;
+<a name="l00171"></a>00171       <span class="keywordtype">bool</span> reverseUpdateFlag() <span class="keyword">const</span>;
+<a name="l00172"></a>00172 
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175    <span class="keyword">private</span>:
 <a name="l00176"></a>00176 
-<a name="l00178"></a>00178       <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>* simulationPtr_;
+<a name="l00178"></a>00178       <a class="code" href="classUtil_1_1RArray.html">RArray&lt;AtomType&gt;</a> atomTypes_;
 <a name="l00179"></a>00179 
-<a name="l00181"></a>00181       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>* boundaryPtr_;
+<a name="l00181"></a>00181       <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>* simulationPtr_;
 <a name="l00182"></a>00182 
-<a name="l00184"></a>00184       <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>*  atomStoragePtr_;
+<a name="l00184"></a>00184       <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>* boundaryPtr_;
 <a name="l00185"></a>00185 
-<a name="l00187"></a>00187       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;2&gt;</a>*  bondStoragePtr_;
+<a name="l00187"></a>00187       <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>*  atomStoragePtr_;
 <a name="l00188"></a>00188 
-<a name="l00189"></a>00189 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
-<a name="l00190"></a>00190 <span class="preprocessor"></span>
-<a name="l00191"></a>00191       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;3&gt;</a>*  angleStoragePtr_;
-<a name="l00192"></a>00192 <span class="preprocessor">      #endif</span>
+<a name="l00190"></a>00190       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;2&gt;</a>*  bondStoragePtr_;
+<a name="l00191"></a>00191 
+<a name="l00192"></a>00192 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
 <a name="l00193"></a>00193 <span class="preprocessor"></span>
-<a name="l00194"></a>00194 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
-<a name="l00195"></a>00195 <span class="preprocessor"></span>
-<a name="l00196"></a>00196       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;4&gt;</a>*  dihedralStoragePtr_;
-<a name="l00197"></a>00197 <span class="preprocessor">      #endif</span>
+<a name="l00194"></a>00194       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;3&gt;</a>*  angleStoragePtr_;
+<a name="l00195"></a>00195 <span class="preprocessor">      #endif</span>
+<a name="l00196"></a>00196 <span class="preprocessor"></span>
+<a name="l00197"></a>00197 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
 <a name="l00198"></a>00198 <span class="preprocessor"></span>
-<a name="l00200"></a>00200       <a class="code" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a>* pairPotentialPtr_;
-<a name="l00201"></a>00201 
-<a name="l00203"></a>00203       <a class="code" href="classDdMd_1_1BondPotential.html" title="An BondPotential calculates bond forces and energies for a parent Simulation.">BondPotential</a>* bondPotentialPtr_;
+<a name="l00199"></a>00199       <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;4&gt;</a>*  dihedralStoragePtr_;
+<a name="l00200"></a>00200 <span class="preprocessor">      #endif</span>
+<a name="l00201"></a>00201 <span class="preprocessor"></span>
+<a name="l00203"></a>00203       <a class="code" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a>* pairPotentialPtr_;
 <a name="l00204"></a>00204 
-<a name="l00205"></a>00205 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
-<a name="l00206"></a>00206 <span class="preprocessor"></span>
-<a name="l00207"></a>00207       <a class="code" href="classDdMd_1_1AnglePotential.html" title="An AnglePotential calculates angle forces and energies for a parent Simulation.">AnglePotential</a>* anglePotentialPtr_;
-<a name="l00208"></a>00208 <span class="preprocessor">      #endif</span>
+<a name="l00206"></a>00206       <a class="code" href="classDdMd_1_1BondPotential.html" title="An BondPotential calculates bond forces and energies for a parent Simulation.">BondPotential</a>* bondPotentialPtr_;
+<a name="l00207"></a>00207 
+<a name="l00208"></a>00208 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
 <a name="l00209"></a>00209 <span class="preprocessor"></span>
-<a name="l00210"></a>00210 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
-<a name="l00211"></a>00211 <span class="preprocessor"></span>
-<a name="l00212"></a>00212       <a class="code" href="classDdMd_1_1DihedralPotential.html" title="An DihedralPotential calculates dihedral forces and energies for a parent Simulation.">DihedralPotential</a>* dihedralPotentialPtr_;
-<a name="l00213"></a>00213 <span class="preprocessor">      #endif</span>
+<a name="l00210"></a>00210       <a class="code" href="classDdMd_1_1AnglePotential.html" title="An AnglePotential calculates angle forces and energies for a parent Simulation.">AnglePotential</a>* anglePotentialPtr_;
+<a name="l00211"></a>00211 <span class="preprocessor">      #endif</span>
+<a name="l00212"></a>00212 <span class="preprocessor"></span>
+<a name="l00213"></a>00213 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
 <a name="l00214"></a>00214 <span class="preprocessor"></span>
-<a name="l00215"></a>00215 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
-<a name="l00216"></a>00216 <span class="preprocessor"></span>
-<a name="l00217"></a>00217       <a class="code" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a>* externalPotentialPtr_;
-<a name="l00218"></a>00218 <span class="preprocessor">      #endif</span>
+<a name="l00215"></a>00215       <a class="code" href="classDdMd_1_1DihedralPotential.html" title="An DihedralPotential calculates dihedral forces and energies for a parent Simulation.">DihedralPotential</a>* dihedralPotentialPtr_;
+<a name="l00216"></a>00216 <span class="preprocessor">      #endif</span>
+<a name="l00217"></a>00217 <span class="preprocessor"></span>
+<a name="l00218"></a>00218 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
 <a name="l00219"></a>00219 <span class="preprocessor"></span>
-<a name="l00221"></a>00221       <a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>* energyEnsemblePtr_;
-<a name="l00222"></a>00222 
-<a name="l00224"></a>00224       <a class="code" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size.">BoundaryEnsemble</a>* boundaryEnsemblePtr_;
+<a name="l00220"></a>00220       <a class="code" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a>* externalPotentialPtr_;
+<a name="l00221"></a>00221 <span class="preprocessor">      #endif</span>
+<a name="l00222"></a>00222 <span class="preprocessor"></span>
+<a name="l00224"></a>00224       <a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>* energyEnsemblePtr_;
 <a name="l00225"></a>00225 
-<a name="l00227"></a>00227       <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>* randomPtr_;
+<a name="l00227"></a>00227       <a class="code" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size.">BoundaryEnsemble</a>* boundaryEnsemblePtr_;
 <a name="l00228"></a>00228 
-<a name="l00230"></a>00230       <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>* domainPtr_;
+<a name="l00230"></a>00230       <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>* randomPtr_;
 <a name="l00231"></a>00231 
-<a name="l00233"></a>00233       <a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>* exchangerPtr_;
+<a name="l00233"></a>00233       <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>* domainPtr_;
 <a name="l00234"></a>00234 
-<a name="l00236"></a>00236       <a class="code" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>*  fileMasterPtr_;
+<a name="l00236"></a>00236       <a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>* exchangerPtr_;
 <a name="l00237"></a>00237 
-<a name="l00239"></a>00239       <span class="keywordtype">int</span> nAtomType_;
+<a name="l00239"></a>00239       <a class="code" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>*  fileMasterPtr_;
 <a name="l00240"></a>00240 
-<a name="l00242"></a>00242       <span class="keywordtype">int</span> nBondType_;
+<a name="l00242"></a>00242       <span class="keywordtype">int</span> nAtomType_;
 <a name="l00243"></a>00243 
-<a name="l00244"></a>00244 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
-<a name="l00245"></a>00245 <span class="preprocessor"></span>
-<a name="l00246"></a>00246       <span class="keywordtype">int</span> nAngleType_;
-<a name="l00247"></a>00247 <span class="preprocessor">      #endif</span>
+<a name="l00245"></a>00245       <span class="keywordtype">int</span> nBondType_;
+<a name="l00246"></a>00246 
+<a name="l00247"></a>00247 <span class="preprocessor">      #ifdef INTER_ANGLE</span>
 <a name="l00248"></a>00248 <span class="preprocessor"></span>
-<a name="l00249"></a>00249 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
-<a name="l00250"></a>00250 <span class="preprocessor"></span>
-<a name="l00251"></a>00251       <span class="keywordtype">int</span> nDihedralType_;
-<a name="l00252"></a>00252 <span class="preprocessor">      #endif</span>
+<a name="l00249"></a>00249       <span class="keywordtype">int</span> nAngleType_;
+<a name="l00250"></a>00250 <span class="preprocessor">      #endif</span>
+<a name="l00251"></a>00251 <span class="preprocessor"></span>
+<a name="l00252"></a>00252 <span class="preprocessor">      #ifdef INTER_DIHEDRAL</span>
 <a name="l00253"></a>00253 <span class="preprocessor"></span>
-<a name="l00254"></a>00254 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
-<a name="l00255"></a>00255 <span class="preprocessor"></span>
-<a name="l00256"></a>00256       <span class="keywordtype">bool</span> hasExternal_;
-<a name="l00257"></a>00257 <span class="preprocessor">      #endif</span>
+<a name="l00254"></a>00254       <span class="keywordtype">int</span> nDihedralType_;
+<a name="l00255"></a>00255 <span class="preprocessor">      #endif</span>
+<a name="l00256"></a>00256 <span class="preprocessor"></span>
+<a name="l00257"></a>00257 <span class="preprocessor">      #ifdef INTER_EXTERNAL</span>
 <a name="l00258"></a>00258 <span class="preprocessor"></span>
-<a name="l00267"></a>00267       <a class="code" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a>  maskedPairPolicy_;
-<a name="l00268"></a>00268 
-<a name="l00269"></a>00269    };
-<a name="l00270"></a>00270 
-<a name="l00271"></a>00271    <span class="comment">// Inline method definitions</span>
-<a name="l00272"></a>00272 
-<a name="l00273"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377">00273</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">SimulationAccess::simulation</a>()
-<a name="l00274"></a>00274    {  <span class="keywordflow">return</span> *simulationPtr_; }
-<a name="l00275"></a>00275 
-<a name="l00276"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a61fedd33350995afa686293e1f28d9d3">00276</a>    <span class="keyword">inline</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a61fedd33350995afa686293e1f28d9d3" title="Get the Boundary.">SimulationAccess::boundary</a>()
-<a name="l00277"></a>00277    {  <span class="keywordflow">return</span> *boundaryPtr_; }
+<a name="l00259"></a>00259       <span class="keywordtype">bool</span> hasExternal_;
+<a name="l00260"></a>00260 <span class="preprocessor">      #endif</span>
+<a name="l00261"></a>00261 <span class="preprocessor"></span>
+<a name="l00270"></a>00270       <a class="code" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a>  maskedPairPolicy_;
+<a name="l00271"></a>00271 
+<a name="l00275"></a>00275       <span class="keywordtype">bool</span> reverseUpdateFlag_;
+<a name="l00276"></a>00276 
+<a name="l00277"></a>00277    };
 <a name="l00278"></a>00278 
-<a name="l00279"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f">00279</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">SimulationAccess::atomStorage</a>()
-<a name="l00280"></a>00280    {  <span class="keywordflow">return</span> *atomStoragePtr_; }
-<a name="l00281"></a>00281 
-<a name="l00282"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ac22a4d1de5834aee4cbace5f4f862388">00282</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;2&gt;</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#ac22a4d1de5834aee4cbace5f4f862388" title="Get the BondStorage.">SimulationAccess::bondStorage</a>()
-<a name="l00283"></a>00283    {  <span class="keywordflow">return</span> *bondStoragePtr_; }
-<a name="l00284"></a>00284 
-<a name="l00285"></a>00285 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
-<a name="l00286"></a>00286 <span class="preprocessor"></span>   <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;3&gt;</a>&amp; SimulationAccess::angleStorage()
-<a name="l00287"></a>00287    {  <span class="keywordflow">return</span> *angleStoragePtr_; }
-<a name="l00288"></a>00288 <span class="preprocessor">   #endif</span>
-<a name="l00289"></a>00289 <span class="preprocessor"></span>
-<a name="l00290"></a>00290 <span class="preprocessor">   #ifdef INTER_DIHEDRAL</span>
-<a name="l00291"></a>00291 <span class="preprocessor"></span>   <span class="keyword">inline</span> GroupStorage&lt;4&gt;&amp; SimulationAccess::dihedralStorage()
-<a name="l00292"></a>00292    {  <span class="keywordflow">return</span> *dihedralStoragePtr_; }
-<a name="l00293"></a>00293 <span class="preprocessor">   #endif</span>
-<a name="l00294"></a>00294 <span class="preprocessor"></span>
-<a name="l00295"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3">00295</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">SimulationAccess::pairPotential</a>()
-<a name="l00296"></a>00296    {  <span class="keywordflow">return</span> *pairPotentialPtr_; }
-<a name="l00297"></a>00297 
-<a name="l00298"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a5d74aec518766698f2de2c06c92840b4">00298</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1BondPotential.html" title="An BondPotential calculates bond forces and energies for a parent Simulation.">BondPotential</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a5d74aec518766698f2de2c06c92840b4" title="Get the PairPotential.">SimulationAccess::bondPotential</a>()
-<a name="l00299"></a>00299    {  <span class="keywordflow">return</span> *bondPotentialPtr_; }
-<a name="l00300"></a>00300 
-<a name="l00301"></a>00301 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
-<a name="l00302"></a>00302 <span class="preprocessor"></span>   <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AnglePotential.html" title="An AnglePotential calculates angle forces and energies for a parent Simulation.">AnglePotential</a>&amp; SimulationAccess::anglePotential()
-<a name="l00303"></a>00303    {  <span class="keywordflow">return</span> *anglePotentialPtr_; }
-<a name="l00304"></a>00304 <span class="preprocessor">   #endif</span>
-<a name="l00305"></a>00305 <span class="preprocessor"></span>
-<a name="l00306"></a>00306 <span class="preprocessor">   #ifdef INTER_DIHEDRAL</span>
-<a name="l00307"></a>00307 <span class="preprocessor"></span>   <span class="keyword">inline</span> DihedralPotential&amp; SimulationAccess::dihedralPotential()
-<a name="l00308"></a>00308    {  <span class="keywordflow">return</span> *dihedralPotentialPtr_; }
-<a name="l00309"></a>00309 <span class="preprocessor">   #endif</span>
-<a name="l00310"></a>00310 <span class="preprocessor"></span>
-<a name="l00311"></a>00311 <span class="preprocessor">   #ifdef INTER_EXTERNAL</span>
-<a name="l00312"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a610aa9dc0ef143e0f70463ae3ca2353a">00312</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a610aa9dc0ef143e0f70463ae3ca2353a" title="Get the ExternalPotential.">SimulationAccess::externalPotential</a>()
-<a name="l00313"></a>00313    {  <span class="keywordflow">return</span> *externalPotentialPtr_; }
-<a name="l00314"></a>00314 <span class="preprocessor">   #endif</span>
-<a name="l00315"></a>00315 <span class="preprocessor"></span>
-<a name="l00316"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ad1368f8371f936ad89410471736d6067">00316</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#ad1368f8371f936ad89410471736d6067" title="Get the EnergyEnsemble.">SimulationAccess::energyEnsemble</a>()
-<a name="l00317"></a>00317    {  <span class="keywordflow">return</span> *energyEnsemblePtr_; }
-<a name="l00318"></a>00318 
-<a name="l00319"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a5e0d9bf61b3ec5773946bbe0a910e5a3">00319</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size.">BoundaryEnsemble</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a5e0d9bf61b3ec5773946bbe0a910e5a3" title="Get the BoundaryEnsemble.">SimulationAccess::boundaryEnsemble</a>()
-<a name="l00320"></a>00320    {  <span class="keywordflow">return</span> *boundaryEnsemblePtr_; }
-<a name="l00321"></a>00321 
-<a name="l00322"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ada4f9aa45c4f0c3953f28167d3471bb5">00322</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#ada4f9aa45c4f0c3953f28167d3471bb5" title="Get the Random number generator.">SimulationAccess::random</a>()
-<a name="l00323"></a>00323    {  <span class="keywordflow">return</span> *randomPtr_; }
-<a name="l00324"></a>00324 
-<a name="l00325"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348">00325</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">SimulationAccess::domain</a>()
-<a name="l00326"></a>00326    {  <span class="keywordflow">return</span> *domainPtr_; }
-<a name="l00327"></a>00327 
-<a name="l00328"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d">00328</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d" title="Get the Exchanger.">SimulationAccess::exchanger</a>()
-<a name="l00329"></a>00329    {  <span class="keywordflow">return</span> *exchangerPtr_; }
-<a name="l00330"></a>00330 
-<a name="l00331"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a6866edf072afe3d647dda038880ec456">00331</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a6866edf072afe3d647dda038880ec456" title="Get the FileMaster.">SimulationAccess::fileMaster</a>()
-<a name="l00332"></a>00332    {  <span class="keywordflow">return</span> *fileMasterPtr_; }
-<a name="l00333"></a>00333 
-<a name="l00334"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0">00334</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0" title="Get maximum number of atom types.">SimulationAccess::nAtomType</a>()
-<a name="l00335"></a>00335    {  <span class="keywordflow">return</span> nAtomType_; }
-<a name="l00336"></a>00336 
-<a name="l00337"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ab650444166cbb12cd5107adc3e83ee7a">00337</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1SimulationAccess.html#ab650444166cbb12cd5107adc3e83ee7a" title="Get maximum number of bond types.">SimulationAccess::nBondType</a>()
-<a name="l00338"></a>00338    {  <span class="keywordflow">return</span> nBondType_; }
-<a name="l00339"></a>00339 
-<a name="l00340"></a>00340 <span class="preprocessor">   #if INTER_ANGLE</span>
-<a name="l00341"></a>00341 <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> SimulationAccess::nAngleType()
-<a name="l00342"></a>00342    {  <span class="keywordflow">return</span> nAngleType_; }
-<a name="l00343"></a>00343 <span class="preprocessor">   #endif</span>
-<a name="l00344"></a>00344 <span class="preprocessor"></span>
-<a name="l00345"></a>00345 <span class="preprocessor">   #if INTER_DIHEDRAL</span>
-<a name="l00346"></a>00346 <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> SimulationAccess::nDihedralType()
-<a name="l00347"></a>00347    {  <span class="keywordflow">return</span> nDihedralType_; }
-<a name="l00348"></a>00348 <span class="preprocessor">   #endif</span>
-<a name="l00349"></a>00349 <span class="preprocessor"></span>
-<a name="l00350"></a>00350 <span class="preprocessor">   #if INTER_EXTERNAL</span>
-<a name="l00351"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#aaa9e5958b8fd7d03ce7cc9ff4c2bcbf5">00351</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1SimulationAccess.html#aaa9e5958b8fd7d03ce7cc9ff4c2bcbf5" title="Does this simulation have an external potential?">SimulationAccess::hasExternal</a>()
-<a name="l00352"></a>00352    {  <span class="keywordflow">return</span> hasExternal_; }
-<a name="l00353"></a>00353 <span class="preprocessor">   #endif</span>
-<a name="l00354"></a>00354 <span class="preprocessor"></span>
-<a name="l00355"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#aa068b27d7d2f1d4b3876ed49fb9c325d">00355</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#aa068b27d7d2f1d4b3876ed49fb9c325d" title="Get an AtomType descriptor for atomtype i.">SimulationAccess::atomType</a>(<span class="keywordtype">int</span> i)
-<a name="l00356"></a>00356    {  <span class="keywordflow">return</span> atomTypes_[i]; }
-<a name="l00357"></a>00357 
-<a name="l00358"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ad84af4b70e4e03b319ed7593ac4df160">00358</a>    <span class="keyword">inline</span> <a class="code" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> <a class="code" href="classDdMd_1_1SimulationAccess.html#ad84af4b70e4e03b319ed7593ac4df160" title="Return the value of the mask policy (MaskNone or MaskBonded).">SimulationAccess::maskedPairPolicy</a>()<span class="keyword"> const</span>
-<a name="l00359"></a>00359 <span class="keyword">   </span>{  <span class="keywordflow">return</span> maskedPairPolicy_; }
-<a name="l00360"></a>00360 
-<a name="l00361"></a>00361 }
-<a name="l00362"></a>00362 <span class="preprocessor">#endif</span>
+<a name="l00279"></a>00279    <span class="comment">// Inline method definitions</span>
+<a name="l00280"></a>00280 
+<a name="l00281"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377">00281</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">SimulationAccess::simulation</a>()
+<a name="l00282"></a>00282    {  <span class="keywordflow">return</span> *simulationPtr_; }
+<a name="l00283"></a>00283 
+<a name="l00284"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a61fedd33350995afa686293e1f28d9d3">00284</a>    <span class="keyword">inline</span> <a class="code" href="group__Boundary__Module.html#ga8b88c48d7752d0866796048129a7909c" title="Boundary is an alias for the periodic boundary condition class.">Boundary</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a61fedd33350995afa686293e1f28d9d3" title="Get the Boundary.">SimulationAccess::boundary</a>()
+<a name="l00285"></a>00285    {  <span class="keywordflow">return</span> *boundaryPtr_; }
+<a name="l00286"></a>00286 
+<a name="l00287"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f">00287</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">SimulationAccess::atomStorage</a>()
+<a name="l00288"></a>00288    {  <span class="keywordflow">return</span> *atomStoragePtr_; }
+<a name="l00289"></a>00289 
+<a name="l00290"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ac22a4d1de5834aee4cbace5f4f862388">00290</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;2&gt;</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#ac22a4d1de5834aee4cbace5f4f862388" title="Get the BondStorage.">SimulationAccess::bondStorage</a>()
+<a name="l00291"></a>00291    {  <span class="keywordflow">return</span> *bondStoragePtr_; }
+<a name="l00292"></a>00292 
+<a name="l00293"></a>00293 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
+<a name="l00294"></a>00294 <span class="preprocessor"></span>   <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1GroupStorage.html">GroupStorage&lt;3&gt;</a>&amp; SimulationAccess::angleStorage()
+<a name="l00295"></a>00295    {  <span class="keywordflow">return</span> *angleStoragePtr_; }
+<a name="l00296"></a>00296 <span class="preprocessor">   #endif</span>
+<a name="l00297"></a>00297 <span class="preprocessor"></span>
+<a name="l00298"></a>00298 <span class="preprocessor">   #ifdef INTER_DIHEDRAL</span>
+<a name="l00299"></a>00299 <span class="preprocessor"></span>   <span class="keyword">inline</span> GroupStorage&lt;4&gt;&amp; SimulationAccess::dihedralStorage()
+<a name="l00300"></a>00300    {  <span class="keywordflow">return</span> *dihedralStoragePtr_; }
+<a name="l00301"></a>00301 <span class="preprocessor">   #endif</span>
+<a name="l00302"></a>00302 <span class="preprocessor"></span>
+<a name="l00303"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3">00303</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1PairPotential.html" title="A PairPotential calculates forces for a parent Simulation.">PairPotential</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#aaab597a844b54caaaefbf8edd881a6f3" title="Get the PairPotential.">SimulationAccess::pairPotential</a>()
+<a name="l00304"></a>00304    {  <span class="keywordflow">return</span> *pairPotentialPtr_; }
+<a name="l00305"></a>00305 
+<a name="l00306"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a5d74aec518766698f2de2c06c92840b4">00306</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1BondPotential.html" title="An BondPotential calculates bond forces and energies for a parent Simulation.">BondPotential</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a5d74aec518766698f2de2c06c92840b4" title="Get the PairPotential.">SimulationAccess::bondPotential</a>()
+<a name="l00307"></a>00307    {  <span class="keywordflow">return</span> *bondPotentialPtr_; }
+<a name="l00308"></a>00308 
+<a name="l00309"></a>00309 <span class="preprocessor">   #ifdef INTER_ANGLE</span>
+<a name="l00310"></a>00310 <span class="preprocessor"></span>   <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AnglePotential.html" title="An AnglePotential calculates angle forces and energies for a parent Simulation.">AnglePotential</a>&amp; SimulationAccess::anglePotential()
+<a name="l00311"></a>00311    {  <span class="keywordflow">return</span> *anglePotentialPtr_; }
+<a name="l00312"></a>00312 <span class="preprocessor">   #endif</span>
+<a name="l00313"></a>00313 <span class="preprocessor"></span>
+<a name="l00314"></a>00314 <span class="preprocessor">   #ifdef INTER_DIHEDRAL</span>
+<a name="l00315"></a>00315 <span class="preprocessor"></span>   <span class="keyword">inline</span> DihedralPotential&amp; SimulationAccess::dihedralPotential()
+<a name="l00316"></a>00316    {  <span class="keywordflow">return</span> *dihedralPotentialPtr_; }
+<a name="l00317"></a>00317 <span class="preprocessor">   #endif</span>
+<a name="l00318"></a>00318 <span class="preprocessor"></span>
+<a name="l00319"></a>00319 <span class="preprocessor">   #ifdef INTER_EXTERNAL</span>
+<a name="l00320"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a610aa9dc0ef143e0f70463ae3ca2353a">00320</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a610aa9dc0ef143e0f70463ae3ca2353a" title="Get the ExternalPotential.">SimulationAccess::externalPotential</a>()
+<a name="l00321"></a>00321    {  <span class="keywordflow">return</span> *externalPotentialPtr_; }
+<a name="l00322"></a>00322 <span class="preprocessor">   #endif</span>
+<a name="l00323"></a>00323 <span class="preprocessor"></span>
+<a name="l00324"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ad1368f8371f936ad89410471736d6067">00324</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1EnergyEnsemble.html" title="A statistical ensemble for energy.">EnergyEnsemble</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#ad1368f8371f936ad89410471736d6067" title="Get the EnergyEnsemble.">SimulationAccess::energyEnsemble</a>()
+<a name="l00325"></a>00325    {  <span class="keywordflow">return</span> *energyEnsemblePtr_; }
+<a name="l00326"></a>00326 
+<a name="l00327"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a5e0d9bf61b3ec5773946bbe0a910e5a3">00327</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1BoundaryEnsemble.html" title="Statistical ensemble for changes in the periodic unit cell size.">BoundaryEnsemble</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a5e0d9bf61b3ec5773946bbe0a910e5a3" title="Get the BoundaryEnsemble.">SimulationAccess::boundaryEnsemble</a>()
+<a name="l00328"></a>00328    {  <span class="keywordflow">return</span> *boundaryEnsemblePtr_; }
+<a name="l00329"></a>00329 
+<a name="l00330"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ada4f9aa45c4f0c3953f28167d3471bb5">00330</a>    <span class="keyword">inline</span> <a class="code" href="classUtil_1_1Random.html" title="Random number generator.">Random</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#ada4f9aa45c4f0c3953f28167d3471bb5" title="Get the Random number generator.">SimulationAccess::random</a>()
+<a name="l00331"></a>00331    {  <span class="keywordflow">return</span> *randomPtr_; }
+<a name="l00332"></a>00332 
+<a name="l00333"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348">00333</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Domain.html" title="Decomposition of the system into domains associated with processors.">Domain</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">SimulationAccess::domain</a>()
+<a name="l00334"></a>00334    {  <span class="keywordflow">return</span> *domainPtr_; }
+<a name="l00335"></a>00335 
+<a name="l00336"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d">00336</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Exchanger.html" title="Class for exchanging Atoms, Ghosts and Groups between processors.">Exchanger</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a287d3964944a8bcbd04b0df12662367d" title="Get the Exchanger.">SimulationAccess::exchanger</a>()
+<a name="l00337"></a>00337    {  <span class="keywordflow">return</span> *exchangerPtr_; }
+<a name="l00338"></a>00338 
+<a name="l00339"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a6866edf072afe3d647dda038880ec456">00339</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1FileMaster.html" title="A FileMaster manages a set of input and output files.">FileMaster</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#a6866edf072afe3d647dda038880ec456" title="Get the FileMaster.">SimulationAccess::fileMaster</a>()
+<a name="l00340"></a>00340    {  <span class="keywordflow">return</span> *fileMasterPtr_; }
+<a name="l00341"></a>00341 
+<a name="l00342"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0">00342</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1SimulationAccess.html#a30bffbe0d56d40b1c30ff13f9e8804a0" title="Get maximum number of atom types.">SimulationAccess::nAtomType</a>()
+<a name="l00343"></a>00343    {  <span class="keywordflow">return</span> nAtomType_; }
+<a name="l00344"></a>00344 
+<a name="l00345"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ab650444166cbb12cd5107adc3e83ee7a">00345</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1SimulationAccess.html#ab650444166cbb12cd5107adc3e83ee7a" title="Get maximum number of bond types.">SimulationAccess::nBondType</a>()
+<a name="l00346"></a>00346    {  <span class="keywordflow">return</span> nBondType_; }
+<a name="l00347"></a>00347 
+<a name="l00348"></a>00348 <span class="preprocessor">   #if INTER_ANGLE</span>
+<a name="l00349"></a>00349 <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> SimulationAccess::nAngleType()
+<a name="l00350"></a>00350    {  <span class="keywordflow">return</span> nAngleType_; }
+<a name="l00351"></a>00351 <span class="preprocessor">   #endif</span>
+<a name="l00352"></a>00352 <span class="preprocessor"></span>
+<a name="l00353"></a>00353 <span class="preprocessor">   #if INTER_DIHEDRAL</span>
+<a name="l00354"></a>00354 <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">int</span> SimulationAccess::nDihedralType()
+<a name="l00355"></a>00355    {  <span class="keywordflow">return</span> nDihedralType_; }
+<a name="l00356"></a>00356 <span class="preprocessor">   #endif</span>
+<a name="l00357"></a>00357 <span class="preprocessor"></span>
+<a name="l00358"></a>00358 <span class="preprocessor">   #if INTER_EXTERNAL</span>
+<a name="l00359"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#aaa9e5958b8fd7d03ce7cc9ff4c2bcbf5">00359</a> <span class="preprocessor"></span>   <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1SimulationAccess.html#aaa9e5958b8fd7d03ce7cc9ff4c2bcbf5" title="Does this simulation have an external potential?">SimulationAccess::hasExternal</a>()
+<a name="l00360"></a>00360    {  <span class="keywordflow">return</span> hasExternal_; }
+<a name="l00361"></a>00361 <span class="preprocessor">   #endif</span>
+<a name="l00362"></a>00362 <span class="preprocessor"></span>
+<a name="l00363"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#aa068b27d7d2f1d4b3876ed49fb9c325d">00363</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1AtomType.html" title="Descriptor for a type of Atom.">AtomType</a>&amp; <a class="code" href="classDdMd_1_1SimulationAccess.html#aa068b27d7d2f1d4b3876ed49fb9c325d" title="Get an AtomType descriptor for atomtype i.">SimulationAccess::atomType</a>(<span class="keywordtype">int</span> i)
+<a name="l00364"></a>00364    {  <span class="keywordflow">return</span> atomTypes_[i]; }
+<a name="l00365"></a>00365 
+<a name="l00366"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#ad84af4b70e4e03b319ed7593ac4df160">00366</a>    <span class="keyword">inline</span> <a class="code" href="group__DdMd__Chemistry__Module.html#gae90ba4819327f99abdcef9fdfb9a94c4" title="Enumeration of policies for suppressing (&amp;quot;masking&amp;quot;) some pair interactions.">MaskPolicy</a> <a class="code" href="classDdMd_1_1SimulationAccess.html#ad84af4b70e4e03b319ed7593ac4df160" title="Return the value of the mask policy (MaskNone or MaskBonded).">SimulationAccess::maskedPairPolicy</a>()<span class="keyword"> const</span>
+<a name="l00367"></a>00367 <span class="keyword">   </span>{  <span class="keywordflow">return</span> maskedPairPolicy_; }
+<a name="l00368"></a>00368 
+<a name="l00369"></a><a class="code" href="classDdMd_1_1SimulationAccess.html#acfc6bd24e02c36a9ef6782d544d20e36">00369</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1SimulationAccess.html#acfc6bd24e02c36a9ef6782d544d20e36" title="Are forces evaluated by reverse communication (true) or not (false)?">SimulationAccess::reverseUpdateFlag</a>()<span class="keyword"> const</span>
+<a name="l00370"></a>00370 <span class="keyword">   </span>{  <span class="keywordflow">return</span> reverseUpdateFlag_; }
+<a name="l00371"></a>00371 
+<a name="l00372"></a>00372 }
+<a name="l00373"></a>00373 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

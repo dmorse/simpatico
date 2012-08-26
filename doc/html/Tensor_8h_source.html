@@ -189,9 +189,9 @@
 <a name="l00328"></a>00328 
 <a name="l00330"></a>00330    <span class="keywordtype">bool</span> <a class="code" href="namespaceUtil.html#a33608178e140012e6439e23adea10b9d" title="Are two PointSymmetry objects not equivalent?">operator != </a>(<span class="keyword">const</span> <span class="keywordtype">double</span> t1[][<a class="code" href="group__Space__Module.html#ga2772f5ec799816685d37798d8d358ef7" title="Dimensionality of space.">Dimension</a>], <span class="keyword">const</span> <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>&amp; t2);
 <a name="l00331"></a>00331 
-<a name="l00341"></a>00341    std::istream&amp; <a class="code" href="namespaceUtil.html#a93c411c32e1b31785287562199dcac7a" title="istream extractor for a OrthorhombicBoundary.">operator &gt;&gt; </a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> &amp;tensor);
+<a name="l00341"></a>00341    std::istream&amp; <a class="code" href="namespaceUtil.html#a84a8e4c844fd5d302194294ce6cf1dda" title="istream extractor for a MonoclinicBoundary.">operator &gt;&gt; </a>(std::istream&amp; in, <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> &amp;tensor);
 <a name="l00342"></a>00342 
-<a name="l00351"></a>00351    std::ostream&amp; <a class="code" href="namespaceUtil.html#af949307f46dca9cf377b8d070604567d" title="ostream inserter for an OrthorhombicBoundary.">operator &lt;&lt; </a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> &amp;tensor);
+<a name="l00351"></a>00351    std::ostream&amp; <a class="code" href="namespaceUtil.html#a10bcffa95685d7673ce01e7c634b0bf2" title="ostream inserter for an MonoclinicBoundary.">operator &lt;&lt; </a>(std::ostream&amp; out, <span class="keyword">const</span> <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a> &amp;tensor);
 <a name="l00352"></a>00352 
 <a name="l00353"></a>00353 <span class="preprocessor">   #ifdef UTIL_MPI</span>
 <a name="l00354"></a>00354 <span class="preprocessor"></span>
@@ -295,7 +295,7 @@
 <a name="l00455"></a><a class="code" href="classUtil_1_1Tensor.html#ac98b79462df1e9c5587f7cc705ce6de0">00455</a>    <span class="keywordtype">void</span> <a class="code" href="classUtil_1_1Tensor.html#ac98b79462df1e9c5587f7cc705ce6de0" title="Add tensor dt to this tensor.">Tensor::operator+=</a>(<span class="keyword">const</span> <a class="code" href="classUtil_1_1Tensor.html" title="A Tensor represents a Cartesian tensor.">Tensor</a>&amp; dt)
 <a name="l00456"></a>00456    {
 <a name="l00457"></a>00457       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="group__Space__Module.html#gaba1e0e490046919d488d1dc7505d8003" title="Square of Dimensionality of space.">DimensionSq</a>; ++i) {
-<a name="l00458"></a>00458          elem_[i] -= dt.elem_[i]; 
+<a name="l00458"></a>00458          elem_[i] += dt.elem_[i];
 <a name="l00459"></a>00459       }
 <a name="l00460"></a>00460    }
 <a name="l00461"></a>00461 
@@ -539,7 +539,7 @@
 <a name="l00699"></a>00699 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

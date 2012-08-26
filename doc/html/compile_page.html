@@ -165,19 +165,19 @@ Dependency Generation</h2>
 <p>The dependency list for every *.o file contains the files src/compiler.mk and one or more of the defines.mk files, in addition to C++ source and header files. This is because these makefile fragments contain definitions of compiler options and C++ preprocessor macros that can effect the object code produced by compilation. Modifying any of these makefile fragments will thus force recompilation of a large number of C++ source files. Modifying src/compiler.mk or src/util/defines.mk forces recompilation of every source file in Simpatico. Modifying src/util/defines.mk force recompilation of all of the source files in src/inter, src/mcMd, and src/ddMd. Modifying src/mcMd/defines.mk forces recompilation of all files in src/mcMd. Modifying src/ddMd/defines.mk forces recompilation of all files in src/ddMd.</p>
 <h2><a class="anchor" id="compile_doc_section"></a>
 Documentation</h2>
-<p>The html documentation you are reading was generated using the <a href="http://www.doxygen.org">doxygen </a> documentation utility. If dOxygen is installed on your machine, you can regenerate all of the html documentation by changing the working directory to the doc/ directory and entering <code> &gt; make html &lt;/endcode&gt; The resulting html documentation is deposited in the doc/html/ directory. To read the documentation, open the file index.html in a browser to open the main page, or open any other html file and follow the link to the main page.</code></p>
-<p><code>The text of the page you are reading now, along with other web pages that are not extracted from the C++ header files, are in files in the doc/dox directory. These are written in plain text, and so can also be read with a text editor. Documentation for each C++ class is instead extracted from documentation blocks in the class header file.</code></p>
-<p><code>Entering 'make clean' from the doc/ directory will remove all the html documentation from the doc/html directory.</code></p>
-<p><code></p>
+<p>The html documentation you are reading was generated using the <a href="http://www.doxygen.org">doxygen </a> documentation utility. If dOxygen is installed on your machine, you can regenerate all of the html documentation by changing the working directory to the doc/ directory and entering </p>
+<div class="fragment"><pre class="fragment">&gt; make html 
+</pre></div><p> The resulting html documentation is deposited in the doc/html/ directory. To read the documentation, open the file index.html in a browser to open the main page, or open any other html file and follow the link to the main page.</p>
+<p>The text of the page you are reading now, along with other web pages that are not extracted from the C++ header files, are in files in the doc/dox directory. These are written in plain text, and so can also be read with a text editor. Documentation for each C++ class is instead extracted from documentation blocks in the class header file.</p>
+<p>Entering 'make clean' from the doc/ directory will remove all the html documentation from the doc/html directory.</p>
 <ul>
 <li>
 <a class="el" href="guide_page.html">User Guide</a> (Up)  </li>
 <li>
 <a class="el" href="usage_page.html">Usage</a> (Next)  </li>
 </ul>
-<p></code></p>
 </div></div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:21 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

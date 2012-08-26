@@ -82,7 +82,7 @@
 <a name="l00072"></a>00072  
 <a name="l00076"></a>00076       <a class="code" href="classDdMd_1_1PairIterator.html" title="Iterator for pairs in a PairList.">PairIterator</a>&amp; operator++ ();
 <a name="l00077"></a>00077  
-<a name="l00084"></a>00084       <span class="keywordtype">bool</span> atEnd() <span class="keyword">const</span>;
+<a name="l00084"></a>00084       <span class="keywordtype">bool</span> isEnd() <span class="keyword">const</span>;
 <a name="l00085"></a>00085    
 <a name="l00091"></a>00091       <span class="keywordtype">bool</span> notEnd() <span class="keyword">const</span>;
 <a name="l00092"></a>00092    
@@ -168,8 +168,8 @@
 <a name="l00185"></a>00185    <span class="comment">/*</span>
 <a name="l00186"></a>00186 <span class="comment">   * Return true if past last pair in list.</span>
 <a name="l00187"></a>00187 <span class="comment">   */</span>
-<a name="l00188"></a>00188    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1PairIterator.html#afc2e7cf5f040f2284aa4c86cf9ce6536" title="Return true if at end of PairList.">PairIterator::atEnd</a>()<span class="keyword"> const</span>
-<a name="l00189"></a><a class="code" href="classDdMd_1_1PairIterator.html#afc2e7cf5f040f2284aa4c86cf9ce6536">00189</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> (atom2Id_ == nAtom2_); }
+<a name="l00188"></a>00188    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1PairIterator.html#adb831e6e567ac391961c9481b770ec95" title="Return true if at end of PairList.">PairIterator::isEnd</a>()<span class="keyword"> const</span>
+<a name="l00189"></a><a class="code" href="classDdMd_1_1PairIterator.html#adb831e6e567ac391961c9481b770ec95">00189</a> <span class="keyword">   </span>{ <span class="keywordflow">return</span> (atom2Id_ == nAtom2_); }
 <a name="l00190"></a>00190    
 <a name="l00191"></a>00191    <span class="comment">/*</span>
 <a name="l00192"></a>00192 <span class="comment">   * Return false if one past last pair in list.</span>
@@ -183,7 +183,7 @@
 <a name="l00200"></a>00200 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Wed Jul 4 2012 00:11:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:20 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>
