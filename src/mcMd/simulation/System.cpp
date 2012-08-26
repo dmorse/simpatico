@@ -437,6 +437,25 @@ namespace McMd
    }
 
    /*
+   * Read configuration from a specific input stream and transform
+   * position coordinates from cartesian to generalized system.
+   */
+   void System::transformCartConfigToGen(std::istream &in)
+   {
+      if (!isEmpty()) removeAllMolecules();
+
+      if (configIoPtr_ == 0) {
+         configIoPtr_ = newDefaultConfigIo();
+      }
+
+      configIoPtr_->transformCartConfigToGen(in);
+
+      #ifdef UTIL_DEBUG
+      isValid();
+      #endif
+   }
+
+   /*
    * Write configuration to specified output stream.
    */
    void System::writeConfig(std::ostream &out)
@@ -445,6 +464,18 @@ namespace McMd
          configIoPtr_ = newDefaultConfigIo();
       }
       configIoPtr_->write(out);
+   }
+
+   /*
+   * Transform position coordinates from cartesian to generalized
+   * system and write configuration to specified output stream.
+   */
+   void System::transformGenToCartConfig(std::ostream &out)
+   {
+      if (configIoPtr_ == 0) {
+         configIoPtr_ = newDefaultConfigIo();
+      }
+      configIoPtr_->transformGenToCartConfig(out);
    }
 
    /* 

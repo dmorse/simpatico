@@ -62,6 +62,15 @@ namespace McMd
       * \param in input file stream.
       */
       void read(std::istream &in);
+
+      /**
+      * Read configuration (particle positions) from file
+      * and transform positions from cartesian to 
+      * generalized system.
+      *
+      * \param in input file stream.
+      */
+      void transformCartConfigToGen(std::istream &in);
  
       /**
       * Write configuration (particle positions) to file.
@@ -69,7 +78,16 @@ namespace McMd
       * \param out output file stream.
       */
       void write(std::ostream &out);
- 
+
+      /**
+      * Transform positions from generalized to cartesian
+      * system and write configuration (particle positions) 
+      * to file.
+      *
+      * \param out output file stream.
+      */
+      void transformGenToCartConfig(std::ostream &out);
+
    }; 
 
 } 

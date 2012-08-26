@@ -371,6 +371,34 @@ namespace McMd
                #endif
 
             } else
+            if (command == "DEFORM_CELL") {
+               
+               // Read in configuration from file
+               inBuffer >> filename;
+               Log::file() << Str(filename, 15) << std::endl;
+               fileMaster().openInputFile(filename, inputFile);
+               system().transformCartConfigToGen(inputFile);
+               inputFile.close();
+
+               // Read in new boundary
+               inBuffer >> system().boundary();
+               Log::file() << "  " << system().boundary();
+               Log::file() << std::endl;
+               inBuffer >> filename;
+
+               // Write out configuration to file
+               inBuffer >> filename;
+               Log::file() << Str(filename, 15) << std::endl;
+               fileMaster().openOutputFile(filename, outputFile);
+               system().transformGenToCartConfig(outputFile);
+               outputFile.close();
+
+               #ifndef INTER_NOPAIR 
+               // Generate cell list
+               system().pairPotential().buildCellList();
+               #endif
+
+            } else
             #ifndef UTIL_MPI
             if (command == "SET_PAIR") {
                std::string paramName;
