@@ -17,8 +17,9 @@ namespace DdMd
    using namespace Util;
 
    /**
-   * An NPH integrator based on Martyna,Tobias and Klein (J. Chem. Phys.
-   * 101, 4177-4189, 1994).
+   * A reversible symplectic NPT integrator.
+   *
+   * Algorithm is based on Martyna,Tobias and Klein (J. Chem. Phys. 101, 4177-4189, 1994).
    *
    * \ingroup DdMd_Integrator_Module
    */

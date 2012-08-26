@@ -24,7 +24,7 @@ namespace DdMd
    /**
    * An DihedralPotential calculates dihedral forces and energies for a parent Simulation.
    *
-   * All operations in this class are local (no MPI).
+   * \ingroup DdMd_Dihedral_Module
    */
    class DihedralPotential  : public Potential
    {
