@@ -24,7 +24,7 @@ namespace DdMd
    /**
    * An AnglePotential calculates angle forces and energies for a parent Simulation.
    *
-   * All operations in this class are local (no MPI).
+   * \ingroup DdMd_Angle_Module
    */
    class AnglePotential  : public Potential
    {
