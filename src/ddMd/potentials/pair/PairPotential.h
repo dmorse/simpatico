@@ -35,6 +35,8 @@ namespace DdMd
    *
    * A PairPotential has a private CellList and PairList which it
    * uses to calculate nonbonded pair forces. 
+   *
+   * \ingroup DdMd_Pair_Module
    */
    class PairPotential : public Potential
    {

@@ -24,6 +24,8 @@ namespace DdMd
 
    /**
    * An ExternalPotential calculates exteranl forces for a parent Simulation.
+   *
+   * \ingroup DdMd_External_Module
    */
    class ExternalPotential : public ParamComposite
    {
