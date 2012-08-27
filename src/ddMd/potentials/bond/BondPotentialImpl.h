@@ -120,6 +120,17 @@ namespace DdMd
       virtual void computeStress();
       #endif
 
+      /**
+      * Compute bond forces and stress.
+      * 
+      * Call on all processors.
+      */
+      #ifdef UTIL_MPI
+      virtual void computeForcesAndStress(MPI::Intracomm& communicator);
+      #else
+      virtual void computeForcesAndStress();
+      #endif
+
       //@}
 
    private:
@@ -383,6 +394,76 @@ namespace DdMd
             forceOverR = 0.5*interactionPtr_->forceOverR(rsq, type);
          }
          f *= forceOverR;
+         incrementPairStress(f, dr, localStress);
+      }
+
+      // if (reverseUpdateFlag()) { } else { } 
+
+      // Normalize by volume 
+      localStress /= boundary().volume();
+
+      #ifdef UTIL_MPI
+      // Reduce results from all processors
+      Tensor totalStress;
+      communicator.Reduce(&localStress(0, 0), &totalStress(0, 0), 
+                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator.Get_rank() != 0) {
+         totalStress.zero();
+      }
+      setStress(totalStress);
+      #else
+      setStress(localStress);
+      #endif
+
+   }
+
+   /*
+   * Compute total pair stress (Call on all processors).
+   */
+   template <class Interaction>
+   #ifdef UTIL_MPI
+   void BondPotentialImpl<Interaction>::computeForcesAndStress(MPI::Intracomm& communicator)
+   #else
+   void BondPotentialImpl<Interaction>::computeForcesAndStress()
+   #endif
+   {
+      // Do nothing and return if stress is already set.
+      if (isStressSet()) return;
+ 
+      Tensor localStress;
+      Vector dr;
+      Vector f;
+      double rsq;
+      GroupIterator<2> iter;
+      Atom*  atom0Ptr;
+      Atom*  atom1Ptr;
+      int    type;
+      int    isLocal0, isLocal1;
+
+      localStress.zero();
+
+      // Iterate over bonds
+      storage().begin(iter);
+      for ( ; iter.notEnd(); ++iter) {
+         type = iter->typeId();
+         atom0Ptr = iter->atomPtr(0);
+         atom1Ptr = iter->atomPtr(1);
+         rsq = boundary().distanceSq(atom0Ptr->position(), 
+                                        atom1Ptr->position(), dr);
+         f  = dr;
+         f *= interactionPtr_->forceOverR(rsq, type);
+         isLocal0 = !(atom0Ptr->isGhost());
+         isLocal1 = !(atom1Ptr->isGhost());
+         assert(isLocal0 || isLocal1);
+         if (isLocal0) {
+            atom0Ptr->force() += f;
+         }
+         if (isLocal1) {
+            atom1Ptr->force() -= f;
+         }
+         if (!(isLocal0 && isLocal1)) {
+            f *= 0.5;
+         }
          incrementPairStress(f, dr, localStress);
       }
 
