@@ -4,10 +4,12 @@ is defined in the DdMd namespace. The code uses a parallelization strategy
 similiar to that used in LAMMPS and several other parallel MD codes. 
 
 The code in the DdMd namespace (or ddMd/ directory) uses classes defined 
-in the Util namespace (or util/ directory), but does not use any classes 
-from the McMD namespace (or mcMd/ directory).  Most files in the DdMd 
-namespace contain a "using namespace Util" directive that brings the 
-entire Util namespace into scope within the DdMd namespace. 
+in the Util and Inter namespaces (or the util/ and inter/ directories), 
+but does not use any code from the McMD namespace (or mcMd/ directory).  
+Most files in the DdMd namespace contain a "using namespace Util" directive 
+that brings the entire Util namespace into scope within the DdMd namespace.
+A few files that use classes from the Inter namespace also contain a
+"using namespace Inter" directive. 
 
 Subdirectories:
 
