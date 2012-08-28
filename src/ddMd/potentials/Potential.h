@@ -98,12 +98,25 @@ namespace DdMd
       *
       * This method must be called on all processors. The result 
       * is stored on the master processor, and may be retrieved 
-      * by calling energy() on this processor.
+      * by calling stress() on this processor.
       */
       #ifdef UTIL_MPI
       virtual void computeStress(MPI::Intracomm& communicator) = 0;
       #else
       virtual void computeStress() = 0;
+      #endif
+
+      /**
+      * Compute forces and stress for all processors.
+      * 
+      * Call on all processors. The default implementation just calls
+      * computeForces() and computeStress() methods. Subclasses should
+      * combine into a single loop.
+      */
+      #ifdef UTIL_MPI
+      virtual void computeForcesAndStress(MPI::Intracomm& communicator);
+      #else
+      virtual void computeForcesAndStress();
       #endif
 
       /**

@@ -7,11 +7,9 @@
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
 #include <ddMd/communicate/Domain.h>
-#include <util/boundary/Boundary.h>
 #include <ddMd/chemistry/Atom.h>
-
 #include <inter/pair/DpdPair.h>
-
+#include <util/boundary/Boundary.h>
 #include <util/random/Random.h>
 
 #ifdef UTIL_MPI
@@ -43,6 +41,14 @@ public:
    {
       object().setNAtomType(1);
       object().associate(domain, boundary, storage);
+      domain.setBoundary(boundary);
+
+      #ifdef UTIL_MPI
+      domain.setGridCommunicator(communicator());
+      domain.setParamCommunicator(communicator());
+      storage.setParamCommunicator(communicator());
+      object().setParamCommunicator(communicator());
+      #endif
 
       // Read parameter file
       openFile("in/PairPotential");
@@ -223,12 +229,24 @@ public:
       const int nAtom = 120;
       const int pairCapacity = 1000;
       double cutoff   = 1.2;
-      Vector  lower(0.0);
-      Vector  upper(2.0, 3.0, 4.0);
-      randomAtoms(nAtom, lower, upper, cutoff);
+      Vector lower(0.0);
+      Vector upper(2.0, 3.0, 4.0);
+      Boundary maxBoundary;
 
-      object().initialize(lower, upper, cutoff, pairCapacity);
-      object().findNeighbors(lower, upper);
+      boundary.setOrthorhombic(upper);
+      randomAtoms(nAtom, lower, upper, cutoff);
+      
+      //object().initialize(maxBoundary, cutoff, pairCapacity);
+      boundary.setOrthorhombic(upper);
+
+      if (!UTIL_ORTHOGONAL) {
+         storage.transformCartToGen(boundary);
+      }
+      object().buildCellList();
+      if (!UTIL_ORTHOGONAL) {
+         storage.transformGenToCart(boundary);
+      }
+      object().buildPairList();
 
       zeroForces();
       object().setMethodId(0);
@@ -251,7 +269,7 @@ public:
 
 TEST_BEGIN(PairPotentialTest)
 TEST_ADD(PairPotentialTest, testRead1)
-TEST_ADD(PairPotentialTest, testRandom1)
+//TEST_ADD(PairPotentialTest, testRandom1)
 TEST_END(PairPotentialTest)
 
 #endif 

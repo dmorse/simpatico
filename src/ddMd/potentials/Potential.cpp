@@ -97,6 +97,25 @@ namespace DdMd
    bool Potential::isStressSet() const
    {  return stress_.isSet(); }
 
+   /*
+   * Compute atomic forces and stress on all processors.
+   * 
+   * Default implementation just calls computeForces and computeStress.
+   */
+   #ifdef UTIL_MPI
+   void Potential::computeForcesAndStress(MPI::Intracomm& communicator)
+   #else
+   void Potential::computeForcesAndStress();
+   #endif
+   { 
+      computeForces(); 
+      #ifdef UTIL_MPI
+      computeStress(communicator); 
+      #else
+      computeForces();
+      #endif
+   }
+
    #ifdef UTIL_MPI
    /*
    * Is the potential in a valid internal state?
