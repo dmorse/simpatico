@@ -173,11 +173,44 @@ namespace DdMd
       */
       void setStress(const Tensor& stress);
 
-      /*
+      /**
       * Add a pair contribution to the stress tensor.
+      *
+      * \param f       pair force = f1 = -f2
+      * \param dr      pair separation = r1 - r2 
+      * \param stress  virial, incremented by dyad dr f
       */
       void incrementPairStress(const Vector& f, const Vector& dr, 
                                Tensor& stress) const;
+
+      /**
+      * Add local energies from all processors, set energy on master.
+      *
+      * Call on all processors.
+      *
+      * \param localEnergy  energy contribution from this processor
+      * \param communicator domain communicator
+      */
+      #ifdef UTIL_MPI
+      void reduceEnergy(double localEnergy, MPI::Intracomm& communicator);
+      #else
+      void reduceEnergy();
+      #endif
+
+      /**
+      * Add local stresses from all processors, set total on master.
+      *
+      * Call on all processors.
+      *
+      * \param localStress  stress contribution from this processor
+      * \param communicator domain communicator
+      */
+      #ifdef UTIL_MPI
+      void reduceStress(Tensor& localStress, MPI::Intracomm& communicator);
+      #else
+      void reduceStress();
+      #endif
+
    private:
 
       /// Total stress.

@@ -116,6 +116,50 @@ namespace DdMd
       #endif
    }
 
+   /*
+   * Reduce energy from all processors.
+   */
+   #ifdef UTIL_MPI
+   void Potential::reduceEnergy(double localEnergy, MPI::Intracomm& communicator)
+   #else
+   void Potential::reduceEnergy(double localEnergy)
+   #endif
+   {
+      #ifdef UTIL_MPI
+      double totalEnergy = 0.0; 
+      communicator.Reduce(&localEnergy, &totalEnergy, 1, 
+                          MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator.Get_rank() != 0) {
+         totalEnergy = 0.0;
+      }
+      setEnergy(totalEnergy);
+      #else
+      setEnergy(localEnergy);
+      #endif
+   }
+
+   /*
+   * Reduce stress from all processors.
+   */
+   #ifdef UTIL_MPI
+   void Potential::reduceStress(Tensor& localStress, MPI::Intracomm& communicator)
+   #else
+   void PairPotential::reduceStress(Tensor& localStress)
+   #endif
+   {
+      #ifdef UTIL_MPI
+      Tensor totalStress;
+      communicator.Reduce(&localStress(0,0), &totalStress(0,0), 
+                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator.Get_rank() != 0) {
+         totalStress.zero();
+      }
+      setStress(totalStress);
+      #else
+      setStress(localStress);
+      #endif
+   }
+
    #ifdef UTIL_MPI
    /*
    * Is the potential in a valid internal state?
