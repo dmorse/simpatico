@@ -162,9 +162,9 @@
 <a name="l00258"></a>00258 
 <a name="l00259"></a><a class="code" href="classDdMd_1_1Cell.html#a62f748bcdccc1dda85966e6c981aa863">00259</a>    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1Cell.html#a62f748bcdccc1dda85966e6c981aa863" title="Reset to empty before incrementing capacity.">Cell::clear</a>()
 <a name="l00260"></a>00260    {
-<a name="l00261"></a>00261       begin_  =  0;
-<a name="l00262"></a>00262       nAtom_  =  0;
-<a name="l00263"></a>00263       atomCapacity_  =  0;
+<a name="l00261"></a>00261       begin_= 0;
+<a name="l00262"></a>00262       nAtom_ = 0;
+<a name="l00263"></a>00263       atomCapacity_ = 0;
 <a name="l00264"></a>00264    }
 <a name="l00265"></a>00265 
 <a name="l00266"></a><a class="code" href="classDdMd_1_1Cell.html#acaccb3b99ff748aeee22852973c31740">00266</a>    <span class="keyword">inline</span> <a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>** <a class="code" href="classDdMd_1_1Cell.html#acaccb3b99ff748aeee22852973c31740" title="Associate the Cell with an array of Atom* pointers.">Cell::initialize</a>(<a class="code" href="classDdMd_1_1Atom.html" title="A point particle.">Atom</a>** begin)
@@ -224,17 +224,23 @@
 <a name="l00320"></a><a class="code" href="classDdMd_1_1Cell.html#a18121553cc98eb9570d8107b20ddfadf">00320</a>    <span class="keyword">inline</span> <span class="keyword">const</span> <a class="code" href="classDdMd_1_1Cell.html" title="A single Cell in a CellList.">Cell</a>* <a class="code" href="classDdMd_1_1Cell.html#a18121553cc98eb9570d8107b20ddfadf" title="Return a pointer to neighbor cell i.">Cell::nextCellPtr</a>()<span class="keyword"> const</span>
 <a name="l00321"></a>00321 <span class="keyword">   </span>{  <span class="keywordflow">return</span> nextCellPtr_; }
 <a name="l00322"></a>00322 
-<a name="l00323"></a><a class="code" href="classDdMd_1_1Cell.html#a3896ac5e2143503fa317c2e45168eff0">00323</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Cell.html#a3896ac5e2143503fa317c2e45168eff0" title="Capacity of array segment.">Cell::atomCapacity</a>()<span class="keyword"> const</span>
-<a name="l00324"></a>00324 <span class="keyword">   </span>{  <span class="keywordflow">return</span> atomCapacity_; }
-<a name="l00325"></a>00325 
-<a name="l00329"></a><a class="code" href="classDdMd_1_1Cell.html#afc08197fde54f29ece0734e72600fd52">00329</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Cell.html#afc08197fde54f29ece0734e72600fd52" title="Is this a ghost cell?">Cell::isGhostCell</a>()<span class="keyword"> const</span>
-<a name="l00330"></a>00330 <span class="keyword">   </span>{  <span class="keywordflow">return</span> isGhostCell_; }
-<a name="l00331"></a>00331 
-<a name="l00332"></a>00332 }
-<a name="l00333"></a>00333 <span class="preprocessor">#endif</span>
+<a name="l00323"></a>00323    <span class="comment">/*</span>
+<a name="l00324"></a>00324 <span class="comment">   *  Return current capacity of cell. </span>
+<a name="l00325"></a>00325 <span class="comment">   */</span>
+<a name="l00326"></a><a class="code" href="classDdMd_1_1Cell.html#a3896ac5e2143503fa317c2e45168eff0">00326</a>    <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="classDdMd_1_1Cell.html#a3896ac5e2143503fa317c2e45168eff0" title="Capacity of array segment.">Cell::atomCapacity</a>()<span class="keyword"> const</span>
+<a name="l00327"></a>00327 <span class="keyword">   </span>{  <span class="keywordflow">return</span> atomCapacity_; }
+<a name="l00328"></a>00328 
+<a name="l00329"></a>00329    <span class="comment">/*</span>
+<a name="l00330"></a>00330 <span class="comment">   * Is this a ghost cell?</span>
+<a name="l00331"></a>00331 <span class="comment">   */</span>
+<a name="l00332"></a><a class="code" href="classDdMd_1_1Cell.html#afc08197fde54f29ece0734e72600fd52">00332</a>    <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="classDdMd_1_1Cell.html#afc08197fde54f29ece0734e72600fd52" title="Is this a ghost cell?">Cell::isGhostCell</a>()<span class="keyword"> const</span>
+<a name="l00333"></a>00333 <span class="keyword">   </span>{  <span class="keywordflow">return</span> isGhostCell_; }
+<a name="l00334"></a>00334 
+<a name="l00335"></a>00335 }
+<a name="l00336"></a>00336 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:19 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:55 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -157,7 +157,7 @@
 <a name="l00106"></a>00106 <span class="preprocessor">      #endif</span>
 <a name="l00107"></a>00107 <span class="preprocessor"></span>      <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().isMaster()) {
 <a name="l00108"></a>00108          T_target_ = <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a4f0645169fdd0f0a6f0f2ae83feca18b" title="Get the EnergyEnsemble by reference.">energyEnsemble</a>().<a class="code" href="classUtil_1_1EnergyEnsemble.html#a783172a4702ba22a168f11c932ab883a" title="Return the temperature.">temperature</a>();
-<a name="l00109"></a>00109          nAtom_  = <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#ae48dda2908e1df9a572e291076bb41db" title="On master processor (rank=0), stored value of total number of atoms.">nAtomTotal</a>();
+<a name="l00109"></a>00109          nAtom_  = <a class="code" href="classDdMd_1_1SimulationAccess.html#a6e866d1a060d70892ab55c327b279f2f" title="Get the AtomStorage.">atomStorage</a>().<a class="code" href="classDdMd_1_1AtomStorage.html#ae48dda2908e1df9a572e291076bb41db" title="Get total number of atoms on all processors.">nAtomTotal</a>();
 <a name="l00110"></a>00110          T_kinetic_ = <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a10c17ef9707e9c64b0295b19089ad6e4" title="Return precomputed total kinetic energy.">kineticEnergy</a>()*2.0/double(3*nAtom_);
 <a name="l00111"></a>00111          xiDot_ = (T_kinetic_/T_target_ -1.0)*nuT_*nuT_;
 <a name="l00112"></a>00112       }
@@ -213,26 +213,29 @@
 <a name="l00162"></a>00162          atomIter-&gt;velocity() *=factor;
 <a name="l00163"></a>00163       }
 <a name="l00164"></a>00164 
-<a name="l00165"></a>00165       <span class="comment">// Update xiDot_ and xi_</span>
-<a name="l00166"></a>00166       <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a8589034d49d77db29774fe9bc67287cb" title="Compute total kinetic energy.">computeKineticEnergy</a>();
-<a name="l00167"></a>00167       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().isMaster()) {
-<a name="l00168"></a>00168          xi_ += xiDot_*dtHalf;
-<a name="l00169"></a>00169          T_kinetic_ = <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a10c17ef9707e9c64b0295b19089ad6e4" title="Return precomputed total kinetic energy.">kineticEnergy</a>()*2.0/double(3*nAtom_);
-<a name="l00170"></a>00170          xiDot_ = (T_kinetic_/T_target_  - 1.0)*nuT_*nuT_;
+<a name="l00165"></a>00165       <span class="comment">// Notify observers of change in velocity</span>
+<a name="l00166"></a>00166       <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#afa658e0fb8d033243fb4f96c96238bb2" title="Signal to indicate change in atomic velocities.">velocitySignal</a>().<a class="code" href="classUtil_1_1Signal.html#ae4c8adf7cb5ed88454aa2a2ca19d330b" title="Notify all observers.">notify</a>();
+<a name="l00167"></a>00167 
+<a name="l00168"></a>00168       <span class="comment">// Update xiDot_ and xi_</span>
+<a name="l00169"></a>00169       <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a8589034d49d77db29774fe9bc67287cb" title="Compute total kinetic energy.">computeKineticEnergy</a>();
+<a name="l00170"></a>00170       <span class="keywordflow">if</span> (<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().isMaster()) {
 <a name="l00171"></a>00171          xi_ += xiDot_*dtHalf;
-<a name="l00172"></a>00172       }
-<a name="l00173"></a>00173 <span class="preprocessor">      #ifdef UTIL_MPI</span>
-<a name="l00174"></a>00174 <span class="preprocessor"></span>      <a class="code" href="namespaceUtil.html#a17692180f6c210c0746958d9a336d02b" title="Broadcast a C-array of T objects.">bcast</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().communicator(), xiDot_, 0);
-<a name="l00175"></a>00175       <a class="code" href="namespaceUtil.html#a17692180f6c210c0746958d9a336d02b" title="Broadcast a C-array of T objects.">bcast</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().communicator(), xi_, 0);
-<a name="l00176"></a>00176 <span class="preprocessor">      #endif</span>
-<a name="l00177"></a>00177 <span class="preprocessor"></span>
-<a name="l00178"></a>00178    }
-<a name="l00179"></a>00179 
-<a name="l00180"></a>00180 }
-<a name="l00181"></a>00181 <span class="preprocessor">#endif</span>
+<a name="l00172"></a>00172          T_kinetic_ = <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#a10c17ef9707e9c64b0295b19089ad6e4" title="Return precomputed total kinetic energy.">kineticEnergy</a>()*2.0/double(3*nAtom_);
+<a name="l00173"></a>00173          xiDot_ = (T_kinetic_/T_target_  - 1.0)*nuT_*nuT_;
+<a name="l00174"></a>00174          xi_ += xiDot_*dtHalf;
+<a name="l00175"></a>00175       }
+<a name="l00176"></a>00176 <span class="preprocessor">      #ifdef UTIL_MPI</span>
+<a name="l00177"></a>00177 <span class="preprocessor"></span>      <a class="code" href="namespaceUtil.html#a17692180f6c210c0746958d9a336d02b" title="Broadcast a C-array of T objects.">bcast</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().communicator(), xiDot_, 0);
+<a name="l00178"></a>00178       <a class="code" href="namespaceUtil.html#a17692180f6c210c0746958d9a336d02b" title="Broadcast a C-array of T objects.">bcast</a>(<a class="code" href="classDdMd_1_1SimulationAccess.html#a15e4404a34ad861a5e223294b9767348" title="Get the Domain.">domain</a>().communicator(), xi_, 0);
+<a name="l00179"></a>00179 <span class="preprocessor">      #endif</span>
+<a name="l00180"></a>00180 <span class="preprocessor"></span>
+<a name="l00181"></a>00181    }
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183 }
+<a name="l00184"></a>00184 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:56 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

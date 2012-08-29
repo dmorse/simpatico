@@ -100,14 +100,14 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">Interaction &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotentialImpl.html#a76171b8e953d68df1005d7d6570abdf9">interaction</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return bond interaction by reference.  <a href="#a76171b8e953d68df1005d7d6570abdf9"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Total Energy, Force and Stress</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotentialImpl.html#a63ce11a9ed6ee868cf4e869325390ca9">addForces</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the bond forces for all atoms.  <a href="#a63ce11a9ed6ee868cf4e869325390ca9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotentialImpl.html#ac806efca2762ade5e4953e34b64133d3">addForces</a> (double &amp;energy)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the bond forces for all atoms and compute energy.  <a href="#ac806efca2762ade5e4953e34b64133d3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotentialImpl.html#ac470eae04cf4fd80733e84604eb937c0">computeForces</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the bond forces for all atoms.  <a href="#ac470eae04cf4fd80733e84604eb937c0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotentialImpl.html#a6a6d0d2226a61f413f7e912d968dca65">computeEnergy</a> (MPI::Intracomm &amp;communicator)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the total bond energy for all processors.  <a href="#a6a6d0d2226a61f413f7e912d968dca65"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotentialImpl.html#a912b3fd6889af281911ef83c1b88f1d0">computeStress</a> (MPI::Intracomm &amp;communicator)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the covalent bond stress.  <a href="#a912b3fd6889af281911ef83c1b88f1d0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1BondPotentialImpl.html#a3006f1b2ea5e94b156a8cd26b1cac101">computeForcesAndStress</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute bond forces and stress.  <a href="#a3006f1b2ea5e94b156a8cd26b1cac101"></a><br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ab15e05eb13eb60fde8cd08bac9ed5f01"></a><!-- doxytag: member="DdMd::BondPotentialImpl::BondPotentialImpl" ref="ab15e05eb13eb60fde8cd08bac9ed5f01" args="(Simulation &amp;simulation)" -->
@@ -129,7 +129,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Constructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00177">177</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00176">176</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -151,7 +151,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Default constructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00186">186</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00185">185</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -173,7 +173,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Destructor. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00195">195</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00194">194</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -199,7 +199,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1BondPotential.html#ab1cd1797ddd43df866735145b05ce09b">DdMd::BondPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00207">207</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00206">206</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -225,7 +225,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Reimplemented from <a class="el" href="classUtil_1_1ParamComposite.html#a1a5c30a9916a5392fedc26f93b8c8724">Util::ParamComposite</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00214">214</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00213">213</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -260,7 +260,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1BondPotential.html#aaeb1cb798ffc2f1d256ff39e7664b42f">DdMd::BondPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00227">227</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00226">226</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -295,7 +295,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1BondPotential.html#a39b06bf99cde37dab2cf8940536316b7">DdMd::BondPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00235">235</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00234">234</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -336,7 +336,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1BondPotential.html#ad6c4b2371205219c1152d84a4a200f6a">DdMd::BondPotential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00244">244</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00243">243</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -359,7 +359,7 @@ template&lt;class Interaction &gt; </div>
 <p>Return bond interaction by const reference. </p>
 <p>Get Interaction by const reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00258">258</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00257">257</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
 </div>
 </div>
@@ -382,18 +382,18 @@ template&lt;class Interaction &gt; </div>
 <p>Return bond interaction by reference. </p>
 <p>Get Interaction by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00251">251</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00250">250</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a63ce11a9ed6ee868cf4e869325390ca9"></a><!-- doxytag: member="DdMd::BondPotentialImpl::addForces" ref="a63ce11a9ed6ee868cf4e869325390ca9" args="()" -->
+<a class="anchor" id="ac470eae04cf4fd80733e84604eb937c0"></a><!-- doxytag: member="DdMd::BondPotentialImpl::computeForces" ref="ac470eae04cf4fd80733e84604eb937c0" args="()" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classDdMd_1_1BondPotentialImpl.html">DdMd::BondPotentialImpl</a>&lt; Interaction &gt;::addForces </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1BondPotentialImpl.html">DdMd::BondPotentialImpl</a>&lt; Interaction &gt;::computeForces </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -404,32 +404,11 @@ template&lt;class Interaction &gt; </div>
 
 <p>Add the bond forces for all atoms. </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1Potential.html#a3b07e1cf5fe1a2fad433cf945cea5af1">DdMd::Potential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1Potential.html#ac7aa9e76573ba14b7fa8a1924543a053">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00265">265</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00264">264</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
-</div>
-</div>
-<a class="anchor" id="ac806efca2762ade5e4953e34b64133d3"></a><!-- doxytag: member="DdMd::BondPotentialImpl::addForces" ref="ac806efca2762ade5e4953e34b64133d3" args="(double &amp;energy)" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class Interaction &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classDdMd_1_1BondPotentialImpl.html">DdMd::BondPotentialImpl</a>&lt; Interaction &gt;::addForces </td>
-          <td>(</td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>energy</em></td><td>)</td>
-          <td><code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>Add the bond forces for all atoms and compute energy. </p>
-
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00272">272</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00229">DdMd::Atom::force()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>.</p>
 
 </div>
 </div>
@@ -455,7 +434,9 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1Potential.html#a4e88eaa5bfc37822ae1132c0f157ddfd">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00281">281</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00300">300</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+
+<p>References <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, and <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>.</p>
 
 </div>
 </div>
@@ -481,9 +462,37 @@ template&lt;class Interaction &gt; </div>
 
 <p>Implements <a class="el" href="classDdMd_1_1Potential.html#a504660ddcbb47afbe9b505150dfad607">DdMd::Potential</a>.</p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00356">356</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00359">359</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
 
 <p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, and <a class="el" href="Tensor_8h_source.html#l00416">Util::Tensor::zero()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3006f1b2ea5e94b156a8cd26b1cac101"></a><!-- doxytag: member="DdMd::BondPotentialImpl::computeForcesAndStress" ref="a3006f1b2ea5e94b156a8cd26b1cac101" args="(MPI::Intracomm &amp;communicator)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class Interaction &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classDdMd_1_1BondPotentialImpl.html">DdMd::BondPotentialImpl</a>&lt; Interaction &gt;::computeForcesAndStress </td>
+          <td>(</td>
+          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
+          <td class="paramname"><em>communicator</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Compute bond forces and stress. </p>
+<p>Call on all processors. </p>
+
+<p>Reimplemented from <a class="el" href="classDdMd_1_1Potential.html#a9dffbbb623977295ba0f532dbce80625">DdMd::Potential</a>.</p>
+
+<p>Definition at line <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html#l00425">425</a> of file <a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a>.</p>
+
+<p>References <a class="el" href="Dimension_8h_source.html#l00019">Util::Dimension</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00229">DdMd::Atom::force()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00213">DdMd::Atom::isGhost()</a>, <a class="el" href="PArrayIterator_8h_source.html#l00092">Util::PArrayIterator&lt; Group&lt; N &gt; &gt;::notEnd()</a>, <a class="el" href="ddMd_2chemistry_2Atom_8h_source.html#l00221">DdMd::Atom::position()</a>, and <a class="el" href="Tensor_8h_source.html#l00416">Util::Tensor::zero()</a>.</p>
 
 </div>
 </div>
@@ -491,7 +500,7 @@ template&lt;class Interaction &gt; </div>
 <li><a class="el" href="ddMd_2potentials_2bond_2BondPotentialImpl_8h_source.html">ddMd/potentials/bond/BondPotentialImpl.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:59 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

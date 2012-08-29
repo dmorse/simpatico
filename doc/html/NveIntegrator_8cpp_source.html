@@ -165,13 +165,15 @@
 <a name="l00114"></a>00114          atomIter-&gt;velocity() += dv;
 <a name="l00115"></a>00115       }
 <a name="l00116"></a>00116 
-<a name="l00117"></a>00117    }
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119 }
-<a name="l00120"></a>00120 <span class="preprocessor">#endif</span>
+<a name="l00117"></a>00117       <span class="comment">// Notify observers of change in velocity</span>
+<a name="l00118"></a>00118       <a class="code" href="classDdMd_1_1SimulationAccess.html#af0d28ee0afd276dd27299ff740718377" title="Get the parent simulation.">simulation</a>().<a class="code" href="classDdMd_1_1Simulation.html#afa658e0fb8d033243fb4f96c96238bb2" title="Signal to indicate change in atomic velocities.">velocitySignal</a>().<a class="code" href="classUtil_1_1Signal.html#ae4c8adf7cb5ed88454aa2a2ca19d330b" title="Notify all observers.">notify</a>();
+<a name="l00119"></a>00119    }
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121 }
+<a name="l00122"></a>00122 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:20 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:56 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

@@ -46,6 +46,8 @@
   </div>
 </div>
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <h1>DdMd::DdTimer Class Reference</h1>  </div>
 </div>
@@ -60,13 +62,187 @@
 
 <p><a href="classDdMd_1_1DdTimer-members.html">List of all members.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdTimer.html#a666df05f67649cc9f8beb70086cb7b3e">clear</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all time statistics.  <a href="#a666df05f67649cc9f8beb70086cb7b3e"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdTimer.html#ad4c8bc3c1e70c74f8ce9e86a849356f1">start</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear statistics, mark a start time.  <a href="#ad4c8bc3c1e70c74f8ce9e86a849356f1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdTimer.html#abe973c8562b8261c1cdb330ec0c1d6b9">stamp</a> (int id)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mark end of interval id.  <a href="#abe973c8562b8261c1cdb330ec0c1d6b9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdTimer.html#aa0bc10ee8e8963625f4e023f2c7e891b">stop</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop total time accumulation.  <a href="#aa0bc10ee8e8963625f4e023f2c7e891b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdTimer.html#a4047560c750f97e39dd227fa30499aa2">time</a> (int id) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get accumulated time for interval i.  <a href="#a4047560c750f97e39dd227fa30499aa2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdTimer.html#a527b83bbc8e7c95888735a817fcfdf11">time</a> () const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get total time since start time.  <a href="#a527b83bbc8e7c95888735a817fcfdf11"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1DdTimer.html#ad6ccef16f4340bf350f22cc05b8cdbd7">reduce</a> (MPI::Intracomm &amp;communicator)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Upon return, times on every processor replaced by average over procs.  <a href="#ad6ccef16f4340bf350f22cc05b8cdbd7"></a><br/></td></tr>
 </table>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a666df05f67649cc9f8beb70086cb7b3e"></a><!-- doxytag: member="DdMd::DdTimer::clear" ref="a666df05f67649cc9f8beb70086cb7b3e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::DdTimer::clear </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Clear all time statistics. </p>
+
+<p>Definition at line <a class="el" href="DdTimer_8cpp_source.html#l00027">27</a> of file <a class="el" href="DdTimer_8cpp_source.html">DdTimer.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="DdTimer_8cpp_source.html#l00034">start()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad4c8bc3c1e70c74f8ce9e86a849356f1"></a><!-- doxytag: member="DdMd::DdTimer::start" ref="ad4c8bc3c1e70c74f8ce9e86a849356f1" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::DdTimer::start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Clear statistics, mark a start time. </p>
+
+<p>Definition at line <a class="el" href="DdTimer_8cpp_source.html#l00034">34</a> of file <a class="el" href="DdTimer_8cpp_source.html">DdTimer.cpp</a>.</p>
+
+<p>References <a class="el" href="DdTimer_8cpp_source.html#l00027">clear()</a>.</p>
+
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="abe973c8562b8261c1cdb330ec0c1d6b9"></a><!-- doxytag: member="DdMd::DdTimer::stamp" ref="abe973c8562b8261c1cdb330ec0c1d6b9" args="(int id)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::DdTimer::stamp </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Mark end of interval id. </p>
+
+<p>Definition at line <a class="el" href="DdTimer_8cpp_source.html#l00041">41</a> of file <a class="el" href="DdTimer_8cpp_source.html">DdTimer.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00070">DdMd::Integrator::computeForces()</a>, and <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa0bc10ee8e8963625f4e023f2c7e891b"></a><!-- doxytag: member="DdMd::DdTimer::stop" ref="aa0bc10ee8e8963625f4e023f2c7e891b" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::DdTimer::stop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Stop total time accumulation. </p>
+
+<p>Definition at line <a class="el" href="DdTimer_8cpp_source.html#l00048">48</a> of file <a class="el" href="DdTimer_8cpp_source.html">DdTimer.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4047560c750f97e39dd227fa30499aa2"></a><!-- doxytag: member="DdMd::DdTimer::time" ref="a4047560c750f97e39dd227fa30499aa2" args="(int id) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double DdMd::DdTimer::time </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get accumulated time for interval i. </p>
+
+<p>Definition at line <a class="el" href="DdTimer_8cpp_source.html#l00067">67</a> of file <a class="el" href="DdTimer_8cpp_source.html">DdTimer.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00119">DdMd::Integrator::outputStatistics()</a>, <a class="el" href="Exchanger_8cpp_source.html#l01287">DdMd::Exchanger::outputStatistics()</a>, and <a class="el" href="Integrator_8cpp_source.html#l00107">DdMd::Integrator::time()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a527b83bbc8e7c95888735a817fcfdf11"></a><!-- doxytag: member="DdMd::DdTimer::time" ref="a527b83bbc8e7c95888735a817fcfdf11" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double DdMd::DdTimer::time </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Get total time since start time. </p>
+
+<p>Definition at line <a class="el" href="DdTimer_8cpp_source.html#l00070">70</a> of file <a class="el" href="DdTimer_8cpp_source.html">DdTimer.cpp</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad6ccef16f4340bf350f22cc05b8cdbd7"></a><!-- doxytag: member="DdMd::DdTimer::reduce" ref="ad6ccef16f4340bf350f22cc05b8cdbd7" args="(MPI::Intracomm &amp;communicator)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DdMd::DdTimer::reduce </td>
+          <td>(</td>
+          <td class="paramtype">MPI::Intracomm &amp;&#160;</td>
+          <td class="paramname"><em>communicator</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Upon return, times on every processor replaced by average over procs. </p>
+
+<p>Definition at line <a class="el" href="DdTimer_8cpp_source.html#l00052">52</a> of file <a class="el" href="DdTimer_8cpp_source.html">DdTimer.cpp</a>.</p>
+
+<p>Referenced by <a class="el" href="TwoStepIntegrator_8cpp_source.html#l00042">DdMd::TwoStepIntegrator::run()</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="DdTimer_8h_source.html">DdTimer.h</a></li>
 <li><a class="el" href="DdTimer_8cpp_source.html">DdTimer.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:23 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:59 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

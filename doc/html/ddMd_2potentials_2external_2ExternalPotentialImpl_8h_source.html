@@ -113,9 +113,9 @@
 <a name="l00115"></a>00115 
 <a name="l00116"></a>00116 
 <a name="l00117"></a>00117 
-<a name="l00121"></a>00121       <span class="keyword">virtual</span> <span class="keywordtype">void</span> addForces();
+<a name="l00121"></a>00121       <span class="keyword">virtual</span> <span class="keywordtype">void</span> computeForces();
 <a name="l00122"></a>00122 
-<a name="l00128"></a>00128       <span class="keyword">virtual</span> <span class="keywordtype">void</span> addForces(<span class="keywordtype">double</span>&amp; energy);
+<a name="l00128"></a>00128       <span class="keyword">virtual</span> <span class="keywordtype">void</span> computeForces(<span class="keywordtype">double</span>&amp; energy);
 <a name="l00129"></a>00129 
 <a name="l00135"></a>00135 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00136"></a>00136 <span class="preprocessor"></span>      <span class="keyword">virtual</span> <span class="keywordtype">void</span> computeEnergy(MPI::Intracomm&amp; communicator);
@@ -141,7 +141,7 @@
 <a name="l00179"></a>00179  
 <a name="l00183"></a>00183       Interaction* interactionPtr_;
 <a name="l00184"></a>00184 
-<a name="l00188"></a>00188       <span class="keywordtype">double</span> addForces(<span class="keywordtype">bool</span> needForce, <span class="keywordtype">bool</span> needEnergy);
+<a name="l00188"></a>00188       <span class="keywordtype">double</span> computeForces(<span class="keywordtype">bool</span> needForce, <span class="keywordtype">bool</span> needEnergy);
 <a name="l00189"></a>00189 
 <a name="l00190"></a>00190 <span class="preprocessor">      #if 0 </span>
 <a name="l00191"></a>00191 <span class="preprocessor"></span>      <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
@@ -271,18 +271,18 @@
 <a name="l00324"></a>00324 <span class="comment">   * Increment atomic forces, without calculating energy.</span>
 <a name="l00325"></a>00325 <span class="comment">   */</span>
 <a name="l00326"></a>00326    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00327"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#af7911992893fa2aa36e2af24ea0b481c">00327</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#af7911992893fa2aa36e2af24ea0b481c" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::addForces</a>()
+<a name="l00327"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a666f769429b6dc74bffc9cf4395bcf05">00327</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a666f769429b6dc74bffc9cf4395bcf05" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::computeForces</a>()
 <a name="l00328"></a>00328    {  
-<a name="l00329"></a>00329       addForces(<span class="keyword">true</span>, <span class="keyword">false</span>); 
+<a name="l00329"></a>00329       computeForces(<span class="keyword">true</span>, <span class="keyword">false</span>); 
 <a name="l00330"></a>00330    }
 <a name="l00331"></a>00331 
 <a name="l00332"></a>00332    <span class="comment">/*</span>
 <a name="l00333"></a>00333 <span class="comment">   * Increment atomic forces, and compute total external energy.</span>
 <a name="l00334"></a>00334 <span class="comment">   */</span>
 <a name="l00335"></a>00335    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
-<a name="l00336"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a2977814562145681c2692f01eb2e240a">00336</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#af7911992893fa2aa36e2af24ea0b481c" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">double</span>&amp; energy)
+<a name="l00336"></a><a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a99fab359b1295db83ce06f0e9d4417fa">00336</a>    <span class="keywordtype">void</span> <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a666f769429b6dc74bffc9cf4395bcf05" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::computeForces</a>(<span class="keywordtype">double</span>&amp; energy)
 <a name="l00337"></a>00337    {  
-<a name="l00338"></a>00338       energy = addForces(<span class="keyword">true</span>, <span class="keyword">true</span>); 
+<a name="l00338"></a>00338       energy = computeForces(<span class="keyword">true</span>, <span class="keyword">true</span>); 
 <a name="l00339"></a>00339    }
 <a name="l00340"></a>00340 
 <a name="l00341"></a>00341    <span class="comment">/*</span>
@@ -297,7 +297,7 @@
 <a name="l00350"></a>00350    <span class="preprocessor">#endif</span>
 <a name="l00351"></a>00351 <span class="preprocessor"></span>   { 
 <a name="l00352"></a>00352       <span class="keywordtype">double</span> localEnergy = 0; 
-<a name="l00353"></a>00353       localEnergy = addForces(<span class="keyword">false</span>, <span class="keyword">true</span>); 
+<a name="l00353"></a>00353       localEnergy = computeForces(<span class="keyword">false</span>, <span class="keyword">true</span>); 
 <a name="l00354"></a>00354 
 <a name="l00355"></a>00355 <span class="preprocessor">      #ifdef UTIL_MPI</span>
 <a name="l00356"></a>00356 <span class="preprocessor"></span>      communicator.Reduce(&amp;localEnergy, &amp;energy_, 1, 
@@ -319,7 +319,7 @@
 <a name="l00372"></a>00372 <span class="comment">   */</span>
 <a name="l00373"></a>00373    <span class="keyword">template</span> &lt;<span class="keyword">class</span> Interaction&gt;
 <a name="l00374"></a>00374    <span class="keywordtype">double</span> 
-<a name="l00375"></a>00375    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#af7911992893fa2aa36e2af24ea0b481c" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::addForces</a>(<span class="keywordtype">bool</span> needForce, 
+<a name="l00375"></a>00375    <a class="code" href="classDdMd_1_1ExternalPotentialImpl.html#a666f769429b6dc74bffc9cf4395bcf05" title="Calculate external forces for all atoms in this Simulation.">ExternalPotentialImpl&lt;Interaction&gt;::computeForces</a>(<span class="keywordtype">bool</span> needForce, 
 <a name="l00376"></a>00376                                                  <span class="keywordtype">bool</span> needEnergy)
 <a name="l00377"></a>00377    {
 <a name="l00378"></a>00378       <span class="comment">// Preconditions</span>
@@ -351,7 +351,7 @@
 <a name="l00404"></a>00404 <span class="preprocessor">#endif</span>
 </pre></div></div>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:19 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:55 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

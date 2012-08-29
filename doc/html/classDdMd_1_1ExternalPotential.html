@@ -49,13 +49,13 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>DdMd::ExternalPotential Class Reference</h1>  </div>
+<h1>DdMd::ExternalPotential Class Reference<div class="ingroups"><a class="el" href="group__DdMd__External__Module.html">External Potentials</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::ExternalPotential" --><!-- doxytag: inherits="Util::ParamComposite" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>An <a class="el" href="classDdMd_1_1ExternalPotential.html" title="An ExternalPotential calculates exteranl forces for a parent Simulation.">ExternalPotential</a> calculates exteranl forces for a parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html#l00028">28</a> of file <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html">ddMd/potentials/external/ExternalPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html#l00030">30</a> of file <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html">ddMd/potentials/external/ExternalPotential.h</a>.</p>
 </div>
 <p><code>#include &lt;<a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html">ExternalPotential.h</a>&gt;</code></p>
 <div class="dynheader">
@@ -91,10 +91,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns force caused by the external potential.  <a href="#a1300f0049294d6198c942bb00a7a70f4"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="member-group"></a>
 Total Energy, Force and Stress</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotential.html#a2c712f5d88961b5622c9b1e7e5fbaa6e">addForces</a> ()=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add external forces all local atoms.  <a href="#a2c712f5d88961b5622c9b1e7e5fbaa6e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotential.html#a886d4cc7f5d3736cb127b3b228cad409">addForces</a> (double &amp;energy)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add pair forces to atom forces, and compute energy.  <a href="#a886d4cc7f5d3736cb127b3b228cad409"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotential.html#a7392df559ecf817bb7ebcf377e89b977">computeForces</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add external forces all local atoms.  <a href="#a7392df559ecf817bb7ebcf377e89b977"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotential.html#ab64ad204618eb059486a8e7101975079">computeForces</a> (double &amp;energy)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add pair forces to atom forces, and compute energy.  <a href="#ab64ad204618eb059486a8e7101975079"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotential.html#a49bf7766dbcb9fa40511b846f5ea1914">computeEnergy</a> (MPI::Intracomm &amp;communicator)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate total pair potential on this processor.  <a href="#a49bf7766dbcb9fa40511b846f5ea1914"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotential.html#add5d5a99aa6e2e3bc0dee99d409854c6">energy</a> ()=0</td></tr>
@@ -317,12 +317,12 @@ Total Energy, Force and Stress</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a2c712f5d88961b5622c9b1e7e5fbaa6e"></a><!-- doxytag: member="DdMd::ExternalPotential::addForces" ref="a2c712f5d88961b5622c9b1e7e5fbaa6e" args="()=0" -->
+<a class="anchor" id="a7392df559ecf817bb7ebcf377e89b977"></a><!-- doxytag: member="DdMd::ExternalPotential::computeForces" ref="a7392df559ecf817bb7ebcf377e89b977" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void DdMd::ExternalPotential::addForces </td>
+          <td class="memname">virtual void DdMd::ExternalPotential::computeForces </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [pure virtual]</code></td>
@@ -333,18 +333,18 @@ Total Energy, Force and Stress</h2></td></tr>
 
 <p>Add external forces all local atoms. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1ExternalPotentialImpl.html#af7911992893fa2aa36e2af24ea0b481c">DdMd::ExternalPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1ExternalPotentialImpl.html#a666f769429b6dc74bffc9cf4395bcf05">DdMd::ExternalPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 <p>Referenced by <a class="el" href="Integrator_8cpp_source.html#l00070">DdMd::Integrator::computeForces()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a886d4cc7f5d3736cb127b3b228cad409"></a><!-- doxytag: member="DdMd::ExternalPotential::addForces" ref="a886d4cc7f5d3736cb127b3b228cad409" args="(double &amp;energy)=0" -->
+<a class="anchor" id="ab64ad204618eb059486a8e7101975079"></a><!-- doxytag: member="DdMd::ExternalPotential::computeForces" ref="ab64ad204618eb059486a8e7101975079" args="(double &amp;energy)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual void DdMd::ExternalPotential::addForces </td>
+          <td class="memname">virtual void DdMd::ExternalPotential::computeForces </td>
           <td>(</td>
           <td class="paramtype">double &amp;&#160;</td>
           <td class="paramname"><em>energy</em></td><td>)</td>
@@ -356,7 +356,7 @@ Total Energy, Force and Stress</h2></td></tr>
 
 <p>Add pair forces to atom forces, and compute energy. </p>
 
-<p>Implemented in <a class="el" href="classDdMd_1_1ExternalPotentialImpl.html#a2977814562145681c2692f01eb2e240a">DdMd::ExternalPotentialImpl&lt; Interaction &gt;</a>.</p>
+<p>Implemented in <a class="el" href="classDdMd_1_1ExternalPotentialImpl.html#a99fab359b1295db83ce06f0e9d4417fa">DdMd::ExternalPotentialImpl&lt; Interaction &gt;</a>.</p>
 
 </div>
 </div>
@@ -417,7 +417,7 @@ Total Energy, Force and Stress</h2></td></tr>
 
 <p>Get the parent <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html#l00150">150</a> of file <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html">ddMd/potentials/external/ExternalPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html#l00152">152</a> of file <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html">ddMd/potentials/external/ExternalPotential.h</a>.</p>
 
 </div>
 </div>
@@ -437,7 +437,7 @@ Total Energy, Force and Stress</h2></td></tr>
 
 <p>Get the Boundary by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html#l00153">153</a> of file <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html">ddMd/potentials/external/ExternalPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html#l00155">155</a> of file <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html">ddMd/potentials/external/ExternalPotential.h</a>.</p>
 
 </div>
 </div>
@@ -457,7 +457,7 @@ Total Energy, Force and Stress</h2></td></tr>
 
 <p>Get the <a class="el" href="classDdMd_1_1AtomStorage.html" title="A container for all the atoms and ghost atoms on this processor.">AtomStorage</a> by reference. </p>
 
-<p>Definition at line <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html#l00156">156</a> of file <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html">ddMd/potentials/external/ExternalPotential.h</a>.</p>
+<p>Definition at line <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html#l00158">158</a> of file <a class="el" href="ddMd_2potentials_2external_2ExternalPotential_8h_source.html">ddMd/potentials/external/ExternalPotential.h</a>.</p>
 
 </div>
 </div>
@@ -466,7 +466,7 @@ Total Energy, Force and Stress</h2></td></tr>
 <li><a class="el" href="ExternalPotential_8cpp_source.html">ExternalPotential.cpp</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:59 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>

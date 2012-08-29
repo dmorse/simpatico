@@ -49,7 +49,7 @@
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
-<h1>DdMd::ExternalPotentialImpl&lt; Interaction &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__DdMd__Pair__Module.html">Pair Potentials</a></div></h1>  </div>
+<h1>DdMd::ExternalPotentialImpl&lt; Interaction &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__DdMd__External__Module.html">External Potentials</a></div></h1>  </div>
 </div>
 <div class="contents">
 <!-- doxytag: class="DdMd::ExternalPotentialImpl" --><!-- doxytag: inherits="DdMd::ExternalPotential" --><hr/><a name="_details"></a><h2>Detailed Description</h2>
@@ -99,10 +99,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const Interaction &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotentialImpl.html#afcdd34fc5bfaa0b5a6bc0ff0df7a90e1">interaction</a> () const </td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return external interaction by const reference.  <a href="#afcdd34fc5bfaa0b5a6bc0ff0df7a90e1"></a><br/></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Total Energy, Forces and Stress</div></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotentialImpl.html#af7911992893fa2aa36e2af24ea0b481c">addForces</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate external forces for all atoms in this <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>.  <a href="#af7911992893fa2aa36e2af24ea0b481c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotentialImpl.html#a2977814562145681c2692f01eb2e240a">addForces</a> (double &amp;energy)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add external forces to atom forces, and compute energy.  <a href="#a2977814562145681c2692f01eb2e240a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotentialImpl.html#a666f769429b6dc74bffc9cf4395bcf05">computeForces</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate external forces for all atoms in this <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>.  <a href="#a666f769429b6dc74bffc9cf4395bcf05"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotentialImpl.html#a99fab359b1295db83ce06f0e9d4417fa">computeForces</a> (double &amp;energy)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add external forces to atom forces, and compute energy.  <a href="#a99fab359b1295db83ce06f0e9d4417fa"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotentialImpl.html#ac57aa4034e47a11aab599c8c21d19d95">computeEnergy</a> (MPI::Intracomm &amp;communicator)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the total external energy for all processors.  <a href="#ac57aa4034e47a11aab599c8c21d19d95"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDdMd_1_1ExternalPotentialImpl.html#a477e3338090f1294c1911fa395edcd05">energy</a> ()</td></tr>
@@ -130,7 +130,7 @@ template&lt;class Interaction &gt; </div>
 
 <p>Definition at line <a class="el" href="ddMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00221">221</a> of file <a class="el" href="ddMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html">ddMd/potentials/external/ExternalPotentialImpl.h</a>.</p>
 
-<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00734">DdMd::Simulation::boundary()</a>.</p>
+<p>References <a class="el" href="ddMd_2simulation_2Simulation_8h_source.html#l00788">DdMd::Simulation::boundary()</a>.</p>
 
 </div>
 </div>
@@ -418,14 +418,14 @@ template&lt;class Interaction &gt; </div>
 
 </div>
 </div>
-<a class="anchor" id="af7911992893fa2aa36e2af24ea0b481c"></a><!-- doxytag: member="DdMd::ExternalPotentialImpl::addForces" ref="af7911992893fa2aa36e2af24ea0b481c" args="()" -->
+<a class="anchor" id="a666f769429b6dc74bffc9cf4395bcf05"></a><!-- doxytag: member="DdMd::ExternalPotentialImpl::computeForces" ref="a666f769429b6dc74bffc9cf4395bcf05" args="()" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classDdMd_1_1ExternalPotentialImpl.html">DdMd::ExternalPotentialImpl</a>&lt; Interaction &gt;::addForces </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1ExternalPotentialImpl.html">DdMd::ExternalPotentialImpl</a>&lt; Interaction &gt;::computeForces </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td><code> [virtual]</code></td>
@@ -436,20 +436,20 @@ template&lt;class Interaction &gt; </div>
 
 <p>Calculate external forces for all atoms in this <a class="el" href="classDdMd_1_1Simulation.html" title="Main object for a domain-decomposition MD simulation.">Simulation</a>. </p>
 
-<p>Implements <a class="el" href="classDdMd_1_1ExternalPotential.html#a2c712f5d88961b5622c9b1e7e5fbaa6e">DdMd::ExternalPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1ExternalPotential.html#a7392df559ecf817bb7ebcf377e89b977">DdMd::ExternalPotential</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00327">327</a> of file <a class="el" href="ddMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html">ddMd/potentials/external/ExternalPotentialImpl.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a2977814562145681c2692f01eb2e240a"></a><!-- doxytag: member="DdMd::ExternalPotentialImpl::addForces" ref="a2977814562145681c2692f01eb2e240a" args="(double &amp;energy)" -->
+<a class="anchor" id="a99fab359b1295db83ce06f0e9d4417fa"></a><!-- doxytag: member="DdMd::ExternalPotentialImpl::computeForces" ref="a99fab359b1295db83ce06f0e9d4417fa" args="(double &amp;energy)" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class Interaction &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classDdMd_1_1ExternalPotentialImpl.html">DdMd::ExternalPotentialImpl</a>&lt; Interaction &gt;::addForces </td>
+          <td class="memname">void <a class="el" href="classDdMd_1_1ExternalPotentialImpl.html">DdMd::ExternalPotentialImpl</a>&lt; Interaction &gt;::computeForces </td>
           <td>(</td>
           <td class="paramtype">double &amp;&#160;</td>
           <td class="paramname"><em>energy</em></td><td>)</td>
@@ -467,7 +467,7 @@ template&lt;class Interaction &gt; </div>
   </dd>
 </dl>
 
-<p>Implements <a class="el" href="classDdMd_1_1ExternalPotential.html#a886d4cc7f5d3736cb127b3b228cad409">DdMd::ExternalPotential</a>.</p>
+<p>Implements <a class="el" href="classDdMd_1_1ExternalPotential.html#ab64ad204618eb059486a8e7101975079">DdMd::ExternalPotential</a>.</p>
 
 <p>Definition at line <a class="el" href="ddMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html#l00336">336</a> of file <a class="el" href="ddMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html">ddMd/potentials/external/ExternalPotentialImpl.h</a>.</p>
 
@@ -528,7 +528,7 @@ template&lt;class Interaction &gt; </div>
 <li><a class="el" href="ddMd_2potentials_2external_2ExternalPotentialImpl_8h_source.html">ddMd/potentials/external/ExternalPotentialImpl.h</a></li>
 </ul>
 </div>
-<hr class="footer"/><address class="footer"><small>Generated on Sun Aug 26 2012 06:54:22 for Simpatico by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Aug 29 2012 08:57:59 for Simpatico by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.3 </small></address>
 </body>
