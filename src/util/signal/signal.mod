@@ -1,7 +1,7 @@
 namespace Util{
 
    /**
-   * \defgroup Signal_Module Signals (Observer Pattern)
+   * \defgroup Util_Signal_Module Signals (Observer Pattern)
    * \ingroup Util_NS_Module
    *
    * Classes used to implement the observer design pattern. A Signal
