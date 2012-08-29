@@ -313,17 +313,8 @@ namespace DdMd
  
       double localEnergy = 0.0; 
       localEnergy = computeForces(false, true); 
-      #ifdef UTIL_MPI
-      double totalEnergy = 0.0;
-      communicator.Reduce(&localEnergy, &totalEnergy, 1, 
-                          MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator.Get_rank() != 0) {
-         totalEnergy = 0.0;
-      }
-      setEnergy(totalEnergy);
-      #else
-      setEnergy(localEnergy);
-      #endif
+
+      reduceEnergy(localEnergy, communicator);
    }
 
    /*
@@ -442,19 +433,8 @@ namespace DdMd
       // Normalize by volume 
       localStress /= boundary().volume();
 
-      #ifdef UTIL_MPI
-      // Reduce results from all processors
-      Tensor totalStress;
-      communicator.Reduce(&localStress(0, 0), &totalStress(0, 0), 
-                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator.Get_rank() != 0) {
-         totalStress.zero();
-      }
-      setStress(totalStress);
-      #else
-      setStress(localStress);
-      #endif
-
+      // Add localStress from all nodes, set sum on master
+      reduceStress(localStress, communicator);
    }
 
 }

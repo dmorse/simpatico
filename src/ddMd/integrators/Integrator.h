@@ -95,6 +95,16 @@ namespace DdMd
       */
       void computeForces();
 
+      /**
+      * Compute forces for all local atoms and virial, with timing.
+      *
+      * Identical to Simulation::computeForceAndVirial(), with timing.
+      * Upon return, forces are correct for all local atoms. Values
+      * of the forces on ghost atoms are undefined. Executes reverse
+      * communication if needed, and emits Simulation::forceSignal().
+      */
+      void computeForcesAndVirial();
+
       /// Total number of steps
       int   nStep_;
 

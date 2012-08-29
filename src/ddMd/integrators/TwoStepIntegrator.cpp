@@ -13,6 +13,7 @@
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/communicate/Exchanger.h>
 #include <ddMd/potentials/pair/PairPotential.h>
+#include <util/ensembles/BoundaryEnsemble.h>
 #include <util/util/Log.h>
 #include <util/global.h>
 
@@ -114,11 +115,16 @@ namespace DdMd
          simulation().isValid();
          #endif
 
-         // Calculate new forces for all local atoms (sends force signal).
-         computeForces();
+         // Calculate new forces for all local atoms. Also calculate virial stresses
+         // for constant pressure ensemble. Both methods send the modifyForce signal.
+         if (simulation().boundaryEnsemble().isRigid()) {
+            computeForces();
+         } else {
+            computeForcesAndVirial();
+         }
 
-         // 2nd step of integration: Finish velocity update 
-         // This method should call simulation().velocitySignal().notify()
+         // 2nd step of integration, which finishes the velocity update.
+         // This method normally call simulation().velocitySignal().notify()
          integrateStep2();
          timer().stamp(INTEGRATE2);
    

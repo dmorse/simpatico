@@ -101,6 +101,43 @@ namespace DdMd
    }
 
    /*
+   * Compute forces for all local atoms and virial, with timing.
+   */
+   void Integrator::computeForcesAndVirial()
+   {
+      simulation().zeroForces();
+      pairPotential().computeForcesAndStress(domain().communicator());
+      timer_.stamp(PAIR_FORCE);
+      bondPotential().computeForcesAndStress(domain().communicator());
+      timer_.stamp(BOND_FORCE);
+      #ifdef INTER_ANGLE
+      if (nAngleType()) {
+         anglePotential().computeForcesAndStress(domain().communicator());
+         timer_.stamp(ANGLE_FORCE);
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType()) {
+         dihedralPotential().computeForcesAndStress(domain().communicator());
+         timer_.stamp(DIHEDRAL_FORCE);
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      if (hasExternal()) {
+         externalPotential().computeForces();
+      }
+      #endif
+
+      // Reverse communication (if any)
+      if (reverseUpdateFlag()) {
+         exchanger().reverseUpdate();
+      }
+
+      // Send signal indicating change in atomic forces
+      simulation().forceSignal().notify();
+   }
+
+   /*
    * Return time per processor for last run.
    */
    double Integrator::time() const

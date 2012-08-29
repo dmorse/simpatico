@@ -655,6 +655,36 @@ namespace DdMd
    }
 
    /*
+   * Compute forces for all atoms and virial stress contributions.
+   */
+   void Simulation::computeForcesAndVirial()
+   {
+      zeroForces();
+      pairPotential().computeForcesAndStress(domain_.communicator());
+      bondPotential().computeForcesAndStress(domain_.communicator());
+      #ifdef INTER_ANGLE
+      if (nAngleType_) {
+         anglePotential().computeForcesAndStress(domain_.communicator());
+      }
+      #endif
+      #ifdef INTER_DIHEDRAL
+      if (nDihedralType_) {
+         dihedralPotential().computeForcesAndStress(domain_.communicator());
+      }
+      #endif
+      #ifdef INTER_EXTERNAL
+      if (hasExternal_) {
+         externalPotential().computeForces();
+      }
+      #endif
+
+      // Reverse communication (if any)
+      if (reverseUpdateFlag_) {
+         exchanger_.reverseUpdate();
+      }
+   }
+
+   /*
    * Integrate.
    */
    void Simulation::simulate(int nStep)

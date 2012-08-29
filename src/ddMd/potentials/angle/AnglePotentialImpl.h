@@ -352,17 +352,8 @@ namespace DdMd
          localEnergy += fraction*angleEnergy;
       }
 
-      #ifdef UTIL_MPI
-      double totalEnergy = 0.0;
-      communicator.Reduce(&localEnergy, &totalEnergy, 1, 
-                          MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator.Get_rank() != 0) {
-         totalEnergy = 0.0;
-      }
-      setEnergy(totalEnergy);
-      #else
-      setEnergy(localEnergy);
-      #endif
+      // Add localEnergy from all nodes, set sum on master.
+      reduceEnergy(localEnergy, communicator);
    }
 
    /*
@@ -419,20 +410,8 @@ namespace DdMd
       // Normalize by volume 
       localStress /= boundary().volume();
 
-      #ifdef UTIL_MPI
-      // Reduce results from all processors
-      Tensor totalStress;
-      int root = 0;
-      communicator.Reduce(&localStress(0, 0), &totalStress(0, 0), 
-                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, root);
-      if (communicator.Get_rank() != root) {
-         totalStress.zero();
-      }
-      setStress(totalStress);
-      #else
-      setStress(localStress);
-      #endif
-
+      // Add localEnergy from all nodes, set sum on master.
+      reduceEnergy(localEnergy, communicator);
    }
 
    #if 0

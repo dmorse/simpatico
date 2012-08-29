@@ -208,6 +208,20 @@ namespace DdMd
       void computeForces();
 
       /**
+      * Compute forces for all local atoms and virial stress.
+      *
+      * Upon return, forces are correct for all local atoms and virial
+      * stress values are set for all Potential objects. Values of the 
+      * forces on ghost atoms are undefined.
+      *
+      * This method zeros all forces, adds forces from all potential
+      * energies, and carries out reverse communication if required 
+      * (i.e., if reverseUpdateFlag is true). It also calculates and
+      * sets each virial stress contribution.
+      */
+      void computeForcesAndVirial();
+
+      /**
       * Compute total kinetic energy.
       * 
       * Reduce operation: Must be called on all processors.
