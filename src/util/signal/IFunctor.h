@@ -15,6 +15,8 @@ namespace Util
 
    /**
    * Interface for functor that wraps a void function with one argument (abstract).
+   *
+   * \ingroup Util_Signal_Module
    */
    template <typename T=void>
    class IFunctor {

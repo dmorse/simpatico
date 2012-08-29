@@ -25,9 +25,14 @@ namespace Util
    * Notifier (or subject) in the Observer design pattern.
    *
    * A Signal manages a list of registered functor objects, and provides
-   * a notify() method that calls them all with the same argument.
+   * a void Signal<T>::notify(const T&) method that calls them all with 
+   * the same argument.
+   *
+   * The explicit specialization Signal<void>, or Signal<>, has a notify
+   * method void Signal<>::notify() that takes no parameters, which calls
+   * a method of each observer that takes no parameters.
    * 
-   * \ingroup Util_Module
+   * \ingroup Util_Signal_Module
    */
    template <typename T=void>
    class Signal
@@ -68,6 +73,13 @@ namespace Util
    
       /**
       * Notify all observers.
+      *
+      * This method notifies all registered observers by calling the appropriate
+      * method of each observer, passing each the parameter t as argument. The
+      * explicit specialization Signal<>, with T=void, is used for notification 
+      * methods that take
+      *
+      * \param t Argument passed to notification methods of all observers.
       */
       void notify(const T& t);
 
@@ -144,10 +156,11 @@ namespace Util
    // Signal with no arguments.
 
    /**
-   * Notifier (or subject) in the Observer design pattern.
+   * Notifier (or subject) in the Observer design pattern (zero parameters).
    *
-   * A Signal manages a list of registered functor objects, and provides
-   * a notify() method that calls them all with the same argument.
+   * This explicit specialization of Signal<T> provides a notify method
+   * that takes no parameters, and that calls methods of each observer
+   * object that take no parameters.
    * 
    * \ingroup Util_Module
    */

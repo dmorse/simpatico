@@ -19,6 +19,8 @@ namespace Util
    * The constructor to MethodFunctor<T> takes pointers to an invoking instance
    * of class Object and a member function (method) that takes one T argument.
    * The operator (const T&) invokes that method on that object.
+   *
+   * \ingroup Util_Signal_Module
    */
    template <class Object, typename T=void>
    class MethodFunctor : public IFunctor<T>
