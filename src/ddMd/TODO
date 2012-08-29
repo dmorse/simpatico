@@ -32,12 +32,9 @@ Flexible Unit Cells:
 Constant Pressure:
 ------------------
 
-- Add computeForcesAndStress() methods to potentials.
-
 - Add requiresStress_ member, setter and accessor to Integrator.
 
 - In TwoStepIntegrator, if (requiresStress), call computeForceAndStress().
-
 
 Hybrid MD
 ----------

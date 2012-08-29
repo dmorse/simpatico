@@ -341,17 +341,8 @@ namespace DdMd
          localEnergy = energyNSq(); 
       }
 
-      #ifdef UTIL_MPI
-      double totalEnergy = 0.0; 
-      communicator.Reduce(&localEnergy, &totalEnergy, 1, 
-                          MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator.Get_rank() != 0) {
-         totalEnergy = 0.0;
-      }
-      setEnergy(totalEnergy);
-      #else
-      setEnergy(localEnergy);
-      #endif
+      // Add localEnergy from all nodes, set energy to sum on master.
+      reduceEnergy(localEnergy, communicator);
    }
 
    /*
@@ -772,18 +763,8 @@ namespace DdMd
       // Normalize by volume 
       localStress /= boundary().volume();
 
-      #ifdef UTIL_MPI
-      Tensor totalStress;
-      communicator.Reduce(&localStress(0,0), &totalStress(0,0), 
-                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator.Get_rank() != 0) {
-         totalStress.zero();
-      }
-      setStress(totalStress);
-      #else
-      setStress(localStress);
-      #endif
-
+      // Add localStress from all nodes, set stress to sum on master.
+      reduceStress(localStress, communicator);
    }
 
    /*
@@ -798,7 +779,7 @@ namespace DdMd
    {
       // If stress is already set, just calculate forces
       if (isStressSet()) {
-         computeForcesList();
+         computeForces();
          return;
       }
  
@@ -854,18 +835,8 @@ namespace DdMd
       // Normalize by volume 
       localStress /= boundary().volume();
 
-      #ifdef UTIL_MPI
-      Tensor totalStress;
-      communicator.Reduce(&localStress(0,0), &totalStress(0,0), 
-                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator.Get_rank() != 0) {
-         totalStress.zero();
-      }
-      setStress(totalStress);
-      #else
-      setStress(localStress);
-      #endif
-
+      // Add localStress from all nodes, set stress to sum on master.
+      reduceStress(localStress, communicator);
    }
 
 }
