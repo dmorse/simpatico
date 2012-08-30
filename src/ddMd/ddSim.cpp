@@ -7,6 +7,11 @@
 
 #include <ddMd/simulation/Simulation.h>
 #include <util/param/ParamComponent.h>
+#include <util/global.h>
+
+#include <iostream>
+
+using namespace Util;
 
 /**
 * Program for parallel domain-decomposition molecular dynamics simulation.
@@ -21,16 +26,19 @@ int main(int argc, char **argv)
 
    #ifdef UTIL_MPI
    MPI::Init();
+   #endif
+
+   #ifdef UTIL_MPI
    DdMd::Simulation simulation(MPI::COMM_WORLD);
    #else
    DdMd::Simulation simulation();
    #endif
 
-   // Read command line options (read on master).
+   // Read command line options.
    simulation.setOptions(argc, argv); 
 
-   // Read parameter file from standard input (read on master).
-   simulation.readParam(std::cin); 
+   // Read parameter file from default param stream (read on master).
+   simulation.readParam(); 
 
    // Read command file (path is specified in parameter file).
    simulation.readCommands();

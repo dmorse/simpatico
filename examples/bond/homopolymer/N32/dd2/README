@@ -1,0 +1,4 @@
+Example of ddSim for 8 processors split between 2 systems, assigning four 
+processors to each system. Command:
+
+mpirun -np 8 ddSim -s 2

@@ -63,7 +63,7 @@ namespace DdMd
          if (sys.domain().isMaster()) {
             double kinetic = sys.kineticEnergy();
             double potential = sys.potentialEnergy();
-            std::cout << Int(iStep, 10)
+            Log::file() << Int(iStep, 10)
                       << Dbl(kinetic, 20)
                       << Dbl(potential, 20)
                       << Dbl(kinetic + potential, 20)

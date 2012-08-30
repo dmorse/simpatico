@@ -135,8 +135,9 @@ namespace Util
       ptr->setIndent(*this, false);
       ++size_;
       #ifdef UTIL_MPI
-         if (hasParamCommunicator()) 
-            ptr->setParamCommunicator(paramCommunicator());
+      if (hasParamCommunicator()) {
+         ptr->setParamCommunicator(paramCommunicator());
+      }
       #endif
       return *ptr;
    }
@@ -164,8 +165,9 @@ namespace Util
       ptr->setIndent(*this, false);
       ++size_;
       #ifdef UTIL_MPI
-         if (hasParamCommunicator()) 
-            ptr->setParamCommunicator(paramCommunicator());
+      if (hasParamCommunicator()) {
+         ptr->setParamCommunicator(paramCommunicator());
+      }
       #endif
       return *ptr;
    }
@@ -192,8 +194,9 @@ namespace Util
       isLeaf_.push_back(true);
       ++size_;
       #ifdef UTIL_MPI
-      if (hasParamCommunicator()) 
+      if (hasParamCommunicator()) {
          ptr->setParamCommunicator(paramCommunicator());
+      }
       #endif
       return *ptr;
    }

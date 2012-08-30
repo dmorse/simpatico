@@ -101,7 +101,10 @@ namespace Util
    * Get the  communicator.
    */
    inline MPI::Intracomm& MpiFileIo::communicator() const
-   {  return *communicatorPtr_; }
+   {
+      assert(communicatorPtr_);  
+      return *communicatorPtr_; 
+   }
    #endif
 }
 

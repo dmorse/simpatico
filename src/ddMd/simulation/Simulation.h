@@ -26,6 +26,8 @@
 #include <util/util/Setable.h>                   // member (template)
 #include <util/signal/Signal.h>                  // members
 
+#include <fstream>
+
 namespace Util { 
    template <typename T> class Factory; 
    class EnergyEnsemble;
@@ -118,6 +120,11 @@ namespace DdMd
       * Read parameters, allocate memory and initialize.
       */
       virtual void readParam(std::istream& in);
+
+      /**
+      * Read parameters from default parameter file.
+      */
+      virtual void readParam();
 
       /*
       * Read and execute commands from a command file.
@@ -779,6 +786,11 @@ namespace DdMd
       /// Is reverse communication enabled?
       bool reverseUpdateFlag_;
 
+      #ifdef UTIL_MPI
+      /// Communicator for this system.
+      MPI::Intracomm communicator_;
+      #endif
+
       /// Signal to force clearing of all computed quantities.
       Signal<>  modifySignal_;
 
@@ -790,6 +802,9 @@ namespace DdMd
 
       /// Signal to indicate change in atomic forces.
       Signal<>  forceSignal_;
+
+      /// Log output file (if not standard out)
+      std::ofstream logFile_;
 
    // friends:
 

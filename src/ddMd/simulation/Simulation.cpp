@@ -64,6 +64,7 @@
 
 #include <fstream>
 #include <unistd.h>
+#include <stdlib.h>
 
 namespace DdMd
 {
@@ -152,6 +153,9 @@ namespace DdMd
       #endif
       maskedPairPolicy_(MaskBonded),
       reverseUpdateFlag_(false)
+      #ifdef UTIL_MPI
+      , communicator_(communicator)
+      #endif
    {
       Util::initStatic();
 
@@ -163,8 +167,11 @@ namespace DdMd
       Util::IntVector::commitMpiType();
       AtomType::initStatic();
 
+      #if 0
       setParamCommunicator(communicator);
       domain_.setGridCommunicator(communicator);
+      #endif
+
       #endif
 
       // Set connections between member objects
@@ -179,6 +186,7 @@ namespace DdMd
                            #endif
                            buffer_);
 
+      fileMasterPtr_ = new FileMaster;
       energyEnsemblePtr_  = new EnergyEnsemble;
       boundaryEnsemblePtr_ = new BoundaryEnsemble;
      
@@ -260,7 +268,7 @@ namespace DdMd
       }
 
       #ifdef UTIL_MPI
-      //if (logFile_.is_open()) logFile_.close();
+      if (logFile_.is_open()) logFile_.close();
       #endif
    }
 
@@ -269,26 +277,73 @@ namespace DdMd
    */
    void Simulation::setOptions(int argc, char **argv)
    {
-      bool  eflag  = false;
+      bool   eFlag = false;
+      bool   sFlag = false;
+      char*  sArg;
+      int    nSystem = 1;
    
       // Read command-line arguments
       int c;
       opterr = 0;
-      while ((c = getopt(argc, argv, "epr:")) != -1) {
+      while ((c = getopt(argc, argv, "es:")) != -1) {
          switch (c) {
          case 'e':
-           eflag = true;
+           eFlag = true;
+           break;
+         case 's':
+           sFlag = true;
+           sArg  = optarg;
+           nSystem = atoi(sArg);
            break;
          case '?':
            std::cout << "Unknown option -" << optopt << std::endl;
          }
       }
    
-      if (eflag) {
-         // Enable echoing of parameters to log file as they are read.
+      // Enable echoing of parameters to log file as they are read.
+      if (eFlag) {
          Util::ParamComponent::setEcho(true);
       }
+
+      // Split communicator
+      if (sFlag) {
+         if (nSystem <= 1) {
+            UTIL_THROW("nSystem must be greater than 1");
+         }
+         int worldRank = communicator_.Get_rank();
+         int worldSize = communicator_.Get_size();
+         if (worldSize % nSystem != 0) {
+            UTIL_THROW("World communicator size is not a multiple of nSystem");
+         }
+
+         // Split the communicator
+         int systemSize = worldSize/nSystem;
+         int systemId  = worldRank/systemSize;
+         communicator_ = communicator_.Split(systemId, worldRank);
+
+         //std::cout << worldRank << "  " << systemId << "  " 
+         //          << communicator_.Get_rank() << std::endl;
+    
+         // Set communicator in sub-objects 
+         setParamCommunicator(communicator_);
+         domain_.setGridCommunicator(communicator_);
+         fileMaster().setDirectoryId(systemId);
+      
+         // Set log file for processor n to a new file named "n/log"
+         // Relies on initialization of FileMaster outputPrefix to "" (empty).
+         fileMaster().openOutputFile("log", logFile_);
+         Log::setFile(logFile_);
+      } else {
+         setParamCommunicator(communicator_);
+         domain_.setGridCommunicator(communicator_);
+      }
    }
+
+   /*
+   *  Read parameters from default parameter file. 
+   */
+   void Simulation::readParam()
+   {   readParam(fileMaster().paramFile()); }
 
    /**
    * Read parameters, allocate memory and initialize.
@@ -420,11 +475,7 @@ namespace DdMd
    */
    void Simulation::readFileMaster(std::istream &in)
    {
-      // Create FileMaster if necessary
-      if (!fileMasterPtr_) {
-         fileMasterPtr_ = new FileMaster();
-         readParamComposite(in, *fileMasterPtr_);
-      }
+      readParamComposite(in, *fileMasterPtr_);
    }
 
    /**
