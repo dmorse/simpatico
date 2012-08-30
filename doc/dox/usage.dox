@@ -101,14 +101,24 @@ The mdSim and mcSim programs can each be invoked with any combination of three c
   <li> -p: Enables the use of free energy perturbation theory.
   </li>
 </ul>
-The -e echo option causes each parameter in the parameter file to be echoed to standard output immediately after it is read. This is very useful for locating errors in the parameter file: The first parameter that is not echoed to standard output is usually the one that is causing trouble. 
+The -e (echo) option causes each parameter in the parameter file to be echoed to standard output immediately after it is read. This is very useful for locating errors in the parameter file: The first parameter that is not echoed to standard output is usually the one that is causing trouble. 
 
 The -r (restart) option takes a required parameter "filename". This is the base name of three input files required to restart a simulation, which have filename suffixes *.prm, *.rst, and *.cmd. 
 This option is discussed in more detail \ref restart_page "here".
 
 The -p (perturbation) option enables the definition of a free energy perturbation, for use with thermodynamic integration and replica exchange algorithms. This is generally only useful when used with a version of mcSim or mdSim that is compiled for use on multiple processors.  This option is discussed in more detail \ref multiMcMd_page "here".  
 
-The only valid option for the ddSim parallel program is the "-e" (echo) option, which has the same effect in all programs.
+The ddSim domain-decomposition MD program can be invoked with the two options:
+<ul>
+  <li> -e: Activates echoing of the parameter file to standard output.</li>
+  <li> -s  p: Enables simulation of p independent systems. </li>
+  </li>
+</ul>
+The -e (echo) option causing echoing of the parameter file to the log file as it is read, as in mcSim and mdSim.
+
+The -s (split) option takes a required parameter p, and enables simultaneous simulation of p independent systems
+by splitting the MPI communicator into p subcommunicators and using each to run a separate simulation. This option
+is discussed in more detail \ref multiDdMd_page "here". 
 
 <ul>
  <li> \ref compile_page  (Previous) </li>

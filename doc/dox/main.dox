@@ -22,6 +22,7 @@ hybrid MD/MC simulations of polymeric and molecular liquids.
    <li> \subpage analysis_page    "Data Analysis"</li>
    <li> \subpage restart_page     "Restarting"</li>
    <li> \subpage multiMcMd_page   "Multi-system simulations (mcSim and mdSim)" </li>
+   <li> \subpage multiMcMd_page   "Multi-system simulations (ddSim)" </li>
    </ul>
  </li>
  <li> \subpage overview_page "Source Code Overview"

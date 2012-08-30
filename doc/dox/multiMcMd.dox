@@ -350,9 +350,9 @@ McSimulation{
 \endcode
 
 <ul>
- <li> \ref restart_page   (Prev)  </li>
- <li> \ref guide_page     (Up)    </li>
- <li> \ref overview_page   (Next)  </li>
+ <li> \ref restart_page    (Prev)  </li>
+ <li> \ref guide_page      (Up)    </li>
+ <li> \ref multiDdMd_page  (Next)  </li>
 </ul>
 
 */
