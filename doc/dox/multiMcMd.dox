@@ -1,7 +1,7 @@
 namespace McMd
 {
 
-/*! \page parallel_page Multi-system simulations
+/*! \page multiMcMd_page Multi-system simulations (mcSim and mdSim)
 
 The mcSim and mdSim programs can be compiled for use on multiple
 processors. The resulting multi-processor versions of these programs
@@ -53,7 +53,7 @@ with the "-p" command line, which enables free energy perturbation.
 This command line option is only valid if the executable was 
 compiled with MCMD_PERTURB defined. 
 
-\section Independent Independent Simulations
+\section parallel_independent_sec Independent Simulations
 
 To use a parallel version of mcSim or mdSim to run a set of completely
 independent simulations, one simply enters the name of the executable

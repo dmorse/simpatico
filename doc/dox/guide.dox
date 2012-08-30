@@ -13,7 +13,7 @@ Contents:
    <li> \subpage examples_page    "Examples"</li>
    <li> \subpage analysis_page    "Data Analysis"</li>
    <li> \subpage restart_page     "Restarting"</li>
-   <li> \subpage parallel_page    "Multi-system simulations" </li>
+   <li> \subpage multiMcMd_page    "Multi-system simulations (mcSim and mdSim)" </li>
    </ul>
 
 Navigation: 

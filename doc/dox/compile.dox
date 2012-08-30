@@ -92,7 +92,7 @@ The multi-processor versions of mcSim and mdSim can be used:
 
   - For replica exchange simulations.
 
-Free energy perturbation theory is discussed in more detail \ref parallel_page here. It is an optional
+Free energy perturbation theory is discussed in more detail \ref multiMcMd_page here. It is an optional
 feature that can be enabled by defining MCMD_PERTURB flag in the file src/mcMd/defines.mk, as discussed
 \ref preprocessor_page here. 
 
