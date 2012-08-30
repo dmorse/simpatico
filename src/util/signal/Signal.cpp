@@ -24,7 +24,7 @@ namespace Util
    */
    void Signal<>::notify()
    {
-      typename std::list< IFunctor<>* >::iterator pos;
+      std::list< IFunctor<>* >::iterator pos;
       pos = functorPtrs_.begin();
       while (pos != functorPtrs_.end())
       {
@@ -38,7 +38,7 @@ namespace Util
    */
    void Signal<>::clear()
    {
-      typename std::list< IFunctor<>* >::iterator pos;
+      std::list< IFunctor<>* >::iterator pos;
       pos = functorPtrs_.begin();
       while (pos != functorPtrs_.end())
       {
