@@ -42,7 +42,6 @@ namespace DdMd
    {}
 
    #if UTIL_MPI
-
    /*
    * Set the grid intracommunicator.
    */
@@ -51,12 +50,9 @@ namespace DdMd
       intracommPtr_ = &intraCommunicator;
       gridRank_ = intracommPtr_->Get_rank();
    }
-
    #else
-
    void Domain::setRank(int rank)
    {  gridRank_ = rank; }
-
    #endif
 
    /*

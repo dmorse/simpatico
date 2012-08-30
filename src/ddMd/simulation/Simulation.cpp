@@ -167,11 +167,10 @@ namespace DdMd
       Util::IntVector::commitMpiType();
       AtomType::initStatic();
 
-      #if 0
       setParamCommunicator(communicator);
       domain_.setGridCommunicator(communicator);
-      #endif
-
+      #else
+      domain_.setRank(0);
       #endif
 
       // Set connections between member objects
@@ -300,7 +299,7 @@ namespace DdMd
          }
       }
    
-      // Enable echoing of parameters to log file as they are read.
+      // Enable echoing of parameters to log file as they are read
       if (eFlag) {
          Util::ParamComponent::setEcho(true);
       }
@@ -321,21 +320,20 @@ namespace DdMd
          int systemId  = worldRank/systemSize;
          communicator_ = communicator_.Split(systemId, worldRank);
 
-         //std::cout << worldRank << "  " << systemId << "  " 
-         //          << communicator_.Get_rank() << std::endl;
+         #if 0
+         std::cout << worldRank << "  " << systemId << "  " 
+                   << communicator_.Get_rank() << std::endl;
+         #endif
     
-         // Set communicator in sub-objects 
+         // Set param and grid communicators
          setParamCommunicator(communicator_);
          domain_.setGridCommunicator(communicator_);
          fileMaster().setDirectoryId(systemId);
       
-         // Set log file for processor n to a new file named "n/log"
-         // Relies on initialization of FileMaster outputPrefix to "" (empty).
+         // Set log file for processor n to a new file named "n/log".
+         // Relies on initialization of outputPrefix to empty string "".
          fileMaster().openOutputFile("log", logFile_);
          Log::setFile(logFile_);
-      } else {
-         setParamCommunicator(communicator_);
-         domain_.setGridCommunicator(communicator_);
       }
    }
 

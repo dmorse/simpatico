@@ -59,15 +59,7 @@ namespace Util
 
    #ifdef UTIL_MPI
    void ParamComponent::setParamCommunicator(MPI::Intracomm& communicator)
-   {
-      // Precondition
-      if (io_.hasCommunicator()) {
-         Log::file() << "Resetting param communicator in a ParamComponent"
-                     << std::endl;
-         //UTIL_THROW("Attempt to reset param communicator in a ParamComponent");
-      }
-      io_.setCommunicator(communicator); 
-   }
+   {  io_.setCommunicator(communicator); }
    #endif
 
    // Static functions

@@ -36,22 +36,14 @@ namespace Util
    {}
 
    #ifdef UTIL_MPI
-
    void MpiFileIo::setCommunicator(MPI::Intracomm& communicator)
    {
-
-      // Precondition
-      if (communicatorPtr_ != 0) {
-         UTIL_THROW("Communicator in MpiFileIo may only be set once")
-      }
-
       communicatorPtr_ = &communicator; 
       if (communicator.Get_rank() == 0) {
          isIoProcessor_ = true;
       } else {
          isIoProcessor_ = false;
       }
-
    }
 
    void MpiFileIo::clearCommunicator()
@@ -59,7 +51,6 @@ namespace Util
       communicatorPtr_ = 0; 
       isIoProcessor_   = true;
    }
-
    #endif
 
 } 
