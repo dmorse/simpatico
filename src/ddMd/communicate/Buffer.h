@@ -58,6 +58,9 @@ namespace DdMd
       */
       void allocate(int atomCapacity, int ghostCapacity);
 
+      /// \name Data Block Management
+      //@{
+      
       #ifdef UTIL_MPI
       /**
       * Clear the send buffer and sendType.
@@ -87,6 +90,10 @@ namespace DdMd
       */
       bool beginRecvBlock();
 
+      //@}
+      /// \name Interprocessor Communication
+      //@{
+      
       /**
       * Receive from processor send and send to processor recv.
       *
@@ -130,6 +137,10 @@ namespace DdMd
       */
       void bcast(MPI::Intracomm& comm, int source);
 
+      //@}
+      /// \name Pack and Unpack Methods
+      //@{
+      
       /**
       * Pack an Atom for exchange of ownership.
       *
@@ -214,6 +225,14 @@ namespace DdMd
       template <int N>
       void unpackGroup(Group<N>& group);
 
+      //@}
+      /// \name Statistics
+      //@{
+      
+      //@}
+      /// \name Accessors
+      //@{
+      
       /**
       * Number of items written to current send block.
       */
@@ -250,6 +269,8 @@ namespace DdMd
       */
       int groupCapacity(int N) const;
 
+      //@}
+
    private:
 
       #ifdef UTIL_MPI
@@ -277,10 +298,10 @@ namespace DdMd
       /// Address one past end of the unpacked portion of the send buffer.
       char* recvPtr_;
 
-      /// Allocated size of send and recv buffers, in bytes.
+      /// Allocated capacity of send and recv buffers, in bytes.
       int bufferCapacity_;
 
-      /// Size of buffer, in bytes, without 4 int envelope.
+      /// Capacity of buffers, in bytes, without 4 int envelope.
       int dataCapacity_;
 
       /// Number of atoms or ghosts currently in send buffer.
@@ -307,6 +328,9 @@ namespace DdMd
 
       /// Maximum number of ghost atoms in buffer.
       int ghostCapacity_;
+
+      /// Maximum size needed for send buffer on this processor, in bytes.
+      int sendMax_;
 
       /// Has this buffer been initialized ?
       bool isInitialized_;

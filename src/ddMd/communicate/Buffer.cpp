@@ -33,6 +33,7 @@ namespace DdMd
       sendPtr_(0),
       recvPtr_(0),
       bufferCapacity_(-1),
+      sendMax_(0),
       dataCapacity_(-1),
       sendSize_(0),
       recvSize_(0),
@@ -537,6 +538,10 @@ namespace DdMd
       // Wait for completion of send.
       request[1].Wait();
 
+      // Update statistics.
+      if (sendBytes > sendMax_) {
+         sendMax_ = sendBytes;
+      }
    }
 
    /*
@@ -560,6 +565,11 @@ namespace DdMd
       sendBytes = sendPtr_ - sendBufferBegin_;
       request = comm.Isend(sendBufferBegin_, sendBytes, MPI::CHAR, dest, 5);
       request.Wait();
+
+      // Update statistics.
+      if (sendBytes > sendMax_) {
+         sendMax_ = sendBytes;
+      }
    }
 
    /*
