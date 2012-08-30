@@ -110,14 +110,11 @@ namespace DdMd
       //@{
 
       /**
-      * Add the angle forces for all atoms.
+      * Compute angle forces for atoms.
+      *
+      * Adds angle forces to existing Atom forces.
       */
-      virtual void addForces();
-
-      /**
-      * Add the angle forces for all atoms and compute energy.
-      */
-      virtual void addForces(double& energy);
+      virtual void computeForces();
 
       /**
       * Compute the total angle energy for all processors
@@ -149,13 +146,6 @@ namespace DdMd
       * Pointer to Interaction (evaluates the angle potential function).
       */ 
       Interaction* interactionPtr_;
-
-      /*
-      * Compute forces and/or energy.
-      *
-      * Return energy if energy is computed.
-      */
-      double addForces(bool needForce, bool needEnergy);
 
    };
 
@@ -274,15 +264,45 @@ namespace DdMd
    * Increment atomic forces, without calculating energy.
    */
    template <class Interaction>
-   void AnglePotentialImpl<Interaction>::addForces()
-   {  addForces(true, false);  }
+   void AnglePotentialImpl<Interaction>::computeForces()
+   {  
+      Vector dr1; // R[1] - R[0]
+      Vector dr2; // R[2] - R[1]
+      Vector f1, f2;
+      double rsq1, rsq2;
+      GroupIterator<3> iter;
+      Atom* atom0Ptr;
+      Atom* atom1Ptr;
+      Atom* atom2Ptr;
+      int   type, isLocal0, isLocal1, isLocal2;
 
-   /*
-   * Increment atomic forces and compute pair energy for this processor.
-   */
-   template <class Interaction>
-   void AnglePotentialImpl<Interaction>::addForces(double& energy)
-   {  energy = addForces(true, true);  }
+      storage().begin(iter);
+      for ( ; iter.notEnd(); ++iter) {
+         type = iter->typeId();
+         atom0Ptr = iter->atomPtr(0);
+         atom1Ptr = iter->atomPtr(1);
+         atom2Ptr = iter->atomPtr(2);
+         // Calculate minimimum image separations
+         rsq1 = boundary().distanceSq(atom1Ptr->position(),
+                                      atom0Ptr->position(), dr1);
+         rsq2 = boundary().distanceSq(atom2Ptr->position(),
+                                      atom1Ptr->position(), dr2);
+         interaction().force(dr1, dr2, f1, f2, type);
+         isLocal0 = !(atom0Ptr->isGhost());
+         isLocal1 = !(atom1Ptr->isGhost());
+         isLocal2 = !(atom2Ptr->isGhost());
+         if (isLocal0) {
+            atom0Ptr->force() += f1;
+         }
+         if (isLocal1) {
+            atom1Ptr->force() -= f1;
+            atom1Ptr->force() += f2;
+         }
+         if (isLocal2) {
+            atom2Ptr->force() -= f2;
+         }
+      }
+   }
 
    /*
    * Compute total angle energy on all processors.
@@ -295,10 +315,45 @@ namespace DdMd
    void AnglePotentialImpl<Interaction>::computeEnergy()
    #endif
    {
-      double localEnergy = 0.0; 
-      double totalEnergy = 0.0; 
-      localEnergy = addForces(false, true); 
+
+      // Do nothing and return if energy is already set.
+      if (isEnergySet()) return;
+ 
+      Vector dr1; // R[1] - R[0]
+      Vector dr2; // R[2] - R[1]
+      double rsq1, rsq2, cosTheta;
+      double angleEnergy;
+      double localEnergy = 0.0;
+      double fraction;
+      double third = 1.0/3.0;
+      GroupIterator<3> iter;
+      Atom* atom0Ptr;
+      Atom* atom1Ptr;
+      Atom* atom2Ptr;
+      int   type, isLocal0, isLocal1, isLocal2;
+
+      storage().begin(iter);
+      for ( ; iter.notEnd(); ++iter) {
+         type = iter->typeId();
+         atom0Ptr = iter->atomPtr(0);
+         atom1Ptr = iter->atomPtr(1);
+         atom2Ptr = iter->atomPtr(2);
+         isLocal0 = !(atom0Ptr->isGhost());
+         isLocal1 = !(atom1Ptr->isGhost());
+         isLocal2 = !(atom2Ptr->isGhost());
+         // Calculate minimimum image separations
+         rsq1 = boundary().distanceSq(atom1Ptr->position(),
+                                      atom0Ptr->position(), dr1);
+         rsq2 = boundary().distanceSq(atom2Ptr->position(),
+                                      atom1Ptr->position(), dr2);
+         cosTheta = dr1.dot(dr2) / sqrt(rsq1 * rsq2);
+         angleEnergy = interaction().energy(cosTheta, type);
+         fraction = (isLocal0 + isLocal1 + isLocal2)*third;
+         localEnergy += fraction*angleEnergy;
+      }
+
       #ifdef UTIL_MPI
+      double totalEnergy = 0.0;
       communicator.Reduce(&localEnergy, &totalEnergy, 1, 
                           MPI::DOUBLE, MPI::SUM, 0);
       if (communicator.Get_rank() != 0) {
@@ -311,10 +366,81 @@ namespace DdMd
    }
 
    /*
+   * Compute total pair stress (Call on all processors).
+   */
+   template <class Interaction>
+   #ifdef UTIL_MPI
+   void AnglePotentialImpl<Interaction>::computeStress(MPI::Intracomm& communicator)
+   #else
+   void AnglePotentialImpl<Interaction>::computeStress()
+   #endif
+   {
+      // Do nothing and return if stress is already set.
+      if (isStressSet()) return;
+ 
+      Tensor localStress;
+      Vector dr1, dr2;
+      Vector f1, f2;
+      double factor;
+      double prefactor = -1.0/3.0;
+      GroupIterator<3> iter;
+      Atom*  atom0Ptr;
+      Atom*  atom1Ptr;
+      Atom*  atom2Ptr;
+      int    type;
+      int    isLocal0, isLocal1, isLocal2;
+
+      localStress.zero();
+      // Iterate over bonds
+      storage().begin(iter);
+      for ( ; iter.notEnd(); ++iter) {
+         atom0Ptr = iter->atomPtr(0);
+         atom1Ptr = iter->atomPtr(1);
+         atom2Ptr = iter->atomPtr(2);
+         type = iter->typeId();
+         boundary().distanceSq(atom1Ptr->position(),
+                                  atom0Ptr->position(), dr1);
+         boundary().distanceSq(atom2Ptr->position(),
+                                  atom1Ptr->position(), dr2);
+
+         // f1 -- along dr1; f2 -- along dr2.
+         interaction().force(dr1, dr2, f1, f2, type);
+
+         isLocal0 = !(atom0Ptr->isGhost());
+         isLocal1 = !(atom1Ptr->isGhost());
+         isLocal2 = !(atom2Ptr->isGhost());
+         factor = prefactor*(isLocal0 + isLocal1 + isLocal2);
+         dr1 *= factor;
+         dr2 *= factor;
+         incrementPairStress(f1, dr1, localStress);
+         incrementPairStress(f2, dr2, localStress);
+      }
+
+      // Normalize by volume 
+      localStress /= boundary().volume();
+
+      #ifdef UTIL_MPI
+      // Reduce results from all processors
+      Tensor totalStress;
+      int root = 0;
+      communicator.Reduce(&localStress(0, 0), &totalStress(0, 0), 
+                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, root);
+      if (communicator.Get_rank() != root) {
+         totalStress.zero();
+      }
+      setStress(totalStress);
+      #else
+      setStress(localStress);
+      #endif
+
+   }
+
+   #if 0
+   /*
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction> double 
-   AnglePotentialImpl<Interaction>::addForces(bool needForce, bool needEnergy)
+   AnglePotentialImpl<Interaction>::computeForces(bool needForce, bool needEnergy)
    {
       // Preconditions
       //if (!storage().isInitialized()) {
@@ -371,74 +497,7 @@ namespace DdMd
       }
       return energy;
    }
-
-   /*
-   * Compute total pair stress (Call on all processors).
-   */
-   template <class Interaction>
-   #ifdef UTIL_MPI
-   void AnglePotentialImpl<Interaction>::computeStress(MPI::Intracomm& communicator)
-   #else
-   void AnglePotentialImpl<Interaction>::computeStress()
    #endif
-   {
-      Tensor localStress;
-      Vector dr1, dr2;
-      Vector f1, f2;
-      double factor;
-      double prefactor = -1.0/3.0;
-      GroupIterator<3> iter;
-      Atom*  atom0Ptr;
-      Atom*  atom1Ptr;
-      Atom*  atom2Ptr;
-      int    type;
-      int    isLocal0, isLocal1, isLocal2;
-
-      localStress.zero();
-      // Iterate over bonds
-      storage().begin(iter);
-      for ( ; iter.notEnd(); ++iter) {
-         atom0Ptr = iter->atomPtr(0);
-         atom1Ptr = iter->atomPtr(1);
-         atom2Ptr = iter->atomPtr(2);
-         type = iter->typeId();
-         isLocal0 = !(atom0Ptr->isGhost());
-         isLocal1 = !(atom1Ptr->isGhost());
-         isLocal2 = !(atom2Ptr->isGhost());
-         boundary().distanceSq(atom1Ptr->position(),
-                                  atom0Ptr->position(), dr1);
-         boundary().distanceSq(atom2Ptr->position(),
-                                  atom1Ptr->position(), dr2);
-
-         // f1 -- along dr1; f2 -- along dr2.
-         interaction().force(dr1, dr2, f1, f2, type);
-
-         factor = prefactor*(isLocal0 + isLocal1 + isLocal2);
-         dr1 *= factor;
-         dr2 *= factor;
-         incrementPairStress(f1, dr1, localStress);
-         incrementPairStress(f2, dr2, localStress);
-
-      }
-
-      // Normalize by volume 
-      localStress /= boundary().volume();
-
-      #ifdef UTIL_MPI
-      // Reduce results from all processors
-      Tensor totalStress;
-      int    root = 0;
-      communicator.Reduce(&localStress(0, 0), &totalStress(0, 0), 
-                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, root);
-      if (communicator.Get_rank() != root) {
-         totalStress.zero();
-      }
-      setStress(totalStress);
-      #else
-      setStress(localStress);
-      #endif
-
-   }
 
 }
 #endif

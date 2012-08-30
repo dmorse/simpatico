@@ -98,12 +98,12 @@ namespace DdMd
       /**
       * Add external forces all local atoms.
       */
-      virtual void addForces() = 0;
+      virtual void computeForces() = 0;
 
       /**
       * Add pair forces to atom forces, and compute energy.
       */
-      virtual void addForces(double& energy) = 0;
+      virtual void computeForces(double& energy) = 0;
 
       /**
       * Calculate total pair potential on this processor

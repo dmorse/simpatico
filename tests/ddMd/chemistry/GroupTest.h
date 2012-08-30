@@ -6,6 +6,12 @@
 #include <ddMd/chemistry/Atom.h>
 #include <util/space/Vector.h>
 
+#ifdef UTIL_MPI
+#ifndef TEST_MPI
+#define TEST_MPI
+#endif
+#endif
+
 #include <test/UnitTest.h>
 #include <test/UnitTestRunner.h>
 
@@ -84,9 +90,11 @@ void GroupTest::testFileIo()
 
    file >> group;
 
-   std::cout << std::endl;
-   std::cout << group;
-   std::cout << std::endl;
+   if (isIoProcessor()) {
+      std::cout << std::endl;
+      std::cout << group;
+      std::cout << std::endl;
+   }
 
 }
 

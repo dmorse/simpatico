@@ -16,6 +16,9 @@
 #include <util/util/Log.h>
 #include <util/global.h>
 
+// Uncomment to enable paranoid validity checks.
+//#define  DDMD_INTEGRATOR_DEBUG
+
 namespace DdMd
 {
    using namespace Util;
@@ -41,6 +44,21 @@ namespace DdMd
       bool needExchange;
       nStep_ = nStep;
 
+      #ifdef DDMD_INTEGRATOR_DEBUG
+      simulation().isValid();
+      #endif
+
+      // Compute nAtomTotal.
+      atomStorage().unsetNAtomTotal();
+      atomStorage().computeNAtomTotal(domain().communicator());
+
+      // Clear all stored computations, compute nAtomTotal.
+      simulation().modifySignal().notify();
+
+      #ifdef DDMD_INTEGRATOR_DEBUG
+      simulation().isValid();
+      #endif
+
       // Main MD loop
       timer().start();
       exchanger().timer().start();
@@ -56,7 +74,14 @@ namespace DdMd
          // First step of integration: Update positions, half velocity 
          integrateStep1();
          timer().stamp(INTEGRATE1);
-   
+  
+         // Unset precomputed values of all energies, stresses, etc.
+         simulation().modifySignal().notify();
+
+         #ifdef DDMD_INTEGRATOR_DEBUG
+         simulation().isValid();
+         #endif
+
          // Check if exchange and reneighboring is necessary
          needExchange = atomStorage().needExchange(domain().communicator(), 
                                                    pairPotential().skin());
@@ -85,25 +110,30 @@ namespace DdMd
             timer().stamp(UPDATE);
          }
    
-         // Calculate new forces for all local atoms
+         #ifdef DDMD_INTEGRATOR_DEBUG
+         simulation().isValid();
+         #endif
+
+         // Calculate new forces for all local atoms (sends force signal).
          computeForces();
 
-         // 2nd step of integration: Finish velocity update.
+         // 2nd step of integration: Finish velocity update 
+         // This method should call simulation().velocitySignal().notify()
          integrateStep2();
          timer().stamp(INTEGRATE2);
    
+         #ifdef DDMD_INTEGRATOR_DEBUG
+         simulation().isValid();
+         #endif
+
       }
       exchanger().timer().stop();
       timer().stop();
 
-      // Compute and reduce statistics for run
+      // Reduce statistics for run
       #ifdef UTIL_MPI
       timer().reduce(domain().communicator());
       exchanger().timer().reduce(domain().communicator());
-      pairPotential().pairList().computeStatistics(domain().communicator());
-      atomStorage().computeNAtomTotal(domain().communicator());
-      #else
-      pairPotential().pairList().computeStatistics();
       #endif
 
       if (domain().isMaster()) {

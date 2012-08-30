@@ -37,6 +37,9 @@ namespace DdMd
       atomCapacity_(0),
       ghostCapacity_(0),
       totalAtomCapacity_(0),
+      #ifdef UTIL_MPI
+      nAtomTotal_(),
+      #endif
       locked_(false),
       isInitialized_(false),
       #if UTIL_ORTHOGONAL
@@ -470,13 +473,21 @@ namespace DdMd
    */
    void AtomStorage::computeNAtomTotal(MPI::Intracomm& communicator)
    {
+      // If nAtomTotal is already set, do nothing and return.
+      // if (nAtomTotal_.isSet()) return;
+
       int nAtomLocal = nAtom();
-      communicator.Reduce(&nAtomLocal, &nAtomTotal_, 1, 
+      int nAtomTotal = 0;
+      communicator.Reduce(&nAtomLocal, &nAtomTotal, 1, 
                           MPI::INT, MPI::SUM, 0);
       if (communicator.Get_rank() !=0) {
-         nAtomTotal_ = -1;
+         nAtomTotal = 0;
       }
+      nAtomTotal_.set(nAtomTotal);
    }
+
+   void AtomStorage::unsetNAtomTotal()
+   {  nAtomTotal_.unset(); }
    #endif
 
    /*
@@ -548,6 +559,20 @@ namespace DdMd
 
       return true;
    }
+
+   #ifdef UTIL_MPI
+   /**
+   * Return true if the internal state is valid, or throw an Exception.
+   *  
+   * \param communicator domain communicator for all domain processors.
+   */
+   bool AtomStorage::isValid(MPI::Intracomm& communicator) const
+   {
+      isValid();
+      nAtomTotal_.isValid(communicator);
+      return true;
+   }
+   #endif
 
 }
 #endif

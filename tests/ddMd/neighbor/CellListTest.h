@@ -1,9 +1,6 @@
 #ifndef DDMD_CELL_LIST_TEST_H
 #define DDMD_CELL_LIST_TEST_H
 
-#include <test/UnitTest.h>
-#include <test/UnitTestRunner.h>
-
 #include <ddMd/neighbor/CellList.h>
 #include <util/boundary/Boundary.h>
 #include <ddMd/chemistry/Atom.h>
@@ -12,6 +9,15 @@
 #include <util/space/Vector.h>
 #include <util/random/Random.h>
 #include <util/format/Int.h>
+
+#ifdef UTIL_MPI
+#ifndef TEST_MPI
+#define TEST_MPI
+#endif
+#endif
+
+#include <test/UnitTest.h>
+#include <test/UnitTestRunner.h>
 
 #include <iostream>
 
@@ -388,7 +394,9 @@ public:
             cellList.placeAtom(atoms[i]);
          } 
          catch (Exception e) {
-            e.write(std::cout);
+            if (isIoProcessor()) {
+               e.write(std::cout);
+            }
             TEST_ASSERT(0);
          }
 

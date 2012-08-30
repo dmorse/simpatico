@@ -258,9 +258,9 @@ namespace DdMd
 
    inline void Cell::clear()
    {
-      begin_  =  0;
-      nAtom_  =  0;
-      atomCapacity_  =  0;
+      begin_= 0;
+      nAtom_ = 0;
+      atomCapacity_ = 0;
    }
 
    inline Atom** Cell::initialize(Atom** begin)
@@ -320,10 +320,13 @@ namespace DdMd
    inline const Cell* Cell::nextCellPtr() const
    {  return nextCellPtr_; }
 
+   /*
+   *  Return current capacity of cell. 
+   */
    inline int Cell::atomCapacity() const
    {  return atomCapacity_; }
 
-   /**
+   /*
    * Is this a ghost cell?
    */
    inline bool Cell::isGhostCell() const

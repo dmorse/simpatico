@@ -1,10 +1,17 @@
 #ifndef EXCEPTION_TEST_H
 #define EXCEPTION_TEST_H
 
-#include <test/UnitTest.h>
-#include <test/UnitTestRunner.h>
 #include <util/util/Exception.h>
 #include <util/global.h>
+
+#ifdef UTIL_MPI
+#ifndef TEST_MPI
+#define TEST_MPI
+#endif
+#endif
+
+#include <test/UnitTest.h>
+#include <test/UnitTestRunner.h>
 
 using namespace Util;
 

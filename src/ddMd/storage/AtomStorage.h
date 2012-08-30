@@ -14,6 +14,7 @@
 #include <util/containers/DArray.h>      // member template
 #include <util/containers/ArraySet.h>    // member template
 #include <util/containers/ArrayStack.h>  // member template
+#include <util/util/Setable.h>           // member template
 #include <util/boundary/Boundary.h>      // typedef
 #include <util/global.h>
 
@@ -409,10 +410,17 @@ namespace DdMd
       * \return on master node, return total number of atoms.
       */
       void computeNAtomTotal(MPI::Intracomm& communicator);
+
+      /**
+      * Unset value of NAtomTotal (mark as unknown). 
+      *
+      * Must be called simultaneously on all processors.
+      */
+      void unsetNAtomTotal();
       #endif
    
       /**
-      * On master processor (rank=0), stored value of total number of atoms.
+      * Get total number of atoms on all processors.
       *
       * This method should only be called on the master node (rank = 0).
       * The return value is computed by a previous call of computeNAtomTotal.
@@ -430,6 +438,15 @@ namespace DdMd
       * Return true if the container is valid, or throw an Exception.
       */
       bool isValid() const;
+
+      #ifdef UTIL_MPI
+      /**
+      * Return true if the container is valid, or throw an Exception.
+      *  
+      * \param communicator domain communicator for all domain processors.
+      */
+      bool isValid(MPI::Intracomm& communicator) const;
+      #endif
 
       //@}
       
@@ -475,8 +492,10 @@ namespace DdMd
       // Maximum number of atoms on all processors, maximum id + 1
       int totalAtomCapacity_;
 
+      #ifdef UTIL_MPI
       // Total number of local atoms on all processors.
-      int nAtomTotal_;
+      Setable<int> nAtomTotal_;
+      #endif
 
       // Is addition or removal of atoms forbidden?
       bool locked_;
@@ -520,8 +539,7 @@ namespace DdMd
    inline int AtomStorage::nAtomTotal() const
    {
       #ifdef UTIL_MPI
-      if (nAtomTotal_ < 0) UTIL_THROW("Value not set: nAtomTotal < 0");
-      return nAtomTotal_;
+      return nAtomTotal_.value();
       #else
       return atomSet_.size();
       #endif

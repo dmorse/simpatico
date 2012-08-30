@@ -69,25 +69,25 @@ namespace DdMd
    void Integrator::computeForces()
    {
       simulation().zeroForces();
-      pairPotential().addForces();
+      pairPotential().computeForces();
       timer_.stamp(PAIR_FORCE);
-      bondPotential().addForces();
+      bondPotential().computeForces();
       timer_.stamp(BOND_FORCE);
       #ifdef INTER_ANGLE
       if (nAngleType()) {
-         anglePotential().addForces();
+         anglePotential().computeForces();
          timer_.stamp(ANGLE_FORCE);
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType()) {
-         dihedralPotential().addForces();
+         dihedralPotential().computeForces();
          timer_.stamp(DIHEDRAL_FORCE);
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal()) {
-         externalPotential().addForces();
+         externalPotential().computeForces();
       }
       #endif
 
@@ -95,6 +95,9 @@ namespace DdMd
       if (reverseUpdateFlag()) {
          exchanger().reverseUpdate();
       }
+
+      // Send signal indicating change in atomic forces
+      simulation().forceSignal().notify();
    }
 
    /*

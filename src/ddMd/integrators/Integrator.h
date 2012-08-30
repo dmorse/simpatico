@@ -90,7 +90,8 @@ namespace DdMd
       *
       * Identical to Simulation::forceCompute(), with added timing.
       * Upon return, forces are correct for all local atoms. Values
-      * of the forces on ghost atoms are undefined.
+      * of the forces on ghost atoms are undefined. Executes reverse
+      * communication if needed, and emits Simulation::forceSignal().
       */
       void computeForces();
 

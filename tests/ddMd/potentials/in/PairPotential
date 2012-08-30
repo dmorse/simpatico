@@ -1,5 +1,5 @@
 Domain{
-   nodeGrid   1   1   1
+   gridDimensions   2   1   3
 }
 AtomStorage{
    atomCapacity       200

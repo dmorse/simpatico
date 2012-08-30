@@ -479,9 +479,6 @@ public:
       int  nAtom  = 0;    // Number of atoms on this processor.
       int  nGhost = 0;    // Number of ghosts on this processor.
 
-      //double range = 0.1;
-      //displaceAtoms(range);
-
       atomStorage.clearSnapshot();
       object().exchange();
 
@@ -503,7 +500,7 @@ public:
          TEST_ASSERT(!domain.isInDomain(ghostIter->position()));
       }
 
-      //pairPotential.findNeighbors();
+      // Build Cell and Pair lists
       pairPotential.buildCellList();
       if (!UTIL_ORTHOGONAL) {
          atomStorage.transformGenToCart(boundary);
@@ -547,58 +544,68 @@ public:
       // Compute forces etc. with N^2 loop
       pairPotential.setMethodId(2); 
       zeroForces();
-      pairPotential.addForces();
+      pairPotential.computeForces();
       #ifdef TEST_EXCHANGER_FORCE_BOND
-      bondPotential.addForces();
+      bondPotential.computeForces();
       #endif
       if (reverseUpdateFlag) {
          object().reverseUpdate();
       }
       saveForces();
-      double energyNSq;
-      pairPotential.computeEnergy(domain.communicator());
-      if (domain.communicator().Get_rank() == 0) {
-         energyNSq = pairPotential.energy();
-      }
       int nPairNSq;
       pairPotential.computeNPair(domain.communicator());
       if (domain.communicator().Get_rank() == 0) {
          nPairNSq = pairPotential.nPair();
       }
+      double pairEnergyNSq;
+      pairPotential.computeEnergy(domain.communicator());
+      if (domain.communicator().Get_rank() == 0) {
+         pairEnergyNSq = pairPotential.energy();
+      }
 
       // Compute forces etc. with pair list
       pairPotential.setMethodId(0); // PairList
       zeroForces();
-      pairPotential.addForces();
+      pairPotential.computeForces();
       #ifdef TEST_EXCHANGER_FORCE_BOND
-      bondPotential.addForces();
+      bondPotential.computeForces();
       #endif
       if (reverseUpdateFlag) {
          object().reverseUpdate();
-      }
-      double energyList;
-      pairPotential.computeEnergy(domain.communicator());
-      if (domain.communicator().Get_rank() == 0) {
-         energyList = pairPotential.energy();
       }
       int nPairList;
       pairPotential.computeNPair(domain.communicator());
       if (domain.communicator().Get_rank() == 0) {
          nPairList = pairPotential.nPair();
       }
+      double energyList;
+      pairPotential.computeEnergy(domain.communicator());
+      if (domain.communicator().Get_rank() == 0) {
+         energyList = pairPotential.energy();
+      }
+      Tensor pairStress;
+      pairPotential.computeStress(domain.communicator());
+      if (domain.communicator().Get_rank() == 0) {
+         pairStress = pairPotential.stress();
+      }
+      #ifdef TEST_EXCHANGER_FORCE_BOND
+      Tensor bondStress;
+      bondPotential.computeStress(domain.communicator());
+      if (domain.communicator().Get_rank() == 0) {
+         bondStress = bondPotential.stress();
+      }
+      #endif
 
+      // Compare Nsq and PairList values of nPair and Energy
       if (domain.communicator().Get_rank() == 0) {
          TEST_ASSERT(nPairNSq == nPairList);
-         TEST_ASSERT(eq(energyNSq, energyList));
+         TEST_ASSERT(eq(pairEnergyNSq, energyList));
       }
 
-      //std::cout << std::endl;
-
+      // Compare NSq and pairlist forces, accumulate total
       Vector totForce;
       Vector nodeForce;
       int id;
-
-      // Check that force are equal, increment total
       nodeForce.zero();
       atomStorage.begin(atomIter);
       for ( ; atomIter.notEnd(); ++atomIter) {
@@ -619,6 +626,42 @@ public:
          TEST_ASSERT(eq(totForce[0], 0.0));
          TEST_ASSERT(eq(totForce[1], 0.0));
          TEST_ASSERT(eq(totForce[2], 0.0));
+      }
+
+      // Test computeForcesAndStress methods 
+      pairPotential.setMethodId(0); // PairList
+      zeroForces();
+      pairPotential.unsetEnergy();
+      pairPotential.unsetStress();
+      pairPotential.computeForcesAndStress(domain.communicator());
+      #ifdef TEST_EXCHANGER_FORCE_BOND
+      bondPotential.unsetEnergy();
+      bondPotential.unsetStress();
+      bondPotential.computeForcesAndStress(domain.communicator());
+      #endif
+      if (reverseUpdateFlag) {
+         object().reverseUpdate();
+      }
+      if (domain.communicator().Get_rank() == 0) {
+         Tensor pairStress2 = pairPotential.stress();
+         #ifdef TEST_EXCHANGER_FORCE_BOND
+         Tensor bondStress2 = bondPotential.stress();
+         #endif
+         for (int i = 0; i < Dimension; ++i) {
+            for (int j = 0; j < Dimension; ++j) {
+               TEST_ASSERT(eq(pairStress(i, j), pairStress2(i, j)));
+               #ifdef TEST_EXCHANGER_FORCE_BOND
+               TEST_ASSERT(eq(bondStress(i, j), bondStress2(i, j)));
+               #endif
+            }
+         }
+      }
+      atomStorage.begin(atomIter);
+      for ( ; atomIter.notEnd(); ++atomIter) {
+         id = atomIter->id();
+         TEST_ASSERT(eq(forces[id][0], atomIter->force()[0]));
+         TEST_ASSERT(eq(forces[id][1], atomIter->force()[1]));
+         TEST_ASSERT(eq(forces[id][2], atomIter->force()[2]));
       }
 
    }
@@ -689,15 +732,15 @@ public:
 
       pairPotential.setMethodId(0); // PairList
       zeroForces();
-      pairPotential.addForces();
+      pairPotential.computeForces();
       #ifdef TEST_EXCHANGER_FORCE_BOND
-      bondPotential.addForces();
+      bondPotential.computeForces();
       #endif
       if (reverseUpdateFlag) {
          object().reverseUpdate();
       }
 
-      double energyNSq, energyList, energyF;
+      double pairEnergyNSq, energyList, energyF;
       int    nPairNSq, nPairList, nPairF;
 
       double range = 0.02;
@@ -777,29 +820,32 @@ public:
          // Calculate forces etc. by N^2 loop.
          zeroForces();
          pairPotential.setMethodId(2); // N^2 loop
-         pairPotential.addForces();
+         pairPotential.computeForces();
          #ifdef TEST_EXCHANGER_FORCE_BOND
-         bondPotential.addForces();
+         bondPotential.computeForces();
          #endif
          if (reverseUpdateFlag) {
             object().reverseUpdate();
          }
          saveForces();
-         pairPotential.computeEnergy(domain.communicator());
-         if (domain.communicator().Get_rank() == 0) {
-            energyNSq = pairPotential.energy();
-         }
          pairPotential.computeNPair(domain.communicator());
          if (domain.communicator().Get_rank() == 0) {
             nPairNSq = pairPotential.nPair();
          }
+         pairPotential.computeEnergy(domain.communicator());
+         if (domain.communicator().Get_rank() == 0) {
+            pairEnergyNSq = pairPotential.energy();
+         }
+         #ifdef TEST_EXCHANGER_FORCE_BOND
+         bondPotential.computeForces();
+         #endif
 
          // Calculate forces etc. via pair list.   
          zeroForces();
          pairPotential.setMethodId(0); // PairList
-         pairPotential.addForces();
+         pairPotential.computeForces();
          #ifdef TEST_EXCHANGER_FORCE_BOND
-         bondPotential.addForces();
+         bondPotential.computeForces();
          #endif
          if (reverseUpdateFlag) {
             object().reverseUpdate();
@@ -833,7 +879,7 @@ public:
             TEST_ASSERT(eq(totForce[1], 0.0));
             TEST_ASSERT(eq(totForce[2], 0.0));
             TEST_ASSERT(nPairNSq == nPairList);
-            TEST_ASSERT(eq(energyNSq, energyList));
+            TEST_ASSERT(eq(pairEnergyNSq, energyList));
          }
 
          if (reverseUpdateFlag && needExchange) {
@@ -853,9 +899,9 @@ public:
             pairPotential.buildPairList();
             TEST_ASSERT(atomStorage.isCartesian());
             pairPotential.setMethodId(0);    
-            pairPotential.addForces();
+            pairPotential.computeForces();
             #ifdef TEST_EXCHANGER_FORCE_BOND
-            bondPotential.addForces();
+            bondPotential.computeForces();
             #endif
             saveForces();
             pairPotential.computeEnergy(domain.communicator());

@@ -15,6 +15,10 @@ namespace Util
 
    /**
    * Interface for functor that wraps a void function with one argument (abstract).
+   *
+   * The operator (const T& t ) invokes the associated one-parameter function.
+   *
+   * \ingroup Util_Signal_Module
    */
    template <typename T=void>
    class IFunctor {
@@ -31,7 +35,7 @@ namespace Util
       *
       * \param t parameter value passed to associated function.
       */
-      virtual void operator () (const T&) = 0;
+      virtual void operator () (const T& t) = 0;
 
    };
 
@@ -40,7 +44,7 @@ namespace Util
    /**
    * Interface for functor that wraps a void function with no arguments (abstract).
    *
-   * The operator (const T&) invokes the associated zero-parameter function.
+   * The operator () invokes the associated zero-parameter function.
    */
    template <>
    class IFunctor<void> {

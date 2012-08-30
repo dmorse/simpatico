@@ -162,6 +162,9 @@ namespace DdMd
          atomIter->velocity() *=factor;
       }
 
+      // Notify observers of change in velocity
+      simulation().velocitySignal().notify();
+
       // Update xiDot_ and xi_
       simulation().computeKineticEnergy();
       if (domain().isMaster()) {

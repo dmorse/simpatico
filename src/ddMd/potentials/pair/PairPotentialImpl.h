@@ -125,7 +125,7 @@ namespace DdMd
       * forces, the method checks if the pair list is current, and
       * rebuilds it if necessary.
       */
-      virtual void addForces();
+      virtual void computeForces();
 
       /**
       * Compute the total nonBonded pair energy for all processors
@@ -151,6 +151,7 @@ namespace DdMd
 
       /**
       * Compute total pair energies for all processors
+      * Compute nonbonded forces and sress for all processors
       * 
       * Call on all processors.
       */
@@ -158,6 +159,17 @@ namespace DdMd
       virtual void computePairEnergies(MPI::Intracomm& communicator);
       #else
       virtual void computePairEnergies();
+      #endif
+
+      /**
+      * Compute nonbonded forces and sress for all processors
+      * 
+      * Call on all processors.
+      */
+      #ifdef UTIL_MPI
+      virtual void computeForcesAndStress(MPI::Intracomm& communicator);
+      #else
+      virtual void computeForcesAndStress();
       #endif
 
       //@}
@@ -180,7 +192,7 @@ namespace DdMd
       /**
       * Calculate atomic pair forces, using PairList.
       */
-      void addForcesList();
+      void computeForcesList();
 
       /**
       * Calculate atomic pair forces and/or pair potential energy.
@@ -190,7 +202,7 @@ namespace DdMd
       /**
       * Calculate atomic pair forces and/or pair potential energy.
       */
-      void addForcesCell();
+      void computeForcesCell();
 
       /**
       * Calculate atomic pair energy, using N^2 loop.
@@ -202,7 +214,7 @@ namespace DdMd
       /**
       * Calculate atomic pair forces, using N^2 loop.
       */
-      void addForcesNSq();
+      void computeForcesNSq();
 
    };
 
@@ -311,15 +323,15 @@ namespace DdMd
    * Increment atomic forces, without calculating energy.
    */
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::addForces()
+   void PairPotentialImpl<Interaction>::computeForces()
    {  
        if (methodId() == 0) {
-          addForcesList(); 
+          computeForcesList(); 
        } else
        if (methodId() == 1) {
-          addForcesCell(); 
+          computeForcesCell(); 
        } else {
-          addForcesNSq(); 
+          computeForcesNSq(); 
        }
    }
 
@@ -333,7 +345,10 @@ namespace DdMd
    #else
    void PairPotentialImpl<Interaction>::computeEnergy()
    #endif
-   { 
+   {
+      // Do nothing (return) if energy is already set.
+      if (isEnergySet()) return;
+ 
       double localEnergy = 0.0; 
       if (methodId() == 0) {
          localEnergy = energyList(); 
@@ -348,6 +363,9 @@ namespace DdMd
       double totalEnergy = 0.0; 
       communicator.Reduce(&localEnergy, &totalEnergy, 1, 
                           MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator.Get_rank() != 0) {
+         totalEnergy = 0.0;
+      }
       setEnergy(totalEnergy);
       #else
       setEnergy(localEnergy);
@@ -399,7 +417,7 @@ namespace DdMd
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::addForcesList()
+   void PairPotentialImpl<Interaction>::computeForcesList()
    {
       Vector f;
       double rsq;
@@ -509,7 +527,7 @@ namespace DdMd
    * Increment atomic forces using Cell List (private).
    */
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::addForcesCell()
+   void PairPotentialImpl<Interaction>::computeForcesCell()
    {
       // Find all neighbors (cell list)
       Cell::NeighborArray neighbors;
@@ -639,7 +657,7 @@ namespace DdMd
    * Increment atomic forces and/or pair energy (private).
    */
    template <class Interaction>
-   void PairPotentialImpl<Interaction>::addForcesNSq()
+   void PairPotentialImpl<Interaction>::computeForcesNSq()
    {
       Vector f;
       double rsq;
@@ -723,6 +741,9 @@ namespace DdMd
    void PairPotentialImpl<Interaction>::computeStress()
    #endif
    {
+      // Do nothing if stress is already set.
+      if (isStressSet()) return;
+ 
       Tensor localStress;
       Vector dr;
       Vector f;
@@ -773,11 +794,92 @@ namespace DdMd
       Tensor totalStress;
       communicator.Reduce(&localStress(0,0), &totalStress(0,0), 
                           Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
-      if (communicator.Get_rank() == 0) {
-         setStress(totalStress);
-      } else {
-         unsetStress();
+      if (communicator.Get_rank() != 0) {
+         totalStress.zero();
       }
+      setStress(totalStress);
+      #else
+      setStress(localStress);
+      #endif
+
+   }
+
+   /*
+   * Compute total pair stress (Call on all processors).
+   */
+   template <class Interaction>
+   #ifdef UTIL_MPI
+   void PairPotentialImpl<Interaction>::computeForcesAndStress(MPI::Intracomm& communicator)
+   #else
+   void PairPotentialImpl<Interaction>::computeForcesAndStress()
+   #endif
+   {
+      // If stress is already set, just calculate forces
+      if (isStressSet()) {
+         computeForcesList();
+         return;
+      }
+ 
+      Tensor localStress;
+      Vector dr;
+      Vector f;
+      double rsq, forceOverR;
+      PairIterator iter;
+      Atom*  atom0Ptr;
+      Atom*  atom1Ptr;
+      int    type0, type1;
+
+      localStress.zero();
+      if (reverseUpdateFlag()) {
+
+         for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+            iter.getPair(atom0Ptr, atom1Ptr);
+            dr.subtract(atom0Ptr->position(), atom1Ptr->position());
+            rsq = dr.square();
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            f = dr;
+            f *= interactionPtr_->forceOverR(rsq, type0, type1);
+            assert(!atom0Ptr->isGhost());
+            atom0Ptr->force() += f;
+            atom1Ptr->force() -= f;
+            incrementPairStress(f, dr, localStress);
+         }
+
+      } else {
+
+         for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+            iter.getPair(atom0Ptr, atom1Ptr);
+            dr.subtract(atom0Ptr->position(), atom1Ptr->position());
+            rsq = dr.square();
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            f  = dr;
+            f *= interactionPtr_->forceOverR(rsq, type0, type1);
+            assert(!atom0Ptr->isGhost());
+            atom0Ptr->force() += f;
+            if (!atom1Ptr->isGhost()) {
+               atom1Ptr->force() -= f;
+               incrementPairStress(f, dr, localStress);
+            } else { // if atom 1 is a ghost
+               f *= 0.5;
+               incrementPairStress(f, dr, localStress);
+            }
+         }
+
+      }
+
+      // Normalize by volume 
+      localStress /= boundary().volume();
+
+      #ifdef UTIL_MPI
+      Tensor totalStress;
+      communicator.Reduce(&localStress(0,0), &totalStress(0,0), 
+                          Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
+      if (communicator.Get_rank() != 0) {
+         totalStress.zero();
+      }
+      setStress(totalStress);
       #else
       setStress(localStress);
       #endif

@@ -58,7 +58,7 @@ namespace DdMd
       /**
       * Add force contributions to all atomic forces.
       */
-      virtual void addForces() = 0;
+      virtual void computeForces() = 0;
 
       /**
       * Compute potential energy on all processors.
@@ -89,16 +89,34 @@ namespace DdMd
       void unsetEnergy();
 
       /**
+      * Is the energy set (known)?
+      */
+      bool isEnergySet() const;
+
+      /**
       * Compute stress on all processors.
       *
       * This method must be called on all processors. The result 
       * is stored on the master processor, and may be retrieved 
-      * by calling energy() on this processor.
+      * by calling stress() on this processor.
       */
       #ifdef UTIL_MPI
       virtual void computeStress(MPI::Intracomm& communicator) = 0;
       #else
       virtual void computeStress() = 0;
+      #endif
+
+      /**
+      * Compute forces and stress for all processors.
+      * 
+      * Call on all processors. The default implementation just calls
+      * computeForces() and computeStress() methods. Subclasses should
+      * combine into a single loop.
+      */
+      #ifdef UTIL_MPI
+      virtual void computeForcesAndStress(MPI::Intracomm& communicator);
+      #else
+      virtual void computeForcesAndStress();
       #endif
 
       /**
@@ -123,6 +141,23 @@ namespace DdMd
       * This should be called whenever atom positions or boundary changes.
       */
       void unsetStress();
+
+      /**
+      * Is the stress set (known)?
+      */
+      bool isStressSet() const;
+
+      #ifdef UTIL_MPI
+      /**
+      * Is the potential in a valid internal state?
+      *
+      * Return true if valid, or throws an Exception.
+      * Must be called on all processors.
+      *
+      * \param communicator domain communicator for all domain procs
+      */
+      virtual bool isValid(MPI::Intracomm& communicator) const;
+      #endif
 
       //@}
 

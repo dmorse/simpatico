@@ -3,18 +3,6 @@ Memory reporting
 
 - Add memory statistics for Buffer.
 - Add memory statistics for AtomStorage and GroupStorage.
-- Improve pair statistics for PairList.
-
-Event Handling
---------------
-
-- Modify Notifier / Observer code to allow for signals with 
-
-  1) Signals with no event object
-  2) Registration of arbitrary method as update method.
-  3) Notifiers and observers as members rather than base classes.
-
-- Create notifiers for basic actions in integration loop. 
 
 Dynamic Resizing
 ----------------
@@ -25,6 +13,10 @@ Dynamic Resizing
 
 Testing
 -------
+
+- Fix CellTest 
+
+- Fix obsolete PairPotentialTest (change interface for PairPotential)
 
 - Improve testing of PairList - check that number of inner pairs doesn't
   change upon reneighboring, in unit tests and as optional test in integrator.
@@ -40,11 +32,12 @@ Flexible Unit Cells:
 Constant Pressure:
 ------------------
 
-- Port NPH integrator (Jens)
+- Add computeForcesAndStress() methods to potentials.
 
-- Port reversible NPT integrator (Jens)
+- Add requiresStress_ member, setter and accessor to Integrator.
 
-- Add vFlag to Simulation, and as argument to addForce() method of potentials.
+- In TwoStepIntegrator, if (requiresStress), call computeForceAndStress().
+
 
 Hybrid MD
 ----------

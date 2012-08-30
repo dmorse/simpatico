@@ -9,7 +9,6 @@ include $(SRC_DIR)/util/sources.mk
 include $(SRC_DIR)/inter/sources.mk
 include $(SRC_DIR)/ddMd/sources.mk
 
-
 include sources.mk
 
 all: $(tests_ddMd_potentials_OBJS) Test

@@ -400,6 +400,18 @@ namespace DdMd
       exchanger_.setPairCutoff(pairPotentialPtr_->cutoff());
       exchanger_.allocate();
 
+      // Set signals
+      modifySignal().addObserver(*this, &Simulation::unsetKineticEnergy );
+      modifySignal().addObserver(*this, &Simulation::unsetKineticStress );
+      modifySignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
+      modifySignal().addObserver(*this, &Simulation::unsetVirialStress );
+
+      velocitySignal().addObserver(*this, &Simulation::unsetKineticEnergy );
+      velocitySignal().addObserver(*this, &Simulation::unsetKineticStress );
+
+      positionSignal().addObserver(*this, &Simulation::unsetPotentialEnergies );
+      positionSignal().addObserver(*this, &Simulation::unsetVirialStress );
+
       readEnd(in);
    }
 
@@ -522,8 +534,9 @@ namespace DdMd
             exchanger_.outputStatistics(Log::file(), time, nStep);
          } else
          if (command == "OUTPUT_PAIRLIST_STATS") {
-            int nStep = integratorPtr_->nStep();
+            pairPotential().pairList().computeStatistics(domain_.communicator());
             if (domain_.isMaster()) {
+               int nStep = integratorPtr_->nStep();
                pairPotential().pairList().outputStatistics(Log::file(), nStep);
             }
          } else
@@ -559,6 +572,17 @@ namespace DdMd
    {  readCommands(fileMaster().commandFile()); }
 
    /*
+   * Set flag to specify if reverse communication is enabled.
+   */
+   void Simulation::setReverseUpdateFlag(bool reverseUpdateFlag)
+   {  
+      reverseUpdateFlag_ = reverseUpdateFlag; 
+      if (pairPotentialPtr_) {
+         pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag);
+      }
+   }
+
+   /*
    * Choose velocities from a Boltzmann distribution.
    */
    void Simulation::setBoltzmannVelocities(double temperature)
@@ -573,6 +597,7 @@ namespace DdMd
             atomIter->velocity()[i] = scale*random_.gaussian();
          }
       }
+      velocitySignal().notify();
    }
 
    /*
@@ -604,21 +629,21 @@ namespace DdMd
    void Simulation::computeForces()
    {
       zeroForces();
-      pairPotential().addForces();
-      bondPotential().addForces();
+      pairPotential().computeForces();
+      bondPotential().computeForces();
       #ifdef INTER_ANGLE
       if (nAngleType_) {
-         anglePotential().addForces();
+         anglePotential().computeForces();
       }
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         dihedralPotential().addForces();
+         dihedralPotential().computeForces();
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
-         externalPotential().addForces();
+         externalPotential().computeForces();
       }
       #endif
 
@@ -645,13 +670,16 @@ namespace DdMd
       integratorPtr_->run(nStep);
    }
 
+   // Kinetic Energy methods ------------------------------------------------------
+
    /*
-   * Calculate total kinetic energy
-   *
-   * Call on all processors. 
+   * Calculate total kinetic energy (call on all processors).
    */
    void Simulation::computeKineticEnergy()
    {
+      // Do nothing if kinetic energy is already set.
+      if (kineticEnergy_.isSet()) return;
+
       double localEnergy = 0.0;
       double mass;
       int typeId;
@@ -689,12 +717,24 @@ namespace DdMd
    {  return kineticEnergy_.value(); }
 
    /*
+   * Mark kinetic energy as unknown.
+   */
+   void Simulation::unsetKineticEnergy()
+   {  kineticEnergy_.unset(); }
+
+   // Kinetic Stress methods ------------------------------------------------------
+   
+   /*
    * Compute total kinetic stress, store on master proc.
    *
    * Call on all processors. 
    */
    void Simulation::computeKineticStress()
    {
+
+      // Do nothing and return if kinetic stress is already set
+      if (kineticStress_.isSet()) return;
+
       Tensor localStress;
       double  mass;
       Vector  velocity;
@@ -702,7 +742,7 @@ namespace DdMd
 
       localStress.zero();
 
-      // For each local atoms on this processor, stress(i, j) += m*v[i]*v[j].
+      // For each local atoms on this processor, stress(i, j) += m*v[i]*v[j]
       AtomIterator atomIter;
       atomStorage_.begin(atomIter); 
       for( ; atomIter.notEnd(); ++atomIter){
@@ -716,10 +756,11 @@ namespace DdMd
          }
       }
 
+      // Divide dyad sum by system volume
       localStress /= boundary().volume();
 
       #ifdef UTIL_MPI
-      // Sum values from all processors.
+      // Sum values from all processors
       Tensor totalStress;
       domain_.communicator().Reduce(&localStress(0, 0), &totalStress(0, 0), 
                                     Dimension*Dimension, MPI::DOUBLE, MPI::SUM, 0);
@@ -751,6 +792,14 @@ namespace DdMd
       return pressure;
    }
 
+   /*
+   * Mark kinetic stress as unknown.
+   */
+   void Simulation::unsetKineticStress()
+   {  kineticStress_.unset(); }
+
+   // Potential Energy Methods ------------------------------------------------------
+   
    #ifdef UTIL_MPI
 
    /*
@@ -806,6 +855,16 @@ namespace DdMd
    #endif
 
    /*
+   * Methods computePotentialEnergies and computeStress rely on use
+   * of lazy (as-needed) evaluation within the compute methods of 
+   * each of the potential energy classes: Each potential energy or
+   * virial contribution is actually computed only if it has been
+   * unset since the last evaluation. Lazy evaluation is implemented
+   * explicitly in the Simulation class only for the kinetic energy
+   * and kinetic stress, which are stored as members of Simulation.
+   */ 
+
+   /*
    * Compute all potential energy contributions.
    */
    double Simulation::potentialEnergy() const
@@ -820,17 +879,40 @@ namespace DdMd
       #endif
       #ifdef INTER_DIHEDRAL
       if (nDihedralType_) {
-         energy += dihedralPotential().energy();
+         energy += dihedralPotentialPtr_->energy();
       }
       #endif
       #ifdef INTER_EXTERNAL
       if (hasExternal_) {
-         energy += externalPotential().energy();
+         energy += externalPotentialPtr_->energy();
       }
       #endif
       return energy;
+
+      // Note: Pointers used above because ...Potential()) accessors 
+      // return non-const references, which violate the method const.
    }
 
+   /*
+   * Mark all potential energies as unknown.
+   */
+   void Simulation::unsetPotentialEnergies()
+   {
+      pairPotential().unsetEnergy();
+      bondPotential().unsetEnergy();
+      #ifdef INTER_ANGLE
+      anglePotential().unsetEnergy();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotential().unsetEnergy();
+      #endif
+      #ifdef INTER_EXTERNAL
+      externalPotential().unsetEnergy();
+      #endif
+   }
+
+   // Virial Stress Methods ------------------------------------------------------
+   
    #ifdef UTIL_MPI
    /*
    * Compute all virial stress contributions.
@@ -953,6 +1035,23 @@ namespace DdMd
 
 
    /*
+   * Mark all potential energies as unknown.
+   */
+   void Simulation::unsetVirialStress()
+   {
+      pairPotential().unsetStress();
+      bondPotential().unsetStress();
+      #ifdef INTER_ANGLE
+      anglePotential().unsetStress();
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotential().unsetStress();
+      #endif
+   }
+
+   // Config File Read and Write -------------------------------------
+
+   /*
    * Read configuration file on master and distribute atoms.
    */
    void Simulation::readConfig(const std::string& filename)
@@ -1009,6 +1108,8 @@ namespace DdMd
       }
    }
 
+   // Potential Factories and Styles -------------------------------------
+   
    #ifndef DDMD_NOPAIR
    /*
    * Return the PairFactory by reference.
@@ -1107,6 +1208,8 @@ namespace DdMd
    {  return externalStyle_;  }
    #endif
 
+   // Integrator and ConfigIo Management -------------------------------
+   
    /*
    * Return the IntegratorFactory by reference.
    */
@@ -1118,8 +1221,6 @@ namespace DdMd
       assert(integratorFactoryPtr_);
       return *integratorFactoryPtr_;
    }
-
-   // ConfigIoIo Management
 
    /*
    * Return the ConfigIoFactory by reference.
@@ -1158,12 +1259,18 @@ namespace DdMd
       configIoPtr_->initialize();
    }
 
+   // Validation ------------------------------------------------------
+   
    /**
    * Return true if this Simulation is valid, or throw an Exception.
    */
    bool Simulation::isValid()
    {
+      #ifdef UTIL_MPI
+      atomStorage_.isValid(domain_.communicator());
+      #else
       atomStorage_.isValid();
+      #endif
 
       // Determine if there are any ghosts on any processor
       int nGhost = atomStorage_.nGhost();
@@ -1177,8 +1284,8 @@ namespace DdMd
       #endif
       bool hasGhosts = bool(nGhostAll);
 
+      // Test Group storage containers
       #ifdef UTIL_MPI
-
       bondStorage_.isValid(atomStorage_, domain_.communicator(), hasGhosts);
       #ifdef INTER_ANGLE
       if (nAngleType_) {
@@ -1191,9 +1298,7 @@ namespace DdMd
                                   hasGhosts);
       }
       #endif
-
-      #else
-
+      #else // ifdef UTIL_MPI
       bondStorage_.isValid(atomStorage_, hasGhosts);
       #ifdef INTER_ANGLE
       if (nAngleType_) {
@@ -1205,21 +1310,21 @@ namespace DdMd
          dihedralStorage_.isValid(atomStorage_, hasGhosts);
       }
       #endif
+      #endif // ifdef UTIL_MPI
 
+      // Test consistency of computed potential energies and stresses
+      #ifdef UTIL_MPI
+      pairPotentialPtr_->isValid(domain_.communicator());
+      bondPotentialPtr_->isValid(domain_.communicator());
+      #ifdef INTER_ANGLE
+      anglePotentialPtr_->isValid(domain_.communicator());
+      #endif
+      #ifdef INTER_DIHEDRAL
+      dihedralPotentialPtr_->isValid(domain_.communicator());
+      #endif
       #endif // ifdef UTIL_MPI
 
       return true; 
-   }
-
-   /*
-   * Set flag to specify if reverse communication is enabled.
-   */
-   void Simulation::setReverseUpdateFlag(bool reverseUpdateFlag)
-   {  
-      reverseUpdateFlag_ = reverseUpdateFlag; 
-      if (pairPotentialPtr_) {
-         pairPotentialPtr_->setReverseUpdateFlag(reverseUpdateFlag);
-      }
    }
 
 }

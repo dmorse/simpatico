@@ -1,15 +1,17 @@
 #ifndef DDMD_BOND_STORAGE_TEST_H
 #define DDMD_BOND_STORAGE_TEST_H
 
-#ifdef UTIL_MPI
-#define TEST_MPI
-#endif
-
 #include <ddMd/storage/BondStorage.h>
 #include <ddMd/storage/BondIterator.h>
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/chemistry/Bond.h>
 #include <util/containers/DPArray.h>
+
+#ifdef UTIL_MPI
+#ifndef TEST_MPI
+#define TEST_MPI
+#endif
+#endif
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>

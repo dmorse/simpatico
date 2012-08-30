@@ -114,6 +114,8 @@ namespace DdMd
          atomIter->velocity() += dv;
       }
 
+      // Notify observers of change in velocity
+      simulation().velocitySignal().notify();
    }
 
 }

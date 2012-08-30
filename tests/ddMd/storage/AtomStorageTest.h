@@ -1,10 +1,6 @@
 #ifndef DDMD_ATOM_STORAGE_TEST_H
 #define DDMD_ATOM_STORAGE_TEST_H
 
-#ifdef UTIL_MPI
-#define TEST_MPI
-#endif
-
 #include <ddMd/storage/AtomStorage.h>
 #include <ddMd/storage/AtomIterator.h>
 #include <ddMd/storage/GhostIterator.h>
@@ -12,6 +8,12 @@
 #include <util/containers/DPArray.h>
 #include <util/containers/DArray.h>
 #include <util/random/Random.h>
+
+#ifdef UTIL_MPI
+#ifndef TEST_MPI
+#define TEST_MPI
+#endif
+#endif
 
 #include <test/ParamFileTest.h>
 #include <test/UnitTestRunner.h>

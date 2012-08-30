@@ -17,8 +17,10 @@ namespace Util
    * Functor that wraps a one-argument class member function.
    *
    * The constructor to MethodFunctor<T> takes pointers to an invoking instance
-   * of class Object and a member function (method) that takes one T argument.
-   * The operator (const T&) invokes that method on that object.
+   * of class Object and a member function that takes one T argument. The
+   * operator () (const T&) invokes that method on that object.
+   *
+   * \ingroup Util_Signal_Module
    */
    template <class Object, typename T=void>
    class MethodFunctor : public IFunctor<T>
@@ -43,6 +45,11 @@ namespace Util
       */
       virtual ~MethodFunctor(){}
 
+      /**
+      * Operator ().
+      *
+      * \param t Parameter passed to method of associated T object.
+      */
       virtual void operator () (const T& t)
       {  (objectPtr_->*methodPtr_)(t); }
 

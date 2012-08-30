@@ -55,6 +55,12 @@ namespace DdMd
    {  energy_.unset(); }
 
    /*
+   * Is the energy set?
+   */
+   bool Potential::isEnergySet() const
+   {  return energy_.isSet(); }
+
+   /*
    * Set a value for the total stress.
    */
    Tensor Potential::stress() const
@@ -84,6 +90,43 @@ namespace DdMd
    */
    void Potential::unsetStress()
    {  stress_.unset(); }
+
+   /*
+   * Is the stress set?
+   */
+   bool Potential::isStressSet() const
+   {  return stress_.isSet(); }
+
+   /*
+   * Compute atomic forces and stress on all processors.
+   * 
+   * Default implementation just calls computeForces and computeStress.
+   */
+   #ifdef UTIL_MPI
+   void Potential::computeForcesAndStress(MPI::Intracomm& communicator)
+   #else
+   void Potential::computeForcesAndStress();
+   #endif
+   { 
+      computeForces(); 
+      #ifdef UTIL_MPI
+      computeStress(communicator); 
+      #else
+      computeForces();
+      #endif
+   }
+
+   #ifdef UTIL_MPI
+   /*
+   * Is the potential in a valid internal state?
+   */
+   bool Potential::isValid(MPI::Intracomm& communicator) const
+   {
+      energy_.isValid(communicator);
+      stress_.isValid(communicator);
+      return true;
+   }
+   #endif
 
 }
 #endif
