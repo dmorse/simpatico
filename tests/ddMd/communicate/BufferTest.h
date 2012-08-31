@@ -24,21 +24,23 @@ using namespace DdMd;
 class BufferTest: public ParamFileTest<Buffer>
 {
 
+   Buffer buffer_;
+
 public:
 
    virtual void setUp()
    {
       // Allocate a Buffer with space
       // for 4 local atoms or 4 ghosts.
-      // object().allocate(4, 4);
+      // buffer_.allocate(4, 4);
 
       #ifdef UTIL_MPI
-      object().setParamCommunicator(communicator());
+      buffer_.setParamCommunicator(communicator());
       #endif
 
       // Read parameter file
       openFile("in/Buffer");
-      object().readParam(file());
+      buffer_.readParam(file());
       closeFile();
 
    }
@@ -46,8 +48,8 @@ public:
    void testCapacities()
    {
       printMethod(TEST_FUNC);
-      TEST_ASSERT(object().atomCapacity() == 4);
-      TEST_ASSERT(object().ghostCapacity() > 4);
+      TEST_ASSERT(buffer_.atomCapacity() == 4);
+      TEST_ASSERT(buffer_.ghostCapacity() > 4);
    }
 
    #ifdef UTIL_MPI
@@ -85,13 +87,13 @@ public:
       atoms[1].velocity() = vel;
       atoms[1].plan().setFlags(7);
 
-      TEST_ASSERT(object().isAllocated());
-      object().clearSendBuffer();
+      TEST_ASSERT(buffer_.isAllocated());
+      buffer_.clearSendBuffer();
 
-      object().beginSendBlock(Buffer::ATOM);
-      object().packAtom(atoms[0]);
-      object().packAtom(atoms[1]);
-      object().beginSendBlock(Buffer::ATOM);
+      buffer_.beginSendBlock(Buffer::ATOM);
+      buffer_.packAtom(atoms[0]);
+      buffer_.packAtom(atoms[1]);
+      buffer_.beginSendBlock(Buffer::ATOM);
 
    }
 
@@ -119,14 +121,14 @@ public:
       atoms[1].position() = pos;
       atoms[1].plan().setFlags(7);
 
-      TEST_ASSERT(object().isAllocated());
-      object().clearSendBuffer();
+      TEST_ASSERT(buffer_.isAllocated());
+      buffer_.clearSendBuffer();
 
-      object().beginSendBlock(Buffer::GHOST);
-      TEST_ASSERT(object().sendSize() == 0);
-      object().packGhost(atoms[0]);
-      object().packGhost(atoms[1]);
-      object().endSendBlock();
+      buffer_.beginSendBlock(Buffer::GHOST);
+      TEST_ASSERT(buffer_.sendSize() == 0);
+      buffer_.packGhost(atoms[0]);
+      buffer_.packGhost(atoms[1]);
+      buffer_.endSendBlock();
 
    }
 
@@ -172,26 +174,26 @@ public:
       atoms[1].plan().setFlags(7);
 
       //Initialize the sendbuffer, set atomtype to ATOM
-      object().clearSendBuffer();
+      buffer_.clearSendBuffer();
 
       // Pack 2 local atoms into the send buffer
-      object().beginSendBlock(Buffer::ATOM);
-      object().packAtom(atoms[0]);
-      object().packAtom(atoms[1]);
-      object().endSendBlock();
+      buffer_.beginSendBlock(Buffer::ATOM);
+      buffer_.packAtom(atoms[0]);
+      buffer_.packAtom(atoms[1]);
+      buffer_.endSendBlock();
 
       // Send the sendbuffer to processor to the right. 
       // Receive from the processor on the left.
       int  source = (myrank + commsize - 1) % commsize;
       int  dest   = (myrank + commsize + 1) % commsize;
-      object().sendRecv(MPI::COMM_WORLD, source, dest);
+      buffer_.sendRecv(MPI::COMM_WORLD, source, dest);
 
       // Unpack atoms
-      object().beginRecvBlock();
-      TEST_ASSERT(object().recvSize() == 2);
-      object().unpackAtom(atoms[2]);
-      object().unpackAtom(atoms[3]);
-      TEST_ASSERT(object().recvSize() == 0);
+      buffer_.beginRecvBlock();
+      TEST_ASSERT(buffer_.recvSize() == 2);
+      buffer_.unpackAtom(atoms[2]);
+      buffer_.unpackAtom(atoms[3]);
+      TEST_ASSERT(buffer_.recvSize() == 0);
 
       TEST_ASSERT(atoms[2].id() == 0);
       TEST_ASSERT(atoms[2].typeId() == 0);
@@ -291,26 +293,26 @@ public:
       atoms[1].plan().setFlags(2);
 
       //Initialize the sendbuffer, set atomtype to GHOST
-      object().clearSendBuffer();
+      buffer_.clearSendBuffer();
 
       //Pack 2 local atoms into the send buffer
-      object().beginSendBlock(Buffer::GHOST);
-      object().packGhost(atoms[0]);
-      object().packGhost(atoms[1]);
-      object().endSendBlock();
+      buffer_.beginSendBlock(Buffer::GHOST);
+      buffer_.packGhost(atoms[0]);
+      buffer_.packGhost(atoms[1]);
+      buffer_.endSendBlock();
 
       // Send the sendbuffer to processor to the right. Receive from the
       int  source = (myrank + commsize - 1) % commsize;
       int  dest   = (myrank + commsize + 1) % commsize;
-      object().sendRecv(MPI::COMM_WORLD, source, dest);
+      buffer_.sendRecv(MPI::COMM_WORLD, source, dest);
 
       // Unpack ghost atoms
-      object().beginRecvBlock();
-      TEST_ASSERT(object().recvSize() == 2);
-      object().unpackGhost(atoms[2]);
-      TEST_ASSERT(object().recvSize() == 1);
-      object().unpackGhost(atoms[3]);
-      TEST_ASSERT(object().recvSize() == 0);
+      buffer_.beginRecvBlock();
+      TEST_ASSERT(buffer_.recvSize() == 2);
+      buffer_.unpackGhost(atoms[2]);
+      TEST_ASSERT(buffer_.recvSize() == 1);
+      buffer_.unpackGhost(atoms[3]);
+      TEST_ASSERT(buffer_.recvSize() == 0);
 
       TEST_ASSERT(atoms[2].id() == 0);
       TEST_ASSERT(atoms[2].typeId() == 0);
@@ -368,29 +370,29 @@ public:
       atoms[1].velocity() = vel;
 
       // Initialize the sendbuffer, set atomtype to ATOM
-      object().clearSendBuffer();
+      buffer_.clearSendBuffer();
 
       // Pack 2 local atoms into the send buffer
       // Set isComplete parameter false.
-      object().beginSendBlock(Buffer::ATOM);
-      object().packAtom(atoms[0]);
-      object().packAtom(atoms[1]);
-      object().endSendBlock(false);
+      buffer_.beginSendBlock(Buffer::ATOM);
+      buffer_.packAtom(atoms[0]);
+      buffer_.packAtom(atoms[1]);
+      buffer_.endSendBlock(false);
 
       // Send the sendbuffer to processor to the right.
       int  dest   = (myrank + commsize + 1) % commsize;
-      object().send(MPI::COMM_WORLD, dest);
+      buffer_.send(MPI::COMM_WORLD, dest);
 
       // Receive from the processor on the left.
       int  source = (myrank + commsize - 1) % commsize;
-      object().recv(MPI::COMM_WORLD, source);
-      bool isComplete = object().beginRecvBlock();
+      buffer_.recv(MPI::COMM_WORLD, source);
+      bool isComplete = buffer_.beginRecvBlock();
 
       TEST_ASSERT(!isComplete);
 
       // Unpack 2 atoms from receive buffer
-      object().unpackAtom(atoms[2]);
-      object().unpackAtom(atoms[3]);
+      buffer_.unpackAtom(atoms[2]);
+      buffer_.unpackAtom(atoms[3]);
 
       TEST_ASSERT(atoms[2].id() == 0);
       TEST_ASSERT(atoms[2].typeId() == 0);
@@ -486,31 +488,31 @@ public:
       atoms[1].position() = pos;
 
       //Initialize the sendbuffer, set atomtype to GHOST
-      object().clearSendBuffer();
-      object().beginSendBlock(Buffer::GHOST);
+      buffer_.clearSendBuffer();
+      buffer_.beginSendBlock(Buffer::GHOST);
 
       //Pack 2 local atoms into the send buffer
-      object().packGhost(atoms[0]);
-      object().packGhost(atoms[1]);
-      object().endSendBlock(true);
+      buffer_.packGhost(atoms[0]);
+      buffer_.packGhost(atoms[1]);
+      buffer_.endSendBlock(true);
 
       // Send the sendbuffer to processor to the right.
       int  dest   = (myrank + commsize + 1) % commsize;
-      object().send(MPI::COMM_WORLD, dest);
+      buffer_.send(MPI::COMM_WORLD, dest);
 
       // Receive from the processor on the left.
       int  source = (myrank + commsize - 1) % commsize;
-      object().recv(MPI::COMM_WORLD, source);
-      bool isComplete = object().beginRecvBlock();
+      buffer_.recv(MPI::COMM_WORLD, source);
+      bool isComplete = buffer_.beginRecvBlock();
 
       TEST_ASSERT(isComplete);
 
       // Unpack ghost atoms
-      TEST_ASSERT(object().recvSize() == 2);
-      object().unpackGhost(atoms[2]);
-      TEST_ASSERT(object().recvSize() == 1);
-      object().unpackGhost(atoms[3]);
-      TEST_ASSERT(object().recvSize() == 0);
+      TEST_ASSERT(buffer_.recvSize() == 2);
+      buffer_.unpackGhost(atoms[2]);
+      TEST_ASSERT(buffer_.recvSize() == 1);
+      buffer_.unpackGhost(atoms[3]);
+      TEST_ASSERT(buffer_.recvSize() == 0);
 
       TEST_ASSERT(atoms[2].id() == 0);
       TEST_ASSERT(atoms[2].typeId() == 0);
@@ -589,42 +591,42 @@ public:
       vel[1] = myrank  + 52.3;
       vel[2] = myrank  + 62.3;
 
-      object().clearSendBuffer();
+      buffer_.clearSendBuffer();
 
       // Pack block of 2 local atoms into the send buffer
       // Set isComplete parameter false.
-      TEST_ASSERT(object().sendSize() == 0);
-      object().beginSendBlock(Buffer::ATOM);
-      object().packAtom(atoms[0]);
-      TEST_ASSERT(object().sendSize() == 1);
-      object().packAtom(atoms[1]);
-      TEST_ASSERT(object().sendSize() == 2);
-      object().endSendBlock(false);
+      TEST_ASSERT(buffer_.sendSize() == 0);
+      buffer_.beginSendBlock(Buffer::ATOM);
+      buffer_.packAtom(atoms[0]);
+      TEST_ASSERT(buffer_.sendSize() == 1);
+      buffer_.packAtom(atoms[1]);
+      TEST_ASSERT(buffer_.sendSize() == 2);
+      buffer_.endSendBlock(false);
 
       // Pack block 2 ghost atoms into the send buffer
-      object().beginSendBlock(Buffer::GHOST);
-      object().packGhost(atoms[2]);
-      object().packGhost(atoms[3]);
-      object().endSendBlock(true); // set isComplete = true
+      buffer_.beginSendBlock(Buffer::GHOST);
+      buffer_.packGhost(atoms[2]);
+      buffer_.packGhost(atoms[3]);
+      buffer_.endSendBlock(true); // set isComplete = true
 
       // Send sendbuffer to next processor in ring.
       int  dest   = (myrank + commsize + 1) % commsize;
-      object().send(MPI::COMM_WORLD, dest);
+      buffer_.send(MPI::COMM_WORLD, dest);
 
       // Receive from previous processor in ring.
       int  source = (myrank + commsize - 1) % commsize;
-      object().recv(MPI::COMM_WORLD, source);
+      buffer_.recv(MPI::COMM_WORLD, source);
 
       // Unpack block of 2 local atoms from receive buffer
       bool isComplete;
-      TEST_ASSERT(object().recvSize() == 0);
-      isComplete = object().beginRecvBlock();
+      TEST_ASSERT(buffer_.recvSize() == 0);
+      isComplete = buffer_.beginRecvBlock();
       TEST_ASSERT(!isComplete);
-      TEST_ASSERT(object().recvSize() == 2);
-      object().unpackAtom(atoms[4]);
-      TEST_ASSERT(object().recvSize() == 1);
-      object().unpackAtom(atoms[5]);
-      TEST_ASSERT(object().recvSize() == 0);
+      TEST_ASSERT(buffer_.recvSize() == 2);
+      buffer_.unpackAtom(atoms[4]);
+      TEST_ASSERT(buffer_.recvSize() == 1);
+      buffer_.unpackAtom(atoms[5]);
+      TEST_ASSERT(buffer_.recvSize() == 0);
 
       TEST_ASSERT(atoms[4].id() == 0);
       TEST_ASSERT(atoms[4].typeId() == 0);
@@ -645,11 +647,11 @@ public:
       TEST_ASSERT(feq(atoms[5].velocity()[2], 60.3 + double(source)));
 
       // Unpack block of 2 ghost atoms from receive buffer
-      TEST_ASSERT(object().recvSize() == 0);
-      isComplete = object().beginRecvBlock();
+      TEST_ASSERT(buffer_.recvSize() == 0);
+      isComplete = buffer_.beginRecvBlock();
       TEST_ASSERT(isComplete);
-      object().unpackGhost(atoms[6]);
-      object().unpackGhost(atoms[7]);
+      buffer_.unpackGhost(atoms[6]);
+      buffer_.unpackGhost(atoms[7]);
 
       TEST_ASSERT(atoms[6].id() == 0);
       TEST_ASSERT(atoms[6].typeId() == 0);
@@ -733,26 +735,26 @@ public:
       bonds[1].setAtomId(1, myrank + 39);
 
       //Initialize the sendbuffer, set atomtype to ATOM
-      object().clearSendBuffer();
-      object().beginSendBlock(Buffer::GROUP, 2);
+      buffer_.clearSendBuffer();
+      buffer_.beginSendBlock(Buffer::GROUP, 2);
 
       // Pack 2 bonds into the send buffer
-      object().packGroup(bonds[0]);
-      object().packGroup(bonds[1]);
-      object().endSendBlock();
+      buffer_.packGroup(bonds[0]);
+      buffer_.packGroup(bonds[1]);
+      buffer_.endSendBlock();
 
       // Send the sendbuffer to processor to the right. 
       // Receive from the processor on the left.
       int  source = (myrank + commsize - 1) % commsize;
       int  dest   = (myrank + commsize + 1) % commsize;
-      object().sendRecv(MPI::COMM_WORLD, source, dest);
+      buffer_.sendRecv(MPI::COMM_WORLD, source, dest);
 
       // Unpack bonds
-      object().beginRecvBlock();
-      TEST_ASSERT(object().recvSize() == 2);
-      object().unpackGroup(bonds[2]);
-      object().unpackGroup(bonds[3]);
-      TEST_ASSERT(object().recvSize() == 0);
+      buffer_.beginRecvBlock();
+      TEST_ASSERT(buffer_.recvSize() == 2);
+      buffer_.unpackGroup(bonds[2]);
+      buffer_.unpackGroup(bonds[3]);
+      TEST_ASSERT(buffer_.recvSize() == 0);
 
       TEST_ASSERT(bonds[2].id() == 0);
       TEST_ASSERT(bonds[2].typeId() == 0);
@@ -836,26 +838,26 @@ public:
          bonds[1].setAtomId(1, myrank + 39);
    
          //Initialize the sendbuffer, set atomtype to GROUP
-         object().clearSendBuffer();
-         object().beginSendBlock(Buffer::GROUP, 2);
+         buffer_.clearSendBuffer();
+         buffer_.beginSendBlock(Buffer::GROUP, 2);
    
          // Pack 2 bonds into the send buffer
-         object().packGroup(bonds[0]);
-         object().packGroup(bonds[1]);
-         object().endSendBlock();
+         buffer_.packGroup(bonds[0]);
+         buffer_.packGroup(bonds[1]);
+         buffer_.endSendBlock();
 
       }
 
-      object().bcast(MPI::COMM_WORLD, source);
+      buffer_.bcast(MPI::COMM_WORLD, source);
 
       if (myrank != source) {
 
          // Unpack bonds
-         object().beginRecvBlock();
-         TEST_ASSERT(object().recvSize() == 2);
-         object().unpackGroup(bonds[2]);
-         object().unpackGroup(bonds[3]);
-         TEST_ASSERT(object().recvSize() == 0);
+         buffer_.beginRecvBlock();
+         TEST_ASSERT(buffer_.recvSize() == 2);
+         buffer_.unpackGroup(bonds[2]);
+         buffer_.unpackGroup(bonds[3]);
+         TEST_ASSERT(buffer_.recvSize() == 0);
    
          TEST_ASSERT(bonds[2].id() == 0);
          TEST_ASSERT(bonds[2].typeId() == 0);

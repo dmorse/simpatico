@@ -24,6 +24,9 @@ using namespace DdMd;
 
 class SimulationTest : public ParamFileTest<Simulation>
 {
+private:
+
+    Simulation simulation_;
 
 public:
 
@@ -81,13 +84,13 @@ inline void SimulationTest::testReadParam()
    printMethod(TEST_FUNC); 
 
    openFile("in/param1"); 
-   object().readParam(file()); 
+   simulation_.readParam(file()); 
    if (verbose() > 0) {
-      object().writeParam(std::cout);
+      simulation_.writeParam(std::cout);
    }
-   // TEST_ASSERT(object().buffer().isAllocated())
-   TEST_ASSERT(object().domain().isInitialized());
-   TEST_ASSERT(object().domain().hasBoundary());
+   // TEST_ASSERT(simulation_.buffer().isAllocated())
+   TEST_ASSERT(simulation_.domain().isInitialized());
+   TEST_ASSERT(simulation_.domain().hasBoundary());
 }
 
 inline void SimulationTest::testReadConfig()
@@ -95,14 +98,14 @@ inline void SimulationTest::testReadConfig()
    printMethod(TEST_FUNC); 
 
    openFile("in/param1"); 
-   object().readParam(file()); 
+   simulation_.readParam(file()); 
 
-   Domain& domain = object().domain();
-   Boundary& boundary = object().boundary();
-   AtomStorage& atomStorage = object().atomStorage();
+   Domain& domain = simulation_.domain();
+   Boundary& boundary = simulation_.boundary();
+   AtomStorage& atomStorage = simulation_.atomStorage();
 
    std::string filename("config1");
-   object().readConfig(filename);
+   simulation_.readConfig(filename);
 
    int nAtomAll;
    int myRank = domain.gridRank();
@@ -131,15 +134,15 @@ inline void SimulationTest::testExchangeAtoms()
    printMethod(TEST_FUNC); 
 
    openFile("in/param1"); 
-   object().readParam(file()); 
+   simulation_.readParam(file()); 
 
-   Domain&   domain = object().domain();
-   Boundary& boundary = object().boundary();
-   AtomStorage& atomStorage = object().atomStorage();
-   Random&  random = object().random();
+   Domain&   domain = simulation_.domain();
+   Boundary& boundary = simulation_.boundary();
+   AtomStorage& atomStorage = simulation_.atomStorage();
+   Random&  random = simulation_.random();
 
    std::string filename("config1");
-   object().readConfig(filename);
+   simulation_.readConfig(filename);
 
    displaceAtoms(atomStorage, boundary, random, 0.8);
  
@@ -159,7 +162,7 @@ inline void SimulationTest::testExchangeAtoms()
    #endif
 
    // Exchange atoms among processors
-   object().exchanger().exchange();
+   simulation_.exchanger().exchange();
 
    // Check that all atoms are accounted for after exchange.
    int nAtomAll;
@@ -188,20 +191,20 @@ inline void SimulationTest::testExchange()
    printMethod(TEST_FUNC); 
 
    openFile("in/param1"); 
-   object().readParam(file()); 
+   simulation_.readParam(file()); 
 
-   Domain&  domain  = object().domain();
-   Boundary& boundary = object().boundary();
-   AtomStorage& atomStorage = object().atomStorage();
-   Random&  random = object().random();
+   Domain&  domain  = simulation_.domain();
+   Boundary& boundary = simulation_.boundary();
+   AtomStorage& atomStorage = simulation_.atomStorage();
+   Random&  random = simulation_.random();
 
    std::string filename("config1");
-   object().readConfig(filename);
+   simulation_.readConfig(filename);
 
    displaceAtoms(atomStorage, boundary, random, 0.8);
 
    // Exchange atoms among processors
-   object().exchanger().exchange();
+   simulation_.exchanger().exchange();
 
    // Check that all atoms are accounted for after exchange.
    int nAtomAll;
@@ -232,7 +235,7 @@ inline void SimulationTest::testExchange()
    }
 
    #if 0
-   int nGhostAll = object().nGhostTotal();
+   int nGhostAll = simulation_.nGhostTotal();
    if (myRank == 0) {
       std::cout << "Total ghost count = " << nGhostAll << std::endl;
    }
@@ -245,20 +248,20 @@ inline void SimulationTest::testUpdate()
    printMethod(TEST_FUNC); 
 
    openFile("in/param1"); 
-   object().readParam(file()); 
+   simulation_.readParam(file()); 
 
-   Domain&  domain  = object().domain();
-   Boundary& boundary = object().boundary();
-   AtomStorage& atomStorage = object().atomStorage();
-   Random&  random  = object().random();
+   Domain&  domain  = simulation_.domain();
+   Boundary& boundary = simulation_.boundary();
+   AtomStorage& atomStorage = simulation_.atomStorage();
+   Random&  random  = simulation_.random();
 
    std::string filename("config1");
-   object().readConfig(filename);
+   simulation_.readConfig(filename);
 
    displaceAtoms(atomStorage, boundary, random, 0.8);
 
    // Exchange atoms among processors
-   object().exchanger().exchange();
+   simulation_.exchanger().exchange();
 
    // Check that all atoms are accounted for after exchange.
    int nAtomAll;
@@ -293,7 +296,7 @@ inline void SimulationTest::testUpdate()
    }
 
    displaceAtoms(atomStorage, boundary, random, 0.1);
-   object().exchanger().update();
+   simulation_.exchanger().update();
 
 }
 
@@ -302,23 +305,23 @@ inline void SimulationTest::testCalculateForces()
    printMethod(TEST_FUNC); 
 
    openFile("in/param1"); 
-   object().readParam(file()); 
+   simulation_.readParam(file()); 
 
-   Domain&  domain  = object().domain();
-   Boundary& boundary = object().boundary();
-   AtomStorage& atomStorage = object().atomStorage();
+   Domain&  domain  = simulation_.domain();
+   Boundary& boundary = simulation_.boundary();
+   AtomStorage& atomStorage = simulation_.atomStorage();
    int myRank = domain.gridRank();
 
    std::string filename("config1");
-   object().readConfig(filename);
+   simulation_.readConfig(filename);
 
    // Compute forces.
-   object().pairPotential().buildCellList();
+   simulation_.pairPotential().buildCellList();
    if (!UTIL_ORTHOGONAL) {
-      atomStorage.transformGenToCart(object().boundary());
+      atomStorage.transformGenToCart(simulation_.boundary());
    }
-   object().pairPotential().buildPairList();
-   object().computeForces();
+   simulation_.pairPotential().buildPairList();
+   simulation_.computeForces();
 
    Vector f(0.0); // total force on processor
    Vector t(0.0); // total force on all processors
@@ -349,47 +352,47 @@ inline void SimulationTest::testIntegrate1()
    printMethod(TEST_FUNC); 
 
    openFile("in/param2"); 
-   object().readParam(file()); 
+   simulation_.readParam(file()); 
 
-   Domain& domain = object().domain();
-   Boundary& boundary = object().boundary();
-   AtomStorage& atomStorage = object().atomStorage();
+   Domain& domain = simulation_.domain();
+   Boundary& boundary = simulation_.boundary();
+   AtomStorage& atomStorage = simulation_.atomStorage();
    int myRank = domain.gridRank();
 
    // Read configuration file
    std::string filename("config2");
-   object().readConfig(filename);
+   simulation_.readConfig(filename);
 
    // Set random velocities
    double temperature = 1.0;
-   object().setBoltzmannVelocities(temperature);
+   simulation_.setBoltzmannVelocities(temperature);
 
    if (myRank == 0) {
       std::cout << std::endl;
    }
 
    // Setup the integrator
-   object().integrator().setup();
-   TEST_ASSERT(object().isValid());
+   simulation_.integrator().setup();
+   TEST_ASSERT(simulation_.isValid());
 
    double kinetic;
    double potential;
-   for (int i = 0; i < 10; ++i ) {
+   for (int i = 0; i < 4; ++i ) {
 
       // Calculate energies
-      object().computeKineticEnergy();
-      object().computePotentialEnergies();
+      simulation_.computeKineticEnergy();
+      simulation_.computePotentialEnergies();
       if (myRank == 0) {
-         kinetic = object().kineticEnergy();
-         potential = object().potentialEnergy();
+         kinetic = simulation_.kineticEnergy();
+         potential = simulation_.potentialEnergy();
          std::cout << Dbl(kinetic) << Dbl(potential) 
                    << Dbl(kinetic + potential) << std::endl;
       }
 
-      object().integrator().run(500);
-      TEST_ASSERT(object().isValid());
+      simulation_.integrator().run(200);
+      TEST_ASSERT(simulation_.isValid());
    }
-   object().integrator().outputStatistics(std::cout);
+   simulation_.integrator().outputStatistics(std::cout);
 
 }
 

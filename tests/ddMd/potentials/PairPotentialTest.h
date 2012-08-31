@@ -31,30 +31,31 @@ class PairPotentialTest: public ParamFileTest< PairPotentialImpl<DpdPair> >
 
 private:
 
-      Boundary    boundary;
-      Domain      domain;
+      Boundary boundary;
+      Domain   domain;
       AtomStorage storage;
+      PairPotentialImpl<DpdPair> pairPotential;
 
 public:
 
    virtual void setUp()
    {
-      object().setNAtomType(1);
-      object().associate(domain, boundary, storage);
+      pairPotential.setNAtomType(1);
+      pairPotential.associate(domain, boundary, storage);
       domain.setBoundary(boundary);
 
       #ifdef UTIL_MPI
       domain.setGridCommunicator(communicator());
       domain.setParamCommunicator(communicator());
       storage.setParamCommunicator(communicator());
-      object().setParamCommunicator(communicator());
+      pairPotential.setParamCommunicator(communicator());
       #endif
 
       // Read parameter file
       openFile("in/PairPotential");
       domain.readParam(file());
       storage.readParam(file());
-      object().readParam(file());
+      pairPotential.readParam(file());
       closeFile();
    }
 
@@ -212,8 +213,8 @@ public:
          std::cout << iter->position() << std::endl;
       }      
 
-      object().setMethodId(2); // N^2 loop
-      object().computeForces();
+      pairPotential.setMethodId(2); // N^2 loop
+      pairPotential.computeForces();
 
       std::cout << std::endl;
       storage.begin(iter);
@@ -236,31 +237,31 @@ public:
       boundary.setOrthorhombic(upper);
       randomAtoms(nAtom, lower, upper, cutoff);
       
-      //object().initialize(maxBoundary, cutoff, pairCapacity);
+      //pairPotential.initialize(maxBoundary, cutoff, pairCapacity);
       boundary.setOrthorhombic(upper);
 
       if (!UTIL_ORTHOGONAL) {
          storage.transformCartToGen(boundary);
       }
-      object().buildCellList();
+      pairPotential.buildCellList();
       if (!UTIL_ORTHOGONAL) {
          storage.transformGenToCart(boundary);
       }
-      object().buildPairList();
+      pairPotential.buildPairList();
 
       zeroForces();
-      object().setMethodId(0);
-      object().computeForces();
+      pairPotential.setMethodId(0);
+      pairPotential.computeForces();
       writeForces();
  
       zeroForces();
-      object().setMethodId(1);
-      object().computeForces();
+      pairPotential.setMethodId(1);
+      pairPotential.computeForces();
       writeForces();
 
       zeroForces();
-      object().setMethodId(2);
-      object().computeForces();
+      pairPotential.setMethodId(2);
+      pairPotential.computeForces();
       writeForces();
 
    }

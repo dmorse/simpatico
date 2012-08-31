@@ -55,6 +55,7 @@ private:
    Boundary boundary;
    Domain domain;
    Buffer buffer;
+   Exchanger exchanger;
    AtomStorage atomStorage;
    BondStorage bondStorage;
    #ifdef INTER_ANGLE
@@ -93,7 +94,7 @@ public:
                          dihedralStorage,
                          #endif
                          buffer);
-      object().associate(domain, boundary, atomStorage, bondStorage, 
+      exchanger.associate(domain, boundary, atomStorage, bondStorage, 
                          #ifdef INTER_ANGLE
                          angleStorage,
                          #endif
@@ -154,8 +155,8 @@ public:
       #endif
       closeFile();
 
-      object().setPairCutoff(pairPotential.cutoff());
-      object().allocate();
+      exchanger.setPairCutoff(pairPotential.cutoff());
+      exchanger.allocate();
       forces.allocate(atomStorage.totalAtomCapacity());
 
       MaskPolicy policy = MaskBonded;
@@ -293,7 +294,7 @@ public:
 
       double range = 0.4;
       displaceAtoms(range);
-      object().exchange();
+      exchanger.exchange();
 
       // Record number of atoms and ghosts after exchange
       nAtom = atomStorage.nAtom();
@@ -305,7 +306,7 @@ public:
       }
 
       // Update ghost positions
-      object().update();
+      exchanger.update();
 
       // Check number of atoms and ghosts on each processor is unchanged.
       TEST_ASSERT(nAtom == atomStorage.nAtom());
@@ -378,7 +379,7 @@ public:
       double range = 0.05;
       //displaceAtoms(range);
 
-      object().exchange();
+      exchanger.exchange();
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
 
@@ -410,7 +411,7 @@ public:
          displaceAtoms(range);
 
          for (int j=0; j < 2; ++j) {
-            object().update();
+            exchanger.update();
             TEST_ASSERT(nGhost == atomStorage.nGhost());
             TEST_ASSERT(nAtom == atomStorage.nAtom());
             displaceAtoms(range);
@@ -422,7 +423,7 @@ public:
          }
 
          atomStorage.clearSnapshot();
-         object().exchange();
+         exchanger.exchange();
 
          nAtom  = atomStorage.nAtom();
          nGhost = atomStorage.nGhost();
@@ -480,7 +481,7 @@ public:
       int  nGhost = 0;    // Number of ghosts on this processor.
 
       atomStorage.clearSnapshot();
-      object().exchange();
+      exchanger.exchange();
 
       // Record number of atoms and ghosts after exchange
       nAtom = atomStorage.nAtom();
@@ -509,7 +510,7 @@ public:
       atomStorage.makeSnapshot();
 
       // Update ghost positions
-      object().update();
+      exchanger.update();
 
       // Check number of atoms and ghosts on each processor is unchanged.
       TEST_ASSERT(nAtom == atomStorage.nAtom());
@@ -549,7 +550,7 @@ public:
       bondPotential.computeForces();
       #endif
       if (reverseUpdateFlag) {
-         object().reverseUpdate();
+         exchanger.reverseUpdate();
       }
       saveForces();
       int nPairNSq;
@@ -571,7 +572,7 @@ public:
       bondPotential.computeForces();
       #endif
       if (reverseUpdateFlag) {
-         object().reverseUpdate();
+         exchanger.reverseUpdate();
       }
       int nPairList;
       pairPotential.computeNPair(domain.communicator());
@@ -640,7 +641,7 @@ public:
       bondPotential.computeForcesAndStress(domain.communicator());
       #endif
       if (reverseUpdateFlag) {
-         object().reverseUpdate();
+         exchanger.reverseUpdate();
       }
       if (domain.communicator().Get_rank() == 0) {
          Tensor pairStress2 = pairPotential.stress();
@@ -695,7 +696,7 @@ public:
       if (!UTIL_ORTHOGONAL) {
          TEST_ASSERT(!atomStorage.isCartesian());
       }
-      object().exchange();
+      exchanger.exchange();
 
       nAtom = atomStorage.nAtom();
       nGhost = atomStorage.nGhost();
@@ -737,7 +738,7 @@ public:
       bondPotential.computeForces();
       #endif
       if (reverseUpdateFlag) {
-         object().reverseUpdate();
+         exchanger.reverseUpdate();
       }
 
       double pairEnergyNSq, energyList, energyF;
@@ -766,7 +767,7 @@ public:
                TEST_ASSERT(!atomStorage.isCartesian());
             }
 
-            object().exchange();
+            exchanger.exchange();
 
             // Confirm that all atoms are within the processor domain.
             atomStorage.begin(atomIter);
@@ -799,7 +800,7 @@ public:
             //   std::cout << "Step " << i << ",  update" << std::endl;
             //}
             
-            object().update();
+            exchanger.update();
          }
    
          nAtom  = atomStorage.nAtom();
@@ -825,7 +826,7 @@ public:
          bondPotential.computeForces();
          #endif
          if (reverseUpdateFlag) {
-            object().reverseUpdate();
+            exchanger.reverseUpdate();
          }
          saveForces();
          pairPotential.computeNPair(domain.communicator());
@@ -848,7 +849,7 @@ public:
          bondPotential.computeForces();
          #endif
          if (reverseUpdateFlag) {
-            object().reverseUpdate();
+            exchanger.reverseUpdate();
          }
          pairPotential.computeEnergy(domain.communicator());
          if (domain.communicator().Get_rank() == 0) {

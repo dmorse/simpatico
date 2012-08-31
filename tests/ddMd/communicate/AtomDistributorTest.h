@@ -25,6 +25,10 @@ using namespace DdMd;
 
 class AtomDistributorTest: public ParamFileTest<AtomDistributor>
 {
+private:
+   
+    AtomDistributor distributor_;
+
 public:
 
    virtual void setUp()
@@ -42,7 +46,7 @@ public:
 
       // Set connections between objects
       domain.setBoundary(boundary);
-      object().associate(domain, boundary, storage, buffer);
+      distributor_.associate(domain, boundary, storage, buffer);
 
       #ifdef UTIL_MPI
       // Set communicators
@@ -50,7 +54,7 @@ public:
       domain.setParamCommunicator(communicator());
       storage.setParamCommunicator(communicator());
       buffer.setParamCommunicator(communicator());
-      object().setParamCommunicator(communicator());
+      distributor_.setParamCommunicator(communicator());
       #else
       domain.setRank(0);
       #endif
@@ -77,8 +81,8 @@ public:
 
       // Initialize AtomDistributor object
       // int cacheCapacity = 35; 
-      // object().initialize(cacheCapacity);
-      object().readParam(file());
+      // distributor_.initialize(cacheCapacity);
+      distributor_.readParam(file());
 
       // Finish reading parameter file
       closeFile();
@@ -105,12 +109,12 @@ public:
 
          #if UTIL_MPI
          // Initialize the sendbuffer.
-         object().setup();
+         distributor_.setup();
          #endif
 
          // Fill the atom objects
          for(i = 0; i < atomCount; ++i) {
-            ptr = object().newAtomPtr();
+            ptr = distributor_.newAtomPtr();
             ptr->setId(i);
             ptr->setTypeId(0);
 
@@ -126,17 +130,17 @@ public:
             //Use position vector for velocity for now
             ptr->velocity() = ptr->position();
 
-            object().addAtom();
+            distributor_.addAtom();
 
          }
          file().close();
 
          // Send any atoms not sent previously.
-         object().send();
+         distributor_.send();
 
       } else { // If I am not the master processor
 
-         object().receive();
+         distributor_.receive();
 
       }
 

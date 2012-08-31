@@ -32,6 +32,7 @@ class AtomCollectorTest: public ParamFileTest<AtomCollector>
    Buffer buffer;
    AtomStorage storage;
    AtomDistributor distributor;
+   AtomCollector collector;
    int atomCount; // Number to be distributed by master
    int myRank;    // Communicator rank
 
@@ -163,21 +164,21 @@ public:
       distribute();
 
       // Collect atoms
-      object().associate(domain, storage, buffer);
+      collector.associate(domain, storage, buffer);
       if (domain.isMaster()) {  
-         object().allocate(buffer.atomCapacity());
-         object().setup();
-         Atom* atomPtr = object().nextPtr();
+         collector.allocate(buffer.atomCapacity());
+         collector.setup();
+         Atom* atomPtr = collector.nextPtr();
          int i = 0;
          while (atomPtr) {
             //std::cout << atomPtr->id() 
             //          << "  " << atomPtr->position() << std::endl;
-            atomPtr = object().nextPtr();
+            atomPtr = collector.nextPtr();
             ++i;
          }
          TEST_ASSERT(i == atomCount);
       } else { 
-         object().send();
+         collector.send();
       }
    }
 
@@ -189,21 +190,21 @@ public:
       distribute();
 
       // Collect atoms
-      object().associate(domain, storage, buffer);
+      collector.associate(domain, storage, buffer);
       if (domain.isMaster()) {  
-         object().allocate(6);
-         object().setup();
-         Atom* atomPtr = object().nextPtr();
+         collector.allocate(6);
+         collector.setup();
+         Atom* atomPtr = collector.nextPtr();
          int i = 0;
          while (atomPtr) {
             //std::cout << atomPtr->id() 
             //          << "  " << atomPtr->position() << std::endl;
-            atomPtr = object().nextPtr();
+            atomPtr = collector.nextPtr();
             ++i;
          }
          TEST_ASSERT(i == atomCount);
       } else { 
-         object().send();
+         collector.send();
       }
    }
 

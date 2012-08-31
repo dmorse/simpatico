@@ -21,17 +21,20 @@ using namespace DdMd;
 
 class BondStorageTest : public ParamFileTest<BondStorage>
 {
+private:
+
+     BondStorage bondStorage_;
 
 public:
 
    virtual void setUp()
    { 
       #ifdef UTIL_MPI 
-      object().setParamCommunicator(communicator());
+      bondStorage_.setParamCommunicator(communicator());
       #endif
 
       openFile("in/BondStorage"); 
-      object().readParam(file()); 
+      bondStorage_.readParam(file()); 
    }
 
    void testReadParam();
@@ -50,7 +53,7 @@ inline void BondStorageTest::testReadParam()
 {  
    printMethod(TEST_FUNC); 
    if (verbose() > 0) {
-      object().writeParam(std::cout);
+      bondStorage_.writeParam(std::cout);
    }
 }
 
@@ -58,25 +61,25 @@ inline void BondStorageTest::testAdd()
 {
    printMethod(TEST_FUNC);
 
-   Bond* ptr53 = object().add(53);
-   TEST_ASSERT(object().find(53) == ptr53);
+   Bond* ptr53 = bondStorage_.add(53);
+   TEST_ASSERT(bondStorage_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(object().size() == 1);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(bondStorage_.size() == 1);
+   TEST_ASSERT(bondStorage_.isValid());
 
-   Bond* ptr35 = object().add(35);
-   TEST_ASSERT(object().size() == 2);
-   TEST_ASSERT(object().find(53) == ptr53);
+   Bond* ptr35 = bondStorage_.add(35);
+   TEST_ASSERT(bondStorage_.size() == 2);
+   TEST_ASSERT(bondStorage_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(object().find(35) == ptr35);
+   TEST_ASSERT(bondStorage_.find(35) == ptr35);
    TEST_ASSERT(ptr35->id() == 35);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(bondStorage_.isValid());
 
-   Bond* ptr18 = object().add(18);
-   TEST_ASSERT(object().find(18) == ptr18);
+   Bond* ptr18 = bondStorage_.add(18);
+   TEST_ASSERT(bondStorage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().size() == 3);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(bondStorage_.size() == 3);
+   TEST_ASSERT(bondStorage_.isValid());
 }
 
 void BondStorageTest::testAddRemove()
@@ -84,73 +87,73 @@ void BondStorageTest::testAddRemove()
    printMethod(TEST_FUNC);
 
    // Add three bonds
-   Bond* ptr53 = object().add(53);
-   Bond* ptr35 = object().add(35);
-   Bond* ptr18 = object().add(18);
+   Bond* ptr53 = bondStorage_.add(53);
+   Bond* ptr35 = bondStorage_.add(35);
+   Bond* ptr18 = bondStorage_.add(18);
 
-   TEST_ASSERT(object().find(53) == ptr53);
+   TEST_ASSERT(bondStorage_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(object().find(35) == ptr35);
+   TEST_ASSERT(bondStorage_.find(35) == ptr35);
    TEST_ASSERT(ptr35->id() == 35);
-   TEST_ASSERT(object().find(18) == ptr18);
+   TEST_ASSERT(bondStorage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().size() == 3);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(bondStorage_.size() == 3);
+   TEST_ASSERT(bondStorage_.isValid());
 
-   Bond* newPtr = object().newPtr();
-   object().returnPtr();
+   Bond* newPtr = bondStorage_.newPtr();
+   bondStorage_.returnPtr();
 
-   TEST_ASSERT(object().find(53) == ptr53);
+   TEST_ASSERT(bondStorage_.find(53) == ptr53);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(object().find(35) == ptr35);
+   TEST_ASSERT(bondStorage_.find(35) == ptr35);
    TEST_ASSERT(ptr35->id() == 35);
-   TEST_ASSERT(object().find(18) == ptr18);
+   TEST_ASSERT(bondStorage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().size() == 3);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(bondStorage_.size() == 3);
+   TEST_ASSERT(bondStorage_.isValid());
 
 
-   object().remove(ptr53);
-   TEST_ASSERT(object().find(53) == 0);
+   bondStorage_.remove(ptr53);
+   TEST_ASSERT(bondStorage_.find(53) == 0);
    TEST_ASSERT(ptr53->id() < 0);
-   TEST_ASSERT(object().find(35) == ptr35);
+   TEST_ASSERT(bondStorage_.find(35) == ptr35);
    TEST_ASSERT(ptr35->id() == 35);
-   TEST_ASSERT(object().find(18) == ptr18);
+   TEST_ASSERT(bondStorage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().size() == 2);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(bondStorage_.size() == 2);
+   TEST_ASSERT(bondStorage_.isValid());
 
-   Bond* ptr67 = object().add(67);
-   Bond* ptr82 = object().add(82);
-   Bond* ptr44 = object().add(44);
-   TEST_ASSERT(object().find(53) == 0);
-   TEST_ASSERT(object().find(35) == ptr35);
+   Bond* ptr67 = bondStorage_.add(67);
+   Bond* ptr82 = bondStorage_.add(82);
+   Bond* ptr44 = bondStorage_.add(44);
+   TEST_ASSERT(bondStorage_.find(53) == 0);
+   TEST_ASSERT(bondStorage_.find(35) == ptr35);
    TEST_ASSERT(ptr35->id() == 35);
-   TEST_ASSERT(object().find(18) == ptr18);
+   TEST_ASSERT(bondStorage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().find(67) == ptr67);
+   TEST_ASSERT(bondStorage_.find(67) == ptr67);
    TEST_ASSERT(ptr67->id() == 67);
-   TEST_ASSERT(object().find(82) == ptr82);
+   TEST_ASSERT(bondStorage_.find(82) == ptr82);
    TEST_ASSERT(ptr82->id() == 82);
-   TEST_ASSERT(object().find(44) == ptr44);
+   TEST_ASSERT(bondStorage_.find(44) == ptr44);
    TEST_ASSERT(ptr44->id() == 44);
-   TEST_ASSERT(object().size() == 5);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(bondStorage_.size() == 5);
+   TEST_ASSERT(bondStorage_.isValid());
 
-   object().remove(ptr35);
-   TEST_ASSERT(object().find(53) == 0);
-   TEST_ASSERT(object().find(35) == 0);
+   bondStorage_.remove(ptr35);
+   TEST_ASSERT(bondStorage_.find(53) == 0);
+   TEST_ASSERT(bondStorage_.find(35) == 0);
    TEST_ASSERT(ptr35->id() < 0);
-   TEST_ASSERT(object().find(18) == ptr18);
+   TEST_ASSERT(bondStorage_.find(18) == ptr18);
    TEST_ASSERT(ptr18->id() == 18);
-   TEST_ASSERT(object().find(67) == ptr67);
+   TEST_ASSERT(bondStorage_.find(67) == ptr67);
    TEST_ASSERT(ptr67->id() == 67);
-   TEST_ASSERT(object().find(82) == ptr82);
+   TEST_ASSERT(bondStorage_.find(82) == ptr82);
    TEST_ASSERT(ptr82->id() == 82);
-   TEST_ASSERT(object().find(44) == ptr44);
+   TEST_ASSERT(bondStorage_.find(44) == ptr44);
    TEST_ASSERT(ptr44->id() == 44);
-   TEST_ASSERT(object().size() == 4);
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(bondStorage_.size() == 4);
+   TEST_ASSERT(bondStorage_.isValid());
    #if 0
    #endif
 
@@ -162,32 +165,32 @@ void BondStorageTest::testIterator()
 
    DPArray<Bond> bonds;
 
-   bonds.allocate(object().capacity());
+   bonds.allocate(bondStorage_.capacity());
 
    // Add bonds
-   bonds.append(*object().add(53));
-   bonds.append(*object().add(35));
-   bonds.append(*object().add(18));
-   bonds.append(*object().add(44));
-   bonds.append(*object().add(17));
-   bonds.append(*object().add(82));
-   bonds.append(*object().add(39));
-   TEST_ASSERT(object().size() == 7);
-   TEST_ASSERT(object().isValid());
+   bonds.append(*bondStorage_.add(53));
+   bonds.append(*bondStorage_.add(35));
+   bonds.append(*bondStorage_.add(18));
+   bonds.append(*bondStorage_.add(44));
+   bonds.append(*bondStorage_.add(17));
+   bonds.append(*bondStorage_.add(82));
+   bonds.append(*bondStorage_.add(39));
+   TEST_ASSERT(bondStorage_.size() == 7);
+   TEST_ASSERT(bondStorage_.isValid());
  
    BondIterator localIter;
    int n = 0; 
-   for (object().begin(localIter); localIter.notEnd(); ++localIter) {
+   for (bondStorage_.begin(localIter); localIter.notEnd(); ++localIter) {
       ++n;
       //std::cout << localIter->id() << std::endl;
    }
-   TEST_ASSERT(n == object().size());
+   TEST_ASSERT(n == bondStorage_.size());
    TEST_ASSERT(n == 7);
 
-   object().remove(&bonds[1]);
+   bondStorage_.remove(&bonds[1]);
    --n;
-   TEST_ASSERT(object().isValid());
-   TEST_ASSERT(n == object().size());
+   TEST_ASSERT(bondStorage_.isValid());
+   TEST_ASSERT(n == bondStorage_.size());
    TEST_ASSERT(n == 6);
 
 }
@@ -198,16 +201,16 @@ inline void BondStorageTest::testFindBonds()
 
    DPArray<Bond> bonds;
 
-   bonds.allocate(object().capacity());
+   bonds.allocate(bondStorage_.capacity());
 
    // Add bonds
-   Bond* ptr53 = object().add(53); // 0
-   Bond* ptr35 = object().add(35); // 1
-   Bond* ptr18 = object().add(18); // 2
-   Bond* ptr44 = object().add(44); // 3
-   Bond* ptr17 = object().add(17); // 4
-   Bond* ptr82 = object().add(82); // 5
-   Bond* ptr39 = object().add(39); // 6
+   Bond* ptr53 = bondStorage_.add(53); // 0
+   Bond* ptr35 = bondStorage_.add(35); // 1
+   Bond* ptr18 = bondStorage_.add(18); // 2
+   Bond* ptr44 = bondStorage_.add(44); // 3
+   Bond* ptr17 = bondStorage_.add(17); // 4
+   Bond* ptr82 = bondStorage_.add(82); // 5
+   Bond* ptr39 = bondStorage_.add(39); // 6
 
    bonds.append(*ptr53); // 0
    bonds.append(*ptr35); // 1
@@ -217,17 +220,17 @@ inline void BondStorageTest::testFindBonds()
    bonds.append(*ptr82); // 5
    bonds.append(*ptr39); // 6
   
-   TEST_ASSERT(object().find(53) == ptr53);
-   TEST_ASSERT(object().find(82) == ptr82);
+   TEST_ASSERT(bondStorage_.find(53) == ptr53);
+   TEST_ASSERT(bondStorage_.find(82) == ptr82);
    TEST_ASSERT(ptr53->id() == 53);
-   TEST_ASSERT(object().find(54) == 0);
-   object().remove(ptr82);
-   TEST_ASSERT(object().find(53) == ptr53);
-   TEST_ASSERT(object().find(18) == ptr18);
-   TEST_ASSERT(object().find(44) == ptr44);
-   TEST_ASSERT(object().find(17) == ptr17);
-   TEST_ASSERT(object().find(82) == 0);
-   TEST_ASSERT(object().find(83) == 0);
+   TEST_ASSERT(bondStorage_.find(54) == 0);
+   bondStorage_.remove(ptr82);
+   TEST_ASSERT(bondStorage_.find(53) == ptr53);
+   TEST_ASSERT(bondStorage_.find(18) == ptr18);
+   TEST_ASSERT(bondStorage_.find(44) == ptr44);
+   TEST_ASSERT(bondStorage_.find(17) == ptr17);
+   TEST_ASSERT(bondStorage_.find(82) == 0);
+   TEST_ASSERT(bondStorage_.find(83) == 0);
 
 }
 
