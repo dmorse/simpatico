@@ -16,13 +16,13 @@
 using namespace Util;
 using namespace McMd;
 
-class MdIntegratorTest : public ParamFileTest<MdSimulation>
+class MdIntegratorTest : public ParamFileTest
 {
 
 public:
 
    MdIntegratorTest()
-    : ParamFileTest<MdSimulation>(),
+    : ParamFileTest(),
       systemPtr_(0)
    {}
 

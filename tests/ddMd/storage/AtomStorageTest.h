@@ -21,7 +21,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class AtomStorageTest : public ParamFileTest<AtomStorage>
+class AtomStorageTest : public ParamFileTest
 {
 
 private:

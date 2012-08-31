@@ -16,13 +16,13 @@
 using namespace Util;
 using namespace McMd;
 
-class MdSimulationTest : public ParamFileTest<MdSimulation>
+class MdSimulationTest : public ParamFileTest
 {
 
 public:
 
    MdSimulationTest()
-    : ParamFileTest<MdSimulation>(),
+    : ParamFileTest(),
       system_(simulation_.system())
    {} 
 

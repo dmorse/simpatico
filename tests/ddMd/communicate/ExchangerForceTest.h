@@ -47,7 +47,7 @@ using namespace Util;
 using namespace Inter;
 using namespace DdMd;
 
-class ExchangerForceTest: public ParamFileTest<Exchanger>
+class ExchangerForceTest: public ParamFileTest
 {
 
 private:

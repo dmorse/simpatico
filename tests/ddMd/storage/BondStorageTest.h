@@ -19,7 +19,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class BondStorageTest : public ParamFileTest<BondStorage>
+class BondStorageTest : public ParamFileTest
 {
 private:
 

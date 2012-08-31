@@ -23,7 +23,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class DomainTest : public ParamFileTest<Domain>
+class DomainTest : public ParamFileTest
 {
 
 private:

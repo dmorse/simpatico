@@ -24,7 +24,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class AtomCollectorTest: public ParamFileTest<AtomCollector>
+class AtomCollectorTest: public ParamFileTest
 {
 
    Boundary boundary;

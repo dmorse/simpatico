@@ -26,7 +26,7 @@ using namespace Util;
 using namespace Inter;
 using namespace DdMd;
 
-class PairPotentialTest: public ParamFileTest< PairPotentialImpl<DpdPair> >
+class PairPotentialTest: public ParamFileTest
 {
 
 private:

@@ -16,13 +16,13 @@
 using namespace Util;
 using namespace McMd;
 
-class McPairPerturbationTest : public ParamFileTest<McSimulation>
+class McPairPerturbationTest : public ParamFileTest
 {
 
 public:
 
    McPairPerturbationTest()
-    : ParamFileTest<McSimulation>(),
+    : ParamFileTest(),
       system_(simulation_.system()),
       perturbation_(simulation_.system())
    {}

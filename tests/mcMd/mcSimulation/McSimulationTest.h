@@ -29,13 +29,13 @@
 using namespace Util;
 using namespace McMd;
 
-class McSimulationTest : public ParamFileTest<McSimulation>
+class McSimulationTest : public ParamFileTest
 {
 
 public:
 
    McSimulationTest()
-    : ParamFileTest<McSimulation>(),
+    : ParamFileTest(),
       system_(simulation_.system())
    { 
       // setVerbose(2); 

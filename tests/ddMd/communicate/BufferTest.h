@@ -21,7 +21,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class BufferTest: public ParamFileTest<Buffer>
+class BufferTest: public ParamFileTest
 {
 
    Buffer buffer_;

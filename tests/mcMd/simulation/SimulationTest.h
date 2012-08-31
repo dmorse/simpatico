@@ -11,7 +11,7 @@
 using namespace Util;
 using namespace McMd;
 
-class SimulationTest : public ParamFileTest<Simulation>
+class SimulationTest : public ParamFileTest
 {
 
 public:

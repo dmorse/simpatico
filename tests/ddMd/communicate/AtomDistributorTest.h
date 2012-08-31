@@ -23,7 +23,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class AtomDistributorTest: public ParamFileTest<AtomDistributor>
+class AtomDistributorTest: public ParamFileTest
 {
 private:
    

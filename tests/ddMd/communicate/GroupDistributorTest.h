@@ -29,7 +29,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class GroupDistributorTest: public ParamFileTest< GroupDistributor<2> >
+class GroupDistributorTest: public ParamFileTest
 {
 public:
 

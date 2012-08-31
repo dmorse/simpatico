@@ -22,7 +22,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class SimulationTest : public ParamFileTest<Simulation>
+class SimulationTest : public ParamFileTest
 {
 private:
 

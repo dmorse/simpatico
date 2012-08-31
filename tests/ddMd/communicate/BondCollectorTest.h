@@ -27,7 +27,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class BondCollectorTest: public ParamFileTest< GroupCollector<2> >
+class BondCollectorTest: public ParamFileTest
 {
 
     Boundary boundary;

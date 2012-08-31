@@ -33,7 +33,7 @@
 using namespace Util;
 using namespace DdMd;
 
-class ExchangerTest: public ParamFileTest<Exchanger>
+class ExchangerTest: public ParamFileTest
 {
 private:
 

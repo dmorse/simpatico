@@ -12,7 +12,7 @@
 using namespace Util;
 using namespace McMd;
 
-class SystemTest : public ParamFileTest<Simulation>
+class SystemTest : public ParamFileTest
 {
 
 public:

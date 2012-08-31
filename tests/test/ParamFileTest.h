@@ -7,7 +7,6 @@
 #include <iostream>
 #include <fstream>
 
-template <class T>
 class ParamFileTest : public UnitTest 
 {
 
@@ -46,12 +45,6 @@ public:
    }
 
    /**
-   * Returns associated object by reference.
-   */
-   T& object()
-   {  return object_; }
-
-   /**
    * Returns input file by reference.
    */
    std::ifstream& file()
@@ -59,7 +52,6 @@ public:
 
 private:
 
-   T              object_;
    std::ifstream  file_;
 
 };
