@@ -10,6 +10,7 @@
 
 #include <mcMd/configIos/ConfigIo.h> // base class
 #include <util/boundary/Boundary.h>   // base class
+#include <util/space/Vector.h>   
 
 namespace McMd
 {
@@ -62,14 +63,14 @@ namespace McMd
       * \param in input file stream.
       */
       void read(std::istream &in);
- 
+     
       /**
       * Write configuration (particle positions) to file.
       *
       * \param out output file stream.
       */
       void write(std::ostream &out);
- 
+
    }; 
 
 } 

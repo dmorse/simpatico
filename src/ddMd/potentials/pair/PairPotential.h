@@ -159,6 +159,32 @@ namespace DdMd
       void buildPairList();
 
       /**
+      * Compute pair energies on all processors.
+      *
+      * This method must be called on all processors. The result is
+      * stored on the master processor, and may be retrieved by 
+      * calling pairEnergies() on this processor.
+      */
+      #ifdef UTIL_MPI
+      virtual void computePairEnergies(MPI::Intracomm& communicator) = 0;
+      #else
+      virtual void computePairEnergies() = 0;
+      #endif
+
+      /**
+      * Return total pair energies, from all processors.
+      *
+      * This method should only be called on the master (rank 0) 
+      * processor, after a previous call to computePairEnergies.
+      */
+      Util::DMatrix<double> pairEnergies() const;
+
+      /**
+      * Mark pair energy as unknown (nullify).
+      */
+      void unsetPairEnergies();
+
+      /**
       * Compute twice the number of pairs within the force cutoff.
       *  
       * This method must be called on all processors.
@@ -252,6 +278,11 @@ namespace DdMd
       */
       AtomStorage& storage();
 
+      /**
+      * Set values for pair energies.
+      */
+      void setPairEnergies(DMatrix<double> pairEnergies);
+
    private:
 
       // Pointer to associated Domain object.
@@ -268,6 +299,9 @@ namespace DdMd
 
       /// Number of pairs within specified cutoff.
       int nPair_;
+
+      /// Pair energies.
+      Setable< DMatrix<double> > pairEnergies_;
 
       // Private methods used to compute number of pairs
       int nPairList(double cutoffSq);

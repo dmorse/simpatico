@@ -51,15 +51,15 @@ namespace McMd
       * \param out output file stream.
       */
       virtual void write(std::ostream& out);
- 
+
    protected:
 
       /// Read data for one atom.
       virtual void readAtom(std::istream& out, Atom& atom) = 0;
-     
+
       /// Write data for one atom.
       virtual void writeAtom(std::ostream& out, const Atom& atom) = 0;
-     
+
    }; 
 
 } 

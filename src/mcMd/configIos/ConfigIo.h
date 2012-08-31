@@ -59,14 +59,14 @@ namespace McMd
       * \param in input file stream.
       */
       virtual void read(std::istream &in) = 0;
- 
+
       /**
       * Write configuration (particle positions) to file.
       *
       * \param out output file stream.
       */
       virtual void write(std::ostream& out) = 0;
- 
+
    protected:
 
       /// Get a reference to the parent System. 

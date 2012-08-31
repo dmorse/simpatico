@@ -41,10 +41,10 @@ namespace McMd
 
       /// Read data for one atom.
       virtual void readAtom(std::istream& out, Atom& atom);
-     
+
       /// Write data for one atom.
       virtual void writeAtom(std::ostream& out, const Atom& atom);
-     
+
    }; 
 
 } 

@@ -1,30 +1,31 @@
-#ifndef MCMD_STRUCTURE_FACTOR_GRID_CPP
-#define MCMD_STRUCTURE_FACTOR_GRID_CPP
+#ifndef DDMD_STRUCTURE_FACTOR_GRID_CPP
+#define DDMD_STRUCTURE_FACTOR_GRID_CPP
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
 #include "StructureFactorGrid.h"
-#include <mcMd/simulation/Simulation.h>
-#include <mcMd/simulation/McMd_mpi.h>
+#include <ddMd/simulation/Simulation.h>
 #include <util/crystal/PointGroup.h>
 #include <util/crystal/PointSymmetry.h>
 #include <util/archives/Serializable_includes.h>
 #include <util/format/Int.h>
 #include <util/format/Dbl.h>
 
-namespace McMd
+#include <iostream>
+#include <fstream>
+namespace DdMd
 {
 
    using namespace Util;
 
    /// Constructor.
-   StructureFactorGrid::StructureFactorGrid(System& system) 
-    : StructureFactor(system),
+   StructureFactorGrid::StructureFactorGrid(Simulation& simulation) 
+    : StructureFactor(simulation),
       hMax_(0),
       nStar_(0),
       lattice_(Triclinic),
@@ -35,7 +36,7 @@ namespace McMd
    void StructureFactorGrid::readParam(std::istream& in) 
    {
 
-      nAtomType_ = system().simulation().nAtomType();
+      nAtomType_ = simulation().nAtomType();
 
       // Read parameters
       readInterval(in);
@@ -47,7 +48,7 @@ namespace McMd
       read<Util::LatticeSystem>(in, "lattice", lattice_);
 
       // Allocate wavevectors arrays
-      nWave_     = (2*hMax_ + 1)*(2*hMax_ + 1)*(2*hMax_ + 1);
+      nWave_     = (2*hMax_ +1 )*(2*hMax_ + 1)*(2*hMax_ + 1);
       waveIntVectors_.allocate(nWave_);
       waveVectors_.allocate(nWave_);
       fourierModes_.allocate(nWave_, nMode_);
@@ -58,8 +59,7 @@ namespace McMd
 
       // Cubic Symmetry
       if (lattice_ == Cubic) {
-
-         nStar_ = (hMax_ + 1 )*(hMax_ + 2)*(hMax_ + 3)/6;
+         nStar_ = (hMax_ +1 )*(hMax_ + 2)*(hMax_ + 3)/6;
          starIds_.allocate(nStar_);
          starSizes_.allocate(nStar_);
    
@@ -123,11 +123,11 @@ namespace McMd
          a.R(0,0) =  1;
          a.R(1,2) =  1;
          a.R(2,1) =  1;
-   
+
          b.R(0,0) =  -1;
          b.R(1,1) =  1;
          b.R(2,2) =  1;
-   
+
          c.R(0,0) =  1;
          c.R(1,1) =  -1;
          c.R(2,2) =  1;
@@ -136,7 +136,7 @@ namespace McMd
          group.add(b);
          group.add(a);
          group.makeCompleteGroup();
-   
+
          // Create grid of wavevectors
          FSArray<IntVector, 16> star;
          i = 0;
@@ -160,10 +160,10 @@ namespace McMd
          }
          if (i != nStar_) {
             UTIL_THROW("Error");
-         } 
+         }
          if (j != nWave_) {
             UTIL_THROW("Error");
-         } 
+         }
       }
 
       // Clear accumulators
@@ -177,6 +177,9 @@ namespace McMd
       maximumWaveIntVector_.allocate(Samples);
       maximumQ_.allocate(Samples);
    
+      for (i=0; i < Samples; ++i) {
+         maximumValue_[i] = 0.0;
+      }
       nSample_ = 0;
 
       isInitialized_ = true;
@@ -185,111 +188,57 @@ namespace McMd
    void StructureFactorGrid::setup() 
    {}
 
-   void StructureFactorGrid::output() 
+   void StructureFactorGrid::output()
    {
-      double  value, average, size;
-      int     i, j, k, m, n;
+      if (simulation().domain().isMaster()) {
+            
+         double  value, average, size;
+         int     i, j, k, m, n;
 
-      // Echo parameters to a log file
-      fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
-      writeParam(outputFile_); 
-      outputFile_.close();
+         // Echo parameters to a log file
+         simulation().fileMaster().openOutputFile(outputFileName(".prm"), outputFile_);
+         writeParam(outputFile_);
+         outputFile_.close();
 
-      // Output structure factors to one file
-      fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
+         // Output structure factors to one file
+         simulation().fileMaster().openOutputFile(outputFileName(".dat"), outputFile_);
 
-      // Loop over waves to output structure factor
-      for (i = 0; i < nStar_; ++i) {
-         size = starSizes_[i];
+         // Loop over waves to output structure factor
+         for (i = 0; i < nStar_; ++i) {
+            size = starSizes_[i];
 
-         #if 0
-         // Output individual waves in star
-         k = starIds_[i];
-         for (m = 0; m < size; ++m) {
+            k = starIds_[i];
             for (n = 0; n < Dimension; ++n) {
                outputFile_ << Int(waveIntVectors_[k][n], 5);
             }
             outputFile_ << Dbl(waveVectors_[k].abs(), 20, 8);
             for (j = 0; j < nMode_; ++j) {
-               value = structureFactors_(k, j)/double(nSample_);
-               outputFile_ << Dbl(value, 20, 8);
+               k = starIds_[i];
+               average = 0.0;
+               for (m = 0; m < size; ++m) {
+                  value = structureFactors_(k, j)/double(nSample_);
+                  average += value;
+                  ++k;
+               }
+               average = average/double(size);
+               outputFile_ << Dbl(average, 20, 8);
             }
             outputFile_ << std::endl;
-            ++k;
          }
-         outputFile_ << std::endl;
-         #endif
-
-         k = starIds_[i];
-         for (n = 0; n < Dimension; ++n) {
-            outputFile_ << Int(waveIntVectors_[k][n], 5);
-         }
-         outputFile_ << Dbl(waveVectors_[k].abs(), 20, 8);
-         for (j = 0; j < nMode_; ++j) {
-            k = starIds_[i];
-            average = 0.0;
-            for (m = 0; m < size; ++m) {
-                value = structureFactors_(k, j)/double(nSample_);
-                average += value;
-                ++k;
-            }
-            average = average/double(size);
-            outputFile_ << Dbl(average, 20, 8);
-         }
-         outputFile_ << std::endl;
-
-      }
-      outputFile_.close();
-
-      // Outputs history of maximum structure factors
-      fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_);
-      for (int i = 0; i < nSample_; ++i) {
-         outputFile_ << maximumWaveIntVector_[i];
-         outputFile_ << Dbl(maximumQ_[i], 20, 8);
-         outputFile_ << Dbl(maximumValue_[i], 20, 8);
-         outputFile_ << std::endl;
-      }
-      outputFile_.close();
-                                                                  
-      #if 0
-      // Output each structure factor to a separate file
-      std::string suffix;
-      int         typeId;
-      for (j = 0; j < nMode_; ++j) {
-
-         // Construct file suffix for this structure factor
-         suffix = std::string(".");
-         for (k = 0; k < 2; k++) {
-            typeId = atomTypeIdPairs_[j][k];
-            if (typeId < 0) {
-               suffix += std::string("A");
-            } else {
-               suffix += toString(typeId);
-            }
-         }
-         suffix += std::string(".dat");
-
-         fileMaster().openOutputFile(outputFileName(suffix), outputFile_);
-
-         // Loop over waves to output structure factor
-
          outputFile_.close();
+
+         // Outputs history of maximum structure factors
+         simulation().fileMaster().openOutputFile(outputFileName("_max.dat"), outputFile_);
+         for (i = 0; i < nSample_; ++i) {
+            outputFile_ << maximumWaveIntVector_[i];
+            outputFile_ << Dbl(maximumQ_[i], 20, 8);
+            outputFile_ << Dbl(maximumValue_[i], 20, 8);
+            outputFile_ << std::endl;
+         }
+         outputFile_.close();
+      
       }
-      #endif
-
    }
-
-   /*
-   * Save state to binary file archive.
-   */
-   void StructureFactorGrid::save(Serializable::OArchiveType& ar)
-   { ar & *this; }
-
-   /*
-   * Load state from a binary file archive.
-   */
-   void StructureFactorGrid::load(Serializable::IArchiveType& ar)
-   { ar & *this; }
 
 }
 #endif

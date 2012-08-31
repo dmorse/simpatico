@@ -150,6 +150,18 @@ namespace DdMd
       #endif
 
       /**
+      * Compute total pair energies for all processors
+      * Compute nonbonded forces and sress for all processors
+      * 
+      * Call on all processors.
+      */
+      #ifdef UTIL_MPI
+      virtual void computePairEnergies(MPI::Intracomm& communicator);
+      #else
+      virtual void computePairEnergies();
+      #endif
+
+      /**
       * Compute nonbonded forces and sress for all processors
       * 
       * Call on all processors.
@@ -168,6 +180,9 @@ namespace DdMd
       * Pointer to pair interaction object.
       */ 
       Interaction* interactionPtr_;
+
+      // Number of atom types.
+      int nAtomType_;
 
       /**
       * Calculate atomic pair energy, using PairList.
@@ -231,7 +246,10 @@ namespace DdMd
    PairPotentialImpl<Interaction>::PairPotentialImpl(Simulation& simulation)
     : PairPotential(simulation),
       interactionPtr_(0)
-   {  interactionPtr_ = new Interaction; }
+   {  
+      interactionPtr_ = new Interaction;
+      nAtomType_ =  simulation.nAtomType();
+   }
  
    /* 
    * Default constructor.
@@ -837,6 +855,86 @@ namespace DdMd
 
       // Add localStress from all nodes, set stress to sum on master.
       reduceStress(localStress, communicator);
+   }
+
+   /*
+   * Compute total pair energies (Call on all processors).
+   */
+   template <class Interaction>
+   #ifdef UTIL_MPI
+   void PairPotentialImpl<Interaction>::computePairEnergies(MPI::Intracomm& communicator)
+   #else
+   void PairPotentialImpl<Interaction>::computePairEnergies()
+   #endif
+   {
+      Vector f;
+      double rsq;
+      double energy = 0.0;
+      PairIterator iter;
+      Atom*  atom0Ptr;
+      Atom*  atom1Ptr;
+      int    type0, type1;
+
+      DMatrix<double> localPairEnergies;
+      localPairEnergies.allocate(nAtomType_, nAtomType_);
+      for (int i = 0; i < nAtomType_; ++i) {
+         for (int j = 0; j < nAtomType_; ++j) {
+            localPairEnergies(i,j) = 0.0;
+         }
+      }
+
+      //if (methodId() == 0) {
+      if (reverseUpdateFlag()) {
+         for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+            iter.getPair(atom0Ptr, atom1Ptr);
+            assert(!atom0Ptr->isGhost());
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            f.subtract(atom0Ptr->position(), atom1Ptr->position());
+            rsq = f.square();
+            energy = interactionPtr_->energy(rsq, type0, type1);
+            localPairEnergies(type0,type1) += energy;
+         }
+      } else {
+         for (pairList_.begin(iter); iter.notEnd(); ++iter) {
+            iter.getPair(atom0Ptr, atom1Ptr);
+            assert(!atom0Ptr->isGhost());
+            type0 = atom0Ptr->typeId();
+            type1 = atom1Ptr->typeId();
+            f.subtract(atom0Ptr->position(), atom1Ptr->position());
+            rsq = f.square();
+            if (!atom1Ptr->isGhost()) {
+               energy = interactionPtr_->energy(rsq, type0, type1);
+            } else {
+               energy = 0.5*interactionPtr_->energy(rsq, type0, type1);
+            } 
+            localPairEnergies(type0,type1) += energy;
+         }
+      }
+
+      DMatrix<double> totalPairEnergies;
+      totalPairEnergies.allocate(nAtomType_, nAtomType_);
+      for (int i = 0; i < nAtomType_; ++i) {
+         for (int j = 0; j < nAtomType_; ++j) {
+            totalPairEnergies(i,j) = 0.0;
+         }
+      }
+
+      #ifdef UTIL_MPI
+      for (int i = 0; i < nAtomType_; ++i) {
+         for (int j = 0; j < nAtomType_; ++j) {
+            communicator.Reduce(&localPairEnergies(i,j), &totalPairEnergies(i,j), 1,
+                                 MPI::DOUBLE, MPI::SUM, 0);
+         }
+      }
+      if (communicator.Get_rank() == 0) {
+         setPairEnergies(totalPairEnergies);
+      } else {
+         unsetPairEnergies();
+      }
+      #else
+      setPairEnergies(localPairEnergies);
+      #endif
    }
 
 }
