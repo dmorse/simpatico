@@ -7,6 +7,9 @@
 #include <iostream>
 #include <fstream>
 
+/**
+* A UnitTest with a built-in parameter file.
+ **/
 class ParamFileTest : public UnitTest 
 {
 
