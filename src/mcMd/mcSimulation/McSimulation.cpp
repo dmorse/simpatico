@@ -13,6 +13,8 @@
 #include "McSimulation.h"
 #include "McDiagnosticManager.h"
 #include <mcMd/simulation/serialize.h>
+#include <mcMd/chemistry/Molecule.h>
+#include <mcMd/chemistry/Atom.h>
 #include <mcMd/diagnostics/Diagnostic.h>
 #include <mcMd/mcMoves/McMoveManager.h>
 #include <mcMd/species/Species.h>
@@ -377,8 +379,23 @@ namespace McMd
                inBuffer >> filename;
                Log::file() << Str(filename, 15) << std::endl;
                fileMaster().openInputFile(filename, inputFile);
-               system().transformCartConfigToGen(inputFile);
+               system().readConfig(inputFile);
                inputFile.close();
+
+               System::MoleculeIterator molIter;
+               Molecule::AtomIterator atomIter;
+               for (int iSpec=0; iSpec < nSpecies(); ++iSpec) {
+                  system().begin(iSpec, molIter);
+                  for ( ; molIter.notEnd(); ++molIter) {
+                     molIter->begin(atomIter);
+                     for ( ; atomIter.notEnd(); ++atomIter) {
+                        Vector cartPosition, genPosition;
+                        cartPosition = atomIter->position();
+                        system().boundary().transformCartToGen(cartPosition, genPosition);
+                        atomIter->position() = genPosition;
+                     }
+                  }
+               }
 
                // Read in new boundary
                inBuffer >> system().boundary();
@@ -386,11 +403,24 @@ namespace McMd
                Log::file() << std::endl;
                inBuffer >> filename;
 
+               for (int iSpec=0; iSpec < nSpecies(); ++iSpec) {
+                  system().begin(iSpec, molIter);
+                  for ( ; molIter.notEnd(); ++molIter) {
+                     molIter->begin(atomIter);
+                     for ( ; atomIter.notEnd(); ++atomIter) {
+                        Vector cartPosition, genPosition;
+                        genPosition = atomIter->position();
+                        system().boundary().transformGenToCart(genPosition, cartPosition);
+                        atomIter->position() = cartPosition;
+                     }
+                  }
+               }
+
                // Write out configuration to file
                inBuffer >> filename;
                Log::file() << Str(filename, 15) << std::endl;
                fileMaster().openOutputFile(filename, outputFile);
-               system().transformGenToCartConfig(outputFile);
+               system().writeConfig(outputFile);
                outputFile.close();
 
                #ifndef INTER_NOPAIR 

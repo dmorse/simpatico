@@ -42,20 +42,9 @@ namespace McMd
       /// Read data for one atom.
       virtual void readAtom(std::istream& out, Atom& atom);
      
-      /*
-      * Read data for one atom and transform its position from 
-      * cartesian to generalized system.
-      */
-      virtual void transformCartToGen(std::istream& out, Atom& atom);
-
       /// Write data for one atom.
       virtual void writeAtom(std::ostream& out, const Atom& atom);
      
-      /*
-      * Transform atom position from generalized to cartesian
-      * system and write data for atom.
-      */
-      virtual void transformGenToCart(std::ostream& out, const Atom& atom);
    }; 
 
 } 

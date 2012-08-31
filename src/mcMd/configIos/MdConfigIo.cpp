@@ -47,50 +47,11 @@ namespace McMd
    }
 
    /* 
-   * Read data for one atom and transform its position from
-   * cartesian to generalized system.
-   */
-   void MdConfigIo::transformCartToGen(std::istream &in, Atom& atom)
-   {
-      Vector cartPosition, genPosition;
-
-      in >> cartPosition;
-      #ifdef MCMD_SHIFT
-      in >> atom.shift();
-      boundary().shift(cartPosition, atom.shift());
-      #else
-      boundary().shift(cartPosition);
-      #endif
-      boundary().transformCartToGen(cartPosition, genPosition);
-      atom.position() = genPosition;
-      in >> atom.velocity();
-   }
-
-   /* 
    * Write data for one atom.
    */
    void MdConfigIo::writeAtom(std::ostream &out, const Atom& atom)
    {
       out << atom.position() << std::endl; 
-      out << atom.velocity(); 
-      #ifdef MCMD_SHIFT
-      for (int i = 0; i < Dimension; ++i) {
-         out << Int(atom.shift()[i], 3);
-      }
-      #endif
-      out << std::endl; 
-   }
-
-   /* 
-   * Transform atom position from generalized to cartesian
-   * system and write data for atom.
-   */
-   void MdConfigIo::transformGenToCart(std::ostream &out, const Atom& atom)
-   {
-      Vector genPosition, cartPosition;
-      genPosition = atom.position();
-      boundary().transformGenToCart(genPosition, cartPosition);
-      out << cartPosition << std::endl;
       out << atom.velocity(); 
       #ifdef MCMD_SHIFT
       for (int i = 0; i < Dimension; ++i) {
