@@ -23,11 +23,11 @@ public:
 
    MdSimulationTest()
     : ParamFileTest<MdSimulation>(),
-      system_(object().system())
+      system_(simulation_.system())
    {} 
 
    virtual void setUp()
-   {  object().fileMaster().setRootPrefix(filePrefix()); }
+   {  simulation_.fileMaster().setRootPrefix(filePrefix()); }
 
    void testReadParam();
    void testSetZeroVelocities();
@@ -46,7 +46,8 @@ public:
 
 private:
 
-   MdSystem& system_;
+   MdSimulation simulation_;
+   MdSystem&    system_;
 
 };
 
@@ -58,19 +59,19 @@ void MdSimulationTest::testReadParam()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    try {
-      object().isValid();
+      simulation_.isValid();
    } catch (Exception e) {
       TEST_ASSERT(0);
    }
 
    if (verbose() > 1) {
       std::cout << std::endl;
-      object().writeParam(std::cout);
-      object().system().writeConfig(std::cout);
+      simulation_.writeParam(std::cout);
+      simulation_.system().writeConfig(std::cout);
    }
 }
 
@@ -80,13 +81,13 @@ void MdSimulationTest::testSetZeroVelocities()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
    double energy;
 
-   object().simulate(100);
+   simulation_.simulate(100);
    system_.setZeroVelocities();
    energy = system_.kineticEnergy();
    std::cout << "kinetic energy = " << energy << std::endl;
@@ -98,8 +99,8 @@ void MdSimulationTest::testSetBoltzmannVelocities()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
    //double temperature = 1.0;
@@ -114,17 +115,17 @@ void MdSimulationTest::testBuildPairList()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
 
    //double temperature = 1.0;
    //system_.setBoltzmannVelocities(temperature);
-   object().simulate(10000);
+   simulation_.simulate(10000);
 
    try {
-      object().isValid();
+      simulation_.isValid();
    } catch (Exception e) {
       std::cout << e.message();
       TEST_ASSERT(0);
@@ -139,14 +140,14 @@ void MdSimulationTest::testPairEnergy()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
 
    //double temperature = 1.0;
    //system_.setBoltzmannVelocities(temperature);
-   object().simulate(1000);
+   simulation_.simulate(1000);
 
    double energy;
    energy = system_.pairPotential().energy();
@@ -159,14 +160,14 @@ void MdSimulationTest::testAddPairForces()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
 
    //double temperature = 1.0;
    //system_.setBoltzmannVelocities(temperature);
-   object().simulate(1000);
+   simulation_.simulate(1000);
    system_.pairPotential().addForces();
   
 }
@@ -177,14 +178,14 @@ void MdSimulationTest::testBondEnergy()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
 
    //double temperature = 1.0;
    //system_.setBoltzmannVelocities(temperature);
-   object().simulate(1000);
+   simulation_.simulate(1000);
 
    system_.pairPotential().buildPairList();
    double energy = system_.bondPotential().energy();
@@ -197,14 +198,14 @@ void MdSimulationTest::testAddBondForces()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
 
    //double temperature = 1.0;
    //system_.setBoltzmannVelocities(temperature);
-   object().simulate(1000);
+   simulation_.simulate(1000);
 
    system_.pairPotential().buildPairList();
    system_.bondPotential().addForces();
@@ -216,13 +217,13 @@ void MdSimulationTest::testCalculateForces()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
 
    //double temperature = 1.0;
-   //object().simulate(1000);
+   //simulation_.simulate(1000);
    system_.pairPotential().buildPairList();
    system_.calculateForces();
 }
@@ -233,14 +234,14 @@ void MdSimulationTest::testStep()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
 
    double kinetic, potential;
    //double temperature = 1.0;
-   object().simulate(100);
+   simulation_.simulate(100);
 
    system_.pairPotential().buildPairList();
    system_.calculateForces();
@@ -266,18 +267,18 @@ void MdSimulationTest::testSimulate()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
 
    std::string baseFileName("simulate.0");
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 
-   object().simulate(20);
+   simulation_.simulate(20);
 
    baseFileName = "simulate.20";
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 
 }
 
@@ -287,22 +288,22 @@ void MdSimulationTest::testWriteRestart()
    std::cout << std::endl;
 
    openFile("in/MdSimulation"); 
-   object().readParam(file());
-   object().readCommands();
+   simulation_.readParam(file());
+   simulation_.readCommands();
 
    std::cout << std::endl;
 
    std::string baseFileName("writeRestart.0");
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 
-   object().simulate(100000);
+   simulation_.simulate(100000);
    baseFileName = "writeRestart.n";
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 
    bool isContinuation = true;
-   object().simulate(200000, isContinuation);
+   simulation_.simulate(200000, isContinuation);
    baseFileName = "writeRestart.2n";
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 
 }
 
@@ -312,10 +313,10 @@ void MdSimulationTest::testReadRestart()
    std::cout << std::endl;
 
    std::string baseFileName("writeRestart.n");
-   object().readRestart(baseFileName);
+   simulation_.readRestart(baseFileName);
 
    baseFileName = "readRestart";
-   object().writeRestart(baseFileName);
+   simulation_.writeRestart(baseFileName);
 }
 
 #if 0
@@ -326,7 +327,7 @@ void MdSimulationTest::testIntegrator()
 
    double kinetic, potential;
    double temperature = 1.0;
-   object().simulate(100);
+   simulation_.simulate(100);
 
    system_.pairPotential().buildPairList();
    system_.calculateForces();

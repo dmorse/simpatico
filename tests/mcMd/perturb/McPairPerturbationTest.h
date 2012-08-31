@@ -23,14 +23,14 @@ public:
 
    McPairPerturbationTest()
     : ParamFileTest<McSimulation>(),
-      system_(object().system()),
-      perturbation_(object().system())
+      system_(simulation_.system()),
+      perturbation_(simulation_.system())
    {}
 
    virtual void setUp()
    {  
       openFile("in/McSimulation"); 
-      object().readParam(file());
+      simulation_.readParam(file());
    }
 
    void testReadParam();
@@ -39,6 +39,7 @@ public:
 
 private:
 
+   McSimulation       simulation_;
    McSystem&          system_;
    McPairPerturbation perturbation_;
 
@@ -50,7 +51,7 @@ void McPairPerturbationTest::testReadParam()
    printMethod(TEST_FUNC);
 
    try {
-      object().isValid();
+      simulation_.isValid();
    } catch (Exception e) {
       std::cout << e.message();
       TEST_ASSERT(0);
@@ -58,7 +59,7 @@ void McPairPerturbationTest::testReadParam()
 
    if (verbose() > 1) {
       std::cout << std::endl;
-      object().writeParam(std::cout);
+      simulation_.writeParam(std::cout);
    }
 
 }
@@ -69,14 +70,14 @@ void McPairPerturbationTest::testPairEnergy()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   object().run();
+   simulation_.run();
 
    System::MoleculeIterator molIter;
    Molecule::AtomIterator   atomIter;
    double energy, de;
 
    energy = 0.0;
-   for (int is=0; is < object().nSpecies(); ++is) {
+   for (int is=0; is < simulation_.nSpecies(); ++is) {
       for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             de = system_.atomPairEnergy(*atomIter);
@@ -96,24 +97,24 @@ void McPairPerturbationTest::testSetParameter()
    printMethod(TEST_FUNC);
    std::cout << std::endl;
 
-   object().run();
+   simulation_.run();
 
-   object().system().perturbation().setParameter(2.0);
-   std::cout << Dbl(object().system().perturbation().parameter()) << std::endl;
-   TEST_ASSERT( eq(object().system().perturbation().parameter(), 2.0) );
-   std::cout << Dbl(object().system().perturbation().derivative()) << std::endl;
+   simulation_.system().perturbation().setParameter(2.0);
+   std::cout << Dbl(simulation_.system().perturbation().parameter()) << std::endl;
+   TEST_ASSERT( eq(simulation_.system().perturbation().parameter(), 2.0) );
+   std::cout << Dbl(simulation_.system().perturbation().derivative()) << std::endl;
 
-   //object().system().perturbation().setParameter(2.0);
-   //std::cout << Dbl(object().system().perturbation().parameter()) << std::endl;
-   //TEST_ASSERT( eq(object().system().perturbation().parameter(), 2.0) );
-   //std::cout << Dbl(object().system().perturbation().derivative()) << std::endl;
+   //simulation_.system().perturbation().setParameter(2.0);
+   //std::cout << Dbl(simulation_.system().perturbation().parameter()) << std::endl;
+   //TEST_ASSERT( eq(simulation_.system().perturbation().parameter(), 2.0) );
+   //std::cout << Dbl(simulation_.system().perturbation().derivative()) << std::endl;
 
    System::MoleculeIterator molIter;
    Molecule::AtomIterator   atomIter;
    double energy, de;
 
    energy = 0.0;
-   for (int is=0; is < object().nSpecies(); ++is) {
+   for (int is=0; is < simulation_.nSpecies(); ++is) {
       for (system_.begin(is, molIter); molIter.notEnd(); ++molIter) {
          for (molIter->begin(atomIter); atomIter.notEnd(); ++atomIter) {
             de = system_.atomPairEnergy(*atomIter);

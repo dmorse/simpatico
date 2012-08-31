@@ -35,10 +35,14 @@ public:
       openFile("in/Simulation"); 
       #endif
       #endif
-      object().readParam(file());
+      simulation_.readParam(file());
    }
 
    void testReadParam();
+
+private:
+
+   Simulation simulation_;
 
 };
 
@@ -50,18 +54,18 @@ void SimulationTest::testReadParam()
 
    if (verbose() > 1) {
       std::cout << std::endl;
-      object().writeParam(std::cout);
+      simulation_.writeParam(std::cout);
    }
 
    Species *species;
-   for (int i=0; i < object().nSpecies() ; ++i ) {
+   for (int i=0; i < simulation_.nSpecies() ; ++i ) {
 
-      species = &object().species(i);
+      species = &simulation_.species(i);
       TEST_ASSERT(species->isValid());
 
    }
 
-   TEST_ASSERT(object().isValid());
+   TEST_ASSERT(simulation_.isValid());
 }
 
 TEST_BEGIN(SimulationTest)
