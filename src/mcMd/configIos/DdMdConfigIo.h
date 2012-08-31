@@ -62,14 +62,14 @@ namespace McMd
       * \param in input file stream.
       */
       void read(std::istream &in);
- 
+
       /**
       * Write configuration (particle positions) to file.
       *
       * \param out output file stream.
       */
       void write(std::ostream &out);
- 
+
    }; 
 
 } 

@@ -23,6 +23,7 @@
 #include <util/boundary/Boundary.h>              // member 
 #include <util/space/Tensor.h>                   // member (template param)
 #include <util/containers/DArray.h>              // member (template)
+#include <util/containers/DMatrix.h>              // member (template)
 #include <util/util/Setable.h>                   // member (template)
 #include <util/signal/Signal.h>                  // members
 
@@ -328,6 +329,23 @@ namespace DdMd
       * \return total virial pressure (only correct on master node).
       */
       double virialPressure() const;
+
+      /**
+      * Calculate and store pair energy 
+      * (or pair energies, depending on nAtomType) on all processors.
+      * 
+      * Reduce operation: Must be called on all nodes.
+      */
+      void computePairEnergies();
+
+      /**
+      * Return precomputed pair energy (or pair energies).
+      *
+      * Call only on master processor, after computePairEnergies.
+      * 
+      * \return total pair energies (only correct on master node).
+      */
+      DMatrix<double> pairEnergies() const;
 
       /**
       * Mark all virial stress contributions as unknown.

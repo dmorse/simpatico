@@ -98,7 +98,6 @@ namespace McMd
 
    }
 
-
    void DdMdConfigIo::write(std::ostream &out)
    {
       // Count total numbers of atoms and bonds in all species.
@@ -228,6 +227,6 @@ namespace McMd
       // Reset Format defaults to initialization values
       Format::initStatic();
    }
- 
+
 } 
 #endif

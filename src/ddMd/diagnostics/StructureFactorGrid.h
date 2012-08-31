@@ -1,17 +1,17 @@
-#ifndef MCMD_STRUCTURE_FACTOR_GRID_H
-#define MCMD_STRUCTURE_FACTOR_GRID_H
+#ifndef DDMD_STRUCTURE_FACTOR_GRID_H
+#define DDMD_STRUCTURE_FACTOR_GRID_H
 
 /*
 * Simpatico - Simulation Package for Polymeric and Molecular Liquids
 *
-* Copyright 2010, David Morse (morse@cems.umn.edu)
+* Copyright 2010 - 2012, David Morse (morse012@umn.edu)
 * Distributed under the terms of the GNU General Public License.
 */
 
 #include "StructureFactor.h"
 #include <util/crystal/LatticeSystem.h>
 
-namespace McMd
+namespace DdMd
 {
 
    using namespace Util;
@@ -66,7 +66,7 @@ namespace McMd
       *
       * \param system reference to parent System object
       */
-      StructureFactorGrid(System &system);
+      StructureFactorGrid(Simulation &simulation);
 
       /**
       * Read parameters from file.
@@ -93,20 +93,6 @@ namespace McMd
       */
       virtual void output();
 
-      /**
-      * Save state to binary file archive.
-      *
-      * \param ar binary saving (output) archive.
-      */
-      virtual void save(Serializable::OArchiveType& ar);
-
-      /**
-      * Load state from a binary file archive.
-      *
-      * \param ar binary loading (input) archive.
-      */
-      virtual void load(Serializable::IArchiveType& ar);
- 
    private:
 
       /// Array of ids for first wavevector in each star.

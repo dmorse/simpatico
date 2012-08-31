@@ -102,7 +102,6 @@ namespace McMd
       if (nAtomType > simulation().nAtomType()) {
          UTIL_THROW("nAtomType > simulation().nAtomType()");
       } 
-
       // Read boundary dimensions
       Vector lengths;
       Vector min;
@@ -164,7 +163,6 @@ namespace McMd
       #endif
 
    }
-
 
    void LammpsConfigIo::write(std::ostream &out)
    {
@@ -267,6 +265,6 @@ namespace McMd
       // Reset Format defaults to initialization values
       Format::initStatic();
    }
- 
+
 } 
 #endif

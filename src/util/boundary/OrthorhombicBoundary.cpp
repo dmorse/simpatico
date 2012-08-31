@@ -58,7 +58,7 @@ namespace Util
    void OrthorhombicBoundary::setTetragonal(double ab, double c) 
    {  
       maxima_[0] = ab;
-      maxima_[1] = ab;
+      maxima_[1] = c;
       maxima_[2] = c;
       lattice_ = Tetragonal;
       reset(); 
