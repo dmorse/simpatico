@@ -211,28 +211,6 @@ namespace McMd
       virtual void readConfig(std::istream& in);
 
       /**
-      * Read system configuration from file and transform 
-      * position coordinates from cartesian to generalized system.
-      *
-      * The configuration file contains the dimensions of the
-      * Boundary, the number of molecules of each Species, and 
-      * the atomic positions for all atoms of all molecules in 
-      * this System. 
-      *
-      * This method uses a ConfigIo object that is registered
-      * with this System. If a ConfigIo object has not been
-      * registered by calling setConfigIo(std::string&), this 
-      * method creates and uses an instance of the ConfigIo 
-      * base class.
-      *
-      * Precondition: The System and its Parent Simulation must
-      * have been initialized by calling their readParam methods. 
-      *
-      * \param in configuration file input stream
-      */
-      virtual void transformCartConfigToGen(std::istream& in);
-
-      /**
       * Write system configuration to a specified ostream.
       *
       * Like readConfig(), this method will create and use 
@@ -242,19 +220,6 @@ namespace McMd
       * \param out configuration file output stream
       */
       void writeConfig(std::ostream& out);
-
-      /**
-      * Transform generalized position coordinates to cartersian
-      * system before outputting system configuration to a 
-      * specified ostream.
-      *
-      * Like transformCartConfigToGen(), this method will create and use 
-      * a ConfigIo object if none has been registered 
-      * previously. 
-      *
-      * \param out configuration file output stream
-      */
-      void transformGenToCartConfig(std::ostream& out);
 
       /**
       * Serialize the System to/from an archive.

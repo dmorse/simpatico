@@ -401,7 +401,6 @@ namespace McMd
                inBuffer >> system().boundary();
                Log::file() << "  " << system().boundary();
                Log::file() << std::endl;
-               inBuffer >> filename;
 
                for (int iSpec=0; iSpec < nSpecies(); ++iSpec) {
                   system().begin(iSpec, molIter);
