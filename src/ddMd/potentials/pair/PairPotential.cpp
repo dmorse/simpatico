@@ -288,13 +288,13 @@ namespace DdMd
    /*
    * Return value of pair energies.
    */
-   DArray<double> PairPotential::pairEnergies() const
+   DMatrix<double> PairPotential::pairEnergies() const
    {  return pairEnergies_.value(); }
 
    /*
    * Set a value for pair energies.
    */
-   void PairPotential::setPairEnergies(DArray<double> pairEnergies)
+   void PairPotential::setPairEnergies(DMatrix<double> pairEnergies)
    {  pairEnergies_.set(pairEnergies); }
 
    /*

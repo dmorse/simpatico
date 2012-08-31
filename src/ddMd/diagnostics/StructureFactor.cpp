@@ -102,7 +102,6 @@ namespace DdMd
       if (isAtInterval(iStep))  {
 
          Vector position;
-         double rsq;
          std::complex<double> expFactor;
          double  product;
          AtomIterator  atomIter;

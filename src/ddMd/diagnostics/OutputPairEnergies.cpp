@@ -60,13 +60,14 @@ namespace DdMd
          Simulation& sys = simulation();
          sys.computePairEnergies();
          if (sys.domain().isMaster()) {
-            DArray<double> pair = sys.pairEnergies();
-            outputFile_ << Int(iStep, 10)
-                        << Dbl(pair[0], 20)
-                        << Dbl(0.5*(pair[1]+pair[2]), 20)
-                        << Dbl(0.5*(pair[1]+pair[2]), 20)
-                        << Dbl(pair[3], 20)
-                        << std::endl;
+            DMatrix<double> pair = sys.pairEnergies();
+            outputFile_ << Int(iStep, 10);
+            for (int i = 0; i < simulation().nAtomType(); ++i){
+               for (int j = 0; j < simulation().nAtomType(); ++j){
+                  outputFile_ << Dbl(pair(i,j), 20);
+               }
+            }
+            outputFile_  << std::endl;
          }
 
          ++nSample_;

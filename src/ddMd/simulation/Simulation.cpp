@@ -1103,11 +1103,10 @@ namespace DdMd
    /*
    * Return pair energies contributions.
    */
-   DArray<double> Simulation::pairEnergies() const
+   DMatrix<double> Simulation::pairEnergies() const
    {
-      DArray<double> pairEnergies;
-      int nPairEnergies = nAtomType_*nAtomType_;
-      pairEnergies.allocate(nPairEnergies);
+      DMatrix<double> pairEnergies;
+      pairEnergies.allocate(nAtomType_, nAtomType_);
       pairEnergies = pairPotentialPtr_->pairEnergies();
       return pairEnergies;
    }

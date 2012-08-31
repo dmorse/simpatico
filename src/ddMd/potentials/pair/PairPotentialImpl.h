@@ -875,11 +875,12 @@ namespace DdMd
       Atom*  atom1Ptr;
       int    type0, type1;
 
-      int nPairEnergies = nAtomType_*nAtomType_;
-      DArray<double> localPairEnergies;
-      localPairEnergies.allocate(nPairEnergies);
-      for (int k = 0; k < nPairEnergies; ++k) {
-         localPairEnergies[k] = 0.0;
+      DMatrix<double> localPairEnergies;
+      localPairEnergies.allocate(nAtomType_, nAtomType_);
+      for (int i = 0; i < nAtomType_; ++i) {
+         for (int j = 0; j < nAtomType_; ++j) {
+            localPairEnergies(i,j) = 0.0;
+         }
       }
 
       //if (methodId() == 0) {
@@ -892,12 +893,7 @@ namespace DdMd
             f.subtract(atom0Ptr->position(), atom1Ptr->position());
             rsq = f.square();
             energy = interactionPtr_->energy(rsq, type0, type1);
-            if (type0 == type1) {
-              localPairEnergies[type0*nAtomType_ + type0] += energy;
-            } else
-            if (type0 != type1) {
-              localPairEnergies[type0*nAtomType_ + type1] += energy;
-            }
+            localPairEnergies(type0,type1) += energy;
          }
       } else {
          for (pairList_.begin(iter); iter.notEnd(); ++iter) {
@@ -911,24 +907,26 @@ namespace DdMd
                energy = interactionPtr_->energy(rsq, type0, type1);
             } else {
                energy = 0.5*interactionPtr_->energy(rsq, type0, type1);
-            }
-            if (type0 == type1) {
-              localPairEnergies[type0*nAtomType_ + type0] += energy;
-            } else
-            if (type0 != type1) {
-              localPairEnergies[type0*nAtomType_ + type1] += energy;
-            }
+            } 
+            localPairEnergies(type0,type1) += energy;
          }
       }
 
-      DArray<double> totalPairEnergies;
-      totalPairEnergies.allocate(nPairEnergies);
-      for (int k = 0; k < nPairEnergies; ++k) {
-         totalPairEnergies[k] = 0.0;
+      DMatrix<double> totalPairEnergies;
+      totalPairEnergies.allocate(nAtomType_, nAtomType_);
+      for (int i = 0; i < nAtomType_; ++i) {
+         for (int j = 0; j < nAtomType_; ++j) {
+            totalPairEnergies(i,j) = 0.0;
+         }
       }
+
       #ifdef UTIL_MPI
-      communicator.Reduce(&localPairEnergies[0], &totalPairEnergies[0], nPairEnergies,
-                          MPI::DOUBLE, MPI::SUM, 0);
+      for (int i = 0; i < nAtomType_; ++i) {
+         for (int j = 0; j < nAtomType_; ++j) {
+            communicator.Reduce(&localPairEnergies(i,j), &totalPairEnergies(i,j), 1,
+                                 MPI::DOUBLE, MPI::SUM, 0);
+         }
+      }
       if (communicator.Get_rank() == 0) {
          setPairEnergies(totalPairEnergies);
       } else {

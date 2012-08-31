@@ -10,7 +10,7 @@
 
 #include <ddMd/diagnostics/Diagnostic.h>
 #include <ddMd/simulation/Simulation.h>
-#include <util/containers/DArray.h>
+#include <util/containers/DMatrix.h>
 
 namespace DdMd
 {

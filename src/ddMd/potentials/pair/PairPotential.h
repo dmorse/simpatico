@@ -177,7 +177,7 @@ namespace DdMd
       * This method should only be called on the master (rank 0) 
       * processor, after a previous call to computePairEnergies.
       */
-      Util::DArray<double> pairEnergies() const;
+      Util::DMatrix<double> pairEnergies() const;
 
       /**
       * Mark pair energy as unknown (nullify).
@@ -281,7 +281,7 @@ namespace DdMd
       /**
       * Set values for pair energies.
       */
-      void setPairEnergies(DArray<double> pairEnergies);
+      void setPairEnergies(DMatrix<double> pairEnergies);
 
    private:
 
@@ -301,7 +301,7 @@ namespace DdMd
       int nPair_;
 
       /// Pair energies.
-      Setable< DArray<double> > pairEnergies_;
+      Setable< DMatrix<double> > pairEnergies_;
 
       // Private methods used to compute number of pairs
       int nPairList(double cutoffSq);
