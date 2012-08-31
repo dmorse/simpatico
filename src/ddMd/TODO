@@ -1,16 +1,3 @@
-Memory reporting
-----------------
-
-- Add memory statistics for Buffer.
-- Add memory statistics for AtomStorage and GroupStorage.
-
-Dynamic Resizing
-----------------
-
-- Allow for dynamic resizing of Storage classes.
-
-- Allow for dynamic resizing of Buffer class.
-
 Testing
 -------
 
@@ -43,6 +30,12 @@ Hybrid MD
 
 - Add transactions to GroupStorage (in branch).
 
+Dynamic Resizing
+----------------
+
+- Allow for dynamic resizing of Storage classes.
+
+- Allow for dynamic resizing of Buffer class.
 Cell List and Pair List:
 ------------------------
 
