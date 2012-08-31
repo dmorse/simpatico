@@ -9,6 +9,7 @@
 */
 #include <util/param/ParamComposite.h>  // base class
 #include <ddMd/chemistry/Bond.h>        // typedef
+#include <util/util/Setable.h>
 #include <util/global.h>
 
 namespace DdMd
@@ -228,7 +229,34 @@ namespace DdMd
       //@}
       /// \name Statistics
       //@{
+    
+      /**
+      * Compute statistics (reduce from all processors).
+      * 
+      * Call on all processors.
+      *
+      * \param comm MPI communicator
+      */
+      #ifdef UTIL_MPI
+      virtual void computeStatistics(MPI::Intracomm& comm);
+      #else
+      virtual void computeStatistics();
+      #endif
+
+      /**
+      * Clear any accumulated usage statistics.
+      */
+      void clearStatistics();
       
+      /**
+      * Output statistics.
+      *
+      * Call on master, after calling computeStatistics on all procs.
+      *
+      * \param out   output stream
+      */
+      void outputStatistics(std::ostream& out);
+
       //@}
       /// \name Accessors
       //@{
@@ -329,11 +357,14 @@ namespace DdMd
       /// Maximum number of ghost atoms in buffer.
       int ghostCapacity_;
 
-      /// Maximum size needed for send buffer on this processor, in bytes.
-      int sendMax_;
+      /// Maximum size used for send buffer on this processor, in bytes.
+      int maxSendLocal_;
 
       /// Has this buffer been initialized ?
       bool isInitialized_;
+
+      /// Maximum size used for send buffers on any processor, in bytes.
+      Setable<int> maxSend_;
 
       #ifdef UTIL_MPI
       /// Return packed size of Atom, in bytes.

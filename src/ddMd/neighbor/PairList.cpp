@@ -227,18 +227,6 @@ namespace DdMd
    }
 
    /*
-   * Clear all statistics.
-   */
-   void PairList::clearStatistics()
-   {
-      maxNAtomLocal_ = 0;
-      maxNPairLocal_ = 0;
-      maxNAtom_ = -1;
-      maxNPair_ = -1;
-      buildCounter_ = 0;
-   }
-
-   /*
    * Compute memory usage statistics (call on all processors).
    */
    #ifdef UTIL_MPI
@@ -248,38 +236,50 @@ namespace DdMd
    #endif
    { 
       #ifdef UTIL_MPI
-      communicator.Reduce(&maxNAtomLocal_, &maxNAtom_, 1, 
-                          MPI::INT, MPI::MAX, 0);
-      communicator.Reduce(&maxNPairLocal_, &maxNPair_, 1, 
-                          MPI::INT, MPI::MAX, 0);
+      int maxNAtomGlobal;
+      int maxNPairGlobal;
+      communicator.Allreduce(&maxNAtomLocal_, &maxNAtomGlobal, 1, 
+                             MPI::INT, MPI::MAX);
+      communicator.Allreduce(&maxNPairLocal_, &maxNPairGlobal, 1, 
+                             MPI::INT, MPI::MAX);
+      maxNAtom_.set(maxNAtomGlobal);
+      maxNPair_.set(maxNPairGlobal);
+      maxNAtomLocal_ = maxNAtomGlobal;
+      maxNPairLocal_ = maxNPairGlobal;
       #else
-      maxNAtom_ = maxNAtomLocal_;
-      maxNPair_ = maxNPairLocal_;
+      maxNAtom_.set(maxNAtomLocal_);
+      maxNPair_.set(maxNPairLocal_);
       #endif
+   }
+
+   /*
+   * Clear all statistics.
+   */
+   void PairList::clearStatistics() 
+   {
+      maxNAtomLocal_ = 0;
+      maxNPairLocal_ = 0;
+      maxNAtom_.unset();
+      maxNPair_.unset();
+      buildCounter_ = 0;
    }
 
    /*
    * Output statistics.
    */
-   void PairList::outputStatistics(std::ostream& out, int nStep)
+   void PairList::outputStatistics(std::ostream& out)
    {
 
       out << std::endl;
-      out << "maxNPair, capacity " 
-                  << Int(maxNPair_, 10)
+      out << "PairList" << std::endl;
+      out << "NPair: max, capacity     " 
+                  << Int(maxNPair_.value(), 10)
                   << Int(pairCapacity_, 10)
                   << std::endl;
-      out << "maxNAtom, capacity " 
-                  << Int(maxNAtom_, 10)
+      out << "NAtom: max, capacity     " 
+                  << Int(maxNAtom_.value(), 10)
                   << Int(atomCapacity_, 10)
                   << std::endl;
-      out << "buildCounter       " 
-                  << Int(buildCounter_, 10)
-                  << std::endl;
-      out << "steps / build      "
-                  << double(nStep)/double(buildCounter_)
-                  << std::endl;
-      out << std::endl;
    }
 
    #if 0
