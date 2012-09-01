@@ -1,5 +1,15 @@
+Main Loop
+---------
+
+- Add ability to continue a simulation with reinitialization.
+
+- Add method to Integrator and/or Simulation to clear all run statistics.
+  This should be called during initialization of a run.
+
 Testing
 -------
+
+- Make composite test for DdMd, for use with mpi with 6 processors.
 
 - Fix CellTest 
 
@@ -16,19 +26,12 @@ Flexible Unit Cells:
 - Generalize makeSnapShot and needsExchange methods in AtomStorage to allow
   for deforming boundaries (requires further changes to Boundary).
 
-Constant Pressure:
-------------------
-
-- Add requiresStress_ member, setter and accessor to Integrator.
-
-- In TwoStepIntegrator, if (requiresStress), call computeForceAndStress().
-
 Hybrid MD
 ----------
 
-- Finish and test transactions in AtomStorage (in branch).
+- Finish and test transactions in AtomStorage (in transactions branch).
 
-- Add transactions to GroupStorage (in branch).
+- Add transactions to GroupStorage (in transactions branch).
 
 Dynamic Resizing
 ----------------
@@ -36,6 +39,7 @@ Dynamic Resizing
 - Allow for dynamic resizing of Storage classes.
 
 - Allow for dynamic resizing of Buffer class.
+
 Cell List and Pair List:
 ------------------------
 
