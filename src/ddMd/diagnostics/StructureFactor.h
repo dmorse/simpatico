@@ -74,7 +74,7 @@ namespace DdMd
    * magnitude of the wavevector, and a list of structure factor
    * values for the wavevector, one for each mode.
    * 
-   * \ingroup McMd_Diagnostic_Module
+   * \ingroup DdMd_Diagnostic_Module
    */
    class StructureFactor : public Diagnostic
    {
