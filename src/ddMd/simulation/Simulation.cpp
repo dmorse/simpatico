@@ -582,11 +582,17 @@ namespace DdMd
             double time  = integratorPtr_->time();
             exchanger_.outputStatistics(Log::file(), time, nStep);
          } else
-         if (command == "OUTPUT_PAIRLIST_STATS") {
+         if (command == "OUTPUT_MEMORY_STATS") {
+            atomStorage().computeStatistics(domain_.communicator());
+            bondStorage().computeStatistics(domain_.communicator());
+            buffer().computeStatistics(domain_.communicator());
             pairPotential().pairList().computeStatistics(domain_.communicator());
             if (domain_.isMaster()) {
-               int nStep = integratorPtr_->nStep();
-               pairPotential().pairList().outputStatistics(Log::file(), nStep);
+               atomStorage().outputStatistics(Log::file());
+               bondStorage().outputStatistics(Log::file());
+               buffer().outputStatistics(Log::file());
+               pairPotential().pairList().outputStatistics(Log::file());
+               Log::file() << std::endl;
             }
          } else
          if (command == "WRITE_CONFIG") {

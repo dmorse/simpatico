@@ -12,6 +12,7 @@
 #include "Domain.h"
 #include <ddMd/chemistry/Atom.h>
 #include <ddMd/chemistry/Group.h>
+#include <util/format/Int.h>
 #include <util/mpi/MpiLogger.h>
 
 namespace DdMd
@@ -33,6 +34,7 @@ namespace DdMd
       sendPtr_(0),
       recvPtr_(0),
       bufferCapacity_(-1),
+      maxSendLocal_(0),
       dataCapacity_(-1),
       sendSize_(0),
       recvSize_(0),
@@ -537,6 +539,10 @@ namespace DdMd
       // Wait for completion of send.
       request[1].Wait();
 
+      // Update statistics.
+      if (sendBytes > maxSendLocal_) {
+         maxSendLocal_ = sendBytes;
+      }
    }
 
    /*
@@ -560,6 +566,11 @@ namespace DdMd
       sendBytes = sendPtr_ - sendBufferBegin_;
       request = comm.Isend(sendBufferBegin_, sendBytes, MPI::CHAR, dest, 5);
       request.Wait();
+
+      // Update statistics.
+      if (sendBytes > maxSendLocal_) {
+         maxSendLocal_ = sendBytes;
+      }
    }
 
    /*
@@ -611,7 +622,52 @@ namespace DdMd
          recvPtr_ = recvBufferBegin_;
          recvType_ = NONE;
       }
+      if (sendBytes > maxSendLocal_) {
+         maxSendLocal_ = sendBytes;
+      }
 
+   }
+
+   /*
+   * Compute maximum message size among all processors.
+   */
+   #ifdef UTIL_MPI
+   void Buffer::computeStatistics(MPI::Intracomm& comm)
+   #else
+   void Buffer::computeStatistics()
+   #endif
+   {
+      #ifdef UTIL_MPI
+      int globalSendMax;
+      comm.Allreduce(&maxSendLocal_, &globalSendMax, 1, MPI::INT, MPI::MAX);
+      maxSend_.set(globalSendMax);
+      #else
+      maxSend_.set(maxSendLocal_);
+      #endif
+   
+   }
+
+   /**
+   * Clear any accumulated usage statistics.
+   */
+   void Buffer::clearStatistics()
+   {
+      maxSendLocal_ = 0;
+      maxSend_.unset();
+   }
+      
+   /*
+   * Output statistics.
+   */
+   void Buffer::outputStatistics(std::ostream& out)
+   {
+
+      out << std::endl;
+      out << "Buffer" << std::endl;
+      out << "sendBytes: max, capacity " 
+          << Int(maxSend_.value(), 10)
+          << Int(bufferCapacity_, 10)
+          << std::endl;
    }
 
    /*

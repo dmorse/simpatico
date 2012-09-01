@@ -14,6 +14,7 @@
 #include "GhostIterator.h"
 #include "ConstGhostIterator.h"
 #include <ddMd/chemistry/Group.h>
+#include <util/format/Int.h>
 #include <util/global.h>
 
 namespace DdMd
@@ -37,8 +38,10 @@ namespace DdMd
       atomCapacity_(0),
       ghostCapacity_(0),
       totalAtomCapacity_(0),
+      maxNAtomLocal_(0),
       #ifdef UTIL_MPI
       nAtomTotal_(),
+      maxNAtom_(),
       #endif
       locked_(false),
       isInitialized_(false),
@@ -162,6 +165,11 @@ namespace DdMd
       atomPtrs_[atomId] = newAtomPtr_;
       newAtomPtr_->setIsGhost(false);
       newAtomPtr_ = 0;
+
+      // Update statistics
+      if (atomSet_.size() > maxNAtomLocal_) {
+         maxNAtomLocal_ = atomSet_.size();
+      }
    }
 
    Atom* AtomStorage::addAtom(int id)
@@ -489,6 +497,49 @@ namespace DdMd
    void AtomStorage::unsetNAtomTotal()
    {  nAtomTotal_.unset(); }
    #endif
+
+   /*
+   * Compute memory usage statistics (call on all processors).
+   */
+   #ifdef UTIL_MPI
+   void AtomStorage::computeStatistics(MPI::Intracomm& communicator)
+   #else
+   void AtomStorage::computeStatistics()
+   #endif
+   { 
+      #ifdef UTIL_MPI
+      int maxNAtomGlobal;
+      communicator.Allreduce(&maxNAtomLocal_, &maxNAtomGlobal, 1, 
+                             MPI::INT, MPI::MAX);
+      maxNAtom_.set(maxNAtomGlobal);
+      maxNAtomLocal_ = maxNAtomGlobal;
+      #else
+      maxNAtom_.set(maxNAtomLocal_);
+      #endif
+   }
+
+   /*
+   * Clear all statistics.
+   */
+   void AtomStorage::clearStatistics() 
+   {
+      maxNAtomLocal_ = 0;
+      maxNAtom_.unset();
+   }
+
+   /*
+   * Output statistics.
+   */
+   void AtomStorage::outputStatistics(std::ostream& out)
+   {
+
+      out << std::endl;
+      out << "AtomStorage" << std::endl;
+      out << "NAtom: max, capacity     " 
+                  << Int(maxNAtom_.value(), 10)
+                  << Int(atomCapacity_, 10)
+                  << std::endl;
+   }
 
    /*
    * Check validity of this AtomStorage.

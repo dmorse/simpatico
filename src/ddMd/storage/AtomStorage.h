@@ -449,7 +449,43 @@ namespace DdMd
       #endif
 
       //@}
-      
+      /// \name Statistics
+      //@{
+ 
+      /**
+      * Compute statistics (reduce from all processors).
+      * 
+      * Call on all processors.
+      */
+      #ifdef UTIL_MPI
+      virtual void computeStatistics(MPI::Intracomm& communicator);
+      #else
+      virtual void computeStatistics();
+      #endif
+
+      /**
+      * Clear statistical accumulators (call on all processors).
+      */
+      void clearStatistics();
+
+      /**
+      * Output statistics.
+      *
+      * Call on master, after calling computeStatistics on all procs.
+      *
+      * \param out   output stream
+      */
+      void outputStatistics(std::ostream& out);
+
+      /**
+      * Get the maximum number of primary atoms encountered thus far.
+      *
+      * Call only on master.
+      */
+      int maxNAtom() const;
+
+      //@}
+
    private:
 
       // Array that holds all available local Atom objects.
@@ -492,9 +528,15 @@ namespace DdMd
       // Maximum number of atoms on all processors, maximum id + 1
       int totalAtomCapacity_;
 
+      /// Maximum number of atoms on this proc since stats cleared.
+      int maxNAtomLocal_; 
+   
       #ifdef UTIL_MPI
       // Total number of local atoms on all processors.
       Setable<int> nAtomTotal_;
+
+      /// Maximum of nAtom1_ on all procs (defined only on master).
+      Setable<int>  maxNAtom_;     
       #endif
 
       // Is addition or removal of atoms forbidden?
